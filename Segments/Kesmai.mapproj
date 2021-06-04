@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.63.0.0">
+<segment name="Kesmai" version="0.64.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -41,7 +41,16 @@
         "Yucha", "Yuchi", "Yuchu", "Yuco", "Yugua", "Yuhua", "Yuja", "Yula", "Yuli", "Yuma", "Yuni", "Yunu", "Yupa",
         "Yupo", "Yuqui", "Yura", "Yuri", "Yuta", "Yuti", "Yuto", "Yutu", "Yuxi", "Yuya"
     };
-        
+    
+    public static string[] _rarePurchaseResponses = new string[]
+    {
+        "That's quite a bargain.", 
+        "You won't find another with such quality.",
+        "I didn't think anyone even wanted that.",
+        "It was left here, pray the owner doesn't come back."
+        "Don't go losing it."
+    };
+    
     public static void gemsPriceMutator(MobileEntity entity, Container source, ItemEntity item)
     {
         /* Item values fall between 0.8 to 1.2 of base price. */
@@ -99037,22 +99046,34 @@ return orc;
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    void onRarePurchase(PlayerEntity player, ItemEntity item)
+    {
+        shopkeeper.SayTo(player, _rarePurchaseResponses.Random());
+    }
+    
     if (spawn is Shopkeeper shopkeeper)
     {
         shopkeeper.AddCounter(new Point2D(25, 22, 1));
-        
-        if (Utility.RandomBool())
-            shopkeeper.Stock<LeatherArmor>("leather armor", 250, Utility.RandomBetween(1, 4));
-            
-        if (Utility.RandomBool())
-            shopkeeper.Stock<ChainmailArmor>("chainmail", 500, Utility.RandomBetween(1, 4));
-            
-        if (Utility.RandomBool())
-            shopkeeper.Stock<LeatherArmor>("platemail", 1000, Utility.RandomBetween(1, 4));
-            
-        if (Utility.RandomDouble() < 0.2)
-            shopkeeper.Stock<WyvernScales>("wyvern scales", 3000);
 
+        var wares = new List<StockEntry>()
+        {
+            new StockEntry("leather armor",     () => new LeatherArmor(),       250,    Utility.RandomBetween(1, 4), null),
+            new StockEntry("chainmail",         () => new ChainmailArmor(),     500,    Utility.RandomBetween(1, 4), null),
+            new StockEntry("platemail",         () => new PlatemailArmor(),     1000,   Utility.RandomBetween(1, 2), null),
+           
+            new StockEntry("leather boots",     () => new LeatherBoots(),       200,    Utility.RandomBetween(1, 4), null),
+            
+            new StockEntry("leather gauntlets", () => new LeatherGauntlets(),   1000,   Utility.RandomBetween(1, 2), null),
+            
+            new StockEntry("ram skull",         () => new RamSkull(),           1500,   Utility.RandomBetween(1, 2), null),
+        };
+        
+        if (Utility.RandomDouble() <= 0.30)  /* 30% chance to spawn */
+            wares.Add(new StockEntry("crocodile boots", () => new CrocodileBoots(), 2500, 1, onRarePurchase));
+        
+        if (Utility.RandomDouble() <= 0.20)  /* 20% chance to spawn */
+            wares.Add(new StockEntry("steel plated gauntlets", () => new SteelGauntlets(), 4000, 1, onRarePurchase));
+            
         for (var i = Utility.Random(1, 3); i > 0; i--)
             shopkeeper.Restock();
     }
@@ -99075,35 +99096,47 @@ return orc;
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    void onRarePurchase(PlayerEntity player, ItemEntity item)
+    {
+        shopkeeper.SayTo(player, _rarePurchaseResponses.Random());
+    }
+        
     if (spawn is Shopkeeper shopkeeper)
     {
         shopkeeper.AddCounter(new Point2D(34, 22, 1));
         
-        if (Utility.RandomBool())
-            shopkeeper.Stock<SteelDagger>("dagger", 100, Utility.RandomBetween(1, 4));
-       
-        if (Utility.RandomBool())
-            shopkeeper.Stock<ShortSword>("sword", 200, Utility.RandomBetween(1, 4));
+        /*  The vendor can sell all varieties of weapons, at a significant mark-up. There is a weapon from each
+            skill category.
+         */
+        var wares = new List<StockEntry>()
+        {
+            new StockEntry("dagger",        () => new SteelDagger(),    100, Utility.RandomBetween(1, 4), null),
+            new StockEntry("sword",         () => new ShortSword(),     200, Utility.RandomBetween(1, 4), null),
+            new StockEntry("spear",         () => new Spear(),          150, Utility.RandomBetween(1, 4), null),
+            new StockEntry("mace",          () => new SteelMace(),      250, Utility.RandomBetween(1, 4), null),
+            new StockEntry("rapier",        () => new Rapier(),         200, Utility.RandomBetween(1, 4), null),
+            new StockEntry("axe",           () => new BattleAxe(),      300, Utility.RandomBetween(1, 4), null),
+            new StockEntry("staff",         () => new WoodenStaff(),    150, Utility.RandomBetween(1, 4), null),
+            new StockEntry("greatsword",    () => new Greatsword(),     400, Utility.RandomBetween(1, 4), null),
+            new StockEntry("crossbow",      () => new Crossbow(),       400, Utility.RandomBetween(1, 4), null),
+            new StockEntry("bow",           () => new Shortbow(),       200, Utility.RandomBetween(1, 4), null),
+            new StockEntry("flail",         () => new WoodenFlail(),    250, Utility.RandomBetween(1, 4), null),
+            new StockEntry("shuriken",      () => new Shuriken(),       200, Utility.RandomBetween(1, 4), null),
+            new StockEntry("katana",        () => new Katana(),         300, Utility.RandomBetween(1, 4), null),
+        };
         
-        if (Utility.RandomBool())
-            shopkeeper.Stock<Spear>("spear", 150, Utility.RandomBetween(1, 4));
-            
-        if (Utility.RandomBool())
-            shopkeeper.Stock<Rapier>("rapier", 200, Utility.RandomBetween(1, 4));
-            
-        if (Utility.RandomBool())
-            shopkeeper.Stock<BattleAxe>("axe", 300, Utility.RandomBetween(1, 4));
-            
-        if (Utility.RandomBool())
-            shopkeeper.Stock<WoodenStaff>("staff", 500, Utility.RandomBetween(1, 4));
+        if (Utility.RandomDouble() <= 0.25)  /* 25% chance to spawn */
+            wares.Add(new StockEntry("silver dagger", () => new SilverDagger(), 3500, 1, onRarePurchase));
 
-        if (Utility.RandomBool())
-            shopkeeper.Stock<Shortbow>("bow", 200, Utility.RandomBetween(1, 4));
+        if (Utility.RandomDouble() <= 0.20)  /* 15% chance to spawn */
+            wares.Add(new StockEntry("throwing hammer", () => new ThrowingHammer(), 1500, 1, onRarePurchase));
             
-        if (Utility.RandomDouble() < 0.2)
-            shopkeeper.Stock<Greatsword>("greatsword", 2000);
-            
-        for (var i = Utility.Random(1, 3); i > 0; i--)
+        /* The vendor won't sell everything though, at least not this time around. */
+        foreach (var stock in wares.Random(6))
+            shopkeeper.Stock(stock);
+
+        /* Of the things they stock, they don't exactly have everything, yet. */
+        for (var i = Utility.Random(3, 5); i > 0; i--)
             shopkeeper.Restock();
     }
 ]]></block>
