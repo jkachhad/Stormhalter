@@ -99292,7 +99292,7 @@ return orc;
         var wares = new List<StockEntry>()
         {
            new StockEntry("jade amulet",                () => new JadeAmulet(),             (int)(400 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
-           new StockEntry("scorpion amulet",            () => new ScorpionAmulet(),         (int)(250 * merchangeUpsell),       Utility.RandomBetween(1, 4), null),
+           new StockEntry("scorpion amulet",            () => new ScorpionAmulet(),         (int)(250 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
            new StockEntry("black pearls",               () => new BlackPearls(),            (int)(600 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
            new StockEntry("weak strength bracelet",     () => new WeakStrengthBracelet(),   (int)(500 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
            new StockEntry("weak shield ring",           () => new WeakShieldRing(),         (int)(600 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
