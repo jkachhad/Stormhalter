@@ -105278,30 +105278,29 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var peacekeeper = new Skeleton()
+    var peacekeeper = new Peacekeeper()
     {
-        Name = Statue(),
-        
-        if (spawn is Peacekeeper Statue)
-        {
-        BaseDodge = 15,
+        Name = "statue",
+        Body = 51,
         
         MaxHealth = 300, Health = 300,
+        BaseDodge = 15,
         
         Movement = 0,
         
         Experience = 50,
-    
-        peacekeeper.Attacks = new CreatureAttackCollection
-        {
-            new CreatureBasicAttack(6),
-        };
-    
-        peacekeeper.Spells = new CreatureSpellCollection(100.0)
-        {
-            new CreatureSpell<DeathSpell>(15),
-        };
     };
+    
+    peacekeeper.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(6),
+    };
+    
+    peacekeeper.Spells = new CreatureSpellCollection(100.0)
+    {
+        new CreatureSpell<DeathSpell>(15),
+    };
+
     return peacekeeper;
 ]]></block>
         <block><![CDATA[]]></block>
