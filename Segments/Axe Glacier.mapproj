@@ -103915,10 +103915,10 @@
         Immunity = CreatureImmunity.Web
     };
     
-    Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(9) }, 
-        },
+    ogre.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureBasicAttack(9) }, 
+    };
     
     ogre.AddStatus(new NightVisionStatus(ogre));
 
