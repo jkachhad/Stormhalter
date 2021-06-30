@@ -3,6 +3,62 @@
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
+    public static readonly string[] _names = new string[]
+    {
+        "Aca", "Acha", "Achi", "Achu", "Aco", "Agua", "Ahua", "Aja", "Ala", "Ali", "Ama", "Ani", "Anu", "Apa",
+        "Apo", "Aqui", "Ara", "Ari", "Ata", "Ati", "Ato", "Atu", "Axi", "Aya", "Chaca", "Chacha", "Chachi",
+        "Chachu", "Chaco", "Chagua", "Chahua", "Chaja", "Chala", "Chali", "Chama", "Chani", "Chanu", "Chapa",
+        "Chapo", "Chaqui", "Chara", "Chari", "Chata", "Chati", "Chato", "Chatu", "Chaxi", "Chaya", "Chuca",
+        "Chucha", "Chuchi", "Chuchu", "Chuco", "Chugua", "Chuhua", "Chuja", "Chula", "Chuli", "Chuma", "Chuni",
+        "Chunu", "Chupa", "Chupo", "Chuqui", "Chura", "Churi", "Chuta", "Chuti", "Chuto", "Chutu", "Chuxi", "Chuya",
+        "Coca", "Cocha", "Cochi", "Cochu", "Coco", "Cogua", "Cohua", "Coja", "Cola", "Coli", "Coma", "Coni", "Conu",
+        "Copa", "Copo", "Coqui", "Cora", "Cori", "Cota", "Coti", "Coto", "Cotu", "Coxi", "Coya", "Huaca", "Huacha",
+        "Huachi", "Huachu", "Huaco", "Huagua", "Huahua", "Huaja", "Huala", "Huali", "Huama", "Huanca", "Huancha",
+        "Huanchi", "Huanchu", "Huanco", "Huangua", "Huanhua", "Huani", "Huanja", "Huanla", "Huanli", "Huanma",
+        "Huanni", "Huannu", "Huanpa", "Huanpo", "Huanqui", "Huanra", "Huanri", "Huanta", "Huanti", "Huanto",
+        "Huantu", "Huanu", "Huanxi", "Huanya", "Huapa", "Huapo", "Huaqui", "Huara", "Huari", "Huata", "Huati",
+        "Huato", "Huatu", "Huaxi", "Huaya", "Huca", "Hucha", "Huchi", "Huchu", "Huco", "Hugua", "Huhua", "Huja",
+        "Hula", "Huli", "Huma", "Huni", "Hunu", "Hupa", "Hupo", "Huqui", "Hura", "Huri", "Huta", "Huti", "Huto",
+        "Hutu", "Huxi", "Huya", "Ica", "Icha", "Ichi", "Ichu", "Ico", "Igua", "Ihua", "Ija", "Ila", "Ili", "Ima",
+        "Inca", "Incha", "Inchi", "Inchu", "Inco", "Ingua", "Inhua", "Ini", "Inja", "Inla", "Inli", "Inma", "Inni",
+        "Innu", "Inpa", "Inpo", "Inqui", "Inra", "Inri", "Inta", "Inti", "Into", "Intu", "Inu", "Inxi", "Inya",
+        "Ipa", "Ipo", "Iqui", "Ira", "Iri", "Ita", "Iti", "Ito", "Itu", "Ixi", "Iya", "Jauca", "Jaucha", "Jauchu",
+        "Jauco", "Jaugua", "Jauhua", "Jauja", "Jaula", "Jauli", "Jauma", "Jauni", "Jaunu", "Jaupa", "Jaupo",
+        "Jauqui", "Jaura", "Jauri", "Jauta", "Jauti", "Jauto", "Jautu", "Jauxi", "Jauya", "Maca", "Macca", "Maccha",
+        "Macchi", "Macchu", "Macco", "Macgua", "Macha", "Machi", "Machu", "Machua", "Macja", "Macla", "Macli",
+        "Macma", "Macni", "Macnu", "Maco", "Macpa", "Macpo", "Macqui", "Macra", "Macri", "Macta", "Macti", "Macto",
+        "Mactu", "Macxi", "Macya", "Magua", "Mahua", "Maja", "Mala", "Mali", "Mama", "Mani", "Manu", "Mapa", "Mapo",
+        "Maqui", "Mara", "Mari", "Mata", "Mati", "Mato", "Matu", "Maxi", "Maya", "Picca", "Piccha", "Picchi",
+        "Picco", "Picgua", "Pichua", "Picja", "Picla", "Picli", "Picma", "Picni", "Picnu", "Picpa", "Picpo",
+        "Picqui", "Picra", "Picri", "Picta", "Picti", "Picto", "Pictu", "Picxi", "Picya", "Tica", "Ticha", "Tichi",
+        "Tichu", "Tico", "Tigua", "Tihua", "Tija", "Tila", "Tili", "Tima", "Tini", "Tinu", "Tipa", "Tipo", "Tiqui",
+        "Tira", "Tiri", "Tita", "Titi", "Tito", "Titu", "Tixi", "Tiya", "Tuca", "Tucha", "Tuchi", "Tuchu", "Tuco",
+        "Tugua", "Tuhua", "Tuja", "Tula", "Tuli", "Tuma", "Tuni", "Tunu", "Tupa", "Tupo", "Tuqui", "Tura", "Turi",
+        "Tuta", "Tuti", "Tuto", "Tutu", "Tuxi", "Tuya", "Uca", "Ucha", "Uchi", "Uchu", "Uco", "Ugua", "Uhua", "Uja",
+        "Ula", "Uli", "Uma", "Uni", "Unu", "Upa", "Upo", "Uqui", "Ura", "Uri", "Uta", "Uti", "Uto", "Utu", "Uxi",
+        "Uya", "Yaca", "Yacha", "Yachi", "Yachu", "Yaco", "Yagua", "Yahua", "Yaja", "Yala", "Yali", "Yama", "Yani",
+        "Yanu", "Yapa", "Yapo", "Yaqui", "Yara", "Yari", "Yata", "Yati", "Yato", "Yatu", "Yaxi", "Yaya", "Yuca",
+        "Yucha", "Yuchi", "Yuchu", "Yuco", "Yugua", "Yuhua", "Yuja", "Yula", "Yuli", "Yuma", "Yuni", "Yunu", "Yupa",
+        "Yupo", "Yuqui", "Yura", "Yuri", "Yuta", "Yuti", "Yuto", "Yutu", "Yuxi", "Yuya"
+    };
+    
+    public static string[] _rarePurchaseResponses = new string[]
+    {
+        "That's quite a bargain.", 
+        "You won't find another with such quality.",
+        "I didn't think anyone even wanted that.",
+        "It was left here, pray the owner doesn't come back.",
+        "Don't go losing it."
+    };
+    
+    public static void gemsPriceMutator(MobileEntity entity, Container source, ItemEntity item)
+    {
+        /* Item values fall between 0.8 to 1.2 of base price. */
+        var lesserPrice = (int)(item.BasePrice * 0.2);
+        var higherPrice = (int)(item.BasePrice * 0.2);
+        
+        item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
+    }
 ]]></block>
     <block><![CDATA[]]></block>
   </script>
@@ -5951,6 +6007,11 @@
           <destroyed>147</destroyed>
           <ruins>0</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>146</wall>
+          <destroyed>148</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="1" y="20">
@@ -102675,11 +102736,4067 @@
     <location name="Thief" x="31" y="6" region="1" />
     <location name="Resurrect" x="33" y="9" region="1" />
   </locations>
-  <subregions />
-  <entities />
-  <spawns />
+  <subregions>
+    <subregion name="Axe Town" type="Town" region="1">
+      <rectangles>
+        <rectangle left="26" top="1" right="36" bottom="37" />
+        <rectangle left="20" top="10" right="25" bottom="18" />
+      </rectangles>
+    </subregion>
+    <subregion name="Ice Dragon's Lair" type="Lair" region="39">
+      <rectangles>
+        <rectangle left="0" top="0" right="8" bottom="14" />
+      </rectangles>
+    </subregion>
+    <subregion name="Drake Lair" type="Lair" region="36">
+      <rectangles>
+        <rectangle left="0" top="0" right="9" bottom="9" />
+      </rectangles>
+    </subregion>
+    <subregion name="Yeti Lair" type="Lair" region="45">
+      <rectangles>
+        <rectangle left="0" top="0" right="18" bottom="21" />
+      </rectangles>
+    </subregion>
+    <subregion name="Por's Pub" type="Town" region="11">
+      <rectangles>
+        <rectangle left="0" top="0" right="11" bottom="15" />
+      </rectangles>
+    </subregion>
+    <subregion name="Giant's Lair Lower" type="Lair" region="6">
+      <rectangles>
+        <rectangle left="8" top="16" right="15" bottom="20" />
+        <rectangle left="12" top="12" right="15" bottom="15" />
+        <rectangle left="16" top="14" right="18" bottom="24" />
+        <rectangle left="19" top="16" right="21" bottom="23" />
+      </rectangles>
+    </subregion>
+    <subregion name="Giant's Lair Main" type="Lair" region="8">
+      <rectangles>
+        <rectangle left="8" top="5" right="32" bottom="18" />
+      </rectangles>
+    </subregion>
+  </subregions>
+  <entities>
+    <entity name="surfaceWraith">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var wraith = new Wraith()
+    {
+        MaxHealth = 68, Health = 68,
+        MaxMana = 17, Mana = 17,
+        BaseDodge = 13,
+        
+        Experience = 1500,
+    };
+    wraith.AddStatus(new NightVisionStatus(wraith));
+        
+    wraith.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(8),
+    };
+    
+    wraith.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<BlindSpell>(
+            skillLevel: 6, cost: 4, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<DeathSpell>(
+            skillLevel: 3, cost: 6, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
+        
+    wraith.Wield(new BlackStaff());
+        
+    wraith.AddGold(350);
+    wraith.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+    ));
+    
+    return wraith;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="surfaceWolf">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var wolf = new Wolf()
+    {
+        MaxHealth = 50, Health = 50,
+        BaseDodge = 12,
+                
+        Experience = 500,
+    };
+    
+    wolf.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(5,     3, 10,   "The wolf rakes you with its claws."),  50 }, 
+        { new CreatureAttack(7,     4, 12,  "The wolf sinks its teeth into you."),  30 }, 
+        { new CreatureAttack(7,     5, 14,  "The wolf lunges at you."),             20 }, 
+    };
+        
+    wolf.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the thick hide"),
+        new CreatureBlock(3, "a paw"),
+    };
+        
+    wolf.AddGold(75);
+    wolf.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+    ));
+        
+    return wolf;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="surfaceSkeleton">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var skeleton = new Skeleton()
+    {
+        MaxHealth = 40, Health = 40,
+        BaseDodge = 12,
+                
+        Experience = 500,
+                
+        Movement = 2,
+                
+        Attacks = new CreatureAttackCollection()
+        {
+            new CreatureBasicAttack(6)
+        }
+    };
+    
+    skeleton.Wield(new Spear());
+            
+    skeleton.AddGold(200);
+    skeleton.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+    ));
+    
+    return skeleton;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="surfaceGoblinSentry">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var goblin = new Goblin()
+    {
+        MaxHealth = 36, Health = 36,
+        BaseDodge = 12,
+                
+        Experience = 750,
+        
+        Attacks = new CreatureAttackCollection()
+        {
+            new CreatureBasicAttack(6)
+        },
+    };
+    
+    goblin.Wield(new Crossbow());
+    goblin.Equip(new LeatherArmor());
+            
+    goblin.AddGold(120);
+    goblin.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+    ));
+    
+    return goblin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="surfaceOrc">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var orc = new Orc()
+    {
+        MaxHealth = 35, Health = 35,
+        BaseDodge = 12,
+                
+        Experience = 425,
+        
+        CanFlee = true,
+                
+        Attacks = new CreatureAttackCollection()
+        {
+            new CreatureBasicAttack(6)
+        }
+    };
+    
+    orc.Wield(new BattleAxe());
+    orc.Equip(new LeatherArmor());
+            
+    orc.AddGold(100);
+    orc.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new ThrowingHammer(), 16)
+    ));
+    
+    return orc;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="surfaceTroll">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var troll = new Troll()
+    {
+        MaxHealth = 60, Health = 60,
+        BaseDodge = 12,
+                
+        Experience = 1025,
+                
+        Movement = 2,
+                
+        CanFlee = true,
+                
+        Attacks = new CreatureAttackCollection()
+        {
+            new CreatureBasicAttack(6)
+        }
+    };
+    
+    troll.Wield(new Greatsword());
+    troll.Equip(new ChainmailArmor());
+    
+    troll.AddGold(500);
+    troll.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+    ));
+    
+    return troll;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="surfaceGoblin">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var goblin = new Goblin()
+    {
+        MaxHealth = 36, Health = 36,
+        BaseDodge = 12,
+                
+        Experience = 725,
+    
+        Attacks = new CreatureAttackCollection()
+        {
+            new CreatureBasicAttack(6),
+        }
+    
+    };
+    
+    goblin.Wield(new Longsword());
+    goblin.Equip(new LeatherArmor());
+            
+    goblin.AddGold(120);
+    goblin.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new LeatherGauntlets(), 7.5)
+    ));
+    
+    return goblin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="surfaceGargoyle">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var gargoyle = new Gargoyle()
+    {
+        MaxHealth = 82, Health = 82,
+        BaseDodge = 12,
+                
+        Experience = 2425,
+                
+        Movement = 2,
+    };
+    gargoyle.AddStatus(new NightVisionStatus(gargoyle));
+            
+    gargoyle.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(6,     4, 8,   "The gargoyle strikes you with its claws."),    60 },
+        { new CreatureAttack(7,     6, 12,  "The gargoyle batters you with its wings."),    40 },
+    };
+    
+    gargoyle.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(3, "a claw"),
+        new CreatureBlock(1, "a wing"),
+    };
+
+    gargoyle.AddGold(700);
+    gargoyle.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5)
+    ));
+
+    return gargoyle;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="surfaceGoblinMage">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var goblin = new Goblin()
+    {
+        MaxHealth = 36, Health = 36,
+        MaxMana = 16, Mana = 16,
+        BaseDodge = 12,
+                
+        Experience = 725,
+    };
+    
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(6)
+    };
+    
+    goblin.Spells = new CreatureSpellCollection
+    {
+        new CreatureSpell<FireballSpell>(
+            skillLevel: 4, cost: 6, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<MagicMissileSpell>(
+            skillLevel: 4, cost: 3, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
+    
+    goblin.Wield(new BlackStaff());
+            
+    goblin.AddGold(120);
+    goblin.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new LeatherGauntlets(), 7.5)
+    ));
+    
+    return goblin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="lightningmesaGoblin">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var goblin = new Goblin()
+    {
+        MaxHealth = 45, Health = 45,
+        BaseDodge = 13,
+                
+        Experience = 800,
+    
+        Attacks = new CreatureAttackCollection()
+        {
+            new CreatureBasicAttack(7),
+        }
+    
+    };
+    
+    goblin.Wield(new BattleAxe());
+    goblin.Equip(new LeatherArmor());
+            
+    goblin.AddGold(200);
+    goblin.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        
+        new LootPackEntry(true, (from, container) => new LeatherGauntlets(), 7.5)
+    ));
+    
+    return goblin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="lightningMesaTroll">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var troll = new Troll()
+    {
+        MaxHealth = 70, Health = 70,
+        BaseDodge = 13,
+                
+        Experience = 1250,
+                
+        Movement = 2,
+                
+        CanFlee = true,
+                
+        Attacks = new CreatureAttackCollection()
+        {
+            new CreatureBasicAttack(7)
+        }
+    };
+    
+    troll.Wield(new Greatsword());
+    troll.Equip(new ChainmailArmor());
+    
+    troll.AddGold(500);
+    troll.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+    ));
+    
+    return troll;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="lightningMesaFighter">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+                    
+    var fighter = new Humanoid()
+    {
+        Name = _names.Random(),
+        Body = (female ? 33 : 32), IsFemale = female,
+            
+        MaxHealth = 110, Health = 110,
+        BaseDodge = 13,
+    
+        Experience = 3450,
+    
+        Movement = 2,
+            
+        CanSwim = true,
+    };
+    
+    fighter.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(8), 
+    };
+    
+    fighter.Wield(new SteelLongsword());
+    fighter.Equip(new PlatemailArmor());    
+    
+    fighter.AddGold(550);
+    fighter.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        
+        new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 10.0)
+    ));
+    
+    return fighter;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="lightningmesaMA">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+                    
+    var martialartist = new Humanoid()
+    {
+        Name = _names.Random(),
+        Body = (female ? 33 : 32), IsFemale = female,
+            
+        MaxHealth = 100, Health = 100,
+        BaseDodge = 13,
+    
+        Experience = 3450,
+    
+        Movement = 2,
+        
+        CanJumpkick = true,
+        CanSwim = true,
+    };
+    
+    martialartist.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(8), 
+    };   
+    
+    martialartist.AddGold(550);
+    martialartist.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 10.0)
+    ));
+    
+    return martialartist;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="lightningMesaOrc">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var orc = new Orc()
+    {
+        MaxHealth = 50, Health = 50,
+        BaseDodge = 13,
+                
+        Experience = 600,
+        
+        CanFlee = true,
+                
+        Attacks = new CreatureAttackCollection()
+        {
+            new CreatureBasicAttack(6)
+        }
+    };
+    
+    orc.Wield(new BattleAxe());
+    orc.Equip(new LeatherArmor());
+            
+    orc.AddGold(100);
+    orc.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new ThrowingHammer(), 16)
+    ));
+    
+    return orc;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="lightningMesaGargoyle">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var gargoyle = new Gargoyle()
+    {
+        MaxHealth = 82, Health = 82,
+        BaseDodge = 12,
+                
+        Experience = 2425,
+                
+        Movement = 2,
+    };
+    gargoyle.AddStatus(new NightVisionStatus(gargoyle));
+            
+    gargoyle.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(6,     4, 8,   "The gargoyle strikes you with its claws."),    60 },
+        { new CreatureAttack(7,     6, 12,  "The gargoyle batters you with its wings."),    40 },
+    };
+    
+    gargoyle.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(3, "a claw"),
+        new CreatureBlock(1, "a wing"),
+    };
+
+    gargoyle.AddGold(700);
+    gargoyle.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        
+        new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5)
+    ));
+
+    return gargoyle;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="lightningMesaWolf">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var wolf = new Wolf()
+    {
+        MaxHealth = 55, Health = 55,
+        BaseDodge = 13,
+                
+        Experience = 600,
+    };
+    
+    wolf.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(5,     4, 11,   "The wolf rakes you with its claws."),  50 }, 
+        { new CreatureAttack(7,     4, 13,  "The wolf sinks its teeth into you."),  30 }, 
+        { new CreatureAttack(7,     5, 15,  "The wolf lunges at you."),             20 }, 
+    };
+        
+    wolf.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the thick hide"),
+        new CreatureBlock(3, "a paw"),
+    };
+        
+    wolf.AddGold(300);
+    wolf.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+    ));
+        
+    return wolf;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="lightningMesaWraith">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var wraith = new Wraith()
+    {
+        MaxHealth = 68, Health = 68,
+        MaxMana = 17, Mana = 17,
+        BaseDodge = 13,
+        
+        Experience = 1500,
+    };
+    wraith.AddStatus(new NightVisionStatus(wraith));
+        
+    wraith.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(8),
+    };
+    
+    wraith.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<BlindSpell>(
+            skillLevel: 6, cost: 4, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<DeathSpell>(
+            skillLevel: 3, cost: 6, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
+        
+    wraith.Wield(new BlackStaff());
+        
+    wraith.AddGold(350);
+    wraith.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+    ));
+    
+    return wraith;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="lightningMesaGoblinMage">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var goblin = new Goblin()
+    {
+        MaxHealth = 40, Health = 40,
+        MaxMana = 16, Mana = 16,
+        BaseDodge = 12,
+                
+        Experience = 725,
+    };
+    
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(6)
+    };
+    
+    goblin.Spells = new CreatureSpellCollection
+    {
+        new CreatureSpell<FireballSpell>(
+            skillLevel: 4.5, cost: 6, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<MagicMissileSpell>(
+            skillLevel: 4, cost: 3, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
+    
+    goblin.Wield(new BlackStaff());
+            
+    goblin.AddGold(120);
+    goblin.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        
+        new LootPackEntry(true, (from, container) => new LeatherGauntlets(), 7.5)
+    ));
+    
+    return goblin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="lightningMesaRapier">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+                    
+    var fighter = new Humanoid()
+    {
+        Name = _names.Random(),
+        Body = (female ? 33 : 32), IsFemale = female,
+            
+        MaxHealth = 110, Health = 110,
+        BaseDodge = 13,
+    
+        Experience = 3450,
+    
+        Movement = 2,
+            
+        CanSwim = true,
+    };
+    
+    fighter.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(8), 
+    };
+    
+    fighter.Wield(new Rapier());
+    fighter.Equip(new PlatemailArmor());    
+    
+    fighter.AddGold(550);
+    fighter.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 10.0)
+    ));
+    
+    return fighter;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="lightningMesaGoblinSentry">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var goblin = new Goblin()
+    {
+        MaxHealth = 40, Health = 40,
+        BaseDodge = 12,
+                
+        Experience = 800,
+        
+        Attacks = new CreatureAttackCollection()
+        {
+            new CreatureBasicAttack(7)
+        },
+    };
+    
+    goblin.Wield(new Crossbow());
+    goblin.Equip(new LeatherArmor());
+            
+    goblin.AddGold(200);
+    goblin.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+    ));
+    
+    return goblin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="lightningMesaHobgoblin">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var hobgoblin = new Hobgoblin()
+    {
+        MaxHealth = 59, Health = 59,
+        BaseDodge = 13,
+    
+        Experience = 850,
+        
+        Attacks = new CreatureAttackCollection
+        {
+            { new CreatureBasicAttack(8) }, 
+        },
+    };
+    
+    hobgoblin.Wield(new Longsword());
+    hobgoblin.Equip(new LeatherArmor());    
+    
+    hobgoblin.AddGold(500);
+    hobgoblin.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+    ));
+    
+    return hobgoblin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="pwolf">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var wolf = new Wolf()
+    {
+        MaxHealth = 100, Health = 100,
+        BaseDodge = 14,
+                
+        Experience = 1500,
+        
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
+        Weakness = CreatureWeakness.Silver,
+    };
+    
+    wolf.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(6,     5, 20,   "The wolf rakes you with its claws."),  50 }, 
+        { new CreatureAttack(8,     6, 23,  "The wolf sinks its teeth into you."),  30 }, 
+        { new CreatureAttack(8,     7, 26,  "The wolf lunges at you."),             20 }, 
+    };
+        
+    wolf.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the thick hide"),
+        new CreatureBlock(3, "a paw"),
+    };
+        
+    wolf.AddGold(500);
+    wolf.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+    ));
+        
+    return wolf;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="kWolf">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var wolf = new Wolf()
+    {
+        MaxHealth = 400, Health = 400,
+        BaseDodge = 18,
+                
+        Experience = 5000,
+        
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
+        Weakness = CreatureWeakness.Silver,
+        FireProtection = 100,
+        IceProtection = 100,
+        StunProtection = 100,
+    };
+    
+    wolf.AddStatus(new NightVisionStatus(wolf));
+    
+    wolf.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(9,     10, 30,   "The wolf rakes you with its claws."),  50 }, 
+        { new CreatureAttack(11,     15, 35,  "The wolf sinks its teeth into you."),  30 }, 
+        { new CreatureAttack(11,     20, 45,  "The wolf lunges at you."),             20 }, 
+    };
+        
+    wolf.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the thick hide"),
+        new CreatureBlock(3, "a paw"),
+    };
+        
+    wolf.AddGold(500);
+    wolf.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        
+    ));
+        
+    return wolf;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="rockWorm">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var rockworm = new Sandwyrm()
+    {
+        MaxHealth = 150, Health = 150,
+        BaseDodge = 14,
+    
+        Experience = 2500,
+    
+        VisibilityDistance = 1,
+        
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
+        Weakness = CreatureWeakness.Silver,
+            
+        IceProtection = 100,
+    };
+    rockworm.AddStatus(new NightVisionStatus(rockworm));
+    
+    rockworm.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(8,     12, 16,     "The rockworm rolls over you"),      70 }, 
+        { new CreatureAttack(9,    15, 25,     "You've been bitten by the rockworm",
+                                                    new AttackPoisonComponent(8)),             30 },
+                                                    // TODO: Attack poison chance. 50%
+    };
+        
+    rockworm.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the carapace"), 
+        new CreatureBlock(4, "the toothy maw"), 
+    };
+    
+    rockworm.AddGold(800);
+    rockworm.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        
+        ));
+    
+    return rockworm;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="lightningMesaArcher">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+                    
+    var fighter = new Humanoid()
+    {
+        Name = _names.Random(),
+        Body = (female ? 33 : 32), IsFemale = female,
+            
+        MaxHealth = 110, Health = 110,
+        BaseDodge = 13,
+    
+        Experience = 3450,
+    
+        Movement = 2,
+            
+        CanSwim = true,
+    };
+    
+    fighter.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(8), 
+    };
+    
+    fighter.Wield(new FineCrossbow());
+    fighter.Equip(new PlatemailArmor());    
+    
+    fighter.AddGold(550);
+    fighter.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        
+        new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 10.0)
+    ));
+    
+    return fighter;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="lightningMesaOgre">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var ogre = new Ogre()
+    {
+        MaxHealth = 110, Health = 110,
+        BaseDodge = 13,
+    
+        Experience = 2600,
+            
+        Immunity = CreatureImmunity.Web
+    };
+    
+    ogre.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureBasicAttack(9) }, 
+    };
+    
+    ogre.AddStatus(new NightVisionStatus(ogre));
+
+    ogre.Wield(new Halberd());    
+    
+    ogre.AddGold(650);
+    ogre.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new SteelGauntlets(), 6.67)
+    ));
+    
+    return ogre;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="lowerLizard">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var lizard = new Lizard()
+    {
+        MaxHealth = 70, Health = 70,
+        BaseDodge = 13,
+        
+        Experience = 1500,
+        
+        Movement = 2,
+        
+        IceProtection = 100,
+    };
+    
+    lizard.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(8,     6, 15,  "The lizard claws at you"),             60 },
+        { new CreatureAttack(8,     7, 20,  "The lizard hits you with its tail"),   40 },
+    };
+    
+    lizard.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(3, "a claw"),
+        new CreatureBlock(1, "a tail")
+    };
+    
+    lizard.Spells = new CreatureSpellCollection(50.0);
+    lizard.Spells.Add(new CreatureSpell<IceStormSpell>(8), 100, TimeSpan.FromSeconds(3.0));
+    
+    lizard.AddGold(400);
+    lizard.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new FieryRuby(1200u), 100.0)
+    ));
+    
+    return lizard;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="giant">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[    
+    var giant = new ElderTroll()
+    {
+        MaxHealth = 1000, Health = 1000,
+        BaseDodge = 23,
+    
+        Experience = 15000,
+       
+        CanJumpkick = true,
+        
+        BasePenetration = ArmorPenetration.VeryHeavy,
+
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
+        Weakness = CreatureWeakness.BlueGlowing,
+    
+        FireProtection = 100,
+        IceProtection = 100,
+        StunProtection = 100,
+    };
+    giant.AddStatus(new NightVisionStatus(giant));
+    
+    giant.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(15,      20, 50,      "The giant smashes you with his fist.",
+                                                        new AttackProneComponent(15), 
+                                                        new AttackStunComponent(5)),                40
+        },
+        {
+            new CreatureAttack(15,      30, 60,     "The giant stomps on you.",
+                                                        new AttackProneComponent(25), 
+                                                        new AttackStunComponent(10)),               40
+        },
+        {
+            new CreatureAttack(16,      40, 70,     "The giant slams you across the room.",
+                                                        new AttackProneComponent(100), 
+                                                        new AttackStunComponent(15)),               20
+        },
+    };
+    
+    giant.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "his forearm"),
+        new CreatureBlock(4, "his thick skull"),
+        new CreatureBlock(3, "a meaty ham fist"),
+    };
+        
+   giant.AddGold(3000);
+   giant.AddLoot(
+        new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+            
+            new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100, gemsPriceMutator),
+            new LootPackEntry(true, (from, container) => new GriffinSkull(),        100, gemsPriceMutator),
+            new LootPackEntry(true, (from, container) => new SilverDagger(),        100, gemsPriceMutator)
+        ));
+    
+    return giant;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="goose">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var goose = new Dog()
+    {
+        MaxHealth = 32, Health = 32,
+        BaseDodge = 12,
+                
+        Experience = 500,
+    };
+    
+    goose.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(5,     1, 8,   "The goose pecks you with his mighty beak."),  50 }, 
+        { new CreatureAttack(7,     2, 10,  "The goose kicks your shin."),  30 }, 
+        { new CreatureAttack(7,     3, 12,  "The goose flaps his wings in your face."),             20 }, 
+    };
+        
+    goose.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "a swift wing"),
+        new CreatureBlock(3, "a webbed foot"),
+    };
+        
+    goose.AddGold(75);
+    goose.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        
+    ));
+        
+    return goose;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="upperGoblinSentry">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var goblin = new Goblin()
+    {
+        MaxHealth = 55, Health = 55,
+        BaseDodge = 13,
+                
+        Experience = 1000,
+        
+        Attacks = new CreatureAttackCollection()
+        {
+            new CreatureBasicAttack(8)
+        },
+    };
+    
+    goblin.Wield(new Crossbow());
+    goblin.Equip(new LeatherArmor());
+            
+    goblin.AddGold(300);
+    goblin.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+    ));
+    
+    return goblin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="upperArcher">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+                    
+    var fighter = new Humanoid()
+    {
+        Name = _names.Random(),
+        Body = (female ? 33 : 32), IsFemale = female,
+            
+        MaxHealth = 120, Health = 120,
+        BaseDodge = 14,
+    
+        Experience = 4000,
+    
+        Movement = 3,
+            
+        CanSwim = true,
+    };
+    
+    fighter.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(9), 
+    };
+    
+    fighter.Wield(new FineCrossbow());
+    fighter.Equip(new PlatemailArmor());    
+    
+    fighter.AddGold(700);
+    fighter.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 10.0)
+    ));
+    
+    return fighter;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="upperFighter">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+                    
+    var fighter = new Humanoid()
+    {
+        Name = _names.Random(),
+        Body = (female ? 33 : 32), IsFemale = female,
+            
+        MaxHealth = 120, Health = 120,
+        BaseDodge = 15,
+    
+        Experience = 40000,
+    
+        Movement = 3,
+            
+        CanSwim = true,
+    };
+    
+    fighter.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(9), 
+    };
+    
+    fighter.Wield(new SteelLongsword());
+    fighter.Equip(new PlatemailArmor());    
+    
+    fighter.AddGold(550);
+    fighter.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 10.0)
+    ));
+    
+    return fighter;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="upperGargoyle">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var gargoyle = new Gargoyle()
+    {
+        MaxHealth = 100, Health = 100,
+        BaseDodge = 13,
+                
+        Experience = 3225,
+                
+        Movement = 3,
+        CanJumpkick = true,
+    };
+    gargoyle.AddStatus(new NightVisionStatus(gargoyle));
+            
+    gargoyle.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(7,     5, 10,   "The gargoyle strikes you with its claws."),    60 },
+        { new CreatureAttack(8,     12, 20,  "The gargoyle batters you with its wings."),    40 },
+    };
+    
+    gargoyle.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(3, "a claw"),
+        new CreatureBlock(1, "a wing"),
+    };
+
+    gargoyle.AddGold(700);
+    gargoyle.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5)
+    ));
+
+    return gargoyle;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="upperGoblin">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var goblin = new Goblin()
+    {
+        MaxHealth = 55, Health = 55,
+        BaseDodge = 13,
+                
+        Experience = 1000,
+    
+        Attacks = new CreatureAttackCollection()
+        {
+            new CreatureBasicAttack(8),
+        }
+    
+    };
+    
+    goblin.Wield(new BattleAxe());
+    goblin.Equip(new LeatherArmor());
+            
+    goblin.AddGold(300);
+    goblin.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new LeatherGauntlets(), 7.5)
+    ));
+    
+    return goblin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="upperGoblinMage">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var goblin = new Goblin()
+    {
+        MaxHealth = 50, Health = 50,
+        MaxMana = 16, Mana = 16,
+        BaseDodge = 12,
+                
+        Experience = 1000,
+    };
+    
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(6)
+    };
+    
+    goblin.Spells = new CreatureSpellCollection
+    {
+        new CreatureSpell<FireballSpell>(
+            skillLevel: 5, cost: 6, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<MagicMissileSpell>(
+            skillLevel: 5, cost: 3, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
+    
+    goblin.Wield(new BlackStaff());
+            
+    goblin.AddGold(250);
+    goblin.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new LeatherGauntlets(), 7.5)
+    ));
+    
+    return goblin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="upperHobgoblin">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var hobgoblin = new Hobgoblin()
+    {
+        MaxHealth = 72, Health = 72,
+        BaseDodge = 14,
+    
+        Experience = 1000,
+        
+        Attacks = new CreatureAttackCollection
+        {
+            { new CreatureBasicAttack(9) }, 
+        },
+    };
+    
+    hobgoblin.Wield(new Longsword());
+    hobgoblin.Equip(new LeatherArmor());    
+    
+    hobgoblin.AddGold(500);
+    hobgoblin.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+    ));
+    
+    return hobgoblin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="upperMA">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+                    
+    var martialartist = new Humanoid()
+    {
+        Name = _names.Random(),
+        Body = (female ? 33 : 32), IsFemale = female,
+            
+        MaxHealth = 120, Health = 120,
+        BaseDodge = 13,
+    
+        Experience = 4050,
+    
+        Movement = 3,
+        
+        CanJumpkick = true,
+        CanSwim = true,
+    };
+    
+    martialartist.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(9), 
+    };   
+    
+    martialartist.AddGold(60);
+    martialartist.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 10.0)
+    ));
+    
+    return martialartist;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="upperOgre">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var ogre = new Ogre()
+    {
+        MaxHealth = 120, Health = 120,
+        BaseDodge = 15,
+    
+        Experience = 3500,
+            
+        Immunity = CreatureImmunity.Web
+    };
+    
+    ogre.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureBasicAttack(9) }, 
+    };
+    
+    ogre.AddStatus(new NightVisionStatus(ogre));
+
+    ogre.Wield(new Halberd());    
+    
+    ogre.AddGold(700);
+    ogre.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new SteelGauntlets(), 6.67)
+    ));
+    
+    return ogre;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="upperOrc">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var orc = new Orc()
+    {
+        MaxHealth = 60, Health = 60,
+        BaseDodge = 13,
+                
+        Experience = 700,
+        
+        CanFlee = true,
+                
+        Attacks = new CreatureAttackCollection()
+        {
+            new CreatureBasicAttack(7)
+        }
+    };
+    
+    orc.Wield(new ShortSword());
+    orc.Equip(new LeatherArmor());
+            
+    orc.AddGold(200);
+    orc.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new ThrowingHammer(), 16)
+    ));
+    
+    return orc;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="upperRapierFighter">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+                    
+    var fighter = new Humanoid()
+    {
+        Name = _names.Random(),
+        Body = (female ? 33 : 32), IsFemale = female,
+            
+        MaxHealth = 120, Health = 120,
+        BaseDodge = 16,
+    
+        Experience = 4050,
+    
+        Movement = 3,
+            
+        CanSwim = true,
+    };
+    
+    fighter.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(9), 
+    };
+    
+    fighter.Wield(new Rapier());
+    fighter.Equip(new PlatemailArmor());    
+    
+    fighter.AddGold(700);
+    fighter.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 10.0)
+    ));
+    
+    return fighter;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="upperTroll">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var troll = new Troll()
+    {
+        MaxHealth = 80, Health = 80,
+        BaseDodge = 13,
+                
+        Experience = 1400,
+                
+        Movement = 2,
+                
+        CanFlee = true,
+                
+        Attacks = new CreatureAttackCollection()
+        {
+            new CreatureBasicAttack(8)
+        }
+    };
+    
+    troll.Wield(new Greatsword());
+    troll.Equip(new ChainmailArmor());
+    
+    troll.AddGold(500);
+    troll.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+    ));
+    
+    return troll;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="upperWolf">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var wolf = new Wolf()
+    {
+        MaxHealth = 65, Health = 65,
+        BaseDodge = 14,
+                
+        Experience = 700,
+    };
+    
+    wolf.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(6,     5, 13,   "The wolf rakes you with its claws."),  50 }, 
+        { new CreatureAttack(8,     6, 15,  "The wolf sinks its teeth into you."),  30 }, 
+        { new CreatureAttack(9,     8, 17,  "The wolf lunges at you."),             20 }, 
+    };
+        
+    wolf.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the thick hide"),
+        new CreatureBlock(3, "a paw"),
+    };
+        
+    wolf.AddGold(300);
+    wolf.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+    ));
+        
+    return wolf;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="upperWraith">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var wraith = new Wraith()
+    {
+        MaxHealth = 89, Health = 89,
+        MaxMana = 17, Mana = 17,
+        BaseDodge = 13,
+        
+        Experience = 1500,
+    };
+    wraith.AddStatus(new NightVisionStatus(wraith));
+        
+    wraith.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(8),
+    };
+    
+    wraith.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<BlindSpell>(
+            skillLevel: 8, cost: 4, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<DeathSpell>(
+            skillLevel: 4.5, cost: 6, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
+        
+    wraith.Wield(new BlackStaff());
+        
+    wraith.AddGold(50);
+    wraith.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+    ));
+    
+    return wraith;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="upperLizard">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var lizard = new Lizard()
+    {
+        MaxHealth = 70, Health = 70,
+        BaseDodge = 13,
+        
+        Experience = 1600,
+        
+        Movement = 2,
+        
+        IceProtection = 100,
+    };
+    
+    lizard.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(8,     7, 18,  "The lizard claws at you"),             60 },
+        { new CreatureAttack(8,     8, 23,  "The lizard hits you with its tail"),   40 },
+    };
+    
+    lizard.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(3, "a claw"),
+        new CreatureBlock(1, "a tail")
+    };
+    
+    lizard.Spells = new CreatureSpellCollection(50.0);
+    lizard.Spells.Add(new CreatureSpell<IceStormSpell>(10), 100, TimeSpan.FromSeconds(3.0));
+    
+    lizard.AddGold(500);
+    lizard.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new FieryRuby(1200u), 100.0)
+    ));
+    
+    return lizard;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="easyBear">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var bear = new Bear()
+    {
+        MaxHealth = 120, Health = 120,
+        BaseDodge = 13,
+                
+        Experience = 2500,
+                
+        Movement = 3,
+            
+        CanSwim = true,
+    };
+    bear.AddStatus(new NightVisionStatus(bear));
+        
+    bear.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(7,     10, 18,  "The bear slashes you with its claws."),        50 },
+        { new CreatureAttack(7,     12, 20,  "You've been mauled by the bear."),             40 },
+        { new CreatureAttack(8,     18, 30, "The bear crushes you within its embrace."),    10 }
+    };
+        
+    bear.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the tough hide"),
+        new CreatureBlock(4, "a claw"),
+    };
+        
+    bear.AddGold(500);
+    bear.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        
+        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
+    ));
+        
+    return bear;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="hardBear">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var bear = new Bear()
+    {
+        MaxHealth = 250, Health = 250,
+        BaseDodge = 13,
+                
+        Experience = 4000,
+                
+        Movement = 3,
+            
+        CanSwim = true,
+    };
+    bear.AddStatus(new NightVisionStatus(bear));
+        
+    bear.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(8,     15, 20,  "The bear slashes you with its claws."),        50 },
+        { new CreatureAttack(8,     15, 30,  "You've been mauled by the bear."),             40 },
+        { new CreatureAttack(9,     30, 40, "The bear crushes you within its embrace."),    10 }
+    };
+        
+    bear.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the tough hide"),
+        new CreatureBlock(4, "a claw"),
+    };
+        
+    bear.AddGold(600);
+    bear.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+    ));
+        
+    return bear;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="drake">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var drake = new Dragon()
+    {
+        MaxHealth = 2000, Health = 2000,
+        BaseDodge = 18,
+    
+        Experience = 35000,
+        
+        CanFly = true,
+        CanCharge = true,
+        
+        BasePenetration = ArmorPenetration.VeryHeavy,
+
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
+        Weakness = CreatureWeakness.BlueGlowing,
+    
+        FireProtection = 100,
+        IceProtection = 100,
+        StunProtection = 100,
+        LightningResistance = 100,
+    };
+    drake.AddStatus(new NightVisionStatus(drake));
+    
+    drake.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(18,      45, 60,      "The drake slashes you with its claws.",
+                                                        new AttackProneComponent(15), 
+                                                        new AttackStunComponent(5)),                40
+        },
+        {
+            new CreatureAttack(19,      50, 65,     "The drake smashes you with its tail.",
+                                                        new AttackProneComponent(25), 
+                                                        new AttackStunComponent(10)),               40
+        },
+        {
+            new CreatureAttack(20,      60, 80,     "The drake buffets you with its wings.",
+                                                        new AttackProneComponent(35), 
+                                                        new AttackStunComponent(15)),               20
+        },
+    };
+    
+    drake.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(4, "a claw"),
+        new CreatureBlock(3, "a wing"),
+    };
+        
+    drake.Spells = new CreatureSpellCollection(25.0)
+    {
+        new CreatureSpell<LightningBoltSpell>(10),
+    };
+    
+    drake.AddGold(4000);
+    drake.AddLoot(
+        new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+            
+            new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100, gemsPriceMutator),
+            new LootPackEntry(true, (from, container) => new GriffinSkull(),        100, gemsPriceMutator),
+            new LootPackEntry(true, (from, container) => new SilverDagger(),        100, gemsPriceMutator)
+        ));
+    
+    return drake;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="iceDragon">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var dragon = new Dragon()
+    {
+        MaxHealth = 3700, Health = 3700,
+        BaseDodge = 22,
+    
+        Experience = 85000,
+        
+        CanFly = true,
+        CanCharge = true,
+        
+        BasePenetration = ArmorPenetration.VeryHeavy,
+
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.Silver,
+    
+        FireProtection = 100,
+        IceProtection = 100,
+        StunProtection = 100,
+        LightningResistance = 100,
+    };
+    dragon.AddStatus(new NightVisionStatus(dragon));
+    
+    dragon.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(21,      40, 110,      "The Ice Dragon slashes you with a claw.",
+                                                        new AttackProneComponent(15), 
+                                                        new AttackStunComponent(5)),                40
+        },
+        {
+            new CreatureAttack(18,      50, 110,     "The Ice Dragon smashes you against the ice with its tail.",
+                                                        new AttackProneComponent(25), 
+                                                        new AttackStunComponent(10)),               40
+        },
+        {
+            new CreatureAttack(18,      90, 115,     "The Ice Dragon buffets you with its wings.",
+                                                        new AttackProneComponent(35), 
+                                                        new AttackStunComponent(15)),               20
+        },
+    };
+    
+    dragon.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(4, "a tail"),
+        new CreatureBlock(3, "a wing"),
+    };
+        
+    dragon.Spells = new CreatureSpellCollection(40.0)
+    {
+        new CreatureSpell<DragonBreathIceSpell>(15),
+    };
+    
+    dragon.AddGold(20000);
+    dragon.AddLoot(
+        new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+            
+            new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100, gemsPriceMutator),
+            new LootPackEntry(true, (from, container) => new GriffinSkull(),        100, gemsPriceMutator),
+            new LootPackEntry(true, (from, container) => new SilverDagger(),        100, gemsPriceMutator)
+        ));
+    
+    return dragon;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="yeti">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var yeti = new Yeti()
+    {
+        MaxHealth = 2500, Health = 2500,
+        BaseDodge = 23,
+    
+        Experience = 45000,
+       
+        CanJumpkick = true,
+        
+        BasePenetration = ArmorPenetration.VeryHeavy,
+
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
+        Weakness = CreatureWeakness.BlueGlowing,
+    
+        FireProtection = 100,
+        IceProtection = 100,
+        StunProtection = 100,
+    };
+    yeti.AddStatus(new NightVisionStatus(yeti));
+    
+    yeti.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(15,      50, 70,      "The yeti smashes you with his fist.",
+                                                        new AttackProneComponent(15), 
+                                                        new AttackStunComponent(5)),                40
+        },
+        {
+            new CreatureAttack(15,      60, 80,     "The yeti stomps on you.",
+                                                        new AttackProneComponent(25), 
+                                                        new AttackStunComponent(10)),               40
+        },
+        {
+            new CreatureAttack(16,      70, 90,     "The giant slams you across the room.",
+                                                        new AttackProneComponent(100), 
+                                                        new AttackStunComponent(15)),               20
+        },
+    };
+    
+    yeti.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "his forearm"),
+        new CreatureBlock(4, "his thick skull"),
+        new CreatureBlock(3, "a meaty ham fist"),
+    };
+        
+   yeti.AddGold(3000);
+   yeti.AddLoot(
+        new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+            new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100, gemsPriceMutator),
+            new LootPackEntry(true, (from, container) => new BearSkull(),        100, gemsPriceMutator),
+            new LootPackEntry(true, (from, container) => new MisericordeDagger(),        100, gemsPriceMutator)
+        ));
+    
+    return yeti;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="confessorGhost">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	return new ConfessorGhost();
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="balmVendor">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+    var vendor = new Merchant<ClearBalm>(16, 10, byte.MaxValue)
+    {
+        Name = _names.Random(),
+        
+        Body = (female ? 16 : 48), IsFemale = female,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+
+    return vendor;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="shopkeeperTemplate">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+/*  This is a template from which all shopkeepers are created. 
+    Check each individual spawner for counter assignments. 
+*/
+    var female = Utility.RandomBool();
+    var vendor = new Shopkeeper()
+    {
+        Name = _names.Random(),
+        Body = (female ? 10 : 9), IsFemale = female,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+    
+    return vendor;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="axeBanker">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+    var banker = new Banker()
+    {
+        Name = _names.Random(),
+        
+        Body = 10, IsFemale = true,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+
+    return banker;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="ojouleWizard">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	    var ojoule = new WizardTrainer()
+    {
+        Name = "Ojoule", Body = 38,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+
+        Experience = 50,
+    };
+    
+    foreach (var skill in Skill.Weapons)
+        ojoule.SetTraining(skill, 0, 4);
+    
+    ojoule.SetTraining(Skill.Magic, 9, 14);
+    
+    return ojoule;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="recallVendor">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+    var vendor = new Merchant<RecallRing>(150, 4, byte.MaxValue)
+    {
+        Name = _names.Random(),
+        
+        Body = (female ? 10 : 9), IsFemale = female,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+
+    return vendor;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="statue">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var peacekeeper = new Peacekeeper()
+    {
+        Name = "statue",
+        Body = 51,
+        
+        MaxHealth = 300, Health = 300,
+        BaseDodge = 15,
+        
+        Movement = 0,
+        
+        Experience = 50,
+    };
+    
+    peacekeeper.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(6),
+    };
+    
+    peacekeeper.Spells = new CreatureSpellCollection(100.0)
+    {
+        new CreatureSpell<DeathSpell>(15),
+    };
+
+    return peacekeeper;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="weaponTrainerTemplate">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var female = Utility.RandomBool();
+    var trainer = new WeaponTrainer()
+    {
+        Name = _names.Random(),
+        Body = (female ? 10 : 9), IsFemale = female,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+    
+    return trainer;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="tailorVendor">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var female = Utility.RandomBool();
+    var vendor = new Tailor()
+    {
+        Name = _names.Random(),
+        Body = (female ? 10 : 9), IsFemale = female,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+    
+    return vendor;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="phredrickThaumaturge">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	    var phredrick = new ThaumaturgeTrainer()
+    {
+        Name = "Phredrick", Body = 48,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+
+        Experience = 50,
+    };
+    
+    phredrick.AddCounter(new Point2D(32, 10, 1));
+    phredrick.AddCounter(new Point2D(33, 10, 1));
+    
+    foreach (var skill in Skill.Weapons)
+        phredrick.SetTraining(skill, 0, 4);
+    
+    phredrick.SetTraining(Skill.Magic, 9, 14);
+    
+    return phredrick;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="shadow">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var shadow = new Spectre()
+    {
+        MaxHealth = 89, Health = 89,
+        MaxMana = 5, Mana = 5,
+        BaseDodge = 13,
+        
+        Experience = 1500,
+    };
+    shadow.AddStatus(new NightVisionStatus(shadow));
+        
+    shadow.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(8),
+    };
+    
+    shadow.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<DarknessSpell>(
+            skillLevel: 8, cost: 4, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+    };
+        
+    shadow.Wield(new Spear());
+        
+    shadow.AddGold(200);
+    shadow.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+    ));
+    
+    return shadow;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="ChaosWizard">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var female = Utility.RandomBool();
+                
+    var wizard = new Humanoid()
+    {
+        Name = _names.Random(),
+        Body = (female ? 37 : 38), IsFemale = female,
+            
+        MaxHealth = 105, Health = 105,
+        MaxMana = 16, Mana = 16,
+        BaseDodge = 13,
+    
+        Experience = 4050,
+        
+        CanSwim = true,
+            
+        FireProtection = 100,
+    };
+    
+    wizard.Wield(new BlackStaff());
+    wizard.Wield(new WoodenShield());
+    wizard.Equip(new LeatherArmor());
+    
+    wizard.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(9),
+    };
+    
+    wizard.Spells = new CreatureSpellCollection
+    {
+        new CreatureSpell<FireballSpell>(
+            skillLevel: 6, cost: 6, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<MagicMissileSpell>(
+            skillLevel: 6, cost: 3, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
+    
+    wizard.AddGold(650);
+    wizard.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        
+        new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    10.0),
+        new LootPackEntry(true, (from, container) => new RedRunesRobe(),        10.0)
+    ));
+    
+    return wizard;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="chaosThaum">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+                
+    var thaum = new Humanoid()
+    {
+        Name = _names.Random(),
+        Body = (female ? 16 : 48), IsFemale = female,
+            
+        MaxHealth = 110, Health = 110,
+        MaxMana = 23, Mana = 23,
+        BaseDodge = 14,
+    
+        Experience = 4550,
+    
+        CanSwim = true,
+    };
+    
+    thaum.Wield(new WoodenFlail());
+    thaum.Wield(new WoodenShield());
+    thaum.Equip(new LeatherArmor());
+    
+    thaum.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(9),
+    };
+    
+    thaum.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<StunSpell>(
+            skillLevel: 7,cost: 4, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<DeathSpell>(
+            skillLevel: 6, cost: 6, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
+        
+    thaum.AddGold(650);
+    thaum.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        
+        new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    10.0),
+        new LootPackEntry(true, (from, container) => new RedRunesRobe(),        10.0)
+    ));
+    
+    return thaum;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="ChaosWizardIce">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+                
+    var wizard = new Humanoid()
+    {
+        Name = _names.Random(),
+        Body = (female ? 37 : 38), IsFemale = female,
+            
+        MaxHealth = 100, Health = 100,
+        MaxMana = 16, Mana = 16,
+        BaseDodge = 14,
+    
+        Experience = 4550,
+        
+        CanSwim = true,
+            
+        IceProtection = 100,
+    };
+    
+    wizard.Wield(new BlackStaff());
+    wizard.Wield(new WoodenShield());
+    wizard.Equip(new LeatherArmor());
+    
+    wizard.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(9),
+    };
+    
+    wizard.Spells = new CreatureSpellCollection
+    {
+        new CreatureSpell<IceStormSpell>(
+            skillLevel: 6, cost: 6, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<MagicMissileSpell>(
+            skillLevel: 5, cost: 3, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
+    
+    wizard.AddGold(800);
+    wizard.AddLoot(new LootPack(
+        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, TestTreasureBottles,    20),
+        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        
+        new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    10.0),
+        new LootPackEntry(true, (from, container) => new RedRunesRobe(),        10.0)
+    ));
+    
+    return wizard;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+  </entities>
+  <spawns>
+    <spawn type="LocationSpawner" name="axeSEShopkeeper">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is Shopkeeper shopkeeper)
+        shopkeeper.AddCounter(new Point2D(33, 32, 1));
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <location x="33" y="33" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="axeArmorer">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is Shopkeeper shopkeeper)
+    {
+        void onRarePurchase(PlayerEntity player, ItemEntity item)
+        {
+            shopkeeper.SayTo(player, _rarePurchaseResponses.Random());
+        }
+    
+        shopkeeper.AddCounter(new Point2D(21, 12, 1));
+
+        var wares = new List<StockEntry>()
+        {
+            new StockEntry("leather armor",     () => new LeatherArmor(),       250,    Utility.RandomBetween(1, 4), null),
+            new StockEntry("chainmail",         () => new ChainmailArmor(),     500,    Utility.RandomBetween(1, 4), null),
+            new StockEntry("platemail",         () => new PlatemailArmor(),     1000,   Utility.RandomBetween(1, 2), null),
+           
+            new StockEntry("leather boots",     () => new LeatherBoots(),       200,    Utility.RandomBetween(1, 4), null),
+            
+            new StockEntry("leather gauntlets", () => new LeatherGauntlets(),   1000,   Utility.RandomBetween(1, 2), null),
+            
+            new StockEntry("ram skull",         () => new RamSkull(),           1500,   Utility.RandomBetween(1, 2), null),
+        };
+        if (Utility.RandomDouble() <= 0.30)  /* 30% chance to spawn */
+            wares.Add(new StockEntry("crocodile boots", () => new CrocodileBoots(), 2500, 1, onRarePurchase));
+        
+        if (Utility.RandomDouble() <= 0.20)  /* 20% chance to spawn */
+            wares.Add(new StockEntry("steel plated gauntlets", () => new SteelGauntlets(), 4000, 1, onRarePurchase));
+        for (var i = Utility.Random(1, 3); i > 0; i--)
+            shopkeeper.Restock();
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <location x="21" y="11" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="axeAvess">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    spawn.Name = "Avess";
+    spawn.Body = 33; spawn.IsFemale = true;
+    
+    if (spawn is TrainerEntity avess)
+    {
+        foreach (var skill in Skill.Weapons)
+            avess.SetTraining(skill, 8, 14);
+
+        avess.SetTraining(Skill.Hand, 0, 4);
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="weaponTrainerTemplate" size="1" minimum="1" maximum="1" />
+      <location x="31" y="29" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="axeOjoule">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="ojouleWizard" size="1" minimum="1" maximum="1" />
+      <location x="27" y="15" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="axePhredrick">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="phredrickThaumaturge" size="1" minimum="1" maximum="1" />
+      <location x="32" y="11" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="Statue 1">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="statue" size="1" minimum="1" maximum="1" />
+      <location x="24" y="16" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="Statue 2">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="statue" size="1" minimum="1" maximum="1" />
+      <location x="25" y="22" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="Statue 3">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="statue" size="1" minimum="1" maximum="1" />
+      <location x="31" y="14" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="axePriest">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    spawn.Name = "priest";
+    spawn.MaxHealth = 100; spawn.Health = 100;
+    spawn.BaseDodge = 10;
+    
+    if (spawn is Peacekeeper priest)
+    {
+        priest.Brain = new PriestAI(priest);
+        
+        priest.Home = new RectangleBounds()
+        {  
+            new Rectangle2D(29, 4, 33, 7, 1)
+        };
+        
+        priest.Wield(new SteelMace());
+        priest.Equip(new LeatherArmor());
+        
+        priest.Spells = new CreatureSpellCollection()
+        {
+            new CreatureSpell<CurseSpell>(
+                    skillLevel: 3, cost: 3,
+                    mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        };
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <location x="31" y="6" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="axeBalmVendor">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="balmVendor" size="1" minimum="1" maximum="1" />
+      <location x="33" y="24" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="recallVendor">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="recallVendor" size="1" minimum="0" maximum="0" />
+      <location x="30" y="24" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="axeThorgen">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    spawn.Name = "Thorgen";
+    spawn.Body = 49; spawn.IsFemale = false;
+    
+    if (spawn is TrainerEntity thorgen)
+    {
+        foreach (var skill in Skill.Weapons)
+            thorgen.SetTraining(skill, 0, 4);
+
+        thorgen.SetTraining(Skill.Hand, 8, 14);
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <location x="32" y="22" region="1" />
+    </spawn>
+    <spawn type="RegionSpawner" name="Surface Dungeon">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>55</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfaceWraith" size="1" minimum="3" maximum="6" />
+      <entry entity="surfaceWolf" size="3" minimum="4" maximum="7" />
+      <entry entity="surfaceSkeleton" size="2" minimum="3" maximum="6" />
+      <entry entity="surfaceGoblinSentry" size="2" minimum="3" maximum="6" />
+      <entry entity="surfaceOrc" size="3" minimum="4" maximum="7" />
+      <entry entity="surfaceTroll" size="2" minimum="3" maximum="6" />
+      <entry entity="surfaceGoblin" size="3" minimum="3" maximum="6" />
+      <entry entity="surfaceGargoyle" size="1" minimum="3" maximum="5" />
+      <entry entity="surfaceGoblinMage" size="1" minimum="2" maximum="5" />
+      <bounds region="1">
+        <inclusion left="1" top="7" right="8" bottom="36" />
+        <inclusion left="10" top="19" right="20" bottom="37" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Surface Ice">
+      <minimumDelay>420</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>10</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfaceTroll" size="3" minimum="1" maximum="1" />
+      <entry entity="surfaceOrc" size="3" minimum="1" maximum="1" />
+      <bounds region="1">
+        <inclusion left="4" top="1" right="15" bottom="9" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Griff Cliffs Outside">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>55</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="lightningmesaGoblin" size="3" minimum="3" maximum="6" />
+      <entry entity="lightningMesaTroll" size="2" minimum="2" maximum="5" />
+      <entry entity="lightningMesaFighter" size="1" minimum="2" maximum="4" />
+      <entry entity="lightningmesaMA" size="1" minimum="2" maximum="4" />
+      <entry entity="lightningMesaOrc" size="3" minimum="3" maximum="6" />
+      <entry entity="lightningMesaGargoyle" size="1" minimum="2" maximum="4" />
+      <entry entity="lightningMesaGoblinMage" size="1" minimum="2" maximum="4" />
+      <entry entity="pwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="lightningMesaRapier" size="1" minimum="1" maximum="3" />
+      <entry entity="lightningMesaGoblinSentry" size="2" minimum="3" maximum="6" />
+      <entry entity="lightningMesaHobgoblin" size="3" minimum="3" maximum="6" />
+      <bounds region="8">
+        <inclusion left="3" top="6" right="6" bottom="22" />
+        <inclusion left="7" top="20" right="20" bottom="33" />
+        <inclusion left="22" top="21" right="31" bottom="23" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Griff Cliff Dungeon">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>35</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="lightningMesaWraith" size="1" minimum="2" maximum="4" />
+      <entry entity="pwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="lightningMesaTroll" size="2" minimum="2" maximum="4" />
+      <entry entity="lightningMesaGargoyle" size="1" minimum="0" maximum="0" />
+      <entry entity="lightningMesaHobgoblin" size="3" minimum="3" maximum="4" />
+      <entry entity="lightningMesaWolf" size="3" minimum="2" maximum="4" />
+      <entry entity="lightningMesaOrc" size="3" minimum="3" maximum="5" />
+      <bounds region="8">
+        <inclusion left="11" top="33" right="21" bottom="40" />
+        <inclusion left="22" top="25" right="33" bottom="40" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Lower Glacier Dungeon">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>45</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="lightningMesaRapier" size="1" minimum="1" maximum="3" />
+      <entry entity="lightningMesaGoblinMage" size="1" minimum="1" maximum="3" />
+      <entry entity="lightningMesaTroll" size="2" minimum="3" maximum="5" />
+      <entry entity="lightningMesaFighter" size="1" minimum="1" maximum="3" />
+      <entry entity="lightningmesaMA" size="1" minimum="1" maximum="3" />
+      <entry entity="lightningMesaOrc" size="3" minimum="3" maximum="5" />
+      <entry entity="rockWorm" size="1" minimum="1" maximum="2" />
+      <entry entity="pwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="lightningMesaWraith" size="1" minimum="1" maximum="2" />
+      <entry entity="lightningMesaGoblinSentry" size="3" minimum="2" maximum="4" />
+      <entry entity="lightningMesaOgre" size="1" minimum="1" maximum="2" />
+      <entry entity="lightningMesaGargoyle" size="1" minimum="1" maximum="1" />
+      <bounds region="6">
+        <inclusion left="22" top="29" right="32" bottom="40" />
+        <inclusion left="2" top="31" right="21" bottom="40" />
+        <inclusion left="3" top="24" right="12" bottom="29" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Outside Giant Castle">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>50</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="lightningmesaGoblin" size="3" minimum="3" maximum="5" />
+      <entry entity="lightningMesaTroll" size="2" minimum="3" maximum="5" />
+      <entry entity="lightningMesaFighter" size="1" minimum="2" maximum="5" />
+      <entry entity="lightningmesaMA" size="1" minimum="1" maximum="3" />
+      <entry entity="lightningMesaOrc" size="3" minimum="3" maximum="5" />
+      <entry entity="lightningMesaWolf" size="3" minimum="2" maximum="5" />
+      <entry entity="lightningMesaWraith" size="1" minimum="2" maximum="3" />
+      <entry entity="lightningMesaGoblinMage" size="1" minimum="1" maximum="3" />
+      <entry entity="lightningMesaRapier" size="1" minimum="1" maximum="3" />
+      <entry entity="lightningMesaGoblinSentry" size="3" minimum="1" maximum="3" />
+      <entry entity="rockWorm" size="1" minimum="1" maximum="2" />
+      <entry entity="pwolf" size="1" minimum="0" maximum="1" />
+      <bounds region="6">
+        <inclusion left="2" top="4" right="25" bottom="12" />
+        <inclusion left="5" top="13" right="7" bottom="21" />
+        <inclusion left="13" top="14" right="31" bottom="28" />
+        <inclusion left="10" top="3" right="25" bottom="12" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Inside Giants Castle">
+      <minimumDelay>1200</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>11</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="lightningMesaRapier" size="1" minimum="1" maximum="4" />
+      <entry entity="lightningmesaMA" size="1" minimum="1" maximum="5" />
+      <entry entity="lightningMesaFighter" size="1" minimum="1" maximum="5" />
+      <entry entity="lightningMesaArcher" size="1" minimum="1" maximum="3" />
+      <bounds region="6">
+        <inclusion left="12" top="12" right="15" bottom="21" />
+        <inclusion left="16" top="14" right="18" bottom="24" />
+        <inclusion left="19" top="17" right="20" bottom="22" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Giants Castle Main">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>8</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="lightningMesaGoblinSentry" size="3" minimum="1" maximum="1" />
+      <entry entity="lightningmesaMA" size="1" minimum="1" maximum="3" />
+      <entry entity="lightningMesaArcher" size="1" minimum="2" maximum="3" />
+      <entry entity="lightningMesaFighter" size="1" minimum="3" maximum="4" />
+      <bounds region="8">
+        <inclusion left="8" top="10" right="16" bottom="15" />
+        <inclusion left="13" top="7" right="17" bottom="11" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Giant and Goose">
+      <minimumDelay>3600</minimumDelay>
+      <maximumDelay>10800</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="giant" size="1" minimum="1" maximum="1" />
+      <entry entity="goose" size="1" minimum="1" maximum="1" />
+      <bounds region="8">
+        <inclusion left="18" top="13" right="20" bottom="16" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="BehindGiant">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>10</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="lightningMesaArcher" size="1" minimum="2" maximum="4" />
+      <entry entity="lightningmesaMA" size="1" minimum="2" maximum="3" />
+      <entry entity="lightningMesaFighter" size="1" minimum="2" maximum="4" />
+      <entry entity="lightningMesaRapier" size="1" minimum="2" maximum="4" />
+      <bounds region="8">
+        <inclusion left="23" top="5" right="32" bottom="18" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Ogre Cave West">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>90</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="upperGoblinSentry" size="3" minimum="5" maximum="8" />
+      <entry entity="upperOgre" size="1" minimum="3" maximum="5" />
+      <entry entity="upperWolf" size="3" minimum="4" maximum="7" />
+      <entry entity="shadow" size="1" minimum="3" maximum="5" />
+      <entry entity="upperHobgoblin" size="3" minimum="4" maximum="7" />
+      <entry entity="upperGoblinMage" size="1" minimum="2" maximum="4" />
+      <entry entity="pwolf" size="1" minimum="0" maximum="2" />
+      <entry entity="upperTroll" size="2" minimum="3" maximum="6" />
+      <entry entity="upperGoblin" size="3" minimum="4" maximum="7" />
+      <entry entity="upperWraith" size="1" minimum="3" maximum="6" />
+      <entry entity="hardBear" size="1" minimum="1" maximum="1" />
+      <entry entity="rockWorm" size="1" minimum="1" maximum="2" />
+      <entry entity="upperOrc" size="3" minimum="4" maximum="7" />
+      <entry entity="easyBear" size="1" minimum="1" maximum="3" />
+      <bounds region="12">
+        <inclusion left="1" top="1" right="24" bottom="38" />
+        <inclusion left="25" top="9" right="29" bottom="38" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Ogre Caves Ice">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>14</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="upperLizard" size="1" minimum="3" maximum="4" />
+      <entry entity="upperWolf" size="3" minimum="2" maximum="4" />
+      <entry entity="pwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="easyBear" size="1" minimum="1" maximum="2" />
+      <bounds region="12">
+        <inclusion left="25" top="3" right="32" bottom="8" />
+        <inclusion left="30" top="9" right="34" bottom="31" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Ogre Caves East">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>45</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="upperGoblin" size="3" minimum="2" maximum="5" />
+      <entry entity="upperTroll" size="3" minimum="2" maximum="4" />
+      <entry entity="upperGoblinSentry" size="3" minimum="2" maximum="4" />
+      <entry entity="upperOgre" size="1" minimum="2" maximum="4" />
+      <entry entity="upperWraith" size="1" minimum="1" maximum="3" />
+      <entry entity="upperHobgoblin" size="3" minimum="2" maximum="5" />
+      <entry entity="upperWolf" size="3" minimum="2" maximum="5" />
+      <entry entity="shadow" size="1" minimum="2" maximum="4" />
+      <entry entity="easyBear" size="1" minimum="1" maximum="2" />
+      <entry entity="rockWorm" size="1" minimum="1" maximum="2" />
+      <entry entity="pwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="upperOrc" size="3" minimum="2" maximum="4" />
+      <bounds region="12">
+        <inclusion left="38" top="4" right="46" bottom="36" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Dungeons of Doom">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>60</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="lightningMesaWolf" size="3" minimum="3" maximum="6" />
+      <entry entity="surfaceGoblinSentry" size="3" minimum="3" maximum="5" />
+      <entry entity="lightningMesaGoblinMage" size="1" minimum="2" maximum="4" />
+      <entry entity="lightningMesaTroll" size="2" minimum="3" maximum="5" />
+      <entry entity="lightningMesaWraith" size="1" minimum="1" maximum="2" />
+      <entry entity="lightningMesaOgre" size="1" minimum="2" maximum="4" />
+      <entry entity="lightningMesaOrc" size="3" minimum="3" maximum="5" />
+      <entry entity="pwolf" size="1" minimum="0" maximum="2" />
+      <entry entity="easyBear" size="1" minimum="1" maximum="2" />
+      <entry entity="hardBear" size="1" minimum="0" maximum="1" />
+      <entry entity="rockWorm" size="1" minimum="1" maximum="2" />
+      <entry entity="lightningmesaGoblin" size="3" minimum="2" maximum="4" />
+      <entry entity="kWolf" size="1" minimum="0" maximum="1" />
+      <bounds region="10">
+        <inclusion left="1" top="3" right="25" bottom="39" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Upper Glacier Left Trees">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>12</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="upperHobgoblin" size="3" minimum="1" maximum="2" />
+      <entry entity="upperWolf" size="3" minimum="1" maximum="2" />
+      <entry entity="upperWraith" size="1" minimum="0" maximum="1" />
+      <bounds region="23">
+        <inclusion left="1" top="28" right="5" bottom="34" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Upper Glacier Ice">
+      <minimumDelay>1200</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>3</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="pwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="upperLizard" size="1" minimum="2" maximum="3" />
+      <bounds region="23">
+        <inclusion left="2" top="8" right="7" bottom="27" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Upper Glacier Lower Right Trees">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>10</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <bounds region="23">
+        <inclusion left="7" top="22" right="13" bottom="33" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Upper Glacier Upper Trees">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>29</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="upperHobgoblin" size="3" minimum="1" maximum="3" />
+      <entry entity="upperOgre" size="1" minimum="1" maximum="2" />
+      <entry entity="upperWolf" size="3" minimum="2" maximum="3" />
+      <entry entity="upperHobgoblin" size="3" minimum="1" maximum="2" />
+      <entry entity="upperTroll" size="2" minimum="1" maximum="2" />
+      <entry entity="upperGoblinSentry" size="3" minimum="1" maximum="2" />
+      <entry entity="pwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="kWolf" size="1" minimum="0" maximum="1" />
+      <entry entity="upperWraith" size="1" minimum="0" maximum="1" />
+      <bounds region="23">
+        <inclusion left="11" top="3" right="16" bottom="20" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Yeti Den Outside">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>10</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="upperLizard" size="1" minimum="2" maximum="4" />
+      <entry entity="upperWolf" size="3" minimum="2" maximum="3" />
+      <entry entity="hardBear" size="1" minimum="1" maximum="1" />
+      <bounds region="45">
+        <inclusion left="1" top="5" right="10" bottom="20" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Yeti Lair">
+      <minimumDelay>7200</minimumDelay>
+      <maximumDelay>14400</maximumDelay>
+      <maximum>7</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="upperGoblin" size="1" minimum="3" maximum="4" />
+      <entry entity="upperGoblinSentry" size="1" minimum="3" maximum="4" />
+      <entry entity="yeti" size="1" minimum="1" maximum="1" />
+      <bounds region="45">
+        <inclusion left="11" top="9" right="15" bottom="14" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Chaos Temple Bottom">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>6</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="ChaosWizard" size="1" minimum="2" maximum="2" />
+      <entry entity="chaosThaum" size="1" minimum="1" maximum="1" />
+      <bounds region="17">
+        <inclusion left="8" top="1" right="14" bottom="11" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="ChaosTempleMiddle">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>6</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="upperRapierFighter" size="1" minimum="1" maximum="2" />
+      <entry entity="upperMA" size="1" minimum="1" maximum="2" />
+      <entry entity="upperWolf" size="3" minimum="1" maximum="1" />
+      <bounds region="18">
+        <inclusion left="1" top="17" right="7" bottom="27" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Chaos Temple Upper">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>5</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="upperWraith" size="1" minimum="1" maximum="1" />
+      <entry entity="upperTroll" size="2" minimum="1" maximum="1" />
+      <entry entity="ChaosWizardIce" size="1" minimum="1" maximum="1" />
+      <entry entity="upperFighter" size="1" minimum="1" maximum="1" />
+      <bounds region="19">
+        <inclusion left="1" top="3" right="7" bottom="13" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Chaos Temple Top">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>7</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="upperRapierFighter" size="1" minimum="2" maximum="2" />
+      <entry entity="upperTroll" size="3" minimum="1" maximum="1" />
+      <entry entity="upperHobgoblin" size="3" minimum="1" maximum="1" />
+      <bounds region="20">
+        <inclusion left="1" top="0" right="7" bottom="10" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Chaos Town West">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>14</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="upperRapierFighter" size="1" minimum="2" maximum="3" />
+      <entry entity="upperMA" size="1" minimum="2" maximum="4" />
+      <entry entity="ChaosWizard" size="1" minimum="1" maximum="2" />
+      <entry entity="upperWolf" size="3" minimum="2" maximum="3" />
+      <entry entity="pwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="chaosThaum" size="1" minimum="1" maximum="2" />
+      <bounds region="18">
+        <inclusion left="7" top="4" right="14" bottom="28" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Chaos Town Main">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>30</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="upperFighter" size="1" minimum="4" maximum="8" />
+      <entry entity="ChaosWizardIce" size="1" minimum="1" maximum="3" />
+      <entry entity="ChaosWizard" size="1" minimum="1" maximum="3" />
+      <entry entity="upperMA" size="1" minimum="4" maximum="8" />
+      <entry entity="upperRapierFighter" size="1" minimum="4" maximum="8" />
+      <entry entity="chaosThaum" size="1" minimum="1" maximum="3" />
+      <entry entity="upperArcher" size="1" minimum="3" maximum="5" />
+      <entry entity="upperOgre" size="1" minimum="2" maximum="3" />
+      <bounds region="18">
+        <inclusion left="14" top="4" right="30" bottom="32" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+  </spawns>
   <treasures>
-    <treasure name="Testing" />
+    <treasure name="TestTreasureBottles">
+      <entry weight="6">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+    return new ClearBalm();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+    return new StaminaPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="TestTreasureGems">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new GoldNugget(800u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="2">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new UncutEmerald(700u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new UncutDiamond(1000u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="TestTreasureTreasure">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new Yttril();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="2">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new FireIceProtectionAmulet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="2">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StrengthRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="2">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new ShieldRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
   </treasures>
   <hoards />
 </segment>
