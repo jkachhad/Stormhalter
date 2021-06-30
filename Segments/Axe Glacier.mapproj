@@ -2,8 +2,7 @@
 <segment name="Axe Glacier" version="0.66.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
-    <block><![CDATA[public class Segment
-{
+    <block><![CDATA[
     public static readonly string[] _names = new string[]
     {
         "Aca", "Acha", "Achi", "Achu", "Aco", "Agua", "Ahua", "Aja", "Ala", "Ali", "Ama", "Ani", "Anu", "Apa",
@@ -60,7 +59,7 @@
         
         item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
     }
-}]]></block>
+]]></block>
     <block><![CDATA[]]></block>
   </script>
   <regions>
@@ -102967,7 +102966,7 @@
         }
     };
     
-    orc.Wield(new Axe());
+    orc.Wield(new BattleAxe());
     orc.Equip(new LeatherArmor());
             
     orc.AddGold(100);
@@ -103129,12 +103128,14 @@
         BaseDodge = 12,
                 
         Experience = 725,
+    };
     
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(6)
-        };
-        goblin.Spells = new CreatureSpellCollection
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(6)
+    };
+    
+    goblin.Spells = new CreatureSpellCollection
     {
         new CreatureSpell<FireballSpell>(
             skillLevel: 4, cost: 6, 
@@ -103143,9 +103144,8 @@
             skillLevel: 4, cost: 3, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
-    };
     
-    goblin.Wield(new Staff());
+    goblin.Wield(new BlackStaff());
             
     goblin.AddGold(120);
     goblin.AddLoot(new LootPack(
@@ -103184,7 +103184,7 @@
     
     };
     
-    goblin.Wield(new Axe());
+    goblin.Wield(new BattleAxe());
     goblin.Equip(new LeatherArmor());
             
     goblin.AddGold(200);
@@ -103363,7 +103363,7 @@
         }
     };
     
-    orc.Wield(new Axe());
+    orc.Wield(new BattleAxe());
     orc.Equip(new LeatherArmor());
             
     orc.AddGold(100);
@@ -103536,12 +103536,14 @@
         BaseDodge = 12,
                 
         Experience = 725,
+    };
     
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(6)
-        };
-        goblin.Spells = new CreatureSpellCollection
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(6)
+    };
+    
+    goblin.Spells = new CreatureSpellCollection
     {
         new CreatureSpell<FireballSpell>(
             skillLevel: 4.5, cost: 6, 
@@ -103550,9 +103552,8 @@
             skillLevel: 4, cost: 3, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
-    };
     
-    goblin.Wield(new Staff());
+    goblin.Wield(new BlackStaff());
             
     goblin.AddGold(120);
     goblin.AddLoot(new LootPack(
@@ -103817,7 +103818,7 @@
             
         IceProtection = 100,
     };
-    rockworm.AddStatus(new NightVisionStatus(ghoul));
+    rockworm.AddStatus(new NightVisionStatus(rockworm));
     
     rockworm.Attacks = new CreatureAttackCollection
     {
@@ -103841,7 +103842,7 @@
         
         ));
     
-    return ghoul;
+    return rockworm;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -104005,7 +104006,7 @@
     
         Experience = 15000,
        
-        CanJumpkick=true
+        CanJumpkick = true,
         
         BasePenetration = ArmorPenetration.VeryHeavy,
 
@@ -104017,7 +104018,7 @@
         IceProtection = 100,
         StunProtection = 100,
     };
-    giant.AddStatus(new NightVisionStatus(dragon));
+    giant.AddStatus(new NightVisionStatus(giant));
     
     giant.Attacks = new CreatureAttackCollection
     {
@@ -104258,7 +104259,7 @@
         Experience = 3225,
                 
         Movement = 3,
-        CanJumpkick = true;
+        CanJumpkick = true,
     };
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
             
@@ -104312,7 +104313,7 @@
     
     };
     
-    goblin.Wield(new Axe());
+    goblin.Wield(new BattleAxe());
     goblin.Equip(new LeatherArmor());
             
     goblin.AddGold(300);
@@ -104345,12 +104346,14 @@
         BaseDodge = 12,
                 
         Experience = 1000,
+    };
     
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(6)
-        };
-        goblin.Spells = new CreatureSpellCollection
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(6)
+    };
+    
+    goblin.Spells = new CreatureSpellCollection
     {
         new CreatureSpell<FireballSpell>(
             skillLevel: 5, cost: 6, 
@@ -104359,9 +104362,8 @@
             skillLevel: 5, cost: 3, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
-    };
     
-    goblin.Wield(new Staff());
+    goblin.Wield(new BlackStaff());
             
     goblin.AddGold(250);
     goblin.AddLoot(new LootPack(
@@ -104480,10 +104482,10 @@
         Immunity = CreatureImmunity.Web
     };
     
-    Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(9) }, 
-        },
+    ogre.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureBasicAttack(9) }, 
+    };
     
     ogre.AddStatus(new NightVisionStatus(ogre));
 
@@ -104961,7 +104963,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Dragon">
+    <entity name="iceDragon">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -104978,8 +104980,8 @@
         BasePenetration = ArmorPenetration.VeryHeavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic
-        Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.Silver
+                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.Silver,
     
         FireProtection = 100,
         IceProtection = 100,
@@ -105065,7 +105067,7 @@
         IceProtection = 100,
         StunProtection = 100,
     };
-    yeti.AddStatus(new NightVisionStatus(dragon));
+    yeti.AddStatus(new NightVisionStatus(yeti));
     
     yeti.Attacks = new CreatureAttackCollection
     {
@@ -105104,7 +105106,7 @@
             new LootPackEntry(true, (from, container) => new MisericordeDagger(),        100, gemsPriceMutator)
         ));
     
-    return giant;
+    return yeti;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -105418,17 +105420,17 @@
         new CreatureBasicAttack(8),
     };
     
-    wraith.Spells = new CreatureSpellCollection()
+    shadow.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<DarknessSpell>(
             skillLevel: 8, cost: 4, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
     };
         
-    wraith.Wield(new Spear());
+    shadow.Wield(new Spear());
         
-    wraith.AddGold(200);
-    wraith.AddLoot(new LootPack(
+    shadow.AddGold(200);
+    shadow.AddLoot(new LootPack(
         new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, TestTreasureBottles,    20),
         new LootPackEntry(true, TestTreasureTreasure,   0.63)
@@ -105712,9 +105714,9 @@
     if (spawn is TrainerEntity avess)
     {
         foreach (var skill in Skill.Weapons)
-            olaf.SetTraining(skill, 8, 14);
+            avess.SetTraining(skill, 8, 14);
 
-        olaf.SetTraining(Skill.Hand, 0, 4);
+        avess.SetTraining(Skill.Hand, 0, 4);
     }
 ]]></block>
         <block><![CDATA[]]></block>
