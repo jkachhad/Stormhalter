@@ -105631,6 +105631,39 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="magicPeacekeeperTemplate">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var female = Utility.RandomBool();
+    var peacekeeper = new Peacekeeper()
+    {
+        Name = _names.Random(),
+        Body = (female ? 16 : 48), IsFemale = female,
+    
+        BaseDodge = 12,
+        MaxHealth = 100, Health = 100,
+        MaxMana = 30, Mana = 30,
+        
+        Experience = 50,
+    };
+
+    peacekeeper.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(6),
+    };
+    
+    return peacekeeper;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="axeSEShopkeeper">
@@ -105870,6 +105903,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="magicPeacekeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="31" y="6" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="axeBalmVendor">
@@ -105909,7 +105943,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="recallVendor" size="1" minimum="0" maximum="0" />
+      <entry entity="recallVendor" size="1" minimum="1" maximum="1" />
       <location x="30" y="24" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="axeThorgen">
@@ -105938,7 +105972,28 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="weaponTrainerTemplate" size="1" minimum="1" maximum="1" />
       <location x="32" y="22" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="axeGhost">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="confessorGhost" size="1" minimum="1" maximum="1" />
+      <location x="13" y="4" region="1" />
     </spawn>
     <spawn type="RegionSpawner" name="Surface Dungeon">
       <minimumDelay>600</minimumDelay>
@@ -106318,7 +106373,7 @@
     <spawn type="RegionSpawner" name="Ogre Caves East">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>45</maximum>
+      <maximum>35</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106333,12 +106388,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="upperGoblin" size="3" minimum="2" maximum="5" />
-      <entry entity="upperTroll" size="3" minimum="2" maximum="4" />
-      <entry entity="upperGoblinSentry" size="3" minimum="2" maximum="4" />
+      <entry entity="upperGoblin" size="3" minimum="1" maximum="5" />
+      <entry entity="upperTroll" size="3" minimum="1" maximum="4" />
+      <entry entity="upperGoblinSentry" size="3" minimum="1" maximum="4" />
       <entry entity="upperOgre" size="1" minimum="2" maximum="4" />
       <entry entity="upperWraith" size="1" minimum="1" maximum="3" />
-      <entry entity="upperHobgoblin" size="3" minimum="2" maximum="5" />
+      <entry entity="upperHobgoblin" size="3" minimum="1" maximum="5" />
       <entry entity="upperWolf" size="3" minimum="2" maximum="5" />
       <entry entity="shadow" size="1" minimum="2" maximum="4" />
       <entry entity="easyBear" size="1" minimum="1" maximum="2" />
@@ -106705,6 +106760,54 @@
       <entry entity="upperOgre" size="1" minimum="2" maximum="3" />
       <bounds region="18">
         <inclusion left="14" top="4" right="30" bottom="32" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Mama">
+      <minimumDelay>7200</minimumDelay>
+      <maximumDelay>14400</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="iceDragon" size="1" minimum="1" maximum="1" />
+      <bounds region="39">
+        <inclusion left="0" top="0" right="5" bottom="8" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Drake">
+      <minimumDelay>3600</minimumDelay>
+      <maximumDelay>7200</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="drake" size="1" minimum="1" maximum="1" />
+      <bounds region="36">
+        <inclusion left="0" top="0" right="7" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
