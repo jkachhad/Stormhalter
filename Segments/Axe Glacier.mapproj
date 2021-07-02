@@ -103310,7 +103310,7 @@
     var martialartist = new Humanoid()
     {
         Name = _names.Random(),
-        Body = (female ? 33 : 32), IsFemale = female,
+        Body = (female ? 35 : 49), IsFemale = female,
             
         MaxHealth = 100, Health = 100,
         BaseDodge = 13,
@@ -103808,6 +103808,7 @@
         <block><![CDATA[
     var rockworm = new Sandwyrm()
     {
+        Name = 'Rockworm',
         MaxHealth = 150, Health = 150,
         BaseDodge = 14,
     
@@ -104004,6 +104005,7 @@
         <block><![CDATA[    
     var giant = new ElderTroll()
     {
+        Name = 'Giant',
         MaxHealth = 1000, Health = 1000,
         BaseDodge = 23,
     
@@ -104026,17 +104028,17 @@
     giant.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(15,      20, 50,      "The giant smashes you with his fist.",
+            new CreatureAttack(12,      50, 75,      "The giant smashes you with his fist.",
                                                         new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(15,      30, 60,     "The giant stomps on you.",
+            new CreatureAttack(12,      60, 85,     "The giant stomps on you.",
                                                         new AttackProneComponent(25), 
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(16,      40, 70,     "The giant slams you across the room.",
+            new CreatureAttack(12,      70, 100,     "The giant slams you across the room.",
                                                         new AttackProneComponent(100), 
                                                         new AttackStunComponent(15)),               20
         },
@@ -104078,6 +104080,7 @@
         <block><![CDATA[
     var goose = new Dog()
     {
+        Name = 'Goose',
         MaxHealth = 32, Health = 32,
         BaseDodge = 12,
                 
@@ -104434,7 +104437,7 @@
     var martialartist = new Humanoid()
     {
         Name = _names.Random(),
-        Body = (female ? 33 : 32), IsFemale = female,
+        Body = (female ? 35 : 49), IsFemale = female,
             
         MaxHealth = 120, Health = 120,
         BaseDodge = 13,
@@ -104891,6 +104894,7 @@
         <block><![CDATA[
 	var drake = new Dragon()
     {
+        Name = "Drake",
         MaxHealth = 2000, Health = 2000,
         BaseDodge = 18,
     
@@ -104902,30 +104906,26 @@
         BasePenetration = ArmorPenetration.VeryHeavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
-        Weakness = CreatureWeakness.BlueGlowing,
+                   CreatureImmunity.Projectile | CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
     
-        FireProtection = 100,
-        IceProtection = 100,
-        StunProtection = 100,
-        LightningResistance = 100,
     };
     drake.AddStatus(new NightVisionStatus(drake));
     
     drake.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(18,      45, 60,      "The drake slashes you with its claws.",
+            new CreatureAttack(15,      45, 60,      "The drake slashes you with its claws.",
                                                         new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(19,      50, 65,     "The drake smashes you with its tail.",
+            new CreatureAttack(16,      50, 65,     "The drake smashes you with its tail.",
                                                         new AttackProneComponent(25), 
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(20,      60, 80,     "The drake buffets you with its wings.",
+            new CreatureAttack(27,      60, 80,     "The drake buffets you with its wings.",
                                                         new AttackProneComponent(35), 
                                                         new AttackStunComponent(15)),               20
         },
@@ -104940,7 +104940,7 @@
         
     drake.Spells = new CreatureSpellCollection(25.0)
     {
-        new CreatureSpell<LightningBoltSpell>(10),
+        new CreatureSpell<LightningBoltSpell>(14),
     };
     
     drake.AddGold(4000);
@@ -104950,9 +104950,9 @@
         new LootPackEntry(true, TestTreasureBottles,    20),
         new LootPackEntry(true, TestTreasureTreasure,   0.63),
             
-            new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100, gemsPriceMutator),
-            new LootPackEntry(true, (from, container) => new GriffinSkull(),        100, gemsPriceMutator),
-            new LootPackEntry(true, (from, container) => new SilverDagger(),        100, gemsPriceMutator)
+            new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
+            new LootPackEntry(true, (from, container) => new DrakeScaleArmor(),        100, gemsPriceMutator),
+            new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(),        100, gemsPriceMutator)
         ));
     
     return drake;
@@ -104986,10 +104986,7 @@
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.Silver,
     
-        FireProtection = 100,
-        IceProtection = 100,
-        StunProtection = 100,
-        LightningResistance = 100,
+
     };
     dragon.AddStatus(new NightVisionStatus(dragon));
     
@@ -105021,7 +105018,7 @@
         
     dragon.Spells = new CreatureSpellCollection(40.0)
     {
-        new CreatureSpell<DragonBreathIceSpell>(15),
+        new CreatureSpell<DragonBreathIceSpell>(19),
     };
     
     dragon.AddGold(20000);
@@ -105410,6 +105407,7 @@
         <block><![CDATA[
     var shadow = new Spectre()
     {
+        Name = 'Shadow',
         MaxHealth = 89, Health = 89,
         MaxMana = 5, Mana = 5,
         BaseDodge = 13,
@@ -105657,6 +105655,118 @@
     };
     
     return peacekeeper;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="thaumTrainerTemplate">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+	var thaumaturgeTrainer = new ThaumaturgeTrainer()
+    {
+        Name = _names.Random(),
+        Body = (female ? 16 : 48), IsFemale = female,
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+
+        Experience = 50,
+    };
+    
+   
+    foreach (var skill in Skill.Weapons)
+        thaumaturgeTrainer.SetTraining(skill, 0, 4);
+    
+    thaumaturgeTrainer.SetTraining(Skill.Magic, 9, 14);
+    
+    return thaumaturgeTrainer;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="wizTrainerTemplate">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var female = Utility.RandomBool();
+    var wizardTrainer = new WizardTrainer()
+    {
+        Name = _names.Random(),
+        Body = (female ? 37 : 38), IsFemale = female,
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+
+        Experience = 50,
+    };
+    
+   
+    foreach (var skill in Skill.Weapons)
+        wizardTrainer.SetTraining(skill, 0, 4);
+    
+    wizardTrainer.SetTraining(Skill.Magic, 9, 14);
+    
+    return wizardTrainer;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="lawfulGryphon">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var griffin = new Peacekeeper()
+    var griffin = new Griffin
+    {
+        MaxHealth = 150, Health = 150,
+        BaseDodge = 17,
+                
+        Experience = 50,
+    };
+    griffin.AddStatus(new NightVisionStatus(griffin));
+        
+    griffin.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(8,     10, 20,      "The griffin tears your flesh with its beak."),     30 },
+        { new CreatureAttack(8,     15, 30,     "The griffin buries its talons into you."),         30 },
+        { new CreatureAttack(9,     25, 40,     "The griffin pummels you with its wings.", 
+                                                    new AttackStunComponent(15.0)),                 40 }
+    };
+    
+    griffin.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(4, "a talon"),
+        new CreatureBlock(3, "a beak"),
+    };
+        
+    griffin.AddGold(150);
+    griffin.AddLoot(new LootPack(
+        new LootPackEntry(true, surfaceTreasure, 0.6),
+        
+        new LootPackEntry(true, (from, container) => new OchreEgg(), 25.0), 
+        new LootPackEntry(true, (from, container) => new ClearBalm(), 50)
+    ));
+        
+    return griffin;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -105998,10 +106108,232 @@
       <entry entity="confessorGhost" size="1" minimum="1" maximum="1" />
       <location x="13" y="4" region="1" />
     </spawn>
+    <spawn type="LocationSpawner" name="lockpickVendor">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is Shopkeeper shopkeeper)
+    shopkeeper.AddCounter(new Point2D(10, 31, 15));
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <location x="10" y="32" region="15" />
+    </spawn>
+    <spawn type="LocationSpawner" name="axeBanker">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is Banker banker)
+        banker.AddCounter(new Point2D(25, 12, 1));
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="axeBanker" size="1" minimum="1" maximum="1" />
+      <location x="25" y="11" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="lockpickBanker">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is Banker banker)
+    banker.AddCounter(new Point2D(8, 18, 15));
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="axeBanker" size="1" minimum="1" maximum="1" />
+      <location x="8" y="17" region="15" />
+    </spawn>
+    <spawn type="LocationSpawner" name="lockpickVendor2">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is Shopkeeper shopkeeper)
+    shopkeeper.AddCounter(new Point2D(7, 12, 15));
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <location x="7" y="11" region="15" />
+    </spawn>
+    <spawn type="LocationSpawner" name="lockpickBalmSeller">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="balmVendor" size="1" minimum="1" maximum="1" />
+      <location x="8" y="15" region="15" />
+    </spawn>
+    <spawn type="LocationSpawner" name="lockpickWizTrainer">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="wizTrainerTemplate" size="1" minimum="1" maximum="1" />
+      <location x="4" y="2" region="15" />
+    </spawn>
+    <spawn type="LocationSpawner" name="lockpickThaumTrainer">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is ThaumaturgeTrainer thaumaturgeTrainer)
+    thaumaturgeTrainer.AddCounter(new Point2D(7, 4, 15)),
+    thaumaturgeTrainer.AddCounter(new Point2D(8, 4, 15));
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="thaumTrainerTemplate" size="1" minimum="1" maximum="1" />
+      <location x="7" y="3" region="15" />
+    </spawn>
+    <spawn type="LocationSpawner" name="lockpickMATrainer">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    spawn.Body = 49; spawn.IsFemale = false;
+    
+    if (spawn is TrainerEntity lockpicktrainer)
+    {
+        foreach (var skill in Skill.Weapons)
+            lockpicktrainer.SetTraining(skill, 0, 4);
+
+        lockpicktrainer.SetTraining(Skill.Hand, 8, 14);
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="weaponTrainerTemplate" size="1" minimum="1" maximum="1" />
+      <location x="2" y="5" region="15" />
+    </spawn>
+    <spawn type="LocationSpawner" name="lockpickWeaponTrainer">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    spawn.Body = 32; spawn.IsFemale = false;
+    
+    if (spawn is TrainerEntity lockpickweapontrainer)
+    {
+        foreach (var skill in Skill.Weapons)
+            lockpickweapontrainer.SetTraining(skill, 8, 14);
+
+        lockpickweapontrainer.SetTraining(Skill.Hand, 0, 4);
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="weaponTrainerTemplate" size="1" minimum="1" maximum="1" />
+      <location x="15" y="0" region="15" />
+    </spawn>
+    <spawn type="LocationSpawner" name="lawfulGryphon">
+      <minimumDelay>540</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="lawfulGryphon" size="1" minimum="1" maximum="1" />
+      <location x="35" y="34" region="8" />
+    </spawn>
     <spawn type="RegionSpawner" name="Surface Dungeon">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>55</maximum>
+      <maximum>35</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106059,7 +106391,7 @@
     <spawn type="RegionSpawner" name="Griff Cliffs Outside">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>55</maximum>
+      <maximum>40</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106095,7 +106427,7 @@
     <spawn type="RegionSpawner" name="Griff Cliff Dungeon">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>35</maximum>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106126,7 +106458,7 @@
     <spawn type="RegionSpawner" name="Lower Glacier Dungeon">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>600</maximumDelay>
-      <maximum>45</maximum>
+      <maximum>35</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106310,7 +106642,7 @@
     <spawn type="RegionSpawner" name="Ogre Cave West">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>90</maximum>
+      <maximum>60</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106348,7 +106680,7 @@
     <spawn type="RegionSpawner" name="Ogre Caves Ice">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>600</maximumDelay>
-      <maximum>14</maximum>
+      <maximum>10</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106376,7 +106708,7 @@
     <spawn type="RegionSpawner" name="Ogre Caves East">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>35</maximum>
+      <maximum>30</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106447,7 +106779,7 @@
     <spawn type="RegionSpawner" name="Upper Glacier Left Trees">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>12</maximum>
+      <maximum>7</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106498,7 +106830,7 @@
     <spawn type="RegionSpawner" name="Upper Glacier Lower Right Trees">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>10</maximum>
+      <maximum>6</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106513,6 +106845,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="upperWraith" size="1" minimum="1" maximum="2" />
+      <entry entity="upperHobgoblin" size="3" minimum="1" maximum="2" />
+      <entry entity="upperWolf" size="3" minimum="1" maximum="2" />
+      <entry entity="upperGoblinSentry" size="1" minimum="1" maximum="2" />
       <bounds region="23">
         <inclusion left="7" top="22" right="13" bottom="33" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -106521,7 +106857,7 @@
     <spawn type="RegionSpawner" name="Upper Glacier Upper Trees">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>29</maximum>
+      <maximum>12</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106683,7 +107019,7 @@
     <spawn type="RegionSpawner" name="Chaos Temple Top">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>7</maximum>
+      <maximum>4</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106738,7 +107074,7 @@
     <spawn type="RegionSpawner" name="Chaos Town Main">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>30</maximum>
+      <maximum>25</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
