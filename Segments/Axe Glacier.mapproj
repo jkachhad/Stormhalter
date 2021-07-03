@@ -103808,7 +103808,7 @@
         <block><![CDATA[
     var rockworm = new Sandwyrm()
     {
-        Name = 'Rockworm',
+        Name = "rockworm",
         MaxHealth = 150, Health = 150,
         BaseDodge = 14,
     
@@ -104005,7 +104005,7 @@
         <block><![CDATA[    
     var giant = new ElderTroll()
     {
-        Name = 'Giant',
+        Name = "giant",
         MaxHealth = 1000, Health = 1000,
         BaseDodge = 23,
     
@@ -104080,7 +104080,7 @@
         <block><![CDATA[
     var goose = new Dog()
     {
-        Name = 'Goose',
+        Name = "goose",
         MaxHealth = 32, Health = 32,
         BaseDodge = 12,
                 
@@ -105407,7 +105407,7 @@
         <block><![CDATA[
     var shadow = new Spectre()
     {
-        Name = 'Shadow',
+        Name = "Shadow",
         MaxHealth = 89, Health = 89,
         MaxMana = 5, Mana = 5,
         BaseDodge = 13,
@@ -105733,13 +105733,14 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var griffin = new Peacekeeper()
-    var griffin = new Griffin
+    var griffin = new Griffin()
     {
         MaxHealth = 150, Health = 150,
         BaseDodge = 17,
                 
         Experience = 50,
+        
+        Alignment = Alignment.Lawful,
     };
     griffin.AddStatus(new NightVisionStatus(griffin));
         
@@ -105760,8 +105761,6 @@
         
     griffin.AddGold(150);
     griffin.AddLoot(new LootPack(
-        new LootPackEntry(true, surfaceTreasure, 0.6),
-        
         new LootPackEntry(true, (from, container) => new OchreEgg(), 25.0), 
         new LootPackEntry(true, (from, container) => new ClearBalm(), 50)
     ));
@@ -106115,7 +106114,7 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     if (spawn is Shopkeeper shopkeeper)
-    shopkeeper.AddCounter(new Point2D(10, 31, 15));
+        shopkeeper.AddCounter(new Point2D(10, 31, 15));
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -106157,7 +106156,7 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     if (spawn is Banker banker)
-    banker.AddCounter(new Point2D(8, 18, 15));
+        banker.AddCounter(new Point2D(8, 18, 15));
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -106178,7 +106177,7 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     if (spawn is Shopkeeper shopkeeper)
-    shopkeeper.AddCounter(new Point2D(7, 12, 15));
+        shopkeeper.AddCounter(new Point2D(7, 12, 15));
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -106239,8 +106238,10 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     if (spawn is ThaumaturgeTrainer thaumaturgeTrainer)
-    thaumaturgeTrainer.AddCounter(new Point2D(7, 4, 15)),
-    thaumaturgeTrainer.AddCounter(new Point2D(8, 4, 15));
+    {
+        thaumaturgeTrainer.AddCounter(new Point2D(7, 4, 15));
+        thaumaturgeTrainer.AddCounter(new Point2D(8, 4, 15));
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
