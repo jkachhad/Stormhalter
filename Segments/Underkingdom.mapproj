@@ -96085,7 +96085,7 @@
         <block><![CDATA[
 	var rat = new Peacekeeper()
 	{
-	   Name = "Squeakers", Body = BlackRat,
+	   Name = "Squeakers", Body = 72,
 	   MaxHealth = 50, Health = 50,
 	   BaseDodge = 13,
 	   
@@ -96093,10 +96093,10 @@
 	   
 	   Experience = 50,
 	   
-	   rat.Home = new RectangleBounds()
+	   Home = new RectangleBounds()
        {
             new Rectangle2D(7, 2, 13, 14, 1)
-       };
+       }
 	};
 	
 	rat.Attacks = new CreatureAttackCollection
@@ -96112,7 +96112,7 @@
         new CreatureBlock(1, "his tail."),
     };
 	
-	
+	return rat;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96129,7 +96129,7 @@
         <block><![CDATA[
     var rat = new Peacekeeper()
     {
-       Name = "Mr.Pibbs", Body = WhiteRat,
+       Name = "Mr.Pibbs", Body = 72,
        MaxHealth = 50, Health = 50,
        BaseDodge = 13,
        
@@ -96137,10 +96137,10 @@
        
        Experience = 50,
        
-       rat.Home = new RectangleBounds()
+       Home = new RectangleBounds()
        {
             new Rectangle2D(7, 2, 13, 14, 1)
-       };
+       }
     };
     
     rat.Attacks = new CreatureAttackCollection
@@ -96157,44 +96157,7 @@
     };
     
 
-    
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="priest1">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    spawn.Name = "priest";
-    spawn.MaxHealth = 100; spawn.Health = 100;
-    spawn.BaseDodge = 10;
-    
-    if (spawn is Peacekeeper priest)
-    {
-        priest.Brain = new PriestAI(priest);
-        
-        priest.Home = new RectangleBounds()
-        {  
-            new Rectangle2D(23, 4, 32, 7, 2)
-        };
-        
-        priest.Wield(new SteelMace());
-        priest.Equip(new LeatherArmor());
-        
-        priest.Spells = new CreatureSpellCollection()
-        {
-            new CreatureSpell<CurseSpell>(
-                    skillLevel: 3, cost: 3,
-                    mantra: SpellHelper.GenerateMantra(), instantCast: false),
-        };
-    }
+    return rat;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96237,7 +96200,7 @@
     
     //todo loot
     wyvern.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new Diamond(1500u),        100,    gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new Diamond(1500u),        100,    gemsPriceMutator)
     ));
     
     return wyvern;
@@ -96283,7 +96246,7 @@
     
     //todo loot
     wyvern.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new Diamond(1500u),        100,    gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new Diamond(1500u),        100,    gemsPriceMutator)
     ));
     
     return wyvern;
@@ -96332,7 +96295,7 @@
     
     //todo loot
     wyvern.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new Diamond(1500u),        100,    gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new Diamond(1500u),        100,    gemsPriceMutator)
     ));
     
     return wyvern;
@@ -96378,7 +96341,7 @@
     
     //todo loot
     wyvern.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new Diamond(1500u),        100,    gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new Diamond(1500u),        100,    gemsPriceMutator)
     ));
     
     return wyvern;
@@ -96402,7 +96365,7 @@
         MaxHealth = 2000, Health = 2000,
         BaseDodge = 18,
     
-        Alignment = Alignment.Chaotic
+        Alignment = Alignment.Chaotic,
         
         Experience = 22000,
         
@@ -96450,10 +96413,10 @@
     };
     
     drake.AddGold(2000);
-    drake.AddLoot(      
+    drake.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(),     100),
-        new LootPackEntry(true, (from, container) => new PearDiamond(10000u),    25,    gemsPriceMutator),
-        ));
+        new LootPackEntry(true, (from, container) => new PearDiamond(10000u),    25,    gemsPriceMutator)
+    ));
     
     return drake;
 ]]></block>
@@ -96502,7 +96465,7 @@
     carfel.Wield(new YasnakiDagger());
         
     carfel.AddGold(14000);
-    carfel.AddLoot(
+    carfel.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
@@ -96596,11 +96559,11 @@
     
     //todo determine if I can force it to dual wield? Not sure of context
     trollking.Wield(new Greatsword());
-    trollking.Equip(new DragonScaleArmor);
+    trollking.Equip(new DragonScaleArmor());
     
     trollking.AddGold(2000);
-    trollking.AddLoot(      
-        new LootPackEntry(true, (from, container) => new HummingbirdAmulet(),     100),
+    trollking.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new HummingbirdAmulet(),     100)
         ));
     
     return trollking;
@@ -96625,7 +96588,7 @@
         MaxHealth = 700, Health = 700,
         BaseDodge = 17,
         
-        Alignment = Alignment.Evil
+        Alignment = Alignment.Evil,
         
         Experience = 22000,
     
@@ -96649,9 +96612,9 @@
     
     lurker.AddGold(2000);
     lurker.AddLoot(new LootPack(
-        new LootPackEntry(true, PermanentStrengthPotion,       100),
-        new LootPackEntry(true, YouthPotion,       50),
-        new LootPackEntry(true, ManaPotion,       100)
+        new LootPackEntry(true, (from, container) => new PermanentStrengthPotion(),       100),
+        new LootPackEntry(true, (from, container) => new YouthPotion(),       50),
+        new LootPackEntry(true, (from, container) => new ManaPotion(),       100)
     ));
     
     return lurker;
@@ -96696,7 +96659,7 @@
     swordmaster.Equip(new DrakeScaleArmor());
         
     swordmaster.AddGold(5000);
-    swordmaster.AddLoot(
+    swordmaster.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator)
     ));
     
@@ -96728,7 +96691,7 @@
         BasePenetration = ArmorPenetration.VeryHeavy,
         
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web
+                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
     
         CanCharge = true,
     
@@ -96739,7 +96702,7 @@
         StunResistance = 100,
         
     };
-    overlord.AddStatus(new NightVisionStatus(ydnac));
+    overlord.AddStatus(new NightVisionStatus(overlord));
     
     //not sure on staff being wielded
     
@@ -96760,8 +96723,8 @@
     
     overlord.AddGold(3000);
     overlord.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon1Bottles,    20),
-        new LootPackEntry(true, ydnacTreasure,      100),
+        //new LootPackEntry(true, dungeon1Bottles,    20),
+        //todo: new LootPackEntry(true, ydnacTreasure,      100),
         
         new LootPackEntry(true, (from, container) => new ClearBalm(),           50),
         new LootPackEntry(true, (from, container) => new Diamond(1500u),        100,    gemsPriceMutator),

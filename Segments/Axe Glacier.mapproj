@@ -103055,9 +103055,9 @@
             
     goblin.AddGold(120);
     goblin.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
         new LootPackEntry(true, (from, container) => new LeatherGauntlets(), 7.5)
     ));
     
@@ -103104,7 +103104,7 @@
     gargoyle.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
-        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
         new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5)
     ));
 
@@ -103412,7 +103412,7 @@
     gargoyle.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
-        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
         new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5)
     ));
 
@@ -103796,7 +103796,6 @@
         <block><![CDATA[
     var rockworm = new Rockwyrm()
     {
-        Name = "rockworm",
         MaxHealth = 150, Health = 150,
         BaseDodge = 14,
     
@@ -103919,7 +103918,7 @@
     ogre.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
-        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
         new LootPackEntry(true, (from, container) => new SteelGauntlets(), 6.67)
     ));
     
@@ -103992,7 +103991,6 @@
         <block><![CDATA[    
     var giant = new Giant()
     {
-        Name = "giant",
         MaxHealth = 1000, Health = 1000,
         BaseDodge = 23,
     
@@ -104003,7 +104001,7 @@
         BasePenetration = ArmorPenetration.VeryHeavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic
+                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
     };
     giant.AddStatus(new NightVisionStatus(giant));
@@ -104035,7 +104033,7 @@
     };
         
    giant.AddGold(3000);
-   giant.AddLoot(
+   giant.AddLoot(new LootPack(
        new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100, gemsPriceMutator),
        new LootPackEntry(true, (from, container) => new ReturningHammer(),        100),
        new LootPackEntry(true, (from, container) => new GrizzlyJacket(),        100),
@@ -104043,6 +104041,7 @@
        new LootPackEntry(true, (from, container) => new DragonScaleArmor(),        100),
        new LootPackEntry(true, (from, container) => new PermanentIntelligencePotion(),        50)
    ));
+       
    return giant;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -104058,9 +104057,8 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var goose = new Dog()
+    var goose = new Goose()
     {
-        Name = "goose",
         MaxHealth = 32, Health = 32,
         BaseDodge = 12,
                 
@@ -104081,8 +104079,8 @@
     };
         //todo: add gold goose egg
     goose.AddGold(75);
-    goose.AddLoot(
-        new LootPackEntry(true, (from, container) => new GoldNugget(5000u),    100, gemsPriceMutator),
+    goose.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new GoldNugget(5000u),    100, gemsPriceMutator)
     ));
         
     return goose;
@@ -104261,7 +104259,8 @@
     gargoyle.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    20),
-        new LootPackEntry(true, upperTreasure,   0.63)
+        new LootPackEntry(true, upperTreasure,   0.63),
+        
         new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5)
     ));
 
@@ -104473,7 +104472,7 @@
     ogre.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    20),
-        new LootPackEntry(true, upperTreasure,   0.63)
+        new LootPackEntry(true, upperTreasure,   0.63),
         new LootPackEntry(true, (from, container) => new SteelGauntlets(), 6.67)
     ));
     
@@ -104863,7 +104862,6 @@
         <block><![CDATA[
 	var drake = new Drake()
     {
-        Name = "Drake",
         MaxHealth = 2000, Health = 2000,
         BaseDodge = 18,
     
@@ -104913,7 +104911,7 @@
     };
     
     drake.AddGold(2000);
-    drake.AddLoot(      
+    drake.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new StrongShieldRing(),    50),
         new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(),     100),
@@ -104924,7 +104922,7 @@
         new LootPackEntry(true, (from, container) => new StunResistanceBracelet(),    50),
         new LootPackEntry(true, (from, container) => new FeatherFallBoots(),    100),
         new LootPackEntry(true, (from, container) => new DexterityRing(),    10)
-        ));
+    ));
     
     return drake;
 ]]></block>
@@ -104995,7 +104993,7 @@
     };
     //todo: add griffin figurine, protection from cold amulet (replaces f/i ammy)
     dragon.AddGold(6000);
-    dragon.AddLoot(
+    dragon.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new DragonSkull(),        100),
         new LootPackEntry(true, (from, container) => new IvoryBrooch(),        25),
@@ -105069,7 +105067,7 @@
     };
         
    yeti.AddGold(12000);
-   yeti.AddLoot(
+   yeti.AddLoot(new LootPack(
        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
        new LootPackEntry(true, (from, container) => new BearSkull(),        100),
        new LootPackEntry(true, (from, container) => new BreatheWaterBracelet(),        100),
@@ -105077,9 +105075,9 @@
        new LootPackEntry(true, (from, container) => new SaffronRobe(),        100),
        new LootPackEntry(true, (from, container) => new FeatherFallBoots(),        100),
        new LootPackEntry(true, (from, container) => new MisericordeDagger(),        100)
-    ));
+   ));
     
-    return yeti;
+   return yeti;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -105256,7 +105254,7 @@
     var peacekeeper = new Peacekeeper()
     {
         Name = "statue",
-        Body = Statue,
+        Body = 97,
         
         MaxHealth = 300, Health = 300,
         BaseDodge = 15,
@@ -105746,7 +105744,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Presence">
+    <entity name="axePresence">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105780,7 +105778,7 @@
     presence.Spells = new CreatureSpellCollection(20.0)
     {
         new CreatureSpell<IceStormSpell>(10),
-    }
+    };
     
     presence.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new WaveRobe(),    100)
@@ -107331,7 +107329,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Presence" size="1" minimum="1" maximum="1" />
+      <entry entity="axePresence" size="1" minimum="1" maximum="1" />
       <bounds region="36">
         <inclusion left="0" top="0" right="7" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
