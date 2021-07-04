@@ -97056,7 +97056,7 @@ return orc;
         MaxHealth = 60, Health = 60,
         BaseDodge = 12,
                 
-        Experience = 1025,
+        Experience = 725,
                 
         Movement = 2,
                 
@@ -97100,7 +97100,7 @@ return orc;
         MaxHealth = 42, Health = 42,
         BaseDodge = 12,
                 
-        Experience = 700,
+        Experience = 600,
                 
         Movement = 2,
     
@@ -97230,7 +97230,7 @@ return orc;
         MaxHealth = 36, Health = 36,
         BaseDodge = 12,
                 
-        Experience = 725,
+        Experience = 525,
     
         Attacks = new CreatureAttackCollection()
         {
@@ -97272,7 +97272,7 @@ return orc;
         MaxHealth = 36, Health = 36,
         BaseDodge = 12,
                 
-        Experience = 725,
+        Experience = 525,
         
         Attacks = new CreatureAttackCollection()
         {
@@ -97365,7 +97365,7 @@ return orc;
         MaxHealth = 82, Health = 82,
         BaseDodge = 12,
                 
-        Experience = 2425,
+        Experience = 1525,
                 
         Movement = 2,
     };
@@ -97468,7 +97468,7 @@ return orc;
         MaxMana = 13, Mana = 13,
         BaseDodge = 12,
     
-        Experience = 1050,
+        Experience = 850,
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
         
@@ -97518,7 +97518,7 @@ return orc;
         MaxMana = 8, Mana = 8,
         BaseDodge = 12,
     
-        Experience = 1025,
+        Experience = 725,
         
         CanFlee = true,
     };
@@ -97708,7 +97708,7 @@ return orc;
         MaxHealth = 83, Health = 83,
         BaseDodge = 13,
     
-        Experience = 1150,
+        Experience = 850,
     
         Attacks = new CreatureAttackCollection
         {
@@ -97748,7 +97748,7 @@ return orc;
         MaxHealth = 59, Health = 59,
         BaseDodge = 13,
     
-        Experience = 850,
+        Experience = 750,
         
         Attacks = new CreatureAttackCollection
         {
@@ -97788,7 +97788,7 @@ return orc;
         MaxHealth = 107, Health = 107,
         BaseDodge = 13,
     
-        Experience = 2400,
+        Experience = 2000,
     };
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
     
@@ -97890,7 +97890,7 @@ return orc;
         MaxMana = 17, Mana = 17,
         BaseDodge = 13,
         
-        Experience = 2000,
+        Experience = 1700,
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
         
@@ -97941,7 +97941,7 @@ return orc;
         MaxMana = 17, Mana = 17,
         BaseDodge = 14,
     
-        Experience = 2100,
+        Experience = 1800,
     
         VisibilityDistance = 1,
     };
@@ -98042,7 +98042,7 @@ return orc;
         MaxHealth = 120, Health = 120,
         BaseDodge = 13,
     
-        Experience = 2600,
+        Experience = 2200,
     
         CanCharge = true,
         
@@ -98102,7 +98102,7 @@ return orc;
         MaxHealth = 110, Health = 110,
         BaseDodge = 13,
     
-        Experience = 3450,
+        Experience = 2650,
     
         Movement = 2,
             
@@ -98153,7 +98153,7 @@ return orc;
         MaxHealth = 110, Health = 110,
         BaseDodge = 13,
     
-        Experience = 3450,
+        Experience = 2650,
     
         Movement = 2,
             
@@ -98205,7 +98205,7 @@ return orc;
         MaxMana = 16, Mana = 16,
         BaseDodge = 13,
     
-        Experience = 3450,
+        Experience = 2650,
         
         CanSwim = true,
             
@@ -98269,7 +98269,7 @@ return orc;
         MaxMana = 17, Mana = 17,
         BaseDodge = 13,
     
-        Experience = 3450,
+        Experience = 2650,
     
         CanSwim = true,
     };
@@ -98373,7 +98373,7 @@ return orc;
         MaxHealth = 32, Health = 32,
         BaseDodge = 12,
                 
-        Experience = 500,
+        Experience = 300,
     };
     
     wolf.Attacks = new CreatureAttackCollection
@@ -98695,7 +98695,7 @@ return orc;
         MaxHealth = 50, Health = 50,
         BaseDodge = 12,
                             
-        Experience = 1000,
+        Experience = 700,
     };
     
     centaur.Attacks = new CreatureAttackCollection
@@ -98961,7 +98961,7 @@ return orc;
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
     
-        Experience = 2000,
+        Experience = 1500,
         
         FireProtection = 100,
         IceProtection = 80,
@@ -99064,7 +99064,7 @@ return orc;
         MaxHealth = 500, Health = 500,
         BaseDodge = 20,
     
-        Experience = 8000,
+        Experience = 11000,
         
         CanFly = true,
         CanCharge = true,
@@ -99110,6 +99110,7 @@ return orc;
         new CreatureSpell<DragonBreathFireSpell>(9),
     };
     
+    //todo: add the +4 shining silver longsword in her loot chance (the purple one from OG). Add the binding "Agate gem" assuming the agate I added isn't it
     dragon.AddGold(1000);
     dragon.AddLoot(
         new LootPack(
@@ -99117,8 +99118,7 @@ return orc;
             new LootPackEntry(true, dungeon4Rings,              10.0),
             
             new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100, gemsPriceMutator),
-            new LootPackEntry(true, (from, container) => new GriffinSkull(),        100, gemsPriceMutator),
-            new LootPackEntry(true, (from, container) => new SilverDagger(),        100, gemsPriceMutator)
+            new LootPackEntry(true, (from, container) => new ScorpionRobe(),        100)
         ));
     
     return dragon;
@@ -101194,7 +101194,7 @@ return orc;
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new ScorpionAmulet();
+	return new StrengthRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -101203,7 +101203,7 @@ return orc;
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new WeakShieldRing();
+	return new YouthPotion();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -101221,7 +101221,7 @@ return orc;
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new IceProtectionRing();
+	return new StrengthBracelet();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>

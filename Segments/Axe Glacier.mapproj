@@ -102791,7 +102791,7 @@
         MaxMana = 17, Mana = 17,
         BaseDodge = 13,
         
-        Experience = 1500,
+        Experience = 900,
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
         
@@ -102814,9 +102814,9 @@
         
     wraith.AddGold(350);
     wraith.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
     return wraith;
@@ -102857,9 +102857,9 @@
         
     wolf.AddGold(75);
     wolf.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
         
     return wolf;
@@ -102896,9 +102896,9 @@
             
     skeleton.AddGold(200);
     skeleton.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
     return skeleton;
@@ -102921,7 +102921,7 @@
         MaxHealth = 36, Health = 36,
         BaseDodge = 12,
                 
-        Experience = 750,
+        Experience = 600,
         
         Attacks = new CreatureAttackCollection()
         {
@@ -102934,9 +102934,9 @@
             
     goblin.AddGold(120);
     goblin.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
     return goblin;
@@ -102974,10 +102974,9 @@
             
     orc.AddGold(100);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        new LootPackEntry(true, (from, container) => new ThrowingHammer(), 16)
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
     return orc;
@@ -103000,7 +102999,7 @@
         MaxHealth = 60, Health = 60,
         BaseDodge = 12,
                 
-        Experience = 1025,
+        Experience = 700,
                 
         Movement = 2,
                 
@@ -103017,9 +103016,9 @@
     
     troll.AddGold(500);
     troll.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
     return troll;
@@ -103042,7 +103041,7 @@
         MaxHealth = 36, Health = 36,
         BaseDodge = 12,
                 
-        Experience = 725,
+        Experience = 600,
     
         Attacks = new CreatureAttackCollection()
         {
@@ -103056,9 +103055,9 @@
             
     goblin.AddGold(120);
     goblin.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
         new LootPackEntry(true, (from, container) => new LeatherGauntlets(), 7.5)
     ));
     
@@ -103082,7 +103081,7 @@
         MaxHealth = 82, Health = 82,
         BaseDodge = 12,
                 
-        Experience = 2425,
+        Experience = 1525,
                 
         Movement = 2,
     };
@@ -103103,9 +103102,9 @@
 
     gargoyle.AddGold(700);
     gargoyle.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
         new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5)
     ));
 
@@ -103130,7 +103129,7 @@
         MaxMana = 16, Mana = 16,
         BaseDodge = 12,
                 
-        Experience = 725,
+        Experience = 600,
     };
     
     goblin.Attacks = new CreatureAttackCollection()
@@ -103152,10 +103151,9 @@
             
     goblin.AddGold(120);
     goblin.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        new LootPackEntry(true, (from, container) => new LeatherGauntlets(), 7.5)
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
     return goblin;
@@ -103178,7 +103176,7 @@
         MaxHealth = 45, Health = 45,
         BaseDodge = 13,
                 
-        Experience = 800,
+        Experience = 700,
     
         Attacks = new CreatureAttackCollection()
         {
@@ -103192,11 +103190,9 @@
             
     goblin.AddGold(200);
     goblin.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        
-        new LootPackEntry(true, (from, container) => new LeatherGauntlets(), 7.5)
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
     return goblin;
@@ -103219,7 +103215,7 @@
         MaxHealth = 70, Health = 70,
         BaseDodge = 13,
                 
-        Experience = 1250,
+        Experience = 800,
                 
         Movement = 2,
                 
@@ -103236,9 +103232,9 @@
     
     troll.AddGold(500);
     troll.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
     return troll;
@@ -103266,7 +103262,7 @@
         MaxHealth = 110, Health = 110,
         BaseDodge = 13,
     
-        Experience = 3450,
+        Experience = 2650,
     
         Movement = 2,
             
@@ -103283,11 +103279,9 @@
     
     fighter.AddGold(550);
     fighter.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        
-        new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 10.0)
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
     return fighter;
@@ -103315,7 +103309,7 @@
         MaxHealth = 100, Health = 100,
         BaseDodge = 13,
     
-        Experience = 3450,
+        Experience = 2650,
     
         Movement = 2,
         
@@ -103330,10 +103324,9 @@
     
     martialartist.AddGold(550);
     martialartist.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 10.0)
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
     return martialartist;
@@ -103371,10 +103364,9 @@
             
     orc.AddGold(100);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        new LootPackEntry(true, (from, container) => new ThrowingHammer(), 16)
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
     return orc;
@@ -103394,10 +103386,10 @@
         <block><![CDATA[
     var gargoyle = new Gargoyle()
     {
-        MaxHealth = 82, Health = 82,
-        BaseDodge = 12,
+        MaxHealth = 107, Health = 107,
+        BaseDodge = 13,
                 
-        Experience = 2425,
+        Experience = 2025,
                 
         Movement = 2,
     };
@@ -103418,10 +103410,9 @@
 
     gargoyle.AddGold(700);
     gargoyle.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
         new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5)
     ));
 
@@ -103463,9 +103454,9 @@
         
     wolf.AddGold(300);
     wolf.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
         
     return wolf;
@@ -103489,7 +103480,7 @@
         MaxMana = 17, Mana = 17,
         BaseDodge = 13,
         
-        Experience = 1500,
+        Experience = 1100,
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
         
@@ -103504,7 +103495,7 @@
             skillLevel: 6, cost: 4, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<DeathSpell>(
-            skillLevel: 3, cost: 6, 
+            skillLevel: 3.5, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
@@ -103512,9 +103503,9 @@
         
     wraith.AddGold(350);
     wraith.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
     return wraith;
@@ -103560,11 +103551,9 @@
             
     goblin.AddGold(120);
     goblin.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        
-        new LootPackEntry(true, (from, container) => new LeatherGauntlets(), 7.5)
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
     return goblin;
@@ -103592,7 +103581,7 @@
         MaxHealth = 110, Health = 110,
         BaseDodge = 13,
     
-        Experience = 3450,
+        Experience = 2650,
     
         Movement = 2,
             
@@ -103609,10 +103598,9 @@
     
     fighter.AddGold(550);
     fighter.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 10.0)
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
     return fighter;
@@ -103635,7 +103623,7 @@
         MaxHealth = 40, Health = 40,
         BaseDodge = 12,
                 
-        Experience = 800,
+        Experience = 700,
         
         Attacks = new CreatureAttackCollection()
         {
@@ -103648,9 +103636,9 @@
             
     goblin.AddGold(200);
     goblin.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
     return goblin;
@@ -103673,7 +103661,7 @@
         MaxHealth = 59, Health = 59,
         BaseDodge = 13,
     
-        Experience = 850,
+        Experience = 750,
         
         Attacks = new CreatureAttackCollection
         {
@@ -103686,9 +103674,9 @@
     
     hobgoblin.AddGold(500);
     hobgoblin.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
     return hobgoblin;
@@ -103711,7 +103699,7 @@
         MaxHealth = 100, Health = 100,
         BaseDodge = 14,
                 
-        Experience = 1500,
+        Experience = 2500,
         
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
@@ -103733,9 +103721,9 @@
         
     wolf.AddGold(500);
     wolf.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
     ));
         
     return wolf;
@@ -103758,7 +103746,7 @@
         MaxHealth = 400, Health = 400,
         BaseDodge = 18,
                 
-        Experience = 5000,
+        Experience = 5500,
         
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
@@ -103782,12 +103770,12 @@
         new CreatureBlock(6, "the thick hide"),
         new CreatureBlock(3, "a paw"),
     };
-        
-    wolf.AddGold(500);
+    //todo: add obsidian egg
+    wolf.AddGold(1000);
     wolf.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
         
     ));
         
@@ -103806,13 +103794,12 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var rockworm = new Sandwyrm()
+    var rockworm = new Rockwyrm()
     {
-        Name = "rockworm",
         MaxHealth = 150, Health = 150,
         BaseDodge = 14,
     
-        Experience = 2500,
+        Experience = 1500,
     
         VisibilityDistance = 1,
         
@@ -103840,9 +103827,9 @@
     
     rockworm.AddGold(800);
     rockworm.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
         
         ));
     
@@ -103871,7 +103858,7 @@
         MaxHealth = 110, Health = 110,
         BaseDodge = 13,
     
-        Experience = 3450,
+        Experience = 2650,
     
         Movement = 2,
             
@@ -103888,11 +103875,9 @@
     
     fighter.AddGold(550);
     fighter.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        
-        new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 10.0)
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
     return fighter;
@@ -103931,9 +103916,9 @@
     
     ogre.AddGold(650);
     ogre.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
         new LootPackEntry(true, (from, container) => new SteelGauntlets(), 6.67)
     ));
     
@@ -103957,7 +103942,7 @@
         MaxHealth = 70, Health = 70,
         BaseDodge = 13,
         
-        Experience = 1500,
+        Experience = 800,
         
         Movement = 2,
         
@@ -103977,15 +103962,16 @@
         new CreatureBlock(1, "a tail")
     };
     
-    lizard.Spells = new CreatureSpellCollection(50.0);
-    lizard.Spells.Add(new CreatureSpell<IceStormSpell>(8), 100, TimeSpan.FromSeconds(3.0));
+    lizard.Spells = new CreatureSpellCollection(80.0)
+    {
+        new CreatureSpell<IceStormSpell>(8),
+    };
     
     lizard.AddGold(400);
     lizard.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        new LootPackEntry(true, (from, container) => new FieryRuby(1200u), 100.0)
+        new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, surfaceTreasureBottles,    20),
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
     return lizard;
@@ -104003,25 +103989,20 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[    
-    var giant = new ElderTroll()
+    var giant = new Giant()
     {
-        Name = "giant",
         MaxHealth = 1000, Health = 1000,
         BaseDodge = 23,
     
-        Experience = 15000,
+        Experience = 9000,
        
         CanJumpkick = true,
         
         BasePenetration = ArmorPenetration.VeryHeavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
-        Weakness = CreatureWeakness.BlueGlowing,
-    
-        FireProtection = 100,
-        IceProtection = 100,
-        StunProtection = 100,
+                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
     };
     giant.AddStatus(new NightVisionStatus(giant));
     
@@ -104038,7 +104019,7 @@
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(12,      70, 100,     "The giant slams you across the room.",
+            new CreatureAttack(10,      70, 100,     "The giant slams you across the room.",
                                                         new AttackProneComponent(100), 
                                                         new AttackStunComponent(15)),               20
         },
@@ -104052,18 +104033,16 @@
     };
         
    giant.AddGold(3000);
-   giant.AddLoot(
-        new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-            
-            new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100, gemsPriceMutator),
-            new LootPackEntry(true, (from, container) => new GriffinSkull(),        100, gemsPriceMutator),
-            new LootPackEntry(true, (from, container) => new SilverDagger(),        100, gemsPriceMutator)
-        ));
-    
-    return giant;
+   giant.AddLoot(new LootPack(
+       new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100, gemsPriceMutator),
+       new LootPackEntry(true, (from, container) => new ReturningHammer(),        100),
+       new LootPackEntry(true, (from, container) => new GrizzlyJacket(),        100),
+       new LootPackEntry(true, (from, container) => new ReturningHammer(),        100),
+       new LootPackEntry(true, (from, container) => new DragonScaleArmor(),        100),
+       new LootPackEntry(true, (from, container) => new PermanentIntelligencePotion(),        50)
+   ));
+       
+   return giant;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -104078,9 +104057,8 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var goose = new Dog()
+    var goose = new Goose()
     {
-        Name = "goose",
         MaxHealth = 32, Health = 32,
         BaseDodge = 12,
                 
@@ -104099,13 +104077,10 @@
         new CreatureBlock(6, "a swift wing"),
         new CreatureBlock(3, "a webbed foot"),
     };
-        
+        //todo: add gold goose egg
     goose.AddGold(75);
     goose.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63)
-        
+        new LootPackEntry(true, (from, container) => new GoldNugget(5000u),    100, gemsPriceMutator)
     ));
         
     return goose;
@@ -104128,7 +104103,7 @@
         MaxHealth = 55, Health = 55,
         BaseDodge = 13,
                 
-        Experience = 1000,
+        Experience = 800,
         
         Attacks = new CreatureAttackCollection()
         {
@@ -104141,9 +104116,9 @@
             
     goblin.AddGold(300);
     goblin.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
     return goblin;
@@ -104171,7 +104146,7 @@
         MaxHealth = 120, Health = 120,
         BaseDodge = 14,
     
-        Experience = 4000,
+        Experience = 3000,
     
         Movement = 3,
             
@@ -104188,10 +104163,9 @@
     
     fighter.AddGold(700);
     fighter.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 10.0)
+        new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
     return fighter;
@@ -104219,7 +104193,7 @@
         MaxHealth = 120, Health = 120,
         BaseDodge = 15,
     
-        Experience = 40000,
+        Experience = 3000,
     
         Movement = 3,
             
@@ -104234,12 +104208,11 @@
     fighter.Wield(new SteelLongsword());
     fighter.Equip(new PlatemailArmor());    
     
-    fighter.AddGold(550);
+    fighter.AddGold(650);
     fighter.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 10.0)
+        new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
     return fighter;
@@ -104259,10 +104232,10 @@
         <block><![CDATA[
     var gargoyle = new Gargoyle()
     {
-        MaxHealth = 100, Health = 100,
+        MaxHealth = 120, Health = 120,
         BaseDodge = 13,
                 
-        Experience = 3225,
+        Experience = 2525,
                 
         Movement = 3,
         CanJumpkick = true,
@@ -104284,9 +104257,10 @@
 
     gargoyle.AddGold(700);
     gargoyle.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63),
+        
         new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5)
     ));
 
@@ -104310,7 +104284,7 @@
         MaxHealth = 55, Health = 55,
         BaseDodge = 13,
                 
-        Experience = 1000,
+        Experience = 800,
     
         Attacks = new CreatureAttackCollection()
         {
@@ -104324,10 +104298,9 @@
             
     goblin.AddGold(300);
     goblin.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        new LootPackEntry(true, (from, container) => new LeatherGauntlets(), 7.5)
+        new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
     return goblin;
@@ -104351,7 +104324,7 @@
         MaxMana = 16, Mana = 16,
         BaseDodge = 12,
                 
-        Experience = 1000,
+        Experience = 800,
     };
     
     goblin.Attacks = new CreatureAttackCollection()
@@ -104373,10 +104346,9 @@
             
     goblin.AddGold(250);
     goblin.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        new LootPackEntry(true, (from, container) => new LeatherGauntlets(), 7.5)
+        new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
     return goblin;
@@ -104399,7 +104371,7 @@
         MaxHealth = 72, Health = 72,
         BaseDodge = 14,
     
-        Experience = 1000,
+        Experience = 800,
         
         Attacks = new CreatureAttackCollection
         {
@@ -104412,9 +104384,9 @@
     
     hobgoblin.AddGold(500);
     hobgoblin.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
     return hobgoblin;
@@ -104442,7 +104414,7 @@
         MaxHealth = 120, Health = 120,
         BaseDodge = 13,
     
-        Experience = 4050,
+        Experience = 3050,
     
         Movement = 3,
         
@@ -104455,12 +104427,11 @@
         new CreatureBasicAttack(9), 
     };   
     
-    martialartist.AddGold(60);
+    martialartist.AddGold(650);
     martialartist.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 10.0)
+        new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
     return martialartist;
@@ -104483,7 +104454,7 @@
         MaxHealth = 120, Health = 120,
         BaseDodge = 15,
     
-        Experience = 3500,
+        Experience = 3000,
             
         Immunity = CreatureImmunity.Web
     };
@@ -104499,9 +104470,9 @@
     
     ogre.AddGold(700);
     ogre.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
+        new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63),
         new LootPackEntry(true, (from, container) => new SteelGauntlets(), 6.67)
     ));
     
@@ -104540,10 +104511,9 @@
             
     orc.AddGold(200);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        new LootPackEntry(true, (from, container) => new ThrowingHammer(), 16)
+        new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
     return orc;
@@ -104571,7 +104541,7 @@
         MaxHealth = 120, Health = 120,
         BaseDodge = 16,
     
-        Experience = 4050,
+        Experience = 3050,
     
         Movement = 3,
             
@@ -104588,10 +104558,9 @@
     
     fighter.AddGold(700);
     fighter.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 10.0)
+        new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
     return fighter;
@@ -104614,7 +104583,7 @@
         MaxHealth = 80, Health = 80,
         BaseDodge = 13,
                 
-        Experience = 1400,
+        Experience = 1100,
                 
         Movement = 2,
                 
@@ -104631,9 +104600,9 @@
     
     troll.AddGold(500);
     troll.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
     return troll;
@@ -104674,9 +104643,9 @@
         
     wolf.AddGold(300);
     wolf.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
     ));
         
     return wolf;
@@ -104723,9 +104692,9 @@
         
     wraith.AddGold(50);
     wraith.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
     return wraith;
@@ -104748,7 +104717,7 @@
         MaxHealth = 70, Health = 70,
         BaseDodge = 13,
         
-        Experience = 1600,
+        Experience = 900,
         
         Movement = 2,
         
@@ -104768,15 +104737,16 @@
         new CreatureBlock(1, "a tail")
     };
     
-    lizard.Spells = new CreatureSpellCollection(50.0);
-    lizard.Spells.Add(new CreatureSpell<IceStormSpell>(10), 100, TimeSpan.FromSeconds(3.0));
+    lizard.Spells = new CreatureSpellCollection(80.0)
+    {
+        new CreatureSpell<IceStormSpell>(8),
+    };
     
     lizard.AddGold(500);
     lizard.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        new LootPackEntry(true, (from, container) => new FieryRuby(1200u), 100.0)
+        new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
     return lizard;
@@ -104822,11 +104792,9 @@
         
     bear.AddGold(500);
     bear.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        
-        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
+        new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
     ));
         
     return bear;
@@ -104849,7 +104817,7 @@
         MaxHealth = 250, Health = 250,
         BaseDodge = 13,
                 
-        Experience = 4000,
+        Experience = 5000,
                 
         Movement = 3,
             
@@ -104870,11 +104838,11 @@
         new CreatureBlock(4, "a claw"),
     };
         
-    bear.AddGold(600);
+    bear.AddGold(700);
     bear.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
     ));
         
     return bear;
@@ -104892,13 +104860,12 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	var drake = new Dragon()
+	var drake = new Drake()
     {
-        Name = "Drake",
         MaxHealth = 2000, Health = 2000,
         BaseDodge = 18,
     
-        Experience = 35000,
+        Experience = 15000,
         
         CanFly = true,
         CanCharge = true,
@@ -104940,20 +104907,22 @@
         
     drake.Spells = new CreatureSpellCollection(25.0)
     {
-        new CreatureSpell<LightningBoltSpell>(14),
+        new CreatureSpell<LightningBoltSpell>(10),
     };
     
-    drake.AddGold(4000);
-    drake.AddLoot(
-        new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-            
-            new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
-            new LootPackEntry(true, (from, container) => new DrakeScaleArmor(),        100, gemsPriceMutator),
-            new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(),        100, gemsPriceMutator)
-        ));
+    drake.AddGold(2000);
+    drake.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new StrongShieldRing(),    50),
+        new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(),     100),
+        new LootPackEntry(true, (from, container) => new LightningShield(),     10),
+        new LootPackEntry(true, (from, container) => new StrongStrengthBracelet(),    50),
+        new LootPackEntry(true, (from, container) => new GriffinSkull(),    100),
+        new LootPackEntry(true, (from, container) => new ManaPotion(),    100),
+        new LootPackEntry(true, (from, container) => new StunResistanceBracelet(),    50),
+        new LootPackEntry(true, (from, container) => new FeatherFallBoots(),    100),
+        new LootPackEntry(true, (from, container) => new DexterityRing(),    10)
+    ));
     
     return drake;
 ]]></block>
@@ -104970,12 +104939,13 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    //todo add Ice Dragon model / corpse.
     var dragon = new Dragon()
     {
         MaxHealth = 3700, Health = 3700,
         BaseDodge = 22,
     
-        Experience = 85000,
+        Experience = 25000,
         
         CanFly = true,
         CanCharge = true,
@@ -104985,7 +104955,8 @@
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.Silver,
-    
+        //todo add Heavy Silver creature weakness stat.
+        //todo add Hide level check?
 
     };
     dragon.AddStatus(new NightVisionStatus(dragon));
@@ -105016,22 +104987,22 @@
         new CreatureBlock(3, "a wing"),
     };
         
-    dragon.Spells = new CreatureSpellCollection(40.0)
+    dragon.Spells = new CreatureSpellCollection(35.0)
     {
         new CreatureSpell<DragonBreathIceSpell>(19),
     };
-    
-    dragon.AddGold(20000);
-    dragon.AddLoot(
-        new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-            
-            new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100, gemsPriceMutator),
-            new LootPackEntry(true, (from, container) => new GriffinSkull(),        100, gemsPriceMutator),
-            new LootPackEntry(true, (from, container) => new SilverDagger(),        100, gemsPriceMutator)
-        ));
+    //todo: add griffin figurine, protection from cold amulet (replaces f/i ammy)
+    dragon.AddGold(6000);
+    dragon.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new DragonSkull(),        100),
+        new LootPackEntry(true, (from, container) => new IvoryBrooch(),        25),
+        new LootPackEntry(true, (from, container) => new ShieldBracelet(),        25),
+        new LootPackEntry(true, (from, container) => new FireProtectionAmulet(),        25),
+        new LootPackEntry(true, (from, container) => new StrengthRing(),        25),
+        new LootPackEntry(true, (from, container) => new FeatherFallBoots(),        100),
+        new LootPackEntry(true, (from, container) => new ManaPotion(),        100)
+    ));
     
     return dragon;
 ]]></block>
@@ -105053,7 +105024,7 @@
         MaxHealth = 2500, Health = 2500,
         BaseDodge = 23,
     
-        Experience = 45000,
+        Experience = 17000,
        
         CanJumpkick = true,
         
@@ -105095,18 +105066,18 @@
         new CreatureBlock(3, "a meaty ham fist"),
     };
         
-   yeti.AddGold(3000);
-   yeti.AddLoot(
-        new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-            new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100, gemsPriceMutator),
-            new LootPackEntry(true, (from, container) => new BearSkull(),        100, gemsPriceMutator),
-            new LootPackEntry(true, (from, container) => new MisericordeDagger(),        100, gemsPriceMutator)
-        ));
+   yeti.AddGold(12000);
+   yeti.AddLoot(new LootPack(
+       new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
+       new LootPackEntry(true, (from, container) => new BearSkull(),        100),
+       new LootPackEntry(true, (from, container) => new BreatheWaterBracelet(),        100),
+       new LootPackEntry(true, (from, container) => new ManaPotion(),        100),
+       new LootPackEntry(true, (from, container) => new SaffronRobe(),        100),
+       new LootPackEntry(true, (from, container) => new FeatherFallBoots(),        100),
+       new LootPackEntry(true, (from, container) => new MisericordeDagger(),        100)
+   ));
     
-    return yeti;
+   return yeti;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -105283,7 +105254,7 @@
     var peacekeeper = new Peacekeeper()
     {
         Name = "statue",
-        Body = 51,
+        Body = 97,
         
         MaxHealth = 300, Health = 300,
         BaseDodge = 15,
@@ -105412,7 +105383,7 @@
         MaxMana = 5, Mana = 5,
         BaseDodge = 13,
         
-        Experience = 1500,
+        Experience = 1200,
     };
     shadow.AddStatus(new NightVisionStatus(shadow));
         
@@ -105432,9 +105403,9 @@
         
     shadow.AddGold(200);
     shadow.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63)
+        new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
     return shadow;
@@ -105463,7 +105434,7 @@
         MaxMana = 16, Mana = 16,
         BaseDodge = 13,
     
-        Experience = 4050,
+        Experience = 3050,
         
         CanSwim = true,
             
@@ -105491,12 +105462,9 @@
     
     wizard.AddGold(650);
     wizard.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        
-        new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    10.0),
-        new LootPackEntry(true, (from, container) => new RedRunesRobe(),        10.0)
+        new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
     return wizard;
@@ -105525,7 +105493,7 @@
         MaxMana = 23, Mana = 23,
         BaseDodge = 14,
     
-        Experience = 4550,
+        Experience = 3050,
     
         CanSwim = true,
     };
@@ -105545,18 +105513,15 @@
             skillLevel: 7,cost: 4, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<DeathSpell>(
-            skillLevel: 6, cost: 6, 
+            skillLevel: 7, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
     thaum.AddGold(650);
     thaum.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        
-        new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    10.0),
-        new LootPackEntry(true, (from, container) => new RedRunesRobe(),        10.0)
+        new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
     return thaum;
@@ -105585,7 +105550,7 @@
         MaxMana = 16, Mana = 16,
         BaseDodge = 14,
     
-        Experience = 4550,
+        Experience = 3050,
         
         CanSwim = true,
             
@@ -105611,14 +105576,11 @@
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
-    wizard.AddGold(800);
+    wizard.AddGold(600);
     wizard.AddLoot(new LootPack(
-        new LootPackEntry(true, TestTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, TestTreasureBottles,    20),
-        new LootPackEntry(true, TestTreasureTreasure,   0.63),
-        
-        new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    10.0),
-        new LootPackEntry(true, (from, container) => new RedRunesRobe(),        10.0)
+        new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
     return wizard;
@@ -105742,6 +105704,12 @@
         
         Alignment = Alignment.Lawful,
     };
+    
+    griffin.Home = new RectangleBounds()
+    {  
+        new Rectangle2D(35, 31, 36, 35, 8)
+    };
+    
     griffin.AddStatus(new NightVisionStatus(griffin));
         
     griffin.Attacks = new CreatureAttackCollection
@@ -105766,6 +105734,135 @@
     ));
         
     return griffin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="axePresence">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var presence = new Presence()
+    {
+        MaxHealth = 120, Health = 120,
+        BaseDodge = 14,
+    
+        Experience = 5000,
+    
+        Movement = 3,
+        
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+            CreatureImmunity.Projectile | CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell,
+    };
+    presence.AddStatus(new NightVisionStatus(presence));
+    
+    presence.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(12,     10, 30,   "The presence reaches inside of you!"),             100 }, 
+    };
+    
+    presence.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "an invisible barrier"),
+        new CreatureBlock(3, "an inexplicable miss"),
+        new CreatureBlock(1, "a fearful aura")
+    };
+    
+    presence.Spells = new CreatureSpellCollection(20.0)
+    {
+        new CreatureSpell<IceStormSpell>(10),
+    };
+    
+    presence.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new WaveRobe(),    100)
+    ));
+    
+    return presence;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="yetiGoblin">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var goblin = new Goblin()
+    {
+        MaxHealth = 55, Health = 55,
+        BaseDodge = 13,
+        Alignment = Alignment.Evil,
+                
+        Experience = 800,
+    
+        Attacks = new CreatureAttackCollection()
+        {
+            new CreatureBasicAttack(8),
+        }
+    
+    };
+    
+    goblin.Wield(new BattleAxe());
+    goblin.Equip(new LeatherArmor());
+            
+    goblin.AddGold(300);
+    goblin.AddLoot(new LootPack(
+        new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
+    ));
+    
+    return goblin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="yetiGoblinSentry">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var goblin = new Goblin()
+    {
+        MaxHealth = 55, Health = 55,
+        BaseDodge = 13,
+        Alignment = Alignment.Evil,
+        Experience = 800,
+        
+        Attacks = new CreatureAttackCollection()
+        {
+            new CreatureBasicAttack(8)
+        },
+    };
+    
+    goblin.Wield(new Crossbow());
+    goblin.Equip(new LeatherArmor());
+            
+    goblin.AddGold(300);
+    goblin.AddLoot(new LootPack(
+        new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.63)
+    ));
+    
+    return goblin;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -106317,7 +106414,7 @@
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -106370,6 +106467,30 @@
       </script>
       <entry entity="tailorVendor" size="1" minimum="1" maximum="1" />
       <location x="6" y="18" region="15" />
+    </spawn>
+    <spawn type="LocationSpawner" name="figEngraver">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    //todo add Figurine Engraver to this template.
+    if (spawn is Shopkeeper shopkeeper)
+    {
+        shopkeeper.AddCounter(new Point2D(29, 7, 8));
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <location x="30" y="7" region="8" />
     </spawn>
     <spawn type="RegionSpawner" name="Surface Dungeon">
       <minimumDelay>600</minimumDelay>
@@ -106971,8 +107092,8 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="upperGoblin" size="1" minimum="3" maximum="4" />
-      <entry entity="upperGoblinSentry" size="1" minimum="3" maximum="4" />
+      <entry entity="yetiGoblin" size="1" minimum="3" maximum="4" />
+      <entry entity="yetiGoblinSentry" size="1" minimum="3" maximum="4" />
       <entry entity="yeti" size="1" minimum="1" maximum="1" />
       <bounds region="45">
         <inclusion left="11" top="9" right="15" bottom="14" />
@@ -107191,10 +107312,33 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
+    <spawn type="RegionSpawner" name="Presence">
+      <minimumDelay>2700</minimumDelay>
+      <maximumDelay>3600</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="axePresence" size="1" minimum="1" maximum="1" />
+      <bounds region="36">
+        <inclusion left="0" top="0" right="7" bottom="7" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
   </spawns>
   <treasures>
-    <treasure name="TestTreasureBottles">
-      <entry weight="6">
+    <treasure name="surfaceTreasureBottles">
+      <entry weight="5">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -107212,13 +107356,22 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-    </treasure>
-    <treasure name="TestTreasureGems">
       <entry weight="1">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new GoldNugget(800u);
+	return new NitroPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="surfaceTreasureGems">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new GoldNugget(700u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -107236,13 +107389,13 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new UncutDiamond(1000u);
+	return new UncutDiamond(800u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
       </entry>
     </treasure>
-    <treasure name="TestTreasureTreasure">
+    <treasure name="surfaceTreasureTreasure">
       <entry weight="1">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
@@ -107275,6 +107428,160 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new ShieldRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="upperTreasureGems">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new GoldNugget(800u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="2">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new UncutEmerald(900u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new UncutDiamond(1000u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="minibossTreasureGems">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PearDiamond(1500u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="2">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new GoldNugget(1100u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new UncutDiamond(1200u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="upperTreasureBottles">
+      <entry weight="4">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+    return new ClearBalm();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+    return new StaminaPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new NitroPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new NaphthaPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="upperTreasure">
+      <entry weight="50">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StrengthRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="50">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new FireIceProtectionRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="50">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new ShieldBracelet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StrongShieldRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StrongStrengthRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="chaosGems">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PearDiamond(1500u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
