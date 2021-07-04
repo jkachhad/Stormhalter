@@ -3,6 +3,62 @@
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
+    public static readonly string[] _names = new string[]
+    {
+        "Aca", "Acha", "Achi", "Achu", "Aco", "Agua", "Ahua", "Aja", "Ala", "Ali", "Ama", "Ani", "Anu", "Apa",
+        "Apo", "Aqui", "Ara", "Ari", "Ata", "Ati", "Ato", "Atu", "Axi", "Aya", "Chaca", "Chacha", "Chachi",
+        "Chachu", "Chaco", "Chagua", "Chahua", "Chaja", "Chala", "Chali", "Chama", "Chani", "Chanu", "Chapa",
+        "Chapo", "Chaqui", "Chara", "Chari", "Chata", "Chati", "Chato", "Chatu", "Chaxi", "Chaya", "Chuca",
+        "Chucha", "Chuchi", "Chuchu", "Chuco", "Chugua", "Chuhua", "Chuja", "Chula", "Chuli", "Chuma", "Chuni",
+        "Chunu", "Chupa", "Chupo", "Chuqui", "Chura", "Churi", "Chuta", "Chuti", "Chuto", "Chutu", "Chuxi", "Chuya",
+        "Coca", "Cocha", "Cochi", "Cochu", "Coco", "Cogua", "Cohua", "Coja", "Cola", "Coli", "Coma", "Coni", "Conu",
+        "Copa", "Copo", "Coqui", "Cora", "Cori", "Cota", "Coti", "Coto", "Cotu", "Coxi", "Coya", "Huaca", "Huacha",
+        "Huachi", "Huachu", "Huaco", "Huagua", "Huahua", "Huaja", "Huala", "Huali", "Huama", "Huanca", "Huancha",
+        "Huanchi", "Huanchu", "Huanco", "Huangua", "Huanhua", "Huani", "Huanja", "Huanla", "Huanli", "Huanma",
+        "Huanni", "Huannu", "Huanpa", "Huanpo", "Huanqui", "Huanra", "Huanri", "Huanta", "Huanti", "Huanto",
+        "Huantu", "Huanu", "Huanxi", "Huanya", "Huapa", "Huapo", "Huaqui", "Huara", "Huari", "Huata", "Huati",
+        "Huato", "Huatu", "Huaxi", "Huaya", "Huca", "Hucha", "Huchi", "Huchu", "Huco", "Hugua", "Huhua", "Huja",
+        "Hula", "Huli", "Huma", "Huni", "Hunu", "Hupa", "Hupo", "Huqui", "Hura", "Huri", "Huta", "Huti", "Huto",
+        "Hutu", "Huxi", "Huya", "Ica", "Icha", "Ichi", "Ichu", "Ico", "Igua", "Ihua", "Ija", "Ila", "Ili", "Ima",
+        "Inca", "Incha", "Inchi", "Inchu", "Inco", "Ingua", "Inhua", "Ini", "Inja", "Inla", "Inli", "Inma", "Inni",
+        "Innu", "Inpa", "Inpo", "Inqui", "Inra", "Inri", "Inta", "Inti", "Into", "Intu", "Inu", "Inxi", "Inya",
+        "Ipa", "Ipo", "Iqui", "Ira", "Iri", "Ita", "Iti", "Ito", "Itu", "Ixi", "Iya", "Jauca", "Jaucha", "Jauchu",
+        "Jauco", "Jaugua", "Jauhua", "Jauja", "Jaula", "Jauli", "Jauma", "Jauni", "Jaunu", "Jaupa", "Jaupo",
+        "Jauqui", "Jaura", "Jauri", "Jauta", "Jauti", "Jauto", "Jautu", "Jauxi", "Jauya", "Maca", "Macca", "Maccha",
+        "Macchi", "Macchu", "Macco", "Macgua", "Macha", "Machi", "Machu", "Machua", "Macja", "Macla", "Macli",
+        "Macma", "Macni", "Macnu", "Maco", "Macpa", "Macpo", "Macqui", "Macra", "Macri", "Macta", "Macti", "Macto",
+        "Mactu", "Macxi", "Macya", "Magua", "Mahua", "Maja", "Mala", "Mali", "Mama", "Mani", "Manu", "Mapa", "Mapo",
+        "Maqui", "Mara", "Mari", "Mata", "Mati", "Mato", "Matu", "Maxi", "Maya", "Picca", "Piccha", "Picchi",
+        "Picco", "Picgua", "Pichua", "Picja", "Picla", "Picli", "Picma", "Picni", "Picnu", "Picpa", "Picpo",
+        "Picqui", "Picra", "Picri", "Picta", "Picti", "Picto", "Pictu", "Picxi", "Picya", "Tica", "Ticha", "Tichi",
+        "Tichu", "Tico", "Tigua", "Tihua", "Tija", "Tila", "Tili", "Tima", "Tini", "Tinu", "Tipa", "Tipo", "Tiqui",
+        "Tira", "Tiri", "Tita", "Titi", "Tito", "Titu", "Tixi", "Tiya", "Tuca", "Tucha", "Tuchi", "Tuchu", "Tuco",
+        "Tugua", "Tuhua", "Tuja", "Tula", "Tuli", "Tuma", "Tuni", "Tunu", "Tupa", "Tupo", "Tuqui", "Tura", "Turi",
+        "Tuta", "Tuti", "Tuto", "Tutu", "Tuxi", "Tuya", "Uca", "Ucha", "Uchi", "Uchu", "Uco", "Ugua", "Uhua", "Uja",
+        "Ula", "Uli", "Uma", "Uni", "Unu", "Upa", "Upo", "Uqui", "Ura", "Uri", "Uta", "Uti", "Uto", "Utu", "Uxi",
+        "Uya", "Yaca", "Yacha", "Yachi", "Yachu", "Yaco", "Yagua", "Yahua", "Yaja", "Yala", "Yali", "Yama", "Yani",
+        "Yanu", "Yapa", "Yapo", "Yaqui", "Yara", "Yari", "Yata", "Yati", "Yato", "Yatu", "Yaxi", "Yaya", "Yuca",
+        "Yucha", "Yuchi", "Yuchu", "Yuco", "Yugua", "Yuhua", "Yuja", "Yula", "Yuli", "Yuma", "Yuni", "Yunu", "Yupa",
+        "Yupo", "Yuqui", "Yura", "Yuri", "Yuta", "Yuti", "Yuto", "Yutu", "Yuxi", "Yuya"
+    };
+    
+    public static string[] _rarePurchaseResponses = new string[]
+    {
+        "That's quite a bargain.", 
+        "You won't find another with such quality.",
+        "I didn't think anyone even wanted that.",
+        "It was left here, pray the owner doesn't come back.",
+        "Don't go losing it."
+    };
+    
+    public static void gemsPriceMutator(MobileEntity entity, Container source, ItemEntity item)
+    {
+        /* Item values fall between 0.8 to 1.2 of base price. */
+        var lesserPrice = (int)(item.BasePrice * 0.2);
+        var higherPrice = (int)(item.BasePrice * 0.2);
+        
+        item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
+    }
 ]]></block>
     <block><![CDATA[]]></block>
   </script>
@@ -95729,7 +95785,1002 @@
     <location name="Thief" x="7" y="2" region="1" />
   </locations>
   <subregions />
-  <entities />
+  <entities>
+    <entity name="balmVendor">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    //todo get values for kobolds
+    var female = Utility.RandomBool();
+    var vendor = new Merchant<ClearBalm>(16, 10, byte.MaxValue)
+    {
+        Name = _names.Random(),
+        
+        Body = (female ? 16 : 48), IsFemale = female,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+
+    return vendor;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="ukBanker">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var banker = new Banker()
+    {
+                
+        Body = 10, IsFemale = true,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+
+    return banker;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="confessorGhost">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    return new ConfessorGhost();
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="mugwortVendor">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+    var vendor = new Merchant<Mugwort>(25, 4, byte.MaxValue)
+    {
+        Name = _names.Random(),
+        
+        Body = (female ? 10 : 9), IsFemale = female,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+
+    return vendor;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="recallVendor">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+    var vendor = new Merchant<RecallRing>(150, 4, byte.MaxValue)
+    {
+        Name = _names.Random(),
+        
+        Body = (female ? 10 : 9), IsFemale = female,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+
+    return vendor;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="shopkeeperTemplate">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+    var vendor = new Shopkeeper()
+    {
+        Name = _names.Random(),
+        Body = (female ? 10 : 9), IsFemale = female,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+    
+    return vendor;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="tannerTemplate">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+    var vendor = new Tailor()
+    {
+        Name = _names.Random(),
+        Body = (female ? 10 : 9), IsFemale = female,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+    
+    return vendor;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="thaumTrainer">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var trainer = new ThaumaturgeTrainer()
+    {
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+
+        Experience = 50,
+    };
+    
+    foreach (var skill in Skill.Weapons)
+        trainer.SetTraining(skill, 0, 4);
+    
+    trainer.SetTraining(Skill.Magic, 14, 19);
+    
+    return trainer;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="thiefTrainer">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var trainer = new ThiefTrainer()
+    {
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+
+        Experience = 50,
+        
+        Alignment = Alignment.Neutral
+    };
+    
+    trainer.SetTraining(Skill.Magic, 14, 19);
+    
+    return trainer;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="weaponTrainerTemplate">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+    var trainer = new WeaponTrainer()
+    {
+ 
+        Body = (female ? 10 : 9), IsFemale = female,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+    
+    return trainer;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="wizTrainer">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var trainer = new WizardTrainer()
+    {
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+
+        Experience = 50,
+    };
+    
+    foreach (var skill in Skill.Weapons)
+        trainer.SetTraining(skill, 0, 4);
+    
+    trainer.SetTraining(Skill.Magic, 8, 14);
+    
+    return trainer;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="townRat1">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var rat = new Peacekeeper()
+	{
+	   Name = "Squeakers", Body = BlackRat,
+	   MaxHealth = 50, Health = 50,
+	   BaseDodge = 13,
+	   
+	   Movement = 3,
+	   
+	   Experience = 50,
+	   
+	   rat.Home = new RectangleBounds()
+       {
+            new Rectangle2D(7, 2, 13, 14, 1)
+       };
+	};
+	
+	rat.Attacks = new CreatureAttackCollection
+	{
+        { new CreatureAttack(10,    10, 20,    "Squeakers sinks his teeth into your flesh."),    60 },
+        { new CreatureAttack(10,    15, 20,    "Squeakers sends a flurry of claws towards your femural artery."),    40 },
+    };
+    
+    rat.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "a claw."),
+        new CreatureBlock(3, "his fangs."),
+        new CreatureBlock(1, "his tail."),
+    };
+	
+	
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="townRat2">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var rat = new Peacekeeper()
+    {
+       Name = "Mr.Pibbs", Body = WhiteRat,
+       MaxHealth = 50, Health = 50,
+       BaseDodge = 13,
+       
+       Movement = 3,
+       
+       Experience = 50,
+       
+       rat.Home = new RectangleBounds()
+       {
+            new Rectangle2D(7, 2, 13, 14, 1)
+       };
+    };
+    
+    rat.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(10,    10, 20,    "Mr.Pibbs sinks his teeth into your flesh."),    60 },
+        { new CreatureAttack(10,    15, 20,    "Mr.Pibbs sends a flurry of claws towards your femural artery."),    40 },
+    };
+    
+    rat.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "a claw."),
+        new CreatureBlock(3, "his fangs."),
+        new CreatureBlock(1, "his tail."),
+    };
+    
+
+    
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="priest1">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    spawn.Name = "priest";
+    spawn.MaxHealth = 100; spawn.Health = 100;
+    spawn.BaseDodge = 10;
+    
+    if (spawn is Peacekeeper priest)
+    {
+        priest.Brain = new PriestAI(priest);
+        
+        priest.Home = new RectangleBounds()
+        {  
+            new Rectangle2D(23, 4, 32, 7, 2)
+        };
+        
+        priest.Wield(new SteelMace());
+        priest.Equip(new LeatherArmor());
+        
+        priest.Spells = new CreatureSpellCollection()
+        {
+            new CreatureSpell<CurseSpell>(
+                    skillLevel: 3, cost: 3,
+                    mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        };
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="whiteWyvern">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var wyvern = new Wyvern()
+    {
+        MaxHealth = 50, Health = 50,
+        BaseDodge = 15,
+                
+        Experience = 400,
+    
+        Movement = 2,
+    };
+    wyvern.AddStatus(new NightVisionStatus(wyvern));
+    
+    wyvern.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(10,     10, 12,   "The wyvern rakes you with its claws."),        50 },
+        { new CreatureAttack(11,     12, 15,   "The wyvern bites you."),                       30 },
+        { new CreatureAttack(12,     15, 20,  "The wyvern rakes whips you with its tail."),   20 }
+    };
+    wyvern.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(3, "a claw"),
+        new CreatureBlock(1, "a tail")
+    };
+            
+    wyvern.AddGold(110);
+    
+    //todo loot
+    wyvern.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new Diamond(1500u),        100,    gemsPriceMutator),
+    ));
+    
+    return wyvern;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="redWyvern">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var wyvern = new Wyvern()
+    {
+        MaxHealth = 50, Health = 50,
+        BaseDodge = 15,
+                
+        Experience = 400,
+    
+        Movement = 2,
+    };
+    wyvern.AddStatus(new NightVisionStatus(wyvern));
+    
+    wyvern.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(10,     10, 12,   "The wyvern rakes you with its claws."),        50 },
+        { new CreatureAttack(11,     12, 15,   "The wyvern bites you."),                       30 },
+        { new CreatureAttack(12,     15, 20,  "The wyvern rakes whips you with its tail."),   20 }
+    };
+    wyvern.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(3, "a claw"),
+        new CreatureBlock(1, "a tail")
+    };
+            
+    wyvern.AddGold(110);
+    
+    //todo loot
+    wyvern.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new Diamond(1500u),        100,    gemsPriceMutator),
+    ));
+    
+    return wyvern;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="blueWyvern">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var wyvern = new Wyvern()
+    {
+        MaxHealth = 50, Health = 50,
+        BaseDodge = 15,
+                
+        Experience = 400,
+    
+        Movement = 2,
+        
+        
+        
+    };
+    wyvern.AddStatus(new NightVisionStatus(wyvern));
+    
+    wyvern.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(10,     10, 12,   "The wyvern rakes you with its claws."),        50 },
+        { new CreatureAttack(11,     12, 15,   "The wyvern bites you."),                       30 },
+        { new CreatureAttack(12,     15, 20,  "The wyvern rakes whips you with its tail."),   20 }
+    };
+    wyvern.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(3, "a claw"),
+        new CreatureBlock(1, "a tail")
+    };
+            
+    wyvern.AddGold(110);
+    
+    //todo loot
+    wyvern.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new Diamond(1500u),        100,    gemsPriceMutator),
+    ));
+    
+    return wyvern;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="greenWyvern">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var wyvern = new Wyvern()
+    {
+        MaxHealth = 50, Health = 50,
+        BaseDodge = 15,
+                
+        Experience = 400,
+    
+        Movement = 2,
+    };
+    wyvern.AddStatus(new NightVisionStatus(wyvern));
+    
+    wyvern.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(10,     10, 12,   "The wyvern rakes you with its claws."),        50 },
+        { new CreatureAttack(11,     12, 15,   "The wyvern bites you."),                       30 },
+        { new CreatureAttack(12,     15, 20,  "The wyvern rakes whips you with its tail."),   20 }
+    };
+    wyvern.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(3, "a claw"),
+        new CreatureBlock(1, "a tail")
+    };
+            
+    wyvern.AddGold(110);
+    
+    //todo loot
+    wyvern.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new Diamond(1500u),        100,    gemsPriceMutator),
+    ));
+    
+    return wyvern;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="drake">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var drake = new Drake()
+    {
+        Name = "Drake",
+        MaxHealth = 2000, Health = 2000,
+        BaseDodge = 18,
+    
+        Alignment = Alignment.Chaotic
+        
+        Experience = 22000,
+        
+        CanFly = true,
+        CanCharge = true,
+        
+        BasePenetration = ArmorPenetration.VeryHeavy,
+
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
+    
+    };
+    drake.AddStatus(new NightVisionStatus(drake));
+    
+    drake.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(15,      45, 60,      "The drake slashes you with its claws.",
+                                                        new AttackProneComponent(15), 
+                                                        new AttackStunComponent(5)),                40
+        },
+        {
+            new CreatureAttack(16,      50, 65,     "The drake smashes you with its tail.",
+                                                        new AttackProneComponent(25), 
+                                                        new AttackStunComponent(10)),               40
+        },
+        {
+            new CreatureAttack(27,      60, 80,     "The drake buffets you with its wings.",
+                                                        new AttackProneComponent(35), 
+                                                        new AttackStunComponent(15)),               20
+        },
+    };
+    
+    drake.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(4, "a claw"),
+        new CreatureBlock(3, "a wing"),
+    };
+        
+    drake.Spells = new CreatureSpellCollection(20.0)
+    {
+        new CreatureSpell<LightningBoltSpell>(9),
+    };
+    
+    drake.AddGold(2000);
+    drake.AddLoot(      
+        new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(),     100),
+        new LootPackEntry(true, (from, container) => new PearDiamond(10000u),    25,    gemsPriceMutator),
+        ));
+    
+    return drake;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="carfel">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    //todo get Carfel body type
+    var carfel = new ElderTroll()
+    {
+        Name = "Carfel",
+        MaxHealth = 1500, Health = 1000,
+        BaseDodge = 21,
+    
+        Alignment = Alignment.Evil,
+        
+        Experience = 22000,
+       
+        CanJumpkick = true,
+        
+        VisibilityDistance = 0,
+        
+        BasePenetration = ArmorPenetration.Heavy,
+
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Web,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.Silver,
+    
+    };
+    carfel.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(15),
+    };
+    
+    //todo determine if I can force it to dual wield? Not sure of context
+    carfel.Wield(new YasnakiDagger());
+    carfel.Wield(new YasnakiDagger());
+        
+    carfel.AddGold(14000);
+    carfel.AddLoot(
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new BearSkull(),        100),
+        new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
+        new LootPackEntry(true, (from, container) => new StrongStrengthRing(),        100)
+    ));
+    
+    return carfel;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="shelob">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    //todo add Shelob body
+    var shelob = new Spider()
+    {
+        MaxHealth = 500, Health = 500,
+        BaseDodge = 15,
+    
+        Experience = 14000,
+    
+        Movement = 3,
+        
+        VisibilityDistance = 0,
+        RangePerception = 0,
+    };
+    
+    
+    //todo Check context on attack value
+    
+    shelob.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(12,     10, 20,      "The spider bites you", 
+                                                new AttackPoisonComponent(40, 50)),  100 }, 
+    };
+    
+    shelob.Blocks = new CreatureBlockCollection
+    {
+        { new CreatureBlock(1, "the hardened carapace") }, 
+    };
+    
+    shelob.AddGold(1000);
+    
+    return shelob;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="trollKing">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    //todo add Troll king sprite template / check stats. Needs immunity to death/lightning but no other magic. Need variables for such.
+    var trollking = new ElderTroll()
+    {
+        Name = "Troll.King",
+        MaxHealth = 3000, Health = 3000,
+        BaseDodge = 19,
+            
+        Experience = 22000,
+        
+        Immunity = CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.IceSpearSpell,
+        
+        CanCharge = true,
+        
+        BasePenetration = ArmorPenetration.VeryHeavy,
+    
+    };
+    
+    trollking.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(15),
+    };
+    
+    //todo determine if I can force it to dual wield? Not sure of context
+    trollking.Wield(new Greatsword());
+    trollking.Equip(new DragonScaleArmor);
+    
+    trollking.AddGold(2000);
+    trollking.AddLoot(      
+        new LootPackEntry(true, (from, container) => new HummingbirdAmulet(),     100),
+        ));
+    
+    return trollking;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="orugugra">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    //todo add Oruguru / Lurker bodies to spawn list variable
+    var lurker = new Ghoul()
+    {
+        Name = "Orugugra",
+        MaxHealth = 700, Health = 700,
+        BaseDodge = 17,
+        
+        Alignment = Alignment.Evil
+        
+        Experience = 22000,
+    
+        Movement = 3,
+        
+        VisibilityDistance = 0,
+    };
+    
+    lurker.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(15,     20, 30,      "Orugugra whips you with a tentacle"),  50 }, 
+        { new CreatureAttack(15,     1, 40,     "Orugugra",
+                                                    new AttackPoisonComponent(40)),          50 },
+    };
+    
+    lurker.Blocks = new CreatureBlockCollection
+    {
+        { new CreatureBlock(6, "a tentacle") }, 
+        { new CreatureBlock(4, "sharp fangs") }, 
+    };
+    
+    lurker.AddGold(2000);
+    lurker.AddLoot(new LootPack(
+        new LootPackEntry(true, PermanentStrengthPotion,       100),
+        new LootPackEntry(true, YouthPotion,       50),
+        new LootPackEntry(true, ManaPotion,       100)
+    ));
+    
+    return lurker;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="swordmaster">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    //todo get Swordmaster body type
+    var swordmaster = new Skeleton()
+    {
+        Name = "Swordmaster",
+        MaxHealth = 800, Health = 800,
+        BaseDodge = 21,
+            
+        Experience = 14000,
+       
+        CanCharge = true,
+                
+        BasePenetration = ArmorPenetration.Heavy,
+
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Web | CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell,
+    
+    };
+    swordmaster.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(15, new AttackAgeComponent(10, 30)),
+    };
+    
+    swordmaster.Wield(new BlackSteelRapier());
+    swordmaster.Equip(new DrakeScaleArmor());
+        
+    swordmaster.AddGold(5000);
+    swordmaster.AddLoot(
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator)
+    ));
+    
+    return swordmaster;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="overlord">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    // TODO: Overlord Body
+    var overlord = new Wraith()
+    {
+        Name = "Overlord", Alignment = Alignment.Evil,
+    
+        MaxHealth = 4000, Health = 4000,
+        BaseDodge = 15,
+    
+        Experience = 25000,
+        
+        BasePenetration = ArmorPenetration.VeryHeavy,
+        
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web
+    
+        CanCharge = true,
+    
+        FireProtection = 100,
+        IceProtection = 100,
+        LightningResistance = 100,
+            
+        StunResistance = 100,
+        
+    };
+    overlord.AddStatus(new NightVisionStatus(ydnac));
+    
+    //not sure on staff being wielded
+    
+    overlord.Wield(new EbonyStaff());
+    overlord.Equip(new DragonScaleArmor());
+    
+    
+    //todo check context on attack stun chance being added on a "normal" weapon attack
+    overlord.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(20, new AttackStunComponent (25)),
+    };
+    
+    overlord.Spells = new CreatureSpellCollection(35.0)
+    {
+        new CreatureSpell<IceSpearSpell>(10),
+    };
+    
+    overlord.AddGold(3000);
+    overlord.AddLoot(new LootPack(
+        new LootPackEntry(true, dungeon1Bottles,    20),
+        new LootPackEntry(true, ydnacTreasure,      100),
+        
+        new LootPackEntry(true, (from, container) => new ClearBalm(),           50),
+        new LootPackEntry(true, (from, container) => new Diamond(1500u),        100,    gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100,    gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new StarsRobe(),           100)
+    ));
+    
+    return overlord;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+  </entities>
   <spawns />
   <treasures>
     <treasure name="Testing" />

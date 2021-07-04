@@ -84247,6 +84247,43 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="priest1">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    spawn.Name = "priest";
+    spawn.MaxHealth = 100; spawn.Health = 100;
+    spawn.BaseDodge = 10;
+    
+    if (spawn is Peacekeeper priest)
+    {
+        priest.Brain = new PriestAI(priest);
+        
+        priest.Home = new RectangleBounds()
+        {  
+            new Rectangle2D(24, 9, 28, 10, 10)
+        };
+        
+        priest.Wield(new SteelMace());
+        priest.Equip(new LeatherArmor());
+        
+        priest.Spells = new CreatureSpellCollection()
+        {
+            new CreatureSpell<CurseSpell>(
+                    skillLevel: 3, cost: 3,
+                    mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        };
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns />
   <treasures>
