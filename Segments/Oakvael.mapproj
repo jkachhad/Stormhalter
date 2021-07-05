@@ -83955,7 +83955,7 @@
     </subregion>
   </subregions>
   <entities>
-    <entity name="balmVendor">
+    <entity name="oakBalmVendor">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -83987,6 +83987,7 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    // Missing from CS.
     return new ConfessorGhost();
 ]]></block>
         <block><![CDATA[]]></block>
@@ -84051,7 +84052,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="recallVendor">
+    <entity name="oakRecallVendor">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -84083,6 +84084,7 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    // Missing from CS.
     var female = Utility.RandomBool();
     var vendor = new Merchant<Mugwort>(25, 4, byte.MaxValue)
     {
@@ -84134,7 +84136,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="thaumTrainer">
+    <entity name="thaumTrainerTemplate">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -84150,6 +84152,7 @@
     foreach (var skill in Skill.Weapons)
         trainer.SetTraining(skill, 0, 4);
     
+    // Why was this was set low to 14?
     trainer.SetTraining(Skill.Magic, 8, 14);
     
     return trainer;
@@ -84163,13 +84166,14 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="wizTrainer">
+    <entity name="oakWizTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var trainer = new WizardTrainer()
     {
-        
+        Name = "Ozkin",
+        Body = 38,
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
 
@@ -84179,7 +84183,8 @@
     foreach (var skill in Skill.Weapons)
         trainer.SetTraining(skill, 0, 4);
     
-    trainer.SetTraining(Skill.Magic, 8, 14);
+    // The max trainer value was 14. Change to match hardcoded.
+    trainer.SetTraining(Skill.Magic, 8, 16);
     
     return trainer;
 ]]></block>
@@ -84192,14 +84197,15 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="weaponTrainer">
+    <entity name="oakWeaponTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var female = Utility.RandomBool();
     var trainer = new WeaponTrainer()
     {
- 
+        Name = "Grizlad",
+        // Body = 32,
         Body = (female ? 10 : 9), IsFemale = female,
         
         BaseDodge = 10,
@@ -84208,6 +84214,9 @@
         Experience = 50,
     };
     
+    foreach (var skill in Skill.Weapons)
+        trainer.SetTraining(skill, 8, 16);
+    
     return trainer;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -84219,24 +84228,122 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="thiefTrainer">
+    <entity name="surfaceThiefTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var trainer = new ThiefTrainer()
     {
-        
-        BaseDodge = 10,
+        Name = "Iamani",
+        Body = 47,
+
         MaxHealth = 50, Health = 50,
+        BaseDodge = 10,
 
         Experience = 50,
-        
+
         Alignment = Alignment.Neutral
     };
-    
-    trainer.SetTraining(Skill.Magic, 8, 14);
+    trainer.AddCounter(new Point2D(4, 5, 1));
+
+    // The max training level was 14. Going with hardcoded version.
+    // Which is right?
+    trainer.SetTraining(Skill.Magic, 8, 16);
     
     return trainer;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="oakTailor">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var female = Utility.RandomBool();
+    var vendor = new Tailor()
+    {
+        Name = _names.Random(),
+        Body = (female ? 10 : 9), IsFemale = female,
+
+        MaxHealth = 50, Health = 50,
+        BaseDodge = 10,
+
+        Experience = 50,
+    };
+
+    return vendor;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="oakLowMaTrainer">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	 var tombo = new WeaponTrainer()
+    {
+        Name = "Tombo",
+        Body = 49, IsFemale = true,
+        
+        MaxHealth = 50, Health = 50,
+        BaseDodge = 10,
+        
+        Experience = 50,
+    };
+
+    tombo.SetTraining(Skill.Hand, 8, 16);
+
+    return tombo;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="oakSheriff">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var sheriff = new Peacekeeper()
+    {
+        Name = "sheriff",
+        Body = 68,
+
+        MaxHealth = 130, Health = 130,
+        BaseDodge = 12,
+
+        Experience = 50,
+    };
+    sheriff.Home = new RectangleBounds()
+    {
+        new Rectangle2D(6, 12, 27, 12, _town)
+    };
+
+    sheriff.Hands.AddItem(new Crossbow(), 1);
+    sheriff.Paperdoll.AddItem(new LeatherArmor());
+
+    sheriff.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(6),
+    };
+
+    return sheriff;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -84248,7 +84355,364 @@
       </script>
     </entity>
   </entities>
-  <spawns />
+  <spawns>
+    <spawn type="LocationSpawner" name="oakSheriff">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="oakSheriff" size="1" minimum="1" maximum="1" />
+      <location x="14" y="13" region="10" />
+    </spawn>
+    <spawn type="LocationSpawner" name="oakLowMaTrainer">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="oakLowMaTrainer" size="1" minimum="1" maximum="1" />
+      <location x="19" y="20" region="10" />
+    </spawn>
+    <spawn type="LocationSpawner" name="oakWeaponTrainer">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="oakWeaponTrainer" size="1" minimum="1" maximum="1" />
+      <location x="4" y="3" region="8" />
+    </spawn>
+    <spawn type="LocationSpawner" name="oakTavern">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is Shopkeeper vendor) {
+        vendor.AddCounter(new Point2D(30, 26, 10));
+        vendor.AddCounter(new Point2D(31, 26, 10));
+        vendor.AddCounter(new Point2D(32, 26, 10));
+    }
+    
+    // TODO: Set shop items.
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <location x="31" y="27" region="10" />
+    </spawn>
+    <spawn type="LocationSpawner" name="oakApothecary">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is Shopkeeper vendor) {
+        vendor.AddCounter(new Point2D(8, 8, 10));
+    }
+    
+    // TODO: Set shop items.
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <location x="8" y="7" region="10" />
+    </spawn>
+    <spawn type="LocationSpawner" name="oakArmourer">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is Shopkeeper vendor) {
+        vendor.AddCounter(new Point2D(4, 12, 10));
+    }
+    
+    // TODO: Set shop items.
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <location x="4" y="11" region="10" />
+    </spawn>
+    <spawn type="LocationSpawner" name="oakPawner">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is Shopkeeper vendor) {
+        vendor.AddCounter(new Point2D(17, 26, 10));
+    }
+    
+    // TODO: Set shop items.
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <location x="17" y="27" region="10" />
+    </spawn>
+    <spawn type="LocationSpawner" name="oakWeaponsmith">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is Shopkeeper vendor) {
+        vendor.AddCounter(new Point2D(11, 23, 10));
+        vendor.AddCounter(new Point2D(12, 23, 10));
+    }
+    
+    // TODO: Set shop items.
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <location x="11" y="24" region="10" />
+    </spawn>
+    <spawn type="LocationSpawner" name="oakJeweler">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is Shopkeeper vendor) {
+        vendor.AddCounter(new Point2D(4, 17, 10));
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <location x="4" y="16" region="10" />
+    </spawn>
+    <spawn type="LocationSpawner" name="oakTailor">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="oakTailor" size="1" minimum="1" maximum="1" />
+      <location x="41" y="15" region="10" />
+    </spawn>
+    <spawn type="LocationSpawner" name="oakRecallVendor">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="oakRecallVendor" size="1" minimum="1" maximum="1" />
+      <location x="7" y="18" region="10" />
+    </spawn>
+    <spawn type="LocationSpawner" name="oakThaumTrainer">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is ThaumaturgeTrainer trainer)) {
+        trainer.Name = "Tvecie";
+        trainer.Body = 48;
+        trainer.AddCounter(new Point2D(25, 7, 10));
+        trainer.AddCounter(new Point2D(26, 7, 10));
+        trainer.AddCounter(new Point2D(27, 7, 10));
+
+        // This was set to max 14 in template. Why?
+        trainer.SetTraining(Skill.Magic, 8, 16);
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="thaumTrainerTemplate" size="1" minimum="1" maximum="1" />
+      <location x="26" y="6" region="10" />
+    </spawn>
+    <spawn type="LocationSpawner" name="oakBalmVendor">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="oakBalmVendor" size="1" minimum="1" maximum="1" />
+      <location x="28" y="10" region="10" />
+    </spawn>
+    <spawn type="LocationSpawner" name="oakBanker">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is ThaumaturgeTrainer trainer)) {
+        trainer.AddCounter(new Point2D(6, 23, 10));
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="bankerTemplate" size="1" minimum="1" maximum="1" />
+      <location x="6" y="24" region="10" />
+    </spawn>
+    <spawn type="LocationSpawner" name="surfaceThiefTrainer">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfaceThiefTrainer" size="1" minimum="1" maximum="1" />
+      <location x="4" y="4" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="oakWizTrainer">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="oakWizTrainer" size="1" minimum="1" maximum="1" />
+      <location x="4" y="12" region="10" />
+    </spawn>
+  </spawns>
   <treasures>
     <treasure name="Testing" />
   </treasures>
