@@ -105251,10 +105251,10 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var peacekeeper = new Peacekeeper()
+    var statue = new Statue()
     {
         Name = "statue",
-        Body = 97,
+        Body = 99,
         
         MaxHealth = 300, Health = 300,
         BaseDodge = 15,
@@ -105262,19 +105262,21 @@
         Movement = 0,
         
         Experience = 50,
+        
+        Alignment = Alignment.Lawful,
     };
     
-    peacekeeper.Attacks = new CreatureAttackCollection
+    statue.Attacks = new CreatureAttackCollection
     {
         new CreatureBasicAttack(6),
     };
     
-    peacekeeper.Spells = new CreatureSpellCollection(100.0)
+    statue.Spells = new CreatureSpellCollection(100.0)
     {
         new CreatureSpell<DeathSpell>(15),
     };
 
-    return peacekeeper;
+    return statue;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
