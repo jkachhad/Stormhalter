@@ -84322,7 +84322,7 @@
         <block><![CDATA[
     var sheriff = new Peacekeeper()
     {
-        Name = "sheriff",
+        Name = "Sheriff",
         Body = 68,
 
         MaxHealth = 130, Health = 130,
@@ -84344,6 +84344,127 @@
     };
 
     return sheriff;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="aniet">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var knight = new KnighthoodTeacher()
+    {
+        Name = "Aniet",
+        Body = 19, IsFemale = true,
+                
+        MaxHealth = 100, Health = 100,
+        BaseDodge = 10,
+
+        Experience = 50,
+    });
+    
+    return knight;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="oakPriest">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var female = Utility.RandomBool();
+    var priest = new Peacekeeper()
+    {
+        Name = "priest",
+        Body = (female ? 16 : 48), IsFemale = female,
+
+        MaxHealth = 100, Health = 100,
+        MaxMana = 27, Mana = 27,
+        BaseDodge = 10,
+
+        Experience = 50,
+
+        Attacks = new CreatureAttackCollection
+        {
+            new CreatureBasicAttack(6),
+        },
+        Spells = new CreatureSpellCollection()
+        {
+            { new CreatureSpell<CurseSpell>(3, mantra: SpellHelper.GenerateMantra(),
+                cost: 3, instantCast: false) }
+        }
+    };
+    priest.Brain = new PriestAI(priest);
+    priest.Home = new RectangleBounds()
+    {
+        new Rectangle2D(24, 8, 5, 3, 10)
+    };
+
+    priest.Wield(new SteelMace());
+    priest.Equip(new LeatherArmor());
+
+    return priest;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="tagget">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    // High MA surface trainer.
+	var trainer = new WeaponTrainer()
+    {
+        Name = "Tagget",
+        Body = 49,
+        
+        MaxHealth = 50, Health = 50,
+        BaseDodge = 10,
+        
+        Experience = 50,
+    };
+    
+    trainer.SetTraining(Skill.Hand, 16, 19);
+
+    return trainer;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="cudyl">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var cudyl = new Cudyl();
+            
+    cudyl.Wield(new Greatsword());
+    cudyl.Equip(new ChainmailArmor());    
+
+    return cudyl;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -84711,6 +84832,86 @@
       </script>
       <entry entity="oakWizTrainer" size="1" minimum="1" maximum="1" />
       <location x="4" y="12" region="10" />
+    </spawn>
+    <spawn type="LocationSpawner" name="aniet">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="aniet" size="1" minimum="1" maximum="1" />
+      <location x="4" y="1" region="255" />
+    </spawn>
+    <spawn type="LocationSpawner" name="oakPriest">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="oakPriest" size="1" minimum="1" maximum="1" />
+      <location x="28" y="9" region="10" />
+    </spawn>
+    <spawn type="LocationSpawner" name="tagget">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="tagget" size="1" minimum="1" maximum="1" />
+      <location x="13" y="37" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="cudyl">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="cudyl" size="1" minimum="1" maximum="1" />
+      <location x="77" y="18" region="1" />
     </spawn>
   </spawns>
   <treasures>
