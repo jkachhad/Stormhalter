@@ -106171,7 +106171,7 @@
         foreach (var skill in Skill.Weapons)
             thorgen.SetTraining(skill, 0, 4);
 
-        thorgen.SetTraining(Skill.Hand, 8, 14);
+        thorgen.SetTraining(Skill.Hand, 0, 8);
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -106493,6 +106493,34 @@
       </script>
       <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="30" y="7" region="8" />
+    </spawn>
+    <spawn type="LocationSpawner" name="axeMAFoote">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    spawn.Name = "Foote";
+    spawn.Body = 49; spawn.IsFemale = false;
+    
+    if (spawn is TrainerEntity foote)
+    {
+        foreach (var skill in Skill.Weapons)
+            foote.SetTraining(skill, 0, 4);
+
+        foote.SetTraining(Skill.Hand, 8, 14);
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <location x="35" y="22" region="1" />
     </spawn>
     <spawn type="RegionSpawner" name="Surface Dungeon">
       <minimumDelay>600</minimumDelay>
