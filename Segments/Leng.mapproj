@@ -75458,7 +75458,7 @@
     //todo: genuinely can't remember a damn thing about this NPC so needs fine tuning. Archive says it holds some kind of key.
     var powerTroll = new ElderTroll()
     {
-        MaxHealth = 450, Health = 450,
+        MaxHealth = 750, Health = 750,
         BaseDodge = 15,
 
         Experience = 4500,
@@ -76705,13 +76705,11 @@
         <block><![CDATA[
     var tiger = new Tiger()
     {
-        MaxHealth = 350, Health = 350,
+        MaxHealth = 550, Health = 550,
         BaseDodge = 15,
                 
         Experience = 7000,
-                
-        Movement = 3,
-            
+        
         CanSwim = true,
     };
     tiger.AddStatus(new NightVisionStatus(tiger));
@@ -76909,8 +76907,633 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="hyena">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var hyena = new Hyena()
+    {
+        MaxHealth = 120, Health = 120,
+        BaseDodge = 14,
+                
+        Experience = 1800,
+    };
+    
+    hyena.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(8,     5, 12,   "The hyena rakes you with its claws."),  50 }, 
+        { new CreatureAttack(10,     6, 13,  "The hyena sinks its teeth into you."),  30 }, 
+        { new CreatureAttack(11,     8, 15,  "The hyena lunges at you."),             20 }, 
+    };
+        
+    hyena.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the thick hide"),
+        new CreatureBlock(3, "a paw"),
+    };
+        
+    hyena.AddGold(300);
+    return hyena;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="cliffOrcArcher">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var orc = new Orc()
+    {
+        MaxHealth = 160, Health = 160,
+        BaseDodge = 14,
+                
+        Experience = 2400,
+        
+        CanFlee = true,
+                
+        Attacks = new CreatureAttackCollection()
+        {
+            new CreatureBasicAttack(10)
+        }
+    };
+    
+    orc.Wield(new Longbow());
+    orc.Equip(new LeatherArmor());
+            
+    orc.AddGold(500);
+    orc.AddLoot(new LootPack(
+        new LootPackEntry(true, CliffGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, CliffBottles,    20),
+        new LootPackEntry(true, CliffTreasures,    0.63)
+    ));
+    
+    return orc;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="upperManticora">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var manticora = new Manticora()
+    {
+        MaxHealth = 220, Health = 220,
+        BaseDodge = 14,
+    
+        Experience = 3500,
+            
+        
+    };
+    
+    
+    manticora.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(10,     15, 20,      "The manticora bites you with its teeth."),    40 },
+        { new CreatureAttack(11,     20, 25,      "The manticora slashes you with its claws."),    30 },
+        { new CreatureAttack(12,     25, 30,     "The manticora stings you with his tail.", 
+                                                    new AttackPoisonComponent(13)),                 30 }
+    };
+    
+    manticora.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(4, "a claw"),
+        new CreatureBlock(3, "the stinger"),
+    };
+    
+    manticora.AddGold(250);
+    manticora.AddLoot(new LootPack(
+        new LootPackEntry(true, MinotaurGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, CliffBottles,    20),
+        new LootPackEntry(true, MinotaurTreasures,    0.63)
+    ));
+    
+    return manticora;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="wight">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var wight = new Wight()
+    {
+        MaxHealth = 55, Health = 55,
+        MaxMana = 8, Mana = 8,
+        BaseDodge = 12,
+    
+        Experience = 725,
+        
+        CanFlee = true,
+    };
+    wight.AddStatus(new NightVisionStatus(wight));
+        
+    wight.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(7),
+    };
+    
+    wight.Spells =  new CreatureSpellCollection()
+    {
+        new CreatureSpell<CurseSpell>(
+            skillLevel: 4, cost: 3, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
+        
+    wight.Wield(new WoodenStaff());
+        
+    wight.AddGold(120);
+    wight.AddLoot(new LootPack(
+        new LootPackEntry(true, dungeon3Gems,       25,     gemsPriceMutator),
+        new LootPackEntry(true, dungeon3Bottles,    20),
+        new LootPackEntry(true, dungeon3Treasure,   0.6),
+        new LootPackEntry(true, dungeon3Rings,      0.6),
+        new LootPackEntry(true, dungeon3Potions,    0.2)
+    ));
+    
+    return wight;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="magicPeacekeeperTemplate">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+    var peacekeeper = new Peacekeeper()
+    {
+        Name = _names.Random(),
+        Body = (female ? 16 : 48), IsFemale = female,
+    
+        BaseDodge = 12,
+        MaxHealth = 100, Health = 100,
+        MaxMana = 30, Mana = 30,
+        
+        Experience = 50,
+    };
+
+    peacekeeper.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(6),
+    };
+    
+    return peacekeeper;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
+    <spawn type="LocationSpawner" name="Priest">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    spawn.Name = "priest";
+    spawn.MaxHealth = 100; spawn.Health = 100;
+    spawn.BaseDodge = 10;
+    
+    if (spawn is Peacekeeper priest)
+    {
+        priest.Brain = new PriestAI(priest);
+        
+        priest.Home = new RectangleBounds()
+        {  
+            new Rectangle2D(2, 1, 4, 2, 254)
+        };
+        
+        priest.Wield(new SteelMace());
+        priest.Equip(new LeatherArmor());
+        
+        priest.Spells = new CreatureSpellCollection()
+        {
+            new CreatureSpell<CurseSpell>(
+                    skillLevel: 3, cost: 3,
+                    mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        };
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="magicPeacekeeperTemplate" size="1" minimum="1" maximum="1" />
+      <location x="2" y="1" region="254" />
+    </spawn>
+    <spawn type="LocationSpawner" name="thaumTrainer">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is ThaumaturgeTrainer thaumaturgeTrainer)
+    {
+        thaumaturgeTrainer.AddCounter(new Point2D(4, 3, 254));
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="thaumTrainer" size="1" minimum="1" maximum="1" />
+      <location x="4" y="4" region="254" />
+    </spawn>
+    <spawn type="LocationSpawner" name="tanner">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="tannerTemplate" size="1" minimum="1" maximum="1" />
+      <location x="0" y="0" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="nwvendor">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is Shopkeeper shopkeeper)
+        shopkeeper.AddCounter(new Point2D(11, 9, 1));
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <location x="11" y="8" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="banker">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is Banker banker)
+        banker.AddCounter(new Point2D(15, 5, 1));
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="bankerTemplate" size="1" minimum="1" maximum="1" />
+      <location x="15" y="4" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="northvendor">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is Shopkeeper shopkeeper)
+        shopkeeper.AddCounter(new Point2D(20, 10, 1));
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <location x="20" y="9" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="nevendor">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is Shopkeeper shopkeeper)
+        shopkeeper.AddCounter(new Point2D(26, 15, 1));
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <location x="26" y="14" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="sevendor">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is Shopkeeper shopkeeper)
+        shopkeeper.AddCounter(new Point2D(27, 20, 1));
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <location x="27" y="21" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="svendor">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is Shopkeeper shopkeeper)
+        shopkeeper.AddCounter(new Point2D(20, 23, 1));
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <location x="20" y="22" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="wiztrainer">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="wizTrainer" size="1" minimum="1" maximum="1" />
+      <location x="20" y="17" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="weapontrainer">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="weaponTrainer" size="1" minimum="1" maximum="1" />
+      <location x="12" y="15" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="Puck">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    spawn.Name = "Puck";
+    spawn.Body = 49; spawn.IsFemale = false;
+    
+    if (spawn is TrainerEntity puck)
+    {
+        foreach (var skill in Skill.Weapons)
+            puck.SetTraining(skill, 0, 4);
+
+        puck.SetTraining(Skill.Hand, 8, 14);
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="weaponTrainer" size="1" minimum="1" maximum="1" />
+      <location x="5" y="4" region="4" />
+    </spawn>
+    <spawn type="LocationSpawner" name="balmvendor">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="balmVendor" size="1" minimum="1" maximum="1" />
+      <location x="18" y="19" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="recallvendor">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="recallVendor" size="1" minimum="1" maximum="1" />
+      <location x="20" y="19" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="kingplaceholder">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="confessorGhost" size="1" minimum="1" maximum="1" />
+      <location x="10" y="20" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="queenplaceholder">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="confessorGhost" size="1" minimum="1" maximum="1" />
+      <location x="12" y="20" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="confessorghost">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="confessorGhost" size="1" minimum="1" maximum="1" />
+      <location x="1" y="6" region="254" />
+    </spawn>
+    <spawn type="LocationSpawner" name="Iantaplaceholder">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="confessorGhost" size="1" minimum="1" maximum="1" />
+      <location x="24" y="4" region="35" />
+    </spawn>
     <spawn type="RegionSpawner" name="sandyPath">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
@@ -77409,6 +78032,348 @@
       <entry entity="bridgeTroll" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="36" top="15" right="40" bottom="16" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="stablesSpawner">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>13</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="mausWraith" size="1" minimum="2" maximum="2" />
+      <entry entity="mausHobgoblin" size="3" minimum="3" maximum="3" />
+      <entry entity="cliffOrcArcher" size="3" minimum="3" maximum="3" />
+      <entry entity="MausSkeleton" size="3" minimum="3" maximum="3" />
+      <entry entity="mausHobgobMage" size="2" minimum="2" maximum="2" />
+      <bounds region="100">
+        <inclusion left="17" top="1" right="21" bottom="6" />
+        <inclusion left="1" top="5" right="9" bottom="6" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="minotaurLedge">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>10</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="Lich" size="1" minimum="2" maximum="2" />
+      <entry entity="Minotaur" size="1" minimum="5" maximum="5" />
+      <entry entity="upperManticora" size="1" minimum="3" maximum="3" />
+      <bounds region="39">
+        <inclusion left="2" top="0" right="15" bottom="10" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="portalwight">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="wight" size="1" minimum="1" maximum="1" />
+      <bounds region="2">
+        <inclusion left="16" top="4" right="22" bottom="8" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="lengUndead">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1500</maximumDelay>
+      <maximum>25</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="Lich" size="1" minimum="3" maximum="5" />
+      <entry entity="mausWretch" size="3" minimum="6" maximum="9" />
+      <entry entity="mausWraith" size="3" minimum="1" maximum="1" />
+      <entry entity="mausHobgobMage" size="1" minimum="3" maximum="4" />
+      <entry entity="mausHobgoblin" size="3" minimum="5" maximum="7" />
+      <entry entity="mausWraith" size="1" minimum="4" maximum="5" />
+      <entry entity="mausSpectre" size="1" minimum="3" maximum="4" />
+      <entry entity="cliffTrolls" size="3" minimum="4" maximum="6" />
+      <bounds region="18">
+        <inclusion left="3" top="6" right="20" bottom="28" />
+        <inclusion left="21" top="8" right="43" bottom="37" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="surfaceLengSoutheast">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>4</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfacebee" size="3" minimum="2" maximum="2" />
+      <entry entity="surfacecentaur" size="1" minimum="1" maximum="1" />
+      <entry entity="surfacesandworm" size="1" minimum="1" maximum="1" />
+      <bounds region="1">
+        <inclusion left="42" top="21" right="54" bottom="27" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="surfaceNortheast">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>5</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfacecentaur" size="1" minimum="1" maximum="1" />
+      <entry entity="hyena" size="3" minimum="2" maximum="2" />
+      <entry entity="surfacesandworm" size="1" minimum="2" maximum="2" />
+      <bounds region="1">
+        <inclusion left="44" top="9" right="56" bottom="17" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="lengTownEast">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>5</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfacecentaur" size="1" minimum="1" maximum="1" />
+      <entry entity="hyena" size="2" minimum="2" maximum="2" />
+      <entry entity="surfacesandworm" size="1" minimum="2" maximum="2" />
+      <bounds region="1">
+        <inclusion left="28" top="4" right="33" bottom="20" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="lengtownwest">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>8</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfacemanticore" size="1" minimum="1" maximum="1" />
+      <entry entity="surfacesandworm" size="1" minimum="4" maximum="4" />
+      <entry entity="hyena" size="2" minimum="3" maximum="3" />
+      <bounds region="1">
+        <inclusion left="1" top="3" right="7" bottom="38" />
+        <exclusion left="3" top="23" right="4" bottom="25" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="westofDrake">
+      <minimumDelay>1200</minimumDelay>
+      <maximumDelay>1500</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="upperManticora" size="1" minimum="2" maximum="2" />
+      <entry entity="Minotaur" size="1" minimum="3" maximum="4" />
+      <entry entity="Lich" size="1" minimum="3" maximum="3" />
+      <entry entity="Minotaur" size="2" minimum="1" maximum="1" />
+      <bounds region="43">
+        <inclusion left="8" top="2" right="18" bottom="9" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="powerTroll">
+      <minimumDelay>1800</minimumDelay>
+      <maximumDelay>3600</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="powerTroll" size="1" minimum="1" maximum="1" />
+      <bounds region="237">
+        <inclusion left="3" top="6" right="6" bottom="8" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="waterfall">
+      <minimumDelay>1800</minimumDelay>
+      <maximumDelay>3600</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="doomDuck" size="1" minimum="1" maximum="1" />
+      <entry entity="tiger" size="1" minimum="1" maximum="1" />
+      <bounds region="35">
+        <inclusion left="3" top="4" right="9" bottom="5" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="waterfallmain">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>25</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="cliffCentaur" size="1" minimum="3" maximum="3" />
+      <entry entity="cliffWolves" size="3" minimum="5" maximum="6" />
+      <entry entity="cliffOrcs" size="3" minimum="5" maximum="6" />
+      <entry entity="cliffTrolls" size="2" minimum="4" maximum="5" />
+      <entry entity="cliffOrcArcher" size="3" minimum="4" maximum="5" />
+      <bounds region="35">
+        <inclusion left="1" top="9" right="24" bottom="27" />
+        <exclusion left="9" top="26" right="10" bottom="27" />
+        <exclusion left="17" top="9" right="24" bottom="12" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="priest">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <bounds region="254">
+        <inclusion left="2" top="1" right="4" bottom="2" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
