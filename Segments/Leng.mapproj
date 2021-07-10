@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.66.0.0">
+<segment name="Leng" version="0.67.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -75033,12 +75033,12 @@
     
     wraith.Spells = new CreatureSpellCollection()
     {
-        new CreatureSpell<BlindSpell>(
+        { new CreatureSpell<BlindSpell>(
             skillLevel: 9, cost: 16, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false,   75),
-        new CreatureSpell<DeathSpell>(
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),   75 },
+        { new CreatureSpell<DeathSpell>(
             skillLevel: 5, cost: 6, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false,   25)
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 }
     };
         
     wraith.Wield(new BlackStaff());
@@ -75092,15 +75092,15 @@
     
     wizard.Spells = new CreatureSpellCollection
     {
-        new CreatureSpell<ConcussionSpell>(
+        { new CreatureSpell<ConcussionSpell>(
             skillLevel: 5, cost: 16, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false,   50),
-        new CreatureSpell<MagicMissileSpell>(
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),   50 },
+        { new CreatureSpell<MagicMissileSpell>(
             skillLevel: 5, cost: 6, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false,   25),
-        new CreatureSpell<IceStormSpell>(
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 },
+        { new CreatureSpell<IceStormSpell>(
             skillLevel: 6, cost: 6, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false,   25)
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 }
     };
     
     wizard.AddGold(650);
@@ -75151,12 +75151,12 @@
     
     wizard.Spells = new CreatureSpellCollection
     {
-        new CreatureSpell<CreateWebSpell>(
+        { new CreatureSpell<CreateWebSpell>(
             skillLevel: 6, cost: 16, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false,   75),
-        new CreatureSpell<MagicMissileSpell>(
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),   75 },
+        { new CreatureSpell<MagicMissileSpell>(
             skillLevel: 5, cost: 6, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false,   25)
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 }
     };
     
     wizard.AddGold(650);
@@ -75200,12 +75200,12 @@
     
     spectre.Spells = new CreatureSpellCollection()
     {
-        new CreatureSpell<StunSpell>(
+        { new CreatureSpell<StunSpell>(
             skillLevel: 5, cost: 16, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false,   75),
-        new CreatureSpell<DeathSpell>(
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),   75 },
+        { new CreatureSpell<DeathSpell>(
             skillLevel: 4, cost: 6, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false,   25)
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 }
     };
     
     spectre.Wield(new WoodenStaff());
@@ -75288,12 +75288,12 @@
     
     hobgoblin.Spells = new CreatureSpellCollection()
     {
-        new CreatureSpell<StunSpell>(
+        { new CreatureSpell<StunSpell>(
             skillLevel: 6, cost: 16, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false,   75),
-        new CreatureSpell<DeathSpell>(
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),   75 },
+        { new CreatureSpell<DeathSpell>(
             skillLevel: 4, cost: 6, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false,   25)
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 }
     };
     
     hobgoblin.Wield(new Longsword());
