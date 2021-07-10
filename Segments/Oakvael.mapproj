@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.66.0.0">
+<segment name="Oakvael" version="0.67.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -84332,7 +84332,7 @@
     };
     sheriff.Home = new RectangleBounds()
     {
-        new Rectangle2D(6, 12, 27, 12, _town)
+        new Rectangle2D(6, 12, 27, 12, 10)
     };
 
     sheriff.Hands.AddItem(new Crossbow(), 1);
@@ -84367,7 +84367,7 @@
         BaseDodge = 10,
 
         Experience = 50,
-    });
+    };
     
     return knight;
 ]]></block>
@@ -87946,9 +87946,11 @@ PROTECTION P_DEATH 40
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    if (spawn is ThaumaturgeTrainer trainer)) {
+    if (spawn is ThaumaturgeTrainer trainer)
+    {
         trainer.Name = "Tvecie";
         trainer.Body = 48;
+        
         trainer.AddCounter(new Point2D(25, 7, 10));
         trainer.AddCounter(new Point2D(26, 7, 10));
         trainer.AddCounter(new Point2D(27, 7, 10));
@@ -87995,7 +87997,8 @@ PROTECTION P_DEATH 40
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    if (spawn is ThaumaturgeTrainer trainer)) {
+    if (spawn is ThaumaturgeTrainer trainer)
+    {
         trainer.AddCounter(new Point2D(6, 23, 10));
     }
 ]]></block>
@@ -89297,7 +89300,7 @@ PROTECTION P_DEATH 40
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new TemporaryStrengthPotion(109)();
+	return new TemporaryStrengthPotion();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -89456,7 +89459,7 @@ PROTECTION P_DEATH 40
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new TemporaryStrengthPotion(109);
+	return new TemporaryStrengthPotion();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
