@@ -84005,7 +84005,7 @@
         <block><![CDATA[
     var banker = new Banker()
     {
-                
+        Name = _names.Random(),
         Body = 10, IsFemale = true,
         
         BaseDodge = 10,
@@ -87997,9 +87997,9 @@ PROTECTION P_DEATH 40
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    if (spawn is ThaumaturgeTrainer trainer)
+    if (spawn is Banker banker)
     {
-        trainer.AddCounter(new Point2D(6, 23, 10));
+        banker.AddCounter(new Point2D(6, 23, 10));
     }
 ]]></block>
         <block><![CDATA[]]></block>
