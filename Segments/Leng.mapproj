@@ -75241,7 +75241,7 @@
         
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(11) }, 
+            { new CreatureBasicAttack(10) }, 
         },
     };
     
@@ -75272,7 +75272,7 @@
         <block><![CDATA[
     var hobgoblin = new Hobgoblin()
     {
-        MaxHealth = 100, Health = 100,
+        MaxHealth = 80, Health = 80,
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
     
@@ -75283,7 +75283,7 @@
     
     hobgoblin.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(10),
+        new CreatureBasicAttack(9),
     };
     
     hobgoblin.Spells = new CreatureSpellCollection()
@@ -75327,7 +75327,7 @@
         Name = "Wretch",
         Body = (female ? 33 : 32), IsFemale = female,
             
-        MaxHealth = 170, Health = 170,
+        MaxHealth = 145, Health = 145,
         BaseDodge = 13,
         
         Movement = 2,
@@ -75338,7 +75338,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11), 
+        new CreatureBasicAttack(10), 
     };
     
     fighter.Wield(new Longsword());
@@ -75369,6 +75369,7 @@
     //todo add raven model
 	var raven = new Goose()
 	{
+	    Name = "Raven",
         MaxHealth = 45, Health = 45,
         BaseDodge = 12,
                 
@@ -75517,6 +75518,8 @@
     };
     sandwyrm.AddStatus(new NightVisionStatus(sandwyrm));
     
+    sandwyrm.CombatantChangeInterval = TimeSpan.FromSeconds(15.0),
+    
     sandwyrm.Attacks = new CreatureAttackCollection
     {
         { new CreatureAttack(9,     12, 25,     "The sandwyrm rolls over you"),      70 }, 
@@ -75632,6 +75635,8 @@
     };
     shidosha.AddStatus(new NightVisionStatus(shidosha));
     
+    shidosha.CombatantChangeInterval = TimeSpan.FromSeconds(4.0),
+    
     shidosha.Attacks = new CreatureAttackCollection
     {
         {
@@ -75700,17 +75705,17 @@
     ninja.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(20,      10, 30,      "The ninja hits you with a flurry of fists.",
+            new CreatureAttack(14,      10, 30,      "The ninja hits you with a flurry of fists.",
                                                         new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(20,      30, 60,     "The ninja slams his fist into your chest.",
+            new CreatureAttack(15,      30, 60,     "The ninja slams his fist into your chest.",
                                                         new AttackProneComponent(25), 
                                                         new AttackStunComponent(5)),               40
         },
         {
-            new CreatureAttack(20,      40, 60,     "The ninja knocks you back with a forceful kick.",
+            new CreatureAttack(16,      40, 60,     "The ninja knocks you back with a forceful kick.",
                                                         new AttackProneComponent(100), 
                                                         new AttackStunComponent(5)),               20
         },
@@ -75762,20 +75767,22 @@
     };
     dragon.AddStatus(new NightVisionStatus(dragon));
     
+    dragon.CombatantChangeInterval = TimeSpan.FromSeconds(20.0),
+    
     dragon.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(17,      30, 55,      "The dragon slashes you with its claws.",
+            new CreatureAttack(13,      30, 55,      "The dragon slashes you with its claws.",
                                                         new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                45
         },
         {
-            new CreatureAttack(17,      45, 60,     "The dragon smashes you with its tail.",
+            new CreatureAttack(14,      45, 60,     "The dragon smashes you with its tail.",
                                                         new AttackProneComponent(25), 
                                                         new AttackStunComponent(10)),               45
         },
         {
-            new CreatureAttack(17,      60, 80,     "The dragon buffets you with its wings.",
+            new CreatureAttack(15,      60, 80,     "The dragon buffets you with its wings.",
                                                         new AttackProneComponent(100), 
                                                         new AttackStunComponent(15)),               10
         },
@@ -75839,10 +75846,12 @@
         VisibilityDistance = 0,
     };
     
+    vlad.CombatantChangeInterval = TimeSpan.FromSeconds(4.0),
+    
     vlad.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(20,     40, 70,      "Vlad rends your flesh with his claws"),  70 }, 
-        { new CreatureAttack(20,     60, 80,     "Vlad appears behind you, sinking his teeth into your neck",
+        { new CreatureAttack(17,     40, 70,      "Vlad rends your flesh with his claws"),  70 }, 
+        { new CreatureAttack(18,     60, 80,     "Vlad appears behind you, sinking his teeth into your neck",
                                                     new AttackStunComponent(50)),          30 },
     };
     
@@ -75905,6 +75914,8 @@
     
     };
     drake.AddStatus(new NightVisionStatus(drake));
+    
+    drake.CombatantChangeInterval = TimeSpan.FromSeconds(10.0),
     
     drake.Attacks = new CreatureAttackCollection
     {
@@ -76019,7 +76030,7 @@
         Name = "Nomad",
         Body = (female ? 33 : 32), IsFemale = female,
             
-        MaxHealth = 200, Health = 200,
+        MaxHealth = 165, Health = 165,
         BaseDodge = 15,
             
         Experience = 3550,
@@ -76030,7 +76041,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(12), 
+        new CreatureBasicAttack(11), 
     };
     
     fighter.Wield(new Longsword());
@@ -76060,7 +76071,7 @@
         <block><![CDATA[
     var scorpion = new Scorpion()
     {
-        MaxHealth = 220, Health = 220,
+        MaxHealth = 180, Health = 180,
         BaseDodge = 16,
     
         Experience = 5500,
@@ -76168,7 +76179,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(12), 
+        new CreatureBasicAttack(11), 
     };
     
     fighter.Wield(new FineCrossbow());
@@ -76211,10 +76222,10 @@
     
     minotaur.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(15,     25, 35,      "The minotaur hits with a wicked axe"),          60 }, 
-        { new CreatureAttack(15,     30, 40,     "You've been gored by the minotaur",
+        { new CreatureAttack(13,     25, 35,      "The minotaur hits with a wicked axe"),          60 }, 
+        { new CreatureAttack(13,     30, 40,     "You've been gored by the minotaur",
                                                     new AttackStunComponent(10.0)),         30 }, 
-        { new CreatureAttack(15,     35, 60,     "You've been trampled by the minotaur"),    10 }, 
+        { new CreatureAttack(14,     35, 60,     "You've been trampled by the minotaur"),    10 }, 
     };
     
     minotaur.Blocks = new CreatureBlockCollection
@@ -76385,7 +76396,7 @@
     //todo add portal gem loot chance - replace red berries heh
     var sandwyrm = new Sandwyrm()
     {
-        MaxHealth = 160, Health = 160,
+        MaxHealth = 130, Health = 130,
         BaseDodge = 14,
     
         Experience = 3500,
@@ -76399,8 +76410,8 @@
     
     sandwyrm.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(9,     10, 20,     "The sandwyrm rolls over you"),      70 }, 
-        { new CreatureAttack(10,    15, 25,     "You've been bitten by the sandwyrm",
+        { new CreatureAttack(8,     10, 20,     "The sandwyrm rolls over you"),      70 }, 
+        { new CreatureAttack(9,    15, 25,     "You've been bitten by the sandwyrm",
                                                     new AttackPoisonComponent(4)),             30 },
                                                     // TODO: Attack poison chance. 50%
     };
@@ -76446,9 +76457,9 @@
     
     manticora.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(9,     10, 15,      "The manticora bites you with its teeth."),    40 },
-        { new CreatureAttack(9,     12, 18,      "The manticora slashes you with its claws."),    30 },
-        { new CreatureAttack(10,     15, 20,     "The manticora stings you with his tail.", 
+        { new CreatureAttack(8,     10, 15,      "The manticora bites you with its teeth."),    40 },
+        { new CreatureAttack(8,     12, 18,      "The manticora slashes you with its claws."),    30 },
+        { new CreatureAttack(9,     15, 20,     "The manticora stings you with his tail.", 
                                                     new AttackPoisonComponent(8)),                 30 }
     };
     
@@ -76522,7 +76533,7 @@
         Name = "Familiar",
         Body = (female ? 33 : 32), IsFemale = female,
             
-        MaxHealth = 200, Health = 200,
+        MaxHealth = 130, Health = 130,
         BaseDodge = 14,
     
         Experience = 4000,
@@ -76569,7 +76580,7 @@
         Name = "Familiar",
         Body = (female ? 33 : 32), IsFemale = female,
             
-        MaxHealth = 270, Health = 270,
+        MaxHealth = 180, Health = 180,
         BaseDodge = 15,
         
         Movement = 3,
@@ -76644,13 +76655,12 @@
     };
         
     thaum.AddGold(650);
-    /* TODO; These don't exist?
     thaum.AddLoot(new LootPack(
-        new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, upperTreasureBottles,    20),
-        new LootPackEntry(true, upperTreasure,   0.63)
+        new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, MausBottles,    20),
+        new LootPackEntry(true, MausTreasure,  0.63)
     ));
-    */
+    
     return thaum;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -76668,7 +76678,7 @@
         <block><![CDATA[
     var centaur = new Centaur()
     {
-        MaxHealth = 350, Health = 350,
+        MaxHealth = 250, Health = 250,
         BaseDodge = 14,
                             
         Experience = 4700,
@@ -76676,7 +76686,7 @@
     
     centaur.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(12),
+        new CreatureBasicAttack(11),
     };
         
     centaur.Wield(new FineCrossbow());
@@ -76756,11 +76766,13 @@
         Experience = 9000,
     };
     
+    duck.CombatantChangeInterval = TimeSpan.FromSeconds(10.0),
+    
     duck.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(15,     40, 50,   "The duck buffets you with his wings."),  50 }, 
-        { new CreatureAttack(16,     45, 60,  "The duck viciously attacks your shins."),  30 }, 
-        { new CreatureAttack(17,     50, 65,  "The duck pecks at your eyes attempting to blind you."),             20 }, 
+        { new CreatureAttack(13,     40, 50,   "The duck buffets you with his wings."),  50 }, 
+        { new CreatureAttack(14,     45, 60,  "The duck viciously attacks your shins."),  30 }, 
+        { new CreatureAttack(15,     50, 65,  "The duck pecks at your eyes attempting to blind you."),             20 }, 
     };
         
     duck.Blocks = new CreatureBlockCollection
@@ -76770,7 +76782,7 @@
     };
     duck.AddGold(500);
     duck.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new OchreEgg(),    100, gemsPriceMutator) /* Eggs are not gems, so they have a default price, do we need to make it configured? */
+        new LootPackEntry(true, (from, container) => new OchreEgg(), 100.0),  /* TODO: add another piece of minor loot just added egg because it made sense*/
     ));
         
     return duck;
@@ -76790,7 +76802,7 @@
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 160, Health = 160,
+        MaxHealth = 150, Health = 150,
         BaseDodge = 14,
                 
         Experience = 2400,
@@ -76830,7 +76842,7 @@
         <block><![CDATA[
     var wolf = new Wolf()
     {
-        MaxHealth = 150, Health = 150,
+        MaxHealth = 125, Health = 125,
         BaseDodge = 15,
                 
         Experience = 2200,
@@ -76839,8 +76851,8 @@
     wolf.Attacks = new CreatureAttackCollection
     {
         { new CreatureAttack(9,     5, 13,   "The wolf rakes you with its claws."),  50 }, 
-        { new CreatureAttack(11,     6, 15,  "The wolf sinks its teeth into you."),  30 }, 
-        { new CreatureAttack(12,     8, 17,  "The wolf lunges at you."),             20 }, 
+        { new CreatureAttack(10,     6, 15,  "The wolf sinks its teeth into you."),  30 }, 
+        { new CreatureAttack(11,     8, 17,  "The wolf lunges at you."),             20 }, 
     };
         
     wolf.Blocks = new CreatureBlockCollection
@@ -76873,7 +76885,7 @@
         <block><![CDATA[
     var troll = new Troll()
     {
-        MaxHealth = 200, Health = 200,
+        MaxHealth = 175, Health = 175,
         BaseDodge = 15,
                 
         Experience = 2700,
@@ -76882,7 +76894,7 @@
                                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(12)
+            new CreatureBasicAttack(11)
         }
     };
     
@@ -76922,8 +76934,8 @@
     hyena.Attacks = new CreatureAttackCollection
     {
         { new CreatureAttack(8,     5, 12,   "The hyena rakes you with its claws."),  50 }, 
-        { new CreatureAttack(10,     6, 13,  "The hyena sinks its teeth into you."),  30 }, 
-        { new CreatureAttack(11,     8, 15,  "The hyena lunges at you."),             20 }, 
+        { new CreatureAttack(9,     6, 13,  "The hyena sinks its teeth into you."),  30 }, 
+        { new CreatureAttack(10,     8, 15,  "The hyena lunges at you."),             20 }, 
     };
         
     hyena.Blocks = new CreatureBlockCollection
@@ -76950,7 +76962,7 @@
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 160, Health = 160,
+        MaxHealth = 100, Health = 100,
         BaseDodge = 14,
                 
         Experience = 2400,
@@ -77063,15 +77075,12 @@
     wight.Wield(new WoodenStaff());
         
     wight.AddGold(120);
-    /* TODO
+    
     wight.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon3Gems,       25,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon3Bottles,    20),
-        new LootPackEntry(true, dungeon3Treasure,   0.6),
-        new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.2)
+        new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, MausBottles,    20),
+        new LootPackEntry(true, MausTreasure,  0.63)
     ));
-    */
     return wight;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -77564,7 +77573,7 @@
     <spawn type="RegionSpawner" name="westMausoleum">
       <minimumDelay>720</minimumDelay>
       <maximumDelay>1020</maximumDelay>
-      <maximum>25</maximum>
+      <maximum>16</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -77579,11 +77588,11 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="MausSkeleton" size="3" minimum="3" maximum="8" />
+      <entry entity="MausSkeleton" size="3" minimum="2" maximum="8" />
       <entry entity="mausWraith" size="1" minimum="2" maximum="3" />
-      <entry entity="mausWretch" size="3" minimum="3" maximum="8" />
-      <entry entity="raven" size="1" minimum="4" maximum="7" />
-      <entry entity="mausHobgoblin" size="1" minimum="6" maximum="10" />
+      <entry entity="mausWretch" size="3" minimum="2" maximum="8" />
+      <entry entity="raven" size="1" minimum="2" maximum="7" />
+      <entry entity="mausHobgoblin" size="1" minimum="4" maximum="10" />
       <entry entity="mausHobgobMage" size="1" minimum="2" maximum="3" />
       <bounds region="10">
         <inclusion left="7" top="6" right="11" bottom="33" />
@@ -77593,6 +77602,35 @@
     <spawn type="RegionSpawner" name="insideMausoleum">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
+      <maximum>15</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="mausConcWiz" size="1" minimum="3" maximum="7" />
+      <entry entity="mausFireWiz" size="1" minimum="4" maximum="8" />
+      <entry entity="mausWraith" size="1" minimum="2" maximum="5" />
+      <entry entity="mausWretch" size="3" minimum="4" maximum="9" />
+      <entry entity="mausSpectre" size="1" minimum="2" maximum="3" />
+      <bounds region="10">
+        <inclusion left="13" top="8" right="31" bottom="29" />
+        <inclusion left="32" top="13" right="33" bottom="29" />
+        <exclusion left="20" top="22" right="24" bottom="26" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="southofMausoleum">
+      <minimumDelay>720</minimumDelay>
+      <maximumDelay>1020</maximumDelay>
       <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -77608,41 +77646,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="mausConcWiz" size="1" minimum="4" maximum="7" />
-      <entry entity="mausFireWiz" size="1" minimum="5" maximum="8" />
-      <entry entity="mausWraith" size="1" minimum="3" maximum="5" />
-      <entry entity="mausWretch" size="3" minimum="6" maximum="9" />
-      <entry entity="mausSpectre" size="1" minimum="2" maximum="3" />
-      <bounds region="10">
-        <inclusion left="13" top="8" right="31" bottom="29" />
-        <inclusion left="32" top="13" right="33" bottom="29" />
-        <exclusion left="20" top="22" right="24" bottom="26" />
-      </bounds>
-    </spawn>
-    <spawn type="RegionSpawner" name="southofMausoleum">
-      <minimumDelay>720</minimumDelay>
-      <maximumDelay>1020</maximumDelay>
-      <maximum>30</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
       <entry entity="raven" size="3" minimum="2" maximum="4" />
-      <entry entity="mausWretch" size="3" minimum="5" maximum="12" />
+      <entry entity="mausWretch" size="3" minimum="4" maximum="12" />
       <entry entity="mausHobgoblin" size="3" minimum="4" maximum="12" />
-      <entry entity="mausHobgobMage" size="1" minimum="3" maximum="5" />
-      <entry entity="MausSkeleton" size="3" minimum="6" maximum="12" />
-      <entry entity="mausWraith" size="1" minimum="3" maximum="5" />
+      <entry entity="mausHobgobMage" size="1" minimum="2" maximum="5" />
+      <entry entity="MausSkeleton" size="3" minimum="4" maximum="12" />
+      <entry entity="mausWraith" size="1" minimum="2" maximum="5" />
       <bounds region="10">
         <inclusion left="10" top="31" right="49" bottom="40" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -77666,6 +77675,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="presence" size="1" minimum="1" maximum="1" />
       <bounds region="10">
         <inclusion left="33" top="9" right="39" bottom="11" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -77703,7 +77713,7 @@
     <spawn type="RegionSpawner" name="gryphCliffsOutdoors">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>23</maximum>
+      <maximum>18</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -77722,7 +77732,7 @@
       <entry entity="nomad" size="3" minimum="5" maximum="10" />
       <entry entity="cliffCentaur" size="1" minimum="2" maximum="3" />
       <entry entity="scorpion" size="1" minimum="3" maximum="5" />
-      <entry entity="surfacebee" size="3" minimum="3" maximum="3" />
+      <entry entity="surfacebee" size="3" minimum="1" maximum="3" />
       <entry entity="raven" size="1" minimum="2" maximum="2" />
       <bounds region="20">
         <inclusion left="9" top="3" right="37" bottom="9" />
@@ -77784,7 +77794,7 @@
     <spawn type="RegionSpawner" name="gryphcliffdungeon">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>10</maximum>
+      <maximum>8</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -78254,6 +78264,7 @@
     <spawn type="RegionSpawner" name="westofDrake">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1500</maximumDelay>
+      <maximum>10</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -78296,7 +78307,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="powerTroll" size="1" minimum="1" maximum="1" />
-      <bounds region="237">
+      <bounds region="236">
         <inclusion left="3" top="6" right="6" bottom="8" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
