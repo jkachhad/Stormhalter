@@ -76782,7 +76782,7 @@
     };
     duck.AddGold(500);
     duck.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new OchreEgg(), 100.0),  /* TODO: add another piece of minor loot just added egg because it made sense*/
+        new LootPackEntry(true, (from, container) => new OchreEgg(), 100.0)  /* TODO: add another piece of minor loot just added egg because it made sense*/
     ));
         
     return duck;
