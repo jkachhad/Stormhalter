@@ -88195,8 +88195,8 @@ PROTECTION P_DEATH 40
       <location x="25" y="9" region="251" />
     </spawn>
     <spawn type="LocationSpawner" name="hobgoblinCavesSpider">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>1200</maximumDelay>
+      <minimumDelay>-2700</minimumDelay>
+      <maximumDelay>4800</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -88436,7 +88436,7 @@ PROTECTION P_DEATH 40
         <exclusion left="41" top="35" right="54" bottom="40" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="templeSpawner">
+    <spawn type="RegionSpawner" name="undeadSpawner">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -88464,7 +88464,7 @@ PROTECTION P_DEATH 40
       <entry entity="dungeon5Thaum" size="1" minimum="2" maximum="3" />
       <entry entity="dungeon5Wizard" size="1" minimum="4" maximum="5" />
       <bounds region="227">
-        <inclusion left="0" top="0" right="100" bottom="100" />
+        <inclusion left="0" top="4" right="26" bottom="40" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -88512,7 +88512,7 @@ PROTECTION P_DEATH 40
       <entry entity="dungeon1OrcSentry" size="1" minimum="2" maximum="2" />
       <entry entity="dungeon2Goblin" size="3" minimum="2" maximum="2" />
       <bounds region="241">
-        <inclusion left="0" top="0" right="100" bottom="100" />
+        <inclusion left="0" top="0" right="13" bottom="22" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -88541,7 +88541,7 @@ PROTECTION P_DEATH 40
       <entry entity="dungeon1OrcSentry" size="1" minimum="2" maximum="3" />
       <entry entity="dungeon1OakTroll" size="1" minimum="4" maximum="6" />
       <bounds region="251">
-        <inclusion left="0" top="0" right="100" bottom="100" />
+        <inclusion left="0" top="0" right="50" bottom="11" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -88571,7 +88571,7 @@ PROTECTION P_DEATH 40
       <entry entity="dungeon2OrcTrapper" size="1" minimum="2" maximum="3" />
       <entry entity="dungeon2Spectre" size="1" minimum="2" maximum="3" />
       <bounds region="239">
-        <inclusion left="0" top="0" right="100" bottom="100" />
+        <inclusion left="0" top="0" right="24" bottom="18" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -88603,7 +88603,7 @@ PROTECTION P_DEATH 40
       <entry entity="dungeon3Troll" size="1" minimum="7" maximum="10" />
       <entry entity="dungeon3Gargoyle" size="1" minimum="6" maximum="9" />
       <bounds region="235">
-        <inclusion left="0" top="0" right="100" bottom="100" />
+        <inclusion left="-4" top="-9" right="53" bottom="42" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -88636,7 +88636,7 @@ PROTECTION P_DEATH 40
       <entry entity="dungeon4Drizilu" size="1" minimum="1" maximum="1" />
       <entry entity="dungeon4Glamuzu" size="1" minimum="1" maximum="1" />
       <bounds region="232">
-        <inclusion left="0" top="0" right="100" bottom="100" />
+        <inclusion left="0" top="3" right="25" bottom="25" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
