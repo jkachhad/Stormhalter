@@ -60,7 +60,76 @@
         item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
     }
 ]]></block>
-    <block><![CDATA[]]></block>
+    <block><![CDATA[
+public class Puck : VendorEntity
+    {
+        public Puck()
+        {
+            Name = "Puck";
+            Body = 49;
+
+            Health = MaxHealth = 50;
+            BaseDodge = 10;
+
+            Experience = 50;
+
+            Movement = 0;
+        }
+
+        public Puck(Serial serial) : base(serial)
+        {
+        }
+        
+        public override void HandleOrder(OrderEventArgs args)
+        {
+            base.HandleOrder(args);
+
+            if (args.Handled)
+                return;
+            
+            var source = args.Source;
+            var order = args.Order;
+            
+            /* example: craft broadsword */
+            if (_craft.TryGetMatch(order, out var craftMatch) && craftMatch.Groups[1].Value.Matches("gauntlets", true))
+            {
+                args.Handled = true;
+                
+                if (AtCounter(source, out var counter))
+                {
+                    var items = Segment.GetItemsAt(Location).ToList();
+
+                    var buddha = items.OfType<Kimono>();
+
+                    if (buddha.Any())
+                    {
+                        if (ConsumeFromLocation<Kimono>(counter, 1))
+                        {
+                            new CrystalGauntlets().Move(counter, true, Segment);
+
+                            SayTo(source, 6300349); /* Wield this weapon with courage and honor. */
+                        }
+                    }
+                    else
+                    {
+                        SayTo(source, 6300348); /* Bring something from Shidosha and I will make you the weapon. */
+                    }
+                }
+                else
+                {
+                    if (_counters.Any())
+                        SayTo(source, 6300236); /* Please step up to a counter. */
+                    else
+                        SayTo(source, 6300237); /* Please stand closer to me. */
+                }
+                
+                return;
+            }
+        }
+
+        
+    }
+}]]></block>
   </script>
   <regions>
     <region>
@@ -74685,7 +74754,7 @@
 	var skeleton = new Skeleton()
     {
         MaxHealth = 90, Health = 90,
-        BaseDodge = 17,
+        BaseDodge = 10,
 
         Experience = 1500,
 
@@ -74778,7 +74847,7 @@
         Alignment = Alignment.Neutral
     };
     
-    trainer.SetTraining(Skill.Magic, 8, 14);
+    trainer.SetTraining(Skill.Magic, 8, 16);
     
     return trainer;
 ]]></block>
@@ -74863,7 +74932,7 @@
     foreach (var skill in Skill.Weapons)
         trainer.SetTraining(skill, 0, 4);
     
-    trainer.SetTraining(Skill.Magic, 8, 14);
+    trainer.SetTraining(Skill.Magic, 8, 16);
     
     return trainer;
 ]]></block>
@@ -74880,11 +74949,10 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var female = Utility.RandomBool();
     var vendor = new Shopkeeper()
     {
         Name = _names.Random(),
-        Body = (female ? 10 : 9), IsFemale = female,
+        Body = (9),
         
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
@@ -75020,7 +75088,7 @@
     {
         MaxHealth = 100, Health = 100,
         MaxMana = 31, Mana = 31,
-        BaseDodge = 14,
+        BaseDodge = 12,
         
         Experience = 1800,
     };
@@ -75073,7 +75141,7 @@
             
         MaxHealth = 100, Health = 100,
         MaxMana = 31, Mana = 31,
-        BaseDodge = 15,
+        BaseDodge = 14,
     
         Experience = 4550,
         
@@ -75096,10 +75164,10 @@
             skillLevel: 5, cost: 16, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   50 },
         { new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 5, cost: 6, 
+            skillLevel: 8, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 },
         { new CreatureSpell<IceStormSpell>(
-            skillLevel: 6, cost: 6, 
+            skillLevel: 8, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 }
     };
     
@@ -75132,7 +75200,7 @@
             
         MaxHealth = 100, Health = 100,
         MaxMana = 31, Mana = 31,
-        BaseDodge = 15,
+        BaseDodge = 13,
     
         Experience = 3850,
         
@@ -75155,7 +75223,7 @@
             skillLevel: 6, cost: 16, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   75 },
         { new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 5, cost: 6, 
+            skillLevel: 8, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 }
     };
     
@@ -75235,7 +75303,7 @@
     var hobgoblin = new Hobgoblin()
     {
         MaxHealth = 90, Health = 90,
-        BaseDodge = 14,
+        BaseDodge = 11,
     
         Experience = 1400,
         
@@ -75274,7 +75342,7 @@
     {
         MaxHealth = 80, Health = 80,
         MaxMana = 31, Mana = 31,
-        BaseDodge = 14,
+        BaseDodge = 12,
     
         Experience = 1700,
     
@@ -75292,7 +75360,7 @@
             skillLevel: 6, cost: 16, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   75 },
         { new CreatureSpell<DeathSpell>(
-            skillLevel: 4, cost: 6, 
+            skillLevel: 5, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 }
     };
     
@@ -75328,11 +75396,11 @@
         Body = (female ? 33 : 32), IsFemale = female,
             
         MaxHealth = 145, Health = 145,
-        BaseDodge = 13,
+        BaseDodge = 11,
         
         Movement = 2,
     
-        Experience = 2750,
+        Experience = 2550,
             
     };
     
@@ -75367,12 +75435,13 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     //todo add raven model
-	var raven = new Goose()
+	var raven = new Raven()
 	{
 	    Name = "Raven",
         MaxHealth = 45, Health = 45,
         BaseDodge = 12,
                 
+        VisibilityDistance = 0,
         Experience = 500,
     };
     
@@ -75462,7 +75531,7 @@
         MaxHealth = 750, Health = 750,
         BaseDodge = 15,
 
-        Experience = 4500,
+        Experience = 6500,
         
         Attacks = new CreatureAttackCollection
         {
@@ -75564,7 +75633,7 @@
         MaxMana = 50, Mana = 50,
         BaseDodge = 14,
     
-        Experience = 5000,
+        Experience = 7000,
     
         VisibilityDistance = 0,
         
@@ -75591,10 +75660,10 @@
     presence.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<FearSpell>(
-            skillLevel: 10, cost: 26, 
+            skillLevel: 11, cost: 26, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<DeathSpell>(
-            skillLevel: 6.5, cost: 6, 
+            skillLevel: 7, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
@@ -75618,7 +75687,7 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     //todo make shidosha look like shidosha, add fan/crystal gaunt quest buddha.
-    var shidosha = new Yeti()
+    var shidosha = new Ninja()
     {
         Name = "Shidosha",
         MaxHealth = 3000, Health = 3000,
@@ -75666,7 +75735,7 @@
    shidosha.AddGold(4000);
    shidosha.AddLoot(new LootPack(
        new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100, gemsPriceMutator),
-       new LootPackEntry(true, (from, container) => new Kimono(),        25),
+       new LootPackEntry(true, (from, container) => new Kimono(),        100),
        new LootPackEntry(true, (from, container) => new PermanentDexterityPotion(),        50)
    ));
        
@@ -75686,7 +75755,7 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     //todo make these guys ninjas
-    var ninja = new Goblin()
+    var ninja = new Ninja()
     {
         MaxHealth = 250, Health = 250,
         BaseDodge = 20,
@@ -75803,14 +75872,11 @@
     dragon.AddGold(10000);
     dragon.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new GriffinSkull(),        100),
-        new LootPackEntry(true, (from, container) => new BlindFearProtectionBracelet(),        50),
-        new LootPackEntry(true, (from, container) => new BlueStaffRaiseDead(),        25),
-        new LootPackEntry(true, (from, container) => new DeathResistanceRing(),        15),
+        new LootPackEntry(true, (from, container) => new BlindFearProtectionBracelet(),        100),
         new LootPackEntry(true, (from, container) => new FeatherFallBoots(),        100),
         new LootPackEntry(true, (from, container) => new RedRobe(),        100),
-        new LootPackEntry(true, (from, container) => new StrongStrengthRing(),        100),
-        new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(),        10),
-        new LootPackEntry(true, (from, container) => new PermanentDexterityPotion(),        20)
+        new LootPackEntry(true, KoshOptions,    100),
+        new LootPackEntry(true, (from, container) => new PearDiamond(6000u),    100, gemsPriceMutator)
         ));
     
     return dragon;
@@ -75835,7 +75901,7 @@
         MaxHealth = 7000, Health = 7000,
         BaseDodge = 20,
     
-        Experience = 25000,
+        Experience = 55000,
     
         CanCharge = true,
         
@@ -75900,8 +75966,10 @@
     {
         MaxHealth = 6000, Health = 6000,
         BaseDodge = 19,
-    
-        Experience = 25000,
+        
+        Alignment = Alignment.Chaotic,
+        
+        Experience = 50000,
         
         CanFly = true,
         CanCharge = true,
@@ -76133,7 +76201,7 @@
     lich.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<DeathSpell>(
-            skillLevel: 7, cost: 6, 
+            skillLevel: 8, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
@@ -76542,7 +76610,7 @@
             
         VisibilityDistance = 0,
     };
-    
+    fighter.AddStatus(new NightVisionStatus(fighter));
     fighter.Attacks = new CreatureAttackCollection
     {
         new CreatureBasicAttack(11), 
@@ -76635,6 +76703,7 @@
         VisibilityDistance = 0,
     };
     
+    thaum.AddStatus(new NightVisionStatus(thaum));
     thaum.Wield(new WoodenFlail());
     thaum.Wield(new WoodenShield());
     thaum.Equip(new LeatherArmor());
@@ -76684,6 +76753,7 @@
         Experience = 4700,
     };
     
+    centaur.AddStatus(new NightVisionStatus(centaur));
     centaur.Attacks = new CreatureAttackCollection
     {
         new CreatureBasicAttack(11),
@@ -76802,7 +76872,7 @@
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 150, Health = 150,
+        MaxHealth = 130, Health = 130,
         BaseDodge = 14,
                 
         Experience = 2400,
@@ -76885,7 +76955,7 @@
         <block><![CDATA[
     var troll = new Troll()
     {
-        MaxHealth = 175, Health = 175,
+        MaxHealth = 145, Health = 145,
         BaseDodge = 15,
                 
         Experience = 2700,
@@ -77125,6 +77195,21 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="Puck">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	return new Puck();
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="Priest">
@@ -77177,10 +77262,13 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Name = "Imo";
     if (spawn is ThaumaturgeTrainer thaumaturgeTrainer)
     {
         thaumaturgeTrainer.AddCounter(new Point2D(4, 3, 254));
     }
+    
+    
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -77222,8 +77310,10 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Name = "Reis";
     if (spawn is Shopkeeper shopkeeper)
         shopkeeper.AddCounter(new Point2D(11, 9, 1));
+
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -77244,6 +77334,7 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Name = "Amita";
     if (spawn is Banker banker)
         banker.AddCounter(new Point2D(15, 5, 1));
 ]]></block>
@@ -77266,6 +77357,7 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Name = "Tal";
     if (spawn is Shopkeeper shopkeeper)
         shopkeeper.AddCounter(new Point2D(20, 10, 1));
 ]]></block>
@@ -77288,6 +77380,7 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Name = "Doron";
     if (spawn is Shopkeeper shopkeeper)
         shopkeeper.AddCounter(new Point2D(26, 15, 1));
 ]]></block>
@@ -77309,8 +77402,10 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Name = "Gill";
     if (spawn is Shopkeeper shopkeeper)
         shopkeeper.AddCounter(new Point2D(27, 20, 1));
+
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -77331,8 +77426,10 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Name = "Reuv";
     if (spawn is Shopkeeper shopkeeper)
         shopkeeper.AddCounter(new Point2D(20, 23, 1));
+
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -77350,10 +77447,11 @@
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    spawn.Body = 38;
+    spawn.Name = "Bayaz";
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -77371,10 +77469,18 @@
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Body = 32; spawn.IsFemale = false;
+    spawn.Name = "Hall";
+    if (spawn is TrainerEntity lengweapontrainer)
+    {
+        foreach (var skill in Skill.Weapons)
+            lengweapontrainer.SetTraining(skill, 8, 16);
 
+        lengweapontrainer.SetTraining(Skill.Hand, 0, 4);
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -77388,17 +77494,17 @@
       <entry entity="weaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="12" y="15" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="Puck">
+    <spawn type="LocationSpawner" name="Pock">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    spawn.Name = "Puck";
+    spawn.Name = "Pock";
     spawn.Body = 49; spawn.IsFemale = false;
     
-    if (spawn is TrainerEntity puck)
+    if (spawn is TrainerEntity pock)
     {
         foreach (var skill in Skill.Weapons)
             puck.SetTraining(skill, 0, 4);
@@ -77543,6 +77649,52 @@
       </script>
       <entry entity="confessorGhost" size="1" minimum="1" maximum="1" />
       <location x="24" y="4" region="35" />
+    </spawn>
+    <spawn type="LocationSpawner" name="thiefTrainer">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    spawn.Name = "Lars";
+    if (spawn is ThiefTrainer thieftrainer)
+    {
+        thieftrainer.AddCounter(new Point2D(5, 27, 20));
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="thiefTrainer" size="1" minimum="1" maximum="1" />
+      <location x="5" y="28" region="20" />
+    </spawn>
+    <spawn type="LocationSpawner" name="Puck">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="Puck" size="1" minimum="1" maximum="1" />
+      <location x="4" y="4" region="4" />
     </spawn>
     <spawn type="RegionSpawner" name="sandyPath">
       <minimumDelay>600</minimumDelay>
@@ -77868,8 +78020,8 @@
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Vlad">
-      <minimumDelay>7200</minimumDelay>
-      <maximumDelay>14400</maximumDelay>
+      <minimumDelay>10800</minimumDelay>
+      <maximumDelay>18000</maximumDelay>
       <maximum>4</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -77974,8 +78126,8 @@
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Shidosha">
-      <minimumDelay>3600</minimumDelay>
-      <maximumDelay>7200</maximumDelay>
+      <minimumDelay>7200</minimumDelay>
+      <maximumDelay>10800</maximumDelay>
       <maximum>4</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -78647,6 +78799,53 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new SmallSapphire(1100u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="KoshOptions">
+      <entry weight="2">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new DeathResistanceRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new BlueStaffRaiseDead();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StrongStrengthRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentDexterityPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentConstitutionPotion();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
