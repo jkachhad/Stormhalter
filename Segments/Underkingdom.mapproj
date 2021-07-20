@@ -59,9 +59,9 @@
         
         item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
     }
-]]></block>
-    <block><![CDATA[
-public class Alia : VendorEntity
+    
+    /* I don't think this is how the OG version worked? */
+    public class Alia : VendorEntity
     {
         public Alia()
         {
@@ -126,10 +126,9 @@ public class Alia : VendorEntity
                 return;
             }
         }
-
-        
     }
-}]]></block>
+]]></block>
+    <block><![CDATA[]]></block>
   </script>
   <regions>
     <region>
@@ -96102,7 +96101,6 @@ public class Alia : VendorEntity
         <block><![CDATA[
     var trainer = new ThiefTrainer()
     {
-        
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
 
@@ -96188,7 +96186,7 @@ public class Alia : VendorEntity
 	   MaxHealth = 90, Health = 90,
 	   BaseDodge = 13,
 	   
-	   CanSwim = true;
+	   CanSwim = true,
 	   
 	   Experience = 50,
 	   
@@ -96198,13 +96196,13 @@ public class Alia : VendorEntity
        }
 	};
 	
-	rat.Attacks = new CreatureAttackCollection
+	rat.Attacks = new CreatureAttackCollection()
 	{
         { new CreatureAttack(10,    10, 20,    "Squeakers sinks his teeth into your flesh."),    60 },
         { new CreatureAttack(10,    15, 20,    "Squeakers sends a flurry of claws towards your femural artery."),    40 },
     };
     
-    rat.Blocks = new CreatureBlockCollection
+    rat.Blocks = new CreatureBlockCollection()
     {
         new CreatureBlock(6, "a claw."),
         new CreatureBlock(3, "his fangs."),
@@ -96232,7 +96230,7 @@ public class Alia : VendorEntity
        MaxHealth = 90, Health = 90,
        BaseDodge = 13,
        
-       CanSwim = true;
+       CanSwim = true,
        
        Experience = 50,
        
@@ -96242,13 +96240,13 @@ public class Alia : VendorEntity
        }
     };
     
-    rat.Attacks = new CreatureAttackCollection
+    rat.Attacks = new CreatureAttackCollection()
     {
         { new CreatureAttack(10,    10, 20,    "Mr.Pibbs sinks his teeth into your flesh."),    60 },
         { new CreatureAttack(10,    15, 20,    "Mr.Pibbs sends a flurry of claws towards your femural artery."),    40 },
     };
     
-    rat.Blocks = new CreatureBlockCollection
+    rat.Blocks = new CreatureBlockCollection()
     {
         new CreatureBlock(6, "a claw."),
         new CreatureBlock(3, "his fangs."),
@@ -96285,13 +96283,13 @@ public class Alia : VendorEntity
         
     };
     
-    wyvern.Attacks = new CreatureAttackCollection
+    wyvern.Attacks = new CreatureAttackCollection()
     {
         { new CreatureAttack(9,     6, 10,   "The wyvern rakes you with its claws."),        50 },
         { new CreatureAttack(10,     10, 13,   "The wyvern bites you."),                       30 },
         { new CreatureAttack(11,     12, 15,  "The wyvern rakes whips you with its tail."),   20 }
     };
-    wyvern.Blocks = new CreatureBlockCollection
+    wyvern.Blocks = new CreatureBlockCollection()
     {
         new CreatureBlock(6, "the armor"),
         new CreatureBlock(3, "a claw"),
@@ -96333,13 +96331,13 @@ public class Alia : VendorEntity
         
     };
     
-    wyvern.Attacks = new CreatureAttackCollection
+    wyvern.Attacks = new CreatureAttackCollection()
     {
         { new CreatureAttack(9,     6, 10,   "The wyvern rakes you with its claws."),        50 },
         { new CreatureAttack(10,     10, 13,   "The wyvern bites you."),                       30 },
         { new CreatureAttack(11,     12, 15,  "The wyvern rakes whips you with its tail."),   20 }
     };
-    wyvern.Blocks = new CreatureBlockCollection
+    wyvern.Blocks = new CreatureBlockCollection()
     {
         new CreatureBlock(6, "the armor"),
         new CreatureBlock(3, "a claw"),
@@ -96381,13 +96379,13 @@ public class Alia : VendorEntity
         
     };
     
-    wyvern.Attacks = new CreatureAttackCollection
+    wyvern.Attacks = new CreatureAttackCollection()
     {
         { new CreatureAttack(9,     6, 10,   "The wyvern rakes you with its claws."),        50 },
         { new CreatureAttack(10,     10, 13,   "The wyvern bites you."),                       30 },
         { new CreatureAttack(11,     12, 15,  "The wyvern rakes whips you with its tail."),   20 }
     };
-    wyvern.Blocks = new CreatureBlockCollection
+    wyvern.Blocks = new CreatureBlockCollection()
     {
         new CreatureBlock(6, "the armor"),
         new CreatureBlock(3, "a claw"),
@@ -96429,13 +96427,13 @@ public class Alia : VendorEntity
         
     };
     
-    wyvern.Attacks = new CreatureAttackCollection
+    wyvern.Attacks = new CreatureAttackCollection()
     {
         { new CreatureAttack(9,     6, 10,   "The wyvern rakes you with its claws."),        50 },
         { new CreatureAttack(10,     10, 13,   "The wyvern bites you."),                       30 },
         { new CreatureAttack(11,     12, 15,  "The wyvern rakes whips you with its tail."),   20 }
     };
-    wyvern.Blocks = new CreatureBlockCollection
+    wyvern.Blocks = new CreatureBlockCollection()
     {
         new CreatureBlock(6, "the armor"),
         new CreatureBlock(3, "a claw"),
@@ -96487,7 +96485,7 @@ public class Alia : VendorEntity
     
     drake.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
     
-    drake.Attacks = new CreatureAttackCollection
+    drake.Attacks = new CreatureAttackCollection()
     {
         {
             new CreatureAttack(15,      45, 60,      "The drake slashes you with its claws.",
@@ -96567,7 +96565,7 @@ public class Alia : VendorEntity
     
     carfel.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
     
-    carfel.Attacks = new CreatureAttackCollection
+    carfel.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(15),
     };
@@ -96618,7 +96616,7 @@ public class Alia : VendorEntity
     
     //todo Check context on attack value
     
-    shelob.Attacks = new CreatureAttackCollection
+    shelob.Attacks = new CreatureAttackCollection()
     {
         { new CreatureAttack(12,     10, 20,      "The spider bites you", 
                                                 new AttackPoisonComponent(40)) }, 
@@ -96649,7 +96647,7 @@ public class Alia : VendorEntity
         <block><![CDATA[]]></block>
         <block><![CDATA[
     //todo add Troll king sprite template / check stats. Needs immunity to death/lightning but no other magic. Need variables for such.
-    var trollking = new Panda()
+    var trollKing = new Panda()
     {
         Name = "Troll.King",
         MaxHealth = 5000, Health = 5000,
@@ -96668,24 +96666,24 @@ public class Alia : VendorEntity
     
     };
     
-    trollKing.AddStatus(new NightVisionStatus(trollking));
+    trollKing.AddStatus(new NightVisionStatus(trollKing));
     
-    trollking.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
+    trollKing.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
     
-    trollking.Attacks = new CreatureAttackCollection
+    trollKing.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(16),
     };
     
-    trollking.Wield(new Greatsword());
-    trollking.Equip(new DragonScaleArmor());
+    trollKing.Wield(new Greatsword());
+    trollKing.Equip(new DragonScaleArmor());
     
-    trollking.AddGold(2000);
-    trollking.AddLoot(new LootPack(
+    trollKing.AddGold(2000);
+    trollKing.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new HummingbirdAmulet(),     100)
         ));
     
-    return trollking;
+    return trollKing;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96716,7 +96714,7 @@ public class Alia : VendorEntity
         VisibilityDistance = 0,
     };
     
-    lurker.Attacks = new CreatureAttackCollection
+    lurker.Attacks = new CreatureAttackCollection()
     {
         { new CreatureAttack(15,     20, 30,      "Orugugra whips you with a tentacle"),  50 }, 
         { new CreatureAttack(15,     1, 40,     "Orugugra",
@@ -96769,15 +96767,16 @@ public class Alia : VendorEntity
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell,
     
     };
-    swordmaster.Attacks = new CreatureAttackCollection
     
-    swordmaster.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
+    swordmaster.Attacks = new CreatureAttackCollection()
     {
-        { new CreatureAttack(17,    40, 60,     "The swordmaster pierces you with his rapier."
+        { new CreatureAttack(17,    40, 60,     "The swordmaster pierces you with his rapier.",
                                                     new AttackAgeComponent(50))  },
                                                     //TODO find the values for age components and add the appropriate value to these guys
     };
     
+    swordmaster.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
+   
     swordmaster.Wield(new BlackSteelRapier());
     swordmaster.Equip(new DrakeScaleArmor());
         
@@ -96836,7 +96835,7 @@ public class Alia : VendorEntity
     
     
     //todo check context on attack stun chance being added on a "normal" weapon attack
-    overlord.Attacks = new CreatureAttackCollection
+    overlord.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(20, new AttackStunComponent (25)),
     };
@@ -96922,7 +96921,7 @@ public class Alia : VendorEntity
     };
     minotaur.AddStatus(new NightVisionStatus(minotaur));
     
-    minotaur.Attacks = new CreatureAttackCollection
+    minotaur.Attacks = new CreatureAttackCollection()
     {
         { new CreatureAttack(13,     25, 35,      "The minotaur hits with a wicked axe"),          60 }, 
         { new CreatureAttack(13,     30, 40,     "You've been gored by the minotaur",
@@ -96930,7 +96929,7 @@ public class Alia : VendorEntity
         { new CreatureAttack(14,     35, 60,     "You've been trampled by the minotaur"),    10 }, 
     };
     
-    minotaur.Blocks = new CreatureBlockCollection
+    minotaur.Blocks = new CreatureBlockCollection()
     {
         new CreatureBlock(6, "the armor"),
         new CreatureBlock(3, "its axe"),
@@ -96967,7 +96966,7 @@ public class Alia : VendorEntity
     
     };
     
-        goblin.Attacks = new CreatureAttackCollection
+        goblin.Attacks = new CreatureAttackCollection()
     {
         {
             new CreatureAttack(15,      30, 50,      "The goblin hits you with a flurry of fists.",
@@ -97088,7 +97087,7 @@ public class Alia : VendorEntity
     };
     hobgoblin.AddStatus(new NightVisionStatus(hobgoblin));
     
-    hobgoblin.Attacks = new CreatureAttackCollection
+    hobgoblin.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(11),
     };
@@ -97128,7 +97127,7 @@ public class Alia : VendorEntity
     
         Experience = 4600,
         
-        Attacks = new CreatureAttackCollection
+        Attacks = new CreatureAttackCollection()
         {
             { new CreatureBasicAttack(12) }, 
         },
@@ -97168,7 +97167,7 @@ public class Alia : VendorEntity
                 
         Movement = 3,
                                 
-        Attacks = new CreatureAttackCollection
+        Attacks = new CreatureAttackCollection()
         {
             { new CreatureBasicAttack(11, 25, 30,
                 new AttackProneComponent(100.0), new AttackStunComponent(100.0)) },
@@ -97256,7 +97255,7 @@ public class Alia : VendorEntity
     };
     
     
-    trollguard.Attacks = new CreatureAttackCollection
+    trollguard.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(15),
     };
@@ -97329,7 +97328,7 @@ public class Alia : VendorEntity
     
     };
     
-    orc.Attacks = new CreatureAttackCollection
+    orc.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(9),
     };
@@ -97347,7 +97346,7 @@ public class Alia : VendorEntity
     orc.AddLoot(new LootPack(
     ));
     
-    return hobgoblin;
+    return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -97374,7 +97373,7 @@ public class Alia : VendorEntity
     };
     troll.AddStatus(new NightVisionStatus(troll));
         
-    troll.Attacks = new CreatureAttackCollection
+    troll.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(10),
     };
@@ -97419,7 +97418,7 @@ public class Alia : VendorEntity
     };
     troll.AddStatus(new NightVisionStatus(troll));
         
-    troll.Attacks = new CreatureAttackCollection
+    troll.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(11),
     };
@@ -97462,19 +97461,19 @@ public class Alia : VendorEntity
     
     };
     
-    orc.Attacks = new CreatureAttackCollection
+    orc.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(9),
     };
     
     orc.Spells = new CreatureSpellCollection()
     {
-        new CreatureSpell<CreateWebSpell>(
+       { new CreatureSpell<CreateWebSpell>(
             skillLevel: 10, cost: 10, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false),  75 },
-        new CreatureSpell<MagicMissileSpell>(
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),  75, TimeSpan.Zero },
+       { new CreatureSpell<MagicMissileSpell>(
             skillLevel: 7, cost: 5, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false),  25 },
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),  25, TimeSpan.Zero },
     };
     
     orc.Wield(new WoodenStaff());
@@ -97483,7 +97482,7 @@ public class Alia : VendorEntity
     orc.AddLoot(new LootPack(
     ));
     
-    return hobgoblin;
+    return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -97513,7 +97512,7 @@ public class Alia : VendorEntity
         new CreatureBasicAttack(12)
     };
     
-    goblin.Spells = new CreatureSpellCollection
+    goblin.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<FireballSpell>(
             skillLevel: 10, cost: 6, 
@@ -97556,7 +97555,7 @@ public class Alia : VendorEntity
             
     };
         
-    banshee.Attacks = new CreatureAttackCollection
+    banshee.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(11),
     };
@@ -97574,7 +97573,7 @@ public class Alia : VendorEntity
     banshee.AddLoot(new LootPack(
     ));
     
-    return troll;
+    return banshee;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -97604,7 +97603,7 @@ public class Alia : VendorEntity
     };
     ghoul.AddStatus(new NightVisionStatus(ghoul));
     
-    ghoul.Attacks = new CreatureAttackCollection
+    ghoul.Attacks = new CreatureAttackCollection()
     {
         { new CreatureAttack(12,     30, 40,     "The ghoul scratches you with its claws"),      70 }, 
         { new CreatureAttack(13,    30, 50,     "You've been bitten by the ghoul",
@@ -97689,7 +97688,7 @@ public class Alia : VendorEntity
     };
     spectre.AddStatus(new NightVisionStatus(spectre));
     
-    spectre.Attacks = new CreatureAttackCollection
+    spectre.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(12),
     };
@@ -97727,7 +97726,7 @@ public class Alia : VendorEntity
         <block><![CDATA[
     var mummy = new Mummy()
     {
-        Name = "Councillor",
+        Name = "mummy",
         MaxHealth = 350, Health = 350,
         BaseDodge = 15,
     
@@ -97736,19 +97735,19 @@ public class Alia : VendorEntity
         
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Magic,
-        CreatureWeakness.IceSpearSpell,
+        Weakness = CreatureWeakness.IceSpearSpell,
     };
     mummy.AddStatus(new NightVisionStatus(mummy));
     
-    mummy.Attacks = new CreatureAttackCollection
+    mummy.Attacks = new CreatureAttackCollection()
     {
-        { new CreatureAttack(16,     30, 50,     "The mummy strangles you with his bandages"),      70 }, 
+        { new CreatureAttack(16,     30, 50,     "The mummy strangles you with his bandages"),      70, TimeSpan.Zero }, 
         { new CreatureAttack(17,    40, 60,     "A mummified claw scratches you.",
-                                                    new AttackAgeComponent(50)),             30 },
+                                                    new AttackAgeComponent(50)),             30, TimeSpan.Zero },
                                                     //TODO find the values for age components and add the appropriate value to these guys
     };
         
-    mummy.Blocks = new CreatureBlockCollection
+    mummy.Blocks = new CreatureBlockCollection()
     {
         new CreatureBlock(6, "a swirl of bandages"), 
         new CreatureBlock(4, "mummified claw"), 
@@ -97783,7 +97782,7 @@ public class Alia : VendorEntity
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
         
-    wraith.Attacks = new CreatureAttackCollection
+    wraith.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(7),
     };
@@ -97795,13 +97794,13 @@ public class Alia : VendorEntity
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
-    wight.Wield(new WoodenStaff());
+    wraith.Wield(new WoodenStaff());
         
-    wight.AddGold(120);
+    wraith.AddGold(120);
     
-    wight.AddLoot(new LootPack(
+    wraith.AddLoot(new LootPack(
     ));
-    return wight;
+    return wraith;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -97832,7 +97831,7 @@ public class Alia : VendorEntity
         }
     };
     
-    knight.AddStatus(new NightVisionStatus(troll));
+    knight.AddStatus(new NightVisionStatus(knight));
     
     knight.Wield(new Greatsword());
     knight.Equip(new PlatemailArmor());
@@ -97867,7 +97866,7 @@ public class Alia : VendorEntity
     };
     lich.AddStatus(new NightVisionStatus(lich));
         
-    lich.Attacks = new CreatureAttackCollection
+    lich.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(9),
     };
@@ -97914,7 +97913,7 @@ public class Alia : VendorEntity
         VisibilityDistance = 0,
     };
     
-    lurker.Attacks = new CreatureAttackCollection
+    lurker.Attacks = new CreatureAttackCollection()
     {
         { new CreatureAttack(11,     15, 20,      "The lurker whips you with a tentacle"),  50 }, 
         { new CreatureAttack(12,     1, 30,     "The lurker bites you.",
@@ -97963,7 +97962,7 @@ public class Alia : VendorEntity
         CanJumpkick = true,
     };
     
-    martialartist.Attacks = new CreatureAttackCollection
+    martialartist.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(15), 
     };   
@@ -98004,12 +98003,12 @@ public class Alia : VendorEntity
     wizard.Wield(new BlackStaff());
     wizard.Equip(new LeatherArmor());
     
-    wizard.Attacks = new CreatureAttackCollection
+    wizard.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(9),
     };
     
-    wizard.Spells = new CreatureSpellCollection
+    wizard.Spells = new CreatureSpellCollection()
     {
         { new CreatureSpell<ConcussionSpell>(
             skillLevel: 9, cost: 16, 
@@ -98055,7 +98054,7 @@ public class Alia : VendorEntity
     };
     thaum.AddStatus(new NightVisionStatus(thaum));
         
-    thaum.Attacks = new CreatureAttackCollection
+    thaum.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(12),
     };
@@ -98067,7 +98066,7 @@ public class Alia : VendorEntity
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
-    thaum.Wield(new Flail());
+    thaum.Wield(new SpikedFlail());
     thaum.Wield(new PlatedShield());
     thaum.Equip(new LeatherArmor());
         
@@ -98075,7 +98074,7 @@ public class Alia : VendorEntity
     thaum.AddLoot(new LootPack(
     ));
     
-    return troll;
+    return thaum;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -98334,7 +98333,7 @@ public class Alia : VendorEntity
         Experience = 50,
     };
 
-    peacekeeper.Attacks = new CreatureAttackCollection
+    peacekeeper.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(6),
     };
@@ -98350,35 +98349,7 @@ public class Alia : VendorEntity
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="thiefTrainer">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    var trainer = new ThiefTrainer()
-    {
-        
-        BaseDodge = 10,
-        MaxHealth = 50, Health = 50,
-
-        Experience = 50,
-        
-        Alignment = Alignment.Neutral
-    };
-    
-    trainer.SetTraining(Skill.Magic, 13, 19);
-    
-    return trainer;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="Alia">
+    <entity name="underkingdomAlia">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -98409,7 +98380,7 @@ public class Alia : VendorEntity
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
         
-    wraith.Attacks = new CreatureAttackCollection
+    wraith.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(7),
     };
@@ -98421,14 +98392,14 @@ public class Alia : VendorEntity
             mantra: SpellHelper.GenerateMantra(), instantCast: true)
     };
         
-    wight.Wield(new WoodenStaff());
+    wraith.Wield(new WoodenStaff());
         
-    wight.AddGold(120);
+    wraith.AddGold(120);
     
-    wight.AddLoot(new LootPack(
+    wraith.AddLoot(new LootPack(
     ));
-    return wight;
-}
+    
+    return wraith;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -98795,9 +98766,9 @@ public class Alia : VendorEntity
     if (spawn is TrainerEntity koboldweapontrainer)
     {
         foreach (var skill in Skill.Weapons)
-            lockpickweapontrainer.SetTraining(skill, 14, 19);
+            koboldweapontrainer.SetTraining(skill, 14, 19);
 
-        lockpickweapontrainer.SetTraining(Skill.Hand, 0, 4);
+        koboldweapontrainer.SetTraining(Skill.Hand, 0, 4);
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -98841,14 +98812,14 @@ public class Alia : VendorEntity
         <block><![CDATA[]]></block>
         <block><![CDATA[
     spawn.Body = 116;
-    spawn.Name = "Zipfist"
+    spawn.Name = "Zipfist";
     
     if (spawn is TrainerEntity maTrainer)
     {
         foreach (var skill in Skill.Weapons)
-            lockpicktrainer.SetTraining(skill, 0, 4);
+            maTrainer.SetTraining(skill, 0, 4);
 
-        lockpicktrainer.SetTraining(Skill.Hand, 14, 19);
+        maTrainer.SetTraining(Skill.Hand, 14, 19);
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -99002,9 +98973,10 @@ public class Alia : VendorEntity
         <block><![CDATA[
     spawn.Name = "Shadowhide";
     spawn.Body = 116;
-    if (spawn is ThaumaturgeTrainer thaumaturgeTrainer)
+    if (spawn is ThiefTrainer thiefTrainer)
     {
         thiefTrainer.AddCounter(new Point2D(18, 12, 2));
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -99089,10 +99061,11 @@ public class Alia : VendorEntity
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    if (spawn is Alia alia){
-        Movement = 0,
-        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Magic
+    if (spawn is Alia alia)
+    {
+        alia.Movement = 0;
+        alia.Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Magic;
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -99104,7 +99077,7 @@ public class Alia : VendorEntity
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Alia" size="1" minimum="1" maximum="1" />
+      <entry entity="underkingdomAlia" size="1" minimum="1" maximum="1" />
       <location x="7" y="19" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="koboldkingTEMP">
