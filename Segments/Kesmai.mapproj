@@ -67,6 +67,7 @@
       <id>1</id>
       <name>Surface</name>
       <height>0</height>
+      <experienceMultiplier>1.1</experienceMultiplier>
       <tile x="0" y="0">
         <component type="ObstructionComponent">
           <obstruction>19</obstruction>
@@ -43021,6 +43022,7 @@
       <id>11</id>
       <name>Dungeon -1</name>
       <height>-10</height>
+      <experienceMultiplier>1.05</experienceMultiplier>
       <tile x="2" y="2">
         <component type="FloorComponent">
           <ground>1</ground>
@@ -53921,6 +53923,7 @@
       <id>12</id>
       <name>Dungeon -2</name>
       <height>-20</height>
+      <experienceMultiplier>1.1</experienceMultiplier>
       <tile x="1" y="2">
         <component type="WallComponent">
           <wall>32</wall>
@@ -63813,6 +63816,7 @@
       <id>13</id>
       <name>Dungeon -3</name>
       <height>-30</height>
+      <experienceMultiplier>1.15</experienceMultiplier>
       <tile x="10" y="0" />
       <tile x="11" y="0" />
       <tile x="12" y="0" />
@@ -75914,6 +75918,7 @@
       <id>14</id>
       <name>Dungeon -4</name>
       <height>-40</height>
+      <experienceMultiplier>1.2</experienceMultiplier>
       <tile x="10" y="0">
         <component type="WallComponent">
           <wall>31</wall>
@@ -96354,12 +96359,13 @@
         new LootPackEntry(true, dungeon4Rings, 33),
         new LootPackEntry(true, dungeon1Bottles, 33),
         
-        new LootPackEntry(true, (from, container) => new ClearBalm(),           100.0),
-        new LootPackEntry(true, (from, container) => new RamSkull(),            100.0),
-        new LootPackEntry(true, (from, container) => new Yttril(),              100.0),
-        new LootPackEntry(true, (from, container) => new Diamond(1500u),         100.0), 
-        new LootPackEntry(true, (from, container) => new Diamond(1500u),         100.0), 
-        new LootPackEntry(true, (from, container) => new Diamond(1500u),         100.0)
+        new LootPackEntry(true, (from, container) => new ClearBalm(),               100.0),
+        new LootPackEntry(true, (from, container) => new RamSkull(),                100.0),
+        new LootPackEntry(true, (from, container) => new Yttril(),                  100.0),
+        new LootPackEntry(true, (from, container) => new Diamond(1500u),            100.0), 
+        new LootPackEntry(true, (from, container) => new Diamond(1500u),            100.0), 
+        new LootPackEntry(true, (from, container) => new Diamond(1500u),            100.0),
+        new LootPackEntry(true, (from, container) => new FireProtectionAmulet(),    10.0)
     ));
     
     return elderTroll;
