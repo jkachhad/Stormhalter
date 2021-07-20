@@ -75659,7 +75659,7 @@
     shidosha.Blocks = new CreatureBlockCollection
     {
         new CreatureBlock(6, "the palms of his hands"),
-        new CreatureBlock(4, "incredible speed"),
+        new CreatureBlock(4, "an upward forearm thrust"),
         new CreatureBlock(3, "inhuman reflexes"),
     };
         
@@ -75790,7 +75790,7 @@
     
     dragon.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(6, "fiery scales"),
         new CreatureBlock(4, "a tail"),
         new CreatureBlock(3, "a wing"),
     };
@@ -75824,14 +75824,14 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Vlad">
+    <entity name="vlad">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     //todo: add vlad model to variables
     var vlad = new Wraith()
     {
-        Name = "Vlad",
+        Name = "vampire",
         MaxHealth = 7000, Health = 7000,
         BaseDodge = 20,
     
@@ -75850,14 +75850,14 @@
     
     vlad.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(17,     40, 70,      "Vlad rends your flesh with his claws"),  70 }, 
-        { new CreatureAttack(18,     60, 80,     "Vlad appears behind you, sinking his teeth into your neck",
+        { new CreatureAttack(17,     40, 70,      "The vampire rends your flesh with his claws"),  70 }, 
+        { new CreatureAttack(18,     60, 80,     "The vampire appears behind you, sinking his teeth into your neck",
                                                     new AttackStunComponent(50)),          30 },
     };
     
     vlad.Blocks = new CreatureBlockCollection
     {
-        { new CreatureBlock(6, "an impossibly dark cape") }, 
+        { new CreatureBlock(6, "an impossibly dark flowing cape") }, 
         { new CreatureBlock(4, "a horrifying claw") }, 
     };
     
@@ -75938,7 +75938,7 @@
     
     drake.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(6, "hard scales"),
         new CreatureBlock(4, "a claw"),
         new CreatureBlock(3, "a wing"),
     };
@@ -76304,7 +76304,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="VladGryph">
+    <entity name="vladGryph">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -77885,9 +77885,9 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Vlad" size="1" minimum="1" maximum="1" />
+      <entry entity="vlad" size="1" minimum="1" maximum="1" />
       <entry entity="vladSalamander" size="1" minimum="1" maximum="1" />
-      <entry entity="VladGryph" size="1" minimum="2" maximum="2" />
+      <entry entity="vladGryph" size="1" minimum="2" maximum="2" />
       <bounds region="17">
         <inclusion left="3" top="3" right="7" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -77967,7 +77967,7 @@
       <entry entity="vladFamiliarMelee" size="1" minimum="3" maximum="3" />
       <entry entity="vladFamiliarThaum" size="1" minimum="2" maximum="2" />
       <entry entity="vladSalamander" size="1" minimum="1" maximum="1" />
-      <entry entity="VladGryph" size="1" minimum="1" maximum="1" />
+      <entry entity="vladGryph" size="1" minimum="1" maximum="1" />
       <bounds region="16">
         <inclusion left="2" top="3" right="6" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
