@@ -59,9 +59,8 @@
         
         item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
     }
-]]></block>
-    <block><![CDATA[
-public class Puck : VendorEntity
+    
+    public class Puck : VendorEntity
     {
         public Puck()
         {
@@ -126,10 +125,9 @@ public class Puck : VendorEntity
                 return;
             }
         }
-
-        
     }
-}]]></block>
+]]></block>
+    <block><![CDATA[]]></block>
   </script>
   <regions>
     <region>
@@ -77195,7 +77193,7 @@ public class Puck : VendorEntity
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Puck">
+    <entity name="lengPuck">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -77494,17 +77492,17 @@ public class Puck : VendorEntity
       <entry entity="weaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="12" y="15" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="Pock">
+    <spawn type="LocationSpawner" name="Puck">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    spawn.Name = "Pock";
+    spawn.Name = "puck";
     spawn.Body = 49; spawn.IsFemale = false;
     
-    if (spawn is TrainerEntity pock)
+    if (spawn is TrainerEntity puck)
     {
         foreach (var skill in Skill.Weapons)
             puck.SetTraining(skill, 0, 4);
@@ -77693,7 +77691,7 @@ public class Puck : VendorEntity
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Puck" size="1" minimum="1" maximum="1" />
+      <entry entity="lengPuck" size="1" minimum="1" maximum="1" />
       <location x="4" y="4" region="4" />
     </spawn>
     <spawn type="RegionSpawner" name="sandyPath">

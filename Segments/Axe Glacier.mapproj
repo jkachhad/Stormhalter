@@ -59,9 +59,8 @@
         
         item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
     }
-]]></block>
-    <block><![CDATA[
-public class Silvermoon : VendorEntity
+    
+    public class Silvermoon : VendorEntity
     {
         public Silvermoon()
         {
@@ -127,11 +126,10 @@ public class Silvermoon : VendorEntity
                 return;
             }
         }
-
-        
     }
-}
-public class Vulcan : VendorEntity
+
+
+    public class Vulcan : VendorEntity
     {
         public Vulcan()
         {
@@ -195,11 +193,11 @@ public class Vulcan : VendorEntity
                 
                 return;
             }
-        }
-
-        
+        }      
     }
-}]]></block>
+]]></block>
+    <block><![CDATA[
+]]></block>
   </script>
   <regions>
     <region>
@@ -103917,8 +103915,7 @@ public class Vulcan : VendorEntity
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    20),
         new LootPackEntry(true, upperTreasure,   0.63),
-        new LootPackEntry(true, (from, container) => new ScorpionAmulet(),        100),
-        
+        new LootPackEntry(true, (from, container) => new ScorpionAmulet(),        100)
     ));
         
     return wolf;
@@ -106065,7 +106062,7 @@ public class Vulcan : VendorEntity
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Vulcan">
+    <entity name="axeVulcan">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106080,7 +106077,7 @@ public class Vulcan : VendorEntity
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Silvermoon">
+    <entity name="axeSilvermoon">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106781,7 +106778,7 @@ public class Vulcan : VendorEntity
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Vulcan" size="1" minimum="1" maximum="1" />
+      <entry entity="axeVulcan" size="1" minimum="1" maximum="1" />
       <location x="4" y="7" region="256" />
     </spawn>
     <spawn type="LocationSpawner" name="Silvermoon">
@@ -106802,7 +106799,7 @@ public class Vulcan : VendorEntity
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Silvermoon" size="1" minimum="1" maximum="1" />
+      <entry entity="axeSilvermoon" size="1" minimum="1" maximum="1" />
       <location x="27" y="10" region="1" />
     </spawn>
     <spawn type="RegionSpawner" name="Surface Dungeon">
