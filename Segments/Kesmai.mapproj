@@ -96339,7 +96339,7 @@
                 new AttackProneComponent(15.0), new AttackStunComponent(15.0)) },
         },
                     
-        BasePenetration = ArmorPenetration.VeryHeavy,
+        BasePenetration = ShieldPenetration.VeryHeavy,
         
         Immunity = CreatureImmunity.Web,
 
@@ -98831,7 +98831,7 @@ return orc;
                 
         Experience = 25,
     
-        BasePenetration = ArmorPenetration.VeryLight,
+        BasePenetration = ShieldPenetration.VeryLight,
     };
     
     bee.Attacks = new CreatureAttackCollection
@@ -99200,7 +99200,7 @@ return orc;
     
         Experience = 5000,
         
-        BasePenetration = ArmorPenetration.VeryHeavy,
+        BasePenetration = ShieldPenetration.VeryHeavy,
     
         MaxMana = 35, Mana = 35,
     
@@ -99432,7 +99432,7 @@ return orc;
         VisibilityDistance = 0,
         RangePerception = 0,
         
-        BasePenetration = ArmorPenetration.Medium,
+        BasePenetration = ShieldPenetration.Medium,
     
         FireProtection = 100,
         IceProtection = 100,
@@ -99480,7 +99480,7 @@ return orc;
         CanFly = true,
         CanCharge = true,
         
-        BasePenetration = ArmorPenetration.VeryHeavy,
+        BasePenetration = ShieldPenetration.VeryHeavy,
 
         Immunity = CreatureImmunity.Web,
     
