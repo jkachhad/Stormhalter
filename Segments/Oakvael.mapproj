@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.67.0.0">
+<segment name="Oakvael" version="0.68.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -47491,9 +47491,11 @@
         </component>
       </tile>
       <tile x="20" y="12">
-        <component type="WaterComponent">
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+          <potency>6</potency>
         </component>
       </tile>
       <tile x="21" y="12">
