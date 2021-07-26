@@ -96401,7 +96401,7 @@
         BaseDodge = 18,
     
         Alignment = Alignment.Chaotic,
-        
+        HideDetection = 24,
         Experience = 42000,
         
         CanFly = true,
@@ -96476,7 +96476,7 @@
         Name = "Carfel",
         MaxHealth = 2000, Health = 2000,
         BaseDodge = 21,
-    
+        HideDetection = 27,
         Alignment = Alignment.Evil,
         
         Experience = 32000,
@@ -96586,7 +96586,7 @@
         BaseDodge = 19,
         
         Alignment = Alignment.Chaotic,
-            
+        HideDetection = 28,
         Experience = 42000,
         
         Immunity = CreatureImmunity.Magic,
@@ -96638,7 +96638,7 @@
         BaseDodge = 17,
         BasePenetration = ShieldPenetration.Heavy,
         Alignment = Alignment.Chaotic,
-        
+        HideDetection = 24,
         Experience = 22000,
             
         VisibilityDistance = 0,
@@ -96685,7 +96685,7 @@
         Name = "Swordmaster",
         MaxHealth = 2500, Health = 2500,
         BaseDodge = 21,
-            
+        HideDetection = 25,
         Experience = 35000,
        
         CanCharge = true,
@@ -97341,7 +97341,7 @@
         
     troll.Wield(new Longsword());
         
-    troll.AddGold(180);
+    troll.AddGold(250);
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       10,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    20)
@@ -97531,7 +97531,7 @@
         
     banshee.Wield(new Spear());
         
-    banshee.AddGold(280);
+    banshee.AddGold(480);
     banshee.AddLoot(new LootPack(
         new LootPackEntry(true, udGems,       10,     gemsPriceMutator), 
         new LootPackEntry(true, undeadBottles,    15)
@@ -97699,7 +97699,7 @@
         Name = "mummy",
         MaxHealth = 350, Health = 350,
         BaseDodge = 15,
-    
+        HideDetection = 26,
         Experience = 9000,
     
         BasePenetration = ShieldPenetration.Heavy,
@@ -98046,7 +98046,7 @@
     thaum.Wield(new PlatedShield());
     thaum.Equip(new LeatherArmor());
         
-    thaum.AddGold(580);
+    thaum.AddGold(750);
     thaum.AddLoot(new LootPack(
         new LootPackEntry(true, yasnakiGems,       20,     gemsPriceMutator), 
         new LootPackEntry(true, yasnakiBottles,    20)
@@ -98176,7 +98176,7 @@
     orc.Wield(new Longbow());
     orc.Equip(new LeatherArmor());
             
-    orc.AddGold(500);
+    orc.AddGold(250);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       10,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    20)
@@ -98213,7 +98213,7 @@
     troll.Wield(new Greatsword());
     troll.Equip(new ChainmailArmor());
     
-    troll.AddGold(600);
+    troll.AddGold(370);
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       10,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    20)
@@ -98252,7 +98252,7 @@
     orc.Wield(new Longsword());
     orc.Equip(new LeatherArmor());
             
-    orc.AddGold(500);
+    orc.AddGold(300);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, Testgems,       10,     gemsPriceMutator), 
         new LootPackEntry(true, Testbottles,    20)
@@ -99500,7 +99500,7 @@
     <spawn type="RegionSpawner" name="orcCaves">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>21</maximum>
+      <maximum>15</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -99515,12 +99515,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="uktunnelgobs" size="3" minimum="4" maximum="5" />
-      <entry entity="uktunnelarcher" size="4" minimum="3" maximum="4" />
-      <entry entity="uktunneltroll" size="3" minimum="3" maximum="4" />
+      <entry entity="uktunnelgobs" size="3" minimum="2" maximum="5" />
+      <entry entity="uktunnelarcher" size="4" minimum="2" maximum="4" />
+      <entry entity="uktunneltroll" size="3" minimum="2" maximum="4" />
       <entry entity="uktunnelorc" size="3" minimum="4" maximum="5" />
-      <entry entity="uktunnelgobsentry" size="3" minimum="3" maximum="4" />
-      <entry entity="uktunnelcursetroll" size="1" minimum="2" maximum="3" />
+      <entry entity="uktunnelgobsentry" size="3" minimum="2" maximum="4" />
+      <entry entity="uktunnelcursetroll" size="1" minimum="1" maximum="3" />
       <bounds region="3">
         <inclusion left="3" top="3" right="33" bottom="11" />
         <exclusion left="0" top="0" right="0" bottom="0" />

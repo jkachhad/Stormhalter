@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.67.0.0">
+<segment name="Axe Glacier" version="0.69.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -102953,7 +102953,8 @@
     wraith.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
-        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
     return wraith;
@@ -103035,7 +103036,8 @@
     skeleton.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
-        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
     return skeleton;
@@ -103102,7 +103104,7 @@
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(6)
+            new CreatureBasicAttack(6, 5, 13)
         }
     };
     
@@ -103144,7 +103146,7 @@
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(6)
+            new CreatureBasicAttack(6, 10, 17)
         }
     };
     
@@ -103155,7 +103157,8 @@
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
-        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
     return troll;
@@ -103182,7 +103185,7 @@
     
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(6),
+            new CreatureBasicAttack(6, 5, 12),
         }
     
     };
@@ -103227,7 +103230,7 @@
     gargoyle.Attacks = new CreatureAttackCollection
     {
         { new CreatureAttack(6,     4, 8,   "The gargoyle strikes you with its claws."),    60 },
-        { new CreatureAttack(7,     6, 12,  "The gargoyle batters you with its wings."),    40 },
+        { new CreatureAttack(7,     6, 15,  "The gargoyle batters you with its wings."),    40 },
     };
     
     gargoyle.Blocks = new CreatureBlockCollection
@@ -103242,7 +103245,8 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
-        new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5)
+        new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5),
+        new LootPackEntry(true, (from, container) => new IronOre(), 2.6)
     ));
 
     return gargoyle;
@@ -103317,7 +103321,7 @@
     
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(7),
+            new CreatureBasicAttack(7, 10, 14),
         }
     
     };
@@ -103360,7 +103364,7 @@
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(8)
+            new CreatureBasicAttack(8, 15, 25)
         }
     };
     
@@ -103401,7 +103405,7 @@
     
         Experience = 2650,
     
-        Movement = 2,
+        BasePenetration = ShieldPenetration.Light,
             
         CanSwim = true,
     };
@@ -103418,7 +103422,8 @@
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
-        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
     return fighter;
@@ -103447,8 +103452,7 @@
         BaseDodge = 13,
     
         Experience = 2650,
-    
-        Movement = 2,
+        BasePenetration = ShieldPenetration.Light,
         
         CanJumpkick = true,
         CanSwim = true,
@@ -103456,14 +103460,15 @@
     
     martialartist.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9), 
+        new CreatureBasicAttack(9, 20, 25), 
     };   
     
     martialartist.AddGold(550);
     martialartist.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
-        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
     return martialartist;
@@ -103492,7 +103497,7 @@
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(7)
+            new CreatureBasicAttack(7, 8, 15)
         }
     };
     
@@ -103550,7 +103555,8 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
-        new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5)
+        new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
 
     return gargoyle;
@@ -103720,14 +103726,14 @@
     
         Experience = 2650,
     
-        Movement = 2,
+        BasePenetration = ShieldPenetration.Light,
             
         CanSwim = true,
     };
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9), 
+        new CreatureBasicAttack(9, 20, 30), 
     };
     
     fighter.Wield(new Rapier());
@@ -103802,14 +103808,14 @@
         
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(8) }, 
+            { new CreatureBasicAttack(8, 10, 18) }, 
         },
     };
     
     hobgoblin.Wield(new Longsword());
     hobgoblin.Equip(new LeatherArmor());    
     
-    hobgoblin.AddGold(500);
+    hobgoblin.AddGold(300);
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
@@ -103837,7 +103843,7 @@
         BaseDodge = 14,
                 
         Experience = 2500,
-        
+        BasePenetration = ShieldPenetration.Medium,
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
         Weakness = CreatureWeakness.Silver,
@@ -103884,9 +103890,9 @@
     {
         MaxHealth = 700, Health = 700,
         BaseDodge = 17,
-                
+        BasePenetration = ShieldPenetration.Medium,
         Experience = 5500,
-        
+        HideDetection = 21,
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
         Weakness = CreatureWeakness.Silver,
@@ -103939,7 +103945,7 @@
         BaseDodge = 13,
     
         Experience = 3000,
-    
+        BasePenetration = ShieldPenetration.Light,
         VisibilityDistance = 1,
         
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
@@ -104000,7 +104006,7 @@
     
         Experience = 2650,
     
-        Movement = 2,
+        BasePenetration = ShieldPenetration.Light,
             
         CanSwim = true,
     };
@@ -104017,7 +104023,8 @@
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
-        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
     return fighter;
@@ -104041,13 +104048,13 @@
         BaseDodge = 13,
     
         Experience = 2600,
-            
+        BasePenetration = ShieldPenetration.Medium,
         Immunity = CreatureImmunity.Web
     };
     
     ogre.Attacks = new CreatureAttackCollection
     {
-        { new CreatureBasicAttack(11) }, 
+        { new CreatureBasicAttack(11, 20, 30) }, 
     };
     
     ogre.AddStatus(new NightVisionStatus(ogre));
@@ -104134,11 +104141,11 @@
         MaxHealth = 1000, Health = 1000,
         BaseDodge = 23,
     
-        Experience = 9000,
-       
+        Experience = 13000,
+        HideDetection = 21,
         CanJumpkick = true,
         
-        BasePenetration = ArmorPenetration.VeryHeavy,
+        BasePenetration = ShieldPenetration.VeryHeavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
@@ -104244,7 +104251,7 @@
         BaseDodge = 11,
                 
         Experience = 800,
-        
+        BasePenetration = ShieldPenetration.Light,
         Attacks = new CreatureAttackCollection()
         {
             new CreatureBasicAttack(8)
@@ -104288,7 +104295,7 @@
     
         Experience = 3000,
     
-        Movement = 3,
+        BasePenetration = ShieldPenetration.Light,
             
         CanSwim = true,
     };
@@ -104335,14 +104342,14 @@
     
         Experience = 3000,
     
-        Movement = 3,
+        BasePenetration = ShieldPenetration.Light,
             
         CanSwim = true,
     };
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11), 
+        new CreatureBasicAttack(11, 20, 30), 
     };
     
     fighter.Wield(new Longsword());
@@ -104377,7 +104384,7 @@
                 
         Experience = 2525,
                 
-        Movement = 3,
+        BasePenetration = ShieldPenetration.Light,
         CanJumpkick = true,
     };
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
@@ -104428,7 +104435,7 @@
     
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(9),
+            new CreatureBasicAttack(9, 12, 18),
         }
     
     };
@@ -104515,7 +104522,7 @@
         
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(9) }, 
+            { new CreatureBasicAttack(9, 13, 19) }, 
         },
     };
     
@@ -104556,7 +104563,7 @@
     
         Experience = 3050,
     
-        Movement = 3,
+        BasePenetration = ShieldPenetration.Light,
         
         CanJumpkick = true,
         CanSwim = true,
@@ -104564,7 +104571,7 @@
     
     martialartist.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11), 
+        new CreatureBasicAttack(11, 20, 32), 
     };   
     
     martialartist.AddGold(650);
@@ -104595,13 +104602,13 @@
         BaseDodge = 15,
     
         Experience = 3000,
-            
+        BasePenetration = ShieldPenetration.Medium,
         Immunity = CreatureImmunity.Web
     };
     
     ogre.Attacks = new CreatureAttackCollection
     {
-        { new CreatureBasicAttack(12) }, 
+        { new CreatureBasicAttack(12, 21, 33) }, 
     };
     
     ogre.AddStatus(new NightVisionStatus(ogre));
@@ -104642,7 +104649,7 @@
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(7)
+            new CreatureBasicAttack(8, 11, 17)
         }
     };
     
@@ -104683,14 +104690,14 @@
     
         Experience = 3050,
     
-        Movement = 3,
+        BasePenetration = ShieldPenetration.Light,
             
         CanSwim = true,
     };
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9), 
+        new CreatureBasicAttack(9, 18, 23), 
     };
     
     fighter.Wield(new Rapier());
@@ -104731,7 +104738,7 @@
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(8)
+            new CreatureBasicAttack(8, 12, 21)
         }
     };
     
@@ -104911,8 +104918,7 @@
                 
         Experience = 2500,
                 
-        Movement = 3,
-            
+        BasePenetration = ShieldPenetration.VeryLight,
         CanSwim = true,
     };
     bear.AddStatus(new NightVisionStatus(bear));
@@ -104959,7 +104965,7 @@
                 
         Experience = 5000,
                 
-        Movement = 3,
+        BasePenetration = ShieldPenetration.Medium,
             
         CanSwim = true,
     };
@@ -105006,11 +105012,11 @@
         BaseDodge = 18,
     
         Experience = 45000,
-        
+        HideDetection = 25,
         CanFly = true,
         CanCharge = true,
         
-        BasePenetration = ArmorPenetration.VeryHeavy,
+        BasePenetration = ShieldPenetration.Heavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Magic,
@@ -105086,13 +105092,13 @@
     {
         MaxHealth = 5000, Health = 5000,
         BaseDodge = 19,
-    
+        HideDetection = 31,
         Experience = 55000,
         
         CanFly = true,
         CanCharge = true,
         
-        BasePenetration = ArmorPenetration.VeryHeavy,
+        BasePenetration = ShieldPenetration.VeryHeavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
@@ -105169,10 +105175,10 @@
         BaseDodge = 21,
     
         Experience = 50000,
-       
+        HideDetection = 27,
         CanJumpkick = true,
         
-        BasePenetration = ArmorPenetration.VeryHeavy,
+        BasePenetration = ShieldPenetration.VeryHeavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
@@ -105544,7 +105550,7 @@
         
     shadow.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(8),
+        new CreatureBasicAttack(8, 18, 25),
     };
     
     shadow.Spells = new CreatureSpellCollection()
@@ -105602,7 +105608,7 @@
     
     wizard.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9),
+        new CreatureBasicAttack(9, 20, 28),
     };
     
     wizard.Spells = new CreatureSpellCollection
@@ -105659,7 +105665,7 @@
     
     thaum.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9),
+        new CreatureBasicAttack(9, 20, 28),
     };
     
     thaum.Spells = new CreatureSpellCollection()
@@ -105718,7 +105724,7 @@
     
     wizard.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9),
+        new CreatureBasicAttack(9, 20, 28),
     };
     
     wizard.Spells = new CreatureSpellCollection
@@ -105967,10 +105973,10 @@
         Alignment = Alignment.Evil,
                 
         Experience = 800,
-    
+        BasePenetration = ShieldPenetration.Light,
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(8),
+            new CreatureBasicAttack(8, 15, 23),
         }
     
     };
@@ -106006,7 +106012,7 @@
         BaseDodge = 13,
         Alignment = Alignment.Evil,
         Experience = 800,
-        
+        BasePenetration = ShieldPenetration.Medium,
         Attacks = new CreatureAttackCollection()
         {
             new CreatureBasicAttack(8)
@@ -107722,7 +107728,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new UncutEmerald(700u);
+	return new UncutEmerald(600u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -107919,11 +107925,29 @@
       </entry>
     </treasure>
     <treasure name="chaosGems">
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new UncutEmerald(900u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="2">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new GoldNugget(1100u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
       <entry weight="1">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new PearDiamond(1500u);
+	return new UncutDiamond(1500u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
