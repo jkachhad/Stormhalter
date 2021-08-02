@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.68.0.0">
+<segment name="Oakvael" version="0.69.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -84488,7 +84488,7 @@
         
         MaxHealth = 150, Health = 150,
         BaseDodge = 15,
-
+        BasePenetration = ShieldPenetration.Light,
         Experience = 50,
 
         Attacks = new CreatureAttackCollection
@@ -85746,7 +85746,7 @@
 
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(9) }, 
+            { new CreatureBasicAttack(9, 9, 16) }, 
         },
     };
 
@@ -85789,7 +85789,7 @@
 
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(9) }, 
+            { new CreatureBasicAttack(9, 8, 13) }, 
         },
     };
 
@@ -85924,7 +85924,7 @@
         
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(9) }, 
+            { new CreatureBasicAttack(9, 10, 17) }, 
         },
     };
 
@@ -86080,7 +86080,7 @@
         BaseDodge = 15,
 
         Experience = 1100,
-
+        BasePenetration = ShieldPenetration.Light,
         CanFlee = true,
 
         Attacks = new CreatureAttackCollection
@@ -86134,7 +86134,7 @@
         BaseDodge = 15,
 
         Experience = 2150,
-
+        BasePenetration = ShieldPenetration.Light,
         Movement = 2,
         
         CanFly = true,
@@ -86347,7 +86347,7 @@ PROTECTION P_DEATH 40
 
         Movement = 2,
         CanFly = true,
-
+        BasePenetration = ShieldPenetration.Medium,
         Attacks = new CreatureAttackCollection
         {
             { new CreatureAttack(11, 15, 25, "The gargoyle strikes you with its claws.",
@@ -86398,7 +86398,7 @@ PROTECTION P_DEATH 40
         Experience = 2500,
 
         CanFlee = true,
-
+        BasePenetration = ShieldPenetration.Medium,
         Attacks = new CreatureAttackCollection
         {
             { new CreatureAttack(12, 8, 23, "The minotaur hits with a greatsword."), 60 }, 
@@ -86452,7 +86452,7 @@ PROTECTION P_DEATH 40
         
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(11) }, 
+            { new CreatureBasicAttack(11, 12, 19) }, 
         },
     };
 
@@ -86497,7 +86497,7 @@ PROTECTION P_DEATH 40
 
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(12) }, 
+            { new CreatureBasicAttack(12, 13, 20) }, 
         },
     };
 
@@ -86540,7 +86540,7 @@ PROTECTION P_DEATH 40
 
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(11) }, 
+            { new CreatureBasicAttack(11, 11, 16) }, 
         },
     };
 
@@ -86787,7 +86787,7 @@ PROTECTION P_DEATH 40
         
         MaxHealth = 200, Health = 200,
         BaseDodge = 18,
-
+        BasePenetration = ShieldPenetration.Medium,
         Experience = 5000,
         
         CanFlee = true,
@@ -86834,7 +86834,7 @@ PROTECTION P_DEATH 40
         
         MaxHealth = 200, Health = 200,
         BaseDodge = 18,
-
+        BasePenetration = ShieldPenetration.Medium,
         Experience = 5000,
 
         CanFlee = true,
@@ -87142,7 +87142,7 @@ PROTECTION P_DEATH 40
 
         Movement = 2,
         VisibilityDistance = 1,
-
+        BasePenetration = ShieldPenetration.Medium,
         Attacks = new CreatureAttackCollection
         {
             { new CreatureAttack(14, 6, 20, "The ghoul scratches you with its claws."), 80 }, 
@@ -87352,7 +87352,7 @@ PROTECTION P_DEATH 40
 
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(15) }, 
+            { new CreatureBasicAttack(15, 20, 30) }, 
         },
     };
     stalker.AddStatus(new NightVisionStatus(stalker));
@@ -87642,7 +87642,8 @@ PROTECTION P_DEATH 40
         CanFly = true,
         CanCharge = true,
         
-        BasePenetration = ShieldPenetration.VeryHeavy,
+        BasePenetration = ShieldPenetration.Heavy,
+        HideDetection = 24,
 
         Attacks = new CreatureAttackCollection
         {
@@ -88743,7 +88744,7 @@ PROTECTION P_DEATH 40
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallRuby(800u);
+	return new SmallRuby(500u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -88752,7 +88753,7 @@ PROTECTION P_DEATH 40
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(1000u);
+	return new Amethyst(700u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -88810,7 +88811,7 @@ PROTECTION P_DEATH 40
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallRuby(800u);
+	return new SmallRuby(500u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -88819,7 +88820,7 @@ PROTECTION P_DEATH 40
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(1000u);
+	return new Amethyst(700u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -88915,7 +88916,7 @@ PROTECTION P_DEATH 40
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallRuby(800u);
+	return new SmallRuby(600u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -88924,7 +88925,7 @@ PROTECTION P_DEATH 40
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(1000u);
+	return new Amethyst(700u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -88933,7 +88934,7 @@ PROTECTION P_DEATH 40
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallSapphire(1200u);
+	return new SmallSapphire(900u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -89132,7 +89133,7 @@ PROTECTION P_DEATH 40
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new TemporaryStrengthPotion(109);
+	return new TemporaryStrengthPotion();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>

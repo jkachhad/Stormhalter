@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.67.0.0">
+<segment name="Kesmai" version="0.69.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -96335,11 +96335,11 @@
                     
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(7, 15, 20,
+            { new CreatureBasicAttack(10, 25, 30,
                 new AttackProneComponent(15.0), new AttackStunComponent(15.0)) },
         },
                     
-        BasePenetration = ShieldPenetration.VeryHeavy,
+        BasePenetration = ShieldPenetration.Medium,
         
         Immunity = CreatureImmunity.Web,
 
@@ -97802,7 +97802,7 @@ return orc;
         new LootPackEntry(true, dungeon3Treasure,   0.6),
         new LootPackEntry(true, dungeon3Rings,      0.6),
         new LootPackEntry(true, dungeon3Potions,    0.2),
-        
+        new LootPackEntry(true, (from, container) => new Yttril(), 1.0),
         new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5)
     ));
 
@@ -97903,8 +97903,8 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    20),
         new LootPackEntry(true, dungeon3Treasure,   0.6),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.2)
-        
+        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1.0)
         //new LootPackEntry(true, (from, container) => new SnakeStaff(), 1.6)
     ));
     
@@ -98328,7 +98328,8 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    20),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.2)
+        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1.6)
     ));
     
     return wraith;
@@ -98381,7 +98382,8 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    20),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.2)
+        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1.6)
     ));
     
     return spectre;
@@ -98407,7 +98409,7 @@ return orc;
         Experience = 2500,
     
         Movement = 2,
-        
+        BasePenetration = ShieldPenetration.Light,
         VisibilityDistance = 1,
     };
     
@@ -98456,7 +98458,7 @@ return orc;
         Experience = 2200,
     
         CanCharge = true,
-        
+        BasePenetration = ShieldPenetration.Light,
         Immunity = CreatureImmunity.Web
     };
     minotaur.AddStatus(new NightVisionStatus(minotaur));
@@ -98484,7 +98486,7 @@ return orc;
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
         new LootPackEntry(true, dungeon3Potions,    0.2),
-        
+        new LootPackEntry(true, (from, container) => new Yttril(), 1.6),
         new LootPackEntry(true, (from, container) => new SteelGauntlets(), 6.67)
     ));
     
@@ -98649,7 +98651,7 @@ return orc;
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
         new LootPackEntry(true, dungeon3Potions,    0.2),
-        
+        new LootPackEntry(true, (from, container) => new Yttril(), 1.6),
         new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    10.0),
         new LootPackEntry(true, (from, container) => new RedRunesRobe(),        10.0)
     ));
@@ -98714,7 +98716,7 @@ return orc;
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
         new LootPackEntry(true, dungeon3Potions,    0.2),
-        
+        new LootPackEntry(true, (from, container) => new Yttril(), 1.6),
         new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    10.0),
         new LootPackEntry(true, (from, container) => new RedRunesRobe(),        10.0)
     ));
@@ -99141,13 +99143,13 @@ return orc;
         <block><![CDATA[]]></block>
         <block><![CDATA[
     // TODO: Magic protection 50%
-    // TODO: Hide detection @ 15
     var griffin = new Griffin()
     {
         MaxHealth = 120, Health = 120,
         BaseDodge = 15,
-                
-        Experience = 900,
+        BasePenetration = ShieldPenetration.Light,
+        Experience = 1100,
+        HideDetection = 15,
     };
     griffin.AddStatus(new NightVisionStatus(griffin));
         
@@ -99200,7 +99202,7 @@ return orc;
     
         Experience = 5000,
         
-        BasePenetration = ShieldPenetration.VeryHeavy,
+        BasePenetration = ShieldPenetration.Heavy,
     
         MaxMana = 35, Mana = 35,
     
@@ -99209,7 +99211,7 @@ return orc;
         Weakness = CreatureWeakness.BlueGlowing,
     
         CanSwim = true,
-    
+        HideDetection = 18,
         FireProtection = 100,
         IceProtection = 100,
     
@@ -99276,7 +99278,7 @@ return orc;
         Experience = 2000,
     
         Movement = 2,
-    
+        HideDetection = 15,
         CanSwim = true,
         CanCharge = true,
     
@@ -99347,7 +99349,7 @@ return orc;
         new LootPackEntry(true, dungeon4Gems,       50.0,   gemsPriceMutator), 
         new LootPackEntry(true, dungeon4Bottles,    50.0),
         new LootPackEntry(true, dungeon3Potions,    0.2),
-        
+        new LootPackEntry(true, (from, container) => new Yttril(), 1.6),
         new LootPackEntry(true, (from, container) => new ReturningHammer(),     33.33)
     ));
     
@@ -99402,7 +99404,8 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    20),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.2)
+        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1.6)
     ));
     
     return wraith;
@@ -99480,7 +99483,7 @@ return orc;
         CanFly = true,
         CanCharge = true,
         
-        BasePenetration = ShieldPenetration.VeryHeavy,
+        BasePenetration = ShieldPenetration.Medium,
 
         Immunity = CreatureImmunity.Web,
     
