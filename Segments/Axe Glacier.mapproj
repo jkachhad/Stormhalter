@@ -105156,7 +105156,7 @@
     {
         MaxHealth = 5000, Health = 5000,
         BaseDodge = 19,
-        HideDetection = 31,
+        
         Experience = 55000,
         
         CanFly = true,
@@ -105166,12 +105166,14 @@
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
-        Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.Silver,
-        //todo add Heavy Silver creature weakness stat.
-        //todo add Hide level check?
-
+                   
+        Weakness = CreatureWeakness.IceSpearSpell,
+        
+        HideDetection = 31,
     };
     dragon.AddStatus(new NightVisionStatus(dragon));
+    
+    dragon.AddWeakness(typeof(SilverGreatAxe));
     
     dragon.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
     
