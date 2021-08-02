@@ -128,7 +128,6 @@
         }
     }
 
-
     public class Vulcan : VendorEntity
     {
         public Vulcan()
@@ -165,13 +164,11 @@
                 
                 if (AtCounter(source, out var counter))
                 {
-                    var items = Segment.GetItemsAt(Location).ToList();
+                    var obsidianEggs = Segment.GetItemsAt(Location).OfType<ObsidianEgg>();
 
-                    var obsidianEgg = items.OfType<ScorpionAmulet>();
-
-                    if (obsidianEgg.Any())
+                    if (obsidianEggs.Any())
                     {
-                        if (ConsumeFromLocation<ScorpionAmulet>(counter, 1))
+                        if (ConsumeFromLocation<ObsidianEgg>(counter, 1))
                         {
                             new ReturningAxe().Move(counter, true, Segment);
 
@@ -180,7 +177,7 @@
                     }
                     else
                     {
-                        SayTo(source, 6300348); /* Bring me an obsidian egg and I will make you the weapon. */
+                        SayTo(source, 6300396); /* Bring me an obsidian egg and I will make you the weapon. */
                     }
                 }
                 else
@@ -194,6 +191,65 @@
                 return;
             }
         }      
+    }
+    
+    public class ObsidianEgg : Gem
+    {
+        /// <inheritdoc />
+        public override int LabelNumber => 6000033;
+
+        /// <inheritdoc />
+        public override uint BasePrice => 5000;
+
+        /// <inheritdoc />
+        public override int Weight => 500;
+
+        /// <inheritdoc />
+        public override int Category => 3;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ObsidianEgg"/> class.
+        /// </summary>
+        public ObsidianEgg() : base(123, 5000)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ObsidianEgg"/> class.
+        /// </summary>
+        public ObsidianEgg(Serial serial) : base(serial)
+        {
+        }
+
+        /// <inheritdoc />
+        public override void GetDescription(List<LocalizationEntry> entries)
+        {
+            entries.Add(new LocalizationEntry(6200000, 6200272)); /* [You are looking at] [an obsidian egg.] */
+        }
+
+        /// <inheritdoc />
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((short)1); /* version */
+        }
+
+        /// <inheritdoc />
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+
+            var version = reader.ReadInt16();
+
+            switch (version)
+            {
+                case 1:
+                {
+                    break;
+                }
+            }
+        }
     }
 ]]></block>
     <block><![CDATA[
@@ -103888,17 +103944,27 @@
         <block><![CDATA[
     var wolf = new Wolf()
     {
-        MaxHealth = 700, Health = 700,
         BaseDodge = 17,
-        BasePenetration = ShieldPenetration.Medium,
+        MaxHealth = 700, Health = 700,
+
         Experience = 5500,
-        HideDetection = 21,
+         
+        BasePenetration = ShieldPenetration.Medium,
+
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
-        Weakness = CreatureWeakness.Silver,
+                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic, 
+                   
+        /* He is immune to magic and can only be hurt by IS and Death. */
+        Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+        
         FireProtection = 100,
         IceProtection = 100,
         StunProtection = 100,
+        
+        /* He is protection from magic, all spell damage reduced by 50% */
+        MagicProtection = 50,
+        
+        HideDetection = 21,
     };
     
     wolf.AddStatus(new NightVisionStatus(wolf));
@@ -103907,23 +103973,21 @@
     {
         { new CreatureAttack(9,     10, 30,   "The wolf rakes you with its claws."),  50 }, 
         { new CreatureAttack(11,     15, 35,  "The wolf sinks its teeth into you."),  30 }, 
-        { new CreatureAttack(11,     20, 45,  "The wolf lunges at you."),             20 }, 
+        { new CreatureAttack(11,     20, 45,  "The wolf lunges at you.",
+                                                new AttackProneComponent(10),
+                                                new AttackStunComponent(10)),         20 }, 
     };
-        
+
     wolf.Blocks = new CreatureBlockCollection
     {
         new CreatureBlock(6, "the thick hide"),
         new CreatureBlock(3, "a paw"),
     };
-    //todo: add obsidian egg
-    wolf.AddGold(1000);
+
     wolf.AddLoot(new LootPack(
-        new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, upperTreasureBottles,    20),
-        new LootPackEntry(true, upperTreasure,   0.63),
-        new LootPackEntry(true, (from, container) => new ScorpionAmulet(),        100)
+        new LootPackEntry(true, (from, container) => new ObsidianEgg(),        100)
     ));
-        
+
     return wolf;
 ]]></block>
         <block><![CDATA[]]></block>
