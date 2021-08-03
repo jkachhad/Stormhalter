@@ -24612,7 +24612,13 @@
         </component>
       </tile>
       <tile x="13" y="29">
-        <component type="ItemTeleporter">
+        <component type="FloorComponent">
+          <ground>179</ground>
+        </component>
+        <component type="RuinsComponent">
+          <ruins>195</ruins>
+        </component>
+        <component type="HiddenTeleporterComponent">
           <destinationX>21</destinationX>
           <destinationY>7</destinationY>
           <destinationRegion>255</destinationRegion>
@@ -24620,13 +24626,6 @@
           <moonphases select="all" />
           <professions>Thief</professions>
           <alignments select="all" />
-          <fail>Interrupted</fail>
-        </component>
-        <component type="FloorComponent">
-          <ground>179</ground>
-        </component>
-        <component type="RuinsComponent">
-          <ruins>195</ruins>
         </component>
       </tile>
       <tile x="10" y="30">
