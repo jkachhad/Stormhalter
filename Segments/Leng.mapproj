@@ -24615,9 +24615,6 @@
         <component type="FloorComponent">
           <ground>179</ground>
         </component>
-        <component type="RuinsComponent">
-          <ruins>195</ruins>
-        </component>
         <component type="HiddenTeleporterComponent">
           <destinationX>21</destinationX>
           <destinationY>7</destinationY>
@@ -24626,6 +24623,9 @@
           <moonphases select="all" />
           <professions>Thief</professions>
           <alignments select="all" />
+        </component>
+        <component type="StaticComponent">
+          <static>195</static>
         </component>
       </tile>
       <tile x="10" y="30">
@@ -28270,9 +28270,6 @@
         </component>
       </tile>
       <tile x="3" y="12">
-        <component type="FloorComponent">
-          <ground>195</ground>
-        </component>
         <component type="HiddenTeleporterComponent">
           <destinationX>21</destinationX>
           <destinationY>6</destinationY>
@@ -28281,6 +28278,13 @@
           <moonphases select="all" />
           <professions>Martial Artist,Fighter,Thaumaturge,Wizard,Knight</professions>
           <alignments select="all" />
+        </component>
+        <component type="FloorComponent">
+          <ground>18</ground>
+          <movementCost>2</movementCost>
+        </component>
+        <component type="StaticComponent">
+          <static>195</static>
         </component>
       </tile>
       <tile x="4" y="12">
