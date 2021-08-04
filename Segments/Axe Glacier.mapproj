@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.67.0.0">
+<segment name="Axe Glacier" version="0.69.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -59,8 +59,201 @@
         
         item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
     }
+    
+    public class Silvermoon : VendorEntity
+    {
+        public Silvermoon()
+        {
+            Name = "Silvermoon";
+            Body = 98;
+
+            Health = MaxHealth = 50;
+            BaseDodge = 10;
+
+            Experience = 50;
+
+            Movement = 0;
+        }
+
+        public Silvermoon(Serial serial) : base(serial)
+        {
+        }
+        
+        public override void HandleOrder(OrderEventArgs args)
+        {
+            base.HandleOrder(args);
+
+            if (args.Handled)
+                return;
+            
+            var source = args.Source;
+            var order = args.Order;
+            
+            /* example: craft broadsword */
+            if (_craft.TryGetMatch(order, out var craftMatch) && craftMatch.Groups[1].Value.Matches("greataxe", true))
+            {
+                args.Handled = true;
+                
+                if (AtCounter(source, out var counter))
+                {
+                    var items = Segment.GetItemsAt(Location).ToList();
+
+                    var ironOre = items.OfType<IronOre>();
+                    var yttril = items.OfType<Yttril>();
+
+                    if (ironOre.Any() && yttril.Any())
+                    {
+                        if (ConsumeFromLocation<IronOre>(counter, 1) && ConsumeFromLocation<Yttril>(counter, 1))
+                        {
+                            new SilverGreatAxe().Move(counter, true, Segment);
+
+                            SayTo(source, 6300349); /* Wield this weapon with courage and honor. */
+                        }
+                    }
+                    else
+                    {
+                        SayTo(source, 6300348); /* Bring me iron and yttril and I will make you the weapon. */
+                    }
+                }
+                else
+                {
+                    if (_counters.Any())
+                        SayTo(source, 6300236); /* Please step up to a counter. */
+                    else
+                        SayTo(source, 6300237); /* Please stand closer to me. */
+                }
+                
+                return;
+            }
+        }
+    }
+
+    public class Vulcan : VendorEntity
+    {
+        public Vulcan()
+        {
+            Name = "Vulcan";
+            Body = 98;
+
+            Health = MaxHealth = 50;
+            BaseDodge = 10;
+
+            Experience = 50;
+
+            Movement = 0;
+        }
+
+        public Vulcan(Serial serial) : base(serial)
+        {
+        }
+        
+        public override void HandleOrder(OrderEventArgs args)
+        {
+            base.HandleOrder(args);
+
+            if (args.Handled)
+                return;
+            
+            var source = args.Source;
+            var order = args.Order;
+            
+            /* example: craft broadsword */
+            if (_craft.TryGetMatch(order, out var craftMatch) && craftMatch.Groups[1].Value.Matches("greataxe", true))
+            {
+                args.Handled = true;
+                
+                if (AtCounter(source, out var counter))
+                {
+                    var obsidianEggs = Segment.GetItemsAt(Location).OfType<ObsidianEgg>();
+
+                    if (obsidianEggs.Any())
+                    {
+                        if (ConsumeFromLocation<ObsidianEgg>(counter, 1))
+                        {
+                            new ReturningAxe().Move(counter, true, Segment);
+
+                            SayTo(source, 6300349); /* Wield this weapon with courage and honor. */
+                        }
+                    }
+                    else
+                    {
+                        SayTo(source, 6300396); /* Bring me an obsidian egg and I will make you the weapon. */
+                    }
+                }
+                else
+                {
+                    if (_counters.Any())
+                        SayTo(source, 6300236); /* Please step up to a counter. */
+                    else
+                        SayTo(source, 6300237); /* Please stand closer to me. */
+                }
+                
+                return;
+            }
+        }      
+    }
+    
+    public class ObsidianEgg : Gem
+    {
+        /// <inheritdoc />
+        public override int LabelNumber => 6000033;
+
+        /// <inheritdoc />
+        public override uint BasePrice => 5000;
+
+        /// <inheritdoc />
+        public override int Weight => 500;
+
+        /// <inheritdoc />
+        public override int Category => 3;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ObsidianEgg"/> class.
+        /// </summary>
+        public ObsidianEgg() : base(123, 5000)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ObsidianEgg"/> class.
+        /// </summary>
+        public ObsidianEgg(Serial serial) : base(serial)
+        {
+        }
+
+        /// <inheritdoc />
+        public override void GetDescription(List<LocalizationEntry> entries)
+        {
+            entries.Add(new LocalizationEntry(6200000, 6200272)); /* [You are looking at] [an obsidian egg.] */
+        }
+
+        /// <inheritdoc />
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((short)1); /* version */
+        }
+
+        /// <inheritdoc />
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+
+            var version = reader.ReadInt16();
+
+            switch (version)
+            {
+                case 1:
+                {
+                    break;
+                }
+            }
+        }
+    }
 ]]></block>
-    <block><![CDATA[]]></block>
+    <block><![CDATA[
+]]></block>
   </script>
   <regions>
     <region>
@@ -102789,7 +102982,7 @@
     {
         MaxHealth = 68, Health = 68,
         MaxMana = 17, Mana = 17,
-        BaseDodge = 13,
+        BaseDodge = 12,
         
         Experience = 900,
     };
@@ -102816,7 +103009,8 @@
     wraith.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
-        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
     return wraith;
@@ -102837,7 +103031,7 @@
     var wolf = new Wolf()
     {
         MaxHealth = 50, Health = 50,
-        BaseDodge = 12,
+        BaseDodge = 11,
                 
         Experience = 500,
     };
@@ -102880,7 +103074,7 @@
     var skeleton = new Skeleton()
     {
         MaxHealth = 40, Health = 40,
-        BaseDodge = 12,
+        BaseDodge = 10,
                 
         Experience = 500,
                 
@@ -102898,7 +103092,8 @@
     skeleton.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
-        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
     return skeleton;
@@ -102919,7 +103114,7 @@
     var goblin = new Goblin()
     {
         MaxHealth = 36, Health = 36,
-        BaseDodge = 12,
+        BaseDodge = 10,
                 
         Experience = 600,
         
@@ -102957,7 +103152,7 @@
     var orc = new Orc()
     {
         MaxHealth = 35, Health = 35,
-        BaseDodge = 12,
+        BaseDodge = 10,
                 
         Experience = 425,
         
@@ -102965,7 +103160,7 @@
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(6)
+            new CreatureBasicAttack(6, 5, 13)
         }
     };
     
@@ -103007,7 +103202,7 @@
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(6)
+            new CreatureBasicAttack(6, 10, 17)
         }
     };
     
@@ -103018,7 +103213,8 @@
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
-        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
     return troll;
@@ -103039,13 +103235,13 @@
     var goblin = new Goblin()
     {
         MaxHealth = 36, Health = 36,
-        BaseDodge = 12,
+        BaseDodge = 10,
                 
         Experience = 600,
     
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(6),
+            new CreatureBasicAttack(6, 5, 12),
         }
     
     };
@@ -103079,7 +103275,7 @@
     var gargoyle = new Gargoyle()
     {
         MaxHealth = 82, Health = 82,
-        BaseDodge = 12,
+        BaseDodge = 10,
                 
         Experience = 1525,
                 
@@ -103090,7 +103286,7 @@
     gargoyle.Attacks = new CreatureAttackCollection
     {
         { new CreatureAttack(6,     4, 8,   "The gargoyle strikes you with its claws."),    60 },
-        { new CreatureAttack(7,     6, 12,  "The gargoyle batters you with its wings."),    40 },
+        { new CreatureAttack(7,     6, 15,  "The gargoyle batters you with its wings."),    40 },
     };
     
     gargoyle.Blocks = new CreatureBlockCollection
@@ -103105,7 +103301,8 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
-        new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5)
+        new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5),
+        new LootPackEntry(true, (from, container) => new IronOre(), 2.6)
     ));
 
     return gargoyle;
@@ -103127,7 +103324,7 @@
     {
         MaxHealth = 36, Health = 36,
         MaxMana = 16, Mana = 16,
-        BaseDodge = 12,
+        BaseDodge = 9,
                 
         Experience = 600,
     };
@@ -103180,7 +103377,7 @@
     
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(7),
+            new CreatureBasicAttack(7, 10, 14),
         }
     
     };
@@ -103213,7 +103410,7 @@
     var troll = new Troll()
     {
         MaxHealth = 70, Health = 70,
-        BaseDodge = 13,
+        BaseDodge = 11,
                 
         Experience = 800,
                 
@@ -103223,7 +103420,7 @@
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(8)
+            new CreatureBasicAttack(8, 15, 25)
         }
     };
     
@@ -103260,11 +103457,11 @@
         Body = (female ? 33 : 32), IsFemale = female,
             
         MaxHealth = 110, Health = 110,
-        BaseDodge = 13,
+        BaseDodge = 11,
     
         Experience = 2650,
     
-        Movement = 2,
+        BasePenetration = ShieldPenetration.Light,
             
         CanSwim = true,
     };
@@ -103281,7 +103478,8 @@
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
-        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
     return fighter;
@@ -103310,8 +103508,7 @@
         BaseDodge = 13,
     
         Experience = 2650,
-    
-        Movement = 2,
+        BasePenetration = ShieldPenetration.Light,
         
         CanJumpkick = true,
         CanSwim = true,
@@ -103319,14 +103516,15 @@
     
     martialartist.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9), 
+        new CreatureBasicAttack(9, 20, 25), 
     };   
     
     martialartist.AddGold(550);
     martialartist.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
-        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
     return martialartist;
@@ -103347,7 +103545,7 @@
     var orc = new Orc()
     {
         MaxHealth = 50, Health = 50,
-        BaseDodge = 13,
+        BaseDodge = 10,
                 
         Experience = 600,
         
@@ -103355,7 +103553,7 @@
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(7)
+            new CreatureBasicAttack(7, 8, 15)
         }
     };
     
@@ -103387,7 +103585,7 @@
     var gargoyle = new Gargoyle()
     {
         MaxHealth = 107, Health = 107,
-        BaseDodge = 13,
+        BaseDodge = 12,
                 
         Experience = 2025,
                 
@@ -103413,7 +103611,8 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
-        new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5)
+        new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
 
     return gargoyle;
@@ -103434,7 +103633,7 @@
     var wolf = new Wolf()
     {
         MaxHealth = 55, Health = 55,
-        BaseDodge = 13,
+        BaseDodge = 10,
                 
         Experience = 600,
     };
@@ -103478,7 +103677,7 @@
     {
         MaxHealth = 68, Health = 68,
         MaxMana = 17, Mana = 17,
-        BaseDodge = 13,
+        BaseDodge = 11,
         
         Experience = 1100,
     };
@@ -103543,7 +103742,7 @@
             skillLevel: 4.5, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 4, cost: 3, 
+            skillLevel: 6, cost: 3, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
@@ -103579,18 +103778,18 @@
         Body = (female ? 33 : 32), IsFemale = female,
             
         MaxHealth = 110, Health = 110,
-        BaseDodge = 13,
+        BaseDodge = 12,
     
         Experience = 2650,
     
-        Movement = 2,
+        BasePenetration = ShieldPenetration.Light,
             
         CanSwim = true,
     };
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9), 
+        new CreatureBasicAttack(9, 20, 30), 
     };
     
     fighter.Wield(new Rapier());
@@ -103665,14 +103864,14 @@
         
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(8) }, 
+            { new CreatureBasicAttack(8, 10, 18) }, 
         },
     };
     
     hobgoblin.Wield(new Longsword());
     hobgoblin.Equip(new LeatherArmor());    
     
-    hobgoblin.AddGold(500);
+    hobgoblin.AddGold(300);
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
@@ -103700,7 +103899,7 @@
         BaseDodge = 14,
                 
         Experience = 2500,
-        
+        BasePenetration = ShieldPenetration.Medium,
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
         Weakness = CreatureWeakness.Silver,
@@ -103745,17 +103944,27 @@
         <block><![CDATA[
     var wolf = new Wolf()
     {
-        MaxHealth = 700, Health = 700,
         BaseDodge = 17,
-                
+        MaxHealth = 700, Health = 700,
+
         Experience = 5500,
-        
+         
+        BasePenetration = ShieldPenetration.Medium,
+
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
-        Weakness = CreatureWeakness.Silver,
+                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic, 
+                   
+        /* He is immune to magic and can only be hurt by IS and Death. */
+        Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+        
         FireProtection = 100,
         IceProtection = 100,
         StunProtection = 100,
+        
+        /* He is protection from magic, all spell damage reduced by 50% */
+        MagicProtection = 50,
+        
+        HideDetection = 21,
     };
     
     wolf.AddStatus(new NightVisionStatus(wolf));
@@ -103764,23 +103973,21 @@
     {
         { new CreatureAttack(9,     10, 30,   "The wolf rakes you with its claws."),  50 }, 
         { new CreatureAttack(11,     15, 35,  "The wolf sinks its teeth into you."),  30 }, 
-        { new CreatureAttack(11,     20, 45,  "The wolf lunges at you."),             20 }, 
+        { new CreatureAttack(11,     20, 45,  "The wolf lunges at you.",
+                                                new AttackProneComponent(10),
+                                                new AttackStunComponent(10)),         20 }, 
     };
-        
+
     wolf.Blocks = new CreatureBlockCollection
     {
         new CreatureBlock(6, "the thick hide"),
         new CreatureBlock(3, "a paw"),
     };
-    //todo: add obsidian egg
-    wolf.AddGold(1000);
+
     wolf.AddLoot(new LootPack(
-        new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, upperTreasureBottles,    20),
-        new LootPackEntry(true, upperTreasure,   0.63)
-        
+        new LootPackEntry(true, (from, container) => new ObsidianEgg(),        100)
     ));
-        
+
     return wolf;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -103799,10 +104006,10 @@
     var rockworm = new Rockwyrm()
     {
         MaxHealth = 200, Health = 200,
-        BaseDodge = 14,
+        BaseDodge = 13,
     
-        Experience = 1500,
-    
+        Experience = 3000,
+        BasePenetration = ShieldPenetration.Light,
         VisibilityDistance = 1,
         
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
@@ -103859,11 +104066,11 @@
         Body = (female ? 33 : 32), IsFemale = female,
             
         MaxHealth = 110, Health = 110,
-        BaseDodge = 13,
+        BaseDodge = 11,
     
         Experience = 2650,
     
-        Movement = 2,
+        BasePenetration = ShieldPenetration.Light,
             
         CanSwim = true,
     };
@@ -103880,7 +104087,8 @@
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
-        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
     return fighter;
@@ -103900,17 +104108,17 @@
         <block><![CDATA[
     var ogre = new Ogre()
     {
-        MaxHealth = 110, Health = 110,
+        MaxHealth = 120, Health = 120,
         BaseDodge = 13,
     
         Experience = 2600,
-            
+        BasePenetration = ShieldPenetration.Medium,
         Immunity = CreatureImmunity.Web
     };
     
     ogre.Attacks = new CreatureAttackCollection
     {
-        { new CreatureBasicAttack(9) }, 
+        { new CreatureBasicAttack(11, 20, 30) }, 
     };
     
     ogre.AddStatus(new NightVisionStatus(ogre));
@@ -103943,7 +104151,7 @@
     var lizard = new Lizard()
     {
         MaxHealth = 70, Health = 70,
-        BaseDodge = 13,
+        BaseDodge = 11,
         
         Experience = 800,
         
@@ -103997,11 +104205,11 @@
         MaxHealth = 1000, Health = 1000,
         BaseDodge = 23,
     
-        Experience = 9000,
-       
+        Experience = 13000,
+        HideDetection = 21,
         CanJumpkick = true,
         
-        BasePenetration = ArmorPenetration.VeryHeavy,
+        BasePenetration = ShieldPenetration.VeryHeavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
@@ -104104,10 +104312,10 @@
 	var goblin = new Goblin()
     {
         MaxHealth = 55, Health = 55,
-        BaseDodge = 13,
+        BaseDodge = 11,
                 
         Experience = 800,
-        
+        BasePenetration = ShieldPenetration.Light,
         Attacks = new CreatureAttackCollection()
         {
             new CreatureBasicAttack(8)
@@ -104147,11 +104355,11 @@
         Body = (female ? 33 : 32), IsFemale = female,
             
         MaxHealth = 120, Health = 120,
-        BaseDodge = 14,
+        BaseDodge = 13,
     
         Experience = 3000,
     
-        Movement = 3,
+        BasePenetration = ShieldPenetration.Light,
             
         CanSwim = true,
     };
@@ -104194,18 +104402,18 @@
         Body = (female ? 33 : 32), IsFemale = female,
             
         MaxHealth = 150, Health = 150,
-        BaseDodge = 15,
+        BaseDodge = 14,
     
         Experience = 3000,
     
-        Movement = 3,
+        BasePenetration = ShieldPenetration.Light,
             
         CanSwim = true,
     };
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11), 
+        new CreatureBasicAttack(11, 20, 30), 
     };
     
     fighter.Wield(new Longsword());
@@ -104240,7 +104448,7 @@
                 
         Experience = 2525,
                 
-        Movement = 3,
+        BasePenetration = ShieldPenetration.Light,
         CanJumpkick = true,
     };
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
@@ -104285,13 +104493,13 @@
     var goblin = new Goblin()
     {
         MaxHealth = 65, Health = 65,
-        BaseDodge = 13,
+        BaseDodge = 11,
                 
         Experience = 800,
     
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(8),
+            new CreatureBasicAttack(9, 12, 18),
         }
     
     };
@@ -104325,7 +104533,7 @@
     {
         MaxHealth = 50, Health = 50,
         MaxMana = 16, Mana = 16,
-        BaseDodge = 12,
+        BaseDodge = 11,
                 
         Experience = 800,
     };
@@ -104341,7 +104549,7 @@
             skillLevel: 5, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 5, cost: 3, 
+            skillLevel: 7, cost: 3, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
@@ -104372,13 +104580,13 @@
     var hobgoblin = new Hobgoblin()
     {
         MaxHealth = 72, Health = 72,
-        BaseDodge = 14,
+        BaseDodge = 11,
     
         Experience = 800,
         
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(9) }, 
+            { new CreatureBasicAttack(9, 13, 19) }, 
         },
     };
     
@@ -104419,7 +104627,7 @@
     
         Experience = 3050,
     
-        Movement = 3,
+        BasePenetration = ShieldPenetration.Light,
         
         CanJumpkick = true,
         CanSwim = true,
@@ -104427,7 +104635,7 @@
     
     martialartist.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11), 
+        new CreatureBasicAttack(11, 20, 32), 
     };   
     
     martialartist.AddGold(650);
@@ -104458,13 +104666,13 @@
         BaseDodge = 15,
     
         Experience = 3000,
-            
+        BasePenetration = ShieldPenetration.Medium,
         Immunity = CreatureImmunity.Web
     };
     
     ogre.Attacks = new CreatureAttackCollection
     {
-        { new CreatureBasicAttack(11) }, 
+        { new CreatureBasicAttack(12, 21, 33) }, 
     };
     
     ogre.AddStatus(new NightVisionStatus(ogre));
@@ -104497,7 +104705,7 @@
     var orc = new Orc()
     {
         MaxHealth = 80, Health = 80,
-        BaseDodge = 13,
+        BaseDodge = 11,
                 
         Experience = 700,
         
@@ -104505,7 +104713,7 @@
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(7)
+            new CreatureBasicAttack(8, 11, 17)
         }
     };
     
@@ -104542,18 +104750,18 @@
         Body = (female ? 33 : 32), IsFemale = female,
             
         MaxHealth = 150, Health = 150,
-        BaseDodge = 16,
+        BaseDodge = 14,
     
         Experience = 3050,
     
-        Movement = 3,
+        BasePenetration = ShieldPenetration.Light,
             
         CanSwim = true,
     };
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9), 
+        new CreatureBasicAttack(9, 18, 23), 
     };
     
     fighter.Wield(new Rapier());
@@ -104584,7 +104792,7 @@
     var troll = new Troll()
     {
         MaxHealth = 100, Health = 100,
-        BaseDodge = 13,
+        BaseDodge = 12,
                 
         Experience = 1100,
                 
@@ -104594,7 +104802,7 @@
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(8)
+            new CreatureBasicAttack(8, 12, 21)
         }
     };
     
@@ -104626,7 +104834,7 @@
     var wolf = new Wolf()
     {
         MaxHealth = 65, Health = 65,
-        BaseDodge = 14,
+        BaseDodge = 11,
                 
         Experience = 700,
     };
@@ -104670,7 +104878,7 @@
     {
         MaxHealth = 89, Health = 89,
         MaxMana = 17, Mana = 17,
-        BaseDodge = 13,
+        BaseDodge = 11,
         
         Experience = 1500,
     };
@@ -104718,7 +104926,7 @@
     var lizard = new Lizard()
     {
         MaxHealth = 70, Health = 70,
-        BaseDodge = 13,
+        BaseDodge = 11,
         
         Experience = 900,
         
@@ -104770,12 +104978,11 @@
     var bear = new Bear()
     {
         MaxHealth = 150, Health = 150,
-        BaseDodge = 13,
+        BaseDodge = 11,
                 
         Experience = 2500,
                 
-        Movement = 3,
-            
+        BasePenetration = ShieldPenetration.VeryLight,
         CanSwim = true,
     };
     bear.AddStatus(new NightVisionStatus(bear));
@@ -104822,7 +105029,7 @@
                 
         Experience = 5000,
                 
-        Movement = 3,
+        BasePenetration = ShieldPenetration.Medium,
             
         CanSwim = true,
     };
@@ -104868,12 +105075,12 @@
         MaxHealth = 3000, Health = 3000,
         BaseDodge = 18,
     
-        Experience = 15000,
-        
+        Experience = 45000,
+        HideDetection = 25,
         CanFly = true,
         CanCharge = true,
         
-        BasePenetration = ArmorPenetration.VeryHeavy,
+        BasePenetration = ShieldPenetration.Heavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Magic,
@@ -104949,22 +105156,24 @@
     {
         MaxHealth = 5000, Health = 5000,
         BaseDodge = 19,
-    
-        Experience = 25000,
+        
+        Experience = 55000,
         
         CanFly = true,
         CanCharge = true,
         
-        BasePenetration = ArmorPenetration.VeryHeavy,
+        BasePenetration = ShieldPenetration.VeryHeavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
-        Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.Silver,
-        //todo add Heavy Silver creature weakness stat.
-        //todo add Hide level check?
-
+                   
+        Weakness = CreatureWeakness.IceSpearSpell,
+        
+        HideDetection = 31,
     };
     dragon.AddStatus(new NightVisionStatus(dragon));
+    
+    dragon.AddWeakness(typeof(SilverGreatAxe));
     
     dragon.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
     
@@ -105001,7 +105210,7 @@
     //todo: add griffin figurine, protection from cold amulet (replaces f/i ammy)
     dragon.AddGold(6000);
     dragon.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(25000u),    100, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new DragonSkull(),        100),
         new LootPackEntry(true, (from, container) => new IvoryBrooch(),        25),
         new LootPackEntry(true, (from, container) => new ShieldBracelet(),        25),
@@ -105031,11 +105240,11 @@
         MaxHealth = 3500, Health = 3500,
         BaseDodge = 21,
     
-        Experience = 17000,
-       
+        Experience = 50000,
+        HideDetection = 27,
         CanJumpkick = true,
         
-        BasePenetration = ArmorPenetration.VeryHeavy,
+        BasePenetration = ShieldPenetration.VeryHeavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
@@ -105073,6 +105282,11 @@
         new CreatureBlock(6, "his forearm"),
         new CreatureBlock(4, "his thick skull"),
         new CreatureBlock(3, "a meaty ham fist"),
+    };
+    
+    yeti.Spells = new CreatureSpellCollection(20.0)
+    {
+        new CreatureSpell<DragonBreathIceSpell>(21),
     };
         
    yeti.AddGold(12000);
@@ -105392,7 +105606,7 @@
         Name = "Shadow",
         MaxHealth = 89, Health = 89,
         MaxMana = 5, Mana = 5,
-        BaseDodge = 13,
+        BaseDodge = 12,
         
         Experience = 1200,
         
@@ -105402,7 +105616,7 @@
         
     shadow.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(8),
+        new CreatureBasicAttack(8, 18, 25),
     };
     
     shadow.Spells = new CreatureSpellCollection()
@@ -105445,7 +105659,7 @@
             
         MaxHealth = 105, Health = 105,
         MaxMana = 16, Mana = 16,
-        BaseDodge = 13,
+        BaseDodge = 12,
     
         Experience = 3050,
         
@@ -105460,7 +105674,7 @@
     
     wizard.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9),
+        new CreatureBasicAttack(9, 20, 28),
     };
     
     wizard.Spells = new CreatureSpellCollection
@@ -105469,7 +105683,7 @@
             skillLevel: 10, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 7, cost: 3, 
+            skillLevel: 9, cost: 3, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
@@ -105504,7 +105718,7 @@
             
         MaxHealth = 110, Health = 110,
         MaxMana = 23, Mana = 23,
-        BaseDodge = 14,
+        BaseDodge = 13,
     
         Experience = 3050,
     
@@ -105517,7 +105731,7 @@
     
     thaum.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9),
+        new CreatureBasicAttack(9, 20, 28),
     };
     
     thaum.Spells = new CreatureSpellCollection()
@@ -105561,7 +105775,7 @@
             
         MaxHealth = 100, Health = 100,
         MaxMana = 16, Mana = 16,
-        BaseDodge = 14,
+        BaseDodge = 13,
     
         Experience = 3050,
         
@@ -105576,16 +105790,16 @@
     
     wizard.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9),
+        new CreatureBasicAttack(9, 20, 28),
     };
     
     wizard.Spells = new CreatureSpellCollection
     {
         new CreatureSpell<IceStormSpell>(
-            skillLevel: 6, cost: 6, 
+            skillLevel: 9, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 7, cost: 3, 
+            skillLevel: 9, cost: 3, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
@@ -105825,10 +106039,10 @@
         Alignment = Alignment.Evil,
                 
         Experience = 800,
-    
+        BasePenetration = ShieldPenetration.Light,
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(8),
+            new CreatureBasicAttack(8, 15, 23),
         }
     
     };
@@ -105864,7 +106078,7 @@
         BaseDodge = 13,
         Alignment = Alignment.Evil,
         Experience = 800,
-        
+        BasePenetration = ShieldPenetration.Medium,
         Attacks = new CreatureAttackCollection()
         {
             new CreatureBasicAttack(8)
@@ -105892,6 +106106,64 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="thiefTrainer">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var trainer = new ThiefTrainer()
+    {
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+
+        Experience = 50,
+        
+        Alignment = Alignment.Neutral
+    };
+    
+    trainer.SetTraining(Skill.Magic, 8, 14);
+    
+    return trainer;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="axeVulcan">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    return new Vulcan();
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="axeSilvermoon">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    return new Silvermoon();
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="axeSEShopkeeper">
@@ -105900,6 +106172,8 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Name = "Endre";
+    spawn.Body = 9;
     if (spawn is Shopkeeper shopkeeper)
         shopkeeper.AddCounter(new Point2D(33, 32, 1));
 ]]></block>
@@ -105921,6 +106195,8 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Name = "Alfhild";
+    spawn.Body = 10;
     if (spawn is Shopkeeper shopkeeper)
     {
         void onRarePurchase(PlayerEntity player, ItemEntity item)
@@ -106229,6 +106505,8 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Name = "Thyra";
+    spawn.Body = 10;
     if (spawn is Shopkeeper shopkeeper)
         shopkeeper.AddCounter(new Point2D(10, 31, 15));
 ]]></block>
@@ -106250,6 +106528,8 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Name = "Eira";
+    spawn.Body = 10;
     if (spawn is Banker banker)
         banker.AddCounter(new Point2D(25, 12, 1));
 ]]></block>
@@ -106271,6 +106551,8 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Name = "Lamont";
+    spawn.Body = 9;
     if (spawn is Banker banker)
         banker.AddCounter(new Point2D(8, 18, 15));
 ]]></block>
@@ -106292,6 +106574,8 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Name = "Vern";
+    spawn.Body = 9;
     if (spawn is Shopkeeper shopkeeper)
         shopkeeper.AddCounter(new Point2D(7, 12, 15));
 ]]></block>
@@ -106333,7 +106617,8 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    
+    spawn.Name = "Runa";
+    spawn.Body = 37;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -106353,6 +106638,8 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Name = "Valtrex";
+    spawn.Body = 48;
     if (spawn is ThaumaturgeTrainer thaumaturgeTrainer)
     {
         thaumaturgeTrainer.AddCounter(new Point2D(7, 4, 15));
@@ -106377,7 +106664,8 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    spawn.Body = 49; spawn.IsFemale = false;
+    spawn.Name = "Sten";
+    spawn.Body = 49;
     
     if (spawn is TrainerEntity lockpicktrainer)
     {
@@ -106405,7 +106693,8 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    spawn.Body = 32; spawn.IsFemale = false;
+    spawn.Name = "Ingvar";
+    spawn.Body = 32;
     
     if (spawn is TrainerEntity lockpickweapontrainer)
     {
@@ -106470,9 +106759,11 @@
     <spawn type="LocationSpawner" name="lockpickTanner">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Name = "Solvi";
+    spawn.Body = 10;
 
 ]]></block>
         <block><![CDATA[]]></block>
@@ -106494,6 +106785,8 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     //todo add Figurine Engraver to this template.
+    spawn.Name = "Halvar";
+    spawn.Body = 9;
     if (spawn is Shopkeeper shopkeeper)
     {
         shopkeeper.AddCounter(new Point2D(29, 7, 8));
@@ -106538,6 +106831,48 @@
         <block><![CDATA[]]></block>
       </script>
       <location x="35" y="22" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="Vulcan">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="axeVulcan" size="1" minimum="1" maximum="1" />
+      <location x="4" y="7" region="256" />
+    </spawn>
+    <spawn type="LocationSpawner" name="Silvermoon">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="axeSilvermoon" size="1" minimum="1" maximum="1" />
+      <location x="27" y="10" region="1" />
     </spawn>
     <spawn type="RegionSpawner" name="Surface Dungeon">
       <minimumDelay>600</minimumDelay>
@@ -107125,8 +107460,8 @@
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Yeti Lair">
-      <minimumDelay>7200</minimumDelay>
-      <maximumDelay>14400</maximumDelay>
+      <minimumDelay>9000</minimumDelay>
+      <maximumDelay>18000</maximumDelay>
       <maximum>7</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -107315,8 +107650,8 @@
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Mama">
-      <minimumDelay>7200</minimumDelay>
-      <maximumDelay>14400</maximumDelay>
+      <minimumDelay>10800</minimumDelay>
+      <maximumDelay>21600</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -107339,8 +107674,8 @@
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Drake">
-      <minimumDelay>3600</minimumDelay>
-      <maximumDelay>7200</maximumDelay>
+      <minimumDelay>7200</minimumDelay>
+      <maximumDelay>10800</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -107459,7 +107794,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new UncutEmerald(700u);
+	return new UncutEmerald(600u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -107656,11 +107991,29 @@
       </entry>
     </treasure>
     <treasure name="chaosGems">
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new UncutEmerald(900u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="2">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new GoldNugget(1100u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
       <entry weight="1">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new PearDiamond(1500u);
+	return new UncutDiamond(1500u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
