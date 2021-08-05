@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.69.0.0">
+<segment name="Axe Glacier" version="0.70.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -52877,6 +52877,15 @@
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>14</destinationX>
+          <destinationY>23</destinationY>
+          <destinationRegion>23</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+        </component>
       </tile>
       <tile x="15" y="21">
         <component type="WallComponent">
@@ -53110,6 +53119,15 @@
       <tile x="14" y="23">
         <component type="FloorComponent">
           <ground>12</ground>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>14</destinationX>
+          <destinationY>21</destinationY>
+          <destinationRegion>23</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
         </component>
       </tile>
       <tile x="15" y="23">
@@ -103403,7 +103421,7 @@
         MaxHealth = 110, Health = 110,
         BaseDodge = 11,
     
-        Experience = 2650,
+        Experience = 1600,
     
         BasePenetration = ShieldPenetration.Light,
             
@@ -103724,7 +103742,7 @@
         MaxHealth = 110, Health = 110,
         BaseDodge = 12,
     
-        Experience = 2650,
+        Experience = 1600,
     
         BasePenetration = ShieldPenetration.Light,
             
@@ -104004,7 +104022,7 @@
         MaxHealth = 110, Health = 110,
         BaseDodge = 11,
     
-        Experience = 2650,
+        Experience = 1600,
     
         BasePenetration = ShieldPenetration.Light,
             
@@ -104141,7 +104159,7 @@
         MaxHealth = 1000, Health = 1000,
         BaseDodge = 23,
     
-        Experience = 13000,
+        Experience = 19000,
         HideDetection = 21,
         CanJumpkick = true,
         
@@ -104293,7 +104311,7 @@
         MaxHealth = 120, Health = 120,
         BaseDodge = 13,
     
-        Experience = 3000,
+        Experience = 2000,
     
         BasePenetration = ShieldPenetration.Light,
             
@@ -104340,7 +104358,7 @@
         MaxHealth = 150, Health = 150,
         BaseDodge = 14,
     
-        Experience = 3000,
+        Experience = 2000,
     
         BasePenetration = ShieldPenetration.Light,
             
@@ -104561,7 +104579,7 @@
         MaxHealth = 160, Health = 160,
         BaseDodge = 13,
     
-        Experience = 3050,
+        Experience = 2000,
     
         BasePenetration = ShieldPenetration.Light,
         
@@ -104688,7 +104706,7 @@
         MaxHealth = 150, Health = 150,
         BaseDodge = 14,
     
-        Experience = 3050,
+        Experience = 2000,
     
         BasePenetration = ShieldPenetration.Light,
             
@@ -105595,7 +105613,7 @@
         MaxMana = 16, Mana = 16,
         BaseDodge = 12,
     
-        Experience = 3050,
+        Experience = 2000,
         
         CanSwim = true,
             
@@ -105654,7 +105672,7 @@
         MaxMana = 23, Mana = 23,
         BaseDodge = 13,
     
-        Experience = 3050,
+        Experience = 2000,
     
         CanSwim = true,
     };
@@ -105711,7 +105729,7 @@
         MaxMana = 16, Mana = 16,
         BaseDodge = 13,
     
-        Experience = 3050,
+        Experience = 2000,
         
         CanSwim = true,
             
