@@ -24682,18 +24682,17 @@
         <component type="FloorComponent">
           <ground>179</ground>
         </component>
-        <component type="StaticComponent">
-          <static>195</static>
-        </component>
-        <component type="ItemTeleporter">
+        <component type="HiddenTeleporterComponent">
           <destinationX>21</destinationX>
-          <destinationY>6</destinationY>
-          <destinationRegion>100</destinationRegion>
+          <destinationY>7</destinationY>
+          <destinationRegion>255</destinationRegion>
           <lightphases select="all" />
           <moonphases select="all" />
-          <professions select="all" />
+          <professions>Thief</professions>
           <alignments select="all" />
-          <fail>Interrupted</fail>
+        </component>
+        <component type="StaticComponent">
+          <static>195</static>
         </component>
       </tile>
       <tile x="10" y="30">
@@ -28338,21 +28337,21 @@
         </component>
       </tile>
       <tile x="3" y="12">
-        <component type="FloorComponent">
-          <ground>1</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>195</static>
-        </component>
-        <component type="ItemTeleporter">
+        <component type="HiddenTeleporterComponent">
           <destinationX>21</destinationX>
           <destinationY>6</destinationY>
           <destinationRegion>100</destinationRegion>
           <lightphases select="all" />
           <moonphases select="all" />
-          <professions select="all" />
+          <professions>Martial Artist,Fighter,Thaumaturge,Wizard,Knight</professions>
           <alignments select="all" />
-          <fail>Interrupted</fail>
+        </component>
+        <component type="FloorComponent">
+          <ground>18</ground>
+          <movementCost>2</movementCost>
+        </component>
+        <component type="StaticComponent">
+          <static>195</static>
         </component>
       </tile>
       <tile x="4" y="12">
@@ -51915,12 +51914,6 @@
         </component>
       </tile>
       <tile x="22" y="6">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>195</static>
-        </component>
         <component type="ItemTeleporter">
           <destinationX>4</destinationX>
           <destinationY>12</destinationY>
@@ -51929,7 +51922,14 @@
           <moonphases select="all" />
           <professions select="all" />
           <alignments select="all" />
+          <type>4</type>
           <fail>Interrupted</fail>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
+        </component>
+        <component type="RuinsComponent">
+          <ruins>195</ruins>
         </component>
       </tile>
       <tile x="0" y="7">
@@ -75895,7 +75895,7 @@
     //todo: add vlad model to variables
     var vlad = new Wraith()
     {
-        Name = "vampire",
+        Name = "Vampire",
         MaxHealth = 7000, Health = 7000,
         BaseDodge = 20,
         BasePenetration = ShieldPenetration.VeryHeavy,

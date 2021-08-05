@@ -98253,11 +98253,12 @@
     orc.Equip(new LeatherArmor());
             
     orc.AddGold(300);
+    /*
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, Testgems,       10,     gemsPriceMutator), 
         new LootPackEntry(true, Testbottles,    20)
     ));
-    
+    */
     return orc;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -98367,7 +98368,7 @@
             skillLevel: 11,
             mantra: SpellHelper.GenerateMantra(), instantCast: true)
     };
-    trollKing.AddLoot(new LootPack(
+    wraith.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new HummingbirdSword(),     100)
     ));
     return wraith;

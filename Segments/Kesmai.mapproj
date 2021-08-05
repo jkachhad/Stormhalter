@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.69.0.0">
+<segment name="Kesmai" version="0.70.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -97903,8 +97903,8 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    20),
         new LootPackEntry(true, dungeon3Treasure,   0.6),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.2)
-        new LootPackEntry(true, (from, container) => new Yttril(), 1.0),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1.0)
         //new LootPackEntry(true, (from, container) => new SnakeStaff(), 1.6)
     ));
     
@@ -99561,6 +99561,62 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="dpVendor">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+    var vendor = new Merchant<PermanentConstitutionPotion>(16, 10, byte.MaxValue)
+    {
+        Name = "Dp",
+        
+        Body = (female ? 16 : 48), IsFemale = female,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+
+    return vendor;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="robeVendor">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+    var vendor = new Merchant<StarsRobe>(16, 10, byte.MaxValue)
+    {
+        Name = "Robe",
+        
+        Body = (female ? 16 : 48), IsFemale = female,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+
+    return vendor;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="Elder.Troll">
@@ -100537,6 +100593,46 @@ return orc;
       </script>
       <entry entity="enragedTroll" size="1" minimum="1" maximum="2" />
       <location x="24" y="33" region="12" />
+    </spawn>
+    <spawn type="LocationSpawner" name="kesmaiDPVendor">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="dpVendor" size="1" minimum="1" maximum="1" />
+      <location x="33" y="8" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="kesmaiRobeVendor">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="robeVendor" size="1" minimum="1" maximum="1" />
+      <location x="33" y="9" region="1" />
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai -1">
       <minimumDelay>600</minimumDelay>
