@@ -75088,7 +75088,7 @@
         MaxMana = 31, Mana = 31,
         BaseDodge = 12,
         
-        Experience = 1800,
+        Experience = 1700,
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
         
@@ -75137,11 +75137,11 @@
         Name = "Thrall",
         Body = 37,
             
-        MaxHealth = 100, Health = 100,
+        MaxHealth = 110, Health = 110,
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
     
-        Experience = 4550,
+        Experience = 2000,
         
         CanSwim = true,
             
@@ -75196,11 +75196,11 @@
         Name = "Thrall",
         Body = 38,
             
-        MaxHealth = 100, Health = 100,
+        MaxHealth = 110, Health = 110,
         MaxMana = 31, Mana = 31,
         BaseDodge = 13,
     
-        Experience = 3850,
+        Experience = 2000,
         
         CanSwim = true,
             
@@ -75253,7 +75253,7 @@
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
     
-        Experience = 2200,
+        Experience = 1800,
     
         VisibilityDistance = 1,
     };
@@ -75393,18 +75393,18 @@
         Name = "Wretch",
         Body = (female ? 33 : 32), IsFemale = female,
             
-        MaxHealth = 145, Health = 145,
+        MaxHealth = 125, Health = 125,
         BaseDodge = 11,
         
         Movement = 2,
     
-        Experience = 2550,
+        Experience = 1300,
             
     };
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(10, 13, 22), 
+        new CreatureBasicAttack(10, 11, 18), 
     };
     
     fighter.Wield(new Longsword());
@@ -75579,7 +75579,7 @@
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
         Weakness = CreatureWeakness.BlueGlowing,
-        
+        CanCharge = true,
         FireProtection = 100,
         IceProtection = 100,
     };
@@ -75822,7 +75822,7 @@
         MaxHealth = 3000, Health = 3000,
         BaseDodge = 18,
         HideDetection = 22,
-        Experience = 16000,
+        Experience = 20000,
         
         CanFly = true,
         CanCharge = true,
@@ -76048,7 +76048,7 @@
         MaxHealth = 300, Health = 300,
         BaseDodge = 15,
                 
-        Experience = 9000,
+        Experience = 6000,
     };
     griffin.AddStatus(new NightVisionStatus(griffin));
         
@@ -76096,10 +76096,10 @@
         Name = "Nomad",
         Body = (female ? 33 : 32), IsFemale = female,
             
-        MaxHealth = 135, Health = 135,
+        MaxHealth = 155, Health = 155,
         BaseDodge = 15,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 3550,
+        Experience = 3200,
             
     };
     
@@ -76237,7 +76237,7 @@
         MaxHealth = 110, Health = 110,
         BaseDodge = 14,
             
-        Experience = 3050,
+        Experience = 2800,
             
     };
     
@@ -76245,7 +76245,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11), 
+        new CreatureBasicAttack(12), 
     };
     
     fighter.Wield(new FineCrossbow());
@@ -76278,7 +76278,7 @@
         MaxHealth = 300, Health = 300,
         BaseDodge = 18,
     
-        Experience = 6500,
+        Experience = 5500,
     
         CanCharge = true,
         BasePenetration = ShieldPenetration.Medium,
@@ -76465,7 +76465,7 @@
         MaxHealth = 110, Health = 110,
         BaseDodge = 14,
     
-        Experience = 3500,
+        Experience = 1300,
     
         VisibilityDistance = 1,
         
@@ -76476,8 +76476,8 @@
     
     sandwyrm.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(8,     10, 20,     "The sandwyrm rolls over you"),      70 }, 
-        { new CreatureAttack(9,    15, 25,     "You've been bitten by the sandwyrm",
+        { new CreatureAttack(8,     8, 13,     "The sandwyrm rolls over you"),      70 }, 
+        { new CreatureAttack(9,    12, 18,     "You've been bitten by the sandwyrm",
                                                     new AttackPoisonComponent(4)),             30 },
                                                     // TODO: Attack poison chance. 50%
     };
@@ -76510,10 +76510,10 @@
         <block><![CDATA[
     var manticora = new Manticora()
     {
-        MaxHealth = 110, Health = 110,
+        MaxHealth = 90, Health = 90,
         BaseDodge = 11,
     
-        Experience = 1500,
+        Experience = 1100,
         
     };
     
@@ -76829,6 +76829,7 @@
         CanJumpkick = true,
                 
         Experience = 14000,
+        Alignment = Alignment.Chaotic,
     };
     
     duck.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
@@ -76869,7 +76870,7 @@
     {
         MaxHealth = 110, Health = 110,
         BaseDodge = 14,
-        Experience = 2400,
+        Experience = 1700,
         
         CanFlee = true,
                 
@@ -76909,7 +76910,7 @@
         MaxHealth = 105, Health = 105,
         BaseDodge = 15,
                 
-        Experience = 2200,
+        Experience = 1300,
     };
     
     wolf.Attacks = new CreatureAttackCollection
@@ -76952,7 +76953,7 @@
         MaxHealth = 125, Health = 125,
         BaseDodge = 15,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 2700,
+        Experience = 2000,
                        
         Attacks = new CreatureAttackCollection()
         {
@@ -76990,7 +76991,7 @@
         MaxHealth = 80, Health = 80,
         BaseDodge = 14,
                 
-        Experience = 1800,
+        Experience = 1000,
     };
     
     hyena.Attacks = new CreatureAttackCollection
@@ -77026,7 +77027,7 @@
     {
         MaxHealth = 90, Health = 90,
         BaseDodge = 14,
-        Experience = 2400,
+        Experience = 1700,
         
         CanFlee = true,
                 
