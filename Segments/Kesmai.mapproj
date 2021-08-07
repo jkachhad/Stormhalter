@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.69.0.0">
+<segment name="Kesmai" version="0.70.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -96005,6 +96005,11 @@
         </component>
       </tile>
     </region>
+    <region>
+      <id>5</id>
+      <name>Region 5</name>
+      <height>0</height>
+    </region>
   </regions>
   <locations>
     <location name="Entrance" x="42" y="8" region="1" />
@@ -96297,7 +96302,7 @@
     
     wyvern.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(6, "scales"),
         new CreatureBlock(3, "a claw"),
         new CreatureBlock(1, "a tail")
     };
@@ -97250,7 +97255,7 @@
     };
     wyvern.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(6, "scales"),
         new CreatureBlock(3, "a claw"),
         new CreatureBlock(1, "a tail")
     };
@@ -97442,7 +97447,7 @@ return orc;
     
     spider.Blocks = new CreatureBlockCollection
     {
-        { new CreatureBlock(1, "the armor") }, 
+        { new CreatureBlock(1, "a hairy carapace") }, 
     };
     
     spider.AddGold(250);
@@ -98752,7 +98757,7 @@ return orc;
 
     boar.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(6, "leathery hide"),
         new CreatureBlock(4, "a cloven hoof"),
     };
     
@@ -98798,7 +98803,7 @@ return orc;
         
     wolf.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the thick hide"),
+        new CreatureBlock(6, "thick hide"),
         new CreatureBlock(3, "a paw"),
     };
         
@@ -98886,7 +98891,7 @@ return orc;
         
     bear.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the tough hide"),
+        new CreatureBlock(6, "tough hide"),
         new CreatureBlock(4, "a claw"),
     };
         
@@ -99163,7 +99168,7 @@ return orc;
     
     griffin.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(6, "a large wing"),
         new CreatureBlock(4, "a talon"),
         new CreatureBlock(3, "a beak"),
     };
@@ -99340,7 +99345,7 @@ return orc;
         
     ghoul.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the armor"), 
+        new CreatureBlock(6, "decaying flesh"), 
         new CreatureBlock(4, "a claw"), 
     };
     
@@ -99557,6 +99562,136 @@ return orc;
             quest.SetStage(player, KnightsPurposeStage.Harriette);
         }
     }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="ydnacSkelWar">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var skeleton = new Skeleton()
+    {
+        MaxHealth = 40, Health = 40,
+        BaseDodge = 10,
+
+        Experience = 525,
+
+        Movement = 2,
+                
+        Attacks = new CreatureAttackCollection()
+        {
+            new CreatureBasicAttack(6)
+        },
+    };
+    
+    skeleton.Wield(new Rapier());
+    
+    skeleton.AddGold(260);
+    skeleton.AddLoot(new LootPack(
+        new LootPackEntry(true, dungeon3Gems,       33,     gemsPriceMutator),
+        new LootPackEntry(true, dungeon3Bottles,    16),
+        new LootPackEntry(true, dungeon3Treasure,   2.5),
+        new LootPackEntry(true, dungeon3Rings,      0.6),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
+    ));
+    
+    return skeleton;();
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="ydnacSkelArc">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var skeleton = new Skeleton()
+    {
+        MaxHealth = 35, Health = 35,
+        BaseDodge = 10,
+
+        Experience = 485,
+                
+        Movement = 2,
+
+        Attacks = new CreatureAttackCollection()
+        {
+            new CreatureBasicAttack(6)
+        }
+    };
+    
+    skeleton.Wield(new Shortbow());
+            
+    skeleton.AddGold(260);
+    skeleton.AddLoot(new LootPack(
+        new LootPackEntry(true, dungeon3Gems,       33,     gemsPriceMutator),
+        new LootPackEntry(true, dungeon3Bottles,    25),
+        new LootPackEntry(true, dungeon3Treasure,   2.5),
+        new LootPackEntry(true, dungeon3Rings,      0.6),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
+    ));
+    
+    return skeleton;;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="ydnacMummy">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var mummy = new Mummy()
+    {
+        MaxHealth = 90, Health = 90,
+        BaseDodge = 13,
+    
+        Experience = 2500,
+    
+        Movement = 2,
+        BasePenetration = ShieldPenetration.Light,
+        VisibilityDistance = 1,
+    };
+    
+    mummy.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(7,     6, 12,      "The mummy scratches you with its claws"),  70 }, 
+        { new CreatureAttack(8,     10, 18,     "You've been bitten by the mummy", 30 },
+    };
+    
+    mummy.Blocks = new CreatureBlockCollection
+    {
+        { new CreatureBlock(6, "the armor") }, 
+        { new CreatureBlock(4, "a decaying limb") }, 
+    };
+    
+    mummy.AddGold(350);
+    mummy.AddLoot(new LootPack(
+        new LootPackEntry(true, dungeon4Gems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, dungeon4Bottles,    20),
+        new LootPackEntry(true, dungeon4Treasure,   0.63),
+        new LootPackEntry(true, dungeon4Rings,      0.63),
+        new LootPackEntry(true, dungeon3Potions,    0.2)
+    ));
+    
+    return mummy;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -100538,6 +100673,26 @@ return orc;
       <entry entity="enragedTroll" size="1" minimum="1" maximum="2" />
       <location x="24" y="33" region="12" />
     </spawn>
+    <spawn type="LocationSpawner" name="ydnacMummy">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="ydnacMummy" size="1" minimum="1" maximum="2" />
+      <location x="21" y="12" region="4" />
+    </spawn>
     <spawn type="RegionSpawner" name="Kesmai -1">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>300</maximumDelay>
@@ -100901,6 +101056,62 @@ return orc;
       <entry entity="dungeon4CryptPiranha" size="1" minimum="1" maximum="3" />
       <bounds region="14">
         <inclusion left="12" top="6" right="16" bottom="6" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Ydnac -1">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>12</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="ydnacSkelWar" size="3" minimum="1" maximum="3" />
+      <entry entity="ydnacSkelArc" size="2" minimum="1" maximum="3" />
+      <entry entity="dungeon3Wraith" size="1" minimum="1" maximum="2" />
+      <entry entity="dungeon3Wight" size="1" minimum="1" maximum="2" />
+      <entry entity="dungeon4Spectre" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon4Thaum" size="1" minimum="1" maximum="1" />
+      <bounds region="4">
+        <inclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Ydnac Secret">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>-605.477</maximumDelay>
+      <maximum>4</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfaceWraith" size="1" minimum="1" maximum="1" />
+      <entry entity="surfaceWight" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon4MeleeFighter" size="1" minimum="2" maximum="2" />
+      <entry entity="dungeon4RangedFighter" size="1" minimum="1" maximum="1" />
+      <bounds region="3">
+        <inclusion left="0" top="0" right="0" bottom="0" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
