@@ -82352,8 +82352,8 @@
         </component>
       </tile>
       <tile x="15" y="23">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="DoorComponent">
           <openId>74</openId>
@@ -83756,8 +83756,8 @@
         </component>
       </tile>
       <tile x="25" y="28">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
       </tile>
       <tile x="26" y="28">
@@ -98745,8 +98745,8 @@ return orc;
     
     boar.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(5,     1, 8,   "You have been gored by the boar."),    60 }, 
-        { new CreatureAttack(6,     2, 10,  "The boar tramples you."),              40 }, 
+        { new CreatureAttack(5,     1, 5,   "You have been gored by the boar."),    60 }, 
+        { new CreatureAttack(6,     2, 6,  "The boar tramples you."),              40 }, 
     };
 
     boar.Blocks = new CreatureBlockCollection
@@ -98790,9 +98790,9 @@ return orc;
     
     wolf.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(5,     1, 8,   "The wolf rakes you with its claws."),  50 }, 
-        { new CreatureAttack(7,     2, 10,  "The wolf sinks its teeth into you."),  30 }, 
-        { new CreatureAttack(7,     3, 12,  "The wolf lunges at you."),             20 }, 
+        { new CreatureAttack(5,     1, 4,   "The wolf rakes you with its claws."),  50 }, 
+        { new CreatureAttack(7,     2, 5,  "The wolf sinks its teeth into you."),  30 }, 
+        { new CreatureAttack(7,     3, 6,  "The wolf lunges at you."),             20 }, 
     };
         
     wolf.Blocks = new CreatureBlockCollection
@@ -98837,7 +98837,7 @@ return orc;
     
     bee.Attacks = new CreatureAttackCollection
     {
-        new CreatureAttack(5,   1, 3,   "You have been stung by a bee.", 
+        new CreatureAttack(5,   1, 2,   "You have been stung by a bee.", 
                                             new AttackPoisonComponent(3)), 
     };
         
@@ -98927,7 +98927,7 @@ return orc;
     
     orc.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(5),
+        new CreatureBasicAttack(5, 1, 5),
     };
     
     orc.Wield(new Longsword());
@@ -98970,7 +98970,7 @@ return orc;
     
     orc.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(5),
+        new CreatureBasicAttack(3),
     };
     
     orc.Wield(new Crossbow());
