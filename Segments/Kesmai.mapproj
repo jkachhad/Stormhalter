@@ -97991,7 +97991,7 @@ return orc;
     orc.Wield(new Longsword());
     orc.Equip(new LeatherArmor());    
     
-    orc.AddGold(125);
+    orc.AddGold(225);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, dungeon4Gems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, dungeon4Bottles,    20),
@@ -98035,7 +98035,7 @@ return orc;
     orc.Wield(new Longbow());
     orc.Equip(new LeatherArmor());    
     
-    orc.AddGold(125);
+    orc.AddGold(255);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, dungeon4Gems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, dungeon4Bottles,    20),
@@ -98090,7 +98090,7 @@ return orc;
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
-    orc.AddGold(125);
+    orc.AddGold(255);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, dungeon4Gems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, dungeon4Bottles,    20),
@@ -98268,9 +98268,8 @@ return orc;
     };
     
     salamander.Spells = new CreatureSpellCollection(50.0);
-    salamander.Spells.Add(new CreatureSpell<FirewallSpell>(8), 100, TimeSpan.FromSeconds(15.0));
-    
-    salamander.AddGold(400);
+    salamander.Spells.Add(new CreatureSpell<FirewallSpell>(8), 100, TimeSpan.FromSeconds(15.0), instantCast = true);
+    salamander.AddGold(500);
     salamander.AddLoot(new LootPack(
         new LootPackEntry(true, dungeon4Bottles,    20),
         new LootPackEntry(true, dungeon4Treasure,   0.6), 
@@ -98322,7 +98321,7 @@ return orc;
         
     wraith.Wield(new BlackStaff());
         
-    wraith.AddGold(350);
+    wraith.AddGold(550);
     wraith.AddLoot(new LootPack(
         new LootPackEntry(true, dungeon4Gems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, dungeon4Bottles,    20),
@@ -98426,7 +98425,7 @@ return orc;
         { new CreatureBlock(4, "a claw") }, 
     };
     
-    ghoul.AddGold(350);
+    ghoul.AddGold(950);
     ghoul.AddLoot(new LootPack(
         new LootPackEntry(true, dungeon4Gems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, dungeon4Bottles,    20),
@@ -98530,7 +98529,7 @@ return orc;
     fighter.Wield(new SteelLongsword());
     fighter.Equip(new PlatemailArmor());    
     
-    fighter.AddGold(550);
+    fighter.AddGold(750);
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, dungeon4Gems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, dungeon4Bottles,    20),

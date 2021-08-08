@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.69.0.0">
+<segment name="Oakvael" version="0.70.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -84554,7 +84554,7 @@
         MaxHealth = 150, Health = 150,
         BaseDodge = 15,
 
-        Experience = 1350,
+        Experience = 2350,
         
         Attacks = new CreatureAttackCollection
         {
@@ -84577,7 +84577,7 @@
     };
     griffin.AddStatus(new NightVisionStatus(griffin));    
 
-    griffin.AddGold(450);
+    griffin.AddGold(1050);
     griffin.AddLoot(new LootPack(
             new LootPackEntry(true, (from, container) => new OchreEgg(), 25.0), 
             new LootPackEntry(true, (from, container) => new ClearBalm(), 50.0), 
@@ -84604,7 +84604,7 @@
         MaxHealth = 46, Health = 46,
         BaseDodge = 12,
 
-        Experience = 425,
+        Experience = 625,
 
         Movement = 2,
 
@@ -84647,7 +84647,7 @@
         MaxHealth = 140, Health = 140,
         BaseDodge = 14,
 
-        Experience = 1200,
+        Experience = 2200,
         
         Attacks = new CreatureAttackCollection
         {
@@ -84663,7 +84663,7 @@
     };
     largeBear.AddStatus(new NightVisionStatus(largeBear));    
 
-    largeBear.AddGold(750);
+    largeBear.AddGold(1450);
     largeBear.AddLoot(
         new LootPack(
             new LootPackEntry(true, surfaceGems, 25.0, gemsPriceMutator), 
@@ -84691,13 +84691,13 @@
         MaxHealth = 32, Health = 32,
         BaseDodge = 12,
 
-        Experience = 250,
+        Experience = 350,
 
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureAttack(6, 2, 8, "The wolf rakes you with its claws."), 50 }, 
-            { new CreatureAttack(7, 3, 10, "The wolf sinks its teeth into you."), 30 }, 
-            { new CreatureAttack(7, 4, 12, "The wolf lunges at you."), 20 }, 
+            { new CreatureAttack(6, 2, 5, "The wolf rakes you with its claws."), 50 }, 
+            { new CreatureAttack(7, 3, 6, "The wolf sinks its teeth into you."), 30 }, 
+            { new CreatureAttack(7, 4, 8, "The wolf lunges at you."), 20 }, 
         },
         Blocks = new CreatureBlockCollection
         {
@@ -84731,15 +84731,15 @@
         <block><![CDATA[
 	var boar = new Boar()
     {
-        MaxHealth = 38, Health = 38,
+        MaxHealth = 33, Health = 33,
         BaseDodge = 12,
 
-        Experience = 325,
+        Experience = 425,
         
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureAttack(5, 2, 8, "You have been gored by the boar."), 60 }, 
-            { new CreatureAttack(6, 3, 10, "The boar tramples you."), 40 }, 
+            { new CreatureAttack(5, 2, 6, "You have been gored by the boar."), 60 }, 
+            { new CreatureAttack(6, 3, 8, "The boar tramples you."), 40 }, 
         },
         Blocks = new CreatureBlockCollection
         {
@@ -84773,7 +84773,7 @@
         <block><![CDATA[
 	var beetle = new Beetle()
     {
-        MaxHealth = 40, Health = 40,
+        MaxHealth = 25, Health = 25,
         BaseDodge = 12,
 
         Experience = 250,
@@ -84782,7 +84782,7 @@
 
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureAttack(7, 1, 8, "You have been stung by a beetle.",
+            { new CreatureAttack(6, 1, 8, "You have been stung by a beetle.",
                 new AttackPoisonComponent(3), 
                 new AttackStunComponent(10)), 10 }, 
         },
@@ -84827,7 +84827,7 @@
     orc.Wield(new Katana());
     orc.Equip(new LeatherArmor());    
 
-    orc.AddGold(350);
+    orc.AddGold(250);
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, surfaceGems, 25.0, gemsPriceMutator), 
@@ -84896,7 +84896,7 @@
         MaxHealth = 60, Health = 60,
         BaseDodge = 13,
 
-        Experience = 525,
+        Experience = 725,
 
         Attacks = new CreatureAttackCollection
         {
@@ -84937,7 +84937,7 @@
         MaxHealth = 90, Health = 90,
         BaseDodge = 12,
 
-        Experience = 700,
+        Experience = 1100,
 
         Movement = 2,
 
@@ -85006,7 +85006,7 @@
         Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
     };    
 
-    wyrm.AddGold(250);
+    wyrm.AddGold(850);
     wyrm.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon2Gems, 25.0), 
@@ -85141,7 +85141,7 @@
     scorpion.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon1Gems, 25.0, gemsPriceMutator), 
-            new LootPackEntry(true, dungeon1Bottles, 20.0), 
+            new LootPackEntry(true, dungeon1Bottles, 33.0), 
             new LootPackEntry(true, dungeon1Treasure, 0.63)
         ));
 
@@ -85182,7 +85182,7 @@
     kobold.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon1Gems, 25.0, gemsPriceMutator), 
-            new LootPackEntry(true, dungeon1Bottles, 20.0), 
+            new LootPackEntry(true, dungeon1Bottles, 33.0), 
             new LootPackEntry(true, dungeon1Treasure, 0.63)
         ));
 
@@ -85225,7 +85225,7 @@
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon1Gems, 25.0, gemsPriceMutator), 
-            new LootPackEntry(true, dungeon1Bottles, 20.0), 
+            new LootPackEntry(true, dungeon1Bottles, 33.0), 
             new LootPackEntry(true, dungeon1Treasure, 0.63)
         ));
 
@@ -85266,7 +85266,7 @@
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon1Gems, 25.0, gemsPriceMutator), 
-            new LootPackEntry(true, dungeon1Bottles, 20.0), 
+            new LootPackEntry(true, dungeon1Bottles, 33.0), 
             new LootPackEntry(true, dungeon1Treasure, 0.63)
         ));
 
@@ -85305,11 +85305,11 @@
     troll.Wield(new Greatsword());
     troll.Equip(new ChainmailArmor());    
 
-    troll.AddGold(200);
+    troll.AddGold(300);
     troll.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon1Gems, 25.0, gemsPriceMutator), 
-            new LootPackEntry(true, dungeon1Bottles, 20.0), 
+            new LootPackEntry(true, dungeon1Bottles, 33.0), 
             new LootPackEntry(true, dungeon1Treasure, 0.63)
         ));
 
@@ -85355,7 +85355,7 @@
     spider.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon1Gems, 25.0, gemsPriceMutator), 
-            new LootPackEntry(true, dungeon1Bottles, 20.0), 
+            new LootPackEntry(true, dungeon1Bottles, 33.0), 
             new LootPackEntry(true, dungeon1Treasure, 0.63)
         ));
 
@@ -85379,7 +85379,7 @@
         MaxHealth = 52, Health = 52,
         BaseDodge = 14,
 
-        Experience = 500,
+        Experience = 700,
 
         Movement = 2,
 
@@ -85392,11 +85392,11 @@
     hobgoblin.Wield(new Longsword());
     hobgoblin.Equip(new LeatherArmor());    
 
-    hobgoblin.AddGold(500);
+    hobgoblin.AddGold(350);
     hobgoblin.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon2Gems, 25.0, gemsPriceMutator), 
-            new LootPackEntry(true, dungeon2Bottles, 20.0), 
+            new LootPackEntry(true, dungeon2Bottles, 33.0), 
             new LootPackEntry(true, dungeon2Treasure, 0.63), 
             new LootPackEntry(true, dungeon2Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -85422,7 +85422,7 @@
         MaxHealth = 42, Health = 42,
         BaseDodge = 13,
 
-        Experience = 450,
+        Experience = 550,
 
         Attacks = new CreatureAttackCollection
         {
@@ -85437,7 +85437,7 @@
     goblin.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon2Gems, 25.0, gemsPriceMutator), 
-            new LootPackEntry(true, dungeon2Bottles, 20.0), 
+            new LootPackEntry(true, dungeon2Bottles, 33.0), 
             new LootPackEntry(true, dungeon2Treasure, 0.63), 
             new LootPackEntry(true, dungeon2Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -85463,7 +85463,7 @@
         MaxHealth = 42, Health = 42,
         BaseDodge = 13,
 
-        Experience = 450,
+        Experience = 550,
 
         Attacks = new CreatureAttackCollection
         {
@@ -85474,11 +85474,11 @@
     goblin.Wield(new Longbow());
     goblin.Equip(new LeatherArmor());    
 
-    goblin.AddGold(120);
+    goblin.AddGold(150);
     goblin.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon2Gems, 25.0, gemsPriceMutator), 
-            new LootPackEntry(true, dungeon2Bottles, 20.0), 
+            new LootPackEntry(true, dungeon2Bottles, 33.0), 
             new LootPackEntry(true, dungeon2Treasure, 0.63), 
             new LootPackEntry(true, dungeon2Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -85504,7 +85504,7 @@
         MaxHealth = 75, Health = 75,
         BaseDodge = 14,
 
-        Experience = 500,
+        Experience = 920,
 
         Movement = 2,
 
@@ -85524,7 +85524,7 @@
     troll.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon2Gems, 25.0, gemsPriceMutator), 
-            new LootPackEntry(true, dungeon2Bottles, 20.0), 
+            new LootPackEntry(true, dungeon2Bottles, 33.0), 
             new LootPackEntry(true, dungeon2Treasure, 0.63), 
             new LootPackEntry(true, dungeon2Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -85550,7 +85550,7 @@
         MaxHealth = 40, Health = 40,
         BaseDodge = 13,
 
-        Experience = 425,
+        Experience = 555,
         
         CanFlee = true,
 
@@ -85567,7 +85567,7 @@
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon2Gems, 25.0, gemsPriceMutator), 
-            new LootPackEntry(true, dungeon2Bottles, 20.0), 
+            new LootPackEntry(true, dungeon2Bottles, 33.0), 
             new LootPackEntry(true, dungeon2Treasure, 0.63), 
             new LootPackEntry(true, dungeon2Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -85593,7 +85593,7 @@
         MaxHealth = 40, Health = 40,
         BaseDodge = 13,
 
-        Experience = 325,
+        Experience = 555,
 
         CanFlee = true,
 
@@ -85610,7 +85610,7 @@
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon2Gems, 25.0, gemsPriceMutator), 
-            new LootPackEntry(true, dungeon2Bottles, 20.0), 
+            new LootPackEntry(true, dungeon2Bottles, 33.0), 
             new LootPackEntry(true, dungeon2Treasure, 0.63), 
             new LootPackEntry(true, dungeon2Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -85637,7 +85637,7 @@
         MaxMana = 12, Mana = 12,
         BaseDodge = 13,
 
-        Experience = 425,
+        Experience = 625,
         
         CanFlee = true,
 
@@ -85658,7 +85658,7 @@
     orc.Wield(new WoodenStaff());
     orc.Equip(new LeatherArmor());    
 
-    orc.AddGold(200);
+    orc.AddGold(250);
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon2Treasure, 0.63), 
@@ -85687,7 +85687,7 @@
         MaxMana = 17, Mana = 17,
         BaseDodge = 14,
 
-        Experience = 550,
+        Experience = 950,
 
         VisibilityDistance = 1,
 
@@ -85712,7 +85712,7 @@
     spectre.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon2Gems, 25.0, gemsPriceMutator), 
-            new LootPackEntry(true, dungeon2Bottles, 20.0), 
+            new LootPackEntry(true, dungeon2Bottles, 33.0), 
             new LootPackEntry(true, dungeon2Treasure, 0.63), 
             new LootPackEntry(true, dungeon2Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -85740,7 +85740,7 @@
         MaxHealth = 80, Health = 80,
         BaseDodge = 15,
 
-        Experience = 900,
+        Experience = 1200,
 
         Movement = 2,
 
@@ -85753,11 +85753,11 @@
     hobgoblin.Wield(new Longsword());
     hobgoblin.Equip(new LeatherArmor());    
 
-    hobgoblin.AddGold(700);
+    hobgoblin.AddGold(650);
     hobgoblin.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon3Gems, 25.0), 
-            new LootPackEntry(true, dungeon3Bottles, 20.0), 
+            new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2) 
@@ -85783,7 +85783,7 @@
         MaxHealth = 63, Health = 63,
         BaseDodge = 14,
 
-        Experience = 600,
+        Experience = 900,
         
         CanFlee = true,
 
@@ -85796,11 +85796,11 @@
     orc.Wield(new Longsword());
     orc.Equip(new LeatherArmor());    
 
-    orc.AddGold(150);
+    orc.AddGold(450);
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon3Gems, 25.0), 
-            new LootPackEntry(true, dungeon3Bottles, 20.0), 
+            new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2) 
@@ -85826,7 +85826,7 @@
         MaxHealth = 63, Health = 63,
         BaseDodge = 14,
 
-        Experience = 600,
+        Experience = 900,
         
         CanFlee = true,
 
@@ -85839,11 +85839,11 @@
     orc.Wield(new Longbow());
     orc.Equip(new LeatherArmor());    
 
-    orc.AddGold(150);
+    orc.AddGold(450);
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon3Gems, 25.0), 
-            new LootPackEntry(true, dungeon3Bottles, 20.0), 
+            new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2) 
@@ -85870,7 +85870,7 @@
         MaxMana = 12, Mana = 12,
         BaseDodge = 14,
 
-        Experience = 575,
+        Experience = 975,
 
         CanFlee = true,
 
@@ -85890,11 +85890,11 @@
     orc.Wield(new WoodenStaff());
     orc.Equip(new LeatherArmor());    
 
-    orc.AddGold(150);
+    orc.AddGold(450);
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon3Gems, 25.0), 
-            new LootPackEntry(true, dungeon3Bottles, 20.0), 
+            new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2) 
@@ -85920,7 +85920,7 @@
         MaxHealth = 98, Health = 98,
         BaseDodge = 16,
 
-        Experience = 850,
+        Experience = 1250,
         
         Attacks = new CreatureAttackCollection
         {
@@ -85935,7 +85935,7 @@
     troll.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon3Gems, 25.0), 
-            new LootPackEntry(true, dungeon3Bottles, 20.0), 
+            new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2) 
@@ -85967,7 +85967,7 @@
         MaxMana = 18, Mana = 18,
         BaseDodge = 15,
 
-        Experience = 2100,
+        Experience = 3000,
         
         CanFlee = true,
         CanSwim = true,
@@ -85994,7 +85994,7 @@
     thaum.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon3Gems, 25.0), 
-            new LootPackEntry(true, dungeon3Bottles, 20.0), 
+            new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2) 
@@ -86026,7 +86026,7 @@
         MaxMana = 21, Mana = 21,
         BaseDodge = 15,
 
-        Experience = 2100,
+        Experience = 3000,
 
         CanFlee = true,
         CanSwim = true,
@@ -86052,7 +86052,7 @@
     wizard.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon3Gems, 25.0), 
-            new LootPackEntry(true, dungeon3Bottles, 20.0), 
+            new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2) 
@@ -86079,7 +86079,7 @@
         MaxHealth = 130, Health = 130,
         BaseDodge = 15,
 
-        Experience = 1100,
+        Experience = 2700,
         BasePenetration = ShieldPenetration.Light,
         CanFlee = true,
 
@@ -86107,7 +86107,7 @@
         new LootPack(
             new LootPackEntry(true, (from, container) => new SerpentRobe(), 2.5),
             new LootPackEntry(true, dungeon3Gems, 25.0), 
-            new LootPackEntry(true, dungeon3Bottles, 20.0), 
+            new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2) 
@@ -86133,7 +86133,7 @@
         MaxHealth = 125, Health = 125,
         BaseDodge = 15,
 
-        Experience = 2150,
+        Experience = 2350,
         BasePenetration = ShieldPenetration.Light,
         Movement = 2,
         
@@ -86163,7 +86163,7 @@
     gargoyle.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon3Gems, 25.0), 
-            new LootPackEntry(true, dungeon3Bottles, 20.0), 
+            new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, (from, container) => new SilverDagger(), 7.14)
         ));
 
@@ -86187,7 +86187,7 @@
         MaxHealth = 71, Health = 71,
         BaseDodge = 15,
 
-        Experience = 725,
+        Experience = 1325,
 
         Movement = 2,
 
@@ -86204,7 +86204,7 @@
         },
         Spells = new CreatureSpellCollection(50.0)
         {
-            { new CreatureSpell<FirewallSpell>(8), 100, TimeSpan.FromSeconds(15.0) }
+            { new CreatureSpell<FirewallSpell>(8), 100, TimeSpan.FromSeconds(15.0), instantCast = true }
         }
     };    
 
@@ -86234,7 +86234,7 @@
         MaxHealth = 500, Health = 500,
         BaseDodge = 18,
 
-        Experience = 5000,
+        Experience = 9500,
 
         Movement = 2,
 
@@ -86269,7 +86269,7 @@
         new LootPack(
             new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(), 50.00),
             new LootPackEntry(true, dungeon3Gems, 25.0), 
-            new LootPackEntry(true, dungeon3Bottles, 20.0), 
+            new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2) 
@@ -86300,7 +86300,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 120, Health = 120,
         BaseDodge = 16,
 
-        Experience = 900,
+        Experience = 2500,
 
         CanWalk = false,
 
@@ -86317,7 +86317,7 @@ PROTECTION P_DEATH 40
     pescalanor.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon3Gems, 25.0), 
-            new LootPackEntry(true, dungeon3Bottles, 20.0), 
+            new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2) 
@@ -86343,7 +86343,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 130, Health = 130,
         BaseDodge = 17,
 
-        Experience = 2200,
+        Experience = 2700,
 
         Movement = 2,
         CanFly = true,
@@ -86371,7 +86371,9 @@ PROTECTION P_DEATH 40
     gargoyle.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon4Gems, 25.0), 
-            new LootPackEntry(true, dungeon4Bottles, 20.0), 
+            new LootPackEntry(true, dungeon4Bottles, 33.0), 
+            new LootPackEntry(true, dungeon4Treasure, 0.63), 
+            new LootPackEntry(true, dungeon4Rings, 0.63), 
             new LootPackEntry(true, (from, container) => new SilverDagger(), 7.14)
         ));
 
@@ -86395,7 +86397,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 160, Health = 160,
         BaseDodge = 17,
 
-        Experience = 2500,
+        Experience = 3200,
 
         CanFlee = true,
         BasePenetration = ShieldPenetration.Medium,
@@ -86418,11 +86420,11 @@ PROTECTION P_DEATH 40
     minotaur.Wield(new Greatsword());
     minotaur.Equip(new PlatemailArmor());    
 
-    minotaur.AddGold(950);
+    minotaur.AddGold(1250);
     minotaur.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon4Gems, 25.0), 
-            new LootPackEntry(true, dungeon4Bottles, 20.0), 
+            new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -86448,7 +86450,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 88, Health = 88,
         BaseDodge = 16,
 
-        Experience = 950,
+        Experience = 1450,
         
         Attacks = new CreatureAttackCollection
         {
@@ -86463,7 +86465,7 @@ PROTECTION P_DEATH 40
     hobgoblin.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon4Gems, 25.0), 
-            new LootPackEntry(true, dungeon4Bottles, 20.0), 
+            new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -86489,7 +86491,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 110, Health = 110,
         BaseDodge = 18,
 
-        Experience = 1800,
+        Experience = 1700,
 
         Movement = 2,
 
@@ -86508,7 +86510,7 @@ PROTECTION P_DEATH 40
     troll.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon4Gems, 25.0), 
-            new LootPackEntry(true, dungeon4Bottles, 20.0), 
+            new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -86534,7 +86536,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 71, Health = 71,
         BaseDodge = 16,
 
-        Experience = 700,
+        Experience = 1100,
 
         CanFlee = true,
 
@@ -86547,11 +86549,11 @@ PROTECTION P_DEATH 40
     orc.Wield(new Longsword());
     orc.Equip(new LeatherArmor());    
 
-    orc.AddGold(175);
+    orc.AddGold(675);
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon4Gems, 25.0), 
-            new LootPackEntry(true, dungeon4Bottles, 20.0), 
+            new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -86577,7 +86579,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 71, Health = 71,
         BaseDodge = 16,
 
-        Experience = 700,
+        Experience = 1025,
 
         CanFlee = true,
 
@@ -86590,11 +86592,11 @@ PROTECTION P_DEATH 40
     orc.Wield(new Longbow());
     orc.Equip(new LeatherArmor());    
 
-    orc.AddGold(175);
+    orc.AddGold(675);
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon4Gems, 25.0), 
-            new LootPackEntry(true, dungeon4Bottles, 20.0), 
+            new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -86626,7 +86628,7 @@ PROTECTION P_DEATH 40
         MaxMana = 18, Mana = 18,
         BaseDodge = 17,
 
-        Experience = 2500,
+        Experience = 3500,
 
         CanFlee = true,
         CanSwim = true,
@@ -86652,7 +86654,7 @@ PROTECTION P_DEATH 40
     thaum.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon4Gems, 25.0), 
-            new LootPackEntry(true, dungeon4Bottles, 20.0), 
+            new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -86684,7 +86686,7 @@ PROTECTION P_DEATH 40
         MaxMana = 21, Mana = 21,
         BaseDodge = 17,
 
-        Experience = 2600,
+        Experience = 3300,
 
         CanFlee = true,
         CanSwim = true,
@@ -86710,7 +86712,7 @@ PROTECTION P_DEATH 40
     wizard.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon4Gems, 25.0), 
-            new LootPackEntry(true, dungeon4Bottles, 20.0), 
+            new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -86738,7 +86740,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 80, Health = 80,
         BaseDodge = 17,
 
-        Experience = 800,
+        Experience = 1450,
 
         Movement = 2,
 
@@ -86759,7 +86761,7 @@ PROTECTION P_DEATH 40
         }
     };    
 
-    salamander.AddGold(600);
+    salamander.AddGold(900);
     salamander.AddLoot(
         new LootPack(
             new LootPackEntry(true, (from, container) => new FieryRuby(1700u), 100.0)
@@ -86802,11 +86804,11 @@ PROTECTION P_DEATH 40
     drizilu.Wield(new Crossbow());
     drizilu.Equip(new PlatemailArmor());    
 
-    drizilu.AddGold(600);
+    drizilu.AddGold(900);
     drizilu.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon4Gems, 25.0), 
-            new LootPackEntry(true, dungeon4Bottles, 20.0), 
+            new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -86849,11 +86851,11 @@ PROTECTION P_DEATH 40
     glamuzu.Wield(new Crossbow());
     glamuzu.Equip(new PlatemailArmor());    
 
-    glamuzu.AddGold(600);
+    glamuzu.AddGold(900);
     glamuzu.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon4Gems, 25.0), 
-            new LootPackEntry(true, dungeon4Bottles, 20.0), 
+            new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -86880,11 +86882,11 @@ PROTECTION P_DEATH 40
         MaxMana = 5, Mana = 5,
         BaseDodge = 18,
 
-        Experience = 2875,
+        Experience = 3475,
         
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(14) },
+            { new CreatureBasicAttack(14, 11, 25) },
         },
         Spells = new CreatureSpellCollection()
         {
@@ -86895,10 +86897,10 @@ PROTECTION P_DEATH 40
 
     banshee.Wield(new Spear());    
 
-    banshee.AddGold(700);
+    banshee.AddGold(900);
     banshee.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon5Bottles, 20.0), 
+            new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
@@ -86934,17 +86936,17 @@ PROTECTION P_DEATH 40
         },
         Spells = new CreatureSpellCollection()
         {
-            { new CreatureSpell<CurseSpell>(1.5, cost: 3), 100 }
+            { new CreatureSpell<CurseSpell>(9.5, cost: 3), 100 }
         }
     };
     banshee.AddStatus(new NightVisionStatus(banshee));
 
     banshee.Wield(new Spear());    
 
-    banshee.AddGold(700);
+    banshee.AddGold(850);
     banshee.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon5Bottles, 20.0), 
+            new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
@@ -86976,7 +86978,7 @@ PROTECTION P_DEATH 40
 
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(14) },
+            { new CreatureBasicAttack(14, 15, 20) },
         },
         Spells = new CreatureSpellCollection()
         {
@@ -86990,10 +86992,10 @@ PROTECTION P_DEATH 40
 
     wraith.Wield(new BlackStaff());    
 
-    wraith.AddGold(810);
+    wraith.AddGold(910);
     wraith.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon5Bottles, 20.0), 
+            new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
@@ -87026,7 +87028,7 @@ PROTECTION P_DEATH 40
         MaxMana = 25, Mana = 25,
         BaseDodge = 19,
 
-        Experience = 3000,
+        Experience = 3800,
 
         CanFlee = true,
         CanSwim = true,
@@ -87049,10 +87051,10 @@ PROTECTION P_DEATH 40
     wizard.Wield(new SteelShield());
     wizard.Equip(new LeatherArmor());    
 
-    wizard.AddGold(800);
+    wizard.AddGold(900);
     wizard.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon5Bottles, 20.0), 
+            new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0),
             new LootPackEntry(true, dungeon5SpellOrbs, 5.0),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
@@ -87086,7 +87088,7 @@ PROTECTION P_DEATH 40
         MaxMana = 18, Mana = 18,
         BaseDodge = 19,
 
-        Experience = 3050,
+        Experience = 3850,
 
         CanSwim = true,
 
@@ -87107,10 +87109,10 @@ PROTECTION P_DEATH 40
     thaum.Wield(new SteelShield());
     thaum.Equip(new LeatherArmor());    
 
-    thaum.AddGold(800);
+    thaum.AddGold(950);
     thaum.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon5Bottles, 20.0), 
+            new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0),
             new LootPackEntry(true, dungeon5SpellOrbs, 5.0),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
@@ -87156,10 +87158,10 @@ PROTECTION P_DEATH 40
         },
     };    
 
-    ghoul.AddGold(650);
+    ghoul.AddGold(1250);
     ghoul.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon5Bottles, 20.0), 
+            new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
@@ -87210,7 +87212,7 @@ PROTECTION P_DEATH 40
     spectre.AddGold(830);
     spectre.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon5Bottles, 20.0), 
+            new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
@@ -87239,13 +87241,13 @@ PROTECTION P_DEATH 40
         MaxMana = 10, Mana = 10,
         BaseDodge = 18,
 
-        Experience = 2500,
+        Experience = 2800,
 
         CanFlee = true,
 
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(14) },
+            { new CreatureBasicAttack(14, 20, 25) },
         },
         Spells = new CreatureSpellCollection()
         {
@@ -87257,10 +87259,10 @@ PROTECTION P_DEATH 40
 
     wight.Wield(new WoodenStaff());    
 
-    wight.AddGold(620);
+    wight.AddGold(920);
     wight.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon5Bottles, 20.0), 
+            new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
@@ -87315,10 +87317,10 @@ PROTECTION P_DEATH 40
 
     lich.Wield(new WoodenStaff());    
 
-    lich.AddGold(930);
+    lich.AddGold(1430);
     lich.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon5Bottles, 20.0), 
+            new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
@@ -87359,10 +87361,10 @@ PROTECTION P_DEATH 40
 
     stalker.Wield(new Spear());    
 
-    stalker.AddGold(630);
+    stalker.AddGold(1230);
     stalker.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon5Bottles, 20.0), 
+            new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
@@ -87686,6 +87688,313 @@ PROTECTION P_DEATH 40
     };
     
     return dragon;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="groveNaiad">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var pescalanor = new Humanoid()
+    {
+        Name = "Naiad",
+        MaxHealth = 200, Health = 200,
+        BaseDodge = 16,
+        MagicProtection = 50,
+        Experience = 6500,
+        HideDetection = 35,
+        CanWalk = false,
+        Attacks = new CreatureAttackCollection
+        {
+            { new CreatureBasicAttack(19) }, 
+        },
+    };
+
+    pescalanor.Wield(new FineCrossbow());
+    pescalanor.Equip(new DragonScaleArmor());    
+
+    return pescalanor;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="groveDefender">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var centaur = new Centaur()
+    {
+        Name = "Grove.Defender",
+        MaxHealth = 350, Health = 350,
+        BaseDodge = 16,
+        BasePenetration = ShieldPenetration.Medium,     
+        Experience = 7500,
+        HideDetection = 30,
+        MagicProtection = 25,
+    };
+    
+    centaur.AddStatus(new NightVisionStatus(centaur));
+    centaur.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(17, 30, 45),
+    };
+        
+    centaur.Wield(new WarHammer());
+    
+    centaur.AddGold(2500);
+    centaur.AddLoot(
+        new LootPack(
+            new LootPackEntry(true, dungeon5Bottles, 60.0), 
+            new LootPackEntry(true, groveGems, 25.0),
+            new LootPackEntry(true, groveTreasure, 0.63)
+        ));
+    
+    return centaur;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="groveDryad">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var centaur = new Centaur()
+    {
+        Name = "Dryad",
+        MaxHealth = 230, Health = 230,
+        MaxMana = 31, Mana = 31,
+        BaseDodge = 18,
+        BasePenetration = ShieldPenetration.Medium,     
+        Experience = 6300,
+        MagicProtection = 40,
+    };
+    
+    centaur.AddStatus(new NightVisionStatus(centaur));
+    centaur.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(16, 25, 35),
+    };
+    Spells = new CreatureSpellCollection()
+    {
+        //not sure CreateSnake will work on chaotic monster but would be interesting - I feel a natural defender monster might do it thematically
+        { new CreatureSpell<CreateSnakeSpell>(16, mantra: SpellHelper.GenerateMantra(),
+            cost: 16, instantCast: false) },
+        { new CreatureSpell<CurseSpell>(14, mantra: SpellHelper.GenerateMantra(),
+            cost: 7, instantCast: false) }
+    }
+    centaur.Wield(new IronRod());
+    
+    centaur.AddGold(1500);
+    centaur.AddLoot(
+        new LootPack(
+            new LootPackEntry(true, dungeon5Bottles, 60.0), 
+            new LootPackEntry(true, groveGems, 25.0),
+            new LootPackEntry(true, groveTreasure, 0.63)
+        ));
+    
+    return centaur;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="groveBear">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var bear = new Bear()
+    {
+        Name = "Bear.Spirit",
+        MaxHealth = 2000, Health = 2000,
+        BaseDodge = 25,
+                
+        Experience = 25500,
+        HideDetection = 31,
+        BasePenetration = ShieldPenetration.Heavy,
+        CanSwim = true,
+        CanJumpkick = true,
+        MagicProtection = 50,
+    };
+    bear.AddStatus(new NightVisionStatus(bear));
+        
+    bear.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(16,     50, 65,  "The bear spirit slashes you with spectral claws."),        50 },
+        { new CreatureAttack(18,     60, 80,  "The bear spirits attack passes through your defenses."),             40 },
+        { new CreatureAttack(20,     70, 90, "The spirit batters you with impossible force."),    10 }
+    };
+        
+    bear.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "your weapon passing through the incorporeal beast"),
+        new CreatureBlock(4, "a spectral paw"),
+    };
+        
+    bear.AddLoot(
+        new LootPack(
+            new LootPackEntry(true, dungeon5Bottles, 100.0), 
+            new LootPackEntry(true, groveGems, 100.0),
+            new LootPackEntry(true, groveGems, 100.0),
+            new LootPackEntry(true, groveTreasure, 3.0)
+        ));
+        
+    return bear;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="groveWolf">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var wolf = new Wolf()
+    {
+        Name = "Spectral.Wolf",
+        MaxHealth = 1000, Health = 1000,
+        BaseDodge = 30,
+        BasePenetration = ShieldPenetration.Heavy,
+        Experience = 22500,
+        HideDetection = 33,
+        MagicProtection = 50,
+    };
+    wolf.AddStatus(new NightVisionStatus(wolf));
+    wolf.attacks = new CreatureAttackCollection
+    {
+            { new CreatureAttack(15, 20, 35, "The spirit rakes you with its claws."), 50 }, 
+            { new CreatureAttack(17, 30, 45, "The spirit sinks its teeth into you."), 30 }, 
+            { new CreatureAttack(18, 45, 65, "The wolf lunges at you, passing through you."), 20 }, 
+    },
+    wolf.blocks = new CreatureBlockCollection
+    {
+            new CreatureBlock(6, "your weapon passing through the incorporeal beast"),
+            new CreatureBlock(4, "a spectral paw"),
+    };
+
+    wolf.AddLoot(
+        new LootPack(
+            new LootPackEntry(true, dungeon5Bottles, 100.0), 
+            new LootPackEntry(true, groveGems, 100.0),
+            new LootPackEntry(true, groveTreasure, 2.0)
+        ));
+
+    return wolf;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="groveBoar">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var boar = new Boar()
+    {
+        Name = "Spectral.Boar",
+        MaxHealth = 1500, Health = 1500,
+        BaseDodge = 26,
+        BasePenetration = ShieldPenetration.Medium,
+        Experience = 23250,
+        CanCharge = true,
+        HideDetection = 28,
+        Attacks = new CreatureAttackCollection
+        {
+            { new CreatureAttack(16, 25, 40, "A spectral tusk impales you."), 60 }, 
+            { new CreatureAttack(18, 35, 50, "The boar charges through you."), 40 }, 
+        },
+        MagicProtection = 50,
+    };
+    boar.AddStatus(new NightVisionStatus(boar));
+    boar.blocks = new CreatureBlockCollection
+    {
+            new CreatureBlock(6, "your weapon passing through the incorporeal beast"),
+            new CreatureBlock(4, "a spectral tusk"),
+    };
+
+    boar.AddLoot(
+        new LootPack(
+            new LootPackEntry(true, dungeon5Bottles, 100.0), 
+            new LootPackEntry(true, groveGems, 100.0),
+            new LootPackEntry(true, groveTreasure, 2.0)
+        ));
+
+    return boar;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="groveSnake">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var viper = new Snake()
+    {
+        Name = "Spectral.Viper",
+        
+        MaxHealth = 500, Health = 500,
+        BaseDodge = 28,
+        MagicProtection = 50,
+        CanCharge = true,
+        Experience = 10025,
+        VisibilityDistance = 1,
+        Attacks = new CreatureAttackCollection()
+        {
+            { new CreatureAttack(18,     10, 30,      "The viper sinks its spectral fangs into your flesh.", 
+                                                new AttackPoisonComponent(40)) }, 
+        };  
+        Blocks = new CreatureBlockCollection
+        {
+            { new CreatureBlock(1, "your weapon passing through the viper.") }, 
+        },
+    };    
+
+    viper.AddLoot(
+        new LootPack(
+            new LootPackEntry(true, dungeon5Bottles, 100.0), 
+            new LootPackEntry(true, groveGems, 33.0),
+            new LootPackEntry(true, groveTreasure, 1.0)
+        ));
+    return viper;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -88339,6 +88648,69 @@ PROTECTION P_DEATH 40
       <entry entity="oakvaelDragon" size="1" minimum="1" maximum="1" />
       <location x="9" y="9" region="225" />
     </spawn>
+    <spawn type="LocationSpawner" name="groveBear">
+      <minimumDelay>1200</minimumDelay>
+      <maximumDelay>1500</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="groveBear" size="1" minimum="1" maximum="1" />
+      <location x="37" y="0" region="236" />
+    </spawn>
+    <spawn type="LocationSpawner" name="groveWold">
+      <minimumDelay>1200</minimumDelay>
+      <maximumDelay>1800</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="groveWolf" size="1" minimum="1" maximum="1" />
+      <location x="12" y="-3" region="236" />
+    </spawn>
+    <spawn type="LocationSpawner" name="groveBoar">
+      <minimumDelay>1500</minimumDelay>
+      <maximumDelay>1800</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="groveBoar" size="1" minimum="1" maximum="1" />
+      <location x="1" y="7" region="236" />
+    </spawn>
     <spawn type="RegionSpawner" name="portalPeacemakers">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
@@ -88640,6 +89012,84 @@ PROTECTION P_DEATH 40
       <entry entity="dungeon4Glamuzu" size="1" minimum="1" maximum="1" />
       <bounds region="232">
         <inclusion left="0" top="3" right="25" bottom="25" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="groveNaiads">
+      <minimumDelay>960</minimumDelay>
+      <maximumDelay>1320</maximumDelay>
+      <maximum>3</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="groveNaiad" size="1" minimum="3" maximum="3" />
+      <bounds region="236">
+        <inclusion left="18" top="4" right="26" bottom="7" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="groveDefenders">
+      <minimumDelay>1140</minimumDelay>
+      <maximumDelay>1560</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="groveDefender" size="2" minimum="6" maximum="5" />
+      <entry entity="groveDryad" size="1" minimum="3" maximum="3" />
+      <bounds region="236">
+        <inclusion left="1" top="1" right="11" bottom="7" />
+        <inclusion left="12" top="-3" right="12" bottom="-2" />
+        <inclusion left="4" top="8" right="16" bottom="13" />
+        <inclusion left="12" top="5" right="16" bottom="8" />
+        <inclusion left="17" top="9" right="34" bottom="13" />
+        <inclusion left="28" top="-3" right="34" bottom="8" />
+        <inclusion left="35" top="-3" right="38" bottom="-2" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="groveVipers">
+      <minimumDelay>1200</minimumDelay>
+      <maximumDelay>1800</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="groveSnake" size="3" minimum="1" maximum="1" />
+      <bounds region="236">
+        <inclusion left="24" top="13" right="34" bottom="13" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -89265,7 +89715,7 @@ PROTECTION P_DEATH 40
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Diamond(2000u);
+	return new Diamond(1800u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -89274,7 +89724,7 @@ PROTECTION P_DEATH 40
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new BloodRuby(2000u);
+	return new BloodRuby(2500u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -89387,6 +89837,15 @@ PROTECTION P_DEATH 40
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new YouthPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="8">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentWisdomPotion();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -89518,7 +89977,7 @@ PROTECTION P_DEATH 40
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new BloodRuby(2000u);
+	return new BloodRuby(2700u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -89565,7 +90024,25 @@ PROTECTION P_DEATH 40
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new ShieldBracelet();
+	return new StrongShieldBracelet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="10">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentWillpowerPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="10">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentWisdomPotion();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -89651,6 +90128,82 @@ PROTECTION P_DEATH 40
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new WebOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="groveTreasure">
+      <entry weight="20">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StrongShieldRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="20">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StrongStrengthRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="20">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new FireIceProtectionRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new BlindFearProtectionBracelet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new ScorpionBracelet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="groveGems">
+      <entry weight="20">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new BloodRuby(4000u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="10">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new LargeEmerald(6000u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new SmallTopaz(40000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
