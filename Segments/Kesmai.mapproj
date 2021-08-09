@@ -85077,6 +85077,11 @@
           <destroyed>39</destroyed>
           <ruins>44</ruins>
         </component>
+        <component type="WallComponent">
+          <wall>26</wall>
+          <destroyed>39</destroyed>
+          <ruins>44</ruins>
+        </component>
       </tile>
       <tile x="23" y="33">
         <component type="FloorComponent">
@@ -85281,8 +85286,8 @@
         </component>
       </tile>
       <tile x="13" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>32</wall>
@@ -85291,8 +85296,8 @@
         </component>
       </tile>
       <tile x="14" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
@@ -85301,8 +85306,8 @@
         </component>
       </tile>
       <tile x="15" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
@@ -85311,8 +85316,8 @@
         </component>
       </tile>
       <tile x="16" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
@@ -85321,8 +85326,8 @@
         </component>
       </tile>
       <tile x="17" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
@@ -85331,8 +85336,8 @@
         </component>
       </tile>
       <tile x="18" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
@@ -85341,8 +85346,8 @@
         </component>
       </tile>
       <tile x="19" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
@@ -85351,53 +85356,48 @@
         </component>
       </tile>
       <tile x="20" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="22" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
         </component>
         <component type="WallComponent">
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="WallComponent">
-          <wall>25</wall>
-          <destroyed>38</destroyed>
-          <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="23" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="34">
@@ -85657,24 +85657,32 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="35">
-        <component type="Darkness" />
+        <component type="FloorComponent">
+          <ground>6</ground>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="22" y="35">
-        <component type="Darkness" />
+        <component type="FloorComponent">
+          <ground>6</ground>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="23" y="35">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="35">
@@ -85910,14 +85918,23 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="36">
-        <component type="Darkness" />
+        <component type="FloorComponent">
+          <ground>6</ground>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="22" y="36">
-        <component type="Darkness" />
+        <component type="FloorComponent">
+          <ground>6</ground>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="23" y="36">
         <component type="FloorComponent">
@@ -85927,7 +85944,6 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="36">
@@ -86134,7 +86150,6 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="37">
@@ -86145,11 +86160,15 @@
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="22" y="37">
-        <component type="Darkness" />
+        <component type="FloorComponent">
+          <ground>6</ground>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
         <component type="DoorComponent">
           <openId>74</openId>
           <closedId>62</closedId>
@@ -86166,13 +86185,11 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="37">
@@ -86387,19 +86404,44 @@
         </component>
       </tile>
       <tile x="19" y="38">
-        <component type="Darkness" />
+        <component type="FloorComponent">
+          <ground>6</ground>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="20" y="38">
-        <component type="Darkness" />
+        <component type="FloorComponent">
+          <ground>6</ground>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="21" y="38">
-        <component type="Darkness" />
+        <component type="FloorComponent">
+          <ground>6</ground>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="22" y="38">
-        <component type="Darkness" />
+        <component type="FloorComponent">
+          <ground>6</ground>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="23" y="38">
-        <component type="Darkness" />
+        <component type="FloorComponent">
+          <ground>6</ground>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="24" y="38">
         <component type="FloorComponent">
@@ -96985,7 +97027,7 @@
         MaxHealth = 22, Health = 22,
         BaseDodge = 11,
                 
-        Experience = 190,
+        Experience = 225,
     
         CanFlee = true,
                 
@@ -97028,7 +97070,7 @@
         MaxHealth = 20, Health = 20,
         BaseDodge = 11,
                 
-        Experience = 190,
+        Experience = 225,
         
         CanFlee = true,
         
@@ -97069,7 +97111,7 @@
         MaxHealth = 21, Health = 21,
         BaseDodge = 11,
                 
-        Experience = 170,
+        Experience = 210,
                 
         Movement = 2,
                 
@@ -97114,7 +97156,7 @@
         MaxHealth = 21, Health = 21,
         BaseDodge = 11,
                 
-        Experience = 170,
+        Experience = 210,
         
         CanFlee = true,
                 
@@ -97155,7 +97197,7 @@
         MaxHealth = 17, Health = 17,
         BaseDodge = 11,
                 
-        Experience = 120,
+        Experience = 170,
                 
         Movement = 2,
                 
@@ -97198,7 +97240,7 @@
         MaxHealth = 23, Health = 23,
         BaseDodge = 11,
                 
-        Experience = 300,
+        Experience = 400,
                 
         Movement = 2,
                 
@@ -97241,7 +97283,7 @@
         MaxHealth = 22, Health = 22,
         BaseDodge = 12,
                 
-        Experience = 190,
+        Experience = 235,
     
         Movement = 2,
     };
@@ -97288,7 +97330,7 @@
         MaxHealth = 21, Health = 21,
         BaseDodge = 11,
     
-        Experience = 180,
+        Experience = 230,
     
         MaxMana = 8, Mana = 8,
             
@@ -97338,7 +97380,7 @@
         MaxHealth = 21, Health = 21,
         BaseDodge = 11,
     
-        Experience = 170,
+        Experience = 210,
     
         MaxMana = 13, Mana = 13,
             
@@ -97472,7 +97514,7 @@ return orc;
         MaxHealth = 60, Health = 60,
         BaseDodge = 12,
                 
-        Experience = 725,
+        Experience = 1000,
                 
         Movement = 2,
                 
@@ -97516,7 +97558,7 @@ return orc;
         MaxHealth = 42, Health = 42,
         BaseDodge = 12,
                 
-        Experience = 600,
+        Experience = 850,
                 
         Movement = 2,
     
@@ -97558,7 +97600,7 @@ return orc;
         MaxHealth = 35, Health = 35,
         BaseDodge = 12,
                 
-        Experience = 425,
+        Experience = 575,
         
         CanFlee = true,
                 
@@ -97602,7 +97644,7 @@ return orc;
         MaxHealth = 35, Health = 35,
         BaseDodge = 12,
                 
-        Experience = 425,
+        Experience = 575,
         
         CanFlee = true,
                 
@@ -97646,7 +97688,7 @@ return orc;
         MaxHealth = 36, Health = 36,
         BaseDodge = 12,
                 
-        Experience = 525,
+        Experience = 750,
     
         Attacks = new CreatureAttackCollection()
         {
@@ -97688,7 +97730,7 @@ return orc;
         MaxHealth = 36, Health = 36,
         BaseDodge = 12,
                 
-        Experience = 525,
+        Experience = 750,
         
         Attacks = new CreatureAttackCollection()
         {
@@ -97729,7 +97771,7 @@ return orc;
         MaxMana = 12, Mana = 12,
         BaseDodge = 12,
     
-        Experience = 425,
+        Experience = 555,
         
         CanFlee = true,
     };
@@ -97781,7 +97823,7 @@ return orc;
         MaxHealth = 82, Health = 82,
         BaseDodge = 12,
                 
-        Experience = 1525,
+        Experience = 1825,
                 
         Movement = 2,
     };
@@ -97831,7 +97873,7 @@ return orc;
         MaxHealth = 40, Health = 40,
         BaseDodge = 12,
     
-        Experience = 1000,
+        Experience = 1250,
     
         Movement = 2,
         
@@ -97884,7 +97926,7 @@ return orc;
         MaxMana = 13, Mana = 13,
         BaseDodge = 12,
     
-        Experience = 850,
+        Experience = 1150,
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
         
@@ -97934,7 +97976,7 @@ return orc;
         MaxMana = 8, Mana = 8,
         BaseDodge = 12,
     
-        Experience = 725,
+        Experience = 1000,
         
         CanFlee = true,
     };
@@ -97983,7 +98025,7 @@ return orc;
         MaxHealth = 47, Health = 47,
         BaseDodge = 13,
     
-        Experience = 600,
+        Experience = 850,
     
         CanFlee = true,
     
@@ -98027,7 +98069,7 @@ return orc;
         MaxHealth = 47, Health = 47,
         BaseDodge = 13,
     
-        Experience = 600,
+        Experience = 850,
     
         CanFlee = true,
     
@@ -98124,7 +98166,7 @@ return orc;
         MaxHealth = 83, Health = 83,
         BaseDodge = 13,
     
-        Experience = 850,
+        Experience = 1200,
     
         Attacks = new CreatureAttackCollection
         {
@@ -98164,7 +98206,7 @@ return orc;
         MaxHealth = 59, Health = 59,
         BaseDodge = 13,
     
-        Experience = 750,
+        Experience = 950,
         
         Attacks = new CreatureAttackCollection
         {
@@ -98204,7 +98246,7 @@ return orc;
         MaxHealth = 107, Health = 107,
         BaseDodge = 13,
     
-        Experience = 2000,
+        Experience = 2250,
     };
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
     
@@ -98252,7 +98294,7 @@ return orc;
         MaxHealth = 65, Health = 65,
         BaseDodge = 13,
         
-        Experience = 1125,
+        Experience = 1350,
         
         Movement = 2,
         
@@ -98358,7 +98400,7 @@ return orc;
         MaxMana = 17, Mana = 17,
         BaseDodge = 14,
     
-        Experience = 1800,
+        Experience = 2000,
     
         VisibilityDistance = 1,
     };
@@ -99326,7 +99368,7 @@ return orc;
         MaxHealth = 250, Health = 250,
         BaseDodge = 14,
     
-        Experience = 3000,
+        Experience = 3100,
     
         VisibilityDistance = 0,
             
@@ -99379,7 +99421,7 @@ return orc;
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
     
-        Experience = 1500,
+        Experience = 1700,
         
         FireProtection = 100,
         IceProtection = 80,
@@ -99433,7 +99475,7 @@ return orc;
         MaxHealth = 25, Health = 25,
         BaseDodge = 13,
     
-        Experience = 180,
+        Experience = 225,
     
         Movement = 1,
         
@@ -99483,7 +99525,7 @@ return orc;
         MaxHealth = 500, Health = 500,
         BaseDodge = 20,
     
-        Experience = 11000,
+        Experience = 13000,
         
         CanFly = true,
         CanCharge = true,
