@@ -86757,7 +86757,7 @@ PROTECTION P_DEATH 40
         },
         Spells = new CreatureSpellCollection(50.0)
         {
-            { new CreatureSpell<FirewallSpell>(9), 100, TimeSpan.FromSeconds(15.0) }
+            { new CreatureSpell<FirewallSpell>(9), 100, TimeSpan.FromSeconds(15.0), instantCast = true }
         }
     };    
 
@@ -87684,7 +87684,7 @@ PROTECTION P_DEATH 40
     dragon.Spells = new CreatureSpellCollection()
     {
         /* Expected output of damage is 60 per turn based on replay from Indi..DOOM. */
-        { new CreatureSpell<WhirlwindSpell>(15, cost: 20) },
+        { new CreatureSpell<WhirlwindSpell>(15, cost: 20), instantCast = true },
     };
     
     return dragon;

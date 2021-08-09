@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.69.0.0">
+<segment name="Underkingdom" version="0.70.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -96201,7 +96201,7 @@
     var wyvern = new Wyvern()
     {
         Body = 176,
-        MaxHealth = 110, Health = 110,
+        MaxHealth = 70, Health = 70,
         BaseDodge = 12,
         BasePenetration = ShieldPenetration.Light,
         Experience = 2500,
@@ -96250,7 +96250,7 @@
     var wyvern = new Wyvern()
     {
         Body = 177,
-        MaxHealth = 110, Health = 110,
+        MaxHealth = 70, Health = 70,
         BaseDodge = 12,
                 
         Experience = 2500,
@@ -96299,7 +96299,7 @@
     var wyvern = new Wyvern()
     {
         Body = 178,
-        MaxHealth = 110, Health = 110,
+        MaxHealth = 70, Health = 70,
         BaseDodge = 12,
                 
         Experience = 2500,
@@ -96348,7 +96348,7 @@
     var wyvern = new Wyvern()
     {
         Body = 65,
-        MaxHealth = 110, Health = 110,
+        MaxHealth = 70, Health = 70,
         BaseDodge = 12,
                 
         Experience = 2500,
@@ -96446,7 +96446,7 @@
         
     drake.Spells = new CreatureSpellCollection(20.0)
     {
-        new CreatureSpell<LightningBoltSpell>(9),
+        new CreatureSpell<LightningBoltSpell>(9), instantCast = true,
     };
     
     drake.AddGold(2000);
@@ -96500,7 +96500,7 @@
     
     carfel.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(15),
+        new CreatureBasicAttack(15, 25, 55),
     };
     
     //todo determine if I can force it to dual wield? Not sure of context
@@ -96538,7 +96538,7 @@
         MaxHealth = 800, Health = 800,
         BaseDodge = 15,
     
-        Experience = 14000,
+        Experience = 18000,
         BasePenetration = ShieldPenetration.Medium,
         
         VisibilityDistance = 0,
@@ -96587,12 +96587,13 @@
         
         Alignment = Alignment.Chaotic,
         HideDetection = 28,
-        Experience = 42000,
+        Experience = 56000,
         
         Immunity = CreatureImmunity.Magic,
         Weakness = CreatureWeakness.IceSpearSpell,
         
         CanCharge = true,
+        HideDetection = 30,
         
         BasePenetration = ShieldPenetration.VeryHeavy,
     
@@ -96639,7 +96640,7 @@
         BasePenetration = ShieldPenetration.Heavy,
         Alignment = Alignment.Chaotic,
         HideDetection = 24,
-        Experience = 22000,
+        Experience = 27000,
             
         VisibilityDistance = 0,
     };
@@ -96686,7 +96687,7 @@
         MaxHealth = 2500, Health = 2500,
         BaseDodge = 21,
         HideDetection = 25,
-        Experience = 35000,
+        Experience = 39000,
        
         CanCharge = true,
                 
@@ -96738,7 +96739,7 @@
         MaxHealth = 5000, Health = 5000,
         BaseDodge = 15,
     
-        Experience = 45000,
+        Experience = 69000,
         
         BasePenetration = ShieldPenetration.VeryHeavy,
         
@@ -96772,13 +96773,11 @@
     
     overlord.Spells = new CreatureSpellCollection(35.0)
     {
-        new CreatureSpell<IceSpearSpell>(10),
+        new CreatureSpell<IceSpearSpell>(10), instantCast = true,
     };
     
     overlord.AddGold(3000);
     overlord.AddLoot(new LootPack(
-        //new LootPackEntry(true, dungeon1Bottles,    20),
-        //todo: new LootPackEntry(true, ydnacTreasure,      100),
         
         new LootPackEntry(true, (from, container) => new ClearBalm(),           50),
         new LootPackEntry(true, (from, container) => new Diamond(1500u),        100,    gemsPriceMutator),
@@ -96806,7 +96805,7 @@
         MaxHealth = 130, Health = 130,
         BaseDodge = 12,
                 
-        Experience = 3800,
+        Experience = 5200,
         BasePenetration = ShieldPenetration.Light,
         CanFlee = true,
                 
@@ -96822,7 +96821,7 @@
     orc.AddGold(400);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return orc;
@@ -96845,7 +96844,7 @@
         MaxHealth = 200, Health = 200,
         BaseDodge = 16,
     
-        Experience = 5500,
+        Experience = 10500,
     
         CanCharge = true,
         BasePenetration = ShieldPenetration.Medium,
@@ -96872,7 +96871,7 @@
     minotaur.AddGold(1000);
     minotaur.AddLoot(new LootPack(
         new LootPackEntry(true, drop12gems,       15,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return minotaur;
@@ -96895,7 +96894,7 @@
         MaxHealth = 200, Health = 200,
         BaseDodge = 18,
                 
-        Experience = 9000,
+        Experience = 12000,
         BasePenetration = ShieldPenetration.Medium,
     
     };
@@ -96919,7 +96918,7 @@
     goblin.AddGold(800);
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, drop12gems,       20,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return goblin;
@@ -96943,7 +96942,7 @@
         MaxHealth = 145, Health = 145,
         BaseDodge = 13,
                 
-        Experience = 3400,
+        Experience = 6400,
                 
         Movement = 3,
         BasePenetration = ShieldPenetration.Light,
@@ -96959,7 +96958,7 @@
     troll.AddGold(500);
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, drop12gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return troll;
@@ -96982,7 +96981,7 @@
         MaxHealth = 100, Health = 100,
         BaseDodge = 12,
                 
-        Experience = 2600,
+        Experience = 5600,
         
         CanFlee = true,
         BasePenetration = ShieldPenetration.Light,
@@ -96998,7 +96997,7 @@
     orc.AddGold(300);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, drop12gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return orc;
@@ -97022,7 +97021,7 @@
         MaxMana = 13, Mana = 13,
         BaseDodge = 14,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 4700,
+        Experience = 6700,
     
     };
     hobgoblin.AddStatus(new NightVisionStatus(hobgoblin));
@@ -97044,7 +97043,7 @@
     hobgoblin.AddGold(550);
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       15,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return hobgoblin;
@@ -97064,10 +97063,10 @@
         <block><![CDATA[
     var hobgoblin = new Hobgoblin()
     {
-        MaxHealth = 150, Health = 120,
+        MaxHealth = 150, Health = 150,
         BaseDodge = 14,
     
-        Experience = 4600,
+        Experience = 6600,
         BasePenetration = ShieldPenetration.Medium,
         Attacks = new CreatureAttackCollection()
         {
@@ -97081,7 +97080,7 @@
     hobgoblin.AddGold(500);
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return hobgoblin;
@@ -97107,14 +97106,13 @@
         MaxHealth = 135, Health = 135,
         BaseDodge = 13,
                 
-        Experience = 4200,
+        Experience = 6400,
         BasePenetration = ShieldPenetration.Medium,
         Movement = 3,
                                 
         Attacks = new CreatureAttackCollection()
         {
-            { new CreatureBasicAttack(11, 25, 30,
-                new AttackProneComponent(100.0), new AttackStunComponent(100.0)) },
+            { new CreatureBasicAttack(11, 25, 30) },
         },
     };
     
@@ -97126,7 +97124,7 @@
     troll.AddGold(500);
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return troll;
@@ -97149,7 +97147,7 @@
         MaxHealth = 175, Health = 175,
         BaseDodge = 14,
                 
-        Experience = 4800,
+        Experience = 6800,
                 
         Movement = 3,
         BasePenetration = ShieldPenetration.Medium,
@@ -97167,7 +97165,7 @@
     troll.AddGold(450);
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return troll;
@@ -97191,11 +97189,9 @@
         MaxHealth = 300, Health = 300,
         BaseDodge = 15,
             
-        Experience = 8000,
+        Experience = 11000,
         
-        FireProtection = 50,
-        IceProtection = 50,
-        
+        MagicProtection = 33,
         CanCharge = true,
         
         BasePenetration = ShieldPenetration.Heavy,
@@ -97214,7 +97210,7 @@
     trollguard.AddGold(1000);
     trollguard.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       15,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    20)
+        new LootPackEntry(true, GenericBottles,    33)
         ));
     
     return trollguard;
@@ -97238,7 +97234,7 @@
         MaxHealth = 150, Health = 150,
         BaseDodge = 14,
     
-        Experience = 5500,
+        Experience = 7500,
         BasePenetration = ShieldPenetration.Medium,
         Attacks = new CreatureAttackCollection
         {
@@ -97252,7 +97248,7 @@
     hobgoblin.AddGold(500);
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, speedygems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    20)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return hobgoblin;
@@ -97276,7 +97272,7 @@
         MaxMana = 13, Mana = 13,
         BaseDodge = 11,
         BasePenetration = ShieldPenetration.VeryLight,
-        Experience = 2300,
+        Experience = 5300,
     
     };
     
@@ -97297,7 +97293,7 @@
     orc.AddGold(350);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       15,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    20)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return orc;
@@ -97320,7 +97316,7 @@
         MaxHealth = 110, Health = 110,
         BaseDodge = 11,
         BasePenetration = ShieldPenetration.VeryLight,
-        Experience = 1900,
+        Experience = 5500,
         
         MaxMana = 21, Mana = 21,
             
@@ -97344,7 +97340,7 @@
     troll.AddGold(250);
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    20)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return troll;
@@ -97367,7 +97363,7 @@
         MaxHealth = 130, Health = 130,
         BaseDodge = 12,
     
-        Experience = 4800,
+        Experience = 6800,
         BasePenetration = ShieldPenetration.Light,
         MaxMana = 31, Mana = 31,
             
@@ -97391,7 +97387,7 @@
     troll.AddGold(380);
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       15,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return troll;
@@ -97415,7 +97411,7 @@
         MaxMana = 21, Mana = 21,
         BaseDodge = 11,
     
-        Experience = 1900,
+        Experience = 4900,
         BasePenetration = ShieldPenetration.VeryLight,
     };
     
@@ -97439,7 +97435,7 @@
     orc.AddGold(350);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    20)
+        new LootPackEntry(true, GenericBottles,    25)
     ));
     
     return orc;
@@ -97463,7 +97459,7 @@
         MaxMana = 16, Mana = 16,
         BaseDodge = 11,
         BasePenetration = ShieldPenetration.VeryLight,        
-        Experience = 2800,
+        Experience = 5800,
         FireProtection = 100,
     };
     
@@ -97487,7 +97483,7 @@
     goblin.AddGold(120);
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, drop12gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return goblin;
@@ -97510,11 +97506,11 @@
         MaxHealth = 150, Health = 150,
         BaseDodge = 13,
     
-        Experience = 5800,
+        Experience = 6800,
         BasePenetration = ShieldPenetration.Light,
         MaxMana = 21, Mana = 21,
         DeathResistance = 100,
-            
+        MagicProtection = 33,
     };
         
     banshee.Attacks = new CreatureAttackCollection()
@@ -97557,7 +97553,7 @@
         MaxHealth = 220, Health = 220,
         BaseDodge = 14,
     
-        Experience = 8000,
+        Experience = 9000,
         BasePenetration = ShieldPenetration.Medium,
         VisibilityDistance = 0,
             
@@ -97584,7 +97580,7 @@
     ghoul.AddGold(1000);
     ghoul.AddLoot(new LootPack(
         new LootPackEntry(true, udGems,       15,     gemsPriceMutator), 
-        new LootPackEntry(true, undeadBottles,    15)
+        new LootPackEntry(true, undeadBottles,    50)
     ));
     
     return ghoul;
@@ -97607,7 +97603,7 @@
         MaxHealth = 150, Health = 150,
         BaseDodge = 14,
 
-        Experience = 5500,
+        Experience = 6800,
         BasePenetration = ShieldPenetration.Light,
         Movement = 3,
         DeathResistance = 100,
@@ -97625,7 +97621,7 @@
     
     skeleton.AddLoot(new LootPack(
         new LootPackEntry(true, udGems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, undeadBottles,    20)
+        new LootPackEntry(true, undeadBottles,    33)
     ));
     
     return skeleton;
@@ -97649,7 +97645,7 @@
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
     
-        Experience = 6500,
+        Experience = 8500,
         BasePenetration = ShieldPenetration.Light,
         VisibilityDistance = 1,
         DeathResistance = 100,
@@ -97676,7 +97672,7 @@
     spectre.AddGold(650);
     spectre.AddLoot(new LootPack(
         new LootPackEntry(true, udGems,       15,     gemsPriceMutator), 
-        new LootPackEntry(true, undeadBottles,    20)
+        new LootPackEntry(true, undeadBottles,    33)
     ));
     
     return spectre;
@@ -97700,7 +97696,7 @@
         MaxHealth = 350, Health = 350,
         BaseDodge = 15,
         HideDetection = 26,
-        Experience = 9000,
+        Experience = 19000,
     
         BasePenetration = ShieldPenetration.Heavy,
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Bashing |
@@ -97726,7 +97722,7 @@
     mummy.AddGold(1000);
     mummy.AddLoot(new LootPack(
         new LootPackEntry(true, udGems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, undeadBottles,    20)
+        new LootPackEntry(true, undeadBottles,    50)
     ));
     
     return mummy;
@@ -97749,7 +97745,7 @@
         MaxHealth = 150, Health = 150,
         BaseDodge = 12,
     
-        Experience = 1725,
+        Experience = 2725,
         
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
@@ -97790,7 +97786,7 @@
         MaxHealth = 230, Health = 230,
         BaseDodge = 14,
                 
-        Experience = 7500,
+        Experience = 10500,
         BasePenetration = ShieldPenetration.Medium,
                                 
         Attacks = new CreatureAttackCollection()
@@ -97807,7 +97803,7 @@
     knight.AddGold(600);
     knight.AddLoot(new LootPack(
         new LootPackEntry(true, yasnakiGems,       20,     gemsPriceMutator), 
-        new LootPackEntry(true, yasnakiBottles,    20)
+        new LootPackEntry(true, yasnakiBottles,    33)
     ));
     
     return knight;
@@ -97831,8 +97827,9 @@
         MaxMana = 19, Mana = 19,
         BaseDodge = 14,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 8000,
+        Experience = 12000,
         VisibilityDistance = 0,
+        MagicProtection = 33,
     };
     lich.AddStatus(new NightVisionStatus(lich));
         
@@ -97853,7 +97850,7 @@
     lich.AddGold(700);
     lich.AddLoot(new LootPack(
         new LootPackEntry(true, udGems,       20,     gemsPriceMutator), 
-        new LootPackEntry(true, undeadBottles,    15)
+        new LootPackEntry(true, undeadBottles,    50)
     ));
     
     return lich;
@@ -97880,7 +97877,7 @@
         BasePenetration = ShieldPenetration.Medium,
         CanSwim = true,
         
-        Experience = 3000,
+        Experience = 7000,
             
         VisibilityDistance = 0,
     };
@@ -97929,7 +97926,7 @@
         MaxHealth = 260, Health = 260,
         BaseDodge = 16,
     
-        Experience = 8550,
+        Experience = 10550,
         BasePenetration = ShieldPenetration.Heavy,
         CanJumpkick = true,
     };
@@ -97942,7 +97939,7 @@
     martialartist.AddGold(650);
     martialartist.AddLoot(new LootPack(
         new LootPackEntry(true, yasnakiGems,       20,     gemsPriceMutator), 
-        new LootPackEntry(true, yasnakiBottles,    20)
+        new LootPackEntry(true, yasnakiBottles,    33)
     ));
     
     return martialartist;
@@ -97969,7 +97966,7 @@
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 7050,
+        Experience = 9550,
                     
         IceProtection = 100,
     };
@@ -97998,7 +97995,7 @@
     wizard.AddGold(650);
     wizard.AddLoot(new LootPack(
         new LootPackEntry(true, yasnakiGems,       20,     gemsPriceMutator), 
-        new LootPackEntry(true, yasnakiBottles,    20)
+        new LootPackEntry(true, yasnakiBottles,    33)
     ));
     
     return wizard;
@@ -98019,11 +98016,12 @@
     //todo add all yasnaki models
     var thaum = new Humanoid()
     {
+        Name = "Dark.Thaum",
         Body = 48,
         MaxHealth = 130, Health = 130,
         BaseDodge = 11,
     
-        Experience = 6000,
+        Experience = 9500,
         BasePenetration = ShieldPenetration.Light,
         MaxMana = 31, Mana = 31,
             
@@ -98038,7 +98036,7 @@
     thaum.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CurseSpell>(
-            skillLevel: 7, cost: 10, 
+            skillLevel: 8, cost: 10, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
@@ -98049,7 +98047,7 @@
     thaum.AddGold(750);
     thaum.AddLoot(new LootPack(
         new LootPackEntry(true, yasnakiGems,       20,     gemsPriceMutator), 
-        new LootPackEntry(true, yasnakiBottles,    20)
+        new LootPackEntry(true, yasnakiBottles,    33)
     ));
     
     return thaum;
@@ -98087,7 +98085,7 @@
         MaxHealth = 130, Health = 130,
         BaseDodge = 12,
                 
-        Experience = 2700,
+        Experience = 5700,
         BasePenetration = ShieldPenetration.Light,
         Attacks = new CreatureAttackCollection()
         {
@@ -98102,7 +98100,7 @@
     goblin.AddGold(300);
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, drop12gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return goblin;
@@ -98125,7 +98123,7 @@
         MaxHealth = 130, Health = 130,
         BaseDodge = 10,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 1800,
+        Experience = 4800,
     
         Attacks = new CreatureAttackCollection()
         {
@@ -98140,7 +98138,7 @@
     goblin.AddGold(300);
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    20)
+        new LootPackEntry(true, GenericBottles,    25)
     ));
     
     return goblin;
@@ -98163,7 +98161,7 @@
         MaxHealth = 80, Health = 80,
         BaseDodge = 11,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 1800,
+        Experience = 4800,
         
         CanFlee = true,
                 
@@ -98179,7 +98177,7 @@
     orc.AddGold(250);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    20)
+        new LootPackEntry(true, GenericBottles,    25)
     ));
     
     return orc;
@@ -98202,7 +98200,7 @@
         MaxHealth = 110, Health = 110,
         BaseDodge = 12,
                 
-        Experience = 2600,
+        Experience = 5600,
         BasePenetration = ShieldPenetration.Light,         
         Attacks = new CreatureAttackCollection()
         {
@@ -98216,7 +98214,7 @@
     troll.AddGold(370);
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    20)
+        new LootPackEntry(true, GenericBottles,    25)
     ));
     
     return troll;
@@ -98239,7 +98237,7 @@
         MaxHealth = 80, Health = 80,
         BaseDodge = 11,
                 
-        Experience = 1900,
+        Experience = 4900,
         BasePenetration = ShieldPenetration.Light,
         CanFlee = true,
                 
@@ -98252,13 +98250,11 @@
     orc.Wield(new Longsword());
     orc.Equip(new LeatherArmor());
             
-    orc.AddGold(300);
-    /*
+    orc.AddGold(350);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, Testgems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, Testbottles,    20)
+        new LootPackEntry(true, tunnelSewerGems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    25)
     ));
-    */
     return orc;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -98279,7 +98275,7 @@
         MaxHealth = 80, Health = 80,
         BaseDodge = 10,
         BasePenetration = ShieldPenetration.Light,       
-        Experience = 1400,
+        Experience = 4400,
         
         Attacks = new CreatureAttackCollection()
         {
@@ -98293,7 +98289,7 @@
     goblin.AddGold(300);
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    20)
+        new LootPackEntry(true, GenericBottles,    25)
     ));
     
     return goblin;
@@ -98366,7 +98362,7 @@
     {
         new CreatureSpell<WhirlwindSpell>(
             skillLevel: 11,
-            mantra: SpellHelper.GenerateMantra(), instantCast: true)
+            mantra: SpellHelper.GenerateMantra(), instantCast = true)
     };
     wraith.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new HummingbirdSword(),     100)
@@ -100009,7 +100005,7 @@
   </spawns>
   <treasures>
     <treasure name="GenericBottles">
-      <entry weight="20">
+      <entry weight="150">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -100018,7 +100014,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="2">
+      <entry weight="5">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -100027,7 +100023,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="5">
+      <entry weight="20">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -100036,7 +100032,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="2">
+      <entry weight="5">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -100315,7 +100311,7 @@
       </entry>
     </treasure>
     <treasure name="yasnakiBottles">
-      <entry weight="20">
+      <entry weight="70">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -100324,7 +100320,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="5">
+      <entry weight="10">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[

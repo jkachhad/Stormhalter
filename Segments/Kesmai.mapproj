@@ -97847,7 +97847,7 @@ return orc;
     };
     
     salamander.Spells = new CreatureSpellCollection(50.0);
-    salamander.Spells.Add(new CreatureSpell<FirewallSpell>(6), 100, TimeSpan.FromSeconds(15.0));
+    salamander.Spells.Add(new CreatureSpell<FirewallSpell>(6), 100, TimeSpan.FromSeconds(15.0), instantCast = true);
     
     salamander.AddLoot(new LootPack(
         new LootPackEntry(true, dungeon3Bottles,    33), 
@@ -99520,7 +99520,7 @@ return orc;
         
     dragon.Spells = new CreatureSpellCollection(40.0)
     {
-        new CreatureSpell<DragonBreathFireSpell>(9),
+        new CreatureSpell<DragonBreathFireSpell>(9), instantCast = true,
     };
     
     //todo: add the +4 shining silver longsword in her loot chance (the purple one from OG). Add the binding "Agate gem" assuming the agate I added isn't it
@@ -99556,62 +99556,6 @@ return orc;
             quest.SetStage(player, KnightsPurposeStage.Harriette);
         }
     }
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="dpVendor">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    var female = Utility.RandomBool();
-    var vendor = new Merchant<PermanentConstitutionPotion>(16, 10, byte.MaxValue)
-    {
-        Name = "Dp",
-        
-        Body = (female ? 16 : 48), IsFemale = female,
-        
-        BaseDodge = 10,
-        MaxHealth = 50, Health = 50,
-        
-        Experience = 50,
-    };
-
-    return vendor;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="robeVendor">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    var female = Utility.RandomBool();
-    var vendor = new Merchant<StarsRobe>(16, 10, byte.MaxValue)
-    {
-        Name = "Robe",
-        
-        Body = (female ? 16 : 48), IsFemale = female,
-        
-        BaseDodge = 10,
-        MaxHealth = 50, Health = 50,
-        
-        Experience = 50,
-    };
-
-    return vendor;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -100592,46 +100536,6 @@ return orc;
       </script>
       <entry entity="enragedTroll" size="1" minimum="1" maximum="2" />
       <location x="24" y="33" region="12" />
-    </spawn>
-    <spawn type="LocationSpawner" name="kesmaiDPVendor">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>900</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="dpVendor" size="1" minimum="1" maximum="1" />
-      <location x="33" y="8" region="1" />
-    </spawn>
-    <spawn type="LocationSpawner" name="kesmaiRobeVendor">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>900</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="robeVendor" size="1" minimum="1" maximum="1" />
-      <location x="33" y="9" region="1" />
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai -1">
       <minimumDelay>600</minimumDelay>
