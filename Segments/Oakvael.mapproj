@@ -84604,7 +84604,7 @@
         MaxHealth = 46, Health = 46,
         BaseDodge = 12,
 
-        Experience = 625,
+        Experience = 525,
 
         Movement = 2,
 
@@ -84691,7 +84691,7 @@
         MaxHealth = 32, Health = 32,
         BaseDodge = 12,
 
-        Experience = 350,
+        Experience = 450,
 
         Attacks = new CreatureAttackCollection
         {
@@ -84776,7 +84776,7 @@
         MaxHealth = 25, Health = 25,
         BaseDodge = 12,
 
-        Experience = 250,
+        Experience = 750,
         
         BasePenetration = ShieldPenetration.VeryLight,
 
@@ -85032,10 +85032,10 @@
         <block><![CDATA[
 	var rat = new BlackRat()
     {
-        MaxHealth = 13, Health = 13,
+        MaxHealth = 33, Health = 33,
         BaseDodge = 12,
 
-        Experience = 175,
+        Experience = 575,
 
         VisibilityDistance = 1,
         Movement = 2,
@@ -85044,9 +85044,9 @@
         
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureAttack(6, 1, 4, "The rat rakes you with its claws"), 50 }, 
-            { new CreatureAttack(6, 1, 6, "The rat bites you"), 30 }, 
-            { new CreatureAttack(6, 1, 8, "The rat whips you with its tail"), 20 }, 
+            { new CreatureAttack(6, 1, 5, "The rat rakes you with its claws"), 50 }, 
+            { new CreatureAttack(6, 1, 8, "The rat bites you"), 30 }, 
+            { new CreatureAttack(6, 1, 10, "The rat whips you with its tail"), 20 }, 
         },
         Blocks = new CreatureBlockCollection
         {
@@ -85080,7 +85080,7 @@
         MaxHealth = 18, Health = 18,
         BaseDodge = 12,
 
-        Experience = 225,
+        Experience = 850,
 
         Movement = 2,
 
@@ -85118,14 +85118,14 @@
         MaxHealth = 42, Health = 42,
         BaseDodge = 12,
 
-        Experience = 450,
+        Experience = 900,
 
         Movement = 2,
 
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureAttack(7, 2, 6, "The scorpion crushes you with its claws."), 60 }, 
-            { new CreatureAttack(7, 3, 10, "The scorpion stings you with its tail.",
+            { new CreatureAttack(7, 3, 8, "The scorpion crushes you with its claws."), 60 }, 
+            { new CreatureAttack(7, 4, 8, "The scorpion stings you with its tail.",
                 new AttackPoisonComponent(7, 20),
                 new AttackStunComponent(10)), 40 }, 
         },
@@ -85162,12 +85162,12 @@
         <block><![CDATA[
 	var kobold = new Kobold()
     {
-        MaxHealth = 16, Health = 16,
-        BaseDodge = 12,
+        MaxHealth = 35, Health = 35,
+        BaseDodge = 13,
 
-        Experience = 275,
+        Experience = 1500,
 
-        Movement = 1,
+        Movement = 2,
 
         Attacks = new CreatureAttackCollection
         {
@@ -85178,7 +85178,7 @@
     kobold.Wield(new SteelMace());
     kobold.Equip(new LeatherArmor());    
 
-    kobold.AddGold(100);
+    kobold.AddGold(300);
     kobold.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon1Gems, 25.0, gemsPriceMutator), 
@@ -85203,10 +85203,10 @@
         <block><![CDATA[
 	var orc = new Orc()
     {
-        MaxHealth = 21, Health = 21,
+        MaxHealth = 44, Health = 44,
         BaseDodge = 11,
 
-        Experience = 300,
+        Experience = 1250,
 
         Movement = 2,
 
@@ -85214,14 +85214,14 @@
 
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(6) }, 
+            { new CreatureBasicAttack(7) }, 
         },
     };
 
     orc.Wield(new Longsword());
     orc.Equip(new LeatherArmor());    
 
-    orc.AddGold(150);
+    orc.AddGold(250);
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon1Gems, 25.0, gemsPriceMutator), 
@@ -85246,23 +85246,23 @@
         <block><![CDATA[
 	var orc = new Orc()
     {
-        MaxHealth = 21, Health = 21,
-        BaseDodge = 11,
+        MaxHealth = 44, Health = 44,
+        BaseDodge = 13,
 
-        Experience = 300,
+        Experience = 1250,
 
         CanFlee = true,
 
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(6) }, 
+            { new CreatureBasicAttack(8) }, 
         },
     };
 
     orc.Wield(new Crossbow());
     orc.Equip(new LeatherArmor());    
 
-    orc.AddGold(150);
+    orc.AddGold(350);
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon1Gems, 25.0, gemsPriceMutator), 
@@ -85287,10 +85287,10 @@
         <block><![CDATA[
 	var troll = new Troll()
     {
-        MaxHealth = 35, Health = 35,
-        BaseDodge = 11,
+        MaxHealth = 55, Health = 55,
+        BaseDodge = 14,
 
-        Experience = 425,
+        Experience = 1325,
 
         Movement = 2,
 
@@ -85298,7 +85298,7 @@
 
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureAttack(6, 4, 15) }, 
+            { new CreatureAttack(6, 5, 15) }, 
         },
     };
 
@@ -85330,10 +85330,10 @@
         <block><![CDATA[
 	var spider = new Spider()
     {
-        MaxHealth = 42, Health = 42,
-        BaseDodge = 12,
+        MaxHealth = 48, Health = 48,
+        BaseDodge = 13,
 
-        Experience = 425,
+        Experience = 1950,
 
         Movement = 0,
         
@@ -85376,16 +85376,16 @@
         <block><![CDATA[
 	var hobgoblin = new Hobgoblin()
     {
-        MaxHealth = 52, Health = 52,
+        MaxHealth = 60, Health = 60,
         BaseDodge = 14,
 
-        Experience = 700,
+        Experience = 2500,
 
         Movement = 2,
 
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(8) }, 
+            { new CreatureBasicAttack(9) }, 
         },
     };
 
@@ -85419,14 +85419,14 @@
         <block><![CDATA[
 	var goblin = new Goblin()
     {
-        MaxHealth = 42, Health = 42,
+        MaxHealth = 46, Health = 46,
         BaseDodge = 13,
 
-        Experience = 550,
+        Experience = 1900,
 
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(7) }, 
+            { new CreatureBasicAttack(9) }, 
         },
     };
 
@@ -85463,7 +85463,7 @@
         MaxHealth = 42, Health = 42,
         BaseDodge = 13,
 
-        Experience = 550,
+        Experience = 1900,
 
         Attacks = new CreatureAttackCollection
         {
@@ -85504,7 +85504,7 @@
         MaxHealth = 75, Health = 75,
         BaseDodge = 14,
 
-        Experience = 920,
+        Experience = 2220,
 
         Movement = 2,
 
@@ -85547,16 +85547,16 @@
         <block><![CDATA[
 	var orc = new Orc()
     {
-        MaxHealth = 40, Health = 40,
+        MaxHealth = 48, Health = 48,
         BaseDodge = 13,
 
-        Experience = 555,
+        Experience = 1900,
         
         CanFlee = true,
 
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(7) }, 
+            { new CreatureBasicAttack(8) }, 
         },
     };
 
@@ -85593,7 +85593,7 @@
         MaxHealth = 40, Health = 40,
         BaseDodge = 13,
 
-        Experience = 555,
+        Experience = 1955,
 
         CanFlee = true,
 
@@ -85637,7 +85637,7 @@
         MaxMana = 12, Mana = 12,
         BaseDodge = 13,
 
-        Experience = 625,
+        Experience = 1925,
         
         CanFlee = true,
 
@@ -85687,7 +85687,7 @@
         MaxMana = 17, Mana = 17,
         BaseDodge = 14,
 
-        Experience = 950,
+        Experience = 2750,
 
         VisibilityDistance = 1,
 
@@ -85740,7 +85740,7 @@
         MaxHealth = 80, Health = 80,
         BaseDodge = 15,
 
-        Experience = 1200,
+        Experience = 2500,
 
         Movement = 2,
 
@@ -85783,7 +85783,7 @@
         MaxHealth = 63, Health = 63,
         BaseDodge = 14,
 
-        Experience = 900,
+        Experience = 2250,
         
         CanFlee = true,
 
@@ -85826,7 +85826,7 @@
         MaxHealth = 63, Health = 63,
         BaseDodge = 14,
 
-        Experience = 900,
+        Experience = 2300,
         
         CanFlee = true,
 
@@ -85870,7 +85870,7 @@
         MaxMana = 12, Mana = 12,
         BaseDodge = 14,
 
-        Experience = 975,
+        Experience = 2275,
 
         CanFlee = true,
 
@@ -85920,7 +85920,7 @@
         MaxHealth = 98, Health = 98,
         BaseDodge = 16,
 
-        Experience = 1250,
+        Experience = 3250,
         
         Attacks = new CreatureAttackCollection
         {
@@ -85967,7 +85967,7 @@
         MaxMana = 18, Mana = 18,
         BaseDodge = 15,
 
-        Experience = 3000,
+        Experience = 5000,
         
         CanFlee = true,
         CanSwim = true,
@@ -86026,7 +86026,7 @@
         MaxMana = 21, Mana = 21,
         BaseDodge = 15,
 
-        Experience = 3000,
+        Experience = 5100,
 
         CanFlee = true,
         CanSwim = true,
@@ -86079,7 +86079,7 @@
         MaxHealth = 130, Health = 130,
         BaseDodge = 15,
 
-        Experience = 2700,
+        Experience = 5500,
         BasePenetration = ShieldPenetration.Light,
         CanFlee = true,
 
@@ -86133,7 +86133,7 @@
         MaxHealth = 125, Health = 125,
         BaseDodge = 15,
 
-        Experience = 2350,
+        Experience = 2450,
         BasePenetration = ShieldPenetration.Light,
         Movement = 2,
         
@@ -86234,7 +86234,7 @@
         MaxHealth = 500, Health = 500,
         BaseDodge = 18,
 
-        Experience = 9500,
+        Experience = 15000,
 
         Movement = 2,
 
@@ -86300,13 +86300,13 @@ PROTECTION P_DEATH 40
         MaxHealth = 120, Health = 120,
         BaseDodge = 16,
 
-        Experience = 2500,
+        Experience = 6000,
 
         CanWalk = false,
 
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(10) }, 
+            { new CreatureBasicAttack(11) }, 
         },
     };
 
@@ -86343,7 +86343,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 130, Health = 130,
         BaseDodge = 17,
 
-        Experience = 2700,
+        Experience = 3500,
 
         Movement = 2,
         CanFly = true,
@@ -86397,7 +86397,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 160, Health = 160,
         BaseDodge = 17,
 
-        Experience = 3200,
+        Experience = 6600,
 
         CanFlee = true,
         BasePenetration = ShieldPenetration.Medium,
@@ -86450,7 +86450,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 88, Health = 88,
         BaseDodge = 16,
 
-        Experience = 1450,
+        Experience = 4450,
         
         Attacks = new CreatureAttackCollection
         {
@@ -86491,7 +86491,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 110, Health = 110,
         BaseDodge = 18,
 
-        Experience = 1700,
+        Experience = 4400,
 
         Movement = 2,
 
@@ -86536,7 +86536,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 71, Health = 71,
         BaseDodge = 16,
 
-        Experience = 1100,
+        Experience = 4100,
 
         CanFlee = true,
 
@@ -86579,7 +86579,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 71, Health = 71,
         BaseDodge = 16,
 
-        Experience = 1025,
+        Experience = 4025,
 
         CanFlee = true,
 
@@ -86628,7 +86628,7 @@ PROTECTION P_DEATH 40
         MaxMana = 18, Mana = 18,
         BaseDodge = 17,
 
-        Experience = 3500,
+        Experience = 6500,
 
         CanFlee = true,
         CanSwim = true,
@@ -86686,7 +86686,7 @@ PROTECTION P_DEATH 40
         MaxMana = 21, Mana = 21,
         BaseDodge = 17,
 
-        Experience = 3300,
+        Experience = 6500,
 
         CanFlee = true,
         CanSwim = true,
@@ -86740,7 +86740,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 80, Health = 80,
         BaseDodge = 17,
 
-        Experience = 1450,
+        Experience = 4450,
 
         Movement = 2,
 
@@ -86790,7 +86790,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 200, Health = 200,
         BaseDodge = 18,
         BasePenetration = ShieldPenetration.Medium,
-        Experience = 5000,
+        Experience = 10000,
         
         CanFlee = true,
         CanSwim = true,
@@ -86837,7 +86837,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 200, Health = 200,
         BaseDodge = 18,
         BasePenetration = ShieldPenetration.Medium,
-        Experience = 5000,
+        Experience = 10000,
 
         CanFlee = true,
         CanSwim = true,
@@ -86882,7 +86882,7 @@ PROTECTION P_DEATH 40
         MaxMana = 5, Mana = 5,
         BaseDodge = 18,
 
-        Experience = 3475,
+        Experience = 5075,
         
         Attacks = new CreatureAttackCollection
         {
@@ -86928,7 +86928,7 @@ PROTECTION P_DEATH 40
         MaxMana = 11, Mana = 11,
         BaseDodge = 18,
 
-        Experience = 3875,
+        Experience = 5475,
 
         Attacks = new CreatureAttackCollection
         {
@@ -86936,7 +86936,7 @@ PROTECTION P_DEATH 40
         },
         Spells = new CreatureSpellCollection()
         {
-            { new CreatureSpell<CurseSpell>(9.5, cost: 3), 100 }
+            { new CreatureSpell<CurseSpell>(8.5, cost: 3), 100 }
         }
     };
     banshee.AddStatus(new NightVisionStatus(banshee));
@@ -86974,7 +86974,7 @@ PROTECTION P_DEATH 40
         MaxMana = 18, Mana = 18,
         BaseDodge = 19,
 
-        Experience = 3100,
+        Experience = 6300,
 
         Attacks = new CreatureAttackCollection
         {
@@ -87028,7 +87028,7 @@ PROTECTION P_DEATH 40
         MaxMana = 25, Mana = 25,
         BaseDodge = 19,
 
-        Experience = 3800,
+        Experience = 6500,
 
         CanFlee = true,
         CanSwim = true,
@@ -87088,7 +87088,7 @@ PROTECTION P_DEATH 40
         MaxMana = 18, Mana = 18,
         BaseDodge = 19,
 
-        Experience = 3850,
+        Experience = 6850,
 
         CanSwim = true,
 
@@ -87140,7 +87140,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 180, Health = 180,
         BaseDodge = 19,
 
-        Experience = 4500,
+        Experience = 6200,
 
         Movement = 2,
         VisibilityDistance = 1,
@@ -87189,7 +87189,7 @@ PROTECTION P_DEATH 40
         MaxMana = 18, Mana = 18,
         BaseDodge = 19,
 
-        Experience = 3000,
+        Experience = 8300,
 
         VisibilityDistance = 1,
 
@@ -87241,7 +87241,7 @@ PROTECTION P_DEATH 40
         MaxMana = 10, Mana = 10,
         BaseDodge = 18,
 
-        Experience = 2800,
+        Experience = 5500,
 
         CanFlee = true,
 
@@ -87290,7 +87290,7 @@ PROTECTION P_DEATH 40
         MaxMana = 21, Mana = 21,
         BaseDodge = 19,
 
-        Experience = 5575,
+        Experience = 9575,
 
         VisibilityDistance = 1,
 
@@ -87348,7 +87348,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 200, Health = 200,
         BaseDodge = 18,
 
-        Experience = 3200,
+        Experience = 6700,
 
         VisibilityDistance = 1,
 
@@ -87394,7 +87394,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 600, Health = 600, /* Based on 4 Death casts to kill at level 16 magic. */
         BaseDodge = 20,
         
-        Experience = 10000,
+        Experience = 25000,
         
         BasePenetration = ShieldPenetration.Heavy,
         
@@ -87451,7 +87451,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 600, Health = 600,
         BaseDodge = 20,
         
-        Experience = 10000,
+        Experience = 25000,
         
         BasePenetration = ShieldPenetration.Heavy,
         
@@ -87508,7 +87508,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 500, Health = 500,
         BaseDodge = 20,
 
-        Experience = 6000,
+        Experience = 10000,
 
         Attacks = new CreatureAttackCollection
         {
@@ -87549,13 +87549,13 @@ PROTECTION P_DEATH 40
         MaxHealth = 50, Health = 50,
         BaseDodge = 14,
 
-        Experience = 800,
+        Experience = 1800,
 
         CanFlee = true,
 
         Attacks = new CreatureAttackCollection
         {
-            new CreatureBasicAttack(8), 
+            new CreatureBasicAttack(9), 
         },
         
         HideDetection = 14,
@@ -87587,7 +87587,7 @@ PROTECTION P_DEATH 40
         MaxMana = 24, Mana = 24,
         BaseDodge = 16,
 
-        Experience = 3000,
+        Experience = 6000,
 
         VisibilityDistance = 0,
         
@@ -87741,7 +87741,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 350, Health = 350,
         BaseDodge = 16,
         BasePenetration = ShieldPenetration.Medium,     
-        Experience = 7500,
+        Experience = 18500,
         HideDetection = 30,
         MagicProtection = 25,
     };
@@ -87784,7 +87784,7 @@ PROTECTION P_DEATH 40
         MaxMana = 31, Mana = 31,
         BaseDodge = 18,
         BasePenetration = ShieldPenetration.Medium,     
-        Experience = 6300,
+        Experience = 17300,
         MagicProtection = 40,
     };
     
@@ -87832,7 +87832,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 2000, Health = 2000,
         BaseDodge = 25,
                 
-        Experience = 25500,
+        Experience = 45500,
         HideDetection = 31,
         BasePenetration = ShieldPenetration.Heavy,
         CanSwim = true,
@@ -87883,7 +87883,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 1000, Health = 1000,
         BaseDodge = 30,
         BasePenetration = ShieldPenetration.Heavy,
-        Experience = 22500,
+        Experience = 42500,
         HideDetection = 33,
         MagicProtection = 50,
     };
@@ -87928,7 +87928,7 @@ PROTECTION P_DEATH 40
         MaxHealth = 1500, Health = 1500,
         BaseDodge = 26,
         BasePenetration = ShieldPenetration.Medium,
-        Experience = 23250,
+        Experience = 43250,
         CanCharge = true,
         HideDetection = 28,
         Attacks = new CreatureAttackCollection
@@ -87975,7 +87975,7 @@ PROTECTION P_DEATH 40
         BaseDodge = 28,
         MagicProtection = 50,
         CanCharge = true,
-        Experience = 10025,
+        Experience = 25025,
         VisibilityDistance = 1,
         Attacks = new CreatureAttackCollection()
         {
