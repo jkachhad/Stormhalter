@@ -77684,7 +77684,7 @@ var mummy = new Mummy()
         MaxMana = 3, Mana = 3,
         BaseDodge = 13,
     
-        Experience = 2550,
+        Experience = 2750,
     
         Movement = 2,
         BasePenetration = ShieldPenetration.Light,
@@ -77696,7 +77696,7 @@ var mummy = new Mummy()
         { new CreatureAttack(10,     13, 22,      "The mummy scratches you with its claws"),  70 }, 
         { new CreatureAttack(11,     15, 25,     "You've been bitten by the mummy"), 30 },
         
-        wight.Spells =  new CreatureSpellCollection()
+        mummy.Spells =  new CreatureSpellCollection()
     {
         new CreatureSpell<CurseSpell>(
             skillLevel: 5, cost: 3, 
