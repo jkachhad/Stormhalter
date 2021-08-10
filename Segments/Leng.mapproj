@@ -75158,15 +75158,14 @@
     
     wizard.Spells = new CreatureSpellCollection
     {
-        //removed instantCast = true, here to double check if spells are by default instant now
         { new CreatureSpell<ConcussionSpell>(
-            skillLevel: 5, cost: 16, 
-            mantra: SpellHelper.GenerateMantra(),   50 },
+            skillLevel: 5, cost: 16, instantCast: false,
+            mantra: SpellHelper.GenerateMantra()),   50 },
         { new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 8, cost: 6, 
-            mantra: SpellHelper.GenerateMantra(),   25 },
+            skillLevel: 8, cost: 6, instantCast: false,
+            mantra: SpellHelper.GenerateMantra()),   25 },
         { new CreatureSpell<IceStormSpell>(
-            skillLevel: 8, cost: 6, 
+            skillLevel: 8, cost: 6, instantCast: false,
             mantra: SpellHelper.GenerateMantra()),   25 }
     };
     
@@ -75865,7 +75864,7 @@
         
     dragon.Spells = new CreatureSpellCollection(40.0)
     {
-        new CreatureSpell<DragonBreathFireSpell>(14), instantCast = true,
+        new CreatureSpell<DragonBreathFireSpell>(14),
     };
     
     dragon.AddGold(10000);
@@ -75928,7 +75927,7 @@
     
     vlad.Spells = new CreatureSpellCollection(25.0)
     {
-        new CreatureSpell<DeathSpell>(12), instantCast = true, 
+        new CreatureSpell<DeathSpell>(12) 
     };
     
     vlad.AddGold(25000);
@@ -76012,7 +76011,7 @@
         
     drake.Spells = new CreatureSpellCollection(20.0)
     {
-        new CreatureSpell<LightningBoltSpell>(13), instantCast = true,
+        new CreatureSpell<LightningBoltSpell>(13)
     };
     
     drake.AddGold(2000);
@@ -76350,7 +76349,7 @@
     };
     
     salamander.Spells = new CreatureSpellCollection(50.0);
-    salamander.Spells.Add(new CreatureSpell<FirewallSpell>(13), 100, TimeSpan.FromSeconds(15.0), instantCast = true);
+    salamander.Spells.Add(new CreatureSpell<FirewallSpell>(13), 100, TimeSpan.FromSeconds(15.0));
     
     salamander.AddGold(800);
     salamander.AddLoot(new LootPack(

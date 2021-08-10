@@ -104195,7 +104195,7 @@
     
     lizard.Spells = new CreatureSpellCollection(80.0)
     {
-        new CreatureSpell<IceStormSpell>(8), instantCast = true,
+        new CreatureSpell<IceStormSpell>(8),
     };
     
     lizard.AddGold(400);
@@ -104970,7 +104970,7 @@
     
     lizard.Spells = new CreatureSpellCollection(80.0)
     {
-        new CreatureSpell<IceStormSpell>(8), instantCast = true,
+        new CreatureSpell<IceStormSpell>(8),
     };
     
     lizard.AddGold(500);
@@ -105139,7 +105139,7 @@
         
     drake.Spells = new CreatureSpellCollection(20.0)
     {
-        new CreatureSpell<LightningBoltSpell>(10), instantCast = true,
+        new CreatureSpell<LightningBoltSpell>(10),
     };
     
     drake.AddGold(5000);
@@ -105225,7 +105225,7 @@
         
     dragon.Spells = new CreatureSpellCollection(35.0)
     {
-        new CreatureSpell<DragonBreathIceSpell>(21), instantCast = true,
+        new CreatureSpell<DragonBreathIceSpell>(21), 
     };
     //todo: add griffin figurine, protection from cold amulet (replaces f/i ammy)
     dragon.AddGold(6000);
@@ -105306,7 +105306,7 @@
     
     yeti.Spells = new CreatureSpellCollection(20.0)
     {
-        new CreatureSpell<DragonBreathIceSpell>(21), instantCast = true,
+        new CreatureSpell<DragonBreathIceSpell>(21),
     };
         
    yeti.AddGold(12000);

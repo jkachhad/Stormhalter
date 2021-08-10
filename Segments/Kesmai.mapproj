@@ -97847,7 +97847,7 @@ return orc;
     };
     
     salamander.Spells = new CreatureSpellCollection(50.0);
-    salamander.Spells.Add(new CreatureSpell<FirewallSpell>(6), 100, TimeSpan.FromSeconds(15.0), instantCast = true);
+    salamander.Spells.Add(new CreatureSpell<FirewallSpell>(6), 100, TimeSpan.FromSeconds(15.0));
     
     salamander.AddLoot(new LootPack(
         new LootPackEntry(true, dungeon3Bottles,    33), 
@@ -98268,7 +98268,7 @@ return orc;
     };
     
     salamander.Spells = new CreatureSpellCollection(50.0);
-    salamander.Spells.Add(new CreatureSpell<FirewallSpell>(8), 100, TimeSpan.FromSeconds(15.0), instantCast = true);
+    salamander.Spells.Add(new CreatureSpell<FirewallSpell>(8), 100, TimeSpan.FromSeconds(15.0));
     salamander.AddGold(500);
     salamander.AddLoot(new LootPack(
         new LootPackEntry(true, dungeon4Bottles,    33),
@@ -99520,7 +99520,7 @@ return orc;
         
     dragon.Spells = new CreatureSpellCollection(40.0)
     {
-        new CreatureSpell<DragonBreathFireSpell>(9), instantCast = true,
+        new CreatureSpell<DragonBreathFireSpell>(9),
     };
     
     //todo: add the +4 shining silver longsword in her loot chance (the purple one from OG). Add the binding "Agate gem" assuming the agate I added isn't it

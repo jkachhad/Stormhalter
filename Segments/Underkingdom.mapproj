@@ -96446,7 +96446,7 @@
         
     drake.Spells = new CreatureSpellCollection(20.0)
     {
-        new CreatureSpell<LightningBoltSpell>(9), instantCast = true,
+        new CreatureSpell<LightningBoltSpell>(9),
     };
     
     drake.AddGold(2000);
@@ -96586,14 +96586,13 @@
         BaseDodge = 19,
         
         Alignment = Alignment.Chaotic,
-        HideDetection = 28,
+        HideDetection = 30,
         Experience = 56000,
         
         Immunity = CreatureImmunity.Magic,
         Weakness = CreatureWeakness.IceSpearSpell,
         
         CanCharge = true,
-        HideDetection = 30,
         
         BasePenetration = ShieldPenetration.VeryHeavy,
     
@@ -96773,7 +96772,7 @@
     
     overlord.Spells = new CreatureSpellCollection(35.0)
     {
-        new CreatureSpell<IceSpearSpell>(10), instantCast = true,
+        new CreatureSpell<IceSpearSpell>(10),
     };
     
     overlord.AddGold(3000);
@@ -98362,7 +98361,7 @@
     {
         new CreatureSpell<WhirlwindSpell>(
             skillLevel: 11,
-            mantra: SpellHelper.GenerateMantra(), instantCast = true)
+            mantra: SpellHelper.GenerateMantra())
     };
     wraith.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new HummingbirdSword(),     100)
