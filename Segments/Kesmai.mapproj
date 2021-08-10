@@ -99547,12 +99547,14 @@ return orc;
     
         if (quest != null && quest.InProgress(player))
         {
+            var backpack = source.Backpack;
+
+            if (backpack != null)
+                backpack.AddItem(new Agate(player));
+			
             if (quest.GetStage(player) != KnightsPurposeStage.Dragon)
                 return;
-    
-            if (source is CreatureEntity dragon)
-                dragon.Backpack.AddItem(new Agate(player));
-            
+
             quest.SetStage(player, KnightsPurposeStage.Harriette);
         }
     }
