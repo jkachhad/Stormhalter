@@ -99635,10 +99635,10 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    16),
         new LootPackEntry(true, dungeon3Treasure,   2.5),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, dungeon3Potions,    0.2)
     ));
     
-    return skeleton;();
+    return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -99676,7 +99676,7 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    25),
         new LootPackEntry(true, dungeon3Treasure,   2.5),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, dungeon3Potions,    0.2)
     ));
     
     return skeleton;;
@@ -99709,7 +99709,7 @@ return orc;
     mummy.Attacks = new CreatureAttackCollection
     {
         { new CreatureAttack(7,     6, 12,      "The mummy scratches you with its claws"),  70 }, 
-        { new CreatureAttack(8,     10, 18,     "You've been bitten by the mummy", 30 },
+        { new CreatureAttack(8,     10, 18,     "You've been bitten by the mummy"), 30 },
     };
     
     mummy.Blocks = new CreatureBlockCollection
