@@ -85077,6 +85077,11 @@
           <destroyed>39</destroyed>
           <ruins>44</ruins>
         </component>
+        <component type="WallComponent">
+          <wall>26</wall>
+          <destroyed>39</destroyed>
+          <ruins>44</ruins>
+        </component>
       </tile>
       <tile x="23" y="33">
         <component type="FloorComponent">
@@ -85281,8 +85286,8 @@
         </component>
       </tile>
       <tile x="13" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>32</wall>
@@ -85291,8 +85296,8 @@
         </component>
       </tile>
       <tile x="14" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
@@ -85301,8 +85306,8 @@
         </component>
       </tile>
       <tile x="15" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
@@ -85311,8 +85316,8 @@
         </component>
       </tile>
       <tile x="16" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
@@ -85321,8 +85326,8 @@
         </component>
       </tile>
       <tile x="17" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
@@ -85331,8 +85336,8 @@
         </component>
       </tile>
       <tile x="18" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
@@ -85341,8 +85346,8 @@
         </component>
       </tile>
       <tile x="19" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
@@ -85351,53 +85356,48 @@
         </component>
       </tile>
       <tile x="20" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="22" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
         </component>
         <component type="WallComponent">
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="WallComponent">
-          <wall>25</wall>
-          <destroyed>38</destroyed>
-          <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="23" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="34">
@@ -85657,24 +85657,32 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="35">
-        <component type="Darkness" />
+        <component type="FloorComponent">
+          <ground>6</ground>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="22" y="35">
-        <component type="Darkness" />
+        <component type="FloorComponent">
+          <ground>6</ground>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="23" y="35">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="35">
@@ -85910,14 +85918,23 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="36">
-        <component type="Darkness" />
+        <component type="FloorComponent">
+          <ground>6</ground>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="22" y="36">
-        <component type="Darkness" />
+        <component type="FloorComponent">
+          <ground>6</ground>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="23" y="36">
         <component type="FloorComponent">
@@ -85927,7 +85944,6 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="36">
@@ -86134,7 +86150,6 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="37">
@@ -86145,11 +86160,15 @@
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="22" y="37">
-        <component type="Darkness" />
+        <component type="FloorComponent">
+          <ground>6</ground>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
         <component type="DoorComponent">
           <openId>74</openId>
           <closedId>62</closedId>
@@ -86166,13 +86185,11 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="37">
@@ -86387,19 +86404,44 @@
         </component>
       </tile>
       <tile x="19" y="38">
-        <component type="Darkness" />
+        <component type="FloorComponent">
+          <ground>6</ground>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="20" y="38">
-        <component type="Darkness" />
+        <component type="FloorComponent">
+          <ground>6</ground>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="21" y="38">
-        <component type="Darkness" />
+        <component type="FloorComponent">
+          <ground>6</ground>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="22" y="38">
-        <component type="Darkness" />
+        <component type="FloorComponent">
+          <ground>6</ground>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="23" y="38">
-        <component type="Darkness" />
+        <component type="FloorComponent">
+          <ground>6</ground>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="24" y="38">
         <component type="FloorComponent">
@@ -96005,6 +96047,11 @@
         </component>
       </tile>
     </region>
+    <region>
+      <id>5</id>
+      <name>Region 5</name>
+      <height>0</height>
+    </region>
   </regions>
   <locations>
     <location name="Entrance" x="42" y="8" region="1" />
@@ -96297,7 +96344,7 @@
     
     wyvern.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(6, "scales"),
         new CreatureBlock(3, "a claw"),
         new CreatureBlock(1, "a tail")
     };
@@ -96980,7 +97027,7 @@
         MaxHealth = 22, Health = 22,
         BaseDodge = 11,
                 
-        Experience = 190,
+        Experience = 225,
     
         CanFlee = true,
                 
@@ -97023,7 +97070,7 @@
         MaxHealth = 20, Health = 20,
         BaseDodge = 11,
                 
-        Experience = 190,
+        Experience = 225,
         
         CanFlee = true,
         
@@ -97064,7 +97111,7 @@
         MaxHealth = 21, Health = 21,
         BaseDodge = 11,
                 
-        Experience = 170,
+        Experience = 210,
                 
         Movement = 2,
                 
@@ -97109,7 +97156,7 @@
         MaxHealth = 21, Health = 21,
         BaseDodge = 11,
                 
-        Experience = 170,
+        Experience = 210,
         
         CanFlee = true,
                 
@@ -97150,7 +97197,7 @@
         MaxHealth = 17, Health = 17,
         BaseDodge = 11,
                 
-        Experience = 120,
+        Experience = 170,
                 
         Movement = 2,
                 
@@ -97193,7 +97240,7 @@
         MaxHealth = 23, Health = 23,
         BaseDodge = 11,
                 
-        Experience = 300,
+        Experience = 400,
                 
         Movement = 2,
                 
@@ -97236,7 +97283,7 @@
         MaxHealth = 22, Health = 22,
         BaseDodge = 12,
                 
-        Experience = 190,
+        Experience = 235,
     
         Movement = 2,
     };
@@ -97250,7 +97297,7 @@
     };
     wyvern.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(6, "scales"),
         new CreatureBlock(3, "a claw"),
         new CreatureBlock(1, "a tail")
     };
@@ -97283,7 +97330,7 @@
         MaxHealth = 21, Health = 21,
         BaseDodge = 11,
     
-        Experience = 180,
+        Experience = 230,
     
         MaxMana = 8, Mana = 8,
             
@@ -97333,7 +97380,7 @@
         MaxHealth = 21, Health = 21,
         BaseDodge = 11,
     
-        Experience = 170,
+        Experience = 210,
     
         MaxMana = 13, Mana = 13,
             
@@ -97442,7 +97489,7 @@ return orc;
     
     spider.Blocks = new CreatureBlockCollection
     {
-        { new CreatureBlock(1, "the armor") }, 
+        { new CreatureBlock(1, "a hairy carapace") }, 
     };
     
     spider.AddGold(250);
@@ -97467,7 +97514,7 @@ return orc;
         MaxHealth = 60, Health = 60,
         BaseDodge = 12,
                 
-        Experience = 725,
+        Experience = 1000,
                 
         Movement = 2,
                 
@@ -97511,7 +97558,7 @@ return orc;
         MaxHealth = 42, Health = 42,
         BaseDodge = 12,
                 
-        Experience = 600,
+        Experience = 850,
                 
         Movement = 2,
     
@@ -97553,7 +97600,7 @@ return orc;
         MaxHealth = 35, Health = 35,
         BaseDodge = 12,
                 
-        Experience = 425,
+        Experience = 575,
         
         CanFlee = true,
                 
@@ -97597,7 +97644,7 @@ return orc;
         MaxHealth = 35, Health = 35,
         BaseDodge = 12,
                 
-        Experience = 425,
+        Experience = 575,
         
         CanFlee = true,
                 
@@ -97641,7 +97688,7 @@ return orc;
         MaxHealth = 36, Health = 36,
         BaseDodge = 12,
                 
-        Experience = 525,
+        Experience = 750,
     
         Attacks = new CreatureAttackCollection()
         {
@@ -97683,7 +97730,7 @@ return orc;
         MaxHealth = 36, Health = 36,
         BaseDodge = 12,
                 
-        Experience = 525,
+        Experience = 750,
         
         Attacks = new CreatureAttackCollection()
         {
@@ -97724,7 +97771,7 @@ return orc;
         MaxMana = 12, Mana = 12,
         BaseDodge = 12,
     
-        Experience = 425,
+        Experience = 555,
         
         CanFlee = true,
     };
@@ -97776,7 +97823,7 @@ return orc;
         MaxHealth = 82, Health = 82,
         BaseDodge = 12,
                 
-        Experience = 1525,
+        Experience = 1825,
                 
         Movement = 2,
     };
@@ -97826,7 +97873,7 @@ return orc;
         MaxHealth = 40, Health = 40,
         BaseDodge = 12,
     
-        Experience = 1000,
+        Experience = 1250,
     
         Movement = 2,
         
@@ -97879,7 +97926,7 @@ return orc;
         MaxMana = 13, Mana = 13,
         BaseDodge = 12,
     
-        Experience = 850,
+        Experience = 1150,
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
         
@@ -97929,7 +97976,7 @@ return orc;
         MaxMana = 8, Mana = 8,
         BaseDodge = 12,
     
-        Experience = 725,
+        Experience = 1000,
         
         CanFlee = true,
     };
@@ -97978,7 +98025,7 @@ return orc;
         MaxHealth = 47, Health = 47,
         BaseDodge = 13,
     
-        Experience = 600,
+        Experience = 850,
     
         CanFlee = true,
     
@@ -98022,7 +98069,7 @@ return orc;
         MaxHealth = 47, Health = 47,
         BaseDodge = 13,
     
-        Experience = 600,
+        Experience = 850,
     
         CanFlee = true,
     
@@ -98119,7 +98166,7 @@ return orc;
         MaxHealth = 83, Health = 83,
         BaseDodge = 13,
     
-        Experience = 850,
+        Experience = 1200,
     
         Attacks = new CreatureAttackCollection
         {
@@ -98159,7 +98206,7 @@ return orc;
         MaxHealth = 59, Health = 59,
         BaseDodge = 13,
     
-        Experience = 750,
+        Experience = 950,
         
         Attacks = new CreatureAttackCollection
         {
@@ -98199,7 +98246,7 @@ return orc;
         MaxHealth = 107, Health = 107,
         BaseDodge = 13,
     
-        Experience = 2000,
+        Experience = 2250,
     };
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
     
@@ -98247,7 +98294,7 @@ return orc;
         MaxHealth = 65, Health = 65,
         BaseDodge = 13,
         
-        Experience = 1125,
+        Experience = 1350,
         
         Movement = 2,
         
@@ -98352,7 +98399,7 @@ return orc;
         MaxMana = 17, Mana = 17,
         BaseDodge = 14,
     
-        Experience = 1800,
+        Experience = 2000,
     
         VisibilityDistance = 1,
     };
@@ -98421,7 +98468,7 @@ return orc;
     
     ghoul.Blocks = new CreatureBlockCollection
     {
-        { new CreatureBlock(6, "the armor") }, 
+        { new CreatureBlock(6, "decaying flesh") }, 
         { new CreatureBlock(4, "a claw") }, 
     };
     
@@ -98751,7 +98798,7 @@ return orc;
 
     boar.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(6, "leathery hide"),
         new CreatureBlock(4, "a cloven hoof"),
     };
     
@@ -98797,7 +98844,7 @@ return orc;
         
     wolf.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the thick hide"),
+        new CreatureBlock(6, "thick hide"),
         new CreatureBlock(3, "a paw"),
     };
         
@@ -98885,7 +98932,7 @@ return orc;
         
     bear.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the tough hide"),
+        new CreatureBlock(6, "tough hide"),
         new CreatureBlock(4, "a claw"),
     };
         
@@ -99162,7 +99209,7 @@ return orc;
     
     griffin.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(6, "a large wing"),
         new CreatureBlock(4, "a talon"),
         new CreatureBlock(3, "a beak"),
     };
@@ -99320,7 +99367,7 @@ return orc;
         MaxHealth = 250, Health = 250,
         BaseDodge = 14,
     
-        Experience = 3000,
+        Experience = 3100,
     
         VisibilityDistance = 0,
             
@@ -99339,7 +99386,7 @@ return orc;
         
     ghoul.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the armor"), 
+        new CreatureBlock(6, "decaying flesh"), 
         new CreatureBlock(4, "a claw"), 
     };
     
@@ -99373,7 +99420,7 @@ return orc;
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
     
-        Experience = 1500,
+        Experience = 1700,
         
         FireProtection = 100,
         IceProtection = 80,
@@ -99427,7 +99474,7 @@ return orc;
         MaxHealth = 25, Health = 25,
         BaseDodge = 13,
     
-        Experience = 180,
+        Experience = 225,
     
         Movement = 1,
         
@@ -99477,7 +99524,7 @@ return orc;
         MaxHealth = 500, Health = 500,
         BaseDodge = 20,
     
-        Experience = 11000,
+        Experience = 13000,
         
         CanFly = true,
         CanCharge = true,
@@ -99556,6 +99603,136 @@ return orc;
             quest.SetStage(player, KnightsPurposeStage.Harriette);
         }
     }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="ydnacSkelWar">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var skeleton = new Skeleton()
+    {
+        MaxHealth = 40, Health = 40,
+        BaseDodge = 10,
+
+        Experience = 525,
+
+        Movement = 2,
+                
+        Attacks = new CreatureAttackCollection()
+        {
+            new CreatureBasicAttack(6)
+        },
+    };
+    
+    skeleton.Wield(new Rapier());
+    
+    skeleton.AddGold(260);
+    skeleton.AddLoot(new LootPack(
+        new LootPackEntry(true, dungeon3Gems,       33,     gemsPriceMutator),
+        new LootPackEntry(true, dungeon3Bottles,    16),
+        new LootPackEntry(true, dungeon3Treasure,   2.5),
+        new LootPackEntry(true, dungeon3Rings,      0.6),
+        new LootPackEntry(true, dungeon3Potions,    0.2)
+    ));
+    
+    return skeleton;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="ydnacSkelArc">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var skeleton = new Skeleton()
+    {
+        MaxHealth = 35, Health = 35,
+        BaseDodge = 10,
+
+        Experience = 485,
+                
+        Movement = 2,
+
+        Attacks = new CreatureAttackCollection()
+        {
+            new CreatureBasicAttack(6)
+        }
+    };
+    
+    skeleton.Wield(new Shortbow());
+            
+    skeleton.AddGold(260);
+    skeleton.AddLoot(new LootPack(
+        new LootPackEntry(true, dungeon3Gems,       33,     gemsPriceMutator),
+        new LootPackEntry(true, dungeon3Bottles,    25),
+        new LootPackEntry(true, dungeon3Treasure,   2.5),
+        new LootPackEntry(true, dungeon3Rings,      0.6),
+        new LootPackEntry(true, dungeon3Potions,    0.2)
+    ));
+    
+    return skeleton;;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="ydnacMummy">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var mummy = new Mummy()
+    {
+        MaxHealth = 90, Health = 90,
+        BaseDodge = 13,
+    
+        Experience = 2500,
+    
+        Movement = 2,
+        BasePenetration = ShieldPenetration.Light,
+        VisibilityDistance = 1,
+    };
+    
+    mummy.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(7,     6, 12,      "The mummy scratches you with its claws"),  70 }, 
+        { new CreatureAttack(8,     10, 18,     "You've been bitten by the mummy"), 30 },
+    };
+    
+    mummy.Blocks = new CreatureBlockCollection
+    {
+        { new CreatureBlock(6, "the armor") }, 
+        { new CreatureBlock(4, "a decaying limb") }, 
+    };
+    
+    mummy.AddGold(350);
+    mummy.AddLoot(new LootPack(
+        new LootPackEntry(true, dungeon4Gems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, dungeon4Bottles,    20),
+        new LootPackEntry(true, dungeon4Treasure,   0.63),
+        new LootPackEntry(true, dungeon4Rings,      0.63),
+        new LootPackEntry(true, dungeon3Potions,    0.2)
+    ));
+    
+    return mummy;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -100537,6 +100714,26 @@ return orc;
       <entry entity="enragedTroll" size="1" minimum="1" maximum="2" />
       <location x="24" y="33" region="12" />
     </spawn>
+    <spawn type="LocationSpawner" name="ydnacMummy">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="ydnacMummy" size="1" minimum="1" maximum="2" />
+      <location x="21" y="12" region="4" />
+    </spawn>
     <spawn type="RegionSpawner" name="Kesmai -1">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>300</maximumDelay>
@@ -100900,6 +101097,62 @@ return orc;
       <entry entity="dungeon4CryptPiranha" size="1" minimum="1" maximum="3" />
       <bounds region="14">
         <inclusion left="12" top="6" right="16" bottom="6" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Ydnac -1">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>12</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="ydnacSkelWar" size="3" minimum="1" maximum="3" />
+      <entry entity="ydnacSkelArc" size="2" minimum="1" maximum="3" />
+      <entry entity="dungeon3Wraith" size="1" minimum="1" maximum="2" />
+      <entry entity="dungeon3Wight" size="1" minimum="1" maximum="2" />
+      <entry entity="dungeon4Spectre" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon4Thaum" size="1" minimum="1" maximum="1" />
+      <bounds region="4">
+        <inclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Ydnac Secret">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <maximum>4</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfaceWraith" size="1" minimum="1" maximum="1" />
+      <entry entity="surfaceWight" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon4MeleeFighter" size="1" minimum="2" maximum="2" />
+      <entry entity="dungeon4RangedFighter" size="1" minimum="1" maximum="1" />
+      <bounds region="3">
+        <inclusion left="0" top="0" right="0" bottom="0" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
