@@ -99895,7 +99895,11 @@ return orc;
             wares.Add(new StockEntry("fire and ice protection ring", () => new FireIceProtectionRing(), (int)(800 * merchantUpsell), 1, onRarePurchase));
         if (Utility.RandomDouble() <= 0.02)  /* 2% chance to spawn. */
             wares.Add(new StockEntry("stun and death protection bracelet", () => new StunDeathProtectionBracelet(), (int)(3000 * merchantUpsell), 1, onRarePurchase));
-        
+
+        /* The vendor won't sell everything though, at least not this time around. */
+        foreach (var stock in wares.Random(6))
+            shopkeeper.Stock(stock);
+            
         // Restock only some items.
         // TODO: Can we move this logic to the template?
         foreach (StockEntry stock in wares.Random(Utility.RandomBetween(3, 5)))
@@ -99946,6 +99950,11 @@ return orc;
         
         if (Utility.RandomDouble() <= 0.20)  /* 20% chance to spawn */
             wares.Add(new StockEntry("steel plated gauntlets", () => new SteelGauntlets(), 4000, 1, onRarePurchase));
+        
+        /* The vendor won't sell everything though, at least not this time around. */
+        foreach (var stock in wares.Random(6))
+            shopkeeper.Stock(stock);        
+        
         for (var i = Utility.Random(1, 3); i > 0; i--)
             shopkeeper.Restock();
     }
