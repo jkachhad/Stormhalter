@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.70.0.0">
+<segment name="Kesmai" version="0.71.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -99739,6 +99739,56 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="dungeon2PirhanaBL">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var piranhaBL = new Piranha()
+    {
+        MaxHealth = 66, Health = 66,
+        BaseDodge = 14,
+    
+        Experience = 725,
+    
+        Movement = 1,
+        
+        VisibilityDistance = 0,
+        RangePerception = 0,
+        
+        BasePenetration = ShieldPenetration.Medium,
+    
+        FireProtection = 100,
+        IceProtection = 100,
+        // TODO: WHIRLWIND PROTECTION 100
+        // TODO: POISON PROTECTION 100
+    };    
+    piranhaBL.AddStatus(new BreatheWaterStatus(piranha));
+    
+    piranhaBL.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(10,     5, 9,   "The piranha swarm upon you"),      70 }, 
+        { new CreatureAttack(13,     7, 14,  "The piranha bite you"),            30 }, 
+    };
+        
+    piranhaBL.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(7, "the armor"), 
+        new CreatureBlock(5, "a tail"), 
+    };
+    
+    piranhaBL.AddGold(200);
+        
+    return piranhaBL;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="Elder.Troll">
@@ -101155,6 +101205,31 @@ return orc;
       <entry entity="dungeon4RangedFighter" size="1" minimum="1" maximum="1" />
       <bounds region="3">
         <inclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai -2 Bloodlands Portal">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>720</maximumDelay>
+      <maximum>12</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="dungeon2PirhanaBL" size="2" minimum="6" maximum="12" />
+      <bounds region="12">
+        <inclusion left="17" top="25" right="24" bottom="26" />
+        <inclusion left="25" top="25" right="33" bottom="31" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
