@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.70.0.0">
+<segment name="Leng" version="0.71.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -74751,7 +74751,7 @@
     </subregion>
   </subregions>
   <entities>
-    <entity name="MausSkeleton">
+    <entity name="mausSkeleton">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -74776,8 +74776,9 @@
     
     
     skeleton.AddLoot(new LootPack(
-        new LootPackEntry(true, MausGems, 33, gemsPriceMutator),
-        new LootPackEntry(true, MausBottles, 16)
+        new LootPackEntry(true, MausGems, 25.0, gemsPriceMutator),
+        new LootPackEntry(true, MausBottles, 33.0)
+        new LootPackEntry(true, MausTreasure,  0.63)        
     ));
     
     return skeleton;
@@ -75117,8 +75118,8 @@
         
     wraith.AddGold(200);
     wraith.AddLoot(new LootPack(
-        new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, MausBottles,    20),
+        new LootPackEntry(true, MausGems,       25.0,     gemsPriceMutator), 
+        new LootPackEntry(true, MausBottles,    33.0),
         new LootPackEntry(true, MausTreasure,  0.63)
     ));
     
@@ -75177,8 +75178,8 @@
     
     wizard.AddGold(450);
     wizard.AddLoot(new LootPack(
-        new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, MausBottles,    20),
+        new LootPackEntry(true, MausGems,       25.0,     gemsPriceMutator), 
+        new LootPackEntry(true, MausBottles,    33.0),
         new LootPackEntry(true, MausTreasure,  0.63)
     ));
     
@@ -75233,8 +75234,8 @@
     
     wizard.AddGold(550);
     wizard.AddLoot(new LootPack(
-        new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, MausBottles,    20),
+        new LootPackEntry(true, MausGems,       25.0,     gemsPriceMutator), 
+        new LootPackEntry(true, MausBottles,    33.0),
         new LootPackEntry(true, MausTreasure,  0.63)
     ));
     
@@ -75284,8 +75285,8 @@
     
     spectre.AddGold(350);
     spectre.AddLoot(new LootPack(
-        new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, MausBottles,    20),
+        new LootPackEntry(true, MausGems,       25.0,     gemsPriceMutator), 
+        new LootPackEntry(true, MausBottles,    33.0),
         new LootPackEntry(true, MausTreasure,  0.63)
     ));
     
@@ -75322,8 +75323,8 @@
     
     hobgoblin.AddGold(300);
     hobgoblin.AddLoot(new LootPack(
-        new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, MausBottles,    20),
+        new LootPackEntry(true, MausGems,       25.0,     gemsPriceMutator), 
+        new LootPackEntry(true, MausBottles,    33.0),
         new LootPackEntry(true, MausTreasure,  0.63)
     ));
     
@@ -75372,8 +75373,8 @@
     
     hobgoblin.AddGold(350);
     hobgoblin.AddLoot(new LootPack(
-        new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, MausBottles,    20),
+        new LootPackEntry(true, MausGems,       25.0,     gemsPriceMutator), 
+        new LootPackEntry(true, MausBottles,    33.0),
         new LootPackEntry(true, MausTreasure,  0.63)
     ));
     
@@ -75418,9 +75419,9 @@
     
     fighter.AddGold(250);
     fighter.AddLoot(new LootPack(
-        new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, MausBottles,    20)
-        
+        new LootPackEntry(true, MausGems,       25.0,     gemsPriceMutator), 
+        new LootPackEntry(true, MausBottles,    33.0)
+        new LootPackEntry(true, MausTreasure,  0.63)        
     ));
     
     return fighter;
@@ -77690,7 +77691,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="MausSkeleton" size="3" minimum="3" maximum="3" />
+      <entry entity="mausSkeleton" size="3" minimum="3" maximum="3" />
       <entry entity="mausSpectre" size="1" minimum="1" maximum="1" />
       <entry entity="mausWraith" size="1" minimum="2" maximum="2" />
       <bounds region="10">
@@ -77716,7 +77717,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="MausSkeleton" size="3" minimum="2" maximum="8" />
+      <entry entity="mausSkeleton" size="3" minimum="2" maximum="8" />
       <entry entity="mausWraith" size="1" minimum="2" maximum="3" />
       <entry entity="mausWretch" size="3" minimum="2" maximum="8" />
       <entry entity="raven" size="1" minimum="2" maximum="7" />
@@ -77778,7 +77779,7 @@
       <entry entity="mausWretch" size="3" minimum="2" maximum="12" />
       <entry entity="mausHobgoblin" size="3" minimum="2" maximum="12" />
       <entry entity="mausHobgobMage" size="1" minimum="2" maximum="5" />
-      <entry entity="MausSkeleton" size="3" minimum="2" maximum="12" />
+      <entry entity="mausSkeleton" size="3" minimum="2" maximum="12" />
       <entry entity="mausWraith" size="1" minimum="2" maximum="5" />
       <bounds region="10">
         <inclusion left="10" top="31" right="49" bottom="40" />
@@ -77827,7 +77828,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="MausSkeleton" size="3" minimum="3" maximum="3" />
+      <entry entity="mausSkeleton" size="3" minimum="3" maximum="3" />
       <entry entity="mausSpectre" size="1" minimum="2" maximum="2" />
       <entry entity="mausWraith" size="1" minimum="2" maximum="2" />
       <entry entity="mausHobgoblin" size="3" minimum="2" maximum="3" />
@@ -78195,7 +78196,7 @@
       <entry entity="mausWraith" size="1" minimum="2" maximum="2" />
       <entry entity="mausHobgoblin" size="3" minimum="3" maximum="3" />
       <entry entity="cliffOrcArcher" size="3" minimum="3" maximum="3" />
-      <entry entity="MausSkeleton" size="3" minimum="3" maximum="3" />
+      <entry entity="mausSkeleton" size="3" minimum="3" maximum="3" />
       <entry entity="mausHobgobMage" size="2" minimum="2" maximum="2" />
       <bounds region="100">
         <inclusion left="17" top="1" right="21" bottom="6" />
@@ -78524,7 +78525,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new LargeEmerald(600u);
+	return new LargeEmerald(1400u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -78533,7 +78534,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallAmethyst(500u);
+	return new SmallAmethyst(800u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -78542,7 +78543,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Diamond(1500u);
+	return new Diamond(2200u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -78563,6 +78564,15 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new StaminaPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new NaphthaPotion();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
