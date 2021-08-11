@@ -85363,9 +85363,16 @@
           <ground>1</ground>
         </component>
         <component type="WallComponent">
+          <wall>32</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="34">
@@ -85376,6 +85383,7 @@
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="22" y="34">
@@ -85383,14 +85391,16 @@
           <ground>1</ground>
         </component>
         <component type="WallComponent">
-          <wall>25</wall>
-          <destroyed>38</destroyed>
-          <ruins>44</ruins>
-        </component>
-        <component type="WallComponent">
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="23" y="34">
@@ -85398,9 +85408,22 @@
           <ground>1</ground>
         </component>
         <component type="WallComponent">
+          <wall>32</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>32</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="34">
@@ -85660,6 +85683,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="35">
@@ -85686,6 +85710,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="35">
@@ -85921,6 +85946,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="36">
@@ -85947,6 +85973,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="36">
@@ -86153,6 +86180,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="37">
@@ -86163,6 +86191,7 @@
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="22" y="37">
@@ -86188,11 +86217,13 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="37">
@@ -97526,7 +97557,7 @@ return orc;
         MaxHealth = 60, Health = 60,
         BaseDodge = 12,
                 
-        Experience = 1000,
+        Experience = 900,
                 
         Movement = 2,
                 
@@ -97570,7 +97601,7 @@ return orc;
         MaxHealth = 42, Health = 42,
         BaseDodge = 12,
                 
-        Experience = 850,
+        Experience = 750,
                 
         Movement = 2,
     
@@ -97700,7 +97731,7 @@ return orc;
         MaxHealth = 36, Health = 36,
         BaseDodge = 12,
                 
-        Experience = 750,
+        Experience = 600,
     
         Attacks = new CreatureAttackCollection()
         {
@@ -97742,7 +97773,7 @@ return orc;
         MaxHealth = 36, Health = 36,
         BaseDodge = 12,
                 
-        Experience = 750,
+        Experience = 600,
         
         Attacks = new CreatureAttackCollection()
         {
@@ -97885,7 +97916,7 @@ return orc;
         MaxHealth = 40, Health = 40,
         BaseDodge = 12,
     
-        Experience = 1250,
+        Experience = 1050,
     
         Movement = 2,
         
@@ -97938,7 +97969,7 @@ return orc;
         MaxMana = 13, Mana = 13,
         BaseDodge = 12,
     
-        Experience = 1150,
+        Experience = 1000,
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
         
@@ -97988,7 +98019,7 @@ return orc;
         MaxMana = 8, Mana = 8,
         BaseDodge = 12,
     
-        Experience = 1000,
+        Experience = 800,
         
         CanFlee = true,
     };
