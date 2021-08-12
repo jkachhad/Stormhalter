@@ -88040,6 +88040,7 @@
        
         BaseDodge = 11,
         MaxHealth = 830, Health = 830,
+        MaxMana = 200, Mana = 200,
         
         Experience = 50,
     };
@@ -88049,6 +88050,12 @@
         new CreatureBasicAttack(40),
     };
     
+    peacekeeper.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<IceSpearSpell>(
+            skillLevel: 14, cost: 25, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
     return peacekeeper;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -88074,12 +88081,14 @@
         CanSwim = true,
         Experience = 1700,
         Alignment = Alignment.Lawful,
+ 
     };
     
     raven.Home = new RectangleBounds()
     {
         new Rectangle2D(23, 21, 13, 21, 1)
     };
+    
     
     raven.Attacks = new CreatureAttackCollection
     {
@@ -88429,7 +88438,7 @@ spawn.Name = "The Reeve";
         };
         
         sheriff.Wield(new Crossbow());
-        sheriff.Equip(new LeatherArmor());
+        sheriff.Equip(new DragonScaleArmor());
     }
 ]]></block>
         <block><![CDATA[]]></block>
