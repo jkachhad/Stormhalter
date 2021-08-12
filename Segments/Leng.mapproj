@@ -75750,23 +75750,24 @@
     };
     
     shidosha.AddStatus(new NightVisionStatus(shidosha));
+    shidosha.AddStatus(new BreatheWaterStatus(shidosha));
     
     shidosha.CombatantChangeInterval = TimeSpan.FromSeconds(4.0);
     
     shidosha.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(20,      10, 30,      "Shidosha hits you with a flurry of fists.",
+            new CreatureAttack(23,      10, 30,      "Shidosha hits you with a flurry of fists.",
                                                         new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(20,      30, 60,     "Shidosha slams his fist into your chest.",
+            new CreatureAttack(25,      30, 60,     "Shidosha slams his fist into your chest.",
                                                         new AttackProneComponent(25), 
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(20,      40, 60,     "Shidosha knocks you back with a forceful kick.",
+            new CreatureAttack(28,      40, 60,     "Shidosha knocks you back with a forceful kick.",
                                                         new AttackProneComponent(100), 
                                                         new AttackStunComponent(15)),               20
         },
@@ -75818,23 +75819,24 @@
     };
     
     ninja.AddStatus(new NightVisionStatus(ninja));
+    ninja.AddStatus(new BreatheWaterStatus(ninja));
     
     ninja.CombatantChangeInterval = TimeSpan.FromSeconds(4.0);
     
     ninja.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(14,      10, 30,      "The ninja hits you with a flurry of fists.",
+            new CreatureAttack(20,      10, 30,      "The ninja hits you with a flurry of fists.",
                                                         new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(15,      25, 35,     "The ninja slams his fist into your chest.",
+            new CreatureAttack(21,      25, 35,     "The ninja slams his fist into your chest.",
                                                         new AttackProneComponent(25), 
                                                         new AttackStunComponent(5)),               40
         },
         {
-            new CreatureAttack(16,      30, 45,     "The ninja knocks you back with a forceful kick.",
+            new CreatureAttack(22,      30, 45,     "The ninja knocks you back with a forceful kick.",
                                                         new AttackProneComponent(100), 
                                                         new AttackStunComponent(5)),               20
         },
@@ -77691,16 +77693,7 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    spawn.Name = "puck";
-    spawn.Body = 49; spawn.IsFemale = false;
-    
-    if (spawn is TrainerEntity puck)
-    {
-        foreach (var skill in Skill.Weapons)
-            puck.SetTraining(skill, 0, 4);
 
-        puck.SetTraining(Skill.Hand, 8, 14);
-    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -77711,7 +77704,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="lengweaponTrainer" size="1" minimum="1" maximum="1" />
+      <entry entity="lengPuck" size="1" minimum="1" maximum="1" />
       <location x="5" y="4" region="4" />
     </spawn>
     <spawn type="LocationSpawner" name="balmvendor">
@@ -77864,6 +77857,36 @@
       </script>
       <entry entity="lengthiefTrainer" size="1" minimum="1" maximum="1" />
       <location x="5" y="28" region="20" />
+    </spawn>
+    <spawn type="LocationSpawner" name="lengMATrainer">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    spawn.Name = "Pock";
+    spawn.Body = 49; spawn.IsFemale = false;
+    
+    if (spawn is TrainerEntity puck)
+    {
+        foreach (var skill in Skill.Weapons)
+            puck.SetTraining(skill, 0, 4);
+
+        puck.SetTraining(Skill.Hand, 8, 14);
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="lengweaponTrainer" size="1" minimum="0" maximum="0" />
+      <location x="4" y="4" region="4" />
     </spawn>
     <spawn type="RegionSpawner" name="sandyPath">
       <minimumDelay>600</minimumDelay>
