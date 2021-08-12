@@ -3068,6 +3068,9 @@
           <destroyedId>84</destroyedId>
           <isSecret>true</isSecret>
         </component>
+        <component type="StaticComponent">
+          <static>245</static>
+        </component>
       </tile>
       <tile x="141" y="3">
         <component type="StaticComponent">
@@ -85360,9 +85363,16 @@
           <ground>1</ground>
         </component>
         <component type="WallComponent">
+          <wall>32</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="34">
@@ -85373,6 +85383,7 @@
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="22" y="34">
@@ -85380,14 +85391,16 @@
           <ground>1</ground>
         </component>
         <component type="WallComponent">
-          <wall>25</wall>
-          <destroyed>38</destroyed>
-          <ruins>44</ruins>
-        </component>
-        <component type="WallComponent">
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="23" y="34">
@@ -85395,9 +85408,22 @@
           <ground>1</ground>
         </component>
         <component type="WallComponent">
+          <wall>32</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>32</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="34">
@@ -85657,6 +85683,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="35">
@@ -85683,6 +85710,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="35">
@@ -85918,6 +85946,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="36">
@@ -85944,6 +85973,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="36">
@@ -86150,6 +86180,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="37">
@@ -86160,6 +86191,7 @@
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="22" y="37">
@@ -86185,11 +86217,13 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="37">
@@ -87470,6 +87504,9 @@
           <destroyedId>85</destroyedId>
           <isSecret>true</isSecret>
         </component>
+        <component type="StaticComponent">
+          <static>246</static>
+        </component>
       </tile>
       <tile x="13" y="5">
         <component type="FloorComponent">
@@ -87952,6 +87989,9 @@
           <destroyed>38</destroyed>
           <ruins>44</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="StaticComponent">
+          <static>245</static>
         </component>
       </tile>
       <tile x="24" y="5">
@@ -88875,6 +88915,9 @@
           <secretId>26</secretId>
           <destroyedId>81</destroyedId>
           <isSecret>true</isSecret>
+        </component>
+        <component type="StaticComponent">
+          <static>246</static>
         </component>
       </tile>
       <tile x="11" y="12">
@@ -97514,7 +97557,7 @@ return orc;
         MaxHealth = 60, Health = 60,
         BaseDodge = 12,
                 
-        Experience = 1000,
+        Experience = 900,
                 
         Movement = 2,
                 
@@ -97558,7 +97601,7 @@ return orc;
         MaxHealth = 42, Health = 42,
         BaseDodge = 12,
                 
-        Experience = 850,
+        Experience = 750,
                 
         Movement = 2,
     
@@ -97688,7 +97731,7 @@ return orc;
         MaxHealth = 36, Health = 36,
         BaseDodge = 12,
                 
-        Experience = 750,
+        Experience = 600,
     
         Attacks = new CreatureAttackCollection()
         {
@@ -97730,7 +97773,7 @@ return orc;
         MaxHealth = 36, Health = 36,
         BaseDodge = 12,
                 
-        Experience = 750,
+        Experience = 600,
         
         Attacks = new CreatureAttackCollection()
         {
@@ -97873,7 +97916,7 @@ return orc;
         MaxHealth = 40, Health = 40,
         BaseDodge = 12,
     
-        Experience = 1250,
+        Experience = 1050,
     
         Movement = 2,
         
@@ -97926,7 +97969,7 @@ return orc;
         MaxMana = 13, Mana = 13,
         BaseDodge = 12,
     
-        Experience = 1150,
+        Experience = 1000,
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
         
@@ -97976,7 +98019,7 @@ return orc;
         MaxMana = 8, Mana = 8,
         BaseDodge = 12,
     
-        Experience = 1000,
+        Experience = 800,
         
         CanFlee = true,
     };
@@ -100117,7 +100160,7 @@ return orc;
         
         var wares = new List<StockEntry>()
         {
-           new StockEntry("water",            () => new WaterPotion()         (int)(5 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+           new StockEntry("water",            () => new WaterPotion(),         (int)(5 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
            new StockEntry("red berries",      () => new RedBerries(),         (int)(5 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
            new StockEntry("yellow berries",   () => new YellowBerries(),      (int)(5 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
            new StockEntry("mugwort",          () => new Mugwort(),            (int)(25 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
@@ -100139,12 +100182,12 @@ return orc;
         /* Rare Potions */
         var rarePotions = new List<StockEntry>()
         {
-            new StockEntry("red clay bottle",           () => new PermanentStrengthPotion(),        (int)(2000 * merchantUpsell),       1, null),
-            new StockEntry("black ceramic bottle",      () => new PermanentDexterityPotion(),       (int)(2000 * merchantUpsell),       1, null),
-            new StockEntry("golden porcelain bottle",   () => new PermanentIntelligencePotion(),    (int)(2000 * merchantUpsell),       1, null),
-            new StockEntry("heavy glass bottle",        () => new PermanentWisdomPotion(),          (int)(2000 * merchantUpsell),       1, null),
-            new StockEntry("porcelain bottle",          () => new PermanentWillpowerPotion(),       (int)(2000 * merchantUpsell),       1, null),
-            new StockEntry("small porcelain vial",      () => new PermanentConstitutionPotion(),    (int)(2000 * merchantUpsell),       1, null),
+            new StockEntry("red clay bottle",           () => new PermanentStrengthPotion(),        (int)(2000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("black ceramic bottle",      () => new PermanentDexterityPotion(),       (int)(2000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("golden porcelain bottle",   () => new PermanentIntelligencePotion(),    (int)(2000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("heavy glass bottle",        () => new PermanentWisdomPotion(),          (int)(2000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("porcelain bottle",          () => new PermanentWillpowerPotion(),       (int)(2000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("small porcelain vial",      () => new PermanentConstitutionPotion(),    (int)(2000 * merchantUpsell),       1, onRarePurchase),
         };
         
         foreach (var rarePotionEntry in rarePotions)
@@ -100824,26 +100867,6 @@ return orc;
       <entry entity="enragedTroll" size="1" minimum="1" maximum="2" />
       <location x="24" y="33" region="12" />
     </spawn>
-    <spawn type="LocationSpawner" name="ydnacMummy">
-      <minimumDelay>300</minimumDelay>
-      <maximumDelay>600</maximumDelay>
-      <maximum>2</maximum>
-      <script name="OnAfterSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="ydnacMummy" size="1" minimum="1" maximum="2" />
-      <location x="21" y="12" region="4" />
-    </spawn>
     <spawn type="RegionSpawner" name="Kesmai -1">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>300</maximumDelay>
@@ -101213,7 +101236,7 @@ return orc;
     <spawn type="RegionSpawner" name="Ydnac -1">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>600</maximumDelay>
-      <maximum>12</maximum>
+      <maximum>10</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -101229,12 +101252,15 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <entry entity="ydnacSkelWar" size="3" minimum="1" maximum="3" />
-      <entry entity="ydnacSkelArc" size="2" minimum="1" maximum="3" />
-      <entry entity="dungeon3Wraith" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon3Wight" size="1" minimum="1" maximum="2" />
+      <entry entity="ydnacSkelArc" size="2" minimum="1" maximum="2" />
+      <entry entity="dungeon3Wraith" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon3Wight" size="1" minimum="1" maximum="1" />
       <entry entity="dungeon4Spectre" size="1" minimum="1" maximum="1" />
       <entry entity="dungeon4Thaum" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon4Wizard" size="1" minimum="1" maximum="1" />
       <bounds region="4">
+        <inclusion left="2" top="7" right="9" bottom="12" />
+        <inclusion left="2" top="14" right="13" bottom="16" />
         <inclusion left="0" top="0" right="0" bottom="0" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
@@ -101257,12 +101283,65 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="surfaceWraith" size="1" minimum="1" maximum="1" />
-      <entry entity="surfaceWight" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon4Wizard" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon4Thaum" size="1" minimum="1" maximum="1" />
       <entry entity="dungeon4MeleeFighter" size="1" minimum="2" maximum="2" />
-      <entry entity="dungeon4RangedFighter" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon4RangedFighter" size="1" minimum="1" maximum="2" />
       <bounds region="3">
+        <inclusion left="9" top="2" right="11" bottom="7" />
         <inclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Ydnac -1 Blood Room">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <maximum>10</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="ydnacMummy" size="1" minimum="3" maximum="5" />
+      <entry entity="dungeon4Thaum" size="1" minimum="1" maximum="1" />
+      <entry entity="ydnacSkelWar" size="3" minimum="1" maximum="2" />
+      <entry entity="ydnacSkelArc" size="2" minimum="1" maximum="2" />
+      <bounds region="4">
+        <inclusion left="15" top="6" right="23" bottom="18" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Ydnac Secret Right Side">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="ydnacSkelWar" size="3" minimum="1" maximum="1" />
+      <entry entity="dungeon4Spectre" size="1" minimum="1" maximum="1" />
+      <bounds region="3">
+        <inclusion left="13" top="2" right="16" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.70.0.0">
+<segment name="Leng" version="0.71.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -77207,6 +77207,61 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="mausMummy">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var mummy = new Mummy()
+    {
+        MaxHealth = 145, Health = 145,
+        MaxMana = 3, Mana = 3,
+        BaseDodge = 13,
+    
+        Experience = 2750,
+    
+        Movement = 2,
+        BasePenetration = ShieldPenetration.Light,
+        VisibilityDistance = 1,
+    };
+    
+    mummy.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(10,     13, 22,      "The mummy scratches you with its claws"),  70 }, 
+        { new CreatureAttack(11,     15, 25,     "You've been bitten by the mummy"), 30 },
+    };   
+    
+    mummy.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<CurseSpell>(
+            skillLevel: 5, cost: 3, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: true)
+    };
+    
+    mummy.Blocks = new CreatureBlockCollection
+    {
+        { new CreatureBlock(6, "the armor") }, 
+        { new CreatureBlock(4, "a decaying limb") }, 
+    };
+    
+    mummy.AddGold(350);
+    mummy.AddLoot(new LootPack(
+        new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, MausBottles,    20),
+        new LootPackEntry(true, MausTreasure,  0.63)
+        
+    ));
+    
+    return mummy;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="Priest">
@@ -78514,6 +78569,31 @@
       </script>
       <bounds region="254">
         <inclusion left="2" top="1" right="4" bottom="2" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="South Maus Crypt">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="mausMummy" size="1" minimum="2" maximum="4" />
+      <entry entity="mausSpectre" size="1" minimum="1" maximum="1" />
+      <bounds region="10">
+        <inclusion left="15" top="37" right="17" bottom="40" />
+        <inclusion left="9" top="41" right="23" bottom="45" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
