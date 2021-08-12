@@ -99881,6 +99881,7 @@ return orc;
         // Normal stock items.
         // TODO: Pick better items.
         var merchantUpsell = 3.5;
+        
         var wares = new List<StockEntry>()
         {
            new StockEntry("jade amulet",                () => new JadeAmulet(),             (int)(400 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
@@ -99889,14 +99890,17 @@ return orc;
            new StockEntry("weak strength bracelet",     () => new WeakStrengthBracelet(),   (int)(500 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
            new StockEntry("weak shield ring",           () => new WeakShieldRing(),         (int)(600 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
            new StockEntry("weak dexterity ring",        () => new WeakDexterityRing(),      (int)(1000 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
-           new StockEntry("breath water bracelet",      () => new BreatheWaterBracelet(),   (int)(2000 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
         };
         
         // Rare wares.
         if (Utility.RandomDouble() <= 0.10)  /* 10% total chance to spawn. */
             wares.Add(new StockEntry("fire and ice protection ring", () => new FireIceProtectionRing(), (int)(800 * merchantUpsell), 1, onRarePurchase));
+
         if (Utility.RandomDouble() <= 0.02)  /* 2% chance to spawn. */
             wares.Add(new StockEntry("stun and death protection bracelet", () => new StunDeathProtectionBracelet(), (int)(3000 * merchantUpsell), 1, onRarePurchase));
+            
+        if (Utility.RandomDouble() <= 0.05)  /* 5% chance to spawn. */
+            wares.Add(new StockEntry("breath water bracelet", () => new BreatheWaterBracelet(), (int)(3000 * merchantUpsell), 1, onRarePurchase));
 
         /* The vendor won't sell everything though, at least not this time around. */
         foreach (var stock in wares.Random(6))
