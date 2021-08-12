@@ -99884,23 +99884,35 @@ return orc;
         
         var wares = new List<StockEntry>()
         {
+           new StockEntry("brass ring",                 () => new SmallBrassRing(),         (int)(100 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
+           new StockEntry("recall ring",                () => new RecallRing(),             (int)(150 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
            new StockEntry("jade amulet",                () => new JadeAmulet(),             (int)(400 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
            new StockEntry("scorpion amulet",            () => new ScorpionAmulet(),         (int)(250 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
            new StockEntry("black pearls",               () => new BlackPearls(),            (int)(600 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
-           new StockEntry("weak strength bracelet",     () => new WeakStrengthBracelet(),   (int)(500 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
+           new StockEntry("weak strength ring",         () => new WeakStrengthRing(),       (int)(500 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
            new StockEntry("weak shield ring",           () => new WeakShieldRing(),         (int)(600 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
-           new StockEntry("weak dexterity ring",        () => new WeakDexterityRing(),      (int)(1000 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+           new StockEntry("water breathing ring",       () => new BreatheWaterRing(),       (int)(500 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+           new StockEntry("vermeil ring",               () => new VermeilRing(),            (int)(300 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
         };
         
         // Rare wares.
-        if (Utility.RandomDouble() <= 0.10)  /* 10% total chance to spawn. */
+        if (Utility.RandomDouble() <= 0.20)  /* 20% total chance to spawn. */
             wares.Add(new StockEntry("fire and ice protection ring", () => new FireIceProtectionRing(), (int)(800 * merchantUpsell), 1, onRarePurchase));
 
+        if (Utility.RandomDouble() <= 0.20)  /* 20% total chance to spawn. */
+            wares.Add(new StockEntry("weak strength bracelet", () => new WeakStrengthBracelet(), (int)(500 * merchantUpsell), 1, onRarePurchase));
+            
+        if (Utility.RandomDouble() <= 0.10)  /* 10% total chance to spawn. */
+            wares.Add(new StockEntry("blind resistance ring", () => new BlindResistanceRing(), (int)(600 * merchantUpsell), 1, onRarePurchase));
+
+        if (Utility.RandomDouble() <= 0.10)  /* 10% total chance to spawn. */
+            wares.Add(new StockEntry("death resistance ring", () => new DeathResistanceRing(), (int)(300 * merchantUpsell), 1, onRarePurchase));
+
+        if (Utility.RandomDouble() <= 0.10)  /* 10% total chance to spawn. */
+            wares.Add(new StockEntry("weak dexterity ring", () => new WeakDexterityRing(), (int)(1000 * merchantUpsell), 1, onRarePurchase));
+            
         if (Utility.RandomDouble() <= 0.02)  /* 2% chance to spawn. */
             wares.Add(new StockEntry("stun and death protection bracelet", () => new StunDeathProtectionBracelet(), (int)(3000 * merchantUpsell), 1, onRarePurchase));
-            
-        if (Utility.RandomDouble() <= 0.05)  /* 5% chance to spawn. */
-            wares.Add(new StockEntry("breath water bracelet", () => new BreatheWaterBracelet(), (int)(3000 * merchantUpsell), 1, onRarePurchase));
 
         /* The vendor won't sell everything though, at least not this time around. */
         foreach (var stock in wares.Random(6))
@@ -100012,9 +100024,9 @@ return orc;
         {
             shopkeeper.SayTo(player, _rarePurchaseResponses.Random());
         }
-        
+
         shopkeeper.AddCounter(new Point2D(34, 22, 1));
-        
+
         /*  The vendor can sell all varieties of weapons, at a significant mark-up. There is a weapon from each
             skill category.
          */
@@ -100034,12 +100046,13 @@ return orc;
             new StockEntry("shuriken",      () => new Shuriken(),       200, Utility.RandomBetween(1, 4), null),
             new StockEntry("katana",        () => new Katana(),         300, Utility.RandomBetween(1, 4), null),
         };
+
         if (Utility.RandomDouble() <= 0.25)  /* 25% chance to spawn */
             wares.Add(new StockEntry("silver dagger", () => new SilverDagger(), 3500, 1, onRarePurchase));
 
         if (Utility.RandomDouble() <= 0.20)  /* 15% chance to spawn */
             wares.Add(new StockEntry("throwing hammer", () => new ThrowingHammer(), 1500, 1, onRarePurchase));
-            
+
         /* The vendor won't sell everything though, at least not this time around. */
         foreach (var stock in wares.Random(6))
             shopkeeper.Stock(stock);
