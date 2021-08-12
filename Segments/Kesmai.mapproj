@@ -100133,6 +100133,9 @@ return orc;
         else if (Utility.RandomDouble() <= 0.33)
             wares.Add(new StockEntry("black ceramic bottle", () => new NitroPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(1, 3), onRarePurchase));
             
+        if (Utility.RandomDouble() <= 0.20)  /* 20% total chance to spawn. */
+            wares.Add(new StockEntry("youth potion",    () => new YouthPotion(),    (int)(800 * merchantUpsell),    1,     onRarePurchase));
+
         /* Rare Potions */
         var rarePotions = new List<StockEntry>()
         {
