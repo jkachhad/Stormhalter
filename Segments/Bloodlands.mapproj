@@ -3,6 +3,62 @@
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
+  public static readonly string[] _names = new string[]
+    {
+        "Aca", "Acha", "Achi", "Achu", "Aco", "Agua", "Ahua", "Aja", "Ala", "Ali", "Ama", "Ani", "Anu", "Apa",
+        "Apo", "Aqui", "Ara", "Ari", "Ata", "Ati", "Ato", "Atu", "Axi", "Aya", "Chaca", "Chacha", "Chachi",
+        "Chachu", "Chaco", "Chagua", "Chahua", "Chaja", "Chala", "Chali", "Chama", "Chani", "Chanu", "Chapa",
+        "Chapo", "Chaqui", "Chara", "Chari", "Chata", "Chati", "Chato", "Chatu", "Chaxi", "Chaya", "Chuca",
+        "Chucha", "Chuchi", "Chuchu", "Chuco", "Chugua", "Chuhua", "Chuja", "Chula", "Chuli", "Chuma", "Chuni",
+        "Chunu", "Chupa", "Chupo", "Chuqui", "Chura", "Churi", "Chuta", "Chuti", "Chuto", "Chutu", "Chuxi", "Chuya",
+        "Coca", "Cocha", "Cochi", "Cochu", "Coco", "Cogua", "Cohua", "Coja", "Cola", "Coli", "Coma", "Coni", "Conu",
+        "Copa", "Copo", "Coqui", "Cora", "Cori", "Cota", "Coti", "Coto", "Cotu", "Coxi", "Coya", "Huaca", "Huacha",
+        "Huachi", "Huachu", "Huaco", "Huagua", "Huahua", "Huaja", "Huala", "Huali", "Huama", "Huanca", "Huancha",
+        "Huanchi", "Huanchu", "Huanco", "Huangua", "Huanhua", "Huani", "Huanja", "Huanla", "Huanli", "Huanma",
+        "Huanni", "Huannu", "Huanpa", "Huanpo", "Huanqui", "Huanra", "Huanri", "Huanta", "Huanti", "Huanto",
+        "Huantu", "Huanu", "Huanxi", "Huanya", "Huapa", "Huapo", "Huaqui", "Huara", "Huari", "Huata", "Huati",
+        "Huato", "Huatu", "Huaxi", "Huaya", "Huca", "Hucha", "Huchi", "Huchu", "Huco", "Hugua", "Huhua", "Huja",
+        "Hula", "Huli", "Huma", "Huni", "Hunu", "Hupa", "Hupo", "Huqui", "Hura", "Huri", "Huta", "Huti", "Huto",
+        "Hutu", "Huxi", "Huya", "Ica", "Icha", "Ichi", "Ichu", "Ico", "Igua", "Ihua", "Ija", "Ila", "Ili", "Ima",
+        "Inca", "Incha", "Inchi", "Inchu", "Inco", "Ingua", "Inhua", "Ini", "Inja", "Inla", "Inli", "Inma", "Inni",
+        "Innu", "Inpa", "Inpo", "Inqui", "Inra", "Inri", "Inta", "Inti", "Into", "Intu", "Inu", "Inxi", "Inya",
+        "Ipa", "Ipo", "Iqui", "Ira", "Iri", "Ita", "Iti", "Ito", "Itu", "Ixi", "Iya", "Jauca", "Jaucha", "Jauchu",
+        "Jauco", "Jaugua", "Jauhua", "Jauja", "Jaula", "Jauli", "Jauma", "Jauni", "Jaunu", "Jaupa", "Jaupo",
+        "Jauqui", "Jaura", "Jauri", "Jauta", "Jauti", "Jauto", "Jautu", "Jauxi", "Jauya", "Maca", "Macca", "Maccha",
+        "Macchi", "Macchu", "Macco", "Macgua", "Macha", "Machi", "Machu", "Machua", "Macja", "Macla", "Macli",
+        "Macma", "Macni", "Macnu", "Maco", "Macpa", "Macpo", "Macqui", "Macra", "Macri", "Macta", "Macti", "Macto",
+        "Mactu", "Macxi", "Macya", "Magua", "Mahua", "Maja", "Mala", "Mali", "Mama", "Mani", "Manu", "Mapa", "Mapo",
+        "Maqui", "Mara", "Mari", "Mata", "Mati", "Mato", "Matu", "Maxi", "Maya", "Picca", "Piccha", "Picchi",
+        "Picco", "Picgua", "Pichua", "Picja", "Picla", "Picli", "Picma", "Picni", "Picnu", "Picpa", "Picpo",
+        "Picqui", "Picra", "Picri", "Picta", "Picti", "Picto", "Pictu", "Picxi", "Picya", "Tica", "Ticha", "Tichi",
+        "Tichu", "Tico", "Tigua", "Tihua", "Tija", "Tila", "Tili", "Tima", "Tini", "Tinu", "Tipa", "Tipo", "Tiqui",
+        "Tira", "Tiri", "Tita", "Titi", "Tito", "Titu", "Tixi", "Tiya", "Tuca", "Tucha", "Tuchi", "Tuchu", "Tuco",
+        "Tugua", "Tuhua", "Tuja", "Tula", "Tuli", "Tuma", "Tuni", "Tunu", "Tupa", "Tupo", "Tuqui", "Tura", "Turi",
+        "Tuta", "Tuti", "Tuto", "Tutu", "Tuxi", "Tuya", "Uca", "Ucha", "Uchi", "Uchu", "Uco", "Ugua", "Uhua", "Uja",
+        "Ula", "Uli", "Uma", "Uni", "Unu", "Upa", "Upo", "Uqui", "Ura", "Uri", "Uta", "Uti", "Uto", "Utu", "Uxi",
+        "Uya", "Yaca", "Yacha", "Yachi", "Yachu", "Yaco", "Yagua", "Yahua", "Yaja", "Yala", "Yali", "Yama", "Yani",
+        "Yanu", "Yapa", "Yapo", "Yaqui", "Yara", "Yari", "Yata", "Yati", "Yato", "Yatu", "Yaxi", "Yaya", "Yuca",
+        "Yucha", "Yuchi", "Yuchu", "Yuco", "Yugua", "Yuhua", "Yuja", "Yula", "Yuli", "Yuma", "Yuni", "Yunu", "Yupa",
+        "Yupo", "Yuqui", "Yura", "Yuri", "Yuta", "Yuti", "Yuto", "Yutu", "Yuxi", "Yuya"
+    };
+    
+    public static string[] _rarePurchaseResponses = new string[]
+    {
+        "That's quite a bargain.", 
+        "You won't find another with such quality.",
+        "I didn't think anyone even wanted that.",
+        "It was left here, pray the owner doesn't come back.",
+        "Don't go losing it."
+    };
+    
+    public static void gemsPriceMutator(MobileEntity entity, Container source, ItemEntity item)
+    {
+        /* Item values fall between 0.8 to 1.2 of base price. */
+        var lesserPrice = (int)(item.BasePrice * 0.2);
+        var higherPrice = (int)(item.BasePrice * 0.2);
+        
+        item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
+    }
 ]]></block>
     <block><![CDATA[]]></block>
   </script>
