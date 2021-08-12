@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.70.0.0">
+<segment name="Kesmai" version="0.71.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -99947,15 +99947,38 @@ return orc;
             
             new StockEntry("ram skull",         () => new RamSkull(),           1500,   Utility.RandomBetween(1, 2), null),
         };
+        
+        /* Rare Armors */
+        if (Utility.RandomDouble() <= 0.25)  /* 25% chance to spawn */
+            wares.Add(new StockEntry("troll vest", () => new TrollVest(), 1000, 1, onRarePurchase));
+
+        if (Utility.RandomDouble() <= 0.10)  /* 10% chance to spawn */
+            wares.Add(new StockEntry("salamander scales", () => new SalamanderScales(), 5000, 1, onRarePurchase));
+
+        if (Utility.RandomDouble() <= 0.10)  /* 10% chance to spawn */
+            wares.Add(new StockEntry("dragon scales", () => new DragonScaleArmor(), 10000, 1, onRarePurchase));
+
+        /* Rare Boots */
         if (Utility.RandomDouble() <= 0.30)  /* 30% chance to spawn */
             wares.Add(new StockEntry("crocodile boots", () => new CrocodileBoots(), 2500, 1, onRarePurchase));
-        
+
+        if (Utility.RandomDouble() <= 0.10)  /* 5% chance to spawn */
+            wares.Add(new StockEntry("feather fall boots", () => new FeatherFallBoots(), 5000, 1, onRarePurchase));
+
+        /* Rare Gloves */
         if (Utility.RandomDouble() <= 0.20)  /* 20% chance to spawn */
             wares.Add(new StockEntry("steel plated gauntlets", () => new SteelGauntlets(), 4000, 1, onRarePurchase));
         
+        /* Rare Helmets */
+        if (Utility.RandomDouble() <= 0.25)  /* 25% chance to spawn */
+            wares.Add(new StockEntry("bear skull", () => new BearSkull(), 4000, 1, onRarePurchase));
+            
+        if (Utility.RandomDouble() <= 0.10)  /* 10% chance to spawn */
+            wares.Add(new StockEntry("winged helm", () => new WingedHelm(true), 10000, 1, onRarePurchase));
+        
         /* The vendor won't sell everything though, at least not this time around. */
         foreach (var stock in wares.Random(6))
-            shopkeeper.Stock(stock);        
+            shopkeeper.Stock(stock);
         
         for (var i = Utility.Random(1, 3); i > 0; i--)
             shopkeeper.Restock();
