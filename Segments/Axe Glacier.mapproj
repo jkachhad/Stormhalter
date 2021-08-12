@@ -105225,7 +105225,7 @@
         
     dragon.Spells = new CreatureSpellCollection(40.0)
     {
-        new CreatureSpell<DragonBreathIceSpell>(31), 
+        new CreatureSpell<DragonBreathIceSpell>(24), 
     };
     //todo: add griffin figurine, protection from cold amulet (replaces f/i ammy)
     dragon.AddGold(6000);
@@ -105265,7 +105265,7 @@
         HideDetection = 27,
         CanJumpkick = true,
         
-        BasePenetration = ShieldPenetration.VeryHeavy,
+        BasePenetration = ShieldPenetration.Medium,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
@@ -105282,17 +105282,17 @@
     yeti.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(13,      50, 70,      "The yeti smashes you with his fist.",
+            new CreatureAttack(14,      50, 70,      "The yeti smashes you with his fist.",
                                                         new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(13,      60, 80,     "The yeti stomps on you.",
+            new CreatureAttack(14,      60, 80,     "The yeti stomps on you.",
                                                         new AttackProneComponent(25), 
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(14,      70, 90,     "The giant slams you across the room.",
+            new CreatureAttack(15,      70, 90,     "The giant slams you across the room.",
                                                         new AttackProneComponent(100), 
                                                         new AttackStunComponent(15)),               20
         },
