@@ -74768,21 +74768,17 @@
     skeleton.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(8, 6, 15)
-    },
+    };
     
     skeleton.Wield(new Spear());
     
     skeleton.AddGold(150);
-    
-    
     skeleton.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems, 33, gemsPriceMutator),
         new LootPackEntry(true, MausBottles, 16)
     ));
     
     return skeleton;
-    
- 
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -76436,8 +76432,8 @@
     
     salamander.Spells = new CreatureSpellCollection(50.0)
     {
-        new CreatureSpell<FirewallSpell>(
-            skillLevel: 13), TimeSpan.FromSeconds(15.0))
+      {  new CreatureSpell<FirewallSpell>(
+            skillLevel: 13), 100, TimeSpan.FromSeconds(15.0) }
     };
     
     salamander.AddGold(800);

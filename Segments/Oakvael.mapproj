@@ -84387,7 +84387,7 @@
     {
         new CreatureSpell<CurseSpell>(
                 skillLevel: 3, cost: 3,
-                mantra: SpellHelper.GenerateMantra(), instantCast: false) }
+                mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
     priest.Brain = new PriestAI(priest);
@@ -84652,7 +84652,7 @@
     
     largeBear.AddStatus(new NightVisionStatus(largeBear));    
     
-    largebear.Attacks = new CreatureAttackCollection
+    largeBear.Attacks = new CreatureAttackCollection
     {
         {
             new CreatureAttack(7, 12, 18, "The bear slashes you with its claws."),      50 
@@ -84665,14 +84665,10 @@
         }, 
     };
     
-    largebear.Blocks = new CreatureBlockCollection
+    largeBear.Blocks = new CreatureBlockCollection
     {
-        {
-            new CreatureBlock(6, "the tough hide")
-        }, 
-        {
-            new CreatureBlock(4, "a claw")
-        }, 
+       new CreatureBlock(6, "the tough hide"),
+       new CreatureBlock(4, "a claw") 
     };
 
     largeBear.AddGold(1450);
@@ -84987,7 +84983,7 @@
         }, 
     };
     
-    bear.blocks = new CreatureBlockCollection
+    bear.Blocks = new CreatureBlockCollection
     {
         new CreatureBlock(6, "the tough hide"),
         new CreatureBlock(4, "a claw")
@@ -85194,8 +85190,8 @@
     
     scorpion.Blocks = new CreatureBlockCollection
     {
-            new CreatureBlock(6, "the armor")
-            new CreatureBlock(3, "a claw") 
+            new CreatureBlock(6, "the armor"),
+            new CreatureBlock(3, "a claw"),
             new CreatureBlock(1, "a tail") 
     };
 
@@ -86182,7 +86178,7 @@
     
     minotaur.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the armor") 
+        new CreatureBlock(6, "the armor"), 
         new CreatureBlock(3, "a staff")
     };
 
@@ -86246,8 +86242,8 @@
     
     gargoyle.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "a greatsword")
-        new CreatureBlock(3, "a claw")
+        new CreatureBlock(6, "a greatsword"),
+        new CreatureBlock(3, "a claw"),
         new CreatureBlock(1, "a wing")
     };
 
@@ -86298,15 +86294,15 @@
     
     salamander.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the armor")
-        new CreatureBlock(3, "a claw")
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(3, "a claw"),
         new CreatureBlock(1, "a tail")
     };
     
     salamander.Spells = new CreatureSpellCollection(50.0)
     {
-        new CreatureSpell<FirewallSpell>(
-            skillLevel: 8, TimeSpan.FromSeconds(15.0))
+        { new CreatureSpell<FirewallSpell>(
+            skillLevel: 8), 100, TimeSpan.FromSeconds(15.0) }
     };
     
     salamander.AddGold(550);
@@ -86479,8 +86475,8 @@
     
     gargoyle.Blocks = new CreatureBlockCollection
     {
-            new CreatureBlock(6, "the armor")
-            new CreatureBlock(3, "a claw")
+            new CreatureBlock(6, "the armor"),
+            new CreatureBlock(3, "a claw"),
             new CreatureBlock(1, "a wing")
     };
 
@@ -86901,8 +86897,8 @@
     
     salamander.Spells = new CreatureSpellCollection(50.0)
     {
-        new CreatureSpell<FirewallSpell>(
-            skillLevel: 9, TimeSpan.FromSeconds(15.0))
+       { new CreatureSpell<FirewallSpell>(
+            skillLevel: 9), 100, TimeSpan.FromSeconds(15.0) }
     };
 
     salamander.AddGold(900);
@@ -87038,8 +87034,8 @@
     
     banshee.Spells = new CreatureSpellCollection()
     {
-        new CreatureSpell<DarknessSpell>(
-            skillLevel: 10, cost: 4, intensity: 2), TimeSpan.FromSeconds(15.0)
+       { new CreatureSpell<DarknessSpell>(
+            skillLevel: 10, cost: 4, intensity: 2), 100, TimeSpan.FromSeconds(15.0) }
     };
 
     banshee.Wield(new Spear());    
@@ -87131,7 +87127,7 @@
     
     wraith.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(14, 15, 20) },
+        new CreatureBasicAttack(14, 15, 20),
     };
     
     wraith.Spells = new CreatureSpellCollection()
@@ -87591,8 +87587,8 @@
     
     twin.Spells = new CreatureSpellCollection(100)
     {
-        new CreatureSpell<IceStormSpell>(
-            skillLevel: 12, TimeSpan.FromSeconds(12.0))
+       { new CreatureSpell<IceStormSpell>(
+            skillLevel: 12), 100, TimeSpan.FromSeconds(12.0) }
     };
 
     twin.AddGold(2000);
@@ -87619,7 +87615,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon5LichRavlob">
+    <entity name="dungeon5LichVlobra">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -87652,8 +87648,8 @@
     
     twin.Spells = new CreatureSpellCollection(100)
     {
-        new CreatureSpell<FireballSpell>(
-            skillLevel: 12, TimeSpan.FromSeconds(12.0))
+        { new CreatureSpell<FireballSpell>(
+            skillLevel: 12), 100, TimeSpan.FromSeconds(12.0) }
     };
     
     twin.AddGold(2000);
@@ -87701,7 +87697,7 @@
     
     doomOrc.Attacks = new CreatureAttackCollection
     {
-            new CreatureAttack(12)
+        new CreatureBasicAttack(12)
     };
                 
     doomOrc.Wield(new HeavyCrossbow());
@@ -88217,7 +88213,8 @@
     };  
     
     viper.Blocks = new CreatureBlockCollection
-        new CreatureBlock(1, "your weapon passing through the viper.")
+    {
+        new CreatureBlock(1, "your weapon passing through the viper."),
     };
 
     viper.AddLoot(
@@ -88816,7 +88813,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="dungeon5LichSahtra" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon5LichRavlob" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon5LichVlobra" size="1" minimum="1" maximum="1" />
       <location x="18" y="38" region="227" />
     </spawn>
     <spawn type="LocationSpawner" name="doomOrcAndPresence">

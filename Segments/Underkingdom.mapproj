@@ -97287,7 +97287,6 @@
     
         Experience = 7500,
         BasePenetration = ShieldPenetration.Medium,
-        Attacks = new CreatureAttackCollection
     };
     
     hobgoblin.Attacks = new CreatureAttackCollection
@@ -97718,10 +97717,10 @@
     
     spectre.Spells = new CreatureSpellCollection()
     {
-        new CreatureSpell<StunSpell>(
+       { new CreatureSpell<StunSpell>(
             skillLevel: 11, cost: 16, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   75 },
-        new CreatureSpell<DeathSpell>(
+       { new CreatureSpell<DeathSpell>(
             skillLevel: 9, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 }
     };

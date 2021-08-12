@@ -97502,7 +97502,7 @@ return orc;
         Experience = 350,
     };
     
-    enrageTroll.Attacks = new CreatureAttackCollection()
+    enragedTroll.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(5)
     };
@@ -97971,8 +97971,8 @@ return orc;
     
     salamander.Spells = new CreatureSpellCollection(50.0)
     {
-        new CreatureSpell<FirewallSpell>(
-            skillLevel: 6, TimeSpan.FromSeconds(15.0))
+        { new CreatureSpell<FirewallSpell>(
+            skillLevel: 6), 100, TimeSpan.FromSeconds(15.0) }
     };
     
     salamander.AddLoot(new LootPack(
@@ -98405,8 +98405,8 @@ return orc;
     
     salamander.Spells = new CreatureSpellCollection(50.0)
     {
-        new CreatureSpell<FirewallSpell>(
-            skillLevel: 6, TimeSpan.FromSeconds(15.0))
+        { new CreatureSpell<FirewallSpell>(
+            skillLevel: 6), 100, TimeSpan.FromSeconds(15.0) }
     };
     
     salamander.AddGold(500);
@@ -99386,7 +99386,7 @@ return orc;
         Weakness = CreatureWeakness.BlueGlowing,
     
         CanSwim = true,
-        HideDetection = 18,
+        
         FireProtection = 100,
         IceProtection = 100,
     

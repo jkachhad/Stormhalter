@@ -104235,7 +104235,7 @@
     
     lizard.Spells = new CreatureSpellCollection(80.0)
     {
-        new CreatureSpell<IceStormSpell>(8
+        new CreatureSpell<IceStormSpell>(
             skillLevel: 8, intensity: 2),
     };
     
@@ -104388,7 +104388,7 @@
         BasePenetration = ShieldPenetration.Light,
     };
     
-    Attacks = new CreatureAttackCollection()
+    goblin.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(8)
     };
@@ -105837,12 +105837,12 @@
     See Leng monster MausWraith for the context of "weighted spell cast" chance: on him the 75/25 are the chances to cast different spells. Spells are the most complex things about monster creation so hopefully these comments help a bit. Have fun.*/ 
     wizard.Spells = new CreatureSpellCollection
     {
-        new CreatureSpell<FireballSpell>(
+        { new CreatureSpell<FireballSpell>(
             skillLevel: 10, cost: 6, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false, TimeSpan.FromSeconds(15.0)),
-        new CreatureSpell<MagicMissileSpell>(
+            mantra: SpellHelper.GenerateMantra(), instantCast: false), 100, TimeSpan.FromSeconds(15.0) },
+        { new CreatureSpell<MagicMissileSpell>(
             skillLevel: 9, cost: 3, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+            mantra: SpellHelper.GenerateMantra(), instantCast: false), 100, TimeSpan.Zero }
     };
     
     wizard.Wield(new BlackStaff());
