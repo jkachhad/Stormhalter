@@ -100160,7 +100160,7 @@ return orc;
         
         var wares = new List<StockEntry>()
         {
-           new StockEntry("water",            () => new WaterPotion()         (int)(5 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+           new StockEntry("water",            () => new WaterPotion(),         (int)(5 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
            new StockEntry("red berries",      () => new RedBerries(),         (int)(5 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
            new StockEntry("yellow berries",   () => new YellowBerries(),      (int)(5 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
            new StockEntry("mugwort",          () => new Mugwort(),            (int)(25 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
@@ -100182,12 +100182,12 @@ return orc;
         /* Rare Potions */
         var rarePotions = new List<StockEntry>()
         {
-            new StockEntry("red clay bottle",           () => new PermanentStrengthPotion(),        (int)(2000 * merchantUpsell),       1, null),
-            new StockEntry("black ceramic bottle",      () => new PermanentDexterityPotion(),       (int)(2000 * merchantUpsell),       1, null),
-            new StockEntry("golden porcelain bottle",   () => new PermanentIntelligencePotion(),    (int)(2000 * merchantUpsell),       1, null),
-            new StockEntry("heavy glass bottle",        () => new PermanentWisdomPotion(),          (int)(2000 * merchantUpsell),       1, null),
-            new StockEntry("porcelain bottle",          () => new PermanentWillpowerPotion(),       (int)(2000 * merchantUpsell),       1, null),
-            new StockEntry("small porcelain vial",      () => new PermanentConstitutionPotion(),    (int)(2000 * merchantUpsell),       1, null),
+            new StockEntry("red clay bottle",           () => new PermanentStrengthPotion(),        (int)(2000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("black ceramic bottle",      () => new PermanentDexterityPotion(),       (int)(2000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("golden porcelain bottle",   () => new PermanentIntelligencePotion(),    (int)(2000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("heavy glass bottle",        () => new PermanentWisdomPotion(),          (int)(2000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("porcelain bottle",          () => new PermanentWillpowerPotion(),       (int)(2000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("small porcelain vial",      () => new PermanentConstitutionPotion(),    (int)(2000 * merchantUpsell),       1, onRarePurchase),
         };
         
         foreach (var rarePotionEntry in rarePotions)

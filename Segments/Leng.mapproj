@@ -77228,13 +77228,13 @@
     {
         { new CreatureAttack(10,     13, 22,      "The mummy scratches you with its claws"),  70 }, 
         { new CreatureAttack(11,     15, 25,     "You've been bitten by the mummy"), 30 },
-        
-        mummy.Spells =  new CreatureSpellCollection()
+    };   
+    
+    mummy.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CurseSpell>(
             skillLevel: 5, cost: 3, 
             mantra: SpellHelper.GenerateMantra(), instantCast: true)
-   
     };
     
     mummy.Blocks = new CreatureBlockCollection
@@ -77251,7 +77251,7 @@
         
     ));
     
-    return mummy;();
+    return mummy;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
