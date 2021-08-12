@@ -105175,14 +105175,14 @@
     var dragon = new Dragon()
     {
         MaxHealth = 5000, Health = 5000,
-        BaseDodge = 24,
+        BaseDodge = 20,
         
         Experience = 75000,
         
         CanFly = true,
         CanCharge = true,
         
-        BasePenetration = ShieldPenetration.Medium,
+        BasePenetration = ShieldPenetration.Heavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
