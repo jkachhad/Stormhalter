@@ -103008,7 +103008,7 @@
         
     wraith.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(8),
+        new CreatureBasicAttack(8)
     };
     
     wraith.Spells = new CreatureSpellCollection()
@@ -103056,9 +103056,15 @@
     
     wolf.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(5,     3, 7,   "The wolf rakes you with its claws."),  50 }, 
-        { new CreatureAttack(7,     4, 8,  "The wolf sinks its teeth into you."),  30 }, 
-        { new CreatureAttack(7,     5, 10,  "The wolf lunges at you."),             20 }, 
+        { 
+            new CreatureAttack(5,     3, 7,   "The wolf rakes you with its claws."),  50 
+        }, 
+        {
+            new CreatureAttack(7,     4, 8,  "The wolf sinks its teeth into you."),   30
+        }, 
+        {
+            new CreatureAttack(7,     5, 10,  "The wolf lunges at you."),             20 
+        }, 
     };
         
     wolf.Blocks = new CreatureBlockCollection
@@ -103097,11 +103103,11 @@
         Experience = 800,
                 
         Movement = 2,
-                
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(6)
-        }
+    };
+    
+    skeleton.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(6)
     };
     
     skeleton.Wield(new Spear());
@@ -103135,11 +103141,11 @@
         BaseDodge = 10,
                 
         Experience = 900,
-        
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(6)
-        },
+    };
+    
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(6)
     };
     
     goblin.Wield(new Crossbow());
@@ -103175,11 +103181,11 @@
         Experience = 925,
         
         CanFlee = true,
-                
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(6, 3, 11)
-        }
+    };
+    
+    orc.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(6, 3, 9)
     };
     
     orc.Wield(new BattleAxe());
@@ -103217,11 +103223,11 @@
         Movement = 2,
                 
         CanFlee = true,
-                
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(6, 4, 13)
-        }
+    };
+    
+    troll.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(6, 4, 13)
     };
     
     troll.Wield(new Greatsword());
@@ -103256,12 +103262,11 @@
         BaseDodge = 10,
                 
         Experience = 900,
+    };
     
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(6, 3, 9),
-        }
-    
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(6, 3, 9)
     };
     
     goblin.Wield(new Longsword());
@@ -103299,12 +103304,17 @@
                 
         Movement = 2,
     };
+    
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
             
     gargoyle.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(6,     4, 8,   "The gargoyle strikes you with its claws."),    60 },
-        { new CreatureAttack(7,     6, 15,  "The gargoyle batters you with its wings."),    40 },
+        { 
+            new CreatureAttack(6,     4, 8,   "The gargoyle strikes you with its claws."),    60 
+        },
+        {
+            new CreatureAttack(7,     6, 15,  "The gargoyle batters you with its wings."),    40 
+        },
     };
     
     gargoyle.Blocks = new CreatureBlockCollection
@@ -103392,12 +103402,11 @@
         BaseDodge = 13,
                 
         Experience = 1900,
+    };
     
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(7, 8, 14),
-        }
-    
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(7, 5, 13)
     };
     
     goblin.Wield(new BattleAxe());
@@ -103435,11 +103444,11 @@
         Movement = 2,
                 
         CanFlee = true,
-                
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(8, 12, 21)
-        }
+    };
+    
+    troll.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(8, 8, 16)
     };
     
     troll.Wield(new Greatsword());
@@ -103486,7 +103495,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9, 13, 21), 
+        new CreatureBasicAttack(9, 13, 21)
     };
     
     fighter.Wield(new Longsword());
@@ -103534,7 +103543,7 @@
     
     martialartist.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(8, 20, 25), 
+        new CreatureBasicAttack(8, 16, 22)
     };   
     
     martialartist.AddGold(550);
@@ -103568,11 +103577,11 @@
         Experience = 2050,
         
         CanFlee = true,
-                
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(7, 8, 15)
-        }
+    };
+    
+    orc.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(7, 5, 11)
     };
     
     orc.Wield(new BattleAxe());
@@ -103609,12 +103618,17 @@
                 
         Movement = 2,
     };
+    
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
             
     gargoyle.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(8,     4, 8,   "The gargoyle strikes you with its claws."),    60 },
-        { new CreatureAttack(9,     6, 12,  "The gargoyle batters you with its wings."),    40 },
+        { 
+            new CreatureAttack(8,     4, 8,   "The gargoyle strikes you with its claws."),    60 
+        },
+        {
+            new CreatureAttack(9,     6, 12,  "The gargoyle batters you with its wings."),    40 
+        },
     };
     
     gargoyle.Blocks = new CreatureBlockCollection
@@ -103658,9 +103672,15 @@
     
     wolf.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(5,     4, 11,   "The wolf rakes you with its claws."),  50 }, 
-        { new CreatureAttack(7,     4, 13,  "The wolf sinks its teeth into you."),  30 }, 
-        { new CreatureAttack(7,     5, 15,  "The wolf lunges at you."),             20 }, 
+        { 
+            new CreatureAttack(5,     4, 9,   "The wolf rakes you with its claws."),  50
+        }, 
+        {
+            new CreatureAttack(7,     4, 11,  "The wolf sinks its teeth into you."),   30
+        }, 
+        {
+            new CreatureAttack(7,     5, 12,  "The wolf lunges at you."),              20
+        }, 
     };
         
     wolf.Blocks = new CreatureBlockCollection
@@ -103703,7 +103723,7 @@
         
     wraith.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(8),
+        new CreatureBasicAttack(8)
     };
     
     wraith.Spells = new CreatureSpellCollection()
@@ -103807,7 +103827,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9, 13, 28), 
+        new CreatureBasicAttack(9, 13, 22)
     };
     
     fighter.Wield(new Rapier());
@@ -103841,11 +103861,11 @@
         BaseDodge = 12,
                 
         Experience = 1800,
-        
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(7)
-        },
+    };
+    
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(7)
     };
     
     goblin.Wield(new Crossbow());
@@ -103879,11 +103899,11 @@
         BaseDodge = 13,
     
         Experience = 2950,
-        
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(8, 9, 16) }, 
-        },
+    };
+    
+    hobgoblin.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(8, 6, 13) 
     };
     
     hobgoblin.Wield(new Longsword());
@@ -103907,7 +103927,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="pwolf">
+    <entity name="lightningmesapwolf">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -103929,9 +103949,15 @@
     
     wolf.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(8,     5, 20,   "The wolf rakes you with its claws."),  50 }, 
-        { new CreatureAttack(9,     6, 23,  "The wolf sinks its teeth into you."),  30 }, 
-        { new CreatureAttack(9,     7, 26,  "The wolf lunges at you."),             20 }, 
+        { 
+            new CreatureAttack(8,     5, 19,   "The wolf rakes you with its claws."), 50 
+        }, 
+        {
+            new CreatureAttack(9,     6, 21,  "The wolf sinks its teeth into you."),  30 
+        }, 
+        {
+            new CreatureAttack(9,     7, 24,  "The wolf lunges at you."),             20 
+        }, 
     };
         
     wolf.Blocks = new CreatureBlockCollection
@@ -103958,7 +103984,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="kWolf">
+    <entity name="upperkWolf">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -103991,11 +104017,17 @@
     
     wolf.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(9,     10, 30,   "The wolf rakes you with its claws."),  50 }, 
-        { new CreatureAttack(11,     15, 35,  "The wolf sinks its teeth into you."),  30 }, 
-        { new CreatureAttack(11,     20, 45,  "The wolf lunges at you.",
+        { 
+            new CreatureAttack(9,     10, 30,   "The wolf rakes you with its claws."),  50 
+        }, 
+        {
+            new CreatureAttack(11,     15, 35,  "The wolf sinks its teeth into you."),  30 
+        }, 
+        {
+            new CreatureAttack(11,     20, 45,  "The wolf lunges at you.",
                                                 new AttackProneComponent(10),
-                                                new AttackStunComponent(10)),         20 }, 
+                                                new AttackStunComponent(10)),           20
+        }, 
     };
 
     wolf.Blocks = new CreatureBlockCollection
@@ -104019,7 +104051,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="rockWorm">
+    <entity name="upperrockWorm">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -104039,14 +104071,18 @@
         IceProtection = 100,
         FireProtection = 50,
     };
+    
     rockworm.AddStatus(new NightVisionStatus(rockworm));
     
     rockworm.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(8,     12, 16,     "The rockworm rolls over you"),      70 }, 
-        { new CreatureAttack(9,    15, 25,     "You've been bitten by the rockworm",
-                                                    new AttackPoisonComponent(8)),             30 },
-                                                    // TODO: Attack poison chance. 50%
+        { 
+            new CreatureAttack(8,     12, 16,     "The rockworm rolls over you"),        70 
+        }, 
+        {
+            new CreatureAttack(9,    15, 25,     "You've been bitten by the rockworm",
+                                                    new AttackPoisonComponent(8, 50)),   30
+        },
     };
         
     rockworm.Blocks = new CreatureBlockCollection
@@ -104097,7 +104133,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(8), 
+        new CreatureBasicAttack(8),
     };
     
     fighter.Wield(new FineCrossbow());
@@ -104138,7 +104174,7 @@
     
     ogre.Attacks = new CreatureAttackCollection
     {
-        { new CreatureBasicAttack(11, 20, 30) }, 
+        new CreatureBasicAttack(11, 17, 25)
     };
     
     ogre.AddStatus(new NightVisionStatus(ogre));
@@ -104164,7 +104200,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="lowerLizard">
+    <entity name="lightningmesalowerLizard">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -104182,8 +104218,12 @@
     
     lizard.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(8,     6, 15,  "The lizard claws at you"),             60 },
-        { new CreatureAttack(8,     7, 20,  "The lizard hits you with its tail"),   40 },
+        { 
+            new CreatureAttack(8,   6, 12,  "The lizard claws at you"),               60 
+        },
+        {
+            new CreatureAttack(8,     7, 15,  "The lizard hits you with its tail"),   40 
+        },
     };
     
     lizard.Blocks = new CreatureBlockCollection
@@ -104195,7 +104235,8 @@
     
     lizard.Spells = new CreatureSpellCollection(80.0)
     {
-        new CreatureSpell<IceStormSpell>(8),
+        new CreatureSpell<IceStormSpell>(
+            skillLevel: 8, intensity: 2),
     };
     
     lizard.AddGold(400);
@@ -104216,7 +104257,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="giant">
+    <entity name="lightningmesagiant">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[    
@@ -104226,8 +104267,11 @@
         BaseDodge = 23,
     
         Experience = 19000,
+        
         HideDetection = 21,
+        
         CanJumpkick = true,
+        CanStrikeCritically = false,
         
         BasePenetration = ShieldPenetration.VeryHeavy,
 
@@ -104235,6 +104279,7 @@
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
     };
+    
     giant.AddStatus(new NightVisionStatus(giant));
     
     giant.Attacks = new CreatureAttackCollection
@@ -104258,22 +104303,21 @@
     
     giant.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "his forearm"),
-        new CreatureBlock(4, "his thick skull"),
-        new CreatureBlock(3, "a meaty ham fist"),
+        new CreatureBlock(4, "his forearm"),
+        new CreatureBlock(6, "his thick skull"),
+        new CreatureBlock(1, "a meaty ham fist"),
     };
         
-   giant.AddGold(3000);
-   giant.AddLoot(new LootPack(
-       new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100, gemsPriceMutator),
-       new LootPackEntry(true, (from, container) => new ReturningHammer(),        100),
-       new LootPackEntry(true, (from, container) => new GrizzlyJacket(),        100),
-       new LootPackEntry(true, (from, container) => new ReturningHammer(),        100),
-       new LootPackEntry(true, (from, container) => new DragonScaleArmor(),        100),
-       new LootPackEntry(true, (from, container) => new PermanentIntelligencePotion(),        50)
-   ));
+    giant.AddGold(3000);
+    giant.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new ReturningHammer(),        100),
+        new LootPackEntry(true, (from, container) => new GrizzlyJacket(),        100),
+        new LootPackEntry(true, (from, container) => new DragonScaleArmor(),        100),
+        new LootPackEntry(true, (from, container) => new PermanentIntelligencePotion(),        50)
+    ));
        
-   return giant;
+    return giant;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -104284,7 +104328,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="goose">
+    <entity name="lightningmesagoose">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -104298,9 +104342,15 @@
     
     goose.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(5,     1, 8,   "The goose pecks you with his mighty beak."),  50 }, 
-        { new CreatureAttack(7,     2, 10,  "The goose kicks your shin."),  30 }, 
-        { new CreatureAttack(7,     3, 12,  "The goose flaps his wings in your face."),             20 }, 
+        { 
+            new CreatureAttack(5,     1, 8,   "The goose pecks you with his mighty beak."),  50 
+        }, 
+        {
+            new CreatureAttack(7,     2, 10,  "The goose kicks your shin."),                 30 
+        }, 
+        {
+            new CreatureAttack(7,     3, 12,  "The goose flaps his wings in your face."),    20 
+        },
     };
         
     goose.Blocks = new CreatureBlockCollection
@@ -104336,10 +104386,11 @@
                 
         Experience = 2800,
         BasePenetration = ShieldPenetration.Light,
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(8)
-        },
+    };
+    
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(8)
     };
     
     goblin.Wield(new Crossbow());
@@ -104363,7 +104414,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="upperArcher">
+    <entity name="chaosArcher">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -104386,7 +104437,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9), 
+        new CreatureBasicAttack(9) 
     };
     
     fighter.Wield(new FineCrossbow());
@@ -104410,7 +104461,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="upperFighter">
+    <entity name="chaosFighter">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -104433,7 +104484,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11, 20, 30), 
+        new CreatureBasicAttack(11, 20, 30)
     };
     
     fighter.Wield(new Longsword());
@@ -104471,12 +104522,17 @@
         BasePenetration = ShieldPenetration.Light,
         CanJumpkick = true,
     };
+    
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
             
     gargoyle.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(9,     5, 10,   "The gargoyle strikes you with its claws."),    60 },
-        { new CreatureAttack(10,     12, 20,  "The gargoyle batters you with its wings."),    40 },
+        { 
+            new CreatureAttack(9,     5, 10,   "The gargoyle strikes you with its claws."),    60 
+        },
+        {
+            new CreatureAttack(10,     12, 20,  "The gargoyle batters you with its wings."),    40 
+        },
     };
     
     gargoyle.Blocks = new CreatureBlockCollection
@@ -104515,13 +104571,12 @@
         MaxHealth = 65, Health = 65,
         BaseDodge = 11,
                 
-        Experience = 2800,
+        Experience = 2800,    
+    };
     
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(9, 12, 18),
-        }
-    
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(9, 12, 18)
     };
     
     goblin.Wield(new BattleAxe());
@@ -104566,7 +104621,7 @@
     goblin.Spells = new CreatureSpellCollection
     {
         new CreatureSpell<FireballSpell>(
-            skillLevel: 5, cost: 6, 
+            skillLevel: 9, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
             skillLevel: 7, cost: 3, 
@@ -104603,11 +104658,11 @@
         BaseDodge = 11,
     
         Experience = 3800,
-        
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(9, 13, 19) }, 
-        },
+    };
+    
+    hobgoblin.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(9, 13, 19)
     };
     
     hobgoblin.Wield(new Longsword());
@@ -104631,7 +104686,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="upperMA">
+    <entity name="chaosMA">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -104655,7 +104710,7 @@
     
     martialartist.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11, 20, 32), 
+        new CreatureBasicAttack(11, 20, 30)
     };   
     
     martialartist.AddGold(650);
@@ -104689,13 +104744,13 @@
         BasePenetration = ShieldPenetration.Medium,
         Immunity = CreatureImmunity.Web
     };
+        
+    ogre.AddStatus(new NightVisionStatus(ogre));
     
     ogre.Attacks = new CreatureAttackCollection
     {
-        { new CreatureBasicAttack(12, 21, 33) }, 
+        new CreatureBasicAttack(12, 21, 33)
     };
-    
-    ogre.AddStatus(new NightVisionStatus(ogre));
 
     ogre.Wield(new Halberd());    
     
@@ -104730,11 +104785,11 @@
         Experience = 3100,
         
         CanFlee = true,
-                
-        Attacks = new CreatureAttackCollection()
-        {
+    };
+    
+    orc.Attacks = new CreatureAttackCollection()
+    {
             new CreatureBasicAttack(8, 11, 17)
-        }
     };
     
     orc.Wield(new ShortSword());
@@ -104758,7 +104813,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="upperRapierFighter">
+    <entity name="chaosRapierFighter">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -104819,11 +104874,11 @@
         Movement = 2,
                 
         CanFlee = true,
-                
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(8, 12, 21)
-        }
+    };
+    
+    troll.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(8, 12, 18)
     };
     
     troll.Wield(new Greatsword());
@@ -104861,9 +104916,15 @@
     
     wolf.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(6,     5, 13,   "The wolf rakes you with its claws."),  50 }, 
-        { new CreatureAttack(8,     6, 15,  "The wolf sinks its teeth into you."),  30 }, 
-        { new CreatureAttack(9,     8, 17,  "The wolf lunges at you."),             20 }, 
+        { 
+            new CreatureAttack(6,     5, 13,   "The wolf rakes you with its claws."), 50
+        }, 
+        { 
+            new CreatureAttack(8,     6, 15,  "The wolf sinks its teeth into you."),  30 
+        }, 
+        {
+            new CreatureAttack(9,     8, 17,  "The wolf lunges at you."),             20 
+        }, 
     };
         
     wolf.Blocks = new CreatureBlockCollection
@@ -104902,11 +104963,12 @@
         
         Experience = 4500,
     };
+    
     wraith.AddStatus(new NightVisionStatus(wraith));
         
     wraith.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(8),
+        new CreatureBasicAttack(8)
     };
     
     wraith.Spells = new CreatureSpellCollection()
@@ -104957,8 +105019,12 @@
     
     lizard.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(8,     7, 18,  "The lizard claws at you"),             60 },
-        { new CreatureAttack(8,     8, 23,  "The lizard hits you with its tail"),   40 },
+        { 
+            new CreatureAttack(8,     7, 18,  "The lizard claws at you"),             60 
+        },
+        {
+            new CreatureAttack(8,     8, 23,  "The lizard hits you with its tail"),   40 
+        },
     };
     
     lizard.Blocks = new CreatureBlockCollection
@@ -104970,7 +105036,8 @@
     
     lizard.Spells = new CreatureSpellCollection(80.0)
     {
-        new CreatureSpell<IceStormSpell>(8),
+        new CreatureSpell<IceStormSpell>(
+        skillLevel: 8, intensity: 2)
     };
     
     lizard.AddGold(500);
@@ -104991,7 +105058,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="easyBear">
+    <entity name="uppereasyBear">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105005,13 +105072,20 @@
         BasePenetration = ShieldPenetration.VeryLight,
         CanSwim = true,
     };
+    
     bear.AddStatus(new NightVisionStatus(bear));
         
     bear.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(8,     10, 18,  "The bear slashes you with its claws."),        50 },
-        { new CreatureAttack(8,     12, 20,  "You've been mauled by the bear."),             40 },
-        { new CreatureAttack(9,     18, 30, "The bear crushes you within its embrace."),    10 }
+        {
+            new CreatureAttack(8,     10, 18,  "The bear slashes you with its claws."),        50 
+        },
+        {
+            new CreatureAttack(8,     12, 20,  "You've been mauled by the bear."),             40 
+        },
+        {
+            new CreatureAttack(9,     18, 30, "The bear crushes you within its embrace."),     10
+        }
     };
         
     bear.Blocks = new CreatureBlockCollection
@@ -105038,7 +105112,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="hardBear">
+    <entity name="upperhardBear">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105053,13 +105127,20 @@
             
         CanSwim = true,
     };
+    
     bear.AddStatus(new NightVisionStatus(bear));
         
     bear.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(9,     15, 20,  "The bear slashes you with its claws."),        50 },
-        { new CreatureAttack(9,     15, 30,  "You've been mauled by the bear."),             40 },
-        { new CreatureAttack(10,     30, 40, "The bear crushes you within its embrace."),    10 }
+        { 
+            new CreatureAttack(9,     15, 20,  "The bear slashes you with its claws."),        50 
+        },
+        {
+            new CreatureAttack(9,     15, 30,  "You've been mauled by the bear."),             40 
+        },
+        {
+            new CreatureAttack(10,     30, 40, "The bear crushes you within its embrace."),    10 
+        }
     };
         
     bear.Blocks = new CreatureBlockCollection
@@ -105086,19 +105167,54 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="drake">
+    <entity name="upperdrake">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    //var is just a name variable to use for the rest of the template, see below.
+    //new Drake() is a template used for mobs - generally it has a few stats set to it, and the body and sound type associated.
 	var drake = new Drake()
     {
+        //maxhealth is the most health the monster has, Health is what the monster spawns with
         MaxHealth = 3000, Health = 3000,
+        //BaseDodge is the main stat for defense rating: BaseDodge + Armor variables + weapon variables multiplied by 50 is their defense value.
         BaseDodge = 18,
-    
+        
+        //experience is the base experience given (multiplied by up to 3x in facet bonuses)
         Experience = 45000,
+        
+        /*HideDetection = Thief Detection. Hide Detection of 25 means a thief level 15 with 10 magic can hide from him 100% of the time. Lower thieves will blink
+        or be totally visible. Formula is as written above: Experience level + Magic Level on thief.*/
         HideDetection = 25,
+        
+        //Showing all the Can tags: Only CanStrikeCriticall is necessary here as Drake() variable can fly and charge, but adding them for documentation.
+        
+        //CanFly = ignores hindering terrain entirely. Can walk onto air hexes.
         CanFly = true,
+        
+        //CanCharge = I believe attacking with their weapon damage value. I'm not 100% sure but seems it's a 2 hex away jumpkick
         CanCharge = true,
+        
+        //CanStrikeCriticall is can it crit for double damage. We can set attack damage based on chances as seen below so I'm not sure if it's ever going to be necessary
+        CanStrikeCritically = false,
+        
+        //CanFlee is the monster will run when it hits severe health point
+        CanFlee = false,
+        
+        //CanLoot can be used to toggle mobs looting or not looting players
+        CanLoot = false,
+        
+        //CanSwim enables monsters who don't fly to swim in water. 
+        CanSwim = true,
+        
+        //Not actually sure what CanPanic does differently from CanFlee but it's a variable available
+        CanPanic = false,
+        
+        //CanJumpkick means it can jumpkick from 3 hexes away. I'm not sure where damage component for a jumpkick is pulled though so I don't know whether Charge or JK is the proper variable
+        CanJumpkick = true,
+        
+        //If set to false, monster cannot walk on land and will stay in water.
+        CanWalk = true,
         
         BasePenetration = ShieldPenetration.Heavy,
 
@@ -105107,10 +105223,18 @@
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
             
     };
+    
+    /*Statuses are buffs such as players wear: fire ice protection, NightVision, Strength, WaterBreathSpell, etc. use the var set at the top of the list. AddStatus, new, 
+    then type Status to see a list of options. Then in parenthesis the selected name of the var from beginning of the script above.*/
     drake.AddStatus(new NightVisionStatus(drake));
     
+    //This allows a timespan for which the drake will choose a new target of those visible at random. 10 seconds for example, here
     drake.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
     
+    /*Seen below is a series of creature attacks. The first value is the attack bonus, which is multiplied by 50 to find its attack value. The next value is the minimum damage the attack will deal,
+    followed by the maximum value. The quote is the message displayed if the attack hits. On the line below is a Component which is added: List of components is AttackAgeComponent, AttackPoisonComponent, AttackStunComponent and AttackProneComponent as of the time of writing this. Prone is when an attack knocks you into the next hex. The number in the parentheses after are the % chance of it landing. The last number on the line is the % for the attack to happen.
+    
+    So below we have a drake who has a 40% chance to do a 13*50 = 650 attack value swing. If it lands it will deal 45-60 damage. It has a 15% chance to knock you down and a 5% chance to stun. The next option is a 40% chance on an attack to do a 700 attack value swing for 50-65 damage, with a 25% chance to knock back and 10% chance to stun. The last attack is a 20% chance to swing for a 750 attack value, 60-80 damage attack. 35% chance to knock down and 15% chance to stun.*/
     drake.Attacks = new CreatureAttackCollection
     {
         {
@@ -105130,18 +105254,22 @@
         },
     };
     
+    //Blocks are custom text to use when blocking. It's a "weighted value" so in this example it adds 6 4 3 for a total of 13. Meaning it's a 46% chance to display "blocked by hard scales" etc going down
     drake.Blocks = new CreatureBlockCollection
     {
         new CreatureBlock(6, "hard scales"),
         new CreatureBlock(4, "a claw"),
         new CreatureBlock(3, "a wing"),
     };
-        
+    
+    /*Here are spells. Since drake doesn't hard cast or use mana it's simple. The example below is a 20% chance to cast a LightningBoltSpell of level 10 when the drake acts instead of attacking. Ouch! We can add other variables to these casts, such as TimeSpan which creates a cooldown. Salamanders from Kesmai have examples of this. If multiple spells are available we can also weight the ones which are cast more frequently. Look through other examples of spellcaster types to see. Look up to chaosWizard to check another note on this.*/
     drake.Spells = new CreatureSpellCollection(20.0)
     {
-        new CreatureSpell<LightningBoltSpell>(10),
+        new CreatureSpell<LightningBoltSpell>(
+            skillLevel: 10)
     };
     
+    /*Loot is simple. Here he drops 5000 gold, then from his container he drops all those items at 100, 50, 100, 10%, 50%, 100 100 50% 100 10% chances respectively. The gemspricemutator takes a 5000 value PearDiamond and makes its price 20% higher or lower than 5000. We can also do loot based on "Treasures" tabs type things. See other mobs in this zone. For an example of "Boss Loot Choices" Vlad and Kosh drop items from "KoshOptions and "VladOptions" treasure sets.*/
     drake.AddGold(5000);
     drake.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new PearDiamond(5000u),    100, gemsPriceMutator),
@@ -105167,7 +105295,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="iceDragon">
+    <entity name="uppericeDragon">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105190,7 +105318,9 @@
         Weakness = CreatureWeakness.IceSpearSpell,
         
         HideDetection = 31,
+        
     };
+    
     dragon.AddStatus(new NightVisionStatus(dragon));
     
     dragon.AddWeakness(typeof(SilverGreatAxe));
@@ -105205,7 +105335,7 @@
                                                         new AttackStunComponent(5)),               70
         },
         {
-            new CreatureAttack(17,      70, 100,     "The dragon sicks its teeth into you.",
+            new CreatureAttack(17,      70, 100,     "The dragon sinks its teeth into you.",
                                                         new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),               25
         },
@@ -105225,7 +105355,8 @@
         
     dragon.Spells = new CreatureSpellCollection(40.0)
     {
-        new CreatureSpell<DragonBreathIceSpell>(21), 
+        new CreatureSpell<DragonBreathIceSpell>(
+            skillLevel: 21), 
     };
     //todo: add griffin figurine, protection from cold amulet (replaces f/i ammy)
     dragon.AddGold(6000);
@@ -105252,7 +105383,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="yeti">
+    <entity name="upperyeti">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105264,8 +105395,8 @@
         Experience = 53000,
         HideDetection = 27,
         CanJumpkick = true,
-        
-        BasePenetration = ShieldPenetration.Medium,
+        CanStrikeCritically = false,
+        BasePenetration = ShieldPenetration.VeryHeavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
@@ -105275,6 +105406,7 @@
         IceProtection = 100,
         StunProtection = 100,
     };
+    
     yeti.AddStatus(new NightVisionStatus(yeti));
     
     yeti.CombatantChangeInterval = TimeSpan.FromSeconds(5.0);
@@ -105307,16 +105439,17 @@
     
     yeti.Spells = new CreatureSpellCollection(20.0)
     {
-        new CreatureSpell<DragonBreathIceSpell>(21),
+        new CreatureSpell<DragonBreathIceSpell>(
+            skillLevel: 21)
     };
         
    yeti.AddGold(12000);
    yeti.AddLoot(new LootPack(
        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
        new LootPackEntry(true, (from, container) => new BearSkull(),        100),
-       new LootPackEntry(true, (from, container) => new BreatheWaterBracelet(),        100),
+       new LootPackEntry(true, (from, container) => new BreatheWaterBracelet(),        33),
        new LootPackEntry(true, (from, container) => new ManaPotion(),        100),
-       new LootPackEntry(true, (from, container) => new SaffronRobe(),        100),
+       new LootPackEntry(true, (from, container) => new SaffronRobe(),        33),
        new LootPackEntry(true, (from, container) => new FeatherFallBoots(),        100),
        new LootPackEntry(true, (from, container) => new MisericordeDagger(),        100)
    ));
@@ -105332,7 +105465,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="confessorGhost">
+    <entity name="axeconfessorGhost">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105347,7 +105480,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="balmVendor">
+    <entity name="axebalmVendor">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105375,7 +105508,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="shopkeeperTemplate">
+    <entity name="axeshopkeeperTemplate">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105433,7 +105566,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="ojouleWizard">
+    <entity name="axeojouleWizard">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105463,7 +105596,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="recallVendor">
+    <entity name="axerecallVendor">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105491,7 +105624,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="statue">
+    <entity name="axestatue">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105512,12 +105645,12 @@
     
     statue.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(6),
+        new CreatureBasicAttack(6)
     };
     
     statue.Spells = new CreatureSpellCollection(100.0)
     {
-        new CreatureSpell<DeathSpell>(15),
+        new CreatureSpell<DeathSpell>(15)
     };
 
     return statue;
@@ -105531,7 +105664,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="weaponTrainerTemplate">
+    <entity name="axewepTrainTemp">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105558,7 +105691,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="tailorVendor">
+    <entity name="axetailorVendor">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105585,7 +105718,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="phredrickThaumaturge">
+    <entity name="axephredrickThaum">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105618,7 +105751,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="shadow">
+    <entity name="uppershadow">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105629,15 +105762,16 @@
         MaxMana = 5, Mana = 5,
         BaseDodge = 12,
         
-        Experience = 2500,
+        Experience = 3800,
         
         VisibilityDistance = 1,
     };
+    
     shadow.AddStatus(new NightVisionStatus(shadow));
         
     shadow.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(8, 18, 25),
+        new CreatureBasicAttack(8, 18, 23)
     };
     
     shadow.Spells = new CreatureSpellCollection()
@@ -105667,7 +105801,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="ChaosWizard">
+    <entity name="chaosWizard">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105689,24 +105823,32 @@
         FireProtection = 100,
     };
     
+    //for monsters with weapons equipped and non-multiple attacks we use this basic creature attack collection: 9 is chance to hit, 20 min damage, 28 max damage. It will just display "NPC Name hits you with <Blackstaff>!"
+    wizard.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(9, 20, 28)
+    };
+    
+    /*for hard casted spells we have this context. This NPC will cast Fireball and MagicMissile at evenly weighted chances. When it runs out of mana it will engage in melee, but in this version of LOK, when it regenerates enough mana for one of it's spells it will leave melee to try and cast. You can decide which spell you want him to cast on second attack chances by making it the one that costs less mana. It's a fairly useful function because you can make it so monsters are higher priority to players by setting values. Fun!
+    We can ALSO add timespan intervals for these, with TimeSpan.FromSeconds(15.0) for a 15 second cooldown on a spell. For this context I would add a , after instantCast: false and turn the line into:
+    new CreatureSpell<FireballSpell>(
+        skillLevel: 10, cost: 6, 
+        mantra: SpellHelper.GenerateMantra(), instantCast: false, TimeSpan.FromSeconds(15.0)),"
+        
+    See Leng monster MausWraith for the context of "weighted spell cast" chance: on him the 75/25 are the chances to cast different spells. Spells are the most complex things about monster creation so hopefully these comments help a bit. Have fun.*/ 
+    wizard.Spells = new CreatureSpellCollection
+    {
+        { new CreatureSpell<FireballSpell>(
+            skillLevel: 10, cost: 6, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false), 100, TimeSpan.FromSeconds(15.0) },
+        { new CreatureSpell<MagicMissileSpell>(
+            skillLevel: 9, cost: 3, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false), 100, TimeSpan.Zero }
+    };
+    
     wizard.Wield(new BlackStaff());
     wizard.Wield(new WoodenShield());
     wizard.Equip(new LeatherArmor());
-    
-    wizard.Attacks = new CreatureAttackCollection
-    {
-        new CreatureBasicAttack(9, 20, 28),
-    };
-    
-    wizard.Spells = new CreatureSpellCollection
-    {
-        new CreatureSpell<FireballSpell>(
-            skillLevel: 10, cost: 6, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false),
-        new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 9, cost: 3, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false)
-    };
     
     wizard.AddGold(700);
     wizard.AddLoot(new LootPack(
@@ -105741,18 +105883,14 @@
         MaxMana = 23, Mana = 23,
         BaseDodge = 13,
     
-        Experience = 2000,
+        Experience = 6900,
     
         CanSwim = true,
     };
     
-    thaum.Wield(new WoodenFlail());
-    thaum.Wield(new WoodenShield());
-    thaum.Equip(new LeatherArmor());
-    
-    thaum.Attacks = new CreatureAttackCollection
+    thaum.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(9, 20, 28),
+        new CreatureBasicAttack(9, 20, 28)
     };
     
     thaum.Spells = new CreatureSpellCollection()
@@ -105764,6 +105902,10 @@
             skillLevel: 7, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
+    
+    thaum.Wield(new WoodenFlail());
+    thaum.Wield(new WoodenShield());
+    thaum.Equip(new LeatherArmor());
         
     thaum.AddGold(750);
     thaum.AddLoot(new LootPack(
@@ -105783,7 +105925,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="ChaosWizardIce">
+    <entity name="chaosWizardIce">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105805,13 +105947,9 @@
         IceProtection = 100,
     };
     
-    wizard.Wield(new BlackStaff());
-    wizard.Wield(new WoodenShield());
-    wizard.Equip(new LeatherArmor());
-    
     wizard.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9, 20, 28),
+        new CreatureBasicAttack(9, 20, 28)
     };
     
     wizard.Spells = new CreatureSpellCollection
@@ -105822,7 +105960,11 @@
         new CreatureSpell<MagicMissileSpell>(
             skillLevel: 9, cost: 3, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
-    };
+    };    
+    
+    wizard.Wield(new BlackStaff());
+    wizard.Wield(new WoodenShield());
+    wizard.Equip(new LeatherArmor());
     
     wizard.AddGold(725);
     wizard.AddLoot(new LootPack(
@@ -105861,7 +106003,7 @@
 
     peacekeeper.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(6),
+        new CreatureBasicAttack(6)
     };
     
     return peacekeeper;
@@ -105875,7 +106017,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="thaumTrainerTemplate">
+    <entity name="axethaumTemplate">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105907,7 +106049,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="wizTrainerTemplate">
+    <entity name="axewizTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105939,7 +106081,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="lawfulGryphon">
+    <entity name="axelawfulGryphon">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105962,10 +106104,16 @@
         
     griffin.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(8,     10, 20,      "The griffin tears your flesh with its beak."),     30 },
-        { new CreatureAttack(8,     15, 30,     "The griffin buries its talons into you."),         30 },
-        { new CreatureAttack(9,     25, 40,     "The griffin pummels you with its wings.", 
-                                                    new AttackStunComponent(15.0)),                 40 }
+        { 
+            new CreatureAttack(8,     10, 20,      "The griffin tears your flesh with its beak."),     30 
+        },
+        {
+            new CreatureAttack(8,     15, 30,     "The griffin buries its talons into you."),          30 
+        },
+        {
+            new CreatureAttack(9,     25, 40,     "The griffin pummels you with its wings.", 
+                                                    new AttackStunComponent(15.0)),                    40
+        }
     };
     
     griffin.Blocks = new CreatureBlockCollection
@@ -106009,13 +106157,14 @@
             CreatureImmunity.Projectile | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell,
     };
+    
     presence.AddStatus(new NightVisionStatus(presence));
     
     presence.CombatantChangeInterval = TimeSpan.FromSeconds(20.0);
     
     presence.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(12,     10, 30,   "The presence reaches inside of you!"),             100 }, 
+        new CreatureAttack(12,     10, 30,   "The presence reaches inside of you!"),
     };
     
     presence.Blocks = new CreatureBlockCollection
@@ -106047,7 +106196,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="yetiGoblin">
+    <entity name="upperyetiGoblin">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106059,11 +106208,11 @@
                 
         Experience = 3800,
         BasePenetration = ShieldPenetration.Light,
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(8, 15, 23),
-        }
+    };
     
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(8, 15, 23)
     };
     
     goblin.Wield(new BattleAxe());
@@ -106087,7 +106236,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="yetiGoblinSentry">
+    <entity name="upperyetiGoblinSentry">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106098,10 +106247,11 @@
         Alignment = Alignment.Evil,
         Experience = 3800,
         BasePenetration = ShieldPenetration.Medium,
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(8)
-        },
+    };
+    
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(12)
     };
     
     goblin.Wield(new Crossbow());
@@ -106125,7 +106275,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="thiefTrainer">
+    <entity name="axethiefTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106205,7 +106355,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="axeshopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="33" y="33" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="axeArmorer">
@@ -106255,7 +106405,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="axeshopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="21" y="11" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="axeAvess">
@@ -106284,7 +106434,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="weaponTrainerTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="axewepTrainTemp" size="1" minimum="1" maximum="1" />
       <location x="31" y="29" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="axeOjoule">
@@ -106304,7 +106454,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ojouleWizard" size="1" minimum="1" maximum="1" />
+      <entry entity="axeojouleWizard" size="1" minimum="1" maximum="1" />
       <location x="27" y="15" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="axePhredrick">
@@ -106324,7 +106474,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="phredrickThaumaturge" size="1" minimum="1" maximum="1" />
+      <entry entity="axephredrickThaum" size="1" minimum="1" maximum="1" />
       <location x="32" y="11" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="Statue 1">
@@ -106344,7 +106494,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="statue" size="1" minimum="1" maximum="1" />
+      <entry entity="axestatue" size="1" minimum="1" maximum="1" />
       <location x="24" y="16" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="Statue 2">
@@ -106364,7 +106514,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="statue" size="1" minimum="1" maximum="1" />
+      <entry entity="axestatue" size="1" minimum="1" maximum="1" />
       <location x="25" y="22" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="Statue 3">
@@ -106384,7 +106534,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="statue" size="1" minimum="1" maximum="1" />
+      <entry entity="axestatue" size="1" minimum="1" maximum="1" />
       <location x="31" y="14" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="axePriest">
@@ -106446,7 +106596,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="balmVendor" size="1" minimum="1" maximum="1" />
+      <entry entity="axebalmVendor" size="1" minimum="1" maximum="1" />
       <location x="33" y="24" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="recallVendor">
@@ -106466,7 +106616,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="recallVendor" size="1" minimum="1" maximum="1" />
+      <entry entity="axerecallVendor" size="1" minimum="1" maximum="1" />
       <location x="30" y="24" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="axeThorgen">
@@ -106495,7 +106645,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="weaponTrainerTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="axewepTrainTemp" size="1" minimum="1" maximum="1" />
       <location x="32" y="22" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="axeGhost">
@@ -106515,7 +106665,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="confessorGhost" size="1" minimum="1" maximum="1" />
+      <entry entity="axeconfessorGhost" size="1" minimum="1" maximum="1" />
       <location x="13" y="4" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="lockpickVendor">
@@ -106538,7 +106688,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="axeshopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="10" y="32" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="axeBanker">
@@ -106607,7 +106757,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="axeshopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="7" y="11" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="lockpickBalmSeller">
@@ -106627,7 +106777,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="balmVendor" size="1" minimum="1" maximum="1" />
+      <entry entity="axebalmVendor" size="1" minimum="1" maximum="1" />
       <location x="8" y="15" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="lockpickWizTrainer">
@@ -106648,7 +106798,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="wizTrainerTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="axewizTrainer" size="1" minimum="1" maximum="1" />
       <location x="4" y="2" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="lockpickThaumTrainer">
@@ -106674,7 +106824,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="thaumTrainerTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="axethaumTemplate" size="1" minimum="1" maximum="1" />
       <location x="7" y="3" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="lockpickMATrainer">
@@ -106703,7 +106853,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="weaponTrainerTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="axewepTrainTemp" size="1" minimum="1" maximum="1" />
       <location x="2" y="5" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="lockpickWeaponTrainer">
@@ -106732,7 +106882,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="weaponTrainerTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="axewepTrainTemp" size="1" minimum="1" maximum="1" />
       <location x="4" y="13" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="lawfulGryphon">
@@ -106752,7 +106902,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="lawfulGryphon" size="1" minimum="1" maximum="1" />
+      <entry entity="axelawfulGryphon" size="1" minimum="1" maximum="1" />
       <location x="35" y="34" region="8" />
     </spawn>
     <spawn type="LocationSpawner" name="tanner">
@@ -106772,7 +106922,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="tailorVendor" size="1" minimum="1" maximum="1" />
+      <entry entity="axetailorVendor" size="1" minimum="1" maximum="1" />
       <location x="34" y="36" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="lockpickTanner">
@@ -106794,7 +106944,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="tailorVendor" size="1" minimum="1" maximum="1" />
+      <entry entity="axetailorVendor" size="1" minimum="1" maximum="1" />
       <location x="6" y="18" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="figEngraver">
@@ -106820,7 +106970,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="axeshopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="30" y="7" region="8" />
     </spawn>
     <spawn type="LocationSpawner" name="axeMAFoote">
@@ -106977,7 +107127,7 @@
       <entry entity="lightningMesaOrc" size="3" minimum="3" maximum="6" />
       <entry entity="lightningMesaGargoyle" size="1" minimum="2" maximum="4" />
       <entry entity="lightningMesaGoblinMage" size="1" minimum="2" maximum="4" />
-      <entry entity="pwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="lightningmesapwolf" size="1" minimum="0" maximum="1" />
       <entry entity="lightningMesaRapier" size="1" minimum="1" maximum="3" />
       <entry entity="lightningMesaGoblinSentry" size="2" minimum="3" maximum="6" />
       <entry entity="lightningMesaHobgoblin" size="3" minimum="3" maximum="6" />
@@ -107007,7 +107157,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="lightningMesaWraith" size="1" minimum="2" maximum="4" />
-      <entry entity="pwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="lightningmesapwolf" size="1" minimum="0" maximum="1" />
       <entry entity="lightningMesaTroll" size="2" minimum="2" maximum="4" />
       <entry entity="lightningMesaGargoyle" size="1" minimum="0" maximum="0" />
       <entry entity="lightningMesaHobgoblin" size="3" minimum="3" maximum="4" />
@@ -107043,8 +107193,8 @@
       <entry entity="lightningMesaFighter" size="1" minimum="1" maximum="3" />
       <entry entity="lightningmesaMA" size="1" minimum="1" maximum="3" />
       <entry entity="lightningMesaOrc" size="3" minimum="3" maximum="5" />
-      <entry entity="rockWorm" size="1" minimum="1" maximum="2" />
-      <entry entity="pwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="upperrockWorm" size="1" minimum="1" maximum="2" />
+      <entry entity="lightningmesapwolf" size="1" minimum="0" maximum="1" />
       <entry entity="lightningMesaWraith" size="1" minimum="1" maximum="2" />
       <entry entity="lightningMesaGoblinSentry" size="3" minimum="2" maximum="4" />
       <entry entity="lightningMesaOgre" size="1" minimum="1" maximum="2" />
@@ -107084,8 +107234,8 @@
       <entry entity="lightningMesaGoblinMage" size="1" minimum="1" maximum="3" />
       <entry entity="lightningMesaRapier" size="1" minimum="1" maximum="3" />
       <entry entity="lightningMesaGoblinSentry" size="3" minimum="1" maximum="3" />
-      <entry entity="rockWorm" size="1" minimum="1" maximum="2" />
-      <entry entity="pwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="upperrockWorm" size="1" minimum="1" maximum="2" />
+      <entry entity="lightningmesapwolf" size="1" minimum="0" maximum="1" />
       <bounds region="6">
         <inclusion left="2" top="4" right="25" bottom="12" />
         <inclusion left="5" top="13" right="7" bottom="21" />
@@ -107172,8 +107322,8 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="giant" size="1" minimum="1" maximum="1" />
-      <entry entity="goose" size="1" minimum="1" maximum="1" />
+      <entry entity="lightningmesagiant" size="1" minimum="1" maximum="1" />
+      <entry entity="lightningmesagoose" size="1" minimum="1" maximum="1" />
       <bounds region="8">
         <inclusion left="18" top="13" right="20" bottom="16" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -107227,17 +107377,17 @@
       <entry entity="upperGoblinSentry" size="3" minimum="5" maximum="8" />
       <entry entity="upperOgre" size="1" minimum="3" maximum="5" />
       <entry entity="upperWolf" size="3" minimum="4" maximum="7" />
-      <entry entity="shadow" size="1" minimum="3" maximum="5" />
+      <entry entity="uppershadow" size="1" minimum="3" maximum="5" />
       <entry entity="upperHobgoblin" size="3" minimum="4" maximum="7" />
       <entry entity="upperGoblinMage" size="1" minimum="2" maximum="4" />
-      <entry entity="pwolf" size="1" minimum="0" maximum="2" />
+      <entry entity="lightningmesapwolf" size="1" minimum="0" maximum="2" />
       <entry entity="upperTroll" size="2" minimum="3" maximum="6" />
       <entry entity="upperGoblin" size="3" minimum="4" maximum="7" />
       <entry entity="upperWraith" size="1" minimum="3" maximum="6" />
-      <entry entity="hardBear" size="1" minimum="1" maximum="1" />
-      <entry entity="rockWorm" size="1" minimum="1" maximum="2" />
+      <entry entity="upperhardBear" size="1" minimum="1" maximum="1" />
+      <entry entity="upperrockWorm" size="1" minimum="1" maximum="2" />
       <entry entity="upperOrc" size="3" minimum="4" maximum="7" />
-      <entry entity="easyBear" size="1" minimum="1" maximum="3" />
+      <entry entity="uppereasyBear" size="1" minimum="1" maximum="3" />
       <bounds region="12">
         <inclusion left="1" top="1" right="24" bottom="38" />
         <inclusion left="25" top="9" right="29" bottom="38" />
@@ -107264,8 +107414,8 @@
       </script>
       <entry entity="upperLizard" size="1" minimum="3" maximum="4" />
       <entry entity="upperWolf" size="3" minimum="2" maximum="4" />
-      <entry entity="pwolf" size="1" minimum="0" maximum="1" />
-      <entry entity="easyBear" size="1" minimum="1" maximum="2" />
+      <entry entity="lightningmesapwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="uppereasyBear" size="1" minimum="1" maximum="2" />
       <bounds region="12">
         <inclusion left="25" top="3" right="32" bottom="8" />
         <inclusion left="30" top="9" right="34" bottom="31" />
@@ -107297,10 +107447,10 @@
       <entry entity="upperWraith" size="1" minimum="1" maximum="3" />
       <entry entity="upperHobgoblin" size="3" minimum="1" maximum="5" />
       <entry entity="upperWolf" size="3" minimum="2" maximum="5" />
-      <entry entity="shadow" size="1" minimum="2" maximum="4" />
-      <entry entity="easyBear" size="1" minimum="1" maximum="2" />
-      <entry entity="rockWorm" size="1" minimum="1" maximum="2" />
-      <entry entity="pwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="uppershadow" size="1" minimum="2" maximum="4" />
+      <entry entity="uppereasyBear" size="1" minimum="1" maximum="2" />
+      <entry entity="upperrockWorm" size="1" minimum="1" maximum="2" />
+      <entry entity="lightningmesapwolf" size="1" minimum="0" maximum="1" />
       <entry entity="upperOrc" size="3" minimum="2" maximum="4" />
       <bounds region="12">
         <inclusion left="38" top="4" right="46" bottom="36" />
@@ -107332,12 +107482,12 @@
       <entry entity="lightningMesaWraith" size="1" minimum="1" maximum="2" />
       <entry entity="lightningMesaOgre" size="1" minimum="2" maximum="4" />
       <entry entity="lightningMesaOrc" size="3" minimum="3" maximum="5" />
-      <entry entity="pwolf" size="1" minimum="0" maximum="2" />
-      <entry entity="easyBear" size="1" minimum="1" maximum="2" />
-      <entry entity="hardBear" size="1" minimum="0" maximum="1" />
-      <entry entity="rockWorm" size="1" minimum="1" maximum="2" />
+      <entry entity="lightningmesapwolf" size="1" minimum="0" maximum="2" />
+      <entry entity="uppereasyBear" size="1" minimum="1" maximum="2" />
+      <entry entity="upperhardBear" size="1" minimum="0" maximum="1" />
+      <entry entity="upperrockWorm" size="1" minimum="1" maximum="2" />
       <entry entity="lightningmesaGoblin" size="3" minimum="2" maximum="4" />
-      <entry entity="kWolf" size="1" minimum="0" maximum="1" />
+      <entry entity="upperkWolf" size="1" minimum="0" maximum="1" />
       <bounds region="10">
         <inclusion left="1" top="3" right="25" bottom="39" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -107387,7 +107537,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="pwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="lightningmesapwolf" size="1" minimum="0" maximum="1" />
       <entry entity="upperLizard" size="1" minimum="2" maximum="3" />
       <bounds region="23">
         <inclusion left="2" top="8" right="7" bottom="27" />
@@ -107445,8 +107595,8 @@
       <entry entity="upperHobgoblin" size="3" minimum="1" maximum="2" />
       <entry entity="upperTroll" size="2" minimum="1" maximum="2" />
       <entry entity="upperGoblinSentry" size="3" minimum="1" maximum="2" />
-      <entry entity="pwolf" size="1" minimum="0" maximum="1" />
-      <entry entity="kWolf" size="1" minimum="0" maximum="1" />
+      <entry entity="lightningmesapwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="upperkWolf" size="1" minimum="0" maximum="1" />
       <entry entity="upperWraith" size="1" minimum="0" maximum="1" />
       <bounds region="23">
         <inclusion left="11" top="3" right="16" bottom="20" />
@@ -107473,7 +107623,7 @@
       </script>
       <entry entity="upperLizard" size="1" minimum="2" maximum="4" />
       <entry entity="upperWolf" size="3" minimum="2" maximum="3" />
-      <entry entity="hardBear" size="1" minimum="1" maximum="2" />
+      <entry entity="upperhardBear" size="1" minimum="1" maximum="2" />
       <bounds region="45">
         <inclusion left="1" top="5" right="10" bottom="20" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -107497,9 +107647,9 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="yetiGoblin" size="1" minimum="3" maximum="4" />
-      <entry entity="yetiGoblinSentry" size="1" minimum="3" maximum="4" />
-      <entry entity="yeti" size="1" minimum="1" maximum="1" />
+      <entry entity="upperyetiGoblin" size="1" minimum="3" maximum="4" />
+      <entry entity="upperyetiGoblinSentry" size="1" minimum="3" maximum="4" />
+      <entry entity="upperyeti" size="1" minimum="1" maximum="1" />
       <bounds region="45">
         <inclusion left="11" top="9" right="15" bottom="14" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -107523,7 +107673,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ChaosWizard" size="1" minimum="2" maximum="2" />
+      <entry entity="chaosWizard" size="1" minimum="2" maximum="2" />
       <entry entity="chaosThaum" size="1" minimum="1" maximum="1" />
       <bounds region="17">
         <inclusion left="8" top="1" right="14" bottom="11" />
@@ -107548,8 +107698,8 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="upperRapierFighter" size="1" minimum="1" maximum="2" />
-      <entry entity="upperMA" size="1" minimum="1" maximum="2" />
+      <entry entity="chaosRapierFighter" size="1" minimum="1" maximum="2" />
+      <entry entity="chaosMA" size="1" minimum="1" maximum="2" />
       <entry entity="upperWolf" size="3" minimum="1" maximum="1" />
       <bounds region="18">
         <inclusion left="1" top="17" right="7" bottom="27" />
@@ -107576,8 +107726,8 @@
       </script>
       <entry entity="upperWraith" size="1" minimum="1" maximum="1" />
       <entry entity="upperTroll" size="2" minimum="1" maximum="1" />
-      <entry entity="ChaosWizardIce" size="1" minimum="1" maximum="1" />
-      <entry entity="upperFighter" size="1" minimum="1" maximum="1" />
+      <entry entity="chaosWizardIce" size="1" minimum="1" maximum="1" />
+      <entry entity="chaosFighter" size="1" minimum="1" maximum="1" />
       <bounds region="19">
         <inclusion left="1" top="3" right="7" bottom="13" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -107601,7 +107751,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="upperRapierFighter" size="1" minimum="2" maximum="2" />
+      <entry entity="chaosRapierFighter" size="1" minimum="2" maximum="2" />
       <entry entity="upperTroll" size="3" minimum="1" maximum="1" />
       <entry entity="upperHobgoblin" size="3" minimum="1" maximum="1" />
       <bounds region="20">
@@ -107627,11 +107777,11 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="upperRapierFighter" size="1" minimum="2" maximum="3" />
-      <entry entity="upperMA" size="1" minimum="2" maximum="4" />
-      <entry entity="ChaosWizard" size="1" minimum="1" maximum="2" />
+      <entry entity="chaosRapierFighter" size="1" minimum="2" maximum="3" />
+      <entry entity="chaosMA" size="1" minimum="2" maximum="4" />
+      <entry entity="chaosWizard" size="1" minimum="1" maximum="2" />
       <entry entity="upperWolf" size="3" minimum="2" maximum="3" />
-      <entry entity="pwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="lightningmesapwolf" size="1" minimum="0" maximum="1" />
       <entry entity="chaosThaum" size="1" minimum="1" maximum="2" />
       <bounds region="18">
         <inclusion left="7" top="4" right="14" bottom="28" />
@@ -107656,13 +107806,13 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="upperFighter" size="1" minimum="4" maximum="8" />
-      <entry entity="ChaosWizardIce" size="1" minimum="1" maximum="3" />
-      <entry entity="ChaosWizard" size="1" minimum="1" maximum="3" />
-      <entry entity="upperMA" size="1" minimum="4" maximum="8" />
-      <entry entity="upperRapierFighter" size="1" minimum="4" maximum="8" />
+      <entry entity="chaosFighter" size="1" minimum="4" maximum="8" />
+      <entry entity="chaosWizardIce" size="1" minimum="1" maximum="3" />
+      <entry entity="chaosWizard" size="1" minimum="1" maximum="3" />
+      <entry entity="chaosMA" size="1" minimum="4" maximum="8" />
+      <entry entity="chaosRapierFighter" size="1" minimum="4" maximum="8" />
       <entry entity="chaosThaum" size="1" minimum="1" maximum="3" />
-      <entry entity="upperArcher" size="1" minimum="3" maximum="5" />
+      <entry entity="chaosArcher" size="1" minimum="3" maximum="5" />
       <entry entity="upperOgre" size="1" minimum="2" maximum="3" />
       <bounds region="18">
         <inclusion left="14" top="4" right="30" bottom="32" />
@@ -107687,7 +107837,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="iceDragon" size="1" minimum="1" maximum="1" />
+      <entry entity="uppericeDragon" size="1" minimum="1" maximum="1" />
       <bounds region="39">
         <inclusion left="0" top="0" right="5" bottom="8" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -107711,7 +107861,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="drake" size="1" minimum="1" maximum="1" />
+      <entry entity="upperdrake" size="1" minimum="1" maximum="1" />
       <bounds region="36">
         <inclusion left="0" top="0" right="7" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
