@@ -99908,8 +99908,8 @@ return orc;
             
         // Restock only some items.
         // TODO: Can we move this logic to the template?
-        foreach (StockEntry stock in wares.Random(Utility.RandomBetween(3, 5)))
-            shopkeeper.Restock(stock);
+        for (var i = Utility.Random(3, 5); i > 0; i--)
+            shopkeeper.Restock();
     }
 ]]></block>
         <block><![CDATA[]]></block>
