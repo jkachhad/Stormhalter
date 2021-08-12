@@ -105175,14 +105175,14 @@
     var dragon = new Dragon()
     {
         MaxHealth = 5000, Health = 5000,
-        BaseDodge = 19,
+        BaseDodge = 24,
         
         Experience = 75000,
         
         CanFly = true,
         CanCharge = true,
         
-        BasePenetration = ShieldPenetration.VeryHeavy,
+        BasePenetration = ShieldPenetration.Medium,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
@@ -105202,17 +105202,17 @@
         {
             new CreatureAttack(16,      40, 70,     "The dragon skewers you with its horn.",
                                                         new AttackProneComponent(10), 
-                                                        new AttackStunComponent(5)),               40
+                                                        new AttackStunComponent(5)),               70
         },
         {
             new CreatureAttack(17,      70, 100,     "The dragon sicks its teeth into you.",
                                                         new AttackProneComponent(15), 
-                                                        new AttackStunComponent(5)),               40
+                                                        new AttackStunComponent(5)),               25
         },
         {
-            new CreatureAttack(15,      80, 120,      "The dragon rakes you with its claws.",
+            new CreatureAttack(18,      90, 120,      "The dragon rakes you with its claws.",
                                                         new AttackProneComponent(20), 
-                                                        new AttackStunComponent(5)),                20
+                                                        new AttackStunComponent(5)),                5
         },
     };
     
@@ -105223,9 +105223,9 @@
         new CreatureBlock(3, "a wing"),
     };
         
-    dragon.Spells = new CreatureSpellCollection(35.0)
+    dragon.Spells = new CreatureSpellCollection(40.0)
     {
-        new CreatureSpell<DragonBreathIceSpell>(21), 
+        new CreatureSpell<DragonBreathIceSpell>(31), 
     };
     //todo: add griffin figurine, protection from cold amulet (replaces f/i ammy)
     dragon.AddGold(6000);
