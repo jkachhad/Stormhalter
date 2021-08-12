@@ -87972,6 +87972,84 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="bloodlandsPeaceKeeper">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var female = Utility.RandomBool();
+    var peacekeeper = new Peacekeeper()
+    {
+        Name = _names.Random(),
+        Body = (female ? 10 : 9), IsFemale = female,
+       
+        BaseDodge = 11,
+        MaxHealth = 830, Health = 830,
+        
+        Experience = 50,
+    };
+    
+    peacekeeper.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(40),
+    };
+    
+    return peacekeeper;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="bloodlandsRaven">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	//todo add raven model
+    var raven = new Raven()
+    {
+        Name = "Morbin",
+        MaxHealth = 199, Health = 199,
+        BaseDodge = 17,
+        BasePenetration = ShieldPenetration.Medium,
+        CanSwim = true,
+        Experience = 1700,
+        Alignment = Alignment.Lawful,
+    };
+    
+    raven.Home = new RectangleBounds()
+    {
+        new Rectangle2D(23, 21, 13, 21, 1)
+    };
+    
+    raven.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(17,     12, 28,   "The raven buffets you with his wings."),  50 }, 
+        { new CreatureAttack(18,     13, 22,  "The raven sends a flurry of pecks towards you."),  30 }, 
+        { new CreatureAttack(19,     14, 25,  "The raven pecks at your eyes attempting to blind you."),             20 }, 
+    };
+        
+    raven.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(16, "a swift wing"),
+        new CreatureBlock(13, "its beak"),
+    };
+    raven.AddGold(1475);
+            
+    return raven;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="bloodlandsBanker">
@@ -88272,6 +88350,64 @@ s   pawn.Name = "Norx";
         <block><![CDATA[]]></block>
       </script>
       <location x="23" y="14" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="bloodlandsSherrif">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+spawn.Name = "The Reeve";
+    spawn.Body = 68; spawn.IsFemale = false;
+    
+    spawn.BaseDodge = 25;
+    
+    if (spawn is Peacekeeper sheriff)
+    {
+        sheriff.Home = new RectangleBounds()
+        {  
+            new Rectangle2D(28, 16, 4, 9, 1)
+            
+            
+        };
+        
+        sheriff.Wield(new Crossbow());
+        sheriff.Equip(new LeatherArmor());
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="bloodlandsPeaceKeeper" size="1" minimum="1" maximum="1" />
+      <location x="30" y="12" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="bloodlandsRaven">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="bloodlandsRaven" size="1" minimum="1" maximum="1" />
+      <location x="30" y="12" region="1" />
     </spawn>
     <spawn type="RegionSpawner" name="surfacePirhana">
       <minimumDelay>900</minimumDelay>
