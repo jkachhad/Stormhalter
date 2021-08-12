@@ -100074,12 +100074,14 @@ return orc;
       <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="34" y="21" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="kesmaiShopkeeper4">
+    <spawn type="LocationSpawner" name="kesmaiPawnshop">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Name = "Dik";
+
     if (spawn is Shopkeeper shopkeeper)
         shopkeeper.AddCounter(new Point2D(40, 31, 1));
 ]]></block>
