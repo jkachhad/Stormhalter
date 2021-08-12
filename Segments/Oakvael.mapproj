@@ -83964,7 +83964,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="confessorGhost">
+    <entity name="oakconfessorGhost">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -83980,7 +83980,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bankerTemplate">
+    <entity name="oakbankerTemplate">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -84006,7 +84006,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="tannerTemplate">
+    <entity name="oaktannerTemplate">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -84061,7 +84061,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="mugwortVendor">
+    <entity name="oakmugwortVendor">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -84090,7 +84090,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="shopkeeperTemplate">
+    <entity name="oakshopkeeperTemplate">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -84117,7 +84117,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="thaumTrainerTemplate">
+    <entity name="oakthaumTrainerTemplate">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -84335,7 +84335,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="aniet">
+    <entity name="oakaniet">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -84376,17 +84376,20 @@
         BaseDodge = 10,
 
         Experience = 50,
-
-        Attacks = new CreatureAttackCollection
-        {
-            new CreatureBasicAttack(6),
-        },
-        Spells = new CreatureSpellCollection()
-        {
-            { new CreatureSpell<CurseSpell>(3, mantra: SpellHelper.GenerateMantra(),
-                cost: 3, instantCast: false) }
-        }
     };
+    
+    priest.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(6)
+    };
+    
+    priest.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<CurseSpell>(
+                skillLevel: 3, cost: 3,
+                mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
+    
     priest.Brain = new PriestAI(priest);
     priest.Home = new RectangleBounds()
     {
@@ -84407,7 +84410,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="tagget">
+    <entity name="oaktagget">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -84436,7 +84439,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="cudyl">
+    <entity name="oakcudyl">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -84456,7 +84459,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="peyton">
+    <entity name="oakpeyton">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -84469,11 +84472,11 @@
         BaseDodge = 15,
         BasePenetration = ShieldPenetration.Light,
         Experience = 50,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(8) }, 
-        },
+    };
+    
+    peyton.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(8) 
     };
 
     peyton.Wield(new Crossbow());
@@ -84490,7 +84493,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="karin">
+    <entity name="oakkarin">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -84503,11 +84506,11 @@
         BaseDodge = 15,
 
         Experience = 50,
-        
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(8) }, 
-        },
+    };
+    
+    karin.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(8)
     };
 
     karin.Wield(new Greatsword());
@@ -84535,26 +84538,39 @@
 
         Experience = 2350,
         
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureAttack(11, 8, 16, "The griffin tears your flesh with its beak."), 40 }, 
-            { new CreatureAttack(11, 10, 25, "The griffin buries its talons into you.",
-                new AttackStunComponent(20.0)), 30 }, 
-            { new CreatureAttack(11, 20, 35, "The griffin pummels you with its wings."), 30 }, 
-        },
-        
-        Blocks = new CreatureBlockCollection
-        {
-            { new CreatureBlock(6, "the armor") }, 
-            { new CreatureBlock(4, "a talon") }, 
-            { new CreatureBlock(3, "a beak") }, 
-        },
-        
         MagicProtection = 20,
         
         HideDetection = 18,
     };
-    griffin.AddStatus(new NightVisionStatus(griffin));    
+    
+    griffin.AddStatus(new NightVisionStatus(griffin)); 
+    
+    griffin.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(11, 8, 16, "The griffin tears your flesh with its beak."),   40 
+        }, 
+        {
+            new CreatureAttack(11, 10, 25, "The griffin buries its talons into you.",
+                                                    new AttackStunComponent(20.0)),         30
+        }, 
+        {
+            new CreatureAttack(11, 20, 35, "The griffin pummels you with its wings."),      30
+        }, 
+    };
+        
+    griffin.Blocks = new CreatureBlockCollection
+    {
+        {
+            new CreatureBlock(6, "the armor")
+        }, 
+        {
+            new CreatureBlock(4, "a talon")
+        }, 
+        {
+            new CreatureBlock(3, "a beak") 
+        }, 
+    };
 
     griffin.AddGold(1050);
     griffin.AddLoot(new LootPack(
@@ -84586,18 +84602,23 @@
         Experience = 525,
 
         Movement = 2,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureAttack(7, 2, 8, "The crocodile snaps his massive jaws shut upon you."), 60 }, 
-            { new CreatureAttack(7, 4, 10, "The crocodile hits you with its tail."), 40 }, 
-        },
-        Blocks = new CreatureBlockCollection
-        {
-            { new CreatureBlock(6, "the tough skin") }, 
-            { new CreatureBlock(4, "a tail") }, 
-        },
     };    
+    
+    crocodile.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(7, 2, 8, "The crocodile snaps his massive jaws shut upon you."), 60 
+        }, 
+        {
+            new CreatureAttack(7, 4, 10, "The crocodile hits you with its tail."),              40 
+        }, 
+    };
+    
+    crocodile.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the tough skin"),
+        new CreatureBlock(4, "a tail")
+    };
 
     crocodile.AddGold(350);
     crocodile.AddLoot(
@@ -84627,20 +84648,28 @@
         BaseDodge = 14,
 
         Experience = 2200,
-        
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureAttack(7, 12, 18, "The bear slashes you with its claws."), 50 }, 
-            { new CreatureAttack(7, 15, 25, "You've been mauled by the bear."), 40 }, 
-            { new CreatureAttack(8, 20, 35, "The bear crushes you within its embrace."), 10 }, 
-        },
-        Blocks = new CreatureBlockCollection
-        {
-            { new CreatureBlock(6, "the tough hide") }, 
-            { new CreatureBlock(4, "a claw") }, 
-        },
     };
+    
     largeBear.AddStatus(new NightVisionStatus(largeBear));    
+    
+    largeBear.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(7, 12, 18, "The bear slashes you with its claws."),      50 
+        }, 
+        {
+            new CreatureAttack(7, 15, 25, "You've been mauled by the bear."),           40 
+        }, 
+        {
+            new CreatureAttack(8, 20, 35, "The bear crushes you within its embrace."),  10 
+        }, 
+    };
+    
+    largeBear.Blocks = new CreatureBlockCollection
+    {
+       new CreatureBlock(6, "the tough hide"),
+       new CreatureBlock(4, "a claw") 
+    };
 
     largeBear.AddGold(1450);
     largeBear.AddLoot(
@@ -84671,19 +84700,26 @@
         BaseDodge = 12,
 
         Experience = 450,
-
-        Attacks = new CreatureAttackCollection
+    };
+    
+    wolf.Attacks = new CreatureAttackCollection
+    {
+        { 
+            new CreatureAttack(6, 2, 5, "The wolf rakes you with its claws."),  50 
+        }, 
         {
-            { new CreatureAttack(6, 2, 5, "The wolf rakes you with its claws."), 50 }, 
-            { new CreatureAttack(7, 3, 6, "The wolf sinks its teeth into you."), 30 }, 
-            { new CreatureAttack(7, 4, 8, "The wolf lunges at you."), 20 }, 
-        },
-        Blocks = new CreatureBlockCollection
+            new CreatureAttack(7, 3, 6, "The wolf sinks its teeth into you."),  30 
+        }, 
         {
+            new CreatureAttack(7, 4, 8, "The wolf lunges at you."),             20
+        }, 
+    };
+    
+    wolf.Blocks = new CreatureBlockCollection
+    {
             { new CreatureBlock(6, "the thick hide") }, 
             { new CreatureBlock(3, "a paw") }, 
-        },
-    };    
+    };
 
     wolf.AddGold(325);
     wolf.AddLoot(
@@ -84714,18 +84750,23 @@
         BaseDodge = 12,
 
         Experience = 425,
-        
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureAttack(5, 2, 6, "You have been gored by the boar."), 60 }, 
-            { new CreatureAttack(6, 3, 8, "The boar tramples you."), 40 }, 
-        },
-        Blocks = new CreatureBlockCollection
-        {
-            { new CreatureBlock(6, "the armor") }, 
-            { new CreatureBlock(4, "a cloven hoof") }, 
-        },
     };    
+    
+    boar.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(5, 2, 6, "You have been gored by the boar."),    60
+        },
+        {
+            new CreatureAttack(6, 3, 8, "The boar tramples you."),              40
+        },
+    };
+    
+    boar.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(4, "a cloven hoof")
+    };
 
     boar.AddGold(200);
     boar.AddLoot(
@@ -84758,18 +84799,19 @@
         Experience = 750,
         
         BasePenetration = ShieldPenetration.VeryLight,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureAttack(6, 1, 8, "You have been stung by a beetle.",
-                new AttackPoisonComponent(3), 
-                new AttackStunComponent(10)), 10 }, 
-        },
-        Blocks = new CreatureBlockCollection
-        {
-            { new CreatureBlock(1, "the armor") }, 
-        },
     };    
+    
+    beetle.Attacks = new CreatureAttackCollection
+    {
+        new CreatureAttack(6, 1, 8, "You have been stung by a beetle.",
+                        new AttackPoisonComponent(3), 
+                        new AttackStunComponent(10))
+    };
+    
+    beetle.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(1, "the armor")
+    };
 
     beetle.AddGold(160);
     
@@ -84796,11 +84838,11 @@
         Experience = 300,
 
         CanFlee = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(6) }, 
-        },
+    };
+    
+    orc.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(6)
     };
 
     orc.Wield(new Katana());
@@ -84837,13 +84879,13 @@
         Experience = 250,
 
         CanFlee = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(5) }, 
-        },
     };
 
+    orc.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(5)
+    };
+    
     orc.Wield(new Crossbow());
     orc.Equip(new LeatherArmor());    
 
@@ -84876,18 +84918,23 @@
         BaseDodge = 13,
 
         Experience = 725,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureAttack(6, 5, 15, "You've been bitten by the shark."), 60 }, 
-            { new CreatureAttack(6, 10, 25, "The shark lashes you with its fin."), 40 }, 
-        },
-        Blocks = new CreatureBlockCollection
-        {
-            { new CreatureBlock(6, "the tough skin") }, 
-            { new CreatureBlock(4, "a fin") }, 
-        },
     };    
+    
+    shark.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(6, 5, 15, "You've been bitten by the shark."),       60 
+        }, 
+        {
+            new CreatureAttack(6, 10, 25, "The shark lashes you with its fin."),    40
+        }, 
+    };
+    
+    shark.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the tough skin"),
+        new CreatureBlock(4, "a fin")
+    };
 
     shark.AddGold(450);
     shark.AddLoot(
@@ -84919,20 +84966,28 @@
         Experience = 1100,
 
         Movement = 2,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureAttack(6, 6, 14, "The bear slashes you with its claws."), 50 }, 
-            { new CreatureAttack(6, 8, 16, "You've been mauled by the bear."), 40 }, 
-            { new CreatureAttack(7, 10, 20, "The bear crushes you within its embrace."), 10 }, 
-        },
-        Blocks = new CreatureBlockCollection
-        {
-            { new CreatureBlock(6, "the tough hide") }, 
-            { new CreatureBlock(4, "a claw") }, 
-        },
     };
-    bear.AddStatus(new NightVisionStatus(bear));    
+    
+    bear.AddStatus(new NightVisionStatus(bear)); 
+    
+    bear.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(6, 6, 14, "The bear slashes you with its claws."),       50 
+        }, 
+        {
+            new CreatureAttack(6, 8, 16, "You've been mauled by the bear."),            40 
+        }, 
+        {
+            new CreatureAttack(7, 10, 20, "The bear crushes you within its embrace."),  10 
+        }, 
+    };
+    
+    bear.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the tough hide"),
+        new CreatureBlock(4, "a claw")
+    };
 
     bear.AddGold(625);
     bear.AddLoot(
@@ -84968,22 +85023,27 @@
 
         CanFlee = true,
         CanSwim = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureAttack(10, 15, 25, "You've been bitten by the wyrm."), 60 }, 
-            { new CreatureAttack(10, 20, 30, "The wyrm hits you with its tail."), 40 }, 
-        },
-        Blocks = new CreatureBlockCollection
-        {
-            { new CreatureBlock(6, "the armor") }, 
-            { new CreatureBlock(4, "a tail") }, 
-        },
         
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | 
                    CreatureImmunity.Bashing | CreatureImmunity.Poison | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
-    };    
+    };
+    
+    wyrm.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(10, 15, 25, "You've been bitten by the wyrm."),  60 
+        }, 
+        {
+            new CreatureAttack(10, 20, 30, "The wyrm hits you with its tail."), 40 
+        }, 
+    };
+    
+    wyrm.Blocks = new CreatureBlockCollection
+    {
+        { new CreatureBlock(6, "the armor") }, 
+        { new CreatureBlock(4, "a tail") }, 
+    };
 
     wyrm.AddGold(850);
     wyrm.AddLoot(
@@ -85020,20 +85080,33 @@
         Movement = 2,
         
         BasePenetration = ShieldPenetration.Light,
-        
-        Attacks = new CreatureAttackCollection
+    };
+    
+    rat.Attacks = new CreatureAttackCollection
+    {
         {
-            { new CreatureAttack(6, 1, 5, "The rat rakes you with its claws"), 50 }, 
-            { new CreatureAttack(6, 1, 8, "The rat bites you"), 30 }, 
-            { new CreatureAttack(6, 1, 10, "The rat whips you with its tail"), 20 }, 
-        },
-        Blocks = new CreatureBlockCollection
+            new CreatureAttack(6, 1, 5, "The rat rakes you with its claws"), 50 
+        }, 
         {
-            { new CreatureBlock(6, "the armor") }, 
-            { new CreatureBlock(3, "a claw") }, 
-            { new CreatureBlock(1, "a tail") }, 
+            new CreatureAttack(6, 1, 8, "The rat bites you"), 30
         },
-    };    
+        {
+            new CreatureAttack(6, 1, 10, "The rat whips you with its tail"), 20 
+        },
+    };
+    
+    rat.Blocks = new CreatureBlockCollection
+    {
+        {
+            new CreatureBlock(6, "the armor") 
+        }, 
+        {
+            new CreatureBlock(3, "a claw") 
+        }, 
+        {
+            new CreatureBlock(1, "a tail") 
+        }, 
+    };
 
     rat.AddGold(50);
     
@@ -85062,18 +85135,19 @@
         Experience = 850,
 
         Movement = 2,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureAttack(8, 1, 6, "The viper strikes you.",
-                new AttackPoisonComponent(5, 30),
-                new AttackStunComponent(5)), 10 }, 
-        },
-        Blocks = new CreatureBlockCollection
-        {
-            { new CreatureBlock(1, "the armor") }, 
-        },
-    };    
+    };
+    
+    viper.Attacks = new CreatureAttackCollection
+    {
+        new CreatureAttack(8, 1, 6, "The viper strikes you.",
+                            new AttackPoisonComponent(5, 30),
+                            new AttackStunComponent(5))
+    };
+    
+    viper.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(1, "the armor")
+    };
 
     viper.AddGold(100);
     
@@ -85100,21 +85174,26 @@
         Experience = 900,
 
         Movement = 2,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureAttack(7, 3, 8, "The scorpion crushes you with its claws."), 60 }, 
-            { new CreatureAttack(7, 4, 8, "The scorpion stings you with its tail.",
-                new AttackPoisonComponent(7, 20),
-                new AttackStunComponent(10)), 40 }, 
-        },
-        Blocks = new CreatureBlockCollection
-        {
-            { new CreatureBlock(6, "the armor") }, 
-            { new CreatureBlock(3, "a claw") }, 
-            { new CreatureBlock(1, "a tail") }, 
-        },
     };    
+
+    scorpion.Attacks = new CreatureAttackCollection
+    {
+        { 
+            new CreatureAttack(7, 3, 8, "The scorpion crushes you with its claws."), 60 
+        }, 
+        {
+            new CreatureAttack(7, 4, 8, "The scorpion stings you with its tail.",
+                    new AttackPoisonComponent(7, 20),
+                    new AttackStunComponent(10)),                                    40 
+        }, 
+    };
+    
+    scorpion.Blocks = new CreatureBlockCollection
+    {
+            new CreatureBlock(6, "the armor"),
+            new CreatureBlock(3, "a claw"),
+            new CreatureBlock(1, "a tail") 
+    };
 
     scorpion.AddGold(250);
     scorpion.AddLoot(
@@ -85147,11 +85226,11 @@
         Experience = 1500,
 
         Movement = 2,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(7) }, 
-        },
+    };
+    
+    kobold.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(7)
     };
 
     kobold.Wield(new SteelMace());
@@ -85190,11 +85269,11 @@
         Movement = 2,
 
         CanFlee = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(7) }, 
-        },
+    };
+    
+    orc.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(7)
     };
 
     orc.Wield(new Longsword());
@@ -85231,11 +85310,11 @@
         Experience = 1250,
 
         CanFlee = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(8) }, 
-        },
+    };
+    
+    orc.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(8)
     };
 
     orc.Wield(new Crossbow());
@@ -85274,11 +85353,11 @@
         Movement = 2,
 
         CanFlee = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureAttack(6, 5, 15) }, 
-        },
+    };
+    
+    troll.Attacks = new CreatureAttackCollection
+    {
+        new CreatureAttack(6, 5, 15)
     };
 
     troll.Wield(new Greatsword());
@@ -85318,17 +85397,18 @@
         
         VisibilityDistance = 0,
         RangePerception = 0,
-        
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureAttack(7, 4, 12, "The spider bites you.",
-                new AttackPoisonComponent(6, 20)), 60 }, 
-        },
-        Blocks = new CreatureBlockCollection
-        {
-            { new CreatureBlock(1, "the armor") }, 
-        },
-    };    
+    };
+    
+    spider.Attacks = new CreatureAttackCollection
+    {
+        new CreatureAttack(7, 4, 12, "The spider bites you.",
+                            new AttackPoisonComponent(6, 33))
+    };
+    
+    spider.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(1, "the armor")
+    };
 
     spider.AddGold(250);
     spider.AddLoot(
@@ -85361,11 +85441,11 @@
         Experience = 2500,
 
         Movement = 2,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(9) }, 
-        },
+    };
+    
+    hobgoblin.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(9)
     };
 
     hobgoblin.Wield(new Longsword());
@@ -85402,11 +85482,11 @@
         BaseDodge = 13,
 
         Experience = 1900,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(9) }, 
-        },
+    };
+    
+    goblin.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(9)
     };
 
     goblin.Wield(new Longsword());
@@ -85443,11 +85523,11 @@
         BaseDodge = 13,
 
         Experience = 1900,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(8) }, 
-        },
+    };
+    
+    goblin.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(8) 
     };
 
     goblin.Wield(new Longbow());
@@ -85488,13 +85568,14 @@
         Movement = 2,
 
         CanFlee = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(8) }, 
-        },
     };
+    
     troll.AddStatus(new NightVisionStatus(troll));
+    
+    troll.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(8)
+    };
 
     troll.Wield(new Greatsword());
     troll.Equip(new ChainmailArmor());    
@@ -85532,11 +85613,11 @@
         Experience = 1900,
         
         CanFlee = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(8) }, 
-        },
+    };
+    
+    orc.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(8)
     };
 
     orc.Wield(new Katana());
@@ -85575,11 +85656,11 @@
         Experience = 1955,
 
         CanFlee = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(7) }, 
-        },
+    };
+    
+    orc.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(7)
     };
 
     orc.Wield(new Crossbow());
@@ -85619,19 +85700,21 @@
         Experience = 1925,
         
         CanFlee = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(9) },
-        },
+    };
+    
+    orc.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(9)
+    };
         
-        Spells = new CreatureSpellCollection()
-        {
-            new CreatureSpell<CreateWebSpell>(6, mantra: SpellHelper.GenerateMantra(),
-                cost: 4, instantCast: false),
-            new CreatureSpell<MagicMissileSpell>(6, mantra: SpellHelper.GenerateMantra(),
-                cost: 3, instantCast: false)
-        }
+    orc.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<CreateWebSpell>(
+            skillLevel: 6, cost: 4,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<MagicMissileSpell>(
+            skillLevel: 6, cost: 3,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
 
     orc.Wield(new WoodenStaff());
@@ -85669,21 +85752,23 @@
         Experience = 2750,
 
         VisibilityDistance = 1,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(8) },
-        },
-        
-        Spells = new CreatureSpellCollection()
-        {
-            new CreatureSpell<StunSpell>(6, mantra: SpellHelper.GenerateMantra(),
-                cost: 4, instantCast: false),
-            new CreatureSpell<DeathSpell>(2.5, mantra: SpellHelper.GenerateMantra(),
-                cost: 6, instantCast: false)
-        },
     };
     spectre.AddStatus(new NightVisionStatus(spectre));
+    
+    spectre.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(8)
+    };
+        
+    spectre.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<StunSpell>(
+            skillLevel: 6, cost: 4,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<DeathSpell>(
+            skillLevel: 2.5, cost: 6, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
 
     spectre.Wield(new WoodenStaff());    
 
@@ -85722,11 +85807,11 @@
         Experience = 2500,
 
         Movement = 2,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(9, 9, 16) }, 
-        },
+    };
+    
+    hobgoblin.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(9, 9, 16)
     };
 
     hobgoblin.Wield(new Longsword());
@@ -85765,11 +85850,11 @@
         Experience = 2250,
         
         CanFlee = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(9, 8, 13) }, 
-        },
+    };
+    
+    orc.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(9, 8, 13)
     };
 
     orc.Wield(new Longsword());
@@ -85808,11 +85893,11 @@
         Experience = 2300,
         
         CanFlee = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(9) }, 
-        },
+    };
+    
+    orc.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(9)
     };
 
     orc.Wield(new Longbow());
@@ -85852,18 +85937,21 @@
         Experience = 2275,
 
         CanFlee = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(9) },
-        },
-        Spells = new CreatureSpellCollection()
-        {
-            new CreatureSpell<CreateWebSpell>(6, mantra: SpellHelper.GenerateMantra(),
-                cost: 4, instantCast: false),
-            new CreatureSpell<MagicMissileSpell>(6, mantra: SpellHelper.GenerateMantra(),
-                cost: 3, instantCast: false)
-        }
+    };
+    
+    orc.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(9)
+    };
+    
+    orc.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<CreateWebSpell>(
+            skillLevel: 6, cost: 4,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<MagicMissileSpell>(
+            skillLevel: 6, cost: 4,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
 
     orc.Wield(new WoodenStaff());
@@ -85900,11 +85988,11 @@
         BaseDodge = 16,
 
         Experience = 3250,
-        
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(9, 10, 17) }, 
-        },
+    };
+    
+    troll.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(9, 10, 17)
     };
 
     troll.Wield(new Greatsword());
@@ -85950,20 +86038,24 @@
         
         CanFlee = true,
         CanSwim = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(10) },
-        },
-        Spells = new CreatureSpellCollection()
-        {
-            { new CreatureSpell<StunSpell>(7, mantra: SpellHelper.GenerateMantra(),
-                cost: 4, instantCast: false) },
-            { new CreatureSpell<DeathSpell>(7, mantra: SpellHelper.GenerateMantra(),
-                cost: 6, instantCast: false) }
-        }
     };
+    
     thaum.AddStatus(new NightVisionStatus(thaum));
+    
+    thaum.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(10) 
+    };
+    
+    thaum.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<StunSpell>(
+            skillLevel: 7, cost: 4,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<DeathSpell>(
+            skillLevel: 7, cost: 6,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
 
     thaum.Wield(new WoodenFlail());
     thaum.Wield(new WoodenShield());
@@ -86009,18 +86101,21 @@
 
         CanFlee = true,
         CanSwim = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(10) },
-        },
-        Spells = new CreatureSpellCollection()
-        {
-            { new CreatureSpell<FireballSpell>(9, mantra: SpellHelper.GenerateMantra(),
-                cost: 6, instantCast: false) },
-            { new CreatureSpell<MagicMissileSpell>(9, mantra: SpellHelper.GenerateMantra(),
-                cost: 3, instantCast: false) }
-        }
+    };
+    
+    wizard.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(10)
+    };
+    
+    wizard.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<FireballSpell>(
+            skillLevel: 9, cost: 6,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<MagicMissileSpell>(
+            skillLevel: 9, cost: 3, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
 
     wizard.Wield(new BlackStaff());
@@ -86061,23 +86156,31 @@
         Experience = 5500,
         BasePenetration = ShieldPenetration.Light,
         CanFlee = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureAttack(11, 8, 22, "The minotaur hits with a staff."), 60 }, 
-            { new CreatureAttack(11, 13, 25, "You've been gored by the minotaur.",
-                new AttackStunComponent(10)), 30 }, 
-            { new CreatureAttack(11, 16, 28, "You've been trampled by the minotaur."), 10 }, 
-        },
-        Blocks = new CreatureBlockCollection
-        {
-            { new CreatureBlock(6, "the armor") }, 
-            { new CreatureBlock(3, "a staff") }, 
-        },
         
         Immunity = CreatureImmunity.Web,
     };
+    
     minotaur.AddStatus(new NightVisionStatus(minotaur));
+    
+    minotaur.Attacks = new CreatureAttackCollection
+    {
+        { 
+            new CreatureAttack(11, 8, 22, "The minotaur hits with a staff."),           60
+        }, 
+        { 
+            new CreatureAttack(11, 13, 25, "You've been gored by the minotaur.",
+                        new AttackStunComponent(10)),                                   30
+        }, 
+        { 
+            new CreatureAttack(11, 16, 28, "You've been trampled by the minotaur."),    10
+        }, 
+    };
+    
+    minotaur.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the armor"), 
+        new CreatureBlock(3, "a staff")
+    };
 
     minotaur.Wield(new IronRodChaotic());    
 
@@ -86117,24 +86220,32 @@
         Movement = 2,
         
         CanFly = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureAttack(9, 6, 12, "The gargoyle strikes you with its claws.",
-                new AttackPoisonComponent(10, 20)), 20 }, 
-            { new CreatureAttack(10, 10, 20, "The gargoyle batters you with its wings."), 30 }, 
-            { new CreatureAttack(11, 7, 14, "The gargoyle hits you with a greatsword."), 50 }, 
-        },
-        Blocks = new CreatureBlockCollection
-        {
-            { new CreatureBlock(6, "a greatsword") }, 
-            { new CreatureBlock(3, "a claw") }, 
-            { new CreatureBlock(1, "a wing") }, 
-        },
         
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Poison,
     };
+    
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
+    
+    gargoyle.Attacks = new CreatureAttackCollection
+    {
+        { 
+            new CreatureAttack(9, 6, 12, "The gargoyle strikes you with its claws.",
+                                            new AttackPoisonComponent(10, 20)),             20
+        }, 
+        {
+            new CreatureAttack(10, 10, 20, "The gargoyle batters you with its wings."),     30
+        }, 
+        {
+            new CreatureAttack(11, 7, 14, "The gargoyle hits you with a greatsword."),      50 
+        }, 
+    };
+    
+    gargoyle.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "a greatsword"),
+        new CreatureBlock(3, "a claw"),
+        new CreatureBlock(1, "a wing")
+    };
 
     gargoyle.Wield(new Greatsword());    
 
@@ -86169,24 +86280,31 @@
         Experience = 1325,
 
         Movement = 2,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureAttack(10, 7, 14, "The salamander claws at you."), 60 }, 
-            { new CreatureAttack(10, 9, 17, "The salamander hits you with its tail."), 40 }, 
-        },
-        Blocks = new CreatureBlockCollection
-        {
-            { new CreatureBlock(6, "the armor") }, 
-            { new CreatureBlock(3, "a claw") }, 
-            { new CreatureBlock(1, "a tail") }, 
-        },
-        Spells = new CreatureSpellCollection(50.0)
-        {
-            { new CreatureSpell<FirewallSpell>(8), 100, TimeSpan.FromSeconds(15.0) }
-        }
     };    
 
+    salamander.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(10, 7, 14, "The salamander claws at you."), 60 
+        }, 
+        {
+            new CreatureAttack(10, 9, 17, "The salamander hits you with its tail."), 40
+        }, 
+    };
+    
+    salamander.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(3, "a claw"),
+        new CreatureBlock(1, "a tail")
+    };
+    
+    salamander.Spells = new CreatureSpellCollection(50.0)
+    {
+        { new CreatureSpell<FirewallSpell>(
+            skillLevel: 8), 100, TimeSpan.FromSeconds(15.0) }
+    };
+    
     salamander.AddGold(550);
     salamander.AddLoot(
         new LootPack(
@@ -86221,27 +86339,42 @@
         CanSwim = true,
         
         BasePenetration = ShieldPenetration.VeryHeavy,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureAttack(15, 20, 35, "The serpent bites you with it's fangs."), 60 }, 
-            { new CreatureAttack(15, 20, 35, "The serpent bites you with it's fangs.",
-                new AttackStunComponent(80), new AttackPoisonComponent(12, 20)), 20 }, 
-            { new CreatureAttack(15, 25, 40, "The serpent strikes you with it's tail.",
-                new AttackStunComponent(10)), 20 }, 
-        },
-        Blocks = new CreatureBlockCollection
-        {
-            { new CreatureBlock(6, "slimy scales") }, 
-            { new CreatureBlock(4, "a fang") }, 
-        },
+        
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing 
                    | CreatureImmunity.Bashing | CreatureImmunity.Poison | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
         
         IceProtection =  100,
+        DeathResistance = 40,
     };
-    serpent.AddStatus(new NightVisionStatus(serpent));    
+    
+    serpent.AddStatus(new NightVisionStatus(serpent)); 
+    
+    serpent.Attacks = new CreatureAttackCollection
+    {
+        { 
+            new CreatureAttack(15, 20, 35, "The serpent bites you with it's fangs."),   60 
+        }, 
+        {
+            new CreatureAttack(15, 20, 35, "The serpent bites you with it's fangs.",
+                                        new AttackStunComponent(80),
+                                        new AttackPoisonComponent(12, 20)),             20 
+        }, 
+        {
+            new CreatureAttack(15, 25, 40, "The serpent strikes you with it's tail.",
+                                        new AttackStunComponent(10)),                   20 
+        }, 
+    };
+    
+    serpent.Blocks = new CreatureBlockCollection
+    {
+        { 
+            new CreatureBlock(6, "slimy scales") 
+        }, 
+        {
+            new CreatureBlock(4, "a fang")
+        }, 
+    };
 
     serpent.AddGold(1500);
     serpent.AddLoot(
@@ -86254,10 +86387,6 @@
             new LootPackEntry(true, oakvaelPotions, 0.2) 
         ));
     
-/*
-PROTECTION P_DEATH 40
-*/
-
     return serpent;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -86282,11 +86411,11 @@ PROTECTION P_DEATH 40
         Experience = 6000,
 
         CanWalk = false,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(11) }, 
-        },
+    };
+    
+    pescalanor.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(11)
     };
 
     pescalanor.Wield(new Crossbow());
@@ -86327,22 +86456,29 @@ PROTECTION P_DEATH 40
         Movement = 2,
         CanFly = true,
         BasePenetration = ShieldPenetration.Medium,
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureAttack(11, 15, 25, "The gargoyle strikes you with its claws.",
-                new AttackPoisonComponent(10, 20)), 60 }, 
-            { new CreatureAttack(12, 20, 30, "The gargoyle batters you with its wings."), 40 }, 
-        },
-        Blocks = new CreatureBlockCollection
-        {
-            { new CreatureBlock(6, "the armor") }, 
-            { new CreatureBlock(3, "a claw") }, 
-            { new CreatureBlock(1, "a wing") }, 
-        },
         
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Poison,
     };
+    
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
+    
+    gargoyle.Attacks = new CreatureAttackCollection
+    {
+        { 
+            new CreatureAttack(11, 15, 25, "The gargoyle strikes you with its claws.",
+                                                     new AttackPoisonComponent(10, 20)),     60
+        }, 
+        {
+            new CreatureAttack(12, 20, 30, "The gargoyle batters you with its wings."),      40
+        }, 
+    };
+    
+    gargoyle.Blocks = new CreatureBlockCollection
+    {
+            new CreatureBlock(6, "the armor"),
+            new CreatureBlock(3, "a claw"),
+            new CreatureBlock(1, "a wing")
+    };
 
     gargoyle.Wield(new Greatsword());    
 
@@ -86380,21 +86516,29 @@ PROTECTION P_DEATH 40
 
         CanFlee = true,
         BasePenetration = ShieldPenetration.Medium,
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureAttack(12, 8, 23, "The minotaur hits with a greatsword."), 60 }, 
-            { new CreatureAttack(12, 14, 26, "You've been gored by the minotaur."), 30 }, 
-            { new CreatureAttack(12, 18, 30, "You've been trampled by the minotaur."), 10 }, 
-        },
-        Blocks = new CreatureBlockCollection
-        {
-            { new CreatureBlock(6, "the armor") }, 
-            { new CreatureBlock(3, "a greatsword") }, 
-        },
-        
         Immunity = CreatureImmunity.Web,
     };
+    
     minotaur.AddStatus(new NightVisionStatus(minotaur));
+    
+    minotaur.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(12, 8, 23, "The minotaur hits with a greatsword."),      60 
+        }, 
+        {
+            new CreatureAttack(12, 14, 26, "You've been gored by the minotaur."),       30 
+        }, 
+        {
+            new CreatureAttack(12, 18, 30, "You've been trampled by the minotaur."),    10 
+        }, 
+    };
+    
+    minotaur.Blocks = new CreatureBlockCollection
+    {
+            new CreatureBlock(6, "the armor"),
+            new CreatureBlock(3, "a greatsword")
+    };
 
     minotaur.Wield(new Greatsword());
     minotaur.Equip(new PlatemailArmor());    
@@ -86430,11 +86574,11 @@ PROTECTION P_DEATH 40
         BaseDodge = 16,
 
         Experience = 4450,
-        
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(11, 12, 19) }, 
-        },
+    };
+    
+    hobgoblin.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(11, 12, 19)
     };
 
     hobgoblin.Wield(new Longsword());
@@ -86475,11 +86619,11 @@ PROTECTION P_DEATH 40
         Movement = 2,
 
         CanFlee = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(12, 13, 20) }, 
-        },
+    };
+    
+    troll.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(12, 13, 20)
     };
 
     troll.Wield(new Greatsword());
@@ -86518,11 +86662,11 @@ PROTECTION P_DEATH 40
         Experience = 4100,
 
         CanFlee = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(11, 11, 16) }, 
-        },
+    };
+    
+    orc.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(11, 11, 16)
     };
 
     orc.Wield(new Longsword());
@@ -86561,11 +86705,11 @@ PROTECTION P_DEATH 40
         Experience = 4025,
 
         CanFlee = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(10) }, 
-        },
+    };
+    
+    orc.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(10)
     };
 
     orc.Wield(new Longbow());
@@ -86611,17 +86755,24 @@ PROTECTION P_DEATH 40
 
         CanFlee = true,
         CanSwim = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(11) },
+    };
+    
+    thaum.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(11)
+    };
+    
+    thaum.Spells = new CreatureSpellCollection()
+    {
+        { 
+            new CreatureSpell<StunSpell>(
+                skillLevel: 8, cost: 4,
+                mantra: SpellHelper.GenerateMantra(), instantCast: false)
         },
-        Spells = new CreatureSpellCollection()
         {
-            { new CreatureSpell<StunSpell>(8, mantra: SpellHelper.GenerateMantra(),
-                cost: 4, instantCast: false) },
-            { new CreatureSpell<DeathSpell>(4.25, mantra: SpellHelper.GenerateMantra(),
-                cost: 6, instantCast: false) }
+            new CreatureSpell<DeathSpell>(
+                skillLevel: 4.25, cost: 6,
+                mantra: SpellHelper.GenerateMantra(), instantCast: false) 
         }
     };
 
@@ -86669,18 +86820,21 @@ PROTECTION P_DEATH 40
 
         CanFlee = true,
         CanSwim = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(12) },
-        },
-        Spells = new CreatureSpellCollection()
-        {
-            { new CreatureSpell<FireballSpell>(10, mantra: SpellHelper.GenerateMantra(),
-                cost: 6, instantCast: false) },
-            { new CreatureSpell<MagicMissileSpell>(10, mantra: SpellHelper.GenerateMantra(),
-                cost: 3, instantCast: false) }
-        }
+    };
+    
+    wizard.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(12)
+    };
+        
+    wizard.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<FireballSpell>(
+            skillLevel: 10, cost: 6,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<MagicMissileSpell>(
+            skillLevel: 10, cost: 3,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
 
     wizard.Wield(new BlackStaff());
@@ -86722,23 +86876,30 @@ PROTECTION P_DEATH 40
         Experience = 4450,
 
         Movement = 2,
-
-        Attacks = new CreatureAttackCollection
+    };
+    
+    salamander.Attacks = new CreatureAttackCollection
+    {
+        { 
+            new CreatureAttack(11, 8, 16, "The salamander claws at you."),              60 
+        }, 
         {
-            { new CreatureAttack(11, 8, 16, "The salamander claws at you."), 60 }, 
-            { new CreatureAttack(11, 10, 18, "The salamander hits you with its tail."), 40 },
+            new CreatureAttack(11, 10, 18, "The salamander hits you with its tail."),   40 
         },
-        Blocks = new CreatureBlockCollection
-        {
-            { new CreatureBlock(6, "the armor") }, 
-            { new CreatureBlock(3, "a claw") }, 
-            { new CreatureBlock(1, "a tail") }, 
-        },
-        Spells = new CreatureSpellCollection(50.0)
-        {
-            { new CreatureSpell<FirewallSpell>(9), 100, TimeSpan.FromSeconds(15.0) }
-        }
-    };    
+    };
+    
+    salamander.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(3, "a claw"),
+        new CreatureBlock(1, "a tail"),
+    };
+    
+    salamander.Spells = new CreatureSpellCollection(50.0)
+    {
+       { new CreatureSpell<FirewallSpell>(
+            skillLevel: 9), 100, TimeSpan.FromSeconds(15.0) }
+    };
 
     salamander.AddGold(900);
     salamander.AddLoot(
@@ -86773,11 +86934,11 @@ PROTECTION P_DEATH 40
         
         CanFlee = true,
         CanSwim = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(12) }, 
-        },
+    };
+    
+    drizilu.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(13)
     };
 
     drizilu.Wield(new Crossbow());
@@ -86820,11 +86981,11 @@ PROTECTION P_DEATH 40
 
         CanFlee = true,
         CanSwim = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(12) }, 
-        },
+    };
+    
+    glamuzu.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(12)
     };
 
     glamuzu.Wield(new Crossbow());
@@ -86862,17 +87023,20 @@ PROTECTION P_DEATH 40
         BaseDodge = 18,
 
         Experience = 5075,
-        
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(14, 11, 25) },
-        },
-        Spells = new CreatureSpellCollection()
-        {
-            { new CreatureSpell<DarknessSpell>(10, cost: 4, intensity: 2), 100, TimeSpan.FromSeconds(15.0) }
-        }
     };
+    
     banshee.AddStatus(new NightVisionStatus(banshee));
+    
+    banshee.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(14, 11, 25)
+    };
+    
+    banshee.Spells = new CreatureSpellCollection()
+    {
+       { new CreatureSpell<DarknessSpell>(
+            skillLevel: 10, cost: 4, intensity: 2), 100, TimeSpan.FromSeconds(15.0) }
+    };
 
     banshee.Wield(new Spear());    
 
@@ -86908,17 +87072,20 @@ PROTECTION P_DEATH 40
         BaseDodge = 18,
 
         Experience = 5475,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(14) },
-        },
-        Spells = new CreatureSpellCollection()
-        {
-            { new CreatureSpell<CurseSpell>(1.5, cost: 3), 100 }
-        }
     };
+    
     banshee.AddStatus(new NightVisionStatus(banshee));
+    
+    banshee.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(14)
+    };
+    
+    banshee.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<CurseSpell>(
+            skillLevel: 2.7, cost: 3)
+    };
 
     banshee.Wield(new Spear());    
 
@@ -86954,20 +87121,24 @@ PROTECTION P_DEATH 40
         BaseDodge = 19,
 
         Experience = 6300,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(14, 15, 20) },
-        },
-        Spells = new CreatureSpellCollection()
-        {
-            new CreatureSpell<BlindSpell>(10, mantra: SpellHelper.GenerateMantra(),
-                cost: 4, instantCast: false),
-            new CreatureSpell<DeathSpell>(6, mantra: SpellHelper.GenerateMantra(),
-                cost: 6, instantCast: false)
-        }
     };
+    
     wraith.AddStatus(new NightVisionStatus(wraith));
+    
+    wraith.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(14, 15, 20),
+    };
+    
+    wraith.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<BlindSpell>(
+            skillLevel: 10, cost: 4,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<DeathSpell>(
+            skillLevel: 6, cost: 6,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
 
     wraith.Wield(new BlackStaff());    
 
@@ -87011,20 +87182,24 @@ PROTECTION P_DEATH 40
 
         CanFlee = true,
         CanSwim = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(15) },
-        },
-        Spells = new CreatureSpellCollection()
-        {
-            { new CreatureSpell<ConcussionSpell>(9, mantra: SpellHelper.GenerateMantra(),
-                cost: 10, instantCast: false) },
-            { new CreatureSpell<IceStormSpell>(9, mantra: SpellHelper.GenerateMantra(),
-                cost: 6, instantCast: false) }
-        }
     };
+    
     wizard.AddStatus(new NightVisionStatus(wizard));
+    
+    wizard.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(15)
+    };
+    
+    wizard.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<ConcussionSpell>(
+            skillLevel: 9, cost: 10,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<IceStormSpell>(
+                skillLevel: 9, cost: 6,
+                mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
 
     wizard.Wield(new BlackStaff());
     wizard.Wield(new SteelShield());
@@ -87070,20 +87245,23 @@ PROTECTION P_DEATH 40
         Experience = 6850,
 
         CanSwim = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(14) },
-        },
-        Spells = new CreatureSpellCollection()
-        {
-            { new CreatureSpell<StunSpell>(10, mantra: SpellHelper.GenerateMantra(),
-                cost: 4, instantCast: false) },
-            { new CreatureSpell<DeathSpell>(10, mantra: SpellHelper.GenerateMantra(),
-                cost: 6, instantCast: false) }
-        }
     };
 
+    thaum.Attacks = new CreatureAttackCollection
+    {
+            { new CreatureBasicAttack(14) },
+    };
+    
+    thaum.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<StunSpell>(
+            skillLevel: 10, cost: 4,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<DeathSpell>(
+            skillLevel: 10, cost: 6,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+    };
+    
     thaum.Wield(new WoodenFlail());
     thaum.Wield(new SteelShield());
     thaum.Equip(new LeatherArmor());    
@@ -87124,28 +87302,32 @@ PROTECTION P_DEATH 40
         Movement = 2,
         VisibilityDistance = 1,
         BasePenetration = ShieldPenetration.Medium,
-        Attacks = new CreatureAttackCollection
+    };
+    
+    ghoul.Attacks = new CreatureAttackCollection
+    {
         {
-            { new CreatureAttack(14, 6, 20, "The ghoul scratches you with its claws."), 80 }, 
-            { new CreatureAttack(15, 15, 40, "You've been bitten by the ghoul.",
-                new AttackPoisonComponent(15, 20)), 20 }, 
-        },
-        Blocks = new CreatureBlockCollection
+            new CreatureAttack(14, 6, 20, "The ghoul scratches you with its claws."),   80 
+        }, 
         {
-            { new CreatureBlock(6, "the armor") }, 
-            { new CreatureBlock(4, "a claw") }, 
-        },
-    };    
+            new CreatureAttack(15, 15, 40, "You've been bitten by the ghoul.",
+                                        new AttackPoisonComponent(15, 20)),             20 
+        }, 
+    };
+    ghoul.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(4, "a claw")
+    };
 
     ghoul.AddGold(1250);
-    ghoul.AddLoot(
-        new LootPack(
+    ghoul.AddLoot(new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
             new LootPackEntry(true, oakvaelPotions, 0.2)
-        ));
+    ));
 
     return ghoul;
 ]]></block>
@@ -87171,20 +87353,24 @@ PROTECTION P_DEATH 40
         Experience = 9000,
 
         VisibilityDistance = 1,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(14) },
-        },
-        Spells = new CreatureSpellCollection()
-        {
-            new CreatureSpell<FearSpell>(10, mantra: SpellHelper.GenerateMantra(),
-                cost: 4, instantCast: false),
-            new CreatureSpell<DeathSpell>(6.25, mantra: SpellHelper.GenerateMantra(),
-                cost: 6, instantCast: false)
-        }
     };
+    
     spectre.AddStatus(new NightVisionStatus(spectre));
+    
+    spectre.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(14)
+    };
+    
+    spectre.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<FearSpell>(
+            skillLevel: 10, cost: 4,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<DeathSpell>(
+            skillLevel: 6.5, cost: 4,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
 
     spectre.Wield(new WoodenStaff());    
 
@@ -87223,18 +87409,21 @@ PROTECTION P_DEATH 40
         Experience = 5500,
 
         CanFlee = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(14, 20, 25) },
-        },
-        Spells = new CreatureSpellCollection()
-        {
-            { new CreatureSpell<CurseSpell>(9, mantra: SpellHelper.GenerateMantra(),
-                cost: 3, instantCast: false) }
-        }
     };
+    
     wight.AddStatus(new NightVisionStatus(wight));
+    
+    wight.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(14, 20, 25)
+    };
+        
+    wight.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<CurseSpell>(
+            skillLevel: 9, cost: 3,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+    };
 
     wight.Wield(new WoodenStaff());    
 
@@ -87272,13 +87461,20 @@ PROTECTION P_DEATH 40
         Experience = 9575,
 
         VisibilityDistance = 1,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(15, new AttackAgeComponent(1000, 50)) },
-        },
-        Spells = new CreatureSpellCollection()
-        {
+        
+        IceProtection = 100,
+    };
+    
+    lich.AddStatus(new NightVisionStatus(lich));
+    
+    lich.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(15, 
+                        new AttackAgeComponent(1000, 50))
+    };
+    
+    lich.Spells = new CreatureSpellCollection()
+    {
             /* Watching Indi..DOOM, he was taking 7-9 points of damage/tick with:
              *    1. Dragon Skull
              *    2. Ice Dragon Armor
@@ -87286,26 +87482,23 @@ PROTECTION P_DEATH 40
              *    4. F/I Ring.
              *    Calculated total ice protection to be 90, damage should be 70-90 per tick.
              * Expected output damage should be 210 to 270. */
-            { new CreatureSpell<IceStormSpell>(32, mantra: SpellHelper.GenerateMantra(),
-                cost: 6, instantCast: false) },
-        },
-        
-        IceProtection = 100,
+             
+        new CreatureSpell<IceStormSpell>(
+            skillLevel: 32, cost: 6,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
-    lich.AddStatus(new NightVisionStatus(lich));
 
     lich.Wield(new WoodenStaff());    
 
     lich.AddGold(1430);
-    lich.AddLoot(
-        new LootPack(
+    lich.AddLoot(new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
             new LootPackEntry(true, oakvaelPotions, 0.2),
             new LootPackEntry(true, (from, container) => new RedRunesRobe(), 5.0) 
-        ));
+    ));
 
     return lich;
 ]]></block>
@@ -87330,13 +87523,14 @@ PROTECTION P_DEATH 40
         Experience = 6700,
 
         VisibilityDistance = 1,
-
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(15, 20, 30) }, 
-        },
     };
+    
     stalker.AddStatus(new NightVisionStatus(stalker));
+    
+    stalker.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(15, 20, 30)
+    };
 
     stalker.Wield(new Spear());    
 
@@ -87379,20 +87573,23 @@ PROTECTION P_DEATH 40
         
         CanJumpkick = true,
         
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(17, 30, 50,
-                new AttackAgeComponent(1000, 20), new AttackProneComponent(15)) }, 
-        },
-        Spells = new CreatureSpellCollection(100)
-        {
-            { new CreatureSpell<IceStormSpell>(12), 100, TimeSpan.FromSeconds(12.0) },
-        },
-        
         FireProtection = 100,
         IceProtection = 100,
     };
+    
     twin.AddStatus(new NightVisionStatus(twin));
+    
+    twin.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(17, 30, 50,
+                    new AttackAgeComponent(1000, 20), new AttackProneComponent(15))
+    };
+    
+    twin.Spells = new CreatureSpellCollection(100)
+    {
+       { new CreatureSpell<IceStormSpell>(
+            skillLevel: 12), 100, TimeSpan.FromSeconds(12.0) }
+    };
 
     twin.AddGold(2000);
     twin.AddLoot(
@@ -87418,7 +87615,7 @@ PROTECTION P_DEATH 40
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon5LichRavlob">
+    <entity name="dungeon5LichVlobra">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -87436,20 +87633,24 @@ PROTECTION P_DEATH 40
         
         CanJumpkick = true,
         
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(17, 30, 50,
-                new AttackAgeComponent(1000, 20), new AttackProneComponent(15)) }, 
-        },
-        Spells = new CreatureSpellCollection(100)
-        {
-            { new CreatureSpell<FireballSpell>(12), 100, TimeSpan.FromSeconds(12.0) },
-        },
-        
         FireProtection = 100,
         IceProtection = 100,
     };
+    
     twin.AddStatus(new NightVisionStatus(twin));
+    
+    twin.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(17, 30, 50,
+                new AttackAgeComponent(1000, 20),
+                new AttackProneComponent(15))
+    };
+    
+    twin.Spells = new CreatureSpellCollection(100)
+    {
+        { new CreatureSpell<FireballSpell>(
+            skillLevel: 12), 100, TimeSpan.FromSeconds(12.0) }
+    };
     
     twin.AddGold(2000);
     twin.AddLoot(
@@ -87488,15 +87689,16 @@ PROTECTION P_DEATH 40
         BaseDodge = 20,
 
         Experience = 10000,
-
-        Attacks = new CreatureAttackCollection
-        {
-            new CreatureAttack(10, 20, 30), 
-        },
         
         HideDetection = 20,
-    };
+    };    
+       
     doomOrc.AddStatus(new NightVisionStatus(doomOrc));
+    
+    doomOrc.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(12)
+    };
                 
     doomOrc.Wield(new HeavyCrossbow());
     doomOrc.Equip(new DragonScaleArmor());    
@@ -87531,13 +87733,13 @@ PROTECTION P_DEATH 40
         Experience = 1800,
 
         CanFlee = true,
-
-        Attacks = new CreatureAttackCollection
-        {
-            new CreatureBasicAttack(9), 
-        },
         
         HideDetection = 14,
+    };
+    
+    orc.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(9)
     };
 
     orc.Wield(new Crossbow());
@@ -87570,22 +87772,25 @@ PROTECTION P_DEATH 40
 
         VisibilityDistance = 0,
         
-        Attacks = new CreatureAttackCollection
-        {
-            new CreatureBasicAttack(8),
-        },
-        
-        Spells = new CreatureSpellCollection()
-        {
-            new CreatureSpell<StunSpell>(6, mantra: SpellHelper.GenerateMantra(),
-                cost: 4, instantCast: false),
-            new CreatureSpell<DeathSpell>(3.25, mantra: SpellHelper.GenerateMantra(),
-                cost: 6, instantCast: false)
-        },
-        
         HideDetection = 20,
     };
+    
     presence.AddStatus(new NightVisionStatus(presence));
+    
+    presence.Attacks = new CreatureAttackCollection
+    {
+       new CreatureBasicAttack(8, 15, 25)
+    };
+    
+    presence.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<StunSpell>(
+            skillLevel: 6, cost: 4,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<DeathSpell>(
+            skillLevel: 3.25, cost: 6,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
 
     presence.Wield(new BlackStaff());    
 
@@ -87626,44 +87831,46 @@ PROTECTION P_DEATH 40
         BasePenetration = ShieldPenetration.Heavy,
         HideDetection = 24,
 
-        Attacks = new CreatureAttackCollection
-        {
-            {
-                // TODO: Damage Outputs
-                /* 43, 31, 16 (maybe balm tick at same time?), 43 */
-                new CreatureAttack(14, 8, 25, "The dragon slashes you with its claws.",
-                    new AttackProneComponent(15), new AttackStunComponent(5)), 30
-            },
-            {
-                /* 37, 39, 28 */
-                new CreatureAttack(14, 10, 30, "The dragon smashes you with its tail.",
-                    new AttackProneComponent(25), new AttackStunComponent(10)), 30
-            },
-            {
-                /* 40, 48, 57, 51, 48 */
-                new CreatureAttack(14, 20, 40, "The dragon buffets you with its wings.",
-                    new AttackProneComponent(35), new AttackStunComponent(15)), 40
-            },
-        },
-        Blocks = new CreatureBlockCollection
-        {
-            { new CreatureBlock(6, "hard scales") },
-            { new CreatureBlock(4, "a tail") },
-            { new CreatureBlock(3, "a wing") },
-        },
-        
         Immunity = CreatureImmunity.Web,
 
         FireProtection = 100,
         IceProtection = 100,
         StunProtection = 100,
     };
+    
     dragon.AddStatus(new NightVisionStatus(dragon));
+
+    dragon.Attacks = new CreatureAttackCollection
+    {
+            {
+                new CreatureAttack(14, 20, 28, "The dragon slashes you with its claws.",
+                                    new AttackProneComponent(15),
+                                    new AttackStunComponent(5)),                            30
+            },
+            {
+                new CreatureAttack(14, 28, 38, "The dragon smashes you with its tail.",
+                                    new AttackProneComponent(25),
+                                    new AttackStunComponent(10)),                           30
+            },
+            {
+                new CreatureAttack(14, 40, 60, "The dragon buffets you with its wings.",
+                                    new AttackProneComponent(35),
+                                    new AttackStunComponent(15)),                           40
+            },
+    };
+    
+    dragon.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "hard scales"),
+        new CreatureBlock(4, "a tail"),
+        new CreatureBlock(3, "a wing")
+    };
 
     dragon.Spells = new CreatureSpellCollection()
     {
         /* Expected output of damage is 60 per turn based on replay from Indi..DOOM. */
-        { new CreatureSpell<WhirlwindSpell>(15, cost: 20) },
+        new CreatureSpell<WhirlwindSpell>(
+            skillLevel: 15, cost: 20)
     };
     
     return dragon;
@@ -87690,10 +87897,12 @@ PROTECTION P_DEATH 40
         Experience = 6500,
         HideDetection = 35,
         CanWalk = false,
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(19) }, 
-        },
+        VisibilityDistance = 3,
+    };
+    
+    pescalanor.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(19)
     };
 
     pescalanor.Wield(new FineCrossbow());
@@ -87726,9 +87935,10 @@ PROTECTION P_DEATH 40
     };
     
     centaur.AddStatus(new NightVisionStatus(centaur));
+    
     centaur.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(17, 30, 45),
+        new CreatureBasicAttack(17, 30, 45)
     };
         
     centaur.Wield(new WarHammer());
@@ -87768,18 +87978,23 @@ PROTECTION P_DEATH 40
     };
     
     centaur.AddStatus(new NightVisionStatus(centaur));
+    
     centaur.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(16, 25, 35),
+        new CreatureBasicAttack(16, 25, 35)
     };
+    
     centaur.Spells = new CreatureSpellCollection()
     {
         //not sure CreateSnake will work on chaotic monster but would be interesting - I feel a natural defender monster might do it thematically
-        { new CreatureSpell<CreateSnakeSpell>(16, mantra: SpellHelper.GenerateMantra(),
-            cost: 16, instantCast: false) },
-        { new CreatureSpell<CurseSpell>(14, mantra: SpellHelper.GenerateMantra(),
-            cost: 7, instantCast: false) }
+        new CreatureSpell<CreateSnakeSpell>(
+            skillLevel: 16, cost: 16,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<CurseSpell>(
+            skillLevel: 14, cost: 7,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
+    
     centaur.Wield(new IronRod());
     
     centaur.AddGold(1500);
@@ -87812,19 +88027,30 @@ PROTECTION P_DEATH 40
         BaseDodge = 25,
                 
         Experience = 45500,
+        
         HideDetection = 31,
+        
         BasePenetration = ShieldPenetration.Heavy,
+        
         CanSwim = true,
         CanJumpkick = true,
+        
         MagicProtection = 50,
     };
+    
     bear.AddStatus(new NightVisionStatus(bear));
         
     bear.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(16,     50, 65,  "The bear spirit slashes you with spectral claws."),        50 },
-        { new CreatureAttack(18,     60, 80,  "The bear spirits attack passes through your defenses."),             40 },
-        { new CreatureAttack(20,     70, 90, "The spirit batters you with impossible force."),    10 }
+        {
+            new CreatureAttack(16,     50, 65,  "The bear spirit slashes you with spectral claws."),        50 
+        },
+        {
+            new CreatureAttack(18,     60, 80,  "The bear spirits attack passes through your defenses."),   40 
+        },
+        {
+            new CreatureAttack(20,     70, 90, "The spirit batters you with impossible force."),            10 
+        }
     };
         
     bear.Blocks = new CreatureBlockCollection
@@ -87866,13 +88092,22 @@ PROTECTION P_DEATH 40
         HideDetection = 33,
         MagicProtection = 50,
     };
+    
     wolf.AddStatus(new NightVisionStatus(wolf));
+    
     wolf.Attacks = new CreatureAttackCollection
     {
-            { new CreatureAttack(15, 20, 35, "The spirit rakes you with its claws."), 50 }, 
-            { new CreatureAttack(17, 30, 45, "The spirit sinks its teeth into you."), 30 }, 
-            { new CreatureAttack(18, 45, 65, "The wolf lunges at you, passing through you."), 20 }, 
+            { 
+                new CreatureAttack(15, 20, 35, "The spirit rakes you with its claws."),         50 
+            }, 
+            {
+                new CreatureAttack(17, 30, 45, "The spirit sinks its teeth into you."),         30
+            }, 
+            { 
+                new CreatureAttack(18, 45, 65, "The wolf lunges at you, passing through you."), 20 
+            }, 
     };
+    
     wolf.Blocks = new CreatureBlockCollection
     {
             new CreatureBlock(6, "your weapon passing through the incorporeal beast"),
@@ -87906,19 +88141,30 @@ PROTECTION P_DEATH 40
         Name = "Spectral.Boar",
         MaxHealth = 1500, Health = 1500,
         BaseDodge = 26,
+        
+        Experience = 43250,        
+        
         BasePenetration = ShieldPenetration.Medium,
-        Experience = 43250,
+        
         CanCharge = true,
+        
         HideDetection = 28,
         
         MagicProtection = 50,
     };
+    
     boar.AddStatus(new NightVisionStatus(boar));
+    
     boar.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(16, 25, 40, "A spectral tusk impales you."), 60 }, 
-        { new CreatureAttack(18, 35, 50, "The boar charges through you."), 40 }, 
+        { 
+            new CreatureAttack(16, 25, 40, "A spectral tusk impales you."), 60 
+        }, 
+        {
+            new CreatureAttack(18, 35, 50, "The boar charges through you."), 40 
+        }, 
     };
+    
     boar.Blocks = new CreatureBlockCollection
     {
             new CreatureBlock(6, "your weapon passing through the incorporeal beast"),
@@ -87958,15 +88204,17 @@ PROTECTION P_DEATH 40
         Experience = 25025,
         VisibilityDistance = 1,
         
-    };    
+    };
+    
     viper.Attacks = new CreatureAttackCollection()
     {
-        { new CreatureAttack(18,     10, 30,      "The viper sinks its spectral fangs into your flesh.", 
-                                            new AttackPoisonComponent(40)) }, 
+        new CreatureAttack(18,     10, 30,      "The viper sinks its spectral fangs into your flesh.", 
+                                            new AttackPoisonComponent(40))
     };  
+    
     viper.Blocks = new CreatureBlockCollection
     {
-        { new CreatureBlock(1, "your weapon passing through the viper.") }, 
+        new CreatureBlock(1, "your weapon passing through the viper."),
     };
 
     viper.AddLoot(
@@ -88071,7 +88319,7 @@ PROTECTION P_DEATH 40
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="oakshopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="31" y="27" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="oakApothecary">
@@ -88095,7 +88343,7 @@ PROTECTION P_DEATH 40
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="oakshopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="8" y="7" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="oakArmourer">
@@ -88119,7 +88367,7 @@ PROTECTION P_DEATH 40
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="oakshopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="4" y="11" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="oakPawner">
@@ -88143,7 +88391,7 @@ PROTECTION P_DEATH 40
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="oakshopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="17" y="27" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="oakWeaponsmith">
@@ -88168,7 +88416,7 @@ PROTECTION P_DEATH 40
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="oakshopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="11" y="24" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="oakJeweler">
@@ -88190,7 +88438,7 @@ PROTECTION P_DEATH 40
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="oakshopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="4" y="16" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="oakTailor">
@@ -88261,7 +88509,7 @@ PROTECTION P_DEATH 40
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="thaumTrainerTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="oakthaumTrainerTemplate" size="1" minimum="1" maximum="1" />
       <location x="26" y="6" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="oakBalmVendor">
@@ -88304,7 +88552,7 @@ PROTECTION P_DEATH 40
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bankerTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="oakbankerTemplate" size="1" minimum="1" maximum="1" />
       <location x="6" y="24" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="surfaceThiefTrainer">
@@ -88364,7 +88612,7 @@ PROTECTION P_DEATH 40
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="aniet" size="1" minimum="1" maximum="1" />
+      <entry entity="oakaniet" size="1" minimum="1" maximum="1" />
       <location x="4" y="1" region="255" />
     </spawn>
     <spawn type="LocationSpawner" name="oakPriest">
@@ -88404,7 +88652,7 @@ PROTECTION P_DEATH 40
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="tagget" size="1" minimum="1" maximum="1" />
+      <entry entity="oaktagget" size="1" minimum="1" maximum="1" />
       <location x="13" y="37" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="cudyl">
@@ -88424,7 +88672,7 @@ PROTECTION P_DEATH 40
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="cudyl" size="1" minimum="1" maximum="1" />
+      <entry entity="oakcudyl" size="1" minimum="1" maximum="1" />
       <location x="77" y="18" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="surfaceShark">
@@ -88565,7 +88813,7 @@ PROTECTION P_DEATH 40
         <block><![CDATA[]]></block>
       </script>
       <entry entity="dungeon5LichSahtra" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon5LichRavlob" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon5LichVlobra" size="1" minimum="1" maximum="1" />
       <location x="18" y="38" region="227" />
     </spawn>
     <spawn type="LocationSpawner" name="doomOrcAndPresence">
@@ -88709,8 +88957,8 @@ PROTECTION P_DEATH 40
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="peyton" size="1" minimum="1" maximum="1" />
-      <entry entity="karin" size="1" minimum="1" maximum="1" />
+      <entry entity="oakpeyton" size="1" minimum="1" maximum="1" />
+      <entry entity="oakkarin" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="24" top="17" right="29" bottom="22" />
         <exclusion left="0" top="0" right="0" bottom="0" />
