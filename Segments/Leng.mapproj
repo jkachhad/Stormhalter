@@ -74760,13 +74760,13 @@
         MaxHealth = 90, Health = 90,
         BaseDodge = 10,
 
-        Experience = 1500,
+        Experience = 3100,
 
         Movement = 2,
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(8, 10, 18)
+            new CreatureBasicAttack(8, 6, 15)
         },
     };
     
@@ -75094,7 +75094,7 @@
         MaxMana = 31, Mana = 31,
         BaseDodge = 12,
         
-        Experience = 1800,
+        Experience = 3200,
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
         
@@ -75143,11 +75143,11 @@
         Name = "Thrall",
         Body = 37,
             
-        MaxHealth = 100, Health = 100,
+        MaxHealth = 110, Health = 110,
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
     
-        Experience = 4550,
+        Experience = 7500,
         
         CanSwim = true,
             
@@ -75165,14 +75165,14 @@
     wizard.Spells = new CreatureSpellCollection
     {
         { new CreatureSpell<ConcussionSpell>(
-            skillLevel: 5, cost: 16, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false),   50 },
+            skillLevel: 5, cost: 16, instantCast: false,
+            mantra: SpellHelper.GenerateMantra()),   50 },
         { new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 8, cost: 6, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 },
+            skillLevel: 8, cost: 6, instantCast: false,
+            mantra: SpellHelper.GenerateMantra()),   25 },
         { new CreatureSpell<IceStormSpell>(
-            skillLevel: 8, cost: 6, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 }
+            skillLevel: 8, cost: 6, instantCast: false,
+            mantra: SpellHelper.GenerateMantra()),   25 }
     };
     
     wizard.AddGold(450);
@@ -75202,11 +75202,11 @@
         Name = "Thrall",
         Body = 38,
             
-        MaxHealth = 100, Health = 100,
+        MaxHealth = 110, Health = 110,
         MaxMana = 31, Mana = 31,
         BaseDodge = 13,
     
-        Experience = 3850,
+        Experience = 7000,
         
         CanSwim = true,
             
@@ -75259,7 +75259,7 @@
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
     
-        Experience = 2200,
+        Experience = 6500,
     
         VisibilityDistance = 1,
     };
@@ -75309,11 +75309,11 @@
         MaxHealth = 90, Health = 90,
         BaseDodge = 11,
     
-        Experience = 1400,
+        Experience = 2300,
         BasePenetration = ShieldPenetration.VeryLight,
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(10, 13, 19) }, 
+            { new CreatureBasicAttack(10, 9, 17) }, 
         },
     };
     
@@ -75348,7 +75348,7 @@
         MaxMana = 31, Mana = 31,
         BaseDodge = 12,
     
-        Experience = 1700,
+        Experience = 2600,
     
     };
     hobgoblin.AddStatus(new NightVisionStatus(hobgoblin));
@@ -75399,18 +75399,18 @@
         Name = "Wretch",
         Body = (female ? 33 : 32), IsFemale = female,
             
-        MaxHealth = 145, Health = 145,
+        MaxHealth = 125, Health = 125,
         BaseDodge = 11,
         
         Movement = 2,
     
-        Experience = 2550,
+        Experience = 4400,
             
     };
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(10, 13, 22), 
+        new CreatureBasicAttack(10, 11, 18), 
     };
     
     fighter.Wield(new Longsword());
@@ -75446,7 +75446,7 @@
         BaseDodge = 12,
         BasePenetration = ShieldPenetration.Medium,
         VisibilityDistance = 0,
-        Experience = 500,
+        Experience = 700,
     };
     
     raven.Attacks = new CreatureAttackCollection
@@ -75535,7 +75535,7 @@
         MaxHealth = 750, Health = 750,
         BaseDodge = 15,
 
-        Experience = 6500,
+        Experience = 10500,
         BasePenetration = ShieldPenetration.Medium,
         Attacks = new CreatureAttackCollection
         {
@@ -75578,14 +75578,14 @@
         MaxHealth = 600, Health = 600,
         BaseDodge = 14,
         HideDetection = 18,
-        Experience = 7500,
+        Experience = 11500,
         BasePenetration = ShieldPenetration.Medium,
         VisibilityDistance = 1,
         
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
         Weakness = CreatureWeakness.BlueGlowing,
-        
+        CanCharge = true,
         FireProtection = 100,
         IceProtection = 100,
     };
@@ -75637,7 +75637,7 @@
         MaxMana = 50, Mana = 50,
         BaseDodge = 14,
     
-        Experience = 7000,
+        Experience = 12000,
     
         VisibilityDistance = 0,
         
@@ -75697,7 +75697,7 @@
         MaxHealth = 3000, Health = 3000,
         BaseDodge = 23,
         HideDetection = 24,
-        Experience = 22000,
+        Experience = 32000,
         
         VisibilityDistance = 0,
        
@@ -75828,7 +75828,7 @@
         MaxHealth = 3000, Health = 3000,
         BaseDodge = 18,
         HideDetection = 22,
-        Experience = 16000,
+        Experience = 40000,
         
         CanFly = true,
         CanCharge = true,
@@ -75905,7 +75905,7 @@
         MaxHealth = 7000, Health = 7000,
         BaseDodge = 20,
         BasePenetration = ShieldPenetration.VeryHeavy,
-        Experience = 55000,
+        Experience = 95000,
         HideDetection = 28,
         CanCharge = true,
         
@@ -75933,7 +75933,7 @@
     
     vlad.Spells = new CreatureSpellCollection(25.0)
     {
-        new CreatureSpell<DeathSpell>(12),
+        new CreatureSpell<DeathSpell>(12) 
     };
     
     vlad.AddGold(25000);
@@ -75973,7 +75973,7 @@
         
         Alignment = Alignment.Chaotic,
         HideDetection = 27,
-        Experience = 50000,
+        Experience = 85000,
         
         CanFly = true,
         CanCharge = true,
@@ -76017,7 +76017,7 @@
         
     drake.Spells = new CreatureSpellCollection(20.0)
     {
-        new CreatureSpell<LightningBoltSpell>(13),
+        new CreatureSpell<LightningBoltSpell>(13)
     };
     
     drake.AddGold(2000);
@@ -76054,7 +76054,7 @@
         MaxHealth = 300, Health = 300,
         BaseDodge = 15,
                 
-        Experience = 9000,
+        Experience = 10000,
     };
     griffin.AddStatus(new NightVisionStatus(griffin));
         
@@ -76102,15 +76102,14 @@
         Name = "Nomad",
         Body = (female ? 33 : 32), IsFemale = female,
             
-        MaxHealth = 135, Health = 135,
+        MaxHealth = 155, Health = 155,
         BaseDodge = 15,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 3550,
+        Experience = 7000,
+        CanSwim = true,
             
     };
-    
-    fighter.AddStatus(new NightVisionStatus(fighter));
-    
+        
     fighter.Attacks = new CreatureAttackCollection
     {
         new CreatureBasicAttack(11, 20, 28), 
@@ -76146,7 +76145,7 @@
         MaxHealth = 160, Health = 160,
         BaseDodge = 16,
     
-        Experience = 5500,
+        Experience = 9500,
         BasePenetration = ShieldPenetration.Light,
         Movement = 2,
         
@@ -76191,8 +76190,8 @@
         MaxHealth = 100, Health = 100,
         MaxMana = 19, Mana = 19,
         BaseDodge = 14,
-        
-        Experience = 4500,
+        MagicProtection = 33,
+        Experience = 6500,
         VisibilityDistance = 0,
     };
     lich.AddStatus(new NightVisionStatus(lich));
@@ -76240,24 +76239,23 @@
         Name = "Nomad",
         Body = (female ? 33 : 32), IsFemale = female,
             
-        MaxHealth = 110, Health = 110,
+        MaxHealth = 120, Health = 120,
         BaseDodge = 14,
             
-        Experience = 3050,
-            
+        Experience = 6800,
+        CanSwim = true,
     };
     
-    fighter.AddStatus(new NightVisionStatus(fighter));
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11), 
+        new CreatureBasicAttack(12), 
     };
     
     fighter.Wield(new FineCrossbow());
     fighter.Equip(new LeatherArmor());    
     
-    fighter.AddGold(370);
+    fighter.AddGold(470);
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, CliffGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
@@ -76284,7 +76282,7 @@
         MaxHealth = 300, Health = 300,
         BaseDodge = 18,
     
-        Experience = 6500,
+        Experience = 15500,
     
         CanCharge = true,
         BasePenetration = ShieldPenetration.Medium,
@@ -76335,10 +76333,10 @@
         MaxHealth = 150, Health = 150,
         BaseDodge = 16,
         
-        Experience = 3025,
+        Experience = 9025,
         
         Movement = 2,
-        
+        MagicProtection = 33,
         FireProtection = 100,
         VisibilityDistance = 0,
     };
@@ -76385,9 +76383,10 @@
         MaxHealth = 300, Health = 300,
         BaseDodge = 15,
         BasePenetration = ShieldPenetration.Medium,
-        Experience = 5000,
+        Experience = 12000,
         VisibilityDistance = 0,
         FireProtection = 100,
+        MagicProtection = 33,
     };
     griffin.AddStatus(new NightVisionStatus(griffin));
         
@@ -76433,7 +76432,7 @@
         MaxHealth = 150, Health = 150,
         BaseDodge = 14,
                             
-        Experience = 2700,
+        Experience = 3700,
     };
     
     centaur.Attacks = new CreatureAttackCollection
@@ -76471,7 +76470,7 @@
         MaxHealth = 110, Health = 110,
         BaseDodge = 14,
     
-        Experience = 3500,
+        Experience = 2300,
     
         VisibilityDistance = 1,
         
@@ -76482,8 +76481,8 @@
     
     sandwyrm.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(8,     10, 20,     "The sandwyrm rolls over you"),      70 }, 
-        { new CreatureAttack(9,    15, 25,     "You've been bitten by the sandwyrm",
+        { new CreatureAttack(8,     8, 13,     "The sandwyrm rolls over you"),      70 }, 
+        { new CreatureAttack(9,    12, 18,     "You've been bitten by the sandwyrm",
                                                     new AttackPoisonComponent(4)),             30 },
                                                     // TODO: Attack poison chance. 50%
     };
@@ -76516,10 +76515,10 @@
         <block><![CDATA[
     var manticora = new Manticora()
     {
-        MaxHealth = 110, Health = 110,
+        MaxHealth = 90, Health = 90,
         BaseDodge = 11,
     
-        Experience = 1500,
+        Experience = 2100,
         
     };
     
@@ -76561,7 +76560,7 @@
         MaxHealth = 35, Health = 35,
         BaseDodge = 9,
                 
-        Experience = 105,
+        Experience = 500,
     
         BasePenetration = ShieldPenetration.VeryLight,
     };
@@ -76604,8 +76603,8 @@
             
         MaxHealth = 130, Health = 130,
         BaseDodge = 14,
-    
-        Experience = 4000,
+        MagicProtection = 33,
+        Experience = 8000,
     
         BasePenetration = ShieldPenetration.Medium,
             
@@ -76651,10 +76650,10 @@
             
         MaxHealth = 180, Health = 180,
         BaseDodge = 15,
-        
+        MagicProtection = 33,
         BasePenetration = ShieldPenetration.Medium,
     
-        Experience = 4750,
+        Experience = 8750,
             
     };
     
@@ -76698,8 +76697,8 @@
         MaxHealth = 130, Health = 130,
         MaxMana = 23, Mana = 23,
         BaseDodge = 14,
-    
-        Experience = 3050,
+        MagicProtection = 33,
+        Experience = 8050,
     
         VisibilityDistance = 0,
     };
@@ -76751,7 +76750,7 @@
         MaxHealth = 178, Health = 178,
         BaseDodge = 14,
         BasePenetration = ShieldPenetration.Medium,     
-        Experience = 4700,
+        Experience = 8700,
     };
     
     centaur.AddStatus(new NightVisionStatus(centaur));
@@ -76789,7 +76788,7 @@
         MaxHealth = 550, Health = 550,
         BaseDodge = 15,
                 
-        Experience = 10000,
+        Experience = 18000,
         BasePenetration = ShieldPenetration.Light,
         CanSwim = true,
     };
@@ -76834,7 +76833,8 @@
         CanSwim = true,
         CanJumpkick = true,
                 
-        Experience = 14000,
+        Experience = 22000,
+        Alignment = Alignment.Chaotic,
     };
     
     duck.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
@@ -76875,7 +76875,7 @@
     {
         MaxHealth = 110, Health = 110,
         BaseDodge = 14,
-        Experience = 2400,
+        Experience = 6200,
         
         CanFlee = true,
                 
@@ -76915,7 +76915,7 @@
         MaxHealth = 105, Health = 105,
         BaseDodge = 15,
                 
-        Experience = 2200,
+        Experience = 5900,
     };
     
     wolf.Attacks = new CreatureAttackCollection
@@ -76958,7 +76958,7 @@
         MaxHealth = 125, Health = 125,
         BaseDodge = 15,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 2700,
+        Experience = 6900,
                        
         Attacks = new CreatureAttackCollection()
         {
@@ -76996,7 +76996,7 @@
         MaxHealth = 80, Health = 80,
         BaseDodge = 14,
                 
-        Experience = 1800,
+        Experience = 2500,
     };
     
     hyena.Attacks = new CreatureAttackCollection
@@ -77032,7 +77032,7 @@
     {
         MaxHealth = 90, Health = 90,
         BaseDodge = 14,
-        Experience = 2400,
+        Experience = 5700,
         
         CanFlee = true,
                 
@@ -77072,7 +77072,7 @@
         MaxHealth = 220, Health = 220,
         BaseDodge = 14,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 3500,
+        Experience = 11500,
             
         
     };
@@ -77121,7 +77121,7 @@
         MaxMana = 8, Mana = 8,
         BaseDodge = 12,
     
-        Experience = 725,
+        Experience = 1725,
         
         CanFlee = true,
     };
@@ -77228,13 +77228,13 @@
     {
         { new CreatureAttack(10,     13, 22,      "The mummy scratches you with its claws"),  70 }, 
         { new CreatureAttack(11,     15, 25,     "You've been bitten by the mummy"), 30 },
-        
-        mummy.Spells =  new CreatureSpellCollection()
+    };   
+    
+    mummy.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CurseSpell>(
             skillLevel: 5, cost: 3, 
             mantra: SpellHelper.GenerateMantra(), instantCast: true)
-   
     };
     
     mummy.Blocks = new CreatureBlockCollection
@@ -77251,7 +77251,7 @@
         
     ));
     
-    return mummy;();
+    return mummy;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -78794,7 +78794,7 @@
       </entry>
     </treasure>
     <treasure name="MinotaurTreasures">
-      <entry weight="1">
+      <entry weight="2">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -78803,7 +78803,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="1">
+      <entry weight="2">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
