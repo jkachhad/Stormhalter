@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Bloodlands" version="0.71.0.0">
+<segment name="Bloodlands" version="0.72.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -7966,12 +7966,14 @@
         </component>
       </tile>
       <tile x="35" y="13">
-        <component type="StaticComponent">
-          <color r="163" g="153" b="165" a="255" />
-          <static>301</static>
+        <component type="FloorComponent">
+          <color r="97" g="88" b="90" a="255" />
+          <ground>301</ground>
         </component>
-        <component type="AltarComponent">
-          <altar>163</altar>
+        <component type="EgressComponent">
+          <color r="170" g="176" b="170" a="255" />
+          <egress>330</egress>
+          <destinationSegment>5</destinationSegment>
         </component>
       </tile>
       <tile x="36" y="13">
