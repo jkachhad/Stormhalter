@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.71.0.0">
+<segment name="Leng" version="0.72.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -75732,7 +75732,7 @@
     {
         Name = "Shidosha",
         MaxHealth = 3000, Health = 3000,
-        BaseDodge = 23,
+        BaseDodge = 28,
         HideDetection = 24,
         Experience = 32000,
         
@@ -75740,6 +75740,7 @@
        
         CanJumpkick = true,
         CanSwim = true,
+        CanStrikeCritically = true,
         
         BasePenetration = ShieldPenetration.Heavy,
 
@@ -75753,17 +75754,17 @@
     shidosha.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(23,      10, 30,      "Shidosha hits you with a flurry of fists.",
+            new CreatureAttack(22,      10, 30,      "Shidosha hits you with a flurry of fists.",
                                                         new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(25,      30, 60,     "Shidosha slams his fist into your chest.",
+            new CreatureAttack(24,      30, 60,     "Shidosha slams his fist into your chest.",
                                                         new AttackProneComponent(25), 
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(28,      40, 60,     "Shidosha knocks you back with a forceful kick.",
+            new CreatureAttack(26,      40, 60,     "Shidosha knocks you back with a forceful kick.",
                                                         new AttackProneComponent(100), 
                                                         new AttackStunComponent(15)),               20
         },
@@ -75809,7 +75810,7 @@
         CanJumpkick = true,
         CanSwim = true,
         VisibilityDistance = 1,
-        
+        CanStrikeCritically = false,
         BasePenetration = ShieldPenetration.Medium,
 
     };
@@ -75822,18 +75823,18 @@
     ninja.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(20,      10, 30,      "The ninja hits you with a flurry of fists.",
-                                                        new AttackProneComponent(15), 
+            new CreatureAttack(18,      10, 30,      "The ninja hits you with a flurry of fists.",
+                                                        new AttackProneComponent(5), 
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(21,      25, 35,     "The ninja slams his fist into your chest.",
-                                                        new AttackProneComponent(25), 
+            new CreatureAttack(19,      25, 35,     "The ninja slams his fist into your chest.",
+                                                        new AttackProneComponent(10), 
                                                         new AttackStunComponent(5)),               40
         },
         {
-            new CreatureAttack(22,      30, 45,     "The ninja knocks you back with a forceful kick.",
-                                                        new AttackProneComponent(100), 
+            new CreatureAttack(20,      30, 45,     "The ninja knocks you back with a forceful kick.",
+                                                        new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),               20
         },
     };
@@ -78332,7 +78333,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="shidShidosha" size="1" minimum="1" maximum="1" />
-      <entry entity="shidninjaguardians" size="3" minimum="3" maximum="3" />
+      <entry entity="shidninjaguardians" size="1" minimum="1" maximum="1" />
       <bounds region="255">
         <inclusion left="1" top="1" right="5" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -78751,6 +78752,78 @@
       <bounds region="10">
         <inclusion left="15" top="37" right="17" bottom="40" />
         <inclusion left="9" top="41" right="23" bottom="45" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="shidguardians1">
+      <minimumDelay>1500</minimumDelay>
+      <maximumDelay>1800</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="shidninjaguardians" size="3" minimum="1" maximum="1" />
+      <bounds region="4">
+        <inclusion left="1" top="1" right="9" bottom="7" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="shidguardians2">
+      <minimumDelay>1500</minimumDelay>
+      <maximumDelay>1800</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="shidninjaguardians" size="3" minimum="1" maximum="1" />
+      <bounds region="4">
+        <inclusion left="1" top="1" right="13" bottom="7" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="shidguardians3">
+      <minimumDelay>1500</minimumDelay>
+      <maximumDelay>1800</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="shidninjaguardians" size="3" minimum="1" maximum="1" />
+      <bounds region="4">
+        <inclusion left="1" top="1" right="15" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
