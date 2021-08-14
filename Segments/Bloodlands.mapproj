@@ -88321,7 +88321,7 @@
     spawn.Name = "Qong";
     spawn.Body = 49; spawn.IsFemale = false;
     
-    if (spawn is TrainerEntity phong)
+    if (spawn is TrainerEntity neela)
     {
         foreach (var skill in Skill.Weapons)
             phong.SetTraining(skill, 12, 20);
@@ -88400,7 +88400,7 @@
     spawn.Name = "Falo";
     spawn.Body = 32; spawn.IsFemale = false;
     
-    if (spawn is TrainerEntity falo)
+    if (spawn is TrainerEntity neela)
     {
         foreach (var skill in Skill.Weapons)
             falo.SetTraining(skill, 12, 20);
