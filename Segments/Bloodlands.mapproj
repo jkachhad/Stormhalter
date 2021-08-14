@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?> 
+﻿<?xml version="1.0" encoding="utf-8"?>
 <segment name="Bloodlands" version="0.72.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
@@ -87503,7 +87503,7 @@
     };
 
     return banker;
-}]]></block>
+]]></block>
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
@@ -87531,7 +87531,7 @@
     };
 
     return vendor;
-}]]></block>
+]]></block>
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
@@ -87650,24 +87650,25 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	var female = Utility.RandomBool();
-    var thaumaturgeTrainer = new ThaumaturgeTrainer()
+	 var sven = new ThaumaturgeTrainer()
     {
-        Name = _names.Random(),
-        Body = (female ? 16 : 48), IsFemale = female,
+        Name = "Sven", Body = 48,
+        
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
 
         Experience = 50,
     };
     
-   
+    sven.AddCounter(new Point2D(30, 7, 1));
+    sven.AddCounter(new Point2D(31, 7, 1));
+    
     foreach (var skill in Skill.Weapons)
-        thaumaturgeTrainer.SetTraining(skill, 12, 20);
+        sven.SetTraining(skill, 0, 4);
     
-    thaumaturgeTrainer.SetTraining(Skill.Magic, 12, 20);
+    sven.SetTraining(Skill.Magic, 0, 10);
     
-    return thaumaturgeTrainer;
+    return sven;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -88270,7 +88271,7 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-s   pawn.Name = "Norx";
+    spawn.Name = "Norx";
     spawn.Body = 48;
     if (spawn is ThaumaturgeTrainer thaumaturgeTrainer)
     {
