@@ -88400,12 +88400,12 @@
     spawn.Name = "Falo";
     spawn.Body = 32; spawn.IsFemale = false;
     
-    if (spawn is TrainerEntity neela)
+    if (spawn is TrainerEntity wulfgar)
     {
         foreach (var skill in Skill.Weapons)
-            falo.SetTraining(skill, 12, 20);
+            wulfgar.SetTraining(skill, 12, 20);
 
-        falo.SetTraining(Skill.Hand, 4, 10);
+        wulfgar.SetTraining(Skill.Hand, 4, 10);
     }
 ]]></block>
         <block><![CDATA[]]></block>
