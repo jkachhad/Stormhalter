@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.71.0.0">
+<segment name="Leng" version="0.72.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -76112,7 +76112,8 @@
         
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11, 20, 28), 
+        new CreatureBasicAttack(10, 10, 18), 60 },
+        new CreatureBasicAttack(11, 20, 28 "The nomad slashes you with a longsword."), 40 },
     };
     
     fighter.Wield(new Longsword());
