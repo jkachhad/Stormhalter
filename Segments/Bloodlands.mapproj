@@ -88324,9 +88324,9 @@
     if (spawn is TrainerEntity neela)
     {
         foreach (var skill in Skill.Weapons)
-            phong.SetTraining(skill, 12, 20);
+            neela.SetTraining(skill, 12, 20);
 
-        phong.SetTraining(Skill.Hand, 12, 20);
+        neela.SetTraining(Skill.Hand, 12, 20);
     }
 
 ]]></block>
