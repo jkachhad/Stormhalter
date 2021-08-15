@@ -103004,7 +103004,6 @@
         
         Experience = 1700,
     };
-    wraith.AddStatus(new NightVisionStatus(wraith));
         
     wraith.Attacks = new CreatureAttackCollection
     {
@@ -103719,7 +103718,6 @@
         
         Experience = 2600,
     };
-    wraith.AddStatus(new NightVisionStatus(wraith));
         
     wraith.Attacks = new CreatureAttackCollection
     {
@@ -104071,8 +104069,6 @@
         IceProtection = 100,
         FireProtection = 50,
     };
-    
-    rockworm.AddStatus(new NightVisionStatus(rockworm));
     
     rockworm.Attacks = new CreatureAttackCollection
     {
@@ -104963,8 +104959,6 @@
         
         Experience = 4500,
     };
-    
-    wraith.AddStatus(new NightVisionStatus(wraith));
         
     wraith.Attacks = new CreatureAttackCollection
     {
@@ -105072,9 +105066,7 @@
         BasePenetration = ShieldPenetration.VeryLight,
         CanSwim = true,
     };
-    
-    bear.AddStatus(new NightVisionStatus(bear));
-        
+            
     bear.Attacks = new CreatureAttackCollection
     {
         {

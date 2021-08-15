@@ -97078,8 +97078,6 @@
     
     };
     
-    hobgoblin.AddStatus(new NightVisionStatus(hobgoblin));
-    
     hobgoblin.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(11, 1, 40)
@@ -97212,9 +97210,7 @@
     {
         new CreatureBasicAttack(11, 15, 30)
     };
-    
-    troll.AddStatus(new NightVisionStatus(troll));
-    
+        
     troll.Wield(new Greatsword());
     troll.Equip(new ChainmailArmor());
     
@@ -97378,7 +97374,6 @@
         MaxMana = 21, Mana = 21,
             
     };
-    troll.AddStatus(new NightVisionStatus(troll));
         
     troll.Attacks = new CreatureAttackCollection()
     {
@@ -97425,9 +97420,7 @@
         MaxMana = 31, Mana = 31,
             
     };
-    
-    troll.AddStatus(new NightVisionStatus(troll));
-        
+            
     troll.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(11, 20, 30)
@@ -97862,8 +97855,6 @@
     {
         new CreatureBasicAttack(14, 25, 40)
     };
-    
-    knight.AddStatus(new NightVisionStatus(knight));
     
     knight.Wield(new Greatsword());
     knight.Equip(new PlatemailArmor());
