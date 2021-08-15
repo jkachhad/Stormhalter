@@ -75541,7 +75541,7 @@
     
     bridgeTroll.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new WingedHelm(),         40.0),
-        new LootPackEntry(true, (from, container) => new Diamond(1500u),         100.0)
+        new LootPackEntry(true, MinotaurGems,       10,     gemsPriceMutator), 
     ));
     
     return bridgeTroll;
@@ -75645,11 +75645,11 @@
     };
     
     sandwyrm.AddGold(1200);
-    sandwyrm.AddLoot(new LootPack(
+    sandwyrm.AddLoot(new LootPack(    
+        new LootPackEntry(true, MausGems, 100, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new StrengthRing(),       20), 
         new LootPackEntry(true, (from, container) => new ShieldRing(),    10),
-        new LootPackEntry(true, (from, container) => new WeakShieldRing(),   20),
-        new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 100.0)
+        new LootPackEntry(true, (from, container) => new WeakShieldRing(),   20)
         
         ));
     
@@ -76077,7 +76077,7 @@
     
     drake.AddGold(2000);
     drake.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, MinotaurGems,       100,     gemsPriceMutator), 
         new LootPackEntry(true, (from, container) => new LightningResistanceRing(),    33),
         new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(),     100),
         new LootPackEntry(true, (from, container) => new LightningShield(),     10),
@@ -76164,16 +76164,16 @@
         Body = (female ? 33 : 32), IsFemale = female,
             
         MaxHealth = 155, Health = 155,
-        BaseDodge = 15,
+        BaseDodge = 14,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 7000,
+        Experience = 7600,
         CanSwim = true,
             
     };
         
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11, 17, 23)
+        new CreatureBasicAttack(12, 17, 23)
     };
     
     fighter.Wield(new Longsword());
@@ -76308,14 +76308,14 @@
         MaxHealth = 120, Health = 120,
         BaseDodge = 14,
             
-        Experience = 6800,
+        Experience = 7200,
         CanSwim = true,
     };
     
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(12)
+        new CreatureBasicAttack(13)
     };
     
     fighter.Wield(new Longbow());
@@ -76381,7 +76381,7 @@
     
     minotaur.AddGold(1000);
     minotaur.AddLoot(new LootPack(
-        new LootPackEntry(true, MinotaurGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, MinotaurGems,       50,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
         new LootPackEntry(true, MinotaurTreasures,    0.63)
     ));
@@ -76550,7 +76550,7 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    //todo add portal gem loot chance - replace red berries heh
+    //todo add portal gem loot chance. I know one of the rubies is it but not sure which off top of head.
     var sandwyrm = new Sandwyrm()
     {
         MaxHealth = 110, Health = 110,
@@ -76585,7 +76585,7 @@
     
     sandwyrm.AddGold(100);
     sandwyrm.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new RedBerries(),       20)
+        new LootPackEntry(true, (from, container) => new BloodRuby(300u),       20)
     ));
     
     return sandwyrm;
@@ -77382,7 +77382,7 @@
     
     mummy.AddGold(350);
     mummy.AddLoot(new LootPack(
-        new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, MausGems,       40,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20),
         new LootPackEntry(true, MausTreasure,  0.63)
         
@@ -78834,7 +78834,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new LargeEmerald(600u);
+	return new LargeEmerald(750u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -78843,7 +78843,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallAmethyst(500u);
+	return new SmallAmethyst(850u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -78852,7 +78852,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Diamond(1500u);
+	return new Diamond(1900u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -78903,7 +78903,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallSapphire(900u);
+	return new SmallSapphire(1100u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -78912,7 +78912,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(1100u);
+	return new Amethyst(1350u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -78921,7 +78921,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StarRuby(1300u);
+	return new StarRuby(1600u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -79066,7 +79066,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(1300u);
+	return new Amethyst(2000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -79075,7 +79075,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StarRuby(1500u);
+	return new StarRuby(3000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -79084,7 +79084,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallSapphire(1100u);
+	return new SmallSapphire(1700u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
