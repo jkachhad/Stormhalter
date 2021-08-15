@@ -85685,8 +85685,8 @@
         </component>
       </tile>
       <tile x="20" y="35">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="WallComponent">
           <wall>26</wall>
@@ -96330,7 +96330,7 @@
         <block><![CDATA[
     var skeleton = new Skeleton()
     {
-        MaxHealth = 7, Health = 7,
+        MaxHealth = 5, Health = 5,
         BaseDodge = 10,
 
         Experience = 100,
@@ -97110,7 +97110,7 @@
         <block><![CDATA[
     var goblin = new Goblin()
     {
-        MaxHealth = 20, Health = 20,
+        MaxHealth = 12, Health = 12,
         BaseDodge = 11,
                 
         Experience = 225,
@@ -97196,7 +97196,7 @@
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 21, Health = 21,
+        MaxHealth = 12, Health = 12,
         BaseDodge = 11,
                 
         Experience = 210,
@@ -97370,7 +97370,7 @@
         <block><![CDATA[
     var wight = new Wight()
     {
-        MaxHealth = 21, Health = 21,
+        MaxHealth = 15, Health = 15,
         BaseDodge = 11,
     
         Experience = 230,
@@ -97420,7 +97420,7 @@
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 21, Health = 21,
+        MaxHealth = 15, Health = 15,
         BaseDodge = 11,
     
         Experience = 210,
@@ -97684,7 +97684,7 @@ return orc;
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 35, Health = 35,
+        MaxHealth = 24, Health = 24,
         BaseDodge = 12,
                 
         Experience = 575,
@@ -97770,7 +97770,7 @@ return orc;
         <block><![CDATA[
     var goblin = new Goblin()
     {
-        MaxHealth = 36, Health = 36,
+        MaxHealth = 24, Health = 24,
         BaseDodge = 12,
                 
         Experience = 600,
@@ -97810,7 +97810,7 @@ return orc;
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 35, Health = 35,
+        MaxHealth = 30, Health = 30,
         MaxMana = 12, Mana = 12,
         BaseDodge = 12,
     
