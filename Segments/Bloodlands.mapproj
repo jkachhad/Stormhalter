@@ -88245,6 +88245,93 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="bloodlandsSouthernDarknessWraith">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	 var wraith = new Wraith()
+    {
+        MaxHealth = 150, Health = 150,
+        BaseDodge = 12,
+    
+        Experience = 2725,
+        
+    };
+    wraith.AddStatus(new NightVisionStatus(wraith));
+        
+    wraith.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(7)
+    };
+    
+    wraith.Spells =  new CreatureSpellCollection()
+    {
+        new CreatureSpell<CurseSpell>(
+            skillLevel: 12,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
+        
+    wraith.Wield(new WoodenStaff());
+    
+    return wraith;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="bloodlandsSouthernDarknessLich">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var lich = new Lich()
+    {
+        MaxHealth = 120, Health = 120,
+        MaxMana = 24, Mana = 24,
+        BaseDodge = 14,
+        BasePenetration = ShieldPenetration.Light,
+        Experience = 12000,
+        VisibilityDistance = 3,
+        MagicProtection = 33,
+        FireProtection =100,
+        
+    };
+
+    lich.AddStatus(new NightVisionStatus(lich));
+        
+    lich.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(9, 20, 25)
+    };
+    
+    lich.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<DeathSpell>(
+            skillLevel: 10, cost: 6, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
+        
+    lich.Wield(new BlackStaff());
+        
+    lich.AddGold(700);
+    
+    //add loot pack
+    
+    return lich;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="bloodlandsBanker">
@@ -88604,6 +88691,69 @@ spawn.Name = "The Reeve";
       <entry entity="bloodlandsRaven" size="1" minimum="1" maximum="1" />
       <location x="30" y="12" region="1" />
     </spawn>
+    <spawn type="LocationSpawner" name="bloodlandsSouthernDarknessFire-East">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="bloodlandsSouthernDarknessLich" size="1" minimum="1" maximum="2" />
+      <location x="6" y="28" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="bloodlandsSouthernDarknessFire-West">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="bloodlandsSouthernDarknessLich" size="1" minimum="1" maximum="2" />
+      <location x="15" y="28" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="bloodlandsSouthernDarknessFire-South">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="bloodlandsSouthernDarknessLich" size="1" minimum="1" maximum="2" />
+      <location x="10" y="32" region="1" />
+    </spawn>
     <spawn type="RegionSpawner" name="surfacePirhana">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
@@ -88750,8 +88900,8 @@ spawn.Name = "The Reeve";
     </spawn>
     <spawn type="RegionSpawner" name="bloodlandsLightningHobNorth">
       <minimumDelay>600</minimumDelay>
-      <maximumDelay>600</maximumDelay>
-      <maximum>2</maximum>
+      <maximumDelay>900</maximumDelay>
+      <maximum>17</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -88775,8 +88925,9 @@ spawn.Name = "The Reeve";
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="bloodlandsLightningHobSouth">
-      <minimumDelay>0</minimumDelay>
-      <maximumDelay>0</maximumDelay>
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>17</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -88796,6 +88947,30 @@ spawn.Name = "The Reeve";
       <entry entity="bloodlands100Kobald" size="3" minimum="4" maximum="7" />
       <bounds region="2">
         <inclusion left="0" top="8" right="23" bottom="18" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="bloodlandsSouthernDarkEntrance">
+      <minimumDelay>480</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="bloodlandsSouthernDarknessWraith" size="1" minimum="2" maximum="2" />
+      <bounds region="1">
+        <inclusion left="8" top="23" right="14" bottom="24" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
