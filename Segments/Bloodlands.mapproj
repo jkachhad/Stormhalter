@@ -87889,7 +87889,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="surfaceBoss1">
+    <entity name="surfaceBossPlaceHolder">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -87927,7 +87927,7 @@
     
     //todo determine if I can force it to dual wield? Not sure of context
     boss1.Wield(new YasnakiDagger());
-    boss1.Wield(new YasnakiDagger());
+  
         
     boss1.AddGold(14000);
     boss1.AddLoot(new LootPack(
@@ -88422,6 +88422,98 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="bloodlandsSwordMaster">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var swordmaster = new Skeleton()
+    {
+        Name = "Knopesh",
+        MaxHealth = 2675, Health = 2675,
+        BaseDodge = 21,
+        HideDetection = 25,
+        Experience = 39000,
+       
+        CanCharge = true,
+                
+        BasePenetration = ShieldPenetration.Heavy,
+
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Web | CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell,
+    
+    };
+    
+    swordmaster.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureAttack(18,    42, 63,     "The swordmaster pierces you with his rapier.",
+                                                    new AttackAgeComponent(5000, 50))
+    };
+    
+    swordmaster.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
+   
+    swordmaster.Wield(new BlackSteelRapier());
+    swordmaster.Equip(new DrakeScaleArmor());
+        
+    swordmaster.AddGold(5000);
+    //todo add loot pack
+    
+    return swordmaster;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="bloodlandsBanshee">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var banshee = new Banshee()
+    {
+        MaxHealth = 165, Health = 150,
+        BaseDodge = 13,
+    
+        Experience = 6800,
+        BasePenetration = ShieldPenetration.Light,
+        MaxMana = 21, Mana = 21,
+        DeathResistance = 100,
+        MagicProtection = 33,
+    };
+        
+    banshee.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(11)
+    };
+    
+    banshee.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<CurseSpell>(
+            skillLevel: 6, cost: 10, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
+        
+    banshee.Wield(new Spear());
+        
+    banshee.AddGold(480);
+    
+    //todo add lootpack
+    
+    return banshee;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="bloodlandsBanker">
@@ -88898,7 +88990,7 @@ spawn.Name = "The Reeve";
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="surfaceBoss1" size="1" minimum="1" maximum="1" />
+      <entry entity="surfaceBossPlaceHolder" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="19" top="-13" right="21" bottom="-11" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -89099,6 +89191,34 @@ spawn.Name = "The Reeve";
       <bounds region="1">
         <inclusion left="13" top="0" right="19" bottom="2" />
         <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="bloodlandsKeepOfDarkness">
+      <minimumDelay>720</minimumDelay>
+      <maximumDelay>1080</maximumDelay>
+      <maximum>27</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="bloodlandsSkeleton" size="2" minimum="9" maximum="17" />
+      <entry entity="bloodlandsMummy" size="1" minimum="2" maximum="2" />
+      <entry entity="bloodlandsSwordMaster" size="1" minimum="1" maximum="1" />
+      <entry entity="bloodlandsSwordMaster" size="2" minimum="4" maximum="7" />
+      <bounds region="1">
+        <inclusion left="0" top="45" right="15" bottom="54" />
+        <exclusion left="6" top="54" right="9" bottom="54" />
+        <exclusion left="7" top="45" right="8" bottom="45" />
       </bounds>
     </spawn>
   </spawns>
