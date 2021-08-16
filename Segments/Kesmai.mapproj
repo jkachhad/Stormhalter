@@ -100167,7 +100167,7 @@ return orc;
         
         var wares = new List<StockEntry>()
         {
-           new StockEntry("water",            () => new WaterPotion()         (int)(5 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+           new StockEntry("water",            () => new WaterPotion(),         (int)(5 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
            new StockEntry("red berries",      () => new RedBerries(),         (int)(5 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
            new StockEntry("yellow berries",   () => new YellowBerries(),      (int)(5 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
            new StockEntry("mugwort",          () => new Mugwort(),            (int)(25 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
