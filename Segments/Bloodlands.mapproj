@@ -88514,6 +88514,45 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="bloodlandsSurfaceOrc">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	 var orc = new Orc()
+    {
+        MaxHealth = 130, Health = 130,
+        BaseDodge = 12,
+                
+        Experience = 5200,
+        BasePenetration = ShieldPenetration.Light,
+        CanFlee = true,
+    };
+    
+    orc.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(10, 15, 25)
+    };
+    
+    orc.Wield(new Longsword());
+    orc.Equip(new LeatherArmor());
+            
+    orc.AddGold(400);
+    orc.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33)
+    ));
+    
+    return orc;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="bloodlandsBanker">
@@ -89219,6 +89258,30 @@ spawn.Name = "The Reeve";
         <inclusion left="0" top="45" right="15" bottom="54" />
         <exclusion left="6" top="54" right="9" bottom="54" />
         <exclusion left="7" top="45" right="8" bottom="45" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="bloodlandsSurfaceNook">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>720</maximumDelay>
+      <maximum>5</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="bloodlandsSurfaceOrc" size="2" minimum="4" maximum="7" />
+      <bounds region="1">
+        <inclusion left="0" top="-14" right="1" bottom="-12" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
   </spawns>
