@@ -75136,11 +75136,11 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-                
+    var isFemale = Utility.RandomBool();            
     var wizard = new Humanoid()
     {
-        Name = "Thrall",
-        Body = 37,
+        Name = _names.Random(),
+        Body = (isFemale ? 37 : 38), IsFemale = isFemale,
             
         MaxHealth = 110, Health = 110,
         MaxMana = 31, Mana = 31,
@@ -75204,7 +75204,7 @@
         <block><![CDATA[
     var wizard = new Humanoid()
     {
-        Name = "Thrall",
+        Name = _names.Random(),
         Body = 38,
             
         MaxHealth = 110, Health = 110,
