@@ -75141,8 +75141,8 @@
                 
     var wizard = new Humanoid()
     {
-        Name = "Thrall",
-        Body = 37,
+        Name = _names.Random(),
+        Body = (female ? 37 : 38), IsFemale = female
             
         MaxHealth = 110, Health = 110,
         MaxMana = 31, Mana = 31,
@@ -75206,7 +75206,7 @@
         <block><![CDATA[
     var wizard = new Humanoid()
     {
-        Name = "Thrall",
+        Name = _names.Random(),
         Body = 38,
             
         MaxHealth = 110, Health = 110,
