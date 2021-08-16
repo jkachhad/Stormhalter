@@ -87938,7 +87938,7 @@
     
     };
     
-    boss1.AddStatus(new NightVisionStatus(carfel));
+    boss1.AddStatus(new NightVisionStatus(boss1));
     
     boss1.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
     
@@ -88150,7 +88150,6 @@
     {
         MaxHealth = 165, Health = 160,
         MaxMana = 13, Mana = 13,
-        BasePenetration = ShieldPenetration.Light,
         BaseDodge = 15,
 
         Experience = 8500,

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.71.0.0">
+<segment name="Kesmai" version="0.72.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -99762,7 +99762,7 @@ return orc;
         // TODO: WHIRLWIND PROTECTION 100
         // TODO: POISON PROTECTION 100
     };    
-    piranhaBL.AddStatus(new BreatheWaterStatus(piranha));
+    piranhaBL.AddStatus(new BreatheWaterStatus(piranhaBL));
     
     piranhaBL.Attacks = new CreatureAttackCollection
     {
