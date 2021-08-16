@@ -88119,6 +88119,132 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="bloodlands100Hobs">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	//todo make these hobgoblins speedy. Right now they're a copy of -300.
+    var hobgoblin = new Hobgoblin()
+    {
+        MaxHealth = 165, Health = 160,
+        MaxMana = 13, Mana = 13,
+        BasePenetration = ShieldPenetration.Light,
+        BaseDodge = 15,
+
+        Experience = 8500,
+        BasePenetration = ShieldPenetration.Medium,
+    };
+    hobgoblin.AddStatus(new NightVisionStatus(hobgoblin));
+    
+    hobgoblin.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(14, 21, 26)
+    };
+    hobgoblin.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<LightningBoltSpell>(
+            skillLevel: 7, cost: 13, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+    };
+    
+    hobgoblin.Wield(new Longsword());
+    hobgoblin.Equip(new LeatherArmor());    
+    
+    hobgoblin.AddGold(700);
+    
+    //Need to add in new loot
+    
+    
+    return hobgoblin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="bloodlands100Archer">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var orc = new Orc()
+    {
+        MaxHealth = 90, Health = 90,
+        BaseDodge = 12,
+        BasePenetration = ShieldPenetration.Light,
+        Experience = 5800,
+        
+        CanFlee = true,
+    };
+    
+    orc.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(10)
+    };
+    
+    orc.Wield(new Longbow());
+    orc.Equip(new LeatherArmor());
+            
+    orc.AddGold(250);
+    
+    //need to add lootpack
+     
+    return orc;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="bloodlands100Kobald">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	 var kobold = new Kobold()
+    {
+        MaxHealth = 145, Health = 145,
+        BaseDodge = 13,
+        
+        Experience = 8002,
+        
+        Movement = 3,
+        
+        Attacks = new CreatureAttackCollection()
+        {
+            new CreatureBasicAttack(3)
+        },
+    };
+    
+    kobold.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(14, 18, 23)
+    };
+    
+    kobold.Wield(new SteelMace());
+    kobold.Equip(new LeatherArmor());
+    
+    kobold.AddGold(472);
+    
+    //add lootpack
+    
+    return kobold;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="bloodlandsBanker">
@@ -88619,6 +88745,57 @@ spawn.Name = "The Reeve";
       <entry entity="surfaceRhammerTroll" size="1" minimum="2" maximum="3" />
       <bounds region="1">
         <inclusion left="20" top="-5" right="21" bottom="-4" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="bloodlandsLightningHobNorth">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="bloodlands100Hobs" size="1" minimum="1" maximum="2" />
+      <entry entity="bloodlands100Archer" size="2" minimum="5" maximum="8" />
+      <entry entity="bloodlands100Kobald" size="3" minimum="4" maximum="7" />
+      <bounds region="2">
+        <inclusion left="0" top="0" right="17" bottom="8" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="bloodlandsLightningHobSouth">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="bloodlands100Hobs" size="1" minimum="1" maximum="2" />
+      <entry entity="bloodlands100Archer" size="2" minimum="5" maximum="8" />
+      <entry entity="bloodlands100Kobald" size="3" minimum="4" maximum="7" />
+      <bounds region="2">
+        <inclusion left="0" top="8" right="23" bottom="18" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
