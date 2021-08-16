@@ -88332,6 +88332,96 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="bloodlandsSkeleton">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var skeleton = new Skeleton()
+    {
+        MaxHealth = 150, Health = 150,
+        BaseDodge = 14,
+
+        Experience = 6800,
+        BasePenetration = ShieldPenetration.Light,
+        Movement = 3,
+        DeathResistance = 100,
+    };
+    
+    skeleton.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(13, 20, 30)
+    };
+    
+    skeleton.Wield(new Spear());
+    
+    skeleton.AddGold(280);
+    
+    //need to add in lootpack
+     
+    return skeleton;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="bloodlandsMummy">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var mummy = new Mummy()
+    {
+        Name = "mummy",
+        MaxHealth = 350, Health = 350,
+        BaseDodge = 15,
+        HideDetection = 26,
+        Experience = 19000,
+    
+        BasePenetration = ShieldPenetration.Heavy,
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.IceSpearSpell,
+    };
+    
+    mummy.AddStatus(new NightVisionStatus(mummy));
+    
+    mummy.Attacks = new CreatureAttackCollection()
+    {
+        { 
+            new CreatureAttack(16,     30, 50,     "The mummy strangles you with his bandages"),      70, TimeSpan.Zero 
+        }, 
+        { 
+            new CreatureAttack(17,    40, 60,     "A mummified claw scratches you.",
+                                                    new AttackAgeComponent(1000, 50)),             30, TimeSpan.Zero
+        },
+        //todo who added TimeSpan to these?
+    };
+        
+    mummy.Blocks = new CreatureBlockCollection()
+    {
+        new CreatureBlock(6, "a swirl of bandages"), 
+        new CreatureBlock(4, "mummified claw"), 
+    };
+    
+    mummy.AddGold(1000);
+    
+    //todo add lootpack
+    
+    return mummy;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="bloodlandsBanker">
@@ -88796,7 +88886,7 @@ spawn.Name = "The Reeve";
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="surfaceBoss1" size="1" minimum="0" maximum="0" />
+      <entry entity="surfaceBoss1" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="19" top="-13" right="21" bottom="-11" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -88820,7 +88910,7 @@ spawn.Name = "The Reeve";
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="surfaceHutKeeper" size="1" minimum="0" maximum="0" />
+      <entry entity="surfaceHutKeeper" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="2" top="11" right="3" bottom="12" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -88845,7 +88935,7 @@ spawn.Name = "The Reeve";
         <block><![CDATA[]]></block>
       </script>
       <entry entity="surfaceLurker" size="1" minimum="10" maximum="15" />
-      <bounds region="0">
+      <bounds region="1">
         <inclusion left="0" top="-4" right="21" bottom="21" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
@@ -88875,8 +88965,8 @@ spawn.Name = "The Reeve";
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="surfaceRhammerTroll2">
-      <minimumDelay>0</minimumDelay>
-      <maximumDelay>0</maximumDelay>
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
       <maximum>3</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -88971,6 +89061,31 @@ spawn.Name = "The Reeve";
       <entry entity="bloodlandsSouthernDarknessWraith" size="1" minimum="2" maximum="2" />
       <bounds region="1">
         <inclusion left="8" top="23" right="14" bottom="24" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="bloodlandsSurfaceKeep">
+      <minimumDelay>420</minimumDelay>
+      <maximumDelay>720</maximumDelay>
+      <maximum>5</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="bloodlandsSkeleton" size="2" minimum="3" maximum="5" />
+      <entry entity="bloodlandsMummy" size="1" minimum="1" maximum="1" />
+      <bounds region="1">
+        <inclusion left="13" top="0" right="19" bottom="2" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
