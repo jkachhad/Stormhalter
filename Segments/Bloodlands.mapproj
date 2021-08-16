@@ -88537,10 +88537,8 @@
     orc.Equip(new LeatherArmor());
             
     orc.AddGold(400);
-    orc.AddLoot(new LootPack(
-        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    33)
-    ));
+    
+    //todo add lootpack
     
     return orc;
 ]]></block>
