@@ -21032,13 +21032,6 @@
         </component>
       </tile>
       <tile x="28" y="15">
-        <component type="FloorComponent">
-          <ground>7</ground>
-        </component>
-        <component type="StaticComponent">
-          <color r="0" g="255" b="255" a="255" />
-          <static>206</static>
-        </component>
         <component type="StaircaseComponent">
           <destinationX>38</destinationX>
           <destinationY>18</destinationY>
@@ -88245,9 +88238,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    source.Say($"I haven't had a visitor in ages.. this shall be fun!);
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -88283,15 +88277,20 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    source.SayTo(killer, $"No! no...curse...you {killer.Name.Substring(0, 3)}--");
+    
+    killer.Stun(3);
+
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    source.Say($"Hey! This is my house.. get out of here!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -88407,7 +88406,8 @@
         CanSwim = true,
         Experience = 1700,
         Alignment = Alignment.Lawful,
-        VisibilityDistance = 3,
+        VisibilityDistance = 2,
+        CanFly = true,
  
     };
     
@@ -88441,9 +88441,11 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    source.Say($"I've got my eye on you {player.Name.Substring(0, 3)}--");
+    
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -88992,9 +88994,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    source.Say($"Mmmmggh...OUT...agh!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
