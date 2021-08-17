@@ -6142,12 +6142,12 @@
         </component>
       </tile>
       <tile x="23" y="7">
-        <component type="FloorComponent">
-          <color r="159" g="155" b="140" a="255" />
-          <ground>178</ground>
+        <component type="StaticComponent">
+          <static>6</static>
         </component>
         <component type="CounterComponent">
           <counter>96</counter>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="24" y="7">
@@ -6168,21 +6168,21 @@
         </component>
       </tile>
       <tile x="25" y="7">
-        <component type="FloorComponent">
-          <color r="159" g="155" b="140" a="255" />
-          <ground>178</ground>
+        <component type="StaticComponent">
+          <static>6</static>
         </component>
         <component type="CounterComponent">
           <counter>96</counter>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="26" y="7">
-        <component type="FloorComponent">
-          <color r="159" g="155" b="140" a="255" />
-          <ground>178</ground>
+        <component type="StaticComponent">
+          <static>6</static>
         </component>
         <component type="CounterComponent">
           <counter>96</counter>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="27" y="7">
@@ -89002,6 +89002,53 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="bloodlands200boss">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var orc = new Orc()
+    {
+        Name = "Urgnah The Orc", Body=30, IsFemale = false,
+       
+        MaxHealth = 1230, Health = 1230,
+        BaseDodge = 17,
+                
+        Experience = 19000,
+        BasePenetration = ShieldPenetration.Light,
+        CanFlee = true,
+        CanSwim = true,
+    };
+    
+    orc.AddStatus(new NightVisionStatus(orc));
+    orc.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(13, 25, 35)
+    };
+    
+    orc.Wield(new Longsword());
+    orc.Equip(new LeatherArmor());
+            
+    orc.AddGold(4000);
+    
+    //todo add lootpack
+    
+    return orc;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="bloodlandsBanker">
@@ -89540,6 +89587,27 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="bloodlandsSouthernDarknessLich" size="1" minimum="2" maximum="2" />
       <location x="-2" y="7" region="4" />
     </spawn>
+    <spawn type="LocationSpawner" name="300Balm">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="bloodlandsBalmVendor" size="1" minimum="1" maximum="1" />
+      <location x="2" y="2" region="5" />
+    </spawn>
     <spawn type="RegionSpawner" name="surfacePirhana">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
@@ -89935,6 +90003,32 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="bloodlands100Archer" size="2" minimum="1" maximum="2" />
       <bounds region="4">
         <inclusion left="0" top="11" right="23" bottom="18" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="bloodlands200boss">
+      <minimumDelay>120</minimumDelay>
+      <maximumDelay>10800</maximumDelay>
+      <maximum>5</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="bloodlands200boss" size="1" minimum="1" maximum="1" />
+      <entry entity="bloodlandsSurfaceOrc" size="2" minimum="2" maximum="2" />
+      <entry entity="bloodlands100Kobald" size="1" minimum="2" maximum="2" />
+      <bounds region="4">
+        <inclusion left="9" top="6" right="15" bottom="12" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
