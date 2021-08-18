@@ -96130,8 +96130,8 @@
         
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(3)
-        },
+            new CreatureBasicAttack(2), 60 },
+            new CreatureBasicAttack(3 , "The kobold smashes you with a mace."), 40 }
     };
     
     kobold.Wield(new SteelMace());
@@ -96178,8 +96178,9 @@
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(3)
-        }
+            new CreatureBasicAttack(2), 60 },
+            new CreatureBasicAttack(3 , "The orc jabs you with a shortsword."), 40 },
+        
     };
 
     orc.Wield(new ShortSword());
@@ -96227,8 +96228,9 @@
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(3)
-        }
+            new CreatureBasicAttack(2), 60 },
+            new CreatureBasicAttack(3, "The orc stabs you with a dagger."), 40 }
+        
     };
     
     orc.Wield(new SteelDagger());
@@ -96276,8 +96278,9 @@
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(3)
-        },
+            new CreatureBasicAttack(2), 60 },
+            new CreatureBasicAttack(3, "The skeleton pierces you with a rapier."), 40 }
+        
     };
     
     skeleton.Wield(new Rapier());
@@ -96368,14 +96371,14 @@
 
     wyvern.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(4,     1, 4,   "The wyvern rakes you with its claws."),        50 },
-        { new CreatureAttack(6,     2, 6,   "The wyvern bites you."),                       30 },
-        { new CreatureAttack(6,     2, 8,   "The wyvern whips you with its tail."),   20 }
+        { new CreatureAttack(3,     1, 4,   "The wyvern rakes you with its claws."),        50 },
+        { new CreatureAttack(4,     2, 6,   "The wyvern bites you."),                       30 },
+        { new CreatureAttack(5,     2, 8,   "The wyvern whips you with its tail."),   20 }
     };
     
     wyvern.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "scales"),
+        new CreatureBlock(6, "the scales"),
         new CreatureBlock(3, "a claw"),
         new CreatureBlock(1, "a tail")
     };
@@ -97203,8 +97206,9 @@
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(4)
-        },
+            new CreatureBasicAttack(3), 60 },
+            new CreatureBasicAttack(4, "The goblin strikes you with an axe."), 40 },
+        
     };
     
     goblin.Wield(new BattleAxe());
@@ -97301,8 +97305,9 @@
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(4)
-        }
+            new CreatureBasicAttack(3), 60 },
+            new CreatureBasicAttack(4, "The orc slashes you with a longsword."), 40 },
+        
     };
     
     orc.Wield(new Longsword());
@@ -97397,8 +97402,9 @@
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(4)
-        }
+            new CreatureBasicAttack(3), 60 },
+            new CreatureBasicAttack(4, "The skeleton pierces you with a rapier."), 40 },
+        
     };
     
     skeleton.Wield(new Rapier());
@@ -97448,8 +97454,9 @@
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(5, 4, 15)
-        }
+            new CreatureBasicAttack(4, 4, 10), 50 },
+            new CreatureBasicAttack(5, 6, 15, "The troll cleaves you with a greatsword."), 50 },
+        
     };
     
     troll.Wield(new Greatsword());
@@ -97497,13 +97504,13 @@
     
     wyvern.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(5,     2, 6,   "The wyvern rakes you with its claws."),        50 },
-        { new CreatureAttack(7,     3, 8,   "The wyvern bites you."),                       30 },
-        { new CreatureAttack(7,     3, 10,  "The wyvern whips you with its tail."),   20 }
+        { new CreatureAttack(4,     2, 6,   "The wyvern rakes you with its claws."),        50 },
+        { new CreatureAttack(6,     3, 8,   "The wyvern bites you."),                       30 },
+        { new CreatureAttack(6,     5, 10,  "The wyvern whips you with its tail."),   20 }
     };
     wyvern.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "scales"),
+        new CreatureBlock(6, "the scales"),
         new CreatureBlock(3, "a claw"),
         new CreatureBlock(1, "a tail")
     };
@@ -97759,8 +97766,9 @@ return orc;
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(6)
-        }
+            new CreatureBasicAttack(5), 60 },
+            new CreatureBasicAttack(6, "The troll cleaves you with a greatsword.") 40 },
+        
     };
     
     troll.Wield(new Greatsword());
@@ -97807,8 +97815,9 @@ return orc;
     
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(6)
-        }
+            new CreatureBasicAttack(5), 60 },
+            new CreatureBasicAttack(6, "The hobgoblin slashes you with a longsword."), 40 },
+        
     };
     
     hobgoblin.Wield(new Longsword());
@@ -97855,8 +97864,9 @@ return orc;
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(6)
-        }
+            new CreatureBasicAttack(5), 60 },
+            new CreatureBasicAttack(6, "The orc slices you with a katana."), 40 },
+        
     };
     
     orc.Wield(new Katana());
@@ -97953,8 +97963,9 @@ return orc;
     
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(6)
-        },
+            new CreatureBasicAttack(5), 60 },
+            new CreatureBasicAttack(6, "The goblin slashes you with a longsword."), 40 },
+        
     };
     
     goblin.Wield(new Longsword());
@@ -98110,13 +98121,14 @@ return orc;
             
     gargoyle.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(6,     4, 8,   "The gargoyle strikes you with its claws."),    60 },
-        { new CreatureAttack(7,     6, 12,  "The gargoyle batters you with its wings."),    40 },
+        { new CreatureAttack(5,     4, 8,   "The gargoyle strikes you with its claws."),    60 },
+        { new CreatureAttack(6,     8, 12,  "The gargoyle batters you with its wings."),    40 },
+                                              
     };
     
     gargoyle.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(6, "the stone flesh"),
         new CreatureBlock(3, "a claw"),
         new CreatureBlock(1, "a wing"),
     };
@@ -98334,8 +98346,9 @@ return orc;
     
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(7) }, 
-        },
+            new CreatureBasicAttack(6), 60 },
+            new CreatureBasicAttack(7, "The orc slashes you with a longsword."), 40 },
+        
     };
     
     orc.Wield(new Longsword());
@@ -98537,8 +98550,9 @@ return orc;
         
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(8) }, 
-        },
+            new CreatureBasicAttack(7), 60 },
+            new CreatureBasicAttack(8, "The hobgoblin slashes you with a longsword."), 40 },
+        
     };
     
     hobgoblin.Wield(new Longsword());
@@ -98585,7 +98599,7 @@ return orc;
     
     gargoyle.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(7,     6, 12,  "The gargoyle strikes you with its claws"),     60 }, 
+        { new CreatureAttack(6,     6, 12,  "The gargoyle strikes you with its claws"),     60 }, 
         { new CreatureAttack(8,     10, 20, "The gargoyle batters you with its wings"),     40 }, 
     };
 
@@ -98818,7 +98832,7 @@ return orc;
     
     ghoul.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(7,     6, 12,      "The ghoul scratches you with its claws"),  70 }, 
+        { new CreatureAttack(6,     6, 12,      "The ghoul scratches you with its claws"),  70 }, 
         { new CreatureAttack(8,     10, 18,     "You've been bitten by the ghoul",
                                                     new AttackPoisonComponent(7)),          30 },
     };
@@ -98874,10 +98888,10 @@ return orc;
     
     minotaur.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(9,     8, 22,      "The minotaur hits with a staff"),          60 }, 
-        { new CreatureAttack(9,     13, 25,     "You've been gored by the minotaur",
+        { new CreatureAttack(7,     10, 22,      "The minotaur hits with a staff"),          60 }, 
+        { new CreatureAttack(8,     15, 25,     "You've been gored by the minotaur",
                                                     new AttackStunComponent(10.0)),         30 }, 
-        { new CreatureAttack(9,     16, 28,     "You've been trampled by the minotaur"),    10 }, 
+        { new CreatureAttack(9,     18, 28,     "You've been trampled by the minotaur"),    10 }, 
     };
     
     minotaur.Blocks = new CreatureBlockCollection
@@ -98939,7 +98953,8 @@ return orc;
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(8), 
+        new CreatureBasicAttack(7), 60 },
+        new CreatureBasicAttack(8, "The warrior slashes you with great precision."), 40 },
     };
     
     fighter.Wield(new SteelLongsword());
@@ -99185,8 +99200,8 @@ return orc;
     
     boar.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(5,     1, 5,   "You have been gored by the boar."),    60 }, 
-        { new CreatureAttack(6,     2, 6,  "The boar tramples you."),              40 }, 
+        { new CreatureAttack(3,     1, 5,   "You have been gored by the boar."),    60 }, 
+        { new CreatureAttack(4,     2, 6,  "The boar tramples you."),              40 }, 
     };
 
     boar.Blocks = new CreatureBlockCollection
@@ -99236,14 +99251,14 @@ return orc;
     
     wolf.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(5,     1, 4,   "The wolf rakes you with its claws."),  50 }, 
-        { new CreatureAttack(7,     2, 5,  "The wolf sinks its teeth into you."),  30 }, 
-        { new CreatureAttack(7,     3, 6,  "The wolf lunges at you."),             20 }, 
+        { new CreatureAttack(4,     1, 4,   "The wolf rakes you with its claws."),  50 }, 
+        { new CreatureAttack(5,     2, 5,  "The wolf sinks its teeth into you."),  30 }, 
+        { new CreatureAttack(6,     3, 6,  "The wolf lunges at you."),             20 }, 
     };
         
     wolf.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "thick hide"),
+        new CreatureBlock(6, "the thick hide"),
         new CreatureBlock(3, "a paw"),
     };
         
@@ -99336,14 +99351,14 @@ return orc;
         
     bear.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(6,     6, 14,  "The bear slashes you with its claws."),        50 },
-        { new CreatureAttack(6,     8, 16,  "You've been mauled by the bear."),             40 },
-        { new CreatureAttack(7,     10, 20, "The bear crushes you within its embrace."),    10 }
+        { new CreatureAttack(4,     6, 14,  "The bear slashes you with its claws."),        50 },
+        { new CreatureAttack(5,     8, 16,  "You've been mauled by the bear."),             40 },
+        { new CreatureAttack(6,     10, 20, "The bear crushes you within its embrace."),    10 }
     };
         
     bear.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "tough hide"),
+        new CreatureBlock(6, "the tough hide"),
         new CreatureBlock(4, "a claw"),
     };
         
@@ -99391,7 +99406,7 @@ return orc;
     
     orc.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(5, 1, 5),
+        new CreatureBasicAttack(4, 1, 5),
     };
     
     orc.Wield(new Longsword());
@@ -100043,7 +100058,7 @@ return orc;
     
     dragon.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "hard scales"),
+        new CreatureBlock(6, "the dragon scales"),
         new CreatureBlock(4, "a tail"),
         new CreatureBlock(3, "a wing"),
     };
@@ -100091,9 +100106,10 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+             source.Say($"Ahhhh. Another mortal has come to perish.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -100287,7 +100303,10 @@ return orc;
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    source.Say($"I'm the law around here.");
+   source.Say($"I'm the law around here.");
+    If (player.Profession == Profession.Thief)
+{    source.Say($"I've got my eye on you, thief.");
+}   
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -100319,8 +100338,8 @@ return orc;
     
     piranhaBL.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(10,     5, 9,   "The piranha swarm upon you"),      70 }, 
-        { new CreatureAttack(13,     7, 14,  "The piranha bite you"),            30 }, 
+        { new CreatureAttack(10,     5, 9,   "The piranha swarm upon you."),      70 }, 
+        { new CreatureAttack(13,     7, 14,  "The piranha shred your flesh."),            30 }, 
     };
         
     piranhaBL.Blocks = new CreatureBlockCollection
