@@ -43451,12 +43451,18 @@
       </tile>
       <tile x="0" y="-72">
         <component type="StaticComponent">
-          <static>13</static>
+          <static>12</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="1" y="-72">
         <component type="StaticComponent">
-          <static>13</static>
+          <static>12</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="2" y="-72">
@@ -43740,7 +43746,10 @@
       </tile>
       <tile x="0" y="-71">
         <component type="StaticComponent">
-          <static>13</static>
+          <static>12</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="1" y="-71">
@@ -88207,6 +88216,7 @@
         BasePenetration = ShieldPenetration.Medium,
         CanSwim = true,
         CanWalk = false,
+        Body = 161,
         
         Experience = 7000,
             
