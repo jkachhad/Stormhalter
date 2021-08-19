@@ -96990,9 +96990,10 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+ source.Say($"I only need a single iron ore and ytrill to craft a great weapon.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -100137,13 +100138,13 @@ return orc;
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-         If (player.Profession == Profession.Fighter)
+         If (player.Profession == Profession.Knight)
 {
-  source.Say($"You'll never get MY gem!");
+  source.Say($"Did Cudyl send you? The gem is mine!");
 }
 else
 {
-  source.Say($"Ahhh. Another mortal has come to perish.");
+  source.Say($"Ahhh. Another adventurer has come to perish.");
 } 
 ]]></block>
         <block><![CDATA[]]></block>
@@ -100367,6 +100368,8 @@ else
         Experience = 725,
     
         Movement = 1,
+        
+        CanCharge = true,
         
         VisibilityDistance = 0,
         RangePerception = 0,
