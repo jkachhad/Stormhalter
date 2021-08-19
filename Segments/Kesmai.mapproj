@@ -96130,8 +96130,8 @@
         
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(2), 60 },
-            new CreatureBasicAttack(3 , "The kobold smashes you with a mace."), 40 }
+        {    new CreatureAttack(2), 60 },
+        {    new CreatureAttack(3, 2, 5, "The kobold smashes you with a mace."), 40 }
     };
     
     kobold.Wield(new SteelMace());
@@ -96178,8 +96178,8 @@
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(2), 60 },
-            new CreatureBasicAttack(3 , "The orc jabs you with a shortsword."), 40 },
+        {   new CreatureAttack(2), 60 },
+        {   new CreatureAttack(3, 2, 5, "The orc jabs you with a shortsword."), 40 },
         
     };
 
@@ -96278,8 +96278,8 @@
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(2), 60 },
-            new CreatureBasicAttack(3, "The skeleton pierces you with a rapier."), 40 }
+        {    new CreatureAttack(2), 60 },
+        {    new CreatureAttack(3, 2, 5, "The skeleton pierces you with a rapier."), 40 }
         
     };
     
@@ -97235,8 +97235,8 @@ else
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(3), 60 },
-            new CreatureBasicAttack(4, "The goblin strikes you with an axe."), 40 },
+        {    new CreatureAttack(3), 60 },
+        {    new CreatureAttack(4, 3, 8, "The goblin strikes you with an axe."), 40 },
         
     };
     
@@ -97334,8 +97334,8 @@ else
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(3), 60 },
-            new CreatureBasicAttack(4, "The orc slashes you with a longsword."), 40 },
+        {    new CreatureAttack(3), 60 },
+        {    new CreatureAttack(4, 3, 8, "The orc slashes you with a longsword."), 40 },
         
     };
     
@@ -97431,8 +97431,8 @@ else
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(3), 60 },
-            new CreatureBasicAttack(4, "The skeleton pierces you with a rapier."), 40 },
+        {    new CreatureAttack(3), 60 },
+        {    new CreatureAttack(4, 3, 8, "The skeleton pierces you with a rapier."), 40 },
         
     };
     
@@ -97483,8 +97483,8 @@ else
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(4, 4, 10), 50 },
-            new CreatureBasicAttack(5, 6, 15, "The troll cleaves you with a greatsword."), 50 },
+        {    new CreatureAttack(4, 4, 10), 50 },
+        {    new CreatureAttack(5, 6, 15, "The troll cleaves you with a greatsword."), 50 },
         
     };
     
@@ -97795,8 +97795,8 @@ return orc;
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(5), 60 },
-            new CreatureBasicAttack(6, "The troll cleaves you with a greatsword.") 40 },
+        {    new CreatureAttack(5), 60 },
+        {    new CreatureAttack(6, 8, 12, "The troll cleaves you with a greatsword.") 40 },
         
     };
     
@@ -97844,8 +97844,8 @@ return orc;
     
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(5), 60 },
-            new CreatureBasicAttack(6, "The hobgoblin slashes you with a longsword."), 40 },
+        {    new CreatureAttack(5), 60 },
+        {    new CreatureAttack(6, 6, 10, "The hobgoblin slashes you with a longsword."), 40 },
         
     };
     
@@ -97893,8 +97893,8 @@ return orc;
                 
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(5), 60 },
-            new CreatureBasicAttack(6, "The orc slices you with a katana."), 40 },
+        {    new CreatureAttack(5), 60 },
+        {    new CreatureAttack(6, 6, 10, "The orc slices you with a katana."), 40 },
         
     };
     
@@ -97992,8 +97992,8 @@ return orc;
     
         Attacks = new CreatureAttackCollection()
         {
-            new CreatureBasicAttack(5), 60 },
-            new CreatureBasicAttack(6, "The goblin slashes you with a longsword."), 40 },
+        {    new CreatureAttack(5), 60 },
+        {    new CreatureAttack(6, 6, 10, "The goblin slashes you with a longsword."), 40 },
         
     };
     
@@ -98533,8 +98533,8 @@ return orc;
     
         Attacks = new CreatureAttackCollection
         {
-            { new CreatureBasicAttack(8) }, 
-        },
+            { new CreatureAttack(7),  60 },
+            { new CreatureAttack(8, 7, 15,  "The troll cleaves you with a greatsword."),   40 },
     };
     
     troll.Wield(new Greatsword());
@@ -100014,7 +100014,7 @@ return orc;
     piranha.Attacks = new CreatureAttackCollection
     {
         { new CreatureAttack(8,     3, 6,   "The piranha swarm upon you"),      70 }, 
-        { new CreatureAttack(9,     5, 10,  "The piranha bite you"),            30 }, 
+        { new CreatureAttack(9,     5, 10,  "The piranha shred your flesh"),            30 }, 
     };
         
     piranha.Blocks = new CreatureBlockCollection
