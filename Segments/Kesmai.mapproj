@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.73.1.0">
+<segment name="Kesmai" version="0.72.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -83232,8 +83232,8 @@
         </component>
       </tile>
       <tile x="24" y="26">
-        <component type="FloorComponent">
-          <ground>1</ground>
+        <component type="StaticComponent">
+          <static>1</static>
         </component>
       </tile>
       <tile x="25" y="26">
@@ -96154,12 +96154,6 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="dungeon1Orc">
       <script name="OnSpawn" enabled="true">
@@ -96197,12 +96191,6 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96253,12 +96241,6 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="dungeon1Skeleton">
       <script name="OnSpawn" enabled="true">
@@ -96298,12 +96280,6 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="dungeon1SkeletonSentry">
       <script name="OnSpawn" enabled="true">
@@ -96338,12 +96314,6 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96391,12 +96361,6 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96465,12 +96429,6 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="recallVendor">
       <script name="OnSpawn" enabled="true">
@@ -96494,12 +96452,6 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96533,12 +96485,6 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="mugwortVendor">
       <script name="OnSpawn" enabled="true">
@@ -96562,12 +96508,6 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96600,12 +96540,6 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="tailorVendor">
       <script name="OnSpawn" enabled="true">
@@ -96628,12 +96562,6 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96669,12 +96597,6 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="weaponTrainerTemplate">
       <script name="OnSpawn" enabled="true">
@@ -96697,12 +96619,6 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96741,12 +96657,6 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="oskarWizard">
       <script name="OnSpawn" enabled="true">
@@ -96772,12 +96682,6 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96814,12 +96718,6 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="meleePeacekeeperTemplate">
       <script name="OnSpawn" enabled="true">
@@ -96848,12 +96746,6 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96893,12 +96785,6 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="rangedPeacekeeperTemplate">
       <script name="OnSpawn" enabled="true">
@@ -96931,12 +96817,6 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="ironbar">
       <script name="OnSpawn" enabled="true">
@@ -96952,12 +96832,6 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="confessorGhost">
       <script name="OnSpawn" enabled="true">
@@ -96968,12 +96842,6 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97016,12 +96884,6 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97072,12 +96934,6 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="sharkLawful">
       <script name="OnSpawn" enabled="true">
@@ -97122,12 +96978,6 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="hermann">
       <script name="OnSpawn" enabled="true">
@@ -97152,12 +97002,6 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="harriette">
       <script name="OnSpawn" enabled="true">
@@ -97168,12 +97012,6 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97222,12 +97060,6 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="dungeon2GoblinSentry">
       <script name="OnSpawn" enabled="true">
@@ -97264,12 +97096,6 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97320,12 +97146,6 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="dungeon2OrcSentry">
       <script name="OnSpawn" enabled="true">
@@ -97362,12 +97182,6 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97416,12 +97230,6 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="dungeon2Troll">
       <script name="OnSpawn" enabled="true">
@@ -97460,12 +97268,6 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97518,12 +97320,6 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="dungeon2Wight">
       <script name="OnSpawn" enabled="true">
@@ -97569,12 +97365,6 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97632,12 +97422,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="enragedTroll">
       <script name="OnSpawn" enabled="true">
@@ -97679,12 +97463,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="kesmaiSpider">
       <script name="OnSpawn" enabled="true">
@@ -97721,12 +97499,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97776,12 +97548,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="dungeon3Hobgoblin">
       <script name="OnSpawn" enabled="true">
@@ -97819,12 +97585,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97874,12 +97634,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="dungeon3OrcSentry">
       <script name="OnSpawn" enabled="true">
@@ -97919,12 +97673,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97972,12 +97720,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="dungeon3GoblinSentry">
       <script name="OnSpawn" enabled="true">
@@ -98013,12 +97755,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -98077,12 +97813,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="dungeon3Gargoyle">
       <script name="OnSpawn" enabled="true">
@@ -98128,12 +97858,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -98191,12 +97915,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="dungeon3Wraith">
       <script name="OnSpawn" enabled="true">
@@ -98242,12 +97960,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -98303,12 +98015,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="dungeon4Orc">
       <script name="OnSpawn" enabled="true">
@@ -98353,12 +98059,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="dungeon4OrcSentry">
       <script name="OnSpawn" enabled="true">
@@ -98398,12 +98098,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -98462,12 +98156,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="dungeon4Troll">
       <script name="OnSpawn" enabled="true">
@@ -98508,12 +98196,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="dungeon4Hobgoblin">
       <script name="OnSpawn" enabled="true">
@@ -98549,12 +98231,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -98603,12 +98279,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -98666,12 +98336,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="dungeon4Wraith">
       <script name="OnSpawn" enabled="true">
@@ -98719,12 +98383,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -98784,12 +98442,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="dungeon4Ghoul">
       <script name="OnSpawn" enabled="true">
@@ -98834,12 +98486,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -98900,12 +98546,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="dungeon4MeleeFighter">
       <script name="OnSpawn" enabled="true">
@@ -98957,12 +98597,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="dungeon4RangedFighter">
       <script name="OnSpawn" enabled="true">
@@ -99009,12 +98643,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -99079,12 +98707,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -99155,12 +98777,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="surfaceBoar">
       <script name="OnSpawn" enabled="true">
@@ -99201,12 +98817,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -99257,12 +98867,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="surfaceBee">
       <script name="OnSpawn" enabled="true">
@@ -99296,12 +98900,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -99357,12 +98955,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="surfaceOrc">
       <script name="OnSpawn" enabled="true">
@@ -99408,12 +99000,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="surfaceOrcSentry">
       <script name="OnSpawn" enabled="true">
@@ -99452,12 +99038,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -99508,12 +99088,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -99570,12 +99144,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="surfaceCentaur">
       <script name="OnSpawn" enabled="true">
@@ -99610,12 +99178,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -99665,12 +99227,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -99753,12 +99309,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="abesh">
       <script name="OnSpawn" enabled="true">
@@ -99802,12 +99352,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -99860,12 +99404,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -99926,12 +99464,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="dungeon4CryptPiranha">
       <script name="OnSpawn" enabled="true">
@@ -99977,12 +99509,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -100082,12 +99608,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="ydnacSkelWar">
       <script name="OnSpawn" enabled="true">
@@ -100129,12 +99649,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="ydnacSkelArc">
       <script name="OnSpawn" enabled="true">
@@ -100171,12 +99685,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -100230,12 +99738,6 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
     </entity>
     <entity name="dungeon2PirhanaBL">
       <script name="OnSpawn" enabled="true">
@@ -100281,12 +99783,6 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
