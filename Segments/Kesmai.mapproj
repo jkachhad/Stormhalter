@@ -100342,6 +100342,7 @@ else
 {
   source.Say($"I've got my eye on you, thief.");
 }
+else
 If (player.Profession == Profession.Knight)
 {
  source.Say(String.Format("Good day, {0}.", player.IsFemale ? "my lady" : "my lord"));
