@@ -88241,6 +88241,12 @@
         new LootPackEntry(true, (from, container) => new PermanentStrengthPotion(),       10),
         new LootPackEntry(true, (from, container) => new YouthPotion(),       10),
         new LootPackEntry(true, (from, container) => new ManaPotion(),       10)
+        new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion,       10)
+        new LootPackEntry(true, (from, container) => new PermanentDexterityPotion,       10)
+        new LootPackEntry(true, (from, container) => new PermanentWillpowerPotion,       10)
+        new LootPackEntry(true, (from, container) => new PermanentWisdomPotion,       10)
+        new LootPackEntry(true, (from, container) => new PermanentIntelligencePotion,       10)
+        
     ));
     
     return lurker;
@@ -90239,12 +90245,12 @@
         <block><![CDATA[
 	var centaur = new Centaur()
     {
-        Name = "Centaur",
+        Name = "Mino",
         MaxHealth = 230, Health = 230,
         MaxMana = 31, Mana = 31,
         BaseDodge = 18,
         BasePenetration = ShieldPenetration.Medium,     
-        Experience = 17300,
+        Experience = 18000,
         MagicProtection = 40,
     };
     
