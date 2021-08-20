@@ -90447,12 +90447,13 @@
         <block><![CDATA[
 	var griffin = new Griffin()
     {
-        MaxHealth = 200, Health = 200,
+        MaxHealth = 210, Health = 210,
         BaseDodge = 23,
         Name = "Bloodthirsty Griffin",
 
         Experience = 13350,
-        
+        CanFly = true,
+        Alignment = Alignment.Chaotic,
         MagicProtection = 20,
         
         HideDetection = 18,
