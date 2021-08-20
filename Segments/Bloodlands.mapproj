@@ -88273,7 +88273,7 @@
 	var boss1 = new ElderTroll()
     {
         Name = "Flordex",
-        MaxHealth = 2000, Health = 2000,
+        MaxHealth = 2500, Health = 2500,
         BaseDodge = 21,
         HideDetection = 27,
         Alignment = Alignment.Evil,
@@ -88299,7 +88299,7 @@
     
     boss1.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(15, 25, 55),
+        new CreatureBasicAttack(16, 28, 61),
     };
     
     //todo determine if I can force it to dual wield? Not sure of context
