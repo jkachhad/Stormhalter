@@ -88152,7 +88152,7 @@
         <block><![CDATA[
 	var piranha = new Piranha()
     {
-        MaxHealth = 60, Health = 60,
+        MaxHealth = 75, Health = 75,
         BaseDodge = 14,
     
         Experience = 3221,
@@ -88175,8 +88175,8 @@
     
     piranha.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(11,     15, 25,   "The piranha swarm upon you"),      70 }, 
-        { new CreatureAttack(10,     13, 15,  "The piranha bite you"),            30 }, 
+        { new CreatureAttack(12,     15, 25,   "The piranha swarm upon you"),      70 }, 
+        { new CreatureAttack(13,     13, 15,  "The piranha bite you"),            30 }, 
     };
         
     piranha.Blocks = new CreatureBlockCollection
@@ -89154,17 +89154,14 @@
     
     goblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(11, 15, 25)
+        new CreatureBasicAttack(13, 15, 25)
     };
     
-    goblin.Wield(new BattleAxe());
+    goblin.Wield(new HeavyCrossbow());
     goblin.Equip(new LeatherArmor());
             
     goblin.AddGold(300);
-    goblin.AddLoot(new LootPack(
-        new LootPackEntry(true, drop12gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    33)
-    ));
+   
     
     return goblin;
 ]]></block>
@@ -90441,6 +90438,77 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="surfaceBloodGrif">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var griffin = new Griffin()
+    {
+        MaxHealth = 200, Health = 200,
+        BaseDodge = 23,
+        Name = "Bloodthirsty Griffin",
+
+        Experience = 17350,
+        
+        MagicProtection = 20,
+        
+        HideDetection = 18,
+    };
+    
+    griffin.AddStatus(new NightVisionStatus(griffin)); 
+    
+    griffin.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(14, 18, 26, "The griffin tears your flesh with its beak."),   40 
+        }, 
+        {
+            new CreatureAttack(15, 20, 35, "The griffin buries its talons into you.",
+                                                    new AttackStunComponent(20.0)),         30
+        }, 
+        {
+            new CreatureAttack(16, 30, 45, "The griffin pummels you with its wings."),      30
+        }, 
+    };
+        
+    griffin.Blocks = new CreatureBlockCollection
+    {
+        {
+            new CreatureBlock(6, "the armor")
+        }, 
+        {
+            new CreatureBlock(4, "a talon")
+        }, 
+        {
+            new CreatureBlock(3, "a beak") 
+        }, 
+    };
+
+    griffin.AddGold(1000);
+    griffin.AddLoot(new LootPack(
+        
+        new LootPackEntry(true, (from, container) => new OchreEgg(), 25.0), 
+        new LootPackEntry(true, (from, container) => new GriffinSkull(), 10)
+    ));
+   
+
+    return griffin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="bloodlandsBanker">
@@ -91109,7 +91177,7 @@ if (spawn is Shopkeeper shopkeeper)
     <spawn type="RegionSpawner" name="surfaceFishNorth">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>23</maximum>
+      <maximum>24</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -91127,6 +91195,7 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="surfacePirhana" size="2" minimum="12" maximum="15" />
       <entry entity="surfaceLurker" size="1" minimum="3" maximum="6" />
       <entry entity="bloodlandsShark" size="1" minimum="1" maximum="1" />
+      <entry entity="surfaceBloodGrif" size="1" minimum="1" maximum="2" />
       <bounds region="1">
         <inclusion left="0" top="-14" right="23" bottom="-3" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -91536,7 +91605,7 @@ if (spawn is Shopkeeper shopkeeper)
     <spawn type="RegionSpawner" name="SurfaceFishSouth">
       <minimumDelay>660</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>23</maximum>
+      <maximum>24</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -91554,6 +91623,7 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="surfaceLurker" size="1" minimum="4" maximum="8" />
       <entry entity="surfacePirhana" size="1" minimum="10" maximum="14" />
       <entry entity="bloodlandsShark" size="1" minimum="1" maximum="1" />
+      <entry entity="surfaceBloodGrif" size="1" minimum="1" maximum="2" />
       <bounds region="1">
         <inclusion left="0" top="0" right="21" bottom="21" />
         <exclusion left="0" top="0" right="0" bottom="0" />
