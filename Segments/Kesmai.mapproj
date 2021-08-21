@@ -96848,9 +96848,13 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+  If (player.Profession == Profession.Thief)
+{
+ source.Say(String.Format("Welcome to the guild, {0}.", player.IsFemale ? "sister" : "brother"));
+}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -100950,7 +100954,7 @@ else
         foreach (var skill in Skill.Weapons)
             neela.SetTraining(skill, 0, 4);
 
-        neela.SetTraining(Skill.Hand, 0, 10);
+        neela.SetTraining(Skill.Hand, 0, 9);
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -100979,7 +100983,7 @@ else
         foreach (var skill in Skill.Weapons)
             phong.SetTraining(skill, 0, 4);
 
-        phong.SetTraining(Skill.Hand, 8, 15);
+        phong.SetTraining(Skill.Hand, 10, 15);
     }
 ]]></block>
         <block><![CDATA[]]></block>
