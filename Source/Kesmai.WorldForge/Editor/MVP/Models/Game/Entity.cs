@@ -12,7 +12,6 @@ namespace Kesmai.WorldForge
 {
 	[ScriptTemplate("OnSpawn", typeof(EntitySpawnScriptTemplate))]
 	[ScriptTemplate("OnDeath", typeof(EntityDeathScriptTemplate))]
-	[ScriptTemplate("OnIncomingPlayer", typeof(EntityIncomingPlayerScriptTemplate))]
 	public class Entity : ObservableObject, ICloneable
 	{
 		private string _name;
@@ -70,15 +69,6 @@ namespace Kesmai.WorldForge
 			if (_scripts.All(s => s.Name != "OnDeath"))
 			{
 				_scripts.Add(new Script("OnDeath", false,
-					String.Empty, 
-					"\n", 
-					String.Empty
-				));
-			}
-			
-			if (_scripts.All(s => s.Name != "OnIncomingPlayer"))
-			{
-				_scripts.Add(new Script("OnIncomingPlayer", false,
 					String.Empty, 
 					"\n", 
 					String.Empty

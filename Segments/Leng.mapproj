@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.72.0.0">
+<segment name="Leng" version="0.71.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -75138,11 +75138,11 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var isFemale = Utility.RandomBool();            
+                
     var wizard = new Humanoid()
     {
-        Name = _names.Random(),
-        Body = (isFemale ? 37 : 38), IsFemale = isFemale,
+        Name = "Thrall",
+        Body = 37,
             
         MaxHealth = 110, Health = 110,
         MaxMana = 31, Mana = 31,
@@ -75206,7 +75206,7 @@
         <block><![CDATA[
     var wizard = new Humanoid()
     {
-        Name = _names.Random(),
+        Name = "Thrall",
         Body = 38,
             
         MaxHealth = 110, Health = 110,

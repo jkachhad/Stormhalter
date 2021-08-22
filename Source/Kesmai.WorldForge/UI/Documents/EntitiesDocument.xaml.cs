@@ -36,15 +36,6 @@ namespace Kesmai.WorldForge.UI.Documents
 		}
 	}
 	
-	public class EntityIncomingPlayerScriptTemplate : ScriptTemplate
-	{
-		public override IEnumerable<string> GetSegments()
-		{
-			yield return "#load \"WorldForge\"\nvoid OnIncomingPlayer(MobileEntity source, PlayerEntity player)\n{";
-			yield return "}";
-		}
-	}
-	
 	public partial class EntitiesDocument : UserControl
 	{
 		public EntitiesDocument()
