@@ -96458,7 +96458,7 @@
       <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    source.SayTo(killer, $"The bloodlands will claim you...{killer.Name.Substring(0, 3)}--");
+    source.SayTo(killer, $"The bloodlands will claim you...{killer.Name}.");
     
     killer.Stun(3);
     killer.Blind(3);
