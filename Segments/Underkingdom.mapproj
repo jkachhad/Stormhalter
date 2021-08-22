@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.72.0.0">
+<segment name="Underkingdom" version="0.73.1.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -7448,6 +7448,16 @@
       <tile x="3" y="17">
         <component type="FloorComponent">
           <ground>178</ground>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>6</destinationX>
+          <destinationY>19</destinationY>
+          <destinationRegion>1</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions>Fighter,Martial Artist,Thaumaturge,Wizard,Knight</professions>
+          <alignments select="all" />
+          <allowNPC>true</allowNPC>
         </component>
       </tile>
       <tile x="4" y="17">
@@ -50885,10 +50895,10 @@
         </component>
       </tile>
       <tile x="13" y="22">
-        <component type="StaticComponent">
-          <static>7</static>
+        <component type="FloorComponent">
+          <ground>6</ground>
         </component>
-        <component type="ItemTeleporter">
+        <component type="HiddenTeleporterComponent">
           <destinationX>2</destinationX>
           <destinationY>19</destinationY>
           <destinationRegion>10</destinationRegion>
@@ -50896,7 +50906,6 @@
           <moonphases select="all" />
           <professions select="all" />
           <alignments select="all" />
-          <fail>Interrupted</fail>
         </component>
       </tile>
       <tile x="14" y="22">
@@ -54082,8 +54091,8 @@
         </component>
       </tile>
       <tile x="2" y="19">
-        <component type="StaticComponent">
-          <static>7</static>
+        <component type="FloorComponent">
+          <ground>6</ground>
         </component>
         <component type="HiddenTeleporterComponent">
           <destinationX>13</destinationX>
@@ -95846,6 +95855,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="townukBanker">
       <script name="OnSpawn" enabled="true">
@@ -95872,6 +95887,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="townconfessorGhost">
       <script name="OnSpawn" enabled="true">
@@ -95882,6 +95903,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -95915,6 +95942,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="townrecallVendor">
       <script name="OnSpawn" enabled="true">
@@ -95937,6 +95970,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -95969,6 +96008,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="townTanner">
       <script name="OnSpawn" enabled="true">
@@ -95991,6 +96036,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96025,6 +96076,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="towntrainerThief">
       <script name="OnSpawn" enabled="true">
@@ -96047,6 +96104,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96079,6 +96142,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="townwizTrainer">
       <script name="OnSpawn" enabled="true">
@@ -96101,6 +96170,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96154,6 +96229,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="townRat2">
       <script name="OnSpawn" enabled="true">
@@ -96198,6 +96279,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96259,6 +96346,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="surfaceWyRed">
       <script name="OnSpawn" enabled="true">
@@ -96310,6 +96403,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96371,6 +96470,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="surfaceWyGreen">
       <script name="OnSpawn" enabled="true">
@@ -96427,6 +96532,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="surfacedrake">
       <script name="OnSpawn" enabled="true">
@@ -96470,7 +96581,7 @@
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(27,      60, 80,     "The drake buffets you with its wings.",
+            new CreatureAttack(17,      60, 80,     "The drake buffets you with its wings.",
                                                         new AttackProneComponent(35), 
                                                         new AttackStunComponent(15)),               20
         },
@@ -96500,6 +96611,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96566,6 +96683,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="yasshelob">
       <script name="OnSpawn" enabled="true">
@@ -96607,6 +96730,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96667,6 +96796,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="udorugugra">
       <script name="OnSpawn" enabled="true">
@@ -96720,6 +96855,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="udswordmaster">
       <script name="OnSpawn" enabled="true">
@@ -96765,6 +96906,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96821,12 +96968,12 @@
     };
     
     overlord.AddGold(3000);
-    overlord.AddLoot(new LootPack(
-        
+    overlord.AddLoot(new LootPack(    
         new LootPackEntry(true, (from, container) => new ClearBalm(),           50),
-        new LootPackEntry(true, (from, container) => new Diamond(50000u),        100,    gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new PearDiamond(33000u),    100,    gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new StarsRobe(),           100)
+        new LootPackEntry(true, (from, container) => new Diamond(1500u),        100,    gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100,    gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PurpleSilkRobe(),           100),
+        new LootPackEntry(true, overlordTreasure, 100)
     ));
     
     return overlord;
@@ -96834,6 +96981,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96873,6 +97026,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96935,6 +97094,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="uk100magob">
       <script name="OnSpawn" enabled="true">
@@ -96983,6 +97148,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="uk100200troll">
       <script name="OnSpawn" enabled="true">
@@ -97023,6 +97194,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="uk100200archer">
       <script name="OnSpawn" enabled="true">
@@ -97058,6 +97235,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97108,6 +97291,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="uk300hob">
       <script name="OnSpawn" enabled="true">
@@ -97141,6 +97330,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97190,6 +97385,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="uk300troll">
       <script name="OnSpawn" enabled="true">
@@ -97225,6 +97426,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97275,6 +97482,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="uk300Speedyhobs">
       <script name="OnSpawn" enabled="true">
@@ -97309,6 +97522,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97354,6 +97573,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97405,6 +97630,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="uk300deathtroll">
       <script name="OnSpawn" enabled="true">
@@ -97446,6 +97677,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97499,6 +97736,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="uk100goblinmage">
       <script name="OnSpawn" enabled="true">
@@ -97547,6 +97790,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="udBanshee">
       <script name="OnSpawn" enabled="true">
@@ -97589,6 +97838,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97648,6 +97903,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="udSkeleton">
       <script name="OnSpawn" enabled="true">
@@ -97684,6 +97945,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97736,6 +98003,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97796,6 +98069,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="udOverlordWraiths">
       <script name="OnSpawn" enabled="true">
@@ -97830,6 +98109,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97870,6 +98155,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97918,6 +98209,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97976,6 +98273,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="yasnakiMA">
       <script name="OnSpawn" enabled="true">
@@ -98011,6 +98314,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -98072,6 +98381,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="yasnakiThaum">
       <script name="OnSpawn" enabled="true">
@@ -98124,6 +98439,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="tkprincessPlaceholder">
       <script name="OnSpawn" enabled="true">
@@ -98134,6 +98455,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -98177,6 +98504,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="uktunnelgobs">
       <script name="OnSpawn" enabled="true">
@@ -98209,6 +98542,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -98253,6 +98592,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="uktunneltroll">
       <script name="OnSpawn" enabled="true">
@@ -98286,6 +98631,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -98329,6 +98680,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="uktunnelgobsentry">
       <script name="OnSpawn" enabled="true">
@@ -98361,6 +98718,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -98399,6 +98762,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="tkhummingghost">
       <script name="OnSpawn" enabled="true">
@@ -98406,7 +98775,7 @@
         <block><![CDATA[
     var wraith = new Wraith()
     {
-        MaxHealth = 650, Health = 650,
+        MaxHealth = 65, Health = 65,
         BaseDodge = 12,
         IsInvisible = true,
         Experience = 1,
@@ -98425,7 +98794,7 @@
     wraith.Spells =  new CreatureSpellCollection(100)
     {
         new CreatureSpell<WhirlwindSpell>(
-            skillLevel: 11)
+            skillLevel: 8), 100, TimeSpan.FromSeconds(12.0)
     };
     
     wraith.AddLoot(new LootPack(
@@ -98436,6 +98805,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -99271,7 +99646,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="udOverlordWraiths" size="1" minimum="0" maximum="0" />
+      <entry entity="udOverlordWraiths" size="1" minimum="1" maximum="1" />
       <location x="0" y="5" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="olwraith2">
@@ -99292,6 +99667,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="udOverlordWraiths" size="1" minimum="1" maximum="1" />
       <location x="0" y="7" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="olwraith3">
@@ -99333,6 +99709,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="udOverlordWraiths" size="1" minimum="1" maximum="1" />
       <location x="0" y="11" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="olwraith5">
@@ -99399,8 +99776,8 @@
       <location x="5" y="10" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="hummingbirdghost">
-      <minimumDelay>600</minimumDelay>
-      <maximumDelay>600</maximumDelay>
+      <minimumDelay>3600</minimumDelay>
+      <maximumDelay>3600</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -99417,7 +99794,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="tkhummingghost" size="1" minimum="1" maximum="1" />
-      <location x="7" y="9" region="10" />
+      <location x="7" y="19" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="balmVendor">
       <minimumDelay>900</minimumDelay>
@@ -99457,6 +99834,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="townrecallVendor" size="1" minimum="1" maximum="1" />
       <location x="13" y="14" region="1" />
     </spawn>
     <spawn type="RegionSpawner" name="wyverns">
@@ -99529,6 +99907,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="surfaceLurker" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="13" top="22" right="24" bottom="24" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -100454,6 +100833,26 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new UncutEmerald(8000u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="overlordTreasure">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new SilverDaggerAmulet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StunDeathProtectionBracelet();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>

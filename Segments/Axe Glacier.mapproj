@@ -127,6 +127,101 @@
             }
         }
     }
+    
+    public class ScavengerAI : CombatAI
+    {
+        private int _happiness;
+        private ItemEntity _item;
+        
+        public ScavengerAI(CreatureEntity entity) : base(entity)
+        {
+        }
+
+        public override bool OnWander()
+        {
+            if (_happiness > 0)
+            {
+                _happiness--;
+                return true; /* We'll idle for another turn. */
+            }
+        
+            /* Ooo, a piece of candy. We've located an item, let's move towards it! */
+            if (_item != null && !_item.Deleted)
+            {
+                var location = _item.Location;
+                
+                if (location != null)
+                {
+                    /* I've moved to the item. */
+                    if (_entity.InRange(location, 0))
+                    {
+                        /* Start the looting */
+                        _action = new AILootAction();
+                        
+                        _happiness += 2;
+                        _item = null;
+                        
+                        return true;
+                    }
+                    
+                    /* I need to path to the item. */
+                    var path = new MovementPath(_entity, location, _entity.Movement, FastAStarAlgorithm.Movement);
+    
+                    if (path.Success)
+                        _action = new AIMovementAction(path.Directions.ToArray());
+                    
+                    return true;
+                }
+            }
+
+            /* Search for treasures around us. */
+            var segment = _entity.Segment;
+            var treasures = segment.GetItemsInRange(_entity.Location, 3)
+                .OfType<ItemEntity>()
+                .Where(i => i is ITreasure)
+                .ToList();
+
+            if (treasures.Any())
+            {
+                /* We found something! */
+                _item = treasures.Random();
+                return false;
+            }
+            
+            /* Nothing shiny on the ground, we'll just keep moving around. */
+            return base.OnWander();
+        }
+    }
+    
+    public class Alia : Humanoid
+    {
+        public Alia()
+        {
+            Name = "Alia";
+            Body = 75;
+
+            Health = MaxHealth = 50;
+            BaseDodge = 10;
+
+            Experience = 50;
+            
+            Alignment = Alignment.Lawful;
+        }
+
+        public Alia(Serial serial) : base(serial)
+        {
+        }
+        
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+
+            if (_brain != null)
+                return;
+                
+            _brain = new ScavengerAI(this);
+        }
+    }
 
     public class Vulcan : VendorEntity
     {
@@ -106333,6 +106428,21 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="axeAlia">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	return new Alia();
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="axeSEShopkeeper">
@@ -107002,7 +107112,6 @@
       <location x="35" y="22" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="Vulcan">
-      <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
@@ -107020,6 +107129,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="axeVulcan" size="1" minimum="1" maximum="1" />
+      <entry entity="axeAlia" size="1" minimum="1" maximum="1" />
       <location x="4" y="7" region="256" />
     </spawn>
     <spawn type="LocationSpawner" name="Silvermoon">
