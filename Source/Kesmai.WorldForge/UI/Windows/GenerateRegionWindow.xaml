@@ -1,0 +1,99 @@
+﻿<Window x:Class="Kesmai.WorldForge.GenerateRegionWindow"
+
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:worldForge="clr-namespace:Kesmai.WorldForge"
+
+        Title="Region Generator" Height="400" Width="550" Background="#FFDDDDDD"
+
+        DataContext="{StaticResource applicationPresenter}">
+    <TabControl Margin="5">
+        <TabItem Header="MapGEN" Visibility="{x:Static worldForge:Core.DebugOnly}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="377*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                           Text="Script:" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
+                <TextBox Grid.Row="0" Grid.Column="1"
+                         Name="_mapGENPath" IsEnabled="false"
+                         Margin="5" />
+                <Button Grid.Row="0" Grid.Column="2" Click="BrowseMapGENData"
+                        Margin="5" Padding="10,5,10,5" >
+                    <TextBlock FontFamily="Tahoma">Browse</TextBlock>
+                </Button>
+
+                <Border Margin="5" Grid.Row="2" Grid.ColumnSpan="3"
+                            BorderBrush="Black">
+                    <DataGrid Name="_mapGENData" ItemsSource="{Binding Path=Regions}" AutoGenerateColumns="false" CanUserAddRows="false" CanUserDeleteRows="false"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn Header="Import" Binding="{Binding Import}" />
+                            <DataGridTextColumn Header="ID" Width="50" Binding="{Binding Id}" />
+                            <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}" />
+                            <DataGridTextColumn Header="Width" Width="70" Binding="{Binding Width, Mode=OneTime}" />
+                            <DataGridTextColumn Header="Height" Width="70" Binding="{Binding Height, Mode=OneTime}" />
+                            <DataGridTextColumn Header="Tiles" Width="70" Binding="{Binding Count, Mode=OneTime}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+                
+                <Button Grid.Row="3" Grid.ColumnSpan="2"  
+                        Name="_importMapGEN" Click="ImportMapGENRegions"
+                        HorizontalAlignment="Right" Width="100"
+                        Margin="0,4,8,4" FontFamily="Tahoma" Grid.Column="1">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../Resources/Import.png" Margin="5,0,5,0" Width="32" Height="32"></Image>
+                        <TextBlock VerticalAlignment="Center">Import</TextBlock>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </TabItem>
+        <!--<TabItem Header="Image">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBox Grid.Row="0" Grid.Column="0"
+                         Margin="5" />
+                <Button Grid.Row="0" Grid.Column="1"
+                        Margin="5" Padding="10,5,10,5" >
+                    <TextBlock FontFamily="Tahoma">Browse</TextBlock>
+                </Button>
+
+                <Border Grid.Row="1"
+                        Margin="5" 
+                        BorderBrush="Black" Grid.ColumnSpan="2">
+                    <Image></Image>
+                </Border>
+                <Button Grid.Row="2" Grid.ColumnSpan="2" 
+                        HorizontalAlignment="Right" Width="120"
+                        Margin="4" Padding="10,5,10,5" FontFamily="Tahoma" >
+                    <TextBlock>Import</TextBlock>
+                </Button>
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="Generator" IsEnabled="false">
+        </TabItem>-->
+    </TabControl>
+</Window>

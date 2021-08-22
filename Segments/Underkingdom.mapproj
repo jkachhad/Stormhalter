@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.70.0.0">
+<segment name="Underkingdom" version="0.73.1.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -7448,6 +7448,16 @@
       <tile x="3" y="17">
         <component type="FloorComponent">
           <ground>178</ground>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>6</destinationX>
+          <destinationY>19</destinationY>
+          <destinationRegion>1</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions>Fighter,Martial Artist,Thaumaturge,Wizard,Knight</professions>
+          <alignments select="all" />
+          <allowNPC>true</allowNPC>
         </component>
       </tile>
       <tile x="4" y="17">
@@ -50885,10 +50895,10 @@
         </component>
       </tile>
       <tile x="13" y="22">
-        <component type="StaticComponent">
-          <static>7</static>
+        <component type="FloorComponent">
+          <ground>6</ground>
         </component>
-        <component type="ItemTeleporter">
+        <component type="HiddenTeleporterComponent">
           <destinationX>2</destinationX>
           <destinationY>19</destinationY>
           <destinationRegion>10</destinationRegion>
@@ -50896,7 +50906,6 @@
           <moonphases select="all" />
           <professions select="all" />
           <alignments select="all" />
-          <fail>Interrupted</fail>
         </component>
       </tile>
       <tile x="14" y="22">
@@ -54082,8 +54091,8 @@
         </component>
       </tile>
       <tile x="2" y="19">
-        <component type="StaticComponent">
-          <static>7</static>
+        <component type="FloorComponent">
+          <ground>6</ground>
         </component>
         <component type="HiddenTeleporterComponent">
           <destinationX>13</destinationX>
@@ -95818,7 +95827,7 @@
     </subregion>
   </subregions>
   <entities>
-    <entity name="ukbalmVendor">
+    <entity name="townukbalmVendor">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -95844,8 +95853,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="ukBanker">
+    <entity name="townukBanker">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -95870,8 +95885,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="confessorGhost">
+    <entity name="townconfessorGhost">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -95885,8 +95906,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="mugwortVendor">
+    <entity name="townmugwortVendor">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -95913,8 +95940,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="recallVendor">
+    <entity name="townrecallVendor">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -95940,8 +95973,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="shopkeeperTemplate">
+    <entity name="townshopTemplate">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -95967,8 +96006,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="tannerTemplate">
+    <entity name="townTanner">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -95994,8 +96039,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="thaumTrainer">
+    <entity name="towntrainerThaum">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -96023,8 +96074,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="thiefTrainer">
+    <entity name="towntrainerThief">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -96050,8 +96107,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="weaponTrainerTemplate">
+    <entity name="townWepTrainTemp">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -96077,8 +96140,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="wizTrainer">
+    <entity name="townwizTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -96099,6 +96168,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96127,15 +96202,19 @@
 	
 	rat.Attacks = new CreatureAttackCollection()
 	{
-        { new CreatureAttack(10,    10, 20,    "Squeakers sinks his teeth into your flesh."),    60 },
-        { new CreatureAttack(10,    15, 20,    "Squeakers sends a flurry of claws towards your femural artery."),    40 },
+        { 
+            new CreatureAttack(10,    10, 20,    "Squeakers sinks her teeth into your flesh."),                        60 
+        },
+        {
+            new CreatureAttack(10,    15, 20,    "Squeakers sends a flurry of claws towards your femural artery."),    40 
+        },
     };
     
     rat.Blocks = new CreatureBlockCollection()
     {
         new CreatureBlock(6, "a claw."),
-        new CreatureBlock(3, "his fangs."),
-        new CreatureBlock(1, "his tail."),
+        new CreatureBlock(3, "her fangs."),
+        new CreatureBlock(1, "her tail."),
     };
 	
 	return rat;
@@ -96143,6 +96222,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96171,8 +96256,12 @@
     
     rat.Attacks = new CreatureAttackCollection()
     {
-        { new CreatureAttack(10,    10, 20,    "Mr.Pibbs sinks his teeth into your flesh."),    60 },
-        { new CreatureAttack(10,    15, 20,    "Mr.Pibbs sends a flurry of claws towards your femural artery."),    40 },
+        { 
+            new CreatureAttack(10,    10, 20,    "Mr.Pibbs sinks his teeth into your flesh."),                        60 
+        },
+        {
+            new CreatureAttack(10,    15, 20,    "Mr.Pibbs sends a flurry of claws towards your femural artery."),    40
+        },
     };
     
     rat.Blocks = new CreatureBlockCollection()
@@ -96193,15 +96282,21 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="whiteWyvern">
+    <entity name="surfaceWyWhite">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var wyvern = new Wyvern()
     {
         Body = 176,
-        MaxHealth = 110, Health = 110,
+        MaxHealth = 70, Health = 70,
         BaseDodge = 12,
         BasePenetration = ShieldPenetration.Light,
         Experience = 2500,
@@ -96214,10 +96309,17 @@
     
     wyvern.Attacks = new CreatureAttackCollection()
     {
-        { new CreatureAttack(9,     6, 10,   "The wyvern rakes you with its claws."),        50 },
-        { new CreatureAttack(10,     10, 13,   "The wyvern bites you."),                       30 },
-        { new CreatureAttack(11,     12, 15,  "The wyvern rakes whips you with its tail."),   20 }
+        { 
+            new CreatureAttack(9,     6, 10,   "The wyvern rakes you with its claws."),         50 
+        },
+        {
+            new CreatureAttack(10,     10, 13,   "The wyvern bites you."),                      30
+        },
+        {
+            new CreatureAttack(11,     12, 15,  "The wyvern rakes whips you with its tail."),   20 
+        }
     };
+    
     wyvern.Blocks = new CreatureBlockCollection()
     {
         new CreatureBlock(6, "the armor"),
@@ -96242,15 +96344,21 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="redWyvern">
+    <entity name="surfaceWyRed">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var wyvern = new Wyvern()
     {
         Body = 177,
-        MaxHealth = 110, Health = 110,
+        MaxHealth = 70, Health = 70,
         BaseDodge = 12,
                 
         Experience = 2500,
@@ -96263,10 +96371,17 @@
     
     wyvern.Attacks = new CreatureAttackCollection()
     {
-        { new CreatureAttack(9,     6, 10,   "The wyvern rakes you with its claws."),        50 },
-        { new CreatureAttack(10,     10, 13,   "The wyvern bites you."),                       30 },
-        { new CreatureAttack(11,     12, 15,  "The wyvern rakes whips you with its tail."),   20 }
+        { 
+            new CreatureAttack(9,     6, 10,   "The wyvern rakes you with its claws."),         50 
+        },
+        {
+            new CreatureAttack(10,     10, 13,   "The wyvern bites you."),                      30 
+        },
+        {
+            new CreatureAttack(11,     12, 15,  "The wyvern rakes whips you with its tail."),   20
+        }
     };
+    
     wyvern.Blocks = new CreatureBlockCollection()
     {
         new CreatureBlock(6, "the armor"),
@@ -96291,15 +96406,21 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="blueWyvern">
+    <entity name="surfaceWyBlue">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var wyvern = new Wyvern()
     {
         Body = 178,
-        MaxHealth = 110, Health = 110,
+        MaxHealth = 70, Health = 70,
         BaseDodge = 12,
                 
         Experience = 2500,
@@ -96312,10 +96433,17 @@
     
     wyvern.Attacks = new CreatureAttackCollection()
     {
-        { new CreatureAttack(9,     6, 10,   "The wyvern rakes you with its claws."),        50 },
-        { new CreatureAttack(10,     10, 13,   "The wyvern bites you."),                       30 },
-        { new CreatureAttack(11,     12, 15,  "The wyvern rakes whips you with its tail."),   20 }
+        { 
+            new CreatureAttack(9,     6, 10,   "The wyvern rakes you with its claws."),        50 
+        },
+        {
+            new CreatureAttack(10,     10, 13,   "The wyvern bites you."),                     30 
+        },
+        {
+            new CreatureAttack(11,     12, 15,  "The wyvern rakes whips you with its tail."),  20
+        }
     };
+    
     wyvern.Blocks = new CreatureBlockCollection()
     {
         new CreatureBlock(6, "the armor"),
@@ -96340,15 +96468,21 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="greenWyvern">
+    <entity name="surfaceWyGreen">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var wyvern = new Wyvern()
     {
         Body = 65,
-        MaxHealth = 110, Health = 110,
+        MaxHealth = 70, Health = 70,
         BaseDodge = 12,
                 
         Experience = 2500,
@@ -96361,10 +96495,17 @@
     
     wyvern.Attacks = new CreatureAttackCollection()
     {
-        { new CreatureAttack(9,     6, 10,   "The wyvern rakes you with its claws."),        50 },
-        { new CreatureAttack(10,     10, 13,   "The wyvern bites you."),                       30 },
-        { new CreatureAttack(11,     12, 15,  "The wyvern rakes whips you with its tail."),   20 }
+        {
+            new CreatureAttack(9,     6, 10,   "The wyvern rakes you with its claws."),        50 
+        },
+        {
+            new CreatureAttack(10,     10, 13,   "The wyvern bites you."),                     30 
+        },
+        {
+            new CreatureAttack(11,     12, 15,  "The wyvern rakes whips you with its tail."),  20 
+        }
     };
+    
     wyvern.Blocks = new CreatureBlockCollection()
     {
         new CreatureBlock(6, "the armor"),
@@ -96389,8 +96530,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="ukdrake">
+    <entity name="surfacedrake">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -96414,6 +96561,7 @@
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
     
     };
+    
     drake.AddStatus(new NightVisionStatus(drake));
     
     drake.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
@@ -96431,7 +96579,7 @@
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(27,      60, 80,     "The drake buffets you with its wings.",
+            new CreatureAttack(17,      60, 80,     "The drake buffets you with its wings.",
                                                         new AttackProneComponent(35), 
                                                         new AttackStunComponent(15)),               20
         },
@@ -96446,7 +96594,8 @@
         
     drake.Spells = new CreatureSpellCollection(20.0)
     {
-        new CreatureSpell<LightningBoltSpell>(9),
+        new CreatureSpell<LightningBoltSpell>(
+            skillLevel: 9),
     };
     
     drake.AddGold(2000);
@@ -96465,8 +96614,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="ukcarfel">
+    <entity name="yascarfel">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -96482,7 +96637,7 @@
         Experience = 32000,
        
         CanJumpkick = true,
-        
+        CanStrikeCritically = true,
         VisibilityDistance = 0,
         
         BasePenetration = ShieldPenetration.Heavy,
@@ -96500,10 +96655,9 @@
     
     carfel.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(15),
+        new CreatureBasicAttack(15, 25, 35)
     };
     
-    //todo determine if I can force it to dual wield? Not sure of context
     carfel.Wield(new YasnakiDagger());
     carfel.Wield(new YasnakiDagger());
         
@@ -96527,8 +96681,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="ukshelob">
+    <entity name="yasshelob">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -96538,27 +96698,27 @@
         MaxHealth = 800, Health = 800,
         BaseDodge = 15,
     
-        Experience = 14000,
+        Experience = 18000,
         BasePenetration = ShieldPenetration.Medium,
         
         VisibilityDistance = 0,
         RangePerception = 0,
     };
     
-    
-    //todo Check context on attack value
+    shelob.AddStatus(new NightVisionStatus(shelob));
     
     shelob.Attacks = new CreatureAttackCollection()
     {
-        { new CreatureAttack(12,     10, 20,      "The spider bites you", 
-                                                new AttackPoisonComponent(40)) }, 
+        { 
+            new CreatureAttack(12,     10, 20,      "The spider bites you", 
+                                                new AttackPoisonComponent(40))
+        }, 
     };
-    
-    shelob.AddStatus(new NightVisionStatus(shelob));
     
     shelob.Blocks = new CreatureBlockCollection
     {
-        { new CreatureBlock(1, "the hardened carapace") }, 
+        new CreatureBlock(5, "a wicked mandible"),
+        new CreatureBlock(5, "your weapon getting caught in a web")
     };
     
     shelob.AddGold(1000);
@@ -96573,8 +96733,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="uktrollKing">
+    <entity name="tktrollKing">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -96586,8 +96752,8 @@
         BaseDodge = 19,
         
         Alignment = Alignment.Chaotic,
-        HideDetection = 28,
-        Experience = 42000,
+        HideDetection = 30,
+        Experience = 56000,
         
         Immunity = CreatureImmunity.Magic,
         Weakness = CreatureWeakness.IceSpearSpell,
@@ -96613,7 +96779,7 @@
     trollKing.AddGold(2000);
     trollKing.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new HummingbirdAmulet(),     100)
-        ));
+    ));
     
     return trollKing;
 ]]></block>
@@ -96625,8 +96791,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="ukorugugra">
+    <entity name="udorugugra">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -96639,22 +96811,26 @@
         BasePenetration = ShieldPenetration.Heavy,
         Alignment = Alignment.Chaotic,
         HideDetection = 24,
-        Experience = 22000,
+        Experience = 27000,
             
         VisibilityDistance = 0,
     };
     
     lurker.Attacks = new CreatureAttackCollection()
     {
-        { new CreatureAttack(15,     20, 30,      "Orugugra whips you with a tentacle"),  50 }, 
-        { new CreatureAttack(15,     1, 40,     "Orugugra",
-                                                    new AttackPoisonComponent(40)),          50 },
+        { 
+            new CreatureAttack(15,     20, 30,      "Orugugra whips you with a tentacle"),  50 
+        }, 
+        {
+            new CreatureAttack(15,     1, 40,     "Orugugra",
+                                                    new AttackPoisonComponent(40)),         50
+        },
     };
     
     lurker.Blocks = new CreatureBlockCollection
     {
-        { new CreatureBlock(6, "a tentacle") }, 
-        { new CreatureBlock(4, "sharp fangs") }, 
+        new CreatureBlock(6, "a tentacle"),
+        new CreatureBlock(4, "sharp fangs")
     };
     
     lurker.AddGold(2000);
@@ -96674,8 +96850,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="ukswordmaster">
+    <entity name="udswordmaster">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -96686,7 +96868,7 @@
         MaxHealth = 2500, Health = 2500,
         BaseDodge = 21,
         HideDetection = 25,
-        Experience = 35000,
+        Experience = 39000,
        
         CanCharge = true,
                 
@@ -96700,9 +96882,8 @@
     
     swordmaster.Attacks = new CreatureAttackCollection()
     {
-        { new CreatureAttack(17,    40, 60,     "The swordmaster pierces you with his rapier.",
-                                                    new AttackAgeComponent(50))  },
-                                                    //TODO find the values for age components and add the appropriate value to these guys
+        new CreatureAttack(17,    40, 60,     "The swordmaster pierces you with his rapier.",
+                                                    new AttackAgeComponent(5000, 50))
     };
     
     swordmaster.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
@@ -96725,8 +96906,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="ukoverlord">
+    <entity name="udoverlord">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -96738,7 +96925,7 @@
         MaxHealth = 5000, Health = 5000,
         BaseDodge = 15,
     
-        Experience = 45000,
+        Experience = 69000,
         
         BasePenetration = ShieldPenetration.VeryHeavy,
         
@@ -96754,36 +96941,34 @@
         StunResistance = 100,
         
     };
+    
     overlord.AddStatus(new NightVisionStatus(overlord));
     
     overlord.CombatantChangeInterval = TimeSpan.FromSeconds(12.0);
     
-    //not sure on staff being wielded
+    //TODO not sure on staff being wielded
     
     overlord.Wield(new EbonyStaff());
     overlord.Equip(new DragonScaleArmor());
     
-    
-    //todo check context on attack stun chance being added on a "normal" weapon attack
     overlord.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(20, 40, 80, new AttackStunComponent (25)),
+        new CreatureBasicAttack(20, 40, 80, new AttackStunComponent (25))
     };
     
     overlord.Spells = new CreatureSpellCollection(35.0)
     {
-        new CreatureSpell<IceSpearSpell>(10),
+        new CreatureSpell<IceSpearSpell>(
+            skillLevel: 10)
     };
     
     overlord.AddGold(3000);
-    overlord.AddLoot(new LootPack(
-        //new LootPackEntry(true, dungeon1Bottles,    20),
-        //todo: new LootPackEntry(true, ydnacTreasure,      100),
-        
+    overlord.AddLoot(new LootPack(    
         new LootPackEntry(true, (from, container) => new ClearBalm(),           50),
         new LootPackEntry(true, (from, container) => new Diamond(1500u),        100,    gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100,    gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new StarsRobe(),           100)
+        new LootPackEntry(true, (from, container) => new PurpleSilkRobe(),           100),
+        new LootPackEntry(true, overlordTreasure, 100)
     ));
     
     return overlord;
@@ -96791,6 +96976,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96806,14 +96997,14 @@
         MaxHealth = 130, Health = 130,
         BaseDodge = 12,
                 
-        Experience = 3800,
+        Experience = 5200,
         BasePenetration = ShieldPenetration.Light,
         CanFlee = true,
-                
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(10, 15, 25)
-        }
+    };
+    
+    orc.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(10, 15, 25)
     };
     
     orc.Wield(new Longsword());
@@ -96822,7 +97013,7 @@
     orc.AddGold(400);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return orc;
@@ -96830,6 +97021,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96845,26 +97042,33 @@
         MaxHealth = 200, Health = 200,
         BaseDodge = 16,
     
-        Experience = 5500,
+        Experience = 10500,
     
         CanCharge = true,
         BasePenetration = ShieldPenetration.Medium,
         Immunity = CreatureImmunity.Web
     };
+    
     minotaur.AddStatus(new NightVisionStatus(minotaur));
     
     minotaur.Attacks = new CreatureAttackCollection()
     {
-        { new CreatureAttack(13,     25, 35,      "The minotaur hits with a wicked axe"),          60 }, 
-        { new CreatureAttack(13,     30, 40,     "You've been gored by the minotaur",
-                                                    new AttackStunComponent(10.0)),         30 }, 
-        { new CreatureAttack(14,     35, 60,     "You've been trampled by the minotaur"),    10 }, 
+        { 
+            new CreatureAttack(13,     25, 35,      "The minotaur hits with a wicked axe"),     60 
+        }, 
+        {
+            new CreatureAttack(13,     30, 40,     "You've been gored by the minotaur",
+                                                    new AttackStunComponent(10.0)),             30
+        }, 
+        {
+            new CreatureAttack(14,     35, 60,     "You've been trampled by the minotaur"),     10
+        }, 
     };
     
     minotaur.Blocks = new CreatureBlockCollection()
     {
         new CreatureBlock(6, "the armor"),
-        new CreatureBlock(3, "its axe"),
+        new CreatureBlock(3, "its axe")
     };
     
     minotaur.Wield(new BattleAxe());    
@@ -96872,7 +97076,7 @@
     minotaur.AddGold(1000);
     minotaur.AddLoot(new LootPack(
         new LootPackEntry(true, drop12gems,       15,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return minotaur;
@@ -96885,8 +97089,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="punchgobbo">
+    <entity name="uk100magob">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -96895,12 +97105,12 @@
         MaxHealth = 200, Health = 200,
         BaseDodge = 18,
                 
-        Experience = 9000,
+        Experience = 12000,
         BasePenetration = ShieldPenetration.Medium,
-    
+        CanStrikeCritically = false,
     };
     
-        goblin.Attacks = new CreatureAttackCollection()
+    goblin.Attacks = new CreatureAttackCollection()
     {
         {
             new CreatureAttack(15,      30, 50,      "The goblin hits you with a flurry of fists.",
@@ -96919,7 +97129,7 @@
     goblin.AddGold(800);
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, drop12gems,       20,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return goblin;
@@ -96928,6 +97138,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96943,14 +97159,15 @@
         MaxHealth = 145, Health = 145,
         BaseDodge = 13,
                 
-        Experience = 3400,
+        Experience = 6400,
                 
         Movement = 3,
         BasePenetration = ShieldPenetration.Light,
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(10, 20, 30)
-        }
+    };
+    
+    troll.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(10, 20, 30)
     };
     
     troll.Wield(new Greatsword());
@@ -96959,7 +97176,7 @@
     troll.AddGold(500);
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, drop12gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return troll;
@@ -96967,6 +97184,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -96982,14 +97205,15 @@
         MaxHealth = 100, Health = 100,
         BaseDodge = 12,
                 
-        Experience = 2600,
+        Experience = 5600,
         
         CanFlee = true,
         BasePenetration = ShieldPenetration.Light,
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(10)
-        }
+    };
+    
+    orc.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(10)
     };
     
     orc.Wield(new Longbow());
@@ -96998,7 +97222,7 @@
     orc.AddGold(300);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, drop12gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return orc;
@@ -97011,8 +97235,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="uklightningHob">
+    <entity name="uk300lightningHob">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -97022,14 +97252,15 @@
         MaxMana = 13, Mana = 13,
         BaseDodge = 14,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 4700,
+        Experience = 6700,
     
     };
+    
     hobgoblin.AddStatus(new NightVisionStatus(hobgoblin));
     
     hobgoblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(11, 1, 40),
+        new CreatureBasicAttack(11, 1, 40)
     };
     
     hobgoblin.Spells = new CreatureSpellCollection()
@@ -97044,7 +97275,7 @@
     hobgoblin.AddGold(550);
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       15,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return hobgoblin;
@@ -97052,6 +97283,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97064,15 +97301,16 @@
         <block><![CDATA[
     var hobgoblin = new Hobgoblin()
     {
-        MaxHealth = 150, Health = 120,
+        MaxHealth = 150, Health = 150,
         BaseDodge = 14,
     
-        Experience = 4600,
+        Experience = 6600,
         BasePenetration = ShieldPenetration.Medium,
-        Attacks = new CreatureAttackCollection()
-        {
-            { new CreatureBasicAttack(12, 20, 30) }, 
-        },
+    };
+    
+    hobgoblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(12, 20, 30)
     };
     
     hobgoblin.Wield(new Longsword());
@@ -97081,7 +97319,7 @@
     hobgoblin.AddGold(500);
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return hobgoblin;
@@ -97089,6 +97327,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97107,26 +97351,25 @@
         MaxHealth = 135, Health = 135,
         BaseDodge = 13,
                 
-        Experience = 4200,
+        Experience = 6400,
         BasePenetration = ShieldPenetration.Medium,
         Movement = 3,
-                                
-        Attacks = new CreatureAttackCollection()
-        {
-            { new CreatureBasicAttack(11, 25, 30,
-                new AttackProneComponent(100.0), new AttackStunComponent(100.0)) },
-        },
     };
     
     troll.AddStatus(new NightVisionStatus(troll));
     
+    troll.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(13)
+    };
+        
     troll.Wield(new Longbow());
     troll.Equip(new ChainmailArmor());
     
     troll.AddGold(500);
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return troll;
@@ -97134,6 +97377,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97149,14 +97398,15 @@
         MaxHealth = 175, Health = 175,
         BaseDodge = 14,
                 
-        Experience = 4800,
+        Experience = 6800,
                 
         Movement = 3,
         BasePenetration = ShieldPenetration.Medium,
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(11, 15, 30)
-        }
+    };
+    
+    troll.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(11, 15, 30)
     };
     
     troll.AddStatus(new NightVisionStatus(troll));
@@ -97167,7 +97417,7 @@
     troll.AddGold(450);
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return troll;
@@ -97180,8 +97430,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="ukelitetrollguard">
+    <entity name="tkelitetrollguard">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -97191,11 +97447,9 @@
         MaxHealth = 300, Health = 300,
         BaseDodge = 15,
             
-        Experience = 8000,
+        Experience = 11000,
         
-        FireProtection = 50,
-        IceProtection = 50,
-        
+        MagicProtection = 33,
         CanCharge = true,
         
         BasePenetration = ShieldPenetration.Heavy,
@@ -97205,7 +97459,7 @@
     
     trollguard.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(15, 30, 40),
+        new CreatureBasicAttack(15, 30, 40)
     };
     
     trollguard.Wield(new Halberd());
@@ -97214,7 +97468,7 @@
     trollguard.AddGold(1000);
     trollguard.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       15,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    20)
+        new LootPackEntry(true, GenericBottles,    33)
         ));
     
     return trollguard;
@@ -97227,8 +97481,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="ukSpeedyhobs">
+    <entity name="uk300Speedyhobs">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -97238,12 +97498,13 @@
         MaxHealth = 150, Health = 150,
         BaseDodge = 14,
     
-        Experience = 5500,
+        Experience = 7500,
         BasePenetration = ShieldPenetration.Medium,
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(13, 20, 25) }, 
-        },
+    };
+    
+    hobgoblin.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(13, 20, 25)
     };
     
     hobgoblin.Wield(new Longsword());
@@ -97252,7 +97513,7 @@
     hobgoblin.AddGold(500);
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, speedygems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    20)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return hobgoblin;
@@ -97265,8 +97526,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="uklightningOrc">
+    <entity name="uktunnellightningOrc">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -97276,13 +97543,13 @@
         MaxMana = 13, Mana = 13,
         BaseDodge = 11,
         BasePenetration = ShieldPenetration.VeryLight,
-        Experience = 2300,
+        Experience = 5300,
     
     };
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(9),
+        new CreatureBasicAttack(9)
     };
     
     orc.Spells = new CreatureSpellCollection()
@@ -97297,7 +97564,7 @@
     orc.AddGold(350);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       15,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    20)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return orc;
@@ -97305,6 +97572,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97320,7 +97593,7 @@
         MaxHealth = 110, Health = 110,
         BaseDodge = 11,
         BasePenetration = ShieldPenetration.VeryLight,
-        Experience = 1900,
+        Experience = 5500,
         
         MaxMana = 21, Mana = 21,
             
@@ -97329,7 +97602,7 @@
         
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(10, 15, 20),
+        new CreatureBasicAttack(10, 15, 20)
     };
     
     troll.Spells = new CreatureSpellCollection()
@@ -97344,7 +97617,7 @@
     troll.AddGold(250);
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    20)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return troll;
@@ -97352,6 +97625,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97367,16 +97646,17 @@
         MaxHealth = 130, Health = 130,
         BaseDodge = 12,
     
-        Experience = 4800,
+        Experience = 6800,
         BasePenetration = ShieldPenetration.Light,
         MaxMana = 31, Mana = 31,
             
     };
+    
     troll.AddStatus(new NightVisionStatus(troll));
         
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(11, 20, 30),
+        new CreatureBasicAttack(11, 20, 30)
     };
     
     troll.Spells = new CreatureSpellCollection()
@@ -97391,7 +97671,7 @@
     troll.AddGold(380);
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       15,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return troll;
@@ -97399,6 +97679,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97415,7 +97701,7 @@
         MaxMana = 21, Mana = 21,
         BaseDodge = 11,
     
-        Experience = 1900,
+        Experience = 4900,
         BasePenetration = ShieldPenetration.VeryLight,
     };
     
@@ -97439,7 +97725,7 @@
     orc.AddGold(350);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    20)
+        new LootPackEntry(true, GenericBottles,    25)
     ));
     
     return orc;
@@ -97447,6 +97733,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97463,7 +97755,7 @@
         MaxMana = 16, Mana = 16,
         BaseDodge = 11,
         BasePenetration = ShieldPenetration.VeryLight,        
-        Experience = 2800,
+        Experience = 5800,
         FireProtection = 100,
     };
     
@@ -97487,7 +97779,7 @@
     goblin.AddGold(120);
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, drop12gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return goblin;
@@ -97500,8 +97792,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="ukBanshee">
+    <entity name="udBanshee">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -97510,16 +97808,16 @@
         MaxHealth = 150, Health = 150,
         BaseDodge = 13,
     
-        Experience = 5800,
+        Experience = 6800,
         BasePenetration = ShieldPenetration.Light,
         MaxMana = 21, Mana = 21,
         DeathResistance = 100,
-            
+        MagicProtection = 33,
     };
         
     banshee.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(11),
+        new CreatureBasicAttack(11)
     };
     
     banshee.Spells = new CreatureSpellCollection()
@@ -97547,8 +97845,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="ukGhoul">
+    <entity name="udGhoul">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -97557,7 +97861,7 @@
         MaxHealth = 220, Health = 220,
         BaseDodge = 14,
     
-        Experience = 8000,
+        Experience = 9000,
         BasePenetration = ShieldPenetration.Medium,
         VisibilityDistance = 0,
             
@@ -97565,14 +97869,18 @@
         IceProtection = 50,
         DeathResistance = 100,
     };
+    
     ghoul.AddStatus(new NightVisionStatus(ghoul));
     
     ghoul.Attacks = new CreatureAttackCollection()
     {
-        { new CreatureAttack(12,     30, 40,     "The ghoul scratches you with its claws"),      70 }, 
-        { new CreatureAttack(13,    30, 50,     "You've been bitten by the ghoul",
-                                                    new AttackPoisonComponent(25)),             30 },
-                                                    // TODO: Attack poison chance. 50%
+        { 
+            new CreatureAttack(12,     30, 40,     "The ghoul scratches you with its claws"),      70 
+        }, 
+        { 
+            new CreatureAttack(13,    30, 50,     "You've been bitten by the ghoul",
+                                                    new AttackPoisonComponent(25)),                30
+        },
     };
         
     ghoul.Blocks = new CreatureBlockCollection
@@ -97584,7 +97892,7 @@
     ghoul.AddGold(1000);
     ghoul.AddLoot(new LootPack(
         new LootPackEntry(true, udGems,       15,     gemsPriceMutator), 
-        new LootPackEntry(true, undeadBottles,    15)
+        new LootPackEntry(true, undeadBottles,    50)
     ));
     
     return ghoul;
@@ -97597,8 +97905,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="ukSkeleton">
+    <entity name="udSkeleton">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -97607,15 +97921,15 @@
         MaxHealth = 150, Health = 150,
         BaseDodge = 14,
 
-        Experience = 5500,
+        Experience = 6800,
         BasePenetration = ShieldPenetration.Light,
         Movement = 3,
         DeathResistance = 100,
-                
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(13, 20, 30)
-        },
+    };
+    
+    skeleton.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(13, 20, 30)
     };
     
     skeleton.Wield(new Spear());
@@ -97625,7 +97939,7 @@
     
     skeleton.AddLoot(new LootPack(
         new LootPackEntry(true, udGems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, undeadBottles,    20)
+        new LootPackEntry(true, undeadBottles,    33)
     ));
     
     return skeleton;
@@ -97638,8 +97952,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="ukSpectre">
+    <entity name="udSpectre">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -97649,24 +97969,25 @@
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
     
-        Experience = 6500,
+        Experience = 8500,
         BasePenetration = ShieldPenetration.Light,
         VisibilityDistance = 1,
         DeathResistance = 100,
     };
+    
     spectre.AddStatus(new NightVisionStatus(spectre));
     
     spectre.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(12, 20, 30),
+        new CreatureBasicAttack(12, 20, 30)
     };
     
     spectre.Spells = new CreatureSpellCollection()
     {
-        { new CreatureSpell<StunSpell>(
+       { new CreatureSpell<StunSpell>(
             skillLevel: 11, cost: 16, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   75 },
-        { new CreatureSpell<DeathSpell>(
+       { new CreatureSpell<DeathSpell>(
             skillLevel: 9, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 }
     };
@@ -97676,7 +97997,7 @@
     spectre.AddGold(650);
     spectre.AddLoot(new LootPack(
         new LootPackEntry(true, udGems,       15,     gemsPriceMutator), 
-        new LootPackEntry(true, undeadBottles,    20)
+        new LootPackEntry(true, undeadBottles,    33)
     ));
     
     return spectre;
@@ -97689,8 +98010,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="ukCouncillors">
+    <entity name="udCouncillors">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -97700,21 +98027,26 @@
         MaxHealth = 350, Health = 350,
         BaseDodge = 15,
         HideDetection = 26,
-        Experience = 9000,
+        Experience = 19000,
     
         BasePenetration = ShieldPenetration.Heavy,
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.IceSpearSpell,
     };
+    
     mummy.AddStatus(new NightVisionStatus(mummy));
     
     mummy.Attacks = new CreatureAttackCollection()
     {
-        { new CreatureAttack(16,     30, 50,     "The mummy strangles you with his bandages"),      70, TimeSpan.Zero }, 
-        { new CreatureAttack(17,    40, 60,     "A mummified claw scratches you.",
-                                                    new AttackAgeComponent(50)),             30, TimeSpan.Zero },
-                                                    //TODO find the values for age components and add the appropriate value to these guys
+        { 
+            new CreatureAttack(16,     30, 50,     "The mummy strangles you with his bandages"),      70, TimeSpan.Zero 
+        }, 
+        { 
+            new CreatureAttack(17,    40, 60,     "A mummified claw scratches you.",
+                                                    new AttackAgeComponent(1000, 50)),             30, TimeSpan.Zero
+        },
+        //todo who added TimeSpan to these?
     };
         
     mummy.Blocks = new CreatureBlockCollection()
@@ -97726,7 +98058,7 @@
     mummy.AddGold(1000);
     mummy.AddLoot(new LootPack(
         new LootPackEntry(true, udGems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, undeadBottles,    20)
+        new LootPackEntry(true, undeadBottles,    50)
     ));
     
     return mummy;
@@ -97739,8 +98071,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="ukOverlordWraiths">
+    <entity name="udOverlordWraiths">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -97749,14 +98087,14 @@
         MaxHealth = 150, Health = 150,
         BaseDodge = 12,
     
-        Experience = 1725,
+        Experience = 2725,
         
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
         
     wraith.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(7),
+        new CreatureBasicAttack(7)
     };
     
     wraith.Spells =  new CreatureSpellCollection()
@@ -97778,6 +98116,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="yasnakiKnight">
       <script name="OnSpawn" enabled="true">
@@ -97790,13 +98134,13 @@
         MaxHealth = 230, Health = 230,
         BaseDodge = 14,
                 
-        Experience = 7500,
+        Experience = 10500,
         BasePenetration = ShieldPenetration.Medium,
-                                
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(14, 25, 40)
-        }
+    };
+    
+    knight.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(14, 25, 40)
     };
     
     knight.AddStatus(new NightVisionStatus(knight));
@@ -97807,7 +98151,7 @@
     knight.AddGold(600);
     knight.AddLoot(new LootPack(
         new LootPackEntry(true, yasnakiGems,       20,     gemsPriceMutator), 
-        new LootPackEntry(true, yasnakiBottles,    20)
+        new LootPackEntry(true, yasnakiBottles,    33)
     ));
     
     return knight;
@@ -97820,8 +98164,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="ukLich">
+    <entity name="udLich">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -97831,14 +98181,16 @@
         MaxMana = 19, Mana = 19,
         BaseDodge = 14,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 8000,
+        Experience = 12000,
         VisibilityDistance = 0,
+        MagicProtection = 33,
     };
+    
     lich.AddStatus(new NightVisionStatus(lich));
         
     lich.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(9, 20, 25),
+        new CreatureBasicAttack(9, 20, 25)
     };
     
     lich.Spells = new CreatureSpellCollection()
@@ -97853,7 +98205,7 @@
     lich.AddGold(700);
     lich.AddLoot(new LootPack(
         new LootPackEntry(true, udGems,       20,     gemsPriceMutator), 
-        new LootPackEntry(true, undeadBottles,    15)
+        new LootPackEntry(true, undeadBottles,    50)
     ));
     
     return lich;
@@ -97866,8 +98218,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="ukLurker">
+    <entity name="surfaceLurker">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -97879,23 +98237,27 @@
         BaseDodge = 13,
         BasePenetration = ShieldPenetration.Medium,
         CanSwim = true,
-        
-        Experience = 3000,
+        CanWalk = false,
+        Experience = 7000,
             
         VisibilityDistance = 0,
     };
     
     lurker.Attacks = new CreatureAttackCollection()
     {
-        { new CreatureAttack(11,     15, 20,      "The lurker whips you with a tentacle"),  50 }, 
-        { new CreatureAttack(12,     1, 30,     "The lurker bites you.",
-                                                    new AttackPoisonComponent(15)),          50 },
+        { 
+            new CreatureAttack(11,     15, 20,      "The lurker whips you with a tentacle"),  50 
+        }, 
+        {
+            new CreatureAttack(12,     1, 30,     "The lurker bites you.",
+                                                    new AttackPoisonComponent(15, 50)),           50
+        }
     };
     
     lurker.Blocks = new CreatureBlockCollection
     {
-        { new CreatureBlock(6, "a tentacle") }, 
-        { new CreatureBlock(4, "sharp fangs") }, 
+        new CreatureBlock(6, "a tentacle"),
+        new CreatureBlock(4, "sharp fangs")
     };
     
     lurker.AddGold(2000);
@@ -97915,6 +98277,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="yasnakiMA">
       <script name="OnSpawn" enabled="true">
@@ -97929,20 +98297,20 @@
         MaxHealth = 260, Health = 260,
         BaseDodge = 16,
     
-        Experience = 8550,
+        Experience = 10550,
         BasePenetration = ShieldPenetration.Heavy,
         CanJumpkick = true,
     };
     
     martialartist.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(15, 20, 35), 
+        new CreatureBasicAttack(15, 20, 35)
     };   
     
     martialartist.AddGold(650);
     martialartist.AddLoot(new LootPack(
         new LootPackEntry(true, yasnakiGems,       20,     gemsPriceMutator), 
-        new LootPackEntry(true, yasnakiBottles,    20)
+        new LootPackEntry(true, yasnakiBottles,    33)
     ));
     
     return martialartist;
@@ -97950,6 +98318,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -97969,7 +98343,7 @@
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 7050,
+        Experience = 9550,
                     
         IceProtection = 100,
     };
@@ -97979,7 +98353,7 @@
     
     wizard.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(10, 20, 25),
+        new CreatureBasicAttack(10, 20, 25)
     };
     
     wizard.Spells = new CreatureSpellCollection()
@@ -97998,7 +98372,7 @@
     wizard.AddGold(650);
     wizard.AddLoot(new LootPack(
         new LootPackEntry(true, yasnakiGems,       20,     gemsPriceMutator), 
-        new LootPackEntry(true, yasnakiBottles,    20)
+        new LootPackEntry(true, yasnakiBottles,    33)
     ));
     
     return wizard;
@@ -98006,6 +98380,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -98019,11 +98399,12 @@
     //todo add all yasnaki models
     var thaum = new Humanoid()
     {
+        Name = "Dark.Thaum",
         Body = 48,
         MaxHealth = 130, Health = 130,
         BaseDodge = 11,
     
-        Experience = 6000,
+        Experience = 9500,
         BasePenetration = ShieldPenetration.Light,
         MaxMana = 31, Mana = 31,
             
@@ -98032,13 +98413,13 @@
         
     thaum.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(12, 20, 25),
+        new CreatureBasicAttack(12, 20, 25)
     };
     
     thaum.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CurseSpell>(
-            skillLevel: 7, cost: 10, 
+            skillLevel: 8, cost: 10, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
@@ -98049,7 +98430,7 @@
     thaum.AddGold(750);
     thaum.AddLoot(new LootPack(
         new LootPackEntry(true, yasnakiGems,       20,     gemsPriceMutator), 
-        new LootPackEntry(true, yasnakiBottles,    20)
+        new LootPackEntry(true, yasnakiBottles,    33)
     ));
     
     return thaum;
@@ -98062,8 +98443,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="princessPlaceholder">
+    <entity name="tkprincessPlaceholder">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -98072,6 +98459,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -98087,13 +98480,13 @@
         MaxHealth = 130, Health = 130,
         BaseDodge = 12,
                 
-        Experience = 2700,
+        Experience = 5700,
         BasePenetration = ShieldPenetration.Light,
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(11, 15, 25),
-        }
+    };
     
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(11, 15, 25)
     };
     
     goblin.Wield(new BattleAxe());
@@ -98102,7 +98495,7 @@
     goblin.AddGold(300);
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, drop12gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    15)
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return goblin;
@@ -98110,6 +98503,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -98125,13 +98524,12 @@
         MaxHealth = 130, Health = 130,
         BaseDodge = 10,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 1800,
+        Experience = 4800,    
+    };
     
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(9, 15, 20),
-        }
-    
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(9, 15, 20)
     };
     
     goblin.Wield(new BattleAxe());
@@ -98140,7 +98538,7 @@
     goblin.AddGold(300);
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    20)
+        new LootPackEntry(true, GenericBottles,    25)
     ));
     
     return goblin;
@@ -98148,6 +98546,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -98163,14 +98567,14 @@
         MaxHealth = 80, Health = 80,
         BaseDodge = 11,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 1800,
+        Experience = 4800,
         
         CanFlee = true,
-                
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(9)
-        }
+    };
+    
+    orc.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(9)
     };
     
     orc.Wield(new Longbow());
@@ -98179,7 +98583,7 @@
     orc.AddGold(250);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    20)
+        new LootPackEntry(true, GenericBottles,    25)
     ));
     
     return orc;
@@ -98187,6 +98591,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -98202,12 +98612,13 @@
         MaxHealth = 110, Health = 110,
         BaseDodge = 12,
                 
-        Experience = 2600,
-        BasePenetration = ShieldPenetration.Light,         
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(10, 20, 25)
-        }
+        Experience = 5600,
+        BasePenetration = ShieldPenetration.Light,
+    };
+    
+    troll.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(10, 20, 25)
     };
     
     troll.Wield(new Greatsword());
@@ -98216,7 +98627,7 @@
     troll.AddGold(370);
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    20)
+        new LootPackEntry(true, GenericBottles,    25)
     ));
     
     return troll;
@@ -98224,6 +98635,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -98239,31 +98656,35 @@
         MaxHealth = 80, Health = 80,
         BaseDodge = 11,
                 
-        Experience = 1900,
+        Experience = 4900,
         BasePenetration = ShieldPenetration.Light,
         CanFlee = true,
-                
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(10, 15, 20)
-        }
+    };
+    
+    orc.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(10, 15, 20)
     };
     
     orc.Wield(new Longsword());
     orc.Equip(new LeatherArmor());
             
-    orc.AddGold(300);
-    /*
+    orc.AddGold(350);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, Testgems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, Testbottles,    20)
+        new LootPackEntry(true, tunnelSewerGems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    25)
     ));
-    */
     return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -98279,12 +98700,12 @@
         MaxHealth = 80, Health = 80,
         BaseDodge = 10,
         BasePenetration = ShieldPenetration.Light,       
-        Experience = 1400,
-        
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(10)
-        },
+        Experience = 4400,
+    };
+    
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(10)
     };
     
     goblin.Wield(new Crossbow());
@@ -98293,7 +98714,7 @@
     goblin.AddGold(300);
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    20)
+        new LootPackEntry(true, GenericBottles,    25)
     ));
     
     return goblin;
@@ -98306,8 +98727,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="magicPeacekeepertemplate">
+    <entity name="townPeaceKeeper">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -98326,7 +98753,7 @@
 
     peacekeeper.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6),
+        new CreatureBasicAttack(6)
     };
     
     return peacekeeper;
@@ -98339,14 +98766,20 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="hummingghost">
+    <entity name="tkhummingghost">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var wraith = new Wraith()
     {
-        MaxHealth = 650, Health = 650,
+        MaxHealth = 65, Health = 65,
         BaseDodge = 12,
         IsInvisible = true,
         Experience = 1,
@@ -98359,15 +98792,15 @@
         
     wraith.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(7),
+        new CreatureBasicAttack(7)
     };
     
-    wraith.Spells =  new CreatureSpellCollection()
+    wraith.Spells =  new CreatureSpellCollection(100)
     {
         new CreatureSpell<WhirlwindSpell>(
-            skillLevel: 11,
-            mantra: SpellHelper.GenerateMantra(), instantCast: true)
+            skillLevel: 8), 100, TimeSpan.FromSeconds(12.0)
     };
+    
     wraith.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new HummingbirdSword(),     100)
     ));
@@ -98376,6 +98809,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -98434,7 +98873,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="townshopTemplate" size="1" minimum="1" maximum="1" />
       <location x="2" y="6" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="sEShopkeeper">
@@ -98486,7 +98925,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="townshopTemplate" size="1" minimum="1" maximum="1" />
       <location x="15" y="14" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="lowershop1">
@@ -98538,7 +98977,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="townshopTemplate" size="1" minimum="1" maximum="1" />
       <location x="26" y="16" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="lowershop2">
@@ -98590,7 +99029,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="townshopTemplate" size="1" minimum="1" maximum="1" />
       <location x="28" y="16" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="lowershop3">
@@ -98642,7 +99081,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="townshopTemplate" size="1" minimum="1" maximum="1" />
       <location x="30" y="16" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="lowershop4">
@@ -98694,7 +99133,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="shopkeeperTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="townshopTemplate" size="1" minimum="1" maximum="1" />
       <location x="32" y="16" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="thaumTrainer">
@@ -98722,7 +99161,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="thaumTrainer" size="1" minimum="1" maximum="1" />
+      <entry entity="towntrainerThaum" size="1" minimum="1" maximum="1" />
       <location x="27" y="4" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="weaponTrainer">
@@ -98752,7 +99191,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="weaponTrainerTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="townWepTrainTemp" size="1" minimum="1" maximum="1" />
       <location x="32" y="11" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="wizardTrainer">
@@ -98773,7 +99212,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="wizTrainer" size="1" minimum="1" maximum="1" />
+      <entry entity="townwizTrainer" size="1" minimum="1" maximum="1" />
       <location x="13" y="5" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="maTrainer">
@@ -98803,7 +99242,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="weaponTrainerTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="townWepTrainTemp" size="1" minimum="1" maximum="1" />
       <location x="13" y="3" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="priest">
@@ -98846,7 +99285,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="magicPeacekeepertemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="townPeaceKeeper" size="1" minimum="1" maximum="1" />
       <location x="27" y="7" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="banker">
@@ -98870,7 +99309,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukBanker" size="1" minimum="1" maximum="1" />
+      <entry entity="townukBanker" size="1" minimum="1" maximum="1" />
       <location x="5" y="5" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="tanner">
@@ -98891,7 +99330,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="tannerTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="townTanner" size="1" minimum="1" maximum="1" />
       <location x="15" y="4" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="townrat1">
@@ -98959,7 +99398,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="thiefTrainer" size="1" minimum="1" maximum="1" />
+      <entry entity="towntrainerThief" size="1" minimum="1" maximum="1" />
       <location x="18" y="11" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="secretThiefTrainer">
@@ -98981,7 +99420,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="thiefTrainer" size="1" minimum="1" maximum="1" />
+      <entry entity="towntrainerThief" size="1" minimum="1" maximum="1" />
       <location x="49" y="35" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="googogTEMP">
@@ -99002,7 +99441,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="confessorGhost" size="1" minimum="1" maximum="1" />
+      <entry entity="townconfessorGhost" size="1" minimum="1" maximum="1" />
       <location x="17" y="24" region="5" />
     </spawn>
     <spawn type="LocationSpawner" name="princessTEMP">
@@ -99023,7 +99462,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="confessorGhost" size="1" minimum="1" maximum="1" />
+      <entry entity="townconfessorGhost" size="1" minimum="1" maximum="1" />
       <location x="4" y="8" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="koboldkingTEMP">
@@ -99044,7 +99483,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="confessorGhost" size="1" minimum="1" maximum="1" />
+      <entry entity="townconfessorGhost" size="1" minimum="1" maximum="1" />
       <location x="20" y="5" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="jailtroll1">
@@ -99211,7 +99650,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukOverlordWraiths" size="1" minimum="0" maximum="0" />
+      <entry entity="udOverlordWraiths" size="1" minimum="1" maximum="1" />
       <location x="0" y="5" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="olwraith2">
@@ -99232,6 +99671,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="udOverlordWraiths" size="1" minimum="1" maximum="1" />
       <location x="0" y="7" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="olwraith3">
@@ -99252,7 +99692,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukOverlordWraiths" size="1" minimum="1" maximum="1" />
+      <entry entity="udOverlordWraiths" size="1" minimum="1" maximum="1" />
       <location x="0" y="9" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="olwraith4">
@@ -99273,6 +99713,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="udOverlordWraiths" size="1" minimum="1" maximum="1" />
       <location x="0" y="11" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="olwraith5">
@@ -99293,7 +99734,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukOverlordWraiths" size="1" minimum="1" maximum="1" />
+      <entry entity="udOverlordWraiths" size="1" minimum="1" maximum="1" />
       <location x="5" y="6" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="olwraith7">
@@ -99314,7 +99755,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukOverlordWraiths" size="1" minimum="1" maximum="1" />
+      <entry entity="udOverlordWraiths" size="1" minimum="1" maximum="1" />
       <location x="5" y="8" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="olwraith8">
@@ -99335,12 +99776,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukOverlordWraiths" size="1" minimum="1" maximum="1" />
+      <entry entity="udOverlordWraiths" size="1" minimum="1" maximum="1" />
       <location x="5" y="10" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="hummingbirdghost">
-      <minimumDelay>600</minimumDelay>
-      <maximumDelay>600</maximumDelay>
+      <minimumDelay>3600</minimumDelay>
+      <maximumDelay>3600</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -99356,8 +99797,8 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="hummingghost" size="1" minimum="1" maximum="1" />
-      <location x="7" y="9" region="10" />
+      <entry entity="tkhummingghost" size="1" minimum="1" maximum="1" />
+      <location x="7" y="19" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="balmVendor">
       <minimumDelay>900</minimumDelay>
@@ -99377,7 +99818,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukbalmVendor" size="1" minimum="1" maximum="1" />
+      <entry entity="townukbalmVendor" size="1" minimum="1" maximum="1" />
       <location x="11" y="8" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="recallVendor">
@@ -99397,6 +99838,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="townrecallVendor" size="1" minimum="1" maximum="1" />
       <location x="13" y="14" region="1" />
     </spawn>
     <spawn type="RegionSpawner" name="wyverns">
@@ -99417,10 +99859,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="whiteWyvern" size="3" minimum="10" maximum="15" />
-      <entry entity="greenWyvern" size="3" minimum="10" maximum="15" />
-      <entry entity="blueWyvern" size="3" minimum="10" maximum="15" />
-      <entry entity="redWyvern" size="3" minimum="10" maximum="15" />
+      <entry entity="surfaceWyWhite" size="3" minimum="10" maximum="15" />
+      <entry entity="surfaceWyGreen" size="3" minimum="10" maximum="15" />
+      <entry entity="surfaceWyBlue" size="3" minimum="10" maximum="15" />
+      <entry entity="surfaceWyRed" size="3" minimum="10" maximum="15" />
       <bounds region="1">
         <inclusion left="3" top="2" right="49" bottom="36" />
         <exclusion left="46" top="34" right="49" bottom="36" />
@@ -99445,7 +99887,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukdrake" size="1" minimum="1" maximum="1" />
+      <entry entity="surfacedrake" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="17" top="2" right="49" bottom="33" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -99469,6 +99911,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="surfaceLurker" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="13" top="22" right="24" bottom="24" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -99492,7 +99935,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukLurker" size="1" minimum="1" maximum="1" />
+      <entry entity="surfaceLurker" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="25" top="18" right="30" bottom="20" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -99548,7 +99991,7 @@
       <entry entity="uk100200mino" size="1" minimum="3" maximum="4" />
       <entry entity="uk100200troll" size="3" minimum="5" maximum="6" />
       <entry entity="uk100200archer" size="3" minimum="6" maximum="7" />
-      <entry entity="punchgobbo" size="1" minimum="1" maximum="1" />
+      <entry entity="uk100magob" size="1" minimum="1" maximum="1" />
       <entry entity="uk100goblinmage" size="4" minimum="2" maximum="2" />
       <entry entity="uk100goblin" size="3" minimum="4" maximum="5" />
       <bounds region="4">
@@ -99579,7 +100022,7 @@
       <entry entity="uk100200archer" size="3" minimum="4" maximum="6" />
       <entry entity="uk100goblinmage" size="4" minimum="2" maximum="2" />
       <entry entity="uk100goblin" size="3" minimum="4" maximum="6" />
-      <entry entity="punchgobbo" size="1" minimum="1" maximum="1" />
+      <entry entity="uk100magob" size="1" minimum="1" maximum="1" />
       <bounds region="5">
         <inclusion left="3" top="3" right="13" bottom="25" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -99603,14 +100046,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="uklightningOrc" size="1" minimum="3" maximum="3" />
+      <entry entity="uktunnellightningOrc" size="1" minimum="3" maximum="3" />
       <entry entity="uktunnelorcmage" size="1" minimum="5" maximum="5" />
       <entry entity="uktunneltroll" size="3" minimum="7" maximum="10" />
       <entry entity="uktunnelorc" size="3" minimum="10" maximum="10" />
       <entry entity="uktunnelcursetroll" size="1" minimum="5" maximum="5" />
       <entry entity="uktunnelgobs" size="3" minimum="10" maximum="10" />
       <entry entity="uktunnelgobsentry" size="3" minimum="7" maximum="10" />
-      <entry entity="ukLurker" size="2" minimum="2" maximum="2" />
+      <entry entity="surfaceLurker" size="2" minimum="2" maximum="2" />
       <bounds region="11">
         <inclusion left="3" top="3" right="34" bottom="39" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -99634,7 +100077,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukelitetrollguard" size="1" minimum="7" maximum="7" />
+      <entry entity="tkelitetrollguard" size="1" minimum="7" maximum="7" />
       <bounds region="9">
         <inclusion left="4" top="11" right="13" bottom="20" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -99658,7 +100101,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="uktrollKing" size="1" minimum="1" maximum="1" />
+      <entry entity="tktrollKing" size="1" minimum="1" maximum="1" />
       <bounds region="9">
         <inclusion left="6" top="22" right="11" bottom="25" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -99682,7 +100125,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="uklightningHob" size="1" minimum="2" maximum="2" />
+      <entry entity="uk300lightningHob" size="1" minimum="2" maximum="2" />
       <entry entity="uk300orc" size="3" minimum="3" maximum="4" />
       <entry entity="uk300hob" size="4" minimum="4" maximum="4" />
       <entry entity="uk300rhammertroll" size="3" minimum="3" maximum="3" />
@@ -99715,7 +100158,7 @@
       <entry entity="uk300deathtroll" size="1" minimum="2" maximum="2" />
       <entry entity="uk300hob" size="4" minimum="5" maximum="5" />
       <entry entity="uk300troll" size="3" minimum="4" maximum="4" />
-      <entry entity="uklightningHob" size="1" minimum="2" maximum="2" />
+      <entry entity="uk300lightningHob" size="1" minimum="2" maximum="2" />
       <bounds region="8">
         <inclusion left="29" top="-1" right="53" bottom="3" />
         <inclusion left="38" top="4" right="53" bottom="14" />
@@ -99741,7 +100184,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukelitetrollguard" size="1" minimum="4" maximum="4" />
+      <entry entity="tkelitetrollguard" size="1" minimum="4" maximum="4" />
       <bounds region="10">
         <inclusion left="2" top="1" right="11" bottom="2" />
         <inclusion left="6" top="3" right="7" bottom="10" />
@@ -99766,11 +100209,11 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukSpeedyhobs" size="4" minimum="5" maximum="7" />
+      <entry entity="uk300Speedyhobs" size="4" minimum="5" maximum="7" />
       <entry entity="uk300orc" size="3" minimum="4" maximum="6" />
       <entry entity="uk300troll" size="3" minimum="4" maximum="6" />
       <entry entity="uk300rhammertroll" size="3" minimum="3" maximum="5" />
-      <entry entity="uklightningHob" size="1" minimum="2" maximum="2" />
+      <entry entity="uk300lightningHob" size="1" minimum="2" maximum="2" />
       <entry entity="uk300deathtroll" size="1" minimum="2" maximum="2" />
       <bounds region="12">
         <inclusion left="2" top="3" right="49" bottom="16" />
@@ -99796,7 +100239,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="uk300rhammertroll" size="3" minimum="2" maximum="2" />
-      <entry entity="uklightningHob" size="1" minimum="2" maximum="2" />
+      <entry entity="uk300lightningHob" size="1" minimum="2" maximum="2" />
       <entry entity="uk300hob" size="4" minimum="3" maximum="2" />
       <entry entity="uk300troll" size="3" minimum="2" maximum="2" />
       <entry entity="uk300orc" size="3" minimum="3" maximum="3" />
@@ -99823,7 +100266,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukCouncillors" size="1" minimum="8" maximum="8" />
+      <entry entity="udCouncillors" size="1" minimum="8" maximum="8" />
       <bounds region="14">
         <inclusion left="5" top="2" right="6" bottom="13" />
         <inclusion left="2" top="15" right="9" bottom="17" />
@@ -99848,7 +100291,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukoverlord" size="1" minimum="1" maximum="1" />
+      <entry entity="udoverlord" size="1" minimum="1" maximum="1" />
       <bounds region="15">
         <inclusion left="-1" top="15" right="5" bottom="17" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -99872,7 +100315,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukcarfel" size="1" minimum="1" maximum="1" />
+      <entry entity="yascarfel" size="1" minimum="1" maximum="1" />
       <bounds region="16">
         <inclusion left="17" top="2" right="20" bottom="5" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -99896,7 +100339,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukshelob" size="1" minimum="1" maximum="1" />
+      <entry entity="yasshelob" size="1" minimum="1" maximum="1" />
       <bounds region="16">
         <inclusion left="2" top="5" right="4" bottom="8" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -99948,11 +100391,11 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukBanshee" size="4" minimum="6" maximum="10" />
-      <entry entity="ukGhoul" size="1" minimum="3" maximum="3" />
-      <entry entity="ukSkeleton" size="4" minimum="8" maximum="10" />
-      <entry entity="ukSpectre" size="1" minimum="3" maximum="3" />
-      <entry entity="ukLich" size="1" minimum="2" maximum="2" />
+      <entry entity="udBanshee" size="4" minimum="6" maximum="10" />
+      <entry entity="udGhoul" size="1" minimum="3" maximum="3" />
+      <entry entity="udSkeleton" size="4" minimum="8" maximum="10" />
+      <entry entity="udSpectre" size="1" minimum="3" maximum="3" />
+      <entry entity="udLich" size="1" minimum="2" maximum="2" />
       <bounds region="17">
         <inclusion left="2" top="3" right="37" bottom="22" />
         <exclusion left="11" top="18" right="28" bottom="20" />
@@ -99976,7 +100419,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukorugugra" size="1" minimum="1" maximum="1" />
+      <entry entity="udorugugra" size="1" minimum="1" maximum="1" />
       <bounds region="17">
         <inclusion left="19" top="4" right="20" bottom="13" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -100000,7 +100443,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukswordmaster" size="1" minimum="1" maximum="1" />
+      <entry entity="udswordmaster" size="1" minimum="1" maximum="1" />
       <bounds region="17">
         <inclusion left="15" top="3" right="24" bottom="16" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -100009,7 +100452,7 @@
   </spawns>
   <treasures>
     <treasure name="GenericBottles">
-      <entry weight="20">
+      <entry weight="150">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -100018,7 +100461,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="2">
+      <entry weight="5">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -100027,7 +100470,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="5">
+      <entry weight="20">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -100036,7 +100479,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="2">
+      <entry weight="5">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -100315,7 +100758,7 @@
       </entry>
     </treasure>
     <treasure name="yasnakiBottles">
-      <entry weight="20">
+      <entry weight="70">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -100324,7 +100767,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="5">
+      <entry weight="10">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -100394,6 +100837,26 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new UncutEmerald(4000u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="overlordTreasure">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new SilverDaggerAmulet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StunDeathProtectionBracelet();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>

@@ -1,0 +1,210 @@
+﻿<Window x:Class="Kesmai.WorldForge.ApplicationWindow"
+		
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:local="clr-namespace:Kesmai.WorldForge"
+        xmlns:ui="clr-namespace:Kesmai.WorldForge.UI"
+        xmlns:editor="clr-namespace:Kesmai.WorldForge.Editor"
+        xmlns:documents="clr-namespace:Kesmai.WorldForge.UI.Documents"
+
+        mc:Ignorable="d"
+		
+        Title="WorldForge" Width="800" Height="600" Icon="..\Resources\Icon.ico"
+		WindowState="Maximized" Background="#FFDDDDDD"
+        
+        DataContext="{StaticResource applicationPresenter}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Menu -->
+        <Menu Grid.Row="0"
+              Background="#FFEEEEEE" >
+            <MenuItem Header="File">
+                <MenuItem Header="Create Segment..." Command="{Binding CreateSegmentCommand}" />
+                <MenuItem Header="Open Segment" Command="{Binding OpenSegmentCommand}" />
+                <MenuItem Header="Close Segment"  Command="{Binding CloseSegmentCommand}" />
+                <Separator />
+                <MenuItem Header="Save Segment"  Command="{Binding SaveSegmentCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="../Resources/Save.png" Width="16" Height="16" />
+                    </MenuItem.Icon>
+                    <MenuItem.CommandParameter>
+                        <system:Boolean>false</system:Boolean>
+                    </MenuItem.CommandParameter>
+                </MenuItem>
+                <MenuItem Header="Save Segment as..." Command="{Binding SaveSegmentCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="../Resources/Save.png" Width="16" Height="16" />
+                    </MenuItem.Icon>
+                    <MenuItem.CommandParameter>
+                        <system:Boolean>true</system:Boolean>
+                    </MenuItem.CommandParameter>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="Exit" Command="{Binding ExitApplicationCommand}" />
+            </MenuItem>
+
+            <MenuItem Header="Regions">
+                <MenuItem Header="Create.." Command="{Binding CreateRegionCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="../Resources/Add.png" Width="16" Height="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Delete Region" Command="{Binding DeleteRegionCommand}" 
+                          CommandParameter="{Binding ActiveDocument}">
+                    <MenuItem.Icon>
+                        <Image Source="../Resources/Delete.png" Width="16" Height="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!--<Separator />
+                <MenuItem Header="Shift Region" Command="{Binding ShiftRegionCommand}" 
+                          CommandParameter="{Binding ActiveDocument}">
+                    <MenuItem.Icon>
+                        <Image Source="../Resources/Move.png" Width="16" Height="16" />
+                    </MenuItem.Icon>
+                </MenuItem>-->
+                
+                <Separator Visibility="{x:Static local:Core.DebugOnly}" />
+                <MenuItem Header="Generate Region..." Command="{Binding GenerateRegionCommand}"
+                          Visibility="{x:Static local:Core.DebugOnly}">
+                    <MenuItem.Icon>
+                        <Image Source="../Resources/Gear.png" Width="16" Height="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        
+
+        <ToolBarTray Grid.Row="1" DockPanel.Dock="Top">
+            <!-- Tools -->
+            <ToolBar ItemsSource="{Binding Tools, Source={StaticResource applicationPresenter}}" 
+                     Background="LightBlue" ToolTip="Tools" OverflowMode="Never">
+                <ToolBar.ItemTemplate>
+                    <DataTemplate>
+                        <ToggleButton  Margin="1" Height="32" Width="32" FocusVisualStyle="{x:Null}"
+                                       Command="{Binding SelectToolCommand, Source={StaticResource applicationPresenter}}"
+                                       CommandParameter="{Binding}" IsChecked="{Binding IsActive}">
+                            <ToggleButton.ToolTip>
+                                <TextBlock Text="{Binding Name}" FocusVisualStyle="{x:Null}"/>
+                            </ToggleButton.ToolTip>
+                            <Image Source="{Binding Icon}" FocusVisualStyle="{x:Null}" VerticalAlignment="Center" Height="26" Width="26" />
+                        </ToggleButton>
+                    </DataTemplate>
+                </ToolBar.ItemTemplate>
+            </ToolBar>
+            
+            <!-- Filters -->
+            <ToolBar ItemsSource="{Binding Filters, Source={StaticResource applicationPresenter}}" 
+                     Background="LightYellow" ToolTip="Filters" OverflowMode="Never">
+                <ToolBar.ItemTemplate>
+                    <DataTemplate>
+                        <ToggleButton  Margin="1" Height="32" Width="32" FocusVisualStyle="{x:Null}"
+                                       Command="{Binding SelectFilterCommand, Source={StaticResource applicationPresenter}}"
+                                       CommandParameter="{Binding}" IsChecked="{Binding IsActive}">
+                            <ToggleButton.ToolTip>
+                                <TextBlock Text="{Binding Name}" FocusVisualStyle="{x:Null}"/>
+                            </ToggleButton.ToolTip>
+                            <Image Source="{Binding Icon}" FocusVisualStyle="{x:Null}" VerticalAlignment="Center" Height="26" Width="26" />
+                        </ToggleButton>
+                    </DataTemplate>
+                </ToolBar.ItemTemplate>
+            </ToolBar>
+        </ToolBarTray>
+        
+        <DockingManager x:Name="_dockingManager" Grid.Row="2"
+                        DocumentsSource="{Binding Documents}"
+                        ActiveContent="{Binding ActiveDocument, Mode=TwoWay}">
+
+            <DockingManager.Resources>
+                <DataTemplate DataType="{x:Type documents:SegmentViewModel}">
+                    <documents:SegmentDocument />
+                </DataTemplate>
+                
+                <DataTemplate DataType="{x:Type editor:SegmentRegion}">
+                    <documents:RegionDocument />
+                </DataTemplate>
+       
+                <DataTemplate DataType="{x:Type documents:LocationsViewModel}">
+                    <documents:LocationsDocument />
+                </DataTemplate>
+                
+                <DataTemplate DataType="{x:Type documents:SubregionViewModel}">
+                    <documents:SubregionDocument />
+                </DataTemplate>
+                
+                <DataTemplate DataType="{x:Type documents:EntitiesViewModel}">
+                    <documents:EntitiesDocument />
+                </DataTemplate>
+                
+                <DataTemplate DataType="{x:Type documents:SpawnsViewModel}">
+                    <documents:SpawnsDocument />
+                </DataTemplate>
+                
+                <DataTemplate DataType="{x:Type documents:TreasuresViewModel}">
+                    <documents:TreasuresDocument />
+                </DataTemplate>
+            </DockingManager.Resources>
+            
+            
+            <DockingManager.DocumentHeaderTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Content.Name}" 
+                                   FontWeight="Bold"
+                                   Margin="3" TextTrimming="CharacterEllipsis"/>
+                    </StackPanel>
+                </DataTemplate>
+            </DockingManager.DocumentHeaderTemplate>
+            
+            
+            <LayoutRoot>
+                <LayoutPanel Orientation="Horizontal">
+                    
+                    <!-- Documents -->
+                    <LayoutDocumentPaneGroup CanRepositionItems="False">
+                        <LayoutDocumentPane>
+   
+                        </LayoutDocumentPane>
+                    </LayoutDocumentPaneGroup>
+                    
+                    <LayoutAnchorablePane FloatingWidth="365" DockWidth="365" DockMinWidth="365">
+                        <LayoutAnchorable Title="Components" ContentId="component">
+                                <ui:ComponentsPanel Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" 
+                                                    OpacityMask="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
+                                                    VerticalAlignment="Stretch" MinWidth="365"></ui:ComponentsPanel>
+                            </LayoutAnchorable>
+                    </LayoutAnchorablePane>
+                </LayoutPanel>
+                
+                <!-- Right Pane -->
+                <LayoutRoot.RightSide>
+                    <LayoutAnchorSide>
+                        
+                        
+                    </LayoutAnchorSide>
+                </LayoutRoot.RightSide>
+                
+            </LayoutRoot>
+            
+            <DockingManager.LayoutItemContainerStyle>
+                <Style TargetType="{x:Type LayoutItem}" >
+                    <Setter Property="Title" Value="{Binding Model.Name}" />
+                </Style>
+            </DockingManager.LayoutItemContainerStyle>
+           
+        </DockingManager>
+    </Grid>
+
+    <!-- Input bindings -->
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding SaveSegmentCommand}" />
+    </Window.InputBindings>
+</Window>
