@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.73.1.0">
+<segment name="Kesmai" version="0.72.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -96128,10 +96128,11 @@
         
         Movement = 1,
         
-        Attacks = new CreatureAttackCollection()
-        {
-        {    new CreatureAttack(2), 60 },
-        {    new CreatureAttack(3, 2, 5, "The kobold smashes you with a mace."), 40 }
+    };
+    
+    kobold.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(3)
     };
     
     kobold.Wield(new SteelMace());
@@ -96176,11 +96177,11 @@
                 
         CanFlee = true,
                 
-        Attacks = new CreatureAttackCollection()
-        {
-        {   new CreatureAttack(2), 60 },
-        {   new CreatureAttack(3, 2, 5, "The orc jabs you with a shortsword."), 40 },
-        
+    };
+    
+    orc.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(3)
     };
 
     orc.Wield(new ShortSword());
@@ -96203,10 +96204,9 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="true">
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-   source.Say($"Intruder!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96225,12 +96225,11 @@
         Movement = 2,
                 
         CanFlee = true,
+    };
                 
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(2), 60 },
-            new CreatureBasicAttack(3, "The orc stabs you with a dagger."), 40 }
-        
+    orc.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(3)
     };
     
     orc.Wield(new SteelDagger());
@@ -96275,12 +96274,11 @@
         Experience = 75,
 
         Movement = 1,
+    };
                 
-        Attacks = new CreatureAttackCollection()
-        {
-        {    new CreatureAttack(2), 60 },
-        {    new CreatureAttack(3, 2, 5, "The skeleton pierces you with a rapier."), 40 }
-        
+    skeleton.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(3)
     };
     
     skeleton.Wield(new Rapier());
@@ -96321,11 +96319,11 @@
         Experience = 100,
                 
         Movement = 2,
+    };
 
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(3)
-        }
+    skeleton.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(3)
     };
     
     skeleton.Wield(new Shortbow());
@@ -96371,16 +96369,22 @@
 
     wyvern.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(3,     1, 4,   "The wyvern rakes you with its claws."),        50 },
-        { new CreatureAttack(4,     2, 6,   "The wyvern bites you."),                       30 },
-        { new CreatureAttack(5,     2, 8,   "The wyvern whips you with its tail."),   20 }
+        { 
+            new CreatureAttack(4,     1, 4,   "The wyvern rakes you with its claws."),        50 
+        },
+        {
+            new CreatureAttack(6,     2, 6,   "The wyvern bites you."),                       30
+        },
+        { 
+            new CreatureAttack(6,     2, 8,   "The wyvern rakes whips you with its tail."),   20
+        },
     };
     
     wyvern.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the scales"),
+        new CreatureBlock(6, "scales"),
         new CreatureBlock(3, "a claw"),
-        new CreatureBlock(1, "a tail")
+        new CreatureBlock(1, "a tail"),
     };
             
     wyvern.AddGold(80);
@@ -96420,12 +96424,6 @@
                     
         CanSwim = true,
                     
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(10, 25, 30,
-                new AttackProneComponent(15.0), new AttackStunComponent(15.0)) },
-        },
-                    
         BasePenetration = ShieldPenetration.Medium,
         
         Immunity = CreatureImmunity.Web,
@@ -96436,6 +96434,12 @@
     
     elderTroll.AddStatus(new NightVisionStatus(elderTroll));
     elderTroll.AddStatus(new BreatheWaterStatus(elderTroll));
+                
+    elderTroll.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(10, 25, 30,
+            new AttackProneComponent(15.0), new AttackStunComponent(15.0))
+    };
                 
     elderTroll.Wield(new SpikedClub());
     elderTroll.Equip(new ChainmailArmor());    
@@ -96462,24 +96466,16 @@
       <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    source.SayTo(killer, $"The bloodlands will claim you...{killer.Name.Substring(0, 3)}--");
+    source.SayTo(killer, $"The bloodlands will claim you...{killer.Name}.");
     
     killer.Stun(3);
     killer.Blind(3);
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="true">
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  If (player.Profession == Profession.Wizard)
-{
-  source.Say($"Wizzzaaarrrd!");
-}
-else
-{
-  source.Say($"You'll not escape me!");
-}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96511,10 +96507,9 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="true">
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  source.Say($"Get get your recall rings here! A quick escape when you need it.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96546,10 +96541,9 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="true">
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  source.Say($"Get your balm of healing here! Only 16 gold.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96581,12 +96575,9 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="true">
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
- 
-   source.Say($"Mugwort cures even the deadliest of poisons!");
-
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96617,10 +96608,9 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="true">
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  source.Say($"Deposit your coin with us!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96651,12 +96641,9 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="true">
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
-  source.Say($"Bring your kills to me and I will fashion armor out of it.");
- 
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96690,10 +96677,9 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="true">
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  source.Say($"Welcome to my shop! Just ask me to 'show prices'.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96724,11 +96710,9 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="true">
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
- 
-  source.Say($"Allow me to train your melee skills.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96765,14 +96749,9 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="true">
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  If (player.Profession == Profession.Thaumaturge)
-{
-  source.Say($"Come to me to learn the skills of life and death.");
-}
-
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96806,14 +96785,9 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="true">
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  If (player.Profession == Profession.Wizard)
-{
-  source.Say($"I'll train you and teach you powerful magic, Wizard.");
-}
-
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96848,13 +96822,9 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="true">
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  If (player.Profession == Profession.Thief)
-{
- source.Say(String.Format("Welcome to the guild, {0}.", player.IsFemale ? "sister" : "brother"));
-}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96876,9 +96846,9 @@ else
         Experience = 50,
     };
 
-    peacekeeper.Attacks = new CreatureAttackCollection
+    peacekeeper.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6),
+        new CreatureBasicAttack(6)
     };
     
     return peacekeeper;
@@ -96891,12 +96861,9 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="true">
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
- source.Say($"Never neglect training.");
-
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96919,9 +96886,9 @@ else
         Experience = 50,
     };
 
-    peacekeeper.Attacks = new CreatureAttackCollection
+    peacekeeper.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6),
+        new CreatureBasicAttack(6)
     };
     
     return peacekeeper;
@@ -96934,10 +96901,9 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="true">
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  source.Say($"Be careful. There is evil afoot.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96958,9 +96924,9 @@ else
         Experience = 50,
     };
     
-    peacekeeper.Attacks = new CreatureAttackCollection
+    peacekeeper.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6),
+        new CreatureBasicAttack(6)
     };
     
     return peacekeeper;
@@ -96994,10 +96960,9 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="true">
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
- source.Say($"I only need a single iron ore and ytrill to craft a great weapon.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -97044,14 +97009,18 @@ else
     
     crocodile.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(6,     2, 8,   "The crocodile snaps his massive jaws shut upon you."), 60 },
-        { new CreatureAttack(6,     4, 10,  "The crocodile hits you with its tail."),               40 },
+        {
+            new CreatureAttack(6,     2, 8,   "The crocodile snaps his massive jaws shut upon you."), 60 
+        },
+        { 
+            new CreatureAttack(6,     4, 10,  "The crocodile hits you with its tail."),               40 
+        },
     };
     
     crocodile.Blocks = new CreatureBlockCollection
     {
-        { new CreatureBlock(6, "the tough skin") },
-        { new CreatureBlock(4, "a tail") }
+        new CreatureBlock(6, "the tough skin"),
+        new CreatureBlock(4, "a tail"),
     };
         
     return crocodile;
@@ -97115,10 +97084,9 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="true">
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
- source.Say($"Bork! Bork!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -97144,8 +97112,12 @@ else
     
     shark.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(6,     10, 20,     "The shark bites you."),                60 },
-        { new CreatureAttack(6,     15, 30,     "The shark lashes you with its fin."),  40 }
+        { 
+            new CreatureAttack(6,     10, 20,     "The shark bites you."),                60 
+        },
+        {
+            new CreatureAttack(6,     15, 30,     "The shark lashes you with its fin."),  40 
+        }
     };
     
     shark.Blocks = new CreatureBlockCollection
@@ -97236,12 +97208,11 @@ else
         Experience = 225,
     
         CanFlee = true,
+    };
                 
-        Attacks = new CreatureAttackCollection()
-        {
-        {    new CreatureAttack(3), 60 },
-        {    new CreatureAttack(4, 3, 8, "The goblin strikes you with an axe."), 40 },
-        
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(4)
     };
     
     goblin.Wield(new BattleAxe());
@@ -97286,11 +97257,11 @@ else
         Experience = 225,
         
         CanFlee = true,
+    };
         
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(4)
-        },
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(4)
     };
     
     goblin.Wield(new Shortbow());
@@ -97335,12 +97306,11 @@ else
         Movement = 2,
                 
         CanFlee = true,
+    };
                 
-        Attacks = new CreatureAttackCollection()
-        {
-        {    new CreatureAttack(3), 60 },
-        {    new CreatureAttack(4, 3, 8, "The orc slashes you with a longsword."), 40 },
-        
+    orc.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(4)
     };
     
     orc.Wield(new Longsword());
@@ -97385,11 +97355,11 @@ else
         Experience = 210,
         
         CanFlee = true,
+    };
                 
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(4)
-        }
+    orc.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(4)
     };
     
     orc.Wield(new Crossbow());
@@ -97432,12 +97402,11 @@ else
         Experience = 170,
                 
         Movement = 2,
+    };
                 
-        Attacks = new CreatureAttackCollection()
-        {
-        {    new CreatureAttack(3), 60 },
-        {    new CreatureAttack(4, 3, 8, "The skeleton pierces you with a rapier."), 40 },
-        
+    skeleton.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(4)
     };
     
     skeleton.Wield(new Rapier());
@@ -97484,12 +97453,11 @@ else
         Movement = 2,
                 
         CanFlee = true,
+    };
                 
-        Attacks = new CreatureAttackCollection()
-        {
-        {    new CreatureAttack(4, 4, 10), 50 },
-        {    new CreatureAttack(5, 6, 15, "The troll cleaves you with a greatsword."), 50 },
-        
+    troll.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(5, 3, 11)
     };
     
     troll.Wield(new Greatsword());
@@ -97537,15 +97505,21 @@ else
     
     wyvern.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(4,     2, 6,   "The wyvern rakes you with its claws."),        50 },
-        { new CreatureAttack(6,     3, 8,   "The wyvern bites you."),                       30 },
-        { new CreatureAttack(6,     5, 10,  "The wyvern whips you with its tail."),   20 }
+        { 
+            new CreatureAttack(5,     2, 6,   "The wyvern rakes you with its claws."),        50 
+        },
+        {
+            new CreatureAttack(7,     3, 8,   "The wyvern bites you."),                       30 
+        },
+        { 
+            new CreatureAttack(7,     3, 10,  "The wyvern rakes whips you with its tail."),   20
+        }
     };
     wyvern.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the scales"),
+        new CreatureBlock(6, "scales"),
         new CreatureBlock(3, "a claw"),
-        new CreatureBlock(1, "a tail")
+        new CreatureBlock(1, "a tail"),
     };
             
     wyvern.AddGold(110);
@@ -97590,9 +97564,9 @@ else
     };
     wight.AddStatus(new NightVisionStatus(wight));
         
-    wight.Attacks = new CreatureAttackCollection
+    wight.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6),
+        new CreatureBasicAttack(6)
     };
     
     wight.Spells = new CreatureSpellCollection()
@@ -97637,19 +97611,18 @@ else
     {
         MaxHealth = 21, Health = 21,
         BaseDodge = 11,
+        MaxMana = 13, Mana = 13,
     
         Experience = 210,
     
-        MaxMana = 13, Mana = 13,
-            
         CanFlee = true,
         
         FireProtection = 100,
     };
     
-    orc.Attacks = new CreatureAttackCollection
+    orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(4),
+        new CreatureBasicAttack(4)
     };
     
     orc.Spells = new CreatureSpellCollection()
@@ -97680,10 +97653,9 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="true">
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-   source.Say($"Burn!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -97698,11 +97670,11 @@ return orc;
         BaseDodge = 12,
     
         Experience = 350,
+    };
     
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(5)
-        },
+    enragedTroll.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(5)
     };
     
     enragedTroll.Wield(new Longsword());
@@ -97754,13 +97726,13 @@ return orc;
     
     spider.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(7,     4, 12,      "The spider bites you", 
-                                                new AttackPoisonComponent(5, 50)),  60 }, 
+        new CreatureAttack(7,     4, 12,      "The spider bites you", 
+                                    new AttackPoisonComponent(5, 50))
     };
     
     spider.Blocks = new CreatureBlockCollection
     {
-        { new CreatureBlock(1, "a hairy carapace") }, 
+       new CreatureBlock(1, "a hairy carapace")
     };
     
     spider.AddGold(250);
@@ -97796,12 +97768,11 @@ return orc;
         Movement = 2,
                 
         CanFlee = true,
+    };
                 
-        Attacks = new CreatureAttackCollection()
-        {
-        {    new CreatureAttack(5), 60 },
-        {    new CreatureAttack(6, 8, 12, "The troll cleaves you with a greatsword.") 40 },
-        
+    troll.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(6)
     };
     
     troll.Wield(new Greatsword());
@@ -97842,15 +97813,14 @@ return orc;
         MaxHealth = 42, Health = 42,
         BaseDodge = 12,
                 
-        Experience = 850,
+        Experience = 750,
                 
         Movement = 2,
+    };
     
-        Attacks = new CreatureAttackCollection()
-        {
-        {    new CreatureAttack(5), 60 },
-        {    new CreatureAttack(6, 6, 10, "The hobgoblin slashes you with a longsword."), 40 },
-        
+    hobgoblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(6)
     };
     
     hobgoblin.Wield(new Longsword());
@@ -97894,12 +97864,11 @@ return orc;
         Experience = 575,
         
         CanFlee = true,
+    };
                 
-        Attacks = new CreatureAttackCollection()
-        {
-        {    new CreatureAttack(5), 60 },
-        {    new CreatureAttack(6, 6, 10, "The orc slices you with a katana."), 40 },
-        
+    orc.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(6)
     };
     
     orc.Wield(new Katana());
@@ -97945,11 +97914,11 @@ return orc;
         Experience = 575,
         
         CanFlee = true,
+    };
                 
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(6)
-        }
+    orc.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(6)
     };
     
     orc.Wield(new Crossbow());
@@ -97992,13 +97961,12 @@ return orc;
         MaxHealth = 36, Health = 36,
         BaseDodge = 12,
                 
-        Experience = 750,
+        Experience = 600,
+    };
     
-        Attacks = new CreatureAttackCollection()
-        {
-        {    new CreatureAttack(5), 60 },
-        {    new CreatureAttack(6, 6, 10, "The goblin slashes you with a longsword."), 40 },
-        
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(6)
     };
     
     goblin.Wield(new Longsword());
@@ -98041,12 +98009,12 @@ return orc;
         MaxHealth = 36, Health = 36,
         BaseDodge = 12,
                 
-        Experience = 750,
+        Experience = 600,
+    };
         
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(6)
-        },
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(6)
     };
     
     goblin.Wield(new Longbow());
@@ -98154,14 +98122,17 @@ return orc;
             
     gargoyle.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(5,     4, 8,   "The gargoyle strikes you with its claws."),    60 },
-        { new CreatureAttack(6,     8, 12,  "The gargoyle batters you with its wings."),    40 },
-                                              
+        {
+            new CreatureAttack(6,     4, 8,   "The gargoyle strikes you with its claws."),    60
+        },
+        { 
+            new CreatureAttack(7,     6, 12,  "The gargoyle batters you with its wings."),    40 
+        },
     };
     
     gargoyle.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the stone flesh"),
+        new CreatureBlock(6, "the armor"),
         new CreatureBlock(3, "a claw"),
         new CreatureBlock(1, "a wing"),
     };
@@ -98212,8 +98183,12 @@ return orc;
     
     salamander.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(6,     3, 8,   "The salamander claws at you"),             60 }, 
-        { new CreatureAttack(6,     4, 12,  "The salamander hits you with its tail"),   40 }, 
+        { 
+            new CreatureAttack(6,     3, 8,   "The salamander claws at you"),             60 
+        }, 
+        {
+            new CreatureAttack(6,     4, 12,  "The salamander hits you with its tail"),   40 
+        },
     };
     
     salamander.Blocks = new CreatureBlockCollection
@@ -98223,8 +98198,11 @@ return orc;
         new CreatureBlock(1, "a tail")
     };
     
-    salamander.Spells = new CreatureSpellCollection(50.0);
-    salamander.Spells.Add(new CreatureSpell<FirewallSpell>(6), 100, TimeSpan.FromSeconds(15.0));
+    salamander.Spells = new CreatureSpellCollection(50.0)
+    {
+        { new CreatureSpell<FirewallSpell>(
+            skillLevel: 6), 100, TimeSpan.FromSeconds(15.0) }
+    };
     
     salamander.AddLoot(new LootPack(
         new LootPackEntry(true, dungeon3Bottles,    33), 
@@ -98266,9 +98244,9 @@ return orc;
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
         
-    wraith.Attacks = new CreatureAttackCollection
+    wraith.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(7),
+        new CreatureBasicAttack(7)
     };
     
     wraith.Spells = new CreatureSpellCollection()
@@ -98324,7 +98302,7 @@ return orc;
     };
     wight.AddStatus(new NightVisionStatus(wight));
         
-    wight.Attacks = new CreatureAttackCollection
+    wight.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(7),
     };
@@ -98376,12 +98354,11 @@ return orc;
         Experience = 850,
     
         CanFlee = true,
+    };
     
-        Attacks = new CreatureAttackCollection
-        {
-            new CreatureBasicAttack(6), 60 },
-            new CreatureBasicAttack(7, "The orc slashes you with a longsword."), 40 },
-        
+    orc.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(7)
     };
     
     orc.Wield(new Longsword());
@@ -98393,7 +98370,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
 
         new LootPackEntry(true, (from, container) => new ThrowingHammer(), 16.67)
     ));
@@ -98427,11 +98404,11 @@ return orc;
         Experience = 850,
     
         CanFlee = true,
+    };
     
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureBasicAttack(7) }, 
-        },
+    orc.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(7)
     };
     
     orc.Wield(new Longbow());
@@ -98443,7 +98420,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
 
         new LootPackEntry(true, (from, container) => new Shuriken(), 11.11)
     ));
@@ -98478,11 +98455,11 @@ return orc;
         Experience = 600,
     
         CanFlee = true,
+    };
     
-        Attacks = new CreatureAttackCollection
-        {
-            new CreatureBasicAttack(7), 
-        },
+    orc.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(7)
     };
     
     orc.Wield(new WoodenStaff());
@@ -98504,7 +98481,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.33)
+        new LootPackEntry(true, dungeon3Potions,    0.2)
     ));
     
     return orc;
@@ -98534,11 +98511,11 @@ return orc;
         BaseDodge = 13,
     
         Experience = 1200,
+    };
     
-        Attacks = new CreatureAttackCollection
-        {
-            { new CreatureAttack(7),  60 },
-            { new CreatureAttack(8, 7, 15,  "The troll cleaves you with a greatsword."),   40 },
+    troll.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(8)
     };
     
     troll.Wield(new Greatsword());
@@ -98550,7 +98527,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.33)
+        new LootPackEntry(true, dungeon3Potions,    0.2)
     ));
     
     return troll;
@@ -98580,12 +98557,11 @@ return orc;
         BaseDodge = 13,
     
         Experience = 950,
+    };
         
-        Attacks = new CreatureAttackCollection
-        {
-            new CreatureBasicAttack(7), 60 },
-            new CreatureBasicAttack(8, "The hobgoblin slashes you with a longsword."), 40 },
-        
+    hobgoblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(8)
     };
     
     hobgoblin.Wield(new Longsword());
@@ -98597,7 +98573,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.33)
+        new LootPackEntry(true, dungeon3Potions,    0.2)
     ));
     
     return hobgoblin;
@@ -98632,8 +98608,12 @@ return orc;
     
     gargoyle.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(6,     6, 12,  "The gargoyle strikes you with its claws"),     60 }, 
-        { new CreatureAttack(8,     10, 20, "The gargoyle batters you with its wings"),     40 }, 
+        {
+            new CreatureAttack(7,     6, 12,  "The gargoyle strikes you with its claws"),     60 
+        }, 
+        {   
+            new CreatureAttack(8,     10, 20, "The gargoyle batters you with its wings"),     40 
+        }, 
     };
 
     gargoyle.Blocks = new CreatureBlockCollection
@@ -98649,7 +98629,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         
         new LootPackEntry(true, (from, container) => new SilverDagger(), 7.14)
     ));
@@ -98689,8 +98669,12 @@ return orc;
     
     salamander.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(8,     6, 12,  "The salamander claws at you"),             60 },
-        { new CreatureAttack(8,     7, 15,  "The salamander hits you with its tail"),   40 },
+        { 
+            new CreatureAttack(8,     6, 12,  "The salamander claws at you"),             60 
+        },
+        {
+            new CreatureAttack(8,     7, 15,  "The salamander hits you with its tail"),   40 
+        },
     };
     
     salamander.Blocks = new CreatureBlockCollection
@@ -98700,14 +98684,18 @@ return orc;
         new CreatureBlock(1, "a tail")
     };
     
-    salamander.Spells = new CreatureSpellCollection(50.0);
-    salamander.Spells.Add(new CreatureSpell<FirewallSpell>(8), 100, TimeSpan.FromSeconds(15.0));
+    salamander.Spells = new CreatureSpellCollection(50.0)
+    {
+        { new CreatureSpell<FirewallSpell>(
+            skillLevel: 8), 100, TimeSpan.FromSeconds(15.0) }
+    };
+
     salamander.AddGold(500);
     salamander.AddLoot(new LootPack(
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.6), 
         new LootPackEntry(true, dungeon4Rings,      0.6), 
-        new LootPackEntry(true, dungeon3Potions,    0.33),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         
         new LootPackEntry(true, (from, container) => new FieryRuby(1200u), 100.0)
     ));
@@ -98745,7 +98733,7 @@ return orc;
         
     wraith.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(8),
+        new CreatureBasicAttack(8)
     };
     
     wraith.Spells = new CreatureSpellCollection()
@@ -98766,7 +98754,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6)
     ));
     
@@ -98803,9 +98791,9 @@ return orc;
     };
     spectre.AddStatus(new NightVisionStatus(spectre));
     
-    spectre.Attacks = new CreatureAttackCollection
+    spectre.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(8),
+        new CreatureBasicAttack(8)
     };
     
     spectre.Spells = new CreatureSpellCollection()
@@ -98826,7 +98814,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6)
     ));
     
@@ -98865,15 +98853,19 @@ return orc;
     
     ghoul.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(6,     6, 12,      "The ghoul scratches you with its claws"),  70 }, 
-        { new CreatureAttack(8,     10, 18,     "You've been bitten by the ghoul",
-                                                    new AttackPoisonComponent(7)),          30 },
+        { 
+            new CreatureAttack(7,     6, 12,      "The ghoul scratches you with its claws"),  70 
+        }, 
+        { 
+            new CreatureAttack(8,     10, 18,     "You've been bitten by the ghoul",
+                                                    new AttackPoisonComponent(7)),            30
+        },
     };
     
     ghoul.Blocks = new CreatureBlockCollection
     {
-        { new CreatureBlock(6, "decaying flesh") }, 
-        { new CreatureBlock(4, "a claw") }, 
+        new CreatureBlock(6, "decaying flesh"), 
+        new CreatureBlock(4, "a claw"), 
     };
     
     ghoul.AddGold(950);
@@ -98882,7 +98874,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.33)
+        new LootPackEntry(true, dungeon3Potions,    0.2)
     ));
     
     return ghoul;
@@ -98921,10 +98913,16 @@ return orc;
     
     minotaur.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(7,     10, 22,      "The minotaur hits with a staff"),          60 }, 
-        { new CreatureAttack(8,     15, 25,     "You've been gored by the minotaur",
-                                                    new AttackStunComponent(10.0)),         30 }, 
-        { new CreatureAttack(9,     18, 28,     "You've been trampled by the minotaur"),    10 }, 
+        { 
+            new CreatureAttack(9,     8, 22,      "The minotaur hits with a staff"),          60 
+        }, 
+        {
+            new CreatureAttack(9,     13, 25,     "You've been gored by the minotaur",
+                                                    new AttackStunComponent(10.0)),           30
+        }, 
+        {
+            new CreatureAttack(9,     16, 28,     "You've been trampled by the minotaur"),    10 
+        }, 
     };
     
     minotaur.Blocks = new CreatureBlockCollection
@@ -98941,9 +98939,10 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    50),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6),
-        new LootPackEntry(true, (from, container) => new SteelGauntlets(), 6.67)
+        new LootPackEntry(true, (from, container) => new SteelGauntlets(), 6.67),
+        new LootPackEntry(true, (from, container) => new IronRod(), 6.67)
     ));
     
     return minotaur;
@@ -98984,10 +98983,9 @@ return orc;
         CanSwim = true,
     };
     
-    fighter.Attacks = new CreatureAttackCollection
+    fighter.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(7), 60 },
-        new CreatureBasicAttack(8, "The warrior slashes you with great precision."), 40 },
+        new CreatureBasicAttack(8)
     };
     
     fighter.Wield(new SteelLongsword());
@@ -98999,7 +98997,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         
         new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 10.0)
     ));
@@ -99042,9 +99040,9 @@ return orc;
         CanSwim = true,
     };
     
-    fighter.Attacks = new CreatureAttackCollection
+    fighter.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(8), 
+        new CreatureBasicAttack(8)
     };
     
     fighter.Wield(new FineCrossbow());
@@ -99056,7 +99054,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         
         new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 10.0)
     ));
@@ -99100,13 +99098,9 @@ return orc;
         IceProtection = 100,
     };
     
-    wizard.Wield(new BlackStaff());
-    wizard.Wield(new WoodenShield());
-    wizard.Equip(new LeatherArmor());
-    
-    wizard.Attacks = new CreatureAttackCollection
+    wizard.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(8),
+        new CreatureBasicAttack(8)
     };
     
     wizard.Spells = new CreatureSpellCollection
@@ -99119,13 +99113,17 @@ return orc;
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
+    wizard.Wield(new BlackStaff());
+    wizard.Wield(new WoodenShield());
+    wizard.Equip(new LeatherArmor());
+    
     wizard.AddGold(650);
     wizard.AddLoot(new LootPack(
         new LootPackEntry(true, dungeon4Gems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6),
         new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    10.0),
         new LootPackEntry(true, (from, container) => new RedRunesRobe(),        10.0)
@@ -99168,13 +99166,9 @@ return orc;
         CanSwim = true,
     };
     
-    thaum.Wield(new WoodenFlail());
-    thaum.Wield(new WoodenShield());
-    thaum.Equip(new LeatherArmor());
-    
-    thaum.Attacks = new CreatureAttackCollection
+    thaum.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(8),
+        new CreatureBasicAttack(8)
     };
     
     thaum.Spells = new CreatureSpellCollection()
@@ -99190,13 +99184,18 @@ return orc;
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
+    
+    thaum.Wield(new WoodenFlail());
+    thaum.Wield(new WoodenShield());
+    thaum.Equip(new LeatherArmor());
+        
     thaum.AddGold(650);
     thaum.AddLoot(new LootPack(
         new LootPackEntry(true, dungeon4Gems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6),
         new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    10.0),
         new LootPackEntry(true, (from, container) => new RedRunesRobe(),        10.0)
@@ -99233,8 +99232,12 @@ return orc;
     
     boar.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(3,     1, 5,   "You have been gored by the boar."),    60 }, 
-        { new CreatureAttack(4,     2, 6,  "The boar tramples you."),              40 }, 
+        { 
+            new CreatureAttack(5,     1, 5,   "You have been gored by the boar."),    60 
+        }, 
+        {
+            new CreatureAttack(6,     2, 6,  "The boar tramples you."),               40 
+        }, 
     };
 
     boar.Blocks = new CreatureBlockCollection
@@ -99284,14 +99287,20 @@ return orc;
     
     wolf.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(4,     1, 4,   "The wolf rakes you with its claws."),  50 }, 
-        { new CreatureAttack(5,     2, 5,  "The wolf sinks its teeth into you."),  30 }, 
-        { new CreatureAttack(6,     3, 6,  "The wolf lunges at you."),             20 }, 
+        { 
+            new CreatureAttack(5,     1, 4,   "The wolf rakes you with its claws."), 50 
+        }, 
+        {
+            new CreatureAttack(7,     2, 5,  "The wolf sinks its teeth into you."),  30 
+        }, 
+        {
+            new CreatureAttack(7,     3, 6,  "The wolf lunges at you."),             20 
+        }, 
     };
         
     wolf.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the thick hide"),
+        new CreatureBlock(6, "thick hide"),
         new CreatureBlock(3, "a paw"),
     };
         
@@ -99338,7 +99347,7 @@ return orc;
     bee.Attacks = new CreatureAttackCollection
     {
         new CreatureAttack(5,   1, 2,   "You have been stung by a bee.", 
-                                            new AttackPoisonComponent(3)), 
+                                            new AttackPoisonComponent(3))
     };
         
     bee.Blocks = new CreatureBlockCollection
@@ -99384,14 +99393,20 @@ return orc;
         
     bear.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(4,     6, 14,  "The bear slashes you with its claws."),        50 },
-        { new CreatureAttack(5,     8, 16,  "You've been mauled by the bear."),             40 },
-        { new CreatureAttack(6,     10, 20, "The bear crushes you within its embrace."),    10 }
+        { 
+            new CreatureAttack(6,     6, 14,  "The bear slashes you with its claws."),        50 
+        },
+        {
+            new CreatureAttack(6,     8, 16,  "You've been mauled by the bear."),             40 
+        },
+        {
+            new CreatureAttack(7,     10, 20, "The bear crushes you within its embrace."),    10 
+        }
     };
         
     bear.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the tough hide"),
+        new CreatureBlock(6, "tough hide"),
         new CreatureBlock(4, "a claw"),
     };
         
@@ -99437,9 +99452,9 @@ return orc;
         CanFlee = true,
     };
     
-    orc.Attacks = new CreatureAttackCollection
+    orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(4, 1, 5),
+        new CreatureBasicAttack(5, 1, 5)
     };
     
     orc.Wield(new Longsword());
@@ -99486,9 +99501,9 @@ return orc;
         CanFlee = true,
     };
     
-    orc.Attacks = new CreatureAttackCollection
+    orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(3),
+        new CreatureBasicAttack(3)
     };
     
     orc.Wield(new Crossbow());
@@ -99536,9 +99551,9 @@ return orc;
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
         
-    wraith.Attacks = new CreatureAttackCollection
+    wraith.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(7),
+        new CreatureBasicAttack(7)
     };
     
     wraith.Spells = new CreatureSpellCollection()
@@ -99594,9 +99609,9 @@ return orc;
     };
     wight.AddStatus(new NightVisionStatus(wight));
         
-    wight.Attacks = new CreatureAttackCollection
+    wight.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6),
+        new CreatureBasicAttack(6)
     };
     
     wight.Spells = new CreatureSpellCollection()
@@ -99646,9 +99661,9 @@ return orc;
         Experience = 700,
     };
     
-    centaur.Attacks = new CreatureAttackCollection
+    centaur.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6),
+        new CreatureBasicAttack(6)
     };
         
     centaur.Wield(new Crossbow());
@@ -99696,10 +99711,16 @@ return orc;
         
     griffin.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(8,     8, 16,      "The griffin tears your flesh with its beak."),     30 },
-        { new CreatureAttack(8,     10, 25,     "The griffin buries its talons into you."),         30 },
-        { new CreatureAttack(9,     20, 35,     "The griffin pummels you with its wings.", 
-                                                    new AttackStunComponent(15.0)),                 40 }
+        {
+            new CreatureAttack(8,     8, 16,      "The griffin tears your flesh with its beak."),     30 
+        },
+        {
+            new CreatureAttack(8,     10, 25,     "The griffin buries its talons into you."),         30 
+        },
+        {
+            new CreatureAttack(9,     20, 35,     "The griffin pummels you with its wings.", 
+                                                    new AttackStunComponent(15.0)),                   40
+        }
     };
     
     griffin.Blocks = new CreatureBlockCollection
@@ -99738,7 +99759,6 @@ return orc;
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    // TODO: Hide Detection 20
     var ydnac = new Humanoid()
     {
         Name = "Ydnac", Alignment = Alignment.Evil,
@@ -99746,31 +99766,29 @@ return orc;
     
         MaxHealth = 300, Health = 300,
         BaseDodge = 15,
+        MaxMana = 35, Mana = 35,
     
         Experience = 5000,
         
         BasePenetration = ShieldPenetration.Heavy,
-    
-        MaxMana = 35, Mana = 35,
     
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
         Weakness = CreatureWeakness.BlueGlowing,
     
         CanSwim = true,
-        HideDetection = 18,
+        
         FireProtection = 100,
         IceProtection = 100,
     
         StunResistance = 20,
+        
+        HideDetection = 20,
     };
     ydnac.AddStatus(new NightVisionStatus(ydnac));
     ydnac.AddStatus(new BreatheWaterStatus(ydnac));
     
-    ydnac.Wield(new BlackStaff());
-    ydnac.Equip(new LeatherArmor());
-    
-    ydnac.Attacks = new CreatureAttackCollection
+    ydnac.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(12)
     };
@@ -99788,6 +99806,9 @@ return orc;
                 mantra: SpellHelper.GenerateMantra(), instantCast: false),      2
         }
     };
+    
+    ydnac.Wield(new BlackStaff());
+    ydnac.Equip(new LeatherArmor());
     
     ydnac.AddGold(3000);
     ydnac.AddLoot(new LootPack(
@@ -99841,13 +99862,13 @@ return orc;
     abesh.AddStatus(new NightVisionStatus(abesh));
     abesh.AddStatus(new BreatheWaterStatus(abesh));
     
-    abesh.Wield(new Longsword());
-    abesh.Equip(new PlatemailArmor());
-    
-    abesh.Attacks = new CreatureAttackCollection
+    abesh.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(7)
     };
+    
+    abesh.Wield(new Longsword());
+    abesh.Equip(new PlatemailArmor());
     
     abesh.AddGold(1000);
     abesh.AddLoot(new LootPack(
@@ -99891,10 +99912,13 @@ return orc;
     
     ghoul.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(9,     13, 18,     "The ghoul scratches you with its claws"),      70 }, 
-        { new CreatureAttack(10,    20, 30,     "You've been bitten by the ghoul",
-                                                    new AttackPoisonComponent(12)),             30 },
-                                                    // TODO: Attack poison chance. 50%
+        { 
+            new CreatureAttack(9,     13, 18,     "The ghoul scratches you with its claws"),        70 
+        },
+        {
+            new CreatureAttack(10,    20, 30,     "You've been bitten by the ghoul",
+                                                    new AttackPoisonComponent(12, 50)),             30
+        },
     };
         
     ghoul.Blocks = new CreatureBlockCollection
@@ -99907,7 +99931,7 @@ return orc;
     ghoul.AddLoot(new LootPack(
         new LootPackEntry(true, dungeon4Gems,       50.0,   gemsPriceMutator), 
         new LootPackEntry(true, dungeon4Bottles,    50.0),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6),
         new LootPackEntry(true, (from, container) => new ReturningHammer(),     33.33)
     ));
@@ -99946,11 +99970,9 @@ return orc;
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
     
-    wraith.Wield(new BlackStaff());
-    
     wraith.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(8),
+        new CreatureBasicAttack(8)
     };
     
     wraith.Spells = new CreatureSpellCollection()
@@ -99963,13 +99985,15 @@ return orc;
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
+    wraith.Wield(new BlackStaff());
+    
     wraith.AddGold(500);
     wraith.AddLoot(new LootPack(
         new LootPackEntry(true, dungeon4Gems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6)
     ));
     
@@ -100017,8 +100041,12 @@ return orc;
     
     piranha.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(8,     3, 6,   "The piranha swarm upon you"),      70 }, 
-        { new CreatureAttack(9,     5, 10,  "The piranha shred your flesh"),            30 }, 
+        { 
+            new CreatureAttack(8,     3, 6,   "The piranha swarm upon you"),      70 
+        }, 
+        {
+            new CreatureAttack(9,     5, 10,  "The piranha bite you"),            30 
+        },
     };
         
     piranha.Blocks = new CreatureBlockCollection
@@ -100091,14 +100119,15 @@ return orc;
     
     dragon.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the dragon scales"),
+        new CreatureBlock(6, "hard scales"),
         new CreatureBlock(4, "a tail"),
-        new CreatureBlock(3, "a wing"),
+        new CreatureBlock(3, "a wing")
     };
         
     dragon.Spells = new CreatureSpellCollection(40.0)
     {
-        new CreatureSpell<DragonBreathFireSpell>(9),
+        new CreatureSpell<DragonBreathFireSpell>(
+            skillLevel: 9)
     };
     
     //todo: add the +4 shining silver longsword in her loot chance (the purple one from OG). Add the binding "Agate gem" assuming the agate I added isn't it
@@ -100139,17 +100168,9 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="true">
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-         If (player.Profession == Profession.Knight)
-{
-  source.Say($"Did Cudyl send you? The gem is mine!");
-}
-else
-{
-  source.Say($"Ahhh. Another adventurer has come to perish.");
-} 
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -100166,11 +100187,12 @@ else
         Experience = 525,
 
         Movement = 2,
-                
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(6)
-        },
+
+    };
+    
+    skeleton.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(6)
     };
     
     skeleton.Wield(new Rapier());
@@ -100181,7 +100203,7 @@ else
         new LootPackEntry(true, dungeon3Bottles,    16),
         new LootPackEntry(true, dungeon3Treasure,   2.5),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.25)
+        new LootPackEntry(true, dungeon3Potions,    0.2)
     ));
     
     return skeleton;
@@ -100213,11 +100235,11 @@ else
         Experience = 485,
                 
         Movement = 2,
-
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(6)
-        }
+    };
+    
+    skeleton.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(6)
     };
     
     skeleton.Wield(new Shortbow());
@@ -100228,7 +100250,7 @@ else
         new LootPackEntry(true, dungeon3Bottles,    25),
         new LootPackEntry(true, dungeon3Treasure,   2.5),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.25)
+        new LootPackEntry(true, dungeon3Potions,    0.2)
     ));
     
     return skeleton;;
@@ -100266,14 +100288,18 @@ else
     
     mummy.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(7,     6, 12,      "The mummy scratches you with its claws"),  70 }, 
-        { new CreatureAttack(8,     10, 18,     "You've been bitten by the mummy"), 30 },
+        { 
+            new CreatureAttack(7,     6, 12,      "The mummy scratches you with its claws"),  70 
+        }, 
+        {
+            new CreatureAttack(8,     10, 18,     "You've been bitten by the mummy"),         30 
+        },
     };
     
     mummy.Blocks = new CreatureBlockCollection
     {
-        { new CreatureBlock(6, "the armor") }, 
-        { new CreatureBlock(4, "a decaying limb") }, 
+        new CreatureBlock(6, "the armor"), 
+        new CreatureBlock(4, "a decaying limb"),
     };
     
     mummy.AddGold(350);
@@ -100282,7 +100308,7 @@ else
         new LootPackEntry(true, dungeon4Bottles,    20),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.33)
+        new LootPackEntry(true, dungeon3Potions,    0.2)
     ));
     
     return mummy;
@@ -100343,19 +100369,7 @@ else
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  If (player.Profession == Profession.Thief)
-{
-  source.Say($"I've got my eye on you, thief.");
-}
-else
-If (player.Profession == Profession.Knight)
-{
- source.Say(String.Format("Good day, {0}.", player.IsFemale ? "my lady" : "my lord"));
-}
-else
-{
-  source.Say($"I'm the law around here.");
-} 
+    source.Say($"I'm the law around here.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -100373,8 +100387,6 @@ else
     
         Movement = 1,
         
-        CanCharge = true,
-        
         VisibilityDistance = 0,
         RangePerception = 0,
         
@@ -100389,8 +100401,8 @@ else
     
     piranhaBL.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(10,     5, 9,   "The piranha swarm upon you."),      70 }, 
-        { new CreatureAttack(13,     7, 14,  "The piranha shred your flesh."),            30 }, 
+        { new CreatureAttack(10,     5, 9,   "The piranha swarm upon you"),      70 }, 
+        { new CreatureAttack(13,     7, 14,  "The piranha bite you"),            30 }, 
     };
         
     piranhaBL.Blocks = new CreatureBlockCollection
@@ -100406,12 +100418,6 @@ else
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -100954,7 +100960,7 @@ else
         foreach (var skill in Skill.Weapons)
             neela.SetTraining(skill, 0, 4);
 
-        neela.SetTraining(Skill.Hand, 0, 9);
+        neela.SetTraining(Skill.Hand, 0, 10);
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -100983,7 +100989,7 @@ else
         foreach (var skill in Skill.Weapons)
             phong.SetTraining(skill, 0, 4);
 
-        phong.SetTraining(Skill.Hand, 10, 15);
+        phong.SetTraining(Skill.Hand, 8, 15);
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -101893,13 +101899,15 @@ else
         <block><![CDATA[]]></block>
       </script>
       <entry entity="ydnacSkelWar" size="3" minimum="1" maximum="3" />
-      <entry entity="ydnacSkelArc" size="2" minimum="1" maximum="3" />
-      <entry entity="dungeon3Wraith" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon3Wight" size="1" minimum="1" maximum="2" />
+      <entry entity="ydnacSkelArc" size="2" minimum="1" maximum="2" />
+      <entry entity="dungeon3Wraith" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon3Wight" size="1" minimum="1" maximum="1" />
       <entry entity="dungeon4Spectre" size="1" minimum="1" maximum="1" />
       <entry entity="dungeon4Thaum" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon4Wizard" size="1" minimum="1" maximum="1" />
       <bounds region="4">
-        <inclusion left="0" top="0" right="0" bottom="0" />
+        <inclusion left="2" top="7" right="9" bottom="12" />
+        <inclusion left="2" top="14" right="13" bottom="16" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -101921,12 +101929,64 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="surfaceWraith" size="1" minimum="1" maximum="1" />
-      <entry entity="surfaceWight" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon4Wizard" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon4Thaum" size="1" minimum="1" maximum="1" />
       <entry entity="dungeon4MeleeFighter" size="1" minimum="2" maximum="2" />
-      <entry entity="dungeon4RangedFighter" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon4RangedFighter" size="1" minimum="1" maximum="2" />
       <bounds region="3">
-        <inclusion left="0" top="0" right="0" bottom="0" />
+        <inclusion left="9" top="2" right="11" bottom="7" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Ydnac -1 Blood Room">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <maximum>10</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="ydnacMummy" size="1" minimum="3" maximum="5" />
+      <entry entity="dungeon4Thaum" size="1" minimum="1" maximum="1" />
+      <entry entity="ydnacSkelWar" size="3" minimum="1" maximum="2" />
+      <entry entity="ydnacSkelArc" size="2" minimum="1" maximum="2" />
+      <bounds region="4">
+        <inclusion left="15" top="6" right="23" bottom="18" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Ydnac Secret Right Side">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="ydnacSkelWar" size="3" minimum="1" maximum="1" />
+      <entry entity="dungeon4Spectre" size="1" minimum="1" maximum="1" />
+      <bounds region="3">
+        <inclusion left="13" top="2" right="16" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
