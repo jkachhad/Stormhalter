@@ -247,12 +247,11 @@ namespace Kesmai.WorldForge.Editor
 			//is there a better way to do this?
 			var wallComponent = tile.GetComponents<WallComponent>();
 			var floorComponent = tile.GetComponents<FloorComponent>();
-			var waterComponent = tile.GetComponents<WaterComponent>();
-			var iceComponent = tile.GetComponents<IceComponent>();
 			var obstructionComponent = tile.GetComponents<ObstructionComponent>();
 			var counterComponent = tile.GetComponents<CounterComponent>();
 			var altarComponent = tile.GetComponents<AltarComponent>();
-						if (!floorComponent.Any() && !waterComponent.Any() && !iceComponent.Any() && !wallComponent.Any(wall => wall.IsIndestructible) && !obstructionComponent.Any() && !counterComponent.Any() && !altarComponent.Any())
+			
+			if (!floorComponent.Any() && !wallComponent.Any(wall => wall.IsIndestructible) && !obstructionComponent.Any() && !counterComponent.Any() && !altarComponent.Any())
 				render.Color = Color.Red; // statics that are walkable without floors to go along with them.
 
 			if (render.Color.Equals(Color.Black))
@@ -269,21 +268,20 @@ namespace Kesmai.WorldForge.Editor
 
 		public override ComponentRender TransformRender(SegmentTile tile, TerrainComponent component, ComponentRender render)
 		{
+			var floorComponents = tile.GetComponents<FloorComponent>();
+			
 			if (component is WallComponent wall && wall.IsIndestructible)
 			{
-				var floorComponents = tile.GetComponents<FloorComponent>();
-				var waterComponents = tile.GetComponents<WaterComponent>();
-				var iceComponents = tile.GetComponents<IceComponent>();
-				if (floorComponents.Any() || waterComponents.Any() || iceComponents.Any()) { render.Color = Color.Yellow; }
-				else { render.Color = Color.Red; }
+				if (floorComponents.Any())
+					render.Color = Color.Yellow;
+				else
+					render.Color = Color.Red;
 			}
 			else
             {
-				var floorComponents = tile.GetComponents<FloorComponent>();
-				var waterComponents = tile.GetComponents<WaterComponent>();
-				var iceComponents = tile.GetComponents<IceComponent>();
-				if (!(floorComponents.Any() || waterComponents.Any() || iceComponents.Any())) { render.Color = Color.Green; }
-			}
+	            if (!floorComponents.Any())
+		            render.Color = Color.Green;
+            }
 			
 			return render;
 		}
