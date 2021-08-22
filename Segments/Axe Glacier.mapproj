@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.71.0.0">
+<segment name="Axe Glacier" version="0.72.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -15804,7 +15804,7 @@
         <component type="DoorComponent">
           <openId>74</openId>
           <closedId>62</closedId>
-          <secretId>25</secretId>
+          <secretId>145</secretId>
           <destroyedId>80</destroyedId>
           <isSecret>true</isSecret>
         </component>
@@ -17024,7 +17024,7 @@
         <component type="DoorComponent">
           <openId>75</openId>
           <closedId>63</closedId>
-          <secretId>26</secretId>
+          <secretId>146</secretId>
           <destroyedId>81</destroyedId>
           <isSecret>true</isSecret>
         </component>
@@ -18337,6 +18337,15 @@
         <component type="FloorComponent">
           <ground>175</ground>
         </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>22</destinationX>
+          <destinationY>22</destinationY>
+          <destinationRegion>6</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+        </component>
       </tile>
       <tile x="21" y="21">
         <component type="StaticComponent">
@@ -18722,7 +18731,7 @@
         <component type="DoorComponent">
           <openId>75</openId>
           <closedId>63</closedId>
-          <secretId>26</secretId>
+          <secretId>146</secretId>
           <destroyedId>81</destroyedId>
           <isSecret>true</isSecret>
         </component>
@@ -106884,7 +106893,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="axewepTrainTemp" size="1" minimum="1" maximum="1" />
-      <location x="4" y="13" region="15" />
+      <location x="10" y="22" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="lawfulGryphon">
       <minimumDelay>540</minimumDelay>
@@ -107044,6 +107053,27 @@
       </script>
       <entry entity="axeSilvermoon" size="1" minimum="1" maximum="1" />
       <location x="27" y="10" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="lockpickRecallVendor">
+      <minimumDelay>10800</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="axerecallVendor" size="1" minimum="1" maximum="1" />
+      <location x="3" y="11" region="15" />
     </spawn>
     <spawn type="RegionSpawner" name="Surface Dungeon">
       <minimumDelay>600</minimumDelay>
