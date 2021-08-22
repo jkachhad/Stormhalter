@@ -88240,7 +88240,7 @@
         { new CreatureAttack(12,     1, 30,     "The lurker bites you.",
                                                     new AttackPoisonComponent(15)),          50 },
     };
-    
+    lurker.AddStatus(new BreatheWaterStatus(lurker));
     lurker.Blocks = new CreatureBlockCollection
     {
         { new CreatureBlock(6, "a tentacle") }, 
