@@ -103108,7 +103108,6 @@
         
         Experience = 1700,
     };
-    wraith.AddStatus(new NightVisionStatus(wraith));
         
     wraith.Attacks = new CreatureAttackCollection
     {
@@ -103823,7 +103822,6 @@
         
         Experience = 2600,
     };
-    wraith.AddStatus(new NightVisionStatus(wraith));
         
     wraith.Attacks = new CreatureAttackCollection
     {
@@ -104176,8 +104174,6 @@
         FireProtection = 50,
     };
     
-    rockworm.AddStatus(new NightVisionStatus(rockworm));
-    
     rockworm.Attacks = new CreatureAttackCollection
     {
         { 
@@ -104414,7 +104410,7 @@
         
     giant.AddGold(3000);
     giant.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(5000u),    100, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new ReturningHammer(),        100),
         new LootPackEntry(true, (from, container) => new GrizzlyJacket(),        100),
         new LootPackEntry(true, (from, container) => new DragonScaleArmor(),        100),
@@ -105067,8 +105063,6 @@
         
         Experience = 4500,
     };
-    
-    wraith.AddStatus(new NightVisionStatus(wraith));
         
     wraith.Attacks = new CreatureAttackCollection
     {
@@ -105176,9 +105170,7 @@
         BasePenetration = ShieldPenetration.VeryLight,
         CanSwim = true,
     };
-    
-    bear.AddStatus(new NightVisionStatus(bear));
-        
+            
     bear.Attacks = new CreatureAttackCollection
     {
         {
@@ -105255,7 +105247,7 @@
         
     bear.AddGold(700);
     bear.AddLoot(new LootPack(
-        new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, minibossTreasureGems,       50,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    75),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
@@ -105376,7 +105368,7 @@
     /*Loot is simple. Here he drops 5000 gold, then from his container he drops all those items at 100, 50, 100, 10%, 50%, 100 100 50% 100 10% chances respectively. The gemspricemutator takes a 5000 value PearDiamond and makes its price 20% higher or lower than 5000. We can also do loot based on "Treasures" tabs type things. See other mobs in this zone. For an example of "Boss Loot Choices" Vlad and Kosh drop items from "KoshOptions and "VladOptions" treasure sets.*/
     drake.AddGold(5000);
     drake.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new PearDiamond(5000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(10000u),    100, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new StrongShieldRing(),    50),
         new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(),     100),
         new LootPackEntry(true, (from, container) => new LightningShield(),     10),
@@ -105548,7 +105540,7 @@
         
    yeti.AddGold(12000);
    yeti.AddLoot(new LootPack(
-       new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
+       new LootPackEntry(true, (from, container) => new PearDiamond(20000u),    100, gemsPriceMutator),
        new LootPackEntry(true, (from, container) => new BearSkull(),        100),
        new LootPackEntry(true, (from, container) => new BreatheWaterBracelet(),        33),
        new LootPackEntry(true, (from, container) => new ManaPotion(),        100),
@@ -108093,7 +108085,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new GoldNugget(800u);
+	return new GoldNugget(950u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -108102,7 +108094,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new UncutEmerald(700u);
+	return new UncutEmerald(850u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -108111,7 +108103,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new UncutDiamond(1000u);
+	return new UncutDiamond(1200u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -108160,7 +108152,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new GoldNugget(1100u);
+	return new GoldNugget(1300u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -108169,7 +108161,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new UncutEmerald(1500u);
+	return new UncutEmerald(1700u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -108178,7 +108170,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new UncutDiamond(1800u);
+	return new UncutDiamond(2100u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -108189,7 +108181,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new PearDiamond(2000u);
+	return new PearDiamond(2300u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -108198,7 +108190,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new GoldNugget(1500u);
+	return new GoldNugget(1700u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -108207,7 +108199,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new UncutDiamond(1700u);
+	return new UncutDiamond(1900u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -108303,7 +108295,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new UncutEmerald(900u);
+	return new UncutEmerald(1300u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -108312,7 +108304,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new GoldNugget(1100u);
+	return new GoldNugget(1500u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -108321,7 +108313,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new UncutDiamond(1500u);
+	return new UncutDiamond(2000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
