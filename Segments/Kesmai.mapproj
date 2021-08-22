@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.72.0.0">
+<segment name="Kesmai" version="0.73.1.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -60121,8 +60121,8 @@
         </component>
       </tile>
       <tile x="15" y="26">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
       </tile>
       <tile x="16" y="26">
@@ -63025,8 +63025,8 @@
         </component>
       </tile>
       <tile x="15" y="37">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
       </tile>
       <tile x="16" y="37">
@@ -82430,8 +82430,8 @@
         </component>
       </tile>
       <tile x="22" y="23">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
       </tile>
       <tile x="23" y="23">
@@ -83232,8 +83232,8 @@
         </component>
       </tile>
       <tile x="24" y="26">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
       </tile>
       <tile x="25" y="26">
@@ -84290,13 +84290,13 @@
         </component>
       </tile>
       <tile x="24" y="30">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
       </tile>
       <tile x="25" y="30">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
       </tile>
       <tile x="26" y="30">
@@ -84848,8 +84848,8 @@
         </component>
       </tile>
       <tile x="25" y="32">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
       </tile>
       <tile x="26" y="32">
@@ -85100,8 +85100,8 @@
         </component>
       </tile>
       <tile x="25" y="33">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
       </tile>
       <tile x="26" y="33">
@@ -85416,8 +85416,8 @@
         </component>
       </tile>
       <tile x="25" y="34">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
       </tile>
       <tile x="26" y="34">
@@ -85686,8 +85686,8 @@
         </component>
       </tile>
       <tile x="24" y="35">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
       </tile>
       <tile x="25" y="35">
@@ -90194,8 +90194,8 @@
         </component>
       </tile>
       <tile x="7" y="2">
-        <component type="StaticComponent">
-          <static>388</static>
+        <component type="FloorComponent">
+          <ground>388</ground>
         </component>
       </tile>
       <tile x="8" y="2">
@@ -100418,6 +100418,12 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
