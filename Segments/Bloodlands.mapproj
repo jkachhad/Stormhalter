@@ -88379,7 +88379,7 @@
       <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    source.SayTo(killer, $"No! no...curse...you {killer.Name.Substring(0, 3)}--");
+    source.SayTo(killer, $"No! no...curse...you {killer.Name}--");
     
     killer.Stun(3);
 
@@ -88543,7 +88543,7 @@
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    source.Say($"I've got my eye on you {player.Name.Substring(0, 3)}--");
+    source.Say($"I've got my eye on you {player.Name}.");
     
 ]]></block>
         <block><![CDATA[]]></block>
