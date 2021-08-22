@@ -43,6 +43,12 @@ namespace Kesmai.WorldForge.UI
 			}
 			else
 			{
+				try
+				{
+					Core.ComponentsResource = XDocument.Load("ComponentResource.cache");
+					Core.ScriptingData = File.ReadAllBytes("ScriptingData.cache");
+				}
+				catch { }
 				OnComplete();
 			}
 		}
@@ -139,6 +145,7 @@ namespace Kesmai.WorldForge.UI
 											stream.Seek(0, SeekOrigin.Begin);
 											
 											Core.ComponentsResource = XDocument.Load(stream);
+											Core.ComponentsResource.Save("ComponentResource.cache");
 										}
 									}
 			
@@ -152,6 +159,7 @@ namespace Kesmai.WorldForge.UI
 
 									if (data.Length > 0)
 										Core.ScriptingData = data;
+										File.WriteAllBytes("ScriptingData.cache", data);
 
 									IncreaseProgress();
 									break;
@@ -193,6 +201,13 @@ namespace Kesmai.WorldForge.UI
 									await Task.Delay(5000);
 									
 									connected = false;
+											try
+											{
+												Core.ComponentsResource = XDocument.Load("ComponentResource.cache");
+												Core.ScriptingData = File.ReadAllBytes("ScriptingData.cache");
+											}
+											catch { }
+											if (null != Core.ScriptingData) { OnComplete(); } // we loaded cached data
 									break;
 								}
 							}
