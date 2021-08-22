@@ -96213,7 +96213,7 @@
         Movement = 2,
                 
         CanFlee = true,
-        
+                
     };
     
     orc.Attacks = new CreatureAttackCollection()
@@ -96257,7 +96257,7 @@
                 
         CanFlee = true,
     };
-    
+                
     orc.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(3)
@@ -96300,7 +96300,7 @@
 
         Movement = 1,
     };
-    
+                
     skeleton.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(3)
@@ -96339,7 +96339,6 @@
                 
         Movement = 2,
     };
-    
     skeleton.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(3)
@@ -96442,6 +96441,12 @@
     elderTroll.AddStatus(new NightVisionStatus(elderTroll));
     elderTroll.AddStatus(new BreatheWaterStatus(elderTroll));
     
+    elderTroll.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(10, 25, 30,
+            new AttackProneComponent(15.0), new AttackStunComponent(15.0))
+    };
+                
     elderTroll.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(10, 25, 30,
@@ -97090,7 +97095,7 @@
     
         CanFlee = true,
     };
-    
+                
     goblin.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(4)
@@ -97133,7 +97138,7 @@
         
         CanFlee = true,
     };
-    
+        
     goblin.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(4)
@@ -97176,7 +97181,7 @@
                 
         CanFlee = true,
     };
-    
+                
     orc.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(4)
@@ -97219,7 +97224,7 @@
         
         CanFlee = true,
     };
-    
+                
     orc.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(4)
@@ -97260,7 +97265,7 @@
                 
         Movement = 2,
     };
-    
+                
     skeleton.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(4)
@@ -97305,7 +97310,7 @@
                 
         CanFlee = true,
     };
-    
+                
     troll.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(5, 3, 11)
@@ -97448,9 +97453,9 @@
         MaxHealth = 21, Health = 21,
         BaseDodge = 11,
         MaxMana = 13, Mana = 13,
-        
+    
         Experience = 210,
-            
+    
         CanFlee = true,
         
         FireProtection = 100,
@@ -97587,7 +97592,7 @@ return orc;
                 
         CanFlee = true,
     };
-    
+                
     troll.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(6)
@@ -97671,7 +97676,7 @@ return orc;
         
         CanFlee = true,
     };
-    
+                
     orc.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(6)
@@ -97715,7 +97720,7 @@ return orc;
         
         CanFlee = true,
     };
-    
+                
     orc.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(6)
@@ -97799,7 +97804,7 @@ return orc;
                 
         Experience = 600,
     };
-    
+        
     goblin.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(6)
@@ -98289,7 +98294,7 @@ return orc;
     
         Experience = 950,
     };
-    
+        
     hobgoblin.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(8)
@@ -98337,7 +98342,8 @@ return orc;
         {
             new CreatureAttack(7,     6, 12,  "The gargoyle strikes you with its claws"),     60 
         }, 
-        {   new CreatureAttack(8,     10, 20, "The gargoyle batters you with its wings"),     40 
+        {   
+            new CreatureAttack(8,     10, 20, "The gargoyle batters you with its wings"),     40 
         }, 
     };
 
@@ -98406,9 +98412,9 @@ return orc;
     salamander.Spells = new CreatureSpellCollection(50.0)
     {
         { new CreatureSpell<FirewallSpell>(
-            skillLevel: 6), 100, TimeSpan.FromSeconds(15.0) }
+            skillLevel: 8), 100, TimeSpan.FromSeconds(15.0) }
     };
-    
+
     salamander.AddGold(500);
     salamander.AddLoot(new LootPack(
         new LootPackEntry(true, dungeon4Bottles,    33),
@@ -98838,7 +98844,7 @@ return orc;
     
         CanSwim = true,
     };
-        
+    
     thaum.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(8)
@@ -98857,6 +98863,11 @@ return orc;
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
+    
+    thaum.Wield(new WoodenFlail());
+    thaum.Wield(new WoodenShield());
+    thaum.Equip(new LeatherArmor());
+        
     
     thaum.Wield(new WoodenFlail());
     thaum.Wield(new WoodenShield());
@@ -99380,7 +99391,7 @@ return orc;
         Experience = 5000,
         
         BasePenetration = ShieldPenetration.Heavy,
-      
+    
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
         Weakness = CreatureWeakness.BlueGlowing,
@@ -99397,7 +99408,7 @@ return orc;
     
     ydnac.AddStatus(new NightVisionStatus(ydnac));
     ydnac.AddStatus(new BreatheWaterStatus(ydnac));
-        
+    
     ydnac.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(12)
@@ -99416,7 +99427,6 @@ return orc;
                 mantra: SpellHelper.GenerateMantra(), instantCast: false),      2
         }
     };
-    
     
     ydnac.Wield(new BlackStaff());
     ydnac.Equip(new LeatherArmor());
@@ -99466,7 +99476,7 @@ return orc;
         IceProtection = 100,
     };
     abesh.AddStatus(new NightVisionStatus(abesh));
-    abesh.AddStatus(new BreatheWaterStatus(abesh));   
+    abesh.AddStatus(new BreatheWaterStatus(abesh));
     
     abesh.Attacks = new CreatureAttackCollection()
     {
@@ -99563,9 +99573,8 @@ return orc;
         FireProtection = 100,
         IceProtection = 80,
     };
-    
     wraith.AddStatus(new NightVisionStatus(wraith));
-        
+    
     wraith.Attacks = new CreatureAttackCollection
     {
         new CreatureBasicAttack(8)
@@ -99581,6 +99590,8 @@ return orc;
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
+    wraith.Wield(new BlackStaff());
+    
     wraith.Wield(new BlackStaff());
     
     wraith.AddGold(500);
@@ -99766,11 +99777,12 @@ return orc;
         Experience = 525,
 
         Movement = 2,
-                
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(6)
-        },
+
+    };
+    
+    skeleton.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(6)
     };
     
     skeleton.Attacks = new CreatureAttackCollection()
@@ -99812,11 +99824,11 @@ return orc;
         Experience = 485,
                 
         Movement = 2,
-
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(6)
-        }
+    };
+    
+    skeleton.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(6)
     };
     
     skeleton.Attacks = new CreatureAttackCollection()
@@ -101374,7 +101386,6 @@ return orc;
       <bounds region="4">
         <inclusion left="2" top="7" right="9" bottom="12" />
         <inclusion left="2" top="14" right="13" bottom="16" />
-        <inclusion left="0" top="0" right="0" bottom="0" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -101402,7 +101413,58 @@ return orc;
       <entry entity="dungeon4RangedFighter" size="1" minimum="1" maximum="2" />
       <bounds region="3">
         <inclusion left="9" top="2" right="11" bottom="7" />
-        <inclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Ydnac -1 Blood Room">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <maximum>10</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="ydnacMummy" size="1" minimum="3" maximum="5" />
+      <entry entity="dungeon4Thaum" size="1" minimum="1" maximum="1" />
+      <entry entity="ydnacSkelWar" size="3" minimum="1" maximum="2" />
+      <entry entity="ydnacSkelArc" size="2" minimum="1" maximum="2" />
+      <bounds region="4">
+        <inclusion left="15" top="6" right="23" bottom="18" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Ydnac Secret Right Side">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="ydnacSkelWar" size="3" minimum="1" maximum="1" />
+      <entry entity="dungeon4Spectre" size="1" minimum="1" maximum="1" />
+      <bounds region="3">
+        <inclusion left="13" top="2" right="16" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
