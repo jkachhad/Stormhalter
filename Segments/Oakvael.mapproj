@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.71.0.0">
+<segment name="Oakvael" version="0.73.1.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -62332,8 +62332,8 @@
         </component>
       </tile>
       <tile x="31" y="10">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
       </tile>
       <tile x="32" y="10">
@@ -68086,13 +68086,13 @@
         </component>
       </tile>
       <tile x="22" y="27">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
       </tile>
       <tile x="23" y="27">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
       </tile>
       <tile x="24" y="27">
@@ -83963,6 +83963,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="oakconfessorGhost">
       <script name="OnSpawn" enabled="true">
@@ -83974,6 +83980,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -84000,6 +84012,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -84032,6 +84050,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="oakRecallVendor">
       <script name="OnSpawn" enabled="true">
@@ -84055,6 +84079,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -84089,6 +84119,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="oakshopkeeperTemplate">
       <script name="OnSpawn" enabled="true">
@@ -84111,6 +84147,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -84141,6 +84183,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -84177,6 +84225,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="oakWeaponTrainer">
       <script name="OnSpawn" enabled="true">
@@ -84203,6 +84257,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -84241,6 +84301,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="oakTailor">
       <script name="OnSpawn" enabled="true">
@@ -84263,6 +84329,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -84291,6 +84363,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -84334,6 +84412,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="oakaniet">
       <script name="OnSpawn" enabled="true">
@@ -84355,6 +84439,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -84409,6 +84499,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="oaktagget">
       <script name="OnSpawn" enabled="true">
@@ -84438,6 +84534,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="oakcudyl">
       <script name="OnSpawn" enabled="true">
@@ -84453,6 +84555,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -84492,6 +84600,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="oakkarin">
       <script name="OnSpawn" enabled="true">
@@ -84521,6 +84635,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -84589,6 +84709,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="surfaceCrocodile">
       <script name="OnSpawn" enabled="true">
@@ -84632,6 +84758,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -84689,6 +84821,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="surfaceWolf">
       <script name="OnSpawn" enabled="true">
@@ -84734,6 +84872,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -84786,6 +84930,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="surfaceBeetle">
       <script name="OnSpawn" enabled="true">
@@ -84820,6 +84970,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -84866,6 +85022,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="surfaceOrcSentry">
       <script name="OnSpawn" enabled="true">
@@ -84902,6 +85064,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -84948,6 +85116,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -85002,6 +85176,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -85064,6 +85244,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="dungeon1Rat">
       <script name="OnSpawn" enabled="true">
@@ -85120,6 +85306,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="dungeon1Viper">
       <script name="OnSpawn" enabled="true">
@@ -85156,6 +85348,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -85213,6 +85411,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="dungeon1Kobold">
       <script name="OnSpawn" enabled="true">
@@ -85249,6 +85453,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -85297,6 +85507,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="dungeon1OrcSentry">
       <script name="OnSpawn" enabled="true">
@@ -85333,6 +85549,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -85376,6 +85598,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -85428,6 +85656,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="dungeon2Hobgoblin">
       <script name="OnSpawn" enabled="true">
@@ -85458,7 +85692,7 @@
             new LootPackEntry(true, dungeon2Bottles, 33.0), 
             new LootPackEntry(true, dungeon2Treasure, 0.63), 
             new LootPackEntry(true, dungeon2Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.05)
         ));
 
     return hobgoblin;
@@ -85466,6 +85700,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -85499,7 +85739,7 @@
             new LootPackEntry(true, dungeon2Bottles, 33.0), 
             new LootPackEntry(true, dungeon2Treasure, 0.63), 
             new LootPackEntry(true, dungeon2Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.05)
         ));
 
     return goblin;
@@ -85507,6 +85747,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -85540,7 +85786,7 @@
             new LootPackEntry(true, dungeon2Bottles, 33.0), 
             new LootPackEntry(true, dungeon2Treasure, 0.63), 
             new LootPackEntry(true, dungeon2Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.05)
         ));
 
     return goblin;
@@ -85548,6 +85794,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -85587,7 +85839,7 @@
             new LootPackEntry(true, dungeon2Bottles, 33.0), 
             new LootPackEntry(true, dungeon2Treasure, 0.63), 
             new LootPackEntry(true, dungeon2Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.05)
         ));
 
     return troll;
@@ -85595,6 +85847,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -85630,7 +85888,7 @@
             new LootPackEntry(true, dungeon2Bottles, 33.0), 
             new LootPackEntry(true, dungeon2Treasure, 0.63), 
             new LootPackEntry(true, dungeon2Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.05)
         ));
 
     return orc;
@@ -85638,6 +85896,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -85673,7 +85937,7 @@
             new LootPackEntry(true, dungeon2Bottles, 33.0), 
             new LootPackEntry(true, dungeon2Treasure, 0.63), 
             new LootPackEntry(true, dungeon2Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.05)
         ));
 
     return orc;
@@ -85681,6 +85945,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -85723,9 +85993,10 @@
     orc.AddGold(250);
     orc.AddLoot(
         new LootPack(
+            new LootPackEntry(true, dungeon2Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon2Treasure, 0.63), 
             new LootPackEntry(true, dungeon2Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.05)
         ));
 
     return orc;
@@ -85733,6 +86004,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -85779,7 +86056,7 @@
             new LootPackEntry(true, dungeon2Bottles, 33.0), 
             new LootPackEntry(true, dungeon2Treasure, 0.63), 
             new LootPackEntry(true, dungeon2Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.05)
             //new LootPackEntry(true, &poak_wands, 5.0), 
             //new LootPackEntry(true, snakestaff, 10.0),
         ));
@@ -85789,6 +86066,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -85820,11 +86103,11 @@
     hobgoblin.AddGold(650);
     hobgoblin.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon3Gems, 25.0), 
+            new LootPackEntry(true, dungeon3Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2) 
+            new LootPackEntry(true, oakvaelPotions, 0.1) 
         ));
 
     return hobgoblin;
@@ -85832,6 +86115,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -85863,11 +86152,11 @@
     orc.AddGold(450);
     orc.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon3Gems, 25.0), 
+            new LootPackEntry(true, dungeon3Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2) 
+            new LootPackEntry(true, oakvaelPotions, 0.1) 
         ));
 
     return orc;
@@ -85875,6 +86164,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -85906,11 +86201,11 @@
     orc.AddGold(450);
     orc.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon3Gems, 25.0), 
+            new LootPackEntry(true, dungeon3Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2) 
+            new LootPackEntry(true, oakvaelPotions, 0.1) 
         ));
 
     return orc;
@@ -85918,6 +86213,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -85960,11 +86261,11 @@
     orc.AddGold(450);
     orc.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon3Gems, 25.0), 
+            new LootPackEntry(true, dungeon3Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2) 
+            new LootPackEntry(true, oakvaelPotions, 0.1) 
         ));
 
     return orc;
@@ -85972,6 +86273,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -86001,11 +86308,11 @@
     troll.AddGold(750);
     troll.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon3Gems, 25.0), 
+            new LootPackEntry(true, dungeon3Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2) 
+            new LootPackEntry(true, oakvaelPotions, 0.1) 
         ));
 
     return troll;
@@ -86013,6 +86320,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -86064,11 +86377,11 @@
     thaum.AddGold(800);
     thaum.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon3Gems, 25.0), 
+            new LootPackEntry(true, dungeon3Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2) 
+            new LootPackEntry(true, oakvaelPotions, 0.1) 
         ));
 
     return thaum;
@@ -86076,6 +86389,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -86125,11 +86444,11 @@
     wizard.AddGold(800);
     wizard.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon3Gems, 25.0), 
+            new LootPackEntry(true, dungeon3Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2) 
+            new LootPackEntry(true, oakvaelPotions, 0.1) 
             //new LootPackEntry(true, &poak_wands, 5.0)
         ));
 
@@ -86138,6 +86457,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -86188,7 +86513,7 @@
     minotaur.AddLoot(
         new LootPack(
             new LootPackEntry(true, (from, container) => new SerpentRobe(), 2.5),
-            new LootPackEntry(true, dungeon3Gems, 25.0), 
+            new LootPackEntry(true, dungeon3Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
@@ -86200,6 +86525,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -86252,7 +86583,7 @@
     gargoyle.AddGold(1200);
     gargoyle.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon3Gems, 25.0), 
+            new LootPackEntry(true, dungeon3Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, (from, container) => new SilverDagger(), 7.14)
         ));
@@ -86262,6 +86593,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -86308,7 +86645,7 @@
     salamander.AddGold(550);
     salamander.AddLoot(
         new LootPack(
-            new LootPackEntry(true, (from, container) => new FieryRuby(1700u), 100)
+            new LootPackEntry(true, (from, container) => new FieryRuby(1700u), 100, gemsPriceMutator)
         ));
 
     return salamander;
@@ -86316,6 +86653,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -86380,7 +86723,7 @@
     serpent.AddLoot(
         new LootPack(
             new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(), 50.00),
-            new LootPackEntry(true, dungeon3Gems, 25.0), 
+            new LootPackEntry(true, dungeon3Gems, 50.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
@@ -86392,6 +86735,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -86424,11 +86773,11 @@
     pescalanor.AddGold(750);
     pescalanor.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon3Gems, 25.0), 
+            new LootPackEntry(true, dungeon3Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2) 
+            new LootPackEntry(true, oakvaelPotions, 0.1) 
         ));
 
     return pescalanor;
@@ -86436,6 +86785,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -86485,7 +86840,7 @@
     gargoyle.AddGold(1500);
     gargoyle.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon4Gems, 25.0), 
+            new LootPackEntry(true, dungeon4Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
@@ -86497,6 +86852,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -86546,7 +86907,7 @@
     minotaur.AddGold(1250);
     minotaur.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon4Gems, 25.0), 
+            new LootPackEntry(true, dungeon4Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
@@ -86558,6 +86919,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -86587,7 +86954,7 @@
     hobgoblin.AddGold(800);
     hobgoblin.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon4Gems, 25.0), 
+            new LootPackEntry(true, dungeon4Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
@@ -86599,6 +86966,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -86632,7 +87005,7 @@
     troll.AddGold(875);
     troll.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon4Gems, 25.0), 
+            new LootPackEntry(true, dungeon4Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
@@ -86644,6 +87017,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -86675,7 +87054,7 @@
     orc.AddGold(675);
     orc.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon4Gems, 25.0), 
+            new LootPackEntry(true, dungeon4Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
@@ -86687,6 +87066,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -86718,7 +87103,7 @@
     orc.AddGold(675);
     orc.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon4Gems, 25.0), 
+            new LootPackEntry(true, dungeon4Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
@@ -86730,6 +87115,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -86783,7 +87174,7 @@
     thaum.AddGold(900);
     thaum.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon4Gems, 25.0), 
+            new LootPackEntry(true, dungeon4Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
@@ -86795,6 +87186,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -86844,7 +87241,7 @@
     wizard.AddGold(900);
     wizard.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon4Gems, 25.0), 
+            new LootPackEntry(true, dungeon4Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
@@ -86858,6 +87255,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -86904,7 +87307,7 @@
     salamander.AddGold(900);
     salamander.AddLoot(
         new LootPack(
-            new LootPackEntry(true, (from, container) => new FieryRuby(1700u), 100.0)
+            new LootPackEntry(true, (from, container) => new FieryRuby(1700u), 100.0, gemsPriceMutator)
         ));
 
     return salamander;
@@ -86912,6 +87315,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -86947,7 +87356,7 @@
     drizilu.AddGold(900);
     drizilu.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon4Gems, 25.0), 
+            new LootPackEntry(true, dungeon4Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
@@ -86959,6 +87368,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -86994,7 +87409,7 @@
     glamuzu.AddGold(900);
     glamuzu.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon4Gems, 25.0), 
+            new LootPackEntry(true, dungeon4Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
@@ -87006,6 +87421,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -87044,7 +87465,7 @@
     banshee.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
-            new LootPackEntry(true, dungeon5Gems, 25.0),
+            new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -87055,6 +87476,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -87093,7 +87520,7 @@
     banshee.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
-            new LootPackEntry(true, dungeon5Gems, 25.0),
+            new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -87104,6 +87531,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -87146,7 +87579,7 @@
     wraith.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
-            new LootPackEntry(true, dungeon5Gems, 25.0),
+            new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -87157,6 +87590,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -87209,7 +87648,7 @@
     wizard.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
-            new LootPackEntry(true, dungeon5Gems, 25.0),
+            new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5SpellOrbs, 5.0),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
@@ -87221,6 +87660,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -87270,7 +87715,7 @@
     thaum.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
-            new LootPackEntry(true, dungeon5Gems, 25.0),
+            new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5SpellOrbs, 5.0),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
@@ -87282,6 +87727,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -87323,7 +87774,7 @@
     ghoul.AddGold(1250);
     ghoul.AddLoot(new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
-            new LootPackEntry(true, dungeon5Gems, 25.0),
+            new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -87334,6 +87785,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -87378,7 +87835,7 @@
     spectre.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
-            new LootPackEntry(true, dungeon5Gems, 25.0),
+            new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -87390,6 +87847,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -87431,7 +87894,7 @@
     wight.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
-            new LootPackEntry(true, dungeon5Gems, 25.0),
+            new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -87442,6 +87905,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -87493,7 +87962,7 @@
     lich.AddGold(1430);
     lich.AddLoot(new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
-            new LootPackEntry(true, dungeon5Gems, 25.0),
+            new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
             new LootPackEntry(true, oakvaelPotions, 0.2),
@@ -87505,6 +87974,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -87538,7 +88013,7 @@
     stalker.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
-            new LootPackEntry(true, dungeon5Gems, 25.0),
+            new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
             new LootPackEntry(true, oakvaelPotions, 0.2)
@@ -87549,6 +88024,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -87594,10 +88075,9 @@
     twin.AddGold(2000);
     twin.AddLoot(
         new LootPack(
-            new LootPackEntry(true, (from, container) => new Diamond(2000u), 100.0), 
-            new LootPackEntry(true, (from, container) => new Diamond(2000u), 100.0), 
-            new LootPackEntry(true, (from, container) => new Diamond(2000u), 100.0),
-            
+            new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
+            new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
+            new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, (from, container) => new FeatherFallBoots(), 100.0),
             new LootPackEntry(true, (from, container) => new TornStripsRobe(), 100.0),
             new LootPackEntry(true, (from, container) => new ManaPotion(), 100.0),
@@ -87609,6 +88089,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -87655,10 +88141,9 @@
     twin.AddGold(2000);
     twin.AddLoot(
         new LootPack(
-            new LootPackEntry(true, (from, container) => new Diamond(2000u), 100.0), 
-            new LootPackEntry(true, (from, container) => new Diamond(2000u), 100.0), 
-            new LootPackEntry(true, (from, container) => new Diamond(2000u), 100.0),
-            
+            new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
+            new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
+            new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, (from, container) => new ManaPotion(), 100.0),
             new LootPackEntry(true, (from, container) => new PermanentDexterityPotion(), 100.0),
             new LootPackEntry(true, dungeon5Rings, 100.0)
@@ -87670,6 +88155,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -87706,8 +88197,8 @@
     doomOrc.AddGold(2000);
     doomOrc.AddLoot(
         new LootPack(
-            new LootPackEntry(true, (from, container) => new Diamond(1500u), 100.0), 
-            new LootPackEntry(true, (from, container) => new Diamond(1500u), 100.0)
+            new LootPackEntry(true, (from, container) => new Diamond(1500u), 100.0, gemsPriceMutator), 
+            new LootPackEntry(true, (from, container) => new Diamond(1500u), 100.0, gemsPriceMutator)
         ));
                 
     return doomOrc;
@@ -87715,6 +88206,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -87752,6 +88249,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -87805,6 +88308,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -87883,6 +88392,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="groveNaiad">
       <script name="OnSpawn" enabled="true">
@@ -87897,6 +88412,7 @@
         Experience = 6500,
         HideDetection = 35,
         CanWalk = false,
+        CanSwim = true,
         VisibilityDistance = 3,
     };
     
@@ -87913,6 +88429,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -87947,7 +88469,7 @@
     centaur.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 60.0), 
-            new LootPackEntry(true, groveGems, 25.0),
+            new LootPackEntry(true, groveGems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, groveTreasure, 0.63)
         ));
     
@@ -87956,6 +88478,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -88001,7 +88529,7 @@
     centaur.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 60.0), 
-            new LootPackEntry(true, groveGems, 25.0),
+            new LootPackEntry(true, groveGems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, groveTreasure, 0.63)
         ));
     
@@ -88010,6 +88538,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -88062,7 +88596,7 @@
     bear.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 100.0), 
-            new LootPackEntry(true, groveGems, 100.0),
+            new LootPackEntry(true, groveGems, 100.0, gemsPriceMutator),
             new LootPackEntry(true, groveGems, 100.0),
             new LootPackEntry(true, groveTreasure, 3.0)
         ));
@@ -88072,6 +88606,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -88117,7 +88657,7 @@
     wolf.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 100.0), 
-            new LootPackEntry(true, groveGems, 100.0),
+            new LootPackEntry(true, groveGems, 100.0, gemsPriceMutator),
             new LootPackEntry(true, groveTreasure, 2.0)
         ));
 
@@ -88126,6 +88666,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -88174,7 +88720,7 @@
     boar.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 100.0), 
-            new LootPackEntry(true, groveGems, 100.0),
+            new LootPackEntry(true, groveGems, 100.0, gemsPriceMutator),
             new LootPackEntry(true, groveTreasure, 2.0)
         ));
 
@@ -88183,6 +88729,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -88220,7 +88772,7 @@
     viper.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 100.0), 
-            new LootPackEntry(true, groveGems, 33.0),
+            new LootPackEntry(true, groveGems, 33.0, gemsPriceMutator),
             new LootPackEntry(true, groveTreasure, 1.0)
         ));
     return viper;
@@ -88228,6 +88780,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -88593,7 +89151,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="oakWizTrainer" size="1" minimum="1" maximum="1" />
-      <location x="4" y="12" region="10" />
+      <location x="4" y="12" region="14" />
     </spawn>
     <spawn type="LocationSpawner" name="aniet">
       <minimumDelay>900</minimumDelay>
@@ -89370,7 +89928,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="40">
+      <entry weight="5">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -89595,7 +90153,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallRuby(600u);
+	return new SmallRuby(700u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -89604,7 +90162,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(700u);
+	return new Amethyst(800u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -89613,7 +90171,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallSapphire(900u);
+	return new SmallSapphire(1000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -89756,7 +90314,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallSapphire(1200u);
+	return new SmallSapphire(1400u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -89765,7 +90323,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(1000u);
+	return new Amethyst(1200u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -89774,7 +90332,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new BloodRuby(1600u);
+	return new BloodRuby(1800u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -89783,7 +90341,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Diamond(2000u);
+	return new Diamond(2200u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -89935,7 +90493,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallSapphire(1200u);
+	return new SmallSapphire(1400u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -89944,7 +90502,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Diamond(1800u);
+	return new Diamond(2100u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -89953,7 +90511,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new BloodRuby(2500u);
+	return new BloodRuby(2900u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -90188,7 +90746,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallSapphire(1200u);
+	return new SmallSapphire(1500u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -90197,7 +90755,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Diamond(2000u);
+	return new Diamond(2400u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -90206,7 +90764,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new BloodRuby(2700u);
+	return new BloodRuby(3000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -90414,7 +90972,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new BloodRuby(4000u);
+	return new BloodRuby(6000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -90423,7 +90981,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new LargeEmerald(6000u);
+	return new LargeEmerald(8000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>

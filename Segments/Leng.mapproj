@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.71.0.0">
+<segment name="Leng" version="0.73.1.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -2570,8 +2570,8 @@
         </component>
       </tile>
       <tile x="39" y="7">
-        <component type="StaticComponent">
-          <static>179</static>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="40" y="7">
@@ -3107,13 +3107,13 @@
         </component>
       </tile>
       <tile x="39" y="8">
-        <component type="StaticComponent">
-          <static>179</static>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="40" y="8">
-        <component type="StaticComponent">
-          <static>179</static>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="41" y="8">
@@ -4321,8 +4321,8 @@
         </component>
       </tile>
       <tile x="7" y="12">
-        <component type="StaticComponent">
-          <static>23</static>
+        <component type="FloorComponent">
+          <ground>23</ground>
         </component>
       </tile>
       <tile x="8" y="12">
@@ -71608,6 +71608,12 @@
         <component type="StaticComponent">
           <static>176</static>
         </component>
+        <component type="WallComponent">
+          <wall>143</wall>
+          <destroyed>144</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
       </tile>
       <tile x="4" y="0">
         <component type="StaticComponent">
@@ -74788,6 +74794,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="lengbalmVendor">
       <script name="OnSpawn" enabled="true">
@@ -74816,6 +74828,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="lengconfessorGhost">
       <script name="OnSpawn" enabled="true">
@@ -74826,6 +74844,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -74859,6 +74883,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="lengweaponTrainer">
       <script name="OnSpawn" enabled="true">
@@ -74881,6 +74911,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -74915,6 +74951,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="lengthaumTrainer">
       <script name="OnSpawn" enabled="true">
@@ -74939,6 +74981,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -74970,6 +75018,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="lengbankerTemplate">
       <script name="OnSpawn" enabled="true">
@@ -74991,6 +75045,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -75024,6 +75084,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="lengrecallVendor">
       <script name="OnSpawn" enabled="true">
@@ -75047,6 +75113,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -75079,6 +75151,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="mausWraith">
       <script name="OnSpawn" enabled="true">
@@ -75092,8 +75170,6 @@
         
         Experience = 3200,
     };
-    
-    wraith.AddStatus(new NightVisionStatus(wraith));
         
     wraith.Attacks = new CreatureAttackCollection
     {
@@ -75133,16 +75209,22 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="mausConcWiz">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-                
+    var isFemale = Utility.RandomBool();            
     var wizard = new Humanoid()
     {
-        Name = "Thrall",
-        Body = 37,
+        Name = _names.Random(),
+        Body = (isFemale ? 37 : 38), IsFemale = isFemale,
             
         MaxHealth = 110, Health = 110,
         MaxMana = 31, Mana = 31,
@@ -75199,6 +75281,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="mausFireWiz">
       <script name="OnSpawn" enabled="true">
@@ -75206,7 +75294,7 @@
         <block><![CDATA[
     var wizard = new Humanoid()
     {
-        Name = "Thrall",
+        Name = _names.Random(),
         Body = 38,
             
         MaxHealth = 110, Health = 110,
@@ -75254,6 +75342,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -75315,6 +75409,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="mausHobgoblin">
       <script name="OnSpawn" enabled="true">
@@ -75358,6 +75458,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="mausHobgobMage">
       <script name="OnSpawn" enabled="true">
@@ -75372,7 +75478,6 @@
         Experience = 2600,
     
     };
-    hobgoblin.AddStatus(new NightVisionStatus(hobgoblin));
     
     hobgoblin.Attacks = new CreatureAttackCollection
     {
@@ -75407,6 +75512,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -75453,6 +75564,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -75507,6 +75624,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="surfacebridgeTroll">
       <script name="OnSpawn" enabled="true">
@@ -75526,8 +75649,6 @@
         Movement = 2,
     };
     
-    bridgeTroll.AddStatus(new NightVisionStatus(bridgeTroll));
-    
     bridgeTroll.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(11, 20, 30,
@@ -75541,7 +75662,7 @@
     
     bridgeTroll.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new WingedHelm(),         40.0),
-        new LootPackEntry(true, (from, container) => new Diamond(1500u),         100.0)
+        new LootPackEntry(true, MinotaurGems,       10,     gemsPriceMutator)
     ));
     
     return bridgeTroll;
@@ -75549,6 +75670,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -75601,6 +75728,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="mausSandy">
       <script name="OnSpawn" enabled="true">
@@ -75645,11 +75778,11 @@
     };
     
     sandwyrm.AddGold(1200);
-    sandwyrm.AddLoot(new LootPack(
+    sandwyrm.AddLoot(new LootPack(    
+        new LootPackEntry(true, MausGems, 100, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new StrengthRing(),       20), 
         new LootPackEntry(true, (from, container) => new ShieldRing(),    10),
-        new LootPackEntry(true, (from, container) => new WeakShieldRing(),   20),
-        new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 100.0)
+        new LootPackEntry(true, (from, container) => new WeakShieldRing(),   20)
         
         ));
     
@@ -75658,6 +75791,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -75722,6 +75861,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="shidShidosha">
       <script name="OnSpawn" enabled="true">
@@ -75732,7 +75877,7 @@
     {
         Name = "Shidosha",
         MaxHealth = 3000, Health = 3000,
-        BaseDodge = 23,
+        BaseDodge = 28,
         HideDetection = 24,
         Experience = 32000,
         
@@ -75740,6 +75885,7 @@
        
         CanJumpkick = true,
         CanSwim = true,
+        CanStrikeCritically = true,
         
         BasePenetration = ShieldPenetration.Heavy,
 
@@ -75753,17 +75899,17 @@
     shidosha.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(23,      10, 30,      "Shidosha hits you with a flurry of fists.",
+            new CreatureAttack(22,      10, 30,      "Shidosha hits you with a flurry of fists.",
                                                         new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(25,      30, 60,     "Shidosha slams his fist into your chest.",
+            new CreatureAttack(24,      30, 60,     "Shidosha slams his fist into your chest.",
                                                         new AttackProneComponent(25), 
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(28,      40, 60,     "Shidosha knocks you back with a forceful kick.",
+            new CreatureAttack(26,      40, 60,     "Shidosha knocks you back with a forceful kick.",
                                                         new AttackProneComponent(100), 
                                                         new AttackStunComponent(15)),               20
         },
@@ -75793,6 +75939,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="shidninjaguardians">
       <script name="OnSpawn" enabled="true">
@@ -75809,7 +75961,7 @@
         CanJumpkick = true,
         CanSwim = true,
         VisibilityDistance = 1,
-        
+        CanStrikeCritically = false,
         BasePenetration = ShieldPenetration.Medium,
 
     };
@@ -75822,18 +75974,18 @@
     ninja.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(20,      10, 30,      "The ninja hits you with a flurry of fists.",
-                                                        new AttackProneComponent(15), 
+            new CreatureAttack(18,      10, 30,      "The ninja hits you with a flurry of fists.",
+                                                        new AttackProneComponent(5), 
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(21,      25, 35,     "The ninja slams his fist into your chest.",
-                                                        new AttackProneComponent(25), 
+            new CreatureAttack(19,      25, 35,     "The ninja slams his fist into your chest.",
+                                                        new AttackProneComponent(10), 
                                                         new AttackStunComponent(5)),               40
         },
         {
-            new CreatureAttack(22,      30, 45,     "The ninja knocks you back with a forceful kick.",
-                                                        new AttackProneComponent(100), 
+            new CreatureAttack(20,      30, 45,     "The ninja knocks you back with a forceful kick.",
+                                                        new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),               20
         },
     };
@@ -75856,6 +76008,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -75940,6 +76098,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="vlad">
       <script name="OnSpawn" enabled="true">
@@ -76013,6 +76177,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="minoSparky">
       <script name="OnSpawn" enabled="true">
@@ -76076,7 +76246,7 @@
     
     drake.AddGold(2000);
     drake.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, MinotaurGems,       100,     gemsPriceMutator), 
         new LootPackEntry(true, (from, container) => new LightningResistanceRing(),    33),
         new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(),     100),
         new LootPackEntry(true, (from, container) => new LightningShield(),     10),
@@ -76093,6 +76263,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -76150,6 +76326,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="cliffnomad">
       <script name="OnSpawn" enabled="true">
@@ -76163,16 +76345,16 @@
         Body = (female ? 33 : 32), IsFemale = female,
             
         MaxHealth = 155, Health = 155,
-        BaseDodge = 15,
+        BaseDodge = 14,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 7000,
+        Experience = 7600,
         CanSwim = true,
             
     };
         
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11, 17, 23)
+        new CreatureBasicAttack(12, 17, 23)
     };
     
     fighter.Wield(new Longsword());
@@ -76190,6 +76372,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -76244,6 +76432,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="minoLich">
       <script name="OnSpawn" enabled="true">
@@ -76292,6 +76486,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="cliffnomadArcher">
       <script name="OnSpawn" enabled="true">
@@ -76307,14 +76507,14 @@
         MaxHealth = 120, Health = 120,
         BaseDodge = 14,
             
-        Experience = 6800,
+        Experience = 7200,
         CanSwim = true,
     };
     
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(12)
+        new CreatureBasicAttack(13)
     };
     
     fighter.Wield(new Longbow());
@@ -76332,6 +76532,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -76380,7 +76586,7 @@
     
     minotaur.AddGold(1000);
     minotaur.AddLoot(new LootPack(
-        new LootPackEntry(true, MinotaurGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, MinotaurGems,       50,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
         new LootPackEntry(true, MinotaurTreasures,    0.63)
     ));
@@ -76390,6 +76596,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -76452,6 +76664,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="vladGryph">
       <script name="OnSpawn" enabled="true">
@@ -76507,6 +76725,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="surfacecentaur">
       <script name="OnSpawn" enabled="true">
@@ -76544,12 +76768,18 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="surfacesandworm">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    //todo add portal gem loot chance - replace red berries heh
+    //todo add portal gem loot chance. I know one of the rubies is it but not sure which off top of head.
     var sandwyrm = new Sandwyrm()
     {
         MaxHealth = 110, Health = 110,
@@ -76562,8 +76792,6 @@
         FireProtection = 100,
         IceProtection = 100,
     };
-    
-    sandwyrm.AddStatus(new NightVisionStatus(sandwyrm));
     
     sandwyrm.Attacks = new CreatureAttackCollection
     {
@@ -76584,7 +76812,7 @@
     
     sandwyrm.AddGold(100);
     sandwyrm.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new RedBerries(),       20)
+        new LootPackEntry(true, (from, container) => new BloodRuby(300u),       20)
     ));
     
     return sandwyrm;
@@ -76592,6 +76820,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -76645,6 +76879,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="surfacebee">
       <script name="OnSpawn" enabled="true">
@@ -76679,6 +76919,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -76733,6 +76979,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="vladFamiliarMelee">
       <script name="OnSpawn" enabled="true">
@@ -76774,6 +77026,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -76839,6 +77097,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="cliffCentaur">
       <script name="OnSpawn" enabled="true">
@@ -76851,8 +77115,6 @@
         BasePenetration = ShieldPenetration.Medium,     
         Experience = 8700,
     };
-    
-    centaur.AddStatus(new NightVisionStatus(centaur));
     
     centaur.Attacks = new CreatureAttackCollection()
     {
@@ -76873,6 +77135,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -76922,6 +77190,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -76983,6 +77257,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="cliffOrcs">
       <script name="OnSpawn" enabled="true">
@@ -77017,6 +77297,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -77071,6 +77357,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="cliffTrolls">
       <script name="OnSpawn" enabled="true">
@@ -77104,6 +77396,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -77152,6 +77450,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="cliffOrcArcher">
       <script name="OnSpawn" enabled="true">
@@ -77186,6 +77490,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -77245,6 +77555,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="surfacewight">
       <script name="OnSpawn" enabled="true">
@@ -77260,8 +77576,6 @@
         
         CanFlee = true,
     };
-    
-    wight.AddStatus(new NightVisionStatus(wight));
         
     wight.Attacks = new CreatureAttackCollection
     {
@@ -77289,6 +77603,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -77327,6 +77647,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="lengPuck">
       <script name="OnSpawn" enabled="true">
@@ -77337,6 +77663,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -77381,7 +77713,7 @@
     
     mummy.AddGold(350);
     mummy.AddLoot(new LootPack(
-        new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, MausGems,       40,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20),
         new LootPackEntry(true, MausTreasure,  0.63)
         
@@ -77392,6 +77724,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -77855,8 +78193,8 @@
       <location x="5" y="28" region="20" />
     </spawn>
     <spawn type="LocationSpawner" name="lengMATrainer">
-      <minimumDelay>0</minimumDelay>
-      <maximumDelay>0</maximumDelay>
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
@@ -77881,7 +78219,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="lengweaponTrainer" size="1" minimum="0" maximum="0" />
+      <entry entity="lengweaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="4" y="4" region="4" />
     </spawn>
     <spawn type="RegionSpawner" name="sandyPath">
@@ -78332,7 +78670,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="shidShidosha" size="1" minimum="1" maximum="1" />
-      <entry entity="shidninjaguardians" size="3" minimum="3" maximum="3" />
+      <entry entity="shidninjaguardians" size="1" minimum="1" maximum="1" />
       <bounds region="255">
         <inclusion left="1" top="1" right="5" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -78754,6 +79092,78 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
+    <spawn type="RegionSpawner" name="shidguardians1">
+      <minimumDelay>1500</minimumDelay>
+      <maximumDelay>1800</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="shidninjaguardians" size="3" minimum="1" maximum="1" />
+      <bounds region="4">
+        <inclusion left="1" top="1" right="9" bottom="7" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="shidguardians2">
+      <minimumDelay>1500</minimumDelay>
+      <maximumDelay>1800</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="shidninjaguardians" size="3" minimum="1" maximum="1" />
+      <bounds region="4">
+        <inclusion left="1" top="1" right="13" bottom="7" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="shidguardians3">
+      <minimumDelay>1500</minimumDelay>
+      <maximumDelay>1800</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="shidninjaguardians" size="3" minimum="1" maximum="1" />
+      <bounds region="4">
+        <inclusion left="1" top="1" right="15" bottom="7" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
   </spawns>
   <treasures>
     <treasure name="MausGems">
@@ -78761,7 +79171,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new LargeEmerald(600u);
+	return new LargeEmerald(750u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -78770,7 +79180,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallAmethyst(500u);
+	return new SmallAmethyst(850u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -78779,7 +79189,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Diamond(1500u);
+	return new Diamond(1900u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -78830,7 +79240,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallSapphire(900u);
+	return new SmallSapphire(1100u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -78839,7 +79249,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(1100u);
+	return new Amethyst(1350u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -78848,7 +79258,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StarRuby(1300u);
+	return new StarRuby(1600u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -78993,7 +79403,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(1300u);
+	return new Amethyst(2000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -79002,7 +79412,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StarRuby(1500u);
+	return new StarRuby(3000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -79011,7 +79421,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallSapphire(1100u);
+	return new SmallSapphire(1700u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
