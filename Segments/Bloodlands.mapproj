@@ -88251,12 +88251,12 @@
     lurker.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new PermanentStrengthPotion(),       10),
         new LootPackEntry(true, (from, container) => new YouthPotion(),       10),
-        new LootPackEntry(true, (from, container) => new ManaPotion(),       10)
-        new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion,       5)
-        new LootPackEntry(true, (from, container) => new PermanentDexterityPotion,       5)
-        new LootPackEntry(true, (from, container) => new PermanentWillpowerPotion,       5)
-        new LootPackEntry(true, (from, container) => new PermanentWisdomPotion,       5)
-        new LootPackEntry(true, (from, container) => new PermanentIntelligencePotion, 5)
+        new LootPackEntry(true, (from, container) => new ManaPotion(),       10),
+        new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(),       5),
+        new LootPackEntry(true, (from, container) => new PermanentDexterityPotion(),       5),
+        new LootPackEntry(true, (from, container) => new PermanentWillpowerPotion(),       5),
+        new LootPackEntry(true, (from, container) => new PermanentWisdomPotion(),       5),
+        new LootPackEntry(true, (from, container) => new PermanentIntelligencePotion(), 5)
         
     ));
     
@@ -88340,7 +88340,7 @@
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    source.Say($"I haven't had a visitor in ages.. this shall be fun!);
+    source.Say($"I haven't had a visitor in ages.. this shall be fun!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -89431,7 +89431,7 @@
     wyvern.AddGold(110);
     
     wyvern.AddLoot(new LootPack(
-        new LootPackEntry(true, tunnelSewerGems,       5,     gemsPriceMutator), 
+        //new LootPackEntry(true, tunnelSewerGems,       5,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    15)
     ));
     
@@ -89673,7 +89673,7 @@
         new CreatureBasicAttack(15, 35, 45)
     };
     
-    trollguard.Wield(new HeavyCrossbow();
+    trollguard.Wield(new HeavyCrossbow());
     trollguard.Equip(new PlatemailArmor());
     
     trollguard.AddGold(1000);
@@ -89727,7 +89727,7 @@
     shark.AddGold(450);
     shark.AddLoot(
         new LootPack(
-            new LootPackEntry(true, (from, container) => new OysterPearl(3000u), 7.69),
+            new LootPackEntry(true, (from, container) => new OysterPearl(3000u), 7.69)
 
         ));
 
@@ -89918,7 +89918,7 @@
             
     };
         
-   fighter.AddStatus(new NightVisionStatus(drake));
+   fighter.AddStatus(new NightVisionStatus(fighter));
     
     fighter.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
     
@@ -89983,7 +89983,7 @@
             
     };
         
-   fighter.AddStatus(new NightVisionStatus(drake));
+   fighter.AddStatus(new NightVisionStatus(fighter));
     
     fighter.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
     
@@ -90308,7 +90308,7 @@
     {
         MaxHealth = 270, Health = 270,
         BaseDodge = 23,
-        Name = Griffin,
+        Name = "griffin",
         CanFly = true,
         Alignment = Alignment.Chaotic,
         
@@ -90379,7 +90379,7 @@
         MaxHealth = 6500, Health = 6500,
         BaseDodge = 25,
         Body = 45,
-        MaxMana: 25,
+        MaxMana = 25,
     
         Alignment = Alignment.Chaotic,
         HideDetection = 30,
@@ -90396,7 +90396,7 @@
     
     };
     
-    unicorn.AddStatus(new NightVisionStatus(drake));
+    unicorn.AddStatus(new NightVisionStatus(unicorn));
     
     unicorn.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
     
@@ -90428,7 +90428,7 @@
         
     unicorn.Spells = new CreatureSpellCollection(20.0)
     {
-        new CreatureSpell<WhirlwindSpell(
+        new CreatureSpell<WhirlwindSpell>(
             skillLevel: 11, cost: 25),
     };
     
@@ -90609,7 +90609,7 @@
         
         priest.Home = new RectangleBounds()
         {  
-            new Rectangle2D(28, 21, 3, 2)
+            new Rectangle2D(28, 21, 3, 2, 1)
         };
         
         priest.Wield(new SteelMace());
@@ -90862,7 +90862,7 @@ spawn.Name = "The Reeve";
         };
         
         
-        sheriff.Wield(new Dagger());
+        sheriff.Wield(new SteelDagger());
         sheriff.Equip(new DragonScaleArmor());
     }
 ]]></block>
@@ -90976,9 +90976,9 @@ if (spawn is Shopkeeper shopkeeper)
             shopkeeper.SayTo(player, _rarePurchaseResponses.Random());
         }
     
-            trainer.AddCounter(new Point2D(28, -3, 1));
-            trainer.AddCounter(new Point2D(29, -3, 1));
-            trainer.AddCounter(new Point2D(30, -3, 1));
+            shopkeeper.AddCounter(new Point2D(28, -3, 1));
+            shopkeeper.AddCounter(new Point2D(29, -3, 1));
+            shopkeeper.AddCounter(new Point2D(30, -3, 1));
 
         // Normal stock items.
         var merchantUpsell = 3.5;
