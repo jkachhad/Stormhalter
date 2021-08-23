@@ -96,13 +96,9 @@
                 var direction = GetDirectionTo(combatant.Location);
                 var distance = GetDistanceToMax(combatant.Location);
 
-                if (direction == Direction.None)
-                    direction = Direction.Cardinal.Random();
+                direction = Direction.Cardinal.Random();
 
-                if (distance >= 3)
-                    whirlwind.CastAt(direction);
-                else
-                    whirlwind.CastAt(direction, direction.Opposite);
+                whirlwind.CastAt(direction, direction.Opposite);
 
                 if (target != null)
                     target.Cancel(this, TargetCancel.Canceled);

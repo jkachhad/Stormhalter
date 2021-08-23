@@ -75225,7 +75225,7 @@
     var isFemale = Utility.RandomBool();            
     var wizard = new Humanoid()
     {
-        Name = _names.Random(),
+        Name = "Thrall",
         Body = (isFemale ? 37 : 38), IsFemale = isFemale,
             
         MaxHealth = 110, Health = 110,
@@ -75297,7 +75297,7 @@
         <block><![CDATA[
     var wizard = new Humanoid()
     {
-        Name = _names.Random(),
+        Name = "Thrall",
         Body = 38,
             
         MaxHealth = 110, Health = 110,
@@ -76201,8 +76201,8 @@
         <block><![CDATA[
     var drake = new Drake()
     {
-        MaxHealth = 6000, Health = 6000,
-        BaseDodge = 19,
+        MaxHealth = 4500, Health = 4500,
+        BaseDodge = 25,
         
         Alignment = Alignment.Chaotic,
         HideDetection = 27,
@@ -76231,14 +76231,13 @@
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(19,      60, 75,     "The drake smashes you with its tail.",
-                                                        new AttackProneComponent(25), 
-                                                        new AttackStunComponent(10)),               40
+            new CreatureAttack(19,      60, 75,     "The drake slashes you with its tail.",
+                                                        new AttackPoisonComponent(30)),             20
         },
         {
-            new CreatureAttack(20,      75, 100,     "The drake buffets you with its wings.",
+            new CreatureAttack(20,      75, 95,     "The drake buffets you with its wings.",
                                                         new AttackProneComponent(35), 
-                                                        new AttackStunComponent(15)),               20
+                                                        new AttackStunComponent(15)),               40
         },
     };
     
@@ -76258,15 +76257,11 @@
     drake.AddGold(2000);
     drake.AddLoot(new LootPack(
         new LootPackEntry(true, MinotaurGems,       100,     gemsPriceMutator), 
-        new LootPackEntry(true, (from, container) => new LightningResistanceRing(),    33),
-        new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(),     100),
-        new LootPackEntry(true, (from, container) => new LightningShield(),     10),
-        new LootPackEntry(true, (from, container) => new StrongStrengthBracelet(),    50),
+        new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(),     100), 
+        new LootPackEntry(true, DrakeOptions,    100),        
         new LootPackEntry(true, (from, container) => new GriffinSkull(),    100),
         new LootPackEntry(true, (from, container) => new ManaPotion(),    100),
-        new LootPackEntry(true, (from, container) => new StunResistanceBracelet(),    50),
         new LootPackEntry(true, (from, container) => new FeatherFallBoots(),    100),
-        new LootPackEntry(true, (from, container) => new DexterityRing(),    10)
     ));
     
     return drake;
@@ -79143,7 +79138,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="shidNinja" size="3" minimum="1" maximum="1" />
-      <bounds region="4">
+      <bounds region="255">
         <inclusion left="1" top="1" right="9" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
@@ -79167,7 +79162,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="shidNinja" size="3" minimum="1" maximum="1" />
-      <bounds region="4">
+      <bounds region="255">
         <inclusion left="1" top="1" right="13" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
@@ -79191,7 +79186,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="shidNinja" size="3" minimum="1" maximum="1" />
-      <bounds region="4">
+      <bounds region="255">
         <inclusion left="1" top="1" right="15" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
@@ -79566,6 +79561,35 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new PermanentStrengthPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="DrakeOptions">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StrongStrengthBracelet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new LightningResistanceRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new DexterityRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
