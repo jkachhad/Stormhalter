@@ -88352,7 +88352,7 @@
 	var hobgoblin = new Hobgoblin()
     {
         Name = "Gorbin the Hermit",
-        MaxHealth = 250, Health = 250,
+        MaxHealth = 450, Health = 450,
         BaseDodge = 14,
     
         Experience = 8600,
@@ -89156,7 +89156,7 @@
     var goblin = new Goblin()
     {
         Name = "Child of Gorbin",
-        MaxHealth = 75, Health = 75,
+        MaxHealth = 100, Health = 100,
         BaseDodge = 12,
                 
         Experience = 4100,
@@ -89168,7 +89168,7 @@
         new CreatureBasicAttack(13, 15, 25)
     };
     
-    goblin.Wield(new HeavyCrossbow());
+    goblin.Wield(new FineCrossbow());
     goblin.Equip(new LeatherArmor());
             
     goblin.AddGold(300);
