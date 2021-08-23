@@ -83,7 +83,7 @@ namespace Kesmai.WorldForge.UI.Documents
 			AddRegionSpawnerCommand = new RelayCommand(AddRegionSpawner);
 			RemoveRegionSpawnerCommand = new RelayCommand<RegionSpawner>(RemoveRegionSpawner,
 				(spawner) => SelectedRegionSpawner != null);
-			RemoveLocationSpawnerCommand.DependsOn(() => SelectedRegionSpawner);
+			RemoveRegionSpawnerCommand.DependsOn(() => SelectedRegionSpawner);
 		}
 		
 		public void AddLocationSpawner()
