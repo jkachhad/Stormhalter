@@ -1,9 +1,5 @@
 using System;
 using System.IO;
-using System.Reflection;
-using System.Reflection.Metadata;
-using System.Reflection.PortableExecutable;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -14,8 +10,18 @@ namespace Kesmai.WorldForge.UI
 {
 	public partial class AuthenticationWindow : Window
 	{
+		private static string StoragePath = ".storage";
+
+		private static string ComponentsName = "Components.cache";
+		private static string ScriptingName = "Scripting.cache";
+		
 		private static Brush _errorBrush = new SolidColorBrush(Colors.Red);
 		private static Brush _normalBrush = new SolidColorBrush(Colors.Black);
+		
+		private DirectoryInfo _storageDirectory;
+		
+		private FileInfo _componentsFile;
+		private FileInfo _scriptsFile;
 		
 		private NetClient _client;
 		private NetPeerConfiguration _configuration;
@@ -25,9 +31,14 @@ namespace Kesmai.WorldForge.UI
 		private int _totalTasks = 4;
 
 		private bool _authenticate = true;
-		
+
 		public AuthenticationWindow()
 		{
+			_storageDirectory = new DirectoryInfo(StoragePath);
+			
+			_componentsFile = new FileInfo($@"{_storageDirectory.FullName}\{ComponentsName}");
+			_scriptsFile = new FileInfo($@"{_storageDirectory.FullName}\{ScriptingName}");
+			
 			InitializeComponent();
 
 			if (_authenticate)
@@ -43,22 +54,28 @@ namespace Kesmai.WorldForge.UI
 			}
 			else
 			{
-				try
-				{
-					Core.ComponentsResource = XDocument.Load("ComponentResource.cache");
-					Core.ScriptingData = File.ReadAllBytes("ScriptingData.cache");
-				}
-				catch { }
-				OnComplete();
+				OnComplete(false);
 			}
 		}
 		
-		public void OnComplete()
+		public void OnComplete(bool useCache)
 		{
 			Dispatcher.Invoke(() =>
 			{
 				var applicationWindow = Application.Current.MainWindow = new ApplicationWindow();
 
+				if (useCache)
+				{
+					if (_storageDirectory is { Exists: false })
+						_storageDirectory.Create();
+					
+					if (_componentsFile.Exists)
+						Core.ComponentsResource = XDocument.Load(_componentsFile.FullName);
+					
+					if (_scriptsFile.Exists)
+						Core.ScriptingData = File.ReadAllBytes(_scriptsFile.FullName);
+				}
+				
 				Close();
 				
 				applicationWindow.Show();
@@ -89,6 +106,9 @@ namespace Kesmai.WorldForge.UI
 
 		private async Task Authenticate(string host, int port)
 		{
+			if (_storageDirectory is { Exists: false })
+				_storageDirectory.Create();
+
 			SetStatus("Connecting...", _normalBrush);
 			
 			await Task.Delay(100);
@@ -144,8 +164,12 @@ namespace Kesmai.WorldForge.UI
 											stream.Write(data, 0, length);
 											stream.Seek(0, SeekOrigin.Begin);
 											
-											Core.ComponentsResource = XDocument.Load(stream);
-											Core.ComponentsResource.Save("ComponentResource.cache");
+											var components = Core.ComponentsResource = XDocument.Load(stream);
+
+											if (_componentsFile.Exists)
+												_componentsFile.Delete();
+											
+											components.Save(_componentsFile.FullName);
 										}
 									}
 			
@@ -158,8 +182,14 @@ namespace Kesmai.WorldForge.UI
 									var data = message.ReadBytes(length);
 
 									if (data.Length > 0)
+									{
 										Core.ScriptingData = data;
-										File.WriteAllBytes("ScriptingData.cache", data);
+										
+										if (_scriptsFile.Exists)
+											_scriptsFile.Delete();
+										
+										await File.WriteAllBytesAsync(_scriptsFile.FullName, data);
+									}
 
 									IncreaseProgress();
 									break;
@@ -198,16 +228,10 @@ namespace Kesmai.WorldForge.UI
 								{
 									SetStatus("Disconnecting.", _normalBrush);
 									
-									await Task.Delay(5000);
+									await Task.Delay(1000);
 									
 									connected = false;
-											try
-											{
-												Core.ComponentsResource = XDocument.Load("ComponentResource.cache");
-												Core.ScriptingData = File.ReadAllBytes("ScriptingData.cache");
-											}
-											catch { }
-											if (null != Core.ScriptingData) { OnComplete(); } // we loaded cached data
+									
 									break;
 								}
 							}
@@ -220,10 +244,22 @@ namespace Kesmai.WorldForge.UI
 				}
 			}
 
-			if (complete)
-				OnComplete();
-			else
-				OnFail();
+			var useCache = false;
+			
+			if (!complete)
+			{
+				var messageResult = MessageBox.Show("Unable to connect to server. Do you wish to continue in offline mode?", "Error", MessageBoxButton.YesNo);
+
+				if (messageResult != MessageBoxResult.Yes)
+				{
+					OnFail();
+					return;
+				}
+
+				useCache = true;
+			}
+
+			OnComplete(useCache);
 		}
 	}
 }
