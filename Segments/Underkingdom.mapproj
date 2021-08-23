@@ -97524,7 +97524,6 @@
             
         Experience = 11000,
         
-        MagicProtection = 33,
         CanCharge = true,
         
         BasePenetration = ShieldPenetration.Heavy,
@@ -97898,7 +97897,6 @@
         BasePenetration = ShieldPenetration.Light,
         MaxMana = 21, Mana = 21,
         DeathResistance = 100,
-        MagicProtection = 33,
     };
         
     banshee.Attacks = new CreatureAttackCollection()
@@ -98279,7 +98277,6 @@
         BasePenetration = ShieldPenetration.Light,
         Experience = 12000,
         VisibilityDistance = 0,
-        MagicProtection = 33,
     };
     
     lich.AddStatus(new NightVisionStatus(lich));
@@ -99964,7 +99961,7 @@
     <spawn type="RegionSpawner" name="wyverns">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>45</maximum>
+      <maximum>25</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -99979,10 +99976,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="surfaceWyWhite" size="3" minimum="10" maximum="15" />
-      <entry entity="surfaceWyGreen" size="3" minimum="10" maximum="15" />
-      <entry entity="surfaceWyBlue" size="3" minimum="10" maximum="15" />
-      <entry entity="surfaceWyRed" size="3" minimum="10" maximum="15" />
+      <entry entity="surfaceWyWhite" size="3" minimum="5" maximum="15" />
+      <entry entity="surfaceWyGreen" size="3" minimum="5" maximum="15" />
+      <entry entity="surfaceWyBlue" size="3" minimum="5" maximum="15" />
+      <entry entity="surfaceWyRed" size="3" minimum="5" maximum="15" />
       <bounds region="1">
         <inclusion left="3" top="2" right="49" bottom="36" />
         <exclusion left="46" top="34" right="49" bottom="36" />
