@@ -98791,10 +98791,10 @@
         new CreatureBasicAttack(7)
     };
     
-    wraith.Spells =  new CreatureSpellCollection(100)
+    wraith.Spells = new CreatureSpellCollection(100)
     {
-        new CreatureSpell<WhirlwindSpell>(
-            skillLevel: 8), 100, TimeSpan.FromSeconds(12.0)
+       { new CreatureSpell<WhirlwindSpell>(
+            skillLevel: 8), 100, TimeSpan.FromSeconds(12.0) }
     };
     
     wraith.AddLoot(new LootPack(
