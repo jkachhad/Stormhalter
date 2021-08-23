@@ -21400,8 +21400,16 @@
         </component>
       </tile>
       <tile x="27" y="16">
+        <component type="FloorComponent">
+          <ground>7</ground>
+        </component>
         <component type="StaticComponent">
-          <static>195</static>
+          <color r="0" g="255" b="255" a="255" />
+          <static>206</static>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>195</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="28" y="16">
@@ -88163,7 +88171,7 @@
         <block><![CDATA[
 	var piranha = new Piranha()
     {
-        MaxHealth = 75, Health = 75,
+        MaxHealth = 99, Health = 99,
         BaseDodge = 14,
     
         Experience = 3221,
@@ -88237,7 +88245,7 @@
     lurker.Attacks = new CreatureAttackCollection()
     {
         { new CreatureAttack(11,     15, 20,      "The lurker whips you with a tentacle"),  50 }, 
-        { new CreatureAttack(12,     1, 30,     "The lurker bites you.",
+        { new CreatureAttack(12,     18, 30,     "The lurker bites you.",
                                                     new AttackPoisonComponent(15)),          50 },
     };
     lurker.AddStatus(new BreatheWaterStatus(lurker));
@@ -88249,15 +88257,8 @@
     
     lurker.AddGold(2200);
     lurker.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new PermanentStrengthPotion(),       10),
-        new LootPackEntry(true, (from, container) => new YouthPotion(),       10),
-        new LootPackEntry(true, (from, container) => new ManaPotion(),       10),
-        new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(),       5),
-        new LootPackEntry(true, (from, container) => new PermanentDexterityPotion(),       5),
-        new LootPackEntry(true, (from, container) => new PermanentWillpowerPotion(),       5),
-        new LootPackEntry(true, (from, container) => new PermanentWisdomPotion(),       5),
-        new LootPackEntry(true, (from, container) => new PermanentIntelligencePotion(), 5)
-        
+        new LootPackEntry(true, MagicBottles, 10),
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return lurker;
@@ -88325,6 +88326,7 @@
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
         new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
         new LootPackEntry(true, (from, container) => new StrongStrengthRing(),        100)
+
     ));
     
     return boss1;
@@ -88353,7 +88355,7 @@
     {
         Name = "Gorbin the Hermit",
         MaxHealth = 470, Health = 470,
-        BaseDodge = 14,
+        BaseDodge = 15,
     
         Experience = 8600,
         BasePenetration = ShieldPenetration.Medium,
@@ -88363,13 +88365,15 @@
         },
     };
     
-    hobgoblin.Wield(new Longsword());
+    hobgoblin.Wield(Utility.RandomBool() ? new Longsword() : new Dagger());
     hobgoblin.Equip(new LeatherArmor());    
     
     hobgoblin.AddGold(700);
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    33)
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 8),
+        new LootPackEntry(true, UltraRare, 0.5)
     ));
     
     return hobgoblin;
@@ -88419,6 +88423,8 @@
     troll.AddStatus(new NightVisionStatus(troll));
     
     troll.Wield(new Longbow());
+    
+
     troll.Equip(new ChainmailArmor());
     
     troll.AddGold(500);
@@ -89156,8 +89162,8 @@
     var goblin = new Goblin()
     {
         Name = "Child of Gorbin",
-        MaxHealth = 100, Health = 100,
-        BaseDodge = 12,
+        MaxHealth = 115, Health = 115,
+        BaseDodge = 14,
                 
         Experience = 4100,
         BasePenetration = ShieldPenetration.Light,
@@ -89340,7 +89346,7 @@
     {
         Name = "Slimey Lurker",
         Body = 161,
-        MaxHealth = 235, Health = 230,
+        MaxHealth = 235, Health = 235,
         BaseDodge = 14,
         BasePenetration = ShieldPenetration.Medium,
         CanSwim = true,
@@ -89714,7 +89720,7 @@
             new CreatureAttack(13, 25, 35, "You've been bitten by the shark."),       60 
         }, 
         {
-            new CreatureAttack(13, 30, 45, "The shark lashes you with its fin."),    40
+            new CreatureAttack(14, 30, 45, "The shark lashes you with its fin."),    40
         }, 
     };
     
@@ -89727,7 +89733,9 @@
     shark.AddGold(450);
     shark.AddLoot(
         new LootPack(
-            new LootPackEntry(true, (from, container) => new OysterPearl(3000u), 7.69)
+            new LootPackEntry(true, (from, container) => new OysterPearl(3000u), 7.69),
+            new LootPackEntry(true, SemiRare, 10)
+            
 
         ));
 
@@ -90458,7 +90466,7 @@
         <block><![CDATA[
 	var griffin = new Griffin()
     {
-        MaxHealth = 210, Health = 210,
+        MaxHealth = 225, Health = 225,
         BaseDodge = 23,
         Name = "Bloodthirsty Griffin",
 
@@ -90501,13 +90509,73 @@
 
     griffin.AddGold(1000);
     griffin.AddLoot(new LootPack(
-        
+        new LootPackEntry(true, MagicBottles, 7),  
+        new LootPackEntry(true, SemiRare, 11),  
         new LootPackEntry(true, (from, container) => new OchreEgg(), 25.0), 
         new LootPackEntry(true, (from, container) => new GriffinSkull(), 10)
     ));
    
+   
 
     return griffin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="surfaceGreaterLurker">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var lurker = new Fish()
+    {
+        Name = "Greater Lurker",
+        MaxHealth = 325, Health = 325,
+        BaseDodge = 16,
+        BasePenetration = ShieldPenetration.Medium,
+        CanSwim = true,
+        CanWalk = false,
+        Body = 161,
+        
+        Experience = 8200,
+            
+        VisibilityDistance = 0,
+    };
+    
+    lurker.Attacks = new CreatureAttackCollection()
+    {
+        { new CreatureAttack(13,     17, 25,      "The lurker whips you with a tentacle"),  50 }, 
+        { new CreatureAttack(14,     22, 43,     "The lurker bites you.",
+                                                    new AttackPoisonComponent(15)),          50 },
+    };
+    lurker.AddStatus(new BreatheWaterStatus(lurker));
+    lurker.Blocks = new CreatureBlockCollection
+    {
+        { new CreatureBlock(6, "a tentacle") }, 
+        { new CreatureBlock(4, "sharp fangs") }, 
+    };
+    
+    lurker.AddGold(2200);
+    lurker.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, MagicBottles, 8),
+        new LootPackEntry(true, UltraRare, 1),
+        new LootPackEntry(true, SemiRare, 10),
+    ));
+    
+    return lurker;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -91961,7 +92029,89 @@ if (spawn is Shopkeeper shopkeeper)
     </spawn>
   </spawns>
   <treasures>
-    <treasure name="Testing" />
+    <treasure name="MagicBottles">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentConstitutionPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentDexterityPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentIntelligencePotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentStrengthPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentStrengthPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentWillpowerPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentWisdomPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="6">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new YouthPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="6">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new ManaPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
     <treasure name="drop3gems">
       <entry weight="25">
         <script name="OnCreate" enabled="true">
@@ -92051,6 +92201,37 @@ if (spawn is Shopkeeper shopkeeper)
           <block><![CDATA[]]></block>
           <block><![CDATA[
     return new PermanentStrengthPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="UltraRare">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new DexterityRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="SemiRare">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StrongShieldRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StrongStrengthRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
