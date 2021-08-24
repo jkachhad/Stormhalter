@@ -7392,9 +7392,13 @@
         </component>
       </tile>
       <tile x="0" y="11">
-        <component type="WaterComponent">
+        <component type="FloorComponent">
           <ground>374</ground>
-          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <color r="159" g="136" b="110" a="255" />
+          <obstruction>370</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="1" y="11">
@@ -7695,9 +7699,13 @@
         </component>
       </tile>
       <tile x="0" y="12">
-        <component type="WaterComponent">
+        <component type="FloorComponent">
           <ground>374</ground>
-          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <color r="159" g="136" b="110" a="255" />
+          <obstruction>370</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="1" y="12">
@@ -88015,8 +88023,8 @@
         Name = _names.Random(),
         Body = (female ? 16 : 48), IsFemale = female,
     
-        BaseDodge = 12,
-        MaxHealth = 100, Health = 100,
+        BaseDodge = 21,
+        MaxHealth = 1000, Health = 1000,
         MaxMana = 30, Mana = 30,
         
         Experience = 50,
@@ -88631,8 +88639,8 @@
     var raven = new Raven()
     {
         Name = "Morbin",
-        MaxHealth = 199, Health = 199,
-        BaseDodge = 17,
+        MaxHealth = 299, Health = 299,
+        BaseDodge = 21,
         BasePenetration = ShieldPenetration.Medium,
         CanSwim = true,
         Experience = 1700,
@@ -88650,9 +88658,9 @@
     
     raven.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(17,     12, 28,   "The raven buffets you with his wings."),  50 }, 
-        { new CreatureAttack(18,     13, 22,  "The raven sends a flurry of pecks towards you."),  30 }, 
-        { new CreatureAttack(19,     14, 25,  "The raven pecks at your eyes attempting to blind you."),             20 }, 
+        { new CreatureAttack(17,     22, 28,   "The raven buffets you with his wings."),  50 }, 
+        { new CreatureAttack(18,     23, 31,  "The raven sends a flurry of pecks towards you."),  30 }, 
+        { new CreatureAttack(19,     24, 45,  "The raven pecks at your eyes attempting to blind you."),             20 }, 
     };
         
     raven.Blocks = new CreatureBlockCollection
@@ -90794,8 +90802,8 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     spawn.Name = "priest";
-    spawn.MaxHealth = 100; spawn.Health = 100;
-    spawn.BaseDodge = 20;
+    spawn.MaxHealth = 1000; spawn.Health = 1000;
+    spawn.BaseDodge = 22;
     
     if (spawn is Peacekeeper priest)
     {
@@ -90812,7 +90820,7 @@
         priest.Spells = new CreatureSpellCollection()
         {
             new CreatureSpell<CurseSpell>(
-                    skillLevel: 10, cost: 3,
+                    skillLevel: 17, cost: 3,
                     mantra: SpellHelper.GenerateMantra(), instantCast: false),
         };
     }
@@ -91346,7 +91354,7 @@ if (spawn is Shopkeeper shopkeeper)
     <spawn type="RegionSpawner" name="surfaceFishNorth">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>24</maximum>
+      <maximum>25</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -91363,7 +91371,7 @@ if (spawn is Shopkeeper shopkeeper)
       </script>
       <entry entity="surfacePirhana" size="2" minimum="12" maximum="15" />
       <entry entity="surfaceLurker" size="1" minimum="3" maximum="6" />
-      <entry entity="bloodlandsShark" size="1" minimum="1" maximum="1" />
+      <entry entity="bloodlandsShark" size="1" minimum="1" maximum="2" />
       <entry entity="surfaceBloodGrif" size="1" minimum="1" maximum="2" />
       <bounds region="1">
         <inclusion left="0" top="-14" right="23" bottom="-3" />
@@ -91774,7 +91782,7 @@ if (spawn is Shopkeeper shopkeeper)
     <spawn type="RegionSpawner" name="SurfaceFishSouth">
       <minimumDelay>660</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>24</maximum>
+      <maximum>27</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -91790,13 +91798,13 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="surfaceLurker" size="1" minimum="4" maximum="8" />
-      <entry entity="surfacePirhana" size="1" minimum="10" maximum="14" />
-      <entry entity="bloodlandsShark" size="1" minimum="1" maximum="1" />
+      <entry entity="surfacePirhana" size="2" minimum="10" maximum="14" />
+      <entry entity="bloodlandsShark" size="1" minimum="1" maximum="2" />
       <entry entity="surfaceBloodGrif" size="1" minimum="1" maximum="2" />
       <entry entity="surfaceGreaterLurker" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="0" top="0" right="21" bottom="21" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="13" top="0" right="19" bottom="2" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="surfaceChildren">
