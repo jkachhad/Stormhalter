@@ -97017,9 +97017,10 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+  source.Say($"Come see my wares, {player.Name}. Just ask me to 'show prices'.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -97134,7 +97135,7 @@ else
         <block><![CDATA[
   If (player.Profession == Profession.Wizard)
 {
-  source.Say($"Allow me to train you in the elements, {player.Name}");
+  source.Say($"Allow me to train you in the elements, {player.Name}.");
 }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -97173,7 +97174,7 @@ else
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  source.Say($"Welcome to the guild, {player.Name}");
+  source.Say($"Welcome to the guild, {player.Name}.");
   source.Say($"Can I offer you training?");
 ]]></block>
         <block><![CDATA[]]></block>
@@ -97314,7 +97315,7 @@ else
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  source.Say($"If I only had another iron ore and yytril.");
+  source.Say($"If I only had another iron ore and yttril.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -100526,7 +100527,7 @@ return orc;
         <block><![CDATA[
   If (player.Profession == Profession.Knight)
 {
-  source.Say($"Did Cudyl send you, {player.Name}? The gem is mine!");
+  source.Say($"Did Cudyl send you, knight? The gem is mine!");
 }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -100733,7 +100734,7 @@ return orc;
 else
     If (player.Profession == Profession.Knight)
 { 
-  source.Say($"Good day, {player.Name}");
+  source.Say($"Good day, {player.Name}.");
 }
 else  
  {   
