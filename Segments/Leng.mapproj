@@ -75878,7 +75878,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="shidShidosha">
+    <entity name="shidBossShidosha">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -76031,7 +76031,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="cliffKosh">
+    <entity name="cliffBossKosh">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -76116,7 +76116,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="vlad">
+    <entity name="vladBoss">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -76170,12 +76170,12 @@
         new LootPackEntry(true, (from, container) => new FireIceProtectionAmulet(),        100),
         new LootPackEntry(true, (from, container) => new GoldenTorc(),        33),
         new LootPackEntry(true, (from, container) => new FeatherFallBoots(),        100),
-        new LootPackEntry(true, (from, container) => new StrongShieldBracelet(),        66),
+        new LootPackEntry(true, (from, container) => new StrongShieldBracelet(),        5),
         new LootPackEntry(true, (from, container) => new StrongStrengthRing(),        100),
         new LootPackEntry(true, (from, container) => new StrongStrengthRing(),        100),
         new LootPackEntry(true, (from, container) => new StrongStrengthRing(),        50),
         new LootPackEntry(true, VladOptions,    100),
-        new LootPackEntry(true, (from, container) => new StrongShieldRing(),        100)
+        new LootPackEntry(true, (from, container) => new StrongShieldRing(),        10)
     ));
     
     return vlad;
@@ -76195,7 +76195,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="minoSparky">
+    <entity name="minoBossSparky">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -78540,7 +78540,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="minoSparky" size="1" minimum="1" maximum="1" />
+      <entry entity="minoBossSparky" size="1" minimum="1" maximum="1" />
       <entry entity="minoLich" size="1" minimum="2" maximum="2" />
       <entry entity="minoMinotaur" size="1" minimum="3" maximum="3" />
       <bounds region="43">
@@ -78566,7 +78566,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="cliffKosh" size="1" minimum="1" maximum="1" />
+      <entry entity="cliffBossKosh" size="1" minimum="1" maximum="1" />
       <bounds region="30">
         <inclusion left="6" top="3" right="8" bottom="5" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -78590,7 +78590,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="vlad" size="1" minimum="1" maximum="1" />
+      <entry entity="vladBoss" size="1" minimum="1" maximum="1" />
       <entry entity="vladSalamander" size="1" minimum="1" maximum="1" />
       <entry entity="vladGryph" size="1" minimum="2" maximum="2" />
       <bounds region="17">
@@ -78696,7 +78696,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="shidShidosha" size="1" minimum="1" maximum="1" />
+      <entry entity="shidBossShidosha" size="1" minimum="1" maximum="1" />
       <entry entity="shidNinja" size="1" minimum="1" maximum="1" />
       <bounds region="255">
         <inclusion left="1" top="1" right="5" bottom="7" />
@@ -79495,7 +79495,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StrongStrengthRing();
+	return new ShieldRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -79567,7 +79567,7 @@
       </entry>
     </treasure>
     <treasure name="DrakeOptions">
-      <entry weight="1">
+      <entry weight="10">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -79576,7 +79576,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="1">
+      <entry weight="10">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
