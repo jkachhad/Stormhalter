@@ -96800,9 +96800,17 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+  If (player.Profession == Profession.Wizard)
+{
+  source.Say($"Filthy Wizzzarrrd!");
+}
+else
+{
+  source.Say($"You will not escape me!");
+}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96834,9 +96842,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+ source.Say($"Recall rings get you out of a pinch and only for 150 gold.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96868,9 +96877,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+   source.Say($"Get your healing balm here. Only 16 gold.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96902,9 +96912,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+ source.Say($"Mugwort cures even the deadliest of poisons. Just 25 gold.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96935,9 +96946,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+  source.Say($"Deposit your gold with us, {player.Name}.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96968,9 +96980,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+  source.Say($"Armor made from your kills.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -97076,9 +97089,13 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+  If (player.Profession == Profession.Thaumaturge)
+{
+  source.Say($"Life and death, I can teach you to master them, {player.Name}.");
+}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -97112,9 +97129,13 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+  If (player.Profession == Profession.Wizard)
+{
+  source.Say($"Allow me to train you in the elements, {player.Name}");
+}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -97149,9 +97170,11 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+  source.Say($"Welcome to the guild, {player.Name}");
+  source.Say($"Can I offer you training?");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -97188,9 +97211,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+ source.Say($"There is evil afoot, {player.Name}. Be careful.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -97287,9 +97311,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+  source.Say($"If I only had another iron ore and yytril.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -97411,9 +97436,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+  source.Say($"Bork! Bork!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -100495,9 +100521,13 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+  If (player.Profession == Profession.Thief)
+{
+  source.Say($"Did Cudyl send you, {player.Name}? The gem is mine!");
+}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -100696,7 +100726,22 @@ return orc;
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    source.Say($"I'm the law around here.");
+    If (player.Profession == Profession.Thief)
+{
+  source.Say($"I'll be watching you, {player.Name}.");
+}
+else
+    If (player.Profession == Profession.Knight)
+{ 
+  source.Say($"Good day, {player.Name}");
+}
+else  
+ {   
+ 
+  source.Say($"I'm the law around here.");
+ 
+ }
+
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
