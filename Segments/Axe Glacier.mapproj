@@ -107721,7 +107721,7 @@
     <spawn type="RegionSpawner" name="Griff Cliffs Outside">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>25</maximum>
+      <maximum>16</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -107750,14 +107750,13 @@
       <bounds region="8">
         <inclusion left="3" top="6" right="6" bottom="22" />
         <inclusion left="7" top="20" right="20" bottom="33" />
-        <inclusion left="22" top="21" right="31" bottom="23" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Griff Cliff Dungeon">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>15</maximum>
+      <maximum>25</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -107775,7 +107774,7 @@
       <entry entity="lightningMesaWraith" size="1" minimum="2" maximum="4" />
       <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="1" />
       <entry entity="lightningMesaTroll" size="2" minimum="2" maximum="4" />
-      <entry entity="lightningMesaGargoyle" size="1" minimum="0" maximum="0" />
+      <entry entity="lightningMesaGargoyle" size="1" minimum="1" maximum="2" />
       <entry entity="lightningMesaHobgoblin" size="3" minimum="3" maximum="4" />
       <entry entity="lightningMesaWolf" size="3" minimum="2" maximum="4" />
       <entry entity="lightningMesaOrc" size="3" minimum="3" maximum="5" />
