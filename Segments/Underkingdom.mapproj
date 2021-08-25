@@ -97004,9 +97004,8 @@
     
     overlord.CombatantChangeInterval = TimeSpan.FromSeconds(12.0);
     
-    //TODO not sure on staff being wielded
+    //TODO figure out how to make this bastard not fumble
     
-    overlord.Wield(new EbonyStaff());
     overlord.Equip(new DragonScaleArmor());
     
     overlord.Attacks = new CreatureAttackCollection()
@@ -97026,6 +97025,7 @@
         new LootPackEntry(true, (from, container) => new Diamond(1500u),        100,    gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100,    gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new PurpleSilkRobe(),           100),
+        new LootPackEntry(true, (from, container) => new EbonyStaff(),           100),
         new LootPackEntry(true, overlordTreasure, 100)
     ));
     
@@ -98896,7 +98896,7 @@
     var wraith = new HummingGuardian()
     {
         Name = "Guardian",
-        MaxHealth = 200, Health = 200,
+        MaxHealth = 50, Health = 50,
         BaseDodge = 12,
         IsInvisible = true,
         Experience = 1,

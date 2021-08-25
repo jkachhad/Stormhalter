@@ -75896,6 +75896,7 @@
         CanJumpkick = true,
         CanSwim = true,
         CanStrikeCritically = true,
+        CanLoot = false,
         
         BasePenetration = ShieldPenetration.Heavy,
 
@@ -75973,6 +75974,7 @@
         VisibilityDistance = 1,
         CanStrikeCritically = false,
         BasePenetration = ShieldPenetration.Medium,
+        CanLoot = false,
 
     };
     
@@ -76210,6 +76212,7 @@
         
         CanFly = true,
         CanCharge = true,
+        CanLoot = false,
         
         BasePenetration = ShieldPenetration.VeryHeavy,
 
@@ -76457,8 +76460,9 @@
         MaxMana = 19, Mana = 19,
         BaseDodge = 14,
         MagicProtection = 33,
-        Experience = 6500,
+        Experience = 9500,
         VisibilityDistance = 0,
+        CanLoot = false,
     };
     
     lich.AddStatus(new NightVisionStatus(lich));
@@ -76564,7 +76568,7 @@
         BaseDodge = 18,
     
         Experience = 15500,
-    
+        
         CanCharge = true,
         BasePenetration = ShieldPenetration.Medium,
         Immunity = CreatureImmunity.Web
@@ -77536,7 +77540,7 @@
         BaseDodge = 14,
         BasePenetration = ShieldPenetration.Light,
         Experience = 11500,
-            
+        
         
     };
     
