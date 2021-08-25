@@ -76169,15 +76169,12 @@
     vlad.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new GriffinSkull(),        100),
         new LootPackEntry(true, (from, container) => new LionRobe(),        50),
-        new LootPackEntry(true, (from, container) => new FireIceProtectionAmulet(),        100),
         new LootPackEntry(true, (from, container) => new GoldenTorc(),        33),
         new LootPackEntry(true, (from, container) => new FeatherFallBoots(),        100),
         new LootPackEntry(true, (from, container) => new StrongShieldBracelet(),        5),
         new LootPackEntry(true, (from, container) => new StrongStrengthRing(),        100),
         new LootPackEntry(true, (from, container) => new StrongStrengthRing(),        100),
-        new LootPackEntry(true, (from, container) => new StrongStrengthRing(),        50),
-        new LootPackEntry(true, VladOptions,    100),
-        new LootPackEntry(true, (from, container) => new StrongShieldRing(),        10)
+        new LootPackEntry(true, (from, container) => new StrongShieldRing(),        6.67)
     ));
     
     return vlad;
@@ -79241,26 +79238,6 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new StaminaPotion();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-    </treasure>
-    <treasure name="VladOptions">
-      <entry weight="2">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new StrongShieldBracelet();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="1">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new GoldenTorc();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
