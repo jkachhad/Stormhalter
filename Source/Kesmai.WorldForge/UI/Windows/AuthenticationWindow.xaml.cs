@@ -62,8 +62,6 @@ namespace Kesmai.WorldForge.UI
 		{
 			Dispatcher.Invoke(() =>
 			{
-				var applicationWindow = Application.Current.MainWindow = new ApplicationWindow();
-
 				if (useCache)
 				{
 					if (_storageDirectory is { Exists: false })
@@ -75,7 +73,9 @@ namespace Kesmai.WorldForge.UI
 					if (_scriptsFile.Exists)
 						Core.ScriptingData = File.ReadAllBytes(_scriptsFile.FullName);
 				}
-				
+
+				var applicationWindow = Application.Current.MainWindow = new ApplicationWindow();
+
 				Close();
 				
 				applicationWindow.Show();
