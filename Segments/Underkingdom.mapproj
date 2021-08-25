@@ -96876,6 +96876,8 @@
         VisibilityDistance = 0,
     };
     
+    lurker.AddStatus(new BreatheWaterStatus(lurker));
+    
     lurker.Attacks = new CreatureAttackCollection()
     {
         { 
@@ -98339,6 +98341,8 @@
         VisibilityDistance = 0,
     };
     
+    lurker.AddStatus(new BreatheWaterStatus(lurker));
+    
     lurker.Attacks = new CreatureAttackCollection()
     {
         { 
@@ -98901,11 +98905,13 @@
         IsInvisible = true,
         Experience = 1,
         Movement = 0,
-        FireProtection = 100,
-        IceProtection = 100,
-        LightningResistance = 100,
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
     };
+    
     wraith.AddStatus(new NightVisionStatus(wraith));
+    
+    wraith.Weakness(WhirlwindSpell);
         
     wraith.Attacks = new CreatureAttackCollection()
     {

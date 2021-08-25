@@ -85088,6 +85088,8 @@
         Experience = 725,
     };    
     
+    shark.AddStatus(new BreatheWaterStatus(shark));
+    
     shark.Attacks = new CreatureAttackCollection
     {
         {
@@ -88415,6 +88417,8 @@
         CanSwim = true,
         VisibilityDistance = 3,
     };
+    
+    pescalanor.AddStatus(new BreatheWaterStatus(pescalanor));
     
     pescalanor.Attacks = new CreatureAttackCollection
     {
