@@ -98120,8 +98120,8 @@
     
         BasePenetration = ShieldPenetration.Heavy,
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Magic,
-        Weakness = CreatureWeakness.IceSpearSpell,
+                   CreatureImmunity.Projectile | CreatureImmunity.Slashing,
+        Weakness = CreatureWeakness.BlueGlowing,
     };
     
     mummy.AddStatus(new NightVisionStatus(mummy));
@@ -98173,29 +98173,33 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var mummy = new Mummy()
+    var wraith = new Wraith()
     {
         MaxHealth = 150, Health = 150,
         BaseDodge = 12,
+        MaxMana = 10, Mana = 10,
     
         Experience = 2725,
         
     };
-    mummy.AddStatus(new NightVisionStatus(wraith));
+    wraith.AddStatus(new NightVisionStatus(wraith));
         
-    mummy.Attacks = new CreatureAttackCollection()
+    wraith.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(7)
     };
     
-    mummy.Spells =  new CreatureSpellCollection()
+    wraith.Spells =  new CreatureSpellCollection()
     {
-        new CreatureSpell<CurseSpell>(
-            skillLevel: 12,
-            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+        { new CreatureSpell<FearSpell>(
+            skillLevel: 15, cost: 10, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),   75 },
+       { new CreatureSpell<CurseSpell>(
+            skillLevel: 9, cost: 0, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 }
     };
         
-    mummy.Wield(new WoodenStaff());
+    wraith.Wield(new WoodenStaff());
     
     return wraith;
 ]]></block>
