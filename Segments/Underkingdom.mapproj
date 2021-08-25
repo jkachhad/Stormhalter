@@ -96613,7 +96613,7 @@
         BasePenetration = ShieldPenetration.Heavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Magic,
+                   CreatureImmunity.Projectile | CreatureImmunity.Magic | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
     
     };
@@ -96936,7 +96936,7 @@
         BasePenetration = ShieldPenetration.Heavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Web | CreatureImmunity.Magic,
+                   CreatureImmunity.Projectile | CreatureImmunity.Web | CreatureImmunity.Magic | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell,
     
     };
@@ -96992,15 +96992,11 @@
         BasePenetration = ShieldPenetration.VeryHeavy,
         
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
+                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
     
         CanCharge = true,
     
-        FireProtection = 100,
-        IceProtection = 100,
-        LightningResistance = 100,
-            
-        StunResistance = 100,
         
     };
     
