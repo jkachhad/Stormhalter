@@ -105817,12 +105817,9 @@
         BasePenetration = ShieldPenetration.VeryHeavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
+                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.BlueGlowing,
     
-        FireProtection = 100,
-        IceProtection = 100,
-        StunProtection = 100,
     };
     
     yeti.AddStatus(new NightVisionStatus(yeti));
