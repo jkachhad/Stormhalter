@@ -5256,6 +5256,33 @@
           <static>317</static>
         </component>
       </tile>
+      <tile x="-4" y="5">
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>159</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-3" y="5">
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>223</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-2" y="5">
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>223</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
       <tile x="-1" y="5">
         <component type="WallComponent">
           <color r="255" g="0" b="0" a="255" />
@@ -5264,9 +5291,12 @@
           <ruins>44</ruins>
           <indestructible>true</indestructible>
         </component>
-        <component type="StaticComponent">
+        <component type="WallComponent">
           <color r="255" g="0" b="0" a="255" />
-          <static>192</static>
+          <wall>223</wall>
+          <destroyed>153</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="0" y="5">
@@ -5655,13 +5685,48 @@
           <destroyedId>80</destroyedId>
         </component>
       </tile>
-      <tile x="-1" y="6">
+      <tile x="-4" y="6">
         <component type="WallComponent">
           <color r="255" g="0" b="0" a="255" />
           <wall>224</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
           <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-3" y="6">
+        <component type="FloorComponent">
+          <color r="159" g="155" b="140" a="255" />
+          <ground>178</ground>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>23</destinationX>
+          <destinationY>12</destinationY>
+          <destinationRegion>1</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+        </component>
+      </tile>
+      <tile x="-2" y="6">
+        <component type="FloorComponent">
+          <color r="159" g="155" b="140" a="255" />
+          <ground>178</ground>
+        </component>
+      </tile>
+      <tile x="-1" y="6">
+        <component type="FloorComponent">
+          <color r="159" g="155" b="140" a="255" />
+          <ground>178</ground>
+        </component>
+        <component type="DoorComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <openId>75</openId>
+          <closedId>65</closedId>
+          <secretId>224</secretId>
+          <destroyedId>81</destroyedId>
+          <isSecret>true</isSecret>
         </component>
       </tile>
       <tile x="0" y="6">
@@ -5971,12 +6036,61 @@
           <ground>178</ground>
         </component>
       </tile>
+      <tile x="-4" y="7">
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>159</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>224</wall>
+          <destroyed>154</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-3" y="7">
+        <component type="FloorComponent">
+          <color r="159" g="155" b="140" a="255" />
+          <ground>178</ground>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>223</wall>
+          <destroyed>153</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-2" y="7">
+        <component type="FloorComponent">
+          <color r="159" g="155" b="140" a="255" />
+          <ground>178</ground>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>223</wall>
+          <destroyed>153</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
       <tile x="-1" y="7">
         <component type="WallComponent">
           <color r="255" g="0" b="0" a="255" />
           <wall>224</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>223</wall>
+          <destroyed>153</destroyed>
+          <ruins>46</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -6599,13 +6713,9 @@
         </component>
       </tile>
       <tile x="0" y="9">
-        <component type="FloorComponent">
+        <component type="WaterComponent">
           <ground>374</ground>
-        </component>
-        <component type="ObstructionComponent">
-          <color r="0" g="0" b="0" a="255" />
-          <obstruction>104</obstruction>
-          <blockVision>true</blockVision>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="1" y="9">
@@ -7282,9 +7392,13 @@
         </component>
       </tile>
       <tile x="0" y="11">
-        <component type="WaterComponent">
+        <component type="FloorComponent">
           <ground>374</ground>
-          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <color r="159" g="136" b="110" a="255" />
+          <obstruction>370</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="1" y="11">
@@ -7585,9 +7699,13 @@
         </component>
       </tile>
       <tile x="0" y="12">
-        <component type="WaterComponent">
+        <component type="FloorComponent">
           <ground>374</ground>
-          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <color r="159" g="136" b="110" a="255" />
+          <obstruction>370</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="1" y="12">
@@ -21400,8 +21518,16 @@
         </component>
       </tile>
       <tile x="27" y="16">
+        <component type="FloorComponent">
+          <ground>7</ground>
+        </component>
         <component type="StaticComponent">
-          <static>195</static>
+          <color r="0" g="255" b="255" a="255" />
+          <static>206</static>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>195</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="28" y="16">
@@ -87897,8 +88023,8 @@
         Name = _names.Random(),
         Body = (female ? 16 : 48), IsFemale = female,
     
-        BaseDodge = 12,
-        MaxHealth = 100, Health = 100,
+        BaseDodge = 21,
+        MaxHealth = 1000, Health = 1000,
         MaxMana = 30, Mana = 30,
         
         Experience = 50,
@@ -88001,9 +88127,9 @@
     sven.AddCounter(new Point2D(31, 7, 1));
     
     foreach (var skill in Skill.Weapons)
-        sven.SetTraining(skill, 0, 4);
+        sven.SetTraining(skill, 4, 12);
     
-    sven.SetTraining(Skill.Magic, 0, 10);
+    sven.SetTraining(Skill.Magic, 12, 20);
     
     return sven;
 ]]></block>
@@ -88163,7 +88289,7 @@
         <block><![CDATA[
 	var piranha = new Piranha()
     {
-        MaxHealth = 75, Health = 75,
+        MaxHealth = 99, Health = 99,
         BaseDodge = 14,
     
         Experience = 3221,
@@ -88221,7 +88347,7 @@
         <block><![CDATA[
 	var lurker = new Fish()
     {
-        Name = "bloodylurker",
+        Name = "Bloody Lurker",
         MaxHealth = 190, Health = 190,
         BaseDodge = 14,
         BasePenetration = ShieldPenetration.Medium,
@@ -88237,7 +88363,7 @@
     lurker.Attacks = new CreatureAttackCollection()
     {
         { new CreatureAttack(11,     15, 20,      "The lurker whips you with a tentacle"),  50 }, 
-        { new CreatureAttack(12,     1, 30,     "The lurker bites you.",
+        { new CreatureAttack(12,     18, 30,     "The lurker bites you.",
                                                     new AttackPoisonComponent(15)),          50 },
     };
     lurker.AddStatus(new BreatheWaterStatus(lurker));
@@ -88249,15 +88375,8 @@
     
     lurker.AddGold(2200);
     lurker.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new PermanentStrengthPotion(),       10),
-        new LootPackEntry(true, (from, container) => new YouthPotion(),       10),
-        new LootPackEntry(true, (from, container) => new ManaPotion(),       10),
-        new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(),       5),
-        new LootPackEntry(true, (from, container) => new PermanentDexterityPotion(),       5),
-        new LootPackEntry(true, (from, container) => new PermanentWillpowerPotion(),       5),
-        new LootPackEntry(true, (from, container) => new PermanentWisdomPotion(),       5),
-        new LootPackEntry(true, (from, container) => new PermanentIntelligencePotion(), 5)
-        
+        new LootPackEntry(true, MagicBottles, 5),
+        new LootPackEntry(true, GenericBottles,    33)
     ));
     
     return lurker;
@@ -88284,14 +88403,16 @@
 	var boss1 = new ElderTroll()
     {
         Name = "Flordex",
-        MaxHealth = 2500, Health = 2500,
+        MaxHealth = 7500, Health = 7500,
         BaseDodge = 21,
-        HideDetection = 27,
+        HideDetection = 28,
         Alignment = Alignment.Evil,
         
-        Experience = 32000,
+        Experience = 94000,
        
         CanJumpkick = true,
+        CanCharge = true,
+        CanSwim = false,
         
         VisibilityDistance = 0,
         
@@ -88299,18 +88420,26 @@
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Web,
-        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.Silver,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
        
     
     };
     
     boss1.AddStatus(new NightVisionStatus(boss1));
     
-    boss1.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
+    boss1.CombatantChangeInterval = TimeSpan.FromSeconds(6.0);
     
-    boss1.Attacks = new CreatureAttackCollection()
+
+    
+    boss1.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(16, 28, 61),
+        {
+            new CreatureAttack(17,     45, 75,      "Flordex rends your flesh with his claws"),                     70 
+        }, 
+        {
+            new CreatureAttack(18,     65, 85,     "Flordex appears behind you, sinking his teeth into your neck",
+                                                    new AttackStunComponent(50)),                                       30 
+        },
     };
     
     //todo determine if I can force it to dual wield? Not sure of context
@@ -88324,7 +88453,11 @@
         new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
         new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
-        new LootPackEntry(true, (from, container) => new StrongStrengthRing(),        100)
+        new LootPackEntry(true, (from, container) => new StrongStrengthRing(),        100),
+        new LootPackEntry(true, (from, container) => new StrongShieldRing(),        100),
+        
+        new LootPackEntry(true, UltraRare, 25)
+
     ));
     
     return boss1;
@@ -88352,8 +88485,8 @@
 	var hobgoblin = new Hobgoblin()
     {
         Name = "Gorbin the Hermit",
-        MaxHealth = 250, Health = 250,
-        BaseDodge = 14,
+        MaxHealth = 470, Health = 470,
+        BaseDodge = 16,
     
         Experience = 8600,
         BasePenetration = ShieldPenetration.Medium,
@@ -88363,13 +88496,15 @@
         },
     };
     
-    hobgoblin.Wield(new Longsword());
+    hobgoblin.Wield(Utility.RandomBool() ? (Weapon)new Longsword() : (Weapon)new SteelDagger());
     hobgoblin.Equip(new LeatherArmor());    
     
     hobgoblin.AddGold(700);
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    33)
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 8),
+        new LootPackEntry(true, UltraRare, 0.5)
     ));
     
     return hobgoblin;
@@ -88389,7 +88524,7 @@
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    source.Say($"Hey! This is my house.. get out of here!");
+    source.Say(Utility.RandomBool() ? $"Hey! This is my house.. get out of here {player.Name} !" : $"I'm going to murder you {player.Name}");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -88419,6 +88554,8 @@
     troll.AddStatus(new NightVisionStatus(troll));
     
     troll.Wield(new Longbow());
+    
+
     troll.Equip(new ChainmailArmor());
     
     troll.AddGold(500);
@@ -88451,10 +88588,10 @@
 	var female = Utility.RandomBool();
     var peacekeeper = new Peacekeeper()
     {
-        Name = _names.Random(),
-        Body = (female ? 10 : 9), IsFemale = female,
+        Name = "The Reeve",
+        Body = 68,
        
-        BaseDodge = 14,
+        BaseDodge = 25,
         MaxHealth = 830, Health = 830,
         MaxMana = 200, Mana = 200,
         
@@ -88470,9 +88607,12 @@
     peacekeeper.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<IceSpearSpell>(
-            skillLevel: 14, cost: 25, 
+            skillLevel: 15, cost: 25, 
             mantra: SpellHelper.GenerateMantra(), instantCast: true)
     };
+     
+     peacekeeper.Wield(new SteelDagger());
+     peacekeeper.Equip(new DragonScaleArmor());
     return peacekeeper;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -88499,8 +88639,8 @@
     var raven = new Raven()
     {
         Name = "Morbin",
-        MaxHealth = 199, Health = 199,
-        BaseDodge = 17,
+        MaxHealth = 299, Health = 299,
+        BaseDodge = 21,
         BasePenetration = ShieldPenetration.Medium,
         CanSwim = true,
         Experience = 1700,
@@ -88518,9 +88658,9 @@
     
     raven.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(17,     12, 28,   "The raven buffets you with his wings."),  50 }, 
-        { new CreatureAttack(18,     13, 22,  "The raven sends a flurry of pecks towards you."),  30 }, 
-        { new CreatureAttack(19,     14, 25,  "The raven pecks at your eyes attempting to blind you."),             20 }, 
+        { new CreatureAttack(17,     22, 28,   "The raven buffets you with his wings."),  50 }, 
+        { new CreatureAttack(18,     23, 31,  "The raven sends a flurry of pecks towards you."),  30 }, 
+        { new CreatureAttack(19,     24, 45,  "The raven pecks at your eyes attempting to blind you."),             20 }, 
     };
         
     raven.Blocks = new CreatureBlockCollection
@@ -89156,8 +89296,8 @@
     var goblin = new Goblin()
     {
         Name = "Child of Gorbin",
-        MaxHealth = 75, Health = 75,
-        BaseDodge = 12,
+        MaxHealth = 115, Health = 115,
+        BaseDodge = 14,
                 
         Experience = 4100,
         BasePenetration = ShieldPenetration.Light,
@@ -89168,10 +89308,10 @@
         new CreatureBasicAttack(13, 15, 25)
     };
     
-    goblin.Wield(new HeavyCrossbow());
+    goblin.Wield(new FineCrossbow());
     goblin.Equip(new LeatherArmor());
             
-    goblin.AddGold(300);
+    goblin.AddGold(450);
    
     
     return goblin;
@@ -89340,7 +89480,7 @@
     {
         Name = "Slimey Lurker",
         Body = 161,
-        MaxHealth = 235, Health = 230,
+        MaxHealth = 235, Health = 235,
         BaseDodge = 14,
         BasePenetration = ShieldPenetration.Medium,
         CanSwim = true,
@@ -89714,7 +89854,7 @@
             new CreatureAttack(13, 25, 35, "You've been bitten by the shark."),       60 
         }, 
         {
-            new CreatureAttack(13, 30, 45, "The shark lashes you with its fin."),    40
+            new CreatureAttack(14, 30, 45, "The shark lashes you with its fin."),    40
         }, 
     };
     
@@ -89727,7 +89867,9 @@
     shark.AddGold(450);
     shark.AddLoot(
         new LootPack(
-            new LootPackEntry(true, (from, container) => new OysterPearl(3000u), 7.69)
+            new LootPackEntry(true, (from, container) => new OysterPearl(3000u), 7.69),
+            new LootPackEntry(true, SemiRare, 10)
+            
 
         ));
 
@@ -90253,9 +90395,9 @@
         <block><![CDATA[
 	var centaur = new Centaur()
     {
-        Name = "Mino",
+        Name = "Centaur",
         MaxHealth = 230, Health = 230,
-        MaxMana = 31, Mana = 31,
+        MaxMana = 14, Mana = 14,
         BaseDodge = 18,
         BasePenetration = ShieldPenetration.Medium,     
         Experience = 18000,
@@ -90458,8 +90600,8 @@
         <block><![CDATA[
 	var griffin = new Griffin()
     {
-        MaxHealth = 210, Health = 210,
-        BaseDodge = 23,
+        MaxHealth = 275, Health = 275,
+        BaseDodge = 21,
         Name = "Bloodthirsty Griffin",
 
         Experience = 13350,
@@ -90501,13 +90643,73 @@
 
     griffin.AddGold(1000);
     griffin.AddLoot(new LootPack(
-        
+        new LootPackEntry(true, MagicBottles, 5),  
+        new LootPackEntry(true, SemiRare, 8),  
         new LootPackEntry(true, (from, container) => new OchreEgg(), 25.0), 
         new LootPackEntry(true, (from, container) => new GriffinSkull(), 10)
     ));
    
+   
 
     return griffin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="surfaceGreaterLurker">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var lurker = new Fish()
+    {
+        Name = "Greater Lurker",
+        MaxHealth = 425, Health = 425,
+        BaseDodge = 16,
+        BasePenetration = ShieldPenetration.Medium,
+        CanSwim = true,
+        CanWalk = false,
+        Body = 161,
+        
+        Experience = 8200,
+            
+        VisibilityDistance = 0,
+    };
+    
+    lurker.Attacks = new CreatureAttackCollection()
+    {
+        { new CreatureAttack(13,     17, 25,      "The lurker whips you with a tentacle"),  50 }, 
+        { new CreatureAttack(14,     22, 43,     "The lurker bites you.",
+                                                    new AttackPoisonComponent(15)),          50 },
+    };
+    lurker.AddStatus(new BreatheWaterStatus(lurker));
+    lurker.Blocks = new CreatureBlockCollection
+    {
+        { new CreatureBlock(6, "a tentacle") }, 
+        { new CreatureBlock(4, "sharp fangs") }, 
+    };
+    
+    lurker.AddGold(2200);
+    lurker.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, MagicBottles, 8),
+        new LootPackEntry(true, UltraRare, 1),
+        new LootPackEntry(true, SemiRare, 10)
+    ));
+    
+    return lurker;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -90569,7 +90771,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="bloodlandsBalmVendor" size="1" minimum="1" maximum="1" />
-      <location x="28" y="9" region="1" />
+      <location x="28" y="8" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="bloodlandsRecallVendor">
       <minimumDelay>900</minimumDelay>
@@ -90600,8 +90802,8 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     spawn.Name = "priest";
-    spawn.MaxHealth = 100; spawn.Health = 100;
-    spawn.BaseDodge = 20;
+    spawn.MaxHealth = 1000; spawn.Health = 1000;
+    spawn.BaseDodge = 22;
     
     if (spawn is Peacekeeper priest)
     {
@@ -90618,7 +90820,7 @@
         priest.Spells = new CreatureSpellCollection()
         {
             new CreatureSpell<CurseSpell>(
-                    skillLevel: 10, cost: 3,
+                    skillLevel: 17, cost: 3,
                     mantra: SpellHelper.GenerateMantra(), instantCast: false),
         };
     }
@@ -90837,46 +91039,6 @@
       </script>
       <entry entity="bloodlandsWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="23" y="14" region="1" />
-    </spawn>
-    <spawn type="LocationSpawner" name="bloodlandsSherrif">
-      <minimumDelay>600</minimumDelay>
-      <maximumDelay>600</maximumDelay>
-      <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-spawn.Name = "The Reeve";
-    spawn.Body = 68; spawn.IsFemale = false;
-    
-    
-    spawn.BaseDodge = 25;
-    
-    
-    if (spawn is Peacekeeper sheriff)
-    {
-        sheriff.Home = new RectangleBounds()
-        {  
-            new Rectangle2D(28, 16, 4, 9, 1)
-            
-            
-        };
-        
-        
-        sheriff.Wield(new SteelDagger());
-        sheriff.Equip(new DragonScaleArmor());
-    }
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="bloodlandsPeaceKeeper" size="1" minimum="1" maximum="1" />
-      <location x="30" y="12" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="bloodlandsRaven">
       <minimumDelay>-3000</minimumDelay>
@@ -91192,7 +91354,7 @@ if (spawn is Shopkeeper shopkeeper)
     <spawn type="RegionSpawner" name="surfaceFishNorth">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>24</maximum>
+      <maximum>25</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -91209,7 +91371,7 @@ if (spawn is Shopkeeper shopkeeper)
       </script>
       <entry entity="surfacePirhana" size="2" minimum="12" maximum="15" />
       <entry entity="surfaceLurker" size="1" minimum="3" maximum="6" />
-      <entry entity="bloodlandsShark" size="1" minimum="1" maximum="1" />
+      <entry entity="bloodlandsShark" size="1" minimum="1" maximum="2" />
       <entry entity="surfaceBloodGrif" size="1" minimum="1" maximum="2" />
       <bounds region="1">
         <inclusion left="0" top="-14" right="23" bottom="-3" />
@@ -91620,7 +91782,7 @@ if (spawn is Shopkeeper shopkeeper)
     <spawn type="RegionSpawner" name="SurfaceFishSouth">
       <minimumDelay>660</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>24</maximum>
+      <maximum>27</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -91636,12 +91798,13 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="surfaceLurker" size="1" minimum="4" maximum="8" />
-      <entry entity="surfacePirhana" size="1" minimum="10" maximum="14" />
-      <entry entity="bloodlandsShark" size="1" minimum="1" maximum="1" />
+      <entry entity="surfacePirhana" size="2" minimum="10" maximum="14" />
+      <entry entity="bloodlandsShark" size="1" minimum="1" maximum="2" />
       <entry entity="surfaceBloodGrif" size="1" minimum="1" maximum="2" />
+      <entry entity="surfaceGreaterLurker" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="0" top="0" right="21" bottom="21" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="13" top="0" right="19" bottom="2" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="surfaceChildren">
@@ -91818,9 +91981,10 @@ if (spawn is Shopkeeper shopkeeper)
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Spawner 8">
-      <minimumDelay>0</minimumDelay>
-      <maximumDelay>0</maximumDelay>
+    <spawn type="RegionSpawner" name="townSheriff">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>300</maximumDelay>
+      <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -91835,8 +91999,9 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <bounds region="0">
-        <inclusion left="0" top="0" right="0" bottom="0" />
+      <entry entity="bloodlandsPeaceKeeper" size="1" minimum="1" maximum="1" />
+      <bounds region="1">
+        <inclusion left="28" top="7" right="32" bottom="16" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -91959,9 +92124,113 @@ if (spawn is Shopkeeper shopkeeper)
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
+    <spawn type="RegionSpawner" name="Spawner 1">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <bounds region="0">
+        <inclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
   </spawns>
   <treasures>
-    <treasure name="Testing" />
+    <treasure name="MagicBottles">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentConstitutionPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentDexterityPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentIntelligencePotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentStrengthPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentStrengthPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentWillpowerPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentWisdomPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="6">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new YouthPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="6">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new ManaPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
     <treasure name="drop3gems">
       <entry weight="25">
         <script name="OnCreate" enabled="true">
@@ -92051,6 +92320,37 @@ if (spawn is Shopkeeper shopkeeper)
           <block><![CDATA[]]></block>
           <block><![CDATA[
     return new PermanentStrengthPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="UltraRare">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new DexterityRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="SemiRare">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StrongShieldRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StrongStrengthRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
