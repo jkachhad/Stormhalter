@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.72.0.0">
+<segment name="Axe Glacier" version="0.73.1.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -103131,6 +103131,7 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, AxePotions,     0.05),
         new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
@@ -103139,6 +103140,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -103180,6 +103187,7 @@
     wolf.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.05),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
         
@@ -103188,6 +103196,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -103220,6 +103234,7 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, AxePotions,     0.05),
         new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
@@ -103228,6 +103243,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -103258,6 +103279,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.05),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -103266,6 +103288,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -103298,6 +103326,7 @@
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.05),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -103306,6 +103335,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -103341,6 +103376,7 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, AxePotions,     0.05),
         new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
@@ -103349,6 +103385,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -103379,6 +103421,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.05),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
         new LootPackEntry(true, (from, container) => new LeatherGauntlets(), 7.5)
     ));
@@ -103388,6 +103431,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -103432,6 +103481,7 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, AxePotions,     0.05), 
         new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5),
         new LootPackEntry(true, (from, container) => new IronOre(), 2.6)
     ));
@@ -103441,6 +103491,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -103481,6 +103537,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.05),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -103494,8 +103551,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="lightningmesaGoblin">
+    <entity name="lightningMesaGoblin">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -103519,6 +103582,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.1),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -103527,6 +103591,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -103561,6 +103631,7 @@
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.1),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -103569,6 +103640,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -103609,6 +103686,7 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, AxePotions,     0.1),
         new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
@@ -103622,8 +103700,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="lightningmesaMA">
+    <entity name="lightningMesaMA">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -103654,6 +103738,7 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, AxePotions,     0.1),
         new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
@@ -103662,6 +103747,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -103694,6 +103785,7 @@
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.1),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -103702,6 +103794,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -103746,6 +103844,7 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, AxePotions,     0.1),
         new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5),
         new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
@@ -103755,6 +103854,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -103796,6 +103901,7 @@
     wolf.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.1),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
         
@@ -103804,6 +103910,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -103844,6 +103956,7 @@
     wraith.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.1),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -103852,6 +103965,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -103892,6 +104011,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.1),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -103900,6 +104020,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -103939,6 +104065,7 @@
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.1),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -103947,6 +104074,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -103977,6 +104110,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.1),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -103985,6 +104119,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -104015,6 +104155,7 @@
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.1),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -104028,8 +104169,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="lightningmesapwolf">
+    <entity name="lightningMesaPwolf">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -104072,6 +104219,7 @@
     wolf.AddLoot(new LootPack(
         new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    50),
+        new LootPackEntry(true, AxePotions,     0.1),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
         
@@ -104085,8 +104233,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="upperkWolf">
+    <entity name="upperBossKingWolf">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -104152,8 +104306,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="upperrockWorm">
+    <entity name="upperRockWorm">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -104195,6 +104355,7 @@
     rockworm.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    50),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
         
         ));
@@ -104204,6 +104365,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -104244,6 +104411,7 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, AxePotions,     0.1),
         new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
@@ -104252,6 +104420,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -104286,6 +104460,7 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, AxePotions,     0.1),
         new LootPackEntry(true, (from, container) => new SteelGauntlets(), 6.67)
     ));
     
@@ -104299,8 +104474,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="lightningmesalowerLizard">
+    <entity name="lightningMesalowerLizard">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -104343,6 +104524,7 @@
     lizard.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.1),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -104356,15 +104538,21 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="lightningmesagiant">
+    <entity name="lightningMesaBossGiant">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[    
     var giant = new Giant()
     {
         MaxHealth = 1000, Health = 1000,
-        BaseDodge = 23,
+        BaseDodge = 21,
     
         Experience = 19000,
         
@@ -104381,6 +104569,9 @@
     };
     
     giant.AddStatus(new NightVisionStatus(giant));
+    
+    giant.Equip(new GrizzlyJacket());
+    giant.Equip(new DragonScaleArmor());
     
     giant.Attacks = new CreatureAttackCollection
     {
@@ -104412,8 +104603,6 @@
     giant.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new PearDiamond(5000u),    100, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new ReturningHammer(),        100),
-        new LootPackEntry(true, (from, container) => new GrizzlyJacket(),        100),
-        new LootPackEntry(true, (from, container) => new DragonScaleArmor(),        100),
         new LootPackEntry(true, (from, container) => new PermanentIntelligencePotion(),        50)
     ));
        
@@ -104427,8 +104616,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="lightningmesagoose">
+    <entity name="lightningMesagoose">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -104474,6 +104669,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="upperGoblinSentry">
       <script name="OnSpawn" enabled="true">
@@ -104500,6 +104701,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -104508,6 +104710,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -104547,6 +104755,7 @@
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -104555,6 +104764,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -104594,6 +104809,7 @@
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -104602,6 +104818,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -104647,7 +104869,7 @@
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
         new LootPackEntry(true, upperTreasure,   0.63),
-        
+        new LootPackEntry(true, AxePotions,     0.2),        
         new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5)
     ));
 
@@ -104656,6 +104878,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -104686,6 +104914,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -104694,6 +104923,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -104734,6 +104969,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -104742,6 +104978,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -104772,6 +105014,7 @@
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -104780,6 +105023,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -104817,6 +105066,7 @@
     martialartist.AddLoot(new LootPack(
         new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -104825,6 +105075,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -104859,6 +105115,7 @@
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
         new LootPackEntry(true, upperTreasure,   0.63),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, (from, container) => new SteelGauntlets(), 6.67)
     ));
     
@@ -104867,6 +105124,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -104899,6 +105162,7 @@
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -104907,6 +105171,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -104946,6 +105216,7 @@
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -104954,6 +105225,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -104988,6 +105265,7 @@
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -104996,6 +105274,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -105037,6 +105321,7 @@
     wolf.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
         
@@ -105045,6 +105330,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -105085,6 +105376,7 @@
     wraith.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -105093,6 +105385,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -105131,17 +105429,17 @@
         new CreatureBlock(3, "a claw"),
         new CreatureBlock(1, "a tail")
     };
-    
-    lizard.Spells = new CreatureSpellCollection(80.0)
+    lizard.Spells = new CreatureSpellCollection(100)
     {
-        new CreatureSpell<IceStormSpell>(
-        skillLevel: 8, intensity: 2)
+       { new CreatureSpell<IceStormSpell>(
+            skillLevel: 9.5, intensity: 2), 100, TimeSpan.FromSeconds(5.0) }
     };
     
     lizard.AddGold(500);
     lizard.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -105155,8 +105453,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="uppereasyBear">
+    <entity name="upperEasyBear">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105194,6 +105498,7 @@
     bear.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    50),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
         
@@ -105207,8 +105512,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="upperhardBear">
+    <entity name="upperHardBear">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105249,6 +105560,7 @@
     bear.AddLoot(new LootPack(
         new LootPackEntry(true, minibossTreasureGems,       50,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    75),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
         
@@ -105262,8 +105574,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="upperdrake">
+    <entity name="upperBossDrake">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105307,7 +105625,7 @@
         CanPanic = false,
         
         //CanJumpkick means it can jumpkick from 3 hexes away. I'm not sure where damage component for a jumpkick is pulled though so I don't know whether Charge or JK is the proper variable
-        CanJumpkick = true,
+        CanJumpkick = false,
         
         //If set to false, monster cannot walk on land and will stay in water.
         CanWalk = true,
@@ -105315,7 +105633,7 @@
         BasePenetration = ShieldPenetration.Heavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Magic,
+                   CreatureImmunity.Projectile | CreatureImmunity.Magic | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
             
     };
@@ -105369,15 +105687,10 @@
     drake.AddGold(5000);
     drake.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new PearDiamond(10000u),    100, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new StrongShieldRing(),    50),
         new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(),     100),
-        new LootPackEntry(true, (from, container) => new LightningShield(),     10),
-        new LootPackEntry(true, (from, container) => new StrongStrengthBracelet(),    50),
-        new LootPackEntry(true, (from, container) => new GriffinSkull(),    100),
-        new LootPackEntry(true, (from, container) => new ManaPotion(),    100),
-        new LootPackEntry(true, (from, container) => new StunResistanceBracelet(),    50),
-        new LootPackEntry(true, (from, container) => new FeatherFallBoots(),    100),
-        new LootPackEntry(true, (from, container) => new DexterityRing(),    10)
+        new LootPackEntry(true, DrakeTreasure,     100.0), 
+        new LootPackEntry(true, DrakeTreasure2,     100.0),
+        new LootPackEntry(true, (from, container) => new ManaPotion(),    100)
     ));
     
     return drake;
@@ -105390,8 +105703,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="uppericeDragon">
+    <entity name="upperBossDragon">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105400,7 +105719,7 @@
     {
         MaxHealth = 5000, Health = 5000,
         BaseDodge = 19,
-        
+        Body = 135,
         Experience = 75000,
         
         CanFly = true,
@@ -105426,7 +105745,7 @@
     dragon.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(21,      40, 65,      "The Ice Dragon slashes you with a claw.",
+            new CreatureAttack(21,      50, 70,      "The Ice Dragon slashes you with a claw.",
                                                         new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
@@ -105436,7 +105755,7 @@
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(17,      75, 100,     "The Ice Dragon buffets you with its wings.",
+            new CreatureAttack(18,      75, 110,     "The Ice Dragon buffets you with its wings.",
                                                         new AttackProneComponent(35), 
                                                         new AttackStunComponent(15)),               20
         },
@@ -105454,16 +105773,14 @@
         new CreatureSpell<DragonBreathIceSpell>(
             skillLevel: 21), 
     };
-    //todo: add griffin figurine, protection from cold amulet (replaces f/i ammy)
+    //todo: add griffin figurine, protection from cold amulet (replaces f/i ammy?)
     dragon.AddGold(6000);
     dragon.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new PearDiamond(25000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new IceDragonScaleArmor(),        100),
         new LootPackEntry(true, (from, container) => new DragonSkull(),        100),
-        new LootPackEntry(true, (from, container) => new IvoryBrooch(),        25),
-        new LootPackEntry(true, (from, container) => new ShieldBracelet(),        25),
-        new LootPackEntry(true, (from, container) => new FireProtectionAmulet(),        25),
-        new LootPackEntry(true, (from, container) => new StrengthRing(),        25),
-        new LootPackEntry(true, (from, container) => new FeatherFallBoots(),        100),
+        new LootPackEntry(true, MamaTreasure,     100.0), 
+        new LootPackEntry(true, MamaTreasure2,     100.0),
         new LootPackEntry(true, (from, container) => new ManaPotion(),        100)
     ));
     
@@ -105477,8 +105794,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="upperyeti">
+    <entity name="upperBossYeti">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105494,12 +105817,9 @@
         BasePenetration = ShieldPenetration.VeryHeavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
+                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.BlueGlowing,
     
-        FireProtection = 100,
-        IceProtection = 100,
-        StunProtection = 100,
     };
     
     yeti.AddStatus(new NightVisionStatus(yeti));
@@ -105509,12 +105829,12 @@
     yeti.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(13,      50, 70,      "The yeti smashes you with his fist.",
+            new CreatureAttack(20,      50, 70,      "The yeti smashes you with his fist.",
                                                         new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(13,      60, 80,     "The yeti stomps on you.",
+            new CreatureAttack(18,      60, 80,     "The yeti stomps on you.",
                                                         new AttackProneComponent(25), 
                                                         new AttackStunComponent(10)),               40
         },
@@ -105541,11 +105861,8 @@
    yeti.AddGold(12000);
    yeti.AddLoot(new LootPack(
        new LootPackEntry(true, (from, container) => new PearDiamond(20000u),    100, gemsPriceMutator),
-       new LootPackEntry(true, (from, container) => new BearSkull(),        100),
-       new LootPackEntry(true, (from, container) => new BreatheWaterBracelet(),        33),
+       new LootPackEntry(true, YetiTreasure,     100.0),       
        new LootPackEntry(true, (from, container) => new ManaPotion(),        100),
-       new LootPackEntry(true, (from, container) => new SaffronRobe(),        33),
-       new LootPackEntry(true, (from, container) => new FeatherFallBoots(),        100),
        new LootPackEntry(true, (from, container) => new MisericordeDagger(),        100)
    ));
     
@@ -105559,8 +105876,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="axeconfessorGhost">
+    <entity name="axeConfessorGhost">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105574,8 +105897,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="axebalmVendor">
+    <entity name="axeBalmVendor">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105597,6 +105926,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -105632,6 +105967,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="axeBanker">
       <script name="OnSpawn" enabled="true">
@@ -105660,8 +106001,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="axeojouleWizard">
+    <entity name="axeOjouleWizard">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105690,8 +106037,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="axerecallVendor">
+    <entity name="axeRecallVendor">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105718,8 +106071,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="axestatue">
+    <entity name="axeStatue">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105758,8 +106117,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="axewepTrainTemp">
+    <entity name="axeWeaponTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105785,8 +106150,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="axetailorVendor">
+    <entity name="axeTailorVendor">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105812,8 +106183,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="axephredrickThaum">
+    <entity name="axePhredrickThaum">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105845,8 +106222,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="uppershadow">
+    <entity name="upperShadow">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105882,6 +106265,7 @@
     shadow.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -105890,6 +106274,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -105949,6 +106339,7 @@
     wizard.AddLoot(new LootPack(
         new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -105957,6 +106348,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -106006,6 +106403,7 @@
     thaum.AddLoot(new LootPack(
         new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -106014,6 +106412,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -106065,6 +106469,7 @@
     wizard.AddLoot(new LootPack(
         new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -106078,8 +106483,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="magicPeacekeeperTemplate">
+    <entity name="axeMagicPeacekeeper">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106111,8 +106522,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="axethaumTemplate">
+    <entity name="axeThaumTemplate">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106143,8 +106560,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="axewizTrainer">
+    <entity name="axeWizardTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106175,8 +106598,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="axelawfulGryphon">
+    <entity name="axeLawfulGryphon">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106234,8 +106663,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="axePresence">
+    <entity name="upperPresence">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106255,7 +106690,7 @@
     
     presence.AddStatus(new NightVisionStatus(presence));
     
-    presence.CombatantChangeInterval = TimeSpan.FromSeconds(20.0);
+    presence.CombatantChangeInterval = TimeSpan.FromSeconds(3.0);
     
     presence.Attacks = new CreatureAttackCollection
     {
@@ -106265,14 +106700,14 @@
     presence.Blocks = new CreatureBlockCollection
     {
         new CreatureBlock(6, "an invisible barrier"),
-        new CreatureBlock(3, "an inexplicable miss"),
+        new CreatureBlock(3, "mysterious mist"),
         new CreatureBlock(1, "a fearful aura")
     };
     
     presence.Spells = new CreatureSpellCollection(100.0)
     {
         new CreatureSpell<IceStormSpell>(
-            skillLevel: 10, cost: 1,
+            skillLevel: 10, cost: 4,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
@@ -106290,8 +106725,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="upperyetiGoblin">
+    <entity name="upperYetiGoblin">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106317,6 +106758,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -106330,8 +106772,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="upperyetiGoblinSentry">
+    <entity name="upperYetiGoblinSentry">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106356,6 +106804,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    20),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -106369,8 +106818,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
-    <entity name="axethiefTrainer">
+    <entity name="axeThiefTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106397,6 +106852,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="axeVulcan">
       <script name="OnSpawn" enabled="true">
@@ -106407,6 +106868,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -106427,6 +106894,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
     </entity>
     <entity name="axeAlia">
       <script name="OnSpawn" enabled="true">
@@ -106437,6 +106910,12 @@
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 ]]></block>
@@ -106544,7 +107023,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="axewepTrainTemp" size="1" minimum="1" maximum="1" />
+      <entry entity="axeWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="31" y="29" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="axeOjoule">
@@ -106564,7 +107043,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="axeojouleWizard" size="1" minimum="1" maximum="1" />
+      <entry entity="axeOjouleWizard" size="1" minimum="1" maximum="1" />
       <location x="27" y="15" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="axePhredrick">
@@ -106584,7 +107063,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="axephredrickThaum" size="1" minimum="1" maximum="1" />
+      <entry entity="axePhredrickThaum" size="1" minimum="1" maximum="1" />
       <location x="32" y="11" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="Statue 1">
@@ -106604,7 +107083,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="axestatue" size="1" minimum="1" maximum="1" />
+      <entry entity="axeStatue" size="1" minimum="1" maximum="1" />
       <location x="24" y="16" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="Statue 2">
@@ -106624,7 +107103,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="axestatue" size="1" minimum="1" maximum="1" />
+      <entry entity="axeStatue" size="1" minimum="1" maximum="1" />
       <location x="25" y="22" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="Statue 3">
@@ -106644,7 +107123,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="axestatue" size="1" minimum="1" maximum="1" />
+      <entry entity="axeStatue" size="1" minimum="1" maximum="1" />
       <location x="31" y="14" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="axePriest">
@@ -106686,7 +107165,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="magicPeacekeeperTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="axeMagicPeacekeeper" size="1" minimum="1" maximum="1" />
       <location x="31" y="6" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="axeBalmVendor">
@@ -106706,12 +107185,13 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="axebalmVendor" size="1" minimum="1" maximum="1" />
+      <entry entity="axeBalmVendor" size="1" minimum="1" maximum="1" />
       <location x="33" y="24" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="recallVendor">
+    <spawn type="LocationSpawner" name="axeRecallVendor">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -106726,7 +107206,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="axerecallVendor" size="1" minimum="1" maximum="1" />
+      <entry entity="axeRecallVendor" size="1" minimum="1" maximum="1" />
       <location x="30" y="24" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="axeThorgen">
@@ -106755,7 +107235,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="axewepTrainTemp" size="1" minimum="1" maximum="1" />
+      <entry entity="axeWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="32" y="22" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="axeGhost">
@@ -106775,7 +107255,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="axeconfessorGhost" size="1" minimum="1" maximum="1" />
+      <entry entity="axeConfessorGhost" size="1" minimum="1" maximum="1" />
       <location x="13" y="4" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="lockpickVendor">
@@ -106887,7 +107367,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="axebalmVendor" size="1" minimum="1" maximum="1" />
+      <entry entity="axeBalmVendor" size="1" minimum="1" maximum="1" />
       <location x="8" y="15" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="lockpickWizTrainer">
@@ -106908,7 +107388,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="axewizTrainer" size="1" minimum="1" maximum="1" />
+      <entry entity="axeWizardTrainer" size="1" minimum="1" maximum="1" />
       <location x="4" y="2" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="lockpickThaumTrainer">
@@ -106934,7 +107414,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="axethaumTemplate" size="1" minimum="1" maximum="1" />
+      <entry entity="axeThaumTemplate" size="1" minimum="1" maximum="1" />
       <location x="7" y="3" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="lockpickMATrainer">
@@ -106963,7 +107443,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="axewepTrainTemp" size="1" minimum="1" maximum="1" />
+      <entry entity="axeWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="2" y="5" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="lockpickWeaponTrainer">
@@ -106992,7 +107472,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="axewepTrainTemp" size="1" minimum="1" maximum="1" />
+      <entry entity="axeWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="10" y="22" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="lawfulGryphon">
@@ -107012,10 +107492,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="axelawfulGryphon" size="1" minimum="1" maximum="1" />
+      <entry entity="axeLawfulGryphon" size="1" minimum="1" maximum="1" />
       <location x="35" y="34" region="8" />
     </spawn>
-    <spawn type="LocationSpawner" name="tanner">
+    <spawn type="LocationSpawner" name="axeTanner">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -107032,7 +107512,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="axetailorVendor" size="1" minimum="1" maximum="1" />
+      <entry entity="axeTailorVendor" size="1" minimum="1" maximum="1" />
       <location x="34" y="36" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="lockpickTanner">
@@ -107054,10 +107534,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="axetailorVendor" size="1" minimum="1" maximum="1" />
+      <entry entity="axeTailorVendor" size="1" minimum="1" maximum="1" />
       <location x="6" y="18" region="15" />
     </spawn>
-    <spawn type="LocationSpawner" name="figEngraver">
+    <spawn type="LocationSpawner" name="giantFigEngraver">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -107086,6 +107566,7 @@
     <spawn type="LocationSpawner" name="axeMAFoote">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -107109,10 +107590,11 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="axeWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="35" y="22" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="Vulcan">
-	  <minimumDelay>900</minimumDelay>
+      <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
@@ -107172,7 +107654,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="axerecallVendor" size="1" minimum="1" maximum="1" />
+      <entry entity="axeRecallVendor" size="1" minimum="1" maximum="1" />
       <location x="3" y="11" region="15" />
     </spawn>
     <spawn type="RegionSpawner" name="Surface Dungeon">
@@ -107236,6 +107718,41 @@
     <spawn type="RegionSpawner" name="Griff Cliffs Outside">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>16</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="lightningMesaGoblin" size="3" minimum="3" maximum="6" />
+      <entry entity="lightningMesaTroll" size="2" minimum="2" maximum="5" />
+      <entry entity="lightningMesaFighter" size="1" minimum="2" maximum="4" />
+      <entry entity="lightningMesaMA" size="1" minimum="2" maximum="4" />
+      <entry entity="lightningMesaOrc" size="3" minimum="3" maximum="6" />
+      <entry entity="lightningMesaGargoyle" size="1" minimum="2" maximum="4" />
+      <entry entity="lightningMesaGoblinMage" size="1" minimum="2" maximum="4" />
+      <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="lightningMesaRapier" size="1" minimum="1" maximum="3" />
+      <entry entity="lightningMesaGoblinSentry" size="2" minimum="3" maximum="6" />
+      <entry entity="lightningMesaHobgoblin" size="3" minimum="3" maximum="6" />
+      <bounds region="8">
+        <inclusion left="3" top="6" right="6" bottom="22" />
+        <inclusion left="7" top="20" right="20" bottom="33" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Griff Cliff Dungeon">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
       <maximum>25</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -107251,46 +107768,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="lightningmesaGoblin" size="3" minimum="3" maximum="6" />
-      <entry entity="lightningMesaTroll" size="2" minimum="2" maximum="5" />
-      <entry entity="lightningMesaFighter" size="1" minimum="2" maximum="4" />
-      <entry entity="lightningmesaMA" size="1" minimum="2" maximum="4" />
-      <entry entity="lightningMesaOrc" size="3" minimum="3" maximum="6" />
-      <entry entity="lightningMesaGargoyle" size="1" minimum="2" maximum="4" />
-      <entry entity="lightningMesaGoblinMage" size="1" minimum="2" maximum="4" />
-      <entry entity="lightningmesapwolf" size="1" minimum="0" maximum="1" />
-      <entry entity="lightningMesaRapier" size="1" minimum="1" maximum="3" />
-      <entry entity="lightningMesaGoblinSentry" size="2" minimum="3" maximum="6" />
-      <entry entity="lightningMesaHobgoblin" size="3" minimum="3" maximum="6" />
-      <bounds region="8">
-        <inclusion left="3" top="6" right="6" bottom="22" />
-        <inclusion left="7" top="20" right="20" bottom="33" />
-        <inclusion left="22" top="21" right="31" bottom="23" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
-      </bounds>
-    </spawn>
-    <spawn type="RegionSpawner" name="Griff Cliff Dungeon">
-      <minimumDelay>600</minimumDelay>
-      <maximumDelay>900</maximumDelay>
-      <maximum>15</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
       <entry entity="lightningMesaWraith" size="1" minimum="2" maximum="4" />
-      <entry entity="lightningmesapwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="1" />
       <entry entity="lightningMesaTroll" size="2" minimum="2" maximum="4" />
-      <entry entity="lightningMesaGargoyle" size="1" minimum="0" maximum="0" />
+      <entry entity="lightningMesaGargoyle" size="1" minimum="1" maximum="2" />
       <entry entity="lightningMesaHobgoblin" size="3" minimum="3" maximum="4" />
       <entry entity="lightningMesaWolf" size="3" minimum="2" maximum="4" />
       <entry entity="lightningMesaOrc" size="3" minimum="3" maximum="5" />
@@ -107322,10 +107803,10 @@
       <entry entity="lightningMesaGoblinMage" size="1" minimum="1" maximum="3" />
       <entry entity="lightningMesaTroll" size="2" minimum="3" maximum="5" />
       <entry entity="lightningMesaFighter" size="1" minimum="1" maximum="3" />
-      <entry entity="lightningmesaMA" size="1" minimum="1" maximum="3" />
+      <entry entity="lightningMesaMA" size="1" minimum="1" maximum="3" />
       <entry entity="lightningMesaOrc" size="3" minimum="3" maximum="5" />
-      <entry entity="upperrockWorm" size="1" minimum="1" maximum="2" />
-      <entry entity="lightningmesapwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="upperRockWorm" size="1" minimum="1" maximum="2" />
+      <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="1" />
       <entry entity="lightningMesaWraith" size="1" minimum="1" maximum="2" />
       <entry entity="lightningMesaGoblinSentry" size="3" minimum="2" maximum="4" />
       <entry entity="lightningMesaOgre" size="1" minimum="1" maximum="2" />
@@ -107355,18 +107836,18 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="lightningmesaGoblin" size="3" minimum="3" maximum="5" />
+      <entry entity="lightningMesaGoblin" size="3" minimum="3" maximum="5" />
       <entry entity="lightningMesaTroll" size="2" minimum="3" maximum="5" />
       <entry entity="lightningMesaFighter" size="1" minimum="2" maximum="5" />
-      <entry entity="lightningmesaMA" size="1" minimum="1" maximum="3" />
+      <entry entity="lightningMesaMA" size="1" minimum="1" maximum="3" />
       <entry entity="lightningMesaOrc" size="3" minimum="3" maximum="5" />
       <entry entity="lightningMesaWolf" size="3" minimum="2" maximum="5" />
       <entry entity="lightningMesaWraith" size="1" minimum="2" maximum="3" />
       <entry entity="lightningMesaGoblinMage" size="1" minimum="1" maximum="3" />
       <entry entity="lightningMesaRapier" size="1" minimum="1" maximum="3" />
       <entry entity="lightningMesaGoblinSentry" size="3" minimum="1" maximum="3" />
-      <entry entity="upperrockWorm" size="1" minimum="1" maximum="2" />
-      <entry entity="lightningmesapwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="upperRockWorm" size="1" minimum="1" maximum="2" />
+      <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="1" />
       <bounds region="6">
         <inclusion left="2" top="4" right="25" bottom="12" />
         <inclusion left="5" top="13" right="7" bottom="21" />
@@ -107397,7 +107878,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="lightningMesaRapier" size="1" minimum="1" maximum="4" />
-      <entry entity="lightningmesaMA" size="1" minimum="1" maximum="5" />
+      <entry entity="lightningMesaMA" size="1" minimum="1" maximum="5" />
       <entry entity="lightningMesaFighter" size="1" minimum="1" maximum="5" />
       <entry entity="lightningMesaArcher" size="1" minimum="1" maximum="3" />
       <bounds region="6">
@@ -107426,7 +107907,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="lightningMesaGoblinSentry" size="3" minimum="1" maximum="1" />
-      <entry entity="lightningmesaMA" size="1" minimum="1" maximum="3" />
+      <entry entity="lightningMesaMA" size="1" minimum="1" maximum="3" />
       <entry entity="lightningMesaArcher" size="1" minimum="2" maximum="3" />
       <entry entity="lightningMesaFighter" size="1" minimum="3" maximum="4" />
       <bounds region="8">
@@ -107453,8 +107934,8 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="lightningmesagiant" size="1" minimum="1" maximum="1" />
-      <entry entity="lightningmesagoose" size="1" minimum="1" maximum="1" />
+      <entry entity="lightningMesaBossGiant" size="1" minimum="1" maximum="1" />
+      <entry entity="lightningMesagoose" size="1" minimum="1" maximum="1" />
       <bounds region="8">
         <inclusion left="18" top="13" right="20" bottom="16" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -107479,7 +107960,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="lightningMesaArcher" size="1" minimum="2" maximum="4" />
-      <entry entity="lightningmesaMA" size="1" minimum="2" maximum="3" />
+      <entry entity="lightningMesaMA" size="1" minimum="2" maximum="3" />
       <entry entity="lightningMesaFighter" size="1" minimum="2" maximum="4" />
       <entry entity="lightningMesaRapier" size="1" minimum="2" maximum="4" />
       <bounds region="8">
@@ -107508,17 +107989,17 @@
       <entry entity="upperGoblinSentry" size="3" minimum="5" maximum="8" />
       <entry entity="upperOgre" size="1" minimum="3" maximum="5" />
       <entry entity="upperWolf" size="3" minimum="4" maximum="7" />
-      <entry entity="uppershadow" size="1" minimum="3" maximum="5" />
+      <entry entity="upperShadow" size="1" minimum="3" maximum="5" />
       <entry entity="upperHobgoblin" size="3" minimum="4" maximum="7" />
       <entry entity="upperGoblinMage" size="1" minimum="2" maximum="4" />
-      <entry entity="lightningmesapwolf" size="1" minimum="0" maximum="2" />
+      <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="2" />
       <entry entity="upperTroll" size="2" minimum="3" maximum="6" />
       <entry entity="upperGoblin" size="3" minimum="4" maximum="7" />
       <entry entity="upperWraith" size="1" minimum="3" maximum="6" />
-      <entry entity="upperhardBear" size="1" minimum="1" maximum="1" />
-      <entry entity="upperrockWorm" size="1" minimum="1" maximum="2" />
+      <entry entity="upperHardBear" size="1" minimum="1" maximum="1" />
+      <entry entity="upperRockWorm" size="1" minimum="1" maximum="2" />
       <entry entity="upperOrc" size="3" minimum="4" maximum="7" />
-      <entry entity="uppereasyBear" size="1" minimum="1" maximum="3" />
+      <entry entity="upperEasyBear" size="1" minimum="1" maximum="3" />
       <bounds region="12">
         <inclusion left="1" top="1" right="24" bottom="38" />
         <inclusion left="25" top="9" right="29" bottom="38" />
@@ -107545,8 +108026,8 @@
       </script>
       <entry entity="upperLizard" size="1" minimum="3" maximum="4" />
       <entry entity="upperWolf" size="3" minimum="2" maximum="4" />
-      <entry entity="lightningmesapwolf" size="1" minimum="0" maximum="1" />
-      <entry entity="uppereasyBear" size="1" minimum="1" maximum="2" />
+      <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="upperEasyBear" size="1" minimum="1" maximum="2" />
       <bounds region="12">
         <inclusion left="25" top="3" right="32" bottom="8" />
         <inclusion left="30" top="9" right="34" bottom="31" />
@@ -107578,10 +108059,10 @@
       <entry entity="upperWraith" size="1" minimum="1" maximum="3" />
       <entry entity="upperHobgoblin" size="3" minimum="1" maximum="5" />
       <entry entity="upperWolf" size="3" minimum="2" maximum="5" />
-      <entry entity="uppershadow" size="1" minimum="2" maximum="4" />
-      <entry entity="uppereasyBear" size="1" minimum="1" maximum="2" />
-      <entry entity="upperrockWorm" size="1" minimum="1" maximum="2" />
-      <entry entity="lightningmesapwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="upperShadow" size="1" minimum="2" maximum="4" />
+      <entry entity="upperEasyBear" size="1" minimum="1" maximum="2" />
+      <entry entity="upperRockWorm" size="1" minimum="1" maximum="2" />
+      <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="1" />
       <entry entity="upperOrc" size="3" minimum="2" maximum="4" />
       <bounds region="12">
         <inclusion left="38" top="4" right="46" bottom="36" />
@@ -107613,12 +108094,12 @@
       <entry entity="lightningMesaWraith" size="1" minimum="1" maximum="2" />
       <entry entity="lightningMesaOgre" size="1" minimum="2" maximum="4" />
       <entry entity="lightningMesaOrc" size="3" minimum="3" maximum="5" />
-      <entry entity="lightningmesapwolf" size="1" minimum="0" maximum="2" />
-      <entry entity="uppereasyBear" size="1" minimum="1" maximum="2" />
-      <entry entity="upperhardBear" size="1" minimum="0" maximum="1" />
-      <entry entity="upperrockWorm" size="1" minimum="1" maximum="2" />
-      <entry entity="lightningmesaGoblin" size="3" minimum="2" maximum="4" />
-      <entry entity="upperkWolf" size="1" minimum="0" maximum="1" />
+      <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="2" />
+      <entry entity="upperEasyBear" size="1" minimum="1" maximum="2" />
+      <entry entity="upperHardBear" size="1" minimum="0" maximum="1" />
+      <entry entity="upperRockWorm" size="1" minimum="1" maximum="2" />
+      <entry entity="lightningMesaGoblin" size="3" minimum="2" maximum="4" />
+      <entry entity="upperBossKingWolf" size="1" minimum="0" maximum="1" />
       <bounds region="10">
         <inclusion left="1" top="3" right="25" bottom="39" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -107668,7 +108149,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="lightningmesapwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="1" />
       <entry entity="upperLizard" size="1" minimum="2" maximum="3" />
       <bounds region="23">
         <inclusion left="2" top="8" right="7" bottom="27" />
@@ -107726,8 +108207,8 @@
       <entry entity="upperHobgoblin" size="3" minimum="1" maximum="2" />
       <entry entity="upperTroll" size="2" minimum="1" maximum="2" />
       <entry entity="upperGoblinSentry" size="3" minimum="1" maximum="2" />
-      <entry entity="lightningmesapwolf" size="1" minimum="0" maximum="1" />
-      <entry entity="upperkWolf" size="1" minimum="0" maximum="1" />
+      <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="upperBossKingWolf" size="1" minimum="0" maximum="1" />
       <entry entity="upperWraith" size="1" minimum="0" maximum="1" />
       <bounds region="23">
         <inclusion left="11" top="3" right="16" bottom="20" />
@@ -107754,7 +108235,7 @@
       </script>
       <entry entity="upperLizard" size="1" minimum="2" maximum="4" />
       <entry entity="upperWolf" size="3" minimum="2" maximum="3" />
-      <entry entity="upperhardBear" size="1" minimum="1" maximum="2" />
+      <entry entity="upperHardBear" size="1" minimum="1" maximum="2" />
       <bounds region="45">
         <inclusion left="1" top="5" right="10" bottom="20" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -107778,9 +108259,9 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="upperyetiGoblin" size="1" minimum="3" maximum="4" />
-      <entry entity="upperyetiGoblinSentry" size="1" minimum="3" maximum="4" />
-      <entry entity="upperyeti" size="1" minimum="1" maximum="1" />
+      <entry entity="upperYetiGoblin" size="1" minimum="3" maximum="4" />
+      <entry entity="upperYetiGoblinSentry" size="1" minimum="3" maximum="4" />
+      <entry entity="upperBossYeti" size="1" minimum="1" maximum="1" />
       <bounds region="45">
         <inclusion left="11" top="9" right="15" bottom="14" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -107912,7 +108393,7 @@
       <entry entity="chaosMA" size="1" minimum="2" maximum="4" />
       <entry entity="chaosWizard" size="1" minimum="1" maximum="2" />
       <entry entity="upperWolf" size="3" minimum="2" maximum="3" />
-      <entry entity="lightningmesapwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="1" />
       <entry entity="chaosThaum" size="1" minimum="1" maximum="2" />
       <bounds region="18">
         <inclusion left="7" top="4" right="14" bottom="28" />
@@ -107968,7 +108449,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="uppericeDragon" size="1" minimum="1" maximum="1" />
+      <entry entity="upperBossDragon" size="1" minimum="1" maximum="1" />
       <bounds region="39">
         <inclusion left="0" top="0" right="5" bottom="8" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -107992,9 +108473,9 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="upperdrake" size="1" minimum="1" maximum="1" />
+      <entry entity="upperBossDrake" size="1" minimum="1" maximum="1" />
       <bounds region="36">
-        <inclusion left="0" top="0" right="7" bottom="7" />
+        <inclusion left="2" top="2" right="5" bottom="5" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -108016,7 +108497,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="axePresence" size="1" minimum="1" maximum="1" />
+      <entry entity="upperPresence" size="1" minimum="1" maximum="1" />
       <bounds region="36">
         <inclusion left="0" top="0" right="7" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -108044,7 +108525,7 @@
       <entry entity="surfaceGoblin" size="3" minimum="2" maximum="2" />
       <entry entity="lightningMesaWraith" size="1" minimum="2" maximum="2" />
       <entry entity="lightningMesaWolf" size="3" minimum="2" maximum="2" />
-      <entry entity="lightningmesaGoblin" size="3" minimum="2" maximum="2" />
+      <entry entity="lightningMesaGoblin" size="3" minimum="2" maximum="2" />
       <bounds region="6">
         <inclusion left="33" top="11" right="54" bottom="39" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -108120,7 +108601,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="2">
+      <entry weight="1">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -108142,7 +108623,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new ShieldRing();
+	return new WeakShieldRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -108245,7 +108726,7 @@
       </entry>
     </treasure>
     <treasure name="upperTreasure">
-      <entry weight="5">
+      <entry weight="15">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -108263,7 +108744,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="5">
+      <entry weight="3">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -108272,20 +108753,20 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="1">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new StrongShieldRing();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="1">
+      <entry weight="7">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new StrongStrengthRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new ShieldRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -108315,6 +108796,217 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new UncutDiamond(2000u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="AxePotions">
+      <entry weight="10">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentStrengthPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentWisdomPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="4">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentConstitutionPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentWillpowerPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="2">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentDexterityPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentIntelligencePotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="MamaTreasure">
+      <entry weight="4">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new IvoryBrooch();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StrongShieldBracelet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="4">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StrongStrengthRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="YetiTreasure">
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new BreatheWaterBracelet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new BearSkull();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="2">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new SaffronRobe();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new FeatherFallBoots();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="DrakeTreasure">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new WeakDexterityRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="6">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new GriffinSkull();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StunResistanceBracelet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="MamaTreasure2">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentConstitutionPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="2">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+    //todo add griffin fig
+	return new StrongStrengthRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new FeatherFallBoots();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="DrakeTreasure2">
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new ShieldRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new LightningShield();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="4">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StrongStrengthBracelet();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
