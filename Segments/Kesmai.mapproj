@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.73.1.0">
+<segment name="Kesmai" version="0.74.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -97254,9 +97254,10 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+ source.Say($"Take your fallen comrades to the priest for healing.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -100180,9 +100181,10 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+ source.SayTo(killer, $"The yasnaki must pay...{killer.Name}.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -100240,9 +100242,10 @@ return orc;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+ source.Say($"Master! Intruders!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -100530,6 +100533,10 @@ return orc;
 {
   source.Say($"Did Cudyl send you, knight? The gem is mine!");
 }
+else
+ { 
+   source.Say($"Ahhh. Another adventurer has come to perish.");
+ }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
