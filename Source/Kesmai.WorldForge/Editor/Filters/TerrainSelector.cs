@@ -237,6 +237,30 @@ namespace Kesmai.WorldForge.Editor
 		}
 	}
 
+	public class StaticSelector : ComponentSelector<StaticComponent>
+	{
+		public override string Name => "Filter for only static components.";
+		public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterStatic.png"));
+
+		public override ComponentRender TransformRender(SegmentTile tile, TerrainComponent component, ComponentRender render)
+		{
+			//is there a better way to do this?
+			var wallComponent = tile.GetComponents<WallComponent>();
+			var floorComponent = tile.GetComponents<FloorComponent>();
+			var obstructionComponent = tile.GetComponents<ObstructionComponent>();
+			var counterComponent = tile.GetComponents<CounterComponent>();
+			var altarComponent = tile.GetComponents<AltarComponent>();
+			
+			if (!floorComponent.Any() && !wallComponent.Any(wall => wall.IsIndestructible) && !obstructionComponent.Any() && !counterComponent.Any() && !altarComponent.Any())
+				render.Color = Color.Red; // statics that are walkable without floors to go along with them.
+
+			if (render.Color.Equals(Color.Black))
+				render.Color = Color.DimGray;
+
+			return render;
+		}
+	}
+
 	public class WallSelector : ComponentSelector<WallComponent>
 	{
 		public override string Name => "Filter for destructible/indestructible walls.";
@@ -244,9 +268,21 @@ namespace Kesmai.WorldForge.Editor
 
 		public override ComponentRender TransformRender(SegmentTile tile, TerrainComponent component, ComponentRender render)
 		{
+			var floorComponents = tile.GetComponents<FloorComponent>();
+			
 			if (component is WallComponent wall && wall.IsIndestructible)
-				render.Color = Color.Red;
-
+			{
+				if (floorComponents.Any())
+					render.Color = Color.Yellow;
+				else
+					render.Color = Color.Red;
+			}
+			else
+            {
+	            if (!floorComponents.Any())
+		            render.Color = Color.Green;
+            }
+			
 			return render;
 		}
 	}
