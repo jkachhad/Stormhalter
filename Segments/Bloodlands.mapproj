@@ -88419,7 +88419,7 @@
         BasePenetration = ShieldPenetration.Heavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Web,
+                   CreatureImmunity.Projectile | CreatureImmunity.Web | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
        
     
@@ -88443,7 +88443,7 @@
     };
     
     //todo determine if I can force it to dual wield? Not sure of context
-    boss1.Wield(new YasnakiDagger());
+    boss1.Wield(new BayonetHammer());
   
         
     boss1.AddGold(14000);
@@ -88453,8 +88453,8 @@
         new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
         new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
-        new LootPackEntry(true, (from, container) => new StrongStrengthRing(),        100),
-        new LootPackEntry(true, (from, container) => new StrongShieldRing(),        100),
+        new LootPackEntry(true, (from, container) => new StrongStrengthRing(),        50),
+        new LootPackEntry(true, (from, container) => new StrongShieldRing(),        50),
         new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        49),
         
         new LootPackEntry(true, UltraRare, 25)
@@ -89338,7 +89338,7 @@
 	var giant = new Giant()
     {
         Name = "Voracious Giant",
-        MaxHealth = 1350, Health = 1350,
+        MaxHealth = 1450, Health = 1450,
         BaseDodge = 24,
     
         Experience = 21000,
@@ -89392,7 +89392,12 @@
         
     giant.AddGold(4000);
     
-    //todo add lootpack
+  giant.AddLoot(new LootPack(
+        new LootPackEntry(true, MagicBottles, 5),
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, UltraRare, 5),
+        new LootPackEntry(true, SemiRare, 10)
+    ));
        
     return giant;
 ]]></block>
@@ -89845,7 +89850,7 @@
         MaxHealth = 300, Health = 300,
         BaseDodge = 15,
 
-        Experience = 3725,
+        Experience = 12225,
     };    
     
     shark.Attacks = new CreatureAttackCollection
@@ -90180,7 +90185,7 @@
         MaxHealth = 225, Health = 225,
         BaseDodge = 26,
         
-        Experience = 43250,        
+        Experience = 12000,        
         
         BasePenetration = ShieldPenetration.Medium,
         
@@ -90237,7 +90242,7 @@
         MaxHealth = 1200, Health = 1200,
         BaseDodge = 25,
                 
-        Experience = 45500,
+        Experience = 25000,
         
         
         
@@ -90298,7 +90303,7 @@
         MaxHealth = 225, Health = 225,
         BaseDodge = 29,
         BasePenetration = ShieldPenetration.Heavy,
-        Experience = 32500,
+        Experience = 12000,
 
         MagicProtection = 50,
     };
@@ -90355,7 +90360,7 @@
         BaseDodge = 28,
         MagicProtection = 50,
         CanCharge = true,
-        Experience = 25025,
+        Experience = 12000,
         VisibilityDistance = 1,
         
     };
