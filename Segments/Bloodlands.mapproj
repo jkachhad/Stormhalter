@@ -89849,8 +89849,8 @@
         <block><![CDATA[
 	var shark = new Shark()
     {
-        MaxHealth = 300, Health = 300,
-        BaseDodge = 15,
+        MaxHealth = 325, Health = 325,
+        BaseDodge = 19,
 
         Experience = 12225,
     };    
@@ -89875,7 +89875,7 @@
     shark.AddLoot(
         new LootPack(
             new LootPackEntry(true, (from, container) => new OysterPearl(3000u), 7.69),
-            new LootPackEntry(true, SemiRare, 10)
+            new LootPackEntry(true, SemiRare, 5)
             
 
         ));
@@ -92336,11 +92336,20 @@ if (spawn is Shopkeeper shopkeeper)
       </entry>
     </treasure>
     <treasure name="UltraRare">
-      <entry weight="1">
+      <entry weight="95">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new DexterityRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StrongShieldRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -92351,7 +92360,7 @@ if (spawn is Shopkeeper shopkeeper)
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StrongShieldRing();
+	return new ShieldRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
