@@ -88354,7 +88354,8 @@
         CanSwim = true,
         CanWalk = false,
         Body = 161,
-        
+        Immunity = CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
         Experience = 7000,
             
         VisibilityDistance = 0,
@@ -88454,9 +88455,8 @@
         new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
         new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
-        new LootPackEntry(true, (from, container) => new StrongStrengthRing(),        50),
-        new LootPackEntry(true, (from, container) => new StrongShieldRing(),        50),
-        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        49),
+         new LootPackEntry(true, SemiRare, 40),
+        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),
         
         new LootPackEntry(true, UltraRare, 25)
 
@@ -88856,8 +88856,8 @@
     
     wraith.Spells =  new CreatureSpellCollection()
     {
-        new CreatureSpell<CurseSpell>(
-            skillLevel: 12,
+        new CreatureSpell<DeathSpell>(
+            skillLevel: 11,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
@@ -90688,7 +90688,8 @@
         CanSwim = true,
         CanWalk = false,
         Body = 161,
-        
+        Immunity = CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
         Experience = 8200,
             
         VisibilityDistance = 0,
