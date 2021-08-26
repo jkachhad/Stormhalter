@@ -423,7 +423,7 @@
         {
             var damage = (double)base.CalculateMeleeDamage(item);
                                             
-            damage *= 1.(enrageAmount);
+            damage *= 1.0 + (enrageAmount * 0.1);
 
             return (int)damage;
         }
@@ -496,7 +496,6 @@
         {
             if (Spell is CurseSpell curse)
             {
-                source.Say(source, $"Please, protect the grove now...");
                 combatant.Teleport(new Point2D(23, 5, 236));
             }
 
@@ -88894,7 +88893,6 @@
         <block><![CDATA[
     var pescalanor = new GroveKeeper()
     {
-        Name = "Naiad",
         MaxHealth = 2500, Health = 2500,
         BaseDodge = 27,
         Experience = 55000,
@@ -88913,10 +88911,10 @@
     
     pescalanor.AddStatus(new BreatheWaterStatus(pescalanor));
     
-    dryad.Spells = new CreatureSpellCollection(35)
+    pescalanor.Spells = new CreatureSpellCollection(35)
     {
         new CreatureSpell<CurseSpell>(
-            skillLevel: 12.5, cost: 7,
+            skillLevel: 15, cost: 0,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
