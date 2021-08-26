@@ -180,6 +180,7 @@ namespace Kesmai.WorldForge.Editor
 				TerrainSelector.Default,
 				
 				new FloorSelector(),
+				new StaticSelector(),
 				new WaterSelector(),
 				new WallSelector(),
 				new StructureSelector(),
