@@ -423,7 +423,7 @@
         {
             var damage = (double)base.CalculateMeleeDamage(item);
                                             
-            damage *= 1.(enrageAmount);
+            damage *= 1.0 + (enrageAmount * 0.1);
 
             return (int)damage;
         }
@@ -89757,10 +89757,10 @@
     
     pescalanor.AddStatus(new BreatheWaterStatus(pescalanor));
     
-    dryad.Spells = new CreatureSpellCollection(35)
+    pescalanor.Spells = new CreatureSpellCollection(35)
     {
         new CreatureSpell<CurseSpell>(
-            skillLevel: 12.5, cost: 7,
+            skillLevel: 15, cost: 7,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
@@ -90157,20 +90157,17 @@
         
         BasePenetration = ShieldPenetration.Medium,
     
-        CreatureImmunity.Magic | CreatureImmunity.Bashing,
+        CreatureImmunity.Magic,
         CanWalk = false,
         CanSwim = true,
     };    
     
     piranha.AddStatus(new BreatheWaterStatus(piranha));
     
-    piranha.AddWeakness(IceStormSpell);
-    piranha.AddWeakness(LightningBoltSpell);
-    
     piranha.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(18,     15, 25,   "The piranha swarm upon you"),      70 }, 
-        { new CreatureAttack(21,     13, 15,  "The piranha bite you"),            30 }, 
+        { new CreatureAttack(18,     10, 15,   "The piranha swarm upon you"),      70 }, 
+        { new CreatureAttack(21,     15, 23,  "The piranha bite you"),            30 }, 
     };
         
     piranha.Blocks = new CreatureBlockCollection
