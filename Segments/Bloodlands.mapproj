@@ -88489,7 +88489,8 @@
         Name = "Gorbin the Hermit",
         MaxHealth = 470, Health = 470,
         BaseDodge = 16,
-    
+        Immunity = CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
         Experience = 8600,
         BasePenetration = ShieldPenetration.Medium,
         Attacks = new CreatureAttackCollection()
@@ -89396,7 +89397,7 @@
   giant.AddLoot(new LootPack(
         new LootPackEntry(true, MagicBottles, 5),
         new LootPackEntry(true, GenericBottles,    33),
-        new LootPackEntry(true, UltraRare, 5),
+        new LootPackEntry(true, UltraRare, 2),
         new LootPackEntry(true, SemiRare, 10)
     ));
        
@@ -90697,7 +90698,7 @@
     {
         { new CreatureAttack(13,     17, 25,      "The lurker whips you with a tentacle"),  50 }, 
         { new CreatureAttack(14,     22, 43,     "The lurker bites you.",
-                                                    new AttackPoisonComponent(15)),          50 },
+                                                    new AttackPoisonComponent(23)),          50 },
     };
     lurker.AddStatus(new BreatheWaterStatus(lurker));
     lurker.Blocks = new CreatureBlockCollection
@@ -91991,7 +91992,7 @@ if (spawn is Shopkeeper shopkeeper)
     <spawn type="RegionSpawner" name="townSheriff">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>300</maximumDelay>
-      <maximum>1</maximum>
+      <maximum>2</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -92007,6 +92008,7 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="bloodlandsPeaceKeeper" size="1" minimum="1" maximum="1" />
+      <entry entity="bloodlandsPriest" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="28" top="7" right="32" bottom="16" />
         <exclusion left="0" top="0" right="0" bottom="0" />
