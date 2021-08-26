@@ -98,7 +98,7 @@
 
                 direction = Direction.Cardinal.Random();
 
-                whirlwind.CastAt(direction, direction.Opposite);
+                whirlwind.CastAt(combatant.Location, direction.Opposite);
 
                 if (target != null)
                     target.Cancel(this, TargetCancel.Canceled);
@@ -101791,8 +101791,10 @@
     
     wraith.AddStatus(new NightVisionStatus(wraith));
     
+	/*
     wraith.Weakness(WhirlwindSpell);
-        
+    */
+	
     wraith.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(7)

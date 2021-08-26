@@ -88420,7 +88420,7 @@
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Web,
-        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.Silver, CreatureWeakness.IceSpearSpell, CreatureWeakness.DeathSpell,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
        
     
     };
@@ -88496,7 +88496,7 @@
         },
     };
     
-    hobgoblin.Wield(Utility.RandomBool() ? new Longsword() : new Dagger());
+    hobgoblin.Wield(Utility.RandomBool() ? (Weapon)new Longsword() : (Weapon)new SteelDagger());
     hobgoblin.Equip(new LeatherArmor());    
     
     hobgoblin.AddGold(700);
@@ -90706,7 +90706,7 @@
         new LootPackEntry(true, GenericBottles,    33),
         new LootPackEntry(true, MagicBottles, 8),
         new LootPackEntry(true, UltraRare, 1),
-        new LootPackEntry(true, SemiRare, 10),
+        new LootPackEntry(true, SemiRare, 10)
     ));
     
     return lurker;
