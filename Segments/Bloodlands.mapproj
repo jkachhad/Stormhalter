@@ -88403,7 +88403,7 @@
 	var boss1 = new ElderTroll()
     {
         Name = "Flordex",
-        MaxHealth = 7500, Health = 7500,
+        MaxHealth = 7250, Health = 7250,
         BaseDodge = 21,
         HideDetection = 28,
         Alignment = Alignment.Evil,
@@ -88455,6 +88455,7 @@
         new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
         new LootPackEntry(true, (from, container) => new StrongStrengthRing(),        100),
         new LootPackEntry(true, (from, container) => new StrongShieldRing(),        100),
+        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        60),
         
         new LootPackEntry(true, UltraRare, 25)
 
@@ -88987,8 +88988,7 @@
         Experience = 19000,
     
         BasePenetration = ShieldPenetration.Heavy,
-        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Magic,
+      
         Weakness = CreatureWeakness.IceSpearSpell,
     };
     
