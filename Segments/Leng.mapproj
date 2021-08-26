@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.73.1.0">
+<segment name="Leng" version="0.74.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -77853,6 +77853,161 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="undeadWyrm">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var wyrm = new Wyrm()
+    {
+        MaxHealth = 500, Health = 500,
+        BaseDodge = 18,
+
+        Experience = 23000,
+
+        Movement = 3,
+        
+        BasePenetration = ShieldPenetration.VeryHeavy,
+        
+        Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing 
+                   | CreatureImmunity.Bashing | CreatureImmunity.Poison,
+        Weakness = CreatureWeakness.BlueGlowing,
+    };
+    
+    wyrm.AddStatus(new NightVisionStatus(wyrm)); 
+    
+    wyrm.Attacks = new CreatureAttackCollection
+    {
+        { 
+            new CreatureAttack(15, 20, 35, "The serpent bites you with it's fangs."),   60 
+        }, 
+        {
+            new CreatureAttack(15, 20, 35, "The serpent bites you with it's fangs.",
+                                        new AttackStunComponent(35),
+                                        new AttackPoisonComponent(12)),             20 
+        }, 
+        {
+            new CreatureAttack(15, 25, 40, "The serpent strikes you with it's tail.",
+                                        new AttackStunComponent(10)),                   20 
+        }, 
+    };
+    
+    wyrm.Blocks = new CreatureBlockCollection
+    {
+        { 
+            new CreatureBlock(6, "slimy scales") 
+        }, 
+        {
+            new CreatureBlock(4, "a fang")
+        }, 
+    };
+
+    wyrm.AddGold(1500);
+    wyrm.AddLoot(new LootPack(
+        new LootPackEntry(true, CliffGems,       50,     gemsPriceMutator), 
+        new LootPackEntry(true, CliffBottles,    20),
+        new LootPackEntry(true, LengPotions,    0.3),
+        new LootPackEntry(true, CliffTreasures,    5)
+    ));
+    
+    return wyrm;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="mausSeaSerpent">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var seaserpent = new SeaSerpent()
+    {
+        MaxHealth = 500, Health = 500,
+        BaseDodge = 18,
+
+        Experience = 23000,
+        
+        CanWalk = false,
+        Movement = 3,
+        
+        BasePenetration = ShieldPenetration.VeryHeavy,
+        
+        Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing 
+                   | CreatureImmunity.Bashing | CreatureImmunity.Poison,
+        Weakness = CreatureWeakness.BlueGlowing,
+    };
+    
+    seaserpent.AddStatus(new NightVisionStatus(seaserpent)); 
+    
+    seaserpent.AddStatus(new NightVisionStatus(seaserpent)); 
+    
+    seaserpent.Attacks = new CreatureAttackCollection
+    {
+        { 
+            new CreatureAttack(15, 20, 35, "The serpent bites you with it's fangs."),   60 
+        }, 
+        {
+            new CreatureAttack(15, 20, 35, "The serpent bites you with it's fangs. It tingles!",
+                                        new AttackStunComponent(35),
+                                        new AttackPoisonComponent(12)),             20 
+        }, 
+        {
+            new CreatureAttack(15, 25, 40, "The serpent strikes you with it's tail.",
+                                        new AttackStunComponent(10)),                   20 
+        }, 
+    };
+    
+    seaserpent.Spells = new CreatureSpellCollection(50.0)
+    {
+      {  new CreatureSpell<LightningStormSpell>(
+            skillLevel: 1, instantCast: false, mantra: SpellHelper.GenerateMantra()), 100, TimeSpan.FromSeconds(15.0) }
+    };
+    
+    seaserpent.Blocks = new CreatureBlockCollection
+    {
+        { 
+            new CreatureBlock(6, "slimy scales") 
+        }, 
+        {
+            new CreatureBlock(4, "a fang")
+        }, 
+    };
+
+    seaserpent.AddGold(1500);
+    seaserpent.AddLoot(new LootPack(
+        new LootPackEntry(true, CliffGems,       50,     gemsPriceMutator), 
+        new LootPackEntry(true, CliffBottles,    20),
+        new LootPackEntry(true, LengPotions,    0.3),
+        new LootPackEntry(true, CliffTreasures,    3)
+    ));
+    
+    return wyrm;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="Priest">
@@ -78923,7 +79078,7 @@
     <spawn type="RegionSpawner" name="lengUndead">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1500</maximumDelay>
-      <maximum>25</maximum>
+      <maximum>38</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -78940,12 +79095,13 @@
       </script>
       <entry entity="minoLich" size="1" minimum="3" maximum="5" />
       <entry entity="mausWretch" size="3" minimum="6" maximum="9" />
-      <entry entity="mausWraith" size="3" minimum="1" maximum="1" />
+      <entry entity="mausWraith" size="3" minimum="1" maximum="3" />
       <entry entity="mausHobgobMage" size="1" minimum="3" maximum="4" />
       <entry entity="mausHobgoblin" size="3" minimum="5" maximum="7" />
       <entry entity="mausWraith" size="1" minimum="4" maximum="5" />
       <entry entity="mausSpectre" size="1" minimum="3" maximum="4" />
       <entry entity="cliffTrolls" size="3" minimum="4" maximum="6" />
+      <entry entity="undeadWyrm" size="1" minimum="1" maximum="1" />
       <bounds region="18">
         <inclusion left="3" top="6" right="20" bottom="28" />
         <inclusion left="21" top="8" right="43" bottom="37" />
