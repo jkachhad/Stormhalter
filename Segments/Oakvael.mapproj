@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.73.1.0">
+<segment name="Oakvael" version="0.74.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -424,7 +424,7 @@
         {
             var damage = (double)base.CalculateMeleeDamage(item);
                                             
-            damage *= 1 + (enrageAmount * 0.1);
+            damage *= (1 + (enrageAmount * 0.1f));
 
             return (int)damage;
         }

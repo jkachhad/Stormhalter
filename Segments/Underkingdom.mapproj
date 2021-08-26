@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.73.1.0">
+<segment name="Underkingdom" version="0.74.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -101785,8 +101785,9 @@
         IsInvisible = true,
         Experience = 1,
         Movement = 0,
-        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
+        FireProtection = 100,
+        IceProtection = 100,
+        LightningResistance = 100,
     };
     
     wraith.AddStatus(new NightVisionStatus(wraith));
