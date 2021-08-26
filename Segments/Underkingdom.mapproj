@@ -98122,8 +98122,7 @@
     
         BasePenetration = ShieldPenetration.Heavy,
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Slashing,
-        Weakness = CreatureWeakness.BlueGlowing,
+                   CreatureImmunity.Projectile,
     };
     
     mummy.AddStatus(new NightVisionStatus(mummy));

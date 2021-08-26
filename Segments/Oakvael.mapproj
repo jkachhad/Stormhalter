@@ -59,6 +59,484 @@
         
         item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
     }
+    
+    public class GroveDryads : CreatureEntity
+    {
+        public GroveDryads()
+        {
+            Name = "Dryad";
+            Body = 15;
+            Alignment = Alignment.Chaotic;
+        }
+
+        public override void OnDeath()
+        {
+            source.Say(source, $"Please, protect the grove now...");
+            base.OnDeath();
+        }
+
+        public GroveDryads(Serial serial) : base(serial)
+        {
+        }
+
+        public override void OnSpellTarget(Target target, MobileEntity combatant)
+        {
+            if (Spell is CurseSpell curse)
+            {
+                var snake = new Snake()
+                {
+                    MaxHealth = 150, Health = 150,
+                    BaseDodge = 18,
+                    Experience = 15000
+                };
+                snake.Attacks = new CreatureAttackCollection()
+                {
+                    new CreatureAttack(18,     10, 30,      "The viper sinks its spectral fangs into your flesh.",
+                                                                                            new AttackPoisonComponent(15, 50))
+                };
+
+                snake.Blocks = new CreatureBlockCollection
+                {
+                    new CreatureBlock(1, "your weapon passing through the viper."),
+                };
+
+                snake.Teleport(combatant.Location);
+            }   
+        }
+
+        public override int GetNearbySound() => 208;
+        public override int GetAttackSound() => 214;
+        public override int GetDeathSound() => 205;
+        public override int GetWarmSound() => 84;
+        public override void OnSpawn()
+        {
+            base.OnSpawn();
+            if (_brain != null)
+                return;
+            if (RightHand is ProjectileWeapon)
+                _brain = new RangedAI(this);
+            else
+                _brain = new CombatAI(this);
+        }    
+
+        public override Corpse GetCorpse() => default(Corpse);
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((short)1); /* version */
+        }
+
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+            var version = reader.ReadInt16();
+            switch (version)
+            {
+                case 1:
+                    {
+                        break;
+                    }
+            }
+        }
+    }
+
+    public class GroveWildlifeBoar : CreatureEntity
+    {
+        public GroveWildlifeBoar()
+        {
+            Name = "terrified wildlife";
+            Body = 39;
+            Alignment = Alignment.Chaotic;
+        }
+
+        public override void OnDeath()
+        {
+            foreach (var defender in GetMobilesInLOS<GroveDefender>().Where(l => l.IsAlive))
+                defender.Enraged(this);
+            base.OnDeath();
+        }
+
+        public GroveWildlifeBoar(Serial serial) : base(serial)
+        {
+        }
+
+        public override int GetNearbySound() => 12;
+        public override int GetAttackSound() => 24;
+        public override int GetDeathSound() => 36;
+        public override Corpse GetCorpse() => default(Corpse);
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            if (_brain != null)
+                return;
+            _brain = new CombatAI(this);
+        }
+
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((short)1); /* version */
+        }
+
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+            var version = reader.ReadInt16();
+            switch (version)
+            {
+                case 1:
+                    {
+                        break;
+                    }
+            }
+        }
+    }
+    
+    public class GroveWildlifeWolf : CreatureEntity
+    {
+        public GroveWildlifeWolf()
+        {
+            Name = "terrified wildlife";
+            Body = 24;
+            Alignment = Alignment.Chaotic;
+        }
+
+        public override void OnDeath()
+        {
+            foreach (var defender in GetMobilesInLOS<GroveDefender>().Where(l => l.IsAlive))
+                defender.Enraged(this);
+            base.OnDeath();
+        }
+
+        public GroveWildlifeWolf(Serial serial) : base(serial)
+        {
+        }
+
+        public override int GetNearbySound() => 14;
+        public override int GetAttackSound() => 26;
+        public override int GetDeathSound() => 38;
+        public override Corpse GetCorpse() => default(Corpse);
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            if (_brain != null)
+                return;
+            _brain = new CombatAI(this);
+        }
+
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((short)1); /* version */
+        }
+
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+            var version = reader.ReadInt16();
+            switch (version)
+            {
+                case 1:
+                    {
+                        break;
+                    }
+            }
+        }
+    }
+    
+    
+    public class GroveWildlifeGriffin : CreatureEntity
+    {
+        public GroveWildlifeGriffin()
+        {
+            Name = "terrified wildlife";
+            Body = 25;
+            Alignment = Alignment.Chaotic;
+        }
+
+        public override void OnDeath()
+        {
+            foreach (var defender in GetMobilesInLOS<GroveDefender>().Where(l => l.IsAlive))
+                defender.Enraged(this);
+            base.OnDeath();
+        }
+
+        public GroveWildlifeGriffin(Serial serial) : base(serial)
+        {
+        }
+
+        public override int GetNearbySound() => 9;
+        public override int GetAttackSound() => 21;
+        public override int GetDeathSound() => 33;
+        public override Corpse GetCorpse() => default(Corpse);
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            if (_brain != null)
+                return;
+            _brain = new CombatAI(this);
+        }
+
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((short)1); /* version */
+        }
+
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+            var version = reader.ReadInt16();
+            switch (version)
+            {
+                case 1:
+                    {
+                        break;
+                    }
+            }
+        }
+    }
+    
+    public class GroveWildlifeBeetle : CreatureEntity
+    {
+        public GroveWildlifeBeetle()
+        {
+            Name = "terrified wildlife";
+            Body = 43;
+            Alignment = Alignment.Chaotic;
+        }
+
+        public override void OnDeath()
+        {
+            foreach (var defender in GetMobilesInLOS<GroveDefender>().Where(l => l.IsAlive))
+                defender.Enraged(this);
+            base.OnDeath();
+        }
+
+        public GroveWildlifeBeetle(Serial serial) : base(serial)
+        {
+        }
+
+        public override int GetNearbySound() => 139;
+        public override int GetAttackSound() => 158;
+        public override int GetDeathSound() => 177;
+        public override Corpse GetCorpse() => default(Corpse);
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            if (_brain != null)
+                return;
+            _brain = new CombatAI(this);
+        }
+
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((short)1); /* version */
+        }
+
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+            var version = reader.ReadInt16();
+            switch (version)
+            {
+                case 1:
+                    {
+                        break;
+                    }
+            }
+        }
+    }
+    
+    public class GroveWildlifeBear : CreatureEntity
+    {
+        public GroveWildlifeBear()
+        {
+            Name = "terrified wildlife";
+            Body = 55;
+            Alignment = Alignment.Chaotic;
+        }
+
+        public override void OnDeath()
+        {
+            foreach (var defender in GetMobilesInLOS<GroveDefender>().Where(l => l.IsAlive))
+                defender.Enraged(this);
+            base.OnDeath();
+        }
+
+        public GroveWildlifeBear(Serial serial) : base(serial)
+        {
+        }
+
+        public override int GetNearbySound() => 18;
+        public override int GetAttackSound() => 30;
+        public override int GetDeathSound() => 42;
+        public override Corpse GetCorpse() => default(Corpse);
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            if (_brain != null)
+                return;
+            _brain = new CombatAI(this);
+        }
+
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((short)1); /* version */
+        }
+
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+            var version = reader.ReadInt16();
+            switch (version)
+            {
+                case 1:
+                    {
+                        break;
+                    }
+            }
+        }
+    }
+
+    public class GroveDefender : CreatureEntity
+    {
+        public GroveDefender()
+        {
+            Body = 3;
+            Alignment = Alignment.Chaotic;
+        }
+
+        public int enrageAmount = 0;
+
+        public void Enraged(GroveDefender deadWildlife)
+        {
+            source.Say(source, $"They're the last... How could you?!");
+            enrageAmount++;
+            Hue = Color.Red;
+
+        }
+
+        public override int CalculateMeleeDamage(ItemEntity item)
+        {
+            var damage = (double)base.CalculateMeleeDamage(item);
+                                            
+            damage *= 1.(enrageAmount);
+
+            return (int)damage;
+        }
+
+        public override void OnDeath()
+        {
+            source.Say(source, $"I have failed the grove!");
+            base.OnDeath();
+        }
+
+        public GroveDefender(Serial serial) : base(serial)
+        {
+        }
+
+        public override void OnSpawn()
+        {
+            base.OnSpawn();
+            if (_brain != null)
+                return;
+            if (RightHand is ProjectileWeapon)
+                _brain = new RangedAI(this);
+            else
+                _brain = new CombatAI(this);
+        }
+
+        public override int GetNearbySound() => 136;
+        public override int GetAttackSound() => 155;
+        public override int GetDeathSound() => 174;
+        public override Corpse GetCorpse() => default(Corpse);
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((short)1); /* version */
+        }
+
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+            var version = reader.ReadInt16();
+            switch (version)
+            {
+                case 1:
+                    {
+                        break;
+                    }
+            }
+        }
+    }
+
+    public class GroveKeeper : CreatureEntity
+    {
+        public GroveKeeper()
+        {
+            Name = "Keeper of the Grove";
+            Body = 216;
+            Alignment = Alignment.Chaotic;
+        }
+
+        public override void OnDeath()
+        {
+            source.Say(source, $"Please, protect the grove now...");
+            base.OnDeath();
+        }
+
+        public GroveKeeper(Serial serial) : base(serial)
+        {
+        }
+
+        public override void OnSpellTarget(Target target, MobileEntity combatant)
+        {
+            if (Spell is CurseSpell curse)
+            {
+                source.Say(source, $"Please, protect the grove now...");
+                combatant.Teleport(new Point2D(23, 5, 236));
+            }
+
+        }
+
+        public override int GetNearbySound() => 208;
+        public override int GetAttackSound() => 214;
+        public override int GetDeathSound() => 205;
+        public override int GetWarmSound() => 84;
+        public override void OnSpawn()
+        {
+            base.OnSpawn();
+            if (_brain != null)
+                return;
+            if (RightHand is ProjectileWeapon)
+                _brain = new RangedAI(this);
+            else
+                _brain = new CombatAI(this);
+        }
+
+        public override Corpse GetCorpse() => default(Corpse);
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((short)1); /* version */
+        }
+
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+            var version = reader.ReadInt16();
+            switch (version)
+            {
+                case 1:
+                    {
+                        break;
+                    }
+            }
+        }
+    }
 ]]></block>
     <block><![CDATA[]]></block>
   </script>
@@ -79290,7 +79768,7 @@
         <component type="DoorComponent">
           <openId>75</openId>
           <closedId>63</closedId>
-          <secretId>26</secretId>
+          <secretId>157</secretId>
           <destroyedId>81</destroyedId>
           <isSecret>true</isSecret>
         </component>
@@ -79870,6 +80348,15 @@
         </component>
         <component type="StaticComponent">
           <static>92</static>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>14</destinationX>
+          <destinationY>41</destinationY>
+          <destinationRegion>235</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
         </component>
       </tile>
       <tile x="21" y="2">
@@ -88405,29 +88892,48 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var pescalanor = new Humanoid()
+    var pescalanor = new GroveKeeper()
     {
         Name = "Naiad",
-        MaxHealth = 200, Health = 200,
-        BaseDodge = 16,
-        MagicProtection = 50,
-        Experience = 6500,
-        HideDetection = 35,
+        MaxHealth = 2500, Health = 2500,
+        BaseDodge = 27,
+        Experience = 55000,
+        HideDetection = 37,
         CanWalk = false,
         CanSwim = true,
-        VisibilityDistance = 3,
+        Movement = 0,
+        VisibilityDistance = 1,
+        BasePenetration = ShieldPenetration.Heavy,
+        CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
     };
+    
+    pescalanor.AddWeakness(IceStormSpell);
+    pescalanor.AddWeakness(LightningBoltSpell);
     
     pescalanor.AddStatus(new BreatheWaterStatus(pescalanor));
     
+    dryad.Spells = new CreatureSpellCollection(35)
+    {
+        new CreatureSpell<CurseSpell>(
+            skillLevel: 12.5, cost: 7,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
+    
     pescalanor.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(19)
+        new CreatureBasicAttack(22)
     };
 
     pescalanor.Wield(new FineCrossbow());
     pescalanor.Equip(new DragonScaleArmor());    
-
+    
+    pescalanor.AddLoot(
+        new LootPack(
+            new LootPackEntry(true, dungeon5Bottles, 60.0), 
+            new LootPackEntry(true, groveGems, 100.0, gemsPriceMutator),
+            new LootPackEntry(true, groveTreasure, 50)
+        ));
     return pescalanor;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -88438,9 +88944,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    source.Say($"The last grove must be defended at any cost!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -88449,7 +88956,7 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var centaur = new Centaur()
+    var centaur = new GroveDefender()
     {
         Name = "Grove.Defender",
         MaxHealth = 350, Health = 350,
@@ -88497,38 +89004,35 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var centaur = new Centaur()
+    var dryad = new GroveDryads()
     {
         Name = "Dryad",
         MaxHealth = 230, Health = 230,
-        MaxMana = 31, Mana = 31,
+        MaxMana = 14, Mana = 14,
         BaseDodge = 18,
         BasePenetration = ShieldPenetration.Medium,     
         Experience = 17300,
     };
     
-    centaur.AddStatus(new NightVisionStatus(centaur));
+    dryad.AddStatus(new NightVisionStatus(centaur));
     
-    centaur.Attacks = new CreatureAttackCollection
+    dryad.Attacks = new CreatureAttackCollection
     {
         new CreatureBasicAttack(16, 25, 35)
     };
     
-    centaur.Spells = new CreatureSpellCollection()
+    dryad.Spells = new CreatureSpellCollection()
     {
-        //not sure CreateSnake will work on chaotic monster but would be interesting - I feel a natural defender monster might do it thematically
-        new CreatureSpell<CreateSnakeSpell>(
-            skillLevel: 16, cost: 16,
-            mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<CurseSpell>(
-            skillLevel: 14, cost: 7,
+            skillLevel: 12.5, cost: 7,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
-    centaur.Wield(new IronRod());
+    dryad.Wield(new GiltDagger());
+    dryad.Wield(new IronRod());
     
-    centaur.AddGold(1500);
-    centaur.AddLoot(
+    dryad.AddGold(1500);
+    dryad.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 60.0), 
             new LootPackEntry(true, groveGems, 25.0, gemsPriceMutator),
@@ -88558,7 +89062,7 @@
         <block><![CDATA[
     var bear = new Bear()
     {
-        Name = "Bear.Spirit",
+        Name = "Bear Spirit",
         MaxHealth = 2000, Health = 2000,
         BaseDodge = 25,
                 
@@ -88623,9 +89127,9 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var wolf = new Wolf()
+    var wolf = new BlackWolf()
     {
-        Name = "Spectral.Wolf",
+        Name = "Spectral Wolf",
         MaxHealth = 1000, Health = 1000,
         BaseDodge = 30,
         BasePenetration = ShieldPenetration.Heavy,
@@ -88746,7 +89250,7 @@
         <block><![CDATA[
     var viper = new Snake()
     {
-        Name = "Spectral.Viper",
+        Name = "Spectral Viper",
         
         MaxHealth = 500, Health = 500,
         BaseDodge = 28,
@@ -88759,7 +89263,7 @@
     viper.Attacks = new CreatureAttackCollection()
     {
         new CreatureAttack(18,     10, 30,      "The viper sinks its spectral fangs into your flesh.", 
-                                            new AttackPoisonComponent(40))
+                                            new AttackPoisonComponent(33, 50))
     };  
     
     viper.Blocks = new CreatureBlockCollection
@@ -88774,6 +89278,347 @@
             new LootPackEntry(true, groveTreasure, 1.0)
         ));
     return viper;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="groveFish">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var piranha = new Piranha()
+    {
+        Name = "frenzied fish",
+        MaxHealth = 75, Health = 75,
+        BaseDodge = 14,
+    
+        Experience = 3221,
+    
+        Movement = 1,
+        
+        VisibilityDistance = 0,
+        RangePerception = 0,
+        
+        BasePenetration = ShieldPenetration.Medium,
+    
+        CreatureImmunity.Magic | CreatureImmunity.Bashing,
+        CanWalk = false,
+        CanSwim = true,
+    };    
+    
+    piranha.AddStatus(new BreatheWaterStatus(piranha));
+    
+    piranha.AddWeakness(IceStormSpell);
+    piranha.AddWeakness(LightningBoltSpell);
+    
+    piranha.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(18,     15, 25,   "The piranha swarm upon you"),      70 }, 
+        { new CreatureAttack(21,     13, 15,  "The piranha bite you"),            30 }, 
+    };
+        
+    piranha.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(8, "the armor"), 
+        new CreatureBlock(6, "a tail"), 
+    };
+    
+    piranha.AddGold(300);
+        
+    return piranha;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="groveSurfaceBeetle">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var beetle = new GroveWildlifeBeetle()
+    {
+        MaxHealth = 25, Health = 25,
+        BaseDodge = 12,
+
+        Experience = 750,
+        
+        BasePenetration = ShieldPenetration.VeryLight,
+    };    
+    
+    beetle.Attacks = new CreatureAttackCollection
+    {
+        new CreatureAttack(6, 1, 8, "You have been stung by a beetle.",
+                        new AttackPoisonComponent(3), 
+                        new AttackStunComponent(10))
+    };
+    
+    beetle.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(1, "the armor")
+    };
+
+    beetle.AddGold(160);
+    
+    return beetle;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="groveSurfaceBoar">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var boar = new GroveWildlifeBoar()
+    {
+        MaxHealth = 33, Health = 33,
+        BaseDodge = 12,
+
+        Experience = 425,
+    };    
+    
+    boar.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(5, 2, 6, "You have been gored by the boar."),    60
+        },
+        {
+            new CreatureAttack(6, 3, 8, "The boar tramples you."),              40
+        },
+    };
+    
+    boar.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(4, "a cloven hoof")
+    };
+
+    boar.AddGold(200);
+    boar.AddLoot(
+        new LootPack(
+            new LootPackEntry(true, surfaceGems, 25.0, gemsPriceMutator), 
+            new LootPackEntry(true, surfaceBottles, 20.0), 
+            new LootPackEntry(true, surfaceTreasure, 0.63)
+        ));
+
+    return boar;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="groveSurfaceGriffin">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var griffin = new GroveWildlifeGriffin()
+    {
+        MaxHealth = 150, Health = 150,
+        BaseDodge = 15,
+
+        Experience = 2350,
+        
+        MagicProtection = 20,
+        
+        HideDetection = 18,
+    };
+    
+    griffin.AddStatus(new NightVisionStatus(griffin)); 
+    
+    griffin.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(11, 8, 16, "The griffin tears your flesh with its beak."),   40 
+        }, 
+        {
+            new CreatureAttack(11, 10, 25, "The griffin buries its talons into you.",
+                                                    new AttackStunComponent(20.0)),         30
+        }, 
+        {
+            new CreatureAttack(11, 20, 35, "The griffin pummels you with its wings."),      30
+        }, 
+    };
+        
+    griffin.Blocks = new CreatureBlockCollection
+    {
+        {
+            new CreatureBlock(6, "the armor")
+        }, 
+        {
+            new CreatureBlock(4, "a talon")
+        }, 
+        {
+            new CreatureBlock(3, "a beak") 
+        }, 
+    };
+
+    griffin.AddGold(1050);
+    griffin.AddLoot(new LootPack(
+            new LootPackEntry(true, (from, container) => new OchreEgg(), 25.0), 
+            new LootPackEntry(true, (from, container) => new ClearBalm(), 50.0), 
+            new LootPackEntry(true, surfaceTreasure, 0.63)
+        ));
+
+    return griffin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="groveSurfaceBear">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var largeBear = new GroveWildlifeBear()
+    {
+        MaxHealth = 140, Health = 140,
+        BaseDodge = 14,
+
+        Experience = 2200,
+    };
+    
+    largeBear.AddStatus(new NightVisionStatus(largeBear));    
+    
+    largeBear.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(7, 12, 18, "The bear slashes you with its claws."),      50 
+        }, 
+        {
+            new CreatureAttack(7, 15, 25, "You've been mauled by the bear."),           40 
+        }, 
+        {
+            new CreatureAttack(8, 20, 35, "The bear crushes you within its embrace."),  10 
+        }, 
+    };
+    
+    largeBear.Blocks = new CreatureBlockCollection
+    {
+       new CreatureBlock(6, "the tough hide"),
+       new CreatureBlock(4, "a claw") 
+    };
+
+    largeBear.AddGold(1450);
+    largeBear.AddLoot(
+        new LootPack(
+            new LootPackEntry(true, surfaceGems, 25.0, gemsPriceMutator), 
+            new LootPackEntry(true, surfaceBottles, 20.0), 
+            new LootPackEntry(true, surfaceTreasure, 0.63)
+        ));
+
+    return largeBear;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="groveSurfaceWolf">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var wolf = new GroveWildlifeWolf()
+    {
+        MaxHealth = 32, Health = 32,
+        BaseDodge = 12,
+
+        Experience = 450,
+    };
+    
+    wolf.Attacks = new CreatureAttackCollection
+    {
+        { 
+            new CreatureAttack(6, 2, 5, "The wolf rakes you with its claws."),  50 
+        }, 
+        {
+            new CreatureAttack(7, 3, 6, "The wolf sinks its teeth into you."),  30 
+        }, 
+        {
+            new CreatureAttack(7, 4, 8, "The wolf lunges at you."),             20
+        }, 
+    };
+    
+    wolf.Blocks = new CreatureBlockCollection
+    {
+            { new CreatureBlock(6, "the thick hide") }, 
+            { new CreatureBlock(3, "a paw") }, 
+    };
+
+    wolf.AddGold(325);
+    wolf.AddLoot(
+        new LootPack(
+            new LootPackEntry(true, surfaceGems, 25.0, gemsPriceMutator), 
+            new LootPackEntry(true, surfaceBottles, 20.0), 
+            new LootPackEntry(true, surfaceTreasure, 0.63)
+        ));
+
+    return wolf;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -89454,7 +90299,7 @@
       <entry entity="groveBear" size="1" minimum="1" maximum="1" />
       <location x="37" y="0" region="236" />
     </spawn>
-    <spawn type="LocationSpawner" name="groveWold">
+    <spawn type="LocationSpawner" name="groveWolf">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>1</maximum>
@@ -89495,6 +90340,27 @@
       </script>
       <entry entity="groveBoar" size="1" minimum="1" maximum="1" />
       <location x="1" y="7" region="236" />
+    </spawn>
+    <spawn type="LocationSpawner" name="groveKeeper">
+      <minimumDelay>7200</minimumDelay>
+      <maximumDelay>7200</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="groveNaiad" size="1" minimum="1" maximum="1" />
+      <location x="23" y="7" region="236" />
     </spawn>
     <spawn type="RegionSpawner" name="portalPeacemakers">
       <minimumDelay>900</minimumDelay>
@@ -89800,10 +90666,10 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="groveNaiads">
-      <minimumDelay>960</minimumDelay>
-      <maximumDelay>1320</maximumDelay>
-      <maximum>3</maximum>
+    <spawn type="RegionSpawner" name="grovepiranhas">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -89818,7 +90684,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="groveNaiad" size="1" minimum="3" maximum="3" />
+      <entry entity="groveFish" size="3" minimum="3" maximum="3" />
       <bounds region="236">
         <inclusion left="18" top="4" right="26" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -89827,6 +90693,7 @@
     <spawn type="RegionSpawner" name="groveDefenders">
       <minimumDelay>1140</minimumDelay>
       <maximumDelay>1560</maximumDelay>
+      <maximum>9</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -89841,7 +90708,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="groveDefender" size="2" minimum="6" maximum="5" />
+      <entry entity="groveDefender" size="2" minimum="6" maximum="6" />
       <entry entity="groveDryad" size="1" minimum="3" maximum="3" />
       <bounds region="236">
         <inclusion left="1" top="1" right="11" bottom="7" />
@@ -89875,6 +90742,40 @@
       <entry entity="groveSnake" size="3" minimum="1" maximum="1" />
       <bounds region="236">
         <inclusion left="24" top="13" right="34" bottom="13" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="groveWildlife">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>16</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="groveSurfaceBeetle" size="3" minimum="3" maximum="3" />
+      <entry entity="groveSurfaceBoar" size="3" minimum="3" maximum="3" />
+      <entry entity="groveSurfaceGriffin" size="1" minimum="3" maximum="3" />
+      <entry entity="groveSurfaceBear" size="1" minimum="3" maximum="3" />
+      <entry entity="groveSurfaceWolf" size="3" minimum="4" maximum="4" />
+      <bounds region="236">
+        <inclusion left="1" top="1" right="11" bottom="7" />
+        <inclusion left="12" top="-3" right="12" bottom="-2" />
+        <inclusion left="4" top="8" right="16" bottom="13" />
+        <inclusion left="12" top="5" right="16" bottom="8" />
+        <inclusion left="17" top="9" right="34" bottom="13" />
+        <inclusion left="28" top="-3" right="34" bottom="8" />
+        <inclusion left="35" top="-3" right="38" bottom="-2" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -90796,7 +91697,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="10">
+      <entry weight="5">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -90901,7 +91802,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="1">
+      <entry weight="3">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -90914,7 +91815,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new WeakDexterityRing();
+	return new ScorpionBracelet();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -90924,6 +91825,15 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new StrongShieldBracelet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="2">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new BlindFearProtectionBracelet();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
