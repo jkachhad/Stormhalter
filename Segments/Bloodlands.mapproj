@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Bloodlands" version="0.73.1.0">
+<segment name="Bloodlands" version="0.74.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -90363,7 +90363,7 @@
     viper.Attacks = new CreatureAttackCollection()
     {
         new CreatureAttack(18,     10, 30,      "The viper sinks its fangs into your flesh.", 
-                                            new AttackPoisonComponent(40))
+                                            new AttackPoisonComponent(29))
     };  
     
     viper.Blocks = new CreatureBlockCollection
@@ -90835,7 +90835,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="bloodlandsPriest" size="1" minimum="1" maximum="1" />
-      <location x="38" y="21" region="1" />
+      <location x="28" y="21" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="bloodlandsGhost">
       <minimumDelay>900</minimumDelay>
