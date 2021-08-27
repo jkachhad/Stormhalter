@@ -87915,7 +87915,7 @@
   </locations>
   <subregions />
   <entities>
-    <entity name="bloodlandsBanker">
+    <entity name="townBanker">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -87942,14 +87942,15 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+       source.Say(Utility.RandomBool() ? $"Plop those coins on the counter {player.Name}... I'll keep them safe." : $"One million.. two.. oh hi {player.Name}, step right up.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlandsBalmVendor">
+    <entity name="townBalmVendor">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -87976,14 +87977,15 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    source.Say($"Come get your balms here.. nice and fresh!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlandsRecallVendor">
+    <entity name="townRecallVendor">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -88010,14 +88012,15 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    source.Say($"Grab yourself a recall ring, don't want to get stuck out there.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlandsPriest">
+    <entity name="townPriest">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -88056,7 +88059,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlandsGhost">
+    <entity name="townGhost">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -88070,14 +88073,22 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (player.Health < player.MaxHealth)
+    {
+    source.Say($"Welcome back to life.. {player.Name}");
+    }
+    else
+    {
+    source.Say(Utility.RandomBool() ? $"Fancy a visit to the underworld?" : $"Visiting a loved ones grave?");
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlandsWizardTrainer">
+    <entity name="townWizardTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -88113,7 +88124,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlandsThaumTrainer">
+    <entity name="townThaumTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -88152,7 +88163,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlandsThiefTrainer">
+    <entity name="townThiefTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -88188,7 +88199,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlandsWeaponTrainer">
+    <entity name="townWeaponTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -88221,7 +88232,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlandsTailorVendor">
+    <entity name="townTailorVendor">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -88254,7 +88265,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlandsShopKeeper">
+    <entity name="townShopKeeper">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -88588,7 +88599,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlandsPeaceKeeper">
+    <entity name="townPeaceKeeper">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -88633,12 +88644,12 @@
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    source.Say($"Welcome to town, I'm the law around here");
+    source.Say(Utility.RandomBool() ? $"Welcome to town {player.Name}." : $"I heard a rumor there is a vampire north of town");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlandsRaven">
+    <entity name="townRaven">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -88690,13 +88701,13 @@
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    source.Say($"I've got my eye on you {player.Name}.");
+    source.Say(Utility.RandomBool() ? $"I've got my eye on you {player.Name}.." : $"Intruder.. Attack! Oh, hi {player.Name}");
     
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlands100Hobs">
+    <entity name="100Hobs">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -88727,6 +88738,10 @@
     hobgoblin.Equip(new LeatherArmor());    
     
     hobgoblin.AddGold(700);
+    hobgoblin.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33)
+    ));
     
     //Need to add in new loot
     
@@ -88748,7 +88763,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlands100Archer">
+    <entity name="100Archer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -88771,6 +88786,10 @@
     orc.Equip(new LeatherArmor());
             
     orc.AddGold(250);
+    orc.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33)
+    ));
     
     //need to add lootpack
      
@@ -88791,7 +88810,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlands100Kobald">
+    <entity name="100Kobald">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -88819,6 +88838,10 @@
     kobold.Equip(new LeatherArmor());
     
     kobold.AddGold(472);
+    kobold.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33)
+    ));
     
     //add lootpack
     
@@ -88839,7 +88862,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlandsSouthernDarknessWraith">
+    <entity name="SouthernDarknessWraith">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -88884,7 +88907,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlandsSouthernDarknessLich">
+    <entity name="SouthernDarknessLich">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -88938,7 +88961,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlandsSkeleton">
+    <entity name="towerSkeleton">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -88981,7 +89004,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlandsMummy">
+    <entity name="towerMummy">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -89019,8 +89042,13 @@
     };
     
     mummy.AddGold(1000);
+      mummy.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 3),
+    ));
     
-    //todo add lootpack
+    
     
     return mummy;
 ]]></block>
@@ -89039,7 +89067,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlandsSwordMaster">
+    <entity name="towerSwordMaster">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -89052,12 +89080,12 @@
         Experience = 39000,
        
         CanCharge = true,
+        CanSwim = false,
                 
         BasePenetration = ShieldPenetration.Heavy,
 
-        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Web | CreatureImmunity.Magic,
-        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell,
+        Immunity = CreatureImmunity.Web | CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
     
     };
     
@@ -89073,7 +89101,14 @@
     swordmaster.Equip(new DrakeScaleArmor());
         
     swordmaster.AddGold(5000);
-    //todo add loot pack
+    swordmaster.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 8),
+        new LootPackEntry(true, UltraRare, 0.5)
+    ));
+    
+
     
     return swordmaster;
 ]]></block>
@@ -89092,7 +89127,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlandsBanshee">
+    <entity name="surfaceBanshee">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -89143,7 +89178,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlandsSurfaceOrc">
+    <entity name="surfaceOrc">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -89186,7 +89221,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlandsKeepOfDarknessBoss">
+    <entity name="KeepOfDarknessBoss">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -89247,7 +89282,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlands200boss">
+    <entity name="200boss">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -89255,7 +89290,7 @@
     {
         Name = "Urgnah The Orc", Body=30, IsFemale = false,
        
-        MaxHealth = 1230, Health = 1230,
+        MaxHealth = 1830, Health = 1830,
         BaseDodge = 17,
                 
         Experience = 19000,
@@ -89274,6 +89309,12 @@
     orc.Equip(new LeatherArmor());
             
     orc.AddGold(4000);
+    orc.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 10),
+        new LootPackEntry(true, UltraRare, 1)
+    ));
     
     //todo add lootpack
     
@@ -89415,14 +89456,15 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    source.Say(Utility.RandomBool() ? $"mmm I'm going to eat your bones {player.Name} !" : $"I'll smash you!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlandsGryphs">
+    <entity name="topGryphs">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -89847,7 +89889,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="bloodlandsShark">
+    <entity name="surfaceShark">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -90740,7 +90782,7 @@
     </entity>
   </entities>
   <spawns>
-    <spawn type="LocationSpawner" name="bloodlandsBanker">
+    <spawn type="LocationSpawner" name="townBanker">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -90761,10 +90803,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsBanker" size="1" minimum="1" maximum="1" />
+      <entry entity="townBanker" size="1" minimum="1" maximum="1" />
       <location x="23" y="6" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="bloodlandsBalmVendor">
+    <spawn type="LocationSpawner" name="townBalmVendor">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -90782,10 +90824,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsBalmVendor" size="1" minimum="1" maximum="1" />
+      <entry entity="townBalmVendor" size="1" minimum="1" maximum="1" />
       <location x="28" y="8" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="bloodlandsRecallVendor">
+    <spawn type="LocationSpawner" name="townRecallVendor">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -90803,10 +90845,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsRecallVendor" size="1" minimum="1" maximum="1" />
+      <entry entity="townRecallVendor" size="1" minimum="1" maximum="1" />
       <location x="32" y="15" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="bloodlandsPriest">
+    <spawn type="LocationSpawner" name="townPriest">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -90846,10 +90888,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsPriest" size="1" minimum="1" maximum="1" />
+      <entry entity="townPriest" size="1" minimum="1" maximum="1" />
       <location x="28" y="21" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="bloodlandsGhost">
+    <spawn type="LocationSpawner" name="townGhost">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -90867,10 +90909,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsGhost" size="1" minimum="1" maximum="1" />
+      <entry entity="townGhost" size="1" minimum="1" maximum="1" />
       <location x="28" y="24" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="bloodlandsWizardTrainer">
+    <spawn type="LocationSpawner" name="townWizardTrainer">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -90888,10 +90930,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsWizardTrainer" size="1" minimum="1" maximum="1" />
+      <entry entity="townWizardTrainer" size="1" minimum="1" maximum="1" />
       <location x="24" y="0" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="bloodlandsThaumTrainer">
+    <spawn type="LocationSpawner" name="townThaumTrainer">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -90916,10 +90958,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsThaumTrainer" size="1" minimum="1" maximum="1" />
+      <entry entity="townThaumTrainer" size="1" minimum="1" maximum="1" />
       <location x="24" y="4" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="bloodlandsThiefTrainer">
+    <spawn type="LocationSpawner" name="townThiefTrainer">
       <minimumDelay>0</minimumDelay>
       <maximumDelay>0</maximumDelay>
       <maximum>1</maximum>
@@ -90937,10 +90979,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsThiefTrainer" size="1" minimum="1" maximum="1" />
+      <entry entity="townThiefTrainer" size="1" minimum="1" maximum="1" />
       <location x="35" y="16" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="bloodlandsMATrainer">
+    <spawn type="LocationSpawner" name="townMATrainer">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>300</maximumDelay>
       <maximum>1</maximum>
@@ -90968,10 +91010,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsWeaponTrainer" size="1" minimum="1" maximum="1" />
+      <entry entity="townWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="36" y="4" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="bloodlandsTailorVendor">
+    <spawn type="LocationSpawner" name="townTailorVendor">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -90989,10 +91031,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsTailorVendor" size="1" minimum="1" maximum="1" />
+      <entry entity="townTailorVendor" size="1" minimum="1" maximum="1" />
       <location x="36" y="6" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="bloodlandsShopKeeperTown">
+    <spawn type="LocationSpawner" name="townShopKeeper">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -91019,10 +91061,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsShopKeeper" size="1" minimum="1" maximum="1" />
+      <entry entity="townShopKeeper" size="1" minimum="1" maximum="1" />
       <location x="25" y="6" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="bloodlandsWeaponTrainer">
+    <spawn type="LocationSpawner" name="townWeaponTrainer">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -91049,10 +91091,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsWeaponTrainer" size="1" minimum="1" maximum="1" />
+      <entry entity="townWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="23" y="14" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="bloodlandsRaven">
+    <spawn type="LocationSpawner" name="townRaven">
       <minimumDelay>-3000</minimumDelay>
       <maximumDelay>-3000</maximumDelay>
       <maximum>1</maximum>
@@ -91070,10 +91112,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsRaven" size="1" minimum="1" maximum="1" />
+      <entry entity="townRaven" size="1" minimum="1" maximum="1" />
       <location x="30" y="12" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="bloodlandsSouthernDarknessFire-East">
+    <spawn type="LocationSpawner" name="SouthernDarknessFire-East">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>2</maximum>
@@ -91091,10 +91133,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsSouthernDarknessLich" size="1" minimum="1" maximum="2" />
+      <entry entity="SouthernDarknessLich" size="1" minimum="1" maximum="2" />
       <location x="6" y="28" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="bloodlandsSouthernDarknessFire-West">
+    <spawn type="LocationSpawner" name="SouthernDarknessFire-West">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>2</maximum>
@@ -91112,10 +91154,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsSouthernDarknessLich" size="1" minimum="1" maximum="2" />
+      <entry entity="SouthernDarknessLich" size="1" minimum="1" maximum="2" />
       <location x="15" y="28" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="bloodlandsSouthernDarknessFire-South">
+    <spawn type="LocationSpawner" name="SouthernDarknessFire-South">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>2</maximum>
@@ -91133,10 +91175,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsSouthernDarknessLich" size="1" minimum="1" maximum="2" />
+      <entry entity="SouthernDarknessLich" size="1" minimum="1" maximum="2" />
       <location x="10" y="32" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="bloodlandsApothicary">
+    <spawn type="LocationSpawner" name="townApothicary">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>600</maximumDelay>
       <maximum>1</maximum>
@@ -91214,10 +91256,10 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsShopKeeper" size="1" minimum="1" maximum="1" />
+      <entry entity="townShopKeeper" size="1" minimum="1" maximum="1" />
       <location x="29" y="-4" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="bloodlands200fire">
+    <spawn type="LocationSpawner" name="200fire">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -91234,7 +91276,7 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsSouthernDarknessLich" size="1" minimum="2" maximum="2" />
+      <entry entity="SouthernDarknessLich" size="1" minimum="2" maximum="2" />
       <location x="-2" y="7" region="4" />
     </spawn>
     <spawn type="LocationSpawner" name="300Balm">
@@ -91255,7 +91297,7 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsBalmVendor" size="1" minimum="1" maximum="1" />
+      <entry entity="townBalmVendor" size="1" minimum="1" maximum="1" />
       <location x="2" y="2" region="5" />
     </spawn>
     <spawn type="LocationSpawner" name="towerTopGiant">
@@ -91383,7 +91425,7 @@ if (spawn is Shopkeeper shopkeeper)
       </script>
       <entry entity="surfacePirhana" size="2" minimum="12" maximum="15" />
       <entry entity="surfaceLurker" size="1" minimum="3" maximum="6" />
-      <entry entity="bloodlandsShark" size="1" minimum="1" maximum="2" />
+      <entry entity="surfaceShark" size="1" minimum="1" maximum="2" />
       <entry entity="surfaceBloodGrif" size="1" minimum="1" maximum="2" />
       <entry entity="surfaceGreaterLurker" size="1" minimum="1" maximum="1" />
       <bounds region="1">
@@ -91530,9 +91572,9 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlands100Hobs" size="1" minimum="1" maximum="2" />
-      <entry entity="bloodlands100Archer" size="2" minimum="5" maximum="8" />
-      <entry entity="bloodlands100Kobald" size="3" minimum="4" maximum="7" />
+      <entry entity="100Hobs" size="1" minimum="1" maximum="2" />
+      <entry entity="100Archer" size="2" minimum="5" maximum="8" />
+      <entry entity="100Kobald" size="3" minimum="4" maximum="7" />
       <bounds region="3">
         <inclusion left="0" top="0" right="17" bottom="8" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -91556,9 +91598,9 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlands100Hobs" size="1" minimum="1" maximum="2" />
-      <entry entity="bloodlands100Archer" size="2" minimum="5" maximum="8" />
-      <entry entity="bloodlands100Kobald" size="3" minimum="4" maximum="7" />
+      <entry entity="100Hobs" size="1" minimum="1" maximum="2" />
+      <entry entity="100Archer" size="2" minimum="5" maximum="8" />
+      <entry entity="100Kobald" size="3" minimum="4" maximum="7" />
       <bounds region="3">
         <inclusion left="0" top="8" right="23" bottom="18" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -91582,7 +91624,7 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsSouthernDarknessWraith" size="1" minimum="2" maximum="2" />
+      <entry entity="SouthernDarknessWraith" size="1" minimum="2" maximum="2" />
       <bounds region="1">
         <inclusion left="8" top="23" right="14" bottom="24" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -91606,8 +91648,8 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsSkeleton" size="2" minimum="3" maximum="5" />
-      <entry entity="bloodlandsMummy" size="1" minimum="1" maximum="1" />
+      <entry entity="towerSkeleton" size="2" minimum="2" maximum="2" />
+      <entry entity="towerMummy" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="13" top="0" right="19" bottom="2" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -91631,10 +91673,10 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsSkeleton" size="2" minimum="9" maximum="17" />
-      <entry entity="bloodlandsMummy" size="1" minimum="2" maximum="2" />
-      <entry entity="bloodlandsSwordMaster" size="1" minimum="1" maximum="1" />
-      <entry entity="bloodlandsBanshee" size="2" minimum="4" maximum="7" />
+      <entry entity="towerSkeleton" size="2" minimum="9" maximum="17" />
+      <entry entity="towerMummy" size="1" minimum="2" maximum="2" />
+      <entry entity="towerSwordMaster" size="1" minimum="1" maximum="1" />
+      <entry entity="surfaceBanshee" size="2" minimum="4" maximum="7" />
       <bounds region="1">
         <inclusion left="0" top="45" right="15" bottom="54" />
         <exclusion left="6" top="54" right="9" bottom="54" />
@@ -91659,7 +91701,7 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsSurfaceOrc" size="2" minimum="4" maximum="7" />
+      <entry entity="surfaceOrc" size="2" minimum="4" maximum="7" />
       <bounds region="1">
         <inclusion left="0" top="-14" right="1" bottom="-12" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -91683,7 +91725,7 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsBanshee" size="2" minimum="4" maximum="4" />
+      <entry entity="surfaceBanshee" size="2" minimum="4" maximum="4" />
       <bounds region="3">
         <inclusion left="0" top="0" right="5" bottom="6" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -91707,9 +91749,9 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsKeepOfDarknessBoss" size="1" minimum="1" maximum="1" />
-      <entry entity="bloodlandsSouthernDarknessLich" size="1" minimum="2" maximum="2" />
-      <entry entity="bloodlandsSkeleton" size="1" minimum="2" maximum="2" />
+      <entry entity="KeepOfDarknessBoss" size="1" minimum="1" maximum="1" />
+      <entry entity="SouthernDarknessLich" size="1" minimum="2" maximum="2" />
+      <entry entity="towerSkeleton" size="1" minimum="2" maximum="2" />
       <bounds region="1">
         <inclusion left="6" top="54" right="9" bottom="59" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -91733,10 +91775,10 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsSurfaceOrc" size="2" minimum="5" maximum="8" />
-      <entry entity="bloodlands100Kobald" size="3" minimum="4" maximum="9" />
-      <entry entity="bloodlands100Hobs" size="1" minimum="2" maximum="2" />
-      <entry entity="bloodlands100Archer" size="2" minimum="1" maximum="2" />
+      <entry entity="surfaceOrc" size="2" minimum="5" maximum="8" />
+      <entry entity="100Kobald" size="3" minimum="4" maximum="9" />
+      <entry entity="100Hobs" size="1" minimum="2" maximum="2" />
+      <entry entity="100Archer" size="2" minimum="1" maximum="2" />
       <bounds region="4">
         <inclusion left="2" top="0" right="23" bottom="6" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -91760,10 +91802,10 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsSurfaceOrc" size="2" minimum="5" maximum="8" />
-      <entry entity="bloodlands100Kobald" size="3" minimum="4" maximum="9" />
-      <entry entity="bloodlands100Hobs" size="1" minimum="2" maximum="2" />
-      <entry entity="bloodlands100Archer" size="2" minimum="1" maximum="2" />
+      <entry entity="surfaceOrc" size="2" minimum="5" maximum="8" />
+      <entry entity="100Kobald" size="3" minimum="4" maximum="9" />
+      <entry entity="100Hobs" size="1" minimum="2" maximum="2" />
+      <entry entity="100Archer" size="2" minimum="1" maximum="2" />
       <bounds region="4">
         <inclusion left="0" top="11" right="23" bottom="18" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -91787,9 +91829,9 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlands200boss" size="1" minimum="1" maximum="1" />
-      <entry entity="bloodlandsSurfaceOrc" size="2" minimum="2" maximum="2" />
-      <entry entity="bloodlands100Kobald" size="1" minimum="2" maximum="2" />
+      <entry entity="200boss" size="1" minimum="1" maximum="1" />
+      <entry entity="surfaceOrc" size="2" minimum="2" maximum="2" />
+      <entry entity="100Kobald" size="1" minimum="2" maximum="2" />
       <bounds region="4">
         <inclusion left="9" top="6" right="15" bottom="12" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -91815,7 +91857,7 @@ if (spawn is Shopkeeper shopkeeper)
       </script>
       <entry entity="surfaceLurker" size="1" minimum="4" maximum="8" />
       <entry entity="surfacePirhana" size="2" minimum="10" maximum="14" />
-      <entry entity="bloodlandsShark" size="1" minimum="1" maximum="2" />
+      <entry entity="surfaceShark" size="1" minimum="1" maximum="2" />
       <entry entity="surfaceBloodGrif" size="1" minimum="1" maximum="2" />
       <entry entity="surfaceGreaterLurker" size="1" minimum="1" maximum="1" />
       <bounds region="1">
@@ -91850,7 +91892,7 @@ if (spawn is Shopkeeper shopkeeper)
     <spawn type="RegionSpawner" name="bloodlandsSurfceKeep1">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>4</maximum>
+      <maximum>6</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -91865,8 +91907,8 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsBanshee" size="1" minimum="2" maximum="2" />
-      <entry entity="bloodlandsSkeleton" size="2" minimum="2" maximum="3" />
+      <entry entity="surfaceBanshee" size="1" minimum="2" maximum="2" />
+      <entry entity="towerSwordMaster" size="1" minimum="1" maximum="1" />
       <bounds region="7">
         <inclusion left="13" top="0" right="19" bottom="2" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -91890,8 +91932,8 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsSkeleton" size="1" minimum="3" maximum="4" />
-      <entry entity="bloodlandsSurfaceOrc" size="2" minimum="2" maximum="2" />
+      <entry entity="towerSkeleton" size="1" minimum="3" maximum="4" />
+      <entry entity="surfaceOrc" size="2" minimum="2" maximum="2" />
       <bounds region="8">
         <inclusion left="13" top="0" right="19" bottom="2" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -91915,8 +91957,8 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsGryphs" size="1" minimum="3" maximum="5" />
-      <entry entity="bloodlandsSurfaceOrc" size="2" minimum="3" maximum="4" />
+      <entry entity="topGryphs" size="1" minimum="3" maximum="5" />
+      <entry entity="surfaceOrc" size="2" minimum="3" maximum="4" />
       <bounds region="8">
         <inclusion left="-3" top="-11" right="2" bottom="16" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -91946,7 +91988,7 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="300Boss" size="1" minimum="1" maximum="1" />
       <entry entity="300TrollGuards" size="2" minimum="4" maximum="6" />
       <entry entity="300TrollGuardRanged" size="1" minimum="4" maximum="4" />
-      <entry entity="bloodlandsShark" size="1" minimum="1" maximum="1" />
+      <entry entity="surfaceShark" size="1" minimum="1" maximum="1" />
       <bounds region="5">
         <inclusion left="0" top="4" right="23" bottom="20" />
         <exclusion left="19" top="8" right="21" bottom="12" />
@@ -92016,8 +92058,8 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsPeaceKeeper" size="1" minimum="1" maximum="1" />
-      <entry entity="bloodlandsPriest" size="1" minimum="1" maximum="1" />
+      <entry entity="townPeaceKeeper" size="1" minimum="1" maximum="1" />
+      <entry entity="townPriest" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="28" top="7" right="32" bottom="16" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -92103,10 +92145,10 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="bloodlandsSwordMaster" size="1" minimum="1" maximum="1" />
-      <entry entity="bloodlandsMummy" size="1" minimum="1" maximum="2" />
-      <entry entity="bloodlandsBanshee" size="2" minimum="2" maximum="3" />
-      <entry entity="bloodlandsSkeleton" size="1" minimum="4" maximum="4" />
+      <entry entity="towerSwordMaster" size="1" minimum="1" maximum="1" />
+      <entry entity="towerMummy" size="1" minimum="1" maximum="2" />
+      <entry entity="surfaceBanshee" size="2" minimum="2" maximum="3" />
+      <entry entity="towerSkeleton" size="1" minimum="4" maximum="4" />
       <bounds region="9">
         <inclusion left="-39" top="1" right="-33" bottom="13" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -92142,9 +92184,10 @@ if (spawn is Shopkeeper shopkeeper)
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Spawner 1">
-      <minimumDelay>0</minimumDelay>
-      <maximumDelay>0</maximumDelay>
+    <spawn type="RegionSpawner" name="forestTop">
+      <minimumDelay>720</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -92159,8 +92202,14 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <bounds region="0">
-        <inclusion left="0" top="0" right="0" bottom="0" />
+      <entry entity="forestBoar" size="2" minimum="3" maximum="5" />
+      <entry entity="forestGriffin" size="1" minimum="3" maximum="5" />
+      <entry entity="forestBear" size="1" minimum="1" maximum="3" />
+      <entry entity="forestWolf" size="3" minimum="3" maximum="5" />
+      <entry entity="forestSnake" size="1" minimum="1" maximum="1" />
+      <entry entity="forestCentaur" size="1" minimum="1" maximum="1" />
+      <bounds region="9">
+        <inclusion left="-23" top="-73" right="9" bottom="-57" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
