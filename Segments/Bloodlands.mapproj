@@ -88750,7 +88750,7 @@
         <block><![CDATA[
 	var orc = new Orc()
     {
-        MaxHealth = 90, Health = 90,
+        MaxHealth = 110, Health = 110,
         BaseDodge = 12,
         BasePenetration = ShieldPenetration.Light,
         Experience = 5800,
@@ -89146,7 +89146,7 @@
 	 var orc = new Orc()
     {
         MaxHealth = 130, Health = 130,
-        BaseDodge = 12,
+        BaseDodge = 14,
                 
         Experience = 5200,
         BasePenetration = ShieldPenetration.Light,
@@ -89155,7 +89155,7 @@
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(10, 15, 25)
+        new CreatureBasicAttack(14, 25, 35)
     };
     
     orc.Wield(new Longsword());
@@ -89424,8 +89424,8 @@
         <block><![CDATA[
 	var griffin = new Griffin()
     {
-        MaxHealth = 225, Health = 225,
-        BaseDodge = 15,
+        MaxHealth = 325, Health = 325,
+        BaseDodge = 21,
         BasePenetration = ShieldPenetration.Medium,
         Experience = 10000,
         VisibilityDistance = 3,
@@ -89438,22 +89438,22 @@
     griffin.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(10,     12, 21,      "The griffin tears your flesh with its beak."),     30 
+            new CreatureAttack(13,     22, 31,      "The griffin tears your flesh with its beak."),     30 
         },
         {
-            new CreatureAttack(11,     17, 25,     "The griffin buries its talons into you."),          30 
+            new CreatureAttack(14,     27, 35,     "The griffin buries its talons into you."),          30 
         },
         {
-            new CreatureAttack(12,     25, 35,     "The griffin pummels you with its wings.", 
+            new CreatureAttack(15,     35, 45,     "The griffin pummels you with its wings.", 
                                                     new AttackStunComponent(15.0)),                     40
         }
     };
     
     griffin.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(5, "the armor"),
-        new CreatureBlock(3, "a talon"),
-        new CreatureBlock(2, "a beak"),
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(4, "a talon"),
+        new CreatureBlock(3, "a beak"),
     };
         
     griffin.AddGold(800);
@@ -91662,8 +91662,8 @@ if (spawn is Shopkeeper shopkeeper)
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="thePit">
-      <minimumDelay>0</minimumDelay>
-      <maximumDelay>0</maximumDelay>
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
       <maximum>4</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -91688,6 +91688,7 @@ if (spawn is Shopkeeper shopkeeper)
     <spawn type="RegionSpawner" name="bloodlandsKeepOfDarknessBoss">
       <minimumDelay>5700</minimumDelay>
       <maximumDelay>10800</maximumDelay>
+      <maximum>4</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -91713,6 +91714,7 @@ if (spawn is Shopkeeper shopkeeper)
     <spawn type="RegionSpawner" name="bloodlands200north">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>21</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -91737,8 +91739,9 @@ if (spawn is Shopkeeper shopkeeper)
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="bloodlands200South">
-      <minimumDelay>0</minimumDelay>
-      <maximumDelay>0</maximumDelay>
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>21</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -91866,8 +91869,8 @@ if (spawn is Shopkeeper shopkeeper)
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="towerTopUndead">
-      <minimumDelay>0</minimumDelay>
-      <maximumDelay>0</maximumDelay>
+      <minimumDelay>720</minimumDelay>
+      <maximumDelay>900</maximumDelay>
       <maximum>5</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -91891,9 +91894,9 @@ if (spawn is Shopkeeper shopkeeper)
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="towerTopGriffs">
-      <minimumDelay>0</minimumDelay>
-      <maximumDelay>0</maximumDelay>
-      <maximum>5</maximum>
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>720</maximumDelay>
+      <maximum>9</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -91909,6 +91912,7 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="bloodlandsGryphs" size="1" minimum="3" maximum="5" />
+      <entry entity="bloodlandsSurfaceOrc" size="2" minimum="3" maximum="4" />
       <bounds region="8">
         <inclusion left="-3" top="-11" right="2" bottom="16" />
         <exclusion left="0" top="0" right="0" bottom="0" />
