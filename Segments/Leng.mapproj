@@ -76183,7 +76183,7 @@
     dragon.AddGold(10000);
     dragon.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new GriffinSkull(),        100),
-        new LootPackEntry(true, (from, container) => new BlindFearProtectionBracelet(),        33),
+        new LootPackEntry(true, (from, container) => new BlindFearProtectionBracelet(),        100),
         new LootPackEntry(true, (from, container) => new FeatherFallBoots(),        100),
         new LootPackEntry(true, (from, container) => new RedRobe(),        100),
         new LootPackEntry(true, KoshOptions,    100),
@@ -79699,7 +79699,7 @@
       </entry>
     </treasure>
     <treasure name="KoshOptions">
-      <entry weight="2">
+      <entry weight="6">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -79708,7 +79708,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="3">
+      <entry weight="1">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -79717,7 +79717,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="3">
+      <entry weight="7">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -79726,11 +79726,20 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="1">
+      <entry weight="4">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new PermanentConstitutionPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="2">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new BlueStaffHeal();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
