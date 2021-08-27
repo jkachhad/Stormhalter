@@ -75739,7 +75739,7 @@
         MaxHealth = 250, Health = 250,
         BaseDodge = 13,
 
-        Experience = 3500,
+        Experience = 5500,
         
         FireProtection = 100,
         IceProtection = 80,
@@ -75757,8 +75757,9 @@
 
     bridgeTroll.AddGold(500);
     
-    bridgeTroll.AddLoot(new LootPack(
-        new LootPackEntry(true, LengPotions,    0.05),
+    bridgeTroll.AddLoot(new LootPack(    
+        new LootPackEntry(true, (from, container) => new WingedHelm(),         25.0),
+        new LootPackEntry(true, LengPotions,    0.1),
         new LootPackEntry(true, MinotaurGems,       10,     gemsPriceMutator)
     ));
     
@@ -78973,8 +78974,8 @@
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Bridgetroll">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>3600</maximumDelay>
+      <minimumDelay>2700</minimumDelay>
+      <maximumDelay>7200</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
