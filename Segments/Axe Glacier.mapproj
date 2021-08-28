@@ -4231,8 +4231,8 @@
         </component>
       </tile>
       <tile x="28" y="12">
-        <component type="FloorComponent">
-          <ground>16</ground>
+        <component type="StaticComponent">
+          <static>23</static>
         </component>
         <component type="WallComponent">
           <wall>157</wall>
@@ -4246,14 +4246,14 @@
           <static>23</static>
         </component>
         <component type="WallComponent">
-          <wall>157</wall>
-          <destroyed>160</destroyed>
+          <wall>158</wall>
+          <destroyed>161</destroyed>
           <ruins>170</ruins>
           <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
-          <wall>158</wall>
-          <destroyed>161</destroyed>
+          <wall>157</wall>
+          <destroyed>160</destroyed>
           <ruins>170</ruins>
           <indestructible>true</indestructible>
         </component>
@@ -107268,7 +107268,7 @@
         foreach (var skill in Skill.Weapons)
             thorgen.SetTraining(skill, 0, 4);
 
-        thorgen.SetTraining(Skill.Hand, 0, 9);
+        thorgen.SetTraining(Skill.Hand, 0, 8);
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -107623,7 +107623,7 @@
         foreach (var skill in Skill.Weapons)
             foote.SetTraining(skill, 0, 4);
 
-        foote.SetTraining(Skill.Hand, 10, 14);
+        foote.SetTraining(Skill.Hand, 8, 14);
     }
 ]]></block>
         <block><![CDATA[]]></block>
