@@ -96804,7 +96804,7 @@
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  If (player.Profession == Profession.Wizard)
+  if (player.Profession == Profession.Wizard)
 {
   source.Say($"Filthy Wizzzarrrd!");
 }
@@ -97094,7 +97094,7 @@ else
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  If (player.Profession == Profession.Thaumaturge)
+  if (player.Profession == Profession.Thaumaturge)
 {
   source.Say($"Life and death, I can teach you to master them, {player.Name}.");
 }
@@ -97134,7 +97134,7 @@ else
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  If (player.Profession == Profession.Wizard)
+  if (player.Profession == Profession.Wizard)
 {
   source.Say($"Allow me to train you in the elements, {player.Name}.");
 }
@@ -100529,7 +100529,7 @@ return orc;
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  If (player.Profession == Profession.Knight)
+  if (player.Profession == Profession.Knight)
 {
   source.Say($"Did Cudyl send you, knight? The gem is mine!");
 }
@@ -100735,12 +100735,12 @@ else
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    If (player.Profession == Profession.Thief)
+    if (player.Profession == Profession.Thief)
 {
   source.Say($"I'll be watching you, {player.Name}.");
 }
 else
-    If (player.Profession == Profession.Knight)
+    if (player.Profession == Profession.Knight)
 { 
   source.Say($"Good day, {player.Name}.");
 }
