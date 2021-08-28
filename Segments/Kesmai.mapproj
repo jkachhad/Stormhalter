@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.73.1.0">
+<segment name="Kesmai" version="0.74.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -5400,11 +5400,8 @@
         </component>
       </tile>
       <tile x="38" y="6">
-        <component type="ShaftComponent">
-          <destinationX>22</destinationX>
-          <destinationY>35</destinationY>
-          <destinationRegion>14</destinationRegion>
-          <teleporterId>182</teleporterId>
+        <component type="FloorComponent">
+          <ground>182</ground>
         </component>
         <component type="StaticComponent">
           <static>209</static>
@@ -34319,8 +34316,8 @@
         </component>
       </tile>
       <tile x="28" y="33">
-        <component type="StaticComponent">
-          <static>13</static>
+        <component type="FloorComponent">
+          <ground>13</ground>
         </component>
         <component type="TrashComponent">
           <static>88</static>
@@ -82619,8 +82616,8 @@
         </component>
       </tile>
       <tile x="20" y="23">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="DoorComponent">
           <openId>74</openId>
@@ -85325,14 +85322,15 @@
         </component>
       </tile>
       <tile x="24" y="33">
-        <component type="StaticComponent">
-          <static>1</static>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
         <component type="DoorComponent">
           <openId>75</openId>
           <closedId>63</closedId>
           <secretId>26</secretId>
           <destroyedId>81</destroyedId>
+          <isSecret>true</isSecret>
         </component>
       </tile>
       <tile x="25" y="33">
@@ -90420,8 +90418,11 @@
           <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
-        <component type="StaticComponent">
-          <static>383</static>
+        <component type="WallComponent">
+          <wall>383</wall>
+          <destroyed>396</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="0" y="2">
@@ -90484,9 +90485,6 @@
         </component>
       </tile>
       <tile x="8" y="2">
-        <component type="StaticComponent">
-          <static>388</static>
-        </component>
         <component type="HiddenTeleporterComponent">
           <destinationX>3</destinationX>
           <destinationY>7</destinationY>
@@ -90495,6 +90493,9 @@
           <moonphases select="all" />
           <professions select="all" />
           <alignments select="all" />
+        </component>
+        <component type="FloorComponent">
+          <ground>388</ground>
         </component>
       </tile>
       <tile x="9" y="2">
@@ -90589,8 +90590,11 @@
           <ruins>45</ruins>
           <indestructible>true</indestructible>
         </component>
-        <component type="StaticComponent">
-          <static>384</static>
+        <component type="WallComponent">
+          <wall>384</wall>
+          <destroyed>397</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="0" y="4">

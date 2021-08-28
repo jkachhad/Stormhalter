@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.73.1.0">
+<segment name="Oakvael" version="0.74.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -3968,7 +3968,7 @@
           <ground>3</ground>
         </component>
         <component type="DoorComponent">
-          <openId>74</openId>
+          <openId>77</openId>
           <closedId>65</closedId>
           <secretId>224</secretId>
           <destroyedId>80</destroyedId>
@@ -14103,18 +14103,6 @@
       <tile x="83" y="21">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="122" y="21">
-        <component type="FloorComponent">
-          <ground>1</ground>
-        </component>
-        <component type="DoorComponent">
-          <openId>74</openId>
-          <closedId>62</closedId>
-          <secretId>25</secretId>
-          <destroyedId>80</destroyedId>
-          <isSecret>true</isSecret>
         </component>
       </tile>
       <tile x="0" y="22">
@@ -75468,7 +75456,7 @@
         <component type="DoorComponent">
           <openId>75</openId>
           <closedId>63</closedId>
-          <secretId>26</secretId>
+          <secretId>158</secretId>
           <destroyedId>81</destroyedId>
           <isSecret>true</isSecret>
         </component>
@@ -75515,7 +75503,7 @@
         <component type="DoorComponent">
           <openId>75</openId>
           <closedId>63</closedId>
-          <secretId>26</secretId>
+          <secretId>158</secretId>
           <destroyedId>81</destroyedId>
           <isSecret>true</isSecret>
         </component>
@@ -75600,7 +75588,7 @@
         <component type="DoorComponent">
           <openId>75</openId>
           <closedId>63</closedId>
-          <secretId>26</secretId>
+          <secretId>158</secretId>
           <destroyedId>81</destroyedId>
           <isSecret>true</isSecret>
         </component>
@@ -79964,11 +79952,16 @@
           <ground>23</ground>
         </component>
         <component type="DoorComponent">
+          <color r="255" g="210" b="95" a="255" />
           <openId>75</openId>
           <closedId>63</closedId>
-          <secretId>157</secretId>
-          <destroyedId>81</destroyedId>
+          <secretId>158</secretId>
+          <destroyedId>80</destroyedId>
           <isSecret>true</isSecret>
+        </component>
+        <component type="StaticComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <static>227</static>
         </component>
       </tile>
       <tile x="36" y="0">
@@ -80539,11 +80532,16 @@
           <ground>23</ground>
         </component>
         <component type="DoorComponent">
+          <color r="255" g="210" b="95" a="255" />
           <openId>74</openId>
           <closedId>62</closedId>
-          <secretId>25</secretId>
+          <secretId>157</secretId>
           <destroyedId>80</destroyedId>
           <isSecret>true</isSecret>
+        </component>
+        <component type="StaticComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <static>226</static>
         </component>
       </tile>
       <tile x="12" y="2">
@@ -81647,6 +81645,17 @@
         <component type="StaticComponent">
           <color r="0" g="255" b="0" a="255" />
           <static>23</static>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="210" b="95" a="255" />
+          <wall>158</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="StaticComponent">
+          <color r="0" g="200" b="0" a="255" />
+          <static>227</static>
         </component>
         <component type="WallComponent">
           <color r="255" g="210" b="95" a="255" />
@@ -91309,6 +91318,7 @@
         <inclusion left="0" top="0" right="0" bottom="0" />
         <exclusion left="21" top="14" right="32" bottom="25" />
         <exclusion left="41" top="35" right="54" bottom="40" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="undeadSpawner">
