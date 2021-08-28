@@ -89340,6 +89340,12 @@
     };
 
     griffin.AddGold(4050);
+
+      griffin.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 3)
+    ));
    
 
     return griffin;
