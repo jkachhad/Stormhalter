@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.73.1.0">
+<segment name="Kesmai" version="0.74.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -100757,6 +100757,51 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="surfaceCroc">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var crocodile = new Crocodile()
+    {
+        BaseDodge = 12,
+        MaxHealth = 55, Health = 55,
+        
+        Experience = 500,
+    };
+    
+    crocodile.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(6,     2, 7,   "The crocodile snaps his massive jaws shut upon you."), 60 
+        },
+        { 
+            new CreatureAttack(6,     3, 9,  "The crocodile hits you with its tail."),               40 
+        },
+    };
+    
+    crocodile.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the tough skin"),
+        new CreatureBlock(4, "a tail"),
+    };
+        
+    return crocodile;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="Elder.Troll">
@@ -102028,6 +102073,7 @@ return orc;
       <entry entity="surfaceOrc" size="3" minimum="1" maximum="1" />
       <entry entity="surfaceOrcSentry" size="1" minimum="1" maximum="1" />
       <entry entity="surfaceBoar" size="3" minimum="1" maximum="2" />
+      <entry entity="surfaceCroc" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="4" top="5" right="18" bottom="37" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -102087,6 +102133,7 @@ return orc;
       <entry entity="surfaceBoar" size="3" minimum="1" maximum="4" />
       <entry entity="surfaceBear" size="1" minimum="1" maximum="2" />
       <entry entity="surfaceCentaur" size="1" minimum="1" maximum="3" />
+      <entry entity="surfaceCroc" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="58" top="4" right="141" bottom="39" />
         <exclusion left="65" top="34" right="69" bottom="38" />
