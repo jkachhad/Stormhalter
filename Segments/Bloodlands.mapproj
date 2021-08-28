@@ -87820,7 +87820,7 @@
       mummy.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33),
-        new LootPackEntry(true, SemiRare, 3),
+        new LootPackEntry(true, SemiRare, 3)
     ));
     
     
@@ -89037,7 +89037,12 @@
             new CreatureBlock(4, "a calloused hide"),
     };
 
-    
+     boar.AddGold(1000);
+      boar.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       15,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 3)
+    ));
     return boar;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -89098,7 +89103,12 @@
         new CreatureBlock(4, "a massive paw"),
     };
         
-   
+    bear.AddGold(1200);
+      bear.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       15,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 3)
+    ));
         
     return bear;]]></block>
         <block><![CDATA[]]></block>
@@ -89152,7 +89162,12 @@
             new CreatureBlock(4, "a hardened paw"),
     };
 
-   
+   wolf.AddGold(1000);
+      wolf.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 3)
+    ));
 
     return wolf;
 ]]></block>
@@ -89199,7 +89214,12 @@
         new CreatureBlock(1, "your weapon blocked by the vipers tail."),
     };
 
-   
+   viper.AddGold(1000);
+      viper.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 3)
+    ));
     return viper;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -89403,7 +89423,16 @@
     };
     
     unicorn.AddGold(5000);
-    
+     unicorn.AddGold(1000);
+      unicorn.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 3),
+         new LootPackEntry(true, SemiRare, 40),
+        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),
+        
+        new LootPackEntry(true, UltraRare, 25)
+    ));
     
     return unicorn;
 ]]></block>
