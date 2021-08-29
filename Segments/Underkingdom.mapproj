@@ -103180,12 +103180,13 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukTunnelGoblin" size="3" minimum="2" maximum="5" />
-      <entry entity="ukTunnelArcher" size="4" minimum="2" maximum="4" />
-      <entry entity="ukTunnelTroll" size="3" minimum="2" maximum="4" />
-      <entry entity="ukTunnelOrc" size="3" minimum="4" maximum="5" />
-      <entry entity="ukTunnelGoblinSentry" size="3" minimum="2" maximum="4" />
-      <entry entity="ukTunnelCursetroll" size="1" minimum="1" maximum="3" />
+      <entry entity="ukTunnelGoblin" size="3" minimum="1" maximum="3" />
+      <entry entity="ukTunnelArcher" size="4" minimum="1" maximum="4" />
+      <entry entity="ukTunnelTroll" size="3" minimum="1" maximum="4" />
+      <entry entity="ukTunnelOrc" size="3" minimum="1" maximum="5" />
+      <entry entity="ukTunnelGoblinSentry" size="3" minimum="1" maximum="4" />
+      <entry entity="ukTunnelCursetroll" size="1" minimum="1" maximum="2" />
+      <entry entity="ukTunnelOrcMage" size="1" minimum="1" maximum="2" />
       <bounds region="3">
         <inclusion left="3" top="3" right="33" bottom="11" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -103194,7 +103195,7 @@
     <spawn type="RegionSpawner" name="uk100">
       <minimumDelay>720</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>23</maximum>
+      <maximum>18</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -103211,13 +103212,15 @@
       </script>
       <entry entity="uk100200Mino" size="1" minimum="3" maximum="4" />
       <entry entity="uk100200Troll" size="3" minimum="5" maximum="6" />
-      <entry entity="uk100200Archer" size="3" minimum="6" maximum="7" />
+      <entry entity="uk100200Archer" size="3" minimum="3" maximum="3" />
       <entry entity="uk100MaGoblin" size="1" minimum="1" maximum="1" />
       <entry entity="uk100GoblinMage" size="4" minimum="2" maximum="2" />
       <entry entity="uk100Goblin" size="3" minimum="4" maximum="5" />
       <bounds region="4">
-        <inclusion left="3" top="3" right="19" bottom="27" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
+        <inclusion left="3" top="3" right="9" bottom="6" />
+        <inclusion left="8" top="7" right="19" bottom="12" />
+        <inclusion left="17" top="3" right="19" bottom="6" />
+        <exclusion left="11" top="11" right="13" bottom="13" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="uk200">
@@ -103273,7 +103276,7 @@
       <entry entity="ukTunnelOrc" size="3" minimum="10" maximum="10" />
       <entry entity="ukTunnelCursetroll" size="1" minimum="5" maximum="5" />
       <entry entity="ukTunnelGoblin" size="3" minimum="10" maximum="10" />
-      <entry entity="ukTunnelGoblinSentry" size="3" minimum="7" maximum="10" />
+      <entry entity="ukTunnelGoblinSentry" size="3" minimum="2" maximum="2" />
       <entry entity="surfaceLurker" size="2" minimum="2" maximum="2" />
       <bounds region="11">
         <inclusion left="3" top="3" right="34" bottom="39" />
