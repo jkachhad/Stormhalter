@@ -100851,7 +100851,7 @@ else
     if (player.Profession == Profession.Thief)
         source.Say($"I got my eyes on you, {player.Name}.");
     else if (player.Profession == Profession.Knight)
-        source.Say($"Good day, {0} {1}.", (player.IsFemale ? "Serah" : "Ser"), player.Name);
+        source.Say(String.Format("Good day, {0} {1}.", (player.IsFemale ? "Serah" : "Ser"), player.Name));
     else
         source.Say($"I'm the law around here.");
 ]]></block>
