@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.73.1.0">
+<segment name="Underkingdom" version="0.74.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -108,6 +108,149 @@
                 base.OnSpellTarget(target, combatant);
             }
         }
+    }
+    
+    public class KoboldKing : CreatureIdentity
+    {
+        public KoboldKing()
+        {
+            Body = 119;
+            Alignment = Alignment.Lawful;
+        }
+    
+        public KoboldKing(Serial serial) : base(serial)
+        {
+        }
+    
+        public override void OnSpawn()
+        {
+            base.OnSpawn();
+            if (_brain != null)
+                return;
+            if (RightHand is ProjectileWeapon)
+                _brain = new RangedAI(this);
+            else
+                _brain = new CombatAI(this);
+        }
+    
+        public override int GetNearbySound() => 92;
+        public override int GetAttackSound() => 99;
+        public override int GetDeathSound() => 106;
+        public override Corpse GetCorpse() => default(Corpse);
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((short)1); /* version */
+        }
+    
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+            var version = reader.ReadInt16();
+            switch (version)
+            {
+                case 1:
+                    {
+                        break;
+                    }
+            }
+        }
+        public void Elated()
+        {
+            source.Say(source, $"My daughter! You've rescued her from the troll king!");
+            source.EmitSound(92);
+        }
+    }
+    
+    
+    
+    public class KoboldPrincess : CreatureEntity
+    {
+        public override bool CanOrderFollow => true;
+    
+        public KoboldPrincess()
+        {
+            Name = "Princess";
+            Body = 117;
+    
+            Health = MaxHealth = 150;
+            BaseDodge = 10;
+    
+            Experience = 50;
+            Movement = 1;
+    
+            Alignment = Alignment.Lawful;
+    
+            Brain = new RescueAI(this)
+            {
+                Aggressive = true,
+            };
+    
+        }
+    
+        protected virtual void OnFinishMovement(PathingEventArgs args)
+        {
+            foreach (var king in GetMobilesInLOS<KoboldKing>(0).Where(l => l.IsAlive))
+            {
+                new PermanentManaPotion().Move(Location);
+                source.Say(source, $"Hi dad! What's for dinner?!");
+                king.Elated(this);
+                Delete();
+            }
+        }
+    
+        public override void HandleOrder(OrderEventArgs args)
+        {
+            base.HandleOrder(args);
+    
+            if (args.Handled)
+                return;
+    
+            var source = args.Source;
+            var order = args.Order;
+    
+            if (IsSubordinate && source != Director)
+                return;
+    
+            if (order.Matches("follow", true))
+            {
+                Director = source;
+    
+                OnOrderFollow(source);
+                return;
+            }
+        }
+    
+        public KoboldPrincess(Serial serial) : base(serial)
+        {
+        }
+    
+        public override int GetNearbySound() => 256;
+        public override int GetAttackSound() => 257;
+        public override int GetDeathSound() => 258;
+    
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+    
+            writer.Write((short)1); /* version */
+        }
+    
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+    
+            var version = reader.ReadInt16();
+    
+            switch (version)
+            {
+                case 1:
+                    {
+                        break;
+                    }
+            }
+        }
+    
     }
 ]]></block>
     <block><![CDATA[]]></block>
@@ -54729,8 +54872,12 @@
         <component type="FloorComponent">
           <ground>3</ground>
         </component>
-        <component type="ObstructionComponent">
-          <obstruction>450</obstruction>
+        <component type="DoorComponent">
+          <openId>434</openId>
+          <closedId>421</closedId>
+          <secretId>384</secretId>
+          <destroyedId>436</destroyedId>
+          <isSecret>true</isSecret>
         </component>
       </tile>
       <tile x="6" y="8">
@@ -101786,8 +101933,9 @@
         IsInvisible = true,
         Experience = 1,
         Movement = 0,
-        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
+        FireProtection = 100,
+        IceProtection = 100,
+        LightningResistance = 100,
     };
     
     wraith.AddStatus(new NightVisionStatus(wraith));
@@ -101822,6 +101970,67 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     source.Say($"Are.... you... worthy?.");
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="tkKoboldPrincess">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var princess = new KoboldPrincess()
+    {
+        Name = "Princess",
+        
+        BaseDodge = 10,
+        MaxHealth = 100, Health = 100,
+        
+        Experience = 50,
+    };
+    
+    return princess;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="townKoboldKing">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var king = new KoboldKing()
+    {
+        Name = "King",
+        
+        BaseDodge = 10,
+        MaxHealth = 100, Health = 100,
+        Movement = 0,
+        Experience = 50,
+    };
+    return king;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102449,7 +102658,7 @@
       <entry entity="townConfessorGhost" size="1" minimum="1" maximum="1" />
       <location x="17" y="24" region="5" />
     </spawn>
-    <spawn type="LocationSpawner" name="princessTEMP">
+    <spawn type="LocationSpawner" name="tkPrincess">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -102467,10 +102676,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="townConfessorGhost" size="1" minimum="1" maximum="1" />
+      <entry entity="tkKoboldPrincess" size="1" minimum="1" maximum="1" />
       <location x="4" y="8" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="koboldkingTEMP">
+    <spawn type="LocationSpawner" name="koboldKing">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -102488,7 +102697,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="townConfessorGhost" size="1" minimum="1" maximum="1" />
+      <entry entity="townKoboldKing" size="1" minimum="1" maximum="1" />
       <location x="20" y="5" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="jailtroll1">
@@ -104005,6 +104214,15 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new StrongShieldBracelet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new BlueStaffRaiseDead();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
