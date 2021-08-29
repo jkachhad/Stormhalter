@@ -110,12 +110,14 @@
         }
     }
     
-    public class KoboldKing : CreatureIdentity
+    public class KoboldKing : CreatureEntity
     {
         public KoboldKing()
         {
             Body = 119;
             Alignment = Alignment.Lawful;
+			
+			CanLoot = false;
         }
     
         public KoboldKing(Serial serial) : base(serial)
@@ -157,8 +159,8 @@
         }
         public void Elated()
         {
-            source.Say(source, $"My daughter! You've rescued her from the troll king!");
-            source.EmitSound(92);
+            Say($"My daughter! You've rescued her from the troll king!");
+            EmitSound(92, 3, 9);
         }
     }
     
@@ -185,17 +187,22 @@
             {
                 Aggressive = true,
             };
-    
+			
+			CanLoot = false;
         }
     
-        protected virtual void OnFinishMovement(PathingEventArgs args)
+        protected override void OnFinishMovement(PathingEventArgs args)
         {
-            foreach (var king in GetMobilesInLOS<KoboldKing>(0).Where(l => l.IsAlive))
+			var king = GetBeheldInVisibility(0).SelectMany(m => m.Members).OfType<KoboldKing>().FirstOrDefault();
+			
+            if (king != null)
             {
-                new PermanentManaPotion().Move(Location);
-                source.Say(source, $"Hi dad! What's for dinner?!");
-                king.Elated(this);
-                Delete();
+                new PermanentManaPotion().Move(Location, true, Segment);
+                Say($"Hi dad! What's for dinner?!");
+                king.Elated();
+				
+				/* We won't delete the entity on the same frame. Server will crash. This call is part of a an optimized loop. */
+                Timer.DelayCall(TimeSpan.FromSeconds(0.2), () => Delete());
             }
         }
     

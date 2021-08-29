@@ -100,7 +100,8 @@
                     new CreatureBlock(1, "your weapon passing through the viper."),
                 };
 
-                snake.Teleport(combatant.Location);
+				/* When making an entity on demand without a spawner, we have to assign them a group. This will allow them to think/move. */
+				CreatureGroup.Instantiate(snake, Facet, Segment, combatant.Location);
             }   
         }
 
@@ -89760,7 +89761,7 @@
 	
     dryad.AddStatus(new BreatheWaterStatus(dryad));
     
-    pescalanor.Spells = new CreatureSpellCollection(35)
+    dryad.Spells = new CreatureSpellCollection(35)
     {
         new CreatureSpell<CurseSpell>(
             skillLevel: 15, cost: 7,
