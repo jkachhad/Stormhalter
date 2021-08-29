@@ -71,7 +71,7 @@
 
         public override void OnDeath()
         {
-            source.Say(source, $"Please, protect the grove now...");
+            Say($"Please, protect the grove now...");
             base.OnDeath();
         }
 
@@ -151,8 +151,9 @@
 
         public override void OnDeath()
         {
-            foreach (var defender in GetMobilesInLOS<GroveDefender>().Where(l => l.IsAlive))
-                defender.Enraged(this);
+            foreach (var defender in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<GroveDefender>())
+                defender.Enraged();
+			
             base.OnDeath();
         }
 
@@ -203,8 +204,8 @@
 
         public override void OnDeath()
         {
-            foreach (var defender in GetMobilesInLOS<GroveDefender>().Where(l => l.IsAlive))
-                defender.Enraged(this);
+            foreach (var defender in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<GroveDefender>())
+                defender.Enraged();
             base.OnDeath();
         }
 
@@ -256,8 +257,8 @@
 
         public override void OnDeath()
         {
-            foreach (var defender in GetMobilesInLOS<GroveDefender>().Where(l => l.IsAlive))
-                defender.Enraged(this);
+            foreach (var defender in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<GroveDefender>())
+                defender.Enraged();
             base.OnDeath();
         }
 
@@ -308,8 +309,8 @@
 
         public override void OnDeath()
         {
-            foreach (var defender in GetMobilesInLOS<GroveDefender>().Where(l => l.IsAlive))
-                defender.Enraged(this);
+            foreach (var defender in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<GroveDefender>())
+                defender.Enraged();
             base.OnDeath();
         }
 
@@ -360,8 +361,8 @@
 
         public override void OnDeath()
         {
-            foreach (var defender in GetMobilesInLOS<GroveDefender>().Where(l => l.IsAlive))
-                defender.Enraged(this);
+            foreach (var defender in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<GroveDefender>())
+                defender.Enraged();
             base.OnDeath();
         }
 
@@ -411,9 +412,9 @@
 
         public int enrageAmount = 0;
 
-        public void Enraged(GroveDefender deadWildlife)
+        public void Enraged()
         {
-            source.Say(source, $"They're the last... How could you?!");
+            Say($"They're the last... How could you?!");
             enrageAmount++;
             Hue = Color.Red;
 
@@ -422,7 +423,7 @@
         public override int CalculateMeleeDamage(ItemEntity item)
         {
             var damage = (double)base.CalculateMeleeDamage(item);
-                                            
+
             damage *= 1.0 + (enrageAmount * 0.1);
 
             return (int)damage;
@@ -430,7 +431,7 @@
 
         public override void OnDeath()
         {
-            source.Say(source, $"I have failed the grove!");
+            Say($"I have failed the grove!");
             base.OnDeath();
         }
 
@@ -484,7 +485,7 @@
 
         public override void OnDeath()
         {
-            source.Say(source, $"Please, protect the grove now...");
+            Say($"Please, protect the grove now...");
             base.OnDeath();
         }
 
@@ -496,7 +497,7 @@
         {
             if (Spell is CurseSpell curse)
             {
-                source.Say(source, $"Please, protect the grove now...");
+                Say($"Please, protect the grove now...");
                 combatant.Teleport(new Point2D(23, 5, 236));
             }
 
@@ -89736,7 +89737,7 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var pescalanor = new GroveKeeper()
+    var dryad = new GroveKeeper()
     {
         Name = "Naiad",
         MaxHealth = 2500, Health = 2500,
@@ -89748,14 +89749,16 @@
         Movement = 0,
         VisibilityDistance = 1,
         BasePenetration = ShieldPenetration.Heavy,
-        CreatureImmunity.Magic,
+        Immunity = CreatureImmunity.Magic,
         Weakness = CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
     };
     
-    pescalanor.AddWeakness(IceStormSpell);
-    pescalanor.AddWeakness(LightningBoltSpell);
-    
-    pescalanor.AddStatus(new BreatheWaterStatus(pescalanor));
+	/*
+    dryad.AddWeakness(IceStormSpell);
+    dryad.AddWeakness(LightningBoltSpell);
+    */
+	
+    dryad.AddStatus(new BreatheWaterStatus(dryad));
     
     pescalanor.Spells = new CreatureSpellCollection(35)
     {
@@ -89764,21 +89767,21 @@
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
-    pescalanor.Attacks = new CreatureAttackCollection
+    dryad.Attacks = new CreatureAttackCollection
     {
         new CreatureBasicAttack(22)
     };
 
-    pescalanor.Wield(new FineCrossbow());
-    pescalanor.Equip(new DragonScaleArmor());    
+    dryad.Wield(new FineCrossbow());
+    dryad.Equip(new DragonScaleArmor());    
     
-    pescalanor.AddLoot(
+    dryad.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 60.0), 
             new LootPackEntry(true, groveGems, 100.0, gemsPriceMutator),
             new LootPackEntry(true, groveTreasure, 50)
         ));
-    return pescalanor;
+    return dryad;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -89858,7 +89861,7 @@
         Experience = 17300,
     };
     
-    dryad.AddStatus(new NightVisionStatus(centaur));
+    dryad.AddStatus(new NightVisionStatus(dryad));
     
     dryad.Attacks = new CreatureAttackCollection
     {
@@ -89883,7 +89886,7 @@
             new LootPackEntry(true, groveTreasure, 0.63)
         ));
     
-    return centaur;
+    return dryad;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -90156,14 +90159,20 @@
         RangePerception = 0,
         
         BasePenetration = ShieldPenetration.Medium,
-    
-        CreatureImmunity.Magic,
+
+        Immunity = CreatureImmunity.Magic | CreatureImmunity.Bashing,
+
         CanWalk = false,
         CanSwim = true,
     };    
     
     piranha.AddStatus(new BreatheWaterStatus(piranha));
     
+	/*
+    piranha.AddWeakness(IceStormSpell);
+    piranha.AddWeakness(LightningBoltSpell);
+    */
+
     piranha.Attacks = new CreatureAttackCollection
     {
         { new CreatureAttack(18,     10, 15,   "The piranha swarm upon you"),      70 }, 
