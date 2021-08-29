@@ -3,6 +3,20 @@
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
+    public static TimeSpan _speechDelay = TimeSpan.FromMinutes(1.0);
+    public static Dictionary<MobileEntity, DateTime> _speechDelays = new Dictionary<MobileEntity, DateTime>();
+    
+    public static bool spokeRecently(MobileEntity entity)
+    {
+        /* If the entity spoke recently, we're not going to speak again. */
+        if (_speechDelays.TryGetValue(entity, out var nextSpeechTime) && DateTime.Now < nextSpeechTime)
+            return true;
+        
+        /* The entity did not speak recently, add them to the delay, and allow them to talk. */
+        _speechDelays[entity] = DateTime.Now + _speechDelay;
+        return false;
+    }
+
     public static readonly string[] _names = new string[]
     {
         "Aca", "Acha", "Achi", "Achu", "Aco", "Agua", "Ahua", "Aja", "Ala", "Ali", "Ama", "Ani", "Anu", "Apa",
@@ -96534,7 +96548,10 @@
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
- source.Say($"Kill the intruder!");
+    if (spokeRecently(source))
+        return;
+
+    source.Say($"Taag the gaz!"); /* Kill the intruder! */
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96804,14 +96821,13 @@
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  if (player.Profession == Profession.Wizard)
-{
-  source.Say($"Filthy Wizzzarrrd!");
-}
-else
-{
-  source.Say($"You will not escape me!");
-}
+    if (spokeRecently(source))
+        return;
+    
+    if (player.Profession == Profession.Wizard)
+        source.Say($"Filthy Wizzzarrrd!");
+    else
+        source.Say($"You will not escape me!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96846,7 +96862,10 @@ else
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
- source.Say($"Recall rings get you out of a pinch and only for 150 gold.");
+    if (spokeRecently(source))
+        return;
+
+    source.Say($"Rings of Recall can get you out of a pinch, and only for 150 gold!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96881,7 +96900,10 @@ else
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-   source.Say($"Get your healing balm here. Only 16 gold.");
+    if (spokeRecently(source))
+        return;
+
+    source.Say($"Get your Balm of Gilead here! Only 16 gold pieces.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96916,7 +96938,10 @@ else
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
- source.Say($"Mugwort cures even the deadliest of poisons. Just 25 gold.");
+    if (spokeRecently(source))
+        return;
+
+    source.Say($"Mugwort can cure even the deadliest of poisons. Just 25 pieces of your gold.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96950,7 +96975,10 @@ else
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  source.Say($"Deposit your gold with us, {player.Name}.");
+    if (spokeRecently(source))
+        return;
+
+    source.Say($"Deposit your gold with us, {player.Name}.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -96984,7 +97012,10 @@ else
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  source.Say($"Armor made from your kills.");
+    if (spokeRecently(source))
+        return;
+        
+    source.Say($"Armors made from your kills, or someone else's, if you take it.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -97021,7 +97052,10 @@ else
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  source.Say($"Come see my wares, {player.Name}. Just ask me to 'show prices'.");
+    if (spokeRecently(source))
+        return;
+
+    source.Say($"Come see our wares, {player.Name}. Just ask me to 'show prices'.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -97094,10 +97128,13 @@ else
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  if (player.Profession == Profession.Thaumaturge)
-{
-  source.Say($"Life and death, I can teach you to master them, {player.Name}.");
-}
+    if (spokeRecently(source))
+        return;
+
+    if (player.Profession != Profession.Thaumaturge)
+        source.Say($"Praise the ghods! A servent has arrived to clean the temple.");
+    else
+        source.Say($"Life, Death, & Taxes. I can teach you to master them, {player.Name}.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -97134,10 +97171,13 @@ else
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  if (player.Profession == Profession.Wizard)
-{
-  source.Say($"Allow me to train you in the elements, {player.Name}.");
-}
+    if (spokeRecently(source))
+        return;
+        
+    if (player.Profession == Profession.Wizard)
+        source.Say($"Allow me to critique your skill in the elements, {player.Name}.");
+    else if (player.MaxMana <= 0)
+        source.Say($"Shoo! Shoo! muggle!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -97175,8 +97215,13 @@ else
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  source.Say($"Welcome to the guild, {player.Name}.");
-  source.Say($"Can I offer you training?");
+    if (spokeRecently(source))
+        return;
+        
+    if (player.Profession != Profession.Thief)
+        source.Say($"Hey you, {player.Profession.ToString().ToLower()}, get out of here!");
+    else
+        source.Say($"Welcome to the guild, {player.Name}. May I offer you any training?");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -97216,7 +97261,15 @@ else
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
- source.Say($"There is evil afoot, {player.Name}. Be careful.");
+    if (spokeRecently(source))
+        return;
+        
+    switch (Utility.Random(1, 3))
+    {
+        case 1: source.Say($"There is evil afoot, {player.Name}. Be careful wandering the wilds."); break;
+        case 2: source.Say($"Seek out the temple north of town, we need to clear the dungeons!"); break;
+        case 3: source.Say($"If we save the town, our friends in Oakvael too may need aid."); break;
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -97257,7 +97310,15 @@ else
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
- source.Say($"Take your fallen comrades to the priest for healing.");
+    if (spokeRecently(source))
+        return;
+
+    switch (Utility.Random(1, 3))
+    {
+        case 1: source.Say($"Should your friends die, consider leaving them."); break;
+        case 2: source.Say($"Should your friends die-- do you have any friends, {player.Name}?"); break;
+        case 3: source.Say($"Should your friends die, bring them to the temple."); break;
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -97317,7 +97378,10 @@ else
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  source.Say($"If I only had another iron ore and yttril.");
+    if (spokeRecently(source))
+        return;
+        
+    source.Say($"If I only had another iron ore and yttril..");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -97442,7 +97506,50 @@ else
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-  source.Say($"Bork! Bork!");
+    if (spokeRecently(source))
+        return;
+
+    switch (Utility.Random(1, 5))
+    {
+        case 1:
+        {
+            source.Emote($"does an impression of a corpse");
+            
+            Timer.DelayCall(TimeSpan.FromSeconds(4.0), () =>
+            {
+                source.EmitSound(37, 3, 9);
+                source.Emote($"dies");
+                
+                source.Name = "spirit.of.biscuit";
+                source.Hue = Color.FromArgb(150, 255, 255, 255);
+                source.Alignment = Alignment.Neutral;
+            });
+            
+            
+            Timer.DelayCall(TimeSpan.FromSeconds(12.0), () =>
+            {
+                source.Emote("is confused");
+            });
+            
+            Timer.DelayCall(TimeSpan.FromSeconds(15.0), () =>
+            {
+                source.EmitSound(55, 3, 9);
+                source.Emote("barks");
+                
+                source.Name = "biscuit";
+                source.Hue = default;
+                source.Alignment = Alignment.Lawful;
+
+                source.EmitSound(13, 3, 9);
+            });
+            
+            break;
+        }
+        case 2: source.Emote($"wags his tail at {player.Name}"); break;
+        case 3: source.Emote($"barks softly"); break;
+        case 4: source.Emote($"watches {player.Name} for a moment, then yawns."); break;
+        case 5: source.Emote($"contemplates the need for {player.Name}'s existance."); break;
+   }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -100245,7 +100352,10 @@ return orc;
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
- source.Say($"Master! Intruders!");
+    if (spokeRecently(source))
+        return;
+
+    source.Say($"Master! An intruder!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -100735,22 +100845,15 @@ else
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (spokeRecently(source))
+        return;
+        
     if (player.Profession == Profession.Thief)
-{
-  source.Say($"I'll be watching you, {player.Name}.");
-}
-else
-    if (player.Profession == Profession.Knight)
-{ 
-  source.Say($"Good day, {player.Name}.");
-}
-else  
- {   
- 
-  source.Say($"I'm the law around here.");
- 
- }
-
+        source.Say($"I got my eyes on you, {player.Name}.");
+    else if (player.Profession == Profession.Knight)
+        source.Say($"Good day, {0} {1}.", (player.IsFemale ? "Serah" : "Ser"), player.Name);
+    else
+        source.Say($"I'm the law around here.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
