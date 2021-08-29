@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.73.1.0">
+<segment name="Oakvael" version="0.74.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -100,7 +100,8 @@
                     new CreatureBlock(1, "your weapon passing through the viper."),
                 };
 
-                snake.Teleport(combatant.Location);
+				/* When making an entity on demand without a spawner, we have to assign them a group. This will allow them to think/move. */
+				CreatureGroup.Instantiate(snake, Facet, Segment, combatant.Location);
             }   
         }
 
@@ -423,8 +424,8 @@
         public override int CalculateMeleeDamage(ItemEntity item)
         {
             var damage = (double)base.CalculateMeleeDamage(item);
-                                            
-            damage *= 1 + (enrageAmount * 0.1);
+
+            damage *= 1.0 + (enrageAmount * 0.1);
 
             return (int)damage;
         }
@@ -89763,7 +89764,7 @@
     dryad.Spells = new CreatureSpellCollection(35)
     {
         new CreatureSpell<CurseSpell>(
-            skillLevel: 12.5, cost: 7,
+            skillLevel: 15, cost: 7,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
@@ -90159,8 +90160,9 @@
         RangePerception = 0,
         
         BasePenetration = ShieldPenetration.Medium,
-    
+
         Immunity = CreatureImmunity.Magic | CreatureImmunity.Bashing,
+
         CanWalk = false,
         CanSwim = true,
     };    
@@ -90171,11 +90173,11 @@
     piranha.AddWeakness(IceStormSpell);
     piranha.AddWeakness(LightningBoltSpell);
     */
-	
+
     piranha.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(18,     15, 25,   "The piranha swarm upon you"),      70 }, 
-        { new CreatureAttack(21,     13, 15,  "The piranha bite you"),            30 }, 
+        { new CreatureAttack(18,     10, 15,   "The piranha swarm upon you"),      70 }, 
+        { new CreatureAttack(21,     15, 23,  "The piranha bite you"),            30 }, 
     };
         
     piranha.Blocks = new CreatureBlockCollection

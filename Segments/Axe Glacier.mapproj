@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.73.1.0">
+<segment name="Axe Glacier" version="0.74.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -105899,7 +105899,7 @@
     
     yeti.Spells = new CreatureSpellCollection(20.0)
     {
-        new CreatureSpell<DragonBreathIceSpell>(
+        new CreatureSpell<IceStormSpell>(
             skillLevel: 21)
     };
         
