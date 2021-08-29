@@ -110,7 +110,7 @@
         }
     }
     
-    public class KoboldKing : VendorEntity
+    public class KoboldKing : CreatureIdentity
     {
         public KoboldKing()
         {
@@ -155,33 +155,14 @@
                     }
             }
         }
-        public override void HandleOrder(OrderEventArgs args)
+        public void Elated()
         {
-            base.HandleOrder(args);
-    
-            if (args.Handled)
-                return;
-    
-            var source = args.Source;
-            var order = args.Order;
-    
-            if (IsSubordinate && source != Director)
-                return;
-    
-            //will this make an Order, King, the princess, followed by handle order?
-    
-            if (order.Matches("the princess", true))
-            {
-    
-                foreach (var princess in GetMobilesInLOS<KoboldPrincess>().Where(l => l.IsAlive))
-                {
-                    source.Say(source, $"Joyous day! You've rescued my daughter!");
-                    princess.Completed(this);
-                    new PermanentManaPotion().Move(counter);
-                }
-            }
+            source.Say(source, $"My daughter! You've rescued her from the troll king!");
+            source.EmitSound(92);
         }
-    }       
+    }
+    
+    
     
     public class KoboldPrincess : CreatureEntity
     {
@@ -207,6 +188,17 @@
     
         }
     
+        protected virtual void OnFinishMovement(PathingEventArgs args)
+        {
+            foreach (var king in GetMobilesInLOS<KoboldKing>(0).Where(l => l.IsAlive))
+            {
+                new PermanentManaPotion().Move(Location);
+                source.Say(source, $"Hi dad! What's for dinner?!");
+                king.Elated(this);
+                Delete();
+            }
+        }
+    
         public override void HandleOrder(OrderEventArgs args)
         {
             base.HandleOrder(args);
@@ -227,13 +219,6 @@
                 OnOrderFollow(source);
                 return;
             }
-        }
-    
-        public void Completed()
-        {
-            source.Say(source, $"Dad! I was fine!");
-            //how to despawn?    
-    
         }
     
         public KoboldPrincess(Serial serial) : base(serial)
@@ -264,7 +249,8 @@
                         break;
                     }
             }
-        }    
+        }
+    
     }
 ]]></block>
     <block><![CDATA[]]></block>
