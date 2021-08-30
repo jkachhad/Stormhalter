@@ -89743,6 +89743,7 @@
         Name = "Naiad",
         MaxHealth = 2500, Health = 2500,
         BaseDodge = 27,
+        MaxMana = 15, Mana = 15,
         Experience = 55000,
         HideDetection = 37,
         CanWalk = false,
@@ -89761,10 +89762,10 @@
 	
     dryad.AddStatus(new BreatheWaterStatus(dryad));
     
-    dryad.Spells = new CreatureSpellCollection(35)
+    dryad.Spells = new CreatureSpellCollection(100)
     {
         new CreatureSpell<CurseSpell>(
-            skillLevel: 15, cost: 7,
+            skillLevel: 15, cost: 14,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
