@@ -10973,14 +10973,15 @@
       </tile>
       <tile x="35" y="21">
         <component type="FloorComponent">
-          <color r="0" g="69" b="0" a="255" />
-          <ground>196</ground>
-        </component>
-        <component type="Darkness">
-          <allowDispel>true</allowDispel>
+          <ground>7</ground>
         </component>
         <component type="StaticComponent">
-          <static>195</static>
+          <color r="0" g="255" b="255" a="255" />
+          <static>206</static>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>195</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="36" y="21">
@@ -90973,7 +90974,7 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="300Boss" size="1" minimum="1" maximum="1" />
       <entry entity="300TrollGuards" size="2" minimum="4" maximum="6" />
       <entry entity="300TrollGuardRanged" size="1" minimum="4" maximum="4" />
-      <entry entity="surfaceShark" size="1" minimum="1" maximum="1" />
+      <entry entity="surfaceShark" size="1" minimum="2" maximum="2" />
       <bounds region="5">
         <inclusion left="0" top="4" right="23" bottom="20" />
         <exclusion left="19" top="8" right="21" bottom="12" />
