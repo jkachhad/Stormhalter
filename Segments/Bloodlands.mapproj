@@ -10679,22 +10679,25 @@
         </component>
       </tile>
       <tile x="0" y="21">
-        <component type="WaterComponent">
-          <ground>374</ground>
-          <movementCost>3</movementCost>
-        </component>
-      </tile>
-      <tile x="1" y="21">
         <component type="FloorComponent">
           <color r="159" g="155" b="140" a="255" />
           <ground>178</ground>
         </component>
         <component type="StaircaseComponent">
-          <destinationX>1</destinationX>
           <destinationY>10</destinationY>
           <destinationRegion>3</destinationRegion>
           <teleporterId>123</teleporterId>
           <descends>true</descends>
+        </component>
+      </tile>
+      <tile x="1" y="21">
+        <component type="FloorComponent">
+          <ground>374</ground>
+        </component>
+        <component type="ObstructionComponent">
+          <color r="159" g="136" b="110" a="255" />
+          <obstruction>370</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="2" y="21">
@@ -16827,18 +16830,11 @@
         </component>
       </tile>
       <tile x="23" y="0">
-        <component type="StaticComponent">
-          <static>7</static>
-        </component>
-        <component type="StaticComponent">
-          <color r="0" g="255" b="255" a="255" />
-          <static>206</static>
-        </component>
-        <component type="WallComponent">
-          <wall>334</wall>
-          <destroyed>39</destroyed>
-          <ruins>44</ruins>
-          <indestructible>true</indestructible>
+        <component type="StaircaseComponent">
+          <destinationX>23</destinationX>
+          <destinationRegion>4</destinationRegion>
+          <teleporterId>123</teleporterId>
+          <descends>true</descends>
         </component>
       </tile>
       <tile x="24" y="0">
@@ -16852,12 +16848,6 @@
         <component type="WallComponent">
           <wall>334</wall>
           <destroyed>39</destroyed>
-          <ruins>44</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="WallComponent">
-          <wall>333</wall>
-          <destroyed>38</destroyed>
           <ruins>44</ruins>
           <indestructible>true</indestructible>
         </component>
@@ -17084,12 +17074,12 @@
         </component>
       </tile>
       <tile x="23" y="1">
-        <component type="StaircaseComponent">
-          <destinationX>23</destinationX>
-          <destinationY>1</destinationY>
-          <destinationRegion>4</destinationRegion>
-          <teleporterId>123</teleporterId>
-          <descends>true</descends>
+        <component type="FloorComponent">
+          <ground>7</ground>
+        </component>
+        <component type="StaticComponent">
+          <color r="0" g="255" b="255" a="255" />
+          <static>206</static>
         </component>
       </tile>
       <tile x="24" y="1">
@@ -19071,18 +19061,12 @@
         </component>
       </tile>
       <tile x="0" y="9">
-        <component type="StaticComponent">
-          <static>7</static>
+        <component type="FloorComponent">
+          <ground>7</ground>
         </component>
         <component type="StaticComponent">
           <color r="0" g="255" b="255" a="255" />
           <static>206</static>
-        </component>
-        <component type="WallComponent">
-          <wall>333</wall>
-          <destroyed>38</destroyed>
-          <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="1" y="9">
@@ -19409,35 +19393,23 @@
         </component>
       </tile>
       <tile x="0" y="10">
-        <component type="StaticComponent">
-          <static>7</static>
-        </component>
-        <component type="StaticComponent">
-          <color r="0" g="255" b="255" a="255" />
-          <static>206</static>
-        </component>
-        <component type="WallComponent">
-          <wall>334</wall>
-          <destroyed>39</destroyed>
-          <ruins>44</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="WallComponent">
-          <wall>333</wall>
-          <destroyed>153</destroyed>
-          <ruins>46</ruins>
-        </component>
-      </tile>
-      <tile x="1" y="10">
         <component type="FloorComponent">
           <ground>6</ground>
         </component>
         <component type="StaircaseComponent">
-          <destinationX>1</destinationX>
           <destinationY>21</destinationY>
           <destinationRegion>1</destinationRegion>
           <teleporterId>128</teleporterId>
           <descends>false</descends>
+        </component>
+      </tile>
+      <tile x="1" y="10">
+        <component type="FloorComponent">
+          <ground>7</ground>
+        </component>
+        <component type="StaticComponent">
+          <color r="0" g="255" b="255" a="255" />
+          <static>206</static>
         </component>
       </tile>
       <tile x="2" y="10">
@@ -22723,7 +22695,6 @@
       <id>4</id>
       <name>Bloodlands -200</name>
       <height>-200</height>
-      <healthMultiplier>2</healthMultiplier>
       <tile x="-1" y="-1">
         <component type="WallComponent">
           <wall>355</wall>
@@ -23151,26 +23122,20 @@
         </component>
       </tile>
       <tile x="22" y="0">
-        <component type="StaticComponent">
-          <static>7</static>
+        <component type="FloorComponent">
+          <ground>7</ground>
         </component>
         <component type="StaticComponent">
           <color r="0" g="255" b="255" a="255" />
           <static>206</static>
         </component>
-        <component type="WallComponent">
-          <wall>334</wall>
-          <destroyed>154</destroyed>
-          <ruins>46</ruins>
-          <indestructible>true</indestructible>
-        </component>
       </tile>
       <tile x="23" y="0">
-        <component type="WallComponent">
-          <wall>333</wall>
-          <destroyed>38</destroyed>
-          <ruins>44</ruins>
-          <indestructible>true</indestructible>
+        <component type="StaircaseComponent">
+          <destinationX>23</destinationX>
+          <destinationRegion>3</destinationRegion>
+          <teleporterId>127</teleporterId>
+          <descends>false</descends>
         </component>
       </tile>
       <tile x="24" y="0">
@@ -23184,12 +23149,6 @@
         <component type="WallComponent">
           <wall>334</wall>
           <destroyed>39</destroyed>
-          <ruins>44</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="WallComponent">
-          <wall>333</wall>
-          <destroyed>38</destroyed>
           <ruins>44</ruins>
           <indestructible>true</indestructible>
         </component>
@@ -23434,12 +23393,12 @@
         </component>
       </tile>
       <tile x="23" y="1">
-        <component type="StaircaseComponent">
-          <destinationX>23</destinationX>
-          <destinationY>1</destinationY>
-          <destinationRegion>3</destinationRegion>
-          <teleporterId>127</teleporterId>
-          <descends>false</descends>
+        <component type="FloorComponent">
+          <ground>7</ground>
+        </component>
+        <component type="StaticComponent">
+          <color r="0" g="255" b="255" a="255" />
+          <static>206</static>
         </component>
       </tile>
       <tile x="24" y="1">
@@ -25647,8 +25606,6 @@
       </tile>
       <tile x="12" y="9">
         <component type="StaircaseComponent">
-          <destinationX>1</destinationX>
-          <destinationY>1</destinationY>
           <destinationRegion>5</destinationRegion>
           <teleporterId>181</teleporterId>
           <descends>true</descends>
@@ -43978,7 +43935,7 @@
           <ground>12</ground>
         </component>
         <component type="StaircaseComponent">
-          <destinationX>3</destinationX>
+          <destinationX>1</destinationX>
           <destinationY>1</destinationY>
           <destinationRegion>10</destinationRegion>
           <teleporterId>181</teleporterId>
@@ -66599,8 +66556,6 @@
           <movementCost>3</movementCost>
         </component>
         <component type="RopeComponent">
-          <destinationX>1</destinationX>
-          <destinationY>1</destinationY>
           <destinationRegion>11</destinationRegion>
           <teleporterId>514</teleporterId>
         </component>
@@ -76646,10 +76601,19 @@
           <ruins>0</ruins>
           <indestructible>true</indestructible>
         </component>
+        <component type="RopeComponent">
+          <destinationX>-30</destinationX>
+          <destinationY>-70</destinationY>
+          <destinationRegion>9</destinationRegion>
+          <teleporterId>238</teleporterId>
+        </component>
       </tile>
       <tile x="1" y="0">
         <component type="FloorComponent">
           <ground>12</ground>
+        </component>
+        <component type="RuinsComponent">
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="2" y="0">
@@ -76950,20 +76914,8 @@
         </component>
       </tile>
       <tile x="2" y="1">
-        <component type="StaticComponent">
-          <static>1</static>
-        </component>
-        <component type="WallComponent">
-          <wall>31</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="RopeComponent">
-          <destinationX>-30</destinationX>
-          <destinationY>-70</destinationY>
-          <destinationRegion>9</destinationRegion>
-          <teleporterId>238</teleporterId>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="3" y="1">
@@ -80597,6 +80549,12 @@
           <ruins>0</ruins>
           <indestructible>true</indestructible>
         </component>
+        <component type="RopeComponent">
+          <destinationX>-39</destinationX>
+          <destinationY>5</destinationY>
+          <destinationRegion>9</destinationRegion>
+          <teleporterId>237</teleporterId>
+        </component>
       </tile>
       <tile x="1" y="-1">
         <component type="StaticComponent">
@@ -80777,11 +80735,8 @@
           <ruins>0</ruins>
           <indestructible>true</indestructible>
         </component>
-        <component type="RopeComponent">
-          <destinationX>-39</destinationX>
-          <destinationY>5</destinationY>
-          <destinationRegion>9</destinationRegion>
-          <teleporterId>237</teleporterId>
+        <component type="StaticComponent">
+          <static>220</static>
         </component>
       </tile>
       <tile x="2" y="0">
@@ -87399,7 +87354,7 @@
     
     troll.AddStatus(new NightVisionStatus(troll));
     
-    troll.Wield(new Longbow());
+    troll.Wield(new ReturningHammer());
     
 
     troll.Equip(new ChainmailArmor());
@@ -87619,7 +87574,11 @@
         new LootPackEntry(true, GenericBottles,    33)
     ));
     
-    //need to add lootpack
+kobold.AddGold(700);
+    kobold.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33)
+    ));
      
     return orc;
 ]]></block>
@@ -87651,10 +87610,7 @@
         
         Movement = 3,
         
-        Attacks = new CreatureAttackCollection()
-        {
-            new CreatureBasicAttack(3)
-        },
+      
     };
     
     kobold.Attacks = new CreatureAttackCollection
@@ -87671,7 +87627,11 @@
         new LootPackEntry(true, GenericBottles,    33)
     ));
     
-    //add lootpack
+    kobold.AddGold(700);
+    kobold.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33)
+    ));
     
     return kobold;
 ]]></block>
@@ -87712,12 +87672,12 @@
     wraith.Spells =  new CreatureSpellCollection()
     {
         new CreatureSpell<DeathSpell>(
-            skillLevel: 8,
+            skillLevel: 11,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
     wraith.Wield(new WoodenStaff());
-        wraith.AddGold(700);
+    
     return wraith;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -87762,7 +87722,7 @@
     lich.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<DeathSpell>(
-            skillLevel: 8, cost: 8, 
+            skillLevel: 10, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
@@ -88056,10 +88016,10 @@
 	var mummy = new Mummy()
     {
         Name = "Jormin",
-        MaxHealth = 2350, Health = 2350,
-        BaseDodge = 15,
+        MaxHealth = 8350, Health = 8350,
+        BaseDodge = 22,
         HideDetection = 26,
-        Experience = 34000,
+        Experience = 42000,
         CanSwim = true,
     
         BasePenetration = ShieldPenetration.Heavy,
@@ -88073,11 +88033,11 @@
     mummy.Attacks = new CreatureAttackCollection()
     {
         { 
-            new CreatureAttack(16,     35, 55,     "The mummy strangles you with his bandages"),      70, TimeSpan.Zero 
+            new CreatureAttack(17     35, 55,     "The mummy strangles you with his bandages"),      70, TimeSpan.Zero 
         }, 
         { 
-            new CreatureAttack(17,    45, 65,     "A mummified claw scratches you.",
-                                                    new AttackAgeComponent(1000, 50)),             30, TimeSpan.Zero
+            new CreatureAttack(18,    45, 65,     "A mummified claw scratches you.",
+                                                    new AttackAgeComponent(1200, 50)),             30, TimeSpan.Zero
         },
         //todo who added TimeSpan to these?
     };
@@ -88088,7 +88048,16 @@
         new CreatureBlock(5, "mummified claw"), 
     };
     
-    mummy.AddGold(4000);
+    mummy.AddGold(14000);
+    mummy.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new BearSkull(),        100),
+        new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
+         new LootPackEntry(true, SemiRare, 40),
+        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),        
+        new LootPackEntry(true, UltraRare, 25)
     
     //todo add lootpack
     
@@ -89095,7 +89064,6 @@
         new LootPackEntry(true, drop3gems,       15,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33),
         new LootPackEntry(true, SemiRare, 3)
-        
     ));
     return boar;
 ]]></block>
@@ -90437,8 +90405,8 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="100Hobs" size="1" minimum="1" maximum="2" />
-      <entry entity="100Archer" size="2" minimum="5" maximum="5" />
-      <entry entity="100Kobald" size="3" minimum="4" maximum="9" />
+      <entry entity="100Archer" size="2" minimum="5" maximum="8" />
+      <entry entity="100Kobald" size="3" minimum="4" maximum="7" />
       <bounds region="3">
         <inclusion left="0" top="0" right="17" bottom="8" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -90463,14 +90431,14 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="100Hobs" size="1" minimum="1" maximum="2" />
-      <entry entity="100Archer" size="2" minimum="5" maximum="5" />
-      <entry entity="100Archer" size="3" minimum="4" maximum="9" />
+      <entry entity="100Archer" size="2" minimum="5" maximum="8" />
+      <entry entity="100Kobald" size="3" minimum="4" maximum="7" />
       <bounds region="3">
         <inclusion left="0" top="8" right="23" bottom="18" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="SouthernDarkEntrance">
+    <spawn type="RegionSpawner" name="bloodlandsSouthernDarkEntrance">
       <minimumDelay>480</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>2</maximum>
@@ -90494,7 +90462,7 @@ if (spawn is Shopkeeper shopkeeper)
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="SurfaceKeep">
+    <spawn type="RegionSpawner" name="bloodlandsSurfaceKeep">
       <minimumDelay>420</minimumDelay>
       <maximumDelay>720</maximumDelay>
       <maximum>5</maximum>
@@ -90519,7 +90487,7 @@ if (spawn is Shopkeeper shopkeeper)
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="KeepOfDarkness">
+    <spawn type="RegionSpawner" name="bloodlandsKeepOfDarkness">
       <minimumDelay>720</minimumDelay>
       <maximumDelay>1080</maximumDelay>
       <maximum>27</maximum>
@@ -90547,7 +90515,7 @@ if (spawn is Shopkeeper shopkeeper)
         <exclusion left="7" top="45" right="8" bottom="45" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="SurfaceNook">
+    <spawn type="RegionSpawner" name="bloodlandsSurfaceNook">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>720</maximumDelay>
       <maximum>5</maximum>
@@ -90590,12 +90558,12 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="surfaceBanshee" size="2" minimum="4" maximum="4" />
-      <bounds region="3">
+      <bounds region="2">
         <inclusion left="0" top="0" right="5" bottom="6" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="KeepOfDarknessBoss">
+    <spawn type="RegionSpawner" name="bloodlandsKeepOfDarknessBoss">
       <minimumDelay>5700</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <maximum>4</maximum>
@@ -90621,7 +90589,7 @@ if (spawn is Shopkeeper shopkeeper)
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="200north">
+    <spawn type="RegionSpawner" name="bloodlands200north">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>21</maximum>
@@ -90648,7 +90616,7 @@ if (spawn is Shopkeeper shopkeeper)
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="200South">
+    <spawn type="RegionSpawner" name="bloodlands200South">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>21</maximum>
@@ -90675,7 +90643,7 @@ if (spawn is Shopkeeper shopkeeper)
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="200boss">
+    <spawn type="RegionSpawner" name="bloodlands200boss">
       <minimumDelay>120</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <maximum>5</maximum>
@@ -90753,7 +90721,7 @@ if (spawn is Shopkeeper shopkeeper)
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="SurfceKeep1">
+    <spawn type="RegionSpawner" name="bloodlandsSurfceKeep1">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>6</maximum>
