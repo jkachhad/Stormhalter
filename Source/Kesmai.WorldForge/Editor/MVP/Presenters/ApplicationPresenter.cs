@@ -184,6 +184,7 @@ namespace Kesmai.WorldForge.Editor
 				new WaterSelector(),
 				new WallSelector(),
 				new StructureSelector(),
+				new TeleporterSelector(),
 			};
 			
 			Tools = new NotifyingCollection<Tool>()
