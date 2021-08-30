@@ -88359,7 +88359,7 @@
     {
         Name = "Slimey Lurker",
         Body = 161,
-        MaxHealth = 235, Health = 235,
+        MaxHealth = 335, Health = 335,
         BaseDodge = 14,
         BasePenetration = ShieldPenetration.Medium,
         CanSwim = true,
@@ -88430,13 +88430,13 @@
     wyvern.Attacks = new CreatureAttackCollection()
     {
         {
-            new CreatureAttack(9,     8, 12,   "The wyvern rakes you with its claws."),        50 
+            new CreatureAttack(14,     15, 22,   "The wyvern rakes you with its claws."),        50 
         },
         {
-            new CreatureAttack(10,     12, 15,   "The wyvern bites you."),                     30 
+            new CreatureAttack(15,     23, 29,   "The wyvern bites you."),                     30 
         },
         {
-            new CreatureAttack(11,     14, 17,  "The wyvern rakes whips you with its tail."),  20 
+            new CreatureAttack(16,     29, 35,  "The wyvern rakes whips you with its tail."),  20 
         }
     };
     
@@ -88505,7 +88505,7 @@
             new CreatureAttack(16, 50, 65, "The wyrm hits you with its tail."), 40 
         }, 
         {
-            new CreatureAttack(27,      60, 80,     "The wyrm crushes you with its body",
+            new CreatureAttack(25,      60, 80,     "The wyrm crushes you with its body",
                                                         new AttackProneComponent(35), 
                                                         new AttackStunComponent(15)),               20
         },
@@ -88513,12 +88513,20 @@
     
     wyrm.Blocks = new CreatureBlockCollection
     {
-        { new CreatureBlock(6, "the armor") }, 
-        { new CreatureBlock(4, "a tail") }, 
+        { new CreatureBlock(7, "the armor") }, 
+        { new CreatureBlock(8, "a tail") }, 
     };
 
     wyrm.AddGold(1850);
-    //todo add lootpack
+    wyrm.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new BearSkull(),        100),
+        new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
+         new LootPackEntry(true, SemiRare, 40),
+        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        10),        
+        new LootPackEntry(true, UltraRare, 10)
 
     return wyrm;
 ]]></block>
@@ -88545,7 +88553,7 @@
     {
         Name = "Servant of Apep",
         MaxHealth = 320, Health = 320,
-        BaseDodge = 15,
+        BaseDodge = 21,
             
         Experience = 12000,
         
@@ -88560,7 +88568,7 @@
     
     trollguard.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(15, 35, 45)
+        new CreatureBasicAttack(17, 45, 55)
     };
     
     trollguard.Wield(new Halberd());
@@ -88595,10 +88603,10 @@
         Name = "Lardil the disgraced", Alignment = Alignment.Evil,
         Body = 48,
     
-        MaxHealth = 500, Health = 500,
-        BaseDodge = 16,
+        MaxHealth = 1500, Health = 1500,
+        BaseDodge = 22,
           
-        Experience = 5000,
+        Experience = 15000,
         
         BasePenetration = ShieldPenetration.Heavy,
     
@@ -88635,7 +88643,7 @@
         },
         {
             new CreatureSpell<DeathSpell>(
-                skillLevel: 14, cost: 6, 
+                skillLevel: 17, cost: 6, 
                 mantra: SpellHelper.GenerateMantra(), instantCast: false),      2
         }
     };
@@ -88673,10 +88681,10 @@
 	var trollguard = new TrollGuard()
     {
         Name = "Servant of Apep",
-        MaxHealth = 220, Health = 220,
-        BaseDodge = 15,
+        MaxHealth = 320, Health = 320,
+        BaseDodge = 21,
             
-        Experience = 12000,
+        Experience = 17000,
         
         MagicProtection = 33,
         CanCharge = true,
@@ -88689,10 +88697,10 @@
     
     trollguard.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(15, 35, 45)
+        new CreatureBasicAttack(17, 35, 45)
     };
     
-    trollguard.Wield(new HeavyCrossbow());
+    trollguard.Wield(new ReturningHammer());
     trollguard.Equip(new PlatemailArmor());
     
     trollguard.AddGold(1000);
@@ -88881,17 +88889,17 @@
         Name = "Dweller",
         Body = 14, IsFemale = female,
             
-        MaxHealth = 255, Health = 255,
+        MaxHealth = 355, Health = 355,
         BaseDodge = 17,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 7000,
+        Experience = 17000,
         CanSwim = true,
             
     };
         
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(14, 25, 33)
+        new CreatureBasicAttack(17, 25, 55)
     };
     
     fighter.Wield(new Longsword());
@@ -88966,7 +88974,15 @@
     fighter.Equip(new PlatemailArmor());    
     
     fighter.AddGold(4450);
-    //todo add lootpack
+  fighter.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new BearSkull(),        100),
+        new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
+         new LootPackEntry(true, SemiRare, 40),
+        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),        
+        new LootPackEntry(true, UltraRare, 25)
     return fighter;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -89031,7 +89047,15 @@
     fighter.Equip(new PlatemailArmor());    
     
     fighter.AddGold(4450);
-    //todo add lootpack
+    fighter.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new BearSkull(),        100),
+        new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
+         new LootPackEntry(true, SemiRare, 40),
+        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),        
+        new LootPackEntry(true, UltraRare, 25)
     return fighter;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -90851,8 +90875,8 @@ if (spawn is Shopkeeper shopkeeper)
     </spawn>
     <spawn type="RegionSpawner" name="SurfceKeep1">
       <minimumDelay>600</minimumDelay>
-      <maximumDelay>900</maximumDelay>
-      <maximum>6</maximum>
+      <maximumDelay>1800</maximumDelay>
+      <maximum>8</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -90869,6 +90893,7 @@ if (spawn is Shopkeeper shopkeeper)
       </script>
       <entry entity="surfaceBanshee" size="1" minimum="2" maximum="5" />
       <entry entity="towerSwordMaster" size="1" minimum="1" maximum="1" />
+      <entry entity="towerSkeleton" size="2" minimum="2" maximum="2" />
       <bounds region="7">
         <inclusion left="13" top="0" right="19" bottom="2" />
         <exclusion left="0" top="0" right="0" bottom="0" />
