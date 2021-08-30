@@ -79,7 +79,7 @@
         {
         }
 
-        public override void OnSpellTarget(Target target, MobileEntity combatant)
+        public override void OnSpellFinished(Target target, MobileEntity combatant)
         {
             if (Spell is CurseSpell curse)
             {
@@ -494,11 +494,11 @@
         {
         }
 
-        public override void OnSpellTarget(Target target, MobileEntity combatant)
+        public override void OnSpellFinished(Target target, MobileEntity combatant)
         {
             if (Spell is CurseSpell curse)
             {
-                Say($"Please, protect the grove now...");
+                Say($"I would sacrifice ANYTHING to protect the grove!");
                 combatant.Teleport(new Point2D(23, 5, 236));
             }
 
