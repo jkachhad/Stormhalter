@@ -87659,7 +87659,7 @@ kobold.AddGold(700);
         MaxHealth = 150, Health = 150,
         BaseDodge = 12,
     
-        Experience = 2725,
+        Experience = 12725,
         
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
@@ -88182,7 +88182,7 @@ kobold.AddGold(700);
 	var giant = new Giant()
     {
         Name = "Voracious Giant",
-        MaxHealth = 1450, Health = 1450,
+        MaxHealth = 3450, Health = 3450,
         BaseDodge = 24,
     
         Experience = 21000,
@@ -88215,7 +88215,7 @@ kobold.AddGold(700);
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(11,      73, 100,     "The giant slams you across the room.",
+            new CreatureAttack(14,      73, 100,     "The giant slams you across the room.",
                                                         new AttackProneComponent(100), 
                                                         new AttackStunComponent(15)),               20
         },
