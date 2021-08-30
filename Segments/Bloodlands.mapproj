@@ -87233,14 +87233,14 @@
             new CreatureAttack(18,     45, 75,      "Flordex rends your flesh with his claws"),                     70 
         }, 
         {
-            new CreatureAttack(19,     66, 92,     "Flordex appears behind you, sinking his teeth into your neck",
+            new CreatureAttack(19,     66, 87,     "Flordex appears behind you, sinking his teeth into your neck",
                                                     new AttackStunComponent(50)),                                       30 
         },
     };
      boss1.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<DeathSpell>(
-            skillLevel: 14, cost: 13,
+            skillLevel: 14, cost: 14,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     //todo determine if I can force it to dual wield? Not sure of context
