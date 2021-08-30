@@ -87202,12 +87202,13 @@
         BaseDodge = 21,
         HideDetection = 28,
         Alignment = Alignment.Evil,
-        
+        Mana = 25, MaxMana = 25,
         Experience = 94000,
        
         CanJumpkick = true,
         CanCharge = true,
         CanSwim = false,
+        
         
         VisibilityDistance = 0,
         
@@ -87229,16 +87230,21 @@
     boss1.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(17,     45, 75,      "Flordex rends your flesh with his claws"),                     70 
+            new CreatureAttack(18,     45, 75,      "Flordex rends your flesh with his claws"),                     70 
         }, 
         {
-            new CreatureAttack(18,     65, 85,     "Flordex appears behind you, sinking his teeth into your neck",
+            new CreatureAttack(19,     66, 92,     "Flordex appears behind you, sinking his teeth into your neck",
                                                     new AttackStunComponent(50)),                                       30 
         },
     };
-    
+     boss1.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<DeathSpell>(
+            skillLevel: 14, cost: 13,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
     //todo determine if I can force it to dual wield? Not sure of context
-    boss1.Wield(new BayonetHammer());
+    boss1.Wield(new GiltDagger());
   
         
     boss1.AddGold(14000);
@@ -87249,8 +87255,7 @@
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
         new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
          new LootPackEntry(true, SemiRare, 40),
-        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),
-        
+        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),        
         new LootPackEntry(true, UltraRare, 25)
 
     ));
