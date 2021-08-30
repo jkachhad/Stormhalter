@@ -22723,6 +22723,7 @@
       <id>4</id>
       <name>Bloodlands -200</name>
       <height>-200</height>
+      <healthMultiplier>2</healthMultiplier>
       <tile x="-1" y="-1">
         <component type="WallComponent">
           <wall>355</wall>
@@ -87711,12 +87712,12 @@
     wraith.Spells =  new CreatureSpellCollection()
     {
         new CreatureSpell<DeathSpell>(
-            skillLevel: 11,
+            skillLevel: 8,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
     wraith.Wield(new WoodenStaff());
-    
+        wraith.AddGold(700);
     return wraith;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -87761,7 +87762,7 @@
     lich.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<DeathSpell>(
-            skillLevel: 10, cost: 6, 
+            skillLevel: 8, cost: 8, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
@@ -89094,6 +89095,7 @@
         new LootPackEntry(true, drop3gems,       15,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33),
         new LootPackEntry(true, SemiRare, 3)
+        
     ));
     return boar;
 ]]></block>
