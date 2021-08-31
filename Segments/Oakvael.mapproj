@@ -81,6 +81,9 @@
 
         public override void OnSpellTarget(Target target, MobileEntity combatant)
         {
+			/* Do the original spell logic. */
+			base.OnSpellTarget(target, combatant);
+			
             if (Spell is CurseSpell curse)
             {
                 var snake = new Snake()
@@ -496,12 +499,13 @@
 
         public override void OnSpellTarget(Target target, MobileEntity combatant)
         {
+			base.OnSpellTarget(target, combatant);
+			
             if (Spell is CurseSpell curse)
             {
                 Say($"Please, protect the grove now...");
                 combatant.Teleport(new Point2D(23, 5, 236));
             }
-
         }
 
         public override int GetNearbySound() => 208;
