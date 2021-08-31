@@ -79,33 +79,38 @@
         {
         }
 
-        public override void OnSpellFinished(Target target, MobileEntity combatant)
+        public override void OnSpellTarget(Target target, MobileEntity combatant)
         {
-			/* Do the original spell logic. */
-			base.OnSpellTarget(target, combatant);
-			
+            base.OnSpellTarget(target, combatant);
+            
             if (Spell is CurseSpell curse)
             {
-                var snake = new Snake()
+                if (combatant is PlayerEntity player)
+                    player.SendMessage($"You feel something writhing under your skin!");
+                  
+                Timer.DelayCall(TimeSpan.FromSeconds(3.0), () =>
                 {
-                    MaxHealth = 250, Health = 250,
-                    BaseDodge = 18,
-                    Experience = 15000
-                };
-                snake.Attacks = new CreatureAttackCollection()
-                {
-                    new CreatureAttack(18,     10, 30,      "The viper sinks its spectral fangs into your flesh.",
-                                                                                            new AttackPoisonComponent(15, 50))
-                };
-
-                snake.Blocks = new CreatureBlockCollection
-                {
-                    new CreatureBlock(1, "hardened scales"),
-                };
-
-				/* When making an entity on demand without a spawner, we have to assign them a group. This will allow them to think/move. */
-				CreatureGroup.Instantiate(snake, Facet, Segment, combatant.Location);
-            }   
+                    var snake = new Snake()
+                    {
+                        MaxHealth = 250, Health = 250,
+                        BaseDodge = 18,
+                        Experience = 15000
+                    };
+                    snake.Attacks = new CreatureAttackCollection()
+                    {
+                        new CreatureAttack(18,     10, 30,      "The viper sinks its spectral fangs into your flesh.",
+                                                                                                new AttackPoisonComponent(15, 50))
+                    };
+        
+                    snake.Blocks = new CreatureBlockCollection
+                    {
+                        new CreatureBlock(1, "hardened scales"),
+                    };
+        
+                    /* When making an entity on demand without a spawner, we have to assign them a group. This will allow them to think/move. */
+                    CreatureGroup.Instantiate(snake, Facet, Segment, combatant.Location);
+                    });
+            }
         }
 
         public override int GetNearbySound() => 208;
@@ -123,7 +128,6 @@
                 _brain = new CombatAI(this);
         }    
 
-        public override Corpse GetCorpse() => default(Corpse);
         public override void Serialize(BinaryWriter writer)
         {
             base.Serialize(writer);
@@ -491,15 +495,16 @@
         {
         }
 
-        public override void OnSpellFinished(Target target, MobileEntity combatant)
+        public override void OnSpellTarget(Target target, MobileEntity combatant)
         {
-			base.OnSpellTarget(target, combatant);
-			
+            base.OnSpellTarget(target, combatant);
+            
             if (Spell is CurseSpell curse)
             {
                 Say($"I would sacrifice ANYTHING to protect the grove!");
                 combatant.Teleport(new Point2D(23, 5, 236));
             }
+
         }
 
         public override int GetNearbySound() => 208;
