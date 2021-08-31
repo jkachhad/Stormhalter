@@ -90,6 +90,8 @@
                   
                 Timer.DelayCall(TimeSpan.FromSeconds(3.0), () =>
                 {
+                    player.EmitSound(206, 3, 9);
+                    
                     var snake = new Snake()
                     {
                         MaxHealth = 250, Health = 250,
