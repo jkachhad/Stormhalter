@@ -96469,6 +96469,8 @@
         
         Movement = 1,
         
+        CanLoot = false,
+        
     };
     
     kobold.Attacks = new CreatureAttackCollection()
@@ -96517,6 +96519,7 @@
         Movement = 2,
                 
         CanFlee = true,
+        CanLoot = false,
                 
     };
     
@@ -96570,6 +96573,7 @@
         Movement = 2,
                 
         CanFlee = true,
+        CanLoot = false,
     };
                 
     orc.Attacks = new CreatureAttackCollection()
@@ -96619,6 +96623,8 @@
         Experience = 75,
 
         Movement = 1,
+        
+        CanLoot = false,
     };
                 
     skeleton.Attacks = new CreatureAttackCollection()
@@ -96664,6 +96670,8 @@
         Experience = 100,
                 
         Movement = 2,
+        
+        CanLoot = false,
     };
 
     skeleton.Attacks = new CreatureAttackCollection()
@@ -96709,6 +96717,8 @@
         Experience = 130,
 
         Movement = 2,
+        
+        CanLoot = false,
     };
     wyvern.AddStatus(new NightVisionStatus(wyvern));
 
@@ -96768,6 +96778,7 @@
         Experience = 2500,
                     
         CanSwim = true,
+        CanLoot = false,
                     
         BasePenetration = ShieldPenetration.Medium,
         
@@ -97671,6 +97682,7 @@
         Experience = 225,
     
         CanFlee = true,
+        CanLoot = false,
     };
                 
     goblin.Attacks = new CreatureAttackCollection()
@@ -97720,6 +97732,7 @@
         Experience = 225,
         
         CanFlee = true,
+        CanLoot = false,
     };
         
     goblin.Attacks = new CreatureAttackCollection()
@@ -97769,6 +97782,7 @@
         Movement = 2,
                 
         CanFlee = true,
+        CanLoot = false,
     };
                 
     orc.Attacks = new CreatureAttackCollection()
@@ -97818,6 +97832,7 @@
         Experience = 210,
         
         CanFlee = true,
+        CanLoot = false,
     };
                 
     orc.Attacks = new CreatureAttackCollection()
@@ -97865,6 +97880,8 @@
         Experience = 170,
                 
         Movement = 2,
+        
+        CanLoot = false,
     };
                 
     skeleton.Attacks = new CreatureAttackCollection()
@@ -97916,6 +97933,7 @@
         Movement = 2,
                 
         CanFlee = true,
+        CanLoot = false,
     };
                 
     troll.Attacks = new CreatureAttackCollection()
@@ -97963,6 +97981,8 @@
         Experience = 235,
     
         Movement = 2,
+        
+        CanLoot = false,
     };
     wyvern.AddStatus(new NightVisionStatus(wyvern));
     
@@ -98024,6 +98044,7 @@
         MaxMana = 8, Mana = 8,
             
         CanFlee = true,
+        CanLoot = false,
     };
     wight.AddStatus(new NightVisionStatus(wight));
         
@@ -98079,6 +98100,7 @@
         Experience = 210,
     
         CanFlee = true,
+        CanLoot = false,
         
         FireProtection = 100,
     };
@@ -98133,6 +98155,8 @@ return orc;
         BaseDodge = 12,
     
         Experience = 350,
+        
+        CanLoot = false,
     };
     
     enragedTroll.Attacks = new CreatureAttackCollection()
@@ -98182,6 +98206,8 @@ return orc;
         Experience = 200,
     
         Movement = 0,
+        
+        CanLoot = false,
         
         VisibilityDistance = 0,
         RangePerception = 0,
@@ -99913,6 +99939,7 @@ return orc;
         Movement = 2,
     
         CanFlee = true,
+        CanLoot = false,
     };
     
     orc.Attacks = new CreatureAttackCollection()
@@ -99962,6 +99989,7 @@ return orc;
         Experience = 170,
         
         CanFlee = true,
+        CanLoot = false,
     };
     
     orc.Attacks = new CreatureAttackCollection()
@@ -100011,6 +100039,8 @@ return orc;
         Experience = 1050,
         
         MaxMana = 13, Mana = 13,
+        
+        CanLoot = false,
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
         
@@ -100069,6 +100099,7 @@ return orc;
         MaxMana = 8, Mana = 8,
             
         CanFlee = true,
+        CanLoot = false,
     };
     wight.AddStatus(new NightVisionStatus(wight));
         
@@ -100122,6 +100153,8 @@ return orc;
         BaseDodge = 12,
                             
         Experience = 700,
+        
+        CanLoot = false,
     };
     
     centaur.Attacks = new CreatureAttackCollection()
@@ -100870,6 +100903,8 @@ else
         Experience = 725,
     
         Movement = 1,
+        
+        CanLoot = false,
         
         VisibilityDistance = 0,
         RangePerception = 0,
