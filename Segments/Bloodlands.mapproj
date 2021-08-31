@@ -3,7 +3,21 @@
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
-  public static readonly string[] _names = new string[]
+    public static TimeSpan _speechDelay = TimeSpan.FromMinutes(1.0);
+    public static Dictionary<MobileEntity, DateTime> _speechDelays = new Dictionary<MobileEntity, DateTime>();
+    
+    public static bool spokeRecently(MobileEntity entity)
+    {
+        /* If the entity spoke recently, we're not going to speak again. */
+        if (_speechDelays.TryGetValue(entity, out var nextSpeechTime) && DateTime.Now < nextSpeechTime)
+            return true;
+        
+        /* The entity did not speak recently, add them to the delay, and allow them to talk. */
+        _speechDelays[entity] = DateTime.Now + _speechDelay;
+        return false;
+    }
+	
+	public static readonly string[] _names = new string[]
     {
         "Aca", "Acha", "Achi", "Achu", "Aco", "Agua", "Ahua", "Aja", "Ala", "Ali", "Ama", "Ani", "Anu", "Apa",
         "Apo", "Aqui", "Ara", "Ari", "Ata", "Ati", "Ato", "Atu", "Axi", "Aya", "Chaca", "Chacha", "Chachi",
@@ -88617,6 +88631,7 @@
          new LootPackEntry(true, SemiRare, 40),
         new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        10),        
         new LootPackEntry(true, UltraRare, 10)
+	));
 
     return wyrm;
 ]]></block>
@@ -89073,6 +89088,7 @@
          new LootPackEntry(true, SemiRare, 40),
         new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),        
         new LootPackEntry(true, UltraRare, 25)
+	));
     return fighter;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -89146,6 +89162,7 @@
          new LootPackEntry(true, SemiRare, 40),
         new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),        
         new LootPackEntry(true, UltraRare, 25)
+	));
     return fighter;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -89833,7 +89850,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Ghoul">
+    <entity name="newGhoul">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -89868,8 +89885,7 @@ var ghoul = new Ghoul()
     
     ghoul.AddGold(1950);
     ghoul.AddLoot(new LootPack(
-        new LootPackEntry(true, drop3gems,       25,     gemsPriceMutator), 
-
+        new LootPackEntry(true, drop3gems,       25,     gemsPriceMutator) 
     ));
     
     return ghoul;
@@ -89909,13 +89925,13 @@ var ghoul = new Ghoul()
     {
         new CreatureBasicAttack(15, 15, 25)
     };
-     gorbin.Spells = new CreatureSpellCollection()
+     goblin.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<DeathSpell>(
             skillLevel: 8, cost: 8, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
-    goblin.Wield(new Dagger());
+    goblin.Wield(new SteelDagger());
     goblin.Equip(new LeatherArmor());
             
     goblin.AddGold(950);
@@ -89959,7 +89975,7 @@ var ghoul = new Ghoul()
         
     abomination.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(19, 35, 5570
+        new CreatureBasicAttack(19, 35, 55)
     };
     
     abomination.Wield(new Longsword());
@@ -90980,7 +90996,7 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="SouthernDarknessWraith" size="1" minimum="2" maximum="2" />
-      <entry entity="Ghoul" size="1" minimum="1" maximum="1" />
+      <entry entity="newGhoul" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="8" top="23" right="14" bottom="24" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -91033,7 +91049,7 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="towerMummy" size="1" minimum="2" maximum="2" />
       <entry entity="towerSwordMaster" size="1" minimum="1" maximum="1" />
       <entry entity="surfaceBanshee" size="2" minimum="4" maximum="7" />
-      <entry entity="Ghoul" size="1" minimum="2" maximum="2" />
+      <entry entity="newGhoul" size="1" minimum="2" maximum="2" />
       <bounds region="1">
         <inclusion left="0" top="45" right="15" bottom="54" />
         <exclusion left="6" top="54" right="9" bottom="54" />
