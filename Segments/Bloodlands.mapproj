@@ -87545,9 +87545,9 @@
     
     raven.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(18,     25, 30,   "The raven buffets you with his wings."),  50 }, 
-        { new CreatureAttack(19,     30, 42,  "The raven sends a flurry of pecks towards you."),  30 }, 
-        { new CreatureAttack(22,     41, 52,  "The raven pecks at your eyes attempting to blind you."),             20 }, 
+        { new CreatureAttack(18,     1, 2,   "The raven buffets you with his wings."),  50 }, 
+        { new CreatureAttack(19,     2, 3,  "The raven sends a flurry of pecks towards you."),  30 }, 
+        { new CreatureAttack(22,     3, 3,  "The raven pecks at your eyes attempting to blind you."),             20 }, 
     };
         
     raven.Blocks = new CreatureBlockCollection
@@ -87584,6 +87584,7 @@
                 source.EmitSound(160, 3, 9);
                 source.Name = "Angry Morbin ";
                 source.Emote($"attacks {player.Name}");
+                source.Jumpkick(player);
              });
              
             Timer.DelayCall(TimeSpan.FromSeconds(3.0), () =>
