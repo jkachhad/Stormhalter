@@ -86767,7 +86767,30 @@
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-       source.Say(Utility.RandomBool() ? $"Plop those coins on the counter {player.Name}... I'll keep them safe." : $"One million.. two.. oh hi {player.Name}, step right up.");
+
+      if (spokeRecently(source))
+        return;
+
+    switch (Utility.Random(1, 5))
+    {
+        case 1:
+        {
+                
+            source.Emote($"Proudly counts his coins");
+            
+            Timer.DelayCall(TimeSpan.FromSeconds(4.0), () =>
+            {
+                source.Say($"Oh, hello there {player.Name} please place your coins on the counter");
+            });
+                     
+           
+            break;
+        }
+        case 2: source.Emote($"Counts the gold in the back while glaring at {player.Name}"); break;
+        case 3: source.Say($"Welcome to the bank!"); break;
+        case 4: source.Say($"Are you new in town {player.Name}? that or poor, I would remember you if you had any gold"); break;
+        case 5: source.Say($"Oh, hi {player.Name}, nice to see you."); break;
+   }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -87239,12 +87262,12 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	var boss1 = new ElderTroll()
+	var boss1 = new Vampire()
     {
         Name = "Flordex",
         MaxHealth = 7250, Health = 7250,
-        BaseDodge = 21,
-        HideDetection = 28,
+        BaseDodge = 22,
+        HideDetection = 30,
         Alignment = Alignment.Evil,
         Mana = 25, MaxMana = 25,
         Experience = 94000,
@@ -87252,6 +87275,7 @@
         CanJumpkick = true,
         CanCharge = true,
         CanSwim = false,
+        Body = 26,
         
         
         VisibilityDistance = 0,
@@ -87259,8 +87283,8 @@
         BasePenetration = ShieldPenetration.Heavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Web | CreatureImmunity.Magic | CreatureImmunity.Poison,
-        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+                   CreatureImmunity.Projectile | CreatureImmunity.Web | CreatureImmunity.Magic | CreatureImmunity.Poison, 
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell |CreatureWeakness.DeathSpell,
        
     
     };
@@ -87274,11 +87298,15 @@
     boss1.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(18,     45, 75,      "Flordex rends your flesh with his claws"),                     70 
+            new CreatureAttack(18,     45, 75,      "Intangles your soul"),                     60 
         }, 
         {
-            new CreatureAttack(19,     66, 87,     "Flordex appears behind you, sinking his teeth into your neck",
-                                                    new AttackStunComponent(50)),                                       30 
+            new CreatureAttack(19,     66, 87,     "Rends your spirit",
+                                                    new AttackStunComponent(33)),                                       30 
+        },
+        {
+            new CreatureAttack(23,     70, 99,     "Consumes your essence",
+                                                    new AttackAgeComponent(45)),                                       10 
         },
     };
      boss1.Spells = new CreatureSpellCollection()
@@ -87317,7 +87345,7 @@
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    source.Say($"I haven't had a visitor in ages.. this shall be fun!");
+    source.Say($"I haven't had a visitor in ages.. this shall be fun {player.Name}");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -87434,7 +87462,7 @@
     var peacekeeper = new Peacekeeper()
     {
         Name = "The Reeve",
-        Body = 68,
+        Body = 14,
        
         BaseDodge = 25,
         MaxHealth = 830, Health = 830,
@@ -87446,7 +87474,7 @@
     peacekeeper.AddStatus(new NightVisionStatus(peacekeeper));
     peacekeeper.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(40),
+        new CreatureBasicAttack(55),
     };
     
     peacekeeper.Spells = new CreatureSpellCollection()
@@ -87905,6 +87933,8 @@
         BaseDodge = 21,
         HideDetection = 25,
         Experience = 39000,
+        Body = 163,
+        
        
         CanCharge = true,
         CanSwim = false,
@@ -87921,7 +87951,7 @@
         new CreatureAttack(18,    42, 63,     "The swordmaster pierces you with his rapier.",
                                                     new AttackAgeComponent(500, 50))
     };
-    
+    swordmaster.AddStatus(new NightVisionStatus(swordmaster));
     swordmaster.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
    
     swordmaster.Wield(new BlackSteelRapier());
@@ -87961,7 +87991,7 @@
 	var banshee = new Banshee()
     {
         MaxHealth = 165, Health = 150,
-        BaseDodge = 13,
+        BaseDodge = 18,
     
         Experience = 6800,
         BasePenetration = ShieldPenetration.Light,
@@ -87972,13 +88002,13 @@
         
     banshee.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(11)
+        new CreatureBasicAttack(25)
     };
     
     banshee.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CurseSpell>(
-            skillLevel: 6, cost: 10, 
+            skillLevel: 8, cost: 10, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
@@ -88891,7 +88921,7 @@
         Body = 14, IsFemale = female,
             
         MaxHealth = 355, Health = 355,
-        BaseDodge = 17,
+        BaseDodge = 19,
         BasePenetration = ShieldPenetration.Light,
         Experience = 17000,
         CanSwim = true,
@@ -89620,7 +89650,7 @@
         BasePenetration = ShieldPenetration.Medium,
         CanSwim = true,
         CanWalk = false,
-        Body = 161,
+        Body = 162,
         Immunity = CreatureImmunity.Magic,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
         Experience = 8200,
@@ -89728,6 +89758,286 @@
    
 
     return griffin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="Ghoul">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+var ghoul = new Ghoul()
+    {
+        MaxHealth = 290, Health = 290,
+        BaseDodge = 19,
+    
+        Experience = 7500,
+    
+        Movement = 2,
+        BasePenetration = ShieldPenetration.Light,
+        VisibilityDistance = 1,
+    };
+    
+    ghoul.Attacks = new CreatureAttackCollection
+    {
+        { 
+            new CreatureAttack(15,     35, 42,      "The ghoul scratches you with its claws"),  70 
+        }, 
+        { 
+            new CreatureAttack(19,     42, 55,     "You've been bitten by the ghoul",
+                                                    new AttackPoisonComponent(7)),            30
+        },
+    };
+        ghoul.AddStatus(new NightVisionStatus(ghoul));
+    ghoul.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(9, "decaying flesh"), 
+        new CreatureBlock(10, "a claw"), 
+    };
+    
+    ghoul.AddGold(1950);
+    ghoul.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       25,     gemsPriceMutator), 
+
+    ));
+    
+    return ghoul;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="surfaceGorbinFavorite">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	
+    var goblin = new Goblin()
+    {
+        Name = "Favorite of Gorbin",
+        MaxHealth = 225, Health = 225,
+        BaseDodge = 22,
+        Mana = 15, MaxMana = 15,
+                
+        Experience = 5100,
+        BasePenetration = ShieldPenetration.Light,
+    };
+    
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(15, 15, 25)
+    };
+     gorbin.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<DeathSpell>(
+            skillLevel: 8, cost: 8, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
+    goblin.Wield(new Dagger());
+    goblin.Equip(new LeatherArmor());
+            
+    goblin.AddGold(950);
+   
+    
+    return goblin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="bloodCavesAbomination">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var female = Utility.RandomBool();
+                    
+    var abomination = new Humanoid()
+    {
+        Name = "Abomination",
+        Body = 246, IsFemale = female,
+            
+        MaxHealth = 455, Health = 455,
+        BaseDodge = 21,
+        BasePenetration = ShieldPenetration.Light,
+        Experience = 27000,
+        CanSwim = true,
+            
+    };
+        
+    abomination.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(19, 35, 5570
+    };
+    
+    abomination.Wield(new Longsword());
+    abomination.Equip(new PlatemailArmor());    
+    
+    abomination.AddGold(450);
+    
+    //todo add lootpack
+    
+    return abomination;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="bloodCaveBanshee">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var banshee = new Banshee()
+    {
+        MaxHealth = 265, Health = 250,
+        BaseDodge = 18,
+    
+        Experience = 6800,
+        BasePenetration = ShieldPenetration.Light,
+        MaxMana = 21, Mana = 21,
+        DeathResistance = 100,
+        MagicProtection = 33,
+    };
+        
+    banshee.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(45)
+    };
+    
+    banshee.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<CurseSpell>(
+            skillLevel:11, cost: 10, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
+        
+    banshee.Wield(new Spear());
+        
+    banshee.AddGold(480);
+    
+    //todo add lootpack
+    
+    return banshee;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="bloodCaveBat">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var bat = new Bat()
+    {
+        MaxHealth = 370, Health = 370,
+        BaseDodge = 23,
+        Name = "Bat",
+        CanFly = true,
+        Alignment = Alignment.Chaotic,
+        Body = 222,
+        
+
+        Experience = 17350,
+        
+        MagicProtection = 20,
+        
+        HideDetection = 18,
+    };
+    
+    bat.AddStatus(new NightVisionStatus(bat)); 
+    
+    bat.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(15, 20, 30, "The bat tears your flesh with its claws."),   40 
+        }, 
+        {
+            new CreatureAttack(16, 30, 40, "The bat buries sinks its fangs into you.",
+                                                    new AttackStunComponent(20.0)),         30
+        }, 
+        {
+            new CreatureAttack(19, 40, 55, "The bat pummels you with its wings."),      30
+        }, 
+    };
+        
+    bat.Blocks = new CreatureBlockCollection
+    {
+        {
+            new CreatureBlock(6, "the armor")
+        }, 
+        {
+            new CreatureBlock(4, "a wing")
+        }, 
+        {
+            new CreatureBlock(3, "a leg") 
+        }, 
+    };
+
+    bat.AddGold(4050);
+
+      bat.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 3)
+    ));
+   
+
+    return bat;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -90445,7 +90755,7 @@ if (spawn is Shopkeeper shopkeeper)
     <spawn type="RegionSpawner" name="surfaceHut">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>1</maximum>
+      <maximum>2</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -90461,6 +90771,7 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="surfaceHutKeeper" size="1" minimum="1" maximum="1" />
+      <entry entity="surfaceGorbinFavorite" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="2" top="11" right="3" bottom="12" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -90594,7 +90905,7 @@ if (spawn is Shopkeeper shopkeeper)
     <spawn type="RegionSpawner" name="SouthernDarkEntrance">
       <minimumDelay>480</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>2</maximum>
+      <maximum>3</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -90610,6 +90921,7 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="SouthernDarknessWraith" size="1" minimum="2" maximum="2" />
+      <entry entity="Ghoul" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="8" top="23" right="14" bottom="24" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -90643,7 +90955,7 @@ if (spawn is Shopkeeper shopkeeper)
     <spawn type="RegionSpawner" name="KeepOfDarkness">
       <minimumDelay>720</minimumDelay>
       <maximumDelay>1080</maximumDelay>
-      <maximum>27</maximum>
+      <maximum>28</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -90662,6 +90974,7 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="towerMummy" size="1" minimum="2" maximum="2" />
       <entry entity="towerSwordMaster" size="1" minimum="1" maximum="1" />
       <entry entity="surfaceBanshee" size="2" minimum="4" maximum="7" />
+      <entry entity="Ghoul" size="1" minimum="2" maximum="2" />
       <bounds region="1">
         <inclusion left="0" top="45" right="15" bottom="54" />
         <exclusion left="6" top="54" right="9" bottom="54" />
@@ -91134,7 +91447,7 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="towerSwordMaster" size="1" minimum="1" maximum="1" />
-      <entry entity="towerMummy" size="1" minimum="1" maximum="2" />
+      <entry entity="towerMummy" size="1" minimum="2" maximum="2" />
       <entry entity="surfaceBanshee" size="2" minimum="2" maximum="3" />
       <entry entity="towerSkeleton" size="1" minimum="4" maximum="4" />
       <bounds region="9">
@@ -91198,6 +91511,32 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="forestCentaur" size="1" minimum="1" maximum="1" />
       <bounds region="9">
         <inclusion left="-23" top="-73" right="9" bottom="-57" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="bloodCaves">
+      <minimumDelay>480</minimumDelay>
+      <maximumDelay>720</maximumDelay>
+      <maximum>15</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="bloodCavesAbomination" size="2" minimum="5" maximum="7" />
+      <entry entity="bloodCaveBanshee" size="2" minimum="4" maximum="5" />
+      <entry entity="bloodCaveBat" size="2" minimum="3" maximum="3" />
+      <bounds region="11">
+        <inclusion left="2" top="1" right="31" bottom="21" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
