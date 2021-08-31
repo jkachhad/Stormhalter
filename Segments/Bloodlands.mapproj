@@ -87499,7 +87499,21 @@
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    source.Say(Utility.RandomBool() ? $"Welcome to town {player.Name}." : $"I heard a rumor there is a vampire north of town");
+   if (spokeRecently(source))
+        return;
+
+    switch (Utility.Random(1, 5))
+    {
+        case 1:
+        {
+            source.Say($"What are you looking at {player.Name}");
+            break;
+        }
+        case 2: source.Say($"Welcome to town {player.Name}"); break;
+        case 3: source.Say($"Keep an eye out, I've seen griffins wander into town"); break;
+        case 4: source.Say($"Hey {player.Name} I've heard romor of a ghastly beast up north"); break;
+        case 5: source.Emote($"mumbles about always being on shift and never getting  break"); break;
+   }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -87531,9 +87545,9 @@
     
     raven.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(17,     22, 28,   "The raven buffets you with his wings."),  50 }, 
-        { new CreatureAttack(18,     23, 31,  "The raven sends a flurry of pecks towards you."),  30 }, 
-        { new CreatureAttack(19,     24, 45,  "The raven pecks at your eyes attempting to blind you."),             20 }, 
+        { new CreatureAttack(18,     25, 30,   "The raven buffets you with his wings."),  50 }, 
+        { new CreatureAttack(19,     30, 42,  "The raven sends a flurry of pecks towards you."),  30 }, 
+        { new CreatureAttack(22,     41, 52,  "The raven pecks at your eyes attempting to blind you."),             20 }, 
     };
         
     raven.Blocks = new CreatureBlockCollection
@@ -87556,7 +87570,50 @@
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    source.Say(Utility.RandomBool() ? $"I've got my eye on you {player.Name}.." : $"Intruder.. Attack! Oh, hi {player.Name}");
+    if (spokeRecently(source))
+        return;
+
+    switch (Utility.Random(1, 5))
+    {
+        case 1:
+        {
+        
+            source.Say($"Attack! It's {player.Name}!");
+            Timer.DelayCall(TimeSpan.FromSeconds(4.0), () =>
+            {
+                source.EmitSound(160, 3, 9);
+                source.Name = "Angry Morbin ";
+                source.Emote($"attacks {player.Name}");
+             });
+             
+            Timer.DelayCall(TimeSpan.FromSeconds(3.0), () =>
+            {
+                source.Emote("is confused");
+            });
+            
+            Timer.DelayCall(TimeSpan.FromSeconds(15.0), () =>
+            {
+                source.EmitSound(141, 3, 9);
+                source.Emote("squawks");
+                source.Say("oh, um, sorry");
+                source.Name = "Morbin";
+
+
+
+
+            });
+
+
+            break;
+        }
+        case 2: source.Say($"I've got my eye on you {player.Name}"); break;
+        case 3: source.Emote($"Squawks at {player.Name}"); break;
+        case 4: source.Emote($"Flutters around nervously"); break;
+        
+        case 5: source.Emote($"screeches at {player.Name}");
+                source.EmitSound(160, 3, 9);
+                break;
+   }
     
 ]]></block>
         <block><![CDATA[]]></block>
