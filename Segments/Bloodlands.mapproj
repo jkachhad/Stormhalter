@@ -87594,10 +87594,11 @@
             
             Timer.DelayCall(TimeSpan.FromSeconds(15.0), () =>
             {
+                source.Name = "Morbin";
                 source.EmitSound(141, 3, 9);
                 source.Emote("squawks");
                 source.Say("oh, um, sorry");
-                source.Name = "Morbin";
+               
 
 
 
