@@ -125,7 +125,7 @@ namespace Kesmai.WorldForge.UI.Documents
 			AddRegionSpawnerCommand = new RelayCommand(AddRegionSpawner);
 			RemoveRegionSpawnerCommand = new RelayCommand<RegionSpawner>(RemoveRegionSpawner,
 				(spawner) => SelectedRegionSpawner != null);
-			RemoveLocationSpawnerCommand.DependsOn(() => SelectedRegionSpawner);
+			RemoveRegionSpawnerCommand.DependsOn(() => SelectedRegionSpawner);
 
 			//todo: set location and region spawners so the presenters are fully intialized. Or fix whatever is preventing both renders from accepting input before both are 'targetted'
 		}
