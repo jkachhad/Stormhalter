@@ -3,7 +3,21 @@
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
-  public static readonly string[] _names = new string[]
+    public static TimeSpan _speechDelay = TimeSpan.FromMinutes(1.0);
+    public static Dictionary<MobileEntity, DateTime> _speechDelays = new Dictionary<MobileEntity, DateTime>();
+    
+    public static bool spokeRecently(MobileEntity entity)
+    {
+        /* If the entity spoke recently, we're not going to speak again. */
+        if (_speechDelays.TryGetValue(entity, out var nextSpeechTime) && DateTime.Now < nextSpeechTime)
+            return true;
+        
+        /* The entity did not speak recently, add them to the delay, and allow them to talk. */
+        _speechDelays[entity] = DateTime.Now + _speechDelay;
+        return false;
+    }
+	
+	public static readonly string[] _names = new string[]
     {
         "Aca", "Acha", "Achi", "Achu", "Aco", "Agua", "Ahua", "Aja", "Ala", "Ali", "Ama", "Ani", "Anu", "Apa",
         "Apo", "Aqui", "Ara", "Ari", "Ata", "Ati", "Ato", "Atu", "Axi", "Aya", "Chaca", "Chacha", "Chachi",
@@ -642,14 +656,14 @@
         </component>
       </tile>
       <tile x="18" y="-13">
-        <component type="WaterComponent">
-          <ground>374</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="19" y="-13">
-        <component type="FloorComponent">
-          <ground>6</ground>
+        <component type="WaterComponent">
+          <ground>374</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="20" y="-13">
@@ -658,14 +672,14 @@
         </component>
       </tile>
       <tile x="21" y="-13">
-        <component type="FloorComponent">
-          <ground>6</ground>
-        </component>
-      </tile>
-      <tile x="22" y="-13">
         <component type="WaterComponent">
           <ground>374</ground>
           <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="22" y="-13">
+        <component type="FloorComponent">
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="23" y="-13">
@@ -1021,9 +1035,8 @@
         </component>
       </tile>
       <tile x="18" y="-11">
-        <component type="WaterComponent">
-          <ground>374</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="19" y="-11">
@@ -1044,9 +1057,8 @@
         </component>
       </tile>
       <tile x="22" y="-11">
-        <component type="WaterComponent">
-          <ground>374</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="23" y="-11">
@@ -10679,25 +10691,22 @@
         </component>
       </tile>
       <tile x="0" y="21">
+        <component type="WaterComponent">
+          <ground>374</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="1" y="21">
         <component type="FloorComponent">
           <color r="159" g="155" b="140" a="255" />
           <ground>178</ground>
         </component>
         <component type="StaircaseComponent">
+          <destinationX>1</destinationX>
           <destinationY>10</destinationY>
           <destinationRegion>3</destinationRegion>
           <teleporterId>123</teleporterId>
           <descends>true</descends>
-        </component>
-      </tile>
-      <tile x="1" y="21">
-        <component type="FloorComponent">
-          <ground>374</ground>
-        </component>
-        <component type="ObstructionComponent">
-          <color r="159" g="136" b="110" a="255" />
-          <obstruction>370</obstruction>
-          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="2" y="21">
@@ -10978,14 +10987,15 @@
       </tile>
       <tile x="35" y="21">
         <component type="FloorComponent">
-          <color r="0" g="69" b="0" a="255" />
-          <ground>196</ground>
-        </component>
-        <component type="Darkness">
-          <allowDispel>true</allowDispel>
+          <ground>7</ground>
         </component>
         <component type="StaticComponent">
-          <static>195</static>
+          <color r="0" g="255" b="255" a="255" />
+          <static>206</static>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>195</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="36" y="21">
@@ -16830,11 +16840,18 @@
         </component>
       </tile>
       <tile x="23" y="0">
-        <component type="StaircaseComponent">
-          <destinationX>23</destinationX>
-          <destinationRegion>4</destinationRegion>
-          <teleporterId>123</teleporterId>
-          <descends>true</descends>
+        <component type="StaticComponent">
+          <static>7</static>
+        </component>
+        <component type="StaticComponent">
+          <color r="0" g="255" b="255" a="255" />
+          <static>206</static>
+        </component>
+        <component type="WallComponent">
+          <wall>334</wall>
+          <destroyed>39</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="0">
@@ -16848,6 +16865,12 @@
         <component type="WallComponent">
           <wall>334</wall>
           <destroyed>39</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>38</destroyed>
           <ruins>44</ruins>
           <indestructible>true</indestructible>
         </component>
@@ -17074,12 +17097,12 @@
         </component>
       </tile>
       <tile x="23" y="1">
-        <component type="FloorComponent">
-          <ground>7</ground>
-        </component>
-        <component type="StaticComponent">
-          <color r="0" g="255" b="255" a="255" />
-          <static>206</static>
+        <component type="StaircaseComponent">
+          <destinationX>23</destinationX>
+          <destinationY>1</destinationY>
+          <destinationRegion>4</destinationRegion>
+          <teleporterId>123</teleporterId>
+          <descends>true</descends>
         </component>
       </tile>
       <tile x="24" y="1">
@@ -19061,12 +19084,18 @@
         </component>
       </tile>
       <tile x="0" y="9">
-        <component type="FloorComponent">
-          <ground>7</ground>
+        <component type="StaticComponent">
+          <static>7</static>
         </component>
         <component type="StaticComponent">
           <color r="0" g="255" b="255" a="255" />
           <static>206</static>
+        </component>
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="1" y="9">
@@ -19393,20 +19422,35 @@
         </component>
       </tile>
       <tile x="0" y="10">
-        <component type="StaircaseComponent">
-          <destinationY>21</destinationY>
-          <destinationRegion>1</destinationRegion>
-          <teleporterId>128</teleporterId>
-          <descends>false</descends>
-        </component>
-      </tile>
-      <tile x="1" y="10">
-        <component type="FloorComponent">
-          <ground>7</ground>
+        <component type="StaticComponent">
+          <static>7</static>
         </component>
         <component type="StaticComponent">
           <color r="0" g="255" b="255" a="255" />
           <static>206</static>
+        </component>
+        <component type="WallComponent">
+          <wall>334</wall>
+          <destroyed>39</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>153</destroyed>
+          <ruins>46</ruins>
+        </component>
+      </tile>
+      <tile x="1" y="10">
+        <component type="FloorComponent">
+          <ground>6</ground>
+        </component>
+        <component type="StaircaseComponent">
+          <destinationX>1</destinationX>
+          <destinationY>21</destinationY>
+          <destinationRegion>1</destinationRegion>
+          <teleporterId>128</teleporterId>
+          <descends>false</descends>
         </component>
       </tile>
       <tile x="2" y="10">
@@ -22692,6 +22736,7 @@
       <id>4</id>
       <name>Bloodlands -200</name>
       <height>-200</height>
+      <healthMultiplier>2</healthMultiplier>
       <tile x="-1" y="-1">
         <component type="WallComponent">
           <wall>355</wall>
@@ -23119,20 +23164,26 @@
         </component>
       </tile>
       <tile x="22" y="0">
-        <component type="FloorComponent">
-          <ground>7</ground>
+        <component type="StaticComponent">
+          <static>7</static>
         </component>
         <component type="StaticComponent">
           <color r="0" g="255" b="255" a="255" />
           <static>206</static>
         </component>
+        <component type="WallComponent">
+          <wall>334</wall>
+          <destroyed>154</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
       </tile>
       <tile x="23" y="0">
-        <component type="StaircaseComponent">
-          <destinationX>23</destinationX>
-          <destinationRegion>3</destinationRegion>
-          <teleporterId>127</teleporterId>
-          <descends>false</descends>
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="0">
@@ -23146,6 +23197,12 @@
         <component type="WallComponent">
           <wall>334</wall>
           <destroyed>39</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>38</destroyed>
           <ruins>44</ruins>
           <indestructible>true</indestructible>
         </component>
@@ -23390,12 +23447,12 @@
         </component>
       </tile>
       <tile x="23" y="1">
-        <component type="FloorComponent">
-          <ground>7</ground>
-        </component>
-        <component type="StaticComponent">
-          <color r="0" g="255" b="255" a="255" />
-          <static>206</static>
+        <component type="StaircaseComponent">
+          <destinationX>23</destinationX>
+          <destinationY>1</destinationY>
+          <destinationRegion>3</destinationRegion>
+          <teleporterId>127</teleporterId>
+          <descends>false</descends>
         </component>
       </tile>
       <tile x="24" y="1">
@@ -25603,6 +25660,8 @@
       </tile>
       <tile x="12" y="9">
         <component type="StaircaseComponent">
+          <destinationX>1</destinationX>
+          <destinationY>1</destinationY>
           <destinationRegion>5</destinationRegion>
           <teleporterId>181</teleporterId>
           <descends>true</descends>
@@ -43932,7 +43991,7 @@
           <ground>12</ground>
         </component>
         <component type="StaircaseComponent">
-          <destinationX>1</destinationX>
+          <destinationX>3</destinationX>
           <destinationY>1</destinationY>
           <destinationRegion>10</destinationRegion>
           <teleporterId>181</teleporterId>
@@ -66553,6 +66612,8 @@
           <movementCost>3</movementCost>
         </component>
         <component type="RopeComponent">
+          <destinationX>1</destinationX>
+          <destinationY>1</destinationY>
           <destinationRegion>11</destinationRegion>
           <teleporterId>514</teleporterId>
         </component>
@@ -76598,19 +76659,10 @@
           <ruins>0</ruins>
           <indestructible>true</indestructible>
         </component>
-        <component type="RopeComponent">
-          <destinationX>-30</destinationX>
-          <destinationY>-70</destinationY>
-          <destinationRegion>9</destinationRegion>
-          <teleporterId>238</teleporterId>
-        </component>
       </tile>
       <tile x="1" y="0">
         <component type="FloorComponent">
           <ground>12</ground>
-        </component>
-        <component type="RuinsComponent">
-          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="2" y="0">
@@ -76911,8 +76963,20 @@
         </component>
       </tile>
       <tile x="2" y="1">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="StaticComponent">
+          <static>1</static>
+        </component>
+        <component type="WallComponent">
+          <wall>31</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="RopeComponent">
+          <destinationX>-30</destinationX>
+          <destinationY>-70</destinationY>
+          <destinationRegion>9</destinationRegion>
+          <teleporterId>238</teleporterId>
         </component>
       </tile>
       <tile x="3" y="1">
@@ -80546,12 +80610,6 @@
           <ruins>0</ruins>
           <indestructible>true</indestructible>
         </component>
-        <component type="RopeComponent">
-          <destinationX>-39</destinationX>
-          <destinationY>5</destinationY>
-          <destinationRegion>9</destinationRegion>
-          <teleporterId>237</teleporterId>
-        </component>
       </tile>
       <tile x="1" y="-1">
         <component type="StaticComponent">
@@ -80732,8 +80790,11 @@
           <ruins>0</ruins>
           <indestructible>true</indestructible>
         </component>
-        <component type="StaticComponent">
-          <static>220</static>
+        <component type="RopeComponent">
+          <destinationX>-39</destinationX>
+          <destinationY>5</destinationY>
+          <destinationRegion>9</destinationRegion>
+          <teleporterId>237</teleporterId>
         </component>
       </tile>
       <tile x="2" y="0">
@@ -86720,7 +86781,30 @@
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-       source.Say(Utility.RandomBool() ? $"Plop those coins on the counter {player.Name}... I'll keep them safe." : $"One million.. two.. oh hi {player.Name}, step right up.");
+
+      if (spokeRecently(source))
+        return;
+
+    switch (Utility.Random(1, 5))
+    {
+        case 1:
+        {
+                
+            source.Emote($"Proudly counts his coins");
+            
+            Timer.DelayCall(TimeSpan.FromSeconds(4.0), () =>
+            {
+                source.Say($"Oh, hello there {player.Name} please place your coins on the counter");
+            });
+                     
+           
+            break;
+        }
+        case 2: source.Emote($"Counts the gold in the back while glaring at {player.Name}"); break;
+        case 3: source.Say($"Welcome to the bank!"); break;
+        case 4: source.Say($"Are you new in town {player.Name}? that or poor, I would remember you if you had any gold"); break;
+        case 5: source.Say($"Oh, hi {player.Name}, nice to see you."); break;
+   }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -87192,27 +87276,29 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	var boss1 = new ElderTroll()
+	var boss1 = new Vampire()
     {
         Name = "Flordex",
         MaxHealth = 7250, Health = 7250,
-        BaseDodge = 21,
-        HideDetection = 28,
+        BaseDodge = 22,
+        HideDetection = 30,
         Alignment = Alignment.Evil,
-        
+        Mana = 25, MaxMana = 25,
         Experience = 94000,
        
         CanJumpkick = true,
         CanCharge = true,
         CanSwim = false,
+        Body = 26,
+        
         
         VisibilityDistance = 0,
         
         BasePenetration = ShieldPenetration.Heavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Web | CreatureImmunity.Magic,
-        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+                   CreatureImmunity.Projectile | CreatureImmunity.Web | CreatureImmunity.Magic | CreatureImmunity.Poison, 
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell |CreatureWeakness.DeathSpell,
        
     
     };
@@ -87226,16 +87312,25 @@
     boss1.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(17,     45, 75,      "Flordex rends your flesh with his claws"),                     70 
+            new CreatureAttack(18,     45, 75,      "Intangles your soul"),                     60 
         }, 
         {
-            new CreatureAttack(18,     65, 85,     "Flordex appears behind you, sinking his teeth into your neck",
-                                                    new AttackStunComponent(50)),                                       30 
+            new CreatureAttack(19,     66, 87,     "Rends your spirit",
+                                                    new AttackStunComponent(33)),                                       30 
+        },
+        {
+            new CreatureAttack(23,     70, 99,     "Consumes your essence",
+                                                    new AttackAgeComponent(45)),                                       10 
         },
     };
-    
+     boss1.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<DeathSpell>(
+            skillLevel: 14, cost: 14,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
     //todo determine if I can force it to dual wield? Not sure of context
-    boss1.Wield(new BayonetHammer());
+    boss1.Wield(new GiltDagger());
   
         
     boss1.AddGold(14000);
@@ -87246,8 +87341,7 @@
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
         new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
          new LootPackEntry(true, SemiRare, 40),
-        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),
-        
+        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),        
         new LootPackEntry(true, UltraRare, 25)
 
     ));
@@ -87265,7 +87359,7 @@
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    source.Say($"I haven't had a visitor in ages.. this shall be fun!");
+    source.Say($"I haven't had a visitor in ages.. this shall be fun {player.Name}");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -87382,7 +87476,7 @@
     var peacekeeper = new Peacekeeper()
     {
         Name = "The Reeve",
-        Body = 68,
+        Body = 14,
        
         BaseDodge = 25,
         MaxHealth = 830, Health = 830,
@@ -87394,7 +87488,7 @@
     peacekeeper.AddStatus(new NightVisionStatus(peacekeeper));
     peacekeeper.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(40),
+        new CreatureBasicAttack(55),
     };
     
     peacekeeper.Spells = new CreatureSpellCollection()
@@ -87419,7 +87513,21 @@
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    source.Say(Utility.RandomBool() ? $"Welcome to town {player.Name}." : $"I heard a rumor there is a vampire north of town");
+   if (spokeRecently(source))
+        return;
+
+    switch (Utility.Random(1, 5))
+    {
+        case 1:
+        {
+            source.Say($"What are you looking at {player.Name}");
+            break;
+        }
+        case 2: source.Say($"Welcome to town {player.Name}"); break;
+        case 3: source.Say($"Keep an eye out, I've seen griffins wander into town"); break;
+        case 4: source.Say($"Hey {player.Name} I've heard romor of a ghastly beast up north"); break;
+        case 5: source.Emote($"mumbles about always being on shift and never getting  break"); break;
+   }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -87451,9 +87559,9 @@
     
     raven.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(17,     22, 28,   "The raven buffets you with his wings."),  50 }, 
-        { new CreatureAttack(18,     23, 31,  "The raven sends a flurry of pecks towards you."),  30 }, 
-        { new CreatureAttack(19,     24, 45,  "The raven pecks at your eyes attempting to blind you."),             20 }, 
+        { new CreatureAttack(18,     1, 2,   "The raven buffets you with his wings."),  50 }, 
+        { new CreatureAttack(19,     2, 3,  "The raven sends a flurry of pecks towards you."),  30 }, 
+        { new CreatureAttack(22,     3, 3,  "The raven pecks at your eyes attempting to blind you."),             20 }, 
     };
         
     raven.Blocks = new CreatureBlockCollection
@@ -87476,7 +87584,52 @@
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    source.Say(Utility.RandomBool() ? $"I've got my eye on you {player.Name}.." : $"Intruder.. Attack! Oh, hi {player.Name}");
+    if (spokeRecently(source))
+        return;
+
+    switch (Utility.Random(1, 5))
+    {
+        case 1:
+        {
+        
+            source.Say($"Attack! It's {player.Name}!");
+            Timer.DelayCall(TimeSpan.FromSeconds(4.0), () =>
+            {
+                source.EmitSound(160, 3, 9);
+                source.Name = "Angry Morbin ";
+                source.Emote($"attacks {player.Name}");
+                source.Jumpkick(player);
+             });
+             
+            Timer.DelayCall(TimeSpan.FromSeconds(3.0), () =>
+            {
+                source.Emote("is confused");
+            });
+            
+            Timer.DelayCall(TimeSpan.FromSeconds(15.0), () =>
+            {
+                source.Name = "Morbin";
+                source.EmitSound(141, 3, 9);
+                source.Emote("squawks");
+                source.Say("oh, um, sorry");
+               
+
+
+
+
+            });
+
+
+            break;
+        }
+        case 2: source.Say($"I've got my eye on you {player.Name}"); break;
+        case 3: source.Emote($"Squawks at {player.Name}"); break;
+        case 4: source.Emote($"Flutters around nervously"); break;
+        
+        case 5: source.Emote($"screeches at {player.Name}");
+                source.EmitSound(160, 3, 9);
+                break;
+   }
     
 ]]></block>
         <block><![CDATA[]]></block>
@@ -87659,12 +87812,12 @@
     wraith.Spells =  new CreatureSpellCollection()
     {
         new CreatureSpell<DeathSpell>(
-            skillLevel: 11,
+            skillLevel: 8,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
     wraith.Wield(new WoodenStaff());
-    
+        wraith.AddGold(700);
     return wraith;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -87709,7 +87862,7 @@
     lich.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<DeathSpell>(
-            skillLevel: 10, cost: 6, 
+            skillLevel: 8, cost: 8, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
@@ -87805,7 +87958,7 @@
         }, 
         { 
             new CreatureAttack(17,    40, 60,     "A mummified claw scratches you.",
-                                                    new AttackAgeComponent(1000, 50)),             30, TimeSpan.Zero
+                                                    new AttackAgeComponent(450, 50)),             30, TimeSpan.Zero
         },
         //todo who added TimeSpan to these?
     };
@@ -87853,6 +88006,8 @@
         BaseDodge = 21,
         HideDetection = 25,
         Experience = 39000,
+        Body = 163,
+        
        
         CanCharge = true,
         CanSwim = false,
@@ -87867,9 +88022,9 @@
     swordmaster.Attacks = new CreatureAttackCollection()
     {
         new CreatureAttack(18,    42, 63,     "The swordmaster pierces you with his rapier.",
-                                                    new AttackAgeComponent(5000, 50))
+                                                    new AttackAgeComponent(500, 50))
     };
-    
+    swordmaster.AddStatus(new NightVisionStatus(swordmaster));
     swordmaster.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
    
     swordmaster.Wield(new BlackSteelRapier());
@@ -87909,7 +88064,7 @@
 	var banshee = new Banshee()
     {
         MaxHealth = 165, Health = 150,
-        BaseDodge = 13,
+        BaseDodge = 18,
     
         Experience = 6800,
         BasePenetration = ShieldPenetration.Light,
@@ -87920,13 +88075,13 @@
         
     banshee.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(11)
+        new CreatureBasicAttack(25)
     };
     
     banshee.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CurseSpell>(
-            skillLevel: 6, cost: 10, 
+            skillLevel: 8, cost: 10, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
@@ -88024,7 +88179,7 @@
         }, 
         { 
             new CreatureAttack(17,    45, 65,     "A mummified claw scratches you.",
-                                                    new AttackAgeComponent(1000, 50)),             30, TimeSpan.Zero
+                                                    new AttackAgeComponent(100, 50)),             30, TimeSpan.Zero
         },
         //todo who added TimeSpan to these?
     };
@@ -88308,7 +88463,7 @@
     {
         Name = "Slimey Lurker",
         Body = 161,
-        MaxHealth = 235, Health = 235,
+        MaxHealth = 335, Health = 335,
         BaseDodge = 14,
         BasePenetration = ShieldPenetration.Medium,
         CanSwim = true,
@@ -88379,13 +88534,13 @@
     wyvern.Attacks = new CreatureAttackCollection()
     {
         {
-            new CreatureAttack(9,     8, 12,   "The wyvern rakes you with its claws."),        50 
+            new CreatureAttack(14,     15, 22,   "The wyvern rakes you with its claws."),        50 
         },
         {
-            new CreatureAttack(10,     12, 15,   "The wyvern bites you."),                     30 
+            new CreatureAttack(15,     23, 29,   "The wyvern bites you."),                     30 
         },
         {
-            new CreatureAttack(11,     14, 17,  "The wyvern rakes whips you with its tail."),  20 
+            new CreatureAttack(16,     29, 35,  "The wyvern rakes whips you with its tail."),  20 
         }
     };
     
@@ -88454,7 +88609,7 @@
             new CreatureAttack(16, 50, 65, "The wyrm hits you with its tail."), 40 
         }, 
         {
-            new CreatureAttack(27,      60, 80,     "The wyrm crushes you with its body",
+            new CreatureAttack(25,      60, 80,     "The wyrm crushes you with its body",
                                                         new AttackProneComponent(35), 
                                                         new AttackStunComponent(15)),               20
         },
@@ -88462,12 +88617,21 @@
     
     wyrm.Blocks = new CreatureBlockCollection
     {
-        { new CreatureBlock(6, "the armor") }, 
-        { new CreatureBlock(4, "a tail") }, 
+        { new CreatureBlock(7, "the armor") }, 
+        { new CreatureBlock(8, "a tail") }, 
     };
 
     wyrm.AddGold(1850);
-    //todo add lootpack
+    wyrm.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new BearSkull(),        100),
+        new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
+         new LootPackEntry(true, SemiRare, 40),
+        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        10),        
+        new LootPackEntry(true, UltraRare, 10)
+	));
 
     return wyrm;
 ]]></block>
@@ -88494,7 +88658,7 @@
     {
         Name = "Servant of Apep",
         MaxHealth = 320, Health = 320,
-        BaseDodge = 15,
+        BaseDodge = 21,
             
         Experience = 12000,
         
@@ -88509,7 +88673,7 @@
     
     trollguard.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(15, 35, 45)
+        new CreatureBasicAttack(17, 45, 55)
     };
     
     trollguard.Wield(new Halberd());
@@ -88544,10 +88708,10 @@
         Name = "Lardil the disgraced", Alignment = Alignment.Evil,
         Body = 48,
     
-        MaxHealth = 500, Health = 500,
-        BaseDodge = 16,
+        MaxHealth = 1500, Health = 1500,
+        BaseDodge = 22,
           
-        Experience = 5000,
+        Experience = 15000,
         
         BasePenetration = ShieldPenetration.Heavy,
     
@@ -88584,7 +88748,7 @@
         },
         {
             new CreatureSpell<DeathSpell>(
-                skillLevel: 14, cost: 6, 
+                skillLevel: 17, cost: 6, 
                 mantra: SpellHelper.GenerateMantra(), instantCast: false),      2
         }
     };
@@ -88622,10 +88786,10 @@
 	var trollguard = new TrollGuard()
     {
         Name = "Servant of Apep",
-        MaxHealth = 220, Health = 220,
-        BaseDodge = 15,
+        MaxHealth = 320, Health = 320,
+        BaseDodge = 21,
             
-        Experience = 12000,
+        Experience = 17000,
         
         MagicProtection = 33,
         CanCharge = true,
@@ -88638,10 +88802,10 @@
     
     trollguard.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(15, 35, 45)
+        new CreatureBasicAttack(17, 35, 45)
     };
     
-    trollguard.Wield(new HeavyCrossbow());
+    trollguard.Wield(new ReturningHammer());
     trollguard.Equip(new PlatemailArmor());
     
     trollguard.AddGold(1000);
@@ -88830,17 +88994,17 @@
         Name = "Dweller",
         Body = 14, IsFemale = female,
             
-        MaxHealth = 255, Health = 255,
-        BaseDodge = 17,
+        MaxHealth = 355, Health = 355,
+        BaseDodge = 19,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 7000,
+        Experience = 17000,
         CanSwim = true,
             
     };
         
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(14, 25, 33)
+        new CreatureBasicAttack(17, 25, 55)
     };
     
     fighter.Wield(new Longsword());
@@ -88915,7 +89079,16 @@
     fighter.Equip(new PlatemailArmor());    
     
     fighter.AddGold(4450);
-    //todo add lootpack
+  fighter.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new BearSkull(),        100),
+        new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
+         new LootPackEntry(true, SemiRare, 40),
+        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),        
+        new LootPackEntry(true, UltraRare, 25)
+	));
     return fighter;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -88980,7 +89153,16 @@
     fighter.Equip(new PlatemailArmor());    
     
     fighter.AddGold(4450);
-    //todo add lootpack
+    fighter.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new BearSkull(),        100),
+        new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
+         new LootPackEntry(true, SemiRare, 40),
+        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),        
+        new LootPackEntry(true, UltraRare, 25)
+	));
     return fighter;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -89042,6 +89224,7 @@
         new LootPackEntry(true, drop3gems,       15,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33),
         new LootPackEntry(true, SemiRare, 3)
+        
     ));
     return boar;
 ]]></block>
@@ -89372,12 +89555,12 @@
     var unicorn = new Drake()
     {
         Name = "Corrupt Unicorn",
-        MaxHealth = 6500, Health = 6500,
+        MaxHealth = 7900, Health = 7900,
         BaseDodge = 25,
         Body = 45,
         MaxMana = 25,
     
-        Alignment = Alignment.Chaotic,
+        Alignment = Alignment.Evil,
         HideDetection = 30,
         Experience = 72000,
         
@@ -89409,7 +89592,7 @@
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(27,      70, 89,     "The Unicorn pierces you with its horn.",
+            new CreatureAttack(21,      70, 89,     "The Unicorn pierces you with its horn.",
                                                         new AttackProneComponent(35), 
                                                         new AttackStunComponent(15)),               20
         },
@@ -89436,7 +89619,7 @@
         new LootPackEntry(true, SemiRare, 3),
          new LootPackEntry(true, SemiRare, 40),
         new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),
-        
+        new LootPackEntry(true, (from, container) => new BrightFeather(), 40),
         new LootPackEntry(true, UltraRare, 25)
     ));
     
@@ -89543,7 +89726,7 @@
         BasePenetration = ShieldPenetration.Medium,
         CanSwim = true,
         CanWalk = false,
-        Body = 161,
+        Body = 162,
         Immunity = CreatureImmunity.Magic,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
         Experience = 8200,
@@ -89574,6 +89757,362 @@
     ));
     
     return lurker;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="forestUnicornFriends">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var griffin = new Griffin()
+    {
+        MaxHealth = 370, Health = 370,
+        BaseDodge = 23,
+        Name = "Ally of Corruption",
+        CanFly = true,
+        Alignment = Alignment.Evil,
+        
+
+        Experience = 17350,
+        
+        MagicProtection = 100,
+        Immunity = CreatureImmunity.Magic,
+        
+        HideDetection = 18,
+    };
+    
+    griffin.AddStatus(new NightVisionStatus(griffin)); 
+    
+    griffin.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(14, 18, 26, "The griffin tears your flesh with its beak."),   40 
+        }, 
+        {
+            new CreatureAttack(15, 20, 35, "The griffin buries its talons into you.",
+                                                    new AttackStunComponent(20.0)),         30
+        }, 
+        {
+            new CreatureAttack(16, 30, 45, "The griffin pummels you with its wings."),      30
+        }, 
+    };
+        
+    griffin.Blocks = new CreatureBlockCollection
+    {
+        {
+            new CreatureBlock(6, "the armor")
+        }, 
+        {
+            new CreatureBlock(4, "a talon")
+        }, 
+        {
+            new CreatureBlock(3, "a beak") 
+        }, 
+    };
+
+    griffin.AddGold(4050);
+
+      griffin.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 9),
+        new LootPackEntry(true, UltraRare, 2)
+    ));
+   
+
+    return griffin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="newGhoul">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+var ghoul = new Ghoul()
+    {
+        MaxHealth = 290, Health = 290,
+        BaseDodge = 19,
+    
+        Experience = 7500,
+    
+        Movement = 2,
+        BasePenetration = ShieldPenetration.Light,
+        VisibilityDistance = 1,
+    };
+    
+    ghoul.Attacks = new CreatureAttackCollection
+    {
+        { 
+            new CreatureAttack(15,     35, 42,      "The ghoul scratches you with its claws"),  70 
+        }, 
+        { 
+            new CreatureAttack(19,     42, 55,     "You've been bitten by the ghoul",
+                                                    new AttackPoisonComponent(7)),            30
+        },
+    };
+        ghoul.AddStatus(new NightVisionStatus(ghoul));
+    ghoul.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(9, "decaying flesh"), 
+        new CreatureBlock(10, "a claw"), 
+    };
+    
+    ghoul.AddGold(1950);
+    ghoul.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       25,     gemsPriceMutator) 
+    ));
+    
+    return ghoul;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="surfaceGorbinFavorite">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	
+    var goblin = new Goblin()
+    {
+        Name = "Favorite of Gorbin",
+        MaxHealth = 225, Health = 225,
+        BaseDodge = 22,
+        Mana = 15, MaxMana = 15,
+                
+        Experience = 5100,
+        BasePenetration = ShieldPenetration.Light,
+    };
+    
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(15, 15, 25)
+    };
+     goblin.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<DeathSpell>(
+            skillLevel: 8, cost: 8, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
+    goblin.Wield(new SteelDagger());
+    goblin.Equip(new LeatherArmor());
+            
+    goblin.AddGold(950);
+   
+    
+    return goblin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="bloodCavesAbomination">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var female = Utility.RandomBool();
+                    
+    var abomination = new Humanoid()
+    {
+        Name = "Abomination",
+        Body = 246, IsFemale = female,
+            
+        MaxHealth = 455, Health = 455,
+        BaseDodge = 21,
+        BasePenetration = ShieldPenetration.Light,
+        Experience = 27000,
+        CanSwim = true,
+            
+    };
+        
+    abomination.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(19, 35, 55)
+    };
+    
+    abomination.Wield(new Longsword());
+    abomination.Equip(new PlatemailArmor());    
+    
+    abomination.AddGold(450);
+    
+    //todo add lootpack
+    
+    return abomination;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="bloodCaveBanshee">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var banshee = new Banshee()
+    {
+        MaxHealth = 265, Health = 250,
+        BaseDodge = 18,
+    
+        Experience = 6800,
+        BasePenetration = ShieldPenetration.Light,
+        MaxMana = 21, Mana = 21,
+        DeathResistance = 100,
+        MagicProtection = 33,
+    };
+        
+    banshee.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(45)
+    };
+    
+    banshee.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<CurseSpell>(
+            skillLevel:11, cost: 10, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
+        
+    banshee.Wield(new Spear());
+        
+    banshee.AddGold(480);
+    
+    //todo add lootpack
+    
+    return banshee;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="bloodCaveBat">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var bat = new Bat()
+    {
+        MaxHealth = 370, Health = 370,
+        BaseDodge = 23,
+        Name = "Bat",
+        CanFly = true,
+        Alignment = Alignment.Chaotic,
+        Body = 222,
+        
+
+        Experience = 17350,
+        
+        MagicProtection = 20,
+        
+        HideDetection = 18,
+    };
+    
+    bat.AddStatus(new NightVisionStatus(bat)); 
+    
+    bat.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(15, 20, 30, "The bat tears your flesh with its claws."),   40 
+        }, 
+        {
+            new CreatureAttack(16, 30, 40, "The bat buries sinks its fangs into you.",
+                                                    new AttackStunComponent(20.0)),         30
+        }, 
+        {
+            new CreatureAttack(19, 40, 55, "The bat pummels you with its wings."),      30
+        }, 
+    };
+        
+    bat.Blocks = new CreatureBlockCollection
+    {
+        {
+            new CreatureBlock(6, "the armor")
+        }, 
+        {
+            new CreatureBlock(4, "a wing")
+        }, 
+        {
+            new CreatureBlock(3, "a leg") 
+        }, 
+    };
+
+    bat.AddGold(4050);
+
+      bat.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 3)
+    ));
+   
+
+    return bat;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -90215,6 +90754,27 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="300Queen" size="1" minimum="1" maximum="1" />
       <location x="12" y="35" region="5" />
     </spawn>
+    <spawn type="LocationSpawner" name="forestunicorn">
+      <minimumDelay>8100</minimumDelay>
+      <maximumDelay>11700</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="forestBoss1" size="1" minimum="1" maximum="1" />
+      <location x="8" y="-13" region="9" />
+    </spawn>
     <spawn type="RegionSpawner" name="surfaceFishNorth">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
@@ -90270,7 +90830,7 @@ if (spawn is Shopkeeper shopkeeper)
     <spawn type="RegionSpawner" name="surfaceHut">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>1</maximum>
+      <maximum>2</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -90286,6 +90846,7 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="surfaceHutKeeper" size="1" minimum="1" maximum="1" />
+      <entry entity="surfaceGorbinFavorite" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="2" top="11" right="3" bottom="12" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -90364,7 +90925,7 @@ if (spawn is Shopkeeper shopkeeper)
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="bloodlands100North">
+    <spawn type="RegionSpawner" name="100North">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>17</maximum>
@@ -90383,14 +90944,14 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="100Hobs" size="1" minimum="1" maximum="2" />
-      <entry entity="100Archer" size="2" minimum="5" maximum="8" />
-      <entry entity="100Kobald" size="3" minimum="4" maximum="7" />
+      <entry entity="100Archer" size="2" minimum="5" maximum="5" />
+      <entry entity="100Kobald" size="3" minimum="4" maximum="9" />
       <bounds region="3">
         <inclusion left="0" top="0" right="17" bottom="8" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="bloodlands100South">
+    <spawn type="RegionSpawner" name="100South">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>17</maximum>
@@ -90409,17 +90970,17 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="100Hobs" size="1" minimum="1" maximum="2" />
-      <entry entity="100Archer" size="2" minimum="5" maximum="8" />
-      <entry entity="100Kobald" size="3" minimum="4" maximum="7" />
+      <entry entity="100Archer" size="2" minimum="5" maximum="5" />
+      <entry entity="100Archer" size="3" minimum="4" maximum="9" />
       <bounds region="3">
         <inclusion left="0" top="8" right="23" bottom="18" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="bloodlandsSouthernDarkEntrance">
+    <spawn type="RegionSpawner" name="SouthernDarkEntrance">
       <minimumDelay>480</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>2</maximum>
+      <maximum>3</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -90435,12 +90996,13 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="SouthernDarknessWraith" size="1" minimum="2" maximum="2" />
+      <entry entity="newGhoul" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="8" top="23" right="14" bottom="24" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="bloodlandsSurfaceKeep">
+    <spawn type="RegionSpawner" name="SurfaceKeep">
       <minimumDelay>420</minimumDelay>
       <maximumDelay>720</maximumDelay>
       <maximum>5</maximum>
@@ -90465,10 +91027,10 @@ if (spawn is Shopkeeper shopkeeper)
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="bloodlandsKeepOfDarkness">
+    <spawn type="RegionSpawner" name="KeepOfDarkness">
       <minimumDelay>720</minimumDelay>
       <maximumDelay>1080</maximumDelay>
-      <maximum>27</maximum>
+      <maximum>28</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -90487,13 +91049,14 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="towerMummy" size="1" minimum="2" maximum="2" />
       <entry entity="towerSwordMaster" size="1" minimum="1" maximum="1" />
       <entry entity="surfaceBanshee" size="2" minimum="4" maximum="7" />
+      <entry entity="newGhoul" size="1" minimum="2" maximum="2" />
       <bounds region="1">
         <inclusion left="0" top="45" right="15" bottom="54" />
         <exclusion left="6" top="54" right="9" bottom="54" />
         <exclusion left="7" top="45" right="8" bottom="45" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="bloodlandsSurfaceNook">
+    <spawn type="RegionSpawner" name="SurfaceNook">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>720</maximumDelay>
       <maximum>5</maximum>
@@ -90541,7 +91104,7 @@ if (spawn is Shopkeeper shopkeeper)
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="bloodlandsKeepOfDarknessBoss">
+    <spawn type="RegionSpawner" name="KeepOfDarknessBoss">
       <minimumDelay>5700</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <maximum>4</maximum>
@@ -90567,7 +91130,7 @@ if (spawn is Shopkeeper shopkeeper)
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="bloodlands200north">
+    <spawn type="RegionSpawner" name="200north">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>21</maximum>
@@ -90594,7 +91157,7 @@ if (spawn is Shopkeeper shopkeeper)
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="bloodlands200South">
+    <spawn type="RegionSpawner" name="200South">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>21</maximum>
@@ -90621,7 +91184,7 @@ if (spawn is Shopkeeper shopkeeper)
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="bloodlands200boss">
+    <spawn type="RegionSpawner" name="200boss">
       <minimumDelay>120</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <maximum>5</maximum>
@@ -90699,10 +91262,10 @@ if (spawn is Shopkeeper shopkeeper)
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="bloodlandsSurfceKeep1">
+    <spawn type="RegionSpawner" name="SurfceKeep1">
       <minimumDelay>600</minimumDelay>
-      <maximumDelay>900</maximumDelay>
-      <maximum>6</maximum>
+      <maximumDelay>1800</maximumDelay>
+      <maximum>8</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -90717,8 +91280,9 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="surfaceBanshee" size="1" minimum="2" maximum="2" />
+      <entry entity="surfaceBanshee" size="1" minimum="2" maximum="5" />
       <entry entity="towerSwordMaster" size="1" minimum="1" maximum="1" />
+      <entry entity="towerSkeleton" size="2" minimum="2" maximum="2" />
       <bounds region="7">
         <inclusion left="13" top="0" right="19" bottom="2" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -90798,16 +91362,17 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="300Boss" size="1" minimum="1" maximum="1" />
       <entry entity="300TrollGuards" size="2" minimum="4" maximum="6" />
       <entry entity="300TrollGuardRanged" size="1" minimum="4" maximum="4" />
-      <entry entity="surfaceShark" size="1" minimum="1" maximum="1" />
+      <entry entity="surfaceShark" size="1" minimum="2" maximum="2" />
       <bounds region="5">
         <inclusion left="0" top="4" right="23" bottom="20" />
         <exclusion left="19" top="8" right="21" bottom="12" />
         <exclusion left="2" top="18" right="8" bottom="20" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Spawner 6">
+    <spawn type="RegionSpawner" name="unicorn lair">
       <minimumDelay>0</minimumDelay>
       <maximumDelay>0</maximumDelay>
+      <maximum>4</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -90822,8 +91387,9 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <bounds region="0">
-        <inclusion left="0" top="0" right="0" bottom="0" />
+      <entry entity="forestUnicornFriends" size="1" minimum="1" maximum="2" />
+      <bounds region="9">
+        <inclusion left="-5" top="-15" right="7" bottom="-11" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -90956,7 +91522,7 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="towerSwordMaster" size="1" minimum="1" maximum="1" />
-      <entry entity="towerMummy" size="1" minimum="1" maximum="2" />
+      <entry entity="towerMummy" size="1" minimum="2" maximum="2" />
       <entry entity="surfaceBanshee" size="2" minimum="2" maximum="3" />
       <entry entity="towerSkeleton" size="1" minimum="4" maximum="4" />
       <bounds region="9">
@@ -91020,6 +91586,32 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="forestCentaur" size="1" minimum="1" maximum="1" />
       <bounds region="9">
         <inclusion left="-23" top="-73" right="9" bottom="-57" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="bloodCaves">
+      <minimumDelay>480</minimumDelay>
+      <maximumDelay>720</maximumDelay>
+      <maximum>15</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="bloodCavesAbomination" size="2" minimum="5" maximum="7" />
+      <entry entity="bloodCaveBanshee" size="2" minimum="4" maximum="5" />
+      <entry entity="bloodCaveBat" size="2" minimum="3" maximum="3" />
+      <bounds region="11">
+        <inclusion left="2" top="1" right="31" bottom="21" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
