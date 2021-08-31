@@ -182,6 +182,11 @@
             Movement = 1;
     
             Alignment = Alignment.Lawful;
+			
+			Attacks = new CreatureAttackCollection()
+			{
+				new CreatureBasicAttack(10),
+			};
     
             Brain = new RescueAI(this)
             {
