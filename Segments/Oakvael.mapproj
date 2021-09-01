@@ -79,7 +79,7 @@
         {
         }
 
-        public override void OnSpellFinished(Target target, MobileEntity combatant)
+        public override void OnSpellTarget(Target target, MobileEntity combatant)
         {
 			/* Do the original spell logic. */
 			base.OnSpellTarget(target, combatant);
@@ -491,7 +491,7 @@
         {
         }
 
-        public override void OnSpellFinished(Target target, MobileEntity combatant)
+        public override void OnSpellTarget(Target target, MobileEntity combatant)
         {
 			base.OnSpellTarget(target, combatant);
 			
