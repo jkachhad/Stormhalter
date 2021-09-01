@@ -105915,9 +105915,21 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (killer is PlayerEntity player)
+    {
+        var quest = Quests.GetQuest<KnightsPurposeTwoQuest>();
+    
+        if (quest != null && quest.InProgress(player))
+        {                        
+            if (quest.GetStage(player) != KnightsPurposeTwoStage.Yeti)
+                return;
+
+            quest.SetStage(player, KnightsPurposeTwoStage.YetiKilled);
+        }
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
