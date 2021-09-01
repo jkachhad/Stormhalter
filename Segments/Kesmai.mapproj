@@ -97138,9 +97138,9 @@
         return;
 
     if (player.Profession != Profession.Thaumaturge)
-        source.Say($"Praise the ghods! A servent has arrived to clean the temple.");
-    else
         source.Say($"Life, Death, & Taxes. I can teach you to master them, {player.Name}.");
+    else
+        source.Say($"Praise the ghods! A servent has arrived to cleanse the dungeons.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
