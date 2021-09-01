@@ -99968,6 +99968,7 @@
     var swordmaster = new Skeleton()
     {
         Name = "Swordmaster",
+        Body = 163,
         MaxHealth = 2500, Health = 2500,
         BaseDodge = 21,
         HideDetection = 25,
@@ -99986,7 +99987,7 @@
     swordmaster.Attacks = new CreatureAttackCollection()
     {
         new CreatureAttack(17,    40, 60,     "The swordmaster pierces you with his rapier.",
-                                                    new AttackAgeComponent(5000, 50))
+                                                    new AttackAgeComponent(500, 50))
     };
     
     swordmaster.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
@@ -99997,7 +99998,7 @@
     swordmaster.AddGold(5000);
     swordmaster.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new PearDiamond(15000u),    100, gemsPriceMutator), 
-        new LootPackEntry(true, UndeadTreasure,    0.15)
+        new LootPackEntry(true, UndeadTreasure,    10)
     ));
     
     return swordmaster;
