@@ -88063,7 +88063,7 @@
         <block><![CDATA[
 	var banshee = new Banshee()
     {
-        MaxHealth = 165, Health = 150,
+        MaxHealth = 165, Health = 165,
         BaseDodge = 18,
     
         Experience = 6800,
@@ -90925,10 +90925,10 @@ if (spawn is Shopkeeper shopkeeper)
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="100North">
+    <spawn type="RegionSpawner" name="100sorth">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>17</maximum>
+      <maximum>18</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -90951,10 +90951,10 @@ if (spawn is Shopkeeper shopkeeper)
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="100South">
+    <spawn type="RegionSpawner" name="100south">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>17</maximum>
+      <maximum>18</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -91099,7 +91099,7 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="surfaceBanshee" size="2" minimum="4" maximum="4" />
-      <bounds region="3">
+      <bounds region="2">
         <inclusion left="0" top="0" right="5" bottom="6" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
