@@ -96388,11 +96388,6 @@
         </component>
       </tile>
     </region>
-    <region>
-      <id>5</id>
-      <name>Region 5</name>
-      <height>0</height>
-    </region>
   </regions>
   <locations>
     <location name="Entrance" x="42" y="8" region="1" />
@@ -100914,6 +100909,51 @@ else
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="surfaceCroc">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var crocodile = new Crocodile()
+    {
+        BaseDodge = 12,
+        MaxHealth = 55, Health = 55,
+        
+        Experience = 500,
+    };
+    
+    crocodile.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(6,     2, 7,   "The crocodile snaps his massive jaws shut upon you."), 60 
+        },
+        { 
+            new CreatureAttack(6,     3, 9,  "The crocodile hits you with its tail."),               40 
+        },
+    };
+    
+    crocodile.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the tough skin"),
+        new CreatureBlock(4, "a tail"),
+    };
+        
+    return crocodile;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="Elder.Troll">
@@ -102185,6 +102225,7 @@ else
       <entry entity="surfaceOrc" size="3" minimum="1" maximum="1" />
       <entry entity="surfaceOrcSentry" size="1" minimum="1" maximum="1" />
       <entry entity="surfaceBoar" size="3" minimum="1" maximum="2" />
+      <entry entity="surfaceCroc" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="4" top="5" right="18" bottom="37" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -102244,6 +102285,7 @@ else
       <entry entity="surfaceBoar" size="3" minimum="1" maximum="4" />
       <entry entity="surfaceBear" size="1" minimum="1" maximum="2" />
       <entry entity="surfaceCentaur" size="1" minimum="1" maximum="3" />
+      <entry entity="surfaceCroc" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="58" top="4" right="141" bottom="39" />
         <exclusion left="65" top="34" right="69" bottom="38" />
@@ -102404,7 +102446,7 @@ else
     </spawn>
     <spawn type="RegionSpawner" name="Ydnac Secret">
       <minimumDelay>300</minimumDelay>
-      <maximumDelay>0</maximumDelay>
+      <maximumDelay>600</maximumDelay>
       <maximum>4</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -102430,8 +102472,8 @@ else
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Ydnac -1 Blood Room">
-      <minimumDelay>0</minimumDelay>
-      <maximumDelay>0</maximumDelay>
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>600</maximumDelay>
       <maximum>10</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -102457,8 +102499,8 @@ else
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Ydnac Secret Right Side">
-      <minimumDelay>0</minimumDelay>
-      <maximumDelay>0</maximumDelay>
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>600</maximumDelay>
       <maximum>2</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -102501,8 +102543,8 @@ else
       </script>
       <entry entity="dungeon2PirhanaBL" size="2" minimum="6" maximum="12" />
       <bounds region="12">
-        <inclusion left="17" top="25" right="24" bottom="26" />
-        <inclusion left="25" top="25" right="33" bottom="31" />
+        <inclusion left="20" top="25" right="25" bottom="26" />
+        <inclusion left="26" top="25" right="33" bottom="31" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>

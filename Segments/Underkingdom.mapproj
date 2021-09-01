@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.73.1.0">
+<segment name="Underkingdom" version="0.74.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -108,6 +108,161 @@
                 base.OnSpellTarget(target, combatant);
             }
         }
+    }
+    
+    public class KoboldKing : CreatureEntity
+    {
+        public KoboldKing()
+        {
+            Body = 119;
+            Alignment = Alignment.Lawful;
+			
+			CanLoot = false;
+        }
+    
+        public KoboldKing(Serial serial) : base(serial)
+        {
+        }
+    
+        public override void OnSpawn()
+        {
+            base.OnSpawn();
+            if (_brain != null)
+                return;
+            if (RightHand is ProjectileWeapon)
+                _brain = new RangedAI(this);
+            else
+                _brain = new CombatAI(this);
+        }
+    
+        public override int GetNearbySound() => 92;
+        public override int GetAttackSound() => 99;
+        public override int GetDeathSound() => 106;
+        public override Corpse GetCorpse() => default(Corpse);
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((short)1); /* version */
+        }
+    
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+            var version = reader.ReadInt16();
+            switch (version)
+            {
+                case 1:
+                    {
+                        break;
+                    }
+            }
+        }
+        public void Elated()
+        {
+            Say($"My daughter! You've rescued her from the troll king!");
+            EmitSound(92, 3, 9);
+        }
+    }
+    
+    
+    
+    public class KoboldPrincess : CreatureEntity
+    {
+        public override bool CanOrderFollow => true;
+    
+        public KoboldPrincess()
+        {
+            Name = "Princess";
+            Body = 117;
+    
+            Health = MaxHealth = 150;
+            BaseDodge = 10;
+    
+            Experience = 50;
+            Movement = 1;
+    
+            Alignment = Alignment.Lawful;
+			
+			Attacks = new CreatureAttackCollection()
+			{
+				new CreatureBasicAttack(10),
+			};
+    
+            Brain = new RescueAI(this)
+            {
+                Aggressive = true,
+            };
+			
+			CanLoot = false;
+        }
+    
+        protected override void OnFinishMovement(PathingEventArgs args)
+        {
+			var king = GetBeheldInVisibility(0).SelectMany(m => m.Members).OfType<KoboldKing>().FirstOrDefault();
+			
+            if (king != null)
+            {
+                new PermanentManaPotion().Move(Location, true, Segment);
+                Say($"Hi dad! What's for dinner?!");
+                king.Elated();
+				
+				/* We won't delete the entity on the same frame. Server will crash. This call is part of a an optimized loop. */
+                Timer.DelayCall(TimeSpan.FromSeconds(0.2), () => Delete());
+            }
+        }
+    
+        public override void HandleOrder(OrderEventArgs args)
+        {
+            base.HandleOrder(args);
+    
+            if (args.Handled)
+                return;
+    
+            var source = args.Source;
+            var order = args.Order;
+    
+            if (IsSubordinate && source != Director)
+                return;
+    
+            if (order.Matches("follow", true))
+            {
+                Director = source;
+    
+                OnOrderFollow(source);
+                return;
+            }
+        }
+    
+        public KoboldPrincess(Serial serial) : base(serial)
+        {
+        }
+    
+        public override int GetNearbySound() => 256;
+        public override int GetAttackSound() => 257;
+        public override int GetDeathSound() => 258;
+    
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+    
+            writer.Write((short)1); /* version */
+        }
+    
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+    
+            var version = reader.ReadInt16();
+    
+            switch (version)
+            {
+                case 1:
+                    {
+                        break;
+                    }
+            }
+        }
+    
     }
 ]]></block>
     <block><![CDATA[]]></block>
@@ -54729,8 +54884,12 @@
         <component type="FloorComponent">
           <ground>3</ground>
         </component>
-        <component type="ObstructionComponent">
-          <obstruction>450</obstruction>
+        <component type="DoorComponent">
+          <openId>434</openId>
+          <closedId>421</closedId>
+          <secretId>384</secretId>
+          <destroyedId>436</destroyedId>
+          <isSecret>true</isSecret>
         </component>
       </tile>
       <tile x="6" y="8">
@@ -99957,6 +100116,7 @@
         new LootPackEntry(true, GenericBottles,    33), 
         new LootPackEntry(true, UKPotions,    0.25), 
         new LootPackEntry(true, UpperTreasure,    0.63)
+
     ));
     
     return orc;
@@ -100204,6 +100364,7 @@
         BaseDodge = 14,
         BasePenetration = ShieldPenetration.Light,
         Experience = 6700,
+        LightningResistance = 100,
     
     };
     
@@ -101785,16 +101946,15 @@
         IsInvisible = true,
         Experience = 1,
         Movement = 0,
-        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
+        FireProtection = 100,
+        IceProtection = 100,
+        LightningResistance = 100,
     };
     
     wraith.AddStatus(new NightVisionStatus(wraith));
-    
-	/*
-    wraith.Weakness(WhirlwindSpell);
-    */
-	
+
+    /* wraith.Weakness(WhirlwindSpell); */
+        
     wraith.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(7)
@@ -101823,6 +101983,67 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     source.Say($"Are.... you... worthy?.");
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="tkKoboldPrincess">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var princess = new KoboldPrincess()
+    {
+        Name = "Princess",
+        
+        BaseDodge = 10,
+        MaxHealth = 100, Health = 100,
+        
+        Experience = 50,
+    };
+    
+    return princess;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="townKoboldKing">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var king = new KoboldKing()
+    {
+        Name = "King",
+        
+        BaseDodge = 10,
+        MaxHealth = 100, Health = 100,
+        Movement = 0,
+        Experience = 50,
+    };
+    return king;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102450,7 +102671,7 @@
       <entry entity="townConfessorGhost" size="1" minimum="1" maximum="1" />
       <location x="17" y="24" region="5" />
     </spawn>
-    <spawn type="LocationSpawner" name="princessTEMP">
+    <spawn type="LocationSpawner" name="tkPrincess">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -102468,10 +102689,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="townConfessorGhost" size="1" minimum="1" maximum="1" />
+      <entry entity="tkKoboldPrincess" size="1" minimum="1" maximum="1" />
       <location x="4" y="8" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="koboldkingTEMP">
+    <spawn type="LocationSpawner" name="koboldKing">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -102489,7 +102710,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="townConfessorGhost" size="1" minimum="1" maximum="1" />
+      <entry entity="townKoboldKing" size="1" minimum="1" maximum="1" />
       <location x="20" y="5" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="jailtroll1">
@@ -102965,12 +103186,13 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukTunnelGoblin" size="3" minimum="2" maximum="5" />
-      <entry entity="ukTunnelArcher" size="4" minimum="2" maximum="4" />
-      <entry entity="ukTunnelTroll" size="3" minimum="2" maximum="4" />
-      <entry entity="ukTunnelOrc" size="3" minimum="4" maximum="5" />
-      <entry entity="ukTunnelGoblinSentry" size="3" minimum="2" maximum="4" />
-      <entry entity="ukTunnelCursetroll" size="1" minimum="1" maximum="3" />
+      <entry entity="ukTunnelGoblin" size="3" minimum="1" maximum="3" />
+      <entry entity="ukTunnelArcher" size="4" minimum="1" maximum="4" />
+      <entry entity="ukTunnelTroll" size="3" minimum="1" maximum="4" />
+      <entry entity="ukTunnelOrc" size="3" minimum="1" maximum="5" />
+      <entry entity="ukTunnelGoblinSentry" size="3" minimum="1" maximum="4" />
+      <entry entity="ukTunnelCursetroll" size="1" minimum="1" maximum="2" />
+      <entry entity="ukTunnelOrcMage" size="1" minimum="1" maximum="2" />
       <bounds region="3">
         <inclusion left="3" top="3" right="33" bottom="11" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -102979,7 +103201,7 @@
     <spawn type="RegionSpawner" name="uk100">
       <minimumDelay>720</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>23</maximum>
+      <maximum>18</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -102996,13 +103218,15 @@
       </script>
       <entry entity="uk100200Mino" size="1" minimum="3" maximum="4" />
       <entry entity="uk100200Troll" size="3" minimum="5" maximum="6" />
-      <entry entity="uk100200Archer" size="3" minimum="6" maximum="7" />
+      <entry entity="uk100200Archer" size="3" minimum="3" maximum="3" />
       <entry entity="uk100MaGoblin" size="1" minimum="1" maximum="1" />
       <entry entity="uk100GoblinMage" size="4" minimum="2" maximum="2" />
       <entry entity="uk100Goblin" size="3" minimum="4" maximum="5" />
       <bounds region="4">
-        <inclusion left="3" top="3" right="19" bottom="27" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
+        <inclusion left="3" top="3" right="9" bottom="6" />
+        <inclusion left="8" top="7" right="19" bottom="12" />
+        <inclusion left="17" top="3" right="19" bottom="6" />
+        <exclusion left="11" top="11" right="13" bottom="13" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="uk200">
@@ -103058,7 +103282,7 @@
       <entry entity="ukTunnelOrc" size="3" minimum="10" maximum="10" />
       <entry entity="ukTunnelCursetroll" size="1" minimum="5" maximum="5" />
       <entry entity="ukTunnelGoblin" size="3" minimum="10" maximum="10" />
-      <entry entity="ukTunnelGoblinSentry" size="3" minimum="7" maximum="10" />
+      <entry entity="ukTunnelGoblinSentry" size="3" minimum="2" maximum="2" />
       <entry entity="surfaceLurker" size="2" minimum="2" maximum="2" />
       <bounds region="11">
         <inclusion left="3" top="3" right="34" bottom="39" />
@@ -104006,6 +104230,15 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new StrongShieldBracelet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new BlueStaffRaiseDead();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>

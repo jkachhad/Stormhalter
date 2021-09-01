@@ -237,6 +237,26 @@ namespace Kesmai.WorldForge.Editor
 		}
 	}
 
+	public class TeleporterSelector : ComponentSelector<TeleportComponent>
+	{
+		public override string Name => "Filter for only Teleport components.";
+		public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterFloor.png"));
+
+		public override ComponentRender TransformRender(SegmentTile tile, TerrainComponent component, ComponentRender render)
+		{
+			
+			if (component is TeleportComponent tc && (tc.DestinationX == 0 || tc.DestinationY == 0))
+            {
+				render.Color = Color.Red;
+			}
+
+			if (render.Color.Equals(Color.Black))
+				render.Color = Color.DimGray;
+
+			return render;
+		}
+	}
+
 	public class StaticSelector : ComponentSelector<StaticComponent>
 	{
 		public override string Name => "Filter for only static components.";

@@ -19,11 +19,40 @@ namespace Kesmai.WorldForge.UI.Documents
 			WeakReferenceMessenger.Default
 				.Register<SpawnsDocument, SpawnsViewModel.SelectedLocationSpawnerChangedMessage>(
 					this, OnLocationSpawnerChanged);
+
+			WeakReferenceMessenger.Default
+				.Register<SpawnsDocument, SpawnsViewModel.SelectedRegionSpawnerChangedMessage>(
+					this, OnRegionSpawnerChanged);
 		}
 		
 		private void OnLocationSpawnerChanged(SpawnsDocument recipient, SpawnsViewModel.SelectedLocationSpawnerChangedMessage message)
 		{
 			_scriptsTabControl.SelectedIndex = 0;
+			
+			var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+			var segment = segmentRequest.Response;
+
+			var spawn = message.Value;
+			if (spawn != null)
+            {
+				_locationPresenter.Region = segment.GetRegion(spawn.Region);
+				_locationPresenter.SetLocation(spawn);
+			}
+		}
+
+		private void OnRegionSpawnerChanged(SpawnsDocument recipient, SpawnsViewModel.SelectedRegionSpawnerChangedMessage message)
+		{
+			_scriptsTabControl.SelectedIndex = 0;
+
+			var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+			var segment = segmentRequest.Response;
+
+			var spawn = message.Value;
+			if (spawn != null)
+			{
+				_regionPresenter.Region = segment.GetRegion(spawn.Region);
+				_regionPresenter.SetLocation(spawn);
+			}
 		}
 	}
 	
@@ -37,7 +66,14 @@ namespace Kesmai.WorldForge.UI.Documents
 			{
 			}
 		}
-		
+
+		public class SelectedRegionSpawnerChangedMessage : ValueChangedMessage<RegionSpawner>
+		{
+			public SelectedRegionSpawnerChangedMessage(RegionSpawner value) : base(value)
+			{
+			}
+		}
+
 		public string Name => "(Spawns)";
 		
 		private Segment _segment;
@@ -59,7 +95,13 @@ namespace Kesmai.WorldForge.UI.Documents
 		public RegionSpawner SelectedRegionSpawner
 		{
 			get => _selectedRegionSpawner;
-			set => SetProperty(ref _selectedRegionSpawner, value, true);
+			set
+			{
+				SetProperty(ref _selectedRegionSpawner, value, true);
+
+				if (value != null)
+					WeakReferenceMessenger.Default.Send(new SelectedRegionSpawnerChangedMessage(value));
+			}
 		}
 
 		public SegmentSpawns Source => _segment.Spawns;
@@ -84,6 +126,8 @@ namespace Kesmai.WorldForge.UI.Documents
 			RemoveRegionSpawnerCommand = new RelayCommand<RegionSpawner>(RemoveRegionSpawner,
 				(spawner) => SelectedRegionSpawner != null);
 			RemoveRegionSpawnerCommand.DependsOn(() => SelectedRegionSpawner);
+
+			//todo: set location and region spawners so the presenters are fully intialized. Or fix whatever is preventing both renders from accepting input before both are 'targetted'
 		}
 		
 		public void AddLocationSpawner()

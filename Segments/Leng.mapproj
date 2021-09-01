@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.73.1.0">
+<segment name="Leng" version="0.74.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -75739,7 +75739,7 @@
         MaxHealth = 250, Health = 250,
         BaseDodge = 13,
 
-        Experience = 3500,
+        Experience = 5500,
         
         FireProtection = 100,
         IceProtection = 80,
@@ -75757,8 +75757,9 @@
 
     bridgeTroll.AddGold(500);
     
-    bridgeTroll.AddLoot(new LootPack(
-        new LootPackEntry(true, LengPotions,    0.05),
+    bridgeTroll.AddLoot(new LootPack(    
+        new LootPackEntry(true, (from, container) => new WingedHelm(),         25.0),
+        new LootPackEntry(true, LengPotions,    0.1),
         new LootPackEntry(true, MinotaurGems,       10,     gemsPriceMutator)
     ));
     
@@ -75985,6 +75986,7 @@
         CanJumpkick = true,
         CanSwim = true,
         CanStrikeCritically = true,
+
         CanLoot = false,
         
         BasePenetration = ShieldPenetration.Heavy,
@@ -76183,7 +76185,7 @@
     dragon.AddGold(10000);
     dragon.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new GriffinSkull(),        100),
-        new LootPackEntry(true, (from, container) => new BlindFearProtectionBracelet(),        33),
+        new LootPackEntry(true, (from, container) => new BlindFearProtectionBracelet(),        100),
         new LootPackEntry(true, (from, container) => new FeatherFallBoots(),        100),
         new LootPackEntry(true, (from, container) => new RedRobe(),        100),
         new LootPackEntry(true, KoshOptions,    100),
@@ -77853,6 +77855,161 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="undeadWyrm">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var wyrm = new Wyrm()
+    {
+        MaxHealth = 500, Health = 500,
+        BaseDodge = 18,
+
+        Experience = 23000,
+
+        Movement = 3,
+        
+        BasePenetration = ShieldPenetration.VeryHeavy,
+        
+        Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing 
+                   | CreatureImmunity.Bashing | CreatureImmunity.Poison,
+        Weakness = CreatureWeakness.BlueGlowing,
+    };
+    
+    wyrm.AddStatus(new NightVisionStatus(wyrm)); 
+    
+    wyrm.Attacks = new CreatureAttackCollection
+    {
+        { 
+            new CreatureAttack(15, 20, 35, "The serpent bites you with it's fangs."),   60 
+        }, 
+        {
+            new CreatureAttack(15, 20, 35, "The serpent bites you with it's fangs.",
+                                        new AttackStunComponent(35),
+                                        new AttackPoisonComponent(12)),             20 
+        }, 
+        {
+            new CreatureAttack(15, 25, 40, "The serpent strikes you with it's tail.",
+                                        new AttackStunComponent(10)),                   20 
+        }, 
+    };
+    
+    wyrm.Blocks = new CreatureBlockCollection
+    {
+        { 
+            new CreatureBlock(6, "slimy scales") 
+        }, 
+        {
+            new CreatureBlock(4, "a fang")
+        }, 
+    };
+
+    wyrm.AddGold(1500);
+    wyrm.AddLoot(new LootPack(
+        new LootPackEntry(true, CliffGems,       50,     gemsPriceMutator), 
+        new LootPackEntry(true, CliffBottles,    20),
+        new LootPackEntry(true, LengPotions,    0.3),
+        new LootPackEntry(true, CliffTreasures,    5)
+    ));
+    
+    return wyrm;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="mausSeaSerpent">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var seaserpent = new SeaSerpent()
+    {
+        MaxHealth = 500, Health = 500,
+        BaseDodge = 18,
+
+        Experience = 23000,
+        
+        CanWalk = false,
+        Movement = 3,
+        
+        BasePenetration = ShieldPenetration.VeryHeavy,
+        
+        Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing 
+                   | CreatureImmunity.Bashing | CreatureImmunity.Poison,
+        Weakness = CreatureWeakness.BlueGlowing,
+    };
+    
+    seaserpent.AddStatus(new NightVisionStatus(seaserpent)); 
+    
+    seaserpent.AddStatus(new NightVisionStatus(seaserpent)); 
+    
+    seaserpent.Attacks = new CreatureAttackCollection
+    {
+        { 
+            new CreatureAttack(15, 20, 35, "The serpent bites you with it's fangs."),   60 
+        }, 
+        {
+            new CreatureAttack(15, 20, 35, "The serpent bites you with it's fangs. It tingles!",
+                                        new AttackStunComponent(35),
+                                        new AttackPoisonComponent(12)),             20 
+        }, 
+        {
+            new CreatureAttack(15, 25, 40, "The serpent strikes you with it's tail.",
+                                        new AttackStunComponent(10)),                   20 
+        }, 
+    };
+    
+    seaserpent.Spells = new CreatureSpellCollection(50.0)
+    {
+      {  new CreatureSpell<LightningStormSpell>(
+            skillLevel: 1, instantCast: false, mantra: SpellHelper.GenerateMantra()), 100, TimeSpan.FromSeconds(15.0) }
+    };
+    
+    seaserpent.Blocks = new CreatureBlockCollection
+    {
+        { 
+            new CreatureBlock(6, "slimy scales") 
+        }, 
+        {
+            new CreatureBlock(4, "a fang")
+        }, 
+    };
+
+    seaserpent.AddGold(1500);
+    seaserpent.AddLoot(new LootPack(
+        new LootPackEntry(true, CliffGems,       50,     gemsPriceMutator), 
+        new LootPackEntry(true, CliffBottles,    20),
+        new LootPackEntry(true, LengPotions,    0.3),
+        new LootPackEntry(true, CliffTreasures,    3)
+    ));
+    
+    return seaserpent;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="Priest">
@@ -78071,8 +78228,11 @@
         <block><![CDATA[
     spawn.Name = "Reuv";
     if (spawn is Shopkeeper shopkeeper)
+	{
+	    shopkeeper.AddCounter(new Point2D(19, 23, 1));
         shopkeeper.AddCounter(new Point2D(20, 23, 1));
-
+        shopkeeper.AddCounter(new Point2D(21, 23, 1));
+	}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -78339,7 +78499,7 @@
       <entry entity="lengWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="4" y="4" region="4" />
     </spawn>
-    <spawn type="RegionSpawner" name="sandyPath">
+    <spawn type="RegionSpawner" name="mausoleumSandyPath">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>5</maximum>
@@ -78365,7 +78525,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="westMausoleum">
+    <spawn type="RegionSpawner" name="mausoleumWest">
       <minimumDelay>720</minimumDelay>
       <maximumDelay>1020</maximumDelay>
       <maximum>16</maximum>
@@ -78394,7 +78554,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="insideMausoleum">
+    <spawn type="RegionSpawner" name="mausoleumInner">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>15</maximum>
@@ -78423,7 +78583,7 @@
         <exclusion left="20" top="22" right="24" bottom="26" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="southofMausoleum">
+    <spawn type="RegionSpawner" name="mausoleumSouth">
       <minimumDelay>720</minimumDelay>
       <maximumDelay>1020</maximumDelay>
       <maximum>14</maximum>
@@ -78452,7 +78612,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="presenceSpawner">
+    <spawn type="RegionSpawner" name="mausoleumPresence">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>7200</maximumDelay>
       <maximum>1</maximum>
@@ -78476,7 +78636,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="eastMausoleum">
+    <spawn type="RegionSpawner" name="mausoleumEast">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>12</maximum>
@@ -78535,7 +78695,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="cliffleftgryph">
+    <spawn type="RegionSpawner" name="griffLevelLeftGriff">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>1</maximum>
@@ -78559,7 +78719,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="eastgriffcave">
+    <spawn type="RegionSpawner" name="griffLevelEastCave">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>6</maximum>
@@ -78586,7 +78746,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="gryphcliffdungeon">
+    <spawn type="RegionSpawner" name="griffLevelDungeon">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>8</maximum>
@@ -78612,7 +78772,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Drake">
+    <spawn type="RegionSpawner" name="drakeBoss">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>14400</maximumDelay>
       <maximum>6</maximum>
@@ -78638,7 +78798,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Kosh">
+    <spawn type="RegionSpawner" name="grissBossKosh">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>14400</maximumDelay>
       <maximum>1</maximum>
@@ -78768,7 +78928,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Shidosha">
+    <spawn type="RegionSpawner" name="shidBoss">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <maximum>4</maximum>
@@ -78793,7 +78953,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Sandy">
+    <spawn type="RegionSpawner" name="mausoleumSandy">
       <minimumDelay>1800</minimumDelay>
       <maximumDelay>7200</maximumDelay>
       <maximum>1</maximum>
@@ -78817,9 +78977,9 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Bridgetroll">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>3600</maximumDelay>
+    <spawn type="RegionSpawner" name="surfaceBridgetroll">
+      <minimumDelay>2700</minimumDelay>
+      <maximumDelay>7200</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -78841,7 +79001,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="stablesSpawner">
+    <spawn type="RegionSpawner" name="shidStables">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>13</maximum>
@@ -78920,10 +79080,10 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="lengUndead">
+    <spawn type="RegionSpawner" name="undeadDungeon">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1500</maximumDelay>
-      <maximum>25</maximum>
+      <maximum>38</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -78940,12 +79100,13 @@
       </script>
       <entry entity="minoLich" size="1" minimum="3" maximum="5" />
       <entry entity="mausWretch" size="3" minimum="6" maximum="9" />
-      <entry entity="mausWraith" size="3" minimum="1" maximum="1" />
+      <entry entity="mausWraith" size="3" minimum="1" maximum="3" />
       <entry entity="mausHobgobMage" size="1" minimum="3" maximum="4" />
       <entry entity="mausHobgoblin" size="3" minimum="5" maximum="7" />
       <entry entity="mausWraith" size="1" minimum="4" maximum="5" />
       <entry entity="mausSpectre" size="1" minimum="3" maximum="4" />
       <entry entity="cliffTrolls" size="3" minimum="4" maximum="6" />
+      <entry entity="undeadWyrm" size="1" minimum="1" maximum="1" />
       <bounds region="18">
         <inclusion left="3" top="6" right="20" bottom="28" />
         <inclusion left="21" top="8" right="43" bottom="37" />
@@ -79056,7 +79217,7 @@
         <exclusion left="3" top="23" right="4" bottom="25" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="westofDrake">
+    <spawn type="RegionSpawner" name="drakeOuter">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1500</maximumDelay>
       <maximum>10</maximum>
@@ -79107,7 +79268,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="waterfall">
+    <spawn type="RegionSpawner" name="cliffWaterfall">
       <minimumDelay>1800</minimumDelay>
       <maximumDelay>3600</maximumDelay>
       <maximum>2</maximum>
@@ -79132,7 +79293,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="waterfallmain">
+    <spawn type="RegionSpawner" name="cliffsMain">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>25</maximum>
@@ -79184,7 +79345,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="South Maus Crypt">
+    <spawn type="RegionSpawner" name="mausoleumSouthCrypt">
       <minimumDelay>0</minimumDelay>
       <maximumDelay>0</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -79209,7 +79370,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="shidguardians1">
+    <spawn type="RegionSpawner" name="shidGuardians1">
       <minimumDelay>1500</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>1</maximum>
@@ -79233,7 +79394,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="shidguardians2">
+    <spawn type="RegionSpawner" name="shidGuardians2">
       <minimumDelay>1500</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>1</maximum>
@@ -79257,7 +79418,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="shidguardians3">
+    <spawn type="RegionSpawner" name="shidGuardians3">
       <minimumDelay>1500</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>1</maximum>
@@ -79278,6 +79439,33 @@
       <entry entity="shidNinja" size="3" minimum="1" maximum="1" />
       <bounds region="255">
         <inclusion left="1" top="1" right="15" bottom="7" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="mausoleumNorthEast">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>10</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="mausWraith" size="1" minimum="2" maximum="1" />
+      <entry entity="mausSpectre" size="1" minimum="2" maximum="1" />
+      <entry entity="mausSkeleton" size="3" minimum="4" maximum="4" />
+      <entry entity="mausHobgoblin" size="3" minimum="2" maximum="4" />
+      <bounds region="10">
+        <inclusion left="40" top="3" right="50" bottom="12" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -79543,7 +79731,7 @@
       </entry>
     </treasure>
     <treasure name="KoshOptions">
-      <entry weight="2">
+      <entry weight="6">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -79552,7 +79740,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="3">
+      <entry weight="1">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -79561,7 +79749,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="3">
+      <entry weight="7">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -79570,11 +79758,20 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="1">
+      <entry weight="4">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new PermanentConstitutionPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="2">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new BlueStaffHeal();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
