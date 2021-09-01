@@ -81,7 +81,6 @@
 
         public override void OnSpellTarget(Target target, MobileEntity combatant)
         {
-            base.OnSpellTarget(target, combatant);
             
             if (Spell is CurseSpell curse)
             {
@@ -113,6 +112,7 @@
                     CreatureGroup.Instantiate(snake, Facet, Segment, combatant.Location);
                     });
             }
+            base.OnSpellTarget(target, combatant);
         }
 
         public override int GetNearbySound() => 208;
@@ -499,13 +499,13 @@
 
         public override void OnSpellTarget(Target target, MobileEntity combatant)
         {
-            base.OnSpellTarget(target, combatant);
             
             if (Spell is CurseSpell curse)
             {
                 Say($"I would sacrifice ANYTHING to protect the grove!");
                 combatant.Teleport(new Point2D(23, 5, 236));
             }
+            base.OnSpellTarget(target, combatant);
 
         }
 
