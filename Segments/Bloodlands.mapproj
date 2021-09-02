@@ -92642,10 +92642,10 @@ if (spawn is Shopkeeper shopkeeper)
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="KeepOfDarknessBoss">
+    <spawn type="RegionSpawner" name="keepOfDarknessBoss">
       <minimumDelay>5700</minimumDelay>
       <maximumDelay>10800</maximumDelay>
-      <maximum>4</maximum>
+      <maximum>5</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -92664,7 +92664,7 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="SouthernDarknessLich" size="1" minimum="2" maximum="2" />
       <entry entity="towerSkeleton" size="1" minimum="2" maximum="2" />
       <bounds region="1">
-        <inclusion left="6" top="54" right="9" bottom="59" />
+        <inclusion left="6" top="54" right="10" bottom="60" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
