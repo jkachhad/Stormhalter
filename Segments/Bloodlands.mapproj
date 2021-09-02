@@ -76076,6 +76076,17 @@
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
+        <component type="StaticComponent">
+          <static>167</static>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>36</destinationX>
+          <destinationRegion>10</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+        </component>
       </tile>
       <tile x="43" y="-5">
         <component type="FloorComponent">
@@ -76351,11 +76362,14 @@
         </component>
       </tile>
       <tile x="36" y="-4">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="StaticComponent">
+          <static>12</static>
         </component>
-        <component type="RuinsComponent">
-          <ruins>44</ruins>
+        <component type="WallComponent">
+          <wall>31</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="37" y="-4">
@@ -76718,11 +76732,14 @@
         </component>
       </tile>
       <tile x="37" y="-3">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="StaticComponent">
+          <static>12</static>
         </component>
-        <component type="RuinsComponent">
-          <ruins>44</ruins>
+        <component type="WallComponent">
+          <wall>31</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="38" y="-3">
@@ -77019,11 +77036,14 @@
         </component>
       </tile>
       <tile x="37" y="-2">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="StaticComponent">
+          <static>12</static>
         </component>
-        <component type="RuinsComponent">
-          <ruins>44</ruins>
+        <component type="WallComponent">
+          <wall>31</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="38" y="-2">
@@ -77313,11 +77333,14 @@
         </component>
       </tile>
       <tile x="38" y="-1">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="StaticComponent">
+          <static>12</static>
         </component>
-        <component type="RuinsComponent">
-          <ruins>44</ruins>
+        <component type="WallComponent">
+          <wall>31</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="39" y="-1">
@@ -77601,6 +77624,18 @@
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
+        <component type="StaticComponent">
+          <static>167</static>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>42</destinationX>
+          <destinationY>-5</destinationY>
+          <destinationRegion>10</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+        </component>
       </tile>
       <tile x="37" y="0">
         <component type="FloorComponent">
@@ -77608,11 +77643,14 @@
         </component>
       </tile>
       <tile x="38" y="0">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="StaticComponent">
+          <static>12</static>
         </component>
-        <component type="RuinsComponent">
-          <ruins>44</ruins>
+        <component type="WallComponent">
+          <wall>31</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="39" y="0">
@@ -88028,10 +88066,10 @@
         Alignment = Alignment.Evil,
         Mana = 25, MaxMana = 25,
         Experience = 94000,
-       
+        CanLoot = false,
         CanJumpkick = true,
         CanCharge = true,
-        CanSwim = false,
+        CanSwim = true,
         Body = 26,
         
         
@@ -88047,6 +88085,7 @@
     };
     
     boss1.AddStatus(new NightVisionStatus(boss1));
+    boss1.AddStatus(new BreatheWaterStatus(boss1));
     
     boss1.CombatantChangeInterval = TimeSpan.FromSeconds(6.0);
     
@@ -88269,7 +88308,7 @@
         case 2: source.Say($"Welcome to town {player.Name}"); break;
         case 3: source.Say($"Keep an eye out, I've seen griffins wander into town"); break;
         case 4: source.Say($"Hey {player.Name} I've heard romor of a ghastly beast up north"); break;
-        case 5: source.Emote($"mumbles about always being on shift and never getting  break"); break;
+        case 5: source.Emote($"mumbles about always being on shift and never getting a break"); break;
    }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -89285,7 +89324,7 @@
         //todo add poison prot
         
     };
-    wyvern.AddStatus(new BreatheWaterStatus(piranha));
+    wyvern.AddStatus(new BreatheWaterStatus(wyvern));
     wyvern.Attacks = new CreatureAttackCollection()
     {
         {
@@ -89759,7 +89798,7 @@
         
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(20, 35, 65)
+        new CreatureBasicAttack(21, 35, 65)
     };
     
     fighter.Wield(new Longsword());
@@ -90008,7 +90047,7 @@
         MaxHealth = 1200, Health = 1200,
         BaseDodge = 25,
                 
-        Experience = 25000,
+        Experience = 33000,
         
         
         
@@ -90328,6 +90367,7 @@
         Alignment = Alignment.Evil,
         HideDetection = 30,
         Experience = 72000,
+        CanLoot = false,
         
         
         CanCharge = true,
@@ -90746,8 +90786,12 @@ var ghoul = new Ghoul()
     abomination.Wield(new Longsword());
     abomination.Equip(new PlatemailArmor());    
     
-    abomination.AddGold(450);
-    
+    abomination.AddGold(1450);
+    abomination.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 3)
+    ));
     //todo add lootpack
     
     return abomination;
@@ -90781,6 +90825,7 @@ var ghoul = new Ghoul()
         MaxMana = 21, Mana = 21,
         DeathResistance = 100,
         MagicProtection = 33,
+        
     };
         
     banshee.Attacks = new CreatureAttackCollection()
@@ -90791,7 +90836,7 @@ var ghoul = new Ghoul()
     banshee.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CurseSpell>(
-            skillLevel:11, cost: 10, 
+            skillLevel:10, cost: 10, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
@@ -90799,7 +90844,11 @@ var ghoul = new Ghoul()
         
     banshee.AddGold(480);
     
-    //todo add lootpack
+ banshee.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 3)
+    ));
     
     return banshee;
 ]]></block>
@@ -91301,7 +91350,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         Experience = 35000,
         
         BasePenetration = ShieldPenetration.Heavy,
-        
+        CanLoot = false,
         CanJumpkick = true,
         
         FireProtection = 100,
@@ -91369,7 +91418,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         Experience = 55000,
         
         BasePenetration = ShieldPenetration.Heavy,
-        
+        CanLoot = false,
         CanJumpkick = true,
         
         FireProtection = 100,
@@ -91407,6 +91456,220 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
 
     
     return twin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="caveWolfy">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var wolf = new Wolf()
+    {
+        Name = "Feral Cave Wolf",
+        MaxHealth = 425, Health = 425,
+        BaseDodge = 29,
+        Body = 242,
+        BasePenetration = ShieldPenetration.Heavy,
+        Experience = 22000,
+
+        MagicProtection = 50,
+    };
+    
+    wolf.AddStatus(new NightVisionStatus(wolf));
+    
+    wolf.Attacks = new CreatureAttackCollection
+    {
+            { 
+                new CreatureAttack(19, 22, 35, "The wolf rakes you with its claws."),         50 
+            }, 
+            {
+                new CreatureAttack(20, 35, 43, "The wolf sinks its teeth into you."),         30
+            }, 
+            { 
+                new CreatureAttack(21, 43, 55, "The wolf lunges at you, biting into your neck."), 20 
+            }, 
+    };
+    
+    wolf.Blocks = new CreatureBlockCollection
+    {
+            new CreatureBlock(7, "your weapon passing through a tuft of fur"),
+            new CreatureBlock(6, "a hardened paw"),
+    };
+
+   wolf.AddGold(1000);
+      wolf.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 3)
+    ));
+
+    return wolf;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="caveBoar">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var boar = new Boar()
+    {
+        Name = "Feral Cave boar",
+        MaxHealth = 325, Health = 325,
+        BaseDodge = 29,
+        BasePenetration = ShieldPenetration.Heavy,
+        Experience = 19000,
+        CanCharge = true,
+        MagicProtection = 50,
+    };
+    
+    boar.AddStatus(new NightVisionStatus(boar));
+    
+    boar.Attacks = new CreatureAttackCollection
+    {
+            { 
+                new CreatureAttack(19, 22, 35, "The boar rakes you with its tusks."),         50 
+            }, 
+            {
+                new CreatureAttack(20, 35, 43, "The boar sinks its teeth into you."),         30
+            }, 
+            { 
+                new CreatureAttack(21, 43, 55, "The boar lunges at you, biting into your neck."), 20 
+            }, 
+    };
+    
+    boar.Blocks = new CreatureBlockCollection
+    {
+            new CreatureBlock(7, "your weapon passing through a tuft of fur"),
+            new CreatureBlock(6, "a hardened tusk"),
+    };
+
+   boar.AddGold(1000);
+      boar.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 3)
+    ));
+
+    return boar;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="caveBoss">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var critter = new Drake()
+    {
+        Name = "Feral Animal",
+        MaxHealth = 10900, Health = 10900,
+        BaseDodge = 31,
+        Body = 233,
+        MaxMana = 45,
+    
+        Alignment = Alignment.Evil,
+        HideDetection = 30,
+        Experience = 79000,
+        CanLoot = false,
+        
+        
+        CanCharge = true,
+        
+        BasePenetration = ShieldPenetration.Heavy,
+
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
+    
+    };
+    
+    critter.AddStatus(new NightVisionStatus(critter));
+    
+    critter.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
+    
+    critter.Attacks = new CreatureAttackCollection()
+    {
+        {
+            new CreatureAttack(19,      55, 70,      "The creature mauls you with its paw",
+                                                        new AttackProneComponent(15), 
+                                                        new AttackStunComponent(5)),                40
+        },
+        {
+            new CreatureAttack(21,      60, 75,     "The creature smashes you with its hind legs.",
+                                                        new AttackProneComponent(25), 
+                                                        new AttackStunComponent(10)),               40
+        },
+        {
+            new CreatureAttack(25,      70, 89,     "The creature pierces you with its horn.",
+                                                        new AttackProneComponent(35), 
+                                                        new AttackStunComponent(15)),               20
+        },
+    };
+    
+    critter.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(10, "an appendage"),
+        new CreatureBlock(8, "a foot"),
+        new CreatureBlock(7, "something disgusting, now coating your weapon"),
+    };
+        
+    critter.Spells = new CreatureSpellCollection(20.0)
+    {
+        new CreatureSpell<WhirlwindSpell>(
+            skillLevel: 11, cost: 25),
+    };
+    
+    critter.AddGold(5000);
+     critter.AddGold(1000);
+      critter.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 3),
+         new LootPackEntry(true, SemiRare, 40),
+        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),
+        new LootPackEntry(true, (from, container) => new BrightFeather(), 40),
+        new LootPackEntry(true, UltraRare, 25)
+    ));
+    
+    return critter;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -92886,8 +93149,8 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="bloodCavesAbomination" size="2" minimum="5" maximum="7" />
-      <entry entity="bloodCaveBanshee" size="2" minimum="4" maximum="5" />
-      <entry entity="bloodCaveBat" size="2" minimum="3" maximum="3" />
+      <entry entity="bloodCaveBanshee" size="2" minimum="3" maximum="3" />
+      <entry entity="bloodCaveBat" size="2" minimum="3" maximum="4" />
       <entry entity="newGhoul" size="1" minimum="3" maximum="5" />
       <entry entity="shark300" size="1" minimum="1" maximum="2" />
       <entry entity="pirhana300" size="3" minimum="2" maximum="2" />
@@ -92970,6 +93233,38 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="forestBoss2b" size="1" minimum="2" maximum="2" />
       <bounds region="9">
         <inclusion left="-28" top="-52" right="-23" bottom="-50" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="forrestCaves">
+      <minimumDelay>660</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>24</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="caveWolfy" size="2" minimum="5" maximum="9" />
+      <entry entity="forestBear" size="1" minimum="2" maximum="3" />
+      <entry entity="caveBoar" size="1" minimum="3" maximum="5" />
+      <entry entity="pirhana300" size="3" minimum="2" maximum="3" />
+      <entry entity="newGhoul" size="1" minimum="1" maximum="1" />
+      <entry entity="bloodCaveBat" size="1" minimum="2" maximum="2" />
+      <entry entity="shark300" size="1" minimum="1" maximum="1" />
+      <entry entity="lurker300" size="1" minimum="1" maximum="1" />
+      <entry entity="archer200" size="1" minimum="1" maximum="1" />
+      <bounds region="10">
+        <inclusion left="5" top="-2" right="31" bottom="9" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
