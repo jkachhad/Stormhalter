@@ -660,11 +660,12 @@ namespace Kesmai.WorldForge
 
 					OnAfterRender(spritebatch);
 
-					if (true) //todo: make this a toggle with a "tool" like button
+					var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+					var segment = segmentRequest.Response;
+
+					if (true) // Destination highlights for teleporters //todo: make this a toggle with a "tool" like button
 					{
 						var _teleportDestinationHighlight = Color.FromNonPremultiplied(80, 255, 80, 200);
-						var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
-						var segment = segmentRequest.Response;
 						var destinationCounter = new System.Collections.Hashtable();
 						int porterCount;
 						foreach (SegmentRegion searchRegion in segment.Regions) //for each region in the segment
@@ -705,7 +706,40 @@ namespace Kesmai.WorldForge
 							}
 						}
 					}
+					if (true) //source highlights for teleporters
+                    {
+						var _teleportSourceHighlight = Color.FromNonPremultiplied(180, 255, 20, 200);
 
+						foreach (SegmentTile tile in region.GetTiles(t => { return t.GetComponents<TeleportComponent>().Any(); })) // for each tile in this region that has a teleportcomponent
+                        {
+							foreach (TeleportComponent component in tile.GetComponents<TeleportComponent>()) // for each of those Teleportcomponents
+                            {
+								var _mx = tile.X;
+								var _my = tile.Y;
+								var targetRegionName = "Invalid";
+								var targetregion = segment.GetRegion(component.DestinationRegion);
+								if (targetregion is not null) { targetRegionName = targetregion.Name; }
+
+								if (viewRectangle.Left <= _mx && _mx <= viewRectangle.Right && // if our viewport has the teleporter
+									viewRectangle.Top <= _my && _my <= viewRectangle.Bottom)
+								{
+
+									var rx = (_mx - viewRectangle.Left) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
+									var ry = (_my - viewRectangle.Top) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
+
+									var bounds = new Rectangle(rx, ry,
+										(int)Math.Floor(_presenter.UnitSize * _zoomFactor), (int)Math.Floor(_presenter.UnitSize * _zoomFactor));
+									var innerRectangle = new Rectangle(bounds.Left, bounds.Bottom - 16, (int)Math.Floor(55 * _zoomFactor), 16);
+
+									spritebatch.FillRectangle(innerRectangle, _teleportSourceHighlight);
+	
+									spritebatch.DrawString(_font, $"{targetRegionName}",
+										new Vector2(bounds.Left + 2, bounds.Bottom - 14), Color.Black);
+								}
+							}
+
+						}
+					}
 
 				}
 				
