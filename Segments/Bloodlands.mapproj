@@ -29246,11 +29246,6 @@
       <id>5</id>
       <name>Bloodlands -300</name>
       <height>-300</height>
-      <tile x="-9" y="-3">
-        <component type="StaticComponent">
-          <static>412</static>
-        </component>
-      </tile>
       <tile x="-1" y="-1">
         <component type="WallComponent">
           <wall>355</wall>
@@ -88031,9 +88026,9 @@
     
     lurker.AddGold(2200);
     lurker.AddLoot(new LootPack(
-        new LootPackEntry(true, MagicBottles, 5),
+        new LootPackEntry(true, MagicBottles, 3),
         new LootPackEntry(true, GenericBottles,    33),
-        new LootPackEntry(true, SemiRare, 1)
+        new LootPackEntry(true, SemiRare, 0.8)
     ));
     
     return lurker;
@@ -88489,13 +88484,13 @@
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(23)
+        new CreatureBasicAttack(18)
     };
-    
+    orc.AddStatus(new NightVisionStatus(orc));
     orc.Wield(new Longbow());
     orc.Equip(new LeatherArmor());
             
-    orc.AddGold(250);
+    orc.AddGold(450);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
         new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(), 5.0), 
@@ -88503,7 +88498,7 @@
         
     ));
     
-    //need to add lootpack
+
      
     return orc;
 ]]></block>
@@ -88916,7 +88911,11 @@
             
     orc.AddGold(400);
     
-    //todo add lootpack
+    orc.AddLoot(new LootPack(
+        new LootPackEntry(true, MagicBottles, 2),
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 0.5)
+    ));
     
     return orc;
 ]]></block>
@@ -88935,7 +88934,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="KeepOfDarknessBoss">
+    <entity name="keepOfDarknessBoss">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -89041,7 +89040,7 @@
         new LootPackEntry(true, UltraRare, 1)
     ));
     
-    //todo add lootpack
+
     
     return orc;
 ]]></block>
@@ -89395,7 +89394,8 @@
                    CreatureImmunity.Bashing | CreatureImmunity.Poison | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
     };
-    
+    wyrm.AddStatus(new NightVisionStatus(wyrm));
+    wyrm.AddStatus(new BreatheWaterStatus(wyrm));
     wyrm.Attacks = new CreatureAttackCollection
     {
         {
@@ -90145,7 +90145,7 @@
       wolf.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33),
-        new LootPackEntry(true, SemiRare, 3)
+        new LootPackEntry(true, SemiRare, 1)
     ));
 
     return wolf;
@@ -90384,7 +90384,7 @@
     
     unicorn.AddStatus(new NightVisionStatus(unicorn));
     
-    unicorn.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
+    unicorn.CombatantChangeInterval = TimeSpan.FromSeconds(6.0);
     
     unicorn.Attacks = new CreatureAttackCollection()
     {
@@ -91073,20 +91073,20 @@ var ghoul = new Ghoul()
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(33)
+        new CreatureBasicAttack(23)
     };
-    
+    orc.AddStatus(new NightVisionStatus(orc));
     orc.Wield(new Longbow());
     orc.Equip(new LeatherArmor());
             
-    orc.AddGold(250);
+    orc.AddGold(750);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(), 5.0), 
         new LootPackEntry(true, GenericBottles,    33)
     ));
     
-    //need to add lootpack
+
      
     return orc;
 ]]></block>
@@ -91304,7 +91304,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         Experience = 12725,
         
     };
-    demon.AddStatus(new NightVisionStatus(wraith));
+    demon.AddStatus(new NightVisionStatus(demon));
         
     demon.Attacks = new CreatureAttackCollection()
     {
@@ -91319,7 +91319,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     };
         
     demon.Wield(new WoodenStaff());
-        demon.AddGold(700);
+    demon.AddGold(700);
     return demon;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -92272,28 +92272,6 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="evilStatue300" size="1" minimum="1" maximum="1" />
       <location x="3" y="18" region="5" />
     </spawn>
-    <spawn type="LocationSpawner" name="300King">
-      <minimumDelay>3600</minimumDelay>
-      <maximumDelay>10800</maximumDelay>
-      <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="king300" size="1" minimum="1" maximum="1" />
-      <entry entity="queen300" size="1" minimum="1" maximum="1" />
-      <location x="12" y="35" region="5" />
-    </spawn>
     <spawn type="LocationSpawner" name="forestunicorn">
       <minimumDelay>8100</minimumDelay>
       <maximumDelay>11700</maximumDelay>
@@ -92316,8 +92294,8 @@ if (spawn is Shopkeeper shopkeeper)
       <location x="8" y="-13" region="9" />
     </spawn>
     <spawn type="RegionSpawner" name="surfaceFishNorth">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>1200</maximumDelay>
+      <minimumDelay>660</minimumDelay>
+      <maximumDelay>900</maximumDelay>
       <maximum>25</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -92370,7 +92348,7 @@ if (spawn is Shopkeeper shopkeeper)
     </spawn>
     <spawn type="RegionSpawner" name="surfaceHut">
       <minimumDelay>900</minimumDelay>
-      <maximumDelay>1200</maximumDelay>
+      <maximumDelay>2700</maximumDelay>
       <maximum>2</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -92396,7 +92374,7 @@ if (spawn is Shopkeeper shopkeeper)
     <spawn type="RegionSpawner" name="300Keep">
       <minimumDelay>720</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>1</maximum>
+      <maximum>13</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -92466,7 +92444,7 @@ if (spawn is Shopkeeper shopkeeper)
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="100sorth">
+    <spawn type="RegionSpawner" name="100north">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>18</maximum>
@@ -92599,7 +92577,7 @@ if (spawn is Shopkeeper shopkeeper)
     </spawn>
     <spawn type="RegionSpawner" name="SurfaceNook">
       <minimumDelay>600</minimumDelay>
-      <maximumDelay>720</maximumDelay>
+      <maximumDelay>900</maximumDelay>
       <maximum>5</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -92615,7 +92593,7 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="surfaceOrc" size="2" minimum="4" maximum="7" />
+      <entry entity="surfaceOrc" size="2" minimum="3" maximum="5" />
       <bounds region="1">
         <inclusion left="0" top="-14" right="1" bottom="-12" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -92624,7 +92602,7 @@ if (spawn is Shopkeeper shopkeeper)
     <spawn type="RegionSpawner" name="thePit">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>6</maximum>
+      <maximum>4</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -92639,7 +92617,7 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="surfaceBanshee" size="2" minimum="4" maximum="4" />
+      <entry entity="surfaceBanshee" size="2" minimum="2" maximum="3" />
       <entry entity="newGhoul" size="1" minimum="1" maximum="1" />
       <bounds region="2">
         <inclusion left="0" top="0" right="5" bottom="6" />
@@ -92664,7 +92642,7 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="KeepOfDarknessBoss" size="1" minimum="1" maximum="1" />
+      <entry entity="keepOfDarknessBoss" size="1" minimum="1" maximum="1" />
       <entry entity="SouthernDarknessLich" size="1" minimum="2" maximum="2" />
       <entry entity="towerSkeleton" size="1" minimum="2" maximum="2" />
       <bounds region="1">
@@ -92783,8 +92761,8 @@ if (spawn is Shopkeeper shopkeeper)
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="surfaceChildren">
-      <minimumDelay>420</minimumDelay>
-      <maximumDelay>600</maximumDelay>
+      <minimumDelay>660</minimumDelay>
+      <maximumDelay>1500</maximumDelay>
       <maximum>6</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -93012,6 +92990,7 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="forestCentaur" size="1" minimum="2" maximum="2" />
       <entry entity="surfacePirhana" size="2" minimum="2" maximum="3" />
       <entry entity="surfaceLurker" size="1" minimum="1" maximum="1" />
+      <entry entity="archer200" size="2" minimum="2" maximum="4" />
       <bounds region="9">
         <inclusion left="-30" top="5" right="-5" bottom="20" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -93043,6 +93022,7 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="forestSnake" size="1" minimum="1" maximum="2" />
       <entry entity="surfacePirhana" size="2" minimum="2" maximum="4" />
       <entry entity="surfaceLurker" size="1" minimum="1" maximum="1" />
+      <entry entity="archer200" size="2" minimum="2" maximum="4" />
       <bounds region="9">
         <inclusion left="-39" top="-21" right="-4" bottom="-2" />
         <exclusion left="-26" top="-7" right="-24" bottom="-6" />
@@ -93101,6 +93081,7 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="forestGriffin" size="1" minimum="3" maximum="5" />
       <entry entity="forestCentaur" size="1" minimum="1" maximum="1" />
       <entry entity="shark300" size="1" minimum="2" maximum="2" />
+      <entry entity="archer200" size="2" minimum="2" maximum="4" />
       <bounds region="9">
         <inclusion left="-30" top="-46" right="-9" bottom="-16" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -93130,6 +93111,7 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="forestWolf" size="3" minimum="3" maximum="5" />
       <entry entity="forestSnake" size="1" minimum="1" maximum="1" />
       <entry entity="forestCentaur" size="1" minimum="1" maximum="1" />
+      <entry entity="archer200" size="2" minimum="2" maximum="4" />
       <bounds region="9">
         <inclusion left="-23" top="-73" right="9" bottom="-57" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -93270,6 +93252,56 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="archer200" size="1" minimum="1" maximum="1" />
       <bounds region="10">
         <inclusion left="5" top="-2" right="31" bottom="9" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="300Keep2">
+      <minimumDelay>660</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>5</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="dweller300" size="1" minimum="3" maximum="4" />
+      <entry entity="trollGuards300" size="1" minimum="1" maximum="2" />
+      <bounds region="5">
+        <inclusion left="0" top="22" right="4" bottom="38" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="throneRoom300">
+      <minimumDelay>7200</minimumDelay>
+      <maximumDelay>10800</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="king300" size="1" minimum="1" maximum="1" />
+      <entry entity="queen300" size="1" minimum="1" maximum="1" />
+      <bounds region="5">
+        <inclusion left="9" top="34" right="15" bottom="37" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
