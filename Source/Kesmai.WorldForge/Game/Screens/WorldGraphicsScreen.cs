@@ -665,6 +665,8 @@ namespace Kesmai.WorldForge
 						var _teleportDestinationHighlight = Color.FromNonPremultiplied(80, 255, 80, 200);
 						var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
 						var segment = segmentRequest.Response;
+						var destinationCounter = new System.Collections.Hashtable();
+						int porterCount;
 						foreach (SegmentRegion searchRegion in segment.Regions) //for each region in the segment
 						{
 							foreach (SegmentTile tile in searchRegion.GetTiles((t) => { return t.GetComponents<TeleportComponent>().Any(); })) // for each tile in the region that is a teleporter:
@@ -676,18 +678,28 @@ namespace Kesmai.WorldForge
 									if (viewRectangle.Left <= _mx && _mx <= viewRectangle.Right && // if our viewport has the destination
 										viewRectangle.Top <= _my && _my <= viewRectangle.Bottom)
                                     {
+										if (!destinationCounter.ContainsKey($"{_mx}{_my}"))
+                                        {
+											destinationCounter.Add($"{_mx}{_my}", 0);
+											porterCount = 0;
+                                        } else
+                                        {
+											destinationCounter[$"{_mx}{_my}"] = (int)destinationCounter[$"{_mx}{_my}"] + 1;
+											porterCount = (int)destinationCounter[$"{_mx}{_my}"];
+										}
 										var rx = (_mx - viewRectangle.Left) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
 										var ry = (_my - viewRectangle.Top) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
 
 										var bounds = new Rectangle(rx, ry,
 											(int)Math.Floor(_presenter.UnitSize * _zoomFactor), (int)Math.Floor(_presenter.UnitSize * _zoomFactor));
-										var innerRectangle = new Rectangle(bounds.Left, bounds.Top + 16, 55, 16);
+										var innerRectangle = new Rectangle(bounds.Left, bounds.Top + 16*porterCount, (int)Math.Floor(55 *_zoomFactor), 16);
+
 
 										spritebatch.DrawRectangle(bounds, _teleportDestinationHighlight);
 										spritebatch.FillRectangle(innerRectangle, _teleportDestinationHighlight);
 
 										spritebatch.DrawString(_font, $"{searchRegion.Name}",
-											new Vector2(bounds.Left + 2, bounds.Top + 2), Color.Black);
+											new Vector2(bounds.Left + 2, bounds.Top + 2 + 16 * porterCount), Color.Black);
 									}
 								}
 							}
