@@ -79,13 +79,16 @@
         {
         }
 
-        public override void OnSpellTarget(Target target, MobileEntity combatant)
+        public override void OnSpellFinished(Target target, MobileEntity combatant)
         {
+			/* Do the original spell logic. */
+			base.OnSpellTarget(target, combatant);
+			
             if (Spell is CurseSpell curse)
             {
                 var snake = new Snake()
                 {
-                    MaxHealth = 150, Health = 150,
+                    MaxHealth = 250, Health = 250,
                     BaseDodge = 18,
                     Experience = 15000
                 };
@@ -97,7 +100,7 @@
 
                 snake.Blocks = new CreatureBlockCollection
                 {
-                    new CreatureBlock(1, "your weapon passing through the viper."),
+                    new CreatureBlock(1, "hardened scales"),
                 };
 
 				/* When making an entity on demand without a spawner, we have to assign them a group. This will allow them to think/move. */
@@ -165,7 +168,6 @@
         public override int GetNearbySound() => 12;
         public override int GetAttackSound() => 24;
         public override int GetDeathSound() => 36;
-        public override Corpse GetCorpse() => default(Corpse);
         protected override void OnCreate()
         {
             base.OnCreate();
@@ -217,7 +219,6 @@
         public override int GetNearbySound() => 14;
         public override int GetAttackSound() => 26;
         public override int GetDeathSound() => 38;
-        public override Corpse GetCorpse() => default(Corpse);
         protected override void OnCreate()
         {
             base.OnCreate();
@@ -270,7 +271,6 @@
         public override int GetNearbySound() => 9;
         public override int GetAttackSound() => 21;
         public override int GetDeathSound() => 33;
-        public override Corpse GetCorpse() => default(Corpse);
         protected override void OnCreate()
         {
             base.OnCreate();
@@ -322,7 +322,6 @@
         public override int GetNearbySound() => 139;
         public override int GetAttackSound() => 158;
         public override int GetDeathSound() => 177;
-        public override Corpse GetCorpse() => default(Corpse);
         protected override void OnCreate()
         {
             base.OnCreate();
@@ -374,7 +373,6 @@
         public override int GetNearbySound() => 18;
         public override int GetAttackSound() => 30;
         public override int GetDeathSound() => 42;
-        public override Corpse GetCorpse() => default(Corpse);
         protected override void OnCreate()
         {
             base.OnCreate();
@@ -454,7 +452,6 @@
         public override int GetNearbySound() => 136;
         public override int GetAttackSound() => 155;
         public override int GetDeathSound() => 174;
-        public override Corpse GetCorpse() => default(Corpse);
         public override void Serialize(BinaryWriter writer)
         {
             base.Serialize(writer);
@@ -494,14 +491,15 @@
         {
         }
 
-        public override void OnSpellTarget(Target target, MobileEntity combatant)
+        public override void OnSpellFinished(Target target, MobileEntity combatant)
         {
+			base.OnSpellTarget(target, combatant);
+			
             if (Spell is CurseSpell curse)
             {
-                Say($"Please, protect the grove now...");
+                Say($"I would sacrifice ANYTHING to protect the grove!");
                 combatant.Teleport(new Point2D(23, 5, 236));
             }
-
         }
 
         public override int GetNearbySound() => 208;
@@ -89743,6 +89741,7 @@
         Name = "Naiad",
         MaxHealth = 2500, Health = 2500,
         BaseDodge = 27,
+        MaxMana = 15, Mana = 15,
         Experience = 55000,
         HideDetection = 37,
         CanWalk = false,
@@ -89761,10 +89760,10 @@
 	
     dryad.AddStatus(new BreatheWaterStatus(dryad));
     
-    dryad.Spells = new CreatureSpellCollection(35)
+    dryad.Spells = new CreatureSpellCollection(100)
     {
         new CreatureSpell<CurseSpell>(
-            skillLevel: 15, cost: 7,
+            skillLevel: 15, cost: 14,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
@@ -89917,7 +89916,7 @@
         Experience = 45500,
         
         HideDetection = 31,
-        
+        Hue = Color.FromArgb(150, 255, 255, 255),
         BasePenetration = ShieldPenetration.Heavy,
         
         CanSwim = true,
@@ -89982,6 +89981,7 @@
         BaseDodge = 30,
         BasePenetration = ShieldPenetration.Heavy,
         Experience = 42500,
+        Hue = Color.FromArgb(150, 255, 255, 255),
         HideDetection = 33,
     };
     
@@ -90043,7 +90043,7 @@
         Experience = 43250,        
         
         BasePenetration = ShieldPenetration.Medium,
-        
+        Hue = Color.FromArgb(150, 255, 255, 255),
         CanCharge = true,
         
         HideDetection = 28,
@@ -90105,7 +90105,7 @@
         CanCharge = true,
         Experience = 25025,
         VisibilityDistance = 1,
-        
+        Hue = Color.FromArgb(150, 255, 255, 255),
     };
     
     viper.Attacks = new CreatureAttackCollection()
@@ -90211,17 +90211,17 @@
         <block><![CDATA[
 	var beetle = new GroveWildlifeBeetle()
     {
-        MaxHealth = 25, Health = 25,
-        BaseDodge = 12,
+        MaxHealth = 95, Health = 95,
+        BaseDodge = 18,
 
-        Experience = 750,
+        Experience = 3750,
         
         BasePenetration = ShieldPenetration.VeryLight,
     };    
     
     beetle.Attacks = new CreatureAttackCollection
     {
-        new CreatureAttack(6, 1, 8, "You have been stung by a beetle.",
+        new CreatureAttack(14, 8, 16, "You have been stung by a beetle.",
                         new AttackPoisonComponent(3), 
                         new AttackStunComponent(10))
     };
@@ -90256,19 +90256,19 @@
         <block><![CDATA[
 	var boar = new GroveWildlifeBoar()
     {
-        MaxHealth = 33, Health = 33,
-        BaseDodge = 12,
+        MaxHealth = 133, Health = 133,
+        BaseDodge = 19,
 
-        Experience = 425,
+        Experience = 6425,
     };    
     
     boar.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(5, 2, 6, "You have been gored by the boar."),    60
+            new CreatureAttack(15, 12, 23, "You have been gored by the boar."),    60
         },
         {
-            new CreatureAttack(6, 3, 8, "The boar tramples you."),              40
+            new CreatureAttack(16, 13, 25, "The boar tramples you."),              40
         },
     };
     
@@ -90281,9 +90281,9 @@
     boar.AddGold(200);
     boar.AddLoot(
         new LootPack(
-            new LootPackEntry(true, surfaceGems, 25.0, gemsPriceMutator), 
+            new LootPackEntry(true, groveGems, 3.0, gemsPriceMutator), 
             new LootPackEntry(true, surfaceBottles, 20.0), 
-            new LootPackEntry(true, surfaceTreasure, 0.63)
+            new LootPackEntry(true, groveTreasure, 0.2)
         ));
 
     return boar;
@@ -90309,10 +90309,10 @@
         <block><![CDATA[
     var griffin = new GroveWildlifeGriffin()
     {
-        MaxHealth = 150, Health = 150,
+        MaxHealth = 350, Health = 350,
         BaseDodge = 15,
 
-        Experience = 2350,
+        Experience = 12350,
         
         MagicProtection = 20,
         
@@ -90350,9 +90350,9 @@
 
     griffin.AddGold(1050);
     griffin.AddLoot(new LootPack(
-            new LootPackEntry(true, (from, container) => new OchreEgg(), 25.0), 
-            new LootPackEntry(true, (from, container) => new ClearBalm(), 50.0), 
-            new LootPackEntry(true, surfaceTreasure, 0.63)
+            new LootPackEntry(true, groveGems, 5.0, gemsPriceMutator), 
+            new LootPackEntry(true, surfaceBottles, 20.0), 
+            new LootPackEntry(true, groveTreasure, 0.4)
         ));
 
     return griffin;
@@ -90378,10 +90378,10 @@
         <block><![CDATA[
 	var largeBear = new GroveWildlifeBear()
     {
-        MaxHealth = 140, Health = 140,
-        BaseDodge = 14,
+        MaxHealth = 340, Health = 340,
+        BaseDodge = 18,
 
-        Experience = 2200,
+        Experience = 12200,
     };
     
     largeBear.AddStatus(new NightVisionStatus(largeBear));    
@@ -90389,13 +90389,13 @@
     largeBear.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(7, 12, 18, "The bear slashes you with its claws."),      50 
+            new CreatureAttack(13, 20, 30, "The bear slashes you with its claws."),      50 
         }, 
         {
-            new CreatureAttack(7, 15, 25, "You've been mauled by the bear."),           40 
+            new CreatureAttack(14, 25, 35, "You've been mauled by the bear."),           40 
         }, 
         {
-            new CreatureAttack(8, 20, 35, "The bear crushes you within its embrace."),  10 
+            new CreatureAttack(15, 30, 45, "The bear crushes you within its embrace."),  10 
         }, 
     };
     
@@ -90408,9 +90408,9 @@
     largeBear.AddGold(1450);
     largeBear.AddLoot(
         new LootPack(
-            new LootPackEntry(true, surfaceGems, 25.0, gemsPriceMutator), 
+            new LootPackEntry(true, groveGems, 5.0, gemsPriceMutator), 
             new LootPackEntry(true, surfaceBottles, 20.0), 
-            new LootPackEntry(true, surfaceTreasure, 0.63)
+            new LootPackEntry(true, groveTreasure, 0.4)
         ));
 
     return largeBear;
@@ -90436,22 +90436,22 @@
         <block><![CDATA[
 	var wolf = new GroveWildlifeWolf()
     {
-        MaxHealth = 32, Health = 32,
-        BaseDodge = 12,
+        MaxHealth = 132, Health = 132,
+        BaseDodge = 18,
 
-        Experience = 450,
+        Experience = 6450,
     };
     
     wolf.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(6, 2, 5, "The wolf rakes you with its claws."),  50 
+            new CreatureAttack(14, 15, 23, "The wolf rakes you with its claws."),  50 
         }, 
         {
-            new CreatureAttack(7, 3, 6, "The wolf sinks its teeth into you."),  30 
+            new CreatureAttack(15, 15, 29, "The wolf sinks its teeth into you."),  30 
         }, 
         {
-            new CreatureAttack(7, 4, 8, "The wolf lunges at you."),             20
+            new CreatureAttack(16, 16, 35, "The wolf lunges at you."),             20
         }, 
     };
     
@@ -90464,9 +90464,9 @@
     wolf.AddGold(325);
     wolf.AddLoot(
         new LootPack(
-            new LootPackEntry(true, surfaceGems, 25.0, gemsPriceMutator), 
+            new LootPackEntry(true, groveGems, 3.0, gemsPriceMutator), 
             new LootPackEntry(true, surfaceBottles, 20.0), 
-            new LootPackEntry(true, surfaceTreasure, 0.63)
+            new LootPackEntry(true, groveTreasure, 0.2)
         ));
 
     return wolf;
