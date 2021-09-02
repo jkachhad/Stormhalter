@@ -88498,7 +88498,9 @@
     orc.AddGold(250);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion, 5.0), 
         new LootPackEntry(true, GenericBottles,    33)
+        
     ));
     
     //need to add lootpack
@@ -91079,7 +91081,8 @@ var ghoul = new Ghoul()
             
     orc.AddGold(250);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion, 5.0), 
         new LootPackEntry(true, GenericBottles,    33)
     ));
     
@@ -92335,6 +92338,7 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="surfaceShark" size="1" minimum="1" maximum="2" />
       <entry entity="surfaceBloodGrif" size="1" minimum="1" maximum="2" />
       <entry entity="surfaceGreaterLurker" size="1" minimum="1" maximum="1" />
+      <entry entity="surfaceWyvern300" size="3" minimum="1" maximum="2" />
       <bounds region="1">
         <inclusion left="0" top="-14" right="23" bottom="-3" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -92772,6 +92776,7 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="surfaceShark" size="1" minimum="1" maximum="2" />
       <entry entity="surfaceBloodGrif" size="1" minimum="1" maximum="2" />
       <entry entity="surfaceGreaterLurker" size="1" minimum="1" maximum="1" />
+      <entry entity="surfaceWyvern300" size="3" minimum="1" maximum="2" />
       <bounds region="1">
         <inclusion left="0" top="0" right="21" bottom="21" />
         <exclusion left="13" top="0" right="19" bottom="2" />
