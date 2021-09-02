@@ -595,7 +595,8 @@ namespace Kesmai.WorldForge
 			var graphicsDevice = graphicsService.GraphicsDevice;
 			var spritebatch = graphicsService.GetSpriteBatch();
 			var viewRectangle = GetViewRectangle();
-			
+			var selection = _selection;
+
 			graphicsDevice.Clear(Color.Black);
 			
 			spritebatch.Begin(SpriteSortMode.Immediate, samplerState: SamplerState.PointClamp);
@@ -665,14 +666,18 @@ namespace Kesmai.WorldForge
 
 					if (true) // Destination highlights for teleporters //todo: make this a toggle with a "tool" like button
 					{
-						var _teleportDestinationHighlight = Color.FromNonPremultiplied(80, 255, 80, 200);
 						var destinationCounter = new System.Collections.Hashtable();
 						int porterCount;
 						foreach (SegmentRegion searchRegion in segment.Regions) //for each region in the segment
 						{
 							foreach (SegmentTile tile in searchRegion.GetTiles((t) => { return t.GetComponents<TeleportComponent>().Any(); })) // for each tile in the region that is a teleporter:
 							{
-								foreach (TeleportComponent component in tile.GetComponents<TeleportComponent>(t => t is TeleportComponent && t.DestinationRegion == region.ID)) // for each Teleportcomponent on that tile where the destination is this region
+								var _teleportDestinationHighlight = Color.FromNonPremultiplied(80, 255, 80, 200); // default highlight color for destinations, but override if the current tile is contained within a selection.
+								if (selection.IsSelected(tile.X, tile.Y, searchRegion))
+								{
+									_teleportDestinationHighlight = Color.FromNonPremultiplied(255, 255, 80, 255);
+								}
+								foreach (TeleportComponent component in tile.GetComponents<TeleportComponent>(t => t is TeleportComponent && t.DestinationRegion == region.ID && (t.DestinationX!= 0 || t.DestinationY!=0))) // for each Teleportcomponent on that tile where the destination is this region
 								{
 									var _mx = component.DestinationX;
 									var _my = component.DestinationY;
@@ -708,17 +713,23 @@ namespace Kesmai.WorldForge
 					}
 					if (true) //source highlights for teleporters
                     {
-						var _teleportSourceHighlight = Color.FromNonPremultiplied(180, 255, 20, 200);
 
 						foreach (SegmentTile tile in region.GetTiles(t => { return t.GetComponents<TeleportComponent>().Any(); })) // for each tile in this region that has a teleportcomponent
                         {
-							foreach (TeleportComponent component in tile.GetComponents<TeleportComponent>()) // for each of those Teleportcomponents
+
+							foreach (TeleportComponent component in tile.GetComponents<TeleportComponent>(t=> t.DestinationX !=0 || t.DestinationY!=0)) // for each of those Teleportcomponents
                             {
 								var _mx = tile.X;
 								var _my = tile.Y;
 								var targetRegionName = "Invalid";
 								var targetregion = segment.GetRegion(component.DestinationRegion);
 								if (targetregion is not null) { targetRegionName = targetregion.Name; }
+
+								var _teleportSourceHighlight = Color.FromNonPremultiplied(180, 255, 20, 200);
+								if (selection.IsSelected(component.DestinationX, component.DestinationY, targetregion))
+								{
+									_teleportSourceHighlight = Color.FromNonPremultiplied(255, 255, 80, 255);
+								}
 
 								if (viewRectangle.Left <= _mx && _mx <= viewRectangle.Right && // if our viewport has the teleporter
 									viewRectangle.Top <= _my && _my <= viewRectangle.Bottom)
@@ -747,8 +758,6 @@ namespace Kesmai.WorldForge
 				
 				spritebatch.Draw(_renderTarget, Vector2.Zero, Color.White);
 			}
-			
-			var selection = _selection;
 
 			if (selection.Region == region)
 			{
