@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.74.0.0">
+<segment name="Underkingdom" version="0.76.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -99840,7 +99840,7 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    //todo add Troll king sprite template / check stats. Needs immunity to death/lightning but no other magic. Need variables for such.
+    //todo add Troll king sprite template / check stats. Needs immunity to death/lightning but no other magic. Need variables for such. (From Brick, I don't recall TK ever being immune to Death)
     var trollKing = new ElderTroll()
     {
         Name = "Troll.King",
@@ -99861,6 +99861,12 @@
     };
     
     trollKing.AddStatus(new NightVisionStatus(trollKing));
+    
+    trollKing.AddImmunity(typeof(PoisonCloudSpell());
+    
+    trollKing.AddImmunity(typeof(Lightning());
+    
+    trollKing.AddImmunity(typeof(WhirlwindSpell());
     
     trollKing.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
     
