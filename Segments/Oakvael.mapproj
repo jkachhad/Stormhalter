@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.74.0.0">
+<segment name="Oakvael" version="0.76.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -79970,9 +79970,10 @@
           <ground>23</ground>
         </component>
         <component type="DoorComponent">
+          <color r="255" g="210" b="95" a="255" />
           <openId>75</openId>
           <closedId>63</closedId>
-          <secretId>157</secretId>
+          <secretId>158</secretId>
           <destroyedId>81</destroyedId>
           <isSecret>true</isSecret>
         </component>
@@ -80545,9 +80546,10 @@
           <ground>23</ground>
         </component>
         <component type="DoorComponent">
+          <color r="255" g="210" b="95" a="255" />
           <openId>74</openId>
           <closedId>62</closedId>
-          <secretId>25</secretId>
+          <secretId>157</secretId>
           <destroyedId>80</destroyedId>
           <isSecret>true</isSecret>
         </component>
@@ -89983,7 +89985,7 @@
         <block><![CDATA[
     var wolf = new BlackWolf()
     {
-        Name = "Spectral Wolf",
+        Name = "Wolf Spirit",
         MaxHealth = 1000, Health = 1000,
         BaseDodge = 30,
         BasePenetration = ShieldPenetration.Heavy,
@@ -90043,7 +90045,7 @@
         <block><![CDATA[
     var boar = new Boar()
     {
-        Name = "Spectral.Boar",
+        Name = "Boar Spirit",
         MaxHealth = 1500, Health = 1500,
         BaseDodge = 26,
         
@@ -90105,7 +90107,7 @@
         <block><![CDATA[
     var viper = new Snake()
     {
-        Name = "Spectral Viper",
+        Name = "Viper Spirit",
         
         MaxHealth = 500, Health = 500,
         BaseDodge = 28,
