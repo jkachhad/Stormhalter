@@ -240,7 +240,7 @@ namespace Kesmai.WorldForge.Editor
 	public class TeleporterSelector : ComponentSelector<TeleportComponent>
 	{
 		public override string Name => "Filter for only Teleport components.";
-		public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterFloor.png"));
+		public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterTeleport.png"));
 
 		public override ComponentRender TransformRender(SegmentTile tile, TerrainComponent component, ComponentRender render)
 		{
