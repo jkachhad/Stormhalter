@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.74.0.0">
+<segment name="Underkingdom" version="0.76.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -99863,6 +99863,12 @@
     trollKing.AddStatus(new NightVisionStatus(trollKing));
     
     trollKing.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
+    
+    trollKing.AddImmunity(typeof(PoisonCloudSpell());
+    
+    trollKing.AddImmunity(typeof(Lightning());
+    
+    trollKing.AddImmunity(typeof(WhirlwindSpell());
     
     trollKing.Attacks = new CreatureAttackCollection()
     {
