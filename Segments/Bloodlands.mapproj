@@ -88498,7 +88498,7 @@
     orc.AddGold(250);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion, 5.0), 
+        new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(), 5.0), 
         new LootPackEntry(true, GenericBottles,    33)
         
     ));
@@ -89698,7 +89698,7 @@
     
     spectre.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(18, 40, 3050
+        new CreatureBasicAttack(18, 40, 50)
     };
     
     spectre.Spells = new CreatureSpellCollection()
@@ -90190,7 +90190,7 @@
         }, 
         {
             new CreatureAttack(19, 20, 30, "The viper buries its poisonous fangs into you.",
-                                                    new AttackPoisonComponent(40),         30
+                                                    new AttackPoisonComponent(40)),         30
         }, 
         {
             new CreatureAttack(19, 30, 45, "The viper kicks you."),      30
@@ -91082,7 +91082,7 @@ var ghoul = new Ghoul()
     orc.AddGold(250);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion, 5.0), 
+        new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(), 5.0), 
         new LootPackEntry(true, GenericBottles,    33)
     ));
     
@@ -91320,7 +91320,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         
     demon.Wield(new WoodenStaff());
         demon.AddGold(700);
-    return wraith;
+    return demon;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -91344,7 +91344,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
 	
     var twin = new AncientLich()
     {
-        Name = "Gortin,
+        Name = "Gortin",
         Body = 209,
         
         MaxHealth = 4775, Health = 4775, /* Based on 4 Death casts to kill at level 16 magic. */
@@ -91378,7 +91378,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     twin.AddGold(2000);
     twin.AddLoot(
         new LootPack(
-                  new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
@@ -91447,7 +91447,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     twin.AddGold(2000);
     twin.AddLoot(
         new LootPack(
-            n      new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
