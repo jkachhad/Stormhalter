@@ -10,6 +10,7 @@ using DigitalRune.Graphics;
 using DigitalRune.Mathematics.Algebra;
 using DigitalRune.ServiceLocation;
 using Kesmai.WorldForge.Editor;
+using Kesmai.WorldForge.Models;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -658,6 +659,42 @@ namespace Kesmai.WorldForge
 					}
 
 					OnAfterRender(spritebatch);
+
+					if (true) //todo: make this a toggle with a "tool" like button
+					{
+						var _teleportDestinationHighlight = Color.FromNonPremultiplied(80, 255, 80, 200);
+						var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+						var segment = segmentRequest.Response;
+						foreach (SegmentRegion searchRegion in segment.Regions) //for each region in the segment
+						{
+							foreach (SegmentTile tile in searchRegion.GetTiles((t) => { return t.GetComponents<TeleportComponent>().Any(); })) // for each tile in the region that is a teleporter:
+							{
+								foreach (TeleportComponent component in tile.GetComponents<TeleportComponent>(t => t is TeleportComponent && t.DestinationRegion == region.ID)) // for each Teleportcomponent on that tile where the destination is this region
+								{
+									var _mx = component.DestinationX;
+									var _my = component.DestinationY;
+									if (viewRectangle.Left <= _mx && _mx <= viewRectangle.Right && // if our viewport has the destination
+										viewRectangle.Top <= _my && _my <= viewRectangle.Bottom)
+                                    {
+										var rx = (_mx - viewRectangle.Left) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
+										var ry = (_my - viewRectangle.Top) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
+
+										var bounds = new Rectangle(rx, ry,
+											(int)Math.Floor(_presenter.UnitSize * _zoomFactor), (int)Math.Floor(_presenter.UnitSize * _zoomFactor));
+										var innerRectangle = new Rectangle(bounds.Left, bounds.Top + 16, 55, 16);
+
+										spritebatch.DrawRectangle(bounds, _teleportDestinationHighlight);
+										spritebatch.FillRectangle(innerRectangle, _teleportDestinationHighlight);
+
+										spritebatch.DrawString(_font, $"{searchRegion.Name}",
+											new Vector2(bounds.Left + 2, bounds.Top + 2), Color.Black);
+									}
+								}
+							}
+						}
+					}
+
+
 				}
 				
 				graphicsService.GraphicsDevice.SetRenderTargets(oldTargets);
