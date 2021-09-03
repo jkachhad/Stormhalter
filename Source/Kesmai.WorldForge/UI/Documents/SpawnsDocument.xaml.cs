@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using Kesmai.WorldForge.Editor;
 using DigitalRune.ServiceLocation;
+using CommonServiceLocator;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
@@ -61,6 +62,9 @@ namespace Kesmai.WorldForge.UI.Documents
 		{
 			DataGridRow row = sender as DataGridRow;
 			// todo: get a reference to the presenter. jump to entities document and select the entity that matches this one.
+			var _presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+			var entity = row.Item as Entity;
+			//WeakReferenceMessenger.Default.Send<>;
 		}
 	}
 	

@@ -484,8 +484,16 @@ namespace Kesmai.WorldForge
 					_presenter.ActiveDocument = _presenter.Documents.Where(t => t is Kesmai.WorldForge.UI.Documents.SpawnsViewModel).FirstOrDefault();
 					inputService.IsKeyboardHandled = true;
 					var s = _presenter.ActiveDocument as UI.Documents.SpawnsViewModel;
-					s.SelectedLocationSpawner = s.Source.Location.First<LocationSpawner>();
-					s.SelectedRegionSpawner = s.Source.Region.First<RegionSpawner>(); //these sets work correctly, but only after the spawns document has been viewed once to initialize the screens.
+					//s.SelectedLocationSpawner = s.Source.Location.First<LocationSpawner>();
+					//s.SelectedRegionSpawner = s.Source.Region.First<RegionSpawner>(); //these sets work correctly, but only after the spawns document has been viewed once to initialize the screens.
+					var sel = _selection.FirstOrDefault();
+					if (sel is { Width: 1, Height: 1 })
+                    {
+						var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+						var segment = segmentRequest.Response;
+						var locationSpawnersHere = segment.Spawns.Location.First(l => l.X == sel.X && l.Y == sel.Y);
+						if (locationSpawnersHere != null) { s.SelectedLocationSpawner = locationSpawnersHere; }
+                    }
 				}
 			}
 			if (inputService.IsPressed(Keys.W, true))
