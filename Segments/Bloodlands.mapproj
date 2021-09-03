@@ -72291,11 +72291,6 @@
           <ground>13</ground>
         </component>
       </tile>
-      <tile x="-19" y="20">
-        <component type="FloorComponent">
-          <ground>13</ground>
-        </component>
-      </tile>
       <tile x="-18" y="20">
         <component type="FloorComponent">
           <ground>12</ground>
@@ -91495,7 +91490,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     
     twin.Spells = new CreatureSpellCollection(100)
     {
-       { new CreatureSpell<FireStormSpell>(
+       { new CreatureSpell<CreateLavaSpell>(
             skillLevel: 12), 100, TimeSpan.FromSeconds(12.0) }
     };
 
@@ -93285,7 +93280,7 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="archer200" size="2" minimum="2" maximum="4" />
       <bounds region="9">
         <inclusion left="-30" top="5" right="-5" bottom="20" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="-23" top="20" right="-19" bottom="22" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="forestMid">
