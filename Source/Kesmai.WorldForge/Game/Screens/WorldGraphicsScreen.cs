@@ -481,19 +481,18 @@ namespace Kesmai.WorldForge
 				}
 				else if (inputService.IsPressed(Keys.P, false))
 				{
-					_presenter.ActiveDocument = _presenter.Documents.Where(t => t is Kesmai.WorldForge.UI.Documents.SpawnsViewModel).FirstOrDefault();
-					inputService.IsKeyboardHandled = true;
-					var s = _presenter.ActiveDocument as UI.Documents.SpawnsViewModel;
-					//s.SelectedLocationSpawner = s.Source.Location.First<LocationSpawner>();
-					//s.SelectedRegionSpawner = s.Source.Region.First<RegionSpawner>(); //these sets work correctly, but only after the spawns document has been viewed once to initialize the screens.
 					var sel = _selection.FirstOrDefault();
 					if (sel is { Width: 1, Height: 1 })
                     {
 						var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
 						var segment = segmentRequest.Response;
-						var locationSpawnersHere = segment.Spawns.Location.First(l => l.X == sel.X && l.Y == sel.Y);
-						if (locationSpawnersHere != null) { s.SelectedLocationSpawner = locationSpawnersHere; }
+						var locationSpawnerHere = segment.Spawns.Location.FirstOrDefault(l => l.Region == region.ID && l.X == sel.X && l.Y == sel.Y); // are there any location spawners on this region\tile
+						var regionSpawnerHere = segment.Spawns.Region.FirstOrDefault(s => s.Region == region.ID && s.Inclusions.Any(i => i.ToRectangle().Contains(sel.Left, sel.Right))); //are there any region spawners containing this region\tile
+						if (locationSpawnerHere != null) { WeakReferenceMessenger.Default.Send(locationSpawnerHere as Spawner); } //if there was a location spawner, jump to it
+						else if (regionSpawnerHere != null) { WeakReferenceMessenger.Default.Send(regionSpawnerHere as Spawner); } //if no location spawner, but a region spawner, jump to that
+						else { WeakReferenceMessenger.Default.Send(null as Spawner); } // default to just jumping to the spawner tab.
                     }
+
 				}
 			}
 			if (inputService.IsPressed(Keys.W, true))
