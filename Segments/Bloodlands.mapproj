@@ -23341,7 +23341,6 @@
       <id>4</id>
       <name>Bloodlands -200</name>
       <height>-200</height>
-      <healthMultiplier>2</healthMultiplier>
       <tile x="-1" y="-1">
         <component type="WallComponent">
           <wall>355</wall>
@@ -62754,8 +62753,14 @@
         </component>
       </tile>
       <tile x="-2" y="-9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="StaticComponent">
+          <static>1</static>
+        </component>
+        <component type="WallComponent">
+          <wall>31</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-1" y="-9">
@@ -91132,7 +91137,7 @@ var ghoul = new Ghoul()
     hobgoblin.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<LightningBoltSpell>(
-            skillLevel: 7, cost: 13, 
+            skillLevel: 9, cost: 13, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
     };
     
@@ -91390,7 +91395,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
         new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
          new LootPackEntry(true, SemiRare, 40),
-        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),        
+        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        10),        
         new LootPackEntry(true, UltraRare, 25)
         ));
     
@@ -91421,7 +91426,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         Name = "Norlaq",
         Body = 209,
         
-        MaxHealth = 600, Health = 600,
+        MaxHealth = 4700, Health = 4700,
         BaseDodge = 25,
         
         Experience = 55000,
@@ -91447,9 +91452,9 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     twin.Spells = new CreatureSpellCollection(100)
     {
         { new CreatureSpell<DragonBreathLightningSpell>(
-            skillLevel: 12), 100, TimeSpan.FromSeconds(12.0) }
+            skillLevel: 12), 100, TimeSpan.FromSeconds(8.0) }
     };
-    
+    twin.Equip(new IceDragonScaleArmor());
     twin.AddGold(2000);
     twin.AddLoot(
         new LootPack(
@@ -91459,7 +91464,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
         new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
          new LootPackEntry(true, SemiRare, 40),
-        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),        
+        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        10),        
         new LootPackEntry(true, UltraRare, 25)
         ));
 
@@ -92521,8 +92526,9 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="hobs100" size="1" minimum="1" maximum="2" />
-      <entry entity="archer100" size="2" minimum="5" maximum="5" />
+      <entry entity="archer100" size="2" minimum="3" maximum="3" />
       <entry entity="kobald100" size="3" minimum="4" maximum="9" />
+      <entry entity="surfaceOrc" size="1" minimum="2" maximum="3" />
       <bounds region="3">
         <inclusion left="0" top="0" right="17" bottom="8" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -92547,8 +92553,9 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="hobs100" size="1" minimum="1" maximum="2" />
-      <entry entity="archer100" size="2" minimum="5" maximum="5" />
-      <entry entity="archer100" size="3" minimum="4" maximum="9" />
+      <entry entity="archer100" size="2" minimum="3" maximum="3" />
+      <entry entity="kobald100" size="3" minimum="4" maximum="9" />
+      <entry entity="surfaceOrc" size="1" minimum="2" maximum="3" />
       <bounds region="3">
         <inclusion left="0" top="8" right="23" bottom="18" />
         <exclusion left="0" top="0" right="0" bottom="0" />
