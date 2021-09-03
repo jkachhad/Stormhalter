@@ -467,6 +467,11 @@ namespace Kesmai.WorldForge
 						_contextMenu.Open(_uiScreen, args.Context.MousePosition);
 					}
 				}
+				if (inputService.MouseWheelDelta != 0)
+                {
+					ZoomFactor += 0.2f * Math.Sign(inputService.MouseWheelDelta);
+					inputService.IsMouseOrTouchHandled = true;
+				}
 			}
 
 			/* Map Shift */
