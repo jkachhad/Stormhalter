@@ -23341,6 +23341,7 @@
       <id>4</id>
       <name>Bloodlands -200</name>
       <height>-200</height>
+      <healthMultiplier>2</healthMultiplier>
       <tile x="-1" y="-1">
         <component type="WallComponent">
           <wall>355</wall>
@@ -91216,7 +91217,7 @@ var ghoul = new Ghoul()
         MaxHealth = 365, Health = 360,
         MaxMana = 13, Mana = 25,
         BaseDodge = 19,
-       
+
         Experience = 13500,
         BasePenetration = ShieldPenetration.Medium,
     };
@@ -91229,7 +91230,7 @@ var ghoul = new Ghoul()
     hobgoblin.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<LightningBoltSpell>(
-            skillLevel: 9, cost: 13, 
+            skillLevel: 7, cost: 13, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
     };
     
@@ -91475,7 +91476,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     twin.Spells = new CreatureSpellCollection(100)
     {
        { new CreatureSpell<FireStormSpell>(
-            skillLevel: 12), 100, TimeSpan.FromSeconds(15.0) }
+            skillLevel: 12), 100, TimeSpan.FromSeconds(12.0) }
     };
 
     twin.AddGold(2000);
@@ -91518,7 +91519,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         Name = "Norlaq",
         Body = 209,
         
-        MaxHealth = 4775, Health = 4775,
+        MaxHealth = 600, Health = 600,
         BaseDodge = 25,
         
         Experience = 55000,
@@ -91544,7 +91545,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     twin.Spells = new CreatureSpellCollection(100)
     {
         { new CreatureSpell<DragonBreathLightningSpell>(
-            skillLevel: 12), 100, TimeSpan.FromSeconds(8.0) }
+            skillLevel: 12), 100, TimeSpan.FromSeconds(12.0) }
     };
     
     twin.AddGold(2000);
@@ -91828,99 +91829,6 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     //todo add lootpack
     
     return abomination;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="forestBoss3">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    var critter = new Drake()
-    {
-        Name = "Corrupt Long Tail",
-        MaxHealth = 11900, Health = 11900,
-        BaseDodge = 31,
-        Body = 74,
-        MaxMana = 45,
-    
-        Alignment = Alignment.Evil,
-        HideDetection = 30,
-        Experience = 79000,
-        CanLoot = false,
-        
-        
-        CanCharge = true,
-        
-        BasePenetration = ShieldPenetration.Heavy,
-
-        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Magic,
-        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
-    
-    };
-    
-    critter.AddStatus(new NightVisionStatus(critter));
-    
-    critter.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
-    
-    critter.Attacks = new CreatureAttackCollection()
-    {
-        {
-            new CreatureAttack(19,      55, 70,      "The creature smacks you with its vicious tail",
-                                                        new AttackProneComponent(15), 
-                                                        new AttackStunComponent(5)),                40
-        },
-        {
-            new CreatureAttack(21,      60, 75,     "The creature smashes you with its neck.",
-                                                        new AttackProneComponent(25), 
-                                                        new AttackStunComponent(10)),               40
-        },
-        {
-            new CreatureAttack(25,      70, 89,     "The stomps pierces you with its legs.",
-                                                        new AttackProneComponent(35), 
-                                                        new AttackStunComponent(15)),               20
-        },
-    };
-    
-    critter.Blocks = new CreatureBlockCollection
-    {
-        new CreatureBlock(10, "a tail"),
-        new CreatureBlock(8, "a neck"),
-        new CreatureBlock(7, "a giant leg"),
-    };
-        
-    critter.Spells = new CreatureSpellCollection(20.0)
-    {
-        new CreatureSpell<LightningLanceSpell>(
-            skillLevel: 11, cost: 25),
-    };
-    
-    critter.AddGold(5000);
-     critter.AddGold(1000);
-      critter.AddLoot(new LootPack(
-        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    33),
-        new LootPackEntry(true, SemiRare, 3),
-         new LootPackEntry(true, SemiRare, 40),
-        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),
-        new LootPackEntry(true, (from, container) => new BrightFeather(), 40),
-        new LootPackEntry(true, UltraRare, 25)
-    ));
-    
-    return critter;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -92541,27 +92449,6 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="forestBoss1" size="1" minimum="1" maximum="1" />
       <location x="8" y="-13" region="9" />
     </spawn>
-    <spawn type="LocationSpawner" name="forestBoss3">
-      <minimumDelay>8100</minimumDelay>
-      <maximumDelay>11700</maximumDelay>
-      <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="forestBoss3" size="1" minimum="1" maximum="1" />
-      <location x="13" y="-68" region="9" />
-    </spawn>
     <spawn type="RegionSpawner" name="surfaceFishNorth">
       <minimumDelay>660</minimumDelay>
       <maximumDelay>900</maximumDelay>
@@ -92732,9 +92619,8 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="hobs100" size="1" minimum="1" maximum="2" />
-      <entry entity="archer100" size="2" minimum="3" maximum="3" />
-      <entry entity="kobald100" size="3" minimum="4" maximum="8" />
-      <entry entity="surfaceOrc" size="1" minimum="2" maximum="3" />
+      <entry entity="archer100" size="2" minimum="5" maximum="5" />
+      <entry entity="kobald100" size="3" minimum="4" maximum="9" />
       <bounds region="3">
         <inclusion left="0" top="0" right="17" bottom="8" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -92759,9 +92645,8 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="hobs100" size="1" minimum="1" maximum="2" />
-      <entry entity="archer100" size="2" minimum="3" maximum="3" />
-      <entry entity="kobald100" size="3" minimum="4" maximum="8" />
-      <entry entity="surfaceOrc" size="1" minimum="2" maximum="3" />
+      <entry entity="archer100" size="2" minimum="5" maximum="5" />
+      <entry entity="archer100" size="3" minimum="4" maximum="9" />
       <bounds region="3">
         <inclusion left="0" top="8" right="23" bottom="18" />
         <exclusion left="0" top="0" right="0" bottom="0" />
