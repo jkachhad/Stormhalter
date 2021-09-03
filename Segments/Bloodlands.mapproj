@@ -88152,7 +88152,7 @@
         BaseDodge = 16,
         Immunity = CreatureImmunity.Magic,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
-        Experience = 8600,
+        Experience = 14600,
         BasePenetration = ShieldPenetration.Medium,
         Attacks = new CreatureAttackCollection()
         {
@@ -88423,7 +88423,7 @@
         MaxMana = 13, Mana = 13,
         BaseDodge = 15,
 
-        Experience = 8500,
+        Experience = 9500,
         BasePenetration = ShieldPenetration.Medium,
     };
     hobgoblin.AddStatus(new NightVisionStatus(hobgoblin));
@@ -88484,7 +88484,7 @@
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(18)
+        new CreatureBasicAttack(17)
     };
     orc.AddStatus(new NightVisionStatus(orc));
     orc.Wield(new Longbow());
@@ -88578,7 +88578,7 @@
         MaxHealth = 150, Health = 150,
         BaseDodge = 12,
     
-        Experience = 2725,
+        Experience = 14725,
         
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
@@ -88845,7 +88845,7 @@
         MaxHealth = 165, Health = 165,
         BaseDodge = 18,
     
-        Experience = 6800,
+        Experience = 9800,
         BasePenetration = ShieldPenetration.Light,
         MaxMana = 21, Mana = 21,
         DeathResistance = 100,
@@ -88944,7 +88944,7 @@
         MaxHealth = 8350, Health = 8350,
         BaseDodge = 25,
         HideDetection = 26,
-        Experience = 34000,
+        Experience = 44000,
         CanSwim = true,
     
         BasePenetration = ShieldPenetration.Heavy,
@@ -89112,7 +89112,7 @@
         MaxHealth = 2950, Health = 2950,
         BaseDodge = 24,
     
-        Experience = 21000,
+        Experience = 40000,
         
         HideDetection = 22,
         
@@ -89264,7 +89264,7 @@
         CanSwim = true,
         CanWalk = false,
         
-        Experience = 8000,
+        Experience = 18000,
             
         VisibilityDistance = 0,
     };
@@ -89842,9 +89842,11 @@
         BaseDodge = 15,
         HideDetection = 27,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 8500,
+        Experience = 80500,
         CanSwim = false,
         Alignment = Alignment.Chaotic,
+        Immunity = CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
             
     };
         
@@ -89916,9 +89918,11 @@
         BaseDodge = 15,
         HideDetection = 27,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 8500,
+        Experience = 80500,
         CanSwim = false,
         Alignment = Alignment.Chaotic,
+        Immunity = CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
             
     };
         
@@ -89986,7 +89990,7 @@
         MaxHealth = 225, Health = 225,
         BaseDodge = 26,
         
-        Experience = 12000,        
+        Experience = 22000,        
         
         BasePenetration = ShieldPenetration.Medium,
         
@@ -90115,7 +90119,7 @@
         MaxHealth = 225, Health = 225,
         BaseDodge = 29,
         BasePenetration = ShieldPenetration.Heavy,
-        Experience = 12000,
+        Experience = 14000,
 
         MagicProtection = 50,
     };
@@ -90177,7 +90181,7 @@
         BaseDodge = 28,
         MagicProtection = 50,
         CanCharge = true,
-        Experience = 12000,
+        Experience = 13000,
         VisibilityDistance = 1,
         
     };
@@ -90536,7 +90540,7 @@
         Body = 162,
         Immunity = CreatureImmunity.Magic,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
-        Experience = 8200,
+        Experience = 14200,
             
         VisibilityDistance = 0,
     };
@@ -90593,7 +90597,7 @@
         Alignment = Alignment.Evil,
         
 
-        Experience = 17350,
+        Experience = 32350,
         
         MagicProtection = 100,
         Immunity = CreatureImmunity.Magic,
@@ -90666,7 +90670,7 @@ var ghoul = new Ghoul()
         MaxHealth = 290, Health = 290,
         BaseDodge = 19,
     
-        Experience = 7500,
+        Experience = 12500,
     
         Movement = 2,
         BasePenetration = ShieldPenetration.Light,
@@ -90773,13 +90777,13 @@ var ghoul = new Ghoul()
         Body = 246, IsFemale = female,
             
         MaxHealth = 455, Health = 455,
-        BaseDodge = 21,
+        BaseDodge = 26,
         BasePenetration = ShieldPenetration.Light,
         Experience = 27000,
         CanSwim = true,
             
     };
-        
+    abomination.AddStatus(new NightVisionStatus(abomination));
     abomination.Attacks = new CreatureAttackCollection
     {
         new CreatureBasicAttack(20, 35, 55)
@@ -90819,20 +90823,20 @@ var ghoul = new Ghoul()
         <block><![CDATA[
 	var banshee = new Banshee()
     {
-        MaxHealth = 265, Health = 250,
+        MaxHealth = 265, Health = 265,
         BaseDodge = 18,
     
-        Experience = 6800,
+        Experience = 14800,
         BasePenetration = ShieldPenetration.Light,
         MaxMana = 21, Mana = 21,
         DeathResistance = 100,
         MagicProtection = 33,
         
     };
-        
+        banshee.AddStatus(new NightVisionStatus(banshee));    
     banshee.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(45)
+           new CreatureBasicAttack(20, 30, 39)
     };
     
     banshee.Spells = new CreatureSpellCollection()
@@ -90877,7 +90881,7 @@ var ghoul = new Ghoul()
     {
         MaxHealth = 370, Health = 370,
         BaseDodge = 23,
-        Name = "Bat",
+        Name = "Cave Bat",
         CanFly = true,
         Alignment = Alignment.Chaotic,
         Body = 222,
@@ -90902,7 +90906,7 @@ var ghoul = new Ghoul()
                                                     new AttackStunComponent(20.0)),         30
         }, 
         {
-            new CreatureAttack(20, 40, 55, "The bat pummels you with its wings."),      30
+            new CreatureAttack(21, 40, 55, "The bat pummels you with its wings."),      30
         }, 
     };
         
@@ -91063,17 +91067,17 @@ var ghoul = new Ghoul()
         <block><![CDATA[
 	var orc = new Orc()
     {
-        MaxHealth = 125, Health = 125,
+        MaxHealth = 225, Health = 225,
         BaseDodge = 18,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 5800,
+        Experience = 9800,
         
         CanFlee = true,
     };
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(23)
+        new CreatureBasicAttack(21)
     };
     orc.AddStatus(new NightVisionStatus(orc));
     orc.Wield(new Longbow());
@@ -91116,7 +91120,7 @@ var ghoul = new Ghoul()
         MaxMana = 13, Mana = 25,
         BaseDodge = 19,
 
-        Experience = 8500,
+        Experience = 13500,
         BasePenetration = ShieldPenetration.Medium,
     };
     hobgoblin.AddStatus(new NightVisionStatus(hobgoblin));
@@ -91170,7 +91174,7 @@ var ghoul = new Ghoul()
         MaxHealth = 275, Health = 275,
         BaseDodge = 21,
         
-        Experience = 8002,
+        Experience = 12002,
         
         Movement = 3,
         
@@ -91226,11 +91230,13 @@ var ghoul = new Ghoul()
             
         MaxHealth = 10500, Health = 10500,
         BaseDodge = 27,
-        HideDetection = 33,
+        HideDetection = 40,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 18500,
+        Experience = 48500,
         CanSwim = false,
         Alignment = Alignment.Evil,
+        Immunity = CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
             
     };
         
@@ -91301,7 +91307,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         Body = 63,
         Alignment = Alignment.Evil,
     
-        Experience = 12725,
+        Experience = 32725,
         
     };
     demon.AddStatus(new NightVisionStatus(demon));
@@ -91673,6 +91679,58 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     ));
     
     return critter;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="bloodCavesAbominationRanged">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var female = Utility.RandomBool();
+                    
+    var abomination = new Humanoid()
+    {
+        Name = "Abomination",
+        Body = 246, IsFemale = female,
+            
+        MaxHealth = 255, Health = 455,
+        BaseDodge = 26,
+        BasePenetration = ShieldPenetration.Light,
+        Experience = 27000,
+        CanSwim = true,
+            
+    };
+        
+    abomination.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(20, 35, 55)
+    };
+    
+    abomination.Wield(new FineCrossbow());
+    abomination.Equip(new PlatemailArmor());    
+    
+    abomination.AddGold(1450);
+    abomination.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 3)
+    ));
+    //todo add lootpack
+    
+    return abomination;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -93120,7 +93178,7 @@ if (spawn is Shopkeeper shopkeeper)
     <spawn type="RegionSpawner" name="bloodCaves">
       <minimumDelay>480</minimumDelay>
       <maximumDelay>720</maximumDelay>
-      <maximum>22</maximum>
+      <maximum>25</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -93144,6 +93202,8 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="surfaceGreaterLurker" size="1" minimum="1" maximum="1" />
       <entry entity="castlespec300" size="1" minimum="1" maximum="1" />
       <entry entity="SouthernDarknessLich" size="1" minimum="2" maximum="2" />
+      <entry entity="bloodCavesAbominationRanged" size="1" minimum="2" maximum="2" />
+      <entry entity="caveWolfy" size="1" minimum="1" maximum="1" />
       <bounds region="11">
         <inclusion left="2" top="1" right="31" bottom="21" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -93302,6 +93362,33 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="queen300" size="1" minimum="1" maximum="1" />
       <bounds region="5">
         <inclusion left="9" top="34" right="15" bottom="37" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="bloodCavesWaitingArea">
+      <minimumDelay>1800</minimumDelay>
+      <maximumDelay>3600</maximumDelay>
+      <maximum>5</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="newGhoul" size="1" minimum="2" maximum="3" />
+      <entry entity="bloodCaveBanshee" size="2" minimum="1" maximum="1" />
+      <entry entity="bloodCavesAbomination" size="1" minimum="1" maximum="1" />
+      <entry entity="bloodCavesAbominationRanged" size="1" minimum="1" maximum="1" />
+      <bounds region="11">
+        <inclusion left="33" top="20" right="37" bottom="22" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
