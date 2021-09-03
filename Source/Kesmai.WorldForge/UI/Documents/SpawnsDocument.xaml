@@ -25,7 +25,6 @@
         <CollectionViewSource 
             x:Key="collectionViewSourceRegion"
             Source="{Binding Source.Region}">
-            
             <CollectionViewSource.SortDescriptions>
                 <componentModel:SortDescription PropertyName="Name" 
                                                 Direction="Ascending" />
@@ -44,7 +43,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="200"></RowDefinition>
+                        <RowDefinition Height="220"></RowDefinition>
                     </Grid.RowDefinitions>
                     
                     <ToolBar Padding="2" Grid.Row="0">
@@ -65,7 +64,8 @@
                         <ListBox Width="300"
                                  ItemsSource="{Binding Source={StaticResource collectionViewSourceLocation}}" 
                                  SelectedItem="{Binding SelectedLocationSpawner, Mode=TwoWay}"
-                                 SelectionMode="Single">
+                                 SelectionMode="Single"
+                                 SelectedIndex="0">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -92,8 +92,16 @@
                     </syncfusion:PropertyGrid>
                 </Grid>
                 
-                <StackPanel Grid.Column="1">
-                    <TabControl ItemsSource="{Binding SelectedLocationSpawner.Scripts}" x:Name="_scriptsTabControl" 
+                <Grid Grid.Column="1" x:Name="locationGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="3"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="3"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    
+                    <TabControl Grid.Row="0" ItemsSource="{Binding SelectedLocationSpawner.Scripts}" x:Name="_scriptsTabControl" 
                                 Margin="5" MinHeight="300">
                         <TabControl.ItemTemplate>
                             <DataTemplate>
@@ -124,8 +132,8 @@
                             </DataTemplate>
                         </TabControl.ContentTemplate>
                     </TabControl>
-                    
-                    <DataGrid Margin="5" Height="300"
+                    <GridSplitter Grid.Row="1" Height="3" HorizontalAlignment="Stretch" />
+                    <DataGrid Grid.Row="2" Margin="5" Height="300"
                               AutoGenerateColumns="False"
                               ItemsSource="{Binding SelectedLocationSpawner.Entries}">
                         <DataGrid.Resources>
@@ -141,7 +149,9 @@
                             <DataGridTextColumn MinWidth="70" Header="Maximum" Binding="{Binding Maximum, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                </StackPanel>
+                    <GridSplitter Grid.Row="3" Height="3" HorizontalAlignment="Stretch" />
+                    <worldForge:SpawnsPresentationTarget x:Name="_locationPresenter" Grid.Row="4"  Margin="2"  />
+                </Grid>
             </Grid>
         </TabItem>
         
@@ -179,7 +189,8 @@
                     <ScrollViewer Grid.Row="1">
                         <ListBox Width="300"
                                  ItemsSource="{Binding Source={StaticResource collectionViewSourceRegion}}" 
-                                 SelectedItem="{Binding SelectedRegionSpawner, Mode=TwoWay}">
+                                 SelectedItem="{Binding SelectedRegionSpawner, Mode=TwoWay}"
+                                 SelectedIndex="0">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -232,8 +243,13 @@
                     </GroupBox>
                 </Grid>
                 
-                <StackPanel Grid.Column="1">
-                    <DataGrid Margin="5" Height="300"
+                <Grid Grid.Column="1" x:Name="regionGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="3"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <DataGrid Grid.Row="0" Margin="5" Height="300"
                               AutoGenerateColumns="False"
                               ItemsSource="{Binding SelectedRegionSpawner.Entries}">
                         <DataGrid.Resources>
@@ -249,7 +265,9 @@
                             <DataGridTextColumn MinWidth="70" Header="Maximum" Binding="{Binding Maximum, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                </StackPanel>
+                    <GridSplitter Grid.Row="1" Height="3" HorizontalAlignment="Stretch" />
+                    <worldForge:SpawnsPresentationTarget Grid.Row="2" x:Name="_regionPresenter" Margin="2" />
+                </Grid>
             </Grid>
         </TabItem>
     </TabControl>

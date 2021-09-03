@@ -32,6 +32,23 @@ namespace Kesmai.WorldForge
 			if (_screen != null)
 				_screen.SetLocation(location.X, location.Y);
 		}
+
+	}
+
+	public class SpawnsPresentationTarget : PresentationTarget
+	{
+		private SpawnsGraphicsScreen _screen;
+
+		public override WorldGraphicsScreen CreateGraphicsScreen(IGraphicsService graphicsService)
+		{
+			return (_screen = new SpawnsGraphicsScreen(this, _uiManager, graphicsService));
+		}
+
+		public void SetLocation(Spawner spawner)
+		{
+			if (_screen != null)
+				_screen.SetSpawner(spawner);
+		}
 	}
 
 	public class SubregionsPresentationTarget : PresentationTarget

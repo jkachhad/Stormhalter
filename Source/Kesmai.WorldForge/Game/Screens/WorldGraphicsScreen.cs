@@ -53,11 +53,11 @@ namespace Kesmai.WorldForge
 					var ox = rectangle.Left - viewRectangle.Left;
 					var oy = rectangle.Top - viewRectangle.Top;
 
-					var x = (int)(ox * _presenter.UnitSize * _zoomFactor);
-					var y = (int)(oy * _presenter.UnitSize * _zoomFactor);
+					var x = (int)Math.Floor(ox * _presenter.UnitSize * _zoomFactor);
+					var y = (int)Math.Floor(oy * _presenter.UnitSize * _zoomFactor);
 
-					var width = (int)(rectangle.Width * _presenter.UnitSize * _zoomFactor);
-					var height = (int)(rectangle.Height * _presenter.UnitSize * _zoomFactor);
+					var width = (int)Math.Floor(rectangle.Width * _presenter.UnitSize * _zoomFactor);
+					var height = (int)Math.Floor(rectangle.Height * _presenter.UnitSize * _zoomFactor);
 
 					var bounds = new Rectangle(x, y, width, height);
 
@@ -70,10 +70,119 @@ namespace Kesmai.WorldForge
 			}
 		}
 	}
-	
+
+	public class SpawnsGraphicsScreen : WorldGraphicsScreen
+	{
+		private Spawner _spawner;
+		private Color _inclusionBorder = Color.FromNonPremultiplied(200, 255, 50, 255);
+		private Color _inclusionFill = Color.FromNonPremultiplied(200, 255, 50, 50);
+		private Color _exclusionBorder = Color.FromNonPremultiplied(0, 0, 0, 255);
+		private Color _exclusionFill = Color.FromNonPremultiplied(50, 50, 50, 200);
+		private Color _locationBorder = Color.FromNonPremultiplied(0, 255, 255, 200);
+
+		public SpawnsGraphicsScreen(PresentationTarget presentationTarget, IUIService uiService, IGraphicsService graphicsService) : base(presentationTarget, uiService, graphicsService)
+		{
+		}
+
+		public void SetSpawner(Spawner spawner)
+		{
+			_spawner = spawner;
+			if (_spawner is LocationSpawner ls)
+            {
+				CenterCameraOn(ls.X, ls.Y);
+            }
+			if (_spawner is RegionSpawner rs)
+			{
+				var inclusion = rs.Inclusions.FirstOrDefault();
+				if (inclusion != null)
+					
+					CenterCameraOn(inclusion.Left, inclusion.Top);
+			}
+		}
+
+		protected override void OnAfterRender(SpriteBatch spriteBatch)
+		{
+			base.OnAfterRender(spriteBatch);
+
+			if (_spawner is RegionSpawner rs)
+            {
+				var viewRectangle = GetViewRectangle();
+
+				var inclusions = rs.Inclusions;
+				foreach (var rectangle in inclusions)
+                {
+					if (!viewRectangle.Intersects(rectangle.ToRectangle()))
+						continue;
+
+						var ox = rectangle.Left - viewRectangle.Left;
+						var oy = rectangle.Top - viewRectangle.Top;
+
+						var x = (int)Math.Floor(ox * _presenter.UnitSize * _zoomFactor);
+						var y = (int)Math.Floor(oy * _presenter.UnitSize * _zoomFactor);
+
+						var width = (int)Math.Floor(rectangle.Width * _presenter.UnitSize * _zoomFactor);
+						var height = (int)Math.Floor(rectangle.Height * _presenter.UnitSize * _zoomFactor);
+
+						var bounds = new Rectangle(x, y, width, height);
+
+						spriteBatch.FillRectangle(bounds, _inclusionFill);
+						spriteBatch.DrawRectangle(bounds, _inclusionBorder);
+
+						spriteBatch.DrawString(_font, _spawner.Name,
+							new Vector2(bounds.X + 5, bounds.Y + 5), Color.White);
+				}
+
+				var exclusions = rs.Exclusions;
+				foreach (var rectangle in exclusions)
+				{
+					if (rectangle is { Left: 0, Top: 0, Right:0, Bottom:0 } || !viewRectangle.Intersects(rectangle.ToRectangle()))
+						continue;
+
+					var ox = rectangle.Left - viewRectangle.Left;
+					var oy = rectangle.Top - viewRectangle.Top;
+
+					var x = (int)Math.Floor(ox * _presenter.UnitSize * _zoomFactor);
+					var y = (int)Math.Floor(oy * _presenter.UnitSize * _zoomFactor);
+
+					var width = (int)Math.Floor(rectangle.Width * _presenter.UnitSize * _zoomFactor);
+					var height = (int)Math.Floor(rectangle.Height * _presenter.UnitSize * _zoomFactor);
+
+					var bounds = new Rectangle(x, y, width, height);
+
+					spriteBatch.FillRectangle(bounds, _exclusionFill);
+					spriteBatch.DrawRectangle(bounds, _exclusionBorder);
+
+					spriteBatch.DrawString(_font, "Exclusion",
+						new Vector2(bounds.X + 5, bounds.Y + 5), Color.White);
+				}
+			}
+			if (_spawner is LocationSpawner ls)
+            {
+				var viewRectangle = GetViewRectangle();
+				var _mx = ls.X;
+				var _my = ls.Y;
+				if (viewRectangle.Contains(_mx, _my))
+				{
+					var rx = (_mx - viewRectangle.Left) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
+					var ry = (_my - viewRectangle.Top) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
+
+					var bounds = new Rectangle(rx, ry,
+						(int)Math.Floor(_presenter.UnitSize * _zoomFactor), (int)Math.Floor(_presenter.UnitSize * _zoomFactor));
+					var innerRectangle = new Rectangle(bounds.Left, bounds.Top, 55, 20);
+
+					spriteBatch.DrawRectangle(bounds, _locationBorder);
+					spriteBatch.FillRectangle(innerRectangle, _locationBorder);
+
+					spriteBatch.DrawString(_font, $"{_mx}, {_my}",
+						new Vector2(bounds.Left + 4, bounds.Top + 3), Color.Black);
+				}
+			}
+		}
+	}
+
+
 	public class LocationsGraphicsScreen : WorldGraphicsScreen
 	{
-		private static Color _majorColor = Color.FromNonPremultiplied(154, 205, 50, 200);
 		private static Color _highlightColor = Color.FromNonPremultiplied(0, 255, 255, 200);
 		
 		private int _mx;
@@ -81,6 +190,8 @@ namespace Kesmai.WorldForge
 		
 		public LocationsGraphicsScreen(PresentationTarget presentationTarget, IUIService uiService, IGraphicsService graphicsService) : base(presentationTarget, uiService, graphicsService)
 		{
+			DrawGrid = true;
+			Gridcolor = Color.FromNonPremultiplied(154, 205, 50, 200);
 		}
 
 		public void SetLocation(int mx, int my)
@@ -96,37 +207,14 @@ namespace Kesmai.WorldForge
 			base.OnAfterRender(spriteBatch);
 
 			var viewRectangle = GetViewRectangle();
-			
-			for (var vx = viewRectangle.Left; vx <= viewRectangle.Right; vx++)
-			for (var vy = viewRectangle.Top; vy <= viewRectangle.Bottom; vy++)
-			{
-				var dx = vx % 10;
-				var dy = vy % 10;
-
-				if ((dx != 0 || dy != 0) || (_mx == vx && _my == vy))
-					continue;
-				
-				var rx = (vx - viewRectangle.Left) * (int)(_presenter.UnitSize * _zoomFactor);
-				var ry = (vy - viewRectangle.Top) * (int)(_presenter.UnitSize * _zoomFactor);
-				
-				var bounds = new Rectangle(rx, ry,
-					(int) (_presenter.UnitSize * _zoomFactor), (int) (_presenter.UnitSize * _zoomFactor));
-				var innerRectangle = new Rectangle(bounds.Left, bounds.Top, 55, 20);
-				
-				spriteBatch.DrawRectangle(bounds, _majorColor);
-				spriteBatch.FillRectangle(innerRectangle, _majorColor);
-			
-				spriteBatch.DrawString(_font, $"{vx}, {vy}", 
-					new Vector2(bounds.Left + 4, bounds.Top + 3), Color.Black);
-			}
 
 			if (viewRectangle.Contains(_mx, _my))
 			{
-				var rx = (_mx - viewRectangle.Left) * (int)(_presenter.UnitSize * _zoomFactor);
-				var ry = (_my - viewRectangle.Top) * (int)(_presenter.UnitSize * _zoomFactor);
+				var rx = (_mx - viewRectangle.Left) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
+				var ry = (_my - viewRectangle.Top) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
 				
 				var bounds = new Rectangle(rx, ry,
-					(int) (_presenter.UnitSize * _zoomFactor), (int) (_presenter.UnitSize * _zoomFactor));
+					(int)Math.Floor(_presenter.UnitSize * _zoomFactor), (int)Math.Floor(_presenter.UnitSize * _zoomFactor));
 				var innerRectangle = new Rectangle(bounds.Left, bounds.Top, 55, 20);
 				
 				spriteBatch.DrawRectangle(bounds, _highlightColor);
@@ -137,22 +225,22 @@ namespace Kesmai.WorldForge
 			}
 		}
 	}
-	
+
 	public class WorldGraphicsScreen : GraphicsScreen
 	{
 		private static List<Keys> _selectorKeys = new List<Keys>()
 		{
 			Keys.F1, Keys.F2, Keys.F3, Keys.F4, Keys.F5, Keys.F6, Keys.F7, Keys.F8
 		};
-		
+
 		private static List<Keys> _toolKeys = new List<Keys>()
 		{
 			Keys.D1, Keys.D2, Keys.D3, Keys.D4, Keys.D5, Keys.D6, Keys.D7, Keys.D8
 		};
-		
+
 		protected static Color _selectionFill = Color.FromNonPremultiplied(255, 255, 0, 75);
 		protected static Color _selectionBorder = Color.FromNonPremultiplied(255, 255, 0, 100);
-		
+
 		protected ApplicationPresenter _presenter;
 		private Selection _selection;
 
@@ -160,18 +248,21 @@ namespace Kesmai.WorldForge
 		protected UIScreen _uiScreen;
 		private ContextMenu _contextMenu;
 		protected BitmapFont _font;
-		
+
 		private RenderTarget2D _renderTarget;
 		private bool _invalidateRender;
-		
+
 		private Vector2F _cameraLocation = Vector2F.Zero;
 		private Vector2F _cameraDrag = Vector2F.Zero;
 
 		protected float _zoomFactor = 1.0f;
 
+		private bool _drawgrid = false;
+		private Color _gridcolor = Color.FromNonPremultiplied(255, 255, 0, 75);
+
 		private bool _isMouseOver;
 		private bool _isMouseDirectlyOver;
-		
+
 		public Vector2F CameraLocation
 		{
 			get => _cameraLocation;
@@ -198,8 +289,28 @@ namespace Kesmai.WorldForge
 			set
 			{
 				_zoomFactor = value;
+				if (_zoomFactor < 0.2f) { _zoomFactor = 0.2f; }
 				_invalidateRender = true;
 			}
+		}
+
+		public bool DrawGrid
+		{
+			get => _drawgrid;
+			set
+			{
+				_drawgrid = value;
+				_invalidateRender = true;
+			}
+		}
+		public Color Gridcolor
+		{
+			get => _gridcolor;
+			set
+            {
+				_gridcolor = value;
+				_invalidateRender = true;
+            }
 		}
 
 		public int Width => (int)_presentationTarget.ActualWidth;
@@ -369,6 +480,17 @@ namespace Kesmai.WorldForge
 				inputService.IsKeyboardHandled = true;
 			}
 
+			if (inputService.IsDown(Keys.LeftControl) || inputService.IsDown(Keys.RightControl)) //Document Jumping hotkeys
+            {
+				if (inputService.IsPressed(Keys.E, false))
+                {
+					//Set Entity document as active.					
+                }
+				else if (inputService.IsPressed(Keys.S, false))
+				{
+					//Set Spawns document as active.
+				}
+			}
 			if (inputService.IsPressed(Keys.W, true))
 			{
 				shiftMap(0, -1);
@@ -394,11 +516,11 @@ namespace Kesmai.WorldForge
 			}
 			else if (inputService.IsPressed(Keys.Add, false))
 			{
-				ZoomFactor += 0.1f;
+				ZoomFactor += 0.2f;
 			}
 			else if (inputService.IsPressed(Keys.Subtract, false))
 			{
-				ZoomFactor -= 0.1f;
+				ZoomFactor -= 0.2f;
 			}
 			else if (inputService.IsReleased(Keys.Delete))
 			{
@@ -414,6 +536,11 @@ namespace Kesmai.WorldForge
 					inputService.IsKeyboardHandled = true;
 				}
 			}
+			else if (inputService.IsPressed(Keys.Multiply, false))
+            {
+				_drawgrid = !_drawgrid;
+				_invalidateRender = true;
+            }
 			else
 			{
 				if (!inputService.IsKeyboardHandled)
@@ -496,17 +623,17 @@ namespace Kesmai.WorldForge
 					for (var vx = viewRectangle.Left; vx <= viewRectangle.Right; vx++)
 					for (var vy = viewRectangle.Top; vy <= viewRectangle.Bottom; vy++)
 					{
-						var rx = (vx - viewRectangle.Left) * (int) (_presenter.UnitSize * _zoomFactor);
-						var ry = (vy - viewRectangle.Top) * (int) (_presenter.UnitSize * _zoomFactor);
+						var rx = (vx - viewRectangle.Left) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
+						var ry = (vy - viewRectangle.Top) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
 						
 						var segmentTile = region.GetTile(vx, vy);
 
 						if (segmentTile != default(SegmentTile))
 						{
 							var tileBounds = new Rectangle(rx, ry,
-								(int) (_presenter.UnitSize * _zoomFactor), (int) (_presenter.UnitSize * _zoomFactor));
-							var originalBounds = new Rectangle(tileBounds.X - 45, tileBounds.Y - 45,
-								(int) (100 * _zoomFactor), (int) (100 * _zoomFactor));
+								(int)Math.Floor(_presenter.UnitSize * _zoomFactor), (int)Math.Floor(_presenter.UnitSize * _zoomFactor));
+							var originalBounds = new Rectangle((int)Math.Floor(tileBounds.X - (45*_zoomFactor)), (int)Math.Floor(tileBounds.Y - (45*_zoomFactor)),
+								(int)Math.Floor(100 * _zoomFactor), (int)Math.Floor(100 * _zoomFactor));
 
 							var renders = segmentTile.Renders;
 							
@@ -521,7 +648,7 @@ namespace Kesmai.WorldForge
 									if (sprite.Offset != Vector2F.Zero)
 										spriteBounds.Offset(sprite.Offset.X, sprite.Offset.Y);
 
-									spritebatch.Draw(sprite.Texture, spriteBounds.Location.ToVector2(), render.Color);
+									spritebatch.Draw(sprite.Texture, spriteBounds.Location.ToVector2(),null,  render.Color, 0, Vector2.Zero, _zoomFactor, SpriteEffects.None, 0f);
 								}
 							}
 
@@ -547,14 +674,16 @@ namespace Kesmai.WorldForge
 					if (!viewRectangle.Intersects(rectangle))
 						continue;
 
+					if (rectangle.X == 3 && rectangle.Y == 3) { var breakpoint = true; }
+
 					var ox = rectangle.Left - viewRectangle.Left;
 					var oy = rectangle.Top - viewRectangle.Top;
 
-					var x = (int)(ox * _presenter.UnitSize);
-					var y = (int)(oy * _presenter.UnitSize);
+					var x = (int)Math.Floor(ox * _presenter.UnitSize * _zoomFactor);
+					var y = (int)Math.Floor(oy * _presenter.UnitSize * _zoomFactor);
 
-					var width = (int)(rectangle.Width * _presenter.UnitSize);
-					var height = (int)(rectangle.Height * _presenter.UnitSize);
+					var width = (int)Math.Floor(rectangle.Width * _presenter.UnitSize * _zoomFactor);
+					var height = (int)Math.Floor(rectangle.Height * _presenter.UnitSize * _zoomFactor);
 
 					var bounds = new Rectangle(x, y, width, height);
 
@@ -587,6 +716,32 @@ namespace Kesmai.WorldForge
 
 		protected virtual void OnAfterRender(SpriteBatch spriteBatch)
 		{
+			var viewRectangle = GetViewRectangle();
+
+			if (_drawgrid) {
+				for (var vx = viewRectangle.Left; vx <= viewRectangle.Right; vx++)
+				for (var vy = viewRectangle.Top; vy <= viewRectangle.Bottom; vy++)
+				{
+					var dx = vx % 10;
+					var dy = vy % 10;
+
+					if (dx != 0 || dy != 0)
+						continue;
+
+					var rx = (vx - viewRectangle.Left) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
+					var ry = (vy - viewRectangle.Top) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
+
+					var bounds = new Rectangle(rx, ry,
+						(int)Math.Floor(_presenter.UnitSize * _zoomFactor), (int)Math.Floor(_presenter.UnitSize * _zoomFactor));
+					var innerRectangle = new Rectangle(bounds.Left, bounds.Top, 55, 20);
+
+					spriteBatch.DrawRectangle(bounds, _selectionBorder);
+					spriteBatch.FillRectangle(innerRectangle, _selectionBorder);
+
+					spriteBatch.DrawString(_font, $"{vx}, {vy}",
+						new Vector2(bounds.Left + 4, bounds.Top + 3), Color.Black);
+				}
+			}
 		}
 
 		public void OnSizeChanged(int width, int height)
@@ -619,14 +774,14 @@ namespace Kesmai.WorldForge
 			}
 			
 			return new Rectangle((int)actualX, (int)actualY,
-				(int)(_renderTarget.Width / (_presenter.UnitSize * _zoomFactor)) + 1,
-				(int)(_renderTarget.Height / (_presenter.UnitSize * _zoomFactor)) + 1);
+				(int)Math.Floor(_renderTarget.Width / (_presenter.UnitSize * _zoomFactor)) + 1,
+				(int)Math.Floor(_renderTarget.Height / (_presenter.UnitSize * _zoomFactor)) + 1);
 		}
 
 		public (int wx, int wy) ToWorldCoordinates(int mx, int my)
 		{
-			return ((int)_cameraLocation.X + (int)((mx - _cameraDrag.X) / (_presenter.UnitSize * _zoomFactor)), 
-					(int)_cameraLocation.Y + (int)((my - _cameraDrag.Y) / (_presenter.UnitSize * _zoomFactor)));
+			return ((int)_cameraLocation.X + (int)Math.Floor((mx - _cameraDrag.X) / (_presenter.UnitSize * _zoomFactor)), 
+					(int)_cameraLocation.Y + (int)Math.Floor((my - _cameraDrag.Y) / (_presenter.UnitSize * _zoomFactor)));
 		}
 
 		public SegmentTile ToWorldTile(int mx, int my)
@@ -643,8 +798,8 @@ namespace Kesmai.WorldForge
 		public Rectangle ToScreenBounds(int wx, int wy)
 		{
 			return new Rectangle(
-				(wx - (int)_cameraLocation.X) * ((int)(_presenter.UnitSize * _zoomFactor)), 
-				(wy - (int)_cameraLocation.Y) * ((int)(_presenter.UnitSize * _zoomFactor)), 
+				(wx - (int)_cameraLocation.X) * ((int)Math.Floor(_presenter.UnitSize * _zoomFactor)), 
+				(wy - (int)_cameraLocation.Y) * ((int)Math.Floor(_presenter.UnitSize * _zoomFactor)), 
 				_presenter.UnitSize, 
 				_presenter.UnitSize);
 		}
@@ -652,12 +807,15 @@ namespace Kesmai.WorldForge
 		public void CenterCameraOn(int mx, int my)
 		{
 			var offset = new Vector2F(
-				(int)((_renderTarget.Width / 2) / (_presenter.UnitSize * _zoomFactor)), 
-				(int)((_renderTarget.Height / 2) / (_presenter.UnitSize * _zoomFactor)));
+				(int)Math.Floor((_renderTarget.Width / 2) / (_presenter.UnitSize * _zoomFactor)),
+				(int)Math.Floor((_renderTarget.Height / 2) / (_presenter.UnitSize * _zoomFactor)));
 			
 			CameraLocation = new Vector2F(mx, my) - offset;
 			
 			InvalidateRender();
 		}
 	}
+
 }
+
+

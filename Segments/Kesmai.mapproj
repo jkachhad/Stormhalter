@@ -96388,11 +96388,6 @@
         </component>
       </tile>
     </region>
-    <region>
-      <id>5</id>
-      <name>Region 5</name>
-      <height>0</height>
-    </region>
   </regions>
   <locations>
     <location name="Entrance" x="42" y="8" region="1" />
@@ -102451,7 +102446,7 @@ else
     </spawn>
     <spawn type="RegionSpawner" name="Ydnac Secret">
       <minimumDelay>300</minimumDelay>
-      <maximumDelay>0</maximumDelay>
+      <maximumDelay>600</maximumDelay>
       <maximum>4</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -102477,8 +102472,8 @@ else
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Ydnac -1 Blood Room">
-      <minimumDelay>0</minimumDelay>
-      <maximumDelay>0</maximumDelay>
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>600</maximumDelay>
       <maximum>10</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -102504,8 +102499,8 @@ else
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Ydnac Secret Right Side">
-      <minimumDelay>0</minimumDelay>
-      <maximumDelay>0</maximumDelay>
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>600</maximumDelay>
       <maximum>2</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -102548,8 +102543,8 @@ else
       </script>
       <entry entity="dungeon2PirhanaBL" size="2" minimum="6" maximum="12" />
       <bounds region="12">
-        <inclusion left="17" top="25" right="24" bottom="26" />
-        <inclusion left="25" top="25" right="33" bottom="31" />
+        <inclusion left="20" top="25" right="25" bottom="26" />
+        <inclusion left="26" top="25" right="33" bottom="31" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
