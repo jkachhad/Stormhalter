@@ -45231,6 +45231,9 @@
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
+        <component type="Whirlwind">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="16" y="-69">
         <component type="FloorComponent">
@@ -45571,6 +45574,9 @@
       <tile x="12" y="-68">
         <component type="FloorComponent">
           <ground>12</ground>
+        </component>
+        <component type="Whirlwind">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="13" y="-68">
@@ -45944,6 +45950,9 @@
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
+        <component type="Whirlwind">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="17" y="-67">
         <component type="FloorComponent">
@@ -46289,6 +46298,9 @@
       <tile x="12" y="-66">
         <component type="FloorComponent">
           <ground>13</ground>
+        </component>
+        <component type="Whirlwind">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="13" y="-66">
@@ -88893,6 +88905,7 @@
        
         CanCharge = true,
         CanSwim = false,
+        CanLoot = false,
                 
         BasePenetration = ShieldPenetration.Heavy,
 
@@ -89231,7 +89244,9 @@
     };
     
     giant.AddStatus(new NightVisionStatus(giant));
+    
     giant.AddStatus(new BreatheWaterStatus(giant));
+    giant.Wield(Utility.RandomBool() ? (Weapon)new Longsword() : (Weapon)new SteelDagger());
     giant.Equip(new DrakeScaleArmor());
     giant.Attacks = new CreatureAttackCollection
     {
@@ -91180,7 +91195,7 @@ var ghoul = new Ghoul()
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(21)
+        new CreatureBasicAttack(20)
     };
     orc.AddStatus(new NightVisionStatus(orc));
     orc.Wield(new Longbow());
@@ -91289,7 +91304,7 @@ var ghoul = new Ghoul()
     
     kobold.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(19, 33, 50)
+        new CreatureBasicAttack(18, 33, 43)
     };
     
     kobold.Wield(new SteelMace());
@@ -91493,7 +91508,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
         new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
          new LootPackEntry(true, SemiRare, 40),
-        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),        
+         new LootPackEntry(true, (from, container) => new BlackCloak(),        100),
         new LootPackEntry(true, UltraRare, 25)
         ));
     
@@ -91562,8 +91577,8 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
         new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
          new LootPackEntry(true, SemiRare, 40),
-        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),        
-        new LootPackEntry(true, UltraRare, 25)
+
+        new LootPackEntry(true, UltraRare, 12)
         ));
 
     
@@ -91834,6 +91849,99 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     //todo add lootpack
     
     return abomination;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="forestBoss3">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var critter = new Drake()
+    {
+        Name = "Feral Animal",
+        MaxHealth = 11900, Health = 10900,
+        BaseDodge = 31,
+        Body = 233,
+        MaxMana = 45,
+    
+        Alignment = Alignment.Evil,
+        HideDetection = 30,
+        Experience = 79000,
+        CanLoot = false,
+        
+        
+        CanCharge = true,
+        
+        BasePenetration = ShieldPenetration.Heavy,
+
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
+    
+    };
+    critter.Wield(new SteelMace());
+    critter.AddStatus(new NightVisionStatus(critter));
+    
+    critter.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
+    
+    critter.Attacks = new CreatureAttackCollection()
+    {
+        {
+            new CreatureAttack(19,      55, 73,      "The creature mauls you with its paw",
+                                                        new AttackProneComponent(15), 
+                                                        new AttackStunComponent(5)),                40
+        },
+        {
+            new CreatureAttack(21,      60, 78,     "The creature smashes you with its hind legs.",
+                                                        new AttackProneComponent(25), 
+                                                        new AttackStunComponent(10)),               40
+        },
+        {
+            new CreatureAttack(25,      70, 99,     "The creature pierces you with its horn.",
+                                                        new AttackProneComponent(35), 
+                                                        new AttackStunComponent(15)),               20
+        },
+    };
+    
+    critter.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(10, "an appendage"),
+        new CreatureBlock(8, "a foot"),
+        new CreatureBlock(7, "something disgusting, now coating your weapon"),
+    };
+        
+    critter.Spells = new CreatureSpellCollection(20.0)
+    {
+        new CreatureSpell<PoisonCloudSpell>(
+            skillLevel: 11, cost: 25),
+    };
+    
+    critter.AddGold(5000);
+
+      critter.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 3),
+         new LootPackEntry(true, SemiRare, 40),
+        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        10),
+        new LootPackEntry(true, (from, container) => new BrightFeather(), 40),
+        new LootPackEntry(true, UltraRare, 25)
+    ));
+    
+    return critter;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -92453,6 +92561,27 @@ if (spawn is Shopkeeper shopkeeper)
       </script>
       <entry entity="forestBoss1" size="1" minimum="1" maximum="1" />
       <location x="8" y="-13" region="9" />
+    </spawn>
+    <spawn type="LocationSpawner" name="forestboss3">
+      <minimumDelay>8100</minimumDelay>
+      <maximumDelay>11700</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="forestBoss3" size="1" minimum="1" maximum="1" />
+      <location x="14" y="-68" region="9" />
     </spawn>
     <spawn type="RegionSpawner" name="surfaceFishNorth">
       <minimumDelay>660</minimumDelay>
