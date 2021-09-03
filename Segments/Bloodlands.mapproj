@@ -90780,10 +90780,10 @@ var ghoul = new Ghoul()
         BaseDodge = 26,
         BasePenetration = ShieldPenetration.Light,
         Experience = 27000,
-        CanSwim = true,
-            
+        CanSwim = true,        
     };
     abomination.AddStatus(new NightVisionStatus(abomination));
+    abomination.AddStatus(new BreatheWaterStatus(abomination));
     abomination.Attacks = new CreatureAttackCollection
     {
         new CreatureBasicAttack(20, 35, 55)
