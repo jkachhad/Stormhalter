@@ -481,15 +481,42 @@ namespace Kesmai.WorldForge
 				inputService.IsKeyboardHandled = true;
 			}
 
-			if (inputService.IsDown(Keys.LeftControl) || inputService.IsDown(Keys.RightControl)) //Document Jumping hotkeys
+			if (inputService.IsDown(Keys.LeftControl) || inputService.IsDown(Keys.RightControl)) //Document Jumping hotkeys. Todo: move to a better place to capture this user input.
             {
 				if (inputService.IsPressed(Keys.E, false))
                 {
-					//Set Entity document as active.					
-                }
+					_presenter.ActiveDocument = _presenter.Documents.Where(t => t is Kesmai.WorldForge.UI.Documents.EntitiesViewModel).FirstOrDefault();
+					inputService.IsKeyboardHandled = true;
+					Kesmai.WorldForge.UI.Documents.EntitiesViewModel e = _presenter.ActiveDocument as UI.Documents.EntitiesViewModel;
+					e.SelectedEntity = e.Source.First<Entity>(); // this set works, but only after a previous entity has been viewed at least once
+				}
 				else if (inputService.IsPressed(Keys.S, false))
 				{
-					//Set Spawns document as active.
+					_presenter.ActiveDocument = _presenter.Documents.Where(t => t is Kesmai.WorldForge.UI.Documents.SegmentViewModel).FirstOrDefault();
+					inputService.IsKeyboardHandled = true;
+				}
+				else if (inputService.IsPressed(Keys.L, false))
+				{
+					_presenter.ActiveDocument = _presenter.Documents.Where(t => t is Kesmai.WorldForge.UI.Documents.LocationsViewModel).FirstOrDefault();
+					inputService.IsKeyboardHandled = true;
+				}
+				else if (inputService.IsPressed(Keys.U, false))
+				{
+					_presenter.ActiveDocument = _presenter.Documents.Where(t => t is Kesmai.WorldForge.UI.Documents.SubregionViewModel).FirstOrDefault();
+					inputService.IsKeyboardHandled = true;
+				}
+				else if (inputService.IsPressed(Keys.T, false))
+				{
+					_presenter.ActiveDocument = _presenter.Documents.Where(t => t is Kesmai.WorldForge.UI.Documents.TreasuresViewModel).FirstOrDefault();
+					inputService.IsKeyboardHandled = true;
+				}
+				else if (inputService.IsPressed(Keys.P, false))
+				{
+					_presenter.ActiveDocument = _presenter.Documents.Where(t => t is Kesmai.WorldForge.UI.Documents.SpawnsViewModel).FirstOrDefault();
+					inputService.IsKeyboardHandled = true;
+					var s = _presenter.ActiveDocument as UI.Documents.SpawnsViewModel;
+					s.SelectedLocationSpawner = s.Source.Location.First<LocationSpawner>();
+					s.SelectedRegionSpawner = s.Source.Region.First<RegionSpawner>(); //these sets work correctly, but only after the spawns document has been viewed once to initialize the screens.
 				}
 			}
 			if (inputService.IsPressed(Keys.W, true))

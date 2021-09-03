@@ -1,8 +1,10 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Controls;
 using Kesmai.WorldForge.Editor;
+using DigitalRune.ServiceLocation;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
@@ -53,6 +55,12 @@ namespace Kesmai.WorldForge.UI.Documents
 				_regionPresenter.Region = segment.GetRegion(spawn.Region);
 				_regionPresenter.SetLocation(spawn);
 			}
+		}
+
+		private void jumpEntity(object sender, MouseButtonEventArgs e)
+		{
+			DataGridRow row = sender as DataGridRow;
+			// todo: get a reference to the presenter. jump to entities document and select the entity that matches this one.
 		}
 	}
 	
