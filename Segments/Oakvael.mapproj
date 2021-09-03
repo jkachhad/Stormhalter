@@ -67,6 +67,7 @@
             Name = "Dryad";
             Body = 15;
             Alignment = Alignment.Chaotic;
+            CanLoot = false;
         }
 
         public override void OnDeath()
@@ -150,7 +151,7 @@
         }
     }
 
-    public class GroveWildlifeBoar : CreatureEntity
+    public class GroveWildlifeBoar : AnimalEntity
     {
         public GroveWildlifeBoar()
         {
@@ -202,7 +203,7 @@
         }
     }
     
-    public class GroveWildlifeWolf : CreatureEntity
+    public class GroveWildlifeWolf : AnimalEntity
     {
         public GroveWildlifeWolf()
         {
@@ -254,7 +255,7 @@
     }
     
     
-    public class GroveWildlifeGriffin : CreatureEntity
+    public class GroveWildlifeGriffin : AnimalEntity
     {
         public GroveWildlifeGriffin()
         {
@@ -305,7 +306,7 @@
         }
     }
     
-    public class GroveWildlifeBeetle : CreatureEntity
+    public class GroveWildlifeBeetle : AnimalEntity
     {
         public GroveWildlifeBeetle()
         {
@@ -356,7 +357,7 @@
         }
     }
     
-    public class GroveWildlifeBear : CreatureEntity
+    public class GroveWildlifeBear : AnimalEntity
     {
         public GroveWildlifeBear()
         {
@@ -413,6 +414,7 @@
         {
             Body = 3;
             Alignment = Alignment.Chaotic;
+            CanLoot = false;
         }
 
         public int enrageAmount = 0;
