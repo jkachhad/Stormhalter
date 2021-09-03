@@ -89141,7 +89141,7 @@
     };
     
     orc.Wield(new Longsword());
-    orc.Equip(new LeatherArmor());
+    orc.Equip(new DrakeScaleArmor());
             
     orc.AddGold(4000);
     orc.AddLoot(new LootPack(
@@ -89986,8 +89986,8 @@
         },
     };
     
-    fighter.Wield(new Longsword());
-    fighter.Equip(new PlatemailArmor());    
+    fighter.Wield(new Staff());
+    fighter.Equip(new DrakeScaleArmor());    
     
     fighter.AddGold(4450);
   fighter.AddLoot(new LootPack(
@@ -89997,7 +89997,7 @@
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
         new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
          new LootPackEntry(true, SemiRare, 40),
-        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),        
+
         new LootPackEntry(true, UltraRare, 25)
 	));
     return fighter;
@@ -90062,8 +90062,8 @@
         },
     };
     
-    fighter.Wield(new Longsword());
-    fighter.Equip(new PlatemailArmor());    
+    fighter.Wield(new BlackStaff());
+    fighter.Equip(new DrakeScaleArmor());    
     
     fighter.AddGold(4450);
     fighter.AddLoot(new LootPack(
@@ -90262,7 +90262,8 @@
       wolf.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33),
-        new LootPackEntry(true, SemiRare, 1)
+        new LootPackEntry(true, SemiRare, 1),
+        new LootPackEntry(true, MagicBottles, 1)
     ));
 
     return wolf;
@@ -90377,7 +90378,13 @@
     centaur.Wield(new IronRod());
     
     centaur.AddGold(4500);
-
+centaur.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 3),
+        new LootPackEntry(true, MagicBottles, 4)
+    ));
+   
     
     return centaur;
 ]]></block>
@@ -90450,7 +90457,8 @@
       griffin.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33),
-        new LootPackEntry(true, SemiRare, 3)
+        new LootPackEntry(true, SemiRare, 3),
+        new LootPackEntry(true, MagicBottles, 4)
     ));
    
 
@@ -90909,9 +90917,10 @@ var ghoul = new Ghoul()
     abomination.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33),
-        new LootPackEntry(true, SemiRare, 3)
+        new LootPackEntry(true, SemiRare, 3),
+        new LootPackEntry(true, MagicBottles, 3)
     ));
-    //todo add lootpack
+
     
     return abomination;
 ]]></block>
@@ -91342,7 +91351,7 @@ var ghoul = new Ghoul()
         Body = 221, IsFemale = false,
             
         MaxHealth = 10500, Health = 10500,
-        BaseDodge = 27,
+        BaseDodge = 31,
         HideDetection = 40,
         BasePenetration = ShieldPenetration.Light,
         Experience = 48500,
@@ -91350,12 +91359,13 @@ var ghoul = new Ghoul()
         Alignment = Alignment.Evil,
         Immunity = CreatureImmunity.Magic,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+        Mana = 45, MaxMana = 45,
             
     };
         
    fighter.AddStatus(new NightVisionStatus(fighter));
     
-    fighter.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
+    fighter.CombatantChangeInterval = TimeSpan.FromSeconds(8.0);
     
     fighter.Attacks = new CreatureAttackCollection
     {
@@ -91376,9 +91386,13 @@ var ghoul = new Ghoul()
         },
     };
     
-    fighter.Wield(new Longsword());
-    fighter.Equip(new PlatemailArmor());    
-    
+    fighter.Wield(new BlackStaff());
+    fighter.Equip(new IceDragonScaleArmor());    
+    fighter.Spells = new CreatureSpellCollection(100)
+    {
+        { new CreatureSpell<LightningLanceSpell>(
+            skillLevel: 13), 100, TimeSpan.FromSeconds(12.0) }
+    };
     fighter.AddGold(4450);
   fighter.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
@@ -91438,6 +91452,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     };
         
     demon.Wield(new WoodenStaff());
+    demon.Equip(new DrakeScaleArmor());
     demon.AddGold(700);
     return demon;
 ]]></block>
@@ -91491,7 +91506,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     twin.Spells = new CreatureSpellCollection(100)
     {
        { new CreatureSpell<CreateLavaSpell>(
-            skillLevel: 12), 100, TimeSpan.FromSeconds(12.0) }
+            skillLevel: 12), 100, TimeSpan.FromSeconds(15.0) }
     };
 
     twin.AddGold(2000);
@@ -91502,9 +91517,11 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
         new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
+        new LootPackEntry(true, (from, container) => new LightningResistanceRing(),        35),
          new LootPackEntry(true, SemiRare, 40),
          new LootPackEntry(true, (from, container) => new BlackCloak(),        100),
-        new LootPackEntry(true, UltraRare, 25)
+        new LootPackEntry(true, UltraRare, 13),
+        
         ));
     
     return twin;
@@ -91839,7 +91856,8 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     abomination.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33),
-        new LootPackEntry(true, SemiRare, 3)
+        new LootPackEntry(true, SemiRare, 3),
+        new LootPackEntry(true, MagicBottles, 3)
     ));
     //todo add lootpack
     
@@ -91921,7 +91939,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     critter.Spells = new CreatureSpellCollection(20.0)
     {
         new CreatureSpell<PoisonCloudSpell>(
-            skillLevel: 11, cost: 25),
+            skillLevel: 12, cost: 25),
     };
     
     critter.AddGold(5000);
@@ -93506,7 +93524,7 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="forestBoss2a" size="1" minimum="1" maximum="1" />
-      <entry entity="forestBoss2b" size="1" minimum="2" maximum="2" />
+      <entry entity="forestBoss2b" size="1" minimum="1" maximum="1" />
       <bounds region="9">
         <inclusion left="-28" top="-52" right="-23" bottom="-50" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -93835,6 +93853,15 @@ if (spawn is Shopkeeper shopkeeper)
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new StrongStrengthRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new FireIceProtectionRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
