@@ -454,10 +454,7 @@ namespace Kesmai.WorldForge
 			{
 				if (inputService.IsPressed(Keys.E, false))
 				{
-					_presenter.ActiveDocument = _presenter.Documents.Where(t => t is Kesmai.WorldForge.UI.Documents.EntitiesViewModel).FirstOrDefault();
-					inputService.IsKeyboardHandled = true;
-					Kesmai.WorldForge.UI.Documents.EntitiesViewModel e = _presenter.ActiveDocument as UI.Documents.EntitiesViewModel;
-					e.SelectedEntity = e.Source.First<Entity>(); // this set works, but only after a previous entity has been viewed at least once
+					WeakReferenceMessenger.Default.Send(null as Entity);
 				}
 				else if (inputService.IsPressed(Keys.S, false))
 				{

@@ -82,11 +82,8 @@ namespace Kesmai.WorldForge.UI.Documents
 
 		private void jumpEntity(object sender, MouseButtonEventArgs e)
 		{
-			DataGridRow row = sender as DataGridRow;
-			// todo: get a reference to the presenter. jump to entities document and select the entity that matches this one.
-			var _presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
-			var entity = row.Item as Entity;
-			//WeakReferenceMessenger.Default.Send<>;
+			//get the entity from this row... somehow.
+			var thing = '1';
 		}
 	}
 	
