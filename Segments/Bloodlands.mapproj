@@ -45976,6 +45976,15 @@
           <tree>199</tree>
           <canGrow>true</canGrow>
         </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>-20</destinationX>
+          <destinationY>-39</destinationY>
+          <destinationRegion>9</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+        </component>
       </tile>
       <tile x="-31" y="-64">
         <component type="FloorComponent">
@@ -46372,6 +46381,13 @@
         <component type="FloorComponent">
           <ground>13</ground>
         </component>
+        <component type="DoorComponent">
+          <openId>75</openId>
+          <closedId>63</closedId>
+          <secretId>31</secretId>
+          <destroyedId>81</destroyedId>
+          <isSecret>true</isSecret>
+        </component>
       </tile>
       <tile x="-28" y="-63">
         <component type="FloorComponent">
@@ -46716,8 +46732,14 @@
         </component>
       </tile>
       <tile x="-29" y="-62">
-        <component type="FloorComponent">
-          <ground>13</ground>
+        <component type="StaticComponent">
+          <static>13</static>
+        </component>
+        <component type="WallComponent">
+          <wall>31</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-28" y="-62">
@@ -53880,6 +53902,12 @@
           <destroyed>160</destroyed>
           <ruins>170</ruins>
         </component>
+        <component type="WallComponent">
+          <wall>159</wall>
+          <destroyed>162</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
       </tile>
       <tile x="-20" y="-40">
         <component type="FloorComponent">
@@ -54112,7 +54140,14 @@
       </tile>
       <tile x="-21" y="-39">
         <component type="FloorComponent">
-          <ground>1</ground>
+          <ground>13</ground>
+        </component>
+        <component type="DoorComponent">
+          <openId>75</openId>
+          <closedId>63</closedId>
+          <secretId>158</secretId>
+          <destroyedId>81</destroyedId>
+          <isSecret>true</isSecret>
         </component>
       </tile>
       <tile x="-20" y="-39">
@@ -54321,6 +54356,11 @@
         <component type="WallComponent">
           <wall>157</wall>
           <destroyed>160</destroyed>
+          <ruins>170</ruins>
+        </component>
+        <component type="WallComponent">
+          <wall>158</wall>
+          <destroyed>161</destroyed>
           <ruins>170</ruins>
         </component>
       </tile>
@@ -55705,6 +55745,15 @@
       <tile x="-9" y="-30">
         <component type="FloorComponent">
           <ground>13</ground>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>-42</destinationX>
+          <destinationY>-18</destinationY>
+          <destinationRegion>9</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
         </component>
       </tile>
       <tile x="-8" y="-30">
@@ -69729,6 +69778,11 @@
           <ground>13</ground>
         </component>
       </tile>
+      <tile x="-19" y="20">
+        <component type="FloorComponent">
+          <ground>13</ground>
+        </component>
+      </tile>
       <tile x="-18" y="20">
         <component type="FloorComponent">
           <ground>12</ground>
@@ -69903,6 +69957,15 @@
       <tile x="-25" y="21">
         <component type="FloorComponent">
           <ground>12</ground>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>-1</destinationX>
+          <destinationY>-72</destinationY>
+          <destinationRegion>9</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
         </component>
       </tile>
       <tile x="-24" y="21">
@@ -89151,6 +89214,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
          new LootPackEntry(true, SemiRare, 40),
         new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        10),
         new LootPackEntry(true, (from, container) => new BrightFeather(), 40),
+        new LootPackEntry(true, (from, container) => new BlueStaffRaiseDead(), 50),
         new LootPackEntry(true, UltraRare, 25)
     ));
     
