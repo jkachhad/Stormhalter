@@ -99584,7 +99584,8 @@
     
         Movement = 2,
         BasePenetration = ShieldPenetration.Light,
-        //todo add poison prot
+        
+        Immunity = CreatureImmunity.Poison,
         
     };
     
@@ -99807,7 +99808,7 @@
     {
         { 
             new CreatureAttack(12,     10, 20,      "The spider bites you", 
-                                                new AttackPoisonComponent(40))
+                                                new AttackPoisonComponent(25))
         }, 
     };
     
@@ -99918,6 +99919,8 @@
         Alignment = Alignment.Chaotic,
         HideDetection = 24,
         Experience = 27000,
+        
+        Immunity = CreatureImmunity.Poison,
             
         VisibilityDistance = 0,
     };
@@ -99985,7 +99988,7 @@
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Web | CreatureImmunity.Magic | CreatureImmunity.Poison,
-        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
     
     };
     
@@ -101001,6 +101004,8 @@
         FireProtection = 50,
         IceProtection = 50,
         DeathResistance = 100,
+        
+        Immunity = CreatureImmunity.Poison,
     };
     
     ghoul.AddStatus(new NightVisionStatus(ghoul));
@@ -101060,6 +101065,11 @@
         BasePenetration = ShieldPenetration.Light,
         Movement = 3,
         DeathResistance = 100,
+        
+        Immunity = CreatureImmunity.Piercing,
+        
+        Weakness = CreatureWeakness.Silver,
+        
     };
     
     skeleton.Attacks = new CreatureAttackCollection()
@@ -101170,7 +101180,9 @@
     
         BasePenetration = ShieldPenetration.Heavy,
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile,
+                   CreatureImmunity.Projectile | CreatureImmunity.Magic,
+        
+        Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
     };
     
     mummy.AddStatus(new NightVisionStatus(mummy));
@@ -101383,7 +101395,10 @@
         BasePenetration = ShieldPenetration.Medium,
         CanSwim = true,
         CanWalk = false,
+        CanCharge = true,   
         Experience = 7000,
+        
+        Immunity = CreatureImmunity.Poison, 
             
         VisibilityDistance = 0,
     };
