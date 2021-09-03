@@ -99660,6 +99660,8 @@
     };
     
     drake.AddStatus(new NightVisionStatus(drake));
+	
+	drake.AddImmunity(typeof(Lightning));
     
     drake.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
     
@@ -99865,11 +99867,9 @@
     
     trollKing.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
     
-    trollKing.AddImmunity(typeof(PoisonCloudSpell());
-    
-    trollKing.AddImmunity(typeof(Lightning());
-    
-    trollKing.AddImmunity(typeof(WhirlwindSpell());
+    trollKing.AddImmunity(typeof(PoisonCloudSpell));
+    trollKing.AddImmunity(typeof(Lightning));
+    trollKing.AddImmunity(typeof(WhirlwindSpell));
     
     trollKing.Attacks = new CreatureAttackCollection()
     {
