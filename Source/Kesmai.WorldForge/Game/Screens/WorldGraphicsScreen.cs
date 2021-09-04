@@ -455,25 +455,26 @@ namespace Kesmai.WorldForge
 				if (inputService.IsPressed(Keys.E, false))
 				{
 					WeakReferenceMessenger.Default.Send(null as Entity);
+					inputService.IsKeyboardHandled = true;
 				}
 				else if (inputService.IsPressed(Keys.S, false))
 				{
-					_presenter.ActiveDocument = _presenter.Documents.Where(t => t is Kesmai.WorldForge.UI.Documents.SegmentViewModel).FirstOrDefault();
+					WeakReferenceMessenger.Default.Send(null as Segment);
 					inputService.IsKeyboardHandled = true;
 				}
 				else if (inputService.IsPressed(Keys.L, false))
 				{
-					_presenter.ActiveDocument = _presenter.Documents.Where(t => t is Kesmai.WorldForge.UI.Documents.LocationsViewModel).FirstOrDefault();
+					WeakReferenceMessenger.Default.Send(null as SegmentLocation);
 					inputService.IsKeyboardHandled = true;
 				}
 				else if (inputService.IsPressed(Keys.U, false))
 				{
-					_presenter.ActiveDocument = _presenter.Documents.Where(t => t is Kesmai.WorldForge.UI.Documents.SubregionViewModel).FirstOrDefault();
+					WeakReferenceMessenger.Default.Send(null as SegmentSubregion);
 					inputService.IsKeyboardHandled = true;
 				}
 				else if (inputService.IsPressed(Keys.T, false))
 				{
-					_presenter.ActiveDocument = _presenter.Documents.Where(t => t is Kesmai.WorldForge.UI.Documents.TreasuresViewModel).FirstOrDefault();
+					WeakReferenceMessenger.Default.Send(null as SegmentTreasure);
 					inputService.IsKeyboardHandled = true;
 				}
 				else if (inputService.IsPressed(Keys.P, false))
@@ -481,12 +482,12 @@ namespace Kesmai.WorldForge
 					var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
 					var segment = segmentRequest.Response;
 					var sel = _selection.FirstOrDefault();
-					var locationSpawnerHere = segment.Spawns.Location.FirstOrDefault(l => l.Region == region.ID && l.X == sel.X && l.Y == sel.Y); // are there any location spawners on this region\tile
-					var regionSpawnerHere = segment.Spawns.Region.FirstOrDefault(s => s.Region == region.ID && s.Inclusions.Any(i => i.ToRectangle().Contains(sel.Left, sel.Right))); //are there any region spawners containing this region\tile
+					LocationSpawner locationSpawnerHere = null;
+					RegionSpawner regionSpawnerHere = null;
 					if (sel is { Width: 1, Height: 1 })
                     {
 						locationSpawnerHere = segment.Spawns.Location.FirstOrDefault(l => l.Region == region.ID && l.X == sel.X && l.Y == sel.Y); // are there any location spawners on this region\tile
-						regionSpawnerHere = segment.Spawns.Region.FirstOrDefault(s => s.Region == region.ID && s.Inclusions.Any(i => i.ToRectangle().Contains(sel.Left, sel.Right))); //are there any region spawners containing this region\tile
+						regionSpawnerHere = segment.Spawns.Region.FirstOrDefault(s => s.Region == region.ID && s.Inclusions.Any(i => i.ToRectangle().Contains(sel.Left, sel.Top))); //are there any region spawners containing this region\tile
 					}
 					if (locationSpawnerHere != null) { WeakReferenceMessenger.Default.Send(locationSpawnerHere as Spawner); } //if there was a location spawner, jump to it
 					else if (regionSpawnerHere != null) { WeakReferenceMessenger.Default.Send(regionSpawnerHere as Spawner); } //if no location spawner, but a region spawner, jump to that

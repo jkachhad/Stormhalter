@@ -133,7 +133,7 @@
                         </TabControl.ContentTemplate>
                     </TabControl>
                     <GridSplitter Grid.Row="1" Height="3" HorizontalAlignment="Stretch" />
-                    <DataGrid Grid.Row="2" Margin="5" Height="300"
+                    <DataGrid Grid.Row="2" Margin="5" Height="300" x:Name="_locationEntities"
                               AutoGenerateColumns="False"
                               ItemsSource="{Binding SelectedLocationSpawner.Entries}">
                         <DataGrid.Resources>

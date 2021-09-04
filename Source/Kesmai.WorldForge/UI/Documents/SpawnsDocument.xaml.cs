@@ -30,25 +30,7 @@ namespace Kesmai.WorldForge.UI.Documents
 
 			WeakReferenceMessenger.Default
 				.Register<SpawnsDocument, Spawner>(
-					this, (r,m) => { ChangeSpawner(m); });
-		}
-		private void ChangeSpawner(Spawner spawner)
-		{
-			var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
-			var viewmodel = presenter.Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
-			presenter.ActiveDocument = viewmodel;
-
-			if (spawner is LocationSpawner)
-            {
-				_typeSelector.SelectedIndex = 0;
-				viewmodel.SelectedLocationSpawner = spawner as LocationSpawner;
-            }
-
-			if (spawner is RegionSpawner)
-            {
-				_typeSelector.SelectedIndex = 1;
-				viewmodel.SelectedRegionSpawner = spawner as RegionSpawner;
-			}
+					this, (r,m) => { _typeSelector.SelectedIndex = m is LocationSpawner ? 0 : 1; });
 		}
 		private void OnLocationSpawnerChanged(SpawnsDocument recipient, SpawnsViewModel.SelectedLocationSpawnerChangedMessage message)
 		{
@@ -83,7 +65,8 @@ namespace Kesmai.WorldForge.UI.Documents
 		private void jumpEntity(object sender, MouseButtonEventArgs e)
 		{
 			//get the entity from this row... somehow.
-			var thing = '1';
+			var ent = _locationEntities.SelectedItem as Entity;
+			WeakReferenceMessenger.Default.Send<Entity>(ent);
 		}
 	}
 	
