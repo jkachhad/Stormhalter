@@ -265,7 +265,7 @@ namespace Kesmai.WorldForge.Editor
 	public class SpawnSelector : ComponentSelector<TerrainComponent>
 	{
 		public override string Name => "Show all spawns as overlays"; //render code in worldscreen
-		public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterTeleport.png"));
+		public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/Spawns.png"));
 
 		public override ComponentRender TransformRender(SegmentTile tile, TerrainComponent component, ComponentRender render)
 		{
