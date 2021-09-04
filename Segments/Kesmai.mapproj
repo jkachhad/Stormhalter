@@ -100657,7 +100657,7 @@ return orc;
             skillLevel: 9)
     };
     
-    //todo: add the +4 shining silver longsword in her loot chance (the purple one from OG). Add the binding "Agate gem" assuming the agate I added isn't it
+    //todo: Add the missing the +4 Shining Steel Greatsword to items and then add to Daisy loot table.
     dragon.AddGold(1000);
     dragon.AddLoot(
         new LootPack(
@@ -100665,7 +100665,8 @@ return orc;
             new LootPackEntry(true, dungeon4Rings,              25.0),
             new LootPackEntry(true, dungeon3Potions,    10.0),
             new LootPackEntry(true, (from, container) => new PearDiamond(16000u),    100, gemsPriceMutator),
-            new LootPackEntry(true, (from, container) => new ScorpionRobe(),        100)
+            new LootPackEntry(true, (from, container) => new ScorpionRobe(),        100),
+            new LootPackEntry(true, (from, container) => new SteelLongsword(),        50.0),
         ));
     
     return dragon;
