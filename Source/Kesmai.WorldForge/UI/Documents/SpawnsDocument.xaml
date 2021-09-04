@@ -147,15 +147,6 @@
                             <DataGridTextColumn MinWidth="70" Header="Size" Binding="{Binding Size, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                             <DataGridTextColumn MinWidth="70" Header="Minimum" Binding="{Binding Minimum, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                             <DataGridTextColumn MinWidth="70" Header="Maximum" Binding="{Binding Maximum, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
-                            <DataGridTemplateColumn MinWidth="70" Header="">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock MouseDown="jumpEntity">
-                                            Jump
-                                        </TextBlock>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                     <GridSplitter Grid.Row="3" Height="3" HorizontalAlignment="Stretch" />

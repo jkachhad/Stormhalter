@@ -66,7 +66,7 @@ namespace Kesmai.WorldForge.UI.Documents
 		{
 			//get the entity from this row... somehow.
 			var ent = _locationEntities.SelectedItem as Entity;
-			WeakReferenceMessenger.Default.Send<Entity>(ent);
+			//WeakReferenceMessenger.Default.Send<Entity>(ent);
 		}
 	}
 	
