@@ -80,7 +80,7 @@
         {
         }
 
-        public override void OnSpellFinished(Target target, MobileEntity combatant)
+        public override void OnSpellTarget(Target target, MobileEntity combatant)
         {
             if (Spell is CurseSpell curse)
             {
@@ -89,6 +89,9 @@
                   
                 Timer.DelayCall(TimeSpan.FromSeconds(3.0), () =>
                 {
+					if (combatant.IsAlive)
+						return;
+				
                     combatant.EmitSound(206, 3, 9);
                     
                     var snake = new Snake()
@@ -499,7 +502,7 @@
         {
         }
 
-        public override void OnSpellFinished(Target target, MobileEntity combatant)
+        public override void OnSpellTarget(Target target, MobileEntity combatant)
         {
             
             if (Spell is CurseSpell curse)
@@ -507,6 +510,7 @@
                 Say($"I would sacrifice ANYTHING to protect the grove!");
                 combatant.Teleport(new Point2D(23, 5, 236));
             }
+			
             base.OnSpellTarget(target, combatant);
 
         }
