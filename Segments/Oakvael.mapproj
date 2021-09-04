@@ -81,6 +81,9 @@
 
         public override void OnSpellFinished(Target target, MobileEntity combatant)
         {
+			/* Do the original spell logic. */
+			base.OnSpellTarget(target, combatant);
+			
             if (Spell is CurseSpell curse)
             {
                 var snake = new Snake()
@@ -490,12 +493,13 @@
 
         public override void OnSpellFinished(Target target, MobileEntity combatant)
         {
+			base.OnSpellTarget(target, combatant);
+			
             if (Spell is CurseSpell curse)
             {
                 Say($"I would sacrifice ANYTHING to protect the grove!");
                 combatant.Teleport(new Point2D(23, 5, 236));
             }
-
         }
 
         public override int GetNearbySound() => 208;
@@ -89748,11 +89752,9 @@
         Immunity = CreatureImmunity.Magic,
         Weakness = CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
     };
-    
-	/*
-    dryad.AddWeakness(IceStormSpell);
-    dryad.AddWeakness(LightningBoltSpell);
-    */
+
+    dryad.AddWeakness(typeof(IceStormSpell));
+    dryad.AddWeakness(typeof(LightningBoltSpell));
 	
     dryad.AddStatus(new BreatheWaterStatus(dryad));
     
@@ -90165,10 +90167,8 @@
     
     piranha.AddStatus(new BreatheWaterStatus(piranha));
     
-	/*
-    piranha.AddWeakness(IceStormSpell);
-    piranha.AddWeakness(LightningBoltSpell);
-    */
+    piranha.AddWeakness(typeof(IceStormSpell));
+    piranha.AddWeakness(typeof(LightningBoltSpell));
 
     piranha.Attacks = new CreatureAttackCollection
     {

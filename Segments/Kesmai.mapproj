@@ -100497,10 +100497,11 @@ return orc;
     
         FireProtection = 100,
         IceProtection = 100,
-        // TODO: WHIRLWIND PROTECTION 100
-        // TODO: POISON PROTECTION 100
     };    
     piranha.AddStatus(new BreatheWaterStatus(piranha));
+    
+    piranha.AddImmunity(typeof(Whirlwind));
+    piranha.AddImmunity(typeof(Poison));
     
     piranha.Attacks = new CreatureAttackCollection
     {
@@ -100561,6 +100562,8 @@ return orc;
     };
     dragon.AddStatus(new NightVisionStatus(dragon));
     
+    dragon.AddImmunity(typeof(DragonBreathFireSpell));
+
     dragon.Attacks = new CreatureAttackCollection
     {
         {
@@ -100873,10 +100876,11 @@ else
     
         FireProtection = 100,
         IceProtection = 100,
-        // TODO: WHIRLWIND PROTECTION 100
-        // TODO: POISON PROTECTION 100
     };    
     piranhaBL.AddStatus(new BreatheWaterStatus(piranhaBL));
+    
+    piranhaBL.AddImmunity(typeof(Whirlwind));
+    piranhaBL.AddImmunity(typeof(Poison));
     
     piranhaBL.Attacks = new CreatureAttackCollection
     {

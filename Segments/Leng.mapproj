@@ -76311,6 +76311,8 @@
     };
     
     drake.AddStatus(new NightVisionStatus(drake));
+	
+	drake.AddImmunity(typeof(Lightning));
     
     drake.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
     
@@ -78228,10 +78230,11 @@
         <block><![CDATA[
     spawn.Name = "Reuv";
     if (spawn is Shopkeeper shopkeeper)
+	{
+	    shopkeeper.AddCounter(new Point2D(19, 23, 1));
         shopkeeper.AddCounter(new Point2D(20, 23, 1));
-        shopkeeper.AddCounter(new Point2D(19, 23, 1));
         shopkeeper.AddCounter(new Point2D(21, 23, 1));
-
+	}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
