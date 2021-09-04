@@ -23341,7 +23341,6 @@
       <id>4</id>
       <name>Bloodlands -200</name>
       <height>-200</height>
-      <healthMultiplier>2</healthMultiplier>
       <tile x="-1" y="-1">
         <component type="WallComponent">
           <wall>355</wall>
@@ -37000,6 +36999,11 @@
         <component type="StaticComponent">
           <static>244</static>
         </component>
+        <component type="RopeComponent">
+          <destinationY>9</destinationY>
+          <destinationRegion>8</destinationRegion>
+          <teleporterId>238</teleporterId>
+        </component>
       </tile>
       <tile x="18" y="9">
         <component type="FloorComponent">
@@ -38279,6 +38283,9 @@
       </tile>
       <tile x="0" y="-13">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>-10</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -38303,46 +38310,6 @@
         </component>
       </tile>
       <tile x="5" y="-13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="-13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="-13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="-13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="-13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="-13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="-13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="-13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="-13">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -38412,6 +38379,9 @@
       </tile>
       <tile x="0" y="-12">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>-9</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -38436,46 +38406,6 @@
         </component>
       </tile>
       <tile x="5" y="-12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="-12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="-12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="-12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="-12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="-12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="-12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="-12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="-12">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -38544,6 +38474,9 @@
       </tile>
       <tile x="0" y="-11">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>-8</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -38568,46 +38501,6 @@
         </component>
       </tile>
       <tile x="5" y="-11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="-11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="-11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="-11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="-11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="-11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="-11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="-11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="-11">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -38673,6 +38566,9 @@
       </tile>
       <tile x="0" y="-10">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>-7</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -38697,46 +38593,6 @@
         </component>
       </tile>
       <tile x="5" y="-10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="-10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="-10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="-10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="-10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="-10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="-10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="-10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="-10">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -38806,6 +38662,9 @@
       </tile>
       <tile x="0" y="-9">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>-5</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -38830,46 +38689,6 @@
         </component>
       </tile>
       <tile x="5" y="-9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="-9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="-9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="-9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="-9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="-9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="-9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="-9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="-9">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -38939,6 +38758,9 @@
       </tile>
       <tile x="0" y="-8">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>-3</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -38963,46 +38785,6 @@
         </component>
       </tile>
       <tile x="5" y="-8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="-8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="-8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="-8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="-8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="-8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="-8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="-8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="-8">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -39071,6 +38853,9 @@
       </tile>
       <tile x="0" y="-7">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>-3</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -39095,46 +38880,6 @@
         </component>
       </tile>
       <tile x="5" y="-7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="-7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="-7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="-7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="-7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="-7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="-7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="-7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="-7">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -39200,6 +38945,9 @@
       </tile>
       <tile x="0" y="-6">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>-1</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -39224,46 +38972,6 @@
         </component>
       </tile>
       <tile x="5" y="-6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="-6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="-6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="-6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="-6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="-6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="-6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="-6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="-6">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -39332,6 +39040,8 @@
       </tile>
       <tile x="0" y="-5">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -39356,81 +39066,6 @@
         </component>
       </tile>
       <tile x="5" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="15" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="16" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="17" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="18" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="19" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="20" y="-5">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -39499,6 +39134,9 @@
       </tile>
       <tile x="0" y="-4">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>1</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -39523,81 +39161,6 @@
         </component>
       </tile>
       <tile x="5" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="15" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="16" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="17" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="18" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="19" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="20" y="-4">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -39662,11 +39225,16 @@
       </tile>
       <tile x="0" y="-3">
         <component type="SkyComponent">
+          <destinationY>1</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="1" y="-3">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>1</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -39845,6 +39413,9 @@
       </tile>
       <tile x="2" y="-2">
         <component type="SkyComponent">
+          <destinationX>2</destinationX>
+          <destinationY>3</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -40017,6 +39588,9 @@
       </tile>
       <tile x="2" y="-1">
         <component type="SkyComponent">
+          <destinationX>2</destinationX>
+          <destinationY>3</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -40914,51 +40488,81 @@
       </tile>
       <tile x="2" y="3">
         <component type="SkyComponent">
+          <destinationX>2</destinationX>
+          <destinationY>7</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="3" y="3">
         <component type="SkyComponent">
+          <destinationX>4</destinationX>
+          <destinationY>5</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="4" y="3">
         <component type="SkyComponent">
+          <destinationX>6</destinationX>
+          <destinationY>5</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="5" y="3">
         <component type="SkyComponent">
+          <destinationX>6</destinationX>
+          <destinationY>5</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="6" y="3">
         <component type="SkyComponent">
+          <destinationX>7</destinationX>
+          <destinationY>5</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="7" y="3">
         <component type="SkyComponent">
+          <destinationX>7</destinationX>
+          <destinationY>5</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="8" y="3">
         <component type="SkyComponent">
+          <destinationX>8</destinationX>
+          <destinationY>5</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="9" y="3">
         <component type="SkyComponent">
+          <destinationX>8</destinationX>
+          <destinationY>5</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="10" y="3">
         <component type="SkyComponent">
+          <destinationX>10</destinationX>
+          <destinationY>5</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="11" y="3">
         <component type="SkyComponent">
+          <destinationX>10</destinationX>
+          <destinationY>5</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -41119,11 +40723,17 @@
       </tile>
       <tile x="2" y="4">
         <component type="SkyComponent">
+          <destinationX>2</destinationX>
+          <destinationY>7</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="3" y="4">
         <component type="SkyComponent">
+          <destinationX>4</destinationX>
+          <destinationY>5</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -41203,8 +40813,9 @@
         </component>
       </tile>
       <tile x="19" y="4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="-6" y="5">
@@ -41248,21 +40859,33 @@
       </tile>
       <tile x="0" y="5">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>6</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="1" y="5">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>6</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="2" y="5">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>6</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="3" y="5">
         <component type="SkyComponent">
+          <destinationX>4</destinationX>
+          <destinationY>5</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -41342,8 +40965,9 @@
         </component>
       </tile>
       <tile x="19" y="5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="-6" y="6">
@@ -41390,25 +41014,52 @@
           <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
+        <component type="Whirlwind">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="0" y="6">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>8</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
+        </component>
+        <component type="Whirlwind">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="1" y="6">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>8</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
+        </component>
+        <component type="Whirlwind">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="2" y="6">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>8</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
+        </component>
+        <component type="Whirlwind">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="3" y="6">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>8</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
+        </component>
+        <component type="Whirlwind">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="4" y="6">
@@ -41432,63 +41083,75 @@
         </component>
       </tile>
       <tile x="8" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="9" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="10" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="11" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="12" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="13" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="14" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="15" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="16" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="17" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="18" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="19" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="-6" y="7">
@@ -41527,30 +41190,71 @@
           <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
+        <component type="WallComponent">
+          <wall>159</wall>
+          <destroyed>162</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
       </tile>
       <tile x="-1" y="7">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+        </component>
+        <component type="StaticComponent">
+          <static>245</static>
         </component>
       </tile>
       <tile x="0" y="7">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+        </component>
+        <component type="StaticComponent">
+          <static>243</static>
+        </component>
       </tile>
       <tile x="1" y="7">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+        </component>
+        <component type="StaticComponent">
+          <static>245</static>
         </component>
       </tile>
       <tile x="2" y="7">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+        </component>
       </tile>
       <tile x="3" y="7">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>8</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
+        </component>
+        <component type="Whirlwind">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="4" y="7">
@@ -41574,68 +41278,9 @@
         </component>
       </tile>
       <tile x="8" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="15" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="16" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="17" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="18" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="19" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="20" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="-6" y="8">
@@ -41674,30 +41319,76 @@
           <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
+        <component type="WallComponent">
+          <wall>158</wall>
+          <destroyed>161</destroyed>
+          <ruins>170</ruins>
+        </component>
+        <component type="StaticComponent">
+          <static>246</static>
+        </component>
       </tile>
       <tile x="-1" y="8">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
+        </component>
+        <component type="FloorComponent">
+          <ground>3</ground>
+        </component>
+        <component type="RuinsComponent">
+          <ruins>380</ruins>
+        </component>
+        <component type="StaticComponent">
+          <static>171</static>
+        </component>
+        <component type="StaticComponent">
+          <static>245</static>
         </component>
       </tile>
       <tile x="0" y="8">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
+        <component type="FloorComponent">
+          <ground>3</ground>
+        </component>
       </tile>
       <tile x="1" y="8">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
+        </component>
+        <component type="FloorComponent">
+          <ground>3</ground>
+        </component>
+        <component type="AltarComponent">
+          <altar>138</altar>
         </component>
       </tile>
       <tile x="2" y="8">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
+        <component type="FloorComponent">
+          <ground>3</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>158</wall>
+          <destroyed>161</destroyed>
+          <ruins>170</ruins>
+        </component>
+        <component type="StaticComponent">
+          <static>246</static>
+        </component>
       </tile>
       <tile x="3" y="8">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>8</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
+        </component>
+        <component type="Whirlwind">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="4" y="8">
@@ -41721,68 +41412,9 @@
         </component>
       </tile>
       <tile x="8" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="15" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="16" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="17" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="18" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="19" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="20" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="-7" y="9">
@@ -41832,25 +41464,61 @@
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
+        <component type="FloorComponent">
+          <ground>3</ground>
+        </component>
+        <component type="StaticComponent">
+          <static>242</static>
+        </component>
       </tile>
       <tile x="0" y="9">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
+        </component>
+        <component type="FloorComponent">
+          <ground>3</ground>
+        </component>
+        <component type="StaircaseComponent">
+          <destinationX>18</destinationX>
+          <destinationY>9</destinationY>
+          <destinationRegion>6</destinationRegion>
+          <teleporterId>8</teleporterId>
+          <descends>true</descends>
         </component>
       </tile>
       <tile x="1" y="9">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
+        <component type="FloorComponent">
+          <ground>3</ground>
+        </component>
       </tile>
       <tile x="2" y="9">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
+        <component type="FloorComponent">
+          <ground>3</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>158</wall>
+          <destroyed>161</destroyed>
+          <ruins>170</ruins>
+        </component>
+        <component type="StaticComponent">
+          <static>246</static>
+        </component>
       </tile>
       <tile x="3" y="9">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>8</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
+        </component>
+        <component type="Whirlwind">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="4" y="9">
@@ -41874,68 +41542,9 @@
         </component>
       </tile>
       <tile x="8" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="15" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="16" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="17" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="18" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="19" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="20" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="-7" y="10">
@@ -41984,25 +41593,83 @@
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
+        <component type="FloorComponent">
+          <ground>3</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+        </component>
+        <component type="StaticComponent">
+          <static>245</static>
+        </component>
       </tile>
       <tile x="0" y="10">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
+        </component>
+        <component type="FloorComponent">
+          <ground>3</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+        </component>
+        <component type="StaticComponent">
+          <static>245</static>
         </component>
       </tile>
       <tile x="1" y="10">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
+        <component type="FloorComponent">
+          <ground>3</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+        </component>
+        <component type="StaticComponent">
+          <static>245</static>
+        </component>
       </tile>
       <tile x="2" y="10">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
+        <component type="FloorComponent">
+          <ground>3</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+        </component>
+        <component type="WallComponent">
+          <wall>158</wall>
+          <destroyed>161</destroyed>
+          <ruins>170</ruins>
+        </component>
+        <component type="StaticComponent">
+          <static>245</static>
+        </component>
+        <component type="StaticComponent">
+          <static>246</static>
+        </component>
       </tile>
       <tile x="3" y="10">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>8</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
+        </component>
+        <component type="Whirlwind">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="4" y="10">
@@ -42026,68 +41693,9 @@
         </component>
       </tile>
       <tile x="8" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="15" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="16" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="17" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="18" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="19" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="20" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="-7" y="11">
@@ -42135,27 +41743,57 @@
       </tile>
       <tile x="-1" y="11">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>16</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
+        </component>
+        <component type="Whirlwind">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="0" y="11">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>16</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
+        </component>
+        <component type="Whirlwind">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="1" y="11">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>16</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
+        </component>
+        <component type="Whirlwind">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="2" y="11">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>8</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
+        </component>
+        <component type="Whirlwind">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="3" y="11">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>8</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
+        </component>
+        <component type="Whirlwind">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="4" y="11">
@@ -42179,68 +41817,9 @@
         </component>
       </tile>
       <tile x="8" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="15" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="16" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="17" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="18" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="19" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="20" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="-7" y="12">
@@ -42281,11 +41860,15 @@
       </tile>
       <tile x="-2" y="12">
         <component type="SkyComponent">
+          <destinationY>19</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="-1" y="12">
         <component type="SkyComponent">
+          <destinationY>19</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -42330,68 +41913,9 @@
         </component>
       </tile>
       <tile x="8" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="15" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="16" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="17" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="18" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="19" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="20" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="-7" y="13">
@@ -42432,11 +41956,15 @@
       </tile>
       <tile x="-2" y="13">
         <component type="SkyComponent">
+          <destinationY>19</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="-1" y="13">
         <component type="SkyComponent">
+          <destinationY>19</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -42481,73 +42009,9 @@
         </component>
       </tile>
       <tile x="8" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="15" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="16" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="17" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="18" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="19" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="20" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="21" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="-7" y="14">
@@ -42586,31 +42050,44 @@
       </tile>
       <tile x="-2" y="14">
         <component type="SkyComponent">
+          <destinationX>1</destinationX>
+          <destinationY>16</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="-1" y="14">
         <component type="SkyComponent">
+          <destinationY>21</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="0" y="14">
         <component type="SkyComponent">
+          <destinationY>21</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="1" y="14">
         <component type="SkyComponent">
+          <destinationY>21</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="2" y="14">
         <component type="SkyComponent">
+          <destinationY>21</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="3" y="14">
         <component type="SkyComponent">
+          <destinationY>21</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -42635,73 +42112,9 @@
         </component>
       </tile>
       <tile x="8" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="15" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="16" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="17" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="18" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="19" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="20" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="21" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="-8" y="15">
@@ -42748,122 +42161,73 @@
       </tile>
       <tile x="-2" y="15">
         <component type="SkyComponent">
+          <destinationY>21</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="-1" y="15">
         <component type="SkyComponent">
+          <destinationY>21</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="0" y="15">
         <component type="SkyComponent">
+          <destinationY>21</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="1" y="15">
         <component type="SkyComponent">
+          <destinationY>21</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="2" y="15">
         <component type="SkyComponent">
+          <destinationY>21</destinationY>
+          <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="3" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="4" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="5" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="6" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="7" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="8" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="15" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="16" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="17" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="18" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="19" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="20" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="21" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="ObstructionComponent">
+          <obstruction>31</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="-8" y="16">
@@ -42934,96 +42298,6 @@
           <blockVision>true</blockVision>
         </component>
       </tile>
-      <tile x="4" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="15" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="16" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="17" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="18" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="19" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="20" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="21" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
       <tile x="-9" y="17">
         <component type="ObstructionComponent">
           <obstruction>31</obstruction>
@@ -43090,96 +42364,6 @@
         <component type="ObstructionComponent">
           <obstruction>31</obstruction>
           <blockVision>true</blockVision>
-        </component>
-      </tile>
-      <tile x="4" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="15" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="16" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="17" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="18" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="19" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="20" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="21" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="-8" y="18">
@@ -45232,6 +44416,9 @@
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
+        <component type="Whirlwind">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="16" y="-69">
         <component type="FloorComponent">
@@ -45572,6 +44759,9 @@
       <tile x="12" y="-68">
         <component type="FloorComponent">
           <ground>12</ground>
+        </component>
+        <component type="Whirlwind">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="13" y="-68">
@@ -45945,6 +45135,9 @@
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
+        <component type="Whirlwind">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="17" y="-67">
         <component type="FloorComponent">
@@ -46290,6 +45483,9 @@
       <tile x="12" y="-66">
         <component type="FloorComponent">
           <ground>13</ground>
+        </component>
+        <component type="Whirlwind">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="13" y="-66">
@@ -46780,6 +45976,15 @@
           <tree>199</tree>
           <canGrow>true</canGrow>
         </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>-20</destinationX>
+          <destinationY>-39</destinationY>
+          <destinationRegion>9</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+        </component>
       </tile>
       <tile x="-31" y="-64">
         <component type="FloorComponent">
@@ -47176,6 +46381,13 @@
         <component type="FloorComponent">
           <ground>13</ground>
         </component>
+        <component type="DoorComponent">
+          <openId>75</openId>
+          <closedId>63</closedId>
+          <secretId>31</secretId>
+          <destroyedId>81</destroyedId>
+          <isSecret>true</isSecret>
+        </component>
       </tile>
       <tile x="-28" y="-63">
         <component type="FloorComponent">
@@ -47520,8 +46732,14 @@
         </component>
       </tile>
       <tile x="-29" y="-62">
-        <component type="FloorComponent">
-          <ground>13</ground>
+        <component type="StaticComponent">
+          <static>13</static>
+        </component>
+        <component type="WallComponent">
+          <wall>31</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-28" y="-62">
@@ -54684,6 +53902,12 @@
           <destroyed>160</destroyed>
           <ruins>170</ruins>
         </component>
+        <component type="WallComponent">
+          <wall>159</wall>
+          <destroyed>162</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
       </tile>
       <tile x="-20" y="-40">
         <component type="FloorComponent">
@@ -54916,7 +54140,14 @@
       </tile>
       <tile x="-21" y="-39">
         <component type="FloorComponent">
-          <ground>1</ground>
+          <ground>13</ground>
+        </component>
+        <component type="DoorComponent">
+          <openId>75</openId>
+          <closedId>63</closedId>
+          <secretId>158</secretId>
+          <destroyedId>81</destroyedId>
+          <isSecret>true</isSecret>
         </component>
       </tile>
       <tile x="-20" y="-39">
@@ -55125,6 +54356,11 @@
         <component type="WallComponent">
           <wall>157</wall>
           <destroyed>160</destroyed>
+          <ruins>170</ruins>
+        </component>
+        <component type="WallComponent">
+          <wall>158</wall>
+          <destroyed>161</destroyed>
           <ruins>170</ruins>
         </component>
       </tile>
@@ -56509,6 +55745,15 @@
       <tile x="-9" y="-30">
         <component type="FloorComponent">
           <ground>13</ground>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>-42</destinationX>
+          <destinationY>-18</destinationY>
+          <destinationRegion>9</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
         </component>
       </tile>
       <tile x="-8" y="-30">
@@ -61582,6 +60827,9 @@
           <professions select="all" />
           <alignments select="all" />
         </component>
+        <component type="StaticComponent">
+          <static>167</static>
+        </component>
       </tile>
       <tile x="-6" y="-12">
         <component type="FloorComponent">
@@ -62745,6 +61993,9 @@
       </tile>
       <tile x="-4" y="-9">
         <component type="SkyComponent">
+          <destinationX>-2</destinationX>
+          <destinationY>-8</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -62754,8 +62005,14 @@
         </component>
       </tile>
       <tile x="-2" y="-9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
+        <component type="StaticComponent">
+          <static>1</static>
+        </component>
+        <component type="WallComponent">
+          <wall>31</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-1" y="-9">
@@ -62834,36 +62091,6 @@
           <destroyed>0</destroyed>
           <ruins>0</ruins>
           <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="8" y="-9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="-9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="-9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="-9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="-9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="-9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="-37" y="-8">
@@ -63108,6 +62335,9 @@
       </tile>
       <tile x="-4" y="-8">
         <component type="SkyComponent">
+          <destinationX>-3</destinationX>
+          <destinationY>-7</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -63209,36 +62439,6 @@
           <destroyed>0</destroyed>
           <ruins>0</ruins>
           <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="8" y="-8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="-8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="-8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="-8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="-8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="-8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="-37" y="-7">
@@ -63483,6 +62683,9 @@
       </tile>
       <tile x="-4" y="-7">
         <component type="SkyComponent">
+          <destinationX>-2</destinationX>
+          <destinationY>-6</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -63549,56 +62752,6 @@
           <destroyed>0</destroyed>
           <ruins>0</ruins>
           <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="4" y="-7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="-7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="-7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="-7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="-7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="-7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="-7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="-7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="-7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="-7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="-37" y="-6">
@@ -63870,71 +63023,6 @@
           <teleporterId>9</teleporterId>
         </component>
       </tile>
-      <tile x="2" y="-6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="-6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="-6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="-6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="-6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="-6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="-6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="-6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="-6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="-6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="-6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="-6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="-6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
       <tile x="-37" y="-5">
         <component type="StaticComponent">
           <static>1</static>
@@ -64193,6 +63281,9 @@
       </tile>
       <tile x="-3" y="-5">
         <component type="SkyComponent">
+          <destinationX>-3</destinationX>
+          <destinationY>-4</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -64212,71 +63303,6 @@
         </component>
       </tile>
       <tile x="1" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="-5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="-5">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -64521,71 +63547,6 @@
           <teleporterId>9</teleporterId>
         </component>
       </tile>
-      <tile x="2" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="-4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
       <tile x="-36" y="-3">
         <component type="StaticComponent">
           <static>1</static>
@@ -64805,6 +63766,9 @@
       </tile>
       <tile x="-2" y="-3">
         <component type="SkyComponent">
+          <destinationX>-2</destinationX>
+          <destinationY>-2</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -64819,71 +63783,6 @@
         </component>
       </tile>
       <tile x="1" y="-3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="-3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="-3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="-3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="-3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="-3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="-3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="-3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="-3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="-3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="-3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="-3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="-3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="-3">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -65120,6 +64019,9 @@
       </tile>
       <tile x="-2" y="-2">
         <component type="SkyComponent">
+          <destinationX>-2</destinationX>
+          <destinationY>-2</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -65134,71 +64036,6 @@
         </component>
       </tile>
       <tile x="1" y="-2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="-2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="-2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="-2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="-2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="-2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="-2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="-2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="-2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="-2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="-2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="-2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="-2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="-2">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -65439,6 +64276,9 @@
       </tile>
       <tile x="-2" y="-1">
         <component type="SkyComponent">
+          <destinationX>-2</destinationX>
+          <destinationY>-1</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -65453,71 +64293,6 @@
         </component>
       </tile>
       <tile x="1" y="-1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="-1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="-1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="-1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="-1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="-1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="-1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="-1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="-1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="-1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="-1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="-1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="-1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="-1">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -65810,6 +64585,8 @@
       </tile>
       <tile x="-2" y="0">
         <component type="SkyComponent">
+          <destinationX>-2</destinationX>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -65824,71 +64601,6 @@
         </component>
       </tile>
       <tile x="1" y="0">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="0">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="0">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="0">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="0">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="0">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="0">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="0">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="0">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="0">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="0">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="0">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="0">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="0">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -66153,6 +64865,9 @@
       </tile>
       <tile x="-2" y="1">
         <component type="SkyComponent">
+          <destinationX>-2</destinationX>
+          <destinationY>1</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -66167,71 +64882,6 @@
         </component>
       </tile>
       <tile x="1" y="1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="1">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="1">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -66500,6 +65150,9 @@
       </tile>
       <tile x="-2" y="2">
         <component type="SkyComponent">
+          <destinationX>-2</destinationX>
+          <destinationY>3</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -66514,71 +65167,6 @@
         </component>
       </tile>
       <tile x="1" y="2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="2">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="2">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -66882,6 +65470,9 @@
       </tile>
       <tile x="-2" y="3">
         <component type="SkyComponent">
+          <destinationX>-2</destinationX>
+          <destinationY>3</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -66896,71 +65487,6 @@
         </component>
       </tile>
       <tile x="1" y="3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="3">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="3">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -67248,6 +65774,9 @@
       </tile>
       <tile x="-2" y="4">
         <component type="SkyComponent">
+          <destinationX>-2</destinationX>
+          <destinationY>4</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -67262,71 +65791,6 @@
         </component>
       </tile>
       <tile x="1" y="4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="4">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="4">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -67607,71 +66071,6 @@
           <teleporterId>9</teleporterId>
         </component>
       </tile>
-      <tile x="2" y="5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="5">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
       <tile x="-40" y="6">
         <component type="StaticComponent">
           <static>1</static>
@@ -67917,6 +66316,9 @@
       </tile>
       <tile x="-1" y="6">
         <component type="SkyComponent">
+          <destinationX>-2</destinationX>
+          <destinationY>5</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -67926,71 +66328,6 @@
         </component>
       </tile>
       <tile x="1" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="6">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="6">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -68233,6 +66570,9 @@
       </tile>
       <tile x="-1" y="7">
         <component type="SkyComponent">
+          <destinationX>-2</destinationX>
+          <destinationY>5</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -68242,76 +66582,6 @@
         </component>
       </tile>
       <tile x="1" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="7">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="15" y="7">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -68568,6 +66838,9 @@
       </tile>
       <tile x="-1" y="8">
         <component type="SkyComponent">
+          <destinationX>-3</destinationX>
+          <destinationY>5</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -68577,76 +66850,6 @@
         </component>
       </tile>
       <tile x="1" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="8">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="15" y="8">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -68911,6 +67114,9 @@
       </tile>
       <tile x="-1" y="9">
         <component type="SkyComponent">
+          <destinationX>-3</destinationX>
+          <destinationY>5</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -68920,76 +67126,6 @@
         </component>
       </tile>
       <tile x="1" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="9">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="15" y="9">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -69253,6 +67389,9 @@
       </tile>
       <tile x="-1" y="10">
         <component type="SkyComponent">
+          <destinationX>-3</destinationX>
+          <destinationY>6</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -69262,76 +67401,6 @@
         </component>
       </tile>
       <tile x="1" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="10">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="15" y="10">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -69584,6 +67653,9 @@
       </tile>
       <tile x="-1" y="11">
         <component type="SkyComponent">
+          <destinationX>-4</destinationX>
+          <destinationY>7</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -69593,76 +67665,6 @@
         </component>
       </tile>
       <tile x="1" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="11">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="15" y="11">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -69948,6 +67950,9 @@
       </tile>
       <tile x="-1" y="12">
         <component type="SkyComponent">
+          <destinationX>-4</destinationX>
+          <destinationY>7</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -69957,71 +67962,6 @@
         </component>
       </tile>
       <tile x="1" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="12">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="12">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -70260,16 +68200,25 @@
       </tile>
       <tile x="-3" y="13">
         <component type="SkyComponent">
+          <destinationX>-3</destinationX>
+          <destinationY>10</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="-2" y="13">
         <component type="SkyComponent">
+          <destinationX>-3</destinationX>
+          <destinationY>10</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="-1" y="13">
         <component type="SkyComponent">
+          <destinationX>-2</destinationX>
+          <destinationY>-2</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -70279,56 +68228,6 @@
         </component>
       </tile>
       <tile x="1" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="13">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="13">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -70577,6 +68476,9 @@
       </tile>
       <tile x="-3" y="14">
         <component type="SkyComponent">
+          <destinationX>-4</destinationX>
+          <destinationY>10</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -70596,56 +68498,6 @@
         </component>
       </tile>
       <tile x="1" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="14">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="14">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -70894,6 +68746,9 @@
       </tile>
       <tile x="-3" y="15">
         <component type="SkyComponent">
+          <destinationX>-5</destinationX>
+          <destinationY>11</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -70913,56 +68768,6 @@
         </component>
       </tile>
       <tile x="1" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="15">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="15">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -71172,6 +68977,9 @@
       </tile>
       <tile x="-3" y="16">
         <component type="SkyComponent">
+          <destinationX>-4</destinationX>
+          <destinationY>12</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -71191,56 +68999,6 @@
         </component>
       </tile>
       <tile x="1" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="16">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="16">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -71442,6 +69200,9 @@
       </tile>
       <tile x="-3" y="17">
         <component type="SkyComponent">
+          <destinationX>-4</destinationX>
+          <destinationY>13</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -71461,61 +69222,6 @@
         </component>
       </tile>
       <tile x="1" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="17">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="17">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -71729,6 +69435,9 @@
       </tile>
       <tile x="-3" y="18">
         <component type="SkyComponent">
+          <destinationX>-5</destinationX>
+          <destinationY>15</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -71748,66 +69457,6 @@
         </component>
       </tile>
       <tile x="1" y="18">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="18">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="18">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="18">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="18">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="18">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="18">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="18">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="18">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="18">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="18">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="18">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="18">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -72030,6 +69679,9 @@
       </tile>
       <tile x="-3" y="19">
         <component type="SkyComponent">
+          <destinationX>-4</destinationX>
+          <destinationY>15</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -72049,71 +69701,6 @@
         </component>
       </tile>
       <tile x="1" y="19">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="19">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="19">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="19">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="19">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="19">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="19">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="19">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="19">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="19">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="19">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="19">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="19">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="19">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -72303,6 +69890,9 @@
       </tile>
       <tile x="-3" y="20">
         <component type="SkyComponent">
+          <destinationX>-4</destinationX>
+          <destinationY>15</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -72322,71 +69912,6 @@
         </component>
       </tile>
       <tile x="1" y="20">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="20">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="20">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="20">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="20">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="20">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="20">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="20">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="20">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="20">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="20">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="20">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="20">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="20">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -72432,6 +69957,15 @@
       <tile x="-25" y="21">
         <component type="FloorComponent">
           <ground>12</ground>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>-1</destinationX>
+          <destinationY>-72</destinationY>
+          <destinationRegion>9</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
         </component>
       </tile>
       <tile x="-24" y="21">
@@ -72585,6 +70119,9 @@
       </tile>
       <tile x="-3" y="21">
         <component type="SkyComponent">
+          <destinationX>-4</destinationX>
+          <destinationY>15</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -72604,76 +70141,6 @@
         </component>
       </tile>
       <tile x="1" y="21">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="21">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="21">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="21">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="21">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="21">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="21">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="21">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="21">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="21">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="21">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="21">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="21">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="21">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="15" y="21">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -72835,16 +70302,25 @@
       </tile>
       <tile x="-5" y="22">
         <component type="SkyComponent">
+          <destinationX>-4</destinationX>
+          <destinationY>15</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="-4" y="22">
         <component type="SkyComponent">
+          <destinationX>-4</destinationX>
+          <destinationY>15</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="-3" y="22">
         <component type="SkyComponent">
+          <destinationX>-4</destinationX>
+          <destinationY>15</destinationY>
+          <destinationRegion>8</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
       </tile>
@@ -72864,71 +70340,6 @@
         </component>
       </tile>
       <tile x="1" y="22">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="22">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="22">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="22">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="22">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="6" y="22">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="7" y="22">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="8" y="22">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="9" y="22">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="10" y="22">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="11" y="22">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="12" y="22">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="13" y="22">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="14" y="22">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -73110,26 +70521,6 @@
           <teleporterId>9</teleporterId>
         </component>
       </tile>
-      <tile x="2" y="23">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="23">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="23">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="5" y="23">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
       <tile x="-23" y="24">
         <component type="StaticComponent">
           <static>1</static>
@@ -73292,21 +70683,6 @@
         </component>
       </tile>
       <tile x="1" y="24">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="2" y="24">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="3" y="24">
-        <component type="SkyComponent">
-          <teleporterId>9</teleporterId>
-        </component>
-      </tile>
-      <tile x="4" y="24">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
         </component>
@@ -81039,6 +78415,13 @@
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
+        <component type="StaircaseComponent">
+          <destinationX>1</destinationX>
+          <destinationY>1</destinationY>
+          <destinationRegion>10</destinationRegion>
+          <teleporterId>181</teleporterId>
+          <descends>true</descends>
+        </component>
       </tile>
       <tile x="23" y="-5">
         <component type="FloorComponent">
@@ -81358,11 +78741,6 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
-      <tile x="32" y="-2">
-        <component type="FloorComponent">
-          <ground>1</ground>
-        </component>
-      </tile>
       <tile x="-1" y="-1">
         <component type="StaticComponent">
           <static>1</static>
@@ -81530,11 +78908,6 @@
           <destroyed>0</destroyed>
           <ruins>0</ruins>
           <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="32" y="-1">
-        <component type="FloorComponent">
-          <ground>1</ground>
         </component>
       </tile>
       <tile x="-1" y="0">
@@ -86815,7 +84188,7 @@
         <component type="DoorComponent">
           <openId>231</openId>
           <closedId>229</closedId>
-          <secretId>25</secretId>
+          <secretId>151</secretId>
           <destroyedId>80</destroyedId>
           <isSecret>true</isSecret>
         </component>
@@ -88790,6 +86163,7 @@
        
         CanCharge = true,
         CanSwim = false,
+        CanLoot = false,
                 
         BasePenetration = ShieldPenetration.Heavy,
 
@@ -89026,11 +86400,11 @@
     orc.AddStatus(new NightVisionStatus(orc));
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(17, 25, 35)
+        new CreatureBasicAttack(19, 45, 55)
     };
     
     orc.Wield(new Longsword());
-    orc.Equip(new LeatherArmor());
+    orc.Equip(new DrakeScaleArmor());
             
     orc.AddGold(4000);
     orc.AddLoot(new LootPack(
@@ -89128,7 +86502,9 @@
     };
     
     giant.AddStatus(new NightVisionStatus(giant));
+    
     giant.AddStatus(new BreatheWaterStatus(giant));
+    giant.Wield(Utility.RandomBool() ? (Weapon)new Longsword() : (Weapon)new SteelDagger());
     giant.Equip(new DrakeScaleArmor());
     giant.Attacks = new CreatureAttackCollection
     {
@@ -89857,24 +87233,24 @@
     fighter.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(18,      55, 70,      "The King gouges you with his fist.",
+            new CreatureAttack(19,      55, 70,      "The King gouges you with his fist.",
                                                         new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(19,      60, 75,     "The King smashes you with his crown.",
+            new CreatureAttack(20,      60, 75,     "The King smashes you with his crown.",
                                                         new AttackProneComponent(25), 
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(20,      75, 100,     "The King surrounds you in his evil robe.",
+            new CreatureAttack(21,      75, 100,     "The King surrounds you in his evil robe.",
                                                         new AttackProneComponent(35), 
                                                         new AttackStunComponent(15)),               20
         },
     };
     
-    fighter.Wield(new Longsword());
-    fighter.Equip(new PlatemailArmor());    
+    fighter.Wield(new WoodenStaff());
+    fighter.Equip(new DrakeScaleArmor());    
     
     fighter.AddGold(4450);
   fighter.AddLoot(new LootPack(
@@ -89884,7 +87260,7 @@
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
         new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
          new LootPackEntry(true, SemiRare, 40),
-        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),        
+
         new LootPackEntry(true, UltraRare, 25)
 	));
     return fighter;
@@ -89933,24 +87309,24 @@
     fighter.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(18,      55, 70,      "The Queen gouges you with her fist.",
+            new CreatureAttack(19,      55, 70,      "The Queen gouges you with her fist.",
                                                         new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(19,      60, 75,     "The Queen smashes you with her crown.",
+            new CreatureAttack(20,      60, 75,     "The Queen smashes you with her crown.",
                                                         new AttackProneComponent(25), 
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(20,      75, 100,     "The Queen disctracts you in her gorgeous looks.",
+            new CreatureAttack(21,      75, 100,     "The Queen disctracts you in her gorgeous looks.",
                                                         new AttackProneComponent(35), 
                                                         new AttackStunComponent(15)),               20
         },
     };
     
-    fighter.Wield(new Longsword());
-    fighter.Equip(new PlatemailArmor());    
+    fighter.Wield(new BlackStaff());
+    fighter.Equip(new DrakeScaleArmor());    
     
     fighter.AddGold(4450);
     fighter.AddLoot(new LootPack(
@@ -90149,7 +87525,8 @@
       wolf.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33),
-        new LootPackEntry(true, SemiRare, 1)
+        new LootPackEntry(true, SemiRare, 1),
+        new LootPackEntry(true, MagicBottles, 1)
     ));
 
     return wolf;
@@ -90264,7 +87641,13 @@
     centaur.Wield(new IronRod());
     
     centaur.AddGold(4500);
-
+centaur.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 3),
+        new LootPackEntry(true, MagicBottles, 4)
+    ));
+   
     
     return centaur;
 ]]></block>
@@ -90337,7 +87720,8 @@
       griffin.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33),
-        new LootPackEntry(true, SemiRare, 3)
+        new LootPackEntry(true, SemiRare, 3),
+        new LootPackEntry(true, MagicBottles, 4)
     ));
    
 
@@ -90796,9 +88180,10 @@ var ghoul = new Ghoul()
     abomination.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33),
-        new LootPackEntry(true, SemiRare, 3)
+        new LootPackEntry(true, SemiRare, 3),
+        new LootPackEntry(true, MagicBottles, 3)
     ));
-    //todo add lootpack
+
     
     return abomination;
 ]]></block>
@@ -91077,7 +88462,7 @@ var ghoul = new Ghoul()
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(21)
+        new CreatureBasicAttack(20)
     };
     orc.AddStatus(new NightVisionStatus(orc));
     orc.Wield(new Longbow());
@@ -91132,7 +88517,7 @@ var ghoul = new Ghoul()
     hobgoblin.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<LightningBoltSpell>(
-            skillLevel: 7, cost: 13, 
+            skillLevel: 9, cost: 13, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
     };
     
@@ -91186,7 +88571,7 @@ var ghoul = new Ghoul()
     
     kobold.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(19, 33, 50)
+        new CreatureBasicAttack(18, 33, 43)
     };
     
     kobold.Wield(new SteelMace());
@@ -91229,7 +88614,7 @@ var ghoul = new Ghoul()
         Body = 221, IsFemale = false,
             
         MaxHealth = 10500, Health = 10500,
-        BaseDodge = 27,
+        BaseDodge = 31,
         HideDetection = 40,
         BasePenetration = ShieldPenetration.Light,
         Experience = 48500,
@@ -91237,12 +88622,13 @@ var ghoul = new Ghoul()
         Alignment = Alignment.Evil,
         Immunity = CreatureImmunity.Magic,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+        Mana = 45, MaxMana = 45,
             
     };
         
    fighter.AddStatus(new NightVisionStatus(fighter));
     
-    fighter.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
+    fighter.CombatantChangeInterval = TimeSpan.FromSeconds(8.0);
     
     fighter.Attacks = new CreatureAttackCollection
     {
@@ -91263,9 +88649,13 @@ var ghoul = new Ghoul()
         },
     };
     
-    fighter.Wield(new Longsword());
-    fighter.Equip(new PlatemailArmor());    
-    
+    fighter.Wield(new BlackStaff());
+    fighter.Equip(new IceDragonScaleArmor());    
+    fighter.Spells = new CreatureSpellCollection(100)
+    {
+        { new CreatureSpell<LightningLanceSpell>(
+            skillLevel: 17), 100, TimeSpan.FromSeconds(12.0) }
+    };
     fighter.AddGold(4450);
   fighter.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
@@ -91325,6 +88715,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     };
         
     demon.Wield(new WoodenStaff());
+    demon.Equip(new DrakeScaleArmor());
     demon.AddGold(700);
     return demon;
 ]]></block>
@@ -91377,8 +88768,8 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     
     twin.Spells = new CreatureSpellCollection(100)
     {
-       { new CreatureSpell<FireStormSpell>(
-            skillLevel: 12), 100, TimeSpan.FromSeconds(12.0) }
+       { new CreatureSpell<CreateLavaSpell>(
+            skillLevel: 15), 100, TimeSpan.FromSeconds(15.0) }
     };
 
     twin.AddGold(2000);
@@ -91389,9 +88780,10 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
         new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
+        new LootPackEntry(true, (from, container) => new LightningResistanceRing(),        35),
          new LootPackEntry(true, SemiRare, 40),
-        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),        
-        new LootPackEntry(true, UltraRare, 25)
+         new LootPackEntry(true, (from, container) => new BlackCloak(),        100),
+        new LootPackEntry(true, UltraRare, 13)
         ));
     
     return twin;
@@ -91421,7 +88813,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         Name = "Norlaq",
         Body = 209,
         
-        MaxHealth = 600, Health = 600,
+        MaxHealth = 4700, Health = 4700,
         BaseDodge = 25,
         
         Experience = 55000,
@@ -91436,7 +88828,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     };
     
     twin.AddStatus(new NightVisionStatus(twin));
-    
+        twin.Equip(new IceDragonScaleArmor());
     twin.Attacks = new CreatureAttackCollection
     {
         new CreatureBasicAttack(22, 55, 70,
@@ -91447,7 +88839,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     twin.Spells = new CreatureSpellCollection(100)
     {
         { new CreatureSpell<DragonBreathLightningSpell>(
-            skillLevel: 12), 100, TimeSpan.FromSeconds(12.0) }
+            skillLevel: 15), 100, TimeSpan.FromSeconds(8.0) }
     };
     
     twin.AddGold(2000);
@@ -91459,8 +88851,8 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
         new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
          new LootPackEntry(true, SemiRare, 40),
-        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),        
-        new LootPackEntry(true, UltraRare, 25)
+
+        new LootPackEntry(true, UltraRare, 12)
         ));
 
     
@@ -91726,11 +89118,170 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     abomination.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33),
-        new LootPackEntry(true, SemiRare, 3)
+        new LootPackEntry(true, SemiRare, 3),
+        new LootPackEntry(true, MagicBottles, 3)
     ));
     //todo add lootpack
     
     return abomination;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="forestBoss3">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var critter = new Drake()
+    {
+        Name = "Unusual Critter",
+        MaxHealth = 11900, Health = 10900,
+        BaseDodge = 31,
+        Body = 74,
+        Mana = 45, MaxMana = 45,
+    
+        Alignment = Alignment.Evil,
+        HideDetection = 30,
+        Experience = 79000,
+        CanLoot = false,
+        
+        
+        CanCharge = true,
+        
+        BasePenetration = ShieldPenetration.Heavy,
+
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
+    
+    };
+    critter.Wield(new SteelMace());
+    critter.AddStatus(new NightVisionStatus(critter));
+    
+    critter.CombatantChangeInterval = TimeSpan.FromSeconds(8.0);
+    
+    critter.Attacks = new CreatureAttackCollection()
+    {
+        {
+            new CreatureAttack(19,      55, 73,      "The creature mauls you with its paw",
+                                                        new AttackProneComponent(25), 
+                                                        new AttackStunComponent(5)),                40
+        },
+        {
+            new CreatureAttack(21,      60, 78,     "The creature smashes you with its hind legs.",
+                                                        new AttackProneComponent(30), 
+                                                        new AttackStunComponent(10)),               40
+        },
+        {
+            new CreatureAttack(25,      70, 99,     "The creature smashes you with its body.",
+                                                        new AttackProneComponent(35), 
+                                                        new AttackStunComponent(15)),               20
+        },
+    };
+    
+    critter.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(10, "an appendage"),
+        new CreatureBlock(8, "a foot"),
+        new CreatureBlock(7, "something disgusting, now coating your weapon"),
+    };
+        
+    critter.Spells = new CreatureSpellCollection(35.0)
+    {
+        new CreatureSpell<ConcussionSpell>(
+            skillLevel: 18, cost: 25),
+    };
+    
+    critter.AddGold(5000);
+
+      critter.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 3),
+         new LootPackEntry(true, SemiRare, 40),
+        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        10),
+        new LootPackEntry(true, (from, container) => new BrightFeather(), 40),
+        new LootPackEntry(true, (from, container) => new BlueStaffRaiseDead(), 50),
+        new LootPackEntry(true, UltraRare, 25)
+    ));
+    
+    return critter;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="surfaceWyvern">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var wyvern = new Wyvern()
+    {
+        Name = "Slime Wyvern",
+        Body = 65,
+        MaxHealth = 190, Health = 190,
+        BaseDodge = 22,
+                
+        Experience = 6500,
+    
+        Movement = 2,
+        CanSwim = true,
+        BasePenetration = ShieldPenetration.Light,
+        //todo add poison prot
+        
+    };
+    wyvern.AddStatus(new BreatheWaterStatus(wyvern));
+    wyvern.Attacks = new CreatureAttackCollection()
+    {
+        {
+            new CreatureAttack(14,     22, 32,   "The wyvern rakes you with its claws."),        50 
+        },
+        {
+            new CreatureAttack(15,     28, 34,   "The wyvern bites you."),                     30 
+        },
+        {
+            new CreatureAttack(16,     31, 35,  "The wyvern rakes whips you with its tail."),  20 
+        }
+    };
+    
+    wyvern.Blocks = new CreatureBlockCollection()
+    {
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(3, "a claw"),
+        new CreatureBlock(1, "a tail")
+    };
+            
+    wyvern.AddGold(110);
+    
+    wyvern.AddLoot(new LootPack(
+        //new LootPackEntry(true, tunnelSewerGems,       5,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    15)
+    ));
+    
+    return wyvern;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -92351,6 +89902,27 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="forestBoss1" size="1" minimum="1" maximum="1" />
       <location x="8" y="-13" region="9" />
     </spawn>
+    <spawn type="LocationSpawner" name="forestboss3">
+      <minimumDelay>8100</minimumDelay>
+      <maximumDelay>11700</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="forestBoss3" size="1" minimum="1" maximum="1" />
+      <location x="14" y="-68" region="9" />
+    </spawn>
     <spawn type="RegionSpawner" name="surfaceFishNorth">
       <minimumDelay>660</minimumDelay>
       <maximumDelay>900</maximumDelay>
@@ -92374,7 +89946,7 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="surfaceShark" size="1" minimum="1" maximum="2" />
       <entry entity="surfaceBloodGrif" size="1" minimum="1" maximum="2" />
       <entry entity="surfaceGreaterLurker" size="1" minimum="1" maximum="1" />
-      <entry entity="surfaceWyvern300" size="3" minimum="1" maximum="2" />
+      <entry entity="surfaceWyvern" size="3" minimum="1" maximum="2" />
       <bounds region="1">
         <inclusion left="0" top="-14" right="23" bottom="-3" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -92523,6 +90095,7 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="hobs100" size="1" minimum="1" maximum="2" />
       <entry entity="archer100" size="2" minimum="5" maximum="5" />
       <entry entity="kobald100" size="3" minimum="4" maximum="9" />
+      <entry entity="surfaceOrc" size="1" minimum="2" maximum="3" />
       <bounds region="3">
         <inclusion left="0" top="0" right="17" bottom="8" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -92548,7 +90121,8 @@ if (spawn is Shopkeeper shopkeeper)
       </script>
       <entry entity="hobs100" size="1" minimum="1" maximum="2" />
       <entry entity="archer100" size="2" minimum="5" maximum="5" />
-      <entry entity="archer100" size="3" minimum="4" maximum="9" />
+      <entry entity="kobald100" size="3" minimum="4" maximum="9" />
+      <entry entity="surfaceOrc" size="1" minimum="2" maximum="3" />
       <bounds region="3">
         <inclusion left="0" top="8" right="23" bottom="18" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -92812,7 +90386,7 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="surfaceShark" size="1" minimum="1" maximum="2" />
       <entry entity="surfaceBloodGrif" size="1" minimum="1" maximum="2" />
       <entry entity="surfaceGreaterLurker" size="1" minimum="1" maximum="1" />
-      <entry entity="surfaceWyvern300" size="3" minimum="1" maximum="2" />
+      <entry entity="surfaceWyvern" size="3" minimum="1" maximum="2" />
       <bounds region="1">
         <inclusion left="0" top="0" right="21" bottom="21" />
         <exclusion left="13" top="0" right="19" bottom="2" />
@@ -93051,7 +90625,7 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="archer200" size="2" minimum="2" maximum="4" />
       <bounds region="9">
         <inclusion left="-30" top="5" right="-5" bottom="20" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="-23" top="20" right="-19" bottom="22" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="forestMid">
@@ -93277,13 +90851,13 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="forestBoss2a" size="1" minimum="1" maximum="1" />
-      <entry entity="forestBoss2b" size="1" minimum="2" maximum="2" />
+      <entry entity="forestBoss2b" size="1" minimum="1" maximum="1" />
       <bounds region="9">
         <inclusion left="-28" top="-52" right="-23" bottom="-50" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="forrestCaves">
+    <spawn type="RegionSpawner" name="forestCaves">
       <minimumDelay>660</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>24</maximum>
@@ -93606,6 +91180,15 @@ if (spawn is Shopkeeper shopkeeper)
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new StrongStrengthRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new FireIceProtectionRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
