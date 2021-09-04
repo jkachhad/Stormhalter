@@ -169,19 +169,19 @@ namespace Kesmai.WorldForge.Editor
 
 			WeakReferenceMessenger.Default
 				.Register<ApplicationPresenter, SegmentLocation>(
-					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is LocationsViewModel).FirstOrDefault() as LocationsViewModel; });
+					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is LocationsViewModel).FirstOrDefault() as LocationsViewModel; JumpLocation(m); });
 			WeakReferenceMessenger.Default
 				.Register<ApplicationPresenter, SegmentSubregion>(
-					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is SubregionViewModel).FirstOrDefault() as SubregionViewModel; });
+					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is SubregionViewModel).FirstOrDefault() as SubregionViewModel; JumpSubregion(m); });
 			WeakReferenceMessenger.Default
 				.Register<ApplicationPresenter, Entity>(
-					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is EntitiesViewModel).FirstOrDefault() as EntitiesViewModel; });
+					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is EntitiesViewModel).FirstOrDefault() as EntitiesViewModel; JumpEntity(m); });
 			WeakReferenceMessenger.Default
 				.Register<ApplicationPresenter, Spawner>(
 					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel; JumpSpawner(m); });
 			WeakReferenceMessenger.Default
 				.Register<ApplicationPresenter, SegmentTreasure>(
-					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is TreasuresViewModel).FirstOrDefault() as TreasuresViewModel; });
+					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is TreasuresViewModel).FirstOrDefault() as TreasuresViewModel; JumpTreasure(m); });
 			WeakReferenceMessenger.Default
 				.Register<ApplicationPresenter, Segment>(
 					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is SegmentViewModel).FirstOrDefault() as SegmentViewModel; });
@@ -287,6 +287,33 @@ namespace Kesmai.WorldForge.Editor
 				viewmodel.SelectedRegionSpawner = spawner as RegionSpawner;
 			}
 		}
+
+		private void JumpSubregion(SegmentSubregion subregion)
+        {
+			var viewmodel = ActiveDocument as SubregionViewModel;
+			viewmodel.SelectedSubregion = subregion;
+        }
+
+		private void JumpEntity(Entity entity)
+        {
+			var viewmodel = ActiveDocument as EntitiesViewModel;
+			viewmodel.SelectedEntity = entity;
+
+		}
+
+		private void JumpLocation (SegmentLocation location)
+        {
+			var viewmodel = ActiveDocument as LocationsViewModel;
+			viewmodel.SelectedLocation = location;
+        }
+
+		private void JumpTreasure (SegmentTreasure treasure)
+        {
+			var viewmodel = ActiveDocument as TreasuresViewModel;
+			viewmodel.SelectedTreasure = treasure;
+        }
+
+
 		private void CreateSegment()
 		{
 			if (_segment != null)

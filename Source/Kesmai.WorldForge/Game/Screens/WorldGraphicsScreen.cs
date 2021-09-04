@@ -464,17 +464,33 @@ namespace Kesmai.WorldForge
 				}
 				else if (inputService.IsPressed(Keys.L, false))
 				{
-					WeakReferenceMessenger.Default.Send(null as SegmentLocation);
-					inputService.IsKeyboardHandled = true;
-				}
-				else if (inputService.IsPressed(Keys.U, false))
-				{
-					WeakReferenceMessenger.Default.Send(null as SegmentSubregion);
+					var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+					var segment = segmentRequest.Response;
+					var sel = _selection.FirstOrDefault();
+					SegmentLocation locationHere = null;
+					if (sel is { Width: 1, Height: 1 })
+					{
+						locationHere = segment.Locations.FirstOrDefault(l => l.Region == region.ID && l.X == sel.Left && l.Y == sel.Top);
+					}
+					WeakReferenceMessenger.Default.Send(locationHere);
 					inputService.IsKeyboardHandled = true;
 				}
 				else if (inputService.IsPressed(Keys.T, false))
 				{
 					WeakReferenceMessenger.Default.Send(null as SegmentTreasure);
+					inputService.IsKeyboardHandled = true;
+				}
+				else if (inputService.IsPressed(Keys.U, false))
+				{
+					var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+					var segment = segmentRequest.Response;
+					var sel = _selection.FirstOrDefault();
+					SegmentSubregion subregionHere = null;
+					if (sel is { Width: 1, Height: 1 })
+                    {
+						subregionHere = segment.Subregions.FirstOrDefault(s => s.Region == region.ID && s.Rectangles.Any(r => r.ToRectangle().Contains(sel.Left, sel.Top)));
+                    }
+					WeakReferenceMessenger.Default.Send(subregionHere);
 					inputService.IsKeyboardHandled = true;
 				}
 				else if (inputService.IsPressed(Keys.P, false))
@@ -492,7 +508,7 @@ namespace Kesmai.WorldForge
 					if (locationSpawnerHere != null) { WeakReferenceMessenger.Default.Send(locationSpawnerHere as Spawner); } //if there was a location spawner, jump to it
 					else if (regionSpawnerHere != null) { WeakReferenceMessenger.Default.Send(regionSpawnerHere as Spawner); } //if no location spawner, but a region spawner, jump to that
 					else { WeakReferenceMessenger.Default.Send(null as Spawner); } // default to just jumping to the spawner tab.                   
-
+					inputService.IsKeyboardHandled = true;
 				}
 			}
 			if (inputService.IsPressed(Keys.W, true))
