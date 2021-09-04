@@ -76311,6 +76311,8 @@
     };
     
     drake.AddStatus(new NightVisionStatus(drake));
+	
+	drake.AddImmunity(typeof(Lightning));
     
     drake.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
     
