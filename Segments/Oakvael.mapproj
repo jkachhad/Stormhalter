@@ -89752,11 +89752,9 @@
         Immunity = CreatureImmunity.Magic,
         Weakness = CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
     };
-    
-	/*
-    dryad.AddWeakness(IceStormSpell);
-    dryad.AddWeakness(LightningBoltSpell);
-    */
+
+    dryad.AddWeakness(typeof(IceStormSpell));
+    dryad.AddWeakness(typeof(LightningBoltSpell));
 	
     dryad.AddStatus(new BreatheWaterStatus(dryad));
     
@@ -90169,10 +90167,8 @@
     
     piranha.AddStatus(new BreatheWaterStatus(piranha));
     
-	/*
-    piranha.AddWeakness(IceStormSpell);
-    piranha.AddWeakness(LightningBoltSpell);
-    */
+    piranha.AddWeakness(typeof(IceStormSpell));
+    piranha.AddWeakness(typeof(LightningBoltSpell));
 
     piranha.Attacks = new CreatureAttackCollection
     {
