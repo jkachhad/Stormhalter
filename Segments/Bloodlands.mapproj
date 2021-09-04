@@ -87249,7 +87249,7 @@
         },
     };
     
-    fighter.Wield(new Staff());
+    fighter.Wield(new WoodenStaff());
     fighter.Equip(new DrakeScaleArmor());    
     
     fighter.AddGold(4450);
@@ -88783,8 +88783,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         new LootPackEntry(true, (from, container) => new LightningResistanceRing(),        35),
          new LootPackEntry(true, SemiRare, 40),
          new LootPackEntry(true, (from, container) => new BlackCloak(),        100),
-        new LootPackEntry(true, UltraRare, 13),
-        
+        new LootPackEntry(true, UltraRare, 13)
         ));
     
     return twin;
