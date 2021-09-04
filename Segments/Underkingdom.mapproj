@@ -78196,8 +78196,9 @@
         <component type="DoorComponent">
           <openId>75</openId>
           <closedId>63</closedId>
-          <secretId>26</secretId>
+          <secretId>336</secretId>
           <destroyedId>81</destroyedId>
+          <isSecret>true</isSecret>
         </component>
       </tile>
       <tile x="18" y="7">
@@ -103420,7 +103421,7 @@
     <spawn type="RegionSpawner" name="speedyHob">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>22</maximum>
+      <maximum>18</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -103595,8 +103596,10 @@
       <entry entity="yasnakiKnight" size="3" minimum="7" maximum="9" />
       <entry entity="yasnakiMA" size="3" minimum="2" maximum="3" />
       <bounds region="16">
-        <inclusion left="1" top="1" right="37" bottom="21" />
-        <exclusion left="17" top="2" right="20" bottom="5" />
+        <inclusion left="1" top="10" right="37" bottom="21" />
+        <inclusion left="22" top="1" right="37" bottom="9" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="1" top="10" right="5" bottom="10" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="undeadlevel">
@@ -103672,6 +103675,34 @@
       <entry entity="udBossSwordmaster" size="1" minimum="1" maximum="1" />
       <bounds region="17">
         <inclusion left="15" top="3" right="24" bottom="16" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="yasnakiLair">
+      <minimumDelay>1200</minimumDelay>
+      <maximumDelay>1500</maximumDelay>
+      <maximum>3</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="yasnakiMA" size="1" minimum="0" maximum="1" />
+      <entry entity="yasnakiWizard" size="1" minimum="0" maximum="1" />
+      <entry entity="yasnakiThaum" size="1" minimum="0" maximum="1" />
+      <entry entity="yasnakiKnight" size="1" minimum="0" maximum="1" />
+      <bounds region="16">
+        <inclusion left="6" top="2" right="15" bottom="8" />
+        <inclusion left="16" top="7" right="20" bottom="8" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
