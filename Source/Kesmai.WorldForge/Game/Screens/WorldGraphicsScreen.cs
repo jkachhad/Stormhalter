@@ -452,7 +452,25 @@ namespace Kesmai.WorldForge
 
 			if (inputService.IsDown(Keys.LeftControl) || inputService.IsDown(Keys.RightControl)) //Document Jumping hotkeys. Todo: move to a better place to capture this user input.
 			{
-				if (inputService.IsPressed(Keys.E, false))
+				if (inputService.IsPressed(Keys.Left, false))
+				{
+					var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+					var segment = segmentRequest.Response;
+					var sortedRegions = segment.Regions.OrderBy(r => r.ID);
+					var nextRegion = sortedRegions.LastOrDefault(r => r.ID < region.ID);
+					if (nextRegion != null) { _presenter.ActiveDocument = nextRegion; } else { _presenter.ActiveDocument = sortedRegions.Last(); }
+					inputService.IsKeyboardHandled = true;
+				}
+				else if (inputService.IsPressed(Keys.Right, false))
+				{
+					var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+					var segment = segmentRequest.Response;
+					var sortedRegions = segment.Regions.OrderBy(r => r.ID);
+					var nextRegion = sortedRegions.FirstOrDefault(r => r.ID > region.ID);
+					if (nextRegion != null) { _presenter.ActiveDocument = nextRegion; } else { _presenter.ActiveDocument = sortedRegions.First(); }
+					inputService.IsKeyboardHandled = true;
+				}
+				else if (inputService.IsPressed(Keys.E, false))
 				{
 					WeakReferenceMessenger.Default.Send(null as Entity);
 					inputService.IsKeyboardHandled = true;
