@@ -82,11 +82,10 @@
 
         public override void OnSpellTarget(Target target, MobileEntity combatant)
         {
-            if (Spell is CurseSpell curse)
+            if (combatant is PlayerEntity player)
             {
-                if (combatant is PlayerEntity player)
-                    player.SendMessage($"You feel something writhing under your skin!");
-                  
+                player.SendMessage($"You feel something writhing under your skin!");
+              
                 Timer.DelayCall(TimeSpan.FromSeconds(3.0), () =>
                 {
 					if (combatant.IsAlive)
@@ -114,6 +113,7 @@
                     /* When making an entity on demand without a spawner, we have to assign them a group. This will allow them to think/move. */
                     CreatureGroup.Instantiate(snake, Facet, Segment, combatant.Location);
                 });
+                base.OnSpellTarget(target, combatant);
             }
 			
             base.OnSpellTarget(target, combatant);
@@ -504,16 +504,10 @@
 
         public override void OnSpellTarget(Target target, MobileEntity combatant)
         {
-            
-            if (Spell is CurseSpell curse)
-            {
-                Say($"I would sacrifice ANYTHING to protect the grove!");
-                combatant.Teleport(new Point2D(23, 5, 236));
-            }
-			
+            Say($"I would sacrifice ANYTHING to protect the grove!");
+            combatant.Teleport(new Point2D(23, 5, 236));
             base.OnSpellTarget(target, combatant);
-
-        }
+        }			
 
         public override int GetNearbySound() => 208;
         public override int GetAttackSound() => 214;
