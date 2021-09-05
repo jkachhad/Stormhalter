@@ -100937,10 +100937,10 @@
         <block><![CDATA[
     var banshee = new Banshee()
     {
-        MaxHealth = 150, Health = 150,
+        MaxHealth = 120, Health = 120,
         BaseDodge = 13,
     
-        Experience = 6800,
+        Experience = 7200,
         BasePenetration = ShieldPenetration.Light,
         MaxMana = 21, Mana = 21,
         DeathResistance = 100,
@@ -101071,7 +101071,7 @@
     
     skeleton.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(14, 13, 22)
+        new CreatureBasicAttack(14, 11, 20)
     };
     
     skeleton.Wield(new Spear());
@@ -101342,7 +101342,7 @@
         
     lich.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(9, 20, 25)
+        new CreatureBasicAttack(11, 20, 25)
     };
     
     lich.Spells = new CreatureSpellCollection()
@@ -102147,6 +102147,62 @@
     ));
     
     return troll;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="udStalker">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var stalker = new Stalker()
+    {
+        MaxHealth = 200, Health = 200,
+        MaxMana = 17, Mana = 17,
+        BaseDodge = 20,
+    
+        Experience = 14500,
+        BasePenetration = ShieldPenetration.Medium,
+        VisibilityDistance = 1,
+        DeathResistance = 100,
+    };
+    
+    stalker.AddStatus(new NightVisionStatus(stalker));
+    
+    stalker.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(15, 20, 30)
+    };
+    
+    stalker.Spells = new CreatureSpellCollection(100)
+    {
+        new CreatureSpell<DeathSpell>(
+            skillLevel: 10, cost: 16)
+    };
+    
+    stalker.Wield(new Spear());
+    
+    stalker.AddGold(650);
+    stalker.AddLoot(new LootPack(
+        new LootPackEntry(true, udGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, undeadBottles,    33), 
+        new LootPackEntry(true, UKPotions,    0.3), 
+        new LootPackEntry(true, UndeadTreasure,    0.63)
+    ));
+    
+    return spectre;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -103721,7 +103777,7 @@
     <spawn type="RegionSpawner" name="undeadlevel">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>25</maximum>
+      <maximum>44</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -103736,14 +103792,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="udBanshee" size="4" minimum="6" maximum="10" />
-      <entry entity="udGhoul" size="1" minimum="3" maximum="3" />
-      <entry entity="udSkeleton" size="4" minimum="8" maximum="10" />
-      <entry entity="udSpectre" size="1" minimum="3" maximum="3" />
-      <entry entity="udLich" size="1" minimum="2" maximum="2" />
+      <entry entity="udBanshee" size="4" minimum="15" maximum="15" />
+      <entry entity="udGhoul" size="1" minimum="4" maximum="4" />
+      <entry entity="udSkeleton" size="4" minimum="15" maximum="15" />
+      <entry entity="udSpectre" size="1" minimum="4" maximum="4" />
+      <entry entity="udLich" size="1" minimum="3" maximum="3" />
+      <entry entity="udStalker" size="1" minimum="3" maximum="3" />
       <bounds region="17">
         <inclusion left="2" top="3" right="37" bottom="22" />
-        <exclusion left="11" top="18" right="28" bottom="20" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="orugugra">
