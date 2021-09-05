@@ -74835,7 +74835,7 @@
     
     skeleton.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(8, 6, 15)
+        new CreatureBasicAttack(8, 6, 13)
     };
     
     skeleton.Wield(new Spear());
@@ -75236,7 +75236,7 @@
         
     wraith.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9, 12, 20),
+        new CreatureBasicAttack(9, 8, 15),
     };
     
     wraith.Spells = new CreatureSpellCollection()
@@ -75439,7 +75439,7 @@
     
     spectre.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9, 13, 18),
+        new CreatureBasicAttack(9, 10, 16),
     };
     
     spectre.Spells = new CreatureSpellCollection()
@@ -75502,7 +75502,7 @@
     
     hobgoblin.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(10, 9, 17)
+        new CreatureBasicAttack(10, 7, 15)
     };
     
     hobgoblin.Wield(new Longsword());
@@ -75615,7 +75615,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(10, 9, 15)
+        new CreatureBasicAttack(10, 7, 13)
     };
     
     fighter.Wield(new Longsword());
@@ -75664,13 +75664,13 @@
     raven.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(7,     2, 8,   "The raven buffets you with his wings."),                   50
+            new CreatureAttack(7,     2, 7,   "The raven buffets you with his wings."),                   50
         }, 
         {
-            new CreatureAttack(8,     3, 12,  "The raven sends a flurry of pecks towards you."),          30 
+            new CreatureAttack(8,     3, 10,  "The raven sends a flurry of pecks towards you."),          30 
         }, 
         {
-            new CreatureAttack(9,     4, 15,  "The raven pecks at your eyes attempting to blind you."),   20 
+            new CreatureAttack(9,     4, 12,  "The raven pecks at your eyes attempting to blind you."),   20 
         }, 
     };
         
@@ -75712,7 +75712,7 @@
         MaxHealth = 250, Health = 250,
         BaseDodge = 13,
 
-        Experience = 5500,
+        Experience = 10500,
         
         FireProtection = 100,
         IceProtection = 80,
@@ -75900,7 +75900,7 @@
     
     presence.Attacks = new CreatureAttackCollection
     {
-        new CreatureAttack(12,     15, 30,   "The presence reaches inside of you!")
+        new CreatureAttack(12,     12, 23,   "The presence reaches inside of you!")
     };
     
     presence.Blocks = new CreatureBlockCollection
@@ -76357,7 +76357,7 @@
         MaxHealth = 300, Health = 300,
         BaseDodge = 15,
                 
-        Experience = 10000,
+        Experience = 11000,
     };
     griffin.AddStatus(new NightVisionStatus(griffin));
         
@@ -76418,17 +76418,17 @@
         Name = "Nomad",
         Body = (female ? 33 : 32), IsFemale = female,
             
-        MaxHealth = 155, Health = 155,
-        BaseDodge = 14,
+        MaxHealth = 125, Health = 125,
+        BaseDodge = 13,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 7600,
+        Experience = 6300,
         CanSwim = true,
             
     };
         
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(12, 17, 23)
+        new CreatureBasicAttack(13, 8, 16)
     };
     
     fighter.Wield(new Longsword());
@@ -76480,11 +76480,11 @@
     scorpion.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(11,     10, 20,      "The scorpion pinches you with its claws."),    50 
+            new CreatureAttack(12,     8, 15,      "The scorpion pinches you with its claws."),    50 
         },
         { 
-            new CreatureAttack(13,     20, 30,     "The scorpion stings you with his tail.", 
-                                                    new AttackPoisonComponent(20)),                 50
+            new CreatureAttack(13,     12, 20,     "The scorpion stings you with his tail.", 
+                                                    new AttackPoisonComponent(15)),                 50
         },
     };
     
@@ -76581,17 +76581,17 @@
         Name = "Nomad",
         Body = (female ? 33 : 32), IsFemale = female,
             
-        MaxHealth = 120, Health = 120,
+        MaxHealth = 110, Health = 110,
         BaseDodge = 14,
             
-        Experience = 7200,
+        Experience = 6200,
         CanSwim = true,
     };
     
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(13)
+        new CreatureBasicAttack(11)
     };
     
     fighter.Wield(new Longbow());
@@ -76643,14 +76643,14 @@
     minotaur.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(13,     25, 35,      "The minotaur hits with a wicked axe"),  60 
+            new CreatureAttack(13,     22, 30,      "The minotaur hits with a wicked axe"),  60 
         }, 
         {
-            new CreatureAttack(13,     30, 40,     "You've been gored by the minotaur",
+            new CreatureAttack(13,     25, 35,     "You've been gored by the minotaur",
                                                     new AttackStunComponent(10.0)),          30
         }, 
         {
-            new CreatureAttack(14,     35, 45,     "You've been trampled by the minotaur"),  10
+            new CreatureAttack(14,     30, 40,     "You've been trampled by the minotaur"),  10
         }, 
     };
     
@@ -76822,7 +76822,7 @@
         MaxHealth = 150, Health = 150,
         BaseDodge = 14,
                             
-        Experience = 3700,
+        Experience = 4700,
     };
     
     centaur.Attacks = new CreatureAttackCollection
@@ -77202,6 +77202,8 @@
         Experience = 8700,
     };
     
+    centaur.AddStatus(new NightVisionStatus(centaur));
+    
     centaur.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(13),
@@ -77303,7 +77305,7 @@
         CanJumpkick = true,
         CanStrikeCritically = false,
                 
-        Experience = 15000,
+        Experience = 22000,
         Alignment = Alignment.Chaotic,
     };
     
@@ -77367,7 +77369,7 @@
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(10, 13, 21)
+        new CreatureBasicAttack(12, 9, 15)
     };
     
     orc.Wield(new ShortSword());
@@ -77413,13 +77415,13 @@
     wolf.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(9,     5, 13,   "The wolf rakes you with its claws."),  50 
+            new CreatureAttack(10,     5, 12,   "The wolf rakes you with its claws."),  50 
         }, 
         {
-            new CreatureAttack(10,     6, 15,  "The wolf sinks its teeth into you."),  30 
+            new CreatureAttack(11,     6, 14,  "The wolf sinks its teeth into you."),  30 
         }, 
         {
-            new CreatureAttack(11,     8, 17,  "The wolf lunges at you."),             20 
+            new CreatureAttack(12,     8, 16,  "The wolf lunges at you."),             20 
         }, 
     };
         
@@ -77468,7 +77470,7 @@
     
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(11, 16, 23)
+        new CreatureBasicAttack(13, 11, 17)
     };
     
     troll.Wield(new Greatsword());
@@ -77612,13 +77614,13 @@
     manticora.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(10,     15, 20,      "The manticora bites you with its teeth."),     40 
+            new CreatureAttack(10,     12, 18,      "The manticora bites you with its teeth."),     40 
         },
         {
-            new CreatureAttack(11,     20, 25,      "The manticora slashes you with its claws."),   30 
+            new CreatureAttack(11,     15, 22,      "The manticora slashes you with its claws."),   30 
         },
         {
-            new CreatureAttack(12,     25, 30,     "The manticora stings you with his tail.", 
+            new CreatureAttack(12,     22, 27,     "The manticora stings you with his tail.", 
                                                     new AttackPoisonComponent(13)),                 30 
         },
     };
@@ -77910,7 +77912,7 @@
         <block><![CDATA[
     var seaserpent = new SeaSerpent()
     {
-        MaxHealth = 500, Health = 500,
+        MaxHealth = 800, Health = 800,
         BaseDodge = 18,
 
         Experience = 23000,
@@ -78701,7 +78703,7 @@
     <spawn type="RegionSpawner" name="gryphCliffsOutdoors">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>13</maximum>
+      <maximum>22</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -78716,16 +78718,17 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="cliffNomadArcher" size="3" minimum="2" maximum="10" />
-      <entry entity="cliffNomad" size="3" minimum="3" maximum="10" />
-      <entry entity="cliffCentaur" size="1" minimum="1" maximum="3" />
-      <entry entity="cliffScorpion" size="1" minimum="1" maximum="5" />
-      <entry entity="surfaceBee" size="3" minimum="1" maximum="3" />
+      <entry entity="cliffNomadArcher" size="3" minimum="6" maximum="6" />
+      <entry entity="cliffNomad" size="3" minimum="7" maximum="7" />
+      <entry entity="cliffCentaur" size="1" minimum="2" maximum="2" />
+      <entry entity="cliffScorpion" size="1" minimum="3" maximum="3" />
+      <entry entity="surfaceBee" size="3" minimum="2" maximum="2" />
       <entry entity="mausRaven" size="1" minimum="2" maximum="2" />
       <bounds region="20">
-        <inclusion left="9" top="3" right="37" bottom="9" />
+        <inclusion left="26" top="8" right="33" bottom="14" />
         <inclusion left="5" top="10" right="25" bottom="23" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
+        <inclusion left="10" top="6" right="14" bottom="9" />
+        <exclusion left="15" top="13" right="18" bottom="16" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="griffLevelLeftGriff">
@@ -78755,33 +78758,6 @@
     <spawn type="RegionSpawner" name="griffLevelEastCave">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>6</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="cliffGryphon" size="1" minimum="2" maximum="2" />
-      <entry entity="cliffNomad" size="3" minimum="2" maximum="3" />
-      <entry entity="cliffNomadArcher" size="3" minimum="2" maximum="2" />
-      <bounds region="20">
-        <inclusion left="18" top="2" right="23" bottom="9" />
-        <inclusion left="24" top="3" right="36" bottom="6" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
-      </bounds>
-    </spawn>
-    <spawn type="RegionSpawner" name="griffLevelDungeon">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>1200</maximumDelay>
       <maximum>8</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -78797,12 +78773,38 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="cliffTrolls" size="3" minimum="4" maximum="4" />
+      <entry entity="cliffGryphon" size="1" minimum="2" maximum="2" />
+      <entry entity="cliffNomad" size="3" minimum="4" maximum="4" />
+      <entry entity="cliffNomadArcher" size="3" minimum="2" maximum="2" />
+      <bounds region="20">
+        <inclusion left="18" top="2" right="23" bottom="9" />
+        <inclusion left="24" top="3" right="36" bottom="6" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="griffLevelDungeon">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>7</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="cliffTrolls" size="3" minimum="5" maximum="5" />
       <entry entity="mausWraith" size="1" minimum="2" maximum="2" />
       <bounds region="20">
-        <inclusion left="16" top="24" right="34" bottom="27" />
-        <inclusion left="29" top="29" right="37" bottom="23" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
+        <inclusion left="16" top="24" right="33" bottom="27" />
+        <exclusion left="16" top="24" right="19" bottom="26" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="drakeBoss">
@@ -78831,7 +78833,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="grissBossKosh">
+    <spawn type="RegionSpawner" name="gryphBossKosh">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>14400</maximumDelay>
       <maximum>1</maximum>
@@ -79038,7 +79040,7 @@
     <spawn type="RegionSpawner" name="shidStables">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>13</maximum>
+      <maximum>16</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -79054,13 +79056,14 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="mausWraith" size="1" minimum="2" maximum="2" />
-      <entry entity="mausHobgoblin" size="3" minimum="3" maximum="3" />
+      <entry entity="mausHobgoblin" size="3" minimum="5" maximum="5" />
       <entry entity="cliffOrcArcher" size="3" minimum="3" maximum="3" />
-      <entry entity="mausSkeleton" size="3" minimum="3" maximum="3" />
+      <entry entity="mausSkeleton" size="3" minimum="4" maximum="4" />
       <entry entity="mausHobgobMage" size="2" minimum="2" maximum="2" />
       <bounds region="100">
         <inclusion left="17" top="1" right="21" bottom="6" />
         <inclusion left="1" top="5" right="9" bottom="6" />
+        <inclusion left="3" top="3" right="15" bottom="3" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -79254,7 +79257,7 @@
     <spawn type="RegionSpawner" name="drakeOuter">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1500</maximumDelay>
-      <maximum>10</maximum>
+      <maximum>11</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -79270,12 +79273,12 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="minoManticora" size="1" minimum="2" maximum="2" />
-      <entry entity="minoMinotaur" size="1" minimum="3" maximum="4" />
-      <entry entity="minoLich" size="1" minimum="3" maximum="3" />
-      <entry entity="minoMinotaur" size="2" minimum="1" maximum="1" />
+      <entry entity="minoMinotaur" size="1" minimum="5" maximum="5" />
+      <entry entity="minoLich" size="1" minimum="2" maximum="2" />
+      <entry entity="minoMinotaur" size="2" minimum="2" maximum="2" />
       <bounds region="43">
         <inclusion left="8" top="2" right="18" bottom="9" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="8" top="6" right="12" bottom="9" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="powerTroll">
@@ -79330,7 +79333,7 @@
     <spawn type="RegionSpawner" name="cliffsMain">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>25</maximum>
+      <maximum>36</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -79345,14 +79348,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="cliffCentaur" size="1" minimum="3" maximum="3" />
-      <entry entity="cliffWolves" size="3" minimum="5" maximum="6" />
-      <entry entity="cliffOrcs" size="3" minimum="5" maximum="6" />
-      <entry entity="cliffTrolls" size="2" minimum="4" maximum="5" />
-      <entry entity="cliffOrcArcher" size="3" minimum="4" maximum="5" />
+      <entry entity="cliffCentaur" size="1" minimum="2" maximum="2" />
+      <entry entity="cliffWolves" size="3" minimum="8" maximum="8" />
+      <entry entity="cliffOrcs" size="3" minimum="10" maximum="10" />
+      <entry entity="cliffTrolls" size="3" minimum="9" maximum="9" />
+      <entry entity="cliffOrcArcher" size="3" minimum="7" maximum="7" />
       <bounds region="35">
         <inclusion left="1" top="9" right="24" bottom="27" />
-        <exclusion left="9" top="26" right="10" bottom="27" />
+        <exclusion left="8" top="25" right="11" bottom="27" />
         <exclusion left="17" top="9" right="24" bottom="12" />
       </bounds>
     </spawn>
