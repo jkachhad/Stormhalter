@@ -187,11 +187,11 @@ namespace Kesmai.WorldForge.Editor
 					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is SegmentViewModel).FirstOrDefault() as SegmentViewModel; });
 
 			SelectFilterCommand = new RelayCommand<TerrainSelector>(SelectFilter, 
-				(filter) => (Segment != null) && (ActiveDocument is SegmentRegion));
+				(filter) => (Segment != null));
 			SelectFilterCommand.DependsOn(() => Segment, () => ActiveDocument);
 			
 			SelectToolCommand = new RelayCommand<Tool>(SelectTool, 
-				(tool) => (Segment != null) && (ActiveDocument is SegmentRegion));
+				(tool) => (Segment != null) && (ActiveDocument is SegmentRegion || ActiveDocument is ComponentsPanel));
 			SelectToolCommand.DependsOn(() => Segment, () => ActiveDocument);
 
 			Filters = new NotifyingCollection<TerrainSelector>()
