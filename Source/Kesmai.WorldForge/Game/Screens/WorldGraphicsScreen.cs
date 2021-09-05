@@ -552,6 +552,10 @@ namespace Kesmai.WorldForge
 				if (_selection != null)
 					_selection.Select(new Rectangle(0, 0, 1, 1), region);
 			}
+			else if (inputService.IsPressed(Keys.Back, false))
+            {
+				_presenter.JumpPrevious();
+            }
 			else if (inputService.IsPressed(Keys.Add, false))
 			{
 				ZoomFactor += 0.2f;

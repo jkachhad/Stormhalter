@@ -40,6 +40,7 @@ namespace Kesmai.WorldForge.Editor
 		private bool _showSubregions;
 
 		private object _activeDocument;
+		private object _previousDocument;
 
 		public TerrainSelector SelectedFilter
 		{
@@ -127,7 +128,15 @@ namespace Kesmai.WorldForge.Editor
 		public object ActiveDocument
 		{
 			get => _activeDocument;
-			set => SetProperty(ref _activeDocument, value, true);
+			set
+			{
+				if (value != _activeDocument)
+                {
+					_previousDocument = _activeDocument;					
+                }
+				SetProperty(ref _activeDocument, value, true);
+
+			}
 		}
 		
 		public ApplicationPresenter()
@@ -313,6 +322,13 @@ namespace Kesmai.WorldForge.Editor
 			viewmodel.SelectedTreasure = treasure;
         }
 
+		public void JumpPrevious ()
+        {
+			if (_previousDocument != _activeDocument)
+            {
+				ActiveDocument = _previousDocument;
+            }
+        }
 
 		private void CreateSegment()
 		{
