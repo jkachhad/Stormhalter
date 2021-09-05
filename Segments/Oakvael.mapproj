@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.74.0.0">
+<segment name="Oakvael" version="0.76.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -67,6 +67,7 @@
             Name = "Dryad";
             Body = 15;
             Alignment = Alignment.Chaotic;
+            CanLoot = false;
         }
 
         public override void OnDeath()
@@ -81,31 +82,41 @@
 
         public override void OnSpellTarget(Target target, MobileEntity combatant)
         {
-			/* Do the original spell logic. */
-			base.OnSpellTarget(target, combatant);
-			
             if (Spell is CurseSpell curse)
             {
-                var snake = new Snake()
+                if (combatant is PlayerEntity player)
+                    player.SendMessage($"You feel something writhing under your skin!");
+                  
+                Timer.DelayCall(TimeSpan.FromSeconds(3.0), () =>
                 {
-                    MaxHealth = 250, Health = 250,
-                    BaseDodge = 18,
-                    Experience = 15000
-                };
-                snake.Attacks = new CreatureAttackCollection()
-                {
-                    new CreatureAttack(18,     10, 30,      "The viper sinks its spectral fangs into your flesh.",
-                                                                                            new AttackPoisonComponent(15, 50))
-                };
-
-                snake.Blocks = new CreatureBlockCollection
-                {
-                    new CreatureBlock(1, "hardened scales"),
-                };
-
-				/* When making an entity on demand without a spawner, we have to assign them a group. This will allow them to think/move. */
-				CreatureGroup.Instantiate(snake, Facet, Segment, combatant.Location);
-            }   
+					if (combatant.IsAlive)
+						return;
+				
+                    combatant.EmitSound(206, 3, 9);
+                    
+                    var snake = new Snake()
+                    {
+                        MaxHealth = 250, Health = 250,
+                        BaseDodge = 18,
+                        Experience = 15000
+                    };
+                    snake.Attacks = new CreatureAttackCollection()
+                    {
+                        new CreatureAttack(18,     10, 30,      "The viper sinks its spectral fangs into your flesh.",
+                                                                                                new AttackPoisonComponent(15, 50))
+                    };
+        
+                    snake.Blocks = new CreatureBlockCollection
+                    {
+                        new CreatureBlock(1, "hardened scales"),
+                    };
+        
+                    /* When making an entity on demand without a spawner, we have to assign them a group. This will allow them to think/move. */
+                    CreatureGroup.Instantiate(snake, Facet, Segment, combatant.Location);
+                });
+            }
+			
+            base.OnSpellTarget(target, combatant);
         }
 
         public override int GetNearbySound() => 208;
@@ -123,7 +134,6 @@
                 _brain = new CombatAI(this);
         }    
 
-        public override Corpse GetCorpse() => default(Corpse);
         public override void Serialize(BinaryWriter writer)
         {
             base.Serialize(writer);
@@ -144,7 +154,7 @@
         }
     }
 
-    public class GroveWildlifeBoar : CreatureEntity
+    public class GroveWildlifeBoar : AnimalEntity
     {
         public GroveWildlifeBoar()
         {
@@ -196,7 +206,7 @@
         }
     }
     
-    public class GroveWildlifeWolf : CreatureEntity
+    public class GroveWildlifeWolf : AnimalEntity
     {
         public GroveWildlifeWolf()
         {
@@ -248,7 +258,7 @@
     }
     
     
-    public class GroveWildlifeGriffin : CreatureEntity
+    public class GroveWildlifeGriffin : AnimalEntity
     {
         public GroveWildlifeGriffin()
         {
@@ -299,7 +309,7 @@
         }
     }
     
-    public class GroveWildlifeBeetle : CreatureEntity
+    public class GroveWildlifeBeetle : AnimalEntity
     {
         public GroveWildlifeBeetle()
         {
@@ -350,7 +360,7 @@
         }
     }
     
-    public class GroveWildlifeBear : CreatureEntity
+    public class GroveWildlifeBear : AnimalEntity
     {
         public GroveWildlifeBear()
         {
@@ -407,6 +417,7 @@
         {
             Body = 3;
             Alignment = Alignment.Chaotic;
+            CanLoot = false;
         }
 
         public int enrageAmount = 0;
@@ -493,13 +504,15 @@
 
         public override void OnSpellTarget(Target target, MobileEntity combatant)
         {
-			base.OnSpellTarget(target, combatant);
-			
+            
             if (Spell is CurseSpell curse)
             {
                 Say($"I would sacrifice ANYTHING to protect the grove!");
                 combatant.Teleport(new Point2D(23, 5, 236));
             }
+			
+            base.OnSpellTarget(target, combatant);
+
         }
 
         public override int GetNearbySound() => 208;
@@ -79963,9 +79976,10 @@
           <ground>23</ground>
         </component>
         <component type="DoorComponent">
+          <color r="255" g="210" b="95" a="255" />
           <openId>75</openId>
           <closedId>63</closedId>
-          <secretId>157</secretId>
+          <secretId>158</secretId>
           <destroyedId>81</destroyedId>
           <isSecret>true</isSecret>
         </component>
@@ -80538,9 +80552,10 @@
           <ground>23</ground>
         </component>
         <component type="DoorComponent">
+          <color r="255" g="210" b="95" a="255" />
           <openId>74</openId>
           <closedId>62</closedId>
-          <secretId>25</secretId>
+          <secretId>157</secretId>
           <destroyedId>80</destroyedId>
           <isSecret>true</isSecret>
         </component>
@@ -89974,7 +89989,7 @@
         <block><![CDATA[
     var wolf = new BlackWolf()
     {
-        Name = "Spectral Wolf",
+        Name = "Wolf Spirit",
         MaxHealth = 1000, Health = 1000,
         BaseDodge = 30,
         BasePenetration = ShieldPenetration.Heavy,
@@ -90034,7 +90049,7 @@
         <block><![CDATA[
     var boar = new Boar()
     {
-        Name = "Spectral.Boar",
+        Name = "Boar Spirit",
         MaxHealth = 1500, Health = 1500,
         BaseDodge = 26,
         
@@ -90096,7 +90111,7 @@
         <block><![CDATA[
     var viper = new Snake()
     {
-        Name = "Spectral Viper",
+        Name = "Viper Spirit",
         
         MaxHealth = 500, Health = 500,
         BaseDodge = 28,
