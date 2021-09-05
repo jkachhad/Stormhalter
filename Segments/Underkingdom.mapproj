@@ -101176,10 +101176,10 @@
         Experience = 19000,
     
         BasePenetration = ShieldPenetration.Heavy,
-        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Bashing |
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Bashing | CreatureImmunity.Slashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Magic,
         
-        Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+        Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell | CreatureWeakness.BlueGlowing,
     };
     
     mummy.AddStatus(new NightVisionStatus(mummy));
@@ -101187,10 +101187,10 @@
     mummy.Attacks = new CreatureAttackCollection()
     {
         { 
-            new CreatureAttack(16,     30, 50,     "The mummy strangles you with his bandages"),      70, TimeSpan.Zero 
+            new CreatureAttack(23,     30, 50,     "The mummy strangles you with his bandages"),      70, TimeSpan.Zero 
         }, 
         { 
-            new CreatureAttack(17,    40, 60,     "A mummified claw scratches you.",
+            new CreatureAttack(25,    40, 60,     "A mummified claw scratches you.",
                                                     new AttackAgeComponent(1000, 50)),             30, TimeSpan.Zero
         },
         //todo who added TimeSpan to these?
@@ -103650,7 +103650,7 @@
     <spawn type="RegionSpawner" name="mummies">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>8</maximum>
+      <maximum>15</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -103665,7 +103665,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="udCouncillors" size="1" minimum="8" maximum="8" />
+      <entry entity="udCouncillors" size="1" minimum="15" maximum="15" />
       <bounds region="14">
         <inclusion left="5" top="2" right="6" bottom="13" />
         <inclusion left="2" top="15" right="9" bottom="17" />
@@ -103823,6 +103823,9 @@
       <entry entity="udBossOrugugra" size="1" minimum="1" maximum="1" />
       <bounds region="17">
         <inclusion left="19" top="4" right="20" bottom="13" />
+        <inclusion left="33" top="10" right="35" bottom="11" />
+        <inclusion left="34" top="12" right="37" bottom="13" />
+        <inclusion left="34" top="14" right="34" bottom="20" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
