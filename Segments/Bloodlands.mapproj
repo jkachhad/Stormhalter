@@ -86877,11 +86877,11 @@
         <block><![CDATA[
 	var ydnac = new Humanoid()
     {
-        Name = "Lardil the disgraced", Alignment = Alignment.Evil,
+        Name = "Lardil the disgraced", Alignment = Alignment.Chaotic,
         Body = 48,
     
         MaxHealth = 3500, Health = 3500,
-        BaseDodge = 22,
+        BaseDodge = 31,
           
         Experience = 15000,
         
@@ -87123,7 +87123,7 @@
         
         Movement = 0,
         
-        Experience = 5000,
+        Experience = 15000,
         
         Alignment = Alignment.Chaotic,
     };
@@ -87214,8 +87214,9 @@
         Name = "The King",
         Body = 88, IsFemale = false,
             
-        MaxHealth = 4500, Health = 4500,
-        BaseDodge = 15,
+        MaxHealth = 5500, Health = 5500,
+        BaseDodge = 31,
+        MaxMana = 12, Mana = 12,
         HideDetection = 27,
         BasePenetration = ShieldPenetration.Light,
         Experience = 80500,
@@ -87247,6 +87248,19 @@
                                                         new AttackProneComponent(35), 
                                                         new AttackStunComponent(15)),               20
         },
+    };
+    fighter.Spells = new CreatureSpellCollection()
+    {
+        {
+            new CreatureSpell<BlindSpell>(
+                skillLevel: 17, cost: 4, 
+                mantra: SpellHelper.GenerateMantra(), instantCast: false),      5, TimeSpan.FromSeconds(30.0)
+        },
+        {
+            new CreatureSpell<DeathSpell>(
+                skillLevel: 15, cost: 6, 
+                mantra: SpellHelper.GenerateMantra(), instantCast: false),      2
+        }
     };
     
     fighter.Wield(new WoodenStaff());
@@ -87290,8 +87304,9 @@
         Name = "The Queen",
         Body = 87, IsFemale = true,
             
-        MaxHealth = 4500, Health = 4500,
-        BaseDodge = 15,
+        MaxHealth = 5500, Health = 5500,
+        BaseDodge = 31,
+        MaxMana = 10, Mana = 10,
         HideDetection = 27,
         BasePenetration = ShieldPenetration.Light,
         Experience = 80500,
@@ -87324,7 +87339,19 @@
                                                         new AttackStunComponent(15)),               20
         },
     };
-    
+    fighter.Spells = new CreatureSpellCollection()
+    {
+        {
+            new CreatureSpell<CurseSpell>(
+                skillLevel: 17, cost: 4, 
+                mantra: SpellHelper.GenerateMantra(), instantCast: false),      5, TimeSpan.FromSeconds(30.0)
+        },
+        {
+            new CreatureSpell<LightningBoltSpell>(
+                skillLevel: 17, cost: 6, 
+                mantra: SpellHelper.GenerateMantra(), instantCast: false),      2
+        }
+    };
     fighter.Wield(new BlackStaff());
     fighter.Equip(new DrakeScaleArmor());    
     
@@ -87752,7 +87779,7 @@ centaur.AddLoot(new LootPack(
         MaxHealth = 9900, Health = 9900,
         BaseDodge = 26,
         Body = 45,
-        MaxMana = 45,
+        MaxMana = 45, Mana = 50,
     
         Alignment = Alignment.Evil,
         HideDetection = 30,
@@ -88744,7 +88771,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         Name = "Gortin",
         Body = 209,
         
-        MaxHealth = 4775, Health = 4775, /* Based on 4 Death casts to kill at level 16 magic. */
+        MaxHealth = 4775, Health = 4775, 
         BaseDodge = 25,
         
         Experience = 35000,
@@ -88768,8 +88795,8 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     
     twin.Spells = new CreatureSpellCollection(100)
     {
-       { new CreatureSpell<CreateLavaSpell>(
-            skillLevel: 15), 100, TimeSpan.FromSeconds(15.0) }
+       { new CreatureSpell<FireStormSpell>(
+            skillLevel: 15), 100, TimeSpan.FromSeconds(20.0) }
     };
 
     twin.AddGold(2000);
