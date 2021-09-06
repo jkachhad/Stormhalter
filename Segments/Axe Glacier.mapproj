@@ -106044,6 +106044,9 @@
     then type Status to see a list of options. Then in parenthesis the selected name of the var from beginning of the script above.*/
     drake.AddStatus(new NightVisionStatus(drake));
     
+    /* Adds an immunity to lightning stuns. */
+    drake.AddImmunity(typeof(Lightning));
+    
     //This allows a timespan for which the drake will choose a new target of those visible at random. 10 seconds for example, here
     drake.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
     
@@ -106131,8 +106134,6 @@
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
-                   
-        Weakness = CreatureWeakness.IceSpearSpell,
         
         HideDetection = 31,
         
@@ -106141,6 +106142,7 @@
     dragon.AddStatus(new NightVisionStatus(dragon));
     
     dragon.AddWeakness(typeof(SilverGreatAxe));
+    dragon.AddWeakness(typeof(IceSpearSpell));
     
     dragon.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
     
