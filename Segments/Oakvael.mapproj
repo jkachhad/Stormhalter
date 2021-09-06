@@ -88,7 +88,7 @@
               
                 Timer.DelayCall(TimeSpan.FromSeconds(3.0), () =>
                 {
-					if (combatant.IsAlive)
+					if (!combatant.IsAlive)
 						return;
 				
                     combatant.EmitSound(206, 3, 9);
@@ -504,6 +504,9 @@
 
         public override void OnSpellTarget(Target target, MobileEntity combatant)
         {
+            if (target != null)
+                    target.Cancel(this, TargetCancel.Canceled);
+                    
             Say($"I would sacrifice ANYTHING to protect the grove!");
             combatant.Teleport(new Point2D(23, 5, 236));
             base.OnSpellTarget(target, combatant);
@@ -89787,15 +89790,14 @@
     {
         Name = "Naiad",
         MaxHealth = 2500, Health = 2500,
-        BaseDodge = 27,
+        BaseDodge = 20,
         MaxMana = 15, Mana = 15,
         Experience = 55000,
         HideDetection = 37,
         CanWalk = false,
         CanSwim = true,
-        Movement = 0,
-        VisibilityDistance = 1,
-        BasePenetration = ShieldPenetration.Heavy,
+        VisibilityDistance = 2,
+        BasePenetration = ShieldPenetration.VeryHeavy,
         Immunity = CreatureImmunity.Magic,
         Weakness = CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
     };
@@ -91782,7 +91784,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="groveSnake" size="3" minimum="1" maximum="1" />
+      <entry entity="groveSnake" size="1" minimum="1" maximum="1" />
       <bounds region="236">
         <inclusion left="24" top="13" right="34" bottom="13" />
         <exclusion left="0" top="0" right="0" bottom="0" />
