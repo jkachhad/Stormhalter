@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.74.0.0">
+<segment name="Leng" version="0.76.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -75593,7 +75593,7 @@
         }
     };
     
-    hobgoblin.Wield(new Longsword());
+    hobgoblin.Wield(new GiltDagger());
     
     hobgoblin.AddGold(350);
     hobgoblin.AddLoot(new LootPack(
@@ -76726,6 +76726,7 @@
         MagicProtection = 33,
         FireProtection = 100,
         VisibilityDistance = 0,
+        
     };
     
     salamander.Attacks = new CreatureAttackCollection
@@ -76948,6 +76949,8 @@
         BaseDodge = 11,
     
         Experience = 2100,
+        
+        Immunity = CreatureImmunity.Poison,
         
     };
     
@@ -77628,6 +77631,8 @@
         BaseDodge = 14,
         BasePenetration = ShieldPenetration.Light,
         Experience = 11500,
+        
+        Immunity = CreatureImmunity.Poison,
         
         
     };
