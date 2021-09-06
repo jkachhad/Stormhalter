@@ -3,6 +3,76 @@
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
+    public static TimeSpan _speechDelay = TimeSpan.FromMinutes(1.0);
+    public static Dictionary<MobileEntity, DateTime> _speechDelays = new Dictionary<MobileEntity, DateTime>();
+    
+    public static bool spokeRecently(MobileEntity entity)
+    {
+        /* If the entity spoke recently, we're not going to speak again. */
+        if (_speechDelays.TryGetValue(entity, out var nextSpeechTime) && DateTime.Now < nextSpeechTime)
+            return true;
+        
+        /* The entity did not speak recently, add them to the delay, and allow them to talk. */
+        _speechDelays[entity] = DateTime.Now + _speechDelay;
+        return false;
+    }
+    
+    public static readonly string[] _names = new string[]
+    {
+        "Aca", "Acha", "Achi", "Achu", "Aco", "Agua", "Ahua", "Aja", "Ala", "Ali", "Ama", "Ani", "Anu", "Apa",
+        "Apo", "Aqui", "Ara", "Ari", "Ata", "Ati", "Ato", "Atu", "Axi", "Aya", "Chaca", "Chacha", "Chachi",
+        "Chachu", "Chaco", "Chagua", "Chahua", "Chaja", "Chala", "Chali", "Chama", "Chani", "Chanu", "Chapa",
+        "Chapo", "Chaqui", "Chara", "Chari", "Chata", "Chati", "Chato", "Chatu", "Chaxi", "Chaya", "Chuca",
+        "Chucha", "Chuchi", "Chuchu", "Chuco", "Chugua", "Chuhua", "Chuja", "Chula", "Chuli", "Chuma", "Chuni",
+        "Chunu", "Chupa", "Chupo", "Chuqui", "Chura", "Churi", "Chuta", "Chuti", "Chuto", "Chutu", "Chuxi", "Chuya",
+        "Coca", "Cocha", "Cochi", "Cochu", "Coco", "Cogua", "Cohua", "Coja", "Cola", "Coli", "Coma", "Coni", "Conu",
+        "Copa", "Copo", "Coqui", "Cora", "Cori", "Cota", "Coti", "Coto", "Cotu", "Coxi", "Coya", "Huaca", "Huacha",
+        "Huachi", "Huachu", "Huaco", "Huagua", "Huahua", "Huaja", "Huala", "Huali", "Huama", "Huanca", "Huancha",
+        "Huanchi", "Huanchu", "Huanco", "Huangua", "Huanhua", "Huani", "Huanja", "Huanla", "Huanli", "Huanma",
+        "Huanni", "Huannu", "Huanpa", "Huanpo", "Huanqui", "Huanra", "Huanri", "Huanta", "Huanti", "Huanto",
+        "Huantu", "Huanu", "Huanxi", "Huanya", "Huapa", "Huapo", "Huaqui", "Huara", "Huari", "Huata", "Huati",
+        "Huato", "Huatu", "Huaxi", "Huaya", "Huca", "Hucha", "Huchi", "Huchu", "Huco", "Hugua", "Huhua", "Huja",
+        "Hula", "Huli", "Huma", "Huni", "Hunu", "Hupa", "Hupo", "Huqui", "Hura", "Huri", "Huta", "Huti", "Huto",
+        "Hutu", "Huxi", "Huya", "Ica", "Icha", "Ichi", "Ichu", "Ico", "Igua", "Ihua", "Ija", "Ila", "Ili", "Ima",
+        "Inca", "Incha", "Inchi", "Inchu", "Inco", "Ingua", "Inhua", "Ini", "Inja", "Inla", "Inli", "Inma", "Inni",
+        "Innu", "Inpa", "Inpo", "Inqui", "Inra", "Inri", "Inta", "Inti", "Into", "Intu", "Inu", "Inxi", "Inya",
+        "Ipa", "Ipo", "Iqui", "Ira", "Iri", "Ita", "Iti", "Ito", "Itu", "Ixi", "Iya", "Jauca", "Jaucha", "Jauchu",
+        "Jauco", "Jaugua", "Jauhua", "Jauja", "Jaula", "Jauli", "Jauma", "Jauni", "Jaunu", "Jaupa", "Jaupo",
+        "Jauqui", "Jaura", "Jauri", "Jauta", "Jauti", "Jauto", "Jautu", "Jauxi", "Jauya", "Maca", "Macca", "Maccha",
+        "Macchi", "Macchu", "Macco", "Macgua", "Macha", "Machi", "Machu", "Machua", "Macja", "Macla", "Macli",
+        "Macma", "Macni", "Macnu", "Maco", "Macpa", "Macpo", "Macqui", "Macra", "Macri", "Macta", "Macti", "Macto",
+        "Mactu", "Macxi", "Macya", "Magua", "Mahua", "Maja", "Mala", "Mali", "Mama", "Mani", "Manu", "Mapa", "Mapo",
+        "Maqui", "Mara", "Mari", "Mata", "Mati", "Mato", "Matu", "Maxi", "Maya", "Picca", "Piccha", "Picchi",
+        "Picco", "Picgua", "Pichua", "Picja", "Picla", "Picli", "Picma", "Picni", "Picnu", "Picpa", "Picpo",
+        "Picqui", "Picra", "Picri", "Picta", "Picti", "Picto", "Pictu", "Picxi", "Picya", "Tica", "Ticha", "Tichi",
+        "Tichu", "Tico", "Tigua", "Tihua", "Tija", "Tila", "Tili", "Tima", "Tini", "Tinu", "Tipa", "Tipo", "Tiqui",
+        "Tira", "Tiri", "Tita", "Titi", "Tito", "Titu", "Tixi", "Tiya", "Tuca", "Tucha", "Tuchi", "Tuchu", "Tuco",
+        "Tugua", "Tuhua", "Tuja", "Tula", "Tuli", "Tuma", "Tuni", "Tunu", "Tupa", "Tupo", "Tuqui", "Tura", "Turi",
+        "Tuta", "Tuti", "Tuto", "Tutu", "Tuxi", "Tuya", "Uca", "Ucha", "Uchi", "Uchu", "Uco", "Ugua", "Uhua", "Uja",
+        "Ula", "Uli", "Uma", "Uni", "Unu", "Upa", "Upo", "Uqui", "Ura", "Uri", "Uta", "Uti", "Uto", "Utu", "Uxi",
+        "Uya", "Yaca", "Yacha", "Yachi", "Yachu", "Yaco", "Yagua", "Yahua", "Yaja", "Yala", "Yali", "Yama", "Yani",
+        "Yanu", "Yapa", "Yapo", "Yaqui", "Yara", "Yari", "Yata", "Yati", "Yato", "Yatu", "Yaxi", "Yaya", "Yuca",
+        "Yucha", "Yuchi", "Yuchu", "Yuco", "Yugua", "Yuhua", "Yuja", "Yula", "Yuli", "Yuma", "Yuni", "Yunu", "Yupa",
+        "Yupo", "Yuqui", "Yura", "Yuri", "Yuta", "Yuti", "Yuto", "Yutu", "Yuxi", "Yuya"
+    };
+    
+    public static string[] _rarePurchaseResponses = new string[]
+    {
+        "That's quite a bargain.", 
+        "You won't find another with such quality.",
+        "I didn't think anyone even wanted that.",
+        "It was left here, pray the owner doesn't come back.",
+        "Don't go losing it."
+    };
+    
+    public static void gemsPriceMutator(MobileEntity entity, Container source, ItemEntity item)
+    {
+        /* Item values fall between 0.8 to 1.2 of base price. */
+        var lesserPrice = (int)(item.BasePrice * 0.2);
+        var higherPrice = (int)(item.BasePrice * 0.2);
+        
+        item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
+    }
 ]]></block>
     <block><![CDATA[]]></block>
   </script>
@@ -675,10 +745,18 @@
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
+        <component type="EgressComponent">
+          <egress>330</egress>
+          <destinationSegment>5</destinationSegment>
+        </component>
       </tile>
       <tile x="3" y="-38">
         <component type="FloorComponent">
           <ground>176</ground>
+        </component>
+        <component type="EgressComponent">
+          <egress>315</egress>
+          <destinationSegment>2</destinationSegment>
         </component>
       </tile>
       <tile x="4" y="-38">
@@ -725,10 +803,18 @@
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
+        <component type="EgressComponent">
+          <egress>328</egress>
+          <destinationSegment>4</destinationSegment>
+        </component>
       </tile>
       <tile x="11" y="-38">
         <component type="FloorComponent">
           <ground>176</ground>
+        </component>
+        <component type="EgressComponent">
+          <egress>316</egress>
+          <destinationSegment>1</destinationSegment>
         </component>
       </tile>
       <tile x="12" y="-38">
@@ -1054,7 +1140,7 @@
       </tile>
       <tile x="11" y="-36">
         <component type="FloorComponent">
-          <ground>176</ground>
+          <ground>11176</ground>
         </component>
       </tile>
       <tile x="12" y="-36">
@@ -1644,6 +1730,12 @@
         <component type="FloorComponent">
           <ground>13</ground>
         </component>
+        <component type="WallComponent">
+          <wall>33</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
       </tile>
       <tile x="1" y="-32">
         <component type="WallComponent">
@@ -1654,6 +1746,14 @@
         </component>
         <component type="FloorComponent">
           <ground>13</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>27</wall>
+          <destroyed>40</destroyed>
+          <ruins>45</ruins>
+        </component>
+        <component type="StaticComponent">
+          <static>439</static>
         </component>
       </tile>
       <tile x="2" y="-32">
@@ -1756,10 +1856,18 @@
         <component type="FloorComponent">
           <ground>13</ground>
         </component>
+        <component type="StaticComponent">
+          <static>439</static>
+        </component>
       </tile>
       <tile x="13" y="-32">
         <component type="FloorComponent">
           <ground>13</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>27</wall>
+          <destroyed>40</destroyed>
+          <ruins>45</ruins>
         </component>
       </tile>
       <tile x="14" y="-32">
@@ -1845,20 +1953,23 @@
         <component type="FloorComponent">
           <ground>13</ground>
         </component>
-      </tile>
-      <tile x="1" y="-31">
         <component type="WallComponent">
           <wall>28</wall>
           <destroyed>41</destroyed>
           <ruins>45</ruins>
         </component>
+      </tile>
+      <tile x="1" y="-31">
         <component type="FloorComponent">
-          <ground>13</ground>
+          <ground>4</ground>
         </component>
       </tile>
       <tile x="2" y="-31">
         <component type="FloorComponent">
           <ground>4</ground>
+        </component>
+        <component type="CounterComponent">
+          <counter>87</counter>
         </component>
       </tile>
       <tile x="3" y="-31">
@@ -1919,8 +2030,16 @@
         <component type="FloorComponent">
           <ground>4</ground>
         </component>
+        <component type="CounterComponent">
+          <counter>87</counter>
+        </component>
       </tile>
       <tile x="12" y="-31">
+        <component type="FloorComponent">
+          <ground>4</ground>
+        </component>
+      </tile>
+      <tile x="13" y="-31">
         <component type="FloorComponent">
           <ground>4</ground>
         </component>
@@ -1928,11 +2047,6 @@
           <wall>28</wall>
           <destroyed>41</destroyed>
           <ruins>45</ruins>
-        </component>
-      </tile>
-      <tile x="13" y="-31">
-        <component type="FloorComponent">
-          <ground>13</ground>
         </component>
       </tile>
       <tile x="14" y="-31">
@@ -2018,20 +2132,23 @@
         <component type="FloorComponent">
           <ground>13</ground>
         </component>
-      </tile>
-      <tile x="1" y="-30">
         <component type="WallComponent">
           <wall>28</wall>
           <destroyed>41</destroyed>
           <ruins>45</ruins>
         </component>
+      </tile>
+      <tile x="1" y="-30">
         <component type="FloorComponent">
-          <ground>13</ground>
+          <ground>4</ground>
         </component>
       </tile>
       <tile x="2" y="-30">
         <component type="FloorComponent">
           <ground>4</ground>
+        </component>
+        <component type="CounterComponent">
+          <counter>87</counter>
         </component>
       </tile>
       <tile x="3" y="-30">
@@ -2090,8 +2207,16 @@
         <component type="FloorComponent">
           <ground>4</ground>
         </component>
+        <component type="CounterComponent">
+          <counter>87</counter>
+        </component>
       </tile>
       <tile x="12" y="-30">
+        <component type="FloorComponent">
+          <ground>4</ground>
+        </component>
+      </tile>
+      <tile x="13" y="-30">
         <component type="FloorComponent">
           <ground>4</ground>
         </component>
@@ -2099,11 +2224,6 @@
           <wall>28</wall>
           <destroyed>41</destroyed>
           <ruins>45</ruins>
-        </component>
-      </tile>
-      <tile x="13" y="-30">
-        <component type="FloorComponent">
-          <ground>13</ground>
         </component>
       </tile>
       <tile x="14" y="-30">
@@ -2189,20 +2309,23 @@
         <component type="FloorComponent">
           <ground>13</ground>
         </component>
-      </tile>
-      <tile x="1" y="-29">
         <component type="WallComponent">
           <wall>28</wall>
           <destroyed>41</destroyed>
           <ruins>45</ruins>
         </component>
+      </tile>
+      <tile x="1" y="-29">
         <component type="FloorComponent">
-          <ground>13</ground>
+          <ground>4</ground>
         </component>
       </tile>
       <tile x="2" y="-29">
         <component type="FloorComponent">
           <ground>4</ground>
+        </component>
+        <component type="CounterComponent">
+          <counter>87</counter>
         </component>
       </tile>
       <tile x="3" y="-29">
@@ -2261,8 +2384,16 @@
         <component type="FloorComponent">
           <ground>4</ground>
         </component>
+        <component type="CounterComponent">
+          <counter>87</counter>
+        </component>
       </tile>
       <tile x="12" y="-29">
+        <component type="FloorComponent">
+          <ground>4</ground>
+        </component>
+      </tile>
+      <tile x="13" y="-29">
         <component type="FloorComponent">
           <ground>4</ground>
         </component>
@@ -2270,11 +2401,6 @@
           <wall>28</wall>
           <destroyed>41</destroyed>
           <ruins>45</ruins>
-        </component>
-      </tile>
-      <tile x="13" y="-29">
-        <component type="FloorComponent">
-          <ground>13</ground>
         </component>
       </tile>
       <tile x="14" y="-29">
@@ -2360,15 +2486,20 @@
         <component type="FloorComponent">
           <ground>13</ground>
         </component>
-      </tile>
-      <tile x="1" y="-28">
         <component type="WallComponent">
           <wall>28</wall>
           <destroyed>41</destroyed>
           <ruins>45</ruins>
         </component>
+      </tile>
+      <tile x="1" y="-28">
         <component type="FloorComponent">
-          <ground>13</ground>
+          <ground>4</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>27</wall>
+          <destroyed>40</destroyed>
+          <ruins>45</ruins>
         </component>
       </tile>
       <tile x="2" y="-28">
@@ -2475,15 +2606,20 @@
           <destroyed>40</destroyed>
           <ruins>45</ruins>
         </component>
+      </tile>
+      <tile x="13" y="-28">
+        <component type="FloorComponent">
+          <ground>4</ground>
+        </component>
         <component type="WallComponent">
           <wall>28</wall>
           <destroyed>41</destroyed>
           <ruins>45</ruins>
         </component>
-      </tile>
-      <tile x="13" y="-28">
-        <component type="FloorComponent">
-          <ground>13</ground>
+        <component type="WallComponent">
+          <wall>27</wall>
+          <destroyed>40</destroyed>
+          <ruins>45</ruins>
         </component>
       </tile>
       <tile x="14" y="-28">
@@ -2882,6 +3018,9 @@
           <destroyed>40</destroyed>
           <ruins>45</ruins>
         </component>
+        <component type="StaticComponent">
+          <static>245</static>
+        </component>
       </tile>
       <tile x="3" y="-25">
         <component type="FloorComponent">
@@ -2892,6 +3031,9 @@
           <destroyed>40</destroyed>
           <ruins>45</ruins>
         </component>
+        <component type="StaticComponent">
+          <static>439</static>
+        </component>
       </tile>
       <tile x="4" y="-25">
         <component type="FloorComponent">
@@ -2901,6 +3043,9 @@
           <wall>27</wall>
           <destroyed>40</destroyed>
           <ruins>45</ruins>
+        </component>
+        <component type="StaticComponent">
+          <static>245</static>
         </component>
       </tile>
       <tile x="5" y="-25">
@@ -3069,6 +3214,9 @@
           <destroyed>41</destroyed>
           <ruins>45</ruins>
         </component>
+        <component type="StaticComponent">
+          <static>246</static>
+        </component>
       </tile>
       <tile x="2" y="-24">
         <component type="FloorComponent">
@@ -3078,6 +3226,9 @@
       <tile x="3" y="-24">
         <component type="FloorComponent">
           <ground>4</ground>
+        </component>
+        <component type="CounterComponent">
+          <counter>267</counter>
         </component>
       </tile>
       <tile x="4" y="-24">
@@ -3239,6 +3390,9 @@
           <destroyed>41</destroyed>
           <ruins>45</ruins>
         </component>
+        <component type="StaticComponent">
+          <static>244</static>
+        </component>
       </tile>
       <tile x="2" y="-23">
         <component type="FloorComponent">
@@ -3295,6 +3449,9 @@
       <tile x="10" y="-23">
         <component type="FloorComponent">
           <ground>4</ground>
+        </component>
+        <component type="StaticComponent">
+          <static>114</static>
         </component>
       </tile>
       <tile x="11" y="-23">
@@ -3411,10 +3568,16 @@
           <destroyed>41</destroyed>
           <ruins>45</ruins>
         </component>
+        <component type="StaticComponent">
+          <static>246</static>
+        </component>
       </tile>
       <tile x="2" y="-22">
         <component type="FloorComponent">
           <ground>4</ground>
+        </component>
+        <component type="CounterComponent">
+          <counter>270</counter>
         </component>
       </tile>
       <tile x="3" y="-22">
@@ -26634,12 +26797,10 @@
     </region>
   </regions>
   <locations>
-    <location name="Entrance" x="-4" y="2" region="1" />
-    <location name="Resurrect" x="0" y="0" region="0" />
-    <location name="Facet" x="0" y="0" region="0" />
-    <location name="Thief" x="0" y="0" region="0" />
-    <location name="Location 1" x="0" y="0" region="0" />
-    <location name="Location -4, 2 [1]" x="-4" y="2" region="1" />
+    <location name="Entrance" x="-5" y="1" region="1" />
+    <location name="Resurrect" x="11" y="-36" region="1" />
+    <location name="Facet" x="-5" y="1" region="1" />
+    <location name="Thief" x="-5" y="1" region="1" />
   </locations>
   <subregions>
     <subregion name="Subregion 1" type="Town" region="1">
@@ -26654,6 +26815,7 @@
 
     var troll = new GnollGuard()
     {
+        Name = "Gnoll Guard",
         MaxHealth = 175, Health = 175,
         BaseDodge = 14,
                 
@@ -26676,7 +26838,6 @@
         new LootPackEntry(true, drop3gems,       20,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33), 
         new LootPackEntry(true, UKPotions,    0.25), 
-        new LootPackEntry(true, UpperTreasure,    0.63)
     ));
     
     return GnollGuard;
@@ -26696,9 +26857,520 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="Banker">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	 var banker = new Banker()
+    {
+                
+        Body = 10, IsFemale = true,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+
+    return banker;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="Shopkeep">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var female = Utility.RandomBool();
+    var vendor = new Shopkeeper()
+    {
+        Name = _names.Random(),
+        Body = (female ? 10 : 9), IsFemale = female,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+    return vendor;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="MA Trainer">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var female = Utility.RandomBool();
+    var trainer = new WeaponTrainer()
+    {
+        Name = _names.Random(),
+        Body = (female ? 10 : 9), IsFemale = female,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+    return trainer;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="Weapon Trainer">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var female = Utility.RandomBool();
+    var trainer = new WeaponTrainer()
+    {
+        Name = _names.Random(),
+        Body = (female ? 10 : 9), IsFemale = female,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+    return trainer;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="Magic Trainer">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	  var zap = new WizardTrainer()
+    {
+        Name = "Zap", Body = 38,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+
+        Experience = 50,
+    };
+    
+    foreach (var skill in Skill.Weapons)
+        zap.SetTraining(skill, 0, 8);
+    
+    zap.SetTraining(Skill.Magic, 0, 19);
+    
+    return zap;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="Thaum Trainer">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var shven = new ThaumaturgeTrainer()
+    {
+        Name = "Shven", Body = 48,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+
+        Experience = 50,
+    };
+    
+    shven.AddCounter(new Point2D(30, 7, 1));
+    shven.AddCounter(new Point2D(31, 7, 1));
+    
+    foreach (var skill in Skill.Weapons)
+        shven.SetTraining(skill, 0, 8);
+    
+    shven.SetTraining(Skill.Magic, 0, 19);
+    
+    return shven;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="Balm Seller">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var female = Utility.RandomBool();
+    var vendor = new Merchant<ClearBalm>(16, 10, byte.MaxValue)
+    {
+        Name = _names.Random(),
+        
+        Body = (female ? 16 : 48), IsFemale = female,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+
+    return vendor;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="Recall Seller">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var female = Utility.RandomBool();
+    var vendor = new Merchant<RecallRing>(150, 4, byte.MaxValue)
+    {
+        Name = _names.Random(),
+        
+        Body = (female ? 10 : 9), IsFemale = female,
+        
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+
+    return vendor;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="Priest">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+  var female = Utility.RandomBool();
+    var peacekeeper = new Peacekeeper()
+    {
+        Name = _names.Random(),
+        Body = (female ? 16 : 48), IsFemale = female,
+    
+        BaseDodge = 12,
+        MaxHealth = 100, Health = 100,
+        MaxMana = 30, Mana = 30,
+        
+        Experience = 50,
+    };
+
+    peacekeeper.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(6)
+    };
+    
+    return peacekeeper;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
-    <spawn type="LocationSpawner" name="Location Spawn 21, 3 [1]">
+    <spawn type="LocationSpawner" name="North of Gate ">
+      <minimumDelay>3060</minimumDelay>
+      <maximumDelay>300</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="GnollGuard" size="1" minimum="1" maximum="1" />
+      <location x="21" y="-1" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="South of Gate ">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>300</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="GnollGuard" size="1" minimum="1" maximum="1" />
+      <location x="21" y="3" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="Banker ">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+  spawn.Name = "Bezos";
+    spawn.Body = 10;
+    if (spawn is Banker banker)
+        banker.AddCounter(new Point2D(2, -30, 1));
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="Banker" size="1" minimum="1" maximum="1" />
+      <location x="1" y="-30" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="Shopkeep ">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+ if (spawn is Shopkeeper shopkeeper)
+    {
+        void onRarePurchase(PlayerEntity player, ItemEntity item)
+        {
+            shopkeeper.SayTo(player, _rarePurchaseResponses.Random());
+        }
+    
+        shopkeeper.AddCounter(new Point2D(42, 17, 1));
+
+        // Normal stock items.
+        var merchantUpsell = 3.5;
+        
+        var wares = new List<StockEntry>()
+        {
+           new StockEntry("water",            () => new WaterPotion(),         (int)(5 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+           new StockEntry("red berries",      () => new RedBerries(),         (int)(5 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
+           new StockEntry("yellow berries",   () => new YellowBerries(),      (int)(5 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
+           new StockEntry("mugwort",          () => new Mugwort(),            (int)(25 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
+           new StockEntry("clear balm",       () => new ClearBalm(),          (int)(16 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+           new StockEntry("green balm",       () => new GreenBalm(),          (int)(16 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+           new StockEntry("yellow balm",      () => new YellowBalm(),         (int)(16 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+           new StockEntry("stamina potion",   () => new StaminaPotion(),      (int)(40 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+        };
+        
+        // Rare wares.
+        if (Utility.RandomDouble() <= 0.33)  /* 50% total chance to spawn. */
+            wares.Add(new StockEntry("black ceramic bottle", () => new NaphthaPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(1, 3), onRarePurchase));
+        else if (Utility.RandomDouble() <= 0.33)
+            wares.Add(new StockEntry("black ceramic bottle", () => new NitroPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(1, 3), onRarePurchase));
+            
+        if (Utility.RandomDouble() <= 0.20)  /* 20% total chance to spawn. */
+            wares.Add(new StockEntry("youth potion",    () => new YouthPotion(),    (int)(800 * merchantUpsell),    1,     onRarePurchase));
+
+        /* Rare Potions */
+        var rarePotions = new List<StockEntry>()
+        {
+            new StockEntry("red clay bottle",           () => new PermanentStrengthPotion(),        (int)(2000 * merchantUpsell),       1, null),
+            new StockEntry("black ceramic bottle",      () => new PermanentDexterityPotion(),       (int)(2000 * merchantUpsell),       1, null),
+            new StockEntry("golden porcelain bottle",   () => new PermanentIntelligencePotion(),    (int)(2000 * merchantUpsell),       1, null),
+            new StockEntry("heavy glass bottle",        () => new PermanentWisdomPotion(),          (int)(2000 * merchantUpsell),       1, null),
+            new StockEntry("porcelain bottle",          () => new PermanentWillpowerPotion(),       (int)(2000 * merchantUpsell),       1, null),
+            new StockEntry("small porcelain vial",      () => new PermanentConstitutionPotion(),    (int)(2000 * merchantUpsell),       1, null),
+        };
+        
+        foreach (var rarePotionEntry in rarePotions)
+        {
+            if (Utility.RandomDouble() <= 0.10)  /* 10% total chance to spawn. */
+                wares.Add(rarePotionEntry);
+        }
+
+        /* The vendor won't sell everything though, at least not this time around. */
+        foreach (var stock in wares.Random(6))
+            shopkeeper.Stock(stock);
+
+        // Restock only some items.
+        // TODO: Can we move this logic to the template?
+        for (var i = Utility.Random(3, 5); i > 0; i--)
+            shopkeeper.Restock();
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="Shopkeep" size="1" minimum="1" maximum="1" />
+      <location x="13" y="-30" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="MA Trainer ">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+     spawn.Name = "Brucette";
+     spawn.Body = 35; spawn.IsFemale = true;
+    
+    if (spawn is TrainerEntity Brucette)
+    {
+        foreach (var skill in Skill.Weapons)
+            Brucette.SetTraining(skill, 0, 4);
+
+        Brucette.SetTraining(Skill.Hand, 8, 16);
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="MA Trainer" size="1" minimum="1" maximum="1" />
+      <location x="10" y="-24" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="Weapon Trainer">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+ spawn.Name = "Wick";
+    spawn.Body = 32; spawn.IsFemale = false;
+    
+    if (spawn is TrainerEntity wick)
+    {
+        foreach (var skill in Skill.Weapons)
+            wick.SetTraining(skill, 8, 16);
+
+        wick.SetTraining(Skill.Hand, 0, 4);
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="Weapon Trainer" size="1" minimum="1" maximum="1" />
+      <location x="12" y="-22" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="Magic Trainer">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -26715,7 +27387,111 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <location x="21" y="3" region="1" />
+      <entry entity="Magic Trainer" size="1" minimum="1" maximum="1" />
+      <location x="4" y="-22" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="Balm">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="Balm Seller" size="1" minimum="1" maximum="1" />
+      <location x="3" y="-20" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="Recall">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="Recall Seller" size="1" minimum="1" maximum="1" />
+      <location x="11" y="-20" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="Thaum Trainer">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="Thaum Trainer" size="1" minimum="1" maximum="1" />
+      <location x="7" y="-38" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="Priest">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    {
+    spawn.Name = "priest";
+    spawn.MaxHealth = 100; spawn.Health = 100;
+    spawn.BaseDodge = 10;
+    
+    if (spawn is Peacekeeper priest)
+    {
+        priest.Brain = new PriestAI(priest);
+        
+        priest.Home = new RectangleBounds()
+        {  
+            new Rectangle2D(2, -37, 12, -33, 1)
+        };
+        
+        priest.Wield(new SteelMace());
+        priest.Equip(new LeatherArmor());
+        
+        priest.Spells = new CreatureSpellCollection()
+        {
+            new CreatureSpell<CurseSpell>(
+                    skillLevel: 3, cost: 3,
+                    mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        };
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="Priest" size="1" minimum="0" maximum="0" />
+      <location x="2" y="-37" region="1" />
     </spawn>
   </spawns>
   <treasures />
