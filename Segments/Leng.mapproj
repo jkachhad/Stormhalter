@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.74.0.0">
+<segment name="Leng" version="0.76.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -76231,6 +76231,7 @@
         VisibilityDistance = 0,
     };
     
+    vlad.AddStatus(new NightVisionStatus(vlad));
     vlad.CombatantChangeInterval = TimeSpan.FromSeconds(4.0);
     
     vlad.Attacks = new CreatureAttackCollection
@@ -76258,7 +76259,7 @@
     
     vlad.AddGold(25000);
     vlad.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new GriffinSkull(),        100),
+        new LootPackEntry(true, (from, container) => new DragonSkull(),        100),
         new LootPackEntry(true, (from, container) => new LionRobe(),        50),
         new LootPackEntry(true, (from, container) => new GoldenTorc(),        33),
         new LootPackEntry(true, (from, container) => new FeatherFallBoots(),        100),
@@ -78012,6 +78013,63 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="vladLich">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var lich = new Lich()
+    {
+        MaxHealth = 150, Health = 150,
+        MaxMana = 19, Mana = 19,
+        BaseDodge = 14,
+        MagicProtection = 33,
+        Experience = 9500,
+        VisibilityDistance = 0,
+        CanLoot = false,
+    };
+    
+    lich.AddStatus(new NightVisionStatus(lich));
+        
+    lich.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(9, 15, 25)
+    };
+    
+    lich.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<DeathSpell>(
+            skillLevel: 10, cost: 6, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
+        
+    lich.Wield(new BlackStaff());
+        
+    lich.AddGold(700);
+    lich.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new SilverGreatAxe(),        100),
+        new LootPackEntry(true, MinotaurGems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, CliffBottles,    20),
+        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, MinotaurTreasures,    0.63)
+    ));
+    
+    return lich;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="Priest">
@@ -78845,6 +78903,7 @@
       <entry entity="vladBoss" size="1" minimum="1" maximum="1" />
       <entry entity="vladSalamander" size="1" minimum="1" maximum="1" />
       <entry entity="vladGryph" size="1" minimum="2" maximum="2" />
+      <entry entity="vladLich" size="1" minimum="1" maximum="1" />
       <bounds region="17">
         <inclusion left="3" top="3" right="7" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
