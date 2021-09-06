@@ -26834,11 +26834,6 @@
     troll.Equip(new ChainmailArmor());
     
     GnollGuard.AddGold(450);
-    GnollGuard.AddLoot(new LootPack(
-        new LootPackEntry(true, drop3gems,       20,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.25), 
-    ));
     
     return GnollGuard;
 ]]></block>
