@@ -1,8 +1,12 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Controls;
 using Kesmai.WorldForge.Editor;
+using DigitalRune.ServiceLocation;
+using CommonServiceLocator;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
@@ -23,8 +27,11 @@ namespace Kesmai.WorldForge.UI.Documents
 			WeakReferenceMessenger.Default
 				.Register<SpawnsDocument, SpawnsViewModel.SelectedRegionSpawnerChangedMessage>(
 					this, OnRegionSpawnerChanged);
+
+			WeakReferenceMessenger.Default
+				.Register<SpawnsDocument, Spawner>(
+					this, (r,m) => { _typeSelector.SelectedIndex = m is LocationSpawner ? 0 : 1; });
 		}
-		
 		private void OnLocationSpawnerChanged(SpawnsDocument recipient, SpawnsViewModel.SelectedLocationSpawnerChangedMessage message)
 		{
 			_scriptsTabControl.SelectedIndex = 0;
@@ -53,6 +60,13 @@ namespace Kesmai.WorldForge.UI.Documents
 				_regionPresenter.Region = segment.GetRegion(spawn.Region);
 				_regionPresenter.SetLocation(spawn);
 			}
+		}
+
+		private void jumpEntity(object sender, MouseButtonEventArgs e)
+		{
+			//get the entity from this row... somehow.
+			var ent = _locationEntities.SelectedItem as Entity;
+			//WeakReferenceMessenger.Default.Send<Entity>(ent);
 		}
 	}
 	

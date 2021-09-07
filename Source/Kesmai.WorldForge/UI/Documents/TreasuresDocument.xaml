@@ -93,8 +93,12 @@
         
         <Border Margin="2" Grid.Column="1"
                 BorderBrush="Black" BorderThickness="1">
-            <StackPanel>
-                <ToolBar Padding="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <ToolBar Padding="2" Grid.Row="0">
                     <ToolBar.Items>
                         <Button Width="24" Height="24"
                                 Command="{Binding AddTreasureEntryCommand}">
@@ -114,7 +118,7 @@
                     </ToolBar.Items>
                 </ToolBar>
                 
-                <DataGrid ItemsSource="{Binding SelectedTreasure.Entries}"
+                <DataGrid Grid.Row="1" ItemsSource="{Binding SelectedTreasure.Entries}"
                           SelectedItem="{Binding SelectedTreasureEntry}"
                           AutoGenerateColumns="False" SelectionMode="Single"
                           CanUserAddRows="false" CanUserDeleteRows="false"
@@ -192,7 +196,7 @@
                         </DataTemplate>
                     </DataGrid.RowDetailsTemplate>
                 </DataGrid>
-            </StackPanel>
+            </Grid>
         </Border>
     </Grid>
 </UserControl>
