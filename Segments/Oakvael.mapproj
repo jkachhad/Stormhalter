@@ -51883,6 +51883,18 @@
         <component type="FloorComponent">
           <ground>179</ground>
         </component>
+        <component type="StaticComponent">
+          <static>173</static>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>22</destinationX>
+          <destinationY>8</destinationY>
+          <destinationRegion>255</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions>Knight</professions>
+          <alignments>Lawful</alignments>
+        </component>
       </tile>
       <tile x="23" y="6">
         <component type="FloorComponent">
@@ -89730,13 +89742,30 @@
             skillLevel: 15, cost: 20)
     };
     
+    dragon.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new CopperHalberd(),        100),
+        new LootPackEntry(true, (from, container) => new PearDiamond(6000u),    100, gemsPriceMutator)
+        ));
+
     return dragon;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (killer is PlayerEntity player)
+    {
+        var quest = Quests.GetQuest<KnightsDragonSlayerQuest>();
+    
+        if (quest != null && quest.InProgress(player))
+        {                        
+            if (quest.GetStage(player) != KnightsDragonSlayerStage.Wendy)
+                return;
+
+            quest.SetStage(player, KnightsDragonSlayerStage.WendyKilled);
+        }
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -90497,6 +90526,114 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="oakByrch">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var byrch = new Byrch();
+            
+    byrch.Wield(new Greatsword());
+    byrch.Equip(new ChainmailArmor());    
+
+    return byrch;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="reptilePitWyrm">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var wyrm = new Wyrm()
+    {
+        MaxHealth = 90, Health = 90,
+        BaseDodge = 14,
+
+        Experience = 1500,
+
+        Movement = 2,
+
+        CanFlee = false,
+        CanSwim = true,
+        
+        Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | 
+                   CreatureImmunity.Bashing | CreatureImmunity.Poison | CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+    };
+    
+    wyrm.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(10, 15, 25, "You've been bitten by the wyrm."),  60 
+        }, 
+        {
+            new CreatureAttack(10, 20, 30, "The wyrm hits you with its tail."), 40 
+        }, 
+    };
+    
+    wyrm.Blocks = new CreatureBlockCollection
+    {
+        { new CreatureBlock(6, "the armor") }, 
+        { new CreatureBlock(4, "a tail") }, 
+    };
+
+    wyrm.AddGold(850);
+    
+    return wyrm;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="oakGorffwylltra">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var gorffwylltra = new Gorffwylltra();
+            
+    gorffwylltra.Wield(new Greatsword());
+    gorffwylltra.Equip(new ChainmailArmor());    
+
+    return gorffwylltra;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="oakSheriff">
@@ -91121,8 +91258,8 @@
       <location x="50" y="38" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="oakvaelDragon">
-      <minimumDelay>3600</minimumDelay>
-      <maximumDelay>3600</maximumDelay>
+      <minimumDelay>1800</minimumDelay>
+      <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -91223,6 +91360,46 @@
       </script>
       <entry entity="groveNaiad" size="1" minimum="1" maximum="1" />
       <location x="23" y="7" region="236" />
+    </spawn>
+    <spawn type="LocationSpawner" name="byrch">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="oakByrch" size="1" minimum="0" maximum="0" />
+      <location x="2" y="3" region="255" />
+    </spawn>
+    <spawn type="LocationSpawner" name="oakGorffwylltra">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="oakGorffwylltra" size="1" minimum="1" maximum="1" />
+      <location x="3" y="2" region="225" />
     </spawn>
     <spawn type="RegionSpawner" name="portalPeacemakers">
       <minimumDelay>900</minimumDelay>
