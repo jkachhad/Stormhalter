@@ -107562,7 +107562,7 @@
     {
         Name = "Flordex",
         MaxHealth = 7250, Health = 7250,
-        BaseDodge = 22,
+        BaseDodge = 25,
         HideDetection = 30,
         Alignment = Alignment.Evil,
         Mana = 27, MaxMana = 27,
@@ -107588,7 +107588,7 @@
     boss1.AddStatus(new NightVisionStatus(boss1));
     boss1.AddStatus(new BreatheWaterStatus(boss1));
     
-    boss1.CombatantChangeInterval = TimeSpan.FromSeconds(6.0);
+    boss1.CombatantChangeInterval = TimeSpan.FromSeconds(4.0);
     
 
     
@@ -107618,14 +107618,14 @@
         
     boss1.AddGold(14000);
     boss1.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(31000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(13000u),    50, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(13000u),    50, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
         new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
          new LootPackEntry(true, SemiRare, 40),
         new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),        
-        new LootPackEntry(true, UltraRare, 25)
+        new LootPackEntry(true, UltraRare, 13)
 
     ));
     
@@ -108521,7 +108521,7 @@
     {
         Name = "Urgnah The Orc", Body=30, IsFemale = false,
        
-        MaxHealth = 3830, Health = 3830,
+        MaxHealth = 4830, Health = 4830,
         BaseDodge = 21,
                 
         Experience = 19000,
@@ -108541,7 +108541,7 @@
             
     orc.AddGold(4000);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, forestGems,       45,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33),
         new LootPackEntry(true, SemiRare, 10),
         new LootPackEntry(true, UltraRare, 1)
@@ -108768,7 +108768,7 @@
         Name = "Slimey Lurker",
         Body = 161,
         MaxHealth = 335, Health = 335,
-        BaseDodge = 14,
+        BaseDodge = 21,
         BasePenetration = ShieldPenetration.Medium,
         CanSwim = true,
         CanWalk = false,
@@ -108898,6 +108898,7 @@
         CanFlee = true,
         CanSwim = true,
         CanCharge = true,
+        CanLoot = false,
         
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | 
                    CreatureImmunity.Bashing | CreatureImmunity.Poison | CreatureImmunity.Magic,
@@ -108928,13 +108929,13 @@
 
     wyrm.AddGold(1850);
     wyrm.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    100, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new PearDiamond(3000u),    50, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(13000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(31000u),    50, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(20000u),    30, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
         new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
          new LootPackEntry(true, SemiRare, 40),
-        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        10),        
+        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        5),        
         new LootPackEntry(true, UltraRare, 10)
 	));
 
@@ -109201,6 +109202,7 @@
         BasePenetration = ShieldPenetration.Light,
         VisibilityDistance = 1,
         DeathResistance = 100,
+        CanLoot = false,
     };
     
     spectre.AddStatus(new NightVisionStatus(spectre));
@@ -109406,9 +109408,10 @@
         new LootPackEntry(true, (from, container) => new PearDiamond(31000u),    50, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
         new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
+        new LootPackEntry(true, (from, container) => new LightningResistanceRing(),        19),
          new LootPackEntry(true, SemiRare, 40),
 
-        new LootPackEntry(true, UltraRare, 25)
+        new LootPackEntry(true, UltraRare, 5)
 	));
     return fighter;
 ]]></block>
@@ -109498,7 +109501,7 @@
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
         new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
          new LootPackEntry(true, SemiRare, 40),
-        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),        
+        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        2),        
         new LootPackEntry(true, UltraRare, 25)
 	));
     return fighter;
@@ -109733,7 +109736,7 @@
         }, 
         {
             new CreatureAttack(19, 20, 30, "The viper buries its poisonous fangs into you.",
-                                                    new AttackPoisonComponent(40)),         30
+                                                    new AttackPoisonComponent(30)),         30
         }, 
         {
             new CreatureAttack(19, 30, 45, "The viper kicks you."),      30
@@ -109800,7 +109803,7 @@
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
-    centaur.Wield(new IronRod());
+    centaur.Wield(new WoodenStaff());
     
     centaur.AddGold(4500);
 centaur.AddLoot(new LootPack(
@@ -110340,7 +110343,7 @@ var ghoul = new Ghoul()
     
     abomination.AddGold(1450);
     abomination.AddLoot(new LootPack(
-        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, forestGems,       10,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33),
         new LootPackEntry(true, SemiRare, 3),
         new LootPackEntry(true, MagicBottles, 3)
@@ -110473,7 +110476,7 @@ var ghoul = new Ghoul()
     bat.AddGold(4050);
 
       bat.AddLoot(new LootPack(
-        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, forestGems,       10,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33),
         new LootPackEntry(true, SemiRare, 3)
     ));
@@ -110686,7 +110689,7 @@ var ghoul = new Ghoul()
     hobgoblin.Wield(new Longsword());
     hobgoblin.Equip(new LeatherArmor());    
     
-    hobgoblin.AddGold(700);
+    hobgoblin.AddGold(1000);
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, forestGems,       10,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33)
@@ -110718,7 +110721,7 @@ var ghoul = new Ghoul()
         <block><![CDATA[
 	 var kobold = new Kobold()
     {
-        MaxHealth = 275, Health = 275,
+        MaxHealth = 325, Health = 325,
         BaseDodge = 21,
         
         Experience = 12002,
@@ -110739,7 +110742,7 @@ var ghoul = new Ghoul()
     kobold.Wield(new SteelMace());
     kobold.Equip(new LeatherArmor());
     
-    kobold.AddGold(472);
+    kobold.AddGold(772);
     kobold.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33)
@@ -110879,7 +110882,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         
     demon.Wield(new WoodenStaff());
     demon.Equip(new DrakeScaleArmor());
-    demon.AddGold(700);
+    demon.AddGold(2700);
     return demon;
 ]]></block>
         <block><![CDATA[]]></block>
@@ -111279,12 +111282,12 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     
     abomination.AddGold(1450);
     abomination.AddLoot(new LootPack(
-        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, forestGems,       10,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33),
         new LootPackEntry(true, SemiRare, 3),
         new LootPackEntry(true, MagicBottles, 3)
     ));
-    //todo add lootpack
+
     
     return abomination;
 ]]></block>
@@ -111311,9 +111314,9 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     {
         Name = "Unusual Critter",
         MaxHealth = 11900, Health = 10900,
-        BaseDodge = 31,
+        BaseDodge = 32,
         Body = 74,
-        Mana = 45, MaxMana = 45,
+        Mana = 48, MaxMana = 48,
     
         Alignment = Alignment.Evil,
         HideDetection = 30,
@@ -111609,6 +111612,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         MagicProtection = 25,
         
         HideDetection = 31,
+                CanLoot = false,
     };
     
     griffin.AddStatus(new NightVisionStatus(griffin)); 
@@ -111682,6 +111686,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         Name = "Ethereal Giant",
         CanJumpkick = true,
         CanStrikeCritically = false,
+                CanLoot = false,
         
         BasePenetration = ShieldPenetration.VeryHeavy,
 
@@ -111759,6 +111764,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         Movement = 2,
         
         IceProtection = 100,
+                CanLoot = false,
     };
     
     lizard.Attacks = new CreatureAttackCollection
@@ -111830,6 +111836,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         CanCharge = true,
         FireProtection = 100,
         IceProtection = 100,
+                CanLoot = false,
     };
     
     sandwyrm.AddStatus(new NightVisionStatus(sandwyrm));
@@ -111891,6 +111898,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         Hue = Color.FromArgb(150, 255, 255, 255),
         
         BasePenetration = ShieldPenetration.VeryLight,
+                CanLoot = false,
     };    
     
     beetle.Attacks = new CreatureAttackCollection
@@ -111939,6 +111947,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         Hue = Color.FromArgb(150, 255, 255, 255),
         
         BasePenetration = ShieldPenetration.VeryLight,
+        CanLoot = false,
     };    
     
     bee.Attacks = new CreatureAttackCollection
@@ -111989,6 +111998,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         CanFlee = false,
         BasePenetration = ShieldPenetration.Medium,
         Immunity = CreatureImmunity.Web,
+                CanLoot = false,
     };
     
     minotaur.AddStatus(new NightVisionStatus(minotaur));
@@ -112058,6 +112068,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
 
         CanFlee = true,
         CanSwim = true,
+                CanLoot = false,
         
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | 
                    CreatureImmunity.Bashing | CreatureImmunity.Poison | CreatureImmunity.Magic,
