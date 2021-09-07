@@ -75566,7 +75566,7 @@
         }
     };
     
-    hobgoblin.Wield(new Longsword());
+    hobgoblin.Wield(new GiltDagger());
     
     hobgoblin.AddGold(350);
     hobgoblin.AddLoot(new LootPack(
@@ -76702,6 +76702,7 @@
         MagicProtection = 33,
         FireProtection = 100,
         VisibilityDistance = 0,
+        
     };
     
     salamander.Attacks = new CreatureAttackCollection
@@ -76924,6 +76925,8 @@
         BaseDodge = 11,
     
         Experience = 2100,
+        
+        Immunity = CreatureImmunity.Poison,
         
     };
     
@@ -77606,6 +77609,8 @@
         BaseDodge = 14,
         BasePenetration = ShieldPenetration.Light,
         Experience = 11500,
+        
+        Immunity = CreatureImmunity.Poison,
         
         
     };
