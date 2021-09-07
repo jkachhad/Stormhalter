@@ -107611,7 +107611,7 @@
     necro.AddStatus(new NightVisionStatus(necro));
     necro.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(24)
+        new CreatureBasicAttack(24, 33, 50)
     };
     
     necro.Spells = new CreatureSpellCollection(20.0)
