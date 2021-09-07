@@ -187,7 +187,7 @@
 			{
 				new CreatureBasicAttack(10),
 			};
-    
+
             Brain = new RescueAI(this)
             {
                 Aggressive = true,
@@ -60239,8 +60239,8 @@
           <ground>12</ground>
         </component>
         <component type="DoorComponent">
-          <openId>74</openId>
-          <closedId>62</closedId>
+          <openId>75</openId>
+          <closedId>63</closedId>
           <secretId>334</secretId>
           <destroyedId>80</destroyedId>
           <isSecret>true</isSecret>
@@ -78196,8 +78196,9 @@
         <component type="DoorComponent">
           <openId>75</openId>
           <closedId>63</closedId>
-          <secretId>26</secretId>
+          <secretId>336</secretId>
           <destroyedId>81</destroyedId>
+          <isSecret>true</isSecret>
         </component>
       </tile>
       <tile x="18" y="7">
@@ -99660,6 +99661,8 @@
     };
     
     drake.AddStatus(new NightVisionStatus(drake));
+	
+	drake.AddImmunity(typeof(Lightning));
     
     drake.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
     
@@ -99865,11 +99868,9 @@
     
     trollKing.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
     
-    trollKing.AddImmunity(typeof(PoisonCloudSpell());
-    
-    trollKing.AddImmunity(typeof(Lightning());
-    
-    trollKing.AddImmunity(typeof(WhirlwindSpell());
+    trollKing.AddImmunity(typeof(PoisonCloudSpell));
+    trollKing.AddImmunity(typeof(Lightning));
+    trollKing.AddImmunity(typeof(WhirlwindSpell));
     
     trollKing.Attacks = new CreatureAttackCollection()
     {
@@ -99977,6 +99978,7 @@
     var swordmaster = new Skeleton()
     {
         Name = "Swordmaster",
+        Body = 163,
         MaxHealth = 2500, Health = 2500,
         BaseDodge = 21,
         HideDetection = 25,
@@ -99995,7 +99997,7 @@
     swordmaster.Attacks = new CreatureAttackCollection()
     {
         new CreatureAttack(17,    40, 60,     "The swordmaster pierces you with his rapier.",
-                                                    new AttackAgeComponent(5000, 50))
+                                                    new AttackAgeComponent(500, 50))
     };
     
     swordmaster.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
@@ -100006,7 +100008,7 @@
     swordmaster.AddGold(5000);
     swordmaster.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new PearDiamond(15000u),    100, gemsPriceMutator), 
-        new LootPackEntry(true, UndeadTreasure,    0.15)
+        new LootPackEntry(true, UndeadTreasure,    10)
     ));
     
     return swordmaster;
@@ -100957,7 +100959,7 @@
     banshee.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CurseSpell>(
-            skillLevel: 6, cost: 10, 
+            skillLevel: 4.5, cost: 10, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
@@ -101181,8 +101183,8 @@
         BasePenetration = ShieldPenetration.Heavy,
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Magic,
-        
-        Weakness = CreatureWeakness.IceSpearSpell,
+
+        Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
     };
     
     mummy.AddStatus(new NightVisionStatus(mummy));
@@ -103445,7 +103447,7 @@
     <spawn type="RegionSpawner" name="speedyHob">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>22</maximum>
+      <maximum>18</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -103620,8 +103622,10 @@
       <entry entity="yasnakiKnight" size="3" minimum="7" maximum="9" />
       <entry entity="yasnakiMA" size="3" minimum="2" maximum="3" />
       <bounds region="16">
-        <inclusion left="1" top="1" right="37" bottom="21" />
-        <exclusion left="17" top="2" right="20" bottom="5" />
+        <inclusion left="1" top="10" right="37" bottom="21" />
+        <inclusion left="22" top="1" right="37" bottom="9" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="1" top="10" right="5" bottom="10" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="undeadlevel">
@@ -103697,6 +103701,34 @@
       <entry entity="udBossSwordmaster" size="1" minimum="1" maximum="1" />
       <bounds region="17">
         <inclusion left="15" top="3" right="24" bottom="16" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="yasnakiLair">
+      <minimumDelay>1200</minimumDelay>
+      <maximumDelay>1500</maximumDelay>
+      <maximum>3</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="yasnakiMA" size="1" minimum="0" maximum="1" />
+      <entry entity="yasnakiWizard" size="1" minimum="0" maximum="1" />
+      <entry entity="yasnakiThaum" size="1" minimum="0" maximum="1" />
+      <entry entity="yasnakiKnight" size="1" minimum="0" maximum="1" />
+      <bounds region="16">
+        <inclusion left="6" top="2" right="15" bottom="8" />
+        <inclusion left="16" top="7" right="20" bottom="8" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>

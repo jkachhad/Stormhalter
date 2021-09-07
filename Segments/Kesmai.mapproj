@@ -14458,8 +14458,8 @@
         </component>
       </tile>
       <tile x="109" y="14">
-        <component type="FloorComponent">
-          <ground>22</ground>
+        <component type="StaticComponent">
+          <static>22</static>
         </component>
         <component type="FloorComponent">
           <ground>116</ground>
@@ -15487,8 +15487,8 @@
         </component>
       </tile>
       <tile x="109" y="15">
-        <component type="FloorComponent">
-          <ground>22</ground>
+        <component type="StaticComponent">
+          <static>22</static>
         </component>
         <component type="FloorComponent">
           <ground>116</ground>
@@ -17146,8 +17146,8 @@
         </component>
       </tile>
       <tile x="59" y="17">
-        <component type="FloorComponent">
-          <ground>601</ground>
+        <component type="StaticComponent">
+          <static>601</static>
         </component>
         <component type="FloorComponent">
           <ground>116</ground>
@@ -34333,8 +34333,8 @@
         </component>
       </tile>
       <tile x="28" y="33">
-        <component type="StaticComponent">
-          <static>13</static>
+        <component type="FloorComponent">
+          <ground>13</ground>
         </component>
         <component type="TrashComponent">
           <static>88</static>
@@ -77070,16 +77070,16 @@
         </component>
       </tile>
       <tile x="20" y="4">
-        <component type="FloorComponent">
-          <ground>177</ground>
+        <component type="StaticComponent">
+          <static>177</static>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
         </component>
       </tile>
       <tile x="21" y="4">
-        <component type="FloorComponent">
-          <ground>177</ground>
+        <component type="StaticComponent">
+          <static>177</static>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
@@ -77113,8 +77113,8 @@
         </component>
       </tile>
       <tile x="26" y="4">
-        <component type="FloorComponent">
-          <ground>177</ground>
+        <component type="StaticComponent">
+          <static>177</static>
         </component>
         <component type="FloorComponent">
           <ground>252</ground>
@@ -82582,14 +82582,14 @@
         </component>
       </tile>
       <tile x="15" y="23">
-        <component type="FloorComponent">
-          <ground>1</ground>
-        </component>
         <component type="DoorComponent">
           <openId>74</openId>
           <closedId>62</closedId>
           <secretId>25</secretId>
           <destroyedId>80</destroyedId>
+        </component>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
       </tile>
       <tile x="16" y="23">
@@ -82633,15 +82633,15 @@
         </component>
       </tile>
       <tile x="20" y="23">
-        <component type="StaticComponent">
-          <static>1</static>
-        </component>
         <component type="DoorComponent">
           <openId>74</openId>
           <closedId>62</closedId>
           <secretId>25</secretId>
           <destroyedId>80</destroyedId>
           <isSecret>true</isSecret>
+        </component>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
       </tile>
       <tile x="21" y="23">
@@ -83945,13 +83945,13 @@
         </component>
       </tile>
       <tile x="17" y="28">
-        <component type="FloorComponent">
-          <ground>1</ground>
-        </component>
         <component type="WallComponent">
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+        </component>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
       </tile>
       <tile x="18" y="28">
@@ -84203,13 +84203,13 @@
         </component>
       </tile>
       <tile x="17" y="29">
-        <component type="FloorComponent">
-          <ground>1</ground>
-        </component>
         <component type="WallComponent">
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+        </component>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
       </tile>
       <tile x="18" y="29">
@@ -85327,11 +85327,6 @@
           <destroyed>39</destroyed>
           <ruins>44</ruins>
         </component>
-        <component type="WallComponent">
-          <wall>26</wall>
-          <destroyed>39</destroyed>
-          <ruins>44</ruins>
-        </component>
       </tile>
       <tile x="23" y="33">
         <component type="FloorComponent">
@@ -85339,14 +85334,14 @@
         </component>
       </tile>
       <tile x="24" y="33">
-        <component type="StaticComponent">
-          <static>1</static>
-        </component>
         <component type="DoorComponent">
           <openId>75</openId>
           <closedId>63</closedId>
           <secretId>26</secretId>
           <destroyedId>81</destroyedId>
+        </component>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
       </tile>
       <tile x="25" y="33">
@@ -88993,15 +88988,10 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <static>264</static>
-        </component>
-        <component type="WallComponent">
-          <wall>26</wall>
-          <destroyed>39</destroyed>
-          <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="11" y="11">
@@ -89619,15 +89609,10 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <static>264</static>
-        </component>
-        <component type="WallComponent">
-          <wall>26</wall>
-          <destroyed>39</destroyed>
-          <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <static>221</static>
@@ -90245,16 +90230,13 @@
       <height>50</height>
       <tile x="0" y="0">
         <component type="StaticComponent">
-          <static>9</static>
+          <static>388</static>
         </component>
         <component type="WallComponent">
           <wall>409</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
           <indestructible>true</indestructible>
-        </component>
-        <component type="StaticComponent">
-          <static>409</static>
         </component>
       </tile>
       <tile x="1" y="0">
@@ -90418,7 +90400,7 @@
       </tile>
       <tile x="8" y="1">
         <component type="StaticComponent">
-          <static>9</static>
+          <static>388</static>
         </component>
         <component type="WallComponent">
           <wall>383</wall>
@@ -90434,13 +90416,16 @@
           <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
-        <component type="StaticComponent">
-          <static>383</static>
+        <component type="WallComponent">
+          <wall>383</wall>
+          <destroyed>396</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="0" y="2">
         <component type="StaticComponent">
-          <static>9</static>
+          <static>388</static>
         </component>
         <component type="WallComponent">
           <wall>384</wall>
@@ -90498,9 +90483,6 @@
         </component>
       </tile>
       <tile x="8" y="2">
-        <component type="StaticComponent">
-          <static>388</static>
-        </component>
         <component type="HiddenTeleporterComponent">
           <destinationX>3</destinationX>
           <destinationY>7</destinationY>
@@ -90509,6 +90491,9 @@
           <moonphases select="all" />
           <professions select="all" />
           <alignments select="all" />
+        </component>
+        <component type="FloorComponent">
+          <ground>388</ground>
         </component>
       </tile>
       <tile x="9" y="2">
@@ -90524,7 +90509,7 @@
       </tile>
       <tile x="0" y="3">
         <component type="StaticComponent">
-          <static>9</static>
+          <static>388</static>
         </component>
         <component type="WallComponent">
           <wall>384</wall>
@@ -90603,13 +90588,16 @@
           <ruins>45</ruins>
           <indestructible>true</indestructible>
         </component>
-        <component type="StaticComponent">
-          <static>384</static>
+        <component type="WallComponent">
+          <wall>384</wall>
+          <destroyed>397</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="0" y="4">
         <component type="StaticComponent">
-          <static>9</static>
+          <static>388</static>
         </component>
         <component type="WallComponent">
           <wall>384</wall>
@@ -100498,10 +100486,11 @@ return orc;
     
         FireProtection = 100,
         IceProtection = 100,
-        // TODO: WHIRLWIND PROTECTION 100
-        // TODO: POISON PROTECTION 100
     };    
     piranha.AddStatus(new BreatheWaterStatus(piranha));
+    
+    piranha.AddImmunity(typeof(Whirlwind));
+    piranha.AddImmunity(typeof(Poison));
     
     piranha.Attacks = new CreatureAttackCollection
     {
@@ -100563,6 +100552,8 @@ return orc;
     };
     dragon.AddStatus(new NightVisionStatus(dragon));
     
+    dragon.AddImmunity(typeof(DragonBreathFireSpell));
+
     dragon.Attacks = new CreatureAttackCollection
     {
         {
@@ -100875,10 +100866,11 @@ else
     
         FireProtection = 100,
         IceProtection = 100,
-        // TODO: WHIRLWIND PROTECTION 100
-        // TODO: POISON PROTECTION 100
     };    
     piranhaBL.AddStatus(new BreatheWaterStatus(piranhaBL));
+    
+    piranhaBL.AddImmunity(typeof(Whirlwind));
+    piranhaBL.AddImmunity(typeof(Poison));
     
     piranhaBL.Attacks = new CreatureAttackCollection
     {

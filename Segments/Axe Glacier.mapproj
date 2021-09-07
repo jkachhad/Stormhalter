@@ -17550,7 +17550,7 @@
         </component>
         <component type="WallComponent">
           <wall>149</wall>
-          <destroyed>0</destroyed>
+          <destroyed>150</destroyed>
           <ruins>0</ruins>
         </component>
       </tile>
@@ -67369,7 +67369,7 @@
         </component>
         <component type="WallComponent">
           <wall>149</wall>
-          <destroyed>0</destroyed>
+          <destroyed>150</destroyed>
           <ruins>0</ruins>
         </component>
       </tile>
@@ -69207,7 +69207,7 @@
         </component>
         <component type="WallComponent">
           <wall>149</wall>
-          <destroyed>0</destroyed>
+          <destroyed>150</destroyed>
           <ruins>0</ruins>
         </component>
       </tile>
@@ -82519,7 +82519,7 @@
         </component>
         <component type="WallComponent">
           <wall>149</wall>
-          <destroyed>0</destroyed>
+          <destroyed>150</destroyed>
           <ruins>0</ruins>
         </component>
       </tile>
@@ -91843,14 +91843,8 @@
         </component>
       </tile>
       <tile x="43" y="7">
-        <component type="StaticComponent">
-          <static>264</static>
-        </component>
-        <component type="WallComponent">
-          <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
-          <indestructible>true</indestructible>
+        <component type="FloorComponent">
+          <ground>264</ground>
         </component>
         <component type="WallComponent">
           <wall>157</wall>
@@ -94272,14 +94266,13 @@
         </component>
       </tile>
       <tile x="4" y="13">
-        <component type="StaticComponent">
-          <static>264</static>
+        <component type="FloorComponent">
+          <ground>264</ground>
         </component>
         <component type="WallComponent">
           <wall>159</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="5" y="13">
@@ -95559,14 +95552,13 @@
         </component>
       </tile>
       <tile x="9" y="16">
-        <component type="StaticComponent">
-          <static>264</static>
+        <component type="FloorComponent">
+          <ground>264</ground>
         </component>
         <component type="WallComponent">
           <wall>159</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="10" y="16">
@@ -95645,14 +95637,13 @@
         </component>
       </tile>
       <tile x="19" y="16">
-        <component type="StaticComponent">
-          <static>264</static>
+        <component type="FloorComponent">
+          <ground>264</ground>
         </component>
         <component type="WallComponent">
           <wall>159</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="20" y="16">
@@ -105687,6 +105678,9 @@
     then type Status to see a list of options. Then in parenthesis the selected name of the var from beginning of the script above.*/
     drake.AddStatus(new NightVisionStatus(drake));
     
+    /* Adds an immunity to lightning stuns. */
+    drake.AddImmunity(typeof(Lightning));
+    
     //This allows a timespan for which the drake will choose a new target of those visible at random. 10 seconds for example, here
     drake.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
     
@@ -105774,8 +105768,6 @@
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
-                   
-        Weakness = CreatureWeakness.IceSpearSpell,
         
         HideDetection = 31,
         
@@ -105784,6 +105776,7 @@
     dragon.AddStatus(new NightVisionStatus(dragon));
     
     dragon.AddWeakness(typeof(SilverGreatAxe));
+    dragon.AddWeakness(typeof(IceSpearSpell));
     
     dragon.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
     
@@ -105915,9 +105908,21 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (killer is PlayerEntity player)
+    {
+        var quest = Quests.GetQuest<KnightsDragonSlayerQuest>();
+    
+        if (quest != null && quest.InProgress(player))
+        {                        
+            if (quest.GetStage(player) != KnightsDragonSlayerStage.Yeti)
+                return;
+
+            quest.SetStage(player, KnightsDragonSlayerStage.YetiKilled);
+        }
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -108076,6 +108081,7 @@
       <bounds region="12">
         <inclusion left="25" top="3" right="32" bottom="8" />
         <inclusion left="30" top="9" right="34" bottom="31" />
+        <inclusion left="35" top="21" right="37" bottom="30" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>

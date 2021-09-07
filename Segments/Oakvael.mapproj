@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.74.0.0">
+<segment name="Oakvael" version="0.76.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -67,6 +67,7 @@
             Name = "Dryad";
             Body = 15;
             Alignment = Alignment.Chaotic;
+            CanLoot = false;
         }
 
         public override void OnDeath()
@@ -81,31 +82,41 @@
 
         public override void OnSpellTarget(Target target, MobileEntity combatant)
         {
-			/* Do the original spell logic. */
-			base.OnSpellTarget(target, combatant);
-			
             if (Spell is CurseSpell curse)
             {
-                var snake = new Snake()
+                if (combatant is PlayerEntity player)
+                    player.SendMessage($"You feel something writhing under your skin!");
+                  
+                Timer.DelayCall(TimeSpan.FromSeconds(3.0), () =>
                 {
-                    MaxHealth = 250, Health = 250,
-                    BaseDodge = 18,
-                    Experience = 15000
-                };
-                snake.Attacks = new CreatureAttackCollection()
-                {
-                    new CreatureAttack(18,     10, 30,      "The viper sinks its spectral fangs into your flesh.",
-                                                                                            new AttackPoisonComponent(15, 50))
-                };
-
-                snake.Blocks = new CreatureBlockCollection
-                {
-                    new CreatureBlock(1, "hardened scales"),
-                };
-
-				/* When making an entity on demand without a spawner, we have to assign them a group. This will allow them to think/move. */
-				CreatureGroup.Instantiate(snake, Facet, Segment, combatant.Location);
-            }   
+					if (combatant.IsAlive)
+						return;
+				
+                    combatant.EmitSound(206, 3, 9);
+                    
+                    var snake = new Snake()
+                    {
+                        MaxHealth = 250, Health = 250,
+                        BaseDodge = 18,
+                        Experience = 15000
+                    };
+                    snake.Attacks = new CreatureAttackCollection()
+                    {
+                        new CreatureAttack(18,     10, 30,      "The viper sinks its spectral fangs into your flesh.",
+                                                                                                new AttackPoisonComponent(15, 50))
+                    };
+        
+                    snake.Blocks = new CreatureBlockCollection
+                    {
+                        new CreatureBlock(1, "hardened scales"),
+                    };
+        
+                    /* When making an entity on demand without a spawner, we have to assign them a group. This will allow them to think/move. */
+                    CreatureGroup.Instantiate(snake, Facet, Segment, combatant.Location);
+                });
+            }
+			
+            base.OnSpellTarget(target, combatant);
         }
 
         public override int GetNearbySound() => 208;
@@ -123,7 +134,6 @@
                 _brain = new CombatAI(this);
         }    
 
-        public override Corpse GetCorpse() => default(Corpse);
         public override void Serialize(BinaryWriter writer)
         {
             base.Serialize(writer);
@@ -144,7 +154,7 @@
         }
     }
 
-    public class GroveWildlifeBoar : CreatureEntity
+    public class GroveWildlifeBoar : AnimalEntity
     {
         public GroveWildlifeBoar()
         {
@@ -196,7 +206,7 @@
         }
     }
     
-    public class GroveWildlifeWolf : CreatureEntity
+    public class GroveWildlifeWolf : AnimalEntity
     {
         public GroveWildlifeWolf()
         {
@@ -248,7 +258,7 @@
     }
     
     
-    public class GroveWildlifeGriffin : CreatureEntity
+    public class GroveWildlifeGriffin : AnimalEntity
     {
         public GroveWildlifeGriffin()
         {
@@ -299,7 +309,7 @@
         }
     }
     
-    public class GroveWildlifeBeetle : CreatureEntity
+    public class GroveWildlifeBeetle : AnimalEntity
     {
         public GroveWildlifeBeetle()
         {
@@ -350,7 +360,7 @@
         }
     }
     
-    public class GroveWildlifeBear : CreatureEntity
+    public class GroveWildlifeBear : AnimalEntity
     {
         public GroveWildlifeBear()
         {
@@ -407,6 +417,7 @@
         {
             Body = 3;
             Alignment = Alignment.Chaotic;
+            CanLoot = false;
         }
 
         public int enrageAmount = 0;
@@ -493,13 +504,15 @@
 
         public override void OnSpellTarget(Target target, MobileEntity combatant)
         {
-			base.OnSpellTarget(target, combatant);
-			
+            
             if (Spell is CurseSpell curse)
             {
                 Say($"I would sacrifice ANYTHING to protect the grove!");
                 combatant.Teleport(new Point2D(23, 5, 236));
             }
+			
+            base.OnSpellTarget(target, combatant);
+
         }
 
         public override int GetNearbySound() => 208;
@@ -2610,6 +2623,7 @@
           <professions>Fighter,Martial Artist,Thaumaturge,Wizard,Knight</professions>
           <alignments select="all" />
           <message>6300344</message>
+          <allowNPC>true</allowNPC>
         </component>
       </tile>
       <tile x="8" y="4">
@@ -5932,6 +5946,7 @@
           <professions>Fighter,Martial Artist,Thaumaturge,Wizard,Knight</professions>
           <alignments select="all" />
           <message>6300344</message>
+          <allowNPC>true</allowNPC>
         </component>
       </tile>
       <tile x="5" y="9">
@@ -22013,8 +22028,8 @@
         </component>
       </tile>
       <tile x="36" y="34">
-        <component type="FloorComponent">
-          <ground>22</ground>
+        <component type="StaticComponent">
+          <static>22</static>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
@@ -27908,6 +27923,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="6" y="7">
@@ -28028,6 +28044,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="37" y="7">
@@ -28137,6 +28154,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="11" y="8">
@@ -31546,6 +31564,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
@@ -32194,6 +32213,7 @@
           <wall>225</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="6" y="23">
@@ -32689,6 +32709,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
@@ -33082,6 +33103,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="17" y="28">
@@ -51870,6 +51892,18 @@
         <component type="FloorComponent">
           <ground>179</ground>
         </component>
+        <component type="StaticComponent">
+          <static>173</static>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>22</destinationX>
+          <destinationY>8</destinationY>
+          <destinationRegion>255</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions>Knight</professions>
+          <alignments>Lawful</alignments>
+        </component>
       </tile>
       <tile x="23" y="6">
         <component type="FloorComponent">
@@ -57894,90 +57928,90 @@
         </component>
       </tile>
       <tile x="12" y="-4">
-        <component type="FloorComponent">
-          <color r="255" g="144" b="23" a="255" />
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="255" g="144" b="24" a="255" />
+          <static>602</static>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
         </component>
       </tile>
       <tile x="13" y="-4">
-        <component type="FloorComponent">
-          <color r="255" g="144" b="23" a="255" />
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="255" g="144" b="24" a="255" />
+          <static>602</static>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
         </component>
       </tile>
       <tile x="14" y="-4">
-        <component type="FloorComponent">
-          <color r="255" g="144" b="23" a="255" />
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="255" g="144" b="24" a="255" />
+          <static>602</static>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
         </component>
       </tile>
       <tile x="15" y="-4">
-        <component type="FloorComponent">
-          <color r="255" g="144" b="23" a="255" />
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="255" g="144" b="24" a="255" />
+          <static>602</static>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
         </component>
       </tile>
       <tile x="16" y="-4">
-        <component type="FloorComponent">
-          <color r="255" g="144" b="23" a="255" />
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="255" g="144" b="24" a="255" />
+          <static>602</static>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
         </component>
       </tile>
       <tile x="17" y="-4">
-        <component type="FloorComponent">
-          <color r="255" g="144" b="23" a="255" />
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="255" g="144" b="24" a="255" />
+          <static>602</static>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
         </component>
       </tile>
       <tile x="18" y="-4">
-        <component type="FloorComponent">
-          <color r="255" g="144" b="23" a="255" />
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="255" g="144" b="24" a="255" />
+          <static>602</static>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
         </component>
       </tile>
       <tile x="19" y="-4">
-        <component type="FloorComponent">
-          <color r="255" g="144" b="23" a="255" />
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="255" g="144" b="24" a="255" />
+          <static>602</static>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
         </component>
       </tile>
       <tile x="20" y="-4">
-        <component type="FloorComponent">
-          <color r="255" g="144" b="23" a="255" />
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="255" g="144" b="24" a="255" />
+          <static>602</static>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
         </component>
       </tile>
       <tile x="21" y="-4">
-        <component type="FloorComponent">
-          <color r="255" g="144" b="23" a="255" />
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="255" g="144" b="24" a="255" />
+          <static>602</static>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
@@ -63107,72 +63141,72 @@
         </component>
       </tile>
       <tile x="20" y="11">
-        <component type="FloorComponent">
-          <ground>180</ground>
+        <component type="StaticComponent">
+          <static>180</static>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
         </component>
       </tile>
       <tile x="21" y="11">
-        <component type="FloorComponent">
-          <ground>180</ground>
+        <component type="StaticComponent">
+          <static>180</static>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
         </component>
       </tile>
       <tile x="22" y="11">
-        <component type="FloorComponent">
-          <ground>180</ground>
+        <component type="StaticComponent">
+          <static>180</static>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
         </component>
       </tile>
       <tile x="23" y="11">
-        <component type="FloorComponent">
-          <ground>180</ground>
+        <component type="StaticComponent">
+          <static>180</static>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
         </component>
       </tile>
       <tile x="24" y="11">
-        <component type="FloorComponent">
-          <ground>180</ground>
+        <component type="StaticComponent">
+          <static>180</static>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
         </component>
       </tile>
       <tile x="25" y="11">
-        <component type="FloorComponent">
-          <ground>180</ground>
+        <component type="StaticComponent">
+          <static>180</static>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
         </component>
       </tile>
       <tile x="26" y="11">
-        <component type="FloorComponent">
-          <ground>180</ground>
+        <component type="StaticComponent">
+          <static>180</static>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
         </component>
       </tile>
       <tile x="27" y="11">
-        <component type="FloorComponent">
-          <ground>180</ground>
+        <component type="StaticComponent">
+          <static>180</static>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
         </component>
       </tile>
       <tile x="28" y="11">
-        <component type="FloorComponent">
-          <ground>180</ground>
+        <component type="StaticComponent">
+          <static>180</static>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
@@ -64586,8 +64620,8 @@
         </component>
       </tile>
       <tile x="41" y="15">
-        <component type="FloorComponent">
-          <ground>180</ground>
+        <component type="StaticComponent">
+          <static>180</static>
         </component>
         <component type="FloorComponent">
           <ground>116</ground>
@@ -64928,8 +64962,8 @@
         </component>
       </tile>
       <tile x="41" y="16">
-        <component type="FloorComponent">
-          <ground>180</ground>
+        <component type="StaticComponent">
+          <static>180</static>
         </component>
         <component type="FloorComponent">
           <ground>116</ground>
@@ -65226,8 +65260,8 @@
         </component>
       </tile>
       <tile x="41" y="17">
-        <component type="FloorComponent">
-          <ground>180</ground>
+        <component type="StaticComponent">
+          <static>180</static>
         </component>
         <component type="FloorComponent">
           <ground>116</ground>
@@ -65595,8 +65629,8 @@
         </component>
       </tile>
       <tile x="41" y="18">
-        <component type="FloorComponent">
-          <ground>180</ground>
+        <component type="StaticComponent">
+          <static>180</static>
         </component>
         <component type="FloorComponent">
           <ground>116</ground>
@@ -65913,8 +65947,8 @@
         </component>
       </tile>
       <tile x="41" y="19">
-        <component type="FloorComponent">
-          <ground>180</ground>
+        <component type="StaticComponent">
+          <static>180</static>
         </component>
         <component type="FloorComponent">
           <ground>116</ground>
@@ -66261,8 +66295,8 @@
         </component>
       </tile>
       <tile x="41" y="20">
-        <component type="FloorComponent">
-          <ground>180</ground>
+        <component type="StaticComponent">
+          <static>180</static>
         </component>
         <component type="FloorComponent">
           <ground>116</ground>
@@ -66612,8 +66646,8 @@
         </component>
       </tile>
       <tile x="41" y="21">
-        <component type="FloorComponent">
-          <ground>180</ground>
+        <component type="StaticComponent">
+          <static>180</static>
         </component>
         <component type="FloorComponent">
           <ground>116</ground>
@@ -66962,8 +66996,8 @@
         </component>
       </tile>
       <tile x="41" y="22">
-        <component type="FloorComponent">
-          <ground>180</ground>
+        <component type="StaticComponent">
+          <static>180</static>
         </component>
         <component type="FloorComponent">
           <ground>116</ground>
@@ -67313,8 +67347,8 @@
         </component>
       </tile>
       <tile x="41" y="23">
-        <component type="FloorComponent">
-          <ground>180</ground>
+        <component type="StaticComponent">
+          <static>180</static>
         </component>
         <component type="FloorComponent">
           <ground>116</ground>
@@ -67746,8 +67780,8 @@
         </component>
       </tile>
       <tile x="41" y="24">
-        <component type="FloorComponent">
-          <ground>180</ground>
+        <component type="StaticComponent">
+          <static>180</static>
         </component>
         <component type="FloorComponent">
           <ground>116</ground>
@@ -79963,9 +79997,10 @@
           <ground>23</ground>
         </component>
         <component type="DoorComponent">
+          <color r="255" g="210" b="95" a="255" />
           <openId>75</openId>
           <closedId>63</closedId>
-          <secretId>157</secretId>
+          <secretId>158</secretId>
           <destroyedId>81</destroyedId>
           <isSecret>true</isSecret>
         </component>
@@ -80538,9 +80573,10 @@
           <ground>23</ground>
         </component>
         <component type="DoorComponent">
+          <color r="255" g="210" b="95" a="255" />
           <openId>74</openId>
           <closedId>62</closedId>
-          <secretId>25</secretId>
+          <secretId>157</secretId>
           <destroyedId>80</destroyedId>
           <isSecret>true</isSecret>
         </component>
@@ -89715,13 +89751,30 @@
             skillLevel: 15, cost: 20)
     };
     
+    dragon.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new CopperHalberd(),        100),
+        new LootPackEntry(true, (from, container) => new PearDiamond(6000u),    100, gemsPriceMutator)
+        ));
+
     return dragon;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (killer is PlayerEntity player)
+    {
+        var quest = Quests.GetQuest<KnightsDragonSlayerQuest>();
+    
+        if (quest != null && quest.InProgress(player))
+        {                        
+            if (quest.GetStage(player) != KnightsDragonSlayerStage.Wendy)
+                return;
+
+            quest.SetStage(player, KnightsDragonSlayerStage.WendyKilled);
+        }
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -89752,11 +89805,9 @@
         Immunity = CreatureImmunity.Magic,
         Weakness = CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
     };
-    
-	/*
-    dryad.AddWeakness(IceStormSpell);
-    dryad.AddWeakness(LightningBoltSpell);
-    */
+
+    dryad.AddWeakness(typeof(IceStormSpell));
+    dryad.AddWeakness(typeof(LightningBoltSpell));
 	
     dryad.AddStatus(new BreatheWaterStatus(dryad));
     
@@ -89976,7 +90027,7 @@
         <block><![CDATA[
     var wolf = new BlackWolf()
     {
-        Name = "Spectral Wolf",
+        Name = "Wolf Spirit",
         MaxHealth = 1000, Health = 1000,
         BaseDodge = 30,
         BasePenetration = ShieldPenetration.Heavy,
@@ -90036,7 +90087,7 @@
         <block><![CDATA[
     var boar = new Boar()
     {
-        Name = "Spectral.Boar",
+        Name = "Boar Spirit",
         MaxHealth = 1500, Health = 1500,
         BaseDodge = 26,
         
@@ -90098,7 +90149,7 @@
         <block><![CDATA[
     var viper = new Snake()
     {
-        Name = "Spectral Viper",
+        Name = "Viper Spirit",
         
         MaxHealth = 500, Health = 500,
         BaseDodge = 28,
@@ -90169,10 +90220,8 @@
     
     piranha.AddStatus(new BreatheWaterStatus(piranha));
     
-	/*
-    piranha.AddWeakness(IceStormSpell);
-    piranha.AddWeakness(LightningBoltSpell);
-    */
+    piranha.AddWeakness(typeof(IceStormSpell));
+    piranha.AddWeakness(typeof(LightningBoltSpell));
 
     piranha.Attacks = new CreatureAttackCollection
     {
@@ -90470,6 +90519,114 @@
         ));
 
     return wolf;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="oakByrch">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var byrch = new Byrch();
+            
+    byrch.Wield(new Greatsword());
+    byrch.Equip(new ChainmailArmor());    
+
+    return byrch;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="reptilePitWyrm">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var wyrm = new Wyrm()
+    {
+        MaxHealth = 90, Health = 90,
+        BaseDodge = 14,
+
+        Experience = 1500,
+
+        Movement = 2,
+
+        CanFlee = false,
+        CanSwim = true,
+        
+        Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | 
+                   CreatureImmunity.Bashing | CreatureImmunity.Poison | CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+    };
+    
+    wyrm.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(10, 15, 25, "You've been bitten by the wyrm."),  60 
+        }, 
+        {
+            new CreatureAttack(10, 20, 30, "The wyrm hits you with its tail."), 40 
+        }, 
+    };
+    
+    wyrm.Blocks = new CreatureBlockCollection
+    {
+        { new CreatureBlock(6, "the armor") }, 
+        { new CreatureBlock(4, "a tail") }, 
+    };
+
+    wyrm.AddGold(850);
+    
+    return wyrm;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="oakGorffwylltra">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var gorffwylltra = new Gorffwylltra();
+            
+    gorffwylltra.Wield(new Greatsword());
+    gorffwylltra.Equip(new ChainmailArmor());    
+
+    return gorffwylltra;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -91110,8 +91267,8 @@
       <location x="50" y="38" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="oakvaelDragon">
-      <minimumDelay>3600</minimumDelay>
-      <maximumDelay>3600</maximumDelay>
+      <minimumDelay>1800</minimumDelay>
+      <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -91213,6 +91370,46 @@
       <entry entity="groveNaiad" size="1" minimum="1" maximum="1" />
       <location x="23" y="7" region="236" />
     </spawn>
+    <spawn type="LocationSpawner" name="byrch">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="oakByrch" size="1" minimum="0" maximum="0" />
+      <location x="2" y="3" region="255" />
+    </spawn>
+    <spawn type="LocationSpawner" name="oakGorffwylltra">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="oakGorffwylltra" size="1" minimum="1" maximum="1" />
+      <location x="3" y="2" region="225" />
+    </spawn>
     <spawn type="RegionSpawner" name="portalPeacemakers">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
@@ -91310,7 +91507,8 @@
         <inclusion left="0" top="1" right="82" bottom="42" />
         <inclusion left="0" top="0" right="0" bottom="0" />
         <exclusion left="21" top="14" right="32" bottom="25" />
-        <exclusion left="41" top="35" right="54" bottom="40" />
+        <exclusion left="41" top="35" right="54" bottom="41" />
+        <exclusion left="2" top="3" right="7" bottom="9" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="undeadSpawner">

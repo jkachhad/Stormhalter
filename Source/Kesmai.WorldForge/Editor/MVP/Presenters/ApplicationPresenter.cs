@@ -10,6 +10,7 @@ using DigitalRune.Graphics;
 using DigitalRune.ServiceLocation;
 using Ionic.Zip;
 using Kesmai.WorldForge.Models;
+using Kesmai.WorldForge.MVP;
 using Kesmai.WorldForge.Roslyn;
 using Kesmai.WorldForge.UI;
 using Kesmai.WorldForge.UI.Documents;
@@ -40,6 +41,7 @@ namespace Kesmai.WorldForge.Editor
 		private bool _showSubregions;
 
 		private object _activeDocument;
+		private object _previousDocument;
 
 		public TerrainSelector SelectedFilter
 		{
@@ -105,6 +107,7 @@ namespace Kesmai.WorldForge.Editor
 		
 		public NotifyingCollection<TerrainSelector> Filters { get; set; }
 		public NotifyingCollection<Tool> Tools { get; set; }
+		public VisibilityOptions Visibility { get; set; }
 
 		public RelayCommand CreateSegmentCommand { get; set; }
 		public RelayCommand CloseSegmentCommand { get; set; }
@@ -127,7 +130,15 @@ namespace Kesmai.WorldForge.Editor
 		public object ActiveDocument
 		{
 			get => _activeDocument;
-			set => SetProperty(ref _activeDocument, value, true);
+			set
+			{
+				if (value != _activeDocument)
+                {
+					_previousDocument = _activeDocument;					
+                }
+				SetProperty(ref _activeDocument, value, true);
+
+			}
 		}
 		
 		public ApplicationPresenter()
@@ -166,13 +177,32 @@ namespace Kesmai.WorldForge.Editor
 			GenerateRegionCommand = new RelayCommand(GenerateRegions, () => (Segment != null));
 			GenerateRegionCommand.DependsOn(() => Segment);
 
-			
+
+			WeakReferenceMessenger.Default
+				.Register<ApplicationPresenter, SegmentLocation>(
+					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is LocationsViewModel).FirstOrDefault() as LocationsViewModel; JumpLocation(m); });
+			WeakReferenceMessenger.Default
+				.Register<ApplicationPresenter, SegmentSubregion>(
+					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is SubregionViewModel).FirstOrDefault() as SubregionViewModel; JumpSubregion(m); });
+			WeakReferenceMessenger.Default
+				.Register<ApplicationPresenter, Entity>(
+					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is EntitiesViewModel).FirstOrDefault() as EntitiesViewModel; JumpEntity(m); });
+			WeakReferenceMessenger.Default
+				.Register<ApplicationPresenter, Spawner>(
+					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel; JumpSpawner(m); });
+			WeakReferenceMessenger.Default
+				.Register<ApplicationPresenter, SegmentTreasure>(
+					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is TreasuresViewModel).FirstOrDefault() as TreasuresViewModel; JumpTreasure(m); });
+			WeakReferenceMessenger.Default
+				.Register<ApplicationPresenter, Segment>(
+					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is SegmentViewModel).FirstOrDefault() as SegmentViewModel; });
+
 			SelectFilterCommand = new RelayCommand<TerrainSelector>(SelectFilter, 
-				(filter) => (Segment != null) && (ActiveDocument is SegmentRegion));
+				(filter) => (Segment != null));
 			SelectFilterCommand.DependsOn(() => Segment, () => ActiveDocument);
 			
 			SelectToolCommand = new RelayCommand<Tool>(SelectTool, 
-				(tool) => (Segment != null) && (ActiveDocument is SegmentRegion));
+				(tool) => (Segment != null) && (ActiveDocument is SegmentRegion || ActiveDocument is ComponentsPanel));
 			SelectToolCommand.DependsOn(() => Segment, () => ActiveDocument);
 
 			Filters = new NotifyingCollection<TerrainSelector>()
@@ -185,6 +215,7 @@ namespace Kesmai.WorldForge.Editor
 				new WallSelector(),
 				new StructureSelector(),
 				new TeleporterSelector(),
+				new SpawnSelector(),
 			};
 			
 			Tools = new NotifyingCollection<Tool>()
@@ -196,6 +227,8 @@ namespace Kesmai.WorldForge.Editor
 				new PaintTool(),
 				new HammerTool(),
 			};
+
+			Visibility = new VisibilityOptions();
 			
 			ExitApplicationCommand = new RelayCommand(() => Application.Current.Shutdown());
 			
@@ -251,6 +284,56 @@ namespace Kesmai.WorldForge.Editor
 			}
 		}
 		
+		private void JumpSpawner (Spawner spawner)
+        {
+			var viewmodel = ActiveDocument as SpawnsViewModel;
+
+			if (spawner is LocationSpawner)
+			{
+				//_typeSelector.SelectedIndex = 0;
+				viewmodel.SelectedLocationSpawner = spawner as LocationSpawner;
+			}
+
+			if (spawner is RegionSpawner)
+			{
+				//_typeSelector.SelectedIndex = 1;
+				viewmodel.SelectedRegionSpawner = spawner as RegionSpawner;
+			}
+		}
+
+		private void JumpSubregion(SegmentSubregion subregion)
+        {
+			var viewmodel = ActiveDocument as SubregionViewModel;
+			viewmodel.SelectedSubregion = subregion;
+        }
+
+		private void JumpEntity(Entity entity)
+        {
+			var viewmodel = ActiveDocument as EntitiesViewModel;
+			viewmodel.SelectedEntity = entity;
+
+		}
+
+		private void JumpLocation (SegmentLocation location)
+        {
+			var viewmodel = ActiveDocument as LocationsViewModel;
+			viewmodel.SelectedLocation = location;
+        }
+
+		private void JumpTreasure (SegmentTreasure treasure)
+        {
+			var viewmodel = ActiveDocument as TreasuresViewModel;
+			viewmodel.SelectedTreasure = treasure;
+        }
+
+		public void JumpPrevious ()
+        {
+			if (_previousDocument != _activeDocument)
+            {
+				ActiveDocument = _previousDocument;
+            }
+        }
+
 		private void CreateSegment()
 		{
 			if (_segment != null)
@@ -331,6 +414,8 @@ namespace Kesmai.WorldForge.Editor
 			Documents.Add(new EntitiesViewModel(segment));
 			Documents.Add(new SpawnsViewModel(segment));
 			Documents.Add(new TreasuresViewModel(segment));
+
+			
 
 			Segment = segment;
 			Segment.UpdateTiles();
