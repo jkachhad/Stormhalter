@@ -96468,8 +96468,8 @@
     kobold.AddLoot(new LootPack(
         new LootPackEntry(true, dungeon1Gems,       20,     gemsPriceMutator),
         new LootPackEntry(true, dungeon1Bottles,    16),
-        new LootPackEntry(true, dungeon1Treasure,   2.5)
-        new LootPackEntry(true, (from, container) => new PearDiamond(10000u),   1.5, gemsPriceMutator),
+        new LootPackEntry(true, dungeon1Treasure,   2.5),
+        new LootPackEntry(true, (from, container) => new PearDiamond(10000u),   1.5, gemsPriceMutator)
     ));
     
     return kobold;
@@ -96520,7 +96520,7 @@
         new LootPackEntry(true, dungeon1Gems,       20,     gemsPriceMutator),
         new LootPackEntry(true, dungeon1Bottles,    33),
         new LootPackEntry(true, dungeon1Treasure,   2.5),
-        new LootPackEntry(true, (from, container) => new PearDiamond(10000u),   1.5, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(10000u),   1.5, gemsPriceMutator)
     ));
     
     return orc;
@@ -96624,7 +96624,7 @@
         new LootPackEntry(true, dungeon1Gems,       15,     gemsPriceMutator),
         new LootPackEntry(true, dungeon1Bottles,    16),
         new LootPackEntry(true, dungeon1Treasure,   2.5),
-        new LootPackEntry(true, (from, container) => new PearDiamond(10000u),   1.5, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(10000u),   1.5, gemsPriceMutator)
     ));
     
     return skeleton;
@@ -96672,7 +96672,7 @@
         new LootPackEntry(true, dungeon1Gems,       15,     gemsPriceMutator),
         new LootPackEntry(true, dungeon1Bottles,    25),
         new LootPackEntry(true, dungeon1Treasure,   2.5),
-        new LootPackEntry(true, (from, container) => new PearDiamond(10000u),   1.5, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(10000u),   1.5, gemsPriceMutator)
     ));
     
     return skeleton;
@@ -96734,7 +96734,7 @@
         new LootPackEntry(true, dungeon1Gems,       20,     gemsPriceMutator),
         new LootPackEntry(true, dungeon1Bottles,    33),
         new LootPackEntry(true, dungeon1Treasure,   2.5),
-        new LootPackEntry(true, (from, container) => new PearDiamond(10000u),   1.5, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(10000u),   1.5, gemsPriceMutator)
     ));
     
     return wyvern;
@@ -97738,7 +97738,7 @@
         new LootPackEntry(true, dungeon2Bottles,    25),
         new LootPackEntry(true, dungeon2Treasure,   2.6),
         new LootPackEntry(true, dungeon2Rings,      2.6),
-        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator)
     ));
     
     return goblin;
@@ -97839,7 +97839,7 @@
         new LootPackEntry(true, dungeon2Bottles,    33),
         new LootPackEntry(true, dungeon2Treasure,   2.6),
         new LootPackEntry(true, dungeon2Rings,      2.6),
-        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator)
     ));
     
     return orc;
@@ -97941,7 +97941,7 @@
         new LootPackEntry(true, dungeon2Bottles,    50),
         new LootPackEntry(true, dungeon2Treasure,   2.6),
         new LootPackEntry(true, dungeon2Rings,      2.6),
-        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator)
     ));
     
     return troll;
@@ -98003,7 +98003,7 @@
         new LootPackEntry(true, dungeon2Bottles,    33),
         new LootPackEntry(true, dungeon2Treasure,   2.6),
         new LootPackEntry(true, dungeon2Rings,      2.6),
-        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator)
     ));
     
     return wyvern;
@@ -98061,7 +98061,7 @@
         new LootPackEntry(true, dungeon2Bottles,    25),
         new LootPackEntry(true, dungeon2Treasure,   2.6),
         new LootPackEntry(true, dungeon2Rings,      2.6),
-        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator)
     ));
     
     return wight;
@@ -98120,7 +98120,7 @@
         new LootPackEntry(true, dungeon2Bottles,    33),
         new LootPackEntry(true, dungeon2Treasure,   2.6),
         new LootPackEntry(true, dungeon2Rings,      2.6),
-        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator)
     ));
     
 return orc;
@@ -98269,7 +98269,7 @@ return orc;
         new LootPackEntry(true, dungeon3Treasure,   2.7),
         new LootPackEntry(true, dungeon3Rings,      2.7),
         new LootPackEntry(true, dungeon3Potions,    0.33),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator)
     ));
     
     return troll;
@@ -98318,7 +98318,7 @@ return orc;
         new LootPackEntry(true, dungeon3Treasure,   2.7),
         new LootPackEntry(true, dungeon3Rings,      2.7),
         new LootPackEntry(true, dungeon3Potions,    0.33),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator)
     ));
     
     return hobgoblin;
@@ -98513,7 +98513,7 @@ return orc;
         new LootPackEntry(true, dungeon3Treasure,   2.7),
         new LootPackEntry(true, dungeon3Rings,      2.7),
         new LootPackEntry(true, dungeon3Potions,    0.33),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator)
     ));
     
     return goblin;
@@ -98573,7 +98573,7 @@ return orc;
         new LootPackEntry(true, dungeon3Treasure,   2.7),
         new LootPackEntry(true, dungeon3Rings,      2.7),
         new LootPackEntry(true, dungeon3Potions,    0.33),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator)
     ));
     
     return orc;
@@ -98813,7 +98813,7 @@ return orc;
         new LootPackEntry(true, dungeon3Treasure,   2.7),
         new LootPackEntry(true, dungeon3Rings,      2.7),
         new LootPackEntry(true, dungeon3Potions,    0.33),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator)
     ));
     
     return wight;
@@ -98973,7 +98973,7 @@ return orc;
         new LootPackEntry(true, dungeon4Treasure,   2.8),
         new LootPackEntry(true, dungeon4Rings,      2.8),
         new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator)
     ));
     
     return orc;
@@ -99020,7 +99020,7 @@ return orc;
         new LootPackEntry(true, dungeon4Treasure,   2.8),
         new LootPackEntry(true, dungeon4Rings,      2.8),
         new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator)
     ));
     
     return troll;
@@ -99067,7 +99067,7 @@ return orc;
         new LootPackEntry(true, dungeon4Treasure,   2.8),
         new LootPackEntry(true, dungeon4Rings,      2.8),
         new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator)
     ));
     
     return hobgoblin;
@@ -99371,7 +99371,7 @@ return orc;
         new LootPackEntry(true, dungeon4Treasure,   2.8),
         new LootPackEntry(true, dungeon4Rings,      2.8),
         new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator)
     ));
     
     return ghoul;
@@ -99496,7 +99496,7 @@ return orc;
         new LootPackEntry(true, dungeon4Treasure,   2.8),
         new LootPackEntry(true, dungeon4Rings,      2.8),
         new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator)
         
     ));
     
@@ -99553,7 +99553,7 @@ return orc;
         new LootPackEntry(true, dungeon4Treasure,   2.8),
         new LootPackEntry(true, dungeon4Rings,      2.8),
         new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator)
         
     ));
     
@@ -100656,7 +100656,7 @@ return orc;
             new LootPackEntry(true, dungeon3Potions,    10.0),
             new LootPackEntry(true, (from, container) => new PearDiamond(16000u),    100, gemsPriceMutator),
             new LootPackEntry(true, (from, container) => new ScorpionRobe(),        100),
-            new LootPackEntry(true, (from, container) => new SteelLongsword(),        50.0),
+            new LootPackEntry(true, (from, container) => new SteelLongsword(),        50.0)
         ));
     
     return dragon;
@@ -100730,7 +100730,7 @@ else
         new LootPackEntry(true, dungeon3Treasure,   2.5),
         new LootPackEntry(true, dungeon3Rings,      2.5),
         new LootPackEntry(true, dungeon3Potions,    0.33),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator)
     ));
     
     return skeleton;
@@ -100778,7 +100778,7 @@ else
         new LootPackEntry(true, dungeon3Treasure,   2.5),
         new LootPackEntry(true, dungeon3Rings,      2.5),
         new LootPackEntry(true, dungeon3Potions,    0.33),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   1.8, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   1.8, gemsPriceMutator)
     ));
     
     return skeleton;;
@@ -100837,7 +100837,7 @@ else
         new LootPackEntry(true, dungeon4Treasure,   2.5),
         new LootPackEntry(true, dungeon4Rings,      2.5),
         new LootPackEntry(true, dungeon3Potions,    0.33),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator)
     ));
     
     return mummy;
