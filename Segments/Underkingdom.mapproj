@@ -100064,7 +100064,7 @@
     overlord.Spells = new CreatureSpellCollection(35.0)
     {
         new CreatureSpell<IceSpearSpell>(
-            skillLevel: 10)
+            skillLevel: 10), 100, TimeSpan.FromSeconds(6.0)
     };
     
     overlord.AddGold(3000);
