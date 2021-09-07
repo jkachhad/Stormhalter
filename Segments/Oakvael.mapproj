@@ -89743,14 +89743,14 @@
         <block><![CDATA[
     if (killer is PlayerEntity player)
     {
-        var quest = Quests.GetQuest<KnightsPurposeTwoQuest>();
+        var quest = Quests.GetQuest<KnightsDragonSlayerQuest>();
     
         if (quest != null && quest.InProgress(player))
         {                        
-            if (quest.GetStage(player) != KnightsPurposeTwoStage.Wendy)
+            if (quest.GetStage(player) != KnightsDragonSlayerStage.Wendy)
                 return;
 
-            quest.SetStage(player, KnightsPurposeTwoStage.WendyKilled);
+            quest.SetStage(player, KnightsDragonSlayerStage.WendyKilled);
         }
     }
 ]]></block>
