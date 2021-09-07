@@ -10,6 +10,7 @@ using DigitalRune.Graphics;
 using DigitalRune.ServiceLocation;
 using Ionic.Zip;
 using Kesmai.WorldForge.Models;
+using Kesmai.WorldForge.MVP;
 using Kesmai.WorldForge.Roslyn;
 using Kesmai.WorldForge.UI;
 using Kesmai.WorldForge.UI.Documents;
@@ -106,6 +107,7 @@ namespace Kesmai.WorldForge.Editor
 		
 		public NotifyingCollection<TerrainSelector> Filters { get; set; }
 		public NotifyingCollection<Tool> Tools { get; set; }
+		public VisibilityOptions Visibility { get; set; }
 
 		public RelayCommand CreateSegmentCommand { get; set; }
 		public RelayCommand CloseSegmentCommand { get; set; }
@@ -225,6 +227,8 @@ namespace Kesmai.WorldForge.Editor
 				new PaintTool(),
 				new HammerTool(),
 			};
+
+			Visibility = new VisibilityOptions();
 			
 			ExitApplicationCommand = new RelayCommand(() => Application.Current.Shutdown());
 			
