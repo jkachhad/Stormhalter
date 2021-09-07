@@ -100063,8 +100063,8 @@
     
     overlord.Spells = new CreatureSpellCollection(35.0)
     {
-        new CreatureSpell<IceSpearSpell>(
-            skillLevel: 10), 100, TimeSpan.FromSeconds(6.0)
+       { new CreatureSpell<IceSpearSpell>(
+            skillLevel: 10), 100, TimeSpan.FromSeconds(6.0) }
     };
     
     overlord.AddGold(3000);
@@ -102202,7 +102202,7 @@
         new LootPackEntry(true, UndeadTreasure,    0.63)
     ));
     
-    return spectre;
+    return stalker;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>

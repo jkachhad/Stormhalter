@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Segment" version="0.76.0.0">
+<segment name="Blackburrow" version="0.74.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -26808,12 +26808,12 @@
     </subregion>
   </subregions>
   <entities>
-    <entity name="GnollGuard">
+    <entity name="blackburrowGnollGuard">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 
-    var troll = new GnollGuard()
+    var gnoll = new Kobold()
     {
         Name = "Gnoll Guard",
         MaxHealth = 175, Health = 175,
@@ -26825,17 +26825,17 @@
         BasePenetration = ShieldPenetration.Medium,
     };
     
-    GnollGuard.Attacks = new CreatureAttackCollection()
+    gnoll.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(11, 15, 30)
     };
         
-    GnollGuard.Wield(new Greatsword());
-    troll.Equip(new ChainmailArmor());
+    gnoll.Wield(new Greatsword());
+    gnoll.Equip(new ChainmailArmor());
     
-    GnollGuard.AddGold(450);
+    gnoll.AddGold(450);
     
-    return GnollGuard;
+    return gnoll;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -26852,7 +26852,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Banker">
+    <entity name="blackburrowBanker">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -26884,7 +26884,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Shopkeep">
+    <entity name="blackburrowShopkeeper">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -26916,7 +26916,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="MA Trainer">
+    <entity name="blackburrowHandTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -26948,7 +26948,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Weapon Trainer">
+    <entity name="blackburrowWeaponTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -26980,7 +26980,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Magic Trainer">
+    <entity name="blackburrowMagicTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -27016,7 +27016,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Thaum Trainer">
+    <entity name="blackburrowThaumTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -27055,7 +27055,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Balm Seller">
+    <entity name="blackburrowBalmSeller">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -27089,7 +27089,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Recall Seller">
+    <entity name="blackburrowRecallVendor">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -27123,7 +27123,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Priest">
+    <entity name="blackburrowPriest">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -27182,7 +27182,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="GnollGuard" size="1" minimum="1" maximum="1" />
+      <entry entity="blackburrowGnollGuard" size="1" minimum="1" maximum="1" />
       <location x="21" y="-1" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="South of Gate ">
@@ -27203,10 +27203,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="GnollGuard" size="1" minimum="1" maximum="1" />
+      <entry entity="blackburrowGnollGuard" size="1" minimum="1" maximum="1" />
       <location x="21" y="3" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="Banker ">
+    <spawn type="LocationSpawner" name="Town Banker ">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -27226,7 +27226,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Banker" size="1" minimum="1" maximum="1" />
+      <entry entity="blackburrowBanker" size="1" minimum="1" maximum="1" />
       <location x="1" y="-30" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="Shopkeep ">
@@ -27304,7 +27304,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Shopkeep" size="1" minimum="1" maximum="1" />
+      <entry entity="blackburrowShopkeeper" size="1" minimum="1" maximum="1" />
       <location x="13" y="-30" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="MA Trainer ">
@@ -27333,7 +27333,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="MA Trainer" size="1" minimum="1" maximum="1" />
+      <entry entity="blackburrowHandTrainer" size="1" minimum="1" maximum="1" />
       <location x="10" y="-24" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="Weapon Trainer">
@@ -27362,7 +27362,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Weapon Trainer" size="1" minimum="1" maximum="1" />
+      <entry entity="blackburrowWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="12" y="-22" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="Magic Trainer">
@@ -27382,7 +27382,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Magic Trainer" size="1" minimum="1" maximum="1" />
+      <entry entity="blackburrowMagicTrainer" size="1" minimum="1" maximum="1" />
       <location x="4" y="-22" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="Balm">
@@ -27402,7 +27402,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Balm Seller" size="1" minimum="1" maximum="1" />
+      <entry entity="blackburrowBalmSeller" size="1" minimum="1" maximum="1" />
       <location x="3" y="-20" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="Recall">
@@ -27422,7 +27422,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Recall Seller" size="1" minimum="1" maximum="1" />
+      <entry entity="blackburrowRecallVendor" size="1" minimum="1" maximum="1" />
       <location x="11" y="-20" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="Thaum Trainer">
@@ -27442,18 +27442,18 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Thaum Trainer" size="1" minimum="1" maximum="1" />
+      <entry entity="blackburrowThaumTrainer" size="1" minimum="1" maximum="1" />
       <location x="7" y="-38" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="Priest">
+    <spawn type="LocationSpawner" name="Town Priest">
       <minimumDelay>0</minimumDelay>
       <maximumDelay>0</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    {
     spawn.Name = "priest";
-    spawn.MaxHealth = 100; spawn.Health = 100;
+    spawn.MaxHealth = 100; 
+	spawn.Health = 100;
     spawn.BaseDodge = 10;
     
     if (spawn is Peacekeeper priest)
@@ -27485,7 +27485,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Priest" size="1" minimum="0" maximum="0" />
+      <entry entity="blackburrowPriest" size="1" minimum="0" maximum="0" />
       <location x="2" y="-37" region="1" />
     </spawn>
   </spawns>

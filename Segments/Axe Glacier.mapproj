@@ -106161,8 +106161,8 @@
         
     dragon.Spells = new CreatureSpellCollection(35.0)
     {
-        new CreatureSpell<DragonBreathIceSpell>(
-            skillLevel: 21), 100, TimeSpan.FromSeconds(15.0)
+       { new CreatureSpell<DragonBreathIceSpell>(
+            skillLevel: 21), 100, TimeSpan.FromSeconds(15.0) }
     };
     //todo: add griffin figurine, protection from cold amulet (replaces f/i ammy?)
     dragon.AddGold(6000);
