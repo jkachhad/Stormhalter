@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.76.0.0">
+<segment name="Underkingdom" version="0.77.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -99150,7 +99150,7 @@
     foreach (var skill in Skill.Weapons)
         trainer.SetTraining(skill, 0, 4);
     
-    trainer.SetTraining(Skill.Magic, 14, 19);
+    trainer.SetTraining(Skill.Magic, 11, 19);
     
     return trainer;
 ]]></block>
@@ -99183,7 +99183,7 @@
         Alignment = Alignment.Neutral
     };
     
-    trainer.SetTraining(Skill.Magic, 14, 19);
+    trainer.SetTraining(Skill.Magic, 11, 19);
     
     return trainer;
 ]]></block>
@@ -99249,7 +99249,7 @@
     };
     
     
-    trainer.SetTraining(Skill.Magic, 14, 19);
+    trainer.SetTraining(Skill.Magic, 11, 19);
     
     return trainer;
 ]]></block>
@@ -101187,10 +101187,10 @@
     mummy.Attacks = new CreatureAttackCollection()
     {
         { 
-            new CreatureAttack(23,     30, 50,     "The mummy strangles you with his bandages"),      70, TimeSpan.Zero 
+            new CreatureAttack(17,     30, 50,     "The mummy strangles you with his bandages"),      70, TimeSpan.Zero 
         }, 
         { 
-            new CreatureAttack(25,    40, 60,     "A mummified claw scratches you.",
+            new CreatureAttack(19,    40, 60,     "A mummified claw scratches you.",
                                                     new AttackAgeComponent(1000, 50)),             30, TimeSpan.Zero
         },
         //todo who added TimeSpan to these?
@@ -102219,6 +102219,59 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="uk300LightningOrc">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var orc = new Orc()
+    {
+        MaxHealth = 100, Health = 100,
+        MaxMana = 13, Mana = 13,
+        BaseDodge = 14,
+        BasePenetration = ShieldPenetration.VeryLight,
+        Experience = 6000,
+    
+    };
+    
+    orc.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(12)
+    };
+    
+    orc.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<LightningBoltSpell>(
+            skillLevel: 5, cost: 6, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+    };
+    
+    orc.Wield(new WoodenStaff());
+    
+    orc.AddGold(350);
+    orc.AddLoot(new LootPack(
+        new LootPackEntry(true, speedygems,       20,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33), 
+        new LootPackEntry(true, UKPotions,    0.25), 
+        new LootPackEntry(true, UpperTreasure,    0.63)
+    ));
+    
+    return orc;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="nWShopkeeper">
@@ -102575,7 +102628,7 @@
     if (spawn is TrainerEntity koboldweapontrainer)
     {
         foreach (var skill in Skill.Weapons)
-            koboldweapontrainer.SetTraining(skill, 14, 19);
+            koboldweapontrainer.SetTraining(skill, 11, 19);
 
         koboldweapontrainer.SetTraining(Skill.Hand, 0, 4);
     }
@@ -102628,7 +102681,7 @@
         foreach (var skill in Skill.Weapons)
             maTrainer.SetTraining(skill, 0, 4);
 
-        maTrainer.SetTraining(Skill.Hand, 14, 19);
+        maTrainer.SetTraining(Skill.Hand, 11, 19);
     }
 ]]></block>
         <block><![CDATA[]]></block>

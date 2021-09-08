@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.76.0.0">
+<segment name="Leng" version="0.77.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -74934,7 +74934,7 @@
         Alignment = Alignment.Neutral
     };
     
-    trainer.SetTraining(Skill.Magic, 8, 16);
+    trainer.SetTraining(Skill.Magic, 6, 16);
     
     return trainer;
 ]]></block>
@@ -75002,7 +75002,7 @@
     foreach (var skill in Skill.Weapons)
         trainer.SetTraining(skill, 0, 4);
     
-    trainer.SetTraining(Skill.Magic, 8, 14);
+    trainer.SetTraining(Skill.Magic, 6, 14);
     
     return trainer;
 ]]></block>
@@ -75037,7 +75037,7 @@
     foreach (var skill in Skill.Weapons)
         trainer.SetTraining(skill, 0, 4);
     
-    trainer.SetTraining(Skill.Magic, 8, 16);
+    trainer.SetTraining(Skill.Magic, 6, 16);
     
     return trainer;
 ]]></block>
@@ -76210,7 +76210,8 @@
     vlad.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(16,     40, 70,      "The vampire rends your flesh with his claws"),                     70 
+            new CreatureAttack(16,     40, 70,      "The vampire rends your flesh with his claws",
+                                                    new AttackAgeComponent(1000)),                                      70 
         }, 
         {
             new CreatureAttack(17,     60, 80,     "The vampire appears behind you, sinking his teeth into your neck",
@@ -78320,7 +78321,7 @@
     if (spawn is TrainerEntity lengweapontrainer)
     {
         foreach (var skill in Skill.Weapons)
-            lengweapontrainer.SetTraining(skill, 8, 16);
+            lengweapontrainer.SetTraining(skill, 6, 16);
 
         lengweapontrainer.SetTraining(Skill.Hand, 0, 4);
     }
@@ -78524,7 +78525,7 @@
         foreach (var skill in Skill.Weapons)
             puck.SetTraining(skill, 0, 4);
 
-        puck.SetTraining(Skill.Hand, 8, 14);
+        puck.SetTraining(Skill.Hand, 6, 14);
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -78910,6 +78911,8 @@
       <entry entity="vladFamiliarArcher" size="1" minimum="2" maximum="2" />
       <entry entity="vladFamiliarMelee" size="1" minimum="2" maximum="2" />
       <entry entity="vladFamiliarThaum" size="1" minimum="1" maximum="1" />
+      <entry entity="cliffTrolls" size="3" minimum="1" maximum="1" />
+      <entry entity="mausWraith" size="1" minimum="1" maximum="1" />
       <bounds region="12">
         <inclusion left="4" top="3" right="8" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -78933,9 +78936,8 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="vladFamiliarArcher" size="1" minimum="3" maximum="3" />
-      <entry entity="vladFamiliarThaum" size="1" minimum="2" maximum="2" />
-      <entry entity="vladFamiliarMelee" size="1" minimum="3" maximum="3" />
+      <entry entity="vladFamiliarThaum" size="1" minimum="3" maximum="3" />
+      <entry entity="minoLich" size="1" minimum="3" maximum="3" />
       <bounds region="14">
         <inclusion left="4" top="3" right="8" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />

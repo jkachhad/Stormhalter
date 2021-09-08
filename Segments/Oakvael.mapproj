@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.76.0.0">
+<segment name="Oakvael" version="0.77.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -51895,7 +51895,7 @@
         <component type="HiddenTeleporterComponent">
           <destinationX>22</destinationX>
           <destinationY>8</destinationY>
-          <destinationRegion>255</destinationRegion>
+          <destinationRegion>225</destinationRegion>
           <lightphases select="all" />
           <moonphases select="all" />
           <professions>Knight</professions>
@@ -85540,7 +85540,7 @@
         trainer.SetTraining(skill, 0, 4);
     
     // Why was this was set low to 14?
-    trainer.SetTraining(Skill.Magic, 8, 14);
+    trainer.SetTraining(Skill.Magic, 6, 14);
     
     return trainer;
 ]]></block>
@@ -85577,7 +85577,7 @@
         trainer.SetTraining(skill, 0, 4);
     
     // The max trainer value was 14. Change to match hardcoded.
-    trainer.SetTraining(Skill.Magic, 8, 16);
+    trainer.SetTraining(Skill.Magic, 6, 16);
     
     return trainer;
 ]]></block>
@@ -85614,7 +85614,7 @@
     };
     
     foreach (var skill in Skill.Weapons)
-        trainer.SetTraining(skill, 8, 16);
+        trainer.SetTraining(skill, 6, 16);
     
     return trainer;
 ]]></block>
@@ -85653,7 +85653,7 @@
 
     // The max training level was 14. Going with hardcoded version.
     // Which is right?
-    trainer.SetTraining(Skill.Magic, 8, 16);
+    trainer.SetTraining(Skill.Magic, 6, 16);
     
     return trainer;
 ]]></block>
@@ -85720,7 +85720,7 @@
         Experience = 50,
     };
 
-    tombo.SetTraining(Skill.Hand, 8, 16);
+    tombo.SetTraining(Skill.Hand, 6, 16);
 
     return tombo;
 ]]></block>
