@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Bloodlands" version="0.77.0.0">
+<segment name="Bloodlands" version="0.74.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -73673,6 +73673,7 @@
         </component>
         <component type="HiddenTeleporterComponent">
           <destinationX>36</destinationX>
+          <destinationY>1</destinationY>
           <destinationRegion>10</destinationRegion>
           <lightphases select="all" />
           <moonphases select="all" />
@@ -109722,9 +109723,10 @@
         MaxHealth = 210, Health = 210,
         BaseDodge = 28,
         MagicProtection = 50,
-        CanCharge = true,
+        CanCharge = false,
         Experience = 13000,
         VisibilityDistance = 1,
+        CanSwim = false,
         
     };
     
@@ -111333,7 +111335,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
     
     };
-    critter.Wield(new SteelMace());
+
     critter.AddStatus(new NightVisionStatus(critter));
     
     critter.CombatantChangeInterval = TimeSpan.FromSeconds(8.0);
@@ -112783,6 +112785,27 @@ if (spawn is Shopkeeper shopkeeper)
       </script>
       <entry entity="townPriest" size="1" minimum="1" maximum="1" />
       <location x="19" y="15" region="12" />
+    </spawn>
+    <spawn type="LocationSpawner" name="forestCaveBoss">
+      <minimumDelay>5400</minimumDelay>
+      <maximumDelay>11700</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="caveBoss" size="1" minimum="1" maximum="1" />
+      <location x="43" y="-2" region="10" />
     </spawn>
     <spawn type="RegionSpawner" name="surfaceFishNorth">
       <minimumDelay>660</minimumDelay>
