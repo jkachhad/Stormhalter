@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Segment" version="0.76.0.0">
+<segment name="Segment" version="0.77.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -27056,7 +27056,7 @@
     </subregion>
   </subregions>
   <entities>
-    <entity name="(Entrance) GnollGuard">
+    <entity name="EntranceGnollGuard">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -27105,7 +27105,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="(Town)Banker">
+    <entity name="TownBanker">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -27137,7 +27137,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="(Town)Shopkeep">
+    <entity name="TownShopkeep">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -27169,7 +27169,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="(Town)MA Trainer">
+    <entity name="TownMATrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -27201,7 +27201,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="(Town)Weapon Trainer">
+    <entity name="TownWeaponTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -27233,7 +27233,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="(Town)Magic Trainer">
+    <entity name="TownMagicTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -27269,7 +27269,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="(Town)Thaum Trainer">
+    <entity name="TownThaumTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -27308,7 +27308,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="(Town)Balm Seller">
+    <entity name="TownBalmSeller">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -27342,7 +27342,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="(Town)Recall Seller">
+    <entity name="TownRecallSeller">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -27376,7 +27376,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="(Town)Priest">
+    <entity name="TownPriest">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -27415,7 +27415,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="(Entrance) FippyDarkpaw">
+    <entity name="EntranceFippyDarkpaw">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -27505,7 +27505,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="(Entrance) Gnoll Blacksmith">
+    <entity name="EntranceGnollBlacksmith">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -27583,7 +27583,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Entrance (Gnoll Soothsayer)">
+    <entity name="EntranceGnollSoothsayer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -27609,7 +27609,7 @@ if (spokeRecently(source))
     {
         new CreatureSpell<DeathSpell>(
             skillLevel: 10, cost: 6, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<LightningBoltSpell>(
             skillLevel: 10, cost: 5,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
@@ -27638,7 +27638,7 @@ if (spokeRecently(source))
     </entity>
   </entities>
   <spawns>
-    <spawn type="LocationSpawner" name="Banker ">
+    <spawn type="LocationSpawner" name="TownBanker ">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -27659,7 +27659,7 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="(Town)Banker" size="1" minimum="1" maximum="1" />
+      <entry entity="TownBanker" size="1" minimum="1" maximum="1" />
       <location x="1" y="-30" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="Shopkeep ">
@@ -27738,10 +27738,10 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="(Town)Shopkeep" size="1" minimum="1" maximum="1" />
+      <entry entity="TownShopkeep" size="1" minimum="1" maximum="1" />
       <location x="13" y="-30" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="MA Trainer ">
+    <spawn type="LocationSpawner" name="MATrainer ">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -27768,10 +27768,10 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="(Town)MA Trainer" size="1" minimum="1" maximum="1" />
+      <entry entity="TownMATrainer" size="1" minimum="1" maximum="1" />
       <location x="10" y="-24" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="Weapon Trainer">
+    <spawn type="LocationSpawner" name="WeaponTrainer">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -27798,10 +27798,10 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="(Town)Weapon Trainer" size="1" minimum="1" maximum="1" />
+      <entry entity="TownWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="12" y="-22" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="Magic Trainer">
+    <spawn type="LocationSpawner" name="MagicTrainer">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -27819,10 +27819,10 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="(Town)Magic Trainer" size="1" minimum="1" maximum="1" />
+      <entry entity="TownMagicTrainer" size="1" minimum="1" maximum="1" />
       <location x="4" y="-22" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="(Town) Balm">
+    <spawn type="LocationSpawner" name="TownBalm">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -27840,10 +27840,10 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="(Town)Balm Seller" size="1" minimum="1" maximum="1" />
+      <entry entity="TownBalmSeller" size="1" minimum="1" maximum="1" />
       <location x="3" y="-20" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="Recall">
+    <spawn type="LocationSpawner" name="TownRecall">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -27861,10 +27861,10 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="(Town)Recall Seller" size="1" minimum="1" maximum="1" />
+      <entry entity="TownRecallSeller" size="1" minimum="1" maximum="1" />
       <location x="11" y="-20" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="Thaum Trainer">
+    <spawn type="LocationSpawner" name="ThaumTrainer">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -27882,17 +27882,16 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="(Town)Thaum Trainer" size="1" minimum="1" maximum="1" />
+      <entry entity="TownThaumTrainer" size="1" minimum="1" maximum="1" />
       <location x="7" y="-38" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="Priest">
+    <spawn type="LocationSpawner" name="TownPriest">
       <minimumDelay>0</minimumDelay>
       <maximumDelay>0</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    {
     spawn.Name = "priest";
     spawn.MaxHealth = 100; spawn.Health = 100;
     spawn.BaseDodge = 10;
@@ -27926,10 +27925,10 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="(Town)Priest" size="1" minimum="0" maximum="0" />
+      <entry entity="TownPriest" size="1" minimum="0" maximum="0" />
       <location x="2" y="-37" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="(Entrance) Fippy">
+    <spawn type="LocationSpawner" name="EntranceFippy">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>660</maximumDelay>
       <maximum>1</maximum>
@@ -27947,10 +27946,10 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="(Entrance) FippyDarkpaw" size="1" minimum="1" maximum="1" />
+      <entry entity="EntranceFippyDarkpaw" size="1" minimum="1" maximum="1" />
       <location x="20" y="1" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="(Entrance) GnollGuard N">
+    <spawn type="LocationSpawner" name="EntranceGnollGuardN">
       <minimumDelay>180</minimumDelay>
       <maximumDelay>300</maximumDelay>
       <maximum>1</maximum>
@@ -27968,10 +27967,10 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="(Entrance) GnollGuard" size="1" minimum="1" maximum="1" />
+      <entry entity="EntranceGnollGuard" size="1" minimum="1" maximum="1" />
       <location x="21" y="-1" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="(Entrance) GnollGuard S">
+    <spawn type="LocationSpawner" name="EntranceGnollGuardS">
       <minimumDelay>180</minimumDelay>
       <maximumDelay>300</maximumDelay>
       <maximum>1</maximum>
@@ -27991,7 +27990,7 @@ if (spokeRecently(source))
       </script>
       <location x="21" y="3" region="1" />
     </spawn>
-    <spawn type="RegionSpawner" name="(Entrance) Blacksmith">
+    <spawn type="RegionSpawner" name="EntranceBlacksmith">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -28009,13 +28008,13 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="(Entrance) Gnoll Blacksmith" size="1" minimum="1" maximum="1" />
+      <entry entity="EntranceGnollBlacksmith" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="26" top="-9" right="30" bottom="-6" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="(Entrance) Guards">
+    <spawn type="RegionSpawner" name="EntranceGuards">
       <minimumDelay>0</minimumDelay>
       <maximumDelay>0</maximumDelay>
       <maximum>14</maximum>
@@ -28033,8 +28032,8 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="(Entrance) GnollGuard" size="3" minimum="3" maximum="3" />
-      <entry entity="Entrance (Gnoll Soothsayer)" size="1" minimum="3" maximum="3" />
+      <entry entity="EntranceGnollGuard" size="3" minimum="3" maximum="3" />
+      <entry entity="EntranceGnollSoothsayer" size="1" minimum="3" maximum="3" />
       <bounds region="1">
         <inclusion left="23" top="-11" right="33" bottom="12" />
         <exclusion left="26" top="-9" right="30" bottom="-6" />
