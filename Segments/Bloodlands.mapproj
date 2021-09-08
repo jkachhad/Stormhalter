@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Bloodlands" version="0.74.0.0">
+<segment name="Bloodlands" version="0.77.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -85293,10 +85293,17 @@
         </component>
       </tile>
       <tile x="18" y="6">
-        <component type="SkyComponent">
-          <destinationY>9</destinationY>
-          <destinationRegion>8</destinationRegion>
-          <teleporterId>9</teleporterId>
+        <component type="FloorComponent">
+          <ground>11</ground>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>7</destinationX>
+          <destinationY>10</destinationY>
+          <destinationRegion>13</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
         </component>
       </tile>
       <tile x="19" y="6">
@@ -85370,13 +85377,7 @@
       </tile>
       <tile x="18" y="7">
         <component type="FloorComponent">
-          <ground>11</ground>
-        </component>
-        <component type="HiddenTeleporterComponent">
-          <lightphases select="all" />
-          <moonphases select="all" />
-          <professions select="all" />
-          <alignments select="all" />
+          <ground>388</ground>
         </component>
       </tile>
       <tile x="19" y="7">
@@ -86499,6 +86500,11 @@
       </tile>
       <tile x="28" y="16">
         <component type="FloorComponent">
+          <ground>388</ground>
+        </component>
+      </tile>
+      <tile x="29" y="16">
+        <component type="FloorComponent">
           <ground>11</ground>
         </component>
         <component type="HiddenTeleporterComponent">
@@ -86506,13 +86512,6 @@
           <moonphases select="all" />
           <professions select="all" />
           <alignments select="all" />
-        </component>
-      </tile>
-      <tile x="29" y="16">
-        <component type="SkyComponent">
-          <destinationY>9</destinationY>
-          <destinationRegion>8</destinationRegion>
-          <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="30" y="16">
