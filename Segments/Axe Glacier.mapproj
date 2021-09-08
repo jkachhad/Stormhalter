@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.76.0.0">
+<segment name="Axe Glacier" version="0.74.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -17550,7 +17550,7 @@
         </component>
         <component type="WallComponent">
           <wall>149</wall>
-          <destroyed>150</destroyed>
+          <destroyed>0</destroyed>
           <ruins>0</ruins>
         </component>
       </tile>
@@ -42824,6 +42824,11 @@
         <component type="FloorComponent">
           <ground>179</ground>
         </component>
+        <component type="WallComponent">
+          <wall>158</wall>
+          <destroyed>161</destroyed>
+          <ruins>170</ruins>
+        </component>
       </tile>
       <tile x="9" y="4">
         <component type="FloorComponent">
@@ -67722,7 +67727,7 @@
         </component>
         <component type="WallComponent">
           <wall>149</wall>
-          <destroyed>150</destroyed>
+          <destroyed>0</destroyed>
           <ruins>0</ruins>
         </component>
       </tile>
@@ -69560,7 +69565,7 @@
         </component>
         <component type="WallComponent">
           <wall>149</wall>
-          <destroyed>150</destroyed>
+          <destroyed>0</destroyed>
           <ruins>0</ruins>
         </component>
       </tile>
@@ -82872,7 +82877,7 @@
         </component>
         <component type="WallComponent">
           <wall>149</wall>
-          <destroyed>150</destroyed>
+          <destroyed>0</destroyed>
           <ruins>0</ruins>
         </component>
       </tile>
@@ -92196,8 +92201,14 @@
         </component>
       </tile>
       <tile x="43" y="7">
-        <component type="FloorComponent">
-          <ground>264</ground>
+        <component type="StaticComponent">
+          <static>264</static>
+        </component>
+        <component type="WallComponent">
+          <wall>159</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>157</wall>
@@ -94619,13 +94630,14 @@
         </component>
       </tile>
       <tile x="4" y="13">
-        <component type="FloorComponent">
-          <ground>264</ground>
+        <component type="StaticComponent">
+          <static>264</static>
         </component>
         <component type="WallComponent">
           <wall>159</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="5" y="13">
@@ -95905,13 +95917,14 @@
         </component>
       </tile>
       <tile x="9" y="16">
-        <component type="FloorComponent">
-          <ground>264</ground>
+        <component type="StaticComponent">
+          <static>264</static>
         </component>
         <component type="WallComponent">
           <wall>159</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="10" y="16">
@@ -95990,13 +96003,14 @@
         </component>
       </tile>
       <tile x="19" y="16">
-        <component type="FloorComponent">
-          <ground>264</ground>
+        <component type="StaticComponent">
+          <static>264</static>
         </component>
         <component type="WallComponent">
           <wall>159</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="20" y="16">
@@ -103500,7 +103514,7 @@
         
     wraith.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(7)
+        new CreatureBasicAttack(8)
     };
     
     wraith.Spells = new CreatureSpellCollection()
@@ -103705,7 +103719,7 @@
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6, 3, 8)
+        new CreatureBasicAttack(6, 3, 9)
     };
     
     orc.Wield(new BattleAxe());
@@ -103754,7 +103768,7 @@
     
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6, 4, 11)
+        new CreatureBasicAttack(6, 4, 13)
     };
     
     troll.Wield(new Greatsword());
@@ -103800,7 +103814,7 @@
     
     goblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6, 3, 8)
+        new CreatureBasicAttack(6, 3, 9)
     };
     
     goblin.Wield(new Longsword());
@@ -103961,7 +103975,7 @@
     
     goblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(8, 5, 12)
+        new CreatureBasicAttack(7, 5, 13)
     };
     
     goblin.Wield(new BattleAxe());
@@ -104010,7 +104024,7 @@
     
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(9, 7, 13)
+        new CreatureBasicAttack(8, 8, 16)
     };
     
     troll.Wield(new Greatsword());
@@ -104064,7 +104078,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9, 9, 15)
+        new CreatureBasicAttack(9, 13, 21)
     };
     
     fighter.Wield(new Longsword());
@@ -104119,7 +104133,7 @@
     
     martialartist.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(10, 10, 17)
+        new CreatureBasicAttack(8, 16, 22)
     };   
     
     martialartist.AddGold(550);
@@ -104164,7 +104178,7 @@
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(8, 5, 10)
+        new CreatureBasicAttack(7, 5, 11)
     };
     
     orc.Wield(new BattleAxe());
@@ -104270,13 +104284,13 @@
     wolf.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(6,     4, 8,   "The wolf rakes you with its claws."),  50
+            new CreatureAttack(5,     4, 9,   "The wolf rakes you with its claws."),  50
         }, 
         {
-            new CreatureAttack(8,     4, 9,  "The wolf sinks its teeth into you."),   30
+            new CreatureAttack(7,     4, 11,  "The wolf sinks its teeth into you."),   30
         }, 
         {
-            new CreatureAttack(8,     5, 10,  "The wolf lunges at you."),              20
+            new CreatureAttack(7,     5, 12,  "The wolf lunges at you."),              20
         }, 
     };
         
@@ -104444,7 +104458,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9, 9, 15)
+        new CreatureBasicAttack(9, 13, 22)
     };
     
     fighter.Wield(new Rapier());
@@ -104534,7 +104548,7 @@
     
     hobgoblin.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(8, 6, 12) 
+        new CreatureBasicAttack(8, 6, 13) 
     };
     
     hobgoblin.Wield(new Longsword());
@@ -104588,13 +104602,13 @@
     wolf.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(8,     5, 15,   "The wolf rakes you with its claws."), 50 
+            new CreatureAttack(8,     5, 19,   "The wolf rakes you with its claws."), 50 
         }, 
         {
-            new CreatureAttack(9,     6, 16,  "The wolf sinks its teeth into you."),  30 
+            new CreatureAttack(9,     6, 21,  "The wolf sinks its teeth into you."),  30 
         }, 
         {
-            new CreatureAttack(9,     7, 18,  "The wolf lunges at you."),             20 
+            new CreatureAttack(9,     7, 24,  "The wolf lunges at you."),             20 
         }, 
     };
         
@@ -104726,11 +104740,11 @@
     rockworm.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(8,     10, 15,     "The rockworm rolls over you"),        70 
+            new CreatureAttack(8,     12, 16,     "The rockworm rolls over you"),        70 
         }, 
         {
-            new CreatureAttack(9,    12, 20,     "You've been bitten by the rockworm",
-                                                    new AttackPoisonComponent(4, 50)),   30
+            new CreatureAttack(9,    15, 25,     "You've been bitten by the rockworm",
+                                                    new AttackPoisonComponent(8, 50)),   30
         },
     };
         
@@ -104837,7 +104851,7 @@
     
     ogre.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11, 12, 18)
+        new CreatureBasicAttack(11, 17, 25)
     };
     
     ogre.AddStatus(new NightVisionStatus(ogre));
@@ -104889,10 +104903,10 @@
     lizard.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(8,   6, 10,  "The lizard claws at you"),               60 
+            new CreatureAttack(8,   6, 12,  "The lizard claws at you"),               60 
         },
         {
-            new CreatureAttack(8,     7, 12,  "The lizard hits you with its tail"),   40 
+            new CreatureAttack(8,     7, 15,  "The lizard hits you with its tail"),   40 
         },
     };
     
@@ -105134,7 +105148,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(10) 
+        new CreatureBasicAttack(9) 
     };
     
     fighter.Wield(new FineCrossbow());
@@ -105188,7 +105202,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(12, 12, 19)
+        new CreatureBasicAttack(11, 20, 30)
     };
     
     fighter.Wield(new Longsword());
@@ -105293,7 +105307,7 @@
     
     goblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(10, 9, 16)
+        new CreatureBasicAttack(9, 12, 18)
     };
     
     goblin.Wield(new BattleAxe());
@@ -105393,7 +105407,7 @@
     
     hobgoblin.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(10, 11, 16)
+        new CreatureBasicAttack(9, 13, 19)
     };
     
     hobgoblin.Wield(new Longsword());
@@ -105448,7 +105462,7 @@
     
     martialartist.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(12, 13, 21)
+        new CreatureBasicAttack(11, 20, 30)
     };   
     
     martialartist.AddGold(650);
@@ -105494,7 +105508,7 @@
     
     ogre.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(13, 12, 19)
+        new CreatureBasicAttack(12, 21, 33)
     };
 
     ogre.Wield(new Halberd());    
@@ -105541,7 +105555,7 @@
     
     orc.Attacks = new CreatureAttackCollection()
     {
-            new CreatureBasicAttack(8, 7, 13)
+            new CreatureBasicAttack(8, 11, 17)
     };
     
     orc.Wield(new ShortSword());
@@ -105595,7 +105609,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(12, 10, 19), 
+        new CreatureBasicAttack(9, 18, 23), 
     };
     
     fighter.Wield(new Rapier());
@@ -105644,7 +105658,7 @@
     
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(10, 8, 15)
+        new CreatureBasicAttack(8, 12, 18)
     };
     
     troll.Wield(new Greatsword());
@@ -105690,13 +105704,13 @@
     wolf.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(7,     5, 10,   "The wolf rakes you with its claws."), 50
+            new CreatureAttack(6,     5, 13,   "The wolf rakes you with its claws."), 50
         }, 
         { 
-            new CreatureAttack(9,     6, 11,  "The wolf sinks its teeth into you."),  30 
+            new CreatureAttack(8,     6, 15,  "The wolf sinks its teeth into you."),  30 
         }, 
         {
-            new CreatureAttack(10,     8, 12,  "The wolf lunges at you."),             20 
+            new CreatureAttack(9,     8, 17,  "The wolf lunges at you."),             20 
         }, 
     };
         
@@ -105805,10 +105819,10 @@
     lizard.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(8,     7, 13,  "The lizard claws at you"),             60 
+            new CreatureAttack(8,     7, 18,  "The lizard claws at you"),             60 
         },
         {
-            new CreatureAttack(8,     8, 16,  "The lizard hits you with its tail"),   40 
+            new CreatureAttack(8,     8, 23,  "The lizard hits you with its tail"),   40 
         },
     };
     
@@ -105935,7 +105949,7 @@
             new CreatureAttack(9,     15, 30,  "You've been mauled by the bear."),             40 
         },
         {
-            new CreatureAttack(10,     26, 35, "The bear crushes you within its embrace."),    10 
+            new CreatureAttack(10,     30, 40, "The bear crushes you within its embrace."),    10 
         }
     };
         
@@ -106116,7 +106130,7 @@
         
         CanFly = true,
         CanCharge = true,
-        CanStrikeCritically = false,
+        
         BasePenetration = ShieldPenetration.VeryHeavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
@@ -106161,8 +106175,8 @@
         
     dragon.Spells = new CreatureSpellCollection(35.0)
     {
-       { new CreatureSpell<DragonBreathIceSpell>(
-            skillLevel: 21), 100, TimeSpan.FromSeconds(15.0) }
+        new CreatureSpell<DragonBreathIceSpell>(
+            skillLevel: 21), 
     };
     //todo: add griffin figurine, protection from cold amulet (replaces f/i ammy?)
     dragon.AddGold(6000);
@@ -106261,21 +106275,9 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="true">
+      <script name="OnDeath" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    if (killer is PlayerEntity player)
-    {
-        var quest = Quests.GetQuest<KnightsDragonSlayerQuest>();
-    
-        if (quest != null && quest.InProgress(player))
-        {                        
-            if (quest.GetStage(player) != KnightsDragonSlayerStage.Yeti)
-                return;
-
-            quest.SetStage(player, KnightsDragonSlayerStage.YetiKilled);
-        }
-    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -106652,7 +106654,7 @@
         
     shadow.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(12, 13, 19)
+        new CreatureBasicAttack(8, 18, 23)
     };
     
     shadow.Spells = new CreatureSpellCollection()
@@ -106714,7 +106716,7 @@
     //for monsters with weapons equipped and non-multiple attacks we use this basic creature attack collection: 9 is chance to hit, 20 min damage, 28 max damage. It will just display "NPC Name hits you with <Blackstaff>!"
     wizard.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(10, 11, 18)
+        new CreatureBasicAttack(9, 20, 28)
     };
     
     /*for hard casted spells we have this context. This NPC will cast Fireball and MagicMissile at evenly weighted chances. When it runs out of mana it will engage in melee, but in this version of LOK, when it regenerates enough mana for one of it's spells it will leave melee to try and cast. You can decide which spell you want him to cast on second attack chances by making it the one that costs less mana. It's a fairly useful function because you can make it so monsters are higher priority to players by setting values. Fun!
@@ -106785,7 +106787,7 @@
     
     thaum.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(10, 11, 19)
+        new CreatureBasicAttack(9, 20, 28)
     };
     
     thaum.Spells = new CreatureSpellCollection()
@@ -106851,7 +106853,7 @@
     
     wizard.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11, 12, 19)
+        new CreatureBasicAttack(9, 20, 28)
     };
     
     wizard.Spells = new CreatureSpellCollection
@@ -107151,7 +107153,7 @@
     
     goblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(10, 11, 16)
+        new CreatureBasicAttack(8, 15, 23)
     };
     
     goblin.Wield(new BattleAxe());
@@ -108063,7 +108065,7 @@
     <spawn type="RegionSpawner" name="Surface Dungeon">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>33</maximum>
+      <maximum>25</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -108078,21 +108080,18 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="surfaceWraith" size="1" minimum="2" maximum="2" />
-      <entry entity="surfaceWolf" size="3" minimum="5" maximum="5" />
-      <entry entity="surfaceSkeleton" size="2" minimum="5" maximum="5" />
-      <entry entity="surfaceGoblinSentry" size="2" minimum="4" maximum="4" />
-      <entry entity="surfaceOrc" size="3" minimum="5" maximum="5" />
-      <entry entity="surfaceTroll" size="2" minimum="3" maximum="3" />
-      <entry entity="surfaceGoblin" size="3" minimum="5" maximum="5" />
-      <entry entity="surfaceGargoyle" size="1" minimum="2" maximum="2" />
-      <entry entity="surfaceGoblinMage" size="1" minimum="2" maximum="2" />
+      <entry entity="surfaceWraith" size="1" minimum="3" maximum="6" />
+      <entry entity="surfaceWolf" size="3" minimum="4" maximum="7" />
+      <entry entity="surfaceSkeleton" size="2" minimum="3" maximum="6" />
+      <entry entity="surfaceGoblinSentry" size="2" minimum="3" maximum="6" />
+      <entry entity="surfaceOrc" size="3" minimum="4" maximum="7" />
+      <entry entity="surfaceTroll" size="2" minimum="3" maximum="6" />
+      <entry entity="surfaceGoblin" size="3" minimum="3" maximum="6" />
+      <entry entity="surfaceGargoyle" size="1" minimum="3" maximum="5" />
+      <entry entity="surfaceGoblinMage" size="1" minimum="2" maximum="5" />
       <bounds region="1">
-        <inclusion left="2" top="7" right="8" bottom="36" />
+        <inclusion left="1" top="7" right="8" bottom="36" />
         <inclusion left="10" top="19" right="20" bottom="37" />
-        <inclusion left="11" top="17" right="17" bottom="18" />
-        <inclusion left="9" top="11" right="12" bottom="16" />
-        <inclusion left="9" top="25" right="9" bottom="35" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -108153,8 +108152,7 @@
       <bounds region="8">
         <inclusion left="3" top="6" right="6" bottom="22" />
         <inclusion left="7" top="20" right="20" bottom="33" />
-        <exclusion left="7" top="24" right="10" bottom="33" />
-        <exclusion left="3" top="14" right="4" bottom="22" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Griff Cliff Dungeon">
@@ -108191,7 +108189,7 @@
     <spawn type="RegionSpawner" name="Lower Glacier Dungeon">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>600</maximumDelay>
-      <maximum>39</maximum>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -108206,18 +108204,18 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="lightningMesaRapier" size="1" minimum="4" maximum="4" />
-      <entry entity="lightningMesaGoblinMage" size="1" minimum="3" maximum="3" />
-      <entry entity="lightningMesaTroll" size="3" minimum="6" maximum="6" />
-      <entry entity="lightningMesaFighter" size="1" minimum="3" maximum="3" />
-      <entry entity="lightningMesaMA" size="1" minimum="2" maximum="2" />
-      <entry entity="lightningMesaOrc" size="3" minimum="7" maximum="7" />
-      <entry entity="upperRockWorm" size="1" minimum="1" maximum="1" />
-      <entry entity="lightningMesaPwolf" size="1" minimum="1" maximum="1" />
-      <entry entity="lightningMesaWraith" size="1" minimum="2" maximum="2" />
-      <entry entity="lightningMesaGoblinSentry" size="3" minimum="6" maximum="6" />
-      <entry entity="lightningMesaOgre" size="1" minimum="2" maximum="2" />
-      <entry entity="lightningMesaGargoyle" size="1" minimum="2" maximum="2" />
+      <entry entity="lightningMesaRapier" size="1" minimum="1" maximum="3" />
+      <entry entity="lightningMesaGoblinMage" size="1" minimum="1" maximum="3" />
+      <entry entity="lightningMesaTroll" size="2" minimum="3" maximum="5" />
+      <entry entity="lightningMesaFighter" size="1" minimum="1" maximum="3" />
+      <entry entity="lightningMesaMA" size="1" minimum="1" maximum="1" />
+      <entry entity="lightningMesaOrc" size="3" minimum="3" maximum="5" />
+      <entry entity="upperRockWorm" size="1" minimum="1" maximum="2" />
+      <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="lightningMesaWraith" size="1" minimum="1" maximum="2" />
+      <entry entity="lightningMesaGoblinSentry" size="3" minimum="2" maximum="4" />
+      <entry entity="lightningMesaOgre" size="1" minimum="1" maximum="2" />
+      <entry entity="lightningMesaGargoyle" size="1" minimum="1" maximum="1" />
       <bounds region="6">
         <inclusion left="22" top="29" right="32" bottom="40" />
         <inclusion left="2" top="31" right="21" bottom="40" />
@@ -108228,7 +108226,7 @@
     <spawn type="RegionSpawner" name="Outside Giant Castle">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>600</maximumDelay>
-      <maximum>42</maximum>
+      <maximum>30</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -108243,18 +108241,18 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="lightningMesaGoblin" size="3" minimum="6" maximum="6" />
-      <entry entity="lightningMesaTroll" size="2" minimum="5" maximum="5" />
-      <entry entity="lightningMesaFighter" size="1" minimum="3" maximum="3" />
+      <entry entity="lightningMesaGoblin" size="3" minimum="3" maximum="5" />
+      <entry entity="lightningMesaTroll" size="2" minimum="3" maximum="5" />
+      <entry entity="lightningMesaFighter" size="1" minimum="2" maximum="5" />
       <entry entity="lightningMesaMA" size="1" minimum="1" maximum="1" />
-      <entry entity="lightningMesaOrc" size="3" minimum="7" maximum="7" />
-      <entry entity="lightningMesaWolf" size="3" minimum="5" maximum="5" />
-      <entry entity="lightningMesaWraith" size="1" minimum="2" maximum="2" />
-      <entry entity="lightningMesaGoblinMage" size="1" minimum="3" maximum="3" />
-      <entry entity="lightningMesaRapier" size="1" minimum="3" maximum="3" />
-      <entry entity="lightningMesaGoblinSentry" size="3" minimum="5" maximum="5" />
-      <entry entity="upperRockWorm" size="1" minimum="1" maximum="1" />
-      <entry entity="lightningMesaPwolf" size="1" minimum="1" maximum="1" />
+      <entry entity="lightningMesaOrc" size="3" minimum="3" maximum="5" />
+      <entry entity="lightningMesaWolf" size="3" minimum="2" maximum="5" />
+      <entry entity="lightningMesaWraith" size="1" minimum="2" maximum="3" />
+      <entry entity="lightningMesaGoblinMage" size="1" minimum="1" maximum="3" />
+      <entry entity="lightningMesaRapier" size="1" minimum="1" maximum="3" />
+      <entry entity="lightningMesaGoblinSentry" size="3" minimum="1" maximum="3" />
+      <entry entity="upperRockWorm" size="1" minimum="1" maximum="2" />
+      <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="1" />
       <bounds region="6">
         <inclusion left="2" top="4" right="25" bottom="12" />
         <inclusion left="5" top="13" right="7" bottom="21" />
@@ -108264,13 +108262,12 @@
         <exclusion left="13" top="13" right="14" bottom="14" />
         <exclusion left="16" top="22" right="19" bottom="24" />
         <exclusion left="16" top="15" right="17" bottom="15" />
-        <exclusion left="23" top="14" right="31" bottom="24" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Inside Giants Castle">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>13</maximum>
+      <maximum>9</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -108285,10 +108282,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="lightningMesaRapier" size="1" minimum="4" maximum="4" />
-      <entry entity="lightningMesaMA" size="1" minimum="2" maximum="2" />
-      <entry entity="lightningMesaFighter" size="1" minimum="4" maximum="4" />
-      <entry entity="lightningMesaArcher" size="1" minimum="3" maximum="3" />
+      <entry entity="lightningMesaRapier" size="1" minimum="1" maximum="4" />
+      <entry entity="lightningMesaMA" size="1" minimum="1" maximum="2" />
+      <entry entity="lightningMesaFighter" size="1" minimum="1" maximum="5" />
+      <entry entity="lightningMesaArcher" size="1" minimum="1" maximum="3" />
       <bounds region="6">
         <inclusion left="12" top="12" right="15" bottom="21" />
         <inclusion left="16" top="14" right="18" bottom="24" />
@@ -108299,7 +108296,7 @@
     <spawn type="RegionSpawner" name="Giants Castle Main">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>12</maximum>
+      <maximum>8</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -108314,14 +108311,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="lightningMesaGoblinSentry" size="3" minimum="2" maximum="2" />
-      <entry entity="lightningMesaMA" size="1" minimum="3" maximum="3" />
-      <entry entity="lightningMesaArcher" size="1" minimum="3" maximum="3" />
-      <entry entity="lightningMesaFighter" size="1" minimum="4" maximum="4" />
+      <entry entity="lightningMesaGoblinSentry" size="3" minimum="1" maximum="1" />
+      <entry entity="lightningMesaMA" size="1" minimum="1" maximum="3" />
+      <entry entity="lightningMesaArcher" size="1" minimum="2" maximum="3" />
+      <entry entity="lightningMesaFighter" size="1" minimum="3" maximum="4" />
       <bounds region="8">
         <inclusion left="8" top="10" right="16" bottom="15" />
         <inclusion left="13" top="7" right="17" bottom="11" />
-        <exclusion left="8" top="14" right="11" bottom="15" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Giant and Goose">
@@ -108352,7 +108349,7 @@
     <spawn type="RegionSpawner" name="BehindGiant">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>10</maximum>
+      <maximum>8</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -108372,14 +108369,14 @@
       <entry entity="lightningMesaFighter" size="1" minimum="2" maximum="4" />
       <entry entity="lightningMesaRapier" size="1" minimum="2" maximum="4" />
       <bounds region="8">
-        <inclusion left="24" top="7" right="32" bottom="17" />
+        <inclusion left="23" top="5" right="32" bottom="18" />
         <exclusion left="29" top="7" right="30" bottom="7" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Ogre Cave West">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>50</maximum>
+      <maximum>35</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -108409,24 +108406,15 @@
       <entry entity="upperOrc" size="3" minimum="4" maximum="7" />
       <entry entity="upperEasyBear" size="1" minimum="1" maximum="3" />
       <bounds region="12">
-        <inclusion left="2" top="3" right="24" bottom="38" />
+        <inclusion left="1" top="1" right="24" bottom="38" />
         <inclusion left="25" top="9" right="29" bottom="38" />
-        <exclusion left="2" top="9" right="3" bottom="17" />
-        <exclusion left="4" top="14" right="4" bottom="21" />
-        <exclusion left="2" top="29" right="4" bottom="31" />
-        <exclusion left="5" top="23" right="7" bottom="25" />
-        <exclusion left="2" top="3" right="5" bottom="4" />
-        <exclusion left="10" top="29" right="18" bottom="31" />
-        <exclusion left="11" top="32" right="12" bottom="37" />
-        <exclusion left="21" top="31" right="23" bottom="32" />
-        <exclusion left="27" top="35" right="29" bottom="38" />
-        <exclusion left="26" top="30" right="29" bottom="32" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Ogre Caves Ice">
-      <minimumDelay>600</minimumDelay>
-      <maximumDelay>900</maximumDelay>
-      <maximum>9</maximum>
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>7</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -108441,21 +108429,20 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="upperLizard" size="1" minimum="2" maximum="2" />
+      <entry entity="upperLizard" size="1" minimum="3" maximum="4" />
       <entry entity="upperWolf" size="3" minimum="2" maximum="4" />
-      <entry entity="lightningMesaPwolf" size="1" minimum="1" maximum="1" />
-      <entry entity="upperEasyBear" size="1" minimum="2" maximum="2" />
+      <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="upperEasyBear" size="1" minimum="1" maximum="2" />
       <bounds region="12">
         <inclusion left="25" top="3" right="32" bottom="8" />
         <inclusion left="30" top="9" right="34" bottom="31" />
-        <inclusion left="35" top="21" right="37" bottom="30" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Ogre Caves East">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>33</maximum>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -108470,40 +108457,27 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="upperGoblin" size="3" minimum="5" maximum="5" />
-      <entry entity="upperTroll" size="3" minimum="5" maximum="5" />
-      <entry entity="upperGoblinSentry" size="3" minimum="4" maximum="4" />
-      <entry entity="upperOgre" size="1" minimum="2" maximum="2" />
-      <entry entity="upperWraith" size="1" minimum="2" maximum="2" />
-      <entry entity="upperHobgoblin" size="3" minimum="5" maximum="5" />
-      <entry entity="upperWolf" size="3" minimum="5" maximum="5" />
-      <entry entity="upperShadow" size="1" minimum="1" maximum="1" />
-      <entry entity="upperEasyBear" size="1" minimum="2" maximum="2" />
-      <entry entity="upperRockWorm" size="1" minimum="1" maximum="1" />
-      <entry entity="lightningMesaPwolf" size="1" minimum="1" maximum="1" />
-      <entry entity="upperOrc" size="3" minimum="6" maximum="6" />
+      <entry entity="upperGoblin" size="3" minimum="1" maximum="5" />
+      <entry entity="upperTroll" size="3" minimum="1" maximum="4" />
+      <entry entity="upperGoblinSentry" size="3" minimum="1" maximum="4" />
+      <entry entity="upperOgre" size="1" minimum="2" maximum="4" />
+      <entry entity="upperWraith" size="1" minimum="1" maximum="3" />
+      <entry entity="upperHobgoblin" size="3" minimum="1" maximum="5" />
+      <entry entity="upperWolf" size="3" minimum="2" maximum="5" />
+      <entry entity="upperShadow" size="1" minimum="2" maximum="4" />
+      <entry entity="upperEasyBear" size="1" minimum="1" maximum="2" />
+      <entry entity="upperRockWorm" size="1" minimum="1" maximum="2" />
+      <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="upperOrc" size="3" minimum="2" maximum="4" />
       <bounds region="12">
-        <inclusion left="39" top="3" right="42" bottom="3" />
-        <inclusion left="36" top="4" right="39" bottom="5" />
-        <inclusion left="34" top="5" right="35" bottom="7" />
-        <inclusion left="37" top="6" right="43" bottom="7" />
-        <inclusion left="41" top="5" right="43" bottom="5" />
-        <inclusion left="35" top="8" right="43" bottom="9" />
-        <inclusion left="35" top="10" right="38" bottom="11" />
-        <inclusion left="39" top="11" right="44" bottom="14" />
-        <inclusion left="37" top="14" right="38" bottom="17" />
-        <inclusion left="40" top="16" right="44" bottom="27" />
-        <inclusion left="37" top="19" right="39" bottom="21" />
-        <inclusion left="45" top="18" right="46" bottom="36" />
-        <inclusion left="41" top="32" right="44" bottom="36" />
-        <inclusion left="39" top="28" right="44" bottom="31" />
+        <inclusion left="38" top="4" right="46" bottom="36" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Dungeons of Doom">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>52</maximum>
+      <maximum>40</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -108518,23 +108492,22 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="surfaceGoblinSentry" size="3" minimum="8" maximum="8" />
-      <entry entity="lightningMesaGoblinMage" size="1" minimum="4" maximum="4" />
-      <entry entity="lightningMesaTroll" size="3" minimum="8" maximum="8" />
-      <entry entity="lightningMesaWraith" size="1" minimum="4" maximum="4" />
-      <entry entity="lightningMesaOgre" size="1" minimum="4" maximum="4" />
-      <entry entity="lightningMesaOrc" size="3" minimum="9" maximum="9" />
-      <entry entity="lightningMesaPwolf" size="1" minimum="2" maximum="2" />
-      <entry entity="upperEasyBear" size="1" minimum="4" maximum="4" />
-      <entry entity="upperHardBear" size="1" minimum="1" maximum="1" />
-      <entry entity="upperRockWorm" size="1" minimum="1" maximum="1" />
-      <entry entity="lightningMesaGoblin" size="3" minimum="7" maximum="7" />
+      <entry entity="lightningMesaWolf" size="3" minimum="3" maximum="6" />
+      <entry entity="surfaceGoblinSentry" size="3" minimum="3" maximum="5" />
+      <entry entity="lightningMesaGoblinMage" size="1" minimum="2" maximum="4" />
+      <entry entity="lightningMesaTroll" size="2" minimum="3" maximum="5" />
+      <entry entity="lightningMesaWraith" size="1" minimum="1" maximum="2" />
+      <entry entity="lightningMesaOgre" size="1" minimum="2" maximum="4" />
+      <entry entity="lightningMesaOrc" size="3" minimum="3" maximum="5" />
+      <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="2" />
+      <entry entity="upperEasyBear" size="1" minimum="1" maximum="2" />
+      <entry entity="upperHardBear" size="1" minimum="0" maximum="1" />
+      <entry entity="upperRockWorm" size="1" minimum="1" maximum="2" />
+      <entry entity="lightningMesaGoblin" size="3" minimum="2" maximum="4" />
+      <entry entity="upperBossKingWolf" size="1" minimum="0" maximum="1" />
       <bounds region="10">
-        <inclusion left="8" top="4" right="25" bottom="13" />
-        <inclusion left="2" top="4" right="7" bottom="8" />
-        <inclusion left="10" top="14" right="25" bottom="22" />
-        <inclusion left="15" top="24" right="25" bottom="38" />
-        <exclusion left="15" top="31" right="16" bottom="38" />
+        <inclusion left="1" top="3" right="25" bottom="39" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Upper Glacier Left Trees">
@@ -108746,7 +108719,7 @@
       <entry entity="chaosMA" size="1" minimum="1" maximum="2" />
       <entry entity="upperWolf" size="3" minimum="1" maximum="1" />
       <bounds region="18">
-        <inclusion left="2" top="18" right="6" bottom="26" />
+        <inclusion left="1" top="17" right="7" bottom="27" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -108806,7 +108779,7 @@
     <spawn type="RegionSpawner" name="Chaos Town West">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>12</maximum>
+      <maximum>10</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -108835,7 +108808,7 @@
     <spawn type="RegionSpawner" name="Chaos Town Main">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>25</maximum>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -108960,7 +108933,7 @@
       <entry entity="lightningMesaGoblin" size="3" minimum="2" maximum="2" />
       <bounds region="6">
         <inclusion left="33" top="11" right="54" bottom="39" />
-        <exclusion left="42" top="11" right="54" bottom="14" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
   </spawns>
