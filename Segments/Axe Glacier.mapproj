@@ -108252,6 +108252,7 @@
         <block><![CDATA[
     spawn.Name = "Runa";
     spawn.Body = 37;
+    spawn.SetTraining(Skill.Magic, 6, 17);
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -108273,6 +108274,7 @@
         <block><![CDATA[
     spawn.Name = "Valtrex";
     spawn.Body = 48;
+    spawn.SetTraining(Skill.Magic, 6, 17);
     if (spawn is ThaumaturgeTrainer thaumaturgeTrainer)
     {
         thaumaturgeTrainer.AddCounter(new Point2D(7, 4, 15));
@@ -108305,7 +108307,7 @@
         foreach (var skill in Skill.Weapons)
             lockpicktrainer.SetTraining(skill, 0, 4);
 
-        lockpicktrainer.SetTraining(Skill.Hand, 8, 14);
+        lockpicktrainer.SetTraining(Skill.Hand, 8, 17);
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -108332,7 +108334,7 @@
     if (spawn is TrainerEntity lockpickweapontrainer)
     {
         foreach (var skill in Skill.Weapons)
-            lockpickweapontrainer.SetTraining(skill, 8, 14);
+            lockpickweapontrainer.SetTraining(skill, 8, 17);
 
         lockpickweapontrainer.SetTraining(Skill.Hand, 0, 4);
     }
