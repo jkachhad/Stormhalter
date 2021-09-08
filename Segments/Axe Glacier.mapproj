@@ -47027,6 +47027,8 @@
           <ground>179</ground>
         </component>
         <component type="StaircaseComponent">
+          <destinationX>1</destinationX>
+          <destinationY>1</destinationY>
           <destinationRegion>2</destinationRegion>
           <teleporterId>126</teleporterId>
           <descends>true</descends>
@@ -88811,12 +88813,8 @@
         <component type="FloorComponent">
           <ground>264</ground>
         </component>
-        <component type="StaircaseComponent">
-          <destinationX>20</destinationX>
-          <destinationY>39</destinationY>
-          <destinationRegion>10</destinationRegion>
-          <teleporterId>127</teleporterId>
-          <descends>false</descends>
+        <component type="RuinsComponent">
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="1" y="0">
@@ -89356,8 +89354,12 @@
         <component type="FloorComponent">
           <ground>264</ground>
         </component>
-        <component type="RuinsComponent">
-          <ruins>44</ruins>
+        <component type="StaircaseComponent">
+          <destinationX>20</destinationX>
+          <destinationY>39</destinationY>
+          <destinationRegion>10</destinationRegion>
+          <teleporterId>127</teleporterId>
+          <descends>false</descends>
         </component>
       </tile>
       <tile x="2" y="1">
@@ -89376,6 +89378,9 @@
       <tile x="4" y="1">
         <component type="FloorComponent">
           <ground>264</ground>
+        </component>
+        <component type="RuinsComponent">
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="5" y="1">
@@ -89828,10 +89833,16 @@
         <component type="FloorComponent">
           <ground>264</ground>
         </component>
+        <component type="RuinsComponent">
+          <ruins>44</ruins>
+        </component>
       </tile>
       <tile x="3" y="2">
         <component type="FloorComponent">
           <ground>264</ground>
+        </component>
+        <component type="RuinsComponent">
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="4" y="2">
@@ -90257,6 +90268,9 @@
       <tile x="1" y="3">
         <component type="FloorComponent">
           <ground>264</ground>
+        </component>
+        <component type="RuinsComponent">
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="2" y="3">
