@@ -3,20 +3,6 @@
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
-	public static TimeSpan _speechDelay = TimeSpan.FromMinutes(1.0);
-    public static Dictionary<MobileEntity, DateTime> _speechDelays = new Dictionary<MobileEntity, DateTime>();
-    
-    public static bool spokeRecently(MobileEntity entity)
-    {
-        /* If the entity spoke recently, we're not going to speak again. */
-        if (_speechDelays.TryGetValue(entity, out var nextSpeechTime) && DateTime.Now < nextSpeechTime)
-            return true;
-        
-        /* The entity did not speak recently, add them to the delay, and allow them to talk. */
-        _speechDelays[entity] = DateTime.Now + _speechDelay;
-        return false;
-    }
-	
     public static readonly string[] _names = new string[]
     {
         "Aca", "Acha", "Achi", "Achu", "Aco", "Agua", "Ahua", "Aja", "Ala", "Ali", "Ama", "Ani", "Anu", "Apa",
@@ -55,7 +41,18 @@
         "Yucha", "Yuchi", "Yuchu", "Yuco", "Yugua", "Yuhua", "Yuja", "Yula", "Yuli", "Yuma", "Yuni", "Yunu", "Yupa",
         "Yupo", "Yuqui", "Yura", "Yuri", "Yuta", "Yuti", "Yuto", "Yutu", "Yuxi", "Yuya"
     };
-
+    
+    public static bool spokeRecently(MobileEntity entity)
+    {
+        /* If the entity spoke recently, we're not going to speak again. */
+        if (_speechDelays.TryGetValue(entity, out var nextSpeechTime) && DateTime.Now < nextSpeechTime)
+            return true;
+        
+        /* The entity did not speak recently, add them to the delay, and allow them to talk. */
+        _speechDelays[entity] = DateTime.Now + _speechDelay;
+        return false;
+    }
+    
     public static string[] _rarePurchaseResponses = new string[]
     {
         "That's quite a bargain.", 
@@ -47027,6 +47024,8 @@
           <ground>179</ground>
         </component>
         <component type="StaircaseComponent">
+          <destinationX>1</destinationX>
+          <destinationY>1</destinationY>
           <destinationRegion>2</destinationRegion>
           <teleporterId>126</teleporterId>
           <descends>true</descends>
@@ -88811,13 +88810,6 @@
         <component type="FloorComponent">
           <ground>264</ground>
         </component>
-        <component type="StaircaseComponent">
-          <destinationX>20</destinationX>
-          <destinationY>39</destinationY>
-          <destinationRegion>10</destinationRegion>
-          <teleporterId>127</teleporterId>
-          <descends>false</descends>
-        </component>
       </tile>
       <tile x="1" y="0">
         <component type="FloorComponent">
@@ -89356,8 +89348,12 @@
         <component type="FloorComponent">
           <ground>264</ground>
         </component>
-        <component type="RuinsComponent">
-          <ruins>44</ruins>
+        <component type="StaircaseComponent">
+          <destinationX>20</destinationX>
+          <destinationY>39</destinationY>
+          <destinationRegion>10</destinationRegion>
+          <teleporterId>127</teleporterId>
+          <descends>false</descends>
         </component>
       </tile>
       <tile x="2" y="1">
@@ -89828,6 +89824,9 @@
         <component type="FloorComponent">
           <ground>264</ground>
         </component>
+        <component type="RuinsComponent">
+          <ruins>44</ruins>
+        </component>
       </tile>
       <tile x="3" y="2">
         <component type="FloorComponent">
@@ -90258,6 +90257,9 @@
         <component type="FloorComponent">
           <ground>264</ground>
         </component>
+        <component type="RuinsComponent">
+          <ruins>44</ruins>
+        </component>
       </tile>
       <tile x="2" y="3">
         <component type="FloorComponent">
@@ -90267,6 +90269,9 @@
       <tile x="3" y="3">
         <component type="FloorComponent">
           <ground>264</ground>
+        </component>
+        <component type="RuinsComponent">
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="4" y="3">
@@ -107382,7 +107387,7 @@
         new LootPackEntry(true, UndeadGems,       4,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
         new LootPackEntry(true, upperTreasure,   0.1),
-        new LootPackEntry(true, AxePotions,     0.2)
+        new LootPackEntry(true, AxePotions,     0.2),
     ));
 
     return draugr;
@@ -107441,7 +107446,7 @@
         new LootPackEntry(true, UndeadGems,       4,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
         new LootPackEntry(true, upperTreasure,   0.1),
-        new LootPackEntry(true, AxePotions,     0.2)
+        new LootPackEntry(true, AxePotions,     0.2),
     ));
 
     return draugr;
@@ -107508,7 +107513,7 @@
         new LootPackEntry(true, UndeadGems,       4,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
         new LootPackEntry(true, upperTreasure,   0.1),
-        new LootPackEntry(true, AxePotions,     0.2)
+        new LootPackEntry(true, AxePotions,     0.2),
     ));
 
     return draugr;
@@ -107547,7 +107552,7 @@
         Mana = 7, MaxMana = 7,
         BasePenetration = ShieldPenetration.Heavy,
         Experience = 52500,
-        Immunity = CreatureImmunity.Poison,
+        CreatureImmunity.Poison,
         
         IceProtection = 100,
     };
@@ -107571,7 +107576,7 @@
         new LootPackEntry(true, UndeadGems,       100,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
         new LootPackEntry(true, upperTreasure,   2),
-        new LootPackEntry(true, AxePotions,     0.5)
+        new LootPackEntry(true, AxePotions,     0.5),
     ));
 
     return giant;
@@ -107695,7 +107700,7 @@
         new LootPackEntry(true, UndeadGems,       2,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
         new LootPackEntry(true, upperTreasure,   0.63),
-        new LootPackEntry(true, AxePotions,     0.1)
+        new LootPackEntry(true, AxePotions,     0.1),
     ));
     
     return troll;
@@ -107758,7 +107763,7 @@
         new LootPackEntry(true, UndeadGems,       4,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
         new LootPackEntry(true, upperTreasure,   0.1),
-        new LootPackEntry(true, AxePotions,     0.2)
+        new LootPackEntry(true, AxePotions,     0.2),
     ));
     return worg;
 ]]></block>
