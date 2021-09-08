@@ -117,6 +117,17 @@
                     </DataTemplate>
                 </ToolBar.ItemTemplate>
             </ToolBar>
+            
+            <!-- Visibility -->
+            <ToolBar ItemsSource="{Binding Visibility, Source={StaticResource applicationPresenter}}" 
+                     Background="LightPink" ToolTip="Filters" OverflowMode="Never">
+                <ToggleButton  Margin="1" Height="24" Width="24" IsChecked="{Binding Visibility.OpenDoors}">
+                    <ToggleButton.ToolTip>
+                        <TextBlock Text="Toggle Doors" />
+                    </ToggleButton.ToolTip>
+                    <Image Source="../Resources/Door.png" VerticalAlignment="Center" Height="16" Width="16" />
+                </ToggleButton>
+            </ToolBar>
         </ToolBarTray>
         
         <DockingManager x:Name="_dockingManager" Grid.Row="2"

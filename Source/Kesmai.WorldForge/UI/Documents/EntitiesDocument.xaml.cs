@@ -44,9 +44,22 @@ namespace Kesmai.WorldForge.UI.Documents
 			
 			WeakReferenceMessenger.Default
 				.Register<EntitiesDocument, EntitiesViewModel.SelectedEntityChangedMessage>(this, OnEntityChanged);
+			
+			WeakReferenceMessenger.Default
+				.Register<EntitiesDocument, Entity>(
+					this, (r, m) => { ChangeEntity(m); });
 		}
-
-		private void OnEntityChanged(EntitiesDocument recipient, EntitiesViewModel.SelectedEntityChangedMessage message)
+		private void ChangeEntity(Entity entity)
+		{
+			var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+			var viewmodel = presenter.Documents.Where(d => d is EntitiesViewModel).FirstOrDefault() as EntitiesViewModel;
+			presenter.ActiveDocument = viewmodel;
+			if (entity is not null)
+            {
+				viewmodel.SelectedEntity = entity;
+            }
+		}
+			private void OnEntityChanged(EntitiesDocument recipient, EntitiesViewModel.SelectedEntityChangedMessage message)
 		{
 			_scriptsTabControl.SelectedIndex = 0;
 		}
