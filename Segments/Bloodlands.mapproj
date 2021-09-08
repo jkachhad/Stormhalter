@@ -112099,7 +112099,6 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         ));
 
     return wyrm;
-}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -112338,9 +112337,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     rockworm.AddGold(3800);
     rockworm.AddLoot(new LootPack(
         new LootPackEntry(true, forestGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, MagicBottles,     0.2),
-
-        
+        new LootPackEntry(true, MagicBottles,     0.2)
         ));
     
     return rockworm;
@@ -112399,8 +112396,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     shadow.AddGold(2600);
     shadow.AddLoot(new LootPack(
         new LootPackEntry(true, forestGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, MagicBottles,     0.2),
-
+        new LootPackEntry(true, MagicBottles,     0.2)
     ));
     
     return shadow;
