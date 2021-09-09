@@ -107643,15 +107643,15 @@
         new CreatureBasicAttack(24, 33, 50)
     };
     
-    necro.Spells = new CreatureSpellCollection(20.0)
+    necro.Spells = new CreatureSpellCollection(10.0)
     {
         {
             new CreatureSpell<DeathSpell>(
-                skillLevel: 13),  75  
+                skillLevel: 13),  90  
         },
         {
             new CreatureSpell<PoisonCloudSpell>(
-                skillLevel: 10),    25,     TimeSpan.FromSeconds(15.0)
+                skillLevel: 10),    10,     TimeSpan.FromSeconds(15.0)
         },
     };
 
