@@ -75236,7 +75236,7 @@
         
     wraith.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9, 8, 15),
+        new CreatureBasicAttack(9),
     };
     
     wraith.Spells = new CreatureSpellCollection()
@@ -75259,7 +75259,8 @@
     wraith.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.1),
+        new LootPackEntry(true, UtilityTreasures,    3),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, MausTreasure,  0.63)
     ));
     
@@ -75332,7 +75333,8 @@
     wizard.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.1),
+        new LootPackEntry(true, UtilityTreasures,    3),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, MausTreasure,  0.63)
     ));
     
@@ -75399,7 +75401,8 @@
     wizard.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.1),
+        new LootPackEntry(true, UtilityTreasures,    3),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, MausTreasure,  0.63)
     ));
     
@@ -75439,7 +75442,7 @@
     
     spectre.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9, 10, 16),
+        new CreatureBasicAttack(10),
     };
     
     spectre.Spells = new CreatureSpellCollection()
@@ -75462,7 +75465,8 @@
     spectre.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.1),
+        new LootPackEntry(true, UtilityTreasures,    2),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, MausTreasure,  0.63)
     ));
     
@@ -75502,7 +75506,7 @@
     
     hobgoblin.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(10, 7, 15)
+        new CreatureBasicAttack(9)
     };
     
     hobgoblin.Wield(new Longsword());
@@ -75512,7 +75516,7 @@
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.1),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, MausTreasure,  0.63)
     ));
     
@@ -75572,7 +75576,8 @@
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.1),
+        new LootPackEntry(true, UtilityTreasures,    2),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, MausTreasure,  0.63)
     ));
     
@@ -75615,7 +75620,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(10, 7, 13)
+        new CreatureBasicAttack(9)
     };
     
     fighter.Wield(new Longsword());
@@ -75625,7 +75630,7 @@
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.1),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, MausTreasure,  0.63)        
     ));
     
@@ -75787,7 +75792,7 @@
     powerTroll.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new WingedHelm(),         40.0),
         new LootPackEntry(true, (from, container) => new PearDiamond(1200u),         40.0),
-        new LootPackEntry(true, LengPotions,    0.05),
+        new LootPackEntry(true, LengPotions,    5),
         new LootPackEntry(true, (from, container) => new Diamond(1500u),         50.0)
     ));
     
@@ -75922,6 +75927,7 @@
     
     presence.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new WaveRobe(),    100)
+        new LootPackEntry(true, UtilityTreasures,    5),
     ));
     
     return presence;
@@ -76076,7 +76082,7 @@
    ninja.AddGold(500);
    ninja.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, LengPotions,    0.3),
         new LootPackEntry(true, MausBottles,    20)
    ));
        
@@ -76429,7 +76435,7 @@
         
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(13, 8, 16)
+        new CreatureBasicAttack(12)
     };
     
     fighter.Wield(new Longsword());
@@ -76439,7 +76445,7 @@
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, CliffGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.1),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, CliffTreasures,    0.63)
     ));
     
@@ -76534,7 +76540,7 @@
         
     lich.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9, 15, 25)
+        new CreatureBasicAttack(11)
     };
     
     lich.Spells = new CreatureSpellCollection()
@@ -76550,7 +76556,8 @@
     lich.AddLoot(new LootPack(
         new LootPackEntry(true, MinotaurGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, UtilityTreasures,    5),
+        new LootPackEntry(true, LengPotions,    0.3),
         new LootPackEntry(true, MinotaurTreasures,    0.63)
     ));
     
@@ -76592,7 +76599,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11)
+        new CreatureBasicAttack(12)
     };
     
     fighter.Wield(new Longbow());
@@ -76602,7 +76609,7 @@
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, CliffGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.1),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, CliffTreasures,    0.63)
     ));
     
@@ -76667,7 +76674,7 @@
     minotaur.AddLoot(new LootPack(
         new LootPackEntry(true, MinotaurGems,       50,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, LengPotions,    0.3),
         new LootPackEntry(true, MinotaurTreasures,    0.63)
     ));
     
@@ -76793,7 +76800,7 @@
     griffin.AddLoot(new LootPack(
         
         new LootPackEntry(true, (from, container) => new OchreEgg(), 25.0),  
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, LengPotions,    0.4),
         new LootPackEntry(true, (from, container) => new GriffinSkull(), 10),
         new LootPackEntry(true, MinotaurTreasures,  0.63)
     ));
@@ -77042,7 +77049,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11), 
+        new CreatureBasicAttack(13), 
     };
     
     fighter.Wield(new FineCrossbow());
@@ -77052,7 +77059,7 @@
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20), 
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, LengPotions,    0.4),
         new LootPackEntry(true, MinotaurTreasures,  0.63)
     ));
     
@@ -77095,7 +77102,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(13, 25, 40) 
+        new CreatureBasicAttack(14) 
     };
     
     fighter.Wield(new Longsword());
@@ -77104,7 +77111,7 @@
     fighter.AddGold(750);
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator),  
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, LengPotions,    0.4),
         new LootPackEntry(true, MausBottles,    20),
         new LootPackEntry(true, MinotaurTreasures,  0.63)
         
@@ -77151,7 +77158,7 @@
     
     thaum.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9, 25, 40)
+        new CreatureBasicAttack(14)
     };
     
     thaum.Spells = new CreatureSpellCollection()
@@ -77173,7 +77180,8 @@
     thaum.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20), 
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, UtilityTreasures,    4),
+        new LootPackEntry(true, LengPotions,    0.4),
         new LootPackEntry(true, MinotaurTreasures,  0.63)
     ));
     
@@ -77219,7 +77227,7 @@
     centaur.AddLoot(new LootPack(
         new LootPackEntry(true, CliffGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.1),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, CliffTreasures,    0.63)
     ));
     
@@ -77337,7 +77345,7 @@
     };
     duck.AddGold(5000);
     duck.AddLoot(new LootPack(
-        new LootPackEntry(true, LengPotions,    0.1),
+        new LootPackEntry(true, LengPotions,    5),
         new LootPackEntry(true, (from, container) => new OchreEgg(), 100.0)  /* TODO: add another piece of minor loot just added egg because it made sense*/
     ));
         
@@ -77373,7 +77381,7 @@
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(12, 9, 15)
+        new CreatureBasicAttack(12)
     };
     
     orc.Wield(new ShortSword());
@@ -77383,7 +77391,7 @@
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, CliffGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.1),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, CliffTreasures,    0.63)
     ));
     
@@ -77439,7 +77447,7 @@
     wolf.AddLoot(new LootPack(
         new LootPackEntry(true, CliffGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.1),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, CliffTreasures,    0.63)
     ));
         
@@ -77474,7 +77482,7 @@
     
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(13, 11, 17)
+        new CreatureBasicAttack(13)
     };
     
     troll.Wield(new Greatsword());
@@ -77484,7 +77492,7 @@
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, CliffGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.1),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, CliffTreasures,    0.63)
     ));
     
@@ -77579,7 +77587,7 @@
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, CliffGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.1),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, CliffTreasures,    0.63)
     ));
     
@@ -77642,7 +77650,7 @@
     manticora.AddLoot(new LootPack(
         new LootPackEntry(true, MinotaurGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, LengPotions,    0.3),
         new LootPackEntry(true, MinotaurTreasures,    0.63)
     ));
     
@@ -77697,6 +77705,7 @@
     wight.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20),
+        new LootPackEntry(true, UtilityTreasures,    1),
         new LootPackEntry(true, LengPotions,    0.05),
         new LootPackEntry(true, MausTreasure,  0.63)
     ));
@@ -77817,7 +77826,8 @@
     mummy.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       40,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.1),
+        new LootPackEntry(true, UtilityTreasures,    3),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, MausTreasure,  0.63)
         
     ));
@@ -77973,7 +77983,7 @@
     seaserpent.AddLoot(new LootPack(
         new LootPackEntry(true, CliffGems,       50,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.3),
+        new LootPackEntry(true, LengPotions,    0.4),
         new LootPackEntry(true, CliffTreasures,    3)
     ));
     
@@ -78030,6 +78040,7 @@
         new LootPackEntry(true, (from, container) => new SilverGreatAxe(),        100),
         new LootPackEntry(true, MinotaurGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
+        new LootPackEntry(true, UtilityTreasures,    6),
         new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, MinotaurTreasures,    0.63)
     ));
@@ -79901,6 +79912,80 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new DexterityRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="UtilityTreasures">
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new DarknessOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new LightOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new DemonWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new BirchWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new FireballOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new IceStormOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new WebOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new HickoryWand();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>

@@ -86800,7 +86800,7 @@
     
     kobold.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(7)
+        new CreatureBasicAttack(6)
     };
 
     kobold.Wield(new SteelMace());
@@ -86896,7 +86896,7 @@
     
     orc.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(8)
+        new CreatureBasicAttack(6)
     };
 
     orc.Wield(new Crossbow());
@@ -86945,7 +86945,7 @@
     
     troll.Attacks = new CreatureAttackCollection
     {
-        new CreatureAttack(6, 5, 15)
+        new CreatureAttack(7)
     };
 
     troll.Wield(new Greatsword());
@@ -87421,6 +87421,7 @@
             new LootPackEntry(true, dungeon2Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon2Bottles, 33.0), 
             new LootPackEntry(true, dungeon2Treasure, 0.63), 
+            new LootPackEntry(true, dungeon3Wands, 2), 
             new LootPackEntry(true, dungeon2Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.05)
             //new LootPackEntry(true, &poak_wands, 5.0), 
@@ -87460,7 +87461,7 @@
     
     hobgoblin.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9, 9, 16)
+        new CreatureBasicAttack(9)
     };
 
     hobgoblin.Wield(new Longsword());
@@ -87473,7 +87474,7 @@
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.1) 
+            new LootPackEntry(true, oakvaelPotions, 0.2) 
         ));
 
     return hobgoblin;
@@ -87509,7 +87510,7 @@
     
     orc.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9, 8, 13)
+        new CreatureBasicAttack(9)
     };
 
     orc.Wield(new Longsword());
@@ -87522,7 +87523,7 @@
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.1) 
+            new LootPackEntry(true, oakvaelPotions, 0.2) 
         ));
 
     return orc;
@@ -87571,7 +87572,7 @@
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.1) 
+            new LootPackEntry(true, oakvaelPotions, 0.2) 
         ));
 
     return orc;
@@ -87631,7 +87632,7 @@
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.1) 
+            new LootPackEntry(true, oakvaelPotions, 0.2) 
         ));
 
     return orc;
@@ -87665,7 +87666,7 @@
     
     troll.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9, 10, 17)
+        new CreatureBasicAttack(10)
     };
 
     troll.Wield(new Greatsword());
@@ -87678,7 +87679,7 @@
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.1) 
+            new LootPackEntry(true, oakvaelPotions, 0.2) 
         ));
 
     return troll;
@@ -87747,7 +87748,7 @@
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.1) 
+            new LootPackEntry(true, oakvaelPotions, 0.2) 
         ));
 
     return thaum;
@@ -87812,9 +87813,10 @@
         new LootPack(
             new LootPackEntry(true, dungeon3Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
+            new LootPackEntry(true, dungeon3Wands, 2), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.1) 
+            new LootPackEntry(true, oakvaelPotions, 0.2) 
             //new LootPackEntry(true, &poak_wands, 5.0)
         ));
 
@@ -87951,7 +87953,8 @@
         new LootPack(
             new LootPackEntry(true, dungeon3Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
-            new LootPackEntry(true, (from, container) => new SilverDagger(), 7.14)
+            new LootPackEntry(true, (from, container) => new SilverDagger(), 7.14), 
+            new LootPackEntry(true, oakvaelPotions, 0.2) 
         ));
 
     return gargoyle;
@@ -88093,7 +88096,7 @@
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2) 
+            new LootPackEntry(true, oakvaelPotions, 0.3) 
         ));
     
     return serpent;
@@ -88143,7 +88146,7 @@
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.1) 
+            new LootPackEntry(true, oakvaelPotions, 0.2) 
         ));
 
     return pescalanor;
@@ -88210,7 +88213,8 @@
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
-            new LootPackEntry(true, (from, container) => new SilverDagger(), 7.14)
+            new LootPackEntry(true, (from, container) => new SilverDagger(), 7.14), 
+            new LootPackEntry(true, oakvaelPotions, 0.3) 
         ));
 
     return gargoyle;
@@ -88277,7 +88281,7 @@
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return minotaur;
@@ -88311,7 +88315,7 @@
     
     hobgoblin.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11, 12, 19)
+        new CreatureBasicAttack(11)
     };
 
     hobgoblin.Wield(new Longsword());
@@ -88324,7 +88328,7 @@
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return hobgoblin;
@@ -88362,7 +88366,7 @@
     
     troll.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(12, 13, 20)
+        new CreatureBasicAttack(12)
     };
 
     troll.Wield(new Greatsword());
@@ -88375,7 +88379,7 @@
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return troll;
@@ -88411,7 +88415,7 @@
     
     orc.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11, 11, 16)
+        new CreatureBasicAttack(11)
     };
 
     orc.Wield(new Longsword());
@@ -88424,7 +88428,7 @@
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return orc;
@@ -88473,7 +88477,7 @@
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return orc;
@@ -88542,9 +88546,10 @@
         new LootPack(
             new LootPackEntry(true, dungeon4Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
+            new LootPackEntry(true, dungeon3Wands, 3), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return thaum;
@@ -88610,8 +88615,9 @@
             new LootPackEntry(true, dungeon4Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
+            new LootPackEntry(true, dungeon3Wands, 3), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
             //new LootPackEntry(true, &poak_wands, 5.0), 
             //new LootPackEntry(true, &poak_books, 0.63),
         ));
@@ -88726,7 +88732,7 @@
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return drizilu;
@@ -88779,7 +88785,7 @@
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return glamuzu;
@@ -88816,7 +88822,7 @@
     
     banshee.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(14, 11, 25)
+        new CreatureBasicAttack(14)
     };
     
     banshee.Spells = new CreatureSpellCollection()
@@ -88834,7 +88840,7 @@
             new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return banshee;
@@ -88888,8 +88894,9 @@
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
+            new LootPackEntry(true, dungeon5Wands, 1), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return banshee;
@@ -88926,7 +88933,7 @@
     
     wraith.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(14, 15, 20),
+        new CreatureBasicAttack(14),
     };
     
     wraith.Spells = new CreatureSpellCollection()
@@ -88947,8 +88954,9 @@
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
+            new LootPackEntry(true, dungeon5Wands, 2), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return wraith;
@@ -89016,9 +89024,10 @@
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5SpellOrbs, 5.0),
+            new LootPackEntry(true, dungeon5Wands, 2), 
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
-            new LootPackEntry(true, oakvaelPotions, 0.2) 
+            new LootPackEntry(true, oakvaelPotions, 0.3) 
         ));
 
     return wizard;
@@ -89083,9 +89092,10 @@
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5SpellOrbs, 5.0),
+            new LootPackEntry(true, dungeon5Wands, 2), 
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return thaum;
@@ -89143,7 +89153,7 @@
             new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
     ));
 
     return ghoul;
@@ -89203,8 +89213,9 @@
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
+            new LootPackEntry(true, dungeon5Wands, 2), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
             //new LootPackEntry(true, &poak_wands, 5.0)
         ));
 
@@ -89244,7 +89255,7 @@
     
     wight.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(14, 20, 25)
+        new CreatureBasicAttack(14)
     };
         
     wight.Spells = new CreatureSpellCollection()
@@ -89262,8 +89273,9 @@
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
+            new LootPackEntry(true, dungeon5Wands, 2), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return wight;
@@ -89330,8 +89342,9 @@
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
+            new LootPackEntry(true, dungeon5Wands, 2), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
-            new LootPackEntry(true, oakvaelPotions, 0.2),
+            new LootPackEntry(true, oakvaelPotions, 0.3),
             new LootPackEntry(true, (from, container) => new RedRunesRobe(), 5.0) 
     ));
 
@@ -89370,7 +89383,7 @@
     
     stalker.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(15, 20, 30)
+        new CreatureBasicAttack(15)
     };
 
     stalker.Wield(new Spear());    
@@ -89381,8 +89394,9 @@
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
+            new LootPackEntry(true, dungeon5Wands, 2), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return stalker;
@@ -89864,7 +89878,7 @@
     
     centaur.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(17, 30, 45)
+        new CreatureBasicAttack(17)
     };
         
     centaur.Wield(new WarHammer());
@@ -89912,7 +89926,7 @@
     
     dryad.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(16, 25, 35)
+        new CreatureBasicAttack(16)
     };
     
     dryad.Spells = new CreatureSpellCollection()
@@ -89930,6 +89944,7 @@
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 60.0), 
             new LootPackEntry(true, groveGems, 25.0, gemsPriceMutator),
+            new LootPackEntry(true, dungeon5Wands, 4), 
             new LootPackEntry(true, groveTreasure, 0.63)
         ));
     
@@ -92908,6 +92923,64 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new SmallTopaz(40000u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="dungeon5Wands">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new OakWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new BirchWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new DemonWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="dungeon3Wands">
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PineWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new GlassWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new HickoryWand();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>

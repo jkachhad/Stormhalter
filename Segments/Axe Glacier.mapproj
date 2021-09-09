@@ -103555,8 +103555,9 @@
     wraith.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
+        new LootPackEntry(true, UtilityItems,    2),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
-        new LootPackEntry(true, AxePotions,     0.05),
+        new LootPackEntry(true, AxePotions,     0.15),
         new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
@@ -103595,7 +103596,7 @@
             new CreatureAttack(5,     3, 7,   "The wolf rakes you with its claws."),  50 
         }, 
         {
-            new CreatureAttack(7,     4, 8,  "The wolf sinks its teeth into you."),   30
+            new CreatureAttack(6,     4, 8,  "The wolf sinks its teeth into you."),   30
         }, 
         {
             new CreatureAttack(7,     5, 10,  "The wolf lunges at you."),             20 
@@ -103612,7 +103613,7 @@
     wolf.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.05),
+        new LootPackEntry(true, AxePotions,     0.15),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
         
@@ -103659,7 +103660,7 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
-        new LootPackEntry(true, AxePotions,     0.05),
+        new LootPackEntry(true, AxePotions,     0.15),
         new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
@@ -103704,7 +103705,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.05),
+        new LootPackEntry(true, AxePotions,     0.15),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -103741,7 +103742,7 @@
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6, 3, 8)
+        new CreatureBasicAttack(6)
     };
     
     orc.Wield(new BattleAxe());
@@ -103751,7 +103752,7 @@
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.05),
+        new LootPackEntry(true, AxePotions,     0.15),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -103790,7 +103791,7 @@
     
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6, 4, 11)
+        new CreatureBasicAttack(7)
     };
     
     troll.Wield(new Greatsword());
@@ -103801,7 +103802,7 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
-        new LootPackEntry(true, AxePotions,     0.05),
+        new LootPackEntry(true, AxePotions,     0.15),
         new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
@@ -103836,7 +103837,7 @@
     
     goblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6, 3, 8)
+        new CreatureBasicAttack(6)
     };
     
     goblin.Wield(new Longsword());
@@ -103846,7 +103847,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.05),
+        new LootPackEntry(true, AxePotions,     0.15),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
         new LootPackEntry(true, (from, container) => new LeatherGauntlets(), 7.5)
     ));
@@ -103906,7 +103907,7 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
-        new LootPackEntry(true, AxePotions,     0.05), 
+        new LootPackEntry(true, AxePotions,     0.15), 
         new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5),
         new LootPackEntry(true, (from, container) => new IronOre(), 2.6)
     ));
@@ -103962,7 +103963,8 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.05),
+        new LootPackEntry(true, UtilityItems,    2),
+        new LootPackEntry(true, AxePotions,     0.15),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -103997,7 +103999,7 @@
     
     goblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(8, 5, 12)
+        new CreatureBasicAttack(8)
     };
     
     goblin.Wield(new BattleAxe());
@@ -104007,7 +104009,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.1),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -104046,7 +104048,7 @@
     
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(9, 7, 13)
+        new CreatureBasicAttack(8)
     };
     
     troll.Wield(new Greatsword());
@@ -104056,7 +104058,7 @@
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.1),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -104100,7 +104102,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9, 9, 15)
+        new CreatureBasicAttack(9)
     };
     
     fighter.Wield(new Longsword());
@@ -104111,7 +104113,7 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
-        new LootPackEntry(true, AxePotions,     0.1),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
@@ -104155,7 +104157,7 @@
     
     martialartist.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(10, 10, 17)
+        new CreatureBasicAttack(10)
     };   
     
     martialartist.AddGold(550);
@@ -104163,7 +104165,7 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
-        new LootPackEntry(true, AxePotions,     0.1),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
@@ -104200,7 +104202,7 @@
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(8, 5, 10)
+        new CreatureBasicAttack(8)
     };
     
     orc.Wield(new BattleAxe());
@@ -104210,7 +104212,7 @@
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.1),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -104269,7 +104271,7 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
-        new LootPackEntry(true, AxePotions,     0.1),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5),
         new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
@@ -104326,7 +104328,7 @@
     wolf.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.1),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
         
@@ -104381,7 +104383,8 @@
     wraith.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.1),
+        new LootPackEntry(true, UtilityItems,    3),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -104417,7 +104420,7 @@
     
     goblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6)
+        new CreatureBasicAttack(7)
     };
     
     goblin.Spells = new CreatureSpellCollection
@@ -104436,7 +104439,8 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.1),
+        new LootPackEntry(true, UtilityItems,    3),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -104480,7 +104484,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9, 9, 15)
+        new CreatureBasicAttack(9)
     };
     
     fighter.Wield(new Rapier());
@@ -104490,7 +104494,7 @@
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.1),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -104535,7 +104539,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.1),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -104570,7 +104574,7 @@
     
     hobgoblin.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(8, 6, 12) 
+        new CreatureBasicAttack(8) 
     };
     
     hobgoblin.Wield(new Longsword());
@@ -104580,7 +104584,7 @@
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.1),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -104644,7 +104648,7 @@
     wolf.AddLoot(new LootPack(
         new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    50),
-        new LootPackEntry(true, AxePotions,     0.1),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
         
@@ -104780,7 +104784,7 @@
     rockworm.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    50),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, AxePotions,     0.3),
         new LootPackEntry(true, upperTreasure,   0.63)
         
         ));
@@ -104836,7 +104840,7 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
-        new LootPackEntry(true, AxePotions,     0.1),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
@@ -104873,7 +104877,7 @@
     
     ogre.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11, 12, 18)
+        new CreatureBasicAttack(11)
     };
     
     ogre.AddStatus(new NightVisionStatus(ogre));
@@ -104885,7 +104889,7 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
-        new LootPackEntry(true, AxePotions,     0.1),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, (from, container) => new SteelGauntlets(), 6.67)
     ));
     
@@ -104949,7 +104953,7 @@
     lizard.AddLoot(new LootPack(
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.1),
+        new LootPackEntry(true, AxePotions,     0.2),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
     ));
     
@@ -105116,7 +105120,7 @@
     
     goblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(8)
+        new CreatureBasicAttack(9)
     };
     
     goblin.Wield(new Longbow());
@@ -105126,7 +105130,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, AxePotions,     0.3),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -105180,7 +105184,7 @@
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, AxePotions,     0.3),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -105224,7 +105228,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(12, 12, 19)
+        new CreatureBasicAttack(12)
     };
     
     fighter.Wield(new Longsword());
@@ -105234,7 +105238,7 @@
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, AxePotions,     0.3),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -105294,7 +105298,7 @@
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
         new LootPackEntry(true, upperTreasure,   0.63),
-        new LootPackEntry(true, AxePotions,     0.2),        
+        new LootPackEntry(true, AxePotions,     0.3),        
         new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5)
     ));
 
@@ -105329,7 +105333,7 @@
     
     goblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(10, 9, 16)
+        new CreatureBasicAttack(10)
     };
     
     goblin.Wield(new BattleAxe());
@@ -105339,7 +105343,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, AxePotions,     0.3),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -105375,7 +105379,7 @@
     
     goblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6)
+        new CreatureBasicAttack(8)
     };
     
     goblin.Spells = new CreatureSpellCollection
@@ -105394,7 +105398,8 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, AxePotions,     0.3),
+        new LootPackEntry(true, UtilityItems,    3),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -105429,7 +105434,7 @@
     
     hobgoblin.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(10, 11, 16)
+        new CreatureBasicAttack(10)
     };
     
     hobgoblin.Wield(new Longsword());
@@ -105439,7 +105444,7 @@
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, AxePotions,     0.3),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -105484,14 +105489,14 @@
     
     martialartist.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(12, 13, 21)
+        new CreatureBasicAttack(12)
     };   
     
     martialartist.AddGold(650);
     martialartist.AddLoot(new LootPack(
         new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, AxePotions,     0.3),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -105530,7 +105535,7 @@
     
     ogre.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(13, 12, 19)
+        new CreatureBasicAttack(12)
     };
 
     ogre.Wield(new Halberd());    
@@ -105540,7 +105545,7 @@
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
         new LootPackEntry(true, upperTreasure,   0.63),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, AxePotions,     0.3),
         new LootPackEntry(true, (from, container) => new SteelGauntlets(), 6.67)
     ));
     
@@ -105577,7 +105582,7 @@
     
     orc.Attacks = new CreatureAttackCollection()
     {
-            new CreatureBasicAttack(8, 7, 13)
+            new CreatureBasicAttack(9)
     };
     
     orc.Wield(new ShortSword());
@@ -105587,7 +105592,7 @@
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, AxePotions,     0.3),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -105631,7 +105636,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(12, 10, 19), 
+        new CreatureBasicAttack(12), 
     };
     
     fighter.Wield(new Rapier());
@@ -105641,7 +105646,7 @@
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, AxePotions,     0.3),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -105680,7 +105685,7 @@
     
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(10, 8, 15)
+        new CreatureBasicAttack(10)
     };
     
     troll.Wield(new Greatsword());
@@ -105690,7 +105695,7 @@
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, AxePotions,     0.3),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -105746,7 +105751,7 @@
     wolf.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, AxePotions,     0.3),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
         
@@ -105801,7 +105806,8 @@
     wraith.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, UtilityItems,    3),
+        new LootPackEntry(true, AxePotions,     0.3),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -105864,7 +105870,7 @@
     lizard.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, AxePotions,     0.3),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -105923,7 +105929,7 @@
     bear.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    50),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, AxePotions,     0.3),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
         
@@ -105985,7 +105991,7 @@
     bear.AddLoot(new LootPack(
         new LootPackEntry(true, minibossTreasureGems,       50,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    75),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, AxePotions,     0.5),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
         
@@ -106688,7 +106694,7 @@
         
     shadow.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(12, 13, 19)
+        new CreatureBasicAttack(11)
     };
     
     shadow.Spells = new CreatureSpellCollection()
@@ -106704,7 +106710,8 @@
     shadow.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, UtilityItems,    3),
+        new LootPackEntry(true, AxePotions,     0.3),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -106747,10 +106754,10 @@
         FireProtection = 100,
     };
     
-    //for monsters with weapons equipped and non-multiple attacks we use this basic creature attack collection: 9 is chance to hit, 20 min damage, 28 max damage. It will just display "NPC Name hits you with <Blackstaff>!"
+    //for monsters with weapons equipped and non-multiple attacks we use this basic creature attack collection: 10 is hit chance (* 50). Damage is by "10 skill". It will just display "NPC Name hits you with <Blackstaff>!"
     wizard.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(10, 11, 18)
+        new CreatureBasicAttack(10)
     };
     
     /*for hard casted spells we have this context. This NPC will cast Fireball and MagicMissile at evenly weighted chances. When it runs out of mana it will engage in melee, but in this version of LOK, when it regenerates enough mana for one of it's spells it will leave melee to try and cast. You can decide which spell you want him to cast on second attack chances by making it the one that costs less mana. It's a fairly useful function because you can make it so monsters are higher priority to players by setting values. Fun!
@@ -106778,7 +106785,8 @@
     wizard.AddLoot(new LootPack(
         new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, UtilityItems,    4),
+        new LootPackEntry(true, AxePotions,     0.3),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -106821,7 +106829,7 @@
     
     thaum.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(10, 11, 19)
+        new CreatureBasicAttack(11)
     };
     
     thaum.Spells = new CreatureSpellCollection()
@@ -106842,7 +106850,8 @@
     thaum.AddLoot(new LootPack(
         new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, UtilityItems,    4),
+        new LootPackEntry(true, AxePotions,     0.3),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -106887,7 +106896,7 @@
     
     wizard.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11, 12, 19)
+        new CreatureBasicAttack(11)
     };
     
     wizard.Spells = new CreatureSpellCollection
@@ -106908,7 +106917,8 @@
     wizard.AddLoot(new LootPack(
         new LootPackEntry(true, chaosGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, UtilityItems,    4),
+        new LootPackEntry(true, AxePotions,     0.3),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -107187,7 +107197,7 @@
     
     goblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(10, 11, 16)
+        new CreatureBasicAttack(10)
     };
     
     goblin.Wield(new BattleAxe());
@@ -107197,7 +107207,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    20),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, AxePotions,     0.3),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -107233,7 +107243,7 @@
     
     goblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(12)
+        new CreatureBasicAttack(11)
     };
     
     goblin.Wield(new Crossbow());
@@ -107243,7 +107253,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, upperTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    20),
-        new LootPackEntry(true, AxePotions,     0.2),
+        new LootPackEntry(true, AxePotions,     0.3),
         new LootPackEntry(true, upperTreasure,   0.63)
     ));
     
@@ -107521,6 +107531,7 @@
     draugr.AddLoot(new LootPack(
         new LootPackEntry(true, UndeadGems,       4,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, UtilityItems,    5),
         new LootPackEntry(true, upperTreasure,   0.1),
         new LootPackEntry(true, AxePotions,     0.2)
     ));
@@ -107708,6 +107719,7 @@
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, UndeadGems,       2,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, UtilityItems,    5),
         new LootPackEntry(true, upperTreasure,   0.63),
         new LootPackEntry(true, AxePotions,     0.1)
     ));
@@ -110102,6 +110114,71 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new SmallSapphire(70000u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="UtilityItems">
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new GlassWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PineWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new FireballOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new IceStormOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new WebOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new DarknessOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new LightOrb();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
