@@ -107382,6 +107382,8 @@
         
         IceProtection = 100,
     };
+    
+    draugr.AddImmunity(typeof(PoisonCloudSpell));
 
     draugr.Attacks = new CreatureAttackCollection()
     {
@@ -107443,6 +107445,8 @@
         IceProtection = 100,
     };
 
+    draugr.AddImmunity(typeof(PoisonCloudSpell));
+    
     draugr.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(19)
@@ -107507,6 +107511,8 @@
         new CreatureBasicAttack(19)
     };
     
+    draugr.AddImmunity(typeof(PoisonCloudSpell));
+    
     draugr.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<IceStormSpell>(
@@ -107565,6 +107571,8 @@
         
         IceProtection = 100,
     };
+    
+    draugr.AddImmunity(typeof(PoisonCloudSpell));
 
     giant.AddStatus(new NightVisionStatus(giant));
     giant.Attacks = new CreatureAttackCollection()
@@ -107620,11 +107628,14 @@
         HideDetection = 40,
         BasePenetration = ShieldPenetration.Heavy,
         Experience = 200500,
+        CanCharge = true;
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
                    
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
     };
+    
+    necro.AddImmunity(typeof(PoisonCloudSpell));
 
     necro.AddStatus(new NightVisionStatus(necro));
     necro.Attacks = new CreatureAttackCollection()
