@@ -109268,7 +109268,7 @@
     
     statue.Spells = new CreatureSpellCollection(100.0)
     {
-        new CreatureSpell<DeathSpell>(13)
+        new CreatureSpell<DeathSpell>(12)
     };
 
     return statue;
@@ -109966,8 +109966,7 @@ centaur.AddLoot(new LootPack(
         
     unicorn.Spells = new CreatureSpellCollection(20.0)
     {
-        new CreatureSpell<WhirlwindSpell>(
-            skillLevel: 11, cost: 25),
+        new CreatureSpell<WhirlwindSpell>(skillLevel: 11, cost: 25)
     };
     
     unicorn.AddGold(5000);
@@ -111312,7 +111311,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     var critter = new Drake()
     {
         Name = "Unusual Critter",
-        MaxHealth = 11900, Health = 10900,
+        MaxHealth = 11900, Health = 11900,
         BaseDodge = 32,
         Body = 74,
         Mana = 48, MaxMana = 48,
@@ -111365,8 +111364,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         
     critter.Spells = new CreatureSpellCollection(45.0)
     {
-        new CreatureSpell<ConcussionSpell>(
-            skillLevel: 18, cost: 25),
+        new CreatureSpell<ConcussionSpell>(skillLevel: 16, cost: 25)
     };
     
     critter.AddGold(5000);
