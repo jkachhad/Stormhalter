@@ -118290,7 +118290,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     };
     
     twin.AddStatus(new NightVisionStatus(twin));
-    
+            twin.Equip(new DrakeScaleArmor());
     twin.Attacks = new CreatureAttackCollection
     {
         new CreatureBasicAttack(22, 40, 60,
@@ -118300,7 +118300,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     twin.Spells = new CreatureSpellCollection(100)
     {
        { new CreatureSpell<FireStormSpell>(
-            skillLevel: 15), 100, TimeSpan.FromSeconds(20.0) }
+            skillLevel: 17), 100, TimeSpan.FromSeconds(22.0) }
     };
 
     twin.AddGold(2000);
@@ -118370,7 +118370,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     twin.Spells = new CreatureSpellCollection(100)
     {
         { new CreatureSpell<DragonBreathLightningSpell>(
-            skillLevel: 15), 100, TimeSpan.FromSeconds(8.0) }
+            skillLevel: 16), 100, TimeSpan.FromSeconds(7.0) }
     };
     
     twin.AddGold(2000);
@@ -118583,11 +118583,11 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         new CreatureBlock(7, "something disgusting, now coating your weapon"),
     };
         
-    critter.Spells = new CreatureSpellCollection(20.0)
+    critter.Spells = new CreatureSpellCollection(100)
     {
-        new CreatureSpell<WhirlwindSpell>(
-            skillLevel: 11, cost: 25),
-    };
+       { new CreatureSpell<PoisonCloudSpell>(
+            skillLevel: 13), 100, TimeSpan.FromSeconds(12.0) }
+    }; 
     
     critter.AddGold(5000);
      critter.AddGold(1000);
@@ -118728,11 +118728,11 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         new CreatureBlock(8, "a tail"),
         new CreatureBlock(7, "a meaty neck"),
     };
-        
-    critter.Spells = new CreatureSpellCollection(45.0)
+      critter.Spells = new CreatureSpellCollection(100)
     {
-        new CreatureSpell<ConcussionSpell>(skillLevel: 16, cost: 25)
-    };
+       { new CreatureSpell<ConcussionSpell>(
+            skillLevel: 16), 100, TimeSpan.FromSeconds(12.0) }
+    };   
     
     critter.AddGold(5000);
 
