@@ -154,10 +154,14 @@ namespace Kesmai.WorldForge.Models
 			var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
 			var visibility = presenter.Visibility;
 			var showOpened = IsOpen || visibility.OpenDoors;
+			var showHidden = visibility.HideSecretDoors;
 			
 			var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
 
 			var id = (showOpened ? _openId : _closedId);
+
+			if (_isSecret && showHidden)
+				id = _secretId;
 			
 			if (_isDestroyed)
 				id = _destroyedId;

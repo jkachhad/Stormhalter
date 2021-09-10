@@ -726,8 +726,13 @@ namespace Kesmai.WorldForge
 
 					var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
 					var segment = segmentRequest.Response;
-
-					if (_presenter.SelectedFilter is TeleporterSelector) // Destination highlights for teleporters //todo: make this a toggle with a "tool" like button
+					if (_presenter.Visibility.ShowTeleporters||_presenter.Visibility.ShowSpawns)
+                    {
+						//dim the screen
+						var viewportrectangle = GetRenderRectangle(viewRectangle, viewRectangle);
+						spritebatch.FillRectangle(viewportrectangle, Color.FromNonPremultiplied(0, 0, 0, 128));
+					}
+					if (_presenter.Visibility.ShowTeleporters) // Destination highlights for teleporters //todo: make this a toggle with a "tool" like button
 					{
 						var _teleportDestinationHighlight = Color.FromNonPremultiplied(80, 255, 80, 200);
 						var _teleportSourceHighlight = Color.FromNonPremultiplied(160, 255, 20, 200);
@@ -797,7 +802,7 @@ namespace Kesmai.WorldForge
 
 						}
 					}
-					if (_presenter.SelectedFilter is SpawnSelector)
+					if (_presenter.Visibility.ShowSpawns)
 					{
 						var _inclusionBorder = Color.FromNonPremultiplied(200, 255, 50, 255);
 						var _inclusionFill = Color.FromNonPremultiplied(200, 255, 50, 50);

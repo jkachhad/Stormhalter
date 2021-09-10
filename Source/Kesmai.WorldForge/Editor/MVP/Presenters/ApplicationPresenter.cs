@@ -196,6 +196,18 @@ namespace Kesmai.WorldForge.Editor
 			WeakReferenceMessenger.Default
 				.Register<ApplicationPresenter, Segment>(
 					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is SegmentViewModel).FirstOrDefault() as SegmentViewModel; });
+			WeakReferenceMessenger.Default
+				.Register<ApplicationPresenter, VisibilityOptionsChanged>(
+					this, (r, m) => { 
+						if (Segment is not null)
+							Segment.UpdateTiles();
+						var graphicsService = ServiceLocator.Current.GetInstance<IGraphicsService>();
+						if (graphicsService != null)
+						{
+							foreach (var presenter in graphicsService.PresentationTargets.OfType<PresentationTarget>())
+								presenter.InvalidateRender();
+						}
+					});
 
 			SelectFilterCommand = new RelayCommand<TerrainSelector>(SelectFilter, 
 				(filter) => (Segment != null));
@@ -214,8 +226,6 @@ namespace Kesmai.WorldForge.Editor
 				new WaterSelector(),
 				new WallSelector(),
 				new StructureSelector(),
-				new TeleporterSelector(),
-				new SpawnSelector(),
 			};
 			
 			Tools = new NotifyingCollection<Tool>()

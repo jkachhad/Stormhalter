@@ -121,11 +121,29 @@
             <!-- Visibility -->
             <ToolBar ItemsSource="{Binding Visibility, Source={StaticResource applicationPresenter}}" 
                      Background="LightPink" ToolTip="Filters" OverflowMode="Never">
-                <ToggleButton  Margin="1" Height="24" Width="24" IsChecked="{Binding Visibility.OpenDoors}">
+                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding Visibility.OpenDoors}">
                     <ToggleButton.ToolTip>
-                        <TextBlock Text="Toggle Doors" />
+                        <TextBlock Text="Toggle Doors Open\Close" />
                     </ToggleButton.ToolTip>
-                    <Image Source="../Resources/Door.png" VerticalAlignment="Center" Height="16" Width="16" />
+                    <Image Source="../Resources/Door.png" VerticalAlignment="Center" Height="26" Width="26" />
+                </ToggleButton>
+                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding Visibility.HideSecretDoors}">
+                    <ToggleButton.ToolTip>
+                        <TextBlock Text="Show Secret Doors as Secret" />
+                    </ToggleButton.ToolTip>
+                    <Image Source="../Resources/Door.png" VerticalAlignment="Center" Height="26" Width="26" />
+                </ToggleButton>
+                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding Visibility.ShowTeleporters}">
+                    <ToggleButton.ToolTip>
+                        <TextBlock Text="Highlight Teleporter source and destinations" />
+                    </ToggleButton.ToolTip>
+                    <Image Source="../Resources/FilterTeleport.png" VerticalAlignment="Center" Height="26" Width="26" />
+                </ToggleButton>
+                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding Visibility.ShowSpawns}">
+                    <ToggleButton.ToolTip>
+                        <TextBlock Text="Highlight location and region spawners" />
+                    </ToggleButton.ToolTip>
+                    <Image Source="../Resources/Spawns.png" VerticalAlignment="Center" Height="26" Width="26" />
                 </ToggleButton>
             </ToolBar>
         </ToolBarTray>
