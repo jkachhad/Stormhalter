@@ -90783,7 +90783,7 @@ try { // If this doesn't work, don't break the segment. just quietly don't have 
         //Apothecaries carry either naptha or nitro. More likely to carry one or the other based on land.
         var naptha = new StockEntry("black ceramic bottle", () => new NapthaPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
         var nitro = new StockEntry("black ceramic bottle", () => new NitroPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
-        if (Utility.RandomDouble <- 0.10) { // I remember buying Naptha here regularly
+        if (Utility.RandomDouble <= 0.10) { // I remember buying Naptha here regularly
             vendor.Stock(nitro);
             vendor.Restock(nitro);
         } else {
@@ -90939,7 +90939,7 @@ try { // If this doesn't work, don't break the segment. just quietly don't have 
         //Apothecaries carry either naptha or nitro. More likely to carry one or the other based on land.
         var naptha = new StockEntry("black ceramic bottle", () => new NapthaPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
         var nitro = new StockEntry("black ceramic bottle", () => new NitroPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
-        if (Utility.RandomDouble <- 0.90) { // Axe likely has nitro, since the caves to the west are full of them.
+        if (Utility.RandomDouble <= 0.10) { 
             vendor.Stock(nitro);
             vendor.Restock(nitro);
         } else {
