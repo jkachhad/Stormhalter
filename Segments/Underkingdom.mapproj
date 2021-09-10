@@ -99094,9 +99094,13 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (spokeRecently(source))
+        return;
+
+    source.Say($"Come see our wares, {player.Name}. Just ask me to 'show prices'.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102274,7 +102278,7 @@
     </entity>
   </entities>
   <spawns>
-    <spawn type="LocationSpawner" name="nWShopkeeper">
+    <spawn type="LocationSpawner" name="UKPawner">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -102283,37 +102287,75 @@
         <block><![CDATA[
     spawn.Name = "Berrystitch";
     spawn.Body = 116;
-    if (spawn is Shopkeeper shopkeeper)
-    {
+
         
+
+try { // If this doesn't work, don't break the segment. just quietly don't have items to sell, or a counter.
+    if (spawn is Shopkeeper vendor) {
+        vendor.AddCounter(new Point2D(2, 5, 1));
+        vendor.AddCounter(new Point2D(3, 5, 1));
         void onRarePurchase(PlayerEntity player, ItemEntity item)
         {
-            shopkeeper.SayTo(player, _rarePurchaseResponses.Random());
+            vendor.SayTo(player, _rarePurchaseResponses.Random());
         }
-    
-        shopkeeper.AddCounter(new Point2D(2, 5, 1));
-        shopkeeper.AddCounter(new Point2D(3, 5, 1));
-
+       
+        // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
+        var merchantUpsell = Utility.RandomDouble()+3; // 3-4x upsell
         var wares = new List<StockEntry>()
         {
-            new StockEntry("leather armor",     () => new LeatherArmor(),       250,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("chainmail",         () => new ChainmailArmor(),     500,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("platemail",         () => new PlatemailArmor(),     1000,   Utility.RandomBetween(1, 2), null),
-           
-            new StockEntry("leather boots",     () => new LeatherBoots(),       200,    Utility.RandomBetween(1, 4), null),
-            
-            new StockEntry("leather gauntlets", () => new LeatherGauntlets(),   1000,   Utility.RandomBetween(1, 2), null),
-            
-            new StockEntry("ram skull",         () => new RamSkull(),           1500,   Utility.RandomBetween(1, 2), null),
+        //apothecary
+            new StockEntry("green balm",            () => new GreenBalm(),           (int)(16 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
+            new StockEntry("mugwort",               () => new Mugwort(),             (int)(25  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("yellow balm",           () => new YellowBalm(),          (int)(16  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("stamina potion",        () => new StaminaPotion(),       (int)(40  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+        //weaponsmith
+            new StockEntry("dagger",                () => new SteelDagger(),         (int)(30  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("spear",                 () => new Spear(),               (int)(50  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("rapier",                () => new Rapier(),              (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("staff",                 () => new WoodenStaff(),         (int)(40  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("greatsword",            () => new Greatsword(),          (int)(100 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("crossbow",              () => new Crossbow(),            (int)(100 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("shuriken",              () => new Shuriken(),            (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+        //jeweler
+            new StockEntry("scorpion amulet",       () => new ScorpionAmulet(),      (int)(250 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("black pearls",          () => new BlackPearls(),         (int)(600 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("weak strength ring",    () => new WeakStrengthRing(),    (int)(500 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("weak shield ring",      () => new WeakShieldRing(),      (int)(600 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("breathe water ring",    () => new BreatheWaterRing(),    (int)(500 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+        //armorsmith
+            new StockEntry("leather armor",         () => new LeatherArmor(),        (int)(80  * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("chainmail",             () => new ChainmailArmor(),      (int)(140 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("platemail",             () => new PlatemailArmor(),      (int)(280 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("leather boots",         () => new LeatherBoots(),        (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("leather gauntlets",     () => new LeatherGauntlets(),    (int)(280 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("ram skull",             () => new RamSkull(),            (int)(420 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
         };
-        if (Utility.RandomDouble() <= 0.30)  /* 30% chance to spawn */
-            wares.Add(new StockEntry("crocodile boots", () => new CrocodileBoots(), 2500, 1, onRarePurchase));
-        
-        if (Utility.RandomDouble() <= 0.20)  /* 20% chance to spawn */
-            wares.Add(new StockEntry("steel plated gauntlets", () => new SteelGauntlets(), 4000, 1, onRarePurchase));
-        for (var i = Utility.Random(1, 3); i > 0; i--)
-            shopkeeper.Restock();
+        foreach (var stock in wares.Random(3)){
+            vendor.Stock(stock);
+            vendor.Restock(stock);
+        }
+
+        // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
+        merchantUpsell = Utility.RandomDouble()*3+7; // 7-10x upsell
+        var rareWares = new List<StockEntry>()
+        {
+        //Weaponsmith
+            new StockEntry("silver dagger",                  () => new SilverDagger(),                   (int)(350  * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("fire and ice protection ring",   () => new FireIceProtectionRing(),          (int)(800 * merchantUpsell),        1, onRarePurchase),
+            new StockEntry("dragon scales",                  () => new DragonScaleArmor(),               (int)(1000 * merchantUpsell),       1, onRarePurchase)
+        };
+        if (Utility.RandomDouble() <= 0.10) {
+            if (Utility.RandomDouble()<= 0.50) {
+                var thisTimeStock = rareWares[0];
+            } else if (Utility.RandomDouble()<= 0.60) {
+                var thisTimeStock = rareWares[1];
+            } else {
+                var thisTimeStock = rareWares[2];
+            }
+            vendor.Stock(thisTimeStock);
+        }
     }
+}catch {}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102327,7 +102369,7 @@
       <entry entity="townShopkeeper" size="1" minimum="1" maximum="1" />
       <location x="2" y="6" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="sEShopkeeper">
+    <spawn type="LocationSpawner" name="UKGeneralStore">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -102336,36 +102378,83 @@
         <block><![CDATA[
     spawn.Name = "Tibblehobble";
     spawn.Body = 117;
-    if (spawn is Shopkeeper shopkeeper)
-    {
-        
+    var counter = new Point2D(15, 13, 1);
+
+try { // If this doesn't work, don't break the segment. just quietly don't have items to sell, or a counter.
+    if (spawn is Shopkeeper vendor) {
+        vendor.AddCounter(counter);
         void onRarePurchase(PlayerEntity player, ItemEntity item)
         {
-            shopkeeper.SayTo(player, _rarePurchaseResponses.Random());
+            vendor.SayTo(player, _rarePurchaseResponses.Random());
         }
-    
-        shopkeeper.AddCounter(new Point2D(15, 13, 1));
-
+       
+        // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
+        var merchantUpsell = Utility.RandomDouble()+3; // 3-4x upsell
         var wares = new List<StockEntry>()
         {
-            new StockEntry("leather armor",     () => new LeatherArmor(),       250,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("chainmail",         () => new ChainmailArmor(),     500,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("platemail",         () => new PlatemailArmor(),     1000,   Utility.RandomBetween(1, 2), null),
-           
-            new StockEntry("leather boots",     () => new LeatherBoots(),       200,    Utility.RandomBetween(1, 4), null),
-            
-            new StockEntry("leather gauntlets", () => new LeatherGauntlets(),   1000,   Utility.RandomBetween(1, 2), null),
-            
-            new StockEntry("ram skull",         () => new RamSkull(),           1500,   Utility.RandomBetween(1, 2), null),
+        //apothecary
+            new StockEntry("green balm",            () => new GreenBalm(),           (int)(16 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
+            new StockEntry("mugwort",               () => new Mugwort(),             (int)(25  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("yellow balm",           () => new YellowBalm(),          (int)(16  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("stamina potion",        () => new StaminaPotion(),       (int)(40  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+        //weaponsmith
+            new StockEntry("dagger",                () => new SteelDagger(),         (int)(30  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("spear",                 () => new Spear(),               (int)(50  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("rapier",                () => new Rapier(),              (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("staff",                 () => new WoodenStaff(),         (int)(40  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("greatsword",            () => new Greatsword(),          (int)(100 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("crossbow",              () => new Crossbow(),            (int)(100 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("shuriken",              () => new Shuriken(),            (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+        //jeweler
+            new StockEntry("scorpion amulet",       () => new ScorpionAmulet(),      (int)(250 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("black pearls",          () => new BlackPearls(),         (int)(600 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("weak strength ring",    () => new WeakStrengthRing(),    (int)(500 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("weak shield ring",      () => new WeakShieldRing(),      (int)(600 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("breathe water ring",    () => new BreatheWaterRing(),    (int)(500 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+        //armorsmith
+            new StockEntry("leather armor",         () => new LeatherArmor(),        (int)(80  * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("chainmail",             () => new ChainmailArmor(),      (int)(140 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("platemail",             () => new PlatemailArmor(),      (int)(280 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("leather boots",         () => new LeatherBoots(),        (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("leather gauntlets",     () => new LeatherGauntlets(),    (int)(280 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("ram skull",             () => new RamSkull(),            (int)(420 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
         };
-        if (Utility.RandomDouble() <= 0.30)  /* 30% chance to spawn */
-            wares.Add(new StockEntry("crocodile boots", () => new CrocodileBoots(), 2500, 1, onRarePurchase));
-        
-        if (Utility.RandomDouble() <= 0.20)  /* 20% chance to spawn */
-            wares.Add(new StockEntry("steel plated gauntlets", () => new SteelGauntlets(), 4000, 1, onRarePurchase));
-        for (var i = Utility.Random(1, 3); i > 0; i--)
-            shopkeeper.Restock();
+        foreach (var stock in wares.Random(3)){
+            vendor.Stock(stock);
+            vendor.Restock(stock);
+        }
+            
+        //Apothecaries carry either naptha or nitro. More likely to carry one or the other based on land.
+        var naptha = new StockEntry("black ceramic bottle", () => new NapthaPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
+        var nitro = new StockEntry("black ceramic bottle", () => new NitroPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
+        if (Utility.RandomDouble <= 0.90) { // Axe likely has nitro, since the caves to the west are full of them.
+            vendor.Stock(nitro);
+            vendor.Restock(nitro);
+        } else {
+            vendor.Stock(naptha);
+            vendor.Restock(naptha);
+        }
+
+        // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
+        merchantUpsell = Utility.RandomDouble()*3+7; // 7-10x upsell
+        var rareWares = new List<StockEntry>()
+        {
+            new StockEntry("steel plated gauntlets",   () => new SteelGauntlets(),                  (int)(400  * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("small porcelain vial",      () => new PermanentConstitutionPotion(),    (int)(2000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("fear and blind protection bracelet",      () => new BlindFearProtectionBracelet(),    (int)(3000 * merchantUpsell),       1, onRarePurchase)
+        };
+        if (Utility.RandomDouble() <= 0.10) {
+            if (Utility.RandomDouble()<= 0.50) {
+                var thisTimeStock = rareWares[0];
+            } else if (Utility.RandomDouble()<= 0.60) {
+                var thisTimeStock = rareWares[1];
+            } else {
+                var thisTimeStock = rareWares[2];
+            }
+            vendor.Stock(thisTimeStock);
+        }
     }
+}catch {}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102379,7 +102468,7 @@
       <entry entity="townShopkeeper" size="1" minimum="1" maximum="1" />
       <location x="15" y="14" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="lowershop1">
+    <spawn type="LocationSpawner" name="UKArmorer">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -102388,36 +102477,52 @@
         <block><![CDATA[
     spawn.Name = "Bafflebrand";
     spawn.Body = 116;
-    if (spawn is Shopkeeper shopkeeper)
-    {
-        
+    var counter = new Point2D(26, 15, 2);
+
+try { // If this doesn't work, don't break the segment. just quietly don't have items to sell, or a counter.
+    if (spawn is Shopkeeper vendor) {
+        vendor.AddCounter(counter);
         void onRarePurchase(PlayerEntity player, ItemEntity item)
         {
-            shopkeeper.SayTo(player, _rarePurchaseResponses.Random());
+            vendor.SayTo(player, _rarePurchaseResponses.Random());
         }
-    
-        shopkeeper.AddCounter(new Point2D(26, 15, 2));
-
+       
+        // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
+        var merchantUpsell = Utility.RandomDouble()+3; // 3-4x upsell
         var wares = new List<StockEntry>()
         {
-            new StockEntry("leather armor",     () => new LeatherArmor(),       250,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("chainmail",         () => new ChainmailArmor(),     500,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("platemail",         () => new PlatemailArmor(),     1000,   Utility.RandomBetween(1, 2), null),
-           
-            new StockEntry("leather boots",     () => new LeatherBoots(),       200,    Utility.RandomBetween(1, 4), null),
-            
-            new StockEntry("leather gauntlets", () => new LeatherGauntlets(),   1000,   Utility.RandomBetween(1, 2), null),
-            
-            new StockEntry("ram skull",         () => new RamSkull(),           1500,   Utility.RandomBetween(1, 2), null),
+            new StockEntry("leather armor",         () => new LeatherArmor(),        (int)(80  * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("chainmail",             () => new ChainmailArmor(),      (int)(140 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("platemail",             () => new PlatemailArmor(),      (int)(280 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("leather boots",         () => new LeatherBoots(),        (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("leather gauntlets",     () => new LeatherGauntlets(),    (int)(280 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("ram skull",             () => new RamSkull(),            (int)(420 * merchantUpsell),       Utility.RandomBetween(1, 2), null)
         };
-        if (Utility.RandomDouble() <= 0.30)  /* 30% chance to spawn */
-            wares.Add(new StockEntry("crocodile boots", () => new CrocodileBoots(), 2500, 1, onRarePurchase));
-        
-        if (Utility.RandomDouble() <= 0.20)  /* 20% chance to spawn */
-            wares.Add(new StockEntry("steel plated gauntlets", () => new SteelGauntlets(), 4000, 1, onRarePurchase));
-        for (var i = Utility.Random(1, 3); i > 0; i--)
-            shopkeeper.Restock();
+        foreach (var stock in wares.Random(3)){
+            vendor.Stock(stock);
+            vendor.Restock(stock);
+        }
+
+        // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
+        merchantUpsell = Utility.RandomDouble()*3+7; // 7-10x upsell
+        var rareWares = new List<StockEntry>()
+        {
+            new StockEntry("bear skull",               () => new BearSkull(),                       (int)(400  * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("winged helm",              () => new WingedHelm(),                      (int)(400  * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("feather fall boots",       () => new FeatherFallBoots(),                (int)(500  * merchantUpsell),       1, onRarePurchase)
+        };
+        if (Utility.RandomDouble() <= 0.10) {
+            if (Utility.RandomDouble()<= 0.50) {
+                var thisTimeStock = rareWares[0];
+            } else if (Utility.RandomDouble()<= 0.60) {
+                var thisTimeStock = rareWares[1];
+            } else {
+                var thisTimeStock = rareWares[2];
+            }
+            vendor.Stock(thisTimeStock);
+        }
     }
+}catch {}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102431,7 +102536,7 @@
       <entry entity="townShopkeeper" size="1" minimum="1" maximum="1" />
       <location x="26" y="16" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="lowershop2">
+    <spawn type="LocationSpawner" name="UKWeaponsmith">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -102440,36 +102545,53 @@
         <block><![CDATA[
     spawn.Name = "Sparklebell";
     spawn.Body = 117;
-    if (spawn is Shopkeeper shopkeeper)
-    {
-        
+    var counter = AddCounter(new Point2D(28, 15, 2);
+
+try { // If this doesn't work, don't break the segment. just quietly don't have items to sell, or a counter.
+    if (spawn is Shopkeeper vendor) {
+        vendor.AddCounter(counter);
         void onRarePurchase(PlayerEntity player, ItemEntity item)
         {
-            shopkeeper.SayTo(player, _rarePurchaseResponses.Random());
+            vendor.SayTo(player, _rarePurchaseResponses.Random());
         }
-    
-        shopkeeper.AddCounter(new Point2D(28, 15, 2));
-
+       
+        // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
+        var merchantUpsell = Utility.RandomDouble()+3; // 3-4x upsell
         var wares = new List<StockEntry>()
         {
-            new StockEntry("leather armor",     () => new LeatherArmor(),       250,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("chainmail",         () => new ChainmailArmor(),     500,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("platemail",         () => new PlatemailArmor(),     1000,   Utility.RandomBetween(1, 2), null),
-           
-            new StockEntry("leather boots",     () => new LeatherBoots(),       200,    Utility.RandomBetween(1, 4), null),
-            
-            new StockEntry("leather gauntlets", () => new LeatherGauntlets(),   1000,   Utility.RandomBetween(1, 2), null),
-            
-            new StockEntry("ram skull",         () => new RamSkull(),           1500,   Utility.RandomBetween(1, 2), null),
+            new StockEntry("dagger",                () => new SteelDagger(),         (int)(30  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("spear",                 () => new Spear(),               (int)(50  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("rapier",                () => new Rapier(),              (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("staff",                 () => new WoodenStaff(),         (int)(40  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("greatsword",            () => new Greatsword(),          (int)(100 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("crossbow",              () => new Crossbow(),            (int)(100 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("shuriken",              () => new Shuriken(),            (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 4), null)
         };
-        if (Utility.RandomDouble() <= 0.30)  /* 30% chance to spawn */
-            wares.Add(new StockEntry("crocodile boots", () => new CrocodileBoots(), 2500, 1, onRarePurchase));
-        
-        if (Utility.RandomDouble() <= 0.20)  /* 20% chance to spawn */
-            wares.Add(new StockEntry("steel plated gauntlets", () => new SteelGauntlets(), 4000, 1, onRarePurchase));
-        for (var i = Utility.Random(1, 3); i > 0; i--)
-            shopkeeper.Restock();
+        foreach (var stock in wares.Random(3)){
+            vendor.Stock(stock);
+            vendor.Restock(stock);
+        }
+            
+        // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
+        merchantUpsell = Utility.RandomDouble()*3+7; // 7-10x upsell
+        var rareWares = new List<StockEntry>()
+        {
+            new StockEntry("silver dagger",             () => new SilverDagger(),                   (int)(350  * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("longsword",                 () => new SteelLongsword(),                 (int)(350  * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("katana",                    () => new Katana(),                         (int)(90   * merchantUpsell),       1, onRarePurchase)
+        };
+        if (Utility.RandomDouble() <= 0.10) {
+            if (Utility.RandomDouble()<= 0.50) {
+                var thisTimeStock = rareWares[0];
+            } else if (Utility.RandomDouble()<= 0.60) {
+                var thisTimeStock = rareWares[1];
+            } else {
+                var thisTimeStock = rareWares[2];
+            }
+            vendor.Stock(thisTimeStock);
+        }
     }
+}catch {}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102483,7 +102605,7 @@
       <entry entity="townShopkeeper" size="1" minimum="1" maximum="1" />
       <location x="28" y="16" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="lowershop3">
+    <spawn type="LocationSpawner" name="UKJeweler">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -102492,36 +102614,51 @@
         <block><![CDATA[
     spawn.Name = "Lightgem";
     spawn.Body = 117;
-    if (spawn is Shopkeeper shopkeeper)
-    {
-        
+    var counter = new Point2D(30, 15, 2);
+
+try { // If this doesn't work, don't break the segment. just quietly don't have items to sell, or a counter.
+    if (spawn is Shopkeeper vendor) {
+        vendor.AddCounter(counter);
         void onRarePurchase(PlayerEntity player, ItemEntity item)
         {
-            shopkeeper.SayTo(player, _rarePurchaseResponses.Random());
+            vendor.SayTo(player, _rarePurchaseResponses.Random());
         }
-    
-        shopkeeper.AddCounter(new Point2D(30, 15, 2));
-
+       
+        // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
+        var merchantUpsell = Utility.RandomDouble()+3; // 3-4x upsell
         var wares = new List<StockEntry>()
         {
-            new StockEntry("leather armor",     () => new LeatherArmor(),       250,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("chainmail",         () => new ChainmailArmor(),     500,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("platemail",         () => new PlatemailArmor(),     1000,   Utility.RandomBetween(1, 2), null),
-           
-            new StockEntry("leather boots",     () => new LeatherBoots(),       200,    Utility.RandomBetween(1, 4), null),
-            
-            new StockEntry("leather gauntlets", () => new LeatherGauntlets(),   1000,   Utility.RandomBetween(1, 2), null),
-            
-            new StockEntry("ram skull",         () => new RamSkull(),           1500,   Utility.RandomBetween(1, 2), null),
+            new StockEntry("scorpion amulet",       () => new ScorpionAmulet(),      (int)(250 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("black pearls",          () => new BlackPearls(),         (int)(600 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("weak strength ring",    () => new WeakStrengthRing(),    (int)(500 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("weak shield ring",      () => new WeakShieldRing(),      (int)(600 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("breathe water ring",    () => new BreatheWaterRing(),    (int)(500 * merchantUpsell),       Utility.RandomBetween(1, 2), null)
         };
-        if (Utility.RandomDouble() <= 0.30)  /* 30% chance to spawn */
-            wares.Add(new StockEntry("crocodile boots", () => new CrocodileBoots(), 2500, 1, onRarePurchase));
-        
-        if (Utility.RandomDouble() <= 0.20)  /* 20% chance to spawn */
-            wares.Add(new StockEntry("steel plated gauntlets", () => new SteelGauntlets(), 4000, 1, onRarePurchase));
-        for (var i = Utility.Random(1, 3); i > 0; i--)
-            shopkeeper.Restock();
+        foreach (var stock in wares.Random(3)){
+            vendor.Stock(stock);
+            vendor.Restock(stock);
+        }
+            
+        // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
+        merchantUpsell = Utility.RandomDouble()*3+7; // 7-10x upsell
+        var rareWares = new List<StockEntry>()
+        {
+            new StockEntry("death resistance ring",              () => new DeathResistanceRing(),         (int)(300 * merchantUpsell),  1, onRarePurchase),
+            new StockEntry("weak dexterity ring",                () => new WeakDexterityRing(),           (int)(1000 * merchantUpsell), 1, onRarePurchase),
+            new StockEntry("stun and death protection bracelet", () => new StunDeathProtectionBracelet(), (int)(3000 * merchantUpsell), 1, onRarePurchase)
+        };
+        if (Utility.RandomDouble() <= 0.10) {
+            if (Utility.RandomDouble()<= 0.50) {
+                var thisTimeStock = rareWares[0];
+            } else if (Utility.RandomDouble()<= 0.60) {
+                var thisTimeStock = rareWares[1];
+            } else {
+                var thisTimeStock = rareWares[2];
+            }
+            vendor.Stock(thisTimeStock);
+        }
     }
+}catch {}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102535,7 +102672,7 @@
       <entry entity="townShopkeeper" size="1" minimum="1" maximum="1" />
       <location x="30" y="16" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="lowershop4">
+    <spawn type="LocationSpawner" name="UKApothecary">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -102544,36 +102681,61 @@
         <block><![CDATA[
     spawn.Name = "Rogglehaggle";
     spawn.Body = 116;
-    if (spawn is Shopkeeper shopkeeper)
-    {
-        
+    var counter = new Point2D(32, 15, 2);
+
+try { // If this doesn't work, don't break the segment. just quietly don't have items to sell, or a counter.
+    if (spawn is Shopkeeper vendor) {
+        vendor.AddCounter(counter);
         void onRarePurchase(PlayerEntity player, ItemEntity item)
         {
-            shopkeeper.SayTo(player, _rarePurchaseResponses.Random());
+            vendor.SayTo(player, _rarePurchaseResponses.Random());
         }
-    
-        shopkeeper.AddCounter(new Point2D(32, 15, 2));
-
+       
+        // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
+        var merchantUpsell = Utility.RandomDouble()+3; // 3-4x upsell
         var wares = new List<StockEntry>()
         {
-            new StockEntry("leather armor",     () => new LeatherArmor(),       250,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("chainmail",         () => new ChainmailArmor(),     500,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("platemail",         () => new PlatemailArmor(),     1000,   Utility.RandomBetween(1, 2), null),
-           
-            new StockEntry("leather boots",     () => new LeatherBoots(),       200,    Utility.RandomBetween(1, 4), null),
-            
-            new StockEntry("leather gauntlets", () => new LeatherGauntlets(),   1000,   Utility.RandomBetween(1, 2), null),
-            
-            new StockEntry("ram skull",         () => new RamSkull(),           1500,   Utility.RandomBetween(1, 2), null),
+            new StockEntry("green balm",            () => new GreenBalm(),           (int)(16 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
+            new StockEntry("mugwort",               () => new Mugwort(),             (int)(25  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("yellow balm",           () => new YellowBalm(),          (int)(16  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("stamina potion",        () => new StaminaPotion(),       (int)(40  * merchantUpsell),       Utility.RandomBetween(1, 4), null)
         };
-        if (Utility.RandomDouble() <= 0.30)  /* 30% chance to spawn */
-            wares.Add(new StockEntry("crocodile boots", () => new CrocodileBoots(), 2500, 1, onRarePurchase));
-        
-        if (Utility.RandomDouble() <= 0.20)  /* 20% chance to spawn */
-            wares.Add(new StockEntry("steel plated gauntlets", () => new SteelGauntlets(), 4000, 1, onRarePurchase));
-        for (var i = Utility.Random(1, 3); i > 0; i--)
-            shopkeeper.Restock();
+        foreach (var stock in wares.Random(3)){
+            vendor.Stock(stock);
+            vendor.Restock(stock);
+        }
+            
+        //Apothecaries carry either naptha or nitro. More likely to carry one or the other based on land.
+        var naptha = new StockEntry("black ceramic bottle", () => new NapthaPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
+        var nitro = new StockEntry("black ceramic bottle", () => new NitroPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
+        if (Utility.RandomDouble <= 0.50) {
+            vendor.Stock(nitro);
+            vendor.Restock(nitro);
+        } else {
+            vendor.Stock(naptha);
+            vendor.Restock(naptha);
+        }
+
+        // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
+        merchantUpsell = Utility.RandomDouble()*3+7; // 7-10x upsell
+        var rareWares = new List<StockEntry>()
+        {
+            new StockEntry("golden porcelain bottle",   () => new PermanentIntelligencePotion(),    (int)(2000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("black ceramic bottle",      () => new PermanentDexterityPotion(),       (int)(2000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("porcelain bottle",          () => new PermanentWillpowerPotion(),       (int)(2000 * merchantUpsell),       1, onRarePurchase)
+        };
+        if (Utility.RandomDouble() <= 0.10) {
+            if (Utility.RandomDouble()<= 0.50) {
+                var thisTimeStock = rareWares[0];
+            } else if (Utility.RandomDouble()<= 0.60) {
+                var thisTimeStock = rareWares[1];
+            } else {
+                var thisTimeStock = rareWares[2];
+            }
+            vendor.Stock(thisTimeStock);
+        }
     }
+}catch {}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
