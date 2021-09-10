@@ -120248,7 +120248,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         new LootPackEntry(true, SemiRare, 3),
          new LootPackEntry(true, SemiRare, 40),
         new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        10),
-        new LootPackEntry(true, (from, container) => new BrightFeather(), 40),
+        new LootPackEntry(true, (from, container) => new BrightFeather(), 66),
         new LootPackEntry(true, (from, container) => new BlueStaffRaiseDead(), 50),
         new LootPackEntry(true, (from, container) => new LightningResistanceRing(), 25),
         new LootPackEntry(true, UltraRare, 25)
@@ -121543,6 +121543,27 @@ if (spawn is Shopkeeper shopkeeper)
       </script>
       <entry entity="townBalmVendor" size="1" minimum="1" maximum="1" />
       <location x="15" y="15" region="12" />
+    </spawn>
+    <spawn type="LocationSpawner" name="skyNorthPeace">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="skyNorthPeaceKeeper" size="1" minimum="1" maximum="1" />
+      <location x="8" y="10" region="13" />
     </spawn>
     <spawn type="RegionSpawner" name="surfaceFishNorth">
       <minimumDelay>660</minimumDelay>
