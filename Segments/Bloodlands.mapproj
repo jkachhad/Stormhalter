@@ -116380,7 +116380,7 @@
         Body = 48,
     
         MaxHealth = 3500, Health = 3500,
-        BaseDodge = 31,
+        BaseDodge = 27,
           
         Experience = 15000,
         
@@ -116635,7 +116635,7 @@
     
     statue.Spells = new CreatureSpellCollection(100.0)
     {
-        new CreatureSpell<DeathSpell>(12)
+        new CreatureSpell<DeathSpell>(11)
     };
 
     return statue;
@@ -120333,7 +120333,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     
     knight.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(15, 25, 40)
+        new CreatureBasicAttack(14, 20, 40)
     };
     
     knight.Wield(new Greatsword());
@@ -120428,7 +120428,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     
     archer.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(15, 25, 40)
+        new CreatureBasicAttack(15, 25, 35)
     };
     
     archer.Wield(new FineCrossbow());
@@ -120530,7 +120530,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     
     bodyguard.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(11, 12, 20)
+        new CreatureBasicAttack(12, 12, 35)
     };
     
 
@@ -120614,7 +120614,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="thievesSpider">
+    <entity name="thiefSpider">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -121981,8 +121981,8 @@ if (spawn is Shopkeeper shopkeeper)
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="300Hut">
-      <minimumDelay>0</minimumDelay>
-      <maximumDelay>0</maximumDelay>
+      <minimumDelay>60</minimumDelay>
+      <maximumDelay>3600</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -122635,8 +122635,8 @@ if (spawn is Shopkeeper shopkeeper)
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="thievesChallengeHenchmen">
-      <minimumDelay>540</minimumDelay>
-      <maximumDelay>900</maximumDelay>
+      <minimumDelay>420</minimumDelay>
+      <maximumDelay>1020</maximumDelay>
       <maximum>5</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -122654,13 +122654,13 @@ if (spawn is Shopkeeper shopkeeper)
       </script>
       <entry entity="thiefHenchmen" size="2" minimum="4" maximum="4" />
       <bounds region="15">
-        <inclusion left="-4" top="-1" right="4" bottom="2" />
+        <inclusion left="-4" top="-1" right="5" bottom="2" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="thievesChallengeHenchmen2">
       <minimumDelay>600</minimumDelay>
-      <maximumDelay>1200</maximumDelay>
+      <maximumDelay>1320</maximumDelay>
       <maximum>2</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -122704,7 +122704,7 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="thiefGuardDog" size="1" minimum="2" maximum="2" />
       <entry entity="thiefBoss" size="1" minimum="1" maximum="1" />
       <bounds region="15">
-        <inclusion left="6" top="-1" right="10" bottom="2" />
+        <inclusion left="5" top="-1" right="10" bottom="2" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
