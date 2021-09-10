@@ -103614,7 +103614,8 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
         new LootPackEntry(true, AxePotions,     0.15),
-        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
         
     return wolf;
@@ -103706,7 +103707,8 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
         new LootPackEntry(true, AxePotions,     0.15),
-        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
     return goblin;
@@ -103753,7 +103755,8 @@
         new LootPackEntry(true, surfaceTreasureGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, surfaceTreasureBottles,    33),
         new LootPackEntry(true, AxePotions,     0.15),
-        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
     return orc;
@@ -103965,7 +103968,8 @@
         new LootPackEntry(true, surfaceTreasureBottles,    33),
         new LootPackEntry(true, UtilityItems,    2),
         new LootPackEntry(true, AxePotions,     0.15),
-        new LootPackEntry(true, surfaceTreasureTreasure,   0.63)
+        new LootPackEntry(true, surfaceTreasureTreasure,   0.63),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
     
     return goblin;
