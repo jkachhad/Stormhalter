@@ -117360,7 +117360,7 @@ centaur.AddLoot(new LootPack(
         MaxHealth = 9900, Health = 9900,
         BaseDodge = 26,
         Body = 45,
-        MaxMana = 45, Mana = 50,
+        MaxMana = 50, Mana = 50,
     
         Alignment = Alignment.Evil,
         HideDetection = 30,
@@ -117408,9 +117408,9 @@ centaur.AddLoot(new LootPack(
         new CreatureBlock(6, "a tail"),
     };
         
-    unicorn.Spells = new CreatureSpellCollection(20.0)
+    unicorn.Spells = new CreatureSpellCollection(25.0)
     {
-        new CreatureSpell<WhirlwindSpell>(skillLevel: 11, cost: 25)
+        new CreatureSpell<WhirlwindSpell>(skillLevel: 13, cost: 25)
     };
     
     unicorn.AddGold(5000);
@@ -117420,7 +117420,7 @@ centaur.AddLoot(new LootPack(
         new LootPackEntry(true, GenericBottles,    33),
         new LootPackEntry(true, SemiRare, 3),
          new LootPackEntry(true, SemiRare, 40),
-        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        40),
+        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(),        20),
         new LootPackEntry(true, (from, container) => new BrightFeather(), 40),
         new LootPackEntry(true, UltraRare, 25)
     ));
