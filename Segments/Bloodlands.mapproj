@@ -115547,15 +115547,15 @@
     boss1.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(18,     45, 75,      "Intangles your soul"),                     60 
+            new CreatureAttack(18,     45, 75,      "Intangles your soul"),                     50 
         }, 
         {
             new CreatureAttack(19,     66, 87,     "Rends your spirit",
-                                                    new AttackStunComponent(33)),                                       30 
+                                                    new AttackProneComponent(75)),                                       40 
         },
         {
             new CreatureAttack(23,     70, 99,     "Consumes your essence",
-                                                    new AttackAgeComponent(45)),                                       10 
+                                                    new AttackProneComponent(100)),                                       10 
         },
     };
      boss1.Spells = new CreatureSpellCollection(25.0)
@@ -115940,7 +115940,7 @@
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(17)
+        new CreatureBasicAttack(16)
     };
     orc.AddStatus(new NightVisionStatus(orc));
     orc.Wield(new Longbow());
@@ -118577,7 +118577,7 @@ var ghoul = new Ghoul()
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(20)
+        new CreatureBasicAttack(18)
     };
     orc.AddStatus(new NightVisionStatus(orc));
     orc.Wield(new Longbow());
@@ -121592,10 +121592,10 @@ if (spawn is Shopkeeper shopkeeper)
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="boss1">
+    <spawn type="RegionSpawner" name="surfaceBoss1">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>10800</maximumDelay>
-      <maximum>1</maximum>
+      <maximum>3</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -121611,6 +121611,8 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="surfaceBossPlaceHolder" size="1" minimum="1" maximum="1" />
+      <entry entity="surfaceLurker" size="1" minimum="2" maximum="2" />
+      <entry entity="surfacePirhana" size="3" minimum="2" maximum="2" />
       <bounds region="1">
         <inclusion left="19" top="-13" right="21" bottom="-11" />
         <exclusion left="0" top="0" right="0" bottom="0" />
