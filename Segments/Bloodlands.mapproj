@@ -115540,7 +115540,7 @@
     boss1.AddStatus(new NightVisionStatus(boss1));
     boss1.AddStatus(new BreatheWaterStatus(boss1));
     
-    boss1.CombatantChangeInterval = TimeSpan.FromSeconds(4.0);
+    boss1.CombatantChangeInterval = TimeSpan.FromSeconds(5.0);
     
 
     
@@ -115558,14 +115558,12 @@
                                                     new AttackAgeComponent(45)),                                       10 
         },
     };
-     boss1.Spells = new CreatureSpellCollection()
+     boss1.Spells = new CreatureSpellCollection(25.0)
     {
-        new CreatureSpell<DeathSpell>(
-            skillLevel: 14, cost: 14,
-            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+        new CreatureSpell<DeathSpell>(skillLevel: 14, cost: 14)
     };
     //todo determine if I can force it to dual wield? Not sure of context
-    boss1.Wield(new GiltDagger());
+
   
         
     boss1.AddGold(14000);
