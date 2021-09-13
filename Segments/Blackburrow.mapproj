@@ -17137,6 +17137,9 @@
           <ruins>44</ruins>
         </component>
       </tile>
+      <tile x="4" y="-2" />
+      <tile x="5" y="-2" />
+      <tile x="6" y="-2" />
       <tile x="7" y="-2">
         <component type="WallComponent">
           <wall>334</wall>
@@ -28230,6 +28233,205 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="LeveltwoSpider">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+  
+    var shelob = new Spider()
+    {
+        Name = "WidowMaker",
+        MaxHealth = 800, Health = 800,
+        BaseDodge = 15,
+    
+        Experience = 18000,
+        BasePenetration = ShieldPenetration.Medium,
+        
+        VisibilityDistance = 0,
+        HideDetection = 31,
+      
+    };
+    
+    shelob.AddStatus(new NightVisionStatus(shelob));
+    
+    shelob.Attacks = new CreatureAttackCollection()
+    {
+        { 
+            new CreatureAttack(12,     10, 20,      "The spider bites you", new AttackPoisonComponent(25), new AttackProneComponent(25))
+        }, 
+    };
+    
+    shelob.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(5, "a wicked mandible"),
+        new CreatureBlock(5, "your weapon getting caught in a web")
+    };
+    
+    shelob.AddGold(1000);
+    
+    return shelob;
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="LeveltwoGnollGuard">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	
+    var fippy = new ElderTroll()
+    {
+        Name = "Gnoll Officer",
+        MaxHealth = 1500, Health = 1500,
+        BaseDodge = 28,
+        HideDetection = 24,
+        Experience = 32000,
+        
+        VisibilityDistance = 3,
+       
+        CanJumpkick = true,
+        CanSwim = true,
+        CanStrikeCritically = true,
+
+        CanLoot = false,
+        
+        BasePenetration = ShieldPenetration.Medium,
+
+    };
+    
+    fippy.AddStatus(new NightVisionStatus(fippy));
+    fippy.AddStatus(new BreatheWaterStatus(fippy));
+    
+    fippy.CombatantChangeInterval = TimeSpan.FromSeconds(4.0);
+    
+    fippy.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(16,      10, 30,      "The Officer Barks and gnashes you with his fangs",
+                                                        new AttackProneComponent(15), 
+                                                        new AttackStunComponent(5)),                40
+        },
+        {
+            new CreatureAttack(20,      30, 60,     "The Officer slashes you with his razor sharp claws.",
+                                                        new AttackProneComponent(25), 
+                                                        new AttackStunComponent(10)),               40
+        },
+        {
+            new CreatureAttack(22,      40, 60,     "The Officer impales you with his claws.",
+                                                        new AttackProneComponent(100), 
+                                                        new AttackStunComponent(15)),               20
+        },
+    };
+    
+    fippy.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "his iron bracers"),
+        new CreatureBlock(4, "his claws"),
+        new CreatureBlock(3, "canine reflexes"),
+    };
+   
+     
+   fippy.Equip(new ChainmailArmor());     
+   fippy.AddGold(40000);
+  
+  // Todo Add loot pack
+       
+   return fippy;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+if (spokeRecently(source))
+        return;
+
+    source.Say($"What are you doing down here??? I will silence you before you can tell your kind what is happening here!!"); 
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="Level2EvilLurker">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+   
+    var overlord = new Mummy()
+    {
+        Name = "Undead Prisoner", Alignment = Alignment.Evil,
+    
+        MaxHealth = 5000, Health = 5000,
+        BaseDodge = 15,
+    
+        Experience = 69000,
+        
+        BasePenetration = ShieldPenetration.VeryHeavy,
+    
+        CanCharge = true,
+        
+        HideDetection = 32,
+        
+        VisibilityDistance = 1,
+          
+    };
+    
+    overlord.AddStatus(new NightVisionStatus(overlord));
+    
+    overlord.CombatantChangeInterval = TimeSpan.FromSeconds(12.0);
+    
+    overlord.Equip(new DragonScaleArmor());
+    
+    overlord.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(20, 30, 60, new AttackStunComponent (25), new AttackProneComponent(12))
+    };
+    
+    overlord.Spells = new CreatureSpellCollection(35.0)
+    {
+       { new CreatureSpell<IceSpearSpell>(skillLevel: 10), 100, TimeSpan.FromSeconds(6.0) }
+    };
+    
+    overlord.AddGold(3000);
+   
+    
+    return overlord;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="TownBanker ">
@@ -28889,6 +29091,84 @@ if (spokeRecently(source))
       <bounds region="2">
         <inclusion left="-2" top="17" right="2" bottom="21" />
         <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Level 2 Spider">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>4</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="LeveltwoSpider" size="1" minimum="4" maximum="4" />
+      <bounds region="3">
+        <inclusion left="9" top="7" right="12" bottom="13" />
+        <inclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="9" top="11" right="9" bottom="13" />
+        <exclusion left="10" top="8" right="10" bottom="10" />
+        <exclusion left="11" top="11" right="11" bottom="13" />
+        <exclusion left="11" top="7" right="11" bottom="7" />
+        <exclusion left="12" top="8" right="12" bottom="10" />
+        <exclusion left="12" top="12" right="12" bottom="13" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Level 2 Guards">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>8</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="LeveltwoGnollGuard" size="1" minimum="6" maximum="8" />
+      <bounds region="3">
+        <inclusion left="4" top="1" right="15" bottom="19" />
+        <exclusion left="7" top="4" right="13" bottom="15" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Level 2 Mummy">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="Level2EvilLurker" size="1" minimum="1" maximum="1" />
+      <bounds region="3">
+        <inclusion left="8" top="-3" right="13" bottom="-1" />
+        <exclusion left="10" top="-2" right="12" bottom="-1" />
       </bounds>
     </spawn>
   </spawns>
