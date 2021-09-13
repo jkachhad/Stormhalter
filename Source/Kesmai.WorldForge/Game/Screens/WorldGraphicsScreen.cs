@@ -450,7 +450,7 @@ namespace Kesmai.WorldForge
 				inputService.IsKeyboardHandled = true;
 			}
 
-			if (inputService.IsDown(Keys.LeftControl) || inputService.IsDown(Keys.RightControl)) //Document Jumping hotkeys. Todo: move to a better place to capture this user input.
+			if (!inputService.IsKeyboardHandled && inputService.IsDown(Keys.LeftControl) || inputService.IsDown(Keys.RightControl)) //Document Jumping hotkeys. Todo: move to a better place to capture this user input.
 			{
 				if (inputService.IsPressed(Keys.Left, false))
 				{
@@ -529,7 +529,7 @@ namespace Kesmai.WorldForge
 					inputService.IsKeyboardHandled = true;
 				}
 			}
-			if (inputService.IsPressed(Keys.W, true))
+			else if (inputService.IsPressed(Keys.W, true))
 			{
 				shiftMap(0, -1);
 			}
