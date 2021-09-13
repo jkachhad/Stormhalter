@@ -88,7 +88,7 @@ namespace Kesmai.WorldForge
 				var inclusion = rs.Inclusions.FirstOrDefault();
 				if (inclusion != null)
 					
-					CenterCameraOn(inclusion.Left, inclusion.Top);
+					CenterCameraOn((int)(inclusion.Left+inclusion.Width/2), (int)(inclusion.Top+inclusion.Height/2));
 			}
 		}
 
@@ -726,7 +726,7 @@ namespace Kesmai.WorldForge
 
 					var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
 					var segment = segmentRequest.Response;
-					if (_presenter.Visibility.ShowTeleporters||_presenter.Visibility.ShowSpawns)
+					if (_presenter.Visibility.ShowTeleporters||(_presenter.Visibility.ShowSpawns && _presenter.ActiveDocument is not WorldForge.UI.Documents.SpawnsViewModel))
                     {
 						//dim the screen
 						var viewportrectangle = GetRenderRectangle(viewRectangle, viewRectangle);
@@ -802,7 +802,7 @@ namespace Kesmai.WorldForge
 
 						}
 					}
-					if (_presenter.Visibility.ShowSpawns)
+					if (_presenter.Visibility.ShowSpawns && _presenter.ActiveDocument is not WorldForge.UI.Documents.SpawnsViewModel)
 					{
 						var _inclusionBorder = Color.FromNonPremultiplied(200, 255, 50, 255);
 						var _inclusionFill = Color.FromNonPremultiplied(200, 255, 50, 50);

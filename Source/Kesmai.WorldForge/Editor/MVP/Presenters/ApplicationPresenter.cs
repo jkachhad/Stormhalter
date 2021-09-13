@@ -300,13 +300,11 @@ namespace Kesmai.WorldForge.Editor
 
 			if (spawner is LocationSpawner)
 			{
-				//_typeSelector.SelectedIndex = 0;
 				viewmodel.SelectedLocationSpawner = spawner as LocationSpawner;
 			}
 
 			if (spawner is RegionSpawner)
 			{
-				//_typeSelector.SelectedIndex = 1;
 				viewmodel.SelectedRegionSpawner = spawner as RegionSpawner;
 			}
 		}

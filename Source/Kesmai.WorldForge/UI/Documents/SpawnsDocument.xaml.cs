@@ -19,7 +19,9 @@ namespace Kesmai.WorldForge.UI.Documents
 		public SpawnsDocument()
 		{
 			InitializeComponent();
-			
+			_regionPresenter.Initialize();
+			_locationPresenter.Initialize();
+
 			WeakReferenceMessenger.Default
 				.Register<SpawnsDocument, SpawnsViewModel.SelectedLocationSpawnerChangedMessage>(
 					this, OnLocationSpawnerChanged);
