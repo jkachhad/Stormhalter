@@ -107572,7 +107572,7 @@
         IceProtection = 100,
     };
     
-    draugr.AddImmunity(typeof(PoisonCloudSpell));
+    giant.AddImmunity(typeof(PoisonCloudSpell));
 
     giant.AddStatus(new NightVisionStatus(giant));
     giant.Attacks = new CreatureAttackCollection()
@@ -107628,7 +107628,7 @@
         HideDetection = 40,
         BasePenetration = ShieldPenetration.Heavy,
         Experience = 200500,
-        CanCharge = true;
+        CanCharge = true,
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
                    
@@ -108263,7 +108263,11 @@
         <block><![CDATA[
     spawn.Name = "Runa";
     spawn.Body = 37;
-    spawn.SetTraining(Skill.Magic, 6, 17);
+	
+	if (spawn is WizardTrainer trainer)
+    {
+		trainer.SetTraining(Skill.Magic, 6, 17);
+	}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -108285,11 +108289,13 @@
         <block><![CDATA[
     spawn.Name = "Valtrex";
     spawn.Body = 48;
-    spawn.SetTraining(Skill.Magic, 6, 17);
+  
     if (spawn is ThaumaturgeTrainer thaumaturgeTrainer)
     {
         thaumaturgeTrainer.AddCounter(new Point2D(7, 4, 15));
         thaumaturgeTrainer.AddCounter(new Point2D(8, 4, 15));
+		
+		thaumaturgeTrainer.SetTraining(Skill.Magic, 6, 17);
     }
 ]]></block>
         <block><![CDATA[]]></block>
