@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using CommonServiceLocator;
 using DigitalRune.Game.Input;
@@ -33,6 +34,7 @@ namespace Kesmai.WorldForge
 			var filter = presenter.SelectedFilter;
 			
 			var worldScreen = target.WorldScreen;
+			var zoomFactor = worldScreen.ZoomFactor;
 			var region = target.Region;
 			
 			var (mx, my) = worldScreen.ToWorldCoordinates((int)_position.X, (int)_position.Y);
@@ -42,8 +44,8 @@ namespace Kesmai.WorldForge
 			{
 				var viewRectangle = worldScreen.GetViewRectangle();
 
-				var rx = (mx - viewRectangle.Left) * (presenter.UnitSize);
-				var ry = (my - viewRectangle.Top) * (presenter.UnitSize);
+				var rx = (int)Math.Floor((mx - viewRectangle.Left) * (presenter.UnitSize*zoomFactor));
+				var ry = (int)Math.Floor((my - viewRectangle.Top) * (presenter.UnitSize*zoomFactor));
 
 				var dx = _position.X - (rx - 45);
 				var dy = _position.Y - (ry - 45);
@@ -117,17 +119,18 @@ namespace Kesmai.WorldForge
 			
 			var presentationTarget = context.GetPresentationTarget();
 			var worldScreen = presentationTarget.WorldScreen;
+			var zoomFactor = worldScreen.ZoomFactor;
 			
 			if (_componentUnderMouse != null)
 			{
 				var viewRectangle = worldScreen.GetViewRectangle();
 				var (mx, my) = worldScreen.ToWorldCoordinates((int)_position.X, (int)_position.Y);
 			
-				var rx = (mx - viewRectangle.Left) * (presenter.UnitSize);
-				var ry = (my - viewRectangle.Top) * (presenter.UnitSize);
+				var rx = (int)Math.Floor((mx - viewRectangle.Left) * (presenter.UnitSize*zoomFactor));
+				var ry = (int)Math.Floor((my - viewRectangle.Top) * (presenter.UnitSize*zoomFactor));
 			
-				var tileBounds = new Rectangle(rx, ry, presenter.UnitSize, presenter.UnitSize);
-				var originalBounds = new Rectangle(tileBounds.X - 45, tileBounds.Y - 45, 100, 100);
+				var tileBounds = new Rectangle(rx, ry, (int)Math.Floor(presenter.UnitSize * zoomFactor), (int)Math.Floor(presenter.UnitSize * zoomFactor));
+				var originalBounds = new Rectangle((int)Math.Floor(tileBounds.X - 45*zoomFactor), (int)Math.Floor(tileBounds.Y - 45*zoomFactor), (int)Math.Floor(100*zoomFactor), (int)Math.Floor(100*zoomFactor));
 
 				var component = _componentUnderMouse;
 				var terrains = component.GetTerrain();
@@ -145,7 +148,7 @@ namespace Kesmai.WorldForge
 							if (sprite.Offset != Vector2F.Zero)
 								spriteBounds.Offset(sprite.Offset.X, sprite.Offset.Y);
 
-							spriteBatch.Draw(sprite.Texture, spriteBounds.Location.ToVector2(), SelectionColor);
+							spriteBatch.Draw(sprite.Texture, spriteBounds.Location.ToVector2(), null, SelectionColor, 0, Vector2.Zero, zoomFactor, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0f);
 						}
 					}
 				}
