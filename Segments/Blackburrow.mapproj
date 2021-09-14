@@ -29516,10 +29516,10 @@ return dragon;
         <block><![CDATA[]]></block>
         <block><![CDATA[
 	
-	// Caster and Pollux will be brother ogres, Castor will be fire based and Pollux will be ice based. Castor will be immune to whirlwind and Pollux will be immune to PC... so that is a weakness if they figure it out and get brave. 
+	// Caster and Pollux will be brother Liches, Castor will be fire based and Pollux will be ice based. Castor will be immune to whirlwind and Pollux will be immune to PC... so that is a weakness if they figure it out and get brave. 
 	
 	
-	var ogre = new Ogre()
+	var ogre = new AncientLich()
 {
     Name = "Castor",
     MaxHealth = 7500, Health = 7500,
@@ -29529,6 +29529,7 @@ return dragon;
     CanCharge = true,
     CanSwim = true,
     Experience = 100000,
+    VisibilityDistance = 1,
     
     FireProtection = 100,
     DeathResistance = 75,
@@ -29615,7 +29616,7 @@ return ogre;
 	// Caster and Pollux will be brother ogres, Castor will be fire based and Pollux will be ice based. Castor will be immune to whirlwind and Pollux will be immune to PC... so that is a weakness if they figure it out and get brave. 
 	
 	
-	var ogre = new Ogre()
+	var ogre = new AncientLich()
 {
     Name = "Pollux",
     MaxHealth = 7500, Health = 7500,
@@ -29625,6 +29626,7 @@ return ogre;
     CanCharge = true,
     CanSwim = true,
     Experience = 100000,
+    VisibilityDistance = 1,
     
     FireProtection = 80,
     DeathResistance = 75,
