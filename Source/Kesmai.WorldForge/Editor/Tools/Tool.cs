@@ -1,7 +1,6 @@
 using System;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using CommonServiceLocator;
 using DigitalRune.Game.Input;
 using DigitalRune.Graphics;
 using DigitalRune.Mathematics.Algebra;
@@ -62,4 +61,22 @@ namespace Kesmai.WorldForge
 		{
 		}
 	}
+
+	public class ToolStartMessage
+    {
+		public Tool NewTool;
+		public ToolStartMessage(Tool newTool)
+        {
+			NewTool = newTool;
+        }
+    }
+
+	public class ToolStopMessage
+    {
+		public Tool OldTool;
+		public ToolStopMessage (Tool oldTool)
+        {
+			OldTool = oldTool;
+        }
+    }
 }

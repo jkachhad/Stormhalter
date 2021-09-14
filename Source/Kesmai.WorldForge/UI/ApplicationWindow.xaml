@@ -205,7 +205,7 @@
                     </LayoutDocumentPaneGroup>
                     
                     <LayoutAnchorablePane FloatingWidth="365" DockWidth="365" DockMinWidth="365">
-                        <LayoutAnchorable Title="Components" ContentId="component">
+                        <LayoutAnchorable x:Name="_componentsWindow" Title="Components" ContentId="component">
                                 <ui:ComponentsPanel Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" 
                                                     OpacityMask="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
                                                     VerticalAlignment="Stretch" MinWidth="365"></ui:ComponentsPanel>

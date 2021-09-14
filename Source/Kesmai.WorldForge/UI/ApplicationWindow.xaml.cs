@@ -1,5 +1,5 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using System.Windows.Input;
 
 namespace Kesmai.WorldForge
@@ -19,6 +19,19 @@ namespace Kesmai.WorldForge
 			_game = new Game(this);
 			
 			InitializeComponent();
+
+			WeakReferenceMessenger.Default
+				.Register<ApplicationWindow, ToolStartMessage>(
+					this, (r, m) => {
+						if (m.NewTool is Kesmai.WorldForge.DrawTool) { }
+							_componentsWindow.Show();
+					});
+			WeakReferenceMessenger.Default
+				.Register<ApplicationWindow, ToolStopMessage>(
+					this, (r, m) => {
+						if (m.OldTool is Kesmai.WorldForge.DrawTool) { }
+							_componentsWindow.Hide();
+					});
 		}
 	}
 }

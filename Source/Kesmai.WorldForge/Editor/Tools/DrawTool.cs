@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using CommonServiceLocator;
 using DigitalRune.Game.UI;
 using DigitalRune.Game.Input;
@@ -8,7 +7,7 @@ using DigitalRune.Graphics;
 using DigitalRune.Mathematics.Algebra;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Models;
-using Kesmai.WorldForge.Windows;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -28,16 +27,13 @@ namespace Kesmai.WorldForge
 		public override void OnActivate()
 		{
 			base.OnActivate();
-			
-			// TODO: Show components panel, hide others.
-			
+			WeakReferenceMessenger.Default.Send(new ToolStartMessage(this));
 			_actionBlacklist = new List<(int X, int Y)>();
 		}
 
 		public override void OnDeactivate()
 		{
-			// TODO: Hide components panel.
-
+			WeakReferenceMessenger.Default.Send(new ToolStopMessage(this));
 			base.OnDeactivate();
 		}
 
