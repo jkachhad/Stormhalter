@@ -73,6 +73,9 @@
         
         item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
     }
+    
+      
+    
 ]]></block>
     <block><![CDATA[]]></block>
   </script>
@@ -20538,7 +20541,11 @@
           <ruins>398</ruins>
         </component>
       </tile>
-      <tile x="5" y="2" />
+      <tile x="5" y="2">
+        <component type="FloorComponent">
+          <ground>6</ground>
+        </component>
+      </tile>
       <tile x="6" y="2">
         <component type="FloorComponent">
           <ground>6</ground>
@@ -20864,17 +20871,17 @@
       </tile>
       <tile x="6" y="3">
         <component type="FloorComponent">
-          <ground>1004</ground>
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="7" y="3">
         <component type="FloorComponent">
-          <ground>1004</ground>
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="8" y="3">
         <component type="FloorComponent">
-          <ground>1004</ground>
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="9" y="3">
@@ -20897,17 +20904,17 @@
       </tile>
       <tile x="11" y="3">
         <component type="FloorComponent">
-          <ground>1004</ground>
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="12" y="3">
         <component type="FloorComponent">
-          <ground>1004</ground>
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="13" y="3">
         <component type="FloorComponent">
-          <ground>1004</ground>
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="14" y="3">
@@ -21080,7 +21087,7 @@
       </tile>
       <tile x="-23" y="4">
         <component type="FloorComponent">
-          <ground>-23412</ground>
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="-22" y="4">
@@ -21251,15 +21258,13 @@
         </component>
       </tile>
       <tile x="7" y="4">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="8" y="4">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="9" y="4">
@@ -21267,29 +21272,32 @@
           <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
+        <component type="FloorComponent">
+          <ground>252</ground>
+        </component>
       </tile>
       <tile x="10" y="4">
         <component type="WaterComponent">
           <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
+        <component type="FloorComponent">
+          <ground>252</ground>
+        </component>
       </tile>
       <tile x="11" y="4">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="12" y="4">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="13" y="4">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="14" y="4">
@@ -21601,18 +21609,13 @@
         </component>
       </tile>
       <tile x="7" y="5">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="RuinsComponent">
-          <ruins>44</ruins>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="8" y="5">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="9" y="5">
@@ -21628,21 +21631,18 @@
         </component>
       </tile>
       <tile x="11" y="5">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="12" y="5">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="13" y="5">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="14" y="5">
@@ -21996,9 +21996,8 @@
         </component>
       </tile>
       <tile x="7" y="6">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="8" y="6">
@@ -24591,6 +24590,9 @@
           <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
+        <component type="FloorComponent">
+          <ground>1004</ground>
+        </component>
       </tile>
       <tile x="14" y="12">
         <component type="FloorComponent">
@@ -24956,48 +24958,41 @@
         </component>
       </tile>
       <tile x="7" y="13">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
         <component type="RuinsComponent">
           <ruins>44</ruins>
         </component>
+        <component type="FloorComponent">
+          <ground>1004</ground>
+        </component>
       </tile>
       <tile x="8" y="13">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="9" y="13">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="10" y="13">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="11" y="13">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="12" y="13">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="13" y="13">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="14" y="13">
@@ -25320,48 +25315,41 @@
         </component>
       </tile>
       <tile x="7" y="14">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="8" y="14">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
         <component type="RuinsComponent">
           <ruins>44</ruins>
         </component>
+        <component type="FloorComponent">
+          <ground>1004</ground>
+        </component>
       </tile>
       <tile x="9" y="14">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="10" y="14">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="11" y="14">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="12" y="14">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="13" y="14">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="14" y="14">
@@ -25732,45 +25720,38 @@
         </component>
       </tile>
       <tile x="7" y="15">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="8" y="15">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="9" y="15">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="10" y="15">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="11" y="15">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="12" y="15">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="13" y="15">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="14" y="15">
@@ -26053,42 +26034,42 @@
       </tile>
       <tile x="6" y="16">
         <component type="FloorComponent">
-          <ground>1004</ground>
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="7" y="16">
         <component type="FloorComponent">
-          <ground>1004</ground>
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="8" y="16">
         <component type="FloorComponent">
-          <ground>1004</ground>
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="9" y="16">
         <component type="FloorComponent">
-          <ground>1004</ground>
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="10" y="16">
         <component type="FloorComponent">
-          <ground>1004</ground>
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="11" y="16">
         <component type="FloorComponent">
-          <ground>1004</ground>
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="12" y="16">
         <component type="FloorComponent">
-          <ground>1004</ground>
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="13" y="16">
         <component type="FloorComponent">
-          <ground>1004</ground>
+          <ground>6</ground>
         </component>
       </tile>
       <tile x="14" y="16">
@@ -28473,7 +28454,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Level2EvilLurker">
+    <entity name="LeveltwoEvilLurker">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -28782,7 +28763,7 @@ return skeleton;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="SpiritofDark">
+    <entity name="LevelthreeSpiritofDark">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -28935,7 +28916,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Levelthreeworg">
+    <entity name="LevelthreeWorg">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -29021,6 +29002,9 @@ if (spokeRecently(source))
         <block><![CDATA[
 	var giant = new Giant()
 {
+
+    // This guy's meant to be hard. He is the gatekeeper to the final boss area.
+
     Name = "Cave Giant Jym",
     MaxHealth  =  4000, Health = 4000,
     BaseDodge = 30,
@@ -29032,6 +29016,7 @@ if (spokeRecently(source))
     
     Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
     CreatureImmunity.Projectile | CreatureImmunity.Piercing | CreatureImmunity.Web | CreatureImmunity.Magic,
+   
     Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
 };
 
@@ -29073,7 +29058,8 @@ giant.AddLoot(new LootPack(
     new LootPackEntry(true, Levelthreegems, 100, gemsPriceMutator),
     new LootPackEntry(true, Levelthreegems, 100, gemsPriceMutator),
     new LootPackEntry(true, StatPotion, 100),
-    new LootPackEntry(true, Miniboss, 50)
+    new LootPackEntry(true, Miniboss, 50),
+    new LootPackEntry(true, (from, container) => new DragonSkull(), 100)
 ));
 
 return giant;    
@@ -29088,7 +29074,7 @@ return giant;
 if (spokeRecently(source))
         return;
 
-    source.Say($"Me no think you so strong!!!, Arghhhh!!"); 
+    source.Say($"Don't go down the stairs, its not safe! Me warnnnnn youuuu... arghh.."); 
 
 ]]></block>
         <block><![CDATA[]]></block>
@@ -29102,6 +29088,607 @@ if (spokeRecently(source))
 
     source.Say($"Fee, Phi, Fo, Fum... I smell the blood and bones of an Adventurer!"); 
 
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="Levelthreestalker">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	 var stalker = new Stalker()
+    {
+        Name = "Undead Warrior",
+        MaxHealth = 500, Health = 500,
+        MaxMana = 7, Mana = 7,
+        BaseDodge = 30,
+    
+        Experience = 25000,
+        BasePenetration = ShieldPenetration.Medium,
+        VisibilityDistance = 1,
+        DeathResistance = 100,
+        CanCharge = true,
+        
+    };
+    
+    stalker.AddStatus(new NightVisionStatus(stalker));
+    
+    stalker.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(25, 20, 50)
+    };
+    
+    stalker.Spells = new CreatureSpellCollection(100)
+    {
+        new CreatureSpell<DarknessSpell>(
+            skillLevel: 10, cost: 4)
+    };
+    
+    stalker.Wield(new Spear());
+    
+    stalker.AddGold(650);
+    stalker.AddLoot(new LootPack(
+        new LootPackEntry(true, Levelthreegems, 25, gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33), 
+        new LootPackEntry(true, Statpotion,    0.3), 
+        new LootPackEntry(true, Treasure,    0.63)
+    ));
+    
+    return stalker;
+}
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="Levelthreespectres">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	 var spectre = new Spectre()
+    {
+        Name = "Undead Thaum"
+        MaxHealth = 150, Health = 150,
+        MaxMana = 31, Mana = 31,
+        BaseDodge = 14,
+    
+        Experience = 20000,
+        BasePenetration = ShieldPenetration.Light,
+        VisibilityDistance = 1,
+        DeathResistance = 100,
+    };
+    
+    spectre.AddStatus(new NightVisionStatus(spectre));
+    
+    spectre.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(14, 20, 30)
+    };
+    
+    spectre.Spells = new CreatureSpellCollection()
+    {
+       { new CreatureSpell<DeathSpell>(
+            skillLevel: 11, cost: 16, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),   75 },
+       { new CreatureSpell<LightningBoltSpell>(
+            skillLevel: 7, cost: 6, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 }
+    };
+    
+    spectre.Wield(new WoodenStaff());
+    
+    spectre.AddGold(650);
+    spectre.AddLoot(new LootPack(
+        new LootPackEntry(true, Levelthreegems,       25,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33), 
+        new LootPackEntry(true, StatPotion,    0.3), 
+        new LootPackEntry(true, Treasure,    0.63)
+    ));
+    
+    return spectre;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="Levelthreearchers">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var skeleton = new Skeleton()
+	{
+	   Name = "Skeletal Archer",
+	   MaxHealth = 150, Health = 150,
+	   BaseDodge = 18,
+	   BasePenetration = ShieldPenetration.Heavy,
+	   Experience = 10000,
+	   CanSwim = false,
+	   Immunity = CreatureImmunity.Poison,
+	 };
+	 
+	skeleton.AddStatus(new NightVisionStatus(skeleton));
+    skeleton.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(25)
+    };
+    
+    skeleton.AddStatus(new NightVisionStatus(skeleton));
+    skeleton.Wield(new FineCrossbow());
+    
+    skeleton.AddGold(2000);
+    skeleton.AddLoot(new LootPack(
+        new LootPackEntry(true, GenericBottles, 50),
+        new LootPackEntry(true, Levelthreegems, 33)
+    ));
+    
+return skeleton;
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="Levelthreemoccasins">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var snake = new Snake()
+{
+
+    Name = "Water Moccasin"
+    MaxHealth = 425, Health = 425,
+    BaseDodge = 16,
+    BasePenetration = ShieldPenetration.Medium,
+    CanSwim = true,
+    CanWalk = false,
+    Immunity = CreatureImmunity.Magic | CreatureImmunity.Poison,
+    Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+    Experience = 40000,
+    VisibilityDistance = 1,
+    CanCharge = true,
+    Movement = 2,
+};
+
+snake.Attacks = new CreatureAttackCollection()
+{
+
+    {
+    
+        new CreatureAttack(13, 25, 35, "The snake bites you on the ankle", new AttackPoisonComponent(10,25)),75
+    },
+    
+    {6
+    
+        new CreatureAttack(14, 40, 60, "The snake bites you on the neck", new AttackPoisonComponent(30)),25
+        
+    },
+};
+
+snake.AddStatus(new BreatheWaterStatus(snake));
+snake.Blocks = new CreatureBlockCollection
+{
+
+    {
+        new CreatureBlock(6, "sharp fangs")
+    },
+    
+    {
+        new CreatureBlock(4, "its tail")
+    },
+};    
+
+snake.AddGold(2500);
+snake.AddLoot(new LootPack(
+    new LootPackEntry(true, Levelthreegems, 10, gemsPriceMutator),
+    new LootPackEntry(true, GenericBottles, 33),
+));
+
+return snake;
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="LevelthreePoisonElemental">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var elemental = new Lich()
+{
+
+    // Set body to Lich, because i'm not sure how to flag a creature as undead
+    
+    Name = "Poison Elemental",
+    MaxHealth = 100, Health = 100,
+    Mana = 40, MaxMana = 40,
+    BaseDodge = 16,
+    CanSwim = true,
+    FireProtection = 100,
+    IceProtection = 100,
+    Immunity = CreatureImmunity.Poison,
+    Experience = 25000,
+    
+    VisibilityDistance = 0
+};
+
+elemental.Attacks = new CreatureAttackCollection
+{
+
+    new CreatureBasicAttack(15),
+};
+
+elemental.Spells = new CreatureSpellCollection()
+{
+
+    new CreatureSpell<PoisonCloudSpell>(
+        skillLevel 5, cost: 25,
+        mantra: SpellHelper.GenerateMantra(), instantCast: false)
+};
+
+elemental.Wield(new GiltDagger());
+elemental.Equip(new DrakeScaleArmor());
+
+elemental.AddStatus(new BreatheWaterStatus(elemental));
+elemental.AddStatus(new NightVisionStatus(elemental));
+
+elemental.AddGold(5000);
+elemental.AddLoot(new LootPack(
+    new LootPackEntry(true, Levelthreegems, 50, gemsPriceMutator),
+    new LootPackEntry(true, Levelthreegems, 50, gemsPriceMutator),
+    new LootPackEntry(true, GenericBottles, 50),
+    new LootPackEntry(true, Miniboss, 50)
+));
+
+return elemental;
+
+	
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="UndeadDragon">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var dragon = new Skeleton()
+{
+    Name = "Undead Dragon"
+    Body = 135,
+    MaxHealth = 15000, Health = 15000,
+    BaseDodge = 31,
+    BasePenetration = ShieldPenetration.VeryHeavy,
+    HideDetection = 35,
+    Experience = 200000,
+    CanStrikeCritically = true,
+    CanFly = true,
+    CanCharge = true,
+    
+    FireProtection = 100,
+    IceProtection = 100,
+    Immunity = CreatureImmunity.Bashing | CreatureImmunity.Piercing | CreatureImmunity.Projectile | CreatureImmunity.Slashing | CreatureImmunity.Magic |CreatureImmunity.Poison,
+    Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+};
+
+dragon.AddStatus(new NightVisionStatus(dragon));
+dragon.AddStatus(new BreatheWaterStatus(dragon));
+
+dragon.CombatantChangeInterval = TimeSpan.FromSeconds(7.0);
+
+dragon.Attacks = new CreatureAttackCollection
+{
+
+    {
+    
+        new CreatureAttack(25, 60, 100, "The Dragon Slashes you with its claws.", new AttackProneComponent(15),  new AttackStunComponent(5)), 45
+    },
+    
+    { 
+    
+        new CreatureAttack(30, 75, 100, "The Dragon Smashes you with its Tail.", new AttackProneComponent(25), new AttackStunComponent(10)), 45
+    },
+    
+    {
+    
+        new CreatureAttack(25, 60, 100, "The Dragon buffets you with its wings.", new AttackProneComponent(100), new AttackStunComponent(15)), 10
+    },
+};
+
+dragon.Blocks = new CreatureBlockCollection
+{
+
+    new CreatureBlock(6, "Cold Dead Scales"),
+    new CreatureBlock(4, "a tail"),
+    new CreatureBlock(3, "a wing"),
+};
+
+dragon.Spells = CreatureSpellCollection(20.0)
+{
+    {
+        new CreatureSpell<LightningStormSpell>(
+        skillLevel: 3), 5
+    },
+    
+    {
+        new CreatureSpell<PoisonCloudSpell>(
+        skillLevel: 3), 5
+    },
+    
+    {
+        new CreatureSpell<LightningBoltSpell>(
+        skillLevel: 10), 60
+    },
+    
+    {
+        new CreatureSpell<DeathSpell>(
+        skillLevel: 15), 30
+    }
+};
+
+dragon.AddGold(75000);
+dragon.AddLoot(new LootPack(
+    new LootPackEntry(true, Dragongems, 100, gemsPriceMutator),
+    new LootPackEntry(true, Dragongems, 100, gemsPriceMutator),
+    new LootPackEntry(true, Dragongems, 100, gemsPriceMutator),
+    new LootPackEntry(true, Dragongems, 100, gemsPriceMutator),
+    new LootPackEntry(true, Dragonloot, 100),
+    new LootPackEntry(true, (from, container) => IceDragonScaleArmor(),100),
+    new LootPackEntry(true, Dragonloot, 100),
+    new LootPackEntry(true, StatPotion, 100)
+));
+
+return dragon;
+    	
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="Castor">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	
+	// Caster and Pollux will be brother ogres, Castor will be fire based and Pollux will be ice based. Castor will be immune to whirlwind and Pollux will be immune to PC... so that is a weakness if they figure it out and get brave. 
+	
+	
+	var ogre = new Ogre()
+{
+    Name = "Castor",
+    MaxHealth = 7500, Health = 7500,
+    BaseDodge = 30,
+    HideDetection = 33,
+    BasePenetration = ShieldPenetration.VeryHeavy,
+    CanCharge = true,
+    CanSwim = true,
+    Experience = 100000,
+    
+    FireProtection = 100,
+    DeathResistance = 75,
+    IceProtection = 80,
+    Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+};
+
+ogre.AddImmunity(typeof(WhirlwindSpell));
+ogre.AddImmunity(typeof(DragonBreathIceSpell));
+
+
+ogre.AddStatus(new NightVisionStatus(ogre));
+ogre.AddStatus(new BreatheWaterStatus(ogre));
+
+ogre.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
+
+ogre.Attacks = new CreatureAttackCollection(()
+{
+
+   {
+        new CreatureAttack(25, 30, 50, "slashes you with his Halberd.", new AttackProneComponent(15),  new AttackStunComponent(5)), 45
+    },
+    
+    { 
+    
+        new CreatureAttack(30, 30, 50, "kicks you in the chest", new AttackProneComponent(25), new AttackStunComponent(10)), 45
+    },
+    
+    {
+    
+        new CreatureAttack(25, 30, 50, "impales you in the stomach with his halberd.", new AttackProneComponent(100), new AttackStunComponent(15)), 10
+    },
+    
+};
+
+
+ogre.Spells = new CreatureSpellCollection(20.0)
+{
+    new CreatureSpell<DragonBreathFireSpell>(
+        skillLevel: 15),
+};
+
+
+ogre.Blocks = new CreatureBlockCollection
+{
+    new CreatureBlock(6, "Steel breastplate"),
+    new CreatureBlock(4, "his halberd"),
+    new CreatureBlock(3, "his arm"),
+};
+	
+ogre.Equip(new ChainmailArmor());
+ogre.Wield(new Halberd());
+
+ogre.AddLoot(new LootPack(
+    new LootPackEntry(true, Dragongems, 100),
+    new LootPackEntry(true, Dragongems, 100),
+    new LootPackEntry(true, (from, container) => new ManaPotion(), 100),
+    new LootPackEntry(true, Miniboss, 25)
+));
+
+return ogre;
+    	
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="Pollux">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	
+	// Caster and Pollux will be brother ogres, Castor will be fire based and Pollux will be ice based. Castor will be immune to whirlwind and Pollux will be immune to PC... so that is a weakness if they figure it out and get brave. 
+	
+	
+	var ogre = new Ogre()
+{
+    Name = "Pollux",
+    MaxHealth = 7500, Health = 7500,
+    BaseDodge = 30,
+    HideDetection = 33,
+    BasePenetration = ShieldPenetration.VeryHeavy,
+    CanCharge = true,
+    CanSwim = true,
+    Experience = 100000,
+    
+    FireProtection = 80,
+    DeathResistance = 75,
+    IceProtection = 100,
+    Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+};
+
+ogre.AddImmunity(typeof(PoisonCloudSpell));
+ogre.AddImmunity(typeof(DragonBreathFireSpell));
+
+
+ogre.AddStatus(new NightVisionStatus(ogre));
+ogre.AddStatus(new BreatheWaterStatus(ogre));
+
+ogre.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
+
+ogre.Attacks = new CreatureAttackCollection(()
+{
+
+   {
+        new CreatureBasicAttack(30, 50, 75),
+   }
+    
+};
+
+
+ogre.Spells = new CreatureSpellCollection(20.0)
+{
+    new CreatureSpell<DragonBreathIceSpell>(
+        skillLevel: 15),
+};
+
+
+ogre.Blocks = new CreatureBlockCollection
+{
+    new CreatureBlock(6, "Steel breastplate"),
+    new CreatureBlock(4, "his bow staff"),
+    new CreatureBlock(3, "his arm"),
+};
+	
+ogre.Equip(new ChainmailArmor());
+ogre.Wield(new FineCrossbow());
+
+ogre.AddLoot(new LootPack(
+    new LootPackEntry(true, Dragongems, 100),
+    new LootPackEntry(true, Dragongems, 100),
+    new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(), 100),
+    new LootPackEntry(true, Miniboss, 25)
+));
+
+return ogre;
+    	
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -29633,7 +30220,7 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="SpiritofDark" size="1" minimum="1" maximum="1" />
+      <entry entity="LevelthreeSpiritofDark" size="1" minimum="1" maximum="1" />
       <location x="1" y="8" region="4" />
     </spawn>
     <spawn type="RegionSpawner" name="EntranceBlacksmith">
@@ -29859,7 +30446,7 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level2EvilLurker" size="1" minimum="1" maximum="1" />
+      <entry entity="LeveltwoEvilLurker" size="1" minimum="1" maximum="1" />
       <bounds region="3">
         <inclusion left="8" top="-3" right="13" bottom="-1" />
         <exclusion left="10" top="-2" right="12" bottom="-1" />
@@ -29956,7 +30543,7 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Levelthreeworg" size="1" minimum="1" maximum="1" />
+      <entry entity="LevelthreeWorg" size="1" minimum="1" maximum="1" />
       <entry entity="LevelthreeGnollWorgHandle" size="1" minimum="2" maximum="2" />
       <bounds region="4">
         <inclusion left="-23" top="4" right="-18" bottom="14" />
@@ -29981,7 +30568,7 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Levelthreeworg" size="1" minimum="1" maximum="1" />
+      <entry entity="LevelthreeWorg" size="1" minimum="1" maximum="1" />
       <entry entity="LevelthreeGnollWorgHandle" size="1" minimum="21" maximum="2" />
       <bounds region="4">
         <inclusion left="-17" top="3" right="-10" bottom="15" />
@@ -30012,6 +30599,187 @@ if (spokeRecently(source))
         <inclusion left="-15" top="9" right="-12" bottom="12" />
         <inclusion left="-11" top="10" right="-11" bottom="10" />
         <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Stalkers">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>3</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="Levelthreestalker" size="1" minimum="3" maximum="3" />
+      <bounds region="4">
+        <inclusion left="-11" top="-12" right="-11" bottom="-6" />
+        <inclusion left="-10" top="-12" right="-7" bottom="-12" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Maze">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>9</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="Levelthreestalker" size="1" minimum="6" maximum="6" />
+      <entry entity="Levelthreespectres" size="1" minimum="3" maximum="3" />
+      <bounds region="4">
+        <inclusion left="-8" top="3" right="-3" bottom="15" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="SkeeltalArchers1">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>6</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="Levelthreearchers" size="2" minimum="6" maximum="6" />
+      <bounds region="4">
+        <inclusion left="7" top="4" right="14" bottom="5" />
+        <inclusion left="7" top="6" right="7" bottom="6" />
+        <inclusion left="14" top="6" right="14" bottom="11" />
+        <inclusion left="7" top="12" right="14" bottom="13" />
+        <exclusion left="9" top="2" right="10" bottom="2" />
+        <exclusion left="9" top="5" right="10" bottom="5" />
+        <exclusion left="7" top="12" right="12" bottom="12" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Snakes">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <maximum>4</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="Levelthreemoccasins" size="1" minimum="4" maximum="4" />
+      <bounds region="4">
+        <inclusion left="7" top="7" right="12" bottom="12" />
+        <inclusion left="8" top="6" right="13" bottom="6" />
+        <inclusion left="13" top="7" right="13" bottom="11" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Poison Lich">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="LevelthreePoisonElemental" size="1" minimum="1" maximum="1" />
+      <bounds region="4">
+        <inclusion left="7" top="4" right="21" bottom="14" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Dragon">
+      <minimumDelay>3600</minimumDelay>
+      <maximumDelay>7200</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="UndeadDragon" size="1" minimum="1" maximum="1" />
+      <bounds region="4">
+        <inclusion left="27" top="6" right="32" bottom="12" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="CastorPollux">
+      <minimumDelay>3600</minimumDelay>
+      <maximumDelay>7200</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="Castor" size="1" minimum="1" maximum="1" />
+      <entry entity="Pollux" size="1" minimum="1" maximum="1" />
+      <bounds region="4">
+        <inclusion left="18" top="4" right="20" bottom="14" />
+        <exclusion left="19" top="5" right="19" bottom="5" />
+        <exclusion left="19" top="8" right="19" bottom="8" />
+        <exclusion left="19" top="10" right="19" bottom="10" />
+        <exclusion left="19" top="13" right="19" bottom="13" />
       </bounds>
     </spawn>
   </spawns>
@@ -30369,6 +31137,100 @@ if (spokeRecently(source))
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new GoldNugget(100000u)
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="Dragongems">
+      <entry weight="30">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new LargeEmerald(8000u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="25">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new Diamond(12800u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="25">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new SmallRuby(28000u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="25">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StarRuby(44000u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="25">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new GoldNugget(200000u)
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="Dragonloot">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StunDeathProtectionBracelet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new BrightFeather();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StrongShieldRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StrongShieldBracelet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new DexterityRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
