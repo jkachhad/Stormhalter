@@ -85,7 +85,11 @@
         }
 
         
-
+        public override void OnDeath()
+        {
+            Say($"no... my prisoners...");
+            base.OnDeath();
+        }
         public Flordex(Serial serial) : base(serial)
         {
         }
@@ -100,8 +104,20 @@
             base.OnSpellTarget(target, combatant);
         }            
 
-        
-
+        public override int GetNearbySound() => 115;
+        public override int GetAttackSound() => 290;
+        public override int GetDeathSound() => 291;
+        public override int GetWarmSound() => 5;
+        public override void OnSpawn()
+        {
+            base.OnSpawn();
+            if (_brain != null)
+                return;
+            if (RightHand is ProjectileWeapon)
+                _brain = new RangedAI(this);
+            else
+                _brain = new CombatAI(this);
+        }
         public override Corpse GetCorpse() => default(Corpse);
         public override void Serialize(BinaryWriter writer)
         {
