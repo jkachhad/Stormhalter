@@ -23,14 +23,18 @@ namespace Kesmai.WorldForge
 			WeakReferenceMessenger.Default
 				.Register<ApplicationWindow, ToolStartMessage>(
 					this, (r, m) => {
-						if (m.NewTool is Kesmai.WorldForge.DrawTool) { }
+						if (m.NewTool is Kesmai.WorldForge.DrawTool || m.NewTool is Kesmai.WorldForge.PaintTool)
+						{
 							_componentsWindow.Show();
+						}
+						else
+						{
+							_componentsWindow.Hide();
+						}
 					});
 			WeakReferenceMessenger.Default
 				.Register<ApplicationWindow, ToolStopMessage>(
 					this, (r, m) => {
-						if (m.OldTool is Kesmai.WorldForge.DrawTool) { }
-							_componentsWindow.Hide();
 					});
 		}
 	}

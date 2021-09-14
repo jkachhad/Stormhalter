@@ -5,6 +5,7 @@ using DigitalRune.Game.Input;
 using DigitalRune.Graphics;
 using DigitalRune.Mathematics.Algebra;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Messaging;
 
 namespace Kesmai.WorldForge
 {
@@ -55,10 +56,12 @@ namespace Kesmai.WorldForge
 
 		public virtual void OnActivate()
 		{
+			WeakReferenceMessenger.Default.Send(new ToolStartMessage(this));
 		}
 
 		public virtual void OnDeactivate()
 		{
+			WeakReferenceMessenger.Default.Send(new ToolStopMessage(this));
 		}
 	}
 

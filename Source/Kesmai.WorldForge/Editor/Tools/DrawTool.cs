@@ -7,7 +7,6 @@ using DigitalRune.Graphics;
 using DigitalRune.Mathematics.Algebra;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Models;
-using Microsoft.Toolkit.Mvvm.Messaging;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -27,13 +26,11 @@ namespace Kesmai.WorldForge
 		public override void OnActivate()
 		{
 			base.OnActivate();
-			WeakReferenceMessenger.Default.Send(new ToolStartMessage(this));
 			_actionBlacklist = new List<(int X, int Y)>();
 		}
 
 		public override void OnDeactivate()
 		{
-			WeakReferenceMessenger.Default.Send(new ToolStopMessage(this));
 			base.OnDeactivate();
 		}
 
