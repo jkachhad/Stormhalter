@@ -107382,15 +107382,17 @@
         
         IceProtection = 100,
     };
+    
+    draugr.AddImmunity(typeof(PoisonCloudSpell));
 
     draugr.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(19)
     };
 
-    draugr.Wield(new SteelLongsword());
+    draugr.Wield(new Longsword());
     draugr.Wield(new PlatedShield());
-    draugr.Equip(new DragonScaleArmor());
+    draugr.Equip(new PlatemailArmor());
     
     draugr.AddLoot(new LootPack(
         new LootPackEntry(true, UndeadGems,       4,     gemsPriceMutator), 
@@ -107443,13 +107445,15 @@
         IceProtection = 100,
     };
 
+    draugr.AddImmunity(typeof(PoisonCloudSpell));
+    
     draugr.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(19)
     };
 
     draugr.Wield(new Longbow());
-    draugr.Equip(new DragonScaleArmor());
+    draugr.Equip(new PlatemailArmor());
     
     draugr.AddLoot(new LootPack(
         new LootPackEntry(true, UndeadGems,       4,     gemsPriceMutator), 
@@ -107507,16 +107511,18 @@
         new CreatureBasicAttack(19)
     };
     
+    draugr.AddImmunity(typeof(PoisonCloudSpell));
+    
     draugr.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<IceStormSpell>(
-            skillLevel: 30, cost: 5, intensity: 3,
-            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+            skillLevel: 24, cost: 7, intensity: 3,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
 
     draugr.Wield(new SpikedFlail());
     draugr.Wield(new PlatedShield());
-    draugr.Equip(new DragonScaleArmor());
+    draugr.Equip(new PlatemailArmor());
     
     draugr.AddLoot(new LootPack(
         new LootPackEntry(true, UndeadGems,       4,     gemsPriceMutator), 
@@ -107565,17 +107571,20 @@
         
         IceProtection = 100,
     };
+    
+    giant.AddImmunity(typeof(PoisonCloudSpell));
 
     giant.AddStatus(new NightVisionStatus(giant));
     giant.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(27)
+        new CreatureBasicAttack(23)
     };
     
     giant.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<ConcussionSpell>(
-            skillLevel: 13, cost: 7, instantCast: false),
+            skillLevel: 7, cost: 7, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
 
     giant.Wield(new WarHammer());
@@ -107619,11 +107628,14 @@
         HideDetection = 40,
         BasePenetration = ShieldPenetration.Heavy,
         Experience = 200500,
+        CanCharge = true,
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
                    
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
     };
+    
+    necro.AddImmunity(typeof(PoisonCloudSpell));
 
     necro.AddStatus(new NightVisionStatus(necro));
     necro.Attacks = new CreatureAttackCollection()
@@ -107631,15 +107643,15 @@
         new CreatureBasicAttack(24, 33, 50)
     };
     
-    necro.Spells = new CreatureSpellCollection(20.0)
+    necro.Spells = new CreatureSpellCollection(10.0)
     {
         {
             new CreatureSpell<DeathSpell>(
-                skillLevel: 13),  75  
+                skillLevel: 13),  90  
         },
         {
             new CreatureSpell<PoisonCloudSpell>(
-                skillLevel: 10),    25,     TimeSpan.FromSeconds(15.0)
+                skillLevel: 10),    10,     TimeSpan.FromSeconds(15.0)
         },
     };
 
@@ -108251,6 +108263,11 @@
         <block><![CDATA[
     spawn.Name = "Runa";
     spawn.Body = 37;
+	
+	if (spawn is WizardTrainer trainer)
+    {
+		trainer.SetTraining(Skill.Magic, 6, 17);
+	}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -108272,10 +108289,13 @@
         <block><![CDATA[
     spawn.Name = "Valtrex";
     spawn.Body = 48;
+  
     if (spawn is ThaumaturgeTrainer thaumaturgeTrainer)
     {
         thaumaturgeTrainer.AddCounter(new Point2D(7, 4, 15));
         thaumaturgeTrainer.AddCounter(new Point2D(8, 4, 15));
+		
+		thaumaturgeTrainer.SetTraining(Skill.Magic, 6, 17);
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -108304,7 +108324,7 @@
         foreach (var skill in Skill.Weapons)
             lockpicktrainer.SetTraining(skill, 0, 4);
 
-        lockpicktrainer.SetTraining(Skill.Hand, 8, 14);
+        lockpicktrainer.SetTraining(Skill.Hand, 8, 17);
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -108331,7 +108351,7 @@
     if (spawn is TrainerEntity lockpickweapontrainer)
     {
         foreach (var skill in Skill.Weapons)
-            lockpickweapontrainer.SetTraining(skill, 8, 14);
+            lockpickweapontrainer.SetTraining(skill, 8, 17);
 
         lockpickweapontrainer.SetTraining(Skill.Hand, 0, 4);
     }
@@ -109460,7 +109480,7 @@
     <spawn type="RegionSpawner" name="Undead Southeast">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1500</maximumDelay>
-      <maximum>26</maximum>
+      <maximum>40</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -109476,11 +109496,11 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="undeadFrosty" size="1" minimum="1" maximum="1" />
-      <entry entity="undeadDraugrMelee" size="4" minimum="7" maximum="7" />
-      <entry entity="undeadDraugrArcher" size="3" minimum="6" maximum="6" />
-      <entry entity="undeadDraugrMage" size="1" minimum="5" maximum="5" />
-      <entry entity="undeadCurseTroll" size="1" minimum="4" maximum="4" />
-      <entry entity="undeadWorg" size="3" minimum="3" maximum="3" />
+      <entry entity="undeadDraugrMelee" size="4" minimum="9" maximum="9" />
+      <entry entity="undeadDraugrArcher" size="3" minimum="8" maximum="8" />
+      <entry entity="undeadDraugrMage" size="1" minimum="7" maximum="7" />
+      <entry entity="undeadCurseTroll" size="1" minimum="6" maximum="6" />
+      <entry entity="undeadWorg" size="3" minimum="9" maximum="9" />
       <bounds region="2">
         <inclusion left="38" top="17" right="60" bottom="35" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -109489,7 +109509,7 @@
     <spawn type="RegionSpawner" name="Undead Northeast">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1500</maximumDelay>
-      <maximum>45</maximum>
+      <maximum>49</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -109504,12 +109524,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="undeadFrosty" size="1" minimum="2" maximum="2" />
+      <entry entity="undeadFrosty" size="1" minimum="1" maximum="1" />
       <entry entity="undeadDraugrMelee" size="4" minimum="10" maximum="10" />
       <entry entity="undeadDraugrMage" size="1" minimum="10" maximum="10" />
       <entry entity="undeadDraugrArcher" size="3" minimum="10" maximum="10" />
       <entry entity="undeadCurseTroll" size="1" minimum="8" maximum="8" />
-      <entry entity="undeadWorg" size="3" minimum="5" maximum="5" />
+      <entry entity="undeadWorg" size="3" minimum="10" maximum="10" />
       <bounds region="2">
         <inclusion left="28" top="-3" right="60" bottom="16" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -109518,7 +109538,7 @@
     <spawn type="RegionSpawner" name="Undead Northwest">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1500</maximumDelay>
-      <maximum>42</maximum>
+      <maximum>46</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -109533,12 +109553,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="undeadFrosty" size="1" minimum="2" maximum="2" />
+      <entry entity="undeadFrosty" size="1" minimum="1" maximum="1" />
       <entry entity="undeadDraugrArcher" size="3" minimum="9" maximum="9" />
       <entry entity="undeadDraugrMage" size="1" minimum="8" maximum="8" />
       <entry entity="undeadDraugrMelee" size="4" minimum="10" maximum="10" />
       <entry entity="undeadCurseTroll" size="1" minimum="8" maximum="8" />
-      <entry entity="undeadWorg" size="3" minimum="5" maximum="5" />
+      <entry entity="undeadWorg" size="3" minimum="10" maximum="10" />
       <bounds region="2">
         <inclusion left="-2" top="1" right="27" bottom="30" />
         <exclusion left="18" top="23" right="27" bottom="30" />
