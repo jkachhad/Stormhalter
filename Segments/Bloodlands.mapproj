@@ -68,10 +68,59 @@
     public static void gemsPriceMutator(MobileEntity entity, Container source, ItemEntity item)
     {
         /* Item values fall between 0.8 to 1.2 of base price. */
-        var lesserPrice = (int)(item.BasePrice * 0.2);
-        var higherPrice = (int)(item.BasePrice * 0.2);
+        var lesserPrice = (int)(item.BasePrice * 0.25);
+        var higherPrice = (int)(item.BasePrice * 0.25);
         
         item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
+    }
+    
+    public class Flordex : CreatureEntity
+    {
+        public Flordex()
+        {
+            Alignment = Alignment.Evil;
+            Name = "Flordex";
+            Body = 26;
+            
+        }
+
+        
+
+        public Flordex(Serial serial) : base(serial)
+        {
+        }
+
+        public override void OnSpellTarget(Target target, MobileEntity combatant)
+        {
+            if (target != null)
+                    target.Cancel(this, TargetCancel.Canceled);
+                    
+            Say($"Oh yes, another one for my collection");
+            combatant.Teleport(new Point2D(20, -21, 1));
+            base.OnSpellTarget(target, combatant);
+        }            
+
+        
+
+        public override Corpse GetCorpse() => default(Corpse);
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((short)1); /* version */
+        }
+
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+            var version = reader.ReadInt16();
+            switch (version)
+            {
+                case 1:
+                    {
+                        break;
+                    }
+            }
+        }
     }
 ]]></block>
     <block><![CDATA[]]></block>
@@ -81,6 +130,211 @@
       <id>1</id>
       <name>Surace-Town</name>
       <height>0</height>
+      <tile x="16" y="-22">
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>159</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="17" y="-22">
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>223</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="18" y="-22">
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>223</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="19" y="-22">
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>223</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="20" y="-22">
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>223</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="21" y="-22">
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>223</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="22" y="-22">
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>223</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="23" y="-22">
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>223</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="24" y="-22">
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>223</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="16" y="-21">
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>224</wall>
+          <destroyed>39</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="17" y="-21">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+      </tile>
+      <tile x="18" y="-21">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+      </tile>
+      <tile x="19" y="-21">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>166</obstruction>
+        </component>
+      </tile>
+      <tile x="20" y="-21">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+      </tile>
+      <tile x="21" y="-21">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>166</obstruction>
+        </component>
+      </tile>
+      <tile x="22" y="-21">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+      </tile>
+      <tile x="23" y="-21">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+      </tile>
+      <tile x="24" y="-21">
+        <component type="StaticComponent">
+          <static>374</static>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>224</wall>
+          <destroyed>154</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="16" y="-20">
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>224</wall>
+          <destroyed>39</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="17" y="-20">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+      </tile>
+      <tile x="18" y="-20">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+      </tile>
+      <tile x="19" y="-20">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>166</obstruction>
+        </component>
+      </tile>
+      <tile x="20" y="-20">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+      </tile>
+      <tile x="21" y="-20">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>166</obstruction>
+        </component>
+      </tile>
+      <tile x="22" y="-20">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+      </tile>
+      <tile x="23" y="-20">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+      </tile>
+      <tile x="24" y="-20">
+        <component type="StaticComponent">
+          <static>374</static>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>224</wall>
+          <destroyed>154</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
       <tile x="1" y="-19">
         <component type="WallComponent">
           <wall>159</wall>
@@ -135,6 +389,102 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
+      <tile x="16" y="-19">
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>224</wall>
+          <destroyed>39</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="17" y="-19">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="18" y="-19">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="19" y="-19">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>26</wall>
+          <destroyed>39</destroyed>
+          <ruins>44</ruins>
+        </component>
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="20" y="-19">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+      </tile>
+      <tile x="21" y="-19">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>26</wall>
+          <destroyed>39</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="22" y="-19">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="23" y="-19">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="24" y="-19">
+        <component type="StaticComponent">
+          <static>374</static>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>224</wall>
+          <destroyed>154</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
       <tile x="1" y="-18">
         <component type="WallComponent">
           <wall>158</wall>
@@ -174,6 +524,68 @@
           <wall>158</wall>
           <destroyed>161</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="16" y="-18">
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>224</wall>
+          <destroyed>39</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="17" y="-18">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+      </tile>
+      <tile x="18" y="-18">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+      </tile>
+      <tile x="19" y="-18">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>166</obstruction>
+        </component>
+      </tile>
+      <tile x="20" y="-18">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+      </tile>
+      <tile x="21" y="-18">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>166</obstruction>
+        </component>
+      </tile>
+      <tile x="22" y="-18">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+      </tile>
+      <tile x="23" y="-18">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+      </tile>
+      <tile x="24" y="-18">
+        <component type="StaticComponent">
+          <static>374</static>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>224</wall>
+          <destroyed>154</destroyed>
+          <ruins>46</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -234,6 +646,102 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
+      <tile x="16" y="-17">
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>224</wall>
+          <destroyed>39</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="17" y="-17">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="18" y="-17">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="19" y="-17">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>26</wall>
+          <destroyed>39</destroyed>
+          <ruins>44</ruins>
+        </component>
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="20" y="-17">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+      </tile>
+      <tile x="21" y="-17">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>26</wall>
+          <destroyed>39</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="22" y="-17">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="23" y="-17">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="24" y="-17">
+        <component type="StaticComponent">
+          <static>374</static>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>224</wall>
+          <destroyed>154</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
       <tile x="2" y="-16">
         <component type="WallComponent">
           <wall>158</wall>
@@ -260,6 +768,80 @@
           <wall>158</wall>
           <destroyed>161</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="16" y="-16">
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>224</wall>
+          <destroyed>39</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="17" y="-16">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+      </tile>
+      <tile x="18" y="-16">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+      </tile>
+      <tile x="19" y="-16">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>166</obstruction>
+        </component>
+      </tile>
+      <tile x="20" y="-16">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+        <component type="StaticComponent">
+          <static>167</static>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>18</destinationX>
+          <destinationY>-11</destinationY>
+          <destinationRegion>1</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+        </component>
+      </tile>
+      <tile x="21" y="-16">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>166</obstruction>
+        </component>
+      </tile>
+      <tile x="22" y="-16">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+      </tile>
+      <tile x="23" y="-16">
+        <component type="FloorComponent">
+          <ground>178</ground>
+        </component>
+      </tile>
+      <tile x="24" y="-16">
+        <component type="StaticComponent">
+          <static>374</static>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>224</wall>
+          <destroyed>154</destroyed>
+          <ruins>46</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -442,9 +1024,16 @@
       <tile x="16" y="-15">
         <component type="WallComponent">
           <color r="255" g="0" b="0" a="255" />
-          <wall>223</wall>
-          <destroyed>38</destroyed>
+          <wall>224</wall>
+          <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>223</wall>
+          <destroyed>153</destroyed>
+          <ruins>46</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -469,9 +1058,16 @@
       <tile x="19" y="-15">
         <component type="WallComponent">
           <color r="255" g="0" b="0" a="255" />
-          <wall>223</wall>
-          <destroyed>38</destroyed>
+          <wall>224</wall>
+          <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>223</wall>
+          <destroyed>153</destroyed>
+          <ruins>46</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -487,9 +1083,16 @@
       <tile x="21" y="-15">
         <component type="WallComponent">
           <color r="255" g="0" b="0" a="255" />
-          <wall>223</wall>
-          <destroyed>38</destroyed>
+          <wall>224</wall>
+          <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>223</wall>
+          <destroyed>153</destroyed>
+          <ruins>46</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -514,9 +1117,16 @@
       <tile x="24" y="-15">
         <component type="WallComponent">
           <color r="255" g="0" b="0" a="255" />
-          <wall>223</wall>
-          <destroyed>38</destroyed>
+          <wall>224</wall>
+          <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>223</wall>
+          <destroyed>153</destroyed>
+          <ruins>46</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -115832,7 +116442,7 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	var boss1 = new Vampire()
+	var boss1 = new Flordex()
     {
         Name = "Flordex",
         MaxHealth = 7250, Health = 7250,
@@ -115880,7 +116490,7 @@
                                                     new AttackProneComponent(100)),                                       10 
         },
     };
-     boss1.Spells = new CreatureSpellCollection(25.0)
+     boss1.Spells = new CreatureSpellCollection(85.0)
     {
         new CreatureSpell<DeathSpell>(skillLevel: 14, cost: 14)
     };
@@ -121157,6 +121767,151 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="surfacePrisoner">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	   var prisoner = new Humanoid()
+    {
+        Name = "Prisoner",
+        
+        BaseDodge = 12,
+        MaxHealth = 32, Health = 32,
+        
+        Experience = 25,
+
+        CanSwim = true,
+
+        Alignment = Alignment.Lawful,
+    };
+    
+    
+    
+    prisoner.Attacks = new CreatureAttackCollection
+    {
+        new CreatureAttack(6,   2, 8,   "The dog bites you.")
+    };
+    
+    prisoner.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the hand"),
+        new CreatureBlock(3, "a face"),
+    };
+    
+    return prisoner;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+
+    switch (Utility.Random(1, 5))
+    {
+        case 1:
+        {
+            source.Emote($"cries in the cell"); break;
+        }
+        case 2: source.Say($"Run to the exit, {player.Name}!"); break;
+        case 3: source.Say($"Kill the jailer and run!"); break;
+        case 4: source.Emote($"watches {player.Name} for a moment, then cries."); break;
+        case 5: source.Say($"Quick {player.Name}! Kill the Jailer and leave!!."); break;
+   }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="surfaceJailer">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var giant = new Giant()
+    {
+        Name = "The Jail Keeper",
+        MaxHealth = 275, Health = 275,
+        BaseDodge = 18,
+    
+        Experience = 14000,
+        
+        HideDetection = 22,
+        
+        CanJumpkick = true,
+        CanStrikeCritically = false,
+        CanSwim = true,
+        
+        BasePenetration = ShieldPenetration.VeryHeavy,
+
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+    };
+    
+    giant.AddStatus(new NightVisionStatus(giant));
+    
+    giant.AddStatus(new BreatheWaterStatus(giant));
+    giant.Wield(Utility.RandomBool() ? (Weapon)new Longsword() : (Weapon)new SteelDagger());
+    giant.Equip(new DrakeScaleArmor());
+    giant.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(17,      43, 61,      "The giant smashes you with his fist.",
+                                                        new AttackProneComponent(15), 
+                                                        new AttackStunComponent(5)),                45
+        },
+        {
+            new CreatureAttack(18,      53, 71,     "The giant stomps on you.",
+                                                        new AttackProneComponent(25), 
+                                                        new AttackStunComponent(10)),               45
+        },
+        {
+            new CreatureAttack(19,      57, 80,     "The giant slams you across the room.",
+                                                        new AttackProneComponent(100), 
+                                                        new AttackStunComponent(15)),               10
+        },
+    };
+   
+    
+    giant.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(5, "his forearm"),
+        new CreatureBlock(7, "his thick skull"),
+        new CreatureBlock(2, "a meaty ham fist"),
+    };
+        
+    giant.AddGold(4000);
+    
+  giant.AddLoot(new LootPack(
+        new LootPackEntry(true, MagicBottles, 5),
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, UltraRare, 1),
+        new LootPackEntry(true, SemiRare, 5)
+    ));
+       
+    return giant;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    source.Say(Utility.RandomBool() ? $"mmm I'm going to eat your bones {player.Name} !" : $"I'll smash you!");
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="townBanker">
@@ -121886,6 +122641,111 @@ if (spawn is Shopkeeper shopkeeper)
       </script>
       <entry entity="skyNorthPeaceKeeper" size="1" minimum="1" maximum="1" />
       <location x="8" y="10" region="13" />
+    </spawn>
+    <spawn type="LocationSpawner" name="surfacePrisoner1E">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfacePrisoner" size="1" minimum="2" maximum="2" />
+      <location x="23" y="-21" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="surfacePrisoner1W">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfacePrisoner" size="1" minimum="2" maximum="2" />
+      <location x="18" y="-20" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="surfacePrisoner2W">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfacePrisoner" size="1" minimum="1" maximum="1" />
+      <location x="18" y="-18" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="surfacePrisoner2E">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfacePrisoner" size="1" minimum="1" maximum="1" />
+      <location x="23" y="-18" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="surfaceJailer">
+      <minimumDelay>4500</minimumDelay>
+      <maximumDelay>8100</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfaceJailer" size="1" minimum="1" maximum="1" />
+      <location x="20" y="-20" region="1" />
     </spawn>
     <spawn type="RegionSpawner" name="surfaceFishNorth">
       <minimumDelay>660</minimumDelay>
