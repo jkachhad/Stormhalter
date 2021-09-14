@@ -351,11 +351,47 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
+      <tile x="-2" y="-19">
+        <component type="WallComponent">
+          <wall>159</wall>
+          <destroyed>162</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-1" y="-19">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="0" y="-19">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
       <tile x="1" y="-19">
         <component type="WallComponent">
           <wall>159</wall>
           <destroyed>162</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -501,12 +537,44 @@
           <ruins>44</ruins>
         </component>
       </tile>
-      <tile x="1" y="-18">
+      <tile x="-2" y="-18">
         <component type="WallComponent">
           <wall>158</wall>
           <destroyed>161</destroyed>
           <ruins>170</ruins>
           <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-1" y="-18">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+        <component type="StaticComponent">
+          <static>167</static>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>20</destinationX>
+          <destinationY>-21</destinationY>
+          <destinationRegion>1</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+        </component>
+      </tile>
+      <tile x="0" y="-18">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+      </tile>
+      <tile x="1" y="-18">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>158</wall>
+          <destroyed>161</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="2" y="-18">
@@ -605,12 +673,62 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
+      <tile x="-4" y="-17">
+        <component type="WallComponent">
+          <wall>159</wall>
+          <destroyed>162</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-3" y="-17">
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-2" y="-17">
+        <component type="WallComponent">
+          <wall>158</wall>
+          <destroyed>161</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-1" y="-17">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+        </component>
+      </tile>
+      <tile x="0" y="-17">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+      </tile>
       <tile x="1" y="-17">
         <component type="WallComponent">
           <wall>158</wall>
           <destroyed>161</destroyed>
           <ruins>170</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="2" y="-17">
@@ -758,12 +876,44 @@
           <ruins>44</ruins>
         </component>
       </tile>
-      <tile x="2" y="-16">
+      <tile x="-4" y="-16">
         <component type="WallComponent">
           <wall>158</wall>
           <destroyed>161</destroyed>
           <ruins>170</ruins>
           <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-3" y="-16">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+      </tile>
+      <tile x="-2" y="-16">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+      </tile>
+      <tile x="-1" y="-16">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+      </tile>
+      <tile x="0" y="-16">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+      </tile>
+      <tile x="1" y="-16">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+      </tile>
+      <tile x="2" y="-16">
+        <component type="WallComponent">
+          <wall>158</wall>
+          <destroyed>161</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="3" y="-16">
@@ -859,6 +1009,24 @@
           <destroyed>154</destroyed>
           <ruins>46</ruins>
           <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-4" y="-15">
+        <component type="WallComponent">
+          <wall>158</wall>
+          <destroyed>161</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-3" y="-15">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+      </tile>
+      <tile x="-2" y="-15">
+        <component type="FloorComponent">
+          <ground>264</ground>
         </component>
       </tile>
       <tile x="-1" y="-15">
@@ -1146,13 +1314,30 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
+      <tile x="-4" y="-14">
+        <component type="WallComponent">
+          <wall>158</wall>
+          <destroyed>161</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-3" y="-14">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+      </tile>
+      <tile x="-2" y="-14">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+      </tile>
       <tile x="-1" y="-14">
         <component type="WallComponent">
           <color r="255" g="0" b="0" a="255" />
           <wall>224</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="0" y="-14">
@@ -1388,13 +1573,36 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
-      <tile x="-1" y="-13">
+      <tile x="-4" y="-13">
         <component type="WallComponent">
-          <color r="255" g="0" b="0" a="255" />
-          <wall>224</wall>
-          <destroyed>39</destroyed>
-          <ruins>44</ruins>
+          <wall>158</wall>
+          <destroyed>161</destroyed>
+          <ruins>170</ruins>
           <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-3" y="-13">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+      </tile>
+      <tile x="-2" y="-13">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+      </tile>
+      <tile x="-1" y="-13">
+        <component type="FloorComponent">
+          <color r="159" g="155" b="140" a="255" />
+          <ground>178</ground>
+        </component>
+        <component type="DoorComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <openId>75</openId>
+          <closedId>65</closedId>
+          <secretId>224</secretId>
+          <destroyedId>81</destroyedId>
+          <isSecret>true</isSecret>
         </component>
       </tile>
       <tile x="0" y="-13">
@@ -1592,12 +1800,48 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
+      <tile x="-4" y="-12">
+        <component type="WallComponent">
+          <wall>158</wall>
+          <destroyed>161</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-3" y="-12">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-2" y="-12">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
       <tile x="-1" y="-12">
         <component type="WallComponent">
           <color r="255" g="0" b="0" a="255" />
           <wall>224</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="0" b="0" a="255" />
+          <wall>223</wall>
+          <destroyed>153</destroyed>
+          <ruins>46</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -121861,6 +122105,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         CanJumpkick = true,
         CanStrikeCritically = false,
         CanSwim = true,
+        CanLoot = false,
         
         BasePenetration = ShieldPenetration.VeryHeavy,
 
