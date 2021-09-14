@@ -208,6 +208,11 @@ namespace Kesmai.WorldForge.Editor
 								presenter.InvalidateRender();
 						}
 					});
+			WeakReferenceMessenger.Default
+				.Register<ApplicationPresenter,JumpSegmentRegionLocation>(
+				this, (receiver,m) => {
+					ActiveDocument = Documents.Where(d => d is SegmentRegion r && r.ID == m.Region).FirstOrDefault();
+				});
 
 			SelectFilterCommand = new RelayCommand<TerrainSelector>(SelectFilter, 
 				(filter) => (Segment != null));

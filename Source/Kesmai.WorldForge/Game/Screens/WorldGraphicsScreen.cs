@@ -528,6 +528,26 @@ namespace Kesmai.WorldForge
 					else { WeakReferenceMessenger.Default.Send(null as Spawner); } // default to just jumping to the spawner tab.                   
 					inputService.IsKeyboardHandled = true;
 				}
+				else if (inputService.IsPressed(Keys.D, false))
+				{
+					var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+					var segment = segmentRequest.Response;
+					var sel = _selection.FirstOrDefault();
+					if (sel is { Width: 1, Height: 1 })
+					{
+						var thisTile = region.GetTile(sel.Left, sel.Top);
+						if (thisTile is not null)
+                        {
+							var thisComponent = thisTile.GetComponents<TeleportComponent>().FirstOrDefault();
+							if (thisComponent is not null)
+                            {
+								WeakReferenceMessenger.Default.Send(new JumpSegmentRegionLocation(thisComponent.DestinationRegion, thisComponent.DestinationX, thisComponent.DestinationY));
+								_selection.Select(new Rectangle(thisComponent.DestinationX,thisComponent.DestinationY,1,1), segment.GetRegion(thisComponent.DestinationRegion));
+								inputService.IsKeyboardHandled = true;
+							}
+                        }
+					}
+				}
 			}
 			else if (inputService.IsPressed(Keys.W, true))
 			{
