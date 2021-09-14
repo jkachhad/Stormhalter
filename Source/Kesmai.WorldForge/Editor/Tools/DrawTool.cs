@@ -82,10 +82,24 @@ namespace Kesmai.WorldForge
 					if (component != null)
 					{
 						var componentType = component.GetType();
+						var floorTypes = new List<String>() {
+							"FloorComponent",
+							"WaterComponent",
+							"IceComponent",
+							"SkyComponent"
+						};
+						IEnumerable<TerrainComponent> similar;
 
 						if (!_isAltDown && !_isShiftDown)
 						{
-							var similar = selectedTile.GetComponents<TerrainComponent>(c => c.GetType().IsAssignableFrom(componentType));
+							if (floorTypes.Contains(componentType.Name))
+							{
+								similar = selectedTile.GetComponents<TerrainComponent>(c => c is FloorComponent || c is WaterComponent || c is IceComponent || c is SkyComponent);
+							}
+							else
+							{
+								similar = selectedTile.GetComponents<TerrainComponent>(c => c.GetType().IsAssignableFrom(componentType));
+							}
 
 							foreach (var similarComponent in similar)
 								selectedTile.RemoveComponent(similarComponent);
