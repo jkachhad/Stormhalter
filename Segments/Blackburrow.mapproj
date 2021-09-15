@@ -27915,7 +27915,7 @@ if (spokeRecently(source))
         <block><![CDATA[
 	var sooth = new Troll()
     {
-        Name = "Gnoll Soothsayer"
+        Name = "Gnoll Soothsayer",
         MaxHealth = 300, Health = 300,
         MaxMana = 19, Mana = 19,
         BaseDodge = 14,
@@ -28039,7 +28039,7 @@ if (spokeRecently(source))
         <block><![CDATA[
 	var sooth = new Troll()
     {
-        Name = "Gnoll Soothsayer"
+        Name = "Gnoll Soothsayer",
         MaxHealth = 300, Health = 300,
         MaxMana = 19, Mana = 19,
         BaseDodge = 14,
@@ -28530,11 +28530,11 @@ if (spokeRecently(source))
         <block><![CDATA[
 	  var crocodile = new Crocodile()
     {
-        Name = "LockJaw"
+        Name = "LockJaw",
         BaseDodge = 31,
         MaxHealth = 10000, Health = 10000,
         HideDetection = 33,
-        BasePenetration = ShieldPenetration.Heavy
+        BasePenetration = ShieldPenetration.Heavy,
         canswim = true,
         Alignment = Alignment.Evil
         Immunity = CreatureImmunity.Poison
@@ -28594,7 +28594,7 @@ if (spokeRecently(source))
         <block><![CDATA[
 	 var banshee = new ConfessorGhost()
     {
-        Name = "Ghost of Memp"
+        Name = "Ghost of Memp",
         Alignment = Alignment.Evil
         MaxHealth = 120, Health = 120,
         BaseDodge = 13,
@@ -29018,7 +29018,7 @@ if (spokeRecently(source))
     Name = "Cave Giant Jym",
     MaxHealth  =  4000, Health = 4000,
     BaseDodge = 30,
-    BasePenetration = ShieldPenetration.VeryHeavy
+    BasePenetration = ShieldPenetration.VeryHeavy,
     Experience = 100000,
     HideDetection = 35,
     CanJumpkick = true,
@@ -29145,7 +29145,6 @@ if (spokeRecently(source))
     ));
     
     return stalker;
-}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -29168,7 +29167,7 @@ if (spokeRecently(source))
         <block><![CDATA[
 	 var spectre = new Spectre()
     {
-        Name = "Undead Thaum"
+        Name = "Undead Thaum",
         MaxHealth = 150, Health = 150,
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
@@ -29278,7 +29277,7 @@ return skeleton;
 	var snake = new Snake()
 {
 
-    Name = "Water Moccasin"
+    Name = "Water Moccasin",
     MaxHealth = 425, Health = 425,
     BaseDodge = 16,
     BasePenetration = ShieldPenetration.Medium,
@@ -29376,7 +29375,7 @@ elemental.Spells = new CreatureSpellCollection()
 {
 
     new CreatureSpell<PoisonCloudSpell>(
-        skillLevel 5, cost: 25,
+        skillLevel: 5, cost: 25,
         mantra: SpellHelper.GenerateMantra(), instantCast: false)
 };
 
@@ -29419,7 +29418,7 @@ return elemental;
         <block><![CDATA[
 	var dragon = new Skeleton()
 {
-    Name = "Undead Dragon"
+    Name = "Undead Dragon",
     Body = 135,
     MaxHealth = 15000, Health = 15000,
     BaseDodge = 31,
@@ -29556,7 +29555,7 @@ ogre.AddStatus(new BreatheWaterStatus(ogre));
 
 ogre.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
 
-ogre.Attacks = new CreatureAttackCollection(()
+ogre.Attacks = new CreatureAttackCollection()
 {
 
    {
@@ -29653,7 +29652,7 @@ ogre.AddStatus(new BreatheWaterStatus(ogre));
 
 ogre.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
 
-ogre.Attacks = new CreatureAttackCollection(()
+ogre.Attacks = new CreatureAttackCollection()
 {
 
    {
@@ -30073,9 +30072,11 @@ return ogre;
     spawn.Name = "Gates";
     spawn.Body = 10;
     if (spawn is Banker banker)
+	{
         banker.AddCounter(new Point2D(10, -16, 1));
         banker.AddCounter(new Point2D(11, -16, 1));
         banker.AddCounter(new Point2D(11, -15, 1));
+	}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -30837,7 +30838,7 @@ return ogre;
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new GoldNugget(25000u)
+	return new GoldNugget(25000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -31025,7 +31026,7 @@ return ogre;
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new GoldNugget(50000u)
+	return new GoldNugget(50000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -31101,7 +31102,7 @@ return ogre;
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new GoldNugget(50000u)
+	return new GoldNugget(50000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -31148,7 +31149,7 @@ return ogre;
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new GoldNugget(100000u)
+	return new GoldNugget(100000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -31195,7 +31196,7 @@ return ogre;
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new GoldNugget(200000u)
+	return new GoldNugget(200000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
