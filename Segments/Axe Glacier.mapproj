@@ -3372,6 +3372,15 @@
           <ground>6</ground>
         </component>
         <component type="Fire" />
+        <component type="HiddenTeleporterComponent">
+          <destinationX>31</destinationX>
+          <destinationY>13</destinationY>
+          <destinationRegion>1</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+        </component>
       </tile>
       <tile x="28" y="9">
         <component type="WallComponent">
@@ -48275,14 +48284,14 @@
         </component>
       </tile>
       <tile x="0" y="8">
-        <component type="StaticComponent">
-          <static>175</static>
-        </component>
         <component type="WallComponent">
           <wall>146</wall>
           <destroyed>148</destroyed>
           <ruins>0</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="LockersComponent">
+          <static>120</static>
         </component>
       </tile>
       <tile x="1" y="8">
