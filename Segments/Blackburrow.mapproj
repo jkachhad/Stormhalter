@@ -28196,7 +28196,7 @@ if (spokeRecently(source))
         new LootPackEntry(true, StatPotion, 2)
         ));
   
-  // Todo Add loot pack
+ 
        
    return fippy;
 ]]></block>
@@ -28505,6 +28505,12 @@ if (spokeRecently(source))
     };
     
     overlord.AddGold(3000);
+    overlord.AddLoot(new LootPack(
+    new LootPackEntry(true, Dragongems, 100),
+    new LootPackEntry(true, Dragongems, 100),
+    new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(), 100),
+    new LootPackEntry(true, Miniboss, 25)
+    ));
    
     
     return overlord;
@@ -28603,7 +28609,7 @@ if (spokeRecently(source))
         BasePenetration = ShieldPenetration.Light,
         MaxMana = 40, Mana = 40,
         DeathResistance = 100,
-        Immunity = CreatureImmunity.Poison
+        Immunity = CreatureImmunity.Poison,
     };
     
     banshee.AddStatus(new NightVisionStatus(banshee));
@@ -28674,7 +28680,7 @@ if (spokeRecently(source))
         Movement = 2,
         CanSwim = true,
         BasePenetration = ShieldPenetration.Light,
-        Immunity = CreatureImmunity.Poison
+        Immunity = CreatureImmunity.Poison,
         
     };
     
@@ -28698,7 +28704,7 @@ if (spokeRecently(source))
     {
         new CreatureBlock(6, "the armor"),
         new CreatureBlock(3, "a claw"),
-        new CreatureBlock(1, "a tail")
+        new CreatureBlock(1, "a tail"),
     };
             
     babycroc.AddGold(110);
@@ -29299,7 +29305,7 @@ snake.Attacks = new CreatureAttackCollection()
         new CreatureAttack(13, 25, 35, "The snake bites you on the ankle", new AttackPoisonComponent(10,25)),75
     },
     
-    {6
+    {
     
         new CreatureAttack(14, 40, 60, "The snake bites you on the neck", new AttackPoisonComponent(30)),25
         
@@ -29322,7 +29328,7 @@ snake.Blocks = new CreatureBlockCollection
 snake.AddGold(2500);
 snake.AddLoot(new LootPack(
     new LootPackEntry(true, Levelthreegems, 10, gemsPriceMutator),
-    new LootPackEntry(true, GenericBottles, 33),
+    new LootPackEntry(true, GenericBottles, 33)
 ));
 
 return snake;
@@ -29362,7 +29368,7 @@ return snake;
     Immunity = CreatureImmunity.Poison,
     Experience = 25000,
     
-    VisibilityDistance = 0
+    VisibilityDistance = 0,
 };
 
 elemental.Attacks = new CreatureAttackCollection
