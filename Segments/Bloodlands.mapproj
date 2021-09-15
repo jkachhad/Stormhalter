@@ -116776,9 +116776,21 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (killer is PlayerEntity player)
+    {
+        var quest = Quests.GetQuest<EighteenStrengthQuest>();
+    
+        if (quest != null && quest.InProgress(player))
+        {                        
+            if (quest.GetStage(player) != EighteenStrengthStage.Flordex)
+                return;
+
+            quest.SetStage(player, EighteenStrengthStage.FlordexKilled);
+        }
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -119497,9 +119509,21 @@ var ghoul = new Ghoul()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (killer is PlayerEntity player)
+    {
+        var quest = Quests.GetQuest<EighteenStrengthQuest>();
+    
+        if (quest != null && quest.InProgress(player))
+        {                        
+            if (quest.GetStage(player) != EighteenStrengthStage.FlordexKilled)
+                return;
+
+            quest.SetStage(player, EighteenStrengthStage.NecroKilled);
+        }
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -122173,6 +122197,32 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="townRestel">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var restel = new Restel();
+            
+    restel.Wield(new Greatsword());
+    restel.Equip(new ChainmailArmor());    
+
+    return restel;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="townBanker">
@@ -123007,6 +123057,26 @@ if (spawn is Shopkeeper shopkeeper)
       </script>
       <entry entity="surfaceJailer" size="1" minimum="1" maximum="1" />
       <location x="20" y="-20" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="townRestel">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="townRestel" size="1" minimum="1" maximum="1" />
+      <location x="27" y="14" region="1" />
     </spawn>
     <spawn type="RegionSpawner" name="surfaceFishNorth">
       <minimumDelay>660</minimumDelay>
