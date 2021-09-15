@@ -108736,6 +108736,211 @@ try { // If this doesn't work, don't break the segment. just quietly don't have 
       <entry entity="axeRecallVendor" size="1" minimum="1" maximum="1" />
       <location x="3" y="11" region="15" />
     </spawn>
+    <spawn type="LocationSpawner" name="Location Spawn 7, 14 [11]">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <location x="7" y="14" region="11" />
+    </spawn>
+    <spawn type="LocationSpawner" name="PubBarkeep">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    spawn.Name = "Porphyrys";
+    spawn.Body = 9;
+
+try { // If this doesn't work, don't break the segment. just quietly don't have items to sell, or a counter.
+    if (spawn is Shopkeeper vendor) {
+        vendor.AddCounter(new Point2D(6, 13, 11))
+        vendor.AddCounter(new Point2D(7, 13, 11))
+        void onRarePurchase(PlayerEntity player, ItemEntity item)
+        {
+            vendor.SayTo(player, _rarePurchaseResponses.Random());
+        }
+   
+        // Default wares. Pick 3 and stock them. this vendor is a generalist and carries a variety of potions, jewelry and weapons, but doesn't compete with the armorer.
+        var merchantUpsell = 3.5;
+        var wares = new List<StockEntry>()
+        {
+           new StockEntry("stamina potion",   () => new StaminaPotion(),      (int)(40 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+           new StockEntry("mugwort",          () => new Mugwort(),            (int)(25 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+           new StockEntry("yellow balm",      () => new YellowBalm(),         (int)(16 * merchantUpsell),       Utility.RandomBetween(1, 4), null),           
+        };
+        foreach (var stock in wares.Random(3)){
+            vendor.Stock(stock);
+            vendor.Restock(stock);
+        }
+        
+        //Apothecaries carry either naptha or nitro. More likely to carry one or the other based on land.
+        var naptha = new StockEntry("black ceramic bottle", () => new NapthaPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
+        var nitro = new StockEntry("black ceramic bottle", () => new NitroPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
+        if (Utility.RandomDouble <= 0.50) {
+            vendor.Stock(nitro);
+            vendor.Restock(nitro);
+        } else {
+            vendor.Stock(naptha);
+            vendor.Restock(naptha);
+        }
+
+        // Rare Wares: Upsell increased. 50% chance to sell something shiny, since we're further from facet and zone-in.
+        merchantUpsell = Utility.RandomDouble()*3+7; // 7-10x upsell
+        var rareWares = new List<StockEntry>()
+        {
+        //Apothecary
+
+            new StockEntry("red clay bottle",           () => new PermanentStrengthPotion(),        (int)(2000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("black ceramic bottle",      () => new PermanentDexterityPotion(),       (int)(2000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("small porcelain vial",      () => new PermanentConstitutionPotion(),    (int)(2000 * merchantUpsell),       1, onRarePurchase)
+        };
+        if (Utility.RandomDouble() <= 0.50) {
+            if (Utility.RandomDouble()<= 0.50) {
+                var thisTimeStock = rareWares[0];
+            } else if (Utility.RandomDouble()<= 0.60) {
+                var thisTimeStock = rareWares[1];
+            } else {
+                var thisTimeStock = rareWares[2];
+            }
+            vendor.Stock(thisTimeStock);
+        }
+    }
+}catch {}  
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="axeshopkeeperTemplate" size="1" minimum="0" maximum="0" />
+      <location x="6" y="14" region="11" />
+    </spawn>
+    <spawn type="LocationSpawner" name="PubPawn">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+try { // If this doesn't work, don't break the segment. just quietly don't have items to sell, or a counter.
+    if (spawn is Shopkeeper vendor) {
+        vendor.AddCounter(new Point2D(10, 13, 11))
+        void onRarePurchase(PlayerEntity player, ItemEntity item)
+        {
+            vendor.SayTo(player, _rarePurchaseResponses.Random());
+        }
+   
+        // Default wares. Pick 3 and stock them. this vendor is a generalist and carries a variety of potions, jewelry and weapons, but doesn't compete with the armorer.
+        var merchantUpsell = 3.5;
+        var wares = new List<StockEntry>()
+        {
+           new StockEntry("stamina potion",   () => new StaminaPotion(),      (int)(40 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+           new StockEntry("mugwort",          () => new Mugwort(),            (int)(25 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+           new StockEntry("yellow balm",      () => new YellowBalm(),         (int)(16 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+           new StockEntry("stamina potion",   () => new StaminaPotion(),      (int)(40 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+           new StockEntry("dagger",           () => new Dagger(),             (int)(100 * merchantUpsell),      Utility.RandomBetween(1, 4), null),
+           new StockEntry("katana",           () => new Katana(),             (int)(100 * merchantUpsell),      Utility.RandomBetween(1, 4), null),
+           new StockEntry("greatsword",       () => new Greatsword(),         (int)(100 * merchantUpsell),      Utility.RandomBetween(1, 4), null),
+           new StockEntry("scorpion amulet",  () => new ScorpionAmulet(),     (int)(250 * merchantUpsell),      Utility.RandomBetween(1, 2), null),
+           new StockEntry("black pearls",     () => new BlackPearls(),        (int)(600 * merchantUpsell),      Utility.RandomBetween(1, 2), null),
+           new StockEntry("weak strength ring",() => new WeakStrengthRing(),  (int)(500 * merchantUpsell),      Utility.RandomBetween(1, 2), null)
+           
+        };
+        foreach (var stock in wares.Random(3)){
+            vendor.Stock(stock);
+            vendor.Restock(stock);
+        }
+
+        // Rare Wares: Upsell increased. 50% chance to sell something shiny, since we're further from facet and zone-in.
+        merchantUpsell = Utility.RandomDouble()*3+7; // 7-10x upsell
+        var rareWares = new List<StockEntry>()
+        {
+        //Apothecary
+            new StockEntry("dull grey rock",            () => new IronOre(),                        (int)(500 * merchantUpsell),        1, onRarePurchase),
+            new StockEntry("red clay bottle",           () => new PermanentStrengthPotion(),        (int)(2000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("small porcelain vial",      () => new PermanentConstitutionPotion(),    (int)(2000 * merchantUpsell),       1, onRarePurchase)
+        };
+        if (Utility.RandomDouble() <= 0.50) {
+            if (Utility.RandomDouble()<= 0.50) {
+                var thisTimeStock = rareWares[0];
+            } else if (Utility.RandomDouble()<= 0.60) {
+                var thisTimeStock = rareWares[1];
+            } else {
+                var thisTimeStock = rareWares[2];
+            }
+            vendor.Stock(thisTimeStock);
+        }
+    }
+}catch {}  
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="axeshopkeeperTemplate" size="1" minimum="0" maximum="0" />
+      <location x="10" y="14" region="11" />
+    </spawn>
+    <spawn type="LocationSpawner" name="PubBalm">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="axeBalmVendor" size="1" minimum="0" maximum="0" />
+      <location x="3" y="14" region="11" />
+    </spawn>
+    <spawn type="LocationSpawner" name="PubRecall">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="axeRecallVendor" size="1" minimum="0" maximum="0" />
+      <location x="5" y="8" region="11" />
+    </spawn>
     <spawn type="RegionSpawner" name="Surface Dungeon">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
