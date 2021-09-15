@@ -9,11 +9,11 @@
     public static bool spokeRecently(MobileEntity entity)
     {
         /* If the entity spoke recently, we're not going to speak again. */
-        if (_speechDelays.TryGetValue(entity, out var nextSpeechTime) && DateTime.Now < nextSpeechTime)
+        if (_speechDelays.TryGetValue(entity, out var nextSpeechTime) && Server.Now < nextSpeechTime)
             return true;
         
         /* The entity did not speak recently, add them to the delay, and allow them to talk. */
-        _speechDelays[entity] = DateTime.Now + _speechDelay;
+        _speechDelays[entity] = Server.Now + _speechDelay;
         return false;
     }
 	
