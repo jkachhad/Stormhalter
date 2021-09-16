@@ -107660,6 +107660,7 @@
         BasePenetration = ShieldPenetration.Heavy,
         Experience = 200500,
         CanCharge = true,
+        CanStrikeCritically = false,
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
                    
@@ -107671,7 +107672,7 @@
     necro.AddStatus(new NightVisionStatus(necro));
     necro.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(24, 33, 50)
+        new CreatureBasicAttack(22, 25, 40)
     };
     
     necro.Spells = new CreatureSpellCollection(10.0)
