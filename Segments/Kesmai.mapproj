@@ -98754,6 +98754,7 @@ return orc;
         new LootPackEntry(true, dungeon3Treasure,   2.7),
         new LootPackEntry(true, dungeon3Rings,      2.7),
         new LootPackEntry(true, dungeon3Potions,    0.33),
+        new LootPackEntry(true, utilityItems,   2),
         new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.0)
         //new LootPackEntry(true, (from, container) => new SnakeStaff(), 1.6)
@@ -98813,6 +98814,7 @@ return orc;
         new LootPackEntry(true, dungeon3Treasure,   2.7),
         new LootPackEntry(true, dungeon3Rings,      2.7),
         new LootPackEntry(true, dungeon3Potions,    0.33),
+        new LootPackEntry(true, utilityItems,   2),
         new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator)
     ));
     
@@ -99249,6 +99251,7 @@ return orc;
         new LootPackEntry(true, dungeon4Treasure,   2.8),
         new LootPackEntry(true, dungeon4Rings,      2.8),
         new LootPackEntry(true, dungeon3Potions,    0.35),
+        new LootPackEntry(true, utilityItems,   3),
         new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6)
     ));
@@ -99310,6 +99313,7 @@ return orc;
         new LootPackEntry(true, dungeon4Treasure,   2.8),
         new LootPackEntry(true, dungeon4Rings,      2.8),
         new LootPackEntry(true, dungeon3Potions,    0.35),
+        new LootPackEntry(true, utilityItems,   3),
         new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6)
     ));
@@ -99622,6 +99626,7 @@ return orc;
         new LootPackEntry(true, dungeon4Treasure,   2.8),
         new LootPackEntry(true, dungeon4Rings,      2.8),
         new LootPackEntry(true, dungeon3Potions,    0.35),
+        new LootPackEntry(true, utilityItems,   3),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6),
         new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new RedRunesRobe(),        10.0)
@@ -99694,6 +99699,7 @@ return orc;
         new LootPackEntry(true, dungeon4Treasure,   2.8),
         new LootPackEntry(true, dungeon4Rings,      2.8),
         new LootPackEntry(true, dungeon3Potions,    0.35),
+        new LootPackEntry(true, utilityItems,   3),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6),
         new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new RedRunesRobe(),        10.0)
@@ -100072,6 +100078,7 @@ return orc;
         new LootPackEntry(true, dungeon3Gems,       13,     gemsPriceMutator),
         new LootPackEntry(true, dungeon3Bottles,    33),
         new LootPackEntry(true, surfaceTreasure,    2.5),
+        new LootPackEntry(true, utilityItems,   1),
         new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new IronOre(),         1.6)
         //new LootPackEntry(true, (from, container) => new SnakeStaff(),    1.6),
@@ -100131,6 +100138,7 @@ return orc;
         new LootPackEntry(true, dungeon3Gems,       17,     gemsPriceMutator),
         new LootPackEntry(true, dungeon2Bottles,    33),
         new LootPackEntry(true, surfaceTreasure,    2.5),
+        new LootPackEntry(true, utilityItems,   1), 
         new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new IronOre(),     1.6)
     ));
@@ -100323,6 +100331,7 @@ return orc;
         new LootPackEntry(true, (from, container) => new ClearBalm(),           50),
         new LootPackEntry(true, (from, container) => new Diamond(3100u),        100,    gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new PearDiamond(12000u),    100,    gemsPriceMutator),
+        new LootPackEntry(true, utilityItems,   50),
         new LootPackEntry(true, (from, container) => new StarsRobe(),           100)
     ));
     
@@ -100506,6 +100515,7 @@ return orc;
         new LootPackEntry(true, dungeon4Treasure,   2.8),
         new LootPackEntry(true, dungeon4Rings,      2.8),
         new LootPackEntry(true, dungeon3Potions,    0.35),
+        new LootPackEntry(true, utilityItems,   3),
         new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6)
     ));
@@ -103373,6 +103383,71 @@ else
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new FireProtectionAmulet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="utilityItems">
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new DarknessOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new WebOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new LightOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new FireballOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new IceStormOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PineWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new GlassWand();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
