@@ -3,6 +3,20 @@
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
+    public static TimeSpan _speechDelay = TimeSpan.FromMinutes(1.0);
+    public static Dictionary<MobileEntity, DateTime> _speechDelays = new Dictionary<MobileEntity, DateTime>();
+    
+    public static bool spokeRecently(MobileEntity entity)
+    {
+        /* If the entity spoke recently, we're not going to speak again. */
+        if (_speechDelays.TryGetValue(entity, out var nextSpeechTime) && DateTime.Now < nextSpeechTime)
+            return true;
+        
+        /* The entity did not speak recently, add them to the delay, and allow them to talk. */
+        _speechDelays[entity] = DateTime.Now + _speechDelay;
+        return false;
+    }
+    
     public static readonly string[] _names = new string[]
     {
         "Aca", "Acha", "Achi", "Achu", "Aco", "Agua", "Ahua", "Aja", "Ala", "Ali", "Ama", "Ani", "Anu", "Apa",
@@ -50903,6 +50917,15 @@
           <ground>18</ground>
           <movementCost>2</movementCost>
         </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>3</destinationX>
+          <destinationY>9</destinationY>
+          <destinationRegion>225</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+        </component>
       </tile>
       <tile x="21" y="1">
         <component type="FloorComponent">
@@ -85516,9 +85539,13 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (spokeRecently(source))
+        return;
+
+    source.Say($"Come see our wares, {player.Name}. Just ask me to 'show prices'.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -86800,7 +86827,7 @@
     
     kobold.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(7)
+        new CreatureBasicAttack(6)
     };
 
     kobold.Wield(new SteelMace());
@@ -86896,7 +86923,7 @@
     
     orc.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(8)
+        new CreatureBasicAttack(6)
     };
 
     orc.Wield(new Crossbow());
@@ -86945,7 +86972,7 @@
     
     troll.Attacks = new CreatureAttackCollection
     {
-        new CreatureAttack(6, 5, 15)
+        new CreatureBasicAttack(7)
     };
 
     troll.Wield(new Greatsword());
@@ -87421,6 +87448,7 @@
             new LootPackEntry(true, dungeon2Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon2Bottles, 33.0), 
             new LootPackEntry(true, dungeon2Treasure, 0.63), 
+            new LootPackEntry(true, dungeon3Wands, 2), 
             new LootPackEntry(true, dungeon2Rings, 0.63), 
             new LootPackEntry(true, oakvaelPotions, 0.05)
             //new LootPackEntry(true, &poak_wands, 5.0), 
@@ -87460,7 +87488,7 @@
     
     hobgoblin.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9, 9, 16)
+        new CreatureBasicAttack(9)
     };
 
     hobgoblin.Wield(new Longsword());
@@ -87473,7 +87501,7 @@
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.1) 
+            new LootPackEntry(true, oakvaelPotions, 0.2) 
         ));
 
     return hobgoblin;
@@ -87509,7 +87537,7 @@
     
     orc.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9, 8, 13)
+        new CreatureBasicAttack(9)
     };
 
     orc.Wield(new Longsword());
@@ -87522,7 +87550,7 @@
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.1) 
+            new LootPackEntry(true, oakvaelPotions, 0.2) 
         ));
 
     return orc;
@@ -87571,7 +87599,7 @@
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.1) 
+            new LootPackEntry(true, oakvaelPotions, 0.2) 
         ));
 
     return orc;
@@ -87631,7 +87659,7 @@
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.1) 
+            new LootPackEntry(true, oakvaelPotions, 0.2) 
         ));
 
     return orc;
@@ -87665,7 +87693,7 @@
     
     troll.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9, 10, 17)
+        new CreatureBasicAttack(10)
     };
 
     troll.Wield(new Greatsword());
@@ -87678,7 +87706,7 @@
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.1) 
+            new LootPackEntry(true, oakvaelPotions, 0.2) 
         ));
 
     return troll;
@@ -87747,7 +87775,7 @@
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.1) 
+            new LootPackEntry(true, oakvaelPotions, 0.2) 
         ));
 
     return thaum;
@@ -87812,9 +87840,10 @@
         new LootPack(
             new LootPackEntry(true, dungeon3Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
+            new LootPackEntry(true, dungeon3Wands, 2), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.1) 
+            new LootPackEntry(true, oakvaelPotions, 0.2) 
             //new LootPackEntry(true, &poak_wands, 5.0)
         ));
 
@@ -87951,7 +87980,8 @@
         new LootPack(
             new LootPackEntry(true, dungeon3Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
-            new LootPackEntry(true, (from, container) => new SilverDagger(), 7.14)
+            new LootPackEntry(true, (from, container) => new SilverDagger(), 7.14), 
+            new LootPackEntry(true, oakvaelPotions, 0.2) 
         ));
 
     return gargoyle;
@@ -87981,6 +88011,7 @@
         BaseDodge = 15,
 
         Experience = 1325,
+        FireProtection = 100,
 
         Movement = 2,
     };    
@@ -88093,7 +88124,7 @@
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2) 
+            new LootPackEntry(true, oakvaelPotions, 0.3) 
         ));
     
     return serpent;
@@ -88143,7 +88174,7 @@
             new LootPackEntry(true, dungeon3Bottles, 33.0), 
             new LootPackEntry(true, dungeon3Treasure, 0.63), 
             new LootPackEntry(true, dungeon3Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.1) 
+            new LootPackEntry(true, oakvaelPotions, 0.2) 
         ));
 
     return pescalanor;
@@ -88210,7 +88241,8 @@
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
-            new LootPackEntry(true, (from, container) => new SilverDagger(), 7.14)
+            new LootPackEntry(true, (from, container) => new SilverDagger(), 7.14), 
+            new LootPackEntry(true, oakvaelPotions, 0.3) 
         ));
 
     return gargoyle;
@@ -88277,7 +88309,7 @@
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return minotaur;
@@ -88311,7 +88343,7 @@
     
     hobgoblin.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11, 12, 19)
+        new CreatureBasicAttack(11)
     };
 
     hobgoblin.Wield(new Longsword());
@@ -88324,7 +88356,7 @@
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return hobgoblin;
@@ -88362,7 +88394,7 @@
     
     troll.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(12, 13, 20)
+        new CreatureBasicAttack(12)
     };
 
     troll.Wield(new Greatsword());
@@ -88375,7 +88407,7 @@
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return troll;
@@ -88411,7 +88443,7 @@
     
     orc.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11, 11, 16)
+        new CreatureBasicAttack(11)
     };
 
     orc.Wield(new Longsword());
@@ -88424,7 +88456,7 @@
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return orc;
@@ -88473,7 +88505,7 @@
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return orc;
@@ -88542,9 +88574,10 @@
         new LootPack(
             new LootPackEntry(true, dungeon4Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
+            new LootPackEntry(true, dungeon3Wands, 3), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return thaum;
@@ -88610,8 +88643,9 @@
             new LootPackEntry(true, dungeon4Gems, 25.0, gemsPriceMutator), 
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
+            new LootPackEntry(true, dungeon3Wands, 3), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
             //new LootPackEntry(true, &poak_wands, 5.0), 
             //new LootPackEntry(true, &poak_books, 0.63),
         ));
@@ -88643,6 +88677,7 @@
         BaseDodge = 17,
 
         Experience = 4450,
+        FireProtection = 100,
 
         Movement = 2,
     };
@@ -88726,7 +88761,7 @@
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return drizilu;
@@ -88779,7 +88814,7 @@
             new LootPackEntry(true, dungeon4Bottles, 33.0), 
             new LootPackEntry(true, dungeon4Treasure, 0.63), 
             new LootPackEntry(true, dungeon4Rings, 0.63), 
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return glamuzu;
@@ -88816,7 +88851,7 @@
     
     banshee.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(14, 11, 25)
+        new CreatureBasicAttack(14)
     };
     
     banshee.Spells = new CreatureSpellCollection()
@@ -88834,7 +88869,7 @@
             new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return banshee;
@@ -88888,8 +88923,9 @@
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
+            new LootPackEntry(true, dungeon5Wands, 1), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return banshee;
@@ -88926,7 +88962,7 @@
     
     wraith.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(14, 15, 20),
+        new CreatureBasicAttack(14),
     };
     
     wraith.Spells = new CreatureSpellCollection()
@@ -88947,8 +88983,9 @@
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
+            new LootPackEntry(true, dungeon5Wands, 2), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return wraith;
@@ -89016,9 +89053,10 @@
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5SpellOrbs, 5.0),
+            new LootPackEntry(true, dungeon5Wands, 2), 
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
-            new LootPackEntry(true, oakvaelPotions, 0.2) 
+            new LootPackEntry(true, oakvaelPotions, 0.3) 
         ));
 
     return wizard;
@@ -89083,9 +89121,10 @@
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5SpellOrbs, 5.0),
+            new LootPackEntry(true, dungeon5Wands, 2), 
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return thaum;
@@ -89143,7 +89182,7 @@
             new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
     ));
 
     return ghoul;
@@ -89203,8 +89242,9 @@
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
+            new LootPackEntry(true, dungeon5Wands, 2), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
             //new LootPackEntry(true, &poak_wands, 5.0)
         ));
 
@@ -89244,7 +89284,7 @@
     
     wight.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(14, 20, 25)
+        new CreatureBasicAttack(14)
     };
         
     wight.Spells = new CreatureSpellCollection()
@@ -89262,8 +89302,9 @@
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
+            new LootPackEntry(true, dungeon5Wands, 2), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return wight;
@@ -89330,8 +89371,9 @@
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
+            new LootPackEntry(true, dungeon5Wands, 2), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
-            new LootPackEntry(true, oakvaelPotions, 0.2),
+            new LootPackEntry(true, oakvaelPotions, 0.3),
             new LootPackEntry(true, (from, container) => new RedRunesRobe(), 5.0) 
     ));
 
@@ -89370,7 +89412,7 @@
     
     stalker.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(15, 20, 30)
+        new CreatureBasicAttack(15)
     };
 
     stalker.Wield(new Spear());    
@@ -89381,8 +89423,9 @@
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, dungeon5Gems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
+            new LootPackEntry(true, dungeon5Wands, 2), 
             new LootPackEntry(true, dungeon5Rings, 0.63),
-            new LootPackEntry(true, oakvaelPotions, 0.2)
+            new LootPackEntry(true, oakvaelPotions, 0.3)
         ));
 
     return stalker;
@@ -89864,7 +89907,7 @@
     
     centaur.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(17, 30, 45)
+        new CreatureBasicAttack(17)
     };
         
     centaur.Wield(new WarHammer());
@@ -89912,7 +89955,7 @@
     
     dryad.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(16, 25, 35)
+        new CreatureBasicAttack(16)
     };
     
     dryad.Spells = new CreatureSpellCollection()
@@ -89930,6 +89973,7 @@
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 60.0), 
             new LootPackEntry(true, groveGems, 25.0, gemsPriceMutator),
+            new LootPackEntry(true, dungeon5Wands, 4), 
             new LootPackEntry(true, groveTreasure, 0.63)
         ));
     
@@ -90707,13 +90751,34 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    if (spawn is Shopkeeper vendor) {
+   
+    if (spawn is Shopkeeper vendor)
+    {
         vendor.AddCounter(new Point2D(30, 26, 10));
         vendor.AddCounter(new Point2D(31, 26, 10));
         vendor.AddCounter(new Point2D(32, 26, 10));
+        
+        void onRarePurchase(PlayerEntity player, ItemEntity item)
+        {
+            vendor.SayTo(player, _rarePurchaseResponses.Random());
+        }
+       
+        // Default wares. Only food and drink here
+        var merchantUpsell = Utility.RandomDouble() + 3; // 3-4x upsell
+        var wares = new List<StockEntry>()
+        {
+            new StockEntry("water",            () => new WaterPotion(),         (int)(5 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
+            new StockEntry("red berries",      () => new RedBerries(),          (int)(5 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
+            new StockEntry("yellow berries",   () => new YellowBerries(),       (int)(5 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
+            new StockEntry("stamina potion",   () => new StaminaPotion(),       (int)(40 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+        };
+        
+        foreach (var stock in wares)
+        {
+            vendor.Stock(stock);
+            vendor.Restock(stock);
+        }
     }
-    
-    // TODO: Set shop items.
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -90733,11 +90798,67 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    if (spawn is Shopkeeper vendor) {
-        vendor.AddCounter(new Point2D(8, 8, 10));
+    var counter = new Point2D(8, 8, 10);
+
+    if (spawn is Shopkeeper vendor)
+    {
+        vendor.AddCounter(counter);
+        
+        void onRarePurchase(PlayerEntity player, ItemEntity item)
+        {
+            vendor.SayTo(player, _rarePurchaseResponses.Random());
+        }
+   
+        // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
+        var merchantUpsell = Utility.RandomDouble() + 3; // 3-4x upsell
+        var wares = new List<StockEntry>()
+        {
+           new StockEntry("stamina potion",        () => new StaminaPotion(),       (int)(40  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+           new StockEntry("mugwort",               () => new Mugwort(),             (int)(25  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+           new StockEntry("yellow balm",           () => new YellowBalm(),          (int)(16  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+           new StockEntry("stamina potion",        () => new StaminaPotion(),       (int)(40  * merchantUpsell),       Utility.RandomBetween(1, 4), null)
+        };
+        
+        foreach (var stock in wares.Random(3))
+        {
+            vendor.Stock(stock);
+            vendor.Restock(stock);
+        }
+        
+        //Apothecaries carry either naptha or nitro. More likely to carry one or the other based on land.
+        var naptha = new StockEntry("black ceramic bottle", () => new NaphthaPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5), null);
+        var nitro = new StockEntry("black ceramic bottle", () => new NitroPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5), null);
+        
+        if (Utility.RandomDouble() <= 0.10)
+        { // I remember buying Naptha here regularly
+            vendor.Stock(nitro);
+            vendor.Restock(nitro);
+        } 
+        else 
+        {
+            vendor.Stock(naptha);
+            vendor.Restock(naptha);
+        }
+
+        // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
+        merchantUpsell = Utility.RandomDouble() * 3 + 7; // 7-10x upsell
+        var rareWares = new List<StockEntry>()
+        {
+            new StockEntry("small porcelain vial",      () => new PermanentConstitutionPotion(),    (int)(2000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("porcelain bottle",          () => new PermanentWillpowerPotion(),       (int)(2000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("heavy glass bottle",        () => new PermanentWisdomPotion(),          (int)(2000 * merchantUpsell),       1, onRarePurchase)
+        };
+        
+        if (Utility.RandomDouble() <= 0.10) 
+        {
+            if (Utility.RandomDouble() <= 0.50) 
+                vendor.Stock(rareWares[0]);
+            else if (Utility.RandomDouble() <= 0.60) 
+                vendor.Stock(rareWares[1]);
+            else 
+                vendor.Stock(rareWares[2]);
+        }
     }
-    
-    // TODO: Set shop items.
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -90757,11 +90878,54 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    if (spawn is Shopkeeper vendor) {
-        vendor.AddCounter(new Point2D(4, 12, 10));
-    }
+    var counter = new Point2D(4, 12, 10);
     
-    // TODO: Set shop items.
+    if (spawn is Shopkeeper vendor) 
+    {
+        vendor.AddCounter(counter);
+        
+        void onRarePurchase(PlayerEntity player, ItemEntity item)
+        {
+            vendor.SayTo(player, _rarePurchaseResponses.Random());
+        }
+       
+        // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
+        var merchantUpsell = Utility.RandomDouble()+3; // 3-4x upsell
+        var wares = new List<StockEntry>()
+        {
+            new StockEntry("leather armor",         () => new LeatherArmor(),        (int)(80  * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("chainmail",             () => new ChainmailArmor(),      (int)(140 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("platemail",             () => new PlatemailArmor(),      (int)(280 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("leather boots",         () => new LeatherBoots(),        (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("leather gauntlets",     () => new LeatherGauntlets(),    (int)(280 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("ram skull",             () => new RamSkull(),            (int)(420 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+        };
+        
+        foreach (var stock in wares.Random(3))
+        {
+            vendor.Stock(stock);
+            vendor.Restock(stock);
+        }
+            
+        // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
+        merchantUpsell = Utility.RandomDouble() * 3 + 7; // 7-10x upsell
+        var rareWares = new List<StockEntry>()
+        {
+            new StockEntry("dragon scales",            () => new DragonScaleArmor(),                (int)(1000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("steel plated gauntlets",   () => new SteelGauntlets(),                  (int)(400  * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("bear skull",               () => new BearSkull(),                       (int)(400  * merchantUpsell),       1, onRarePurchase),
+        };
+        
+        if (Utility.RandomDouble() <= 0.10) 
+        {
+            if (Utility.RandomDouble() <= 0.50) 
+                vendor.Stock(rareWares[0]);
+            else if (Utility.RandomDouble() <= 0.60) 
+                vendor.Stock(rareWares[1]);
+            else 
+                vendor.Stock(rareWares[2]);
+        }
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -90781,11 +90945,84 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    if (spawn is Shopkeeper vendor) {
-        vendor.AddCounter(new Point2D(17, 26, 10));
+    var counter = new Point2D(17, 26, 10);
+
+    if (spawn is Shopkeeper vendor) 
+    {
+        vendor.AddCounter(counter);
+        
+        void onRarePurchase(PlayerEntity player, ItemEntity item)
+        {
+            vendor.SayTo(player, _rarePurchaseResponses.Random());
+        }
+       
+        // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
+        var merchantUpsell = Utility.RandomDouble() + 3; // 3-4x upsell
+        var wares = new List<StockEntry>()
+        {
+        //weaponsmith
+            new StockEntry("dagger",                () => new SteelDagger(),         (int)(30  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("spear",                 () => new Spear(),               (int)(50  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("rapier",                () => new Rapier(),              (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("staff",                 () => new WoodenStaff(),         (int)(40  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("greatsword",            () => new Greatsword(),          (int)(100 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("crossbow",              () => new Crossbow(),            (int)(100 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("shuriken",              () => new Shuriken(),            (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+        //jeweler
+            new StockEntry("scorpion amulet",       () => new ScorpionAmulet(),      (int)(250 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("black pearls",          () => new BlackPearls(),         (int)(600 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("weak strength ring",    () => new WeakStrengthRing(),    (int)(500 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("weak shield ring",      () => new WeakShieldRing(),      (int)(600 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("breathe water ring",    () => new BreatheWaterRing(),    (int)(500 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+        //armorsmith
+            new StockEntry("leather armor",         () => new LeatherArmor(),        (int)(80  * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("chainmail",             () => new ChainmailArmor(),      (int)(140 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("platemail",             () => new PlatemailArmor(),      (int)(280 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("leather boots",         () => new LeatherBoots(),        (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("leather gauntlets",     () => new LeatherGauntlets(),    (int)(280 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("ram skull",             () => new RamSkull(),            (int)(420 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+        };
+        
+        foreach (var stock in wares.Random(3))
+        {
+            vendor.Stock(stock);
+            vendor.Restock(stock);
+        }
+            
+        //Apothecaries carry either naptha or nitro. More likely to carry one or the other based on land.
+        var naptha = new StockEntry("black ceramic bottle", () => new NaphthaPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
+        var nitro = new StockEntry("black ceramic bottle", () => new NitroPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
+        
+        if (Utility.RandomDouble() <= 0.10)
+        { 
+            vendor.Stock(nitro);
+            vendor.Restock(nitro);
+        } 
+        else 
+        {
+            vendor.Stock(naptha);
+            vendor.Restock(naptha);
+        }
+
+        // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
+        merchantUpsell = Utility.RandomDouble() * 3 + 7; // 7-10x upsell
+        var rareWares = new List<StockEntry>()
+        {
+            new StockEntry("silver dagger",             () => new SilverDagger(),                    (int)(350  * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("weak dexterity ring",       () => new WeakDexterityRing(),               (int)(1000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("dragon scales",             () => new DragonScaleArmor(),                (int)(1000 * merchantUpsell),       1, onRarePurchase)
+        };
+        
+        if (Utility.RandomDouble() <= 0.10) 
+        {
+            if (Utility.RandomDouble() <= 0.50) 
+                vendor.Stock(rareWares[0]);
+            else if (Utility.RandomDouble() <= 0.60) 
+                vendor.Stock(rareWares[1]);
+            else 
+                vendor.Stock(rareWares[2]);
+        }
     }
-    
-    // TODO: Set shop items.
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -90805,12 +91042,54 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    if (spawn is Shopkeeper vendor) {
+    if (spawn is Shopkeeper vendor) 
+    {
         vendor.AddCounter(new Point2D(11, 23, 10));
         vendor.AddCounter(new Point2D(12, 23, 10));
+        
+        void onRarePurchase(PlayerEntity player, ItemEntity item)
+        {
+            vendor.SayTo(player, _rarePurchaseResponses.Random());
+        }
+       
+        // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
+        var merchantUpsell = Utility.RandomDouble() + 3; // 3-4x upsell
+        var wares = new List<StockEntry>()
+        {
+            new StockEntry("dagger",                () => new SteelDagger(),         (int)(30  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("spear",                 () => new Spear(),               (int)(50  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("rapier",                () => new Rapier(),              (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("staff",                 () => new WoodenStaff(),         (int)(40  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("greatsword",            () => new Greatsword(),          (int)(100 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("crossbow",              () => new Crossbow(),            (int)(100 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("shuriken",              () => new Shuriken(),            (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 4), null)
+        };
+        
+        foreach (var stock in wares.Random(3))
+        {
+            vendor.Stock(stock);
+            vendor.Restock(stock);
+        }
+
+        // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
+        merchantUpsell = Utility.RandomDouble() * 3 + 7; // 7-10x upsell
+        var rareWares = new List<StockEntry>()
+        {
+            new StockEntry("longsword",                 () => new SteelLongsword(),                 (int)(350  * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("katana",                    () => new Katana(),                         (int)(90   * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("black staff",               () => new BlackStaff(),                     (int)(200  * merchantUpsell),       1, onRarePurchase)
+        };
+        
+        if (Utility.RandomDouble() <= 0.10) 
+        {
+            if (Utility.RandomDouble() <= 0.50) 
+                vendor.Stock(rareWares[0]);
+            else if (Utility.RandomDouble() <= 0.60) 
+                vendor.Stock(rareWares[1]);
+            else 
+                vendor.Stock(rareWares[2]);
+        }
     }
-    
-    // TODO: Set shop items.
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -90830,8 +91109,52 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    if (spawn is Shopkeeper vendor) {
-        vendor.AddCounter(new Point2D(4, 17, 10));
+    var counter = new Point2D(4, 17, 10);
+
+    if (spawn is Shopkeeper vendor)
+    {
+        vendor.AddCounter(counter);
+        
+        void onRarePurchase(PlayerEntity player, ItemEntity item)
+        {
+            vendor.SayTo(player, _rarePurchaseResponses.Random());
+        }
+       
+        // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
+        var merchantUpsell = Utility.RandomDouble() + 3; // 3-4x upsell
+        var wares = new List<StockEntry>()
+        {
+            new StockEntry("scorpion amulet",       () => new ScorpionAmulet(),      (int)(250 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("black pearls",          () => new BlackPearls(),         (int)(600 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("weak strength ring",    () => new WeakStrengthRing(),    (int)(500 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("weak shield ring",      () => new WeakShieldRing(),      (int)(600 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("breathe water ring",    () => new BreatheWaterRing(),    (int)(500 * merchantUpsell),       Utility.RandomBetween(1, 2), null)
+        };
+        
+        foreach (var stock in wares.Random(3))
+        {
+            vendor.Stock(stock);
+            vendor.Restock(stock);
+        }
+
+        // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
+        merchantUpsell = Utility.RandomDouble() * 3 + 7; // 7-10x upsell
+        var rareWares = new List<StockEntry>()
+        {
+            new StockEntry("fire protection amulet",             () => new FireProtectionAmulet(),        (int)(500 * merchantUpsell),  1, onRarePurchase),
+            new StockEntry("weak strength bracelet",             () => new WeakStrengthBracelet(),        (int)(500 * merchantUpsell),  1, onRarePurchase),
+            new StockEntry("blind resistance ring",              () => new BlindResistanceRing(),         (int)(600 * merchantUpsell),  1, onRarePurchase)
+        };
+        
+        if (Utility.RandomDouble() <= 0.10) 
+        {
+            if (Utility.RandomDouble() <= 0.50) 
+                vendor.Stock(rareWares[0]);
+            else if (Utility.RandomDouble() <= 0.60) 
+                vendor.Stock(rareWares[1]);
+            else 
+                vendor.Stock(rareWares[2]);
+        }
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -92908,6 +93231,64 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new SmallTopaz(40000u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="dungeon5Wands">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new OakWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new BirchWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new DemonWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="dungeon3Wands">
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PineWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new GlassWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new HickoryWand();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
