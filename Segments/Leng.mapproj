@@ -75926,8 +75926,8 @@
     };
     
     presence.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new WaveRobe(),    100)
-        new LootPackEntry(true, UtilityTreasures,    5),
+        new LootPackEntry(true, (from, container) => new WaveRobe(),    100),
+        new LootPackEntry(true, UtilityTreasures,    5)
     ));
     
     return presence;
