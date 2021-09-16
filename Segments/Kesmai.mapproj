@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.76.0.0">
+<segment name="Kesmai" version="0.77.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -97912,7 +97912,7 @@
                 
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(5, 3, 11)
+        new CreatureBasicAttack(5)
     };
     
     troll.Wield(new Greatsword());
@@ -98021,7 +98021,7 @@
         
     wight.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6)
+        new CreatureBasicAttack(4)
     };
     
     wight.Spells = new CreatureSpellCollection()
@@ -98239,7 +98239,7 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    33),
         new LootPackEntry(true, dungeon3Treasure,   0.6),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.1)
+        new LootPackEntry(true, dungeon3Potions,    0.2)
     ));
     
     return troll;
@@ -98287,7 +98287,7 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    33),
         new LootPackEntry(true, dungeon3Treasure,   0.6),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.1)
+        new LootPackEntry(true, dungeon3Potions,    0.2)
     ));
     
     return hobgoblin;
@@ -98335,7 +98335,7 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    33),
         new LootPackEntry(true, dungeon3Treasure,   0.6),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.1),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
 
         new LootPackEntry(true, (from, container) => new ThrowingHammer(), 16)
     ));
@@ -98385,7 +98385,7 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    33),
         new LootPackEntry(true, dungeon3Treasure,   0.6),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.1),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         
         new LootPackEntry(true, (from, container) => new Shuriken(), 11)
     ));
@@ -98433,7 +98433,7 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    33),
         new LootPackEntry(true, dungeon3Treasure,   0.6),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.1),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         
         new LootPackEntry(true, (from, container) => new LeatherGauntlets(), 7.5)
     ));
@@ -98481,7 +98481,7 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    33),
         new LootPackEntry(true, dungeon3Treasure,   0.6),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.1)
+        new LootPackEntry(true, dungeon3Potions,    0.2)
     ));
     
     return goblin;
@@ -98540,7 +98540,7 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    33),
         new LootPackEntry(true, dungeon3Treasure,   0.6),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.1)
+        new LootPackEntry(true, dungeon3Potions,    0.2)
     ));
     
     return orc;
@@ -98598,7 +98598,7 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    50),
         new LootPackEntry(true, dungeon3Treasure,   0.6),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.1),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.0),
         new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5)
     ));
@@ -98663,7 +98663,7 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    33), 
         new LootPackEntry(true, dungeon3Treasure,   0.6), 
         new LootPackEntry(true, dungeon3Rings,      0.6), 
-        new LootPackEntry(true, dungeon3Potions,    0.1),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         
         new LootPackEntry(true, (from, container) => new FieryRuby(1200u), 100.0)
     ));
@@ -98701,7 +98701,7 @@ return orc;
         
     wraith.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(7)
+        new CreatureBasicAttack(6)
     };
     
     wraith.Spells = new CreatureSpellCollection()
@@ -98719,7 +98719,8 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    33),
         new LootPackEntry(true, dungeon3Treasure,   0.6),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.1),
+        new LootPackEntry(true, utilityItems,   2),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.0)
         //new LootPackEntry(true, (from, container) => new SnakeStaff(), 1.6)
     ));
@@ -98759,7 +98760,7 @@ return orc;
         
     wight.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(7),
+        new CreatureBasicAttack(6),
     };
     
     wight.Spells =  new CreatureSpellCollection()
@@ -98776,8 +98777,9 @@ return orc;
         new LootPackEntry(true, dungeon3Gems,       25,     gemsPriceMutator),
         new LootPackEntry(true, dungeon3Bottles,    33),
         new LootPackEntry(true, dungeon3Treasure,   0.6),
+        new LootPackEntry(true, utilityItems,   2),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.1)
+        new LootPackEntry(true, dungeon3Potions,    0.2)
     ));
     
     return wight;
@@ -98825,7 +98827,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, dungeon3Potions,    0.3),
 
         new LootPackEntry(true, (from, container) => new ThrowingHammer(), 16.67)
     ));
@@ -98875,7 +98877,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, dungeon3Potions,    0.3),
 
         new LootPackEntry(true, (from, container) => new Shuriken(), 11.11)
     ));
@@ -98936,7 +98938,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.2)
+        new LootPackEntry(true, dungeon3Potions,    0.3)
     ));
     
     return orc;
@@ -98982,7 +98984,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.2)
+        new LootPackEntry(true, dungeon3Potions,    0.3)
     ));
     
     return troll;
@@ -99028,7 +99030,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.2)
+        new LootPackEntry(true, dungeon3Potions,    0.3)
     ));
     
     return hobgoblin;
@@ -99084,7 +99086,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, dungeon3Potions,    0.3),
         
         new LootPackEntry(true, (from, container) => new SilverDagger(), 7.14)
     ));
@@ -99150,7 +99152,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.6), 
         new LootPackEntry(true, dungeon4Rings,      0.6), 
-        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, dungeon3Potions,    0.3),
         
         new LootPackEntry(true, (from, container) => new FieryRuby(1200u), 100.0)
     ));
@@ -99209,7 +99211,8 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, utilityItems,   3),
+        new LootPackEntry(true, dungeon3Potions,    0.3),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6)
     ));
     
@@ -99269,7 +99272,8 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, utilityItems,   3),
+        new LootPackEntry(true, dungeon3Potions,    0.3),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6)
     ));
     
@@ -99329,7 +99333,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.2)
+        new LootPackEntry(true, dungeon3Potions,    0.3)
     ));
     
     return ghoul;
@@ -99394,7 +99398,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    50),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, dungeon3Potions,    0.3),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6),
         new LootPackEntry(true, (from, container) => new SteelGauntlets(), 6.67),
         new LootPackEntry(true, (from, container) => new IronRod(), 6.67)
@@ -99452,7 +99456,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, dungeon3Potions,    0.3),
         
         new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 10.0)
     ));
@@ -99509,7 +99513,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, dungeon3Potions,    0.3),
         
         new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 10.0)
     ));
@@ -99578,7 +99582,8 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, utilityItems,   3),
+        new LootPackEntry(true, dungeon3Potions,    0.3),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6),
         new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    10.0),
         new LootPackEntry(true, (from, container) => new RedRunesRobe(),        10.0)
@@ -99650,7 +99655,8 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, utilityItems,   3),
+        new LootPackEntry(true, dungeon3Potions,    0.3),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6),
         new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    10.0),
         new LootPackEntry(true, (from, container) => new RedRunesRobe(),        10.0)
@@ -99746,10 +99752,10 @@ return orc;
             new CreatureAttack(5,     1, 4,   "The wolf rakes you with its claws."), 50 
         }, 
         {
-            new CreatureAttack(7,     2, 5,  "The wolf sinks its teeth into you."),  30 
+            new CreatureAttack(5,     2, 5,  "The wolf sinks its teeth into you."),  30 
         }, 
         {
-            new CreatureAttack(7,     3, 6,  "The wolf lunges at you."),             20 
+            new CreatureAttack(6,     3, 6,  "The wolf lunges at you."),             20 
         }, 
     };
         
@@ -99909,7 +99915,7 @@ return orc;
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(5, 1, 5)
+        new CreatureBasicAttack(4)
     };
     
     orc.Wield(new Longsword());
@@ -99958,7 +99964,7 @@ return orc;
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(3)
+        new CreatureBasicAttack(4)
     };
     
     orc.Wield(new Crossbow());
@@ -100008,7 +100014,7 @@ return orc;
         
     wraith.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(7)
+        new CreatureBasicAttack(6)
     };
     
     wraith.Spells = new CreatureSpellCollection()
@@ -100025,7 +100031,7 @@ return orc;
         new LootPackEntry(true, dungeon3Gems,       25,     gemsPriceMutator),
         new LootPackEntry(true, dungeon3Bottles,    33),
         new LootPackEntry(true, surfaceTreasure,    0.6),
-        
+        new LootPackEntry(true, utilityItems,   1),        
         new LootPackEntry(true, (from, container) => new IronOre(),         1.6)
         //new LootPackEntry(true, (from, container) => new SnakeStaff(),    1.6),
     ));
@@ -100066,7 +100072,7 @@ return orc;
         
     wight.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6)
+        new CreatureBasicAttack(4)
     };
     
     wight.Spells = new CreatureSpellCollection()
@@ -100083,7 +100089,7 @@ return orc;
         new LootPackEntry(true, dungeon3Gems,       33,     gemsPriceMutator),
         new LootPackEntry(true, dungeon2Bottles,    33),
         new LootPackEntry(true, surfaceTreasure,    0.6),
-        
+        new LootPackEntry(true, utilityItems,   1),        
         new LootPackEntry(true, (from, container) => new IronOre(),     1.6)
     ));
     
@@ -100271,8 +100277,9 @@ return orc;
         new LootPackEntry(true, ydnacTreasure,      100),
         
         new LootPackEntry(true, (from, container) => new ClearBalm(),           50),
-        new LootPackEntry(true, (from, container) => new Diamond(1500u),        100,    gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100,    gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new Diamond(3500u),        100,    gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(4500u),    100,    gemsPriceMutator),
+        new LootPackEntry(true, utilityItems,   50),
         new LootPackEntry(true, (from, container) => new StarsRobe(),           100)
     ));
     
@@ -100391,7 +100398,7 @@ return orc;
     ghoul.AddLoot(new LootPack(
         new LootPackEntry(true, dungeon4Gems,       50.0,   gemsPriceMutator), 
         new LootPackEntry(true, dungeon4Bottles,    50.0),
-        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, dungeon3Potions,    0.3),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6),
         new LootPackEntry(true, (from, container) => new ReturningHammer(),     33.33)
     ));
@@ -100454,7 +100461,8 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, utilityItems,   3),
+        new LootPackEntry(true, dungeon3Potions,    0.3),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6)
     ));
     
@@ -103187,7 +103195,7 @@ else
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="5">
+      <entry weight="10">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -103315,6 +103323,71 @@ else
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new FireProtectionAmulet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="utilityItems">
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new DarknessOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new WebOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new LightOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new FireballOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new IceStormOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PineWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new GlassWand();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
