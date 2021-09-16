@@ -107532,6 +107532,8 @@
         
         IceProtection = 100,
     };
+    
+    draugr.Brain = new CasterAI();
 
     draugr.Attacks = new CreatureAttackCollection()
     {
@@ -107586,7 +107588,7 @@
         <block><![CDATA[
     var giant = new UndeadFrostGiant()
     {
-        Name = "Decaying Frost Giant",
+        Brain = new CasterAI(),
 
         MaxHealth = 2200,
         Health = 2200,
@@ -107600,6 +107602,8 @@
         IceProtection = 100,
     };
     
+    giant.Brain = new CasterAI();
+    
     giant.AddImmunity(typeof(PoisonCloudSpell));
 
     giant.AddStatus(new NightVisionStatus(giant));
@@ -107611,8 +107615,7 @@
     giant.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<ConcussionSpell>(
-            skillLevel: 7, cost: 7, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+            skillLevel: 12, cost: 7, instantCast: false)
     };
 
     giant.Wield(new WarHammer());
