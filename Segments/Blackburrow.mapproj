@@ -28541,9 +28541,9 @@ if (spokeRecently(source))
         MaxHealth = 10000, Health = 10000,
         HideDetection = 33,
         BasePenetration = ShieldPenetration.Heavy,
-        canswim = true,
-        Alignment = Alignment.Evil
-        Immunity = CreatureImmunity.Poison
+        CanSwim = true,
+        Alignment = Alignment.Evil,
+        Immunity = CreatureImmunity.Poison,
         VisibilityDistance = 0,
         Movement = 1,
         CanJumpkick = true,
@@ -28601,7 +28601,7 @@ if (spokeRecently(source))
 	 var banshee = new ConfessorGhost()
     {
         Name = "Ghost of Memp",
-        Alignment = Alignment.Evil
+        Alignment = Alignment.Evil,
         MaxHealth = 120, Health = 120,
         BaseDodge = 13,
         Experience = 7200,
@@ -29044,19 +29044,19 @@ giant.Attacks = new CreatureAttackCollection
 
      // Attack #1, 50% chance
     {
-        new CreatureAttack(20, 50, 75 "The Giant punches you with his massive fist.", new AttackProneComponent(15), new AttackStunComponent(5)), 50
+        new CreatureAttack(20, 50, 75, "The Giant punches you with his massive fist.", new AttackProneComponent(15), new AttackStunComponent(5)), 50, TimeSpan.Zero
     },
     
     // Attack #2, 30% chance... higher damage, better chance of knocking you back
     
     {
-        new CreatureAttack(25, 60, 85 "The Giant spartan kicks you square in the chest.", new AttackProneComponent(25)),30
+        new CreatureAttack(25, 60, 85, "The Giant spartan kicks you square in the chest.", new AttackProneComponent(25)), 30, TimeSpan.Zero
     },
     
     // Attack #3, 10% Chance... whollop you good.
     
     {
-        new CreatureAttack(30, 80, 100 "The Giant winds up and levels you with a haymaker."), 10, 30
+        new CreatureAttack(30, 80, 100, "The Giant winds up and levels you with a haymaker."), 10, TimeSpan.Zero
     },
 };
     
@@ -29146,7 +29146,7 @@ if (spokeRecently(source))
     stalker.AddLoot(new LootPack(
         new LootPackEntry(true, Levelthreegems, 25, gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33), 
-        new LootPackEntry(true, Statpotion,    0.3), 
+        new LootPackEntry(true, StatPotion,    0.3), 
         new LootPackEntry(true, Treasure,    0.63)
     ));
     
@@ -29451,17 +29451,17 @@ dragon.Attacks = new CreatureAttackCollection
 
     {
     
-        new CreatureAttack(25, 60, 100, "The Dragon Slashes you with its claws.", new AttackProneComponent(15),  new AttackStunComponent(5)), 45
+        new CreatureAttack(25, 60, 100, "The Dragon Slashes you with its claws.", new AttackProneComponent(15),  new AttackStunComponent(5)), 45, TimeSpan.Zero
     },
     
     { 
     
-        new CreatureAttack(30, 75, 100, "The Dragon Smashes you with its Tail.", new AttackProneComponent(25), new AttackStunComponent(10)), 45
+        new CreatureAttack(30, 75, 100, "The Dragon Smashes you with its Tail.", new AttackProneComponent(25), new AttackStunComponent(10)), 45, TimeSpan.Zero
     },
     
     {
     
-        new CreatureAttack(25, 60, 100, "The Dragon buffets you with its wings.", new AttackProneComponent(100), new AttackStunComponent(15)), 10
+        new CreatureAttack(25, 60, 100, "The Dragon buffets you with its wings.", new AttackProneComponent(100), new AttackStunComponent(15)), 10, TimeSpan.Zero
     },
 };
 
@@ -29473,26 +29473,26 @@ dragon.Blocks = new CreatureBlockCollection
     new CreatureBlock(3, "a wing"),
 };
 
-dragon.Spells = CreatureSpellCollection(20.0)
+dragon.Spells = new CreatureSpellCollection(20.0)
 {
     {
         new CreatureSpell<LightningStormSpell>(
-        skillLevel: 3), 5
+        skillLevel: 3), 5, TimeSpan.Zero
     },
     
     {
         new CreatureSpell<PoisonCloudSpell>(
-        skillLevel: 3), 5
+        skillLevel: 3), 5, TimeSpan.Zero
     },
     
     {
         new CreatureSpell<LightningBoltSpell>(
-        skillLevel: 10), 60
+        skillLevel: 10), 60, TimeSpan.Zero
     },
     
     {
         new CreatureSpell<DeathSpell>(
-        skillLevel: 15), 30
+        skillLevel: 15), 30, TimeSpan.Zero
     }
 };
 
@@ -29503,7 +29503,7 @@ dragon.AddLoot(new LootPack(
     new LootPackEntry(true, Dragongems, 100, gemsPriceMutator),
     new LootPackEntry(true, Dragongems, 100, gemsPriceMutator),
     new LootPackEntry(true, Dragonloot, 100),
-    new LootPackEntry(true, (from, container) => IceDragonScaleArmor(),100),
+    new LootPackEntry(true, (from, container) => new IceDragonScaleArmor(),100),
     new LootPackEntry(true, Dragonloot, 100),
     new LootPackEntry(true, StatPotion, 100)
 ));
@@ -29565,17 +29565,17 @@ ogre.Attacks = new CreatureAttackCollection()
 {
 
    {
-        new CreatureAttack(25, 30, 50, "slashes you with his Halberd.", new AttackProneComponent(15),  new AttackStunComponent(5)), 45
+        new CreatureAttack(25, 30, 50, "slashes you with his Halberd.", new AttackProneComponent(15),  new AttackStunComponent(5)), 45, TimeSpan.Zero
     },
     
     { 
     
-        new CreatureAttack(30, 30, 50, "kicks you in the chest", new AttackProneComponent(25), new AttackStunComponent(10)), 45
+        new CreatureAttack(30, 30, 50, "kicks you in the chest", new AttackProneComponent(25), new AttackStunComponent(10)), 45, TimeSpan.Zero
     },
     
     {
     
-        new CreatureAttack(25, 30, 50, "impales you in the stomach with his halberd.", new AttackProneComponent(100), new AttackStunComponent(15)), 10
+        new CreatureAttack(25, 30, 50, "impales you in the stomach with his halberd.", new AttackProneComponent(100), new AttackStunComponent(15)), 10, TimeSpan.Zero
     },
     
 };
@@ -29660,11 +29660,7 @@ ogre.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
 
 ogre.Attacks = new CreatureAttackCollection()
 {
-
-   {
-        new CreatureBasicAttack(30, 50, 75),
-   }
-    
+    new CreatureBasicAttack(30, 50, 75),
 };
 
 
@@ -29722,9 +29718,11 @@ return ogre;
   spawn.Name = "Bezos";
     spawn.Body = 10;
     if (spawn is Banker banker)
+	{
         banker.AddCounter(new Point2D(2, -31, 1));
         banker.AddCounter(new Point2D(2, -30, 1));
         banker.AddCounter(new Point2D(2, -29, 1));
+	}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
