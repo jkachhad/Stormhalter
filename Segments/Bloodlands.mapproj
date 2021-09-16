@@ -123064,6 +123064,7 @@ if (spawn is Shopkeeper shopkeeper)
     <spawn type="LocationSpawner" name="townRestel">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -123079,7 +123080,7 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="townRestel" size="1" minimum="1" maximum="1" />
-      <location x="27" y="14" region="1" />
+      <location x="26" y="14" region="1" />
     </spawn>
     <spawn type="RegionSpawner" name="surfaceFishNorth">
       <minimumDelay>660</minimumDelay>
