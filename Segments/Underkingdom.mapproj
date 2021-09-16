@@ -3,6 +3,20 @@
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
+    public static TimeSpan _speechDelay = TimeSpan.FromMinutes(1.0);
+    public static Dictionary<MobileEntity, DateTime> _speechDelays = new Dictionary<MobileEntity, DateTime>();
+    
+    public static bool spokeRecently(MobileEntity entity)
+    {
+        /* If the entity spoke recently, we're not going to speak again. */
+        if (_speechDelays.TryGetValue(entity, out var nextSpeechTime) && DateTime.Now < nextSpeechTime)
+            return true;
+        
+        /* The entity did not speak recently, add them to the delay, and allow them to talk. */
+        _speechDelays[entity] = DateTime.Now + _speechDelay;
+        return false;
+    }
+    
     public static readonly string[] _names = new string[]
     {
         "Aca", "Acha", "Achi", "Achu", "Aco", "Agua", "Ahua", "Aja", "Ala", "Ali", "Ama", "Ani", "Anu", "Apa",
@@ -99076,7 +99090,7 @@
     var vendor = new Shopkeeper()
     {
         Name = _names.Random(),
-        Body = (116), IsFemale = female,
+        Body = 116, IsFemale = female,
         
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
@@ -102288,19 +102302,18 @@
     spawn.Name = "Berrystitch";
     spawn.Body = 116;
 
-        
-
-try { // If this doesn't work, don't break the segment. just quietly don't have items to sell, or a counter.
-    if (spawn is Shopkeeper vendor) {
+    if (spawn is Shopkeeper vendor)
+    {
         vendor.AddCounter(new Point2D(2, 5, 1));
         vendor.AddCounter(new Point2D(3, 5, 1));
+        
         void onRarePurchase(PlayerEntity player, ItemEntity item)
         {
             vendor.SayTo(player, _rarePurchaseResponses.Random());
         }
        
         // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
-        var merchantUpsell = Utility.RandomDouble()+3; // 3-4x upsell
+        var merchantUpsell = Utility.RandomDouble() + 3; // 3-4x upsell
         var wares = new List<StockEntry>()
         {
         //apothecary
@@ -102330,13 +102343,15 @@ try { // If this doesn't work, don't break the segment. just quietly don't have 
             new StockEntry("leather gauntlets",     () => new LeatherGauntlets(),    (int)(280 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
             new StockEntry("ram skull",             () => new RamSkull(),            (int)(420 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
         };
-        foreach (var stock in wares.Random(3)){
+        
+        foreach (var stock in wares.Random(3))
+        {
             vendor.Stock(stock);
             vendor.Restock(stock);
         }
 
         // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
-        merchantUpsell = Utility.RandomDouble()*3+7; // 7-10x upsell
+        merchantUpsell = Utility.RandomDouble() * 3 + 7; // 7-10x upsell
         var rareWares = new List<StockEntry>()
         {
         //Weaponsmith
@@ -102344,18 +102359,17 @@ try { // If this doesn't work, don't break the segment. just quietly don't have 
             new StockEntry("fire and ice protection ring",   () => new FireIceProtectionRing(),          (int)(800 * merchantUpsell),        1, onRarePurchase),
             new StockEntry("dragon scales",                  () => new DragonScaleArmor(),               (int)(1000 * merchantUpsell),       1, onRarePurchase)
         };
-        if (Utility.RandomDouble() <= 0.10) {
-            if (Utility.RandomDouble()<= 0.50) {
-                var thisTimeStock = rareWares[0];
-            } else if (Utility.RandomDouble()<= 0.60) {
-                var thisTimeStock = rareWares[1];
-            } else {
-                var thisTimeStock = rareWares[2];
-            }
-            vendor.Stock(thisTimeStock);
+        
+        if (Utility.RandomDouble() <= 0.10) 
+        {
+            if (Utility.RandomDouble() <= 0.50) 
+                vendor.Stock(rareWares[0]);
+            else if (Utility.RandomDouble() <= 0.60) 
+                vendor.Stock(rareWares[1]);
+            else 
+                vendor.Stock(rareWares[2]);
         }
     }
-}catch {}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102380,16 +102394,17 @@ try { // If this doesn't work, don't break the segment. just quietly don't have 
     spawn.Body = 117;
     var counter = new Point2D(15, 13, 1);
 
-try { // If this doesn't work, don't break the segment. just quietly don't have items to sell, or a counter.
-    if (spawn is Shopkeeper vendor) {
+    if (spawn is Shopkeeper vendor) 
+    {
         vendor.AddCounter(counter);
+        
         void onRarePurchase(PlayerEntity player, ItemEntity item)
         {
             vendor.SayTo(player, _rarePurchaseResponses.Random());
         }
        
         // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
-        var merchantUpsell = Utility.RandomDouble()+3; // 3-4x upsell
+        var merchantUpsell = Utility.RandomDouble() + 3; // 3-4x upsell
         var wares = new List<StockEntry>()
         {
         //apothecary
@@ -102419,42 +102434,47 @@ try { // If this doesn't work, don't break the segment. just quietly don't have 
             new StockEntry("leather gauntlets",     () => new LeatherGauntlets(),    (int)(280 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
             new StockEntry("ram skull",             () => new RamSkull(),            (int)(420 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
         };
-        foreach (var stock in wares.Random(3)){
+        
+        foreach (var stock in wares.Random(3))
+        {
             vendor.Stock(stock);
             vendor.Restock(stock);
         }
             
         //Apothecaries carry either naptha or nitro. More likely to carry one or the other based on land.
-        var naptha = new StockEntry("black ceramic bottle", () => new NapthaPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
+        var naptha = new StockEntry("black ceramic bottle", () => new NaphthaPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
         var nitro = new StockEntry("black ceramic bottle", () => new NitroPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
-        if (Utility.RandomDouble <= 0.90) { // Axe likely has nitro, since the caves to the west are full of them.
+        
+        if (Utility.RandomDouble() <= 0.90)
+        { // Axe likely has nitro, since the caves to the west are full of them.
             vendor.Stock(nitro);
             vendor.Restock(nitro);
-        } else {
+        } 
+        else 
+        {
             vendor.Stock(naptha);
             vendor.Restock(naptha);
         }
 
         // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
-        merchantUpsell = Utility.RandomDouble()*3+7; // 7-10x upsell
+        merchantUpsell = Utility.RandomDouble() * 3 + 7; // 7-10x upsell
         var rareWares = new List<StockEntry>()
         {
             new StockEntry("steel plated gauntlets",   () => new SteelGauntlets(),                  (int)(400  * merchantUpsell),       1, onRarePurchase),
             new StockEntry("small porcelain vial",      () => new PermanentConstitutionPotion(),    (int)(2000 * merchantUpsell),       1, onRarePurchase),
             new StockEntry("fear and blind protection bracelet",      () => new BlindFearProtectionBracelet(),    (int)(3000 * merchantUpsell),       1, onRarePurchase)
         };
-        if (Utility.RandomDouble() <= 0.10) {
-            if (Utility.RandomDouble()<= 0.50) {
-                var thisTimeStock = rareWares[0];
-            } else if (Utility.RandomDouble()<= 0.60) {
-                var thisTimeStock = rareWares[1];
-            } else {
-                var thisTimeStock = rareWares[2];
-            }
-            vendor.Stock(thisTimeStock);
+        
+        if (Utility.RandomDouble() <= 0.10) 
+        {
+            if (Utility.RandomDouble() <= 0.50) 
+                vendor.Stock(rareWares[0]);
+            else if (Utility.RandomDouble() <= 0.60) 
+                vendor.Stock(rareWares[1]);
+            else 
+                vendor.Stock(rareWares[2]);
         }
     }
-}catch {}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102479,9 +102499,10 @@ try { // If this doesn't work, don't break the segment. just quietly don't have 
     spawn.Body = 116;
     var counter = new Point2D(26, 15, 2);
 
-try { // If this doesn't work, don't break the segment. just quietly don't have items to sell, or a counter.
-    if (spawn is Shopkeeper vendor) {
+    if (spawn is Shopkeeper vendor) 
+    {
         vendor.AddCounter(counter);
+        
         void onRarePurchase(PlayerEntity player, ItemEntity item)
         {
             vendor.SayTo(player, _rarePurchaseResponses.Random());
@@ -102498,7 +102519,9 @@ try { // If this doesn't work, don't break the segment. just quietly don't have 
             new StockEntry("leather gauntlets",     () => new LeatherGauntlets(),    (int)(280 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
             new StockEntry("ram skull",             () => new RamSkull(),            (int)(420 * merchantUpsell),       Utility.RandomBetween(1, 2), null)
         };
-        foreach (var stock in wares.Random(3)){
+        
+        foreach (var stock in wares.Random(3))
+        {
             vendor.Stock(stock);
             vendor.Restock(stock);
         }
@@ -102511,18 +102534,17 @@ try { // If this doesn't work, don't break the segment. just quietly don't have 
             new StockEntry("winged helm",              () => new WingedHelm(),                      (int)(400  * merchantUpsell),       1, onRarePurchase),
             new StockEntry("feather fall boots",       () => new FeatherFallBoots(),                (int)(500  * merchantUpsell),       1, onRarePurchase)
         };
-        if (Utility.RandomDouble() <= 0.10) {
-            if (Utility.RandomDouble()<= 0.50) {
-                var thisTimeStock = rareWares[0];
-            } else if (Utility.RandomDouble()<= 0.60) {
-                var thisTimeStock = rareWares[1];
-            } else {
-                var thisTimeStock = rareWares[2];
-            }
-            vendor.Stock(thisTimeStock);
+        
+        if (Utility.RandomDouble() <= 0.10) 
+        {
+            if (Utility.RandomDouble() <= 0.50) 
+                vendor.Stock(rareWares[0]);
+            else if (Utility.RandomDouble() <= 0.60) 
+                vendor.Stock(rareWares[1]);
+            else 
+                vendor.Stock(rareWares[2]);
         }
     }
-}catch {}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102545,18 +102567,19 @@ try { // If this doesn't work, don't break the segment. just quietly don't have 
         <block><![CDATA[
     spawn.Name = "Sparklebell";
     spawn.Body = 117;
-    var counter = AddCounter(new Point2D(28, 15, 2);
+    var counter = new Point2D(28, 15, 2);
 
-try { // If this doesn't work, don't break the segment. just quietly don't have items to sell, or a counter.
-    if (spawn is Shopkeeper vendor) {
+    if (spawn is Shopkeeper vendor) 
+    {
         vendor.AddCounter(counter);
+        
         void onRarePurchase(PlayerEntity player, ItemEntity item)
         {
             vendor.SayTo(player, _rarePurchaseResponses.Random());
         }
        
         // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
-        var merchantUpsell = Utility.RandomDouble()+3; // 3-4x upsell
+        var merchantUpsell = Utility.RandomDouble() + 3; // 3-4x upsell
         var wares = new List<StockEntry>()
         {
             new StockEntry("dagger",                () => new SteelDagger(),         (int)(30  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
@@ -102567,31 +102590,32 @@ try { // If this doesn't work, don't break the segment. just quietly don't have 
             new StockEntry("crossbow",              () => new Crossbow(),            (int)(100 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
             new StockEntry("shuriken",              () => new Shuriken(),            (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 4), null)
         };
-        foreach (var stock in wares.Random(3)){
+        
+        foreach (var stock in wares.Random(3))
+        {
             vendor.Stock(stock);
             vendor.Restock(stock);
         }
             
         // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
-        merchantUpsell = Utility.RandomDouble()*3+7; // 7-10x upsell
+        merchantUpsell = Utility.RandomDouble() * 3 + 7; // 7-10x upsell
         var rareWares = new List<StockEntry>()
         {
             new StockEntry("silver dagger",             () => new SilverDagger(),                   (int)(350  * merchantUpsell),       1, onRarePurchase),
             new StockEntry("longsword",                 () => new SteelLongsword(),                 (int)(350  * merchantUpsell),       1, onRarePurchase),
             new StockEntry("katana",                    () => new Katana(),                         (int)(90   * merchantUpsell),       1, onRarePurchase)
         };
-        if (Utility.RandomDouble() <= 0.10) {
-            if (Utility.RandomDouble()<= 0.50) {
-                var thisTimeStock = rareWares[0];
-            } else if (Utility.RandomDouble()<= 0.60) {
-                var thisTimeStock = rareWares[1];
-            } else {
-                var thisTimeStock = rareWares[2];
-            }
-            vendor.Stock(thisTimeStock);
+        
+        if (Utility.RandomDouble() <= 0.10) 
+        {
+            if (Utility.RandomDouble() <= 0.50) 
+                vendor.Stock(rareWares[0]);
+            else if (Utility.RandomDouble() <= 0.60) 
+                vendor.Stock(rareWares[1]);
+            else 
+                vendor.Stock(rareWares[2]);
         }
     }
-}catch {}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102616,16 +102640,17 @@ try { // If this doesn't work, don't break the segment. just quietly don't have 
     spawn.Body = 117;
     var counter = new Point2D(30, 15, 2);
 
-try { // If this doesn't work, don't break the segment. just quietly don't have items to sell, or a counter.
-    if (spawn is Shopkeeper vendor) {
+    if (spawn is Shopkeeper vendor)
+    {
         vendor.AddCounter(counter);
+        
         void onRarePurchase(PlayerEntity player, ItemEntity item)
         {
             vendor.SayTo(player, _rarePurchaseResponses.Random());
         }
        
         // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
-        var merchantUpsell = Utility.RandomDouble()+3; // 3-4x upsell
+        var merchantUpsell = Utility.RandomDouble() + 3; // 3-4x upsell
         var wares = new List<StockEntry>()
         {
             new StockEntry("scorpion amulet",       () => new ScorpionAmulet(),      (int)(250 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
@@ -102640,25 +102665,24 @@ try { // If this doesn't work, don't break the segment. just quietly don't have 
         }
             
         // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
-        merchantUpsell = Utility.RandomDouble()*3+7; // 7-10x upsell
+        merchantUpsell = Utility.RandomDouble() * 3 + 7; // 7-10x upsell
         var rareWares = new List<StockEntry>()
         {
             new StockEntry("death resistance ring",              () => new DeathResistanceRing(),         (int)(300 * merchantUpsell),  1, onRarePurchase),
             new StockEntry("weak dexterity ring",                () => new WeakDexterityRing(),           (int)(1000 * merchantUpsell), 1, onRarePurchase),
             new StockEntry("stun and death protection bracelet", () => new StunDeathProtectionBracelet(), (int)(3000 * merchantUpsell), 1, onRarePurchase)
         };
-        if (Utility.RandomDouble() <= 0.10) {
-            if (Utility.RandomDouble()<= 0.50) {
-                var thisTimeStock = rareWares[0];
-            } else if (Utility.RandomDouble()<= 0.60) {
-                var thisTimeStock = rareWares[1];
-            } else {
-                var thisTimeStock = rareWares[2];
-            }
-            vendor.Stock(thisTimeStock);
+        
+        if (Utility.RandomDouble() <= 0.10) 
+        {
+            if (Utility.RandomDouble() <= 0.50) 
+                vendor.Stock(rareWares[0]);
+            else if (Utility.RandomDouble() <= 0.60) 
+                vendor.Stock(rareWares[1]);
+            else 
+                vendor.Stock(rareWares[2]);
         }
     }
-}catch {}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102683,9 +102707,10 @@ try { // If this doesn't work, don't break the segment. just quietly don't have 
     spawn.Body = 116;
     var counter = new Point2D(32, 15, 2);
 
-try { // If this doesn't work, don't break the segment. just quietly don't have items to sell, or a counter.
-    if (spawn is Shopkeeper vendor) {
+    if (spawn is Shopkeeper vendor) 
+    {
         vendor.AddCounter(counter);
+        
         void onRarePurchase(PlayerEntity player, ItemEntity item)
         {
             vendor.SayTo(player, _rarePurchaseResponses.Random());
@@ -102700,18 +102725,24 @@ try { // If this doesn't work, don't break the segment. just quietly don't have 
             new StockEntry("yellow balm",           () => new YellowBalm(),          (int)(16  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
             new StockEntry("stamina potion",        () => new StaminaPotion(),       (int)(40  * merchantUpsell),       Utility.RandomBetween(1, 4), null)
         };
-        foreach (var stock in wares.Random(3)){
+        
+        foreach (var stock in wares.Random(3))
+        {
             vendor.Stock(stock);
             vendor.Restock(stock);
         }
             
         //Apothecaries carry either naptha or nitro. More likely to carry one or the other based on land.
-        var naptha = new StockEntry("black ceramic bottle", () => new NapthaPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
+        var naptha = new StockEntry("black ceramic bottle", () => new NaphthaPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
         var nitro = new StockEntry("black ceramic bottle", () => new NitroPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
-        if (Utility.RandomDouble <= 0.50) {
+        
+        if (Utility.RandomDouble() <= 0.50)
+        {
             vendor.Stock(nitro);
             vendor.Restock(nitro);
-        } else {
+        } 
+        else 
+        {
             vendor.Stock(naptha);
             vendor.Restock(naptha);
         }
@@ -102724,18 +102755,17 @@ try { // If this doesn't work, don't break the segment. just quietly don't have 
             new StockEntry("black ceramic bottle",      () => new PermanentDexterityPotion(),       (int)(2000 * merchantUpsell),       1, onRarePurchase),
             new StockEntry("porcelain bottle",          () => new PermanentWillpowerPotion(),       (int)(2000 * merchantUpsell),       1, onRarePurchase)
         };
-        if (Utility.RandomDouble() <= 0.10) {
-            if (Utility.RandomDouble()<= 0.50) {
-                var thisTimeStock = rareWares[0];
-            } else if (Utility.RandomDouble()<= 0.60) {
-                var thisTimeStock = rareWares[1];
-            } else {
-                var thisTimeStock = rareWares[2];
-            }
-            vendor.Stock(thisTimeStock);
+        
+        if (Utility.RandomDouble() <= 0.10) 
+        {
+            if (Utility.RandomDouble() <= 0.50) 
+                vendor.Stock(rareWares[0]);
+            else if (Utility.RandomDouble() <= 0.60) 
+                vendor.Stock(rareWares[1]);
+            else 
+                vendor.Stock(rareWares[2]);
         }
     }
-}catch {}
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
