@@ -99406,7 +99406,8 @@
         BaseDodge = 12,
         BasePenetration = ShieldPenetration.Light,
         Experience = 2500,
-    
+        HideDetection = 25,
+        
         Movement = 2,
         
         LightningResistance = 100,
@@ -99467,6 +99468,7 @@
         Body = 177,
         MaxHealth = 70, Health = 70,
         BaseDodge = 12,
+        HideDetection = 25,
                 
         Experience = 2500,
         BasePenetration = ShieldPenetration.Light,
@@ -99530,6 +99532,7 @@
         Body = 178,
         MaxHealth = 70, Health = 70,
         BaseDodge = 12,
+        HideDetection = 25,
                 
         Experience = 2500,
     
@@ -99593,6 +99596,7 @@
         Body = 65,
         MaxHealth = 70, Health = 70,
         BaseDodge = 12,
+        HideDetection = 25,
                 
         Experience = 2500,
     
@@ -99659,7 +99663,7 @@
         BaseDodge = 19,
     
         Alignment = Alignment.Chaotic,
-        HideDetection = 24,
+        HideDetection = 26,
         Experience = 42000,
         
         CanFly = true,
@@ -99744,7 +99748,7 @@
         Name = "Carfel",
         MaxHealth = 2000, Health = 2000,
         BaseDodge = 21,
-        HideDetection = 27,
+        HideDetection = 28,
         Alignment = Alignment.Evil,
         
         Experience = 32000,
@@ -99810,7 +99814,7 @@
     {
         MaxHealth = 800, Health = 800,
         BaseDodge = 15,
-    
+        HideDetection = 28,
         Experience = 18000,
         BasePenetration = ShieldPenetration.Medium,
         
@@ -99935,7 +99939,7 @@
         Experience = 27000,
         CanWalk = false,
         Immunity = CreatureImmunity.Poison,
-            
+        HideDetection = 28,    
         VisibilityDistance = 0,
     };
     
@@ -99994,7 +99998,7 @@
         Body = 163,
         MaxHealth = 2500, Health = 2500,
         BaseDodge = 21,
-        HideDetection = 25,
+        HideDetection = 28,
         Experience = 39000,
        
         CanCharge = true,
@@ -100052,7 +100056,7 @@
     
         MaxHealth = 5000, Health = 5000,
         BaseDodge = 15,
-    
+        HideDetection = 30,
         Experience = 69000,
         
         BasePenetration = ShieldPenetration.VeryHeavy,
@@ -100120,7 +100124,7 @@
     {
         MaxHealth = 130, Health = 130,
         BaseDodge = 12,
-                
+        HideDetection = 25,            
         Experience = 5200,
         BasePenetration = ShieldPenetration.Light,
         CanFlee = true,
@@ -100168,7 +100172,7 @@
     {
         MaxHealth = 200, Health = 200,
         BaseDodge = 16,
-    
+        HideDetection = 25, 
         Experience = 10500,
     
         CanCharge = true,
@@ -100233,7 +100237,7 @@
     {
         MaxHealth = 200, Health = 200,
         BaseDodge = 18,
-                
+        HideDetection = 25,           
         Experience = 12000,
         BasePenetration = ShieldPenetration.Medium,
         CanStrikeCritically = false,
@@ -100289,7 +100293,7 @@
     {
         MaxHealth = 145, Health = 145,
         BaseDodge = 13,
-                
+        HideDetection = 25,            
         Experience = 6400,
                 
         Movement = 3,
@@ -100337,7 +100341,7 @@
     {
         MaxHealth = 100, Health = 100,
         BaseDodge = 12,
-                
+        HideDetection = 25,              
         Experience = 5600,
         
         CanFlee = true,
@@ -100389,7 +100393,7 @@
         BasePenetration = ShieldPenetration.Light,
         Experience = 6700,
         LightningResistance = 100,
-    
+        HideDetection = 25, 
     };
     
     hobgoblin.Attacks = new CreatureAttackCollection()
@@ -100440,7 +100444,7 @@
     {
         MaxHealth = 150, Health = 150,
         BaseDodge = 14,
-    
+        HideDetection = 25,
         Experience = 6600,
         BasePenetration = ShieldPenetration.Medium,
     };
@@ -100489,7 +100493,7 @@
     {
         MaxHealth = 135, Health = 135,
         BaseDodge = 13,
-                
+        HideDetection = 25,           
         Experience = 6400,
         BasePenetration = ShieldPenetration.Medium,
         Movement = 3,
@@ -100538,7 +100542,7 @@
     {
         MaxHealth = 175, Health = 175,
         BaseDodge = 14,
-                
+        HideDetection = 25,           
         Experience = 6800,
                 
         Movement = 3,
@@ -100587,7 +100591,7 @@
         Name = "Elite.Guard",
         MaxHealth = 300, Health = 300,
         BaseDodge = 15,
-            
+        HideDetection = 29,    
         Experience = 11000,
         
         CanCharge = true,
@@ -100639,7 +100643,7 @@
     {
         MaxHealth = 150, Health = 150,
         BaseDodge = 14,
-    
+        HideDetection = 25,
         Experience = 7500,
         BasePenetration = ShieldPenetration.Medium,
     };
@@ -100688,7 +100692,7 @@
         BaseDodge = 11,
         BasePenetration = ShieldPenetration.VeryLight,
         Experience = 2300,
-    
+        HideDetection = 25,
     };
     
     orc.Attacks = new CreatureAttackCollection()
@@ -100741,7 +100745,7 @@
         BaseDodge = 11,
         BasePenetration = ShieldPenetration.VeryLight,
         Experience = 2600,
-        
+        HideDetection = 25,  
         MaxMana = 21, Mana = 21,
             
     };
@@ -100794,7 +100798,7 @@
     {
         MaxHealth = 130, Health = 130,
         BaseDodge = 12,
-    
+        HideDetection = 25,
         Experience = 6800,
         BasePenetration = ShieldPenetration.Light,
         MaxMana = 31, Mana = 31,
@@ -100850,7 +100854,7 @@
         MaxHealth = 90, Health = 90,
         MaxMana = 21, Mana = 21,
         BaseDodge = 11,
-    
+        HideDetection = 25,
         Experience = 2300,
         BasePenetration = ShieldPenetration.VeryLight,
     };
@@ -100910,6 +100914,7 @@
         BasePenetration = ShieldPenetration.VeryLight,        
         Experience = 5800,
         FireProtection = 100,
+        HideDetection = 25,
     };
     
     goblin.Attacks = new CreatureAttackCollection()
@@ -100963,7 +100968,7 @@
     {
         MaxHealth = 120, Health = 120,
         BaseDodge = 13,
-    
+        HideDetection = 28,
         Experience = 7200,
         BasePenetration = ShieldPenetration.Light,
         MaxMana = 21, Mana = 21,
@@ -101022,7 +101027,7 @@
         Experience = 9000,
         BasePenetration = ShieldPenetration.Medium,
         VisibilityDistance = 0,
-            
+        HideDetection = 28,    
         FireProtection = 50,
         IceProtection = 50,
         DeathResistance = 100,
@@ -101082,7 +101087,7 @@
     {
         MaxHealth = 150, Health = 150,
         BaseDodge = 14,
-
+        HideDetection = 28,
         Experience = 6800,
         BasePenetration = ShieldPenetration.Light,
         Movement = 3,
@@ -101137,7 +101142,7 @@
         MaxHealth = 150, Health = 150,
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
-    
+        HideDetection = 28, 
         Experience = 8500,
         BasePenetration = ShieldPenetration.Light,
         VisibilityDistance = 1,
@@ -101198,7 +101203,7 @@
         Name = "mummy",
         MaxHealth = 350, Health = 350,
         BaseDodge = 15,
-        HideDetection = 26,
+        HideDetection = 28,
         Experience = 19000,
     
         BasePenetration = ShieldPenetration.Heavy,
@@ -101263,7 +101268,7 @@
         MaxHealth = 150, Health = 150,
         BaseDodge = 12,
         MaxMana = 10, Mana = 10,
-    
+        HideDetection = 28,
         Experience = 2725,
         
     };
@@ -101313,7 +101318,7 @@
         Name = "Yasnaki.Knight",
         MaxHealth = 230, Health = 230,
         BaseDodge = 14,
-                
+        HideDetection = 28,        
         Experience = 10500,
         BasePenetration = ShieldPenetration.Medium,
     };
@@ -101360,6 +101365,7 @@
         MaxHealth = 120, Health = 120,
         MaxMana = 19, Mana = 19,
         BaseDodge = 14,
+        HideDetection = 28,
         BasePenetration = ShieldPenetration.Light,
         Experience = 12000,
         VisibilityDistance = 0,
@@ -101421,6 +101427,7 @@
         CanWalk = false,
         CanCharge = true,   
         Experience = 7000,
+        HideDetection = 25,
         
         Immunity = CreatureImmunity.Poison, 
             
@@ -101483,7 +101490,7 @@
             
         MaxHealth = 260, Health = 260,
         BaseDodge = 16,
-    
+        HideDetection = 28,
         Experience = 10550,
         BasePenetration = ShieldPenetration.Heavy,
         CanJumpkick = true,
@@ -101528,7 +101535,7 @@
     {
         Name = "Yasnaki.Wizard",
         Body = 37,
-            
+        HideDetection = 28,      
         MaxHealth = 150, Health = 150,
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
@@ -101596,7 +101603,7 @@
         Body = 48,
         MaxHealth = 130, Health = 130,
         BaseDodge = 11,
-    
+        HideDetection = 28,
         Experience = 9500,
         BasePenetration = ShieldPenetration.Light,
         MaxMana = 31, Mana = 31,
@@ -101676,7 +101683,7 @@
     {
         MaxHealth = 130, Health = 130,
         BaseDodge = 12,
-                
+        HideDetection = 25,            
         Experience = 5700,
         BasePenetration = ShieldPenetration.Light,
     };
@@ -101723,7 +101730,8 @@
         MaxHealth = 80, Health = 80,
         BaseDodge = 10,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 2200,    
+        Experience = 2200,  
+        HideDetection = 25,
     };
     
     goblin.Attacks = new CreatureAttackCollection()
@@ -101769,7 +101777,7 @@
         BaseDodge = 11,
         BasePenetration = ShieldPenetration.Light,
         Experience = 2200,
-        
+        HideDetection = 25, 
         CanFlee = true,
     };
     
@@ -101814,7 +101822,7 @@
     {
         MaxHealth = 110, Health = 110,
         BaseDodge = 12,
-                
+        HideDetection = 25,        
         Experience = 2600,
         BasePenetration = ShieldPenetration.Light,
     };
@@ -101860,7 +101868,7 @@
     {
         MaxHealth = 80, Health = 80,
         BaseDodge = 11,
-                
+        HideDetection = 25,         
         Experience = 2100,
         BasePenetration = ShieldPenetration.Light,
         CanFlee = true,
@@ -101908,7 +101916,9 @@
         BaseDodge = 10,
         BasePenetration = ShieldPenetration.Light,       
         Experience = 2200,
+        HideDetection = 25,
     };
+    
     
     goblin.Attacks = new CreatureAttackCollection()
     {
@@ -102104,7 +102114,7 @@
     {
         MaxHealth = 90, Health = 90,
         BaseDodge = 14,
-    
+        HideDetection = 25,
         Experience = 2600,
         BasePenetration = ShieldPenetration.Medium,
     };
@@ -102153,7 +102163,7 @@
     {
         MaxHealth = 80, Health = 80,
         BaseDodge = 14,
-                
+        HideDetection = 25,        
         Experience = 2700,
         BasePenetration = ShieldPenetration.Medium,
         Movement = 3,
@@ -102203,7 +102213,7 @@
         MaxHealth = 200, Health = 200,
         MaxMana = 17, Mana = 17,
         BaseDodge = 20,
-    
+        HideDetection = 28,  
         Experience = 14500,
         BasePenetration = ShieldPenetration.Medium,
         VisibilityDistance = 1,
@@ -102262,7 +102272,7 @@
         BaseDodge = 14,
         BasePenetration = ShieldPenetration.VeryLight,
         Experience = 6000,
-    
+        HideDetection = 25,
     };
     
     orc.Attacks = new CreatureAttackCollection()
