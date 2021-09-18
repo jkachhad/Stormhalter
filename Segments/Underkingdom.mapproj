@@ -102310,6 +102310,71 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="Uk300Gargoyle">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var gargoyle = new Gargoyle()
+    {
+        MaxHealth = 130, Health = 130,
+        BaseDodge = 17,
+
+        Experience = 3500,
+
+        Movement = 3,
+        CanFly = true,
+        CanLoot = true,
+        BasePenetration = ShieldPenetration.Heavy,
+        
+        Immunity = CreatureImmunity.Poison,
+    };
+    
+    gargoyle.AddImmunity(typeof(PoisonCloudSpell));
+    gargoyle.AddImmunity(typeof(WhirlwindSpell));
+    
+    gargoyle.AddStatus(new NightVisionStatus(gargoyle));
+    gargoyle.AddStatus(new BreatheWaterStatus(gargoyle));
+    gargoyle.AddStatus(new WaterWalkingStatus(gargoyle));
+    
+    gargoyle.Attacks = new CreatureAttackCollection
+    {
+        { 
+            new CreatureAttack(11, 15, 25, "The gargoyle strikes you with its claws.",
+                                                     new AttackPoisonComponent(10, 20)),     60
+        }, 
+        {
+            new CreatureAttack(12, 20, 30, "The gargoyle batters you with its wings."),      40
+        }, 
+    };
+    
+    gargoyle.Blocks = new CreatureBlockCollection
+    {
+            new CreatureBlock(6, "the armor"),
+            new CreatureBlock(3, "a claw"),
+            new CreatureBlock(1, "a wing")
+    };
+
+    gargoyle.Wield(new Greatsword());    
+
+    gargoyle.AddGold(1500);
+   
+    return gargoyle;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="UKPawner">
@@ -104143,6 +104208,30 @@
       <bounds region="16">
         <inclusion left="6" top="2" right="15" bottom="8" />
         <inclusion left="16" top="7" right="20" bottom="8" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Pond Gargs">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1800</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="Uk300Gargoyle" size="1" minimum="2" maximum="2" />
+      <bounds region="8">
+        <inclusion left="2" top="2" right="9" bottom="8" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
