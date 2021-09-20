@@ -89757,6 +89757,7 @@
     };
     
     dragon.AddStatus(new NightVisionStatus(dragon));
+    dragon.AddImmunity(typeof(WhirlwindSpell));
 
     dragon.Attacks = new CreatureAttackCollection
     {
