@@ -245,6 +245,14 @@
                 OnOrderFollow(source);
                 return;
             }
+			
+			if (order.Matches("trail", true))
+            {
+                Director = source;
+    
+                OnOrderTrail(source);
+                return;
+            }
         }
     
         public KoboldPrincess(Serial serial) : base(serial)
