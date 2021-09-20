@@ -32283,12 +32283,12 @@ if (spokeRecently(source))
     };
     
     skeleton.AddStatus(new NightVisionStatus(skeleton));
-    skeleton.Wield(new FineCrossbow());
+    skeleton.Wield(new Longbow());
     
     skeleton.AddGold(2000);
     skeleton.AddLoot(new LootPack(
         new LootPackEntry(true, GenericBottles, 50),
-        new LootPackEntry(true, Levelthreegems, 33)
+        new LootPackEntry(true, Levelthreegems, 12)
     ));
     
 return skeleton;
@@ -32426,8 +32426,8 @@ elemental.AddStatus(new NightVisionStatus(elemental));
 
 elemental.AddGold(5000);
 elemental.AddLoot(new LootPack(
-    new LootPackEntry(true, Levelthreegems, 50, gemsPriceMutator),
-    new LootPackEntry(true, Levelthreegems, 50, gemsPriceMutator),
+    new LootPackEntry(true, Levelthreegems, 25, gemsPriceMutator),
+    new LootPackEntry(true, Levelthreegems, 25, gemsPriceMutator),
     new LootPackEntry(true, GenericBottles, 50),
 ));
 
