@@ -122296,6 +122296,69 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="surfaceSwordMaster">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var swordmaster = new Skeleton()
+    {
+        Name = "Hseponk",
+        MaxHealth = 1675, Health = 1675,
+        BaseDodge = 19,
+        HideDetection = 25,
+        Experience = 39000,
+        Body = 163,
+        
+       
+        CanCharge = true,
+        CanSwim = false,
+        CanLoot = false,
+                
+        BasePenetration = ShieldPenetration.Heavy,
+
+        Immunity = CreatureImmunity.Web | CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+    
+    };
+    
+    swordmaster.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureAttack(15,    30, 55,     "The swordmaster pierces you with his rapier.",
+                                                    new AttackAgeComponent(500, 50))
+    };
+    swordmaster.AddStatus(new NightVisionStatus(swordmaster));
+    swordmaster.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
+   
+    swordmaster.Wield(new BlackSteelRapier());
+    swordmaster.Equip(new DrakeScaleArmor());
+        
+    swordmaster.AddGold(5000);
+    swordmaster.AddLoot(new LootPack(
+        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, SemiRare, 8),
+        new LootPackEntry(true, UltraRare, 0.5)
+    ));
+    
+
+    
+    return swordmaster;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="townBanker">
@@ -123666,7 +123729,7 @@ if (spawn is Shopkeeper shopkeeper)
         <block><![CDATA[]]></block>
       </script>
       <entry entity="surfaceBanshee" size="1" minimum="2" maximum="5" />
-      <entry entity="towerSwordMaster" size="1" minimum="1" maximum="1" />
+      <entry entity="surfaceSwordMaster" size="1" minimum="1" maximum="1" />
       <entry entity="towerSkeleton" size="2" minimum="2" maximum="2" />
       <bounds region="7">
         <inclusion left="13" top="0" right="19" bottom="2" />
