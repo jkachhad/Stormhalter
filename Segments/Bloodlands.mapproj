@@ -122303,8 +122303,8 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
 	var swordmaster = new Skeleton()
     {
         Name = "Hseponk",
-        MaxHealth = 1675, Health = 1675,
-        BaseDodge = 19,
+        MaxHealth = 1275, Health = 1275,
+        BaseDodge = 17,
         HideDetection = 25,
         Experience = 39000,
         Body = 163,
@@ -122323,7 +122323,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     
     swordmaster.Attacks = new CreatureAttackCollection()
     {
-        new CreatureAttack(15,    30, 55,     "The swordmaster pierces you with his rapier.",
+        new CreatureAttack(11,    30, 55,     "The swordmaster pierces you with his rapier.",
                                                     new AttackAgeComponent(500, 50))
     };
     swordmaster.AddStatus(new NightVisionStatus(swordmaster));
