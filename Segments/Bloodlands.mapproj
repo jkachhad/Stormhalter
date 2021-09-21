@@ -121734,7 +121734,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     
     knight.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(14, 20, 40)
+        new CreatureBasicAttack(16, 20, 40)
     };
     knight.AddStatus(new NightVisionStatus(knight));
     knight.Wield(new Greatsword());
@@ -121784,7 +121784,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     
     martialartist.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(16, 20, 35)
+        new CreatureBasicAttack(17, 20, 40)
     };
     martialartist.AddStatus(new NightVisionStatus(martialartist));    
     martialartist.AddGold(650);
@@ -121829,7 +121829,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     
     archer.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(15, 25, 35)
+        new CreatureBasicAttack(16, 25, 35)
     };
     archer.AddStatus(new NightVisionStatus(archer));
     archer.Wield(new FineCrossbow());
@@ -121879,7 +121879,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     
     henchmen.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(11, 12, 20)
+        new CreatureBasicAttack(16, 14, 38)
     };
     henchmen.AddStatus(new NightVisionStatus(henchmen));
     henchmen.Wield(new Longsword());
@@ -121930,7 +121930,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     
     bodyguard.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(12, 12, 35)
+        new CreatureBasicAttack(21, 30, 55)
     };
     
 
@@ -121981,7 +121981,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     
     trusov.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(17, 31, 69)
+        new CreatureBasicAttack(27, 40, 85)
     };
     trusov.AddStatus(new NightVisionStatus(trusov));
     trusov.Wield(new Longsword());
