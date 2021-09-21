@@ -120957,7 +120957,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
             new CreatureAttack(22,     31, 58,  "The lizard hits you with its tail"),   40 
         },
     };
-    
+    lizard.AddStatus(new NightVisionStatus(lizard));
     lizard.Blocks = new CreatureBlockCollection
     {
         new CreatureBlock(7, "the armor"),
@@ -121088,7 +121088,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
                         new AttackPoisonComponent(12), 
                         new AttackStunComponent(10))
     };
-    
+    beetle.AddStatus(new NightVisionStatus(beetle));
     beetle.Blocks = new CreatureBlockCollection
     {
         new CreatureBlock(14, "the armor")
@@ -121137,7 +121137,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
                         new AttackPoisonComponent(12), 
                         new AttackStunComponent(10))
     };
-    
+    bee.AddStatus(new NightVisionStatus(bee));
     bee.Blocks = new CreatureBlockCollection
     {
         new CreatureBlock(14, "the armor")
@@ -121255,7 +121255,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
                    CreatureImmunity.Bashing | CreatureImmunity.Poison | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
     };
-    
+    wyrm.AddStatus(new NightVisionStatus(wyrm));
     wyrm.Attacks = new CreatureAttackCollection
     {
         {
@@ -121464,7 +121464,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
                         new AttackPoisonComponent(12), 
                         new AttackStunComponent(10))
     };
-    
+    bee.AddStatus(new NightVisionStatus(bee));
     bee.Blocks = new CreatureBlockCollection
     {
         new CreatureBlock(14, "the armor")
@@ -121586,6 +121586,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
       <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -121613,7 +121614,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         FireProtection = 50,
         CanLoot = false,
     };
-    
+    rockworm.AddStatus(new NightVisionStatus(rockworm));
     rockworm.Attacks = new CreatureAttackCollection
     {
         { 
