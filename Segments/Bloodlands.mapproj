@@ -121724,7 +121724,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
  var knight = new Ninja()
     {
         Name = "Passage Knight",
-        MaxHealth = 245, Health = 245,
+        MaxHealth = 275, Health = 275,
         BaseDodge = 25,
         HideDetection = 24,       
         Experience = 10500,
@@ -121734,7 +121734,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     
     knight.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(16, 20, 40)
+        new CreatureBasicAttack(17, 20, 50)
     };
     knight.AddStatus(new NightVisionStatus(knight));
     knight.Wield(new Greatsword());
@@ -121784,7 +121784,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     
     martialartist.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(17, 20, 40)
+        new CreatureBasicAttack(17, 20, 55)
     };
     martialartist.AddStatus(new NightVisionStatus(martialartist));    
     martialartist.AddGold(650);
@@ -121829,11 +121829,12 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
     
     archer.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(16, 25, 35)
+        new CreatureBasicAttack(16, 25, 40)
     };
     archer.AddStatus(new NightVisionStatus(archer));
     archer.Wield(new FineCrossbow());
     archer.Equip(new PlatemailArmor());
+    
     
     archer.AddGold(1600);
     archer.AddLoot(new LootPack(
@@ -121850,6 +121851,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
       <script name="OnDeath" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -124352,7 +124354,7 @@ if (spawn is Shopkeeper shopkeeper)
     <spawn type="RegionSpawner" name="thievesPassage">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>10800</maximumDelay>
-      <maximum>19</maximum>
+      <maximum>25</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -124367,9 +124369,9 @@ if (spawn is Shopkeeper shopkeeper)
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="passageKnight" size="2" minimum="7" maximum="10" />
-      <entry entity="passageMA" size="2" minimum="7" maximum="10" />
-      <entry entity="passageArcher" size="1" minimum="2" maximum="4" />
+      <entry entity="passageKnight" size="2" minimum="7" maximum="12" />
+      <entry entity="passageMA" size="2" minimum="7" maximum="12" />
+      <entry entity="passageArcher" size="1" minimum="2" maximum="5" />
       <bounds region="14">
         <inclusion left="14" top="-2" right="51" bottom="28" />
         <exclusion left="32" top="0" right="44" bottom="9" />
