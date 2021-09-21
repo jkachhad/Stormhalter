@@ -32531,10 +32531,12 @@ dragon.Spells = new CreatureSpellCollection(20.0)
 
 dragon.AddGold(75000);
 dragon.AddLoot(new LootPack(
-    new LootPackEntry(true, Dragongems, 100, gemsPriceMutator),
-    new LootPackEntry(true, Dragongems, 100, gemsPriceMutator),
-    new LootPackEntry(true, Dragongems, 100, gemsPriceMutator),
-    new LootPackEntry(true, Dragongems, 100, gemsPriceMutator),
+    new LootPackEntry(true, (from, container) => new GoldNugget(200000u),    100, gemsPriceMutator),
+    new LootPackEntry(true, (from, container) => new GoldNugget(200000u),    100, gemsPriceMutator),
+    new LootPackEntry(true, (from, container) => new GoldNugget(200000u),    100, gemsPriceMutator),
+    new LootPackEntry(true, Dragongems, 100),
+    new LootPackEntry(true, Dragongems, 100),
+    new LootPackEntry(true, Dragongems, 100),
     new LootPackEntry(true, Dragonloot, 100),
     new LootPackEntry(true, (from, container) => new IceDragonScaleArmor(),100),
     new LootPackEntry(true, Dragonloot, 100),
@@ -34189,7 +34191,7 @@ spawn.Name = "Neo";
       </entry>
     </treasure>
     <treasure name="Miniboss">
-      <entry weight="50">
+      <entry weight="18">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -34212,6 +34214,15 @@ spawn.Name = "Neo";
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new DexterityRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="12">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StrongShieldBracelet();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -34348,7 +34359,7 @@ spawn.Name = "Neo";
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="25">
+      <entry weight="13">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -34399,7 +34410,7 @@ spawn.Name = "Neo";
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new DexterityRing();
+	return new ImbuedIceDragonScales();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
