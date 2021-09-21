@@ -118428,7 +118428,7 @@
         Name = "Evil Statue",
         Body = 99,
         
-        MaxHealth = 100, Health = 100,
+        MaxHealth = 110, Health = 110,
         BaseDodge = 15,
         
         Movement = 0,
@@ -118437,7 +118437,7 @@
         
         Alignment = Alignment.Chaotic,
     };
-    
+    statue.AddStatus(new NightVisionStatus(statue));
     statue.Attacks = new CreatureAttackCollection
     {
         new CreatureBasicAttack(10)
@@ -118526,7 +118526,7 @@
             
         MaxHealth = 5500, Health = 5500,
         BaseDodge = 31,
-        MaxMana = 12, Mana = 12,
+        MaxMana = 17, Mana = 17,
         HideDetection = 27,
         BasePenetration = ShieldPenetration.Light,
         Experience = 80500,
@@ -118561,14 +118561,10 @@
     };
     fighter.Spells = new CreatureSpellCollection()
     {
-        {
-            new CreatureSpell<BlindSpell>(
-                skillLevel: 17, cost: 4, 
-                mantra: SpellHelper.GenerateMantra(), instantCast: false),      5, TimeSpan.FromSeconds(30.0)
-        },
+        
         {
             new CreatureSpell<DeathSpell>(
-                skillLevel: 15, cost: 6, 
+                skillLevel: 16, cost: 6, 
                 mantra: SpellHelper.GenerateMantra(), instantCast: false),      2
         }
     };
@@ -118617,7 +118613,7 @@
             
         MaxHealth = 5500, Health = 5500,
         BaseDodge = 31,
-        MaxMana = 10, Mana = 10,
+        MaxMana = 17, Mana = 17,
         HideDetection = 27,
         BasePenetration = ShieldPenetration.Light,
         Experience = 80500,
@@ -118645,7 +118641,7 @@
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(21,      75, 100,     "The Queen disctracts you in her gorgeous looks.",
+            new CreatureAttack(21,      75, 100,     "The Queen disctracts you with her gorgeous looks.",
                                                         new AttackProneComponent(35), 
                                                         new AttackStunComponent(15)),               20
         },
@@ -120375,7 +120371,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         BasePenetration = ShieldPenetration.Heavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Magic,
+                   CreatureImmunity.Projectile | CreatureImmunity.Magic | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
     
     };
