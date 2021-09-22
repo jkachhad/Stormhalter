@@ -263,8 +263,10 @@ namespace Kesmai.WorldForge.Editor
 					break;
 				case "Entity": //Ctrl-E
 					{
+						Entity target = null;
 						var entityRequest = WeakReferenceMessenger.Default.Send<SpawnsDocument.GetActiveEntity>();
-						Entity target = entityRequest.Response;
+						if (entityRequest.HasReceivedResponse) 
+							target = entityRequest.Response;
 						ActiveDocument = Documents.Where(d => d is EntitiesViewModel).FirstOrDefault() as EntitiesViewModel;
 						if (target is not null)
 							(ActiveDocument as EntitiesViewModel).SelectedEntity = target;
