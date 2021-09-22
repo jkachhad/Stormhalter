@@ -87948,6 +87948,7 @@
         CanFly = true,
         
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Poison,
+        Weakness = CreatureWeakness.Silver,
     };
     
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
@@ -88210,6 +88211,7 @@
         BasePenetration = ShieldPenetration.Medium,
         
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Poison,
+         Weakness = CreatureWeakness.Silver,
     };
     
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
