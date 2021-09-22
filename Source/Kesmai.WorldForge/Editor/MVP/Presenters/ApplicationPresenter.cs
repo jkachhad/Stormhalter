@@ -315,6 +315,7 @@ namespace Kesmai.WorldForge.Editor
 						{
 							ActiveDocument = Documents.Where(d => d is SegmentRegion dr && dr.ID == target.DestinationRegion).FirstOrDefault();
 							WeakReferenceMessenger.Default.Send(new JumpSegmentRegionLocation(target.DestinationRegion, target.DestinationX, target.DestinationY));
+							_selection.Select(new Microsoft.Xna.Framework.Rectangle(target.DestinationX,target.DestinationY,1,1), Segment.GetRegion(target.DestinationRegion));
 						}
 						break;
 					}

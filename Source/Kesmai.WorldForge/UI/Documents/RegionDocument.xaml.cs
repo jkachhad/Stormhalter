@@ -16,7 +16,8 @@ namespace Kesmai.WorldForge.UI.Documents
         {
 			if (_presenter.Region.ID == target.Region)
             {
-				_presenter.WorldScreen.CenterCameraOn(target.X, target.Y);
+				if (_presenter.WorldScreen is not null)
+					_presenter.WorldScreen.CenterCameraOn(target.X, target.Y);
             }
         }
 	}
