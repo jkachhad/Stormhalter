@@ -234,6 +234,55 @@
 
     <!-- Input bindings -->
     <Window.InputBindings>
-        <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding SaveSegmentCommand}" />
+        <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding SaveSegmentCommand}">
+            <KeyBinding.CommandParameter>
+                <system:Boolean>false</system:Boolean>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="P" Command="{Binding SwapDocumentCommand}" >
+            <KeyBinding.CommandParameter>
+                <system:String>Spawn</system:String>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="G" Command="{Binding SwapDocumentCommand}" >
+            <KeyBinding.CommandParameter>
+                <system:String>Segment</system:String>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="E" Command="{Binding SwapDocumentCommand}" >
+            <KeyBinding.CommandParameter>
+                <system:String>Entity</system:String>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="T" Command="{Binding SwapDocumentCommand}" >
+            <KeyBinding.CommandParameter>
+                <system:String>Treasure</system:String>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="L" Command="{Binding SwapDocumentCommand}" >
+            <KeyBinding.CommandParameter>
+                <system:String>Location</system:String>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="U" Command="{Binding SwapDocumentCommand}" >
+            <KeyBinding.CommandParameter>
+                <system:String>Subregion</system:String>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="D" Command="{Binding SwapDocumentCommand}" >
+            <KeyBinding.CommandParameter>
+                <system:String>Teleporter</system:String>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="Left" Command="{Binding SwapDocumentCommand}" >
+            <KeyBinding.CommandParameter>
+                <system:String>RegionLeft</system:String>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="Right" Command="{Binding SwapDocumentCommand}" >
+            <KeyBinding.CommandParameter>
+                <system:String>RegionRight</system:String>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
     </Window.InputBindings>
 </Window>

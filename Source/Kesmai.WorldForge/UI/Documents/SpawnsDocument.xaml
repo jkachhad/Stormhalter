@@ -140,6 +140,11 @@
                         <DataGrid.Resources>
                             <CollectionViewSource x:Key="EntitiesCollection" Source="{Binding Entities}" />
                         </DataGrid.Resources>
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Jump to Entity Definition" Command="{Binding JumpEntityCommand}"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
                         <DataGrid.Columns>
                             <DataGridComboBoxColumn MinWidth="200" Header="Entity" 
                                                     ItemsSource="{Binding Source={StaticResource EntitiesCollection}}"
@@ -256,10 +261,16 @@
                     </Grid.RowDefinitions>
                     <DataGrid Grid.Row="0" Margin="5" Height="300"
                               AutoGenerateColumns="False"
+                              x:Name="_regionEntities"
                               ItemsSource="{Binding SelectedRegionSpawner.Entries}">
                         <DataGrid.Resources>
                             <CollectionViewSource x:Key="EntitiesCollection" Source="{Binding Entities}" />
                         </DataGrid.Resources>
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Jump to Entity Definition" Command="{Binding JumpEntityCommand}"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
                         <DataGrid.Columns>
                             <DataGridComboBoxColumn MinWidth="200" Header="Entity" 
                                                     ItemsSource="{Binding Source={StaticResource EntitiesCollection}}"
