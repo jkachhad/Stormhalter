@@ -241,6 +241,21 @@ namespace Kesmai.WorldForge.Editor
 						var sel = _selection.FirstOrDefault();
 						LocationSpawner targetLS = null;
 						RegionSpawner targetRS = null;
+						if (ActiveDocument is EntitiesViewModel)
+                        {
+							var spawnRequest = WeakReferenceMessenger.Default.Send<EntitiesDocument.GetSelectedSpawner>();
+							if (spawnRequest.HasReceivedResponse)
+							{
+								Spawner target = spawnRequest.Response;
+								ActiveDocument = Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
+								if (target is LocationSpawner)
+									(ActiveDocument as SpawnsViewModel).SelectedLocationSpawner = target as LocationSpawner;
+								if (target is RegionSpawner)
+									(ActiveDocument as SpawnsViewModel).SelectedRegionSpawner = target as RegionSpawner;
+								WeakReferenceMessenger.Default.Send(target as Spawner);
+								break;
+							}
+						}
 						if (sel is { Width: 1, Height: 1 })
 						{
 							targetLS = Segment.Spawns.Location.Where(s => s.Region == _selection.Region.ID && s.X == sel.Left && s.Y == sel.Top).FirstOrDefault();

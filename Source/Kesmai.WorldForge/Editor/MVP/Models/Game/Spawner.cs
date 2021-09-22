@@ -49,8 +49,12 @@ namespace Kesmai.WorldForge
 			get => _name;
 			set => SetProperty(ref _name, value);
 		}
-		
-		public TimeSpan MinimumDelay
+
+        public override string ToString()
+        {
+			return Name;
+        }
+        public TimeSpan MinimumDelay
 		{
 			get => _minimumDelay;
 			set => SetProperty(ref _minimumDelay, value);
