@@ -31268,7 +31268,7 @@ if (spokeRecently(source))
         
         VisibilityDistance = 3,
        
-        CanJumpkick = true,
+        CanCharge = true,
         CanSwim = true,
         CanStrikeCritically = true,
 
@@ -31286,7 +31286,7 @@ if (spokeRecently(source))
     fippy.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(18,      20, 40,      "The Captain Barks and gnashes you with his fangs",
+            new CreatureAttack(22,      20, 60,      "The Captain Barks and gnashes you with his fangs",
                                                         new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
