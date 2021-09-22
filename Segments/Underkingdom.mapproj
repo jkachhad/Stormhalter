@@ -204,7 +204,7 @@
 
             Brain = new RescueAI(this)
             {
-                Aggressive = true,
+                Aggressive = false,
             };
 			
 			CanLoot = false;
@@ -243,6 +243,14 @@
                 Director = source;
     
                 OnOrderFollow(source);
+                return;
+            }
+			
+			if (order.Matches("trail", true))
+            {
+                Director = source;
+    
+                OnOrderTrail(source);
                 return;
             }
         }

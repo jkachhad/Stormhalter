@@ -50918,8 +50918,8 @@
           <movementCost>2</movementCost>
         </component>
         <component type="HiddenTeleporterComponent">
-          <destinationX>3</destinationX>
-          <destinationY>9</destinationY>
+          <destinationX>21</destinationX>
+          <destinationY>3</destinationY>
           <destinationRegion>225</destinationRegion>
           <lightphases select="all" />
           <moonphases select="all" />
@@ -87948,6 +87948,7 @@
         CanFly = true,
         
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Poison,
+        Weakness = CreatureWeakness.Silver,
     };
     
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
@@ -88210,6 +88211,7 @@
         BasePenetration = ShieldPenetration.Medium,
         
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Poison,
+         Weakness = CreatureWeakness.Silver,
     };
     
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
@@ -89757,6 +89759,7 @@
     };
     
     dragon.AddStatus(new NightVisionStatus(dragon));
+    dragon.AddImmunity(typeof(WhirlwindSpell));
 
     dragon.Attacks = new CreatureAttackCollection
     {
