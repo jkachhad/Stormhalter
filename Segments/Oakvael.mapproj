@@ -595,7 +595,7 @@
         {
             var heart = GetBeheldInVisibility(0).SelectMany(m => m.Members).OfType<OakGroveHeart>().FirstOrDefault();
     
-            if (heart != null && heart.Alignment == Neutral)
+            if (heart != null && heart.Alignment == Alignment.Neutral)
             {
                 Emote($"Dissipates into a puff of healing energy, flowing towards the heart of the grove");
                 heart.OakHeartSaved();
@@ -727,19 +727,19 @@
             {
                 Emote($"A series of healthy vegetation flows out of the ground at rapid speed");
                 var tile = Segment.FindTile(30, 51, 236);
-                tile.Components.Add(new ObstructionComponent(266));
+                tile.Add(new Obstruction(266, false));
                 var tile2 = Segment.FindTile(30, 50, 236);
-                tile2.Components.Add(new ObstructionComponent(266));
+                tile2.Add(new Obstruction(266, false));
                 var tile3 = Segment.FindTile(31, 50, 236);
-                tile3.Components.Add(new ObstructionComponent(266));
+                tile3.Add(new Obstruction(266, false));
                 var tile4 = Segment.FindTile(32, 50, 236);
-                tile4.Components.Add(new ObstructionComponent(266));
+                tile4.Add(new Obstruction(266, false));
                 var tile5 = Segment.FindTile(33, 50, 236);
-                tile5.Components.Add(new ObstructionComponent(266));
+                tile5.Add(new Obstruction(266, false));
                 var tile6 = Segment.FindTile(34, 50, 236);
-                tile6.Components.Add(new ObstructionComponent(266));
+                tile6.Add(new Obstruction(266, false));
                 var tile7 = Segment.FindTile(34, 51, 236);
-                tile7.Components.Add(new ObstructionComponent(266));
+                tile7.Add(new Obstruction(266, false));
                 new OakGroveBow().Move(Location, true, Segment);
                 Timer.DelayCall(TimeSpan.FromSeconds(0.2), () => Delete());
             }
@@ -886,7 +886,7 @@
         public void DefenderSoothed()
         {
             soothedAmount++;
-            Say($"Why am I so... angry?);
+            Say($"Why am I so... angry?");
         }
     
         public override int CalculateMeleeDamage(ItemEntity item)
@@ -986,7 +986,7 @@
                     necro.Wield(new BlackStaff());
                     necro.Attacks = new CreatureAttackCollection()
                     {
-                        new CreatureAttack(18),
+                        new CreatureBasicAttack(18),
                     };
     
                     necro.Spells = new CreatureSpellCollection()
@@ -1064,9 +1064,9 @@
         public override void OnSpellTarget(Target target, MobileEntity combatant)
         {
             Emote($"giggles gleefully, fire reflecting from its eyes.");
-            var groundtarget = combatant.Location
-    
-    
+			
+            var groundtarget = combatant.Location;
+  
             Timer.DelayCall(TimeSpan.FromSeconds(3.0), () =>
             {
                 var spell = new ConcussionSpell()
@@ -1085,7 +1085,7 @@
                         Cost = 0,
                     };
                     spell2.Warm(this);
-                    spell2.CastAt(groundtarget);
+                    spell2.CastAt(groundtarget, Direction.Cardinal.Random());
     
                 });
             });
@@ -28792,7 +28792,6 @@
           <destinationY>7</destinationY>
           <destinationRegion>12</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="25" y="8">
@@ -29984,7 +29983,6 @@
           <destinationY>11</destinationY>
           <destinationRegion>12</destinationRegion>
           <teleporterId>129</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="32" y="12">
@@ -37655,7 +37653,6 @@
           <destinationY>17</destinationY>
           <destinationRegion>239</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="42" y="9">
@@ -41216,7 +41213,6 @@
           <destinationY>9</destinationY>
           <destinationRegion>251</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="6" y="17">
@@ -41753,7 +41749,6 @@
           <destinationY>8</destinationY>
           <destinationRegion>10</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="6" y="7">
@@ -42327,7 +42322,6 @@
           <destinationY>12</destinationY>
           <destinationRegion>10</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="13" y="11">
@@ -48520,7 +48514,6 @@
           <destinationY>9</destinationY>
           <destinationRegion>227</destinationRegion>
           <teleporterId>125</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="5" y="12">
@@ -48640,7 +48633,6 @@
           <destinationY>10</destinationY>
           <destinationRegion>235</destinationRegion>
           <teleporterId>129</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="24" y="12">
@@ -51903,7 +51895,6 @@
           <destinationY>9</destinationY>
           <destinationRegion>227</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="22" y="3">
@@ -55124,7 +55115,6 @@
           <destinationY>5</destinationY>
           <destinationRegion>235</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="13" y="9">
@@ -56130,7 +56120,6 @@
           <destinationY>23</destinationY>
           <destinationRegion>235</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="13" y="27">
@@ -61878,7 +61867,6 @@
           <destinationY>9</destinationY>
           <destinationRegion>237</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="30" y="5">
@@ -63383,7 +63371,6 @@
           <destinationY>12</destinationY>
           <destinationRegion>232</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="12" y="10">
@@ -67861,7 +67848,6 @@
           <destinationY>27</destinationY>
           <destinationRegion>237</destinationRegion>
           <teleporterId>130</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="30" y="23">
@@ -72815,7 +72801,6 @@
           <destinationY>4</destinationY>
           <destinationRegion>236</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="15" y="41">
@@ -73385,7 +73370,6 @@
           <destinationY>3</destinationY>
           <destinationRegion>225</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="4" y="9">
@@ -73394,7 +73378,6 @@
           <destinationY>12</destinationY>
           <destinationRegion>232</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="5" y="9">
@@ -82069,7 +82052,6 @@
           <destinationY>41</destinationY>
           <destinationRegion>235</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="15" y="4">
@@ -99190,9 +99172,6 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var tile = Segment.FindTile(43, 22, 236);
-    tile.Components.Add(new ObstructionComponent(413));
-
     var necro = new HeartNecrotroph()
     {
         Name = "Azzeth",
@@ -99335,9 +99314,6 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var tile = Segment.FindTile(35, 22, 236);
-    tile.Components.Add(new ObstructionComponent(413));
-    
     var necro = new HeartNecrotroph()
     {
         Name = "Sogmallon",
@@ -99395,9 +99371,6 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var tile = Segment.FindTile(39, 22, 236);
-    tile.Components.Add(new ObstructionComponent(413));
-    
     var necro = new HeartNecrotroph()
     {
         Name = "Vilvoron",
@@ -100522,10 +100495,16 @@
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    if (spawn is CreatureEntity creature)
+    {
+        var tile = creature.Segment.FindTile(43, 22, 236);
+        
+        if (tile != null && !tile.ContainsComponent<Obstruction>())
+            tile.Add(new Obstruction(413, true));
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -100543,10 +100522,16 @@
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    if (spawn is CreatureEntity creature)
+    {
+        var tile = creature.Segment.FindTile(39, 22, 236);
+        
+        if (tile != null && !tile.ContainsComponent<Obstruction>())
+            tile.Add(new Obstruction(413, true));
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -100564,10 +100549,16 @@
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    if (spawn is CreatureEntity creature)
+    {
+        var tile = creature.Segment.FindTile(35, 22, 236);
+        
+        if (tile != null && !tile.ContainsComponent<Obstruction>())
+            tile.Add(new Obstruction(413, true));
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
