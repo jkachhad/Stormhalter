@@ -74841,7 +74841,7 @@
     {
         MaxHealth = 90, Health = 90,
         BaseDodge = 10,
-
+        HideDetection = 23,   
         Experience = 3100,
 
         Movement = 2,
@@ -75248,7 +75248,7 @@
         MaxHealth = 100, Health = 100,
         MaxMana = 31, Mana = 31,
         BaseDodge = 12,
-        
+        HideDetection = 23,   
         Experience = 3200,
     };
         
@@ -75308,7 +75308,7 @@
     {
         Name = "Thrall",
         Body = (isFemale ? 37 : 38), IsFemale = isFemale,
-            
+        HideDetection = 23,    
         MaxHealth = 110, Health = 110,
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
@@ -75381,7 +75381,7 @@
     {
         Name = "Thrall",
         Body = 38,
-            
+        HideDetection = 23,       
         MaxHealth = 110, Health = 110,
         MaxMana = 31, Mana = 31,
         BaseDodge = 13,
@@ -75450,7 +75450,7 @@
         MaxHealth = 100, Health = 100,
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
-    
+        HideDetection = 23,   
         Experience = 6500,
     
         VisibilityDistance = 1,
@@ -75513,7 +75513,7 @@
     {
         MaxHealth = 90, Health = 90,
         BaseDodge = 11,
-    
+        HideDetection = 23,   
         Experience = 2300,
         BasePenetration = ShieldPenetration.VeryLight,
         Attacks = new CreatureAttackCollection
@@ -75564,7 +75564,7 @@
         MaxHealth = 80, Health = 80,
         MaxMana = 31, Mana = 31,
         BaseDodge = 12,
-    
+        HideDetection = 23,   
         Experience = 2600,
     
     };
@@ -75626,7 +75626,7 @@
     {
         Name = "Wretch",
         Body = (female ? 33 : 32), IsFemale = female,
-            
+        HideDetection = 23,       
         MaxHealth = 125, Health = 125,
         BaseDodge = 11,
         
@@ -75682,6 +75682,7 @@
         BasePenetration = ShieldPenetration.Medium,
         VisibilityDistance = 0,
         Experience = 700,
+        HideDetection = 23,   
     };
     
     raven.Attacks = new CreatureAttackCollection
@@ -75734,6 +75735,7 @@
     {
         MaxHealth = 250, Health = 250,
         BaseDodge = 13,
+        HideDetection = 23,
 
         Experience = 10500,
         
@@ -75786,7 +75788,7 @@
     {
         MaxHealth = 750, Health = 750,
         BaseDodge = 15,
-
+        HideDetection = 23,
         Experience = 10500,
         BasePenetration = ShieldPenetration.Medium,
         
@@ -75839,11 +75841,10 @@
     {
         MaxHealth = 600, Health = 600,
         BaseDodge = 14,
-        HideDetection = 18,
         Experience = 11500,
         BasePenetration = ShieldPenetration.Medium,
         VisibilityDistance = 1,
-        
+        HideDetection = 23,   
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
         Weakness = CreatureWeakness.BlueGlowing,
@@ -75908,7 +75909,7 @@
         MaxHealth = 250, Health = 250,
         MaxMana = 50, Mana = 50,
         BaseDodge = 14,
-    
+        HideDetection = 23,   
         Experience = 12000,
     
         VisibilityDistance = 0,
@@ -75975,7 +75976,7 @@
         Name = "Shidosha",
         MaxHealth = 3000, Health = 3000,
         BaseDodge = 28,
-        HideDetection = 24,
+        HideDetection = 28,
         Experience = 32000,
         
         VisibilityDistance = 0,
@@ -76054,7 +76055,7 @@
     {
         MaxHealth = 250, Health = 250,
         BaseDodge = 20,
-    
+        HideDetection = 26,
         Experience = 6000,
        
         CanJumpkick = true,
@@ -76130,7 +76131,7 @@
     {
         MaxHealth = 3000, Health = 3000,
         BaseDodge = 18,
-        HideDetection = 22,
+        HideDetection = 26,
         Experience = 40000,
         
         CanStrikeCritically = false,
@@ -76294,7 +76295,7 @@
         BaseDodge = 25,
         
         Alignment = Alignment.Chaotic,
-        HideDetection = 27,
+        HideDetection = 28,
         Experience = 85000,
         
         CanFly = true,
@@ -76381,7 +76382,8 @@
     {
         MaxHealth = 300, Health = 300,
         BaseDodge = 15,
-                
+        HideDetection = 26,
+        
         Experience = 11000,
     };
     griffin.AddStatus(new NightVisionStatus(griffin));
@@ -76445,6 +76447,7 @@
             
         MaxHealth = 125, Health = 125,
         BaseDodge = 13,
+        HideDetection = 26,
         BasePenetration = ShieldPenetration.Light,
         Experience = 6300,
         CanSwim = true,
@@ -76492,7 +76495,7 @@
     {
         MaxHealth = 160, Health = 160,
         BaseDodge = 16,
-    
+        HideDetection = 26,
         Experience = 9500,
         BasePenetration = ShieldPenetration.Light,
         Movement = 2,
@@ -76548,6 +76551,7 @@
         MaxHealth = 100, Health = 100,
         MaxMana = 19, Mana = 19,
         BaseDodge = 14,
+        HideDetection = 26,
         MagicProtection = 33,
         Experience = 9500,
         VisibilityDistance = 0,
@@ -76609,7 +76613,7 @@
             
         MaxHealth = 110, Health = 110,
         BaseDodge = 14,
-            
+        HideDetection = 26,    
         Experience = 6200,
         CanSwim = true,
     };
@@ -76656,6 +76660,7 @@
     {
         MaxHealth = 300, Health = 300,
         BaseDodge = 18,
+        HideDetection = 26,
     
         Experience = 15500,
         
@@ -76721,6 +76726,7 @@
     {
         MaxHealth = 150, Health = 150,
         BaseDodge = 16,
+        HideDetection = 28,
         
         Experience = 9025,
         
@@ -76790,6 +76796,7 @@
         VisibilityDistance = 0,
         FireProtection = 100,
         MagicProtection = 33,
+        HideDetection = 28,
     };
     griffin.AddStatus(new NightVisionStatus(griffin));
         
@@ -76848,7 +76855,7 @@
     {
         MaxHealth = 150, Health = 150,
         BaseDodge = 14,
-                            
+        HideDetection = 23,                    
         Experience = 4700,
     };
     
@@ -76893,7 +76900,7 @@
     {
         MaxHealth = 110, Health = 110,
         BaseDodge = 14,
-    
+        HideDetection = 23,
         Experience = 2300,
     
         VisibilityDistance = 1,
@@ -76949,7 +76956,7 @@
     {
         MaxHealth = 90, Health = 90,
         BaseDodge = 11,
-    
+        HideDetection = 23,
         Experience = 2100,
         
         Immunity = CreatureImmunity.Poison,
@@ -77005,7 +77012,7 @@
     {
         MaxHealth = 35, Health = 35,
         BaseDodge = 9,
-                
+        HideDetection = 23,        
         Experience = 500,
     
         BasePenetration = ShieldPenetration.VeryLight,
@@ -77052,7 +77059,7 @@
     {
         Name = "Familiar",
         Body = (female ? 33 : 32), IsFemale = female,
-            
+        HideDetection = 28,    
         MaxHealth = 130, Health = 130,
         BaseDodge = 14,
         MagicProtection = 33,
@@ -77108,7 +77115,7 @@
     {
         Name = "Familiar",
         Body = (female ? 33 : 32), IsFemale = female,
-            
+        HideDetection = 28,    
         MaxHealth = 180, Health = 180,
         BaseDodge = 15,
         MagicProtection = 33,
@@ -77162,7 +77169,7 @@
     {
         Name = "Familiar",
         Body = (female ? 16 : 48), IsFemale = female,
-            
+        HideDetection = 28,    
         MaxHealth = 130, Health = 130,
         MaxMana = 23, Mana = 23,
         BaseDodge = 14,
@@ -77228,6 +77235,7 @@
     {
         MaxHealth = 178, Health = 178,
         BaseDodge = 14,
+        HideDetection = 26,
         BasePenetration = ShieldPenetration.Medium,     
         Experience = 8700,
     };
@@ -77274,7 +77282,7 @@
     {
         MaxHealth = 550, Health = 550,
         BaseDodge = 15,
-                
+        HideDetection = 26,        
         Experience = 18000,
         BasePenetration = ShieldPenetration.Light,
         CanSwim = true,
@@ -77330,7 +77338,7 @@
     {
         MaxHealth = 1000, Health = 1000,
         BaseDodge = 16,
-        HideDetection = 20,
+        HideDetection = 26,
         CanSwim = true,
         CanJumpkick = true,
         CanStrikeCritically = false,
@@ -77393,7 +77401,7 @@
         MaxHealth = 110, Health = 110,
         BaseDodge = 14,
         Experience = 6200,
-        
+        HideDetection = 26,
         CanFlee = true,
     };
     
@@ -77438,7 +77446,7 @@
     {
         MaxHealth = 105, Health = 105,
         BaseDodge = 15,
-                
+        HideDetection = 26,        
         Experience = 5900,
     };
     
@@ -77496,6 +77504,7 @@
         BaseDodge = 15,
         BasePenetration = ShieldPenetration.Light,
         Experience = 6900,
+        HideDetection = 26,
     };
     
     troll.Attacks = new CreatureAttackCollection()
@@ -77539,7 +77548,7 @@
     {
         MaxHealth = 80, Health = 80,
         BaseDodge = 14,
-                
+        HideDetection = 23,        
         Experience = 2500,
     };
     
@@ -77589,7 +77598,7 @@
         MaxHealth = 90, Health = 90,
         BaseDodge = 14,
         Experience = 5700,
-        
+        HideDetection = 26,
         CanFlee = true,
     };
     
@@ -77634,6 +77643,7 @@
     {
         MaxHealth = 220, Health = 220,
         BaseDodge = 14,
+        HideDetection = 26,
         BasePenetration = ShieldPenetration.Light,
         Experience = 11500,
         
@@ -77698,7 +77708,7 @@
         MaxHealth = 55, Health = 55,
         MaxMana = 8, Mana = 8,
         BaseDodge = 12,
-    
+        HideDetection = 23,
         Experience = 1725,
         
         CanFlee = true,
@@ -77813,7 +77823,7 @@
         MaxHealth = 145, Health = 145,
         MaxMana = 3, Mana = 3,
         BaseDodge = 13,
-    
+        HideDetection = 23,   
         Experience = 2750,
     
         Movement = 2,
@@ -77875,7 +77885,7 @@
     {
         MaxHealth = 500, Health = 500,
         BaseDodge = 18,
-
+        HideDetection = 23,
         Experience = 23000,
 
         Movement = 3,
@@ -77948,7 +77958,7 @@
     {
         MaxHealth = 800, Health = 800,
         BaseDodge = 18,
-
+        HideDetection = 23,   
         Experience = 23000,
         
         CanWalk = false,
@@ -78035,6 +78045,7 @@
         Experience = 9500,
         VisibilityDistance = 0,
         CanLoot = false,
+        HideDetection = 28,
     };
     
     lich.AddStatus(new NightVisionStatus(lich));

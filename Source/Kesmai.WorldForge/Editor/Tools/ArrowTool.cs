@@ -282,6 +282,7 @@ namespace Kesmai.WorldForge
 		
 		public override void OnActivate()
 		{
+			base.OnActivate();
 			var selectNormal = Application.GetResourceStream(
 				new Uri(@"/Kesmai.WorldForge;component/Resources/Select-Normal.cur", UriKind.Relative));
 
@@ -312,6 +313,7 @@ namespace Kesmai.WorldForge
 		public override void OnDeactivate()
 		{
 			_cursor = Cursors.Arrow;
+			base.OnDeactivate();
 		}
 
 		public void CopySelection()
