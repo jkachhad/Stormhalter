@@ -116794,8 +116794,7 @@
         CanCharge = true,
         CanSwim = true,
         Body = 26,
-        Brain = new CasterAI(),
-        
+
         VisibilityDistance = 0,
         
         BasePenetration = ShieldPenetration.Heavy,
@@ -119153,7 +119152,6 @@ centaur.AddLoot(new LootPack(
         HideDetection = 30,
         Experience = 72000,
         CanLoot = false,
-        Brain = new CasterAI(),
         
         
         CanCharge = true,
@@ -120019,7 +120017,6 @@ var ghoul = new Ghoul()
     {
         Name = "Demonic Necromancer",
         Body = 221, IsFemale = false,
-        Brain = new CasterAI(),
             
         MaxHealth = 10500, Health = 10500,
         BaseDodge = 31,
@@ -120568,7 +120565,6 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         HideDetection = 30,
         Experience = 79000,
         CanLoot = false,
-        Brain = new CasterAI(),
         
         CanCharge = true,
         
