@@ -107585,8 +107585,6 @@
         <block><![CDATA[
     var giant = new UndeadFrostGiant()
     {
-        Name = "Decaying Frost Giant",
-
         MaxHealth = 2200,
         Health = 2200,
         BaseDodge = 15,
@@ -107610,8 +107608,7 @@
     giant.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<ConcussionSpell>(
-            skillLevel: 7, cost: 7, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+            skillLevel: 12, cost: 7, instantCast: false)
     };
 
     giant.Wield(new WarHammer());
@@ -107656,6 +107653,7 @@
         BasePenetration = ShieldPenetration.Heavy,
         Experience = 200500,
         CanCharge = true,
+        CanStrikeCritically = false,
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
                    
@@ -107667,7 +107665,7 @@
     necro.AddStatus(new NightVisionStatus(necro));
     necro.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(24, 33, 50)
+        new CreatureBasicAttack(22, 25, 40)
     };
     
     necro.Spells = new CreatureSpellCollection(10.0)
