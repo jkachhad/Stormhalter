@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.77.0.0">
+<segment name="Oakvael" version="0.79.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -99215,9 +99215,17 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+
+    var tile = creature.Segment.FindTile(43, 22, 236);
+    
+    if (tile != null && tile.ContainsComponent<Obstruction>())
+    {
+        var component = tile.GetComponent<ObstructionComponent>();
+        tile.Components.Remove(component);
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -99357,9 +99365,16 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    var tile = creature.Segment.FindTile(35, 22, 236);
+    
+    if (tile != null && tile.ContainsComponent<Obstruction>())
+    {
+        var component = tile.GetComponent<ObstructionComponent>();
+        tile.Components.Remove(component);
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -99414,9 +99429,16 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    var tile = creature.Segment.FindTile(39, 22, 236);
+    
+    if (tile != null && tile.ContainsComponent<Obstruction>())
+    {
+        var component = tile.GetComponent<ObstructionComponent>();
+        tile.Components.Remove(component);
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
