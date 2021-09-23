@@ -120071,6 +120071,8 @@ var ghoul = new Ghoul()
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+if (spokeRecently(source))
+        return;
 source.Say($"Oh, you've dealt with my pets have you, {player.Name}? let us play...?");
 ]]></block>
         <block><![CDATA[]]></block>
