@@ -23741,6 +23741,12 @@
         <component type="FloorComponent">
           <ground>183</ground>
         </component>
+        <component type="WallComponent">
+          <wall>371</wall>
+          <destroyed>0</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
       </tile>
       <tile x="-3" y="4">
         <component type="FloorComponent">
@@ -32078,11 +32084,12 @@ if (spokeRecently(source))
     CanJumpkick = true,
     CanStrikeCritically = true,
     
-    Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-    CreatureImmunity.Projectile | CreatureImmunity.Piercing | CreatureImmunity.Web | CreatureImmunity.Magic,
+    Immunity = CreatureImmunity.Web | CreatureImmunity.Magic,
    
-    Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+    Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
 };
+
+giant.AddWeakness(typeof(VenomSpell));
 
 giant.AddStatus(new NightVisionStatus(giant));
 giant.Equip(new LeatherArmor());
@@ -32123,7 +32130,7 @@ giant.AddLoot(new LootPack(
     new LootPackEntry(true, Levelthreegems, 100, gemsPriceMutator),
     new LootPackEntry(true, StatPotion, 100),
     new LootPackEntry(true, Miniboss, 50),
-    new LootPackEntry(true, (from, container) => new DragonSkull(), 25)
+    new LootPackEntry(true, (from, container) => new GriffinSkull(), 25)
 ));
 
 return giant;    
