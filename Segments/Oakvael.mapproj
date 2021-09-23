@@ -822,10 +822,8 @@
         {
             foreach (var defender in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<HeartDefender>())
                 defender.DefenderSoothed();
-            base.OnDeath();
             foreach (var heart in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<OakGroveHeart>())
                 heart.HeartSoothed();
-            base.OnDeath();
             foreach (var keeper in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<OakGroveMainKeeper>())
                 keeper.KeeperSoothed();
             base.OnDeath();
@@ -1081,7 +1079,7 @@
                 {
                     var spell2 = new WhirlwindSpell()
                     {
-                        SkillLevel = 12,
+                        SkillLevel = 10,
                         Cost = 0,
                     };
                     spell2.Warm(this);
@@ -99044,7 +99042,7 @@
         
     centaur.Wield(new WarHammer());
     
-    centaur.AddGold(2500);
+    centaur.AddGold(500);
     centaur.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 60.0), 
@@ -99101,7 +99099,7 @@
     dryad.Wield(new GiltDagger());
     dryad.Wield(new IronRod());
     
-    dryad.AddGold(1500);
+    dryad.AddGold(500);
     dryad.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 60.0), 
@@ -99147,7 +99145,7 @@
     troll.Wield(new BattleAxe());
     troll.Equip(new ChainmailArmor());    
 
-    troll.AddGold(2500);
+    troll.AddGold(500);
     troll.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 30.0), 
@@ -99203,7 +99201,7 @@
     
     necro.Wield(new BlackStaff());
     
-    necro.AddGold(1500);
+    necro.AddGold(300);
     necro.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 60.0), 
@@ -99263,7 +99261,7 @@
     dryad.Wield(new HeavyCrossbow());
     dryad.Equip(new ChainmailArmor());    
 
-    dryad.AddGold(2500);
+    dryad.AddGold(500);
     dryad.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 30.0), 
@@ -100519,7 +100517,7 @@
     </spawn>
     <spawn type="LocationSpawner" name="heartNecro1">
       <minimumDelay>900</minimumDelay>
-      <maximumDelay>1200</maximumDelay>
+      <maximumDelay>1500</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
@@ -100546,7 +100544,7 @@
     </spawn>
     <spawn type="LocationSpawner" name="heartNecro2">
       <minimumDelay>900</minimumDelay>
-      <maximumDelay>1200</maximumDelay>
+      <maximumDelay>1500</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
@@ -100573,7 +100571,7 @@
     </spawn>
     <spawn type="LocationSpawner" name="heartNecro3">
       <minimumDelay>900</minimumDelay>
-      <maximumDelay>1200</maximumDelay>
+      <maximumDelay>1500</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
@@ -101122,8 +101120,87 @@
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="GroveHeart1">
-      <minimumDelay>780</minimumDelay>
-      <maximumDelay>1080</maximumDelay>
+      <minimumDelay>1080</minimumDelay>
+      <maximumDelay>1320</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="heartCorrDef" size="1" minimum="3" maximum="3" />
+      <entry entity="heartTroll" size="4" minimum="5" maximum="5" />
+      <entry entity="heartCorrDry" size="1" minimum="1" maximum="1" />
+      <bounds region="236">
+        <inclusion left="40" top="1" right="41" bottom="16" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="GroveHeart2">
+      <minimumDelay>1080</minimumDelay>
+      <maximumDelay>1320</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="heartTroll" size="4" minimum="5" maximum="5" />
+      <entry entity="heartCorrDef" size="1" minimum="3" maximum="3" />
+      <entry entity="heartCorrDry" size="1" minimum="1" maximum="1" />
+      <bounds region="236">
+        <inclusion left="23" top="16" right="31" bottom="20" />
+        <inclusion left="32" top="16" right="39" bottom="16" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="GroveHeart3">
+      <minimumDelay>1080</minimumDelay>
+      <maximumDelay>1320</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="heartCorrDef" size="2" minimum="4" maximum="4" />
+      <entry entity="heartCorrDry" size="1" minimum="4" maximum="4" />
+      <entry entity="heartTroll" size="4" minimum="16" maximum="16" />
+      <bounds region="236">
+        <inclusion left="23" top="22" right="29" bottom="48" />
+        <inclusion left="21" top="24" right="22" bottom="36" />
+        <inclusion left="30" top="22" right="31" bottom="28" />
+        <inclusion left="30" top="29" right="30" bottom="39" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="GroveHeart4">
+      <minimumDelay>1080</minimumDelay>
+      <maximumDelay>1320</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -101139,90 +101216,14 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="heartCorrDef" size="1" minimum="5" maximum="5" />
-      <entry entity="heartTroll" size="4" minimum="8" maximum="8" />
-      <entry entity="heartCorrDry" size="1" minimum="2" maximum="2" />
-      <bounds region="236">
-        <inclusion left="40" top="1" right="41" bottom="16" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
-      </bounds>
-    </spawn>
-    <spawn type="RegionSpawner" name="GroveHeart2">
-      <minimumDelay>780</minimumDelay>
-      <maximumDelay>1080</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="heartTroll" size="4" minimum="9" maximum="9" />
-      <entry entity="heartCorrDef" size="1" minimum="4" maximum="4" />
-      <entry entity="heartCorrDry" size="1" minimum="2" maximum="2" />
-      <bounds region="236">
-        <inclusion left="23" top="16" right="31" bottom="20" />
-        <inclusion left="32" top="16" right="39" bottom="16" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
-      </bounds>
-    </spawn>
-    <spawn type="RegionSpawner" name="GroveHeart3">
-      <minimumDelay>780</minimumDelay>
-      <maximumDelay>1080</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="heartCorrDef" size="2" minimum="8" maximum="8" />
       <entry entity="heartCorrDry" size="1" minimum="6" maximum="6" />
-      <entry entity="heartTroll" size="4" minimum="20" maximum="20" />
-      <bounds region="236">
-        <inclusion left="23" top="22" right="29" bottom="48" />
-        <inclusion left="21" top="24" right="22" bottom="36" />
-        <inclusion left="30" top="22" right="31" bottom="28" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
-      </bounds>
-    </spawn>
-    <spawn type="RegionSpawner" name="GroveHeart4">
-      <minimumDelay>780</minimumDelay>
-      <maximumDelay>1080</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="heartCorrDef" size="1" minimum="7" maximum="7" />
-      <entry entity="heartCorrDry" size="1" minimum="9" maximum="9" />
-      <entry entity="heartTroll" size="4" minimum="15" maximum="15" />
+      <entry entity="heartTroll" size="4" minimum="12" maximum="12" />
       <bounds region="236">
         <inclusion left="34" top="23" right="44" bottom="27" />
         <inclusion left="33" top="28" right="43" bottom="36" />
         <inclusion left="32" top="38" right="40" bottom="48" />
+        <inclusion left="33" top="37" right="41" bottom="37" />
+        <inclusion left="41" top="38" right="41" bottom="43" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
