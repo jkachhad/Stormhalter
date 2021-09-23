@@ -30955,7 +30955,7 @@ if (spokeRecently(source))
         HideDetection = 31
     };
     
-    sooth.AddImmunity(typeof((Lightning));
+    sooth.AddImmunity(typeof(Lightning));
     sooth.AddStatus(new NightVisionStatus(sooth));
         
     sooth.Attacks = new CreatureAttackCollection()
@@ -31081,7 +31081,7 @@ if (spokeRecently(source))
     };
     
     sooth.AddStatus(new NightVisionStatus(sooth));
-    sooth.AddImmunity(typeof((Lightning));
+    sooth.AddImmunity(typeof(Lightning));
         
     sooth.Attacks = new CreatureAttackCollection()
     {
@@ -32428,7 +32428,7 @@ elemental.AddGold(5000);
 elemental.AddLoot(new LootPack(
     new LootPackEntry(true, Levelthreegems, 25, gemsPriceMutator),
     new LootPackEntry(true, Levelthreegems, 25, gemsPriceMutator),
-    new LootPackEntry(true, GenericBottles, 50),
+    new LootPackEntry(true, GenericBottles, 50)
 ));
 
 return elemental;
