@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Bloodlands" version="0.77.0.0">
+<segment name="Bloodlands" version="0.79.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -1862,7 +1862,7 @@
         <component type="DoorComponent">
           <openId>75</openId>
           <closedId>63</closedId>
-          <secretId>26</secretId>
+          <secretId>158</secretId>
           <destroyedId>81</destroyedId>
           <isSecret>true</isSecret>
         </component>
@@ -5427,7 +5427,6 @@
           <destinationY>1</destinationY>
           <destinationRegion>7</destinationRegion>
           <teleporterId>253</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="17" y="1">
@@ -11591,7 +11590,6 @@
           <destinationY>15</destinationY>
           <destinationRegion>3</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="39" y="18">
@@ -12401,7 +12399,6 @@
           <destinationY>10</destinationY>
           <destinationRegion>3</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="2" y="21">
@@ -18822,7 +18819,6 @@
           <destinationY>1</destinationY>
           <destinationRegion>4</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="24" y="1">
@@ -21172,7 +21168,6 @@
           <destinationY>21</destinationY>
           <destinationRegion>1</destinationRegion>
           <teleporterId>128</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="2" y="10">
@@ -22903,7 +22898,6 @@
           <destinationY>18</destinationY>
           <destinationRegion>1</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="29" y="15">
@@ -25175,7 +25169,6 @@
           <destinationY>1</destinationY>
           <destinationRegion>3</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="24" y="1">
@@ -27387,7 +27380,6 @@
           <destinationY>1</destinationY>
           <destinationRegion>5</destinationRegion>
           <teleporterId>181</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="13" y="9">
@@ -38264,7 +38256,6 @@
           <destinationY>11</destinationY>
           <destinationRegion>5</destinationRegion>
           <teleporterId>8</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="19" y="11">
@@ -38597,7 +38588,6 @@
           <destinationY>1</destinationY>
           <destinationRegion>1</destinationRegion>
           <teleporterId>254</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="17" y="1">
@@ -38609,7 +38599,6 @@
           <destinationY>1</destinationY>
           <destinationRegion>8</destinationRegion>
           <teleporterId>253</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="18" y="1">
@@ -41504,7 +41493,6 @@
           <destinationY>1</destinationY>
           <destinationRegion>7</destinationRegion>
           <teleporterId>254</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="18" y="1">
@@ -42912,7 +42900,6 @@
           <destinationY>9</destinationY>
           <destinationRegion>6</destinationRegion>
           <teleporterId>8</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="7" y="9">
@@ -45211,7 +45198,6 @@
           <destinationY>1</destinationY>
           <destinationRegion>10</destinationRegion>
           <teleporterId>181</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="-29" y="-70">
@@ -79846,7 +79832,6 @@
           <destinationY>1</destinationY>
           <destinationRegion>10</destinationRegion>
           <teleporterId>181</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="23" y="-5">
@@ -110481,7 +110466,6 @@
           <destinationY>-18</destinationY>
           <destinationRegion>1</destinationRegion>
           <teleporterId>181</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="7" y="5">
@@ -112872,7 +112856,6 @@
           <destinationY>1</destinationY>
           <destinationRegion>15</destinationRegion>
           <teleporterId>181</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="24" y="17">
@@ -116816,14 +116799,14 @@
     boss1.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(18,     45, 75,      "Intangles your soul"),                     50 
+            new CreatureAttack(18,     45, 75,      "Flordex Entangles your soul"),                     50 
         }, 
         {
-            new CreatureAttack(19,     66, 87,     "Rends your spirit",
+            new CreatureAttack(19,     66, 87,     "Flordex Rends your spirit",
                                                     new AttackProneComponent(75)),                                       40 
         },
         {
-            new CreatureAttack(23,     70, 99,     "Consumes your essence",
+            new CreatureAttack(23,     70, 99,     "Flordex Consumes your essence",
                                                     new AttackProneComponent(100)),                                       10 
         },
     };
@@ -120088,7 +120071,7 @@ var ghoul = new Ghoul()
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play shall we?");
+source.Say($"Oh, you've dealt with my pets have you, {player.Name}? let us play...?");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -122028,6 +122011,7 @@ source.Say($"Oh, you've dealth with my pets have you? {player.Name} let us play 
         CanJumpkick = true,
 
         Body = 245,
+        
         Alignment = Alignment.Evil,
         
     };
@@ -123169,27 +123153,6 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="surfacePrisoner" size="1" minimum="1" maximum="1" />
       <location x="23" y="-18" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="surfaceJailer">
-      <minimumDelay>4500</minimumDelay>
-      <maximumDelay>8100</maximumDelay>
-      <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="surfaceJailer" size="1" minimum="1" maximum="1" />
-      <location x="20" y="-20" region="1" />
-    </spawn>
     <spawn type="LocationSpawner" name="townRestel">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
@@ -123237,7 +123200,7 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="surfaceWyvern" size="3" minimum="1" maximum="2" />
       <bounds region="1">
         <inclusion left="0" top="-14" right="23" bottom="-3" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="18" top="-13" right="22" bottom="-11" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="surfaceBoss1">
@@ -124587,6 +124550,30 @@ if (spawn is Shopkeeper shopkeeper)
       <entry entity="thiefSpider" size="1" minimum="1" maximum="1" />
       <bounds region="14">
         <inclusion left="47" top="13" right="50" bottom="24" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="surfaceJailer">
+      <minimumDelay>3600</minimumDelay>
+      <maximumDelay>2100</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfaceJailer" size="1" minimum="1" maximum="1" />
+      <bounds region="1">
+        <inclusion left="20" top="-21" right="20" bottom="-16" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
