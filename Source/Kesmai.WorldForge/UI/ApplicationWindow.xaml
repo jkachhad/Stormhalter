@@ -121,11 +121,29 @@
             <!-- Visibility -->
             <ToolBar ItemsSource="{Binding Visibility, Source={StaticResource applicationPresenter}}" 
                      Background="LightPink" ToolTip="Filters" OverflowMode="Never">
-                <ToggleButton  Margin="1" Height="24" Width="24" IsChecked="{Binding Visibility.OpenDoors}">
+                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding Visibility.OpenDoors}">
                     <ToggleButton.ToolTip>
-                        <TextBlock Text="Toggle Doors" />
+                        <TextBlock Text="Toggle Doors Open\Close" />
                     </ToggleButton.ToolTip>
-                    <Image Source="../Resources/Door.png" VerticalAlignment="Center" Height="16" Width="16" />
+                    <Image Source="../Resources/Door.png" VerticalAlignment="Center" Height="26" Width="26" />
+                </ToggleButton>
+                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding Visibility.HideSecretDoors}">
+                    <ToggleButton.ToolTip>
+                        <TextBlock Text="Show Secret Doors as Secret" />
+                    </ToggleButton.ToolTip>
+                    <Image Source="../Resources/SecretDoor.png" VerticalAlignment="Center" Height="26" Width="26" />
+                </ToggleButton>
+                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding Visibility.ShowTeleporters}">
+                    <ToggleButton.ToolTip>
+                        <TextBlock Text="Highlight Teleporter source and destinations" />
+                    </ToggleButton.ToolTip>
+                    <Image Source="../Resources/FilterTeleport.png" VerticalAlignment="Center" Height="26" Width="26" />
+                </ToggleButton>
+                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding Visibility.ShowSpawns}">
+                    <ToggleButton.ToolTip>
+                        <TextBlock Text="Highlight location and region spawners" />
+                    </ToggleButton.ToolTip>
+                    <Image Source="../Resources/Spawns.png" VerticalAlignment="Center" Height="26" Width="26" />
                 </ToggleButton>
             </ToolBar>
         </ToolBarTray>
@@ -187,7 +205,7 @@
                     </LayoutDocumentPaneGroup>
                     
                     <LayoutAnchorablePane FloatingWidth="365" DockWidth="365" DockMinWidth="365">
-                        <LayoutAnchorable Title="Components" ContentId="component">
+                        <LayoutAnchorable x:Name="_componentsWindow" Title="Components" ContentId="component">
                                 <ui:ComponentsPanel Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" 
                                                     OpacityMask="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
                                                     VerticalAlignment="Stretch" MinWidth="365"></ui:ComponentsPanel>
@@ -216,6 +234,55 @@
 
     <!-- Input bindings -->
     <Window.InputBindings>
-        <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding SaveSegmentCommand}" />
+        <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding SaveSegmentCommand}">
+            <KeyBinding.CommandParameter>
+                <system:Boolean>false</system:Boolean>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="P" Command="{Binding SwapDocumentCommand}" >
+            <KeyBinding.CommandParameter>
+                <system:String>Spawn</system:String>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="G" Command="{Binding SwapDocumentCommand}" >
+            <KeyBinding.CommandParameter>
+                <system:String>Segment</system:String>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="E" Command="{Binding SwapDocumentCommand}" >
+            <KeyBinding.CommandParameter>
+                <system:String>Entity</system:String>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="T" Command="{Binding SwapDocumentCommand}" >
+            <KeyBinding.CommandParameter>
+                <system:String>Treasure</system:String>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="L" Command="{Binding SwapDocumentCommand}" >
+            <KeyBinding.CommandParameter>
+                <system:String>Location</system:String>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="U" Command="{Binding SwapDocumentCommand}" >
+            <KeyBinding.CommandParameter>
+                <system:String>Subregion</system:String>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="D" Command="{Binding SwapDocumentCommand}" >
+            <KeyBinding.CommandParameter>
+                <system:String>Teleporter</system:String>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="Left" Command="{Binding SwapDocumentCommand}" >
+            <KeyBinding.CommandParameter>
+                <system:String>RegionLeft</system:String>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="Right" Command="{Binding SwapDocumentCommand}" >
+            <KeyBinding.CommandParameter>
+                <system:String>RegionRight</system:String>
+            </KeyBinding.CommandParameter>
+        </KeyBinding>
     </Window.InputBindings>
 </Window>

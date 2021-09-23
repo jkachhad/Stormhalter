@@ -237,45 +237,6 @@ namespace Kesmai.WorldForge.Editor
 		}
 	}
 
-	public class TeleporterSelector : ComponentSelector<TerrainComponent>
-	{
-		public override string Name => "Show Teleporters and highlight destinations"; // render code in worldscreen
-		public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterTeleport.png"));
-
-		public override ComponentRender TransformRender(SegmentTile tile, TerrainComponent component, ComponentRender render)
-		{
-			
-			if (component is TeleportComponent tc && (tc.DestinationX == 0 || tc.DestinationY == 0))
-            {
-				render.Color = Color.Red;
-			}
-
-			if (render.Color.Equals(Color.Black))
-				render.Color = Color.DimGray;
-
-			if (component is not TeleportComponent)
-            {
-				render.Color = Color.DimGray;
-			}
-
-			return render;
-		}
-	}
-
-	public class SpawnSelector : ComponentSelector<TerrainComponent>
-	{
-		public override string Name => "Show all spawns as overlays"; //render code in worldscreen
-		public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/Spawns.png"));
-
-		public override ComponentRender TransformRender(SegmentTile tile, TerrainComponent component, ComponentRender render)
-		{
-
-			render.Color = Color.DimGray;
-
-			return render;
-		}
-	}
-
 	public class StaticSelector : ComponentSelector<StaticComponent>
 	{
 		public override string Name => "Filter for only static components.";

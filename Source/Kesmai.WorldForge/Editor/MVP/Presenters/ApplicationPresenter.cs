@@ -124,6 +124,8 @@ namespace Kesmai.WorldForge.Editor
 		public RelayCommand<Tool> SelectToolCommand { get; set; }
 
 		public RelayCommand ExitApplicationCommand { get; set; }
+
+		public RelayCommand<String> SwapDocumentCommand { get; set; }
 		
 		public ObservableCollection<object> Documents { get; private set; }
 		
@@ -177,25 +179,20 @@ namespace Kesmai.WorldForge.Editor
 			GenerateRegionCommand = new RelayCommand(GenerateRegions, () => (Segment != null));
 			GenerateRegionCommand.DependsOn(() => Segment);
 
+			SwapDocumentCommand = new RelayCommand<string>(SwapDocument);
 
 			WeakReferenceMessenger.Default
-				.Register<ApplicationPresenter, SegmentLocation>(
-					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is LocationsViewModel).FirstOrDefault() as LocationsViewModel; JumpLocation(m); });
-			WeakReferenceMessenger.Default
-				.Register<ApplicationPresenter, SegmentSubregion>(
-					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is SubregionViewModel).FirstOrDefault() as SubregionViewModel; JumpSubregion(m); });
-			WeakReferenceMessenger.Default
-				.Register<ApplicationPresenter, Entity>(
-					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is EntitiesViewModel).FirstOrDefault() as EntitiesViewModel; JumpEntity(m); });
-			WeakReferenceMessenger.Default
-				.Register<ApplicationPresenter, Spawner>(
-					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel; JumpSpawner(m); });
-			WeakReferenceMessenger.Default
-				.Register<ApplicationPresenter, SegmentTreasure>(
-					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is TreasuresViewModel).FirstOrDefault() as TreasuresViewModel; JumpTreasure(m); });
-			WeakReferenceMessenger.Default
-				.Register<ApplicationPresenter, Segment>(
-					this, (r, m) => { this.ActiveDocument = this.Documents.Where(d => d is SegmentViewModel).FirstOrDefault() as SegmentViewModel; });
+				.Register<ApplicationPresenter, VisibilityOptionsChanged>(
+					this, (r, m) => {
+						if (Segment is not null)
+							Segment.UpdateTiles();
+						var graphicsService = ServiceLocator.Current.GetInstance<IGraphicsService>();
+						if (graphicsService != null)
+						{
+							foreach (var presenter in graphicsService.PresentationTargets.OfType<PresentationTarget>())
+								presenter.InvalidateRender();
+						}
+					});
 
 			SelectFilterCommand = new RelayCommand<TerrainSelector>(SelectFilter, 
 				(filter) => (Segment != null));
@@ -214,8 +211,6 @@ namespace Kesmai.WorldForge.Editor
 				new WaterSelector(),
 				new WallSelector(),
 				new StructureSelector(),
-				new TeleporterSelector(),
-				new SpawnSelector(),
 			};
 			
 			Tools = new NotifyingCollection<Tool>()
@@ -237,6 +232,132 @@ namespace Kesmai.WorldForge.Editor
 			Selection = new Selection();
 		}
 
+		public void SwapDocument(String Target)
+        {
+            switch (Target)
+            {
+				case "Spawn": //Ctrl-P
+					{
+						var sel = _selection.FirstOrDefault();
+						LocationSpawner targetLS = null;
+						RegionSpawner targetRS = null;
+						if (ActiveDocument is EntitiesViewModel)
+                        {
+							var spawnRequest = WeakReferenceMessenger.Default.Send<EntitiesDocument.GetSelectedSpawner>();
+							if (spawnRequest.HasReceivedResponse)
+							{
+								Spawner target = spawnRequest.Response;
+								ActiveDocument = Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
+								if (target is LocationSpawner)
+									(ActiveDocument as SpawnsViewModel).SelectedLocationSpawner = target as LocationSpawner;
+								if (target is RegionSpawner)
+									(ActiveDocument as SpawnsViewModel).SelectedRegionSpawner = target as RegionSpawner;
+								WeakReferenceMessenger.Default.Send(target as Spawner);
+								break;
+							}
+						}
+						if (sel is { Width: 1, Height: 1 })
+						{
+							targetLS = Segment.Spawns.Location.Where(s => s.Region == _selection.Region.ID && s.X == sel.Left && s.Y == sel.Top).FirstOrDefault();
+							targetRS = Segment.Spawns.Region.Where(s => s.Region == _selection.Region.ID && s.Inclusions.Any(i => i.ToRectangle().Contains(sel.Left, sel.Top))).FirstOrDefault();
+						}
+						ActiveDocument = Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
+						if (targetRS is not null && targetLS is null)
+						{
+							(ActiveDocument as SpawnsViewModel).SelectedRegionSpawner = targetRS;
+							WeakReferenceMessenger.Default.Send(targetRS as Spawner);
+						}
+						if (targetLS is not null) { 
+							(ActiveDocument as SpawnsViewModel).SelectedLocationSpawner = targetLS;
+							WeakReferenceMessenger.Default.Send(targetLS as Spawner);
+						}
+						break;
+					}
+				case "Segment": //Ctrl-G
+					ActiveDocument = Documents.Where(d => d is SegmentViewModel).FirstOrDefault() as SegmentViewModel;
+					break;
+				case "Entity": //Ctrl-E
+					{
+						Entity target = null;
+						var entityRequest = WeakReferenceMessenger.Default.Send<SpawnsDocument.GetActiveEntity>();
+						if (entityRequest.HasReceivedResponse) 
+							target = entityRequest.Response;
+						ActiveDocument = Documents.Where(d => d is EntitiesViewModel).FirstOrDefault() as EntitiesViewModel;
+						if (target is not null)
+							(ActiveDocument as EntitiesViewModel).SelectedEntity = target;
+						break;
+					}
+				case "Treasure": //Ctrl-T
+					//todo: Try to identify a targeted Treasure. Can I inspect a script panel and check to see if a word under the cursor matches any treasure definitions.
+					ActiveDocument = Documents.Where(d => d is TreasuresViewModel).FirstOrDefault() as TreasuresViewModel;
+					break;
+				case "Location": //Ctrl-L
+					{
+						var sel = _selection.FirstOrDefault();
+						SegmentLocation target = null;
+						if (sel is { Width: 1, Height: 1 })
+						{
+							target = Segment.Locations.Where(l => l.Region == _selection.Region.ID && l.X == sel.Left && l.Y == sel.Top).FirstOrDefault();
+						}
+						ActiveDocument = Documents.Where(d => d is LocationsViewModel).FirstOrDefault() as LocationsViewModel;
+						if (target is not null)
+							(ActiveDocument as LocationsViewModel).SelectedLocation = target;
+						break;
+					}
+				case "Subregion": //Ctrl-U
+					{
+						var sel = _selection.FirstOrDefault();
+						SegmentSubregion target = null;
+						if (sel is { Width: 1, Height: 1 })
+						{
+							target = Segment.Subregions.Where(s => s.Region == _selection.Region.ID && s.Rectangles.Any(rect => rect.ToRectangle().Contains(sel.Left, sel.Top))).FirstOrDefault();
+						}
+						ActiveDocument = Documents.Where(d => d is SubregionViewModel).FirstOrDefault() as SubregionViewModel;
+						if (target is not null)
+							(ActiveDocument as SubregionViewModel).SelectedSubregion = target;
+						break;
+					}
+				case "Teleporter": //Ctrl-D
+					{
+						var sel = _selection.FirstOrDefault();
+						TeleportComponent target = null;
+						if (sel is { Width:1, Height: 1 })
+                        {
+							var tile = _selection.Region.GetTile(sel.Left, sel.Top);
+							target = tile.GetComponents<TeleportComponent>().FirstOrDefault();
+						}
+						if (target is not null)
+						{
+							ActiveDocument = Documents.Where(d => d is SegmentRegion dr && dr.ID == target.DestinationRegion).FirstOrDefault();
+							WeakReferenceMessenger.Default.Send(new JumpSegmentRegionLocation(target.DestinationRegion, target.DestinationX, target.DestinationY));
+							_selection.Select(new Microsoft.Xna.Framework.Rectangle(target.DestinationX,target.DestinationY,1,1), Segment.GetRegion(target.DestinationRegion));
+						}
+						break;
+					}
+				case "RegionLeft": //Ctrl-Left
+					{
+						if (ActiveDocument is SegmentRegion)
+						{
+							var sortedRegions = Segment.Regions.OrderBy(r => r.ID);
+							int regionID = (ActiveDocument as SegmentRegion).ID;
+							SegmentRegion nextRegion = sortedRegions.LastOrDefault(r => r.ID < regionID);
+							if (nextRegion != null) { ActiveDocument = nextRegion; } else { ActiveDocument = sortedRegions.Last(); }
+						}
+						break;
+					}
+				case "RegionRight": //Ctrl-Right
+					{
+						if (ActiveDocument is SegmentRegion)
+						{
+							var sortedRegions = Segment.Regions.OrderBy(r => r.ID);
+							int regionID = (ActiveDocument as SegmentRegion).ID;
+							SegmentRegion nextRegion = sortedRegions.FirstOrDefault(r => r.ID > regionID);
+							if (nextRegion != null) { ActiveDocument = nextRegion; } else { ActiveDocument = sortedRegions.First(); }
+						}
+						break;
+					}
+            }
+        }
 		public void SelectFilter(TerrainSelector nextFilter)
 		{
 			foreach (var filter in Filters)
@@ -290,13 +411,11 @@ namespace Kesmai.WorldForge.Editor
 
 			if (spawner is LocationSpawner)
 			{
-				//_typeSelector.SelectedIndex = 0;
 				viewmodel.SelectedLocationSpawner = spawner as LocationSpawner;
 			}
 
 			if (spawner is RegionSpawner)
 			{
-				//_typeSelector.SelectedIndex = 1;
 				viewmodel.SelectedRegionSpawner = spawner as RegionSpawner;
 			}
 		}
