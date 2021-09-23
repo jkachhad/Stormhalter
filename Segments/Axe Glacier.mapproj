@@ -103539,7 +103539,7 @@
         MaxHealth = 68, Health = 68,
         MaxMana = 17, Mana = 17,
         BaseDodge = 12,
-        
+        HideDetection = 22, 
         Experience = 1700,
     };
         
@@ -103595,7 +103595,7 @@
     {
         MaxHealth = 50, Health = 50,
         BaseDodge = 11,
-                
+        HideDetection = 22,         
         Experience = 900,
     };
     
@@ -103652,7 +103652,7 @@
     {
         MaxHealth = 40, Health = 40,
         BaseDodge = 10,
-                
+        HideDetection = 22,         
         Experience = 800,
                 
         Movement = 2,
@@ -103699,7 +103699,7 @@
     {
         MaxHealth = 36, Health = 36,
         BaseDodge = 10,
-                
+        HideDetection = 22,        
         Experience = 900,
     };
     
@@ -103745,7 +103745,7 @@
     {
         MaxHealth = 35, Health = 35,
         BaseDodge = 10,
-                
+        HideDetection = 22,         
         Experience = 925,
         
         CanFlee = true,
@@ -103793,7 +103793,7 @@
     {
         MaxHealth = 45, Health = 45,
         BaseDodge = 12,
-                
+        HideDetection = 22,         
         Experience = 1300,
                 
         Movement = 2,
@@ -103843,7 +103843,7 @@
     {
         MaxHealth = 36, Health = 36,
         BaseDodge = 10,
-                
+        HideDetection = 22,         
         Experience = 900,
     };
     
@@ -103889,7 +103889,7 @@
     {
         MaxHealth = 82, Health = 82,
         BaseDodge = 10,
-                
+        HideDetection = 22,        
         Experience = 1525,
                 
         Movement = 2,
@@ -103950,7 +103950,7 @@
         MaxHealth = 36, Health = 36,
         MaxMana = 16, Mana = 16,
         BaseDodge = 9,
-                
+        HideDetection = 22,         
         Experience = 900,
     };
     
@@ -104006,7 +104006,7 @@
     {
         MaxHealth = 45, Health = 45,
         BaseDodge = 13,
-                
+        HideDetection = 23,        
         Experience = 1900,
     };
     
@@ -104051,7 +104051,7 @@
     {
         MaxHealth = 70, Health = 70,
         BaseDodge = 11,
-                
+        HideDetection = 23,        
         Experience = 2700,
                 
         Movement = 2,
@@ -104102,7 +104102,7 @@
     {
         Name = _names.Random(),
         Body = (female ? 33 : 32), IsFemale = female,
-            
+        HideDetection = 23,    
         MaxHealth = 110, Health = 110,
         BaseDodge = 11,
     
@@ -104157,7 +104157,7 @@
     {
         Name = _names.Random(),
         Body = (female ? 35 : 49), IsFemale = female,
-            
+        HideDetection = 23,    
         MaxHealth = 100, Health = 100,
         BaseDodge = 13,
     
@@ -104207,7 +104207,7 @@
     {
         MaxHealth = 50, Health = 50,
         BaseDodge = 10,
-                
+        HideDetection = 23,        
         Experience = 2050,
         
         CanFlee = true,
@@ -104254,7 +104254,7 @@
     {
         MaxHealth = 107, Health = 107,
         BaseDodge = 12,
-                
+        HideDetection = 23,        
         Experience = 2625,
                 
         Movement = 2,
@@ -104314,7 +104314,7 @@
     {
         MaxHealth = 55, Health = 55,
         BaseDodge = 10,
-                
+        HideDetection = 23,        
         Experience = 2200,
     };
     
@@ -104371,7 +104371,7 @@
         MaxHealth = 68, Health = 68,
         MaxMana = 17, Mana = 17,
         BaseDodge = 11,
-        
+        HideDetection = 23,
         Experience = 2600,
     };
         
@@ -104427,7 +104427,7 @@
         MaxHealth = 40, Health = 40,
         MaxMana = 16, Mana = 16,
         BaseDodge = 12,
-                
+        HideDetection = 23,        
         Experience = 1725,
     };
     
@@ -104484,7 +104484,7 @@
     {
         Name = _names.Random(),
         Body = (female ? 33 : 32), IsFemale = female,
-            
+        HideDetection = 23,    
         MaxHealth = 110, Health = 110,
         BaseDodge = 12,
     
@@ -104536,7 +104536,7 @@
     {
         MaxHealth = 40, Health = 40,
         BaseDodge = 12,
-                
+        HideDetection = 23,        
         Experience = 1800,
     };
     
@@ -104581,7 +104581,7 @@
     {
         MaxHealth = 59, Health = 59,
         BaseDodge = 13,
-    
+        HideDetection = 23,
         Experience = 2950,
     };
     
@@ -104626,7 +104626,7 @@
     {
         MaxHealth = 100, Health = 100,
         BaseDodge = 14,
-                
+        HideDetection = 23,        
         Experience = 4500,
         BasePenetration = ShieldPenetration.Medium,
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
@@ -104708,7 +104708,7 @@
         /* He is protection from magic, all spell damage reduced by 50% */
         MagicProtection = 50,
         
-        HideDetection = 21,
+        HideDetection = 24,
     };
     
     wolf.AddStatus(new NightVisionStatus(wolf));
@@ -104763,7 +104763,7 @@
     {
         MaxHealth = 200, Health = 200,
         BaseDodge = 13,
-    
+        HideDetection = 23,
         Experience = 5500,
         BasePenetration = ShieldPenetration.Light,
         VisibilityDistance = 1,
@@ -104829,7 +104829,7 @@
     {
         Name = _names.Random(),
         Body = (female ? 33 : 32), IsFemale = female,
-            
+        HideDetection = 23,    
         MaxHealth = 110, Health = 110,
         BaseDodge = 11,
     
@@ -104882,7 +104882,7 @@
     {
         MaxHealth = 120, Health = 120,
         BaseDodge = 13,
-    
+        HideDetection = 23,
         Experience = 5200,
         BasePenetration = ShieldPenetration.Medium,
         Immunity = CreatureImmunity.Web
@@ -104931,7 +104931,7 @@
     {
         MaxHealth = 70, Health = 70,
         BaseDodge = 11,
-        
+        HideDetection = 23,
         Experience = 3800,
         
         Movement = 2,
@@ -104995,7 +104995,6 @@
     {
         MaxHealth = 1000, Health = 1000,
         BaseDodge = 21,
-    
         Experience = 19000,
         
         HideDetection = 21,
@@ -105073,7 +105072,7 @@
     {
         MaxHealth = 32, Health = 32,
         BaseDodge = 12,
-                
+        HideDetection = 23,        
         Experience = 500,
     };
     
@@ -105126,7 +105125,7 @@
     {
         MaxHealth = 55, Health = 55,
         BaseDodge = 11,
-                
+        HideDetection = 23,        
         Experience = 2800,
         BasePenetration = ShieldPenetration.Light,
     };
@@ -105174,7 +105173,7 @@
     {
         Name = _names.Random(),
         Body = (female ? 33 : 32), IsFemale = female,
-            
+        HideDetection = 23,    
         MaxHealth = 120, Health = 120,
         BaseDodge = 13,
     
@@ -105228,7 +105227,7 @@
     {
         Name = _names.Random(),
         Body = (female ? 33 : 32), IsFemale = female,
-            
+        HideDetection = 23,    
         MaxHealth = 150, Health = 150,
         BaseDodge = 14,
     
@@ -105280,7 +105279,7 @@
     {
         MaxHealth = 175, Health = 175,
         BaseDodge = 13,
-                
+        HideDetection = 23,        
         Experience = 5525,
                 
         BasePenetration = ShieldPenetration.Light,
@@ -105340,7 +105339,7 @@
     {
         MaxHealth = 65, Health = 65,
         BaseDodge = 11,
-                
+        HideDetection = 23,        
         Experience = 2800,    
     };
     
@@ -105386,7 +105385,7 @@
         MaxHealth = 50, Health = 50,
         MaxMana = 16, Mana = 16,
         BaseDodge = 11,
-                
+        HideDetection = 23,        
         Experience = 2800,
     };
     
@@ -105441,7 +105440,7 @@
     {
         MaxHealth = 72, Health = 72,
         BaseDodge = 11,
-    
+        HideDetection = 23,
         Experience = 3800,
     };
     
@@ -105488,7 +105487,7 @@
     {
         Name = _names.Random(),
         Body = (female ? 35 : 49), IsFemale = female,
-            
+        HideDetection = 23,    
         MaxHealth = 160, Health = 160,
         BaseDodge = 13,
     
@@ -105538,7 +105537,7 @@
     {
         MaxHealth = 175, Health = 175,
         BaseDodge = 15,
-    
+        HideDetection = 23,
         Experience = 6000,
         BasePenetration = ShieldPenetration.Medium,
         Immunity = CreatureImmunity.Web
@@ -105587,7 +105586,7 @@
     {
         MaxHealth = 80, Health = 80,
         BaseDodge = 11,
-                
+        HideDetection = 23,        
         Experience = 3100,
         
         CanFlee = true,
@@ -105636,7 +105635,7 @@
     {
         Name = _names.Random(),
         Body = (female ? 33 : 32), IsFemale = female,
-            
+        HideDetection = 23,    
         MaxHealth = 150, Health = 150,
         BaseDodge = 14,
     
@@ -105688,7 +105687,7 @@
     {
         MaxHealth = 100, Health = 100,
         BaseDodge = 12,
-                
+        HideDetection = 23,        
         Experience = 4200,
                 
         Movement = 2,
@@ -105737,7 +105736,7 @@
     {
         MaxHealth = 65, Health = 65,
         BaseDodge = 11,
-                
+        HideDetection = 23,        
         Experience = 3700,
     };
     
@@ -105794,7 +105793,7 @@
         MaxHealth = 89, Health = 89,
         MaxMana = 17, Mana = 17,
         BaseDodge = 11,
-        
+        HideDetection = 23,
         Experience = 4500,
     };
         
@@ -105849,7 +105848,7 @@
     {
         MaxHealth = 70, Health = 70,
         BaseDodge = 11,
-        
+        HideDetection = 23,
         Experience = 4300,
         
         Movement = 2,
@@ -105912,7 +105911,7 @@
     {
         MaxHealth = 150, Health = 150,
         BaseDodge = 11,
-                
+        HideDetection = 23,        
         Experience = 5500,
                 
         BasePenetration = ShieldPenetration.VeryLight,
@@ -105971,7 +105970,7 @@
     {
         MaxHealth = 300, Health = 300,
         BaseDodge = 13,
-                
+        HideDetection = 23,        
         Experience = 9000,
                 
         BasePenetration = ShieldPenetration.Medium,
@@ -106043,7 +106042,7 @@
         
         /*HideDetection = Thief Detection. Hide Detection of 25 means a thief level 15 with 10 magic can hide from him 100% of the time. Lower thieves will blink
         or be totally visible. Formula is as written above: Experience level + Magic Level on thief.*/
-        HideDetection = 25,
+        HideDetection = 26,
         
         //Showing all the Can tags: Only CanStrikeCriticall is necessary here as Drake() variable can fly and charge, but adding them for documentation.
         
@@ -106701,7 +106700,7 @@
         MaxHealth = 89, Health = 89,
         MaxMana = 5, Mana = 5,
         BaseDodge = 12,
-        
+        HideDetection = 23,
         Experience = 3800,
         
         VisibilityDistance = 1,
@@ -106759,7 +106758,7 @@
     {
         Name = _names.Random(),
         Body = (female ? 37 : 38), IsFemale = female,
-            
+        HideDetection = 23,    
         MaxHealth = 105, Health = 105,
         MaxMana = 16, Mana = 16,
         BaseDodge = 12,
@@ -106834,7 +106833,7 @@
     {
         Name = _names.Random(),
         Body = (female ? 16 : 48), IsFemale = female,
-            
+        HideDetection = 23,    
         MaxHealth = 110, Health = 110,
         MaxMana = 23, Mana = 23,
         BaseDodge = 13,
@@ -106899,7 +106898,7 @@
     {
         Name = _names.Random(),
         Body = (female ? 37 : 38), IsFemale = female,
-            
+        HideDetection = 23,    
         MaxHealth = 100, Health = 100,
         MaxMana = 16, Mana = 16,
         BaseDodge = 13,
@@ -107145,7 +107144,7 @@
         MaxHealth = 200, Health = 200,
         BaseDodge = 14,
         MaxMana = 50, Mana = 50,
-    
+        HideDetection = 23,
         Experience = 9000,
         VisibilityDistance = 1,
         
@@ -107207,7 +107206,7 @@
         MaxHealth = 55, Health = 55,
         BaseDodge = 13,
         Alignment = Alignment.Evil,
-                
+        HideDetection = 23,        
         Experience = 3800,
         BasePenetration = ShieldPenetration.Light,
     };
@@ -107256,6 +107255,7 @@
         Alignment = Alignment.Evil,
         Experience = 3800,
         BasePenetration = ShieldPenetration.Medium,
+        HideDetection = 23,
     };
     
     goblin.Attacks = new CreatureAttackCollection()
