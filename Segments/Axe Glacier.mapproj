@@ -107532,8 +107532,6 @@
         
         IceProtection = 100,
     };
-    
-    draugr.Brain = new CasterAI();
 
     draugr.Attacks = new CreatureAttackCollection()
     {
@@ -107588,8 +107586,6 @@
         <block><![CDATA[
     var giant = new UndeadFrostGiant()
     {
-        Brain = new CasterAI(),
-
         MaxHealth = 2200,
         Health = 2200,
         BaseDodge = 15,
@@ -107601,8 +107597,6 @@
         
         IceProtection = 100,
     };
-    
-    giant.Brain = new CasterAI();
     
     giant.AddImmunity(typeof(PoisonCloudSpell));
 
