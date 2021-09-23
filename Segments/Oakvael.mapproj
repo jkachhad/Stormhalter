@@ -1101,15 +1101,16 @@
         public override int GetDeathSound() => 306;
         public override int GetWarmSound() => 140;
     
-        public override void OnSpawn()
+        protected override void OnLoad()
         {
-            base.OnSpawn();
             if (_brain != null)
                 return;
             if (RightHand is ProjectileWeapon)
                 _brain = new RangedAI(this);
             else
                 _brain = new CombatAI(this);
+
+            base.OnLoad();
         }
     
         public override void Serialize(BinaryWriter writer)
