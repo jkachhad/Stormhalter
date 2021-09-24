@@ -99202,6 +99202,11 @@
             skillLevel: 15, cost: 7)
     };
     
+    necro.Home = new RectangleBounds()
+    {
+        new Rectangle2D(42, 34, 43, 36, 236)
+    };
+    
     necro.Wield(new BlackStaff());
     
     necro.AddGold(300);
@@ -99354,6 +99359,11 @@
     
     necro.Wield(new BlackStaff());
     
+    necro.Home = new RectangleBounds()
+    {
+        new Rectangle2D(23, 16, 25, 18, 236)
+    };
+    
     necro.AddGold(1500);
     necro.AddLoot(
         new LootPack(
@@ -99414,6 +99424,11 @@
     {
         new CreatureSpell<FireballSpell>(
             skillLevel: 15, cost: 7)
+    };
+    
+    necro.Home = new RectangleBounds()
+    {
+        new Rectangle2D(21, 34, 23, 36, 236)
     };
     
     necro.Wield(new BlackStaff());
