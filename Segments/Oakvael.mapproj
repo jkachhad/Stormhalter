@@ -690,13 +690,9 @@
     
         public void HeartSoothed()
         {
-            heartrage++;
-            if(heartrage > 9)
-            {
-                Alignment = Alignment.Neutral;
-                Name = "Grove Heart";
-                IsInvulnerable = true;
-            }    
+            Alignment = Alignment.Neutral;
+            Name = "Grove Heart";
+            IsInvulnerable = true;
         }
     
         public override int GetNearbySound() => 340;
@@ -742,7 +738,6 @@
                 var tile7 = Segment.FindTile(34, 51, 236);
                 tile7.Add(new Obstruction(266, false));
                 new OakGroveBow().Move(Location, true, Segment);
-                Timer.DelayCall(TimeSpan.FromSeconds(0.2), () => Delete());
             }
             EmitSound(220, 3, 9);
         }
@@ -774,6 +769,8 @@
                 RightHand.Delete();
                 Wield(new OakGroveBow());
                 IsInvulnerable = true;
+                foreach (var heart in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<OakGroveHeart>())
+                heart.HeartSoothed();
             }
         }
     
@@ -824,8 +821,6 @@
         {
             foreach (var defender in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<HeartDefender>())
                 defender.DefenderSoothed();
-            foreach (var heart in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<OakGroveHeart>())
-                heart.HeartSoothed();
             foreach (var keeper in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<OakGroveMainKeeper>())
                 keeper.KeeperSoothed();
             base.OnDeath();
@@ -1054,8 +1049,6 @@
         {
             foreach (var defender in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<HeartDefender>())
                 defender.DefenderSoothed();
-            foreach (var heart in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<OakGroveHeart>())
-                heart.HeartSoothed();
             foreach (var keeper in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<OakGroveMainKeeper>())
                 keeper.KeeperSoothed();
             base.OnDeath();
