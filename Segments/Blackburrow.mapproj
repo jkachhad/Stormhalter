@@ -31154,7 +31154,7 @@ if (spokeRecently(source))
     {
         Name = "Prisoner",        
         Body = 10, IsFemale = true,
-        Alignment = Alignment.Lawful,
+        Alignment = Alignment.Chaotic,
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
         
@@ -33623,8 +33623,8 @@ spawn.Name = "Neo";
       </script>
       <entry entity="LeveloneGnollOfficer" size="1" minimum="3" maximum="3" />
       <bounds region="2">
-        <inclusion left="-2" top="23" right="2" bottom="32" />
         <inclusion left="6" top="-7" right="17" bottom="11" />
+        <inclusion left="6" top="12" right="7" bottom="15" />
         <exclusion left="9" top="-4" right="15" bottom="7" />
       </bounds>
     </spawn>
@@ -34083,6 +34083,30 @@ spawn.Name = "Neo";
       <bounds region="4">
         <inclusion left="20" top="6" right="21" bottom="12" />
         <inclusion left="22" top="8" right="23" bottom="9" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Officer 2">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>4</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="LeveloneGnollOfficer" size="1" minimum="3" maximum="4" />
+      <bounds region="2">
+        <inclusion left="-2" top="23" right="2" bottom="32" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
