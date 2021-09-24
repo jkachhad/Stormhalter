@@ -31307,17 +31307,17 @@ if (spokeRecently(source))
     fippy.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(22,      20, 60,      "The Captain Barks and gnashes you with his fangs",
+            new CreatureAttack(20,      20, 60,      "The Captain Barks and gnashes you with his fangs",
                                                         new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(25,      50, 80,     "The Captain slashes you with his razor sharp claws.",
+            new CreatureAttack(23,      50, 80,     "The Captain slashes you with his razor sharp claws.",
                                                         new AttackProneComponent(25), 
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(24,      60, 90,     "The Captain impales you with his claws.",
+            new CreatureAttack(22,      60, 90,     "The Captain impales you with his claws.",
                                                         new AttackProneComponent(100), 
                                                         new AttackStunComponent(15)),               20
         },
@@ -31334,9 +31334,9 @@ if (spokeRecently(source))
    fippy.Equip(new ChainmailArmor());     
    fippy.AddGold(4000);
    fippy.AddLoot(new LootPack(
-        new LootPackEntry(true, Levelonegems,       100,     gemsPriceMutator), 
-        new LootPackEntry(true, Levelonegems,       100,     gemsPriceMutator), 
-        new LootPackEntry(true, Levelonegems,       100,     gemsPriceMutator), 
+        new LootPackEntry(true, Leveltwogems,       100,     gemsPriceMutator), 
+        new LootPackEntry(true, Leveltwogems,       100,     gemsPriceMutator), 
+        new LootPackEntry(true, Leveltwogems,       100,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33), 
         new LootPackEntry(true, Treasure,    100),
         new LootPackEntry(true, Miniboss, 25)
