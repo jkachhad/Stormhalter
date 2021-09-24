@@ -772,6 +772,7 @@
                 Alignment = Alignment.Neutral;
                 RightHand.Delete();
                 Wield(new OakGroveBow());
+                IsInvulnerable = true;
             }
         }
     
@@ -101191,7 +101192,7 @@
       <entry entity="heartCorrDry" size="1" minimum="4" maximum="4" />
       <entry entity="heartTroll" size="4" minimum="16" maximum="16" />
       <bounds region="236">
-        <inclusion left="23" top="22" right="29" bottom="48" />
+        <inclusion left="23" top="22" right="29" bottom="44" />
         <inclusion left="21" top="24" right="22" bottom="36" />
         <inclusion left="30" top="22" right="31" bottom="28" />
         <inclusion left="30" top="29" right="30" bottom="39" />
@@ -101221,7 +101222,7 @@
       <bounds region="236">
         <inclusion left="34" top="23" right="44" bottom="27" />
         <inclusion left="33" top="28" right="43" bottom="36" />
-        <inclusion left="32" top="38" right="40" bottom="48" />
+        <inclusion left="32" top="38" right="40" bottom="44" />
         <inclusion left="33" top="37" right="41" bottom="37" />
         <inclusion left="41" top="38" right="41" bottom="43" />
         <exclusion left="0" top="0" right="0" bottom="0" />
