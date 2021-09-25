@@ -74,8 +74,80 @@
         item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
     }
     
-      
-    
+    public class Destiny : VendorEntity
+    {
+        public Destiny()
+        {
+            Name = "Destiny";
+            Body = 48;
+
+            Health = MaxHealth = 50;
+            BaseDodge = 10;
+
+            Experience = 50;
+
+            Movement = 0;
+        }
+
+        public Destiny(Serial serial) : base(serial)
+        {
+        }
+        
+        public override void HandleOrder(OrderEventArgs args)
+        {
+            base.HandleOrder(args);
+
+            if (args.Handled)
+                return;
+            
+            var source = args.Source;
+            var order = args.Order;
+            
+            /* example: craft broadsword */
+            if (_craft.TryGetMatch(order, out var craftMatch) && craftMatch.Groups[1].Value.Matches("potion", true))
+            {
+                args.Handled = true;
+                
+                if (AtCounter(source, out var counter))
+                {
+                    var items = Segment.GetItemsAt(Location).ToList();
+
+                    var glower = items.OfType<StrongStrengthRing>();
+                    var ruby = items.OfType<StarRuby>();
+
+                    if (glower.Any() && ruby.Any())
+                    {
+                        if (ConsumeFromLocation<StrongStrengthRing>(counter, 1) && ConsumeFromLocation<StarRuby>(counter, 1))
+                        {
+                            new ManaPotion().Move(counter, true, Segment);
+
+                            SayTo(source, 6300407); /* Here is a magic potion. */
+                        }
+                    }
+                    else
+                    {
+                        SayTo(source, 6300408); /* Bring me a Strong Strength ring and a Glower. */
+                    }
+                }
+                else
+                {
+                    if (_counters.Any())
+                        SayTo(source, 6300236); /* Please step up to a counter. */
+                    else
+                        SayTo(source, 6300237); /* Please stand closer to me. */
+                }
+                
+                return;
+            }
+        }
+    }      
+
+
+
+
+
+
+
 ]]></block>
     <block><![CDATA[]]></block>
   </script>
@@ -32921,6 +32993,32 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="Destiny">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	return new Destiny();
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+if (spokeRecently(source))
+        return;
+
+    source.Say($"Bring me a Strong Strength ring and a Star Ruby and I will exchange it for something more useful!"); 
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="TownBanker ">
@@ -33499,6 +33597,27 @@ spawn.Name = "Neo";
       </script>
       <entry entity="DungeonBalmSeller" size="1" minimum="1" maximum="1" />
       <location x="22" y="5" region="5" />
+    </spawn>
+    <spawn type="LocationSpawner" name="Destiny">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="Destiny" size="1" minimum="0" maximum="0" />
+      <location x="11" y="-15" region="1" />
     </spawn>
     <spawn type="RegionSpawner" name="EntranceBlacksmith">
       <minimumDelay>900</minimumDelay>
