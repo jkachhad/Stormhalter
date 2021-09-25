@@ -33049,7 +33049,7 @@ if (spokeRecently(source))
         foreach (var skill in Skill.Weapons)
             Brucette.SetTraining(skill, 0, 4);
 
-        Brucette.SetTraining(Skill.Hand, 8, 16);
+        Brucette.SetTraining(Skill.Hand, 8, 19);
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -33077,7 +33077,7 @@ if (spokeRecently(source))
     if (spawn is TrainerEntity wick)
     {
         foreach (var skill in Skill.Weapons)
-            wick.SetTraining(skill, 8, 16);
+            wick.SetTraining(skill, 8, 19);
 
         wick.SetTraining(Skill.Hand, 0, 4);
     }
