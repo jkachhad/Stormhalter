@@ -31862,7 +31862,7 @@ if (spokeRecently(source))
 	skeleton.AddStatus(new NightVisionStatus(skeleton));
     skeleton.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(12)
+        new CreatureBasicAttack(15)
     };
     
     skeleton.AddStatus(new NightVisionStatus(skeleton));
@@ -32834,7 +32834,7 @@ return ogre;
         <block><![CDATA[
 	    var trainer = new ThiefTrainer()
     {
-        Name = "Vincenzo",
+        Name = "Vincenza",
         Body = (female ? 10 : 9), IsFemale = female,
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
