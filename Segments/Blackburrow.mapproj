@@ -32514,13 +32514,12 @@ elemental.Attacks = new CreatureAttackCollection
     new CreatureBasicAttack(15),
 };
 
-elemental.Spells = new CreatureSpellCollection(100)
-{
-
-    new CreatureSpell<PoisonCloudSpell>(
-        skillLevel: 5, cost: 25,
-        mantra: SpellHelper.GenerateMantra(), instantCast: false)
-};
+elemental.Spells = new CreatureSpellCollection()
+    {
+       { new CreatureSpell<PoisonCloudSpell>(
+            skillLevel: 11, cost: 16, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),   100 },
+    };
 
 elemental.Wield(new GiltDagger());
 elemental.Equip(new DrakeScaleArmor());
