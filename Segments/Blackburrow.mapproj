@@ -7852,9 +7852,11 @@
         <component type="FloorComponent">
           <ground>13</ground>
         </component>
-        <component type="ObstructionComponent">
-          <obstruction>266</obstruction>
-          <blockVision>true</blockVision>
+        <component type="StaircaseComponent">
+          <destinationX>-13</destinationX>
+          <destinationY>15</destinationY>
+          <destinationRegion>4</destinationRegion>
+          <teleporterId>181</teleporterId>
         </component>
       </tile>
       <tile x="21" y="-11">
@@ -8080,27 +8082,15 @@
         <component type="FloorComponent">
           <ground>13</ground>
         </component>
-        <component type="ObstructionComponent">
-          <obstruction>266</obstruction>
-          <blockVision>true</blockVision>
-        </component>
       </tile>
       <tile x="19" y="-10">
         <component type="FloorComponent">
           <ground>13</ground>
         </component>
-        <component type="ObstructionComponent">
-          <obstruction>266</obstruction>
-          <blockVision>true</blockVision>
-        </component>
       </tile>
       <tile x="20" y="-10">
         <component type="FloorComponent">
           <ground>13</ground>
-        </component>
-        <component type="ObstructionComponent">
-          <obstruction>266</obstruction>
-          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="21" y="-10">
@@ -30411,9 +30401,9 @@
           <ruins>170</ruins>
         </component>
         <component type="RopeComponent">
-          <destinationX>5</destinationX>
+          <destinationX>10</destinationX>
           <destinationY>16</destinationY>
-          <destinationRegion>4</destinationRegion>
+          <destinationRegion>3</destinationRegion>
           <teleporterId>256</teleporterId>
         </component>
       </tile>
