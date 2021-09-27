@@ -122013,11 +122013,12 @@ source.Say($"Oh, you've dealt with my pets have you, {player.Name}? let us play.
         CanJumpkick = true,
 
         Body = 245,
-        
+
+        Weakness = CreatureWeakness.
         Alignment = Alignment.Evil,
         
     };
-    
+    trusov.AddImmunity(typeof(WhirlwindSpell));
     trusov.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(27, 40, 85)
