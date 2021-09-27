@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.77.0.0">
+<segment name="Leng" version="0.79.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -2311,7 +2311,6 @@
           <destinationY>4</destinationY>
           <destinationRegion>3</destinationRegion>
           <teleporterId>130</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="4" y="7">
@@ -2565,7 +2564,6 @@
           <destinationY>1</destinationY>
           <destinationRegion>99</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="36" y="7">
@@ -8814,7 +8812,6 @@
           <destinationY>4</destinationY>
           <destinationRegion>12</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="24" y="23">
@@ -19656,7 +19653,6 @@
           <destinationY>11</destinationY>
           <destinationRegion>18</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="37" y="12">
@@ -24744,7 +24740,7 @@
         <component type="FloorComponent">
           <ground>179</ground>
         </component>
-        <component type="HiddenTeleporterComponent">
+        <component type="ItemTeleporter">
           <destinationX>21</destinationX>
           <destinationY>7</destinationY>
           <destinationRegion>255</destinationRegion>
@@ -24752,6 +24748,8 @@
           <moonphases select="all" />
           <professions>Thief</professions>
           <alignments select="all" />
+		  <type>StarRuby</type>
+          <fail>Stun</fail>
         </component>
         <component type="StaticComponent">
           <static>195</static>
@@ -25712,7 +25710,6 @@
           <destinationY>5</destinationY>
           <destinationRegion>3</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="57" y="4">
@@ -28405,14 +28402,16 @@
         </component>
       </tile>
       <tile x="3" y="12">
-        <component type="HiddenTeleporterComponent">
+        <component type="ItemTeleporter">
           <destinationX>21</destinationX>
           <destinationY>6</destinationY>
           <destinationRegion>100</destinationRegion>
           <lightphases select="all" />
           <moonphases select="all" />
-          <professions>Martial Artist,Fighter,Thaumaturge,Wizard,Knight</professions>
+          <professions>Martial Artist,Fighter,Thief</professions>
           <alignments select="all" />
+          <type>StarRuby</type>
+          <fail>Stun</fail>
         </component>
         <component type="FloorComponent">
           <ground>18</ground>
@@ -29669,7 +29668,6 @@
           <destinationY>6</destinationY>
           <destinationRegion>4</destinationRegion>
           <teleporterId>130</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="11" y="15">
@@ -38744,7 +38742,6 @@
           <destinationY>23</destinationY>
           <destinationRegion>10</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="8" y="4">
@@ -38878,7 +38875,6 @@
           <destinationY>6</destinationY>
           <destinationRegion>14</destinationRegion>
           <teleporterId>130</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="6" y="6">
@@ -39572,7 +39568,6 @@
           <destinationY>4</destinationY>
           <destinationRegion>16</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="8" y="4">
@@ -39706,7 +39701,6 @@
           <destinationY>6</destinationY>
           <destinationRegion>12</destinationRegion>
           <teleporterId>126</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="6" y="6">
@@ -40392,7 +40386,6 @@
           <destinationY>4</destinationY>
           <destinationRegion>14</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="6" y="4">
@@ -40530,7 +40523,6 @@
           <destinationY>6</destinationY>
           <destinationRegion>17</destinationRegion>
           <teleporterId>130</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="4" y="6">
@@ -43220,7 +43212,6 @@
           <destinationY>12</destinationY>
           <destinationRegion>20</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="27" y="11">
@@ -51077,7 +51068,6 @@
           <destinationY>5</destinationY>
           <destinationRegion>99</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="22" y="1">
@@ -51985,10 +51975,10 @@
           <destinationRegion>1</destinationRegion>
           <lightphases select="all" />
           <moonphases select="all" />
-          <professions select="all" />
+          <professions>Fighter,Martial Artist,Thief</professions>
           <alignments select="all" />
-          <type>4</type>
-          <fail>Interrupted</fail>
+          <type>StarRuby</type>
+          <fail>Stun</fail>
         </component>
         <component type="FloorComponent">
           <ground>12</ground>
@@ -52133,7 +52123,6 @@
           <destinationY>1</destinationY>
           <destinationRegion>255</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="12" y="7">
@@ -52622,7 +52611,6 @@
           <destinationY>7</destinationY>
           <destinationRegion>100</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="22" y="1">
@@ -62128,7 +62116,6 @@
           <destinationY>7</destinationY>
           <destinationRegion>10</destinationRegion>
           <teleporterId>125</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="4" y="4">
@@ -62197,7 +62184,6 @@
           <destinationY>4</destinationY>
           <destinationRegion>1</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="2" y="5">
@@ -73039,7 +73025,6 @@
           <destinationY>15</destinationY>
           <destinationRegion>1</destinationRegion>
           <teleporterId>125</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="3" y="6">
@@ -73782,7 +73767,6 @@
           <destinationY>6</destinationY>
           <destinationRegion>16</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="5" y="6">
@@ -74282,7 +74266,6 @@
           <destinationY>7</destinationY>
           <destinationRegion>10</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="10" y="1">
@@ -74584,7 +74567,6 @@
           <destinationY>1</destinationY>
           <destinationRegion>100</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="2" y="5">
@@ -76928,7 +76910,7 @@
     
     sandwyrm.AddGold(100);
     sandwyrm.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new BloodRuby(300u),       20)
+        new LootPackEntry(true, (from, container) => new StarRuby(300u),       20)
     ));
     
     return sandwyrm;
