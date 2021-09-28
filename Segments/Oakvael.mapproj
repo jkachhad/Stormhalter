@@ -877,11 +877,23 @@
         }
     
         public int soothedAmount = 0;
+        public int changedMood = 0;
     
         public void DefenderSoothed()
         {
-            soothedAmount++;
-            Say($"Why am I so... angry?");
+            if (changedMood < 1)
+            {
+                soothedAmount++;
+                Say($"Why am I so... angry?");
+                if (soothedAmount > 9)
+                {
+                    Say($"The corruption has faded! I will protect the grove!");
+                    Name = "Defender of the Grove";
+                    Alignment = Alignment.Neutral;
+                    soothedAmount = 0;
+                    changedMood = 1;
+                }
+            }
         }
     
         public override int CalculateMeleeDamage(ItemEntity item)
@@ -895,7 +907,10 @@
     
         public override void OnDeath()
         {
-            Say($"My mind has cleared... too late...");
+            if (soothedAmount > 0)
+            {
+                Say($"My mind has cleared... too late...");
+            }
             base.OnDeath();
         }
     
@@ -99022,10 +99037,10 @@
     var centaur = new HeartDefender()
     {
         Name = "Corrupted Defender",
-        MaxHealth = 2250, Health = 2250,
+        MaxHealth = 500, Health = 500,
         BaseDodge = 25,
         BasePenetration = ShieldPenetration.Medium,     
-        Experience = 52500,
+        Experience = 24000,
         HideDetection = 32,
     };
     
@@ -99074,7 +99089,7 @@
         MaxMana = 14, Mana = 14,
         BaseDodge = 18,
         BasePenetration = ShieldPenetration.Medium,     
-        Experience = 18300,
+        Experience = 23000,
         HideDetection = 32,
     };
     
@@ -99130,7 +99145,7 @@
         MaxHealth = 260, Health = 260,
         BaseDodge = 18,
 
-        Experience = 17400,
+        Experience = 22000,
     };
     
     troll.Attacks = new CreatureAttackCollection
@@ -101148,7 +101163,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="heartCorrDef" size="1" minimum="3" maximum="3" />
+      <entry entity="heartCorrDef" size="2" minimum="3" maximum="3" />
       <entry entity="heartTroll" size="4" minimum="5" maximum="5" />
       <entry entity="heartCorrDry" size="1" minimum="1" maximum="1" />
       <bounds region="236">
@@ -101174,7 +101189,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="heartTroll" size="4" minimum="5" maximum="5" />
-      <entry entity="heartCorrDef" size="1" minimum="3" maximum="3" />
+      <entry entity="heartCorrDef" size="2" minimum="3" maximum="3" />
       <entry entity="heartCorrDry" size="1" minimum="1" maximum="1" />
       <bounds region="236">
         <inclusion left="23" top="16" right="31" bottom="20" />
@@ -101227,7 +101242,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="heartCorrDef" size="1" minimum="5" maximum="5" />
+      <entry entity="heartCorrDef" size="2" minimum="5" maximum="5" />
       <entry entity="heartCorrDry" size="1" minimum="6" maximum="6" />
       <entry entity="heartTroll" size="4" minimum="12" maximum="12" />
       <bounds region="236">
