@@ -31580,6 +31580,7 @@ if (spokeRecently(source))
         VisibilityDistance = 0,
         Movement = 1,
         CanJumpkick = true,
+        CanStrikeCritically = false,
         Experience = 100000,
     };
     
@@ -31589,10 +31590,10 @@ if (spokeRecently(source))
     crocodile.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(26,     20, 120,   "The crocodile snaps his massive jaws shut upon you."), 60 
+            new CreatureAttack(24,     20, 100,   "The crocodile snaps his massive jaws shut upon you."), 60 
         },
         { 
-            new CreatureAttack(30,     30, 90,  "The crocodile hits you with its tail."),               40 
+            new CreatureAttack(26,     40, 80,  "The crocodile hits you with its tail."),               40 
         },
     };
     
