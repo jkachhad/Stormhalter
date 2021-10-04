@@ -19,8 +19,6 @@ namespace Kesmai.WorldForge.Models
 
 		#region Properties and Events
 		
-		public bool Descends { get; set; }
-
 		#endregion
 
 		#region Constructors and Cleanup
@@ -30,12 +28,10 @@ namespace Kesmai.WorldForge.Models
 		/// </summary>
 		public StaircaseComponent(int staircaseId, int x, int y, int region, bool descends = false) : base(staircaseId, x, y, region)
 		{
-			Descends = descends;
 		}
 		
 		public StaircaseComponent(XElement element) : base(element)
 		{
-			Descends = (bool)element.Element("descends");
 		}
 
 
@@ -46,9 +42,7 @@ namespace Kesmai.WorldForge.Models
 		public override XElement GetXElement()
 		{
 			var element = base.GetXElement();
-
-			element.Add(new XElement("descends", Descends));
-
+			
 			return element;
 		}
 

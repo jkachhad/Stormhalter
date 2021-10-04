@@ -8,6 +8,7 @@ using CommonServiceLocator;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Scripting;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge
@@ -48,8 +49,12 @@ namespace Kesmai.WorldForge
 			get => _name;
 			set => SetProperty(ref _name, value);
 		}
-		
-		public TimeSpan MinimumDelay
+
+        public override string ToString()
+        {
+			return Name;
+        }
+        public TimeSpan MinimumDelay
 		{
 			get => _minimumDelay;
 			set => SetProperty(ref _minimumDelay, value);
@@ -276,7 +281,79 @@ namespace Kesmai.WorldForge
 				}
 			}
 		}
-		
+
+		public int OpenFloorTiles
+		{
+			get
+			{
+				var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+				var segment = segmentRequest.Response;
+				var region = segment.GetRegion(_region);
+				if (region is null)
+					return 0;
+
+				IEnumerable<SegmentTile> includedTiles = Enumerable.Empty<SegmentTile>() ;
+				foreach (var rect in Inclusions)
+                {
+					var rectTiles = region.GetTiles(t => rect.ToRectangle().Contains(t.X, t.Y) &&
+									   t.Components.Any(floor => floor is Models.FloorComponent || floor is Models.IceComponent || floor is Models.WaterComponent) &&
+									   !t.Components.Any(notfloor => notfloor is Models.WallComponent || notfloor is Models.ObstructionComponent));
+					includedTiles = includedTiles.Union(rectTiles);
+                }
+				foreach (var rect in Exclusions)
+                {
+					if (rect is { Left: 0, Right: 0, Width: 0, Height: 0 })
+						continue;
+					includedTiles = includedTiles.Where(t => ! rect.ToRectangle().Contains(t.X, t.Y));
+				}
+
+				return includedTiles.Count();
+			}
+		}
+
+		public Double AverageMobs
+        {
+            get
+            {
+				//For a new spawner or an empty one, there is no mob count.
+				if (Entries.Count() == 0)
+					return 0.0;
+				
+				//Get some stats based on each entry. What's the average size, how many slots are used and how many mobs generated to hit the minimums.
+				Double averageEntry = 0;
+				int minimumMobs = 0;
+				int minimumSlots = 0;
+				int maximumMobs = 0;
+				foreach (var entry in Entries)
+                {
+					averageEntry += entry.Size;
+					minimumMobs += entry.Minimum * entry.Size;
+					minimumSlots += entry.Minimum;
+					maximumMobs += entry.Maximum * entry.Size;
+                }
+				averageEntry = averageEntry / Entries.Count();
+
+				//For spawners that have a maximum of 0, there is no cap on mobs, and all entries will spawn their maximum
+				if (Maximum == 0)
+					return maximumMobs;
+
+				//For spawners that have fewer slots available than needed to fill the minimums, average mobs is just slots times our average size.
+				if (Maximum < minimumSlots)
+					return averageEntry * Maximum;
+
+				//For other spawners, we need to first fill the minimums, then add remaining slots * our average.
+				return minimumMobs + (Maximum - minimumSlots) * averageEntry;
+            }
+        }
+
+		public Double Density
+        {
+            get
+            {
+				return AverageMobs / OpenFloorTiles;
+            }
+        }
+
 		public override XElement GetXElement()
 		{
 			var element = base.GetXElement();

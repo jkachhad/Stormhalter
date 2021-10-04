@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.76.0.0">
+<segment name="Kesmai" version="0.77.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -9,11 +9,11 @@
     public static bool spokeRecently(MobileEntity entity)
     {
         /* If the entity spoke recently, we're not going to speak again. */
-        if (_speechDelays.TryGetValue(entity, out var nextSpeechTime) && DateTime.Now < nextSpeechTime)
+        if (_speechDelays.TryGetValue(entity, out var nextSpeechTime) && Server.Now < nextSpeechTime)
             return true;
         
         /* The entity did not speak recently, add them to the delay, and allow them to talk. */
-        _speechDelays[entity] = DateTime.Now + _speechDelay;
+        _speechDelays[entity] = Server.Now + _speechDelay;
         return false;
     }
 
@@ -53744,6 +53744,19 @@
           <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>1</destinationX>
+          <destinationY>2</destinationY>
+          <destinationRegion>9</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+        </component>
+        <component type="StaticComponent">
+          <color r="255" g="255" b="255" a="146" />
+          <static>193</static>
+        </component>
       </tile>
       <tile x="8" y="3">
         <component type="StaticComponent">
@@ -97929,7 +97942,7 @@
                 
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(5, 3, 11)
+        new CreatureBasicAttack(5)
     };
     
     troll.Wield(new Greatsword());
@@ -98043,7 +98056,7 @@
         
     wight.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6)
+        new CreatureBasicAttack(4)
     };
     
     wight.Spells = new CreatureSpellCollection()
@@ -98735,7 +98748,7 @@ return orc;
         
     wraith.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(7)
+        new CreatureBasicAttack(6)
     };
     
     wraith.Spells = new CreatureSpellCollection()
@@ -98795,7 +98808,7 @@ return orc;
         
     wight.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(7),
+        new CreatureBasicAttack(6),
     };
     
     wight.Spells =  new CreatureSpellCollection()
@@ -99798,7 +99811,7 @@ return orc;
             new CreatureAttack(5,     2, 5,  "The wolf sinks its teeth into you."),  30 
         }, 
         {
-            new CreatureAttack(5,     3, 6,  "The wolf lunges at you."),             20 
+            new CreatureAttack(6,     3, 6,  "The wolf lunges at you."),             20 
         }, 
     };
         
@@ -99959,7 +99972,7 @@ return orc;
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(4, 1, 5)
+        new CreatureBasicAttack(4)
     };
     
     orc.Wield(new Longsword());
@@ -100009,7 +100022,7 @@ return orc;
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(3)
+        new CreatureBasicAttack(4)
     };
     
     orc.Wield(new Crossbow());
@@ -100061,7 +100074,7 @@ return orc;
         
     wraith.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(7)
+        new CreatureBasicAttack(6)
     };
     
     wraith.Spells = new CreatureSpellCollection()
@@ -100121,7 +100134,7 @@ return orc;
         
     wight.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6)
+        new CreatureBasicAttack(4)
     };
     
     wight.Spells = new CreatureSpellCollection()
@@ -103255,7 +103268,7 @@ else
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="5">
+      <entry weight="10">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[

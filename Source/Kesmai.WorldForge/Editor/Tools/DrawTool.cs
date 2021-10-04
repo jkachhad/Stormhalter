@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using CommonServiceLocator;
 using DigitalRune.Game.UI;
 using DigitalRune.Game.Input;
@@ -8,7 +7,6 @@ using DigitalRune.Graphics;
 using DigitalRune.Mathematics.Algebra;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Models;
-using Kesmai.WorldForge.Windows;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -28,16 +26,11 @@ namespace Kesmai.WorldForge
 		public override void OnActivate()
 		{
 			base.OnActivate();
-			
-			// TODO: Show components panel, hide others.
-			
 			_actionBlacklist = new List<(int X, int Y)>();
 		}
 
 		public override void OnDeactivate()
 		{
-			// TODO: Hide components panel.
-
 			base.OnDeactivate();
 		}
 
@@ -86,10 +79,24 @@ namespace Kesmai.WorldForge
 					if (component != null)
 					{
 						var componentType = component.GetType();
+						var floorTypes = new List<String>() {
+							"FloorComponent",
+							"WaterComponent",
+							"IceComponent",
+							"SkyComponent"
+						};
+						IEnumerable<TerrainComponent> similar;
 
 						if (!_isAltDown && !_isShiftDown)
 						{
-							var similar = selectedTile.GetComponents<TerrainComponent>(c => c.GetType().IsAssignableFrom(componentType));
+							if (floorTypes.Contains(componentType.Name))
+							{
+								similar = selectedTile.GetComponents<TerrainComponent>(c => c is FloorComponent || c is WaterComponent || c is IceComponent || c is SkyComponent);
+							}
+							else
+							{
+								similar = selectedTile.GetComponents<TerrainComponent>(c => c.GetType().IsAssignableFrom(componentType));
+							}
 
 							foreach (var similarComponent in similar)
 								selectedTile.RemoveComponent(similarComponent);
@@ -125,7 +132,8 @@ namespace Kesmai.WorldForge
 			var presentationTarget = context.GetPresentationTarget();
 			
 			var worldScreen = presentationTarget.WorldScreen;
-			
+			var zoomFactor = worldScreen.ZoomFactor;
+
 			var uiScreen = worldScreen.UI;
 			var renderer = uiScreen.Renderer;
 			var spriteFont = renderer.GetFont("Tahoma14Bold");
@@ -137,11 +145,11 @@ namespace Kesmai.WorldForge
 				var viewRectangle = worldScreen.GetViewRectangle();
 				var (mx, my) = worldScreen.ToWorldCoordinates((int)_position.X, (int)_position.Y);
 			
-				var rx = (mx - viewRectangle.Left) * (presenter.UnitSize);
-				var ry = (my - viewRectangle.Top) * (presenter.UnitSize);
+				var rx = (int)Math.Floor((mx - viewRectangle.Left) * (presenter.UnitSize*zoomFactor));
+				var ry = (int)Math.Floor((my - viewRectangle.Top) * (presenter.UnitSize*zoomFactor));
 			
-				var tileBounds = new Rectangle(rx, ry, presenter.UnitSize, presenter.UnitSize);
-				var originalBounds = new Rectangle(tileBounds.X - 45, tileBounds.Y - 45, 100, 100);
+				var tileBounds = new Rectangle(rx, ry, (int)Math.Floor(presenter.UnitSize * zoomFactor), (int)Math.Floor(presenter.UnitSize * zoomFactor));
+				var originalBounds = new Rectangle(tileBounds.X - (int)Math.Floor(45 * zoomFactor), tileBounds.Y - (int)Math.Floor(45 * zoomFactor), (int)Math.Floor(100 * zoomFactor), (int)Math.Floor(100 * zoomFactor));
 				
 				var terrains = component.GetTerrain();
 				
@@ -157,8 +165,8 @@ namespace Kesmai.WorldForge
 
 							if (sprite.Offset != Vector2F.Zero)
 								spriteBounds.Offset(sprite.Offset.X, sprite.Offset.Y);
-							
-							spriteBatch.Draw(sprite.Texture, spriteBounds.Location.ToVector2(), render.Color);
+
+							spriteBatch.Draw(sprite.Texture, spriteBounds.Location.ToVector2(), null, render.Color, 0, Vector2.Zero, zoomFactor, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0f);
 						}
 					}
 				}
