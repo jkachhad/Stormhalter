@@ -444,9 +444,9 @@
 
         }
 
-        public override int CalculateMeleeDamage(ItemEntity item)
+        public override int CalculateMeleeDamage(ItemEntity item, MobileEntity defender)
         {
-            var damage = (double)base.CalculateMeleeDamage(item);
+            var damage = (double)base.CalculateMeleeDamage(item, defender);
 
             damage *= 1.0 + (enrageAmount * 0.1);
 
@@ -889,9 +889,9 @@
             Say($"Why am I so... angry?");
         }
     
-        public override int CalculateMeleeDamage(ItemEntity item)
+        public override int CalculateMeleeDamage(ItemEntity item, MobileEntity defender)
         {
-            var damage = (double)base.CalculateMeleeDamage(item);
+            var damage = (double)base.CalculateMeleeDamage(item, defender);
     
             damage *= 1.0 - (soothedAmount * 0.1);
     

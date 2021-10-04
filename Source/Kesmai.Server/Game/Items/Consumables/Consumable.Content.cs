@@ -8,6 +8,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Game
 {
+	[WorldForge]
 	public class ConsumableHeal : IConsumableContent
 	{
 		private int _amount; 
@@ -16,6 +17,7 @@ namespace Kesmai.Server.Game
 		/// Initializes a new instance of the <see cref="ConsumableHeal"/> class.
 		/// </summary>
 		/// <param name="amount">The amount an entity will be healed.</param>
+		[WorldForge]
 		public ConsumableHeal(int amount)
 		{
 			_amount = amount;
@@ -52,6 +54,7 @@ namespace Kesmai.Server.Game
 		}
 	}
 	
+	[WorldForge]
 	public class ConsumableDamage : IConsumableContent
 	{
 		private int _amount; 
@@ -60,6 +63,7 @@ namespace Kesmai.Server.Game
 		/// Initializes a new instance of the <see cref="ConsumableDamage"/> class.
 		/// </summary>
 		/// <param name="amount">The amount an entity will be hurt.</param>
+		[WorldForge]
 		public ConsumableDamage(int amount)
 		{
 			_amount = amount;
@@ -103,10 +107,12 @@ namespace Kesmai.Server.Game
 		}
 	}
 
+	[WorldForge]
 	public class ConsumablePoison : IConsumableContent
 	{
 		private int _potency;
 		
+		[WorldForge]
 		public ConsumablePoison(int potency)
 		{
 			_potency = potency;
@@ -144,6 +150,7 @@ namespace Kesmai.Server.Game
 		}
 	}
 	
+	[WorldForge]
 	public class ConsumablePoisonAntidote : IConsumableContent
 	{
 		private bool _relative;
@@ -154,6 +161,7 @@ namespace Kesmai.Server.Game
 		/// </summary>
 		/// <param name="potency">The amount of potency reduced on poison status.</param>
 		/// <param name="relative">if the antidote cures by a relative, or absolute amount.</param>
+		[WorldForge]
 		public ConsumablePoisonAntidote(int potency, bool relative = true)
 		{
 			_relative = relative;
@@ -215,6 +223,7 @@ namespace Kesmai.Server.Game
 		}
 	}
 	
+	[WorldForge]
 	public class ConsumableBlindnessAntidote : IConsumableContent
 	{
 		public void GetDescription(List<LocalizationEntry> entries)
@@ -247,11 +256,13 @@ namespace Kesmai.Server.Game
 		}
 	}
 	
+	[WorldForge]
 	public class ConsumableRestoreMana : IConsumableContent
 	{
 		private static Dictionary<int, ConsumableRestoreMana> _collection 
 			= new Dictionary<int, ConsumableRestoreMana>();
 
+		[WorldForge]
 		public static ConsumableRestoreMana Full = new ConsumableRestoreMana(default(int?));
 
 		public static ConsumableRestoreMana Instantiate(int amount)
@@ -268,6 +279,7 @@ namespace Kesmai.Server.Game
 		/// Initializes a new instance of the <see cref="ConsumableRestoreMana"/> class.
 		/// </summary>
 		/// <param name="amount">The amount of mana restored if specified. Otherwise, the maximum amount is restored.</param>
+		[WorldForge]
 		public ConsumableRestoreMana(int? amount)
 		{
 			_amount = amount;
@@ -313,6 +325,7 @@ namespace Kesmai.Server.Game
 		}
 	}
 	
+	[WorldForge]
 	public class ConsumableIncreaseMana : IConsumableContent
 	{
 		private int _amount;
@@ -321,6 +334,7 @@ namespace Kesmai.Server.Game
 		/// Initializes a new instance of the <see cref="ConsumableIncreaseMana"/> class.
 		/// </summary>
 		/// <param name="amount">The amount of max mana increased.</param>
+		[WorldForge]
 		public ConsumableIncreaseMana(int amount)
 		{
 			_amount = amount;
@@ -376,13 +390,16 @@ namespace Kesmai.Server.Game
 		}
 	}
 	
+	[WorldForge]
 	public class ConsumableRestoreStamina : IConsumableContent
 	{
 		private static Dictionary<int, ConsumableRestoreStamina> _collection 
 			= new Dictionary<int, ConsumableRestoreStamina>();
 
+		[WorldForge]
 		public static ConsumableRestoreStamina Full = new ConsumableRestoreStamina(default(int?));
 
+		[WorldForge]
 		public static ConsumableRestoreStamina Instantiate(int amount)
 		{
 			if (!_collection.TryGetValue(amount, out var content))
@@ -442,8 +459,10 @@ namespace Kesmai.Server.Game
 		}
 	}
 
+	[WorldForge]
 	public class ConsumableWater : ConsumableRestoreStamina
 	{
+		[WorldForge]
 		public ConsumableWater() : base(10)
 		{
 		}
@@ -476,10 +495,12 @@ namespace Kesmai.Server.Game
 		}
 	}
 
+	[WorldForge]
 	public class ConsumableUrine : ConsumableDamage
 	{
 		private string _owner;
 		
+		[WorldForge]
 		public ConsumableUrine(string owner) : base(10)
 		{
 			_owner = owner;
@@ -515,6 +536,7 @@ namespace Kesmai.Server.Game
 		}
 	}
 	
+	[WorldForge]
 	public class ConsumableAmbrosia : IConsumableContent
 	{
 		public void GetDescription(List<LocalizationEntry> entries)
@@ -558,6 +580,7 @@ namespace Kesmai.Server.Game
 		}
 	}
 
+	[WorldForge]
 	public class ConsumableNaphtha : IConsumableContent
 	{
 		public void GetDescription(List<LocalizationEntry> entries)
@@ -611,6 +634,7 @@ namespace Kesmai.Server.Game
 		}
 	}
 	
+	[WorldForge]
 	public class ConsumableNitro : IConsumableContent
 	{
 		public void GetDescription(List<LocalizationEntry> entries)
@@ -665,6 +689,7 @@ namespace Kesmai.Server.Game
 		}
 	}
 	
+	[WorldForge]
 	public class ConsumableStrengthSpell : IConsumableContent
 	{
 		public void GetDescription(List<LocalizationEntry> entries)
@@ -706,6 +731,7 @@ namespace Kesmai.Server.Game
 		}
 	}
 
+	[WorldForge]
 	public class ConsumableStrengthStat : IConsumableContent
 	{
 		public void GetDescription(List<LocalizationEntry> entries)
@@ -750,6 +776,7 @@ namespace Kesmai.Server.Game
 		}
 	}
 	
+	[WorldForge]
 	public class ConsumableDexterityStat : IConsumableContent
 	{
 		public void GetDescription(List<LocalizationEntry> entries)
@@ -794,6 +821,7 @@ namespace Kesmai.Server.Game
 		}
 	}
 	
+	[WorldForge]
 	public class ConsumableIntelligenceStat : IConsumableContent
 	{
 		public void GetDescription(List<LocalizationEntry> entries)
@@ -833,6 +861,7 @@ namespace Kesmai.Server.Game
 		}
 	}
 	
+	[WorldForge]
 	public class ConsumableWillpowerStat : IConsumableContent
 	{
 		public void GetDescription(List<LocalizationEntry> entries)
@@ -872,6 +901,7 @@ namespace Kesmai.Server.Game
 		}
 	}
 	
+	[WorldForge]
 	public class ConsumableWisdomStat : IConsumableContent
 	{
 		public void GetDescription(List<LocalizationEntry> entries)
@@ -911,6 +941,7 @@ namespace Kesmai.Server.Game
 		}
 	}
 	
+	[WorldForge]
 	public class ConsumableConstitutionStat : IConsumableContent
 	{
 		public void GetDescription(List<LocalizationEntry> entries)
@@ -984,6 +1015,7 @@ namespace Kesmai.Server.Game
 		}
 	}
 
+	[WorldForge]
 	public class ConsumableBalm : IConsumableContent
 	{
 		public void GetDescription(List<LocalizationEntry> entries)
