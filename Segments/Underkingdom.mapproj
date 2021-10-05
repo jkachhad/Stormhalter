@@ -60156,6 +60156,11 @@
           <destroyedId>81</destroyedId>
         </component>
       </tile>
+      <tile x="13" y="11">
+        <component type="FloorComponent">
+          <ground>12</ground>
+        </component>
+      </tile>
       <tile x="14" y="11">
         <component type="FloorComponent">
           <ground>12</ground>
@@ -103709,10 +103714,15 @@
       <entry entity="uk100GoblinMage" size="4" minimum="2" maximum="2" />
       <entry entity="uk100Goblin" size="3" minimum="4" maximum="4" />
       <bounds region="4">
-        <inclusion left="3" top="3" right="9" bottom="6" />
-        <inclusion left="8" top="7" right="19" bottom="12" />
-        <inclusion left="17" top="3" right="19" bottom="6" />
+        <inclusion left="3" top="3" right="19" bottom="28" />
         <exclusion left="11" top="11" right="13" bottom="13" />
+        <exclusion left="13" top="18" right="19" bottom="23" />
+        <exclusion left="15" top="24" right="19" bottom="28" />
+        <exclusion left="17" top="15" right="19" bottom="17" />
+        <exclusion left="3" top="7" right="6" bottom="11" />
+        <exclusion left="10" top="3" right="16" bottom="6" />
+        <exclusion left="3" top="23" right="5" bottom="28" />
+        <exclusion left="10" top="27" right="14" bottom="28" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="uk200">
