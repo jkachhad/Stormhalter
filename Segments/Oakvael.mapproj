@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.77.0.0">
+<segment name="Oakvael" version="0.79.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -690,12 +690,9 @@
     
         public void HeartSoothed()
         {
-            heartrage++;
-            if(heartrage > 9)
-            {
-                Alignment = Alignment.Neutral;
-                Name = "Grove Heart";
-            }    
+            Alignment = Alignment.Neutral;
+            Name = "Grove Heart";
+            IsInvulnerable = true;
         }
     
         public override int GetNearbySound() => 340;
@@ -741,7 +738,6 @@
                 var tile7 = Segment.FindTile(34, 51, 236);
                 tile7.Add(new Obstruction(266, false));
                 new OakGroveBow().Move(Location, true, Segment);
-                Timer.DelayCall(TimeSpan.FromSeconds(0.2), () => Delete());
             }
             EmitSound(220, 3, 9);
         }
@@ -772,6 +768,9 @@
                 Alignment = Alignment.Neutral;
                 RightHand.Delete();
                 Wield(new OakGroveBow());
+                IsInvulnerable = true;
+                foreach (var heart in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<OakGroveHeart>())
+                heart.HeartSoothed();
             }
         }
     
@@ -822,10 +821,6 @@
         {
             foreach (var defender in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<HeartDefender>())
                 defender.DefenderSoothed();
-            base.OnDeath();
-            foreach (var heart in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<OakGroveHeart>())
-                heart.HeartSoothed();
-            base.OnDeath();
             foreach (var keeper in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<OakGroveMainKeeper>())
                 keeper.KeeperSoothed();
             base.OnDeath();
@@ -882,11 +877,23 @@
         }
     
         public int soothedAmount = 0;
+        public int changedMood = 0;
     
         public void DefenderSoothed()
         {
-            soothedAmount++;
-            Say($"Why am I so... angry?");
+            if (changedMood < 1)
+            {
+                soothedAmount++;
+                Say($"Why am I so... angry?");
+                if (soothedAmount > 9)
+                {
+                    Say($"The corruption has faded! I will protect the grove!");
+                    Name = "Defender of the Grove";
+                    Alignment = Alignment.Neutral;
+                    soothedAmount = 0;
+                    changedMood = 1;
+                }
+            }
         }
     
         public override int CalculateMeleeDamage(ItemEntity item)
@@ -900,7 +907,10 @@
     
         public override void OnDeath()
         {
-            Say($"My mind has cleared... too late...");
+            if (soothedAmount > 0)
+            {
+                Say($"My mind has cleared... too late...");
+            }
             base.OnDeath();
         }
     
@@ -979,7 +989,7 @@
                     {
                         MaxHealth = 450,
                         Health = 450,
-                        Mana = MaxMana = 21,
+                        Mana = MaxMana = 7,
                         BaseDodge = 18,
                         Experience = 25000
                     };
@@ -1054,8 +1064,6 @@
         {
             foreach (var defender in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<HeartDefender>())
                 defender.DefenderSoothed();
-            foreach (var heart in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<OakGroveHeart>())
-                heart.HeartSoothed();
             foreach (var keeper in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<OakGroveMainKeeper>())
                 keeper.KeeperSoothed();
             base.OnDeath();
@@ -1081,7 +1089,7 @@
                 {
                     var spell2 = new WhirlwindSpell()
                     {
-                        SkillLevel = 12,
+                        SkillLevel = 10,
                         Cost = 0,
                     };
                     spell2.Warm(this);
@@ -1101,15 +1109,16 @@
         public override int GetDeathSound() => 306;
         public override int GetWarmSound() => 140;
     
-        public override void OnSpawn()
+        protected override void OnLoad()
         {
-            base.OnSpawn();
             if (_brain != null)
                 return;
             if (RightHand is ProjectileWeapon)
                 _brain = new RangedAI(this);
             else
                 _brain = new CombatAI(this);
+
+            base.OnLoad();
         }
     
         public override void Serialize(BinaryWriter writer)
@@ -80648,6 +80657,7 @@
           <secretId>158</secretId>
           <destroyedId>81</destroyedId>
           <isSecret>true</isSecret>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="40" y="0">
@@ -99027,10 +99037,10 @@
     var centaur = new HeartDefender()
     {
         Name = "Corrupted Defender",
-        MaxHealth = 2250, Health = 2250,
+        MaxHealth = 500, Health = 500,
         BaseDodge = 25,
         BasePenetration = ShieldPenetration.Medium,     
-        Experience = 52500,
+        Experience = 24000,
         HideDetection = 32,
     };
     
@@ -99043,7 +99053,7 @@
         
     centaur.Wield(new WarHammer());
     
-    centaur.AddGold(2500);
+    centaur.AddGold(500);
     centaur.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 60.0), 
@@ -99074,12 +99084,12 @@
         <block><![CDATA[
     var dryad = new HeartDryad()
     {
-        Name = "Corrupted Dryad",
+        Name = "Tainted Dryad",
         MaxHealth = 230, Health = 230,
         MaxMana = 14, Mana = 14,
         BaseDodge = 18,
         BasePenetration = ShieldPenetration.Medium,     
-        Experience = 18300,
+        Experience = 23000,
         HideDetection = 32,
     };
     
@@ -99100,7 +99110,7 @@
     dryad.Wield(new GiltDagger());
     dryad.Wield(new IronRod());
     
-    dryad.AddGold(1500);
+    dryad.AddGold(500);
     dryad.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 60.0), 
@@ -99135,7 +99145,7 @@
         MaxHealth = 260, Health = 260,
         BaseDodge = 18,
 
-        Experience = 17400,
+        Experience = 22000,
     };
     
     troll.Attacks = new CreatureAttackCollection
@@ -99146,7 +99156,7 @@
     troll.Wield(new BattleAxe());
     troll.Equip(new ChainmailArmor());    
 
-    troll.AddGold(2500);
+    troll.AddGold(500);
     troll.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 30.0), 
@@ -99179,7 +99189,7 @@
     {
         Name = "Azzeth",
         MaxHealth = 2530, Health = 2530,
-        MaxMana = 14, Mana = 14,
+        MaxMana = 7, Mana = 7,
         BaseDodge = 18,
         BasePenetration = ShieldPenetration.Medium,     
         Experience = 55300,
@@ -99200,9 +99210,14 @@
             skillLevel: 15, cost: 7)
     };
     
+    necro.Home = new RectangleBounds()
+    {
+        new Rectangle2D(42, 34, 43, 36, 236)
+    };
+    
     necro.Wield(new BlackStaff());
     
-    necro.AddGold(1500);
+    necro.AddGold(300);
     necro.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 60.0), 
@@ -99215,9 +99230,17 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+
+    var tile = creature.Segment.FindTile(43, 22, 236);
+    
+    if (tile != null && tile.ContainsComponent<Obstruction>())
+    {
+        var component = tile.GetComponent<ObstructionComponent>();
+        tile.Components.Remove(component);
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -99254,7 +99277,7 @@
     dryad.Wield(new HeavyCrossbow());
     dryad.Equip(new ChainmailArmor());    
 
-    dryad.AddGold(2500);
+    dryad.AddGold(500);
     dryad.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 30.0), 
@@ -99287,6 +99310,7 @@
     {
         MaxHealth = 260, Health = 260,
         BaseDodge = 18,
+        Movement = 0,
 
         Experience = 50,
     };
@@ -99321,7 +99345,7 @@
     {
         Name = "Sogmallon",
         MaxHealth = 2530, Health = 2530,
-        MaxMana = 14, Mana = 14,
+        MaxMana = 7, Mana = 7,
         BaseDodge = 18,
         BasePenetration = ShieldPenetration.Medium,     
         Experience = 55300,
@@ -99344,6 +99368,11 @@
     
     necro.Wield(new BlackStaff());
     
+    necro.Home = new RectangleBounds()
+    {
+        new Rectangle2D(23, 16, 25, 18, 236)
+    };
+    
     necro.AddGold(1500);
     necro.AddLoot(
         new LootPack(
@@ -99357,9 +99386,16 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    var tile = creature.Segment.FindTile(35, 22, 236);
+    
+    if (tile != null && tile.ContainsComponent<Obstruction>())
+    {
+        var component = tile.GetComponent<ObstructionComponent>();
+        tile.Components.Remove(component);
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -99378,7 +99414,7 @@
     {
         Name = "Vilvoron",
         MaxHealth = 2530, Health = 2530,
-        MaxMana = 14, Mana = 14,
+        MaxMana = 7, Mana = 7,
         BaseDodge = 18,
         BasePenetration = ShieldPenetration.Medium,     
         Experience = 55300,
@@ -99399,6 +99435,11 @@
             skillLevel: 15, cost: 7)
     };
     
+    necro.Home = new RectangleBounds()
+    {
+        new Rectangle2D(21, 34, 23, 36, 236)
+    };
+    
     necro.Wield(new BlackStaff());
     
     necro.AddGold(1500);
@@ -99414,9 +99455,16 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    var tile = creature.Segment.FindTile(39, 22, 236);
+    
+    if (tile != null && tile.ContainsComponent<Obstruction>())
+    {
+        var component = tile.GetComponent<ObstructionComponent>();
+        tile.Components.Remove(component);
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -100496,7 +100544,7 @@
     </spawn>
     <spawn type="LocationSpawner" name="heartNecro1">
       <minimumDelay>900</minimumDelay>
-      <maximumDelay>1200</maximumDelay>
+      <maximumDelay>1500</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
@@ -100523,7 +100571,7 @@
     </spawn>
     <spawn type="LocationSpawner" name="heartNecro2">
       <minimumDelay>900</minimumDelay>
-      <maximumDelay>1200</maximumDelay>
+      <maximumDelay>1500</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
@@ -100550,7 +100598,7 @@
     </spawn>
     <spawn type="LocationSpawner" name="heartNecro3">
       <minimumDelay>900</minimumDelay>
-      <maximumDelay>1200</maximumDelay>
+      <maximumDelay>1500</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
@@ -101099,8 +101147,8 @@
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="GroveHeart1">
-      <minimumDelay>780</minimumDelay>
-      <maximumDelay>1080</maximumDelay>
+      <minimumDelay>1080</minimumDelay>
+      <maximumDelay>1320</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -101115,17 +101163,17 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="heartCorrDef" size="1" minimum="5" maximum="5" />
-      <entry entity="heartTroll" size="4" minimum="8" maximum="8" />
-      <entry entity="heartCorrDry" size="1" minimum="2" maximum="2" />
+      <entry entity="heartCorrDef" size="2" minimum="3" maximum="3" />
+      <entry entity="heartTroll" size="4" minimum="5" maximum="5" />
+      <entry entity="heartCorrDry" size="1" minimum="1" maximum="1" />
       <bounds region="236">
         <inclusion left="40" top="1" right="41" bottom="16" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="GroveHeart2">
-      <minimumDelay>780</minimumDelay>
-      <maximumDelay>1080</maximumDelay>
+      <minimumDelay>1080</minimumDelay>
+      <maximumDelay>1320</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -101140,9 +101188,9 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="heartTroll" size="4" minimum="9" maximum="9" />
-      <entry entity="heartCorrDef" size="1" minimum="4" maximum="4" />
-      <entry entity="heartCorrDry" size="1" minimum="2" maximum="2" />
+      <entry entity="heartTroll" size="4" minimum="5" maximum="5" />
+      <entry entity="heartCorrDef" size="2" minimum="3" maximum="3" />
+      <entry entity="heartCorrDry" size="1" minimum="1" maximum="1" />
       <bounds region="236">
         <inclusion left="23" top="16" right="31" bottom="20" />
         <inclusion left="32" top="16" right="39" bottom="16" />
@@ -101150,8 +101198,8 @@
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="GroveHeart3">
-      <minimumDelay>780</minimumDelay>
-      <maximumDelay>1080</maximumDelay>
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -101166,19 +101214,20 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="heartCorrDef" size="2" minimum="8" maximum="8" />
-      <entry entity="heartCorrDry" size="1" minimum="6" maximum="6" />
-      <entry entity="heartTroll" size="4" minimum="20" maximum="20" />
+      <entry entity="heartCorrDef" size="2" minimum="4" maximum="4" />
+      <entry entity="heartCorrDry" size="1" minimum="4" maximum="4" />
+      <entry entity="heartTroll" size="4" minimum="16" maximum="16" />
       <bounds region="236">
-        <inclusion left="23" top="22" right="29" bottom="48" />
+        <inclusion left="23" top="22" right="29" bottom="44" />
         <inclusion left="21" top="24" right="22" bottom="36" />
         <inclusion left="30" top="22" right="31" bottom="28" />
+        <inclusion left="30" top="29" right="30" bottom="39" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="GroveHeart4">
-      <minimumDelay>780</minimumDelay>
-      <maximumDelay>1080</maximumDelay>
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -101193,13 +101242,15 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="heartCorrDef" size="1" minimum="7" maximum="7" />
-      <entry entity="heartCorrDry" size="1" minimum="9" maximum="9" />
-      <entry entity="heartTroll" size="4" minimum="15" maximum="15" />
+      <entry entity="heartCorrDef" size="2" minimum="5" maximum="5" />
+      <entry entity="heartCorrDry" size="1" minimum="6" maximum="6" />
+      <entry entity="heartTroll" size="4" minimum="12" maximum="12" />
       <bounds region="236">
         <inclusion left="34" top="23" right="44" bottom="27" />
         <inclusion left="33" top="28" right="43" bottom="36" />
-        <inclusion left="32" top="38" right="40" bottom="48" />
+        <inclusion left="32" top="38" right="40" bottom="44" />
+        <inclusion left="33" top="37" right="41" bottom="37" />
+        <inclusion left="41" top="38" right="41" bottom="43" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
