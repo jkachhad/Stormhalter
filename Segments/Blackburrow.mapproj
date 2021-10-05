@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Blackburrow" version="0.77.0.0">
+<segment name="Blackburrow" version="0.79.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -74,8 +74,80 @@
         item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
     }
     
-      
-    
+    public class Destiny : VendorEntity
+    {
+        public Destiny()
+        {
+            Name = "Destiny";
+            Body = 48;
+
+            Health = MaxHealth = 50;
+            BaseDodge = 10;
+
+            Experience = 50;
+
+            Movement = 0;
+        }
+
+        public Destiny(Serial serial) : base(serial)
+        {
+        }
+        
+        public override void HandleOrder(OrderEventArgs args)
+        {
+            base.HandleOrder(args);
+
+            if (args.Handled)
+                return;
+            
+            var source = args.Source;
+            var order = args.Order;
+            
+            /* example: craft broadsword */
+            if (_craft.TryGetMatch(order, out var craftMatch) && craftMatch.Groups[1].Value.Matches("potion", true))
+            {
+                args.Handled = true;
+                
+                if (AtCounter(source, out var counter))
+                {
+                    var items = Segment.GetItemsAt(Location).ToList();
+
+                    var glower = items.OfType<StrongStrengthRing>();
+                    var ruby = items.OfType<StarRuby>();
+
+                    if (glower.Any() && ruby.Any())
+                    {
+                        if (ConsumeFromLocation<StrongStrengthRing>(counter, 1) && ConsumeFromLocation<StarRuby>(counter, 1))
+                        {
+                            new ManaPotion().Move(counter, true, Segment);
+
+                            SayTo(source, 6300407); /* Here is a magic potion. */
+                        }
+                    }
+                    else
+                    {
+                        SayTo(source, 6300408); /* Bring me a Strong Strength ring and a Glower. */
+                    }
+                }
+                else
+                {
+                    if (_counters.Any())
+                        SayTo(source, 6300236); /* Please step up to a counter. */
+                    else
+                        SayTo(source, 6300237); /* Please stand closer to me. */
+                }
+                
+                return;
+            }
+        }
+    }      
+
+
+
+
+
+
+
 ]]></block>
     <block><![CDATA[]]></block>
   </script>
@@ -3895,7 +3967,6 @@
           <destinationY>-21</destinationY>
           <destinationRegion>1</destinationRegion>
           <teleporterId>124</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="39" y="-26">
@@ -4407,6 +4478,7 @@
         </component>
         <component type="CounterComponent">
           <counter>267</counter>
+          <direction>2</direction>
         </component>
       </tile>
       <tile x="4" y="-24">
@@ -5039,6 +5111,7 @@
         </component>
         <component type="CounterComponent">
           <counter>270</counter>
+          <direction>2</direction>
         </component>
       </tile>
       <tile x="3" y="-22">
@@ -5609,7 +5682,6 @@
           <destinationY>-26</destinationY>
           <destinationRegion>1</destinationRegion>
           <teleporterId>129</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="56" y="-21">
@@ -6925,6 +6997,9 @@
           <destroyedId>83</destroyedId>
           <isSecret>true</isSecret>
         </component>
+        <component type="FloorComponent">
+          <ground>3</ground>
+        </component>
       </tile>
       <tile x="15" y="-15">
         <component type="HiddenTeleporterComponent">
@@ -6935,6 +7010,9 @@
           <moonphases select="all" />
           <professions>Thief</professions>
           <alignments>Neutral</alignments>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="16" y="-15">
@@ -7774,9 +7852,11 @@
         <component type="FloorComponent">
           <ground>13</ground>
         </component>
-        <component type="ObstructionComponent">
-          <obstruction>266</obstruction>
-          <blockVision>true</blockVision>
+        <component type="StaircaseComponent">
+          <destinationX>-13</destinationX>
+          <destinationY>15</destinationY>
+          <destinationRegion>4</destinationRegion>
+          <teleporterId>181</teleporterId>
         </component>
       </tile>
       <tile x="21" y="-11">
@@ -8002,27 +8082,15 @@
         <component type="FloorComponent">
           <ground>13</ground>
         </component>
-        <component type="ObstructionComponent">
-          <obstruction>266</obstruction>
-          <blockVision>true</blockVision>
-        </component>
       </tile>
       <tile x="19" y="-10">
         <component type="FloorComponent">
           <ground>13</ground>
         </component>
-        <component type="ObstructionComponent">
-          <obstruction>266</obstruction>
-          <blockVision>true</blockVision>
-        </component>
       </tile>
       <tile x="20" y="-10">
         <component type="FloorComponent">
           <ground>13</ground>
-        </component>
-        <component type="ObstructionComponent">
-          <obstruction>266</obstruction>
-          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="21" y="-10">
@@ -8570,6 +8638,7 @@
       <tile x="30" y="-8">
         <component type="CounterComponent">
           <counter>268</counter>
+          <direction>2</direction>
         </component>
         <component type="FloorComponent">
           <ground>4</ground>
@@ -8784,6 +8853,7 @@
       <tile x="30" y="-7">
         <component type="CounterComponent">
           <counter>268</counter>
+          <direction>2</direction>
         </component>
         <component type="FloorComponent">
           <ground>4</ground>
@@ -10526,7 +10596,6 @@
           <destinationY>2</destinationY>
           <destinationRegion>2</destinationRegion>
           <teleporterId>124</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="35" y="0">
@@ -10768,7 +10837,6 @@
           <destinationY>3</destinationY>
           <destinationRegion>2</destinationRegion>
           <teleporterId>124</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="35" y="1">
@@ -11012,7 +11080,6 @@
           <destinationY>4</destinationY>
           <destinationRegion>2</destinationRegion>
           <teleporterId>124</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="35" y="2">
@@ -12313,6 +12380,7 @@
         </component>
         <component type="CounterComponent">
           <counter>268</counter>
+          <direction>2</direction>
         </component>
       </tile>
       <tile x="28" y="7">
@@ -12326,6 +12394,7 @@
         </component>
         <component type="CounterComponent">
           <counter>268</counter>
+          <direction>2</direction>
         </component>
       </tile>
       <tile x="30" y="7">
@@ -12537,6 +12606,7 @@
         </component>
         <component type="CounterComponent">
           <counter>268</counter>
+          <direction>2</direction>
         </component>
       </tile>
       <tile x="28" y="8">
@@ -12550,6 +12620,7 @@
         </component>
         <component type="CounterComponent">
           <counter>268</counter>
+          <direction>2</direction>
         </component>
       </tile>
       <tile x="30" y="8">
@@ -12781,6 +12852,7 @@
         </component>
         <component type="CounterComponent">
           <counter>268</counter>
+          <direction>2</direction>
         </component>
       </tile>
       <tile x="28" y="9">
@@ -12794,6 +12866,7 @@
         </component>
         <component type="CounterComponent">
           <counter>268</counter>
+          <direction>2</direction>
         </component>
       </tile>
       <tile x="30" y="9">
@@ -13024,6 +13097,7 @@
         </component>
         <component type="CounterComponent">
           <counter>268</counter>
+          <direction>2</direction>
         </component>
       </tile>
       <tile x="28" y="10">
@@ -13037,6 +13111,7 @@
         </component>
         <component type="CounterComponent">
           <counter>268</counter>
+          <direction>2</direction>
         </component>
       </tile>
       <tile x="30" y="10">
@@ -14868,7 +14943,6 @@
           <destinationX>34</destinationX>
           <destinationRegion>1</destinationRegion>
           <teleporterId>128</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="-2" y="2">
@@ -15032,7 +15106,6 @@
           <destinationY>1</destinationY>
           <destinationRegion>1</destinationRegion>
           <teleporterId>128</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="-2" y="3">
@@ -15196,7 +15269,6 @@
           <destinationY>2</destinationY>
           <destinationRegion>1</destinationRegion>
           <teleporterId>128</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="-2" y="4">
@@ -15915,6 +15987,7 @@
           <wall>334</wall>
           <destroyed>343</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="FloorComponent">
           <ground>15</ground>
@@ -16006,6 +16079,7 @@
           <wall>334</wall>
           <destroyed>343</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="14" y="9">
@@ -16094,6 +16168,7 @@
           <wall>334</wall>
           <destroyed>343</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="14" y="10">
@@ -16182,6 +16257,7 @@
           <wall>334</wall>
           <destroyed>343</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="14" y="11">
@@ -16193,7 +16269,6 @@
           <destinationY>18</destinationY>
           <destinationRegion>3</destinationRegion>
           <teleporterId>125</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="15" y="11">
@@ -20611,7 +20686,6 @@
           <destinationY>8</destinationY>
           <destinationRegion>4</destinationRegion>
           <teleporterId>124</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="3" y="8">
@@ -20749,7 +20823,6 @@
           <destinationY>9</destinationY>
           <destinationRegion>4</destinationRegion>
           <teleporterId>124</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="3" y="9">
@@ -20905,7 +20978,6 @@
           <destinationY>10</destinationY>
           <destinationRegion>4</destinationRegion>
           <teleporterId>124</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="3" y="10">
@@ -21489,6 +21561,7 @@
           <wall>413</wall>
           <destroyed>415</destroyed>
           <ruins>398</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="5" y="14">
@@ -21915,7 +21988,6 @@
           <destinationY>11</destinationY>
           <destinationRegion>2</destinationRegion>
           <teleporterId>129</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="10" y="18">
@@ -22310,7 +22382,6 @@
           <destinationY>4</destinationY>
           <destinationRegion>4</destinationRegion>
           <teleporterId>129</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="-6" y="-12">
@@ -22464,40 +22535,22 @@
         </component>
       </tile>
       <tile x="-14" y="-9">
-        <component type="WallComponent">
-          <wall>333</wall>
-          <destroyed>342</destroyed>
-          <ruins>44</ruins>
-        </component>
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
       </tile>
       <tile x="-13" y="-9">
-        <component type="WallComponent">
-          <wall>333</wall>
-          <destroyed>342</destroyed>
-          <ruins>44</ruins>
-        </component>
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
       </tile>
       <tile x="-12" y="-9">
-        <component type="WallComponent">
-          <wall>333</wall>
-          <destroyed>342</destroyed>
-          <ruins>44</ruins>
-        </component>
         <component type="DoorComponent">
           <openId>75</openId>
           <closedId>63</closedId>
           <secretId>334</secretId>
           <destroyedId>81</destroyedId>
           <isSecret>true</isSecret>
-        </component>
-        <component type="FloorComponent">
-          <ground>12</ground>
         </component>
         <component type="HiddenTeleporterComponent">
           <destinationX>-11</destinationX>
@@ -22508,6 +22561,9 @@
           <professions>Fighter,Martial Artist,Thaumaturge,Wizard,Knight</professions>
           <alignments select="all" />
           <allowNPC>true</allowNPC>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="-11" y="-9">
@@ -22525,10 +22581,42 @@
           <ruins>44</ruins>
         </component>
       </tile>
+      <tile x="-15" y="-8">
+        <component type="WallComponent">
+          <wall>334</wall>
+          <destroyed>343</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="-14" y="-8">
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>342</destroyed>
+          <ruins>44</ruins>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
+        </component>
+      </tile>
+      <tile x="-13" y="-8">
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>342</destroyed>
+          <ruins>44</ruins>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
+        </component>
+      </tile>
       <tile x="-12" y="-8">
         <component type="WallComponent">
           <wall>334</wall>
           <destroyed>343</destroyed>
+          <ruins>44</ruins>
+        </component>
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>342</destroyed>
           <ruins>44</ruins>
         </component>
       </tile>
@@ -22597,7 +22685,6 @@
           <destinationY>10</destinationY>
           <destinationRegion>4</destinationRegion>
           <teleporterId>129</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="-9" y="-6">
@@ -23715,12 +23802,17 @@
           <destinationY>-12</destinationY>
           <destinationRegion>4</destinationRegion>
           <teleporterId>125</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="-4" y="4">
         <component type="FloorComponent">
           <ground>183</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>371</wall>
+          <destroyed>0</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-3" y="4">
@@ -24439,6 +24531,7 @@
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-5" y="6">
@@ -24449,6 +24542,7 @@
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-4" y="6">
@@ -24459,6 +24553,7 @@
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-3" y="6">
@@ -24469,6 +24564,7 @@
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-2" y="6">
@@ -24830,6 +24926,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-4" y="7">
@@ -25116,7 +25213,6 @@
           <destinationY>8</destinationY>
           <destinationRegion>3</destinationRegion>
           <teleporterId>128</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="-26" y="8">
@@ -25287,6 +25383,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-4" y="8">
@@ -25570,7 +25667,6 @@
           <destinationY>9</destinationY>
           <destinationRegion>3</destinationRegion>
           <teleporterId>128</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="-26" y="9">
@@ -25727,6 +25823,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-4" y="9">
@@ -26008,7 +26105,6 @@
           <destinationY>10</destinationY>
           <destinationRegion>3</destinationRegion>
           <teleporterId>128</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="-26" y="10">
@@ -26102,7 +26198,6 @@
           <destinationY>-6</destinationY>
           <destinationRegion>4</destinationRegion>
           <teleporterId>124</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="-9" y="10">
@@ -26139,6 +26234,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-4" y="10">
@@ -26623,11 +26719,13 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-4" y="11">
@@ -27013,6 +27111,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-4" y="12">
@@ -27427,6 +27526,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-4" y="13">
@@ -27784,6 +27884,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-4" y="14">
@@ -30318,9 +30419,9 @@
           <ruins>170</ruins>
         </component>
         <component type="RopeComponent">
-          <destinationX>5</destinationX>
+          <destinationX>10</destinationX>
           <destinationY>16</destinationY>
-          <destinationRegion>4</destinationRegion>
+          <destinationRegion>3</destinationRegion>
           <teleporterId>256</teleporterId>
         </component>
       </tile>
@@ -30832,7 +30933,7 @@
         new LootPackEntry(true, SurfaceGems,       15,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33), 
         new LootPackEntry(true, Treasure,    0.63),
-        new LootPackEntry(true, Miniboss, 0.63)
+        new LootPackEntry(true, Miniboss, 5)
         ));
        
    return fippy;
@@ -31013,7 +31114,7 @@ if (spokeRecently(source))
                 
         Experience = 10000,
                 
-        Movement = 3,
+        Movement = 2,
         BasePenetration = ShieldPenetration.Medium,
     };
     
@@ -31133,7 +31234,7 @@ if (spokeRecently(source))
     {
         Name = "Prisoner",        
         Body = 10, IsFemale = true,
-        Alignment = Alignment.Lawful,
+        Alignment = Alignment.Chaotic,
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
         
@@ -31286,17 +31387,17 @@ if (spokeRecently(source))
     fippy.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(22,      20, 60,      "The Captain Barks and gnashes you with his fangs",
+            new CreatureAttack(20,      20, 60,      "The Captain Barks and gnashes you with his fangs",
                                                         new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(25,      50, 80,     "The Captain slashes you with his razor sharp claws.",
+            new CreatureAttack(23,      50, 80,     "The Captain slashes you with his razor sharp claws.",
                                                         new AttackProneComponent(25), 
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(24,      60, 90,     "The Captain impales you with his claws.",
+            new CreatureAttack(22,      60, 90,     "The Captain impales you with his claws.",
                                                         new AttackProneComponent(100), 
                                                         new AttackStunComponent(15)),               20
         },
@@ -31313,9 +31414,9 @@ if (spokeRecently(source))
    fippy.Equip(new ChainmailArmor());     
    fippy.AddGold(4000);
    fippy.AddLoot(new LootPack(
-        new LootPackEntry(true, Levelonegems,       100,     gemsPriceMutator), 
-        new LootPackEntry(true, Levelonegems,       100,     gemsPriceMutator), 
-        new LootPackEntry(true, Levelonegems,       100,     gemsPriceMutator), 
+        new LootPackEntry(true, Leveltwogems,       100,     gemsPriceMutator), 
+        new LootPackEntry(true, Leveltwogems,       100,     gemsPriceMutator), 
+        new LootPackEntry(true, Leveltwogems,       100,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33), 
         new LootPackEntry(true, Treasure,    100),
         new LootPackEntry(true, Miniboss, 25)
@@ -31418,14 +31519,13 @@ if (spokeRecently(source))
     var fippy = new ElderTroll()
     {
         Name = "Gnoll Guard",
-        MaxHealth = 1500, Health = 1500,
-        BaseDodge = 28,
+        MaxHealth = 1200, Health = 1200,
+        BaseDodge = 20,
         HideDetection = 24,
         Experience = 32000,
+        Movement = 2,
         
-        VisibilityDistance = 3,
-       
-        CanJumpkick = true,
+        VisibilityDistance = 3
         CanStrikeCritically = false,
         
         BasePenetration = ShieldPenetration.Medium,
@@ -31579,7 +31679,6 @@ if (spokeRecently(source))
         Immunity = CreatureImmunity.Poison,
         VisibilityDistance = 0,
         Movement = 1,
-        CanJumpkick = true,
         Experience = 100000,
     };
     
@@ -31589,10 +31688,10 @@ if (spokeRecently(source))
     crocodile.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(26,     20, 120,   "The crocodile snaps his massive jaws shut upon you."), 60 
+            new CreatureAttack(20,     20, 120,   "The crocodile snaps his massive jaws shut upon you."), 60 
         },
         { 
-            new CreatureAttack(30,     30, 90,  "The crocodile hits you with its tail."),               40 
+            new CreatureAttack(25,     30, 90,  "The crocodile hits you with its tail."),               40 
         },
     };
     
@@ -31638,6 +31737,7 @@ if (spokeRecently(source))
         MaxHealth = 120, Health = 120,
         BaseDodge = 13,
         Experience = 7200,
+        Brain = new CasterAI(),
         CanSwim = false,
         BasePenetration = ShieldPenetration.Light,
         MaxMana = 40, Mana = 40,
@@ -31781,7 +31881,7 @@ if (spokeRecently(source))
 	skeleton.AddStatus(new NightVisionStatus(skeleton));
     skeleton.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(12)
+        new CreatureBasicAttack(15)
     };
     
     skeleton.AddStatus(new NightVisionStatus(skeleton));
@@ -31903,6 +32003,7 @@ return skeleton;
     
     fippy.AddStatus(new NightVisionStatus(fippy));
     fippy.AddStatus(new BreatheWaterStatus(fippy));
+    fippy.AddImmunity(typeof(LightningBoltSpell));
     
     fippy.CombatantChangeInterval = TimeSpan.FromSeconds(4.0);
     
@@ -31936,7 +32037,7 @@ return skeleton;
    fippy.Equip(new ChainmailArmor());     
    fippy.AddGold(4000);
    fippy.AddLoot(new LootPack(
-        new LootPackEntry(true, Levelthreegems,       30,     gemsPriceMutator), 
+        new LootPackEntry(true, Levelthreegems,       40,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33), 
         new LootPackEntry(true, Treasure,   5),
         new LootPackEntry(true, StatPotion, 5)
@@ -32063,11 +32164,12 @@ if (spokeRecently(source))
     CanJumpkick = true,
     CanStrikeCritically = true,
     
-    Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-    CreatureImmunity.Projectile | CreatureImmunity.Piercing | CreatureImmunity.Web | CreatureImmunity.Magic,
+    Immunity = CreatureImmunity.Web | CreatureImmunity.Magic,
    
-    Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+    Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
 };
+
+giant.AddWeakness(typeof(VenomSpell));
 
 giant.AddStatus(new NightVisionStatus(giant));
 giant.Equip(new LeatherArmor());
@@ -32108,7 +32210,7 @@ giant.AddLoot(new LootPack(
     new LootPackEntry(true, Levelthreegems, 100, gemsPriceMutator),
     new LootPackEntry(true, StatPotion, 100),
     new LootPackEntry(true, Miniboss, 50),
-    new LootPackEntry(true, (from, container) => new DragonSkull(), 25)
+    new LootPackEntry(true, (from, container) => new GriffinSkull(), 25)
 ));
 
 return giant;    
@@ -32164,7 +32266,7 @@ if (spokeRecently(source))
     
     stalker.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(25, 20, 50)
+        new CreatureBasicAttack(20, 20, 50)
     };
     
     stalker.Spells = new CreatureSpellCollection(100)
@@ -32271,6 +32373,7 @@ if (spokeRecently(source))
 	   MaxHealth = 150, Health = 150,
 	   BaseDodge = 18,
 	   BasePenetration = ShieldPenetration.Medium,
+	   HideDetection = 36,
 	   Experience = 10000,
 	   CanSwim = false,
 	   Immunity = CreatureImmunity.Poison,
@@ -32326,9 +32429,10 @@ return skeleton;
     Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
     Experience = 40000,
     VisibilityDistance = 1,
-    CanCharge = true,
+    CanCharge = false,
     Movement = 2,
 };
+
 
 snake.Attacks = new CreatureAttackCollection()
 {
@@ -32345,6 +32449,7 @@ snake.Attacks = new CreatureAttackCollection()
     },
 };
 
+snake.AddStatus(new NightVisionStatus(snake));
 snake.AddStatus(new BreatheWaterStatus(snake));
 snake.Blocks = new CreatureBlockCollection
 {
@@ -32360,7 +32465,7 @@ snake.Blocks = new CreatureBlockCollection
 
 snake.AddGold(2500);
 snake.AddLoot(new LootPack(
-    new LootPackEntry(true, Levelthreegems, 10, gemsPriceMutator),
+    new LootPackEntry(true, Levelthreegems, 25, gemsPriceMutator),
     new LootPackEntry(true, GenericBottles, 33)
 ));
 
@@ -32396,6 +32501,7 @@ return snake;
     Mana = 40, MaxMana = 40,
     BaseDodge = 16,
     CanSwim = true,
+    Brain = new CasterAI(),
     FireProtection = 100,
     IceProtection = 100,
     Immunity = CreatureImmunity.Poison,
@@ -32410,13 +32516,12 @@ elemental.Attacks = new CreatureAttackCollection
     new CreatureBasicAttack(15),
 };
 
-elemental.Spells = new CreatureSpellCollection(80.0)
-{
-
-    new CreatureSpell<PoisonCloudSpell>(
-        skillLevel: 5, cost: 25,
-        mantra: SpellHelper.GenerateMantra(), instantCast: true)
-};
+elemental.Spells = new CreatureSpellCollection()
+    {
+       { new CreatureSpell<PoisonCloudSpell>(
+            skillLevel: 11, cost: 16, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),   100 },
+    };
 
 elemental.Wield(new GiltDagger());
 elemental.Equip(new DrakeScaleArmor());
@@ -32457,11 +32562,12 @@ return elemental;
 	var dragon = new Dragon()
 {
     Name = "Undead Dragon",
+    Alignment = Alignment.Chaotic,
     Body = 135,
     MaxHealth = 15000, Health = 15000,
     BaseDodge = 31,
     BasePenetration = ShieldPenetration.VeryHeavy,
-    HideDetection = 35,
+    HideDetection = 37,
     Experience = 200000,
     CanStrikeCritically = false,
     CanFly = true,
@@ -32509,13 +32615,13 @@ dragon.Blocks = new CreatureBlockCollection
 dragon.Spells = new CreatureSpellCollection(20.0)
 {
     {
-        new CreatureSpell<LightningStormSpell>(
-        skillLevel: 3), 5, TimeSpan.Zero
+        new CreatureSpell<DragonBreathLightningSpell>(
+        skillLevel: 3), 20, TimeSpan.Zero
     },
     
     {
         new CreatureSpell<PoisonCloudSpell>(
-        skillLevel: 3), 5, TimeSpan.Zero
+        skillLevel: 3), 20, TimeSpan.Zero
     },
     
     {
@@ -32574,7 +32680,7 @@ return dragon;
     Name = "Castor",
     MaxHealth = 7500, Health = 7500,
     BaseDodge = 30,
-    HideDetection = 33,
+    HideDetection = 36,
     BasePenetration = ShieldPenetration.VeryHeavy,
     CanCharge = true,
     CanSwim = true,
@@ -32616,11 +32722,11 @@ ogre.Attacks = new CreatureAttackCollection()
 };
 
 
-ogre.Spells = new CreatureSpellCollection(20.0)
-{
-    new CreatureSpell<FireStormSpell>(
-        skillLevel: 19),
-};
+ogre.Spells = new CreatureSpellCollection(100)
+    {
+       { new CreatureSpell<FireStormSpell>(
+            skillLevel: 19), 100, TimeSpan.FromSeconds(6.0) }
+    };
 
 
 ogre.Blocks = new CreatureBlockCollection
@@ -32629,8 +32735,8 @@ ogre.Blocks = new CreatureBlockCollection
     new CreatureBlock(4, "his halberd"),
     new CreatureBlock(3, "his arm"),
 };
-	
-ogre.Equip(new ChainmailArmor());
+
+ogre.Equip(new DrakeScaleArmor());
 ogre.Wield(new Halberd());
 
 ogre.AddLoot(new LootPack(
@@ -32671,7 +32777,7 @@ return ogre;
     Name = "Pollux",
     MaxHealth = 7500, Health = 7500,
     BaseDodge = 30,
-    HideDetection = 33,
+    HideDetection = 36,
     BasePenetration = ShieldPenetration.VeryHeavy,
     CanCharge = true,
     CanSwim = true,
@@ -32699,11 +32805,11 @@ ogre.Attacks = new CreatureAttackCollection()
 };
 
 
-ogre.Spells = new CreatureSpellCollection(20.0)
-{
-    new CreatureSpell<IceStormSpell>(
-        skillLevel: 19),
-};
+ogre.Spells = new CreatureSpellCollection(100)
+    {
+       { new CreatureSpell<IceStormSpell>(
+            skillLevel: 19), 100, TimeSpan.FromSeconds(6.0) }
+    };
 
 
 ogre.Blocks = new CreatureBlockCollection
@@ -32713,7 +32819,7 @@ ogre.Blocks = new CreatureBlockCollection
     new CreatureBlock(3, "his arm"),
 };
 	
-ogre.Equip(new ChainmailArmor());
+ogre.Equip(new DrakeScaleArmor());
 ogre.Wield(new FineCrossbow());
 
 ogre.AddLoot(new LootPack(
@@ -32747,7 +32853,8 @@ return ogre;
         <block><![CDATA[
 	    var trainer = new ThiefTrainer()
     {
-        Name = "Vincenzo",
+        Name = "Vincenza",
+        Body = (female ? 10 : 9), IsFemale = female,
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
 
@@ -32811,6 +32918,112 @@ if (spokeRecently(source))
 
     source.Say($"Checkered ground takes you to town, the burned stone takes you back to your friends."); 
 
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="LeveloneWorg">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	 var worg = new BlackWolf()
+    {
+        Name = "Worg Puppy",
+        MaxHealth = 750, Health = 750,
+        BaseDodge = 19,
+    
+        Alignment = Alignment.Chaotic,
+        HideDetection = 31,
+        Experience = 42000,
+        CanCharge = true,
+        
+        BasePenetration = ShieldPenetration.Heavy,
+    
+    };
+    
+    worg.AddStatus(new NightVisionStatus(worg));
+    
+    worg.AddImmunity(typeof(Lightning));
+    
+    worg.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
+    
+    worg.Attacks = new CreatureAttackCollection()
+    {
+        {
+            new CreatureAttack(15,      45, 60,      "The worg slashes you with its claws.",
+                                                        new AttackProneComponent(15), 
+                                                        new AttackStunComponent(5)),                40
+        },
+        {
+            new CreatureAttack(16,      50, 65,     "The worg whips you with its tail.",
+                                                        new AttackProneComponent(25), 
+                                                        new AttackStunComponent(10)),               40
+        },
+        {
+            new CreatureAttack(17,      60, 80,     "The worg gnashes you with its fangs.",
+                                                        new AttackProneComponent(35), 
+                                                        new AttackStunComponent(15)),               20
+        },
+    };
+    
+    worg.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "tuft of fur"),
+        new CreatureBlock(4, "a claw"),
+        new CreatureBlock(3, "tail"),
+    };
+        
+    worg.Spells = new CreatureSpellCollection(15.0)
+    {
+        new CreatureSpell<LightningBoltSpell>(
+            skillLevel: 7),
+    };
+    
+    worg.AddGold(2000);
+    worg.AddLoot(new LootPack(
+        new LootPackEntry(true, Leveltwogems,       75,     gemsPriceMutator),
+        new LootPackEntry(true, StatPotion, 10)
+    ));
+    
+    return worg;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="Destiny">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	return new Destiny();
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+if (spokeRecently(source))
+        return;
+
+    source.Say($"Bring me a Strong Strength ring and a Star Ruby and I will exchange it for something more useful!"); 
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -32943,7 +33156,7 @@ if (spokeRecently(source))
         foreach (var skill in Skill.Weapons)
             Brucette.SetTraining(skill, 0, 4);
 
-        Brucette.SetTraining(Skill.Hand, 8, 16);
+        Brucette.SetTraining(Skill.Hand, 8, 19);
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -32971,7 +33184,7 @@ if (spokeRecently(source))
     if (spawn is TrainerEntity wick)
     {
         foreach (var skill in Skill.Weapons)
-            wick.SetTraining(skill, 8, 16);
+            wick.SetTraining(skill, 8, 19);
 
         wick.SetTraining(Skill.Hand, 0, 4);
     }
@@ -33371,7 +33584,7 @@ spawn.Name = "Neo";
         <block><![CDATA[]]></block>
       </script>
       <entry entity="TownWeaponTrainer" size="1" minimum="1" maximum="1" />
-      <location x="38" y="-26" region="1" />
+      <location x="38" y="-25" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="DungeonBalm">
       <minimumDelay>0</minimumDelay>
@@ -33393,6 +33606,27 @@ spawn.Name = "Neo";
       </script>
       <entry entity="DungeonBalmSeller" size="1" minimum="1" maximum="1" />
       <location x="22" y="5" region="5" />
+    </spawn>
+    <spawn type="LocationSpawner" name="Destiny">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="Destiny" size="1" minimum="0" maximum="0" />
+      <location x="11" y="-15" region="1" />
     </spawn>
     <spawn type="RegionSpawner" name="EntranceBlacksmith">
       <minimumDelay>900</minimumDelay>
@@ -33491,6 +33725,7 @@ spawn.Name = "Neo";
         <block><![CDATA[]]></block>
       </script>
       <entry entity="EntranceGnollGuard" size="3" minimum="7" maximum="7" />
+      <entry entity="LeveloneWorg" size="1" minimum="3" maximum="3" />
       <bounds region="2">
         <inclusion left="-12" top="14" right="-4" bottom="32" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -33516,8 +33751,8 @@ spawn.Name = "Neo";
       </script>
       <entry entity="LeveloneGnollOfficer" size="1" minimum="3" maximum="3" />
       <bounds region="2">
-        <inclusion left="-2" top="23" right="2" bottom="32" />
         <inclusion left="6" top="-7" right="17" bottom="11" />
+        <inclusion left="6" top="12" right="7" bottom="15" />
         <exclusion left="9" top="-4" right="15" bottom="7" />
       </bounds>
     </spawn>
@@ -33922,6 +34157,7 @@ spawn.Name = "Neo";
       <entry entity="UndeadDragon" size="1" minimum="1" maximum="1" />
       <bounds region="4">
         <inclusion left="27" top="6" right="32" bottom="12" />
+        <inclusion left="25" top="8" right="26" bottom="9" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -33951,6 +34187,55 @@ spawn.Name = "Neo";
         <exclusion left="19" top="8" right="19" bottom="8" />
         <exclusion left="19" top="10" right="19" bottom="10" />
         <exclusion left="19" top="13" right="19" bottom="13" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Tunnel Guards">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>180</maximumDelay>
+      <maximum>3</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="Levelthreearchers" size="1" minimum="4" maximum="4" />
+      <bounds region="4">
+        <inclusion left="20" top="6" right="21" bottom="12" />
+        <inclusion left="22" top="8" right="23" bottom="9" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Officer 2">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>4</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="LeveloneGnollOfficer" size="1" minimum="3" maximum="4" />
+      <bounds region="2">
+        <inclusion left="-2" top="23" right="2" bottom="32" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
   </spawns>
@@ -34370,7 +34655,7 @@ spawn.Name = "Neo";
       </entry>
     </treasure>
     <treasure name="Dragonloot">
-      <entry weight="1">
+      <entry weight="2">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -34379,7 +34664,7 @@ spawn.Name = "Neo";
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="1">
+      <entry weight="20">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -34388,7 +34673,7 @@ spawn.Name = "Neo";
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="1">
+      <entry weight="20">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -34397,7 +34682,7 @@ spawn.Name = "Neo";
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="1">
+      <entry weight="20">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -34415,7 +34700,7 @@ spawn.Name = "Neo";
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="1">
+      <entry weight="10">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
