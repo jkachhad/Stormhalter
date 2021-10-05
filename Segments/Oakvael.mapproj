@@ -99233,13 +99233,12 @@
       <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
-    var tile = creature.Segment.FindTile(43, 22, 236);
+    var tile = source.Segment.FindTile(43, 22, 236);
     
     if (tile != null && tile.ContainsComponent<Obstruction>())
     {
-        var component = tile.GetComponent<ObstructionComponent>();
-        tile.Components.Remove(component);
+        var component = tile.GetComponent<Obstruction>();
+        tile.Remove(component);
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -99389,12 +99388,12 @@
       <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var tile = creature.Segment.FindTile(35, 22, 236);
+    var tile = source.Segment.FindTile(35, 22, 236);
     
     if (tile != null && tile.ContainsComponent<Obstruction>())
     {
-        var component = tile.GetComponent<ObstructionComponent>();
-        tile.Components.Remove(component);
+        var component = tile.GetComponent<Obstruction>();
+        tile.Remove(component);
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -99458,12 +99457,12 @@
       <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var tile = creature.Segment.FindTile(39, 22, 236);
+    var tile = source.Segment.FindTile(39, 22, 236);
     
     if (tile != null && tile.ContainsComponent<Obstruction>())
     {
-        var component = tile.GetComponent<ObstructionComponent>();
-        tile.Components.Remove(component);
+        var component = tile.GetComponent<Obstruction>();
+        tile.Remove(component);
     }
 ]]></block>
         <block><![CDATA[]]></block>

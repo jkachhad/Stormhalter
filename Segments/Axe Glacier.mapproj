@@ -106986,13 +106986,12 @@
 	var thaumaturgeTrainer = new ThaumaturgeTrainer()
     {
         Name = "Valtrex",
-        Body = 48),
+        Body = 48,
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
 
         Experience = 50,
     };
-    
    
     foreach (var skill in Skill.Weapons)
         thaumaturgeTrainer.SetTraining(skill, 0, 4);

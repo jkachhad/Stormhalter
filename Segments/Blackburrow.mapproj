@@ -31525,7 +31525,7 @@ if (spokeRecently(source))
         Experience = 32000,
         Movement = 2,
         
-        VisibilityDistance = 3
+        VisibilityDistance = 3,
         CanStrikeCritically = false,
         
         BasePenetration = ShieldPenetration.Medium,
@@ -31737,7 +31737,6 @@ if (spokeRecently(source))
         MaxHealth = 120, Health = 120,
         BaseDodge = 13,
         Experience = 7200,
-        Brain = new CasterAI(),
         CanSwim = false,
         BasePenetration = ShieldPenetration.Light,
         MaxMana = 40, Mana = 40,
@@ -32501,7 +32500,6 @@ return snake;
     Mana = 40, MaxMana = 40,
     BaseDodge = 16,
     CanSwim = true,
-    Brain = new CasterAI(),
     FireProtection = 100,
     IceProtection = 100,
     Immunity = CreatureImmunity.Poison,
@@ -32851,6 +32849,7 @@ return ogre;
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+		var female = Utility.RandomBool();
 	    var trainer = new ThiefTrainer()
     {
         Name = "Vincenza",
@@ -33002,7 +33001,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Destiny">
+    <entity name="crafterDestiny">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -33563,7 +33562,7 @@ if (spokeRecently(source))
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-spawn.Name = "Neo";
+	spawn.Name = "Neo";
     spawn.Body = 32; spawn.IsFemale = false;
     
     if (spawn is TrainerEntity neo)
@@ -33607,7 +33606,7 @@ spawn.Name = "Neo";
       <entry entity="DungeonBalmSeller" size="1" minimum="1" maximum="1" />
       <location x="22" y="5" region="5" />
     </spawn>
-    <spawn type="LocationSpawner" name="Destiny">
+    <spawn type="LocationSpawner" name="spawnDestiny">
       <minimumDelay>0</minimumDelay>
       <maximumDelay>0</maximumDelay>
       <maximum>1</maximum>
@@ -33625,7 +33624,7 @@ spawn.Name = "Neo";
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Destiny" size="1" minimum="0" maximum="0" />
+      <entry entity="crafterDestiny" size="1" minimum="0" maximum="0" />
       <location x="11" y="-15" region="1" />
     </spawn>
     <spawn type="RegionSpawner" name="EntranceBlacksmith">
