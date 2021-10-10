@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.77.0.0">
+<segment name="Kesmai" version="0.79.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -72,6 +72,39 @@
         var higherPrice = (int)(item.BasePrice * 0.2);
         
         item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
+    }
+    
+    /* Randomized Balms */
+    public static Balm randomBalm(bool hasUrine = false)
+    {
+        var balmChance = Utility.RandomDouble();
+        var balm = default(Balm);
+        
+        if (balmChance < 0.1)
+            balm = new GreenBalm();
+        else if (balmChance < 0.2)
+            balm = new YellowBalm();
+        else
+            balm = new ClearBalm();
+            
+        if (hasUrine)
+        {
+            var urineChance = Utility.RandomDouble();
+            var urine = default(ConsumableUrine);
+        
+            if (urineChance < 0.05)
+                urine = new ConsumableUrine("dragon");
+            else if (urineChance < 0.15)
+                urine = new ConsumableUrine("hobgoblin");
+            else if (urineChance < 0.50)
+                urine = new ConsumableUrine("troll");
+            else
+                urine = new ConsumableUrine("orc");
+            
+            balm.Content = urine;
+        }
+            
+        return balm;
     }
 ]]></block>
     <block><![CDATA[]]></block>
@@ -2196,7 +2229,6 @@
           <destinationY>2</destinationY>
           <destinationRegion>3</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="141" y="2">
@@ -6342,7 +6374,6 @@
           <destinationY>7</destinationY>
           <destinationRegion>11</destinationRegion>
           <teleporterId>125</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="26" y="7">
@@ -18839,7 +18870,6 @@
           <destinationY>1</destinationY>
           <destinationRegion>2</destinationRegion>
           <teleporterId>130</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="26" y="19">
@@ -33440,7 +33470,6 @@
           <destinationY>32</destinationY>
           <destinationRegion>12</destinationRegion>
           <teleporterId>125</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="43" y="32">
@@ -36164,7 +36193,6 @@
           <destinationY>35</destinationY>
           <destinationRegion>11</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="8" y="35">
@@ -38868,7 +38896,6 @@
           <destinationY>4</destinationY>
           <destinationRegion>2</destinationRegion>
           <teleporterId>128</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="114" y="37">
@@ -43558,7 +43585,6 @@
           <destinationY>3</destinationY>
           <destinationRegion>12</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="16" y="3">
@@ -44662,7 +44688,6 @@
           <destinationY>7</destinationY>
           <destinationRegion>1</destinationRegion>
           <teleporterId>129</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="26" y="7">
@@ -48363,7 +48388,6 @@
           <destinationY>21</destinationY>
           <destinationRegion>12</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="29" y="21">
@@ -51799,7 +51823,6 @@
           <destinationY>35</destinationY>
           <destinationRegion>1</destinationRegion>
           <teleporterId>129</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="8" y="35">
@@ -52876,7 +52899,6 @@
           <destinationY>39</destinationY>
           <destinationRegion>12</destinationRegion>
           <teleporterId>124</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="8" y="39">
@@ -53533,7 +53555,6 @@
           <destinationY>19</destinationY>
           <destinationRegion>1</destinationRegion>
           <teleporterId>126</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="2" y="1">
@@ -54329,7 +54350,6 @@
           <destinationY>2</destinationY>
           <destinationRegion>13</destinationRegion>
           <teleporterId>126</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="3" y="3">
@@ -54393,7 +54413,6 @@
           <destinationY>3</destinationY>
           <destinationRegion>11</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="14" y="3">
@@ -57382,7 +57401,6 @@
           <destinationY>14</destinationY>
           <destinationRegion>13</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="33" y="15">
@@ -58882,7 +58900,6 @@
           <destinationY>21</destinationY>
           <destinationRegion>11</destinationRegion>
           <teleporterId>129</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="27" y="21">
@@ -59349,7 +59366,6 @@
           <destinationY>22</destinationY>
           <destinationRegion>13</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="17" y="23">
@@ -60808,7 +60824,6 @@
           <destinationY>27</destinationY>
           <destinationRegion>13</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="24" y="28">
@@ -61830,7 +61845,6 @@
           <destinationY>32</destinationY>
           <destinationRegion>1</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="6" y="32">
@@ -63503,7 +63517,6 @@
           <destinationY>39</destinationY>
           <destinationRegion>11</destinationRegion>
           <teleporterId>130</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="6" y="39">
@@ -63613,7 +63626,6 @@
           <destinationY>38</destinationY>
           <destinationRegion>13</destinationRegion>
           <teleporterId>124</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="25" y="39">
@@ -64365,7 +64377,6 @@
           <destinationY>3</destinationY>
           <destinationRegion>12</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="14" y="2">
@@ -67674,7 +67685,6 @@
           <destinationY>15</destinationY>
           <destinationRegion>12</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="44" y="14">
@@ -68043,7 +68053,6 @@
           <destinationY>16</destinationY>
           <destinationRegion>14</destinationRegion>
           <teleporterId>126</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="21" y="16">
@@ -68173,7 +68182,6 @@
           <destinationY>16</destinationY>
           <destinationRegion>14</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="42" y="16">
@@ -69632,7 +69640,6 @@
           <destinationY>23</destinationY>
           <destinationRegion>12</destinationRegion>
           <teleporterId>130</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="28" y="22">
@@ -71555,7 +71562,6 @@
           <destinationY>28</destinationY>
           <destinationRegion>12</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="35" y="27">
@@ -72429,7 +72435,6 @@
           <destinationY>30</destinationY>
           <destinationRegion>13</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="6" y="30">
@@ -72704,7 +72709,6 @@
           <destinationY>30</destinationY>
           <destinationRegion>13</destinationRegion>
           <teleporterId>128</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="41" y="30">
@@ -75265,7 +75269,6 @@
           <destinationY>39</destinationY>
           <destinationRegion>12</destinationRegion>
           <teleporterId>128</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="2" y="38">
@@ -75542,7 +75545,6 @@
           <destinationY>38</destinationY>
           <destinationRegion>14</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="44" y="38">
@@ -80588,7 +80590,6 @@
           <destinationY>16</destinationY>
           <destinationRegion>13</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="8" y="16">
@@ -80732,7 +80733,6 @@
           <destinationY>16</destinationY>
           <destinationRegion>13</destinationRegion>
           <teleporterId>128</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="29" y="16">
@@ -86745,7 +86745,6 @@
           <destinationY>38</destinationY>
           <destinationRegion>13</destinationRegion>
           <teleporterId>130</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="31" y="38">
@@ -87552,7 +87551,6 @@
           <destinationY>2</destinationY>
           <destinationRegion>1</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="11" y="2">
@@ -87579,7 +87577,6 @@
       <tile x="14" y="2">
         <component type="StaircaseComponent">
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
         <component type="FloorComponent">
           <ground>176</ground>
@@ -87729,7 +87726,6 @@
           <destinationY>11</destinationY>
           <destinationRegion>4</destinationRegion>
           <teleporterId>124</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="17" y="4">
@@ -87799,7 +87795,6 @@
           <destinationY>12</destinationY>
           <destinationRegion>4</destinationRegion>
           <teleporterId>124</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="17" y="5">
@@ -88955,7 +88950,6 @@
           <destinationY>4</destinationY>
           <destinationRegion>3</destinationRegion>
           <teleporterId>128</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="3" y="11">
@@ -89126,7 +89120,6 @@
           <destinationY>5</destinationY>
           <destinationRegion>3</destinationRegion>
           <teleporterId>128</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="3" y="12">
@@ -90453,7 +90446,6 @@
           <destinationY>37</destinationY>
           <destinationRegion>1</destinationRegion>
           <teleporterId>124</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="2" y="2">
@@ -102664,11 +102656,11 @@ else
       </entry>
     </treasure>
     <treasure name="dungeon1Bottles">
-      <entry weight="13">
+      <entry weight="12">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new ClearBalm();
+	return randomBalm();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -102678,6 +102670,15 @@ else
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new StaminaPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+    return randomBalm(true);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
