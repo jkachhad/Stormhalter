@@ -47,7 +47,7 @@ namespace Kesmai.Server.Items
         /// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6200000, 6200163)); /* [You are looking at] [an ebony staff encrusted with diamonds.  The weapon eminates power. The staff is emitting a faint blue glow. The weapon is lawful.] */
+			entries.Add(new LocalizationEntry(6200000, 6200163)); /* [You are looking at] [an ebony staff encrusted with diamonds. The weapon emanates power. The weapon is lawful.] */
 
 			if (Identified)
 				entries.Add(new LocalizationEntry(6250092)); /* The staff seems to have some magical properties. */
