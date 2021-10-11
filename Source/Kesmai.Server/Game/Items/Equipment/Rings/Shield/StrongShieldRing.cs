@@ -19,7 +19,7 @@ namespace Kesmai.Server.Items
 		/// <summary>
 		/// Initializes a new instance of the <see cref="StrongShieldRing"/> class.
 		/// </summary>
-		public StrongShieldRing() : base(394)
+		public StrongShieldRing() : base(501)
 		{
 		}
 		
