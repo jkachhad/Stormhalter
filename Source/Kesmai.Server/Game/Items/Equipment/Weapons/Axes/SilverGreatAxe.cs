@@ -33,7 +33,7 @@ namespace Kesmai.Server.Items
 
 		/// <inheritdoc />
 		public override WeaponFlags Flags => WeaponFlags.TwoHanded | WeaponFlags.Silver | WeaponFlags.Slashing 
-		                                     | WeaponFlags.Lawful;
+		                                     | WeaponFlags.Lawful | WeaponFlags.BlueGlowing;
 
         /// <inheritdoc />
 		public override bool CanBind => true;
