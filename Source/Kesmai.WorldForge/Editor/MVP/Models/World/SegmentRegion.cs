@@ -22,6 +22,8 @@ namespace Kesmai.WorldForge.Editor
 		
 		private double _experienceMultiplier = 1.0f;
 		private double _healthMultiplier = 1.0f;
+
+		private double _level = 0;
 		
 		private int _chunkSize;
 		private Dictionary<ChunkCoordinate, SegmentTile[,]> _chunks;
@@ -59,6 +61,12 @@ namespace Kesmai.WorldForge.Editor
 			set => SetProperty(ref _healthMultiplier, value);
 		}
 		
+		public double Level
+		{
+			get => _level;
+			set => SetProperty(ref _level, value);
+		}
+		
 		public SegmentRegion(int id) : this()
 		{
 			_id = id;
@@ -73,6 +81,7 @@ namespace Kesmai.WorldForge.Editor
 
 			_experienceMultiplier = element.Element("experienceMultiplier", 1.0D);
 			_healthMultiplier = element.Element("healthMultiplier", 1.0D);
+			_level = element.Element("level", 0);
 
 			foreach (var tileElement in element.Elements("tile"))
 			{
@@ -105,6 +114,9 @@ namespace Kesmai.WorldForge.Editor
 
 			if (_healthMultiplier != 1.0D)
 				element.Add(new XElement("healthMultiplier", _healthMultiplier));
+			
+			if (_level != 0)
+				element.Add(new XElement("level", _level));
 
 			var bounds = GetMinimalBounds();
 
