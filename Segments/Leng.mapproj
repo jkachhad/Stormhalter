@@ -1,22 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.77.0.0">
+<segment name="Leng" version="0.74.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
-    public static TimeSpan _speechDelay = TimeSpan.FromMinutes(1.0);
-    public static Dictionary<MobileEntity, DateTime> _speechDelays = new Dictionary<MobileEntity, DateTime>();
-    
-    public static bool spokeRecently(MobileEntity entity)
-    {
-        /* If the entity spoke recently, we're not going to speak again. */
-        if (_speechDelays.TryGetValue(entity, out var nextSpeechTime) && DateTime.Now < nextSpeechTime)
-            return true;
-        
-        /* The entity did not speak recently, add them to the delay, and allow them to talk. */
-        _speechDelays[entity] = DateTime.Now + _speechDelay;
-        return false;
-    }
-    
     public static readonly string[] _names = new string[]
     {
         "Aca", "Acha", "Achi", "Achu", "Aco", "Agua", "Ahua", "Aja", "Ala", "Ali", "Ama", "Ani", "Anu", "Apa",
@@ -2790,19 +2776,19 @@
       <tile x="11" y="8">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="12" y="8">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="13" y="8">
@@ -3283,19 +3269,19 @@
       <tile x="11" y="9">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="12" y="9">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="13" y="9">
@@ -4819,10 +4805,10 @@
       <tile x="15" y="13">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="16" y="13">
@@ -5671,10 +5657,10 @@
       <tile x="23" y="15">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="24" y="15">
@@ -5983,10 +5969,10 @@
       <tile x="12" y="16">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="13" y="16">
@@ -6126,10 +6112,10 @@
       <tile x="29" y="16">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="30" y="16">
@@ -6145,10 +6131,10 @@
       <tile x="31" y="16">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="32" y="16">
@@ -6832,10 +6818,10 @@
       <tile x="23" y="18">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="24" y="18">
@@ -7606,10 +7592,10 @@
       <tile x="21" y="20">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="22" y="20">
@@ -7673,10 +7659,10 @@
       <tile x="27" y="20">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="28" y="20">
@@ -8051,10 +8037,10 @@
       <tile x="29" y="21">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="30" y="21">
@@ -8254,10 +8240,10 @@
       <tile x="6" y="22">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="7" y="22">
@@ -8281,10 +8267,10 @@
       <tile x="9" y="22">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="10" y="22">
@@ -8734,10 +8720,10 @@
       <tile x="12" y="23">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="13" y="23">
@@ -9047,10 +9033,10 @@
       <tile x="4" y="24">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="5" y="24">
@@ -9065,10 +9051,10 @@
       <tile x="6" y="24">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="7" y="24">
@@ -9470,10 +9456,10 @@
       <tile x="9" y="25">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="10" y="25">
@@ -9886,10 +9872,10 @@
       <tile x="11" y="26">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="12" y="26">
@@ -11064,10 +11050,10 @@
       <tile x="13" y="29">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="14" y="29">
@@ -11809,10 +11795,10 @@
       <tile x="3" y="31">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="4" y="31">
@@ -11854,10 +11840,10 @@
       <tile x="10" y="31">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="11" y="31">
@@ -11868,10 +11854,10 @@
       <tile x="12" y="31">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="13" y="31">
@@ -11927,10 +11913,10 @@
       <tile x="23" y="31">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="24" y="31">
@@ -11981,10 +11967,10 @@
       <tile x="33" y="31">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="34" y="31">
@@ -12115,19 +12101,19 @@
       <tile x="3" y="32">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="4" y="32">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="5" y="32">
@@ -12157,10 +12143,10 @@
       <tile x="9" y="32">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="10" y="32">
@@ -12221,10 +12207,10 @@
       <tile x="20" y="32">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="21" y="32">
@@ -12392,10 +12378,10 @@
       <tile x="49" y="32">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="50" y="32">
@@ -12443,28 +12429,28 @@
       <tile x="3" y="33">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="4" y="33">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="5" y="33">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="6" y="33">
@@ -12488,10 +12474,10 @@
       <tile x="9" y="33">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="10" y="33">
@@ -12562,10 +12548,10 @@
       <tile x="18" y="33">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="19" y="33">
@@ -12621,10 +12607,10 @@
       <tile x="29" y="33">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="30" y="33">
@@ -12850,10 +12836,10 @@
       <tile x="5" y="34">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="6" y="34">
@@ -12871,10 +12857,10 @@
       <tile x="8" y="34">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="9" y="34">
@@ -12945,10 +12931,10 @@
       <tile x="19" y="34">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="20" y="34">
@@ -12974,10 +12960,10 @@
       <tile x="24" y="34">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="25" y="34">
@@ -13225,10 +13211,10 @@
       <tile x="5" y="35">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="6" y="35">
@@ -13246,10 +13232,10 @@
       <tile x="8" y="35">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="9" y="35">
@@ -13564,10 +13550,10 @@
       <tile x="50" y="35">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="51" y="35">
@@ -13610,10 +13596,10 @@
       <tile x="5" y="36">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="6" y="36">
@@ -13631,10 +13617,10 @@
       <tile x="8" y="36">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="9" y="36">
@@ -13799,10 +13785,10 @@
       <tile x="29" y="36">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="30" y="36">
@@ -14049,10 +14035,10 @@
       <tile x="5" y="37">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="6" y="37">
@@ -14694,10 +14680,10 @@
       <tile x="38" y="38">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="39" y="38">
@@ -14748,10 +14734,10 @@
       <tile x="48" y="38">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="49" y="38">
@@ -14969,10 +14955,10 @@
       <tile x="36" y="39">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="37" y="39">
@@ -15026,10 +15012,10 @@
       <tile x="43" y="39">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="44" y="39">
@@ -15040,10 +15026,10 @@
       <tile x="45" y="39">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="46" y="39">
@@ -15103,6 +15089,12 @@
         </component>
       </tile>
       <tile x="10" y="40">
+        <component type="WallComponent">
+          <wall>158</wall>
+          <destroyed>161</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
         <component type="StaticComponent">
           <static>12</static>
         </component>
@@ -15110,7 +15102,6 @@
           <wall>158</wall>
           <destroyed>161</destroyed>
           <ruins>170</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="11" y="40">
@@ -15521,13 +15512,14 @@
         </component>
       </tile>
       <tile x="15" y="41">
+        <component type="StaticComponent">
+          <static>12</static>
+        </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>162</destroyed>
+          <destroyed>0</destroyed>
           <ruins>0</ruins>
-        </component>
-        <component type="FloorComponent">
-          <ground>12</ground>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="16" y="41">
@@ -22622,10 +22614,10 @@
       <tile x="12" y="22">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="13" y="22">
@@ -37073,10 +37065,10 @@
       <tile x="23" y="34">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="24" y="34">
@@ -37792,37 +37784,37 @@
       <tile x="6" y="38">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="7" y="38">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="8" y="38">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="9" y="38">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="10" y="38">
@@ -38033,10 +38025,10 @@
       <tile x="6" y="39">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="7" y="39">
@@ -57494,6 +57486,9 @@
         </component>
       </tile>
       <tile x="2" y="3">
+        <component type="FloorComponent">
+          <ground>23</ground>
+        </component>
         <component type="WallComponent">
           <wall>159</wall>
           <destroyed>0</destroyed>
@@ -57502,6 +57497,9 @@
         </component>
       </tile>
       <tile x="3" y="3">
+        <component type="FloorComponent">
+          <ground>23</ground>
+        </component>
         <component type="WallComponent">
           <wall>157</wall>
           <destroyed>160</destroyed>
@@ -57570,6 +57568,9 @@
         </component>
       </tile>
       <tile x="2" y="4">
+        <component type="FloorComponent">
+          <ground>23</ground>
+        </component>
         <component type="WallComponent">
           <wall>158</wall>
           <destroyed>161</destroyed>
@@ -57627,6 +57628,9 @@
         </component>
       </tile>
       <tile x="2" y="5">
+        <component type="FloorComponent">
+          <ground>23</ground>
+        </component>
         <component type="WallComponent">
           <wall>158</wall>
           <destroyed>161</destroyed>
@@ -57690,6 +57694,9 @@
         </component>
       </tile>
       <tile x="2" y="6">
+        <component type="FloorComponent">
+          <ground>23</ground>
+        </component>
         <component type="WallComponent">
           <wall>158</wall>
           <destroyed>161</destroyed>
@@ -57776,6 +57783,9 @@
         </component>
       </tile>
       <tile x="3" y="7">
+        <component type="FloorComponent">
+          <ground>23</ground>
+        </component>
         <component type="WallComponent">
           <wall>157</wall>
           <destroyed>160</destroyed>
@@ -57784,6 +57794,9 @@
         </component>
       </tile>
       <tile x="4" y="7">
+        <component type="FloorComponent">
+          <ground>23</ground>
+        </component>
         <component type="WallComponent">
           <wall>157</wall>
           <destroyed>160</destroyed>
@@ -60409,10 +60422,10 @@
       <tile x="20" y="6">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="21" y="6">
@@ -60809,10 +60822,10 @@
       <tile x="23" y="11">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="24" y="11">
@@ -60883,10 +60896,10 @@
       <tile x="22" y="12">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="23" y="12">
@@ -61192,10 +61205,10 @@
       <tile x="17" y="16">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="18" y="16">
@@ -61554,10 +61567,10 @@
       <tile x="17" y="21">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="18" y="21">
@@ -61680,10 +61693,10 @@
       <tile x="17" y="23">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="18" y="23">
@@ -61740,10 +61753,10 @@
       <tile x="16" y="24">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="17" y="24">
@@ -62284,10 +62297,10 @@
       <tile x="2" y="6">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="3" y="6">
@@ -62371,10 +62384,10 @@
       <tile x="5" y="7">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="6" y="7">
@@ -62522,10 +62535,10 @@
       <tile x="7" y="9">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="8" y="9">
@@ -63307,10 +63320,10 @@
       <tile x="14" y="8">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="15" y="8">
@@ -63493,10 +63506,10 @@
       <tile x="9" y="10">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="10" y="10">
@@ -64258,10 +64271,10 @@
       <tile x="7" y="17">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="8" y="17">
@@ -64272,10 +64285,10 @@
       <tile x="9" y="17">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="10" y="17">
@@ -64365,10 +64378,10 @@
       <tile x="7" y="18">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="8" y="18">
@@ -64407,10 +64420,10 @@
       <tile x="13" y="18">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="14" y="18">
@@ -64616,10 +64629,10 @@
       <tile x="8" y="20">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="9" y="20">
@@ -64749,10 +64762,10 @@
       <tile x="7" y="21">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="8" y="21">
@@ -64869,10 +64882,10 @@
       <tile x="11" y="22">
         <component type="FloorComponent">
           <ground>23</ground>
-          <movementCost>2</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>205</static>
+        <component type="FloorComponent">
+          <ground>205</ground>
+          <movementCost>2</movementCost>
         </component>
       </tile>
       <tile x="12" y="22">
@@ -74841,7 +74854,7 @@
     {
         MaxHealth = 90, Health = 90,
         BaseDodge = 10,
-        HideDetection = 23,   
+
         Experience = 3100,
 
         Movement = 2,
@@ -74849,7 +74862,7 @@
     
     skeleton.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(8, 6, 13)
+        new CreatureBasicAttack(8, 6, 15)
     };
     
     skeleton.Wield(new Spear());
@@ -74948,7 +74961,7 @@
         Alignment = Alignment.Neutral
     };
     
-    trainer.SetTraining(Skill.Magic, 6, 16);
+    trainer.SetTraining(Skill.Magic, 8, 16);
     
     return trainer;
 ]]></block>
@@ -75016,7 +75029,7 @@
     foreach (var skill in Skill.Weapons)
         trainer.SetTraining(skill, 0, 4);
     
-    trainer.SetTraining(Skill.Magic, 6, 14);
+    trainer.SetTraining(Skill.Magic, 8, 14);
     
     return trainer;
 ]]></block>
@@ -75051,7 +75064,7 @@
     foreach (var skill in Skill.Weapons)
         trainer.SetTraining(skill, 0, 4);
     
-    trainer.SetTraining(Skill.Magic, 6, 16);
+    trainer.SetTraining(Skill.Magic, 8, 16);
     
     return trainer;
 ]]></block>
@@ -75095,13 +75108,9 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="true">
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    if (spokeRecently(source))
-        return;
-
-    source.Say($"Come see our wares, {player.Name}. Just ask me to 'show prices'.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -75248,13 +75257,13 @@
         MaxHealth = 100, Health = 100,
         MaxMana = 31, Mana = 31,
         BaseDodge = 12,
-        HideDetection = 23,   
+        
         Experience = 3200,
     };
         
     wraith.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9),
+        new CreatureBasicAttack(9, 12, 20),
     };
     
     wraith.Spells = new CreatureSpellCollection()
@@ -75277,8 +75286,7 @@
     wraith.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20),
-        new LootPackEntry(true, UtilityTreasures,    3),
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, LengPotions,    0.1),
         new LootPackEntry(true, MausTreasure,  0.63)
     ));
     
@@ -75308,7 +75316,7 @@
     {
         Name = "Thrall",
         Body = (isFemale ? 37 : 38), IsFemale = isFemale,
-        HideDetection = 23,    
+            
         MaxHealth = 110, Health = 110,
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
@@ -75351,8 +75359,7 @@
     wizard.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20),
-        new LootPackEntry(true, UtilityTreasures,    3),
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, LengPotions,    0.1),
         new LootPackEntry(true, MausTreasure,  0.63)
     ));
     
@@ -75381,7 +75388,7 @@
     {
         Name = "Thrall",
         Body = 38,
-        HideDetection = 23,       
+            
         MaxHealth = 110, Health = 110,
         MaxMana = 31, Mana = 31,
         BaseDodge = 13,
@@ -75419,8 +75426,7 @@
     wizard.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20),
-        new LootPackEntry(true, UtilityTreasures,    3),
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, LengPotions,    0.1),
         new LootPackEntry(true, MausTreasure,  0.63)
     ));
     
@@ -75450,7 +75456,7 @@
         MaxHealth = 100, Health = 100,
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
-        HideDetection = 23,   
+    
         Experience = 6500,
     
         VisibilityDistance = 1,
@@ -75460,7 +75466,7 @@
     
     spectre.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(10),
+        new CreatureBasicAttack(9, 13, 18),
     };
     
     spectre.Spells = new CreatureSpellCollection()
@@ -75483,8 +75489,7 @@
     spectre.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20),
-        new LootPackEntry(true, UtilityTreasures,    2),
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, LengPotions,    0.1),
         new LootPackEntry(true, MausTreasure,  0.63)
     ));
     
@@ -75513,7 +75518,7 @@
     {
         MaxHealth = 90, Health = 90,
         BaseDodge = 11,
-        HideDetection = 23,   
+    
         Experience = 2300,
         BasePenetration = ShieldPenetration.VeryLight,
         Attacks = new CreatureAttackCollection
@@ -75524,7 +75529,7 @@
     
     hobgoblin.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9)
+        new CreatureBasicAttack(10, 9, 17)
     };
     
     hobgoblin.Wield(new Longsword());
@@ -75534,7 +75539,7 @@
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, LengPotions,    0.1),
         new LootPackEntry(true, MausTreasure,  0.63)
     ));
     
@@ -75564,7 +75569,7 @@
         MaxHealth = 80, Health = 80,
         MaxMana = 31, Mana = 31,
         BaseDodge = 12,
-        HideDetection = 23,   
+    
         Experience = 2600,
     
     };
@@ -75588,14 +75593,13 @@
         }
     };
     
-    hobgoblin.Wield(new GiltDagger());
+    hobgoblin.Wield(new Longsword());
     
     hobgoblin.AddGold(350);
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20),
-        new LootPackEntry(true, UtilityTreasures,    2),
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, LengPotions,    0.1),
         new LootPackEntry(true, MausTreasure,  0.63)
     ));
     
@@ -75626,7 +75630,7 @@
     {
         Name = "Wretch",
         Body = (female ? 33 : 32), IsFemale = female,
-        HideDetection = 23,       
+            
         MaxHealth = 125, Health = 125,
         BaseDodge = 11,
         
@@ -75638,7 +75642,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(9)
+        new CreatureBasicAttack(10, 9, 15)
     };
     
     fighter.Wield(new Longsword());
@@ -75648,7 +75652,7 @@
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, LengPotions,    0.1),
         new LootPackEntry(true, MausTreasure,  0.63)        
     ));
     
@@ -75682,19 +75686,18 @@
         BasePenetration = ShieldPenetration.Medium,
         VisibilityDistance = 0,
         Experience = 700,
-        HideDetection = 23,   
     };
     
     raven.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(7,     2, 7,   "The raven buffets you with his wings."),                   50
+            new CreatureAttack(7,     2, 8,   "The raven buffets you with his wings."),                   50
         }, 
         {
-            new CreatureAttack(8,     3, 10,  "The raven sends a flurry of pecks towards you."),          30 
+            new CreatureAttack(8,     3, 12,  "The raven sends a flurry of pecks towards you."),          30 
         }, 
         {
-            new CreatureAttack(9,     4, 12,  "The raven pecks at your eyes attempting to blind you."),   20 
+            new CreatureAttack(9,     4, 15,  "The raven pecks at your eyes attempting to blind you."),   20 
         }, 
     };
         
@@ -75735,9 +75738,8 @@
     {
         MaxHealth = 250, Health = 250,
         BaseDodge = 13,
-        HideDetection = 23,
 
-        Experience = 10500,
+        Experience = 5500,
         
         FireProtection = 100,
         IceProtection = 80,
@@ -75788,7 +75790,7 @@
     {
         MaxHealth = 750, Health = 750,
         BaseDodge = 15,
-        HideDetection = 23,
+
         Experience = 10500,
         BasePenetration = ShieldPenetration.Medium,
         
@@ -75812,7 +75814,7 @@
     powerTroll.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new WingedHelm(),         40.0),
         new LootPackEntry(true, (from, container) => new PearDiamond(1200u),         40.0),
-        new LootPackEntry(true, LengPotions,    5),
+        new LootPackEntry(true, LengPotions,    0.05),
         new LootPackEntry(true, (from, container) => new Diamond(1500u),         50.0)
     ));
     
@@ -75841,10 +75843,11 @@
     {
         MaxHealth = 600, Health = 600,
         BaseDodge = 14,
+        HideDetection = 18,
         Experience = 11500,
         BasePenetration = ShieldPenetration.Medium,
         VisibilityDistance = 1,
-        HideDetection = 23,   
+        
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
         Weakness = CreatureWeakness.BlueGlowing,
@@ -75909,7 +75912,7 @@
         MaxHealth = 250, Health = 250,
         MaxMana = 50, Mana = 50,
         BaseDodge = 14,
-        HideDetection = 23,   
+    
         Experience = 12000,
     
         VisibilityDistance = 0,
@@ -75924,7 +75927,7 @@
     
     presence.Attacks = new CreatureAttackCollection
     {
-        new CreatureAttack(12,     12, 23,   "The presence reaches inside of you!")
+        new CreatureAttack(12,     15, 30,   "The presence reaches inside of you!")
     };
     
     presence.Blocks = new CreatureBlockCollection
@@ -75945,8 +75948,7 @@
     };
     
     presence.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new WaveRobe(),    100),
-        new LootPackEntry(true, UtilityTreasures,    5)
+        new LootPackEntry(true, (from, container) => new WaveRobe(),    100)
     ));
     
     return presence;
@@ -75976,7 +75978,7 @@
         Name = "Shidosha",
         MaxHealth = 3000, Health = 3000,
         BaseDodge = 28,
-        HideDetection = 28,
+        HideDetection = 24,
         Experience = 32000,
         
         VisibilityDistance = 0,
@@ -76055,7 +76057,7 @@
     {
         MaxHealth = 250, Health = 250,
         BaseDodge = 20,
-        HideDetection = 26,
+    
         Experience = 6000,
        
         CanJumpkick = true,
@@ -76101,7 +76103,7 @@
    ninja.AddGold(500);
    ninja.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, LengPotions,    0.3),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, MausBottles,    20)
    ));
        
@@ -76131,7 +76133,7 @@
     {
         MaxHealth = 3000, Health = 3000,
         BaseDodge = 18,
-        HideDetection = 26,
+        HideDetection = 22,
         Experience = 40000,
         
         CanStrikeCritically = false,
@@ -76229,14 +76231,12 @@
         VisibilityDistance = 0,
     };
     
-    vlad.AddStatus(new NightVisionStatus(vlad));
     vlad.CombatantChangeInterval = TimeSpan.FromSeconds(4.0);
     
     vlad.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(16,     40, 70,      "The vampire rends your flesh with his claws",
-                                                    new AttackAgeComponent(1000)),                                      70 
+            new CreatureAttack(16,     40, 70,      "The vampire rends your flesh with his claws"),                     70 
         }, 
         {
             new CreatureAttack(17,     60, 80,     "The vampire appears behind you, sinking his teeth into your neck",
@@ -76258,7 +76258,7 @@
     
     vlad.AddGold(25000);
     vlad.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new DragonSkull(),        100),
+        new LootPackEntry(true, (from, container) => new GriffinSkull(),        100),
         new LootPackEntry(true, (from, container) => new LionRobe(),        50),
         new LootPackEntry(true, (from, container) => new GoldenTorc(),        33),
         new LootPackEntry(true, (from, container) => new FeatherFallBoots(),        100),
@@ -76295,7 +76295,7 @@
         BaseDodge = 25,
         
         Alignment = Alignment.Chaotic,
-        HideDetection = 28,
+        HideDetection = 27,
         Experience = 85000,
         
         CanFly = true,
@@ -76311,8 +76311,6 @@
     };
     
     drake.AddStatus(new NightVisionStatus(drake));
-	
-	drake.AddImmunity(typeof(Lightning));
     
     drake.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
     
@@ -76382,9 +76380,8 @@
     {
         MaxHealth = 300, Health = 300,
         BaseDodge = 15,
-        HideDetection = 26,
-        
-        Experience = 11000,
+                
+        Experience = 10000,
     };
     griffin.AddStatus(new NightVisionStatus(griffin));
         
@@ -76445,18 +76442,17 @@
         Name = "Nomad",
         Body = (female ? 33 : 32), IsFemale = female,
             
-        MaxHealth = 125, Health = 125,
-        BaseDodge = 13,
-        HideDetection = 26,
+        MaxHealth = 155, Health = 155,
+        BaseDodge = 14,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 6300,
+        Experience = 7600,
         CanSwim = true,
             
     };
         
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(12)
+        new CreatureBasicAttack(12, 17, 23)
     };
     
     fighter.Wield(new Longsword());
@@ -76466,7 +76462,7 @@
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, CliffGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, LengPotions,    0.1),
         new LootPackEntry(true, CliffTreasures,    0.63)
     ));
     
@@ -76495,7 +76491,7 @@
     {
         MaxHealth = 160, Health = 160,
         BaseDodge = 16,
-        HideDetection = 26,
+    
         Experience = 9500,
         BasePenetration = ShieldPenetration.Light,
         Movement = 2,
@@ -76508,11 +76504,11 @@
     scorpion.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(12,     8, 15,      "The scorpion pinches you with its claws."),    50 
+            new CreatureAttack(11,     10, 20,      "The scorpion pinches you with its claws."),    50 
         },
         { 
-            new CreatureAttack(13,     12, 20,     "The scorpion stings you with his tail.", 
-                                                    new AttackPoisonComponent(15)),                 50
+            new CreatureAttack(13,     20, 30,     "The scorpion stings you with his tail.", 
+                                                    new AttackPoisonComponent(20)),                 50
         },
     };
     
@@ -76551,7 +76547,6 @@
         MaxHealth = 100, Health = 100,
         MaxMana = 19, Mana = 19,
         BaseDodge = 14,
-        HideDetection = 26,
         MagicProtection = 33,
         Experience = 9500,
         VisibilityDistance = 0,
@@ -76562,7 +76557,7 @@
         
     lich.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11)
+        new CreatureBasicAttack(9, 15, 25)
     };
     
     lich.Spells = new CreatureSpellCollection()
@@ -76578,8 +76573,7 @@
     lich.AddLoot(new LootPack(
         new LootPackEntry(true, MinotaurGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, UtilityTreasures,    5),
-        new LootPackEntry(true, LengPotions,    0.3),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, MinotaurTreasures,    0.63)
     ));
     
@@ -76611,17 +76605,17 @@
         Name = "Nomad",
         Body = (female ? 33 : 32), IsFemale = female,
             
-        MaxHealth = 110, Health = 110,
+        MaxHealth = 120, Health = 120,
         BaseDodge = 14,
-        HideDetection = 26,    
-        Experience = 6200,
+            
+        Experience = 7200,
         CanSwim = true,
     };
     
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(12)
+        new CreatureBasicAttack(13)
     };
     
     fighter.Wield(new Longbow());
@@ -76631,7 +76625,7 @@
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, CliffGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, LengPotions,    0.1),
         new LootPackEntry(true, CliffTreasures,    0.63)
     ));
     
@@ -76660,7 +76654,6 @@
     {
         MaxHealth = 300, Health = 300,
         BaseDodge = 18,
-        HideDetection = 26,
     
         Experience = 15500,
         
@@ -76674,14 +76667,14 @@
     minotaur.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(13,     22, 30,      "The minotaur hits with a wicked axe"),  60 
+            new CreatureAttack(13,     25, 35,      "The minotaur hits with a wicked axe"),  60 
         }, 
         {
-            new CreatureAttack(13,     25, 35,     "You've been gored by the minotaur",
+            new CreatureAttack(13,     30, 40,     "You've been gored by the minotaur",
                                                     new AttackStunComponent(10.0)),          30
         }, 
         {
-            new CreatureAttack(14,     30, 40,     "You've been trampled by the minotaur"),  10
+            new CreatureAttack(14,     35, 45,     "You've been trampled by the minotaur"),  10
         }, 
     };
     
@@ -76697,7 +76690,7 @@
     minotaur.AddLoot(new LootPack(
         new LootPackEntry(true, MinotaurGems,       50,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.3),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, MinotaurTreasures,    0.63)
     ));
     
@@ -76726,7 +76719,6 @@
     {
         MaxHealth = 150, Health = 150,
         BaseDodge = 16,
-        HideDetection = 28,
         
         Experience = 9025,
         
@@ -76734,7 +76726,6 @@
         MagicProtection = 33,
         FireProtection = 100,
         VisibilityDistance = 0,
-        
     };
     
     salamander.Attacks = new CreatureAttackCollection
@@ -76796,7 +76787,6 @@
         VisibilityDistance = 0,
         FireProtection = 100,
         MagicProtection = 33,
-        HideDetection = 28,
     };
     griffin.AddStatus(new NightVisionStatus(griffin));
         
@@ -76825,7 +76815,7 @@
     griffin.AddLoot(new LootPack(
         
         new LootPackEntry(true, (from, container) => new OchreEgg(), 25.0),  
-        new LootPackEntry(true, LengPotions,    0.4),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, (from, container) => new GriffinSkull(), 10),
         new LootPackEntry(true, MinotaurTreasures,  0.63)
     ));
@@ -76855,8 +76845,8 @@
     {
         MaxHealth = 150, Health = 150,
         BaseDodge = 14,
-        HideDetection = 23,                    
-        Experience = 4700,
+                            
+        Experience = 3700,
     };
     
     centaur.Attacks = new CreatureAttackCollection
@@ -76900,7 +76890,7 @@
     {
         MaxHealth = 110, Health = 110,
         BaseDodge = 14,
-        HideDetection = 23,
+    
         Experience = 2300,
     
         VisibilityDistance = 1,
@@ -76956,10 +76946,8 @@
     {
         MaxHealth = 90, Health = 90,
         BaseDodge = 11,
-        HideDetection = 23,
+    
         Experience = 2100,
-        
-        Immunity = CreatureImmunity.Poison,
         
     };
     
@@ -77012,7 +77000,7 @@
     {
         MaxHealth = 35, Health = 35,
         BaseDodge = 9,
-        HideDetection = 23,        
+                
         Experience = 500,
     
         BasePenetration = ShieldPenetration.VeryLight,
@@ -77059,7 +77047,7 @@
     {
         Name = "Familiar",
         Body = (female ? 33 : 32), IsFemale = female,
-        HideDetection = 28,    
+            
         MaxHealth = 130, Health = 130,
         BaseDodge = 14,
         MagicProtection = 33,
@@ -77074,7 +77062,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(13), 
+        new CreatureBasicAttack(11), 
     };
     
     fighter.Wield(new FineCrossbow());
@@ -77084,7 +77072,7 @@
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20), 
-        new LootPackEntry(true, LengPotions,    0.4),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, MinotaurTreasures,  0.63)
     ));
     
@@ -77115,7 +77103,7 @@
     {
         Name = "Familiar",
         Body = (female ? 33 : 32), IsFemale = female,
-        HideDetection = 28,    
+            
         MaxHealth = 180, Health = 180,
         BaseDodge = 15,
         MagicProtection = 33,
@@ -77127,7 +77115,7 @@
     
     fighter.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(14) 
+        new CreatureBasicAttack(13, 25, 40) 
     };
     
     fighter.Wield(new Longsword());
@@ -77136,7 +77124,7 @@
     fighter.AddGold(750);
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator),  
-        new LootPackEntry(true, LengPotions,    0.4),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, MausBottles,    20),
         new LootPackEntry(true, MinotaurTreasures,  0.63)
         
@@ -77169,7 +77157,7 @@
     {
         Name = "Familiar",
         Body = (female ? 16 : 48), IsFemale = female,
-        HideDetection = 28,    
+            
         MaxHealth = 130, Health = 130,
         MaxMana = 23, Mana = 23,
         BaseDodge = 14,
@@ -77183,7 +77171,7 @@
     
     thaum.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(14)
+        new CreatureBasicAttack(9, 25, 40)
     };
     
     thaum.Spells = new CreatureSpellCollection()
@@ -77205,8 +77193,7 @@
     thaum.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20), 
-        new LootPackEntry(true, UtilityTreasures,    4),
-        new LootPackEntry(true, LengPotions,    0.4),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, MinotaurTreasures,  0.63)
     ));
     
@@ -77235,12 +77222,9 @@
     {
         MaxHealth = 178, Health = 178,
         BaseDodge = 14,
-        HideDetection = 26,
         BasePenetration = ShieldPenetration.Medium,     
         Experience = 8700,
     };
-    
-    centaur.AddStatus(new NightVisionStatus(centaur));
     
     centaur.Attacks = new CreatureAttackCollection()
     {
@@ -77253,7 +77237,7 @@
     centaur.AddLoot(new LootPack(
         new LootPackEntry(true, CliffGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, LengPotions,    0.1),
         new LootPackEntry(true, CliffTreasures,    0.63)
     ));
     
@@ -77282,7 +77266,7 @@
     {
         MaxHealth = 550, Health = 550,
         BaseDodge = 15,
-        HideDetection = 26,        
+                
         Experience = 18000,
         BasePenetration = ShieldPenetration.Light,
         CanSwim = true,
@@ -77338,12 +77322,12 @@
     {
         MaxHealth = 1000, Health = 1000,
         BaseDodge = 16,
-        HideDetection = 26,
+        HideDetection = 20,
         CanSwim = true,
         CanJumpkick = true,
         CanStrikeCritically = false,
                 
-        Experience = 22000,
+        Experience = 15000,
         Alignment = Alignment.Chaotic,
     };
     
@@ -77371,7 +77355,7 @@
     };
     duck.AddGold(5000);
     duck.AddLoot(new LootPack(
-        new LootPackEntry(true, LengPotions,    5),
+        new LootPackEntry(true, LengPotions,    0.1),
         new LootPackEntry(true, (from, container) => new OchreEgg(), 100.0)  /* TODO: add another piece of minor loot just added egg because it made sense*/
     ));
         
@@ -77401,13 +77385,13 @@
         MaxHealth = 110, Health = 110,
         BaseDodge = 14,
         Experience = 6200,
-        HideDetection = 26,
+        
         CanFlee = true,
     };
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(12)
+        new CreatureBasicAttack(10, 13, 21)
     };
     
     orc.Wield(new ShortSword());
@@ -77417,7 +77401,7 @@
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, CliffGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, LengPotions,    0.1),
         new LootPackEntry(true, CliffTreasures,    0.63)
     ));
     
@@ -77446,20 +77430,20 @@
     {
         MaxHealth = 105, Health = 105,
         BaseDodge = 15,
-        HideDetection = 26,        
+                
         Experience = 5900,
     };
     
     wolf.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(10,     5, 12,   "The wolf rakes you with its claws."),  50 
+            new CreatureAttack(9,     5, 13,   "The wolf rakes you with its claws."),  50 
         }, 
         {
-            new CreatureAttack(11,     6, 14,  "The wolf sinks its teeth into you."),  30 
+            new CreatureAttack(10,     6, 15,  "The wolf sinks its teeth into you."),  30 
         }, 
         {
-            new CreatureAttack(12,     8, 16,  "The wolf lunges at you."),             20 
+            new CreatureAttack(11,     8, 17,  "The wolf lunges at you."),             20 
         }, 
     };
         
@@ -77473,7 +77457,7 @@
     wolf.AddLoot(new LootPack(
         new LootPackEntry(true, CliffGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, LengPotions,    0.1),
         new LootPackEntry(true, CliffTreasures,    0.63)
     ));
         
@@ -77504,12 +77488,11 @@
         BaseDodge = 15,
         BasePenetration = ShieldPenetration.Light,
         Experience = 6900,
-        HideDetection = 26,
     };
     
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(13)
+        new CreatureBasicAttack(11, 16, 23)
     };
     
     troll.Wield(new Greatsword());
@@ -77519,7 +77502,7 @@
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, CliffGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, LengPotions,    0.1),
         new LootPackEntry(true, CliffTreasures,    0.63)
     ));
     
@@ -77548,7 +77531,7 @@
     {
         MaxHealth = 80, Health = 80,
         BaseDodge = 14,
-        HideDetection = 23,        
+                
         Experience = 2500,
     };
     
@@ -77598,7 +77581,7 @@
         MaxHealth = 90, Health = 90,
         BaseDodge = 14,
         Experience = 5700,
-        HideDetection = 26,
+        
         CanFlee = true,
     };
     
@@ -77614,7 +77597,7 @@
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, CliffGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, LengPotions,    0.1),
         new LootPackEntry(true, CliffTreasures,    0.63)
     ));
     
@@ -77643,11 +77626,8 @@
     {
         MaxHealth = 220, Health = 220,
         BaseDodge = 14,
-        HideDetection = 26,
         BasePenetration = ShieldPenetration.Light,
         Experience = 11500,
-        
-        Immunity = CreatureImmunity.Poison,
         
         
     };
@@ -77656,13 +77636,13 @@
     manticora.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(10,     12, 18,      "The manticora bites you with its teeth."),     40 
+            new CreatureAttack(10,     15, 20,      "The manticora bites you with its teeth."),     40 
         },
         {
-            new CreatureAttack(11,     15, 22,      "The manticora slashes you with its claws."),   30 
+            new CreatureAttack(11,     20, 25,      "The manticora slashes you with its claws."),   30 
         },
         {
-            new CreatureAttack(12,     22, 27,     "The manticora stings you with his tail.", 
+            new CreatureAttack(12,     25, 30,     "The manticora stings you with his tail.", 
                                                     new AttackPoisonComponent(13)),                 30 
         },
     };
@@ -77678,7 +77658,7 @@
     manticora.AddLoot(new LootPack(
         new LootPackEntry(true, MinotaurGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.3),
+        new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, MinotaurTreasures,    0.63)
     ));
     
@@ -77708,7 +77688,7 @@
         MaxHealth = 55, Health = 55,
         MaxMana = 8, Mana = 8,
         BaseDodge = 12,
-        HideDetection = 23,
+    
         Experience = 1725,
         
         CanFlee = true,
@@ -77733,7 +77713,6 @@
     wight.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20),
-        new LootPackEntry(true, UtilityTreasures,    1),
         new LootPackEntry(true, LengPotions,    0.05),
         new LootPackEntry(true, MausTreasure,  0.63)
     ));
@@ -77823,7 +77802,7 @@
         MaxHealth = 145, Health = 145,
         MaxMana = 3, Mana = 3,
         BaseDodge = 13,
-        HideDetection = 23,   
+    
         Experience = 2750,
     
         Movement = 2,
@@ -77854,8 +77833,7 @@
     mummy.AddLoot(new LootPack(
         new LootPackEntry(true, MausGems,       40,     gemsPriceMutator), 
         new LootPackEntry(true, MausBottles,    20),
-        new LootPackEntry(true, UtilityTreasures,    3),
-        new LootPackEntry(true, LengPotions,    0.2),
+        new LootPackEntry(true, LengPotions,    0.1),
         new LootPackEntry(true, MausTreasure,  0.63)
         
     ));
@@ -77885,7 +77863,7 @@
     {
         MaxHealth = 500, Health = 500,
         BaseDodge = 18,
-        HideDetection = 23,
+
         Experience = 23000,
 
         Movement = 3,
@@ -77956,9 +77934,9 @@
         <block><![CDATA[
     var seaserpent = new SeaSerpent()
     {
-        MaxHealth = 800, Health = 800,
+        MaxHealth = 500, Health = 500,
         BaseDodge = 18,
-        HideDetection = 23,   
+
         Experience = 23000,
         
         CanWalk = false,
@@ -78011,7 +77989,7 @@
     seaserpent.AddLoot(new LootPack(
         new LootPackEntry(true, CliffGems,       50,     gemsPriceMutator), 
         new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.4),
+        new LootPackEntry(true, LengPotions,    0.3),
         new LootPackEntry(true, CliffTreasures,    3)
     ));
     
@@ -78028,101 +78006,6 @@
       <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="vladLich">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    var lich = new Lich()
-    {
-        MaxHealth = 150, Health = 150,
-        MaxMana = 19, Mana = 19,
-        BaseDodge = 14,
-        MagicProtection = 33,
-        Experience = 9500,
-        VisibilityDistance = 0,
-        CanLoot = false,
-        HideDetection = 28,
-    };
-    
-    lich.AddStatus(new NightVisionStatus(lich));
-        
-    lich.Attacks = new CreatureAttackCollection
-    {
-        new CreatureBasicAttack(9, 15, 25)
-    };
-    
-    lich.Spells = new CreatureSpellCollection()
-    {
-        new CreatureSpell<DeathSpell>(
-            skillLevel: 10, cost: 6, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false)
-    };
-        
-    lich.Wield(new BlackStaff());
-        
-    lich.AddGold(700);
-    lich.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new SilverGreatAxe(),        100),
-        new LootPackEntry(true, MinotaurGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, CliffBottles,    20),
-        new LootPackEntry(true, UtilityTreasures,    6),
-        new LootPackEntry(true, LengPotions,    0.2),
-        new LootPackEntry(true, MinotaurTreasures,    0.63)
-    ));
-    
-    return lich;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="lengGambler">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    var vendor = new Shopkeeper()
-    {
-        Name = _names.Random(),
-        Body = (9),
-        
-        BaseDodge = 10,
-        MaxHealth = 50, Health = 50,
-        
-        Experience = 50,
-    };
-    
-    return vendor;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    if (spokeRecently(source))
-        return;
-
-    source.Say($"{player.Name}! Come try your luck! Ask me to 'show prices' to see what you can wager on.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -78220,7 +78103,7 @@
       <entry entity="lengTannerTemplate" size="1" minimum="1" maximum="1" />
       <location x="3" y="25" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="lengApothecary">
+    <spawn type="LocationSpawner" name="nwvendor">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -78228,67 +78111,9 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     spawn.Name = "Reis";
-    var counter = new Point2D(11, 9, 1);
+    if (spawn is Shopkeeper shopkeeper)
+        shopkeeper.AddCounter(new Point2D(11, 9, 1));
 
-    if (spawn is Shopkeeper vendor)
-    {
-        vendor.AddCounter(counter);
-        
-        void onRarePurchase(PlayerEntity player, ItemEntity item)
-        {
-            vendor.SayTo(player, _rarePurchaseResponses.Random());
-        }
-       
-        // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
-        var merchantUpsell = Utility.RandomDouble() + 3; // 3-4x upsell
-        var wares = new List<StockEntry>()
-        {
-        //apothecary
-            new StockEntry("green balm",            () => new GreenBalm(),           (int)(16 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
-            new StockEntry("mugwort",               () => new Mugwort(),             (int)(25  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
-            new StockEntry("yellow balm",           () => new YellowBalm(),          (int)(16  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
-            new StockEntry("stamina potion",        () => new StaminaPotion(),       (int)(40  * merchantUpsell),       Utility.RandomBetween(1, 4), null)
-        };
-        foreach (var stock in wares.Random(3)){
-            vendor.Stock(stock);
-            vendor.Restock(stock);
-        }
-            
-        //Apothecaries carry either naptha or nitro. More likely to carry one or the other based on land.
-        var naptha = new StockEntry("black ceramic bottle", () => new NaphthaPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
-        var nitro = new StockEntry("black ceramic bottle", () => new NitroPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
-        
-        if (Utility.RandomDouble() <= 0.50) 
-        {
-            vendor.Stock(nitro);
-            vendor.Restock(nitro);
-        } 
-        else 
-        {
-            vendor.Stock(naptha);
-            vendor.Restock(naptha);
-        }
-
-        // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
-        merchantUpsell = Utility.RandomDouble() * 3 + 7; // 7-10x upsell
-        var rareWares = new List<StockEntry>()
-        {
-        //Apothecary
-            new StockEntry("black ceramic bottle",      () => new PermanentDexterityPotion(),       (int)(2000 * merchantUpsell),       1, onRarePurchase),
-            new StockEntry("golden porcelain bottle",   () => new PermanentIntelligencePotion(),    (int)(2000 * merchantUpsell),       1, onRarePurchase),
-            new StockEntry("heavy glass bottle",        () => new PermanentWisdomPotion(),          (int)(2000 * merchantUpsell),       1, onRarePurchase)
-        };
-        
-        if (Utility.RandomDouble() <= 0.10) 
-        {
-            if (Utility.RandomDouble() <= 0.50) 
-                vendor.Stock(rareWares[0]);
-            else if (Utility.RandomDouble() <= 0.60) 
-                vendor.Stock(rareWares[1]);
-            else 
-                vendor.Stock(rareWares[2]);
-        }
-    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -78325,7 +78150,7 @@
       <entry entity="lengBankerTemplate" size="1" minimum="1" maximum="1" />
       <location x="15" y="4" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="lengArmorer">
+    <spawn type="LocationSpawner" name="northvendor">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -78333,54 +78158,8 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     spawn.Name = "Tal";
-    var counter = new Point2D(20, 10, 1);
-    
-    if (spawn is Shopkeeper vendor) 
-    {
-        vendor.AddCounter(counter);
-        
-        void onRarePurchase(PlayerEntity player, ItemEntity item)
-        {
-            vendor.SayTo(player, _rarePurchaseResponses.Random());
-        }
-       
-        // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
-        var merchantUpsell = Utility.RandomDouble() + 3; // 3-4x upsell
-        var wares = new List<StockEntry>()
-        {
-            new StockEntry("leather armor",         () => new LeatherArmor(),        (int)(80  * merchantUpsell),       Utility.RandomBetween(1, 2), null),
-            new StockEntry("chainmail",             () => new ChainmailArmor(),      (int)(140 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
-            new StockEntry("platemail",             () => new PlatemailArmor(),      (int)(280 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
-            new StockEntry("leather boots",         () => new LeatherBoots(),        (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 2), null),
-            new StockEntry("leather gauntlets",     () => new LeatherGauntlets(),    (int)(280 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
-            new StockEntry("ram skull",             () => new RamSkull(),            (int)(420 * merchantUpsell),       Utility.RandomBetween(1, 2), null)
-        };
-        
-        foreach (var stock in wares.Random(3))
-        {
-            vendor.Stock(stock);
-            vendor.Restock(stock);
-        }
-
-        // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
-        merchantUpsell = Utility.RandomDouble() * 3 + 7; // 7-10x upsell
-        var rareWares = new List<StockEntry>()
-        {
-            new StockEntry("winged helm",              () => new WingedHelm(),                      (int)(400  * merchantUpsell),       1, onRarePurchase),
-            new StockEntry("dragon scales",            () => new DragonScaleArmor(),                (int)(1000 * merchantUpsell),       1, onRarePurchase),
-            new StockEntry("feather fall boots",       () => new FeatherFallBoots(),                (int)(500  * merchantUpsell),       1, onRarePurchase)
-        };
-        
-        if (Utility.RandomDouble() <= 0.10) 
-        {
-            if (Utility.RandomDouble() <= 0.50) 
-                vendor.Stock(rareWares[0]);
-            else if (Utility.RandomDouble() <= 0.60) 
-                vendor.Stock(rareWares[1]);
-            else 
-                vendor.Stock(rareWares[2]);
-        }
-    }
+    if (spawn is Shopkeeper shopkeeper)
+        shopkeeper.AddCounter(new Point2D(20, 10, 1));
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -78394,7 +78173,7 @@
       <entry entity="lengShopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="20" y="9" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="lengJeweler">
+    <spawn type="LocationSpawner" name="nevendor">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -78402,54 +78181,8 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     spawn.Name = "Doron";
-    var counter = new Point2D(26, 15, 1);
-
-    if (spawn is Shopkeeper vendor)
-    {
-        vendor.AddCounter(counter);
-        
-        void onRarePurchase(PlayerEntity player, ItemEntity item)
-        {
-            vendor.SayTo(player, _rarePurchaseResponses.Random());
-        }
-       
-        // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
-        var merchantUpsell = Utility.RandomDouble() + 3; // 3-4x upsell
-        
-        var wares = new List<StockEntry>()
-        {
-            new StockEntry("scorpion amulet",       () => new ScorpionAmulet(),      (int)(250 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
-            new StockEntry("black pearls",          () => new BlackPearls(),         (int)(600 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
-            new StockEntry("weak strength ring",    () => new WeakStrengthRing(),    (int)(500 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
-            new StockEntry("weak shield ring",      () => new WeakShieldRing(),      (int)(600 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
-            new StockEntry("breathe water ring",    () => new BreatheWaterRing(),    (int)(500 * merchantUpsell),       Utility.RandomBetween(1, 2), null)
-        };
-        
-        foreach (var stock in wares.Random(3))
-        {
-            vendor.Stock(stock);
-            vendor.Restock(stock);
-        }
-
-        // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
-        merchantUpsell = Utility.RandomDouble() * 3 + 7; // 7-10x upsell
-        var rareWares = new List<StockEntry>()
-        {
-            new StockEntry("death resistance ring",              () => new DeathResistanceRing(),         (int)(300 * merchantUpsell),  1, onRarePurchase),
-            new StockEntry("weak dexterity ring",                () => new WeakDexterityRing(),           (int)(1000 * merchantUpsell), 1, onRarePurchase),
-            new StockEntry("stun and death protection bracelet", () => new StunDeathProtectionBracelet(), (int)(3000 * merchantUpsell), 1, onRarePurchase)
-        };
-        
-        if (Utility.RandomDouble() <= 0.10) 
-        {
-            if (Utility.RandomDouble() <= 0.50) 
-                vendor.Stock(rareWares[0]);
-            else if (Utility.RandomDouble() <= 0.60) 
-                vendor.Stock(rareWares[1]);
-            else 
-                vendor.Stock(rareWares[2]);
-        }
-    }
+    if (spawn is Shopkeeper shopkeeper)
+        shopkeeper.AddCounter(new Point2D(26, 15, 1));
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -78463,117 +78196,16 @@
       <entry entity="lengShopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="26" y="14" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="lengGambler">
+    <spawn type="LocationSpawner" name="sevendor">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     spawn.Name = "Gill";
-    var counter = new Point2D(27, 20, 1);
-    
-    if (spawn is Shopkeeper vendor) 
-    {
-        vendor.AddCounter(counter);
-        
-        void onRarePurchase(PlayerEntity player, ItemEntity item)
-        {
-            vendor.SayTo(player, "You got a real treasure there.");
-        }
-       
-        var bottle = (new List<StockEntry>()
-        {
-            new StockEntry("mystery bottle",            () => new GreenBalm(),                      (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery bottle",            () => new YellowBalm(),                     (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery bottle",            () => new StaminaPotion(),                  (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery bottle",            () => new GreenBalm(),                      (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery bottle",            () => new NitroPotion(),                    (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery bottle",            () => new NaphthaPotion(),                  (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery bottle",            () => new PermanentStrengthPotion(),        (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery bottle",            () => new PermanentDexterityPotion(),       (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery bottle",            () => new PermanentIntelligencePotion(),    (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery bottle",            () => new PermanentWisdomPotion(),          (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery bottle",            () => new PermanentWillpowerPotion(),       (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery bottle",            () => new PermanentConstitutionPotion(),    (int)(10000),      1, onRarePurchase, false)
-        }).Random();
-        
-        var weapon = (new List<StockEntry>()
-        {
-            new StockEntry("mystery weapon",   () => new SteelDagger(),         (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery weapon",   () => new Spear(),               (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery weapon",   () => new Rapier(),              (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery weapon",   () => new Greatsword(),          (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery weapon",   () => new Crossbow(),            (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery weapon",   () => new GiltDagger(),          (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery weapon",   () => new FineCrossbow(),        (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery weapon",   () => new SilverDagger(),        (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery weapon",   () => new IronRod(),             (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery weapon",   () => new BlackBroadsword(),     (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery weapon",   () => new SilverGreatAxe(),      (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery weapon",   () => new ReturningHammer(),     (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery weapon",   () => new ReturningAxe(),        (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery weapon",   () => new HeavyCrossbow(),       (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery weapon",   () => new HummingbirdSword(),    (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery weapon",   () => new BlueStaffRaiseDead(),  (int)(10000),      1, onRarePurchase, false)
-        }).Random();
-        
-        var accessory = (new List<StockEntry>()
-        {
-            new StockEntry("mystery item",       () => new ScorpionAmulet(),              (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery item",       () => new BlackPearls(),                 (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery item",       () => new WeakStrengthRing(),            (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery item",       () => new StrengthRing(),                (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery item",       () => new WeakShieldRing(),              (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery item",       () => new ShieldRing(),                  (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery item",       () => new BreatheWaterRing(),            (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery item",       () => new BlindResistanceRing(),         (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery item",       () => new DeathResistanceRing(),         (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery item",       () => new FireProtectionAmulet(),        (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery item",       () => new WeakStrengthBracelet(),        (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery item",       () => new FireIceProtectionRing(),       (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery item",       () => new FireIceProtectionAmulet(),     (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery item",       () => new BreatheWaterBracelet(),        (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery item",       () => new StrengthBracelet(),            (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery item",       () => new ShieldBracelet(),              (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery item",       () => new StrongStrengthRing(),          (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery item",       () => new WeakDexterityRing(),           (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery item",       () => new StunDeathProtectionBracelet(), (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery item",       () => new BlindFearProtectionBracelet(), (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery item",       () => new LightningResistanceRing(),     (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery item",       () => new SilverDaggerAmulet(),          (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery item",       () => new HummingbirdAmulet(),           (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery item",       () => new DexterityRing(),               (int)(10000),      1, onRarePurchase, false)
-        }).Random();
-        
-        var armor = (new List<StockEntry>()
-        {
-            new StockEntry("mystery armor",      () => new LeatherArmor(),        (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery armor",      () => new WyvernScales(),        (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery armor",      () => new SharkJacket(),         (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery armor",      () => new GriffinJacket(),       (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery armor",      () => new ChainmailArmor(),      (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery armor",      () => new PlatemailArmor(),      (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery armor",      () => new SalamanderScales(),    (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery armor",      () => new LeatherBoots(),        (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery armor",      () => new CrocodileBoots(),      (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery armor",      () => new LeatherGauntlets(),    (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery armor",      () => new SteelGauntlets(),      (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery armor",      () => new RamSkull(),            (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery armor",      () => new TigerSkull(),          (int)(10000),      Utility.RandomBetween(1, 4), null),
-            new StockEntry("mystery armor",      () => new GriffinSkull(),        (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery armor",      () => new BearSkull(),           (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery armor",      () => new WingedHelm(),          (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery armor",      () => new FeatherFallBoots(),    (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery armor",      () => new IceDragonScaleArmor(), (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery armor",      () => new DragonSkull(),         (int)(10000),      1, onRarePurchase, false),
-        }).Random();
-        
-        vendor.Stock(bottle);
-        vendor.Stock(weapon);
-        vendor.Stock(accessory);
-        vendor.Stock(armor);
-        vendor.RestockAll();
-    }
+    if (spawn is Shopkeeper shopkeeper)
+        shopkeeper.AddCounter(new Point2D(27, 20, 1));
+
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -78584,10 +78216,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="lengGambler" size="1" minimum="1" maximum="1" />
+      <entry entity="lengShopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="27" y="21" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="lengWeaponsmith">
+    <spawn type="LocationSpawner" name="svendor">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -78595,56 +78227,9 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     spawn.Name = "Reuv";
+    if (spawn is Shopkeeper shopkeeper)
+        shopkeeper.AddCounter(new Point2D(20, 23, 1));
 
-    if (spawn is Shopkeeper vendor) 
-    {
-        vendor.AddCounter(new Point2D(19, 23, 1));
-        vendor.AddCounter(new Point2D(20, 23, 1));
-        vendor.AddCounter(new Point2D(21, 23, 1));
-        
-        void onRarePurchase(PlayerEntity player, ItemEntity item)
-        {
-            vendor.SayTo(player, _rarePurchaseResponses.Random());
-        }
-       
-        // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
-        var merchantUpsell = Utility.RandomDouble()+3; // 3-4x upsell
-        var wares = new List<StockEntry>()
-        {
-            new StockEntry("dagger",                () => new SteelDagger(),         (int)(30  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
-            new StockEntry("spear",                 () => new Spear(),               (int)(50  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
-            new StockEntry("rapier",                () => new Rapier(),              (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
-            new StockEntry("staff",                 () => new WoodenStaff(),         (int)(40  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
-            new StockEntry("greatsword",            () => new Greatsword(),          (int)(100 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
-            new StockEntry("crossbow",              () => new Crossbow(),            (int)(100 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
-            new StockEntry("shuriken",              () => new Shuriken(),            (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 4), null)
-        };
-        
-        foreach (var stock in wares.Random(3))
-        {
-            vendor.Stock(stock);
-            vendor.Restock(stock);
-        }
-
-        // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
-        merchantUpsell = Utility.RandomDouble() * 3 + 7; // 7-10x upsell
-        var rareWares = new List<StockEntry>()
-        {
-            new StockEntry("black staff",               () => new BlackStaff(),                     (int)(200  * merchantUpsell),       1, onRarePurchase),
-            new StockEntry("silver dagger",             () => new SilverDagger(),                   (int)(350  * merchantUpsell),       1, onRarePurchase),
-            new StockEntry("flail",                     () => new WoodenFlail(),                    (int)(80   * merchantUpsell),       1, onRarePurchase)
-        };
-        
-        if (Utility.RandomDouble() <= 0.10) 
-        {
-            if (Utility.RandomDouble() <= 0.50) 
-                vendor.Stock(rareWares[0]);
-            else if (Utility.RandomDouble() <= 0.60) 
-                vendor.Stock(rareWares[1]);
-            else 
-                vendor.Stock(rareWares[2]);
-        }
-    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -78692,7 +78277,7 @@
     if (spawn is TrainerEntity lengweapontrainer)
     {
         foreach (var skill in Skill.Weapons)
-            lengweapontrainer.SetTraining(skill, 6, 16);
+            lengweapontrainer.SetTraining(skill, 8, 16);
 
         lengweapontrainer.SetTraining(Skill.Hand, 0, 4);
     }
@@ -78896,7 +78481,7 @@
         foreach (var skill in Skill.Weapons)
             puck.SetTraining(skill, 0, 4);
 
-        puck.SetTraining(Skill.Hand, 6, 14);
+        puck.SetTraining(Skill.Hand, 8, 14);
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -79080,7 +78665,7 @@
     <spawn type="RegionSpawner" name="gryphCliffsOutdoors">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>22</maximum>
+      <maximum>13</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -79095,17 +78680,16 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="cliffNomadArcher" size="3" minimum="6" maximum="6" />
-      <entry entity="cliffNomad" size="3" minimum="7" maximum="7" />
-      <entry entity="cliffCentaur" size="1" minimum="2" maximum="2" />
-      <entry entity="cliffScorpion" size="1" minimum="3" maximum="3" />
-      <entry entity="surfaceBee" size="3" minimum="2" maximum="2" />
+      <entry entity="cliffNomadArcher" size="3" minimum="2" maximum="10" />
+      <entry entity="cliffNomad" size="3" minimum="3" maximum="10" />
+      <entry entity="cliffCentaur" size="1" minimum="1" maximum="3" />
+      <entry entity="cliffScorpion" size="1" minimum="1" maximum="5" />
+      <entry entity="surfaceBee" size="3" minimum="1" maximum="3" />
       <entry entity="mausRaven" size="1" minimum="2" maximum="2" />
       <bounds region="20">
-        <inclusion left="26" top="8" right="33" bottom="14" />
+        <inclusion left="9" top="3" right="37" bottom="9" />
         <inclusion left="5" top="10" right="25" bottom="23" />
-        <inclusion left="10" top="6" right="14" bottom="9" />
-        <exclusion left="15" top="13" right="18" bottom="16" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="griffLevelLeftGriff">
@@ -79135,7 +78719,7 @@
     <spawn type="RegionSpawner" name="griffLevelEastCave">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>8</maximum>
+      <maximum>6</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -79151,7 +78735,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="cliffGryphon" size="1" minimum="2" maximum="2" />
-      <entry entity="cliffNomad" size="3" minimum="4" maximum="4" />
+      <entry entity="cliffNomad" size="3" minimum="2" maximum="3" />
       <entry entity="cliffNomadArcher" size="3" minimum="2" maximum="2" />
       <bounds region="20">
         <inclusion left="18" top="2" right="23" bottom="9" />
@@ -79162,7 +78746,7 @@
     <spawn type="RegionSpawner" name="griffLevelDungeon">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>7</maximum>
+      <maximum>8</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -79177,11 +78761,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="cliffTrolls" size="3" minimum="5" maximum="5" />
+      <entry entity="cliffTrolls" size="3" minimum="4" maximum="4" />
       <entry entity="mausWraith" size="1" minimum="2" maximum="2" />
       <bounds region="20">
-        <inclusion left="16" top="24" right="33" bottom="27" />
-        <exclusion left="16" top="24" right="19" bottom="26" />
+        <inclusion left="16" top="24" right="34" bottom="27" />
+        <inclusion left="29" top="29" right="37" bottom="23" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="drakeBoss">
@@ -79210,7 +78795,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="gryphBossKosh">
+    <spawn type="RegionSpawner" name="grissBossKosh">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>14400</maximumDelay>
       <maximum>1</maximum>
@@ -79255,7 +78840,6 @@
       <entry entity="vladBoss" size="1" minimum="1" maximum="1" />
       <entry entity="vladSalamander" size="1" minimum="1" maximum="1" />
       <entry entity="vladGryph" size="1" minimum="2" maximum="2" />
-      <entry entity="vladLich" size="1" minimum="1" maximum="1" />
       <bounds region="17">
         <inclusion left="3" top="3" right="7" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -79282,8 +78866,6 @@
       <entry entity="vladFamiliarArcher" size="1" minimum="2" maximum="2" />
       <entry entity="vladFamiliarMelee" size="1" minimum="2" maximum="2" />
       <entry entity="vladFamiliarThaum" size="1" minimum="1" maximum="1" />
-      <entry entity="cliffTrolls" size="3" minimum="1" maximum="1" />
-      <entry entity="mausWraith" size="1" minimum="1" maximum="1" />
       <bounds region="12">
         <inclusion left="4" top="3" right="8" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -79307,8 +78889,9 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="vladFamiliarThaum" size="1" minimum="3" maximum="3" />
-      <entry entity="minoLich" size="1" minimum="3" maximum="3" />
+      <entry entity="vladFamiliarArcher" size="1" minimum="3" maximum="3" />
+      <entry entity="vladFamiliarThaum" size="1" minimum="2" maximum="2" />
+      <entry entity="vladFamiliarMelee" size="1" minimum="3" maximum="3" />
       <bounds region="14">
         <inclusion left="4" top="3" right="8" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -79418,7 +79001,7 @@
     <spawn type="RegionSpawner" name="shidStables">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>16</maximum>
+      <maximum>13</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -79434,14 +79017,13 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="mausWraith" size="1" minimum="2" maximum="2" />
-      <entry entity="mausHobgoblin" size="3" minimum="5" maximum="5" />
+      <entry entity="mausHobgoblin" size="3" minimum="3" maximum="3" />
       <entry entity="cliffOrcArcher" size="3" minimum="3" maximum="3" />
-      <entry entity="mausSkeleton" size="3" minimum="4" maximum="4" />
+      <entry entity="mausSkeleton" size="3" minimum="3" maximum="3" />
       <entry entity="mausHobgobMage" size="2" minimum="2" maximum="2" />
       <bounds region="100">
         <inclusion left="17" top="1" right="21" bottom="6" />
         <inclusion left="1" top="5" right="9" bottom="6" />
-        <inclusion left="3" top="3" right="15" bottom="3" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -79635,7 +79217,7 @@
     <spawn type="RegionSpawner" name="drakeOuter">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1500</maximumDelay>
-      <maximum>11</maximum>
+      <maximum>10</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -79651,12 +79233,12 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="minoManticora" size="1" minimum="2" maximum="2" />
-      <entry entity="minoMinotaur" size="1" minimum="5" maximum="5" />
-      <entry entity="minoLich" size="1" minimum="2" maximum="2" />
-      <entry entity="minoMinotaur" size="2" minimum="2" maximum="2" />
+      <entry entity="minoMinotaur" size="1" minimum="3" maximum="4" />
+      <entry entity="minoLich" size="1" minimum="3" maximum="3" />
+      <entry entity="minoMinotaur" size="2" minimum="1" maximum="1" />
       <bounds region="43">
         <inclusion left="8" top="2" right="18" bottom="9" />
-        <exclusion left="8" top="6" right="12" bottom="9" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="powerTroll">
@@ -79711,7 +79293,7 @@
     <spawn type="RegionSpawner" name="cliffsMain">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>36</maximum>
+      <maximum>25</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -79726,14 +79308,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="cliffCentaur" size="1" minimum="2" maximum="2" />
-      <entry entity="cliffWolves" size="3" minimum="8" maximum="8" />
-      <entry entity="cliffOrcs" size="3" minimum="10" maximum="10" />
-      <entry entity="cliffTrolls" size="3" minimum="9" maximum="9" />
-      <entry entity="cliffOrcArcher" size="3" minimum="7" maximum="7" />
+      <entry entity="cliffCentaur" size="1" minimum="3" maximum="3" />
+      <entry entity="cliffWolves" size="3" minimum="5" maximum="6" />
+      <entry entity="cliffOrcs" size="3" minimum="5" maximum="6" />
+      <entry entity="cliffTrolls" size="2" minimum="4" maximum="5" />
+      <entry entity="cliffOrcArcher" size="3" minimum="4" maximum="5" />
       <bounds region="35">
         <inclusion left="1" top="9" right="24" bottom="27" />
-        <exclusion left="8" top="25" right="11" bottom="27" />
+        <exclusion left="9" top="26" right="10" bottom="27" />
         <exclusion left="17" top="9" right="24" bottom="12" />
       </bounds>
     </spawn>
@@ -80272,80 +79854,6 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new DexterityRing();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-    </treasure>
-    <treasure name="UtilityTreasures">
-      <entry weight="5">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new DarknessOrb();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="5">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new LightOrb();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="3">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new DemonWand();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="3">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new BirchWand();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="1">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new FireballOrb();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="1">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new IceStormOrb();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="1">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new WebOrb();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="1">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new HickoryWand();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>

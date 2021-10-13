@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.77.0.0">
+<segment name="Kesmai" version="0.74.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -9,11 +9,11 @@
     public static bool spokeRecently(MobileEntity entity)
     {
         /* If the entity spoke recently, we're not going to speak again. */
-        if (_speechDelays.TryGetValue(entity, out var nextSpeechTime) && Server.Now < nextSpeechTime)
+        if (_speechDelays.TryGetValue(entity, out var nextSpeechTime) && DateTime.Now < nextSpeechTime)
             return true;
         
         /* The entity did not speak recently, add them to the delay, and allow them to talk. */
-        _speechDelays[entity] = Server.Now + _speechDelay;
+        _speechDelays[entity] = DateTime.Now + _speechDelay;
         return false;
     }
 
@@ -14458,8 +14458,8 @@
         </component>
       </tile>
       <tile x="109" y="14">
-        <component type="StaticComponent">
-          <static>22</static>
+        <component type="FloorComponent">
+          <ground>22</ground>
         </component>
         <component type="FloorComponent">
           <ground>116</ground>
@@ -15487,8 +15487,8 @@
         </component>
       </tile>
       <tile x="109" y="15">
-        <component type="StaticComponent">
-          <static>22</static>
+        <component type="FloorComponent">
+          <ground>22</ground>
         </component>
         <component type="FloorComponent">
           <ground>116</ground>
@@ -17146,8 +17146,8 @@
         </component>
       </tile>
       <tile x="59" y="17">
-        <component type="StaticComponent">
-          <static>601</static>
+        <component type="FloorComponent">
+          <ground>601</ground>
         </component>
         <component type="FloorComponent">
           <ground>116</ground>
@@ -34333,8 +34333,8 @@
         </component>
       </tile>
       <tile x="28" y="33">
-        <component type="FloorComponent">
-          <ground>13</ground>
+        <component type="StaticComponent">
+          <static>13</static>
         </component>
         <component type="TrashComponent">
           <static>88</static>
@@ -53743,19 +53743,6 @@
           <destinationY>21</destinationY>
           <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
-        </component>
-        <component type="HiddenTeleporterComponent">
-          <destinationX>1</destinationX>
-          <destinationY>2</destinationY>
-          <destinationRegion>9</destinationRegion>
-          <lightphases select="all" />
-          <moonphases select="all" />
-          <professions select="all" />
-          <alignments select="all" />
-        </component>
-        <component type="StaticComponent">
-          <color r="255" g="255" b="255" a="146" />
-          <static>193</static>
         </component>
       </tile>
       <tile x="8" y="3">
@@ -77083,16 +77070,16 @@
         </component>
       </tile>
       <tile x="20" y="4">
-        <component type="StaticComponent">
-          <static>177</static>
+        <component type="FloorComponent">
+          <ground>177</ground>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
         </component>
       </tile>
       <tile x="21" y="4">
-        <component type="StaticComponent">
-          <static>177</static>
+        <component type="FloorComponent">
+          <ground>177</ground>
         </component>
         <component type="FloorComponent">
           <ground>115</ground>
@@ -77126,8 +77113,8 @@
         </component>
       </tile>
       <tile x="26" y="4">
-        <component type="StaticComponent">
-          <static>177</static>
+        <component type="FloorComponent">
+          <ground>177</ground>
         </component>
         <component type="FloorComponent">
           <ground>252</ground>
@@ -82595,14 +82582,14 @@
         </component>
       </tile>
       <tile x="15" y="23">
+        <component type="FloorComponent">
+          <ground>1</ground>
+        </component>
         <component type="DoorComponent">
           <openId>74</openId>
           <closedId>62</closedId>
           <secretId>25</secretId>
           <destroyedId>80</destroyedId>
-        </component>
-        <component type="FloorComponent">
-          <ground>1</ground>
         </component>
       </tile>
       <tile x="16" y="23">
@@ -82646,15 +82633,15 @@
         </component>
       </tile>
       <tile x="20" y="23">
+        <component type="StaticComponent">
+          <static>1</static>
+        </component>
         <component type="DoorComponent">
           <openId>74</openId>
           <closedId>62</closedId>
           <secretId>25</secretId>
           <destroyedId>80</destroyedId>
           <isSecret>true</isSecret>
-        </component>
-        <component type="FloorComponent">
-          <ground>1</ground>
         </component>
       </tile>
       <tile x="21" y="23">
@@ -83958,13 +83945,13 @@
         </component>
       </tile>
       <tile x="17" y="28">
+        <component type="FloorComponent">
+          <ground>1</ground>
+        </component>
         <component type="WallComponent">
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
-        </component>
-        <component type="FloorComponent">
-          <ground>1</ground>
         </component>
       </tile>
       <tile x="18" y="28">
@@ -84216,13 +84203,13 @@
         </component>
       </tile>
       <tile x="17" y="29">
+        <component type="FloorComponent">
+          <ground>1</ground>
+        </component>
         <component type="WallComponent">
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
-        </component>
-        <component type="FloorComponent">
-          <ground>1</ground>
         </component>
       </tile>
       <tile x="18" y="29">
@@ -85340,6 +85327,11 @@
           <destroyed>39</destroyed>
           <ruins>44</ruins>
         </component>
+        <component type="WallComponent">
+          <wall>26</wall>
+          <destroyed>39</destroyed>
+          <ruins>44</ruins>
+        </component>
       </tile>
       <tile x="23" y="33">
         <component type="FloorComponent">
@@ -85347,14 +85339,14 @@
         </component>
       </tile>
       <tile x="24" y="33">
+        <component type="StaticComponent">
+          <static>1</static>
+        </component>
         <component type="DoorComponent">
           <openId>75</openId>
           <closedId>63</closedId>
           <secretId>26</secretId>
           <destroyedId>81</destroyedId>
-        </component>
-        <component type="FloorComponent">
-          <ground>1</ground>
         </component>
       </tile>
       <tile x="25" y="33">
@@ -89001,10 +88993,15 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <static>264</static>
+        </component>
+        <component type="WallComponent">
+          <wall>26</wall>
+          <destroyed>39</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="11" y="11">
@@ -89622,10 +89619,15 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <static>264</static>
+        </component>
+        <component type="WallComponent">
+          <wall>26</wall>
+          <destroyed>39</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <static>221</static>
@@ -90243,13 +90245,16 @@
       <height>50</height>
       <tile x="0" y="0">
         <component type="StaticComponent">
-          <static>388</static>
+          <static>9</static>
         </component>
         <component type="WallComponent">
           <wall>409</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="StaticComponent">
+          <static>409</static>
         </component>
       </tile>
       <tile x="1" y="0">
@@ -90413,7 +90418,7 @@
       </tile>
       <tile x="8" y="1">
         <component type="StaticComponent">
-          <static>388</static>
+          <static>9</static>
         </component>
         <component type="WallComponent">
           <wall>383</wall>
@@ -90429,16 +90434,13 @@
           <destinationRegion>1</destinationRegion>
           <teleporterId>9</teleporterId>
         </component>
-        <component type="WallComponent">
-          <wall>383</wall>
-          <destroyed>396</destroyed>
-          <ruins>44</ruins>
-          <indestructible>true</indestructible>
+        <component type="StaticComponent">
+          <static>383</static>
         </component>
       </tile>
       <tile x="0" y="2">
         <component type="StaticComponent">
-          <static>388</static>
+          <static>9</static>
         </component>
         <component type="WallComponent">
           <wall>384</wall>
@@ -90496,6 +90498,9 @@
         </component>
       </tile>
       <tile x="8" y="2">
+        <component type="StaticComponent">
+          <static>388</static>
+        </component>
         <component type="HiddenTeleporterComponent">
           <destinationX>3</destinationX>
           <destinationY>7</destinationY>
@@ -90504,9 +90509,6 @@
           <moonphases select="all" />
           <professions select="all" />
           <alignments select="all" />
-        </component>
-        <component type="FloorComponent">
-          <ground>388</ground>
         </component>
       </tile>
       <tile x="9" y="2">
@@ -90522,7 +90524,7 @@
       </tile>
       <tile x="0" y="3">
         <component type="StaticComponent">
-          <static>388</static>
+          <static>9</static>
         </component>
         <component type="WallComponent">
           <wall>384</wall>
@@ -90601,16 +90603,13 @@
           <ruins>45</ruins>
           <indestructible>true</indestructible>
         </component>
-        <component type="WallComponent">
-          <wall>384</wall>
-          <destroyed>397</destroyed>
-          <ruins>44</ruins>
-          <indestructible>true</indestructible>
+        <component type="StaticComponent">
+          <static>384</static>
         </component>
       </tile>
       <tile x="0" y="4">
         <component type="StaticComponent">
-          <static>388</static>
+          <static>9</static>
         </component>
         <component type="WallComponent">
           <wall>384</wall>
@@ -96389,6 +96388,11 @@
         </component>
       </tile>
     </region>
+    <region>
+      <id>5</id>
+      <name>Region 5</name>
+      <height>0</height>
+    </region>
   </regions>
   <locations>
     <location name="Entrance" x="42" y="8" region="1" />
@@ -97916,7 +97920,7 @@
                 
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(5)
+        new CreatureBasicAttack(5, 3, 11)
     };
     
     troll.Wield(new Greatsword());
@@ -98025,7 +98029,7 @@
         
     wight.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(4)
+        new CreatureBasicAttack(6)
     };
     
     wight.Spells = new CreatureSpellCollection()
@@ -98243,7 +98247,7 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    33),
         new LootPackEntry(true, dungeon3Treasure,   0.6),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.2)
+        new LootPackEntry(true, dungeon3Potions,    0.1)
     ));
     
     return troll;
@@ -98291,7 +98295,7 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    33),
         new LootPackEntry(true, dungeon3Treasure,   0.6),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.2)
+        new LootPackEntry(true, dungeon3Potions,    0.1)
     ));
     
     return hobgoblin;
@@ -98339,7 +98343,7 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    33),
         new LootPackEntry(true, dungeon3Treasure,   0.6),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, dungeon3Potions,    0.1),
 
         new LootPackEntry(true, (from, container) => new ThrowingHammer(), 16)
     ));
@@ -98389,7 +98393,7 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    33),
         new LootPackEntry(true, dungeon3Treasure,   0.6),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, dungeon3Potions,    0.1),
         
         new LootPackEntry(true, (from, container) => new Shuriken(), 11)
     ));
@@ -98437,7 +98441,7 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    33),
         new LootPackEntry(true, dungeon3Treasure,   0.6),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, dungeon3Potions,    0.1),
         
         new LootPackEntry(true, (from, container) => new LeatherGauntlets(), 7.5)
     ));
@@ -98485,7 +98489,7 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    33),
         new LootPackEntry(true, dungeon3Treasure,   0.6),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.2)
+        new LootPackEntry(true, dungeon3Potions,    0.1)
     ));
     
     return goblin;
@@ -98544,7 +98548,7 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    33),
         new LootPackEntry(true, dungeon3Treasure,   0.6),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.2)
+        new LootPackEntry(true, dungeon3Potions,    0.1)
     ));
     
     return orc;
@@ -98602,7 +98606,7 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    50),
         new LootPackEntry(true, dungeon3Treasure,   0.6),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, dungeon3Potions,    0.1),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.0),
         new LootPackEntry(true, (from, container) => new SilverDagger(), 7.5)
     ));
@@ -98667,7 +98671,7 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    33), 
         new LootPackEntry(true, dungeon3Treasure,   0.6), 
         new LootPackEntry(true, dungeon3Rings,      0.6), 
-        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, dungeon3Potions,    0.1),
         
         new LootPackEntry(true, (from, container) => new FieryRuby(1200u), 100.0)
     ));
@@ -98705,7 +98709,7 @@ return orc;
         
     wraith.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6)
+        new CreatureBasicAttack(7)
     };
     
     wraith.Spells = new CreatureSpellCollection()
@@ -98723,8 +98727,7 @@ return orc;
         new LootPackEntry(true, dungeon3Bottles,    33),
         new LootPackEntry(true, dungeon3Treasure,   0.6),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, utilityItems,   2),
-        new LootPackEntry(true, dungeon3Potions,    0.2),
+        new LootPackEntry(true, dungeon3Potions,    0.1),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.0)
         //new LootPackEntry(true, (from, container) => new SnakeStaff(), 1.6)
     ));
@@ -98764,7 +98767,7 @@ return orc;
         
     wight.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6),
+        new CreatureBasicAttack(7),
     };
     
     wight.Spells =  new CreatureSpellCollection()
@@ -98781,9 +98784,8 @@ return orc;
         new LootPackEntry(true, dungeon3Gems,       25,     gemsPriceMutator),
         new LootPackEntry(true, dungeon3Bottles,    33),
         new LootPackEntry(true, dungeon3Treasure,   0.6),
-        new LootPackEntry(true, utilityItems,   2),
         new LootPackEntry(true, dungeon3Rings,      0.6),
-        new LootPackEntry(true, dungeon3Potions,    0.2)
+        new LootPackEntry(true, dungeon3Potions,    0.1)
     ));
     
     return wight;
@@ -98831,7 +98833,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.3),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
 
         new LootPackEntry(true, (from, container) => new ThrowingHammer(), 16.67)
     ));
@@ -98881,7 +98883,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.3),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
 
         new LootPackEntry(true, (from, container) => new Shuriken(), 11.11)
     ));
@@ -98942,7 +98944,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.3)
+        new LootPackEntry(true, dungeon3Potions,    0.2)
     ));
     
     return orc;
@@ -98988,7 +98990,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.3)
+        new LootPackEntry(true, dungeon3Potions,    0.2)
     ));
     
     return troll;
@@ -99034,7 +99036,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.3)
+        new LootPackEntry(true, dungeon3Potions,    0.2)
     ));
     
     return hobgoblin;
@@ -99090,7 +99092,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.3),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         
         new LootPackEntry(true, (from, container) => new SilverDagger(), 7.14)
     ));
@@ -99156,7 +99158,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.6), 
         new LootPackEntry(true, dungeon4Rings,      0.6), 
-        new LootPackEntry(true, dungeon3Potions,    0.3),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         
         new LootPackEntry(true, (from, container) => new FieryRuby(1200u), 100.0)
     ));
@@ -99215,8 +99217,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, utilityItems,   3),
-        new LootPackEntry(true, dungeon3Potions,    0.3),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6)
     ));
     
@@ -99276,8 +99277,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, utilityItems,   3),
-        new LootPackEntry(true, dungeon3Potions,    0.3),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6)
     ));
     
@@ -99337,7 +99337,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.3)
+        new LootPackEntry(true, dungeon3Potions,    0.2)
     ));
     
     return ghoul;
@@ -99402,7 +99402,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    50),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.3),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6),
         new LootPackEntry(true, (from, container) => new SteelGauntlets(), 6.67),
         new LootPackEntry(true, (from, container) => new IronRod(), 6.67)
@@ -99460,7 +99460,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.3),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         
         new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 10.0)
     ));
@@ -99517,7 +99517,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.3),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         
         new LootPackEntry(true, (from, container) => new PearDiamond(1500u), 10.0)
     ));
@@ -99586,8 +99586,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, utilityItems,   3),
-        new LootPackEntry(true, dungeon3Potions,    0.3),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6),
         new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    10.0),
         new LootPackEntry(true, (from, container) => new RedRunesRobe(),        10.0)
@@ -99659,8 +99658,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, utilityItems,   3),
-        new LootPackEntry(true, dungeon3Potions,    0.3),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6),
         new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    10.0),
         new LootPackEntry(true, (from, container) => new RedRunesRobe(),        10.0)
@@ -99756,10 +99754,10 @@ return orc;
             new CreatureAttack(5,     1, 4,   "The wolf rakes you with its claws."), 50 
         }, 
         {
-            new CreatureAttack(5,     2, 5,  "The wolf sinks its teeth into you."),  30 
+            new CreatureAttack(7,     2, 5,  "The wolf sinks its teeth into you."),  30 
         }, 
         {
-            new CreatureAttack(6,     3, 6,  "The wolf lunges at you."),             20 
+            new CreatureAttack(7,     3, 6,  "The wolf lunges at you."),             20 
         }, 
     };
         
@@ -99919,7 +99917,7 @@ return orc;
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(4)
+        new CreatureBasicAttack(5, 1, 5)
     };
     
     orc.Wield(new Longsword());
@@ -99968,7 +99966,7 @@ return orc;
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(4)
+        new CreatureBasicAttack(3)
     };
     
     orc.Wield(new Crossbow());
@@ -100018,7 +100016,7 @@ return orc;
         
     wraith.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6)
+        new CreatureBasicAttack(7)
     };
     
     wraith.Spells = new CreatureSpellCollection()
@@ -100035,7 +100033,7 @@ return orc;
         new LootPackEntry(true, dungeon3Gems,       25,     gemsPriceMutator),
         new LootPackEntry(true, dungeon3Bottles,    33),
         new LootPackEntry(true, surfaceTreasure,    0.6),
-        new LootPackEntry(true, utilityItems,   1),        
+        
         new LootPackEntry(true, (from, container) => new IronOre(),         1.6)
         //new LootPackEntry(true, (from, container) => new SnakeStaff(),    1.6),
     ));
@@ -100076,7 +100074,7 @@ return orc;
         
     wight.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(4)
+        new CreatureBasicAttack(6)
     };
     
     wight.Spells = new CreatureSpellCollection()
@@ -100093,7 +100091,7 @@ return orc;
         new LootPackEntry(true, dungeon3Gems,       33,     gemsPriceMutator),
         new LootPackEntry(true, dungeon2Bottles,    33),
         new LootPackEntry(true, surfaceTreasure,    0.6),
-        new LootPackEntry(true, utilityItems,   1),        
+        
         new LootPackEntry(true, (from, container) => new IronOre(),     1.6)
     ));
     
@@ -100281,9 +100279,8 @@ return orc;
         new LootPackEntry(true, ydnacTreasure,      100),
         
         new LootPackEntry(true, (from, container) => new ClearBalm(),           50),
-        new LootPackEntry(true, (from, container) => new Diamond(3500u),        100,    gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new PearDiamond(4500u),    100,    gemsPriceMutator),
-        new LootPackEntry(true, utilityItems,   50),
+        new LootPackEntry(true, (from, container) => new Diamond(1500u),        100,    gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100,    gemsPriceMutator),
         new LootPackEntry(true, (from, container) => new StarsRobe(),           100)
     ));
     
@@ -100402,7 +100399,7 @@ return orc;
     ghoul.AddLoot(new LootPack(
         new LootPackEntry(true, dungeon4Gems,       50.0,   gemsPriceMutator), 
         new LootPackEntry(true, dungeon4Bottles,    50.0),
-        new LootPackEntry(true, dungeon3Potions,    0.3),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6),
         new LootPackEntry(true, (from, container) => new ReturningHammer(),     33.33)
     ));
@@ -100433,7 +100430,6 @@ return orc;
         MaxHealth = 250, Health = 250,
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
-        HideDetection = 18,
     
         Experience = 1700,
         
@@ -100465,8 +100461,7 @@ return orc;
         new LootPackEntry(true, dungeon4Bottles,    33),
         new LootPackEntry(true, dungeon4Treasure,   0.63),
         new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, utilityItems,   3),
-        new LootPackEntry(true, dungeon3Potions,    0.3),
+        new LootPackEntry(true, dungeon3Potions,    0.2),
         new LootPackEntry(true, (from, container) => new Yttril(), 1.6)
     ));
     
@@ -100507,11 +100502,10 @@ return orc;
     
         FireProtection = 100,
         IceProtection = 100,
+        // TODO: WHIRLWIND PROTECTION 100
+        // TODO: POISON PROTECTION 100
     };    
     piranha.AddStatus(new BreatheWaterStatus(piranha));
-    
-    piranha.AddImmunity(typeof(Whirlwind));
-    piranha.AddImmunity(typeof(Poison));
     
     piranha.Attacks = new CreatureAttackCollection
     {
@@ -100556,7 +100550,6 @@ return orc;
     {
         MaxHealth = 500, Health = 500,
         BaseDodge = 20,
-        HideDetection = 18,
     
         Experience = 13000,
         
@@ -100573,8 +100566,6 @@ return orc;
     };
     dragon.AddStatus(new NightVisionStatus(dragon));
     
-    dragon.AddImmunity(typeof(DragonBreathFireSpell));
-
     dragon.Attacks = new CreatureAttackCollection
     {
         {
@@ -100887,11 +100878,10 @@ else
     
         FireProtection = 100,
         IceProtection = 100,
+        // TODO: WHIRLWIND PROTECTION 100
+        // TODO: POISON PROTECTION 100
     };    
     piranhaBL.AddStatus(new BreatheWaterStatus(piranhaBL));
-    
-    piranhaBL.AddImmunity(typeof(Whirlwind));
-    piranhaBL.AddImmunity(typeof(Poison));
     
     piranhaBL.Attacks = new CreatureAttackCollection
     {
@@ -102461,7 +102451,7 @@ else
     </spawn>
     <spawn type="RegionSpawner" name="Ydnac Secret">
       <minimumDelay>300</minimumDelay>
-      <maximumDelay>600</maximumDelay>
+      <maximumDelay>0</maximumDelay>
       <maximum>4</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -102487,8 +102477,8 @@ else
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Ydnac -1 Blood Room">
-      <minimumDelay>300</minimumDelay>
-      <maximumDelay>600</maximumDelay>
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
       <maximum>10</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -102514,8 +102504,8 @@ else
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Ydnac Secret Right Side">
-      <minimumDelay>300</minimumDelay>
-      <maximumDelay>600</maximumDelay>
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
       <maximum>2</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -102558,8 +102548,8 @@ else
       </script>
       <entry entity="dungeon2PirhanaBL" size="2" minimum="6" maximum="12" />
       <bounds region="12">
-        <inclusion left="20" top="25" right="25" bottom="26" />
-        <inclusion left="26" top="25" right="33" bottom="31" />
+        <inclusion left="17" top="25" right="24" bottom="26" />
+        <inclusion left="25" top="25" right="33" bottom="31" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -103199,7 +103189,7 @@ else
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="10">
+      <entry weight="5">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -103327,71 +103317,6 @@ else
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new FireProtectionAmulet();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-    </treasure>
-    <treasure name="utilityItems">
-      <entry weight="5">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new DarknessOrb();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="5">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new WebOrb();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="5">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new LightOrb();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="3">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new FireballOrb();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="3">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new IceStormOrb();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="1">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new PineWand();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="1">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new GlassWand();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
