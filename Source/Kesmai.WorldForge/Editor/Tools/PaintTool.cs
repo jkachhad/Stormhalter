@@ -10,7 +10,7 @@ namespace Kesmai.WorldForge
 {
 	public class PaintTool : Tool
 	{
-		public PaintTool() : base("Draw", "Editor-Icon-Paint")
+		public PaintTool() : base("Paint", "Editor-Icon-Paint")
 		{
 		}
 
@@ -82,15 +82,12 @@ namespace Kesmai.WorldForge
 
 		public override void OnActivate()
 		{
-			// TODO: Show components panel.
-			
+			base.OnActivate();
 			_cursor = Cursors.Arrow;
 		}
 		
 		public override void OnDeactivate()
 		{
-			// TODO: Hide components panel.
-
 			base.OnDeactivate();
 		}
 	}

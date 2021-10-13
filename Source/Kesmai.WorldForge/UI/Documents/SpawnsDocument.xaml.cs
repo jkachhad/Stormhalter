@@ -1,8 +1,12 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Controls;
 using Kesmai.WorldForge.Editor;
+using DigitalRune.ServiceLocation;
+using CommonServiceLocator;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
@@ -12,10 +16,15 @@ namespace Kesmai.WorldForge.UI.Documents
 {
 	public partial class SpawnsDocument : UserControl
 	{
+		public class GetActiveEntity : RequestMessage<Entity>
+        {
+        }
 		public SpawnsDocument()
 		{
 			InitializeComponent();
-			
+			_regionPresenter.Initialize();
+			_locationPresenter.Initialize();
+
 			WeakReferenceMessenger.Default
 				.Register<SpawnsDocument, SpawnsViewModel.SelectedLocationSpawnerChangedMessage>(
 					this, OnLocationSpawnerChanged);
@@ -23,8 +32,31 @@ namespace Kesmai.WorldForge.UI.Documents
 			WeakReferenceMessenger.Default
 				.Register<SpawnsDocument, SpawnsViewModel.SelectedRegionSpawnerChangedMessage>(
 					this, OnRegionSpawnerChanged);
+
+			WeakReferenceMessenger.Default
+				.Register<SpawnsDocument, Spawner>(
+					this, (r,m) => { _typeSelector.SelectedIndex = m is LocationSpawner ? 0 : 1; });
+
+			WeakReferenceMessenger.Default.Register<SpawnsDocument, GetActiveEntity>(this,
+				(r, m) => m.Reply(GetSelectedEntity()));
 		}
-		
+
+		public Entity GetSelectedEntity()
+		{
+			SpawnEntry entry = null;
+			if (_typeSelector.SelectedIndex == 0)
+			{
+				entry = _locationEntities.SelectedItem as SpawnEntry;
+			} else
+            {
+				entry = _regionEntities.SelectedItem as SpawnEntry;
+			}
+			if (entry is null)
+				return null as Entity;
+
+			return entry.Entity;
+		}
+
 		private void OnLocationSpawnerChanged(SpawnsDocument recipient, SpawnsViewModel.SelectedLocationSpawnerChangedMessage message)
 		{
 			_scriptsTabControl.SelectedIndex = 0;
@@ -54,6 +86,7 @@ namespace Kesmai.WorldForge.UI.Documents
 				_regionPresenter.SetLocation(spawn);
 			}
 		}
+
 	}
 	
 	public class SpawnsViewModel : ObservableRecipient
@@ -73,7 +106,7 @@ namespace Kesmai.WorldForge.UI.Documents
 			{
 			}
 		}
-
+       
 		public string Name => "(Spawns)";
 		
 		private Segment _segment;
@@ -113,6 +146,7 @@ namespace Kesmai.WorldForge.UI.Documents
 		public RelayCommand AddRegionSpawnerCommand { get; set; }
 		public RelayCommand<RegionSpawner> RemoveRegionSpawnerCommand { get; set; }
 
+		public RelayCommand JumpEntityCommand { get; set; }
 		public SpawnsViewModel(Segment segment)
 		{
 			_segment = segment;
@@ -127,7 +161,14 @@ namespace Kesmai.WorldForge.UI.Documents
 				(spawner) => SelectedRegionSpawner != null);
 			RemoveRegionSpawnerCommand.DependsOn(() => SelectedRegionSpawner);
 
-			//todo: set location and region spawners so the presenters are fully intialized. Or fix whatever is preventing both renders from accepting input before both are 'targetted'
+			JumpEntityCommand = new RelayCommand(JumpEntity);
+		}
+
+		public void JumpEntity ()
+        {
+			var entityRequest = WeakReferenceMessenger.Default.Send<SpawnsDocument.GetActiveEntity>();
+			var entity = entityRequest.Response;
+			WeakReferenceMessenger.Default.Send(entity);
 		}
 		
 		public void AddLocationSpawner()

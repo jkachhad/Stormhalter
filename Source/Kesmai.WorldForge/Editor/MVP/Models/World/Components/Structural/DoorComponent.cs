@@ -151,10 +151,18 @@ namespace Kesmai.WorldForge.Models
 		/// <inheritdoc />
 		public override IEnumerable<ComponentRender> GetTerrain()
 		{
+			var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+			var visibility = presenter.Visibility;
+			var showOpened = IsOpen || visibility.OpenDoors;
+			var showHidden = visibility.HideSecretDoors;
+			
 			var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
 
-			var id = _closedId;
+			var id = (showOpened ? _openId : _closedId);
 
+			if (_isSecret && showHidden)
+				id = _secretId;
+			
 			if (_isDestroyed)
 				id = _destroyedId;
 			
