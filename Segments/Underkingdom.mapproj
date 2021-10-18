@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.79.0.0">
+<segment name="Underkingdom" version="0.81.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -243,6 +243,8 @@
                 Director = source;
     
                 OnOrderFollow(source);
+
+                args.Handled = true;
                 return;
             }
 			
@@ -251,6 +253,8 @@
                 Director = source;
     
                 OnOrderTrail(source);
+                
+                args.Handled = true;
                 return;
             }
         }
