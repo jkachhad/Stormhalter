@@ -23,7 +23,7 @@ namespace Kesmai.Server.Game
 			_amount = amount;
 		}
 
-		public void GetDescription(List<LocalizationEntry> entries)
+		public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 		{
 		}
 
@@ -69,7 +69,7 @@ namespace Kesmai.Server.Game
 			_amount = amount;
 		}
 
-		public virtual void GetDescription(List<LocalizationEntry> entries)
+		public virtual void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 		{
 		}
 
@@ -118,9 +118,10 @@ namespace Kesmai.Server.Game
 			_potency = potency;
 		}
 		
-		public void GetDescription(List<LocalizationEntry> entries)
+		public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6300393)); /* The bottle contains a poison. */
+			if (consumable.Identified)
+				entries.Add(new LocalizationEntry(6300393)); /* The bottle contains a poison. */
 		}
 
 		public void OnConsume(MobileEntity entity, Consumable item)
@@ -168,9 +169,10 @@ namespace Kesmai.Server.Game
 			_potency = potency;
 		}
 
-		public void GetDescription(List<LocalizationEntry> entries)
+		public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6300394)); /* The bottle contains a Neutralize Poison potion. */
+			if (consumable.Identified)
+				entries.Add(new LocalizationEntry(6300394)); /* The bottle contains a Neutralize Poison potion. */
 		}
 
 		public void OnConsume(MobileEntity entity, Consumable item)
@@ -226,9 +228,10 @@ namespace Kesmai.Server.Game
 	[WorldForge]
 	public class ConsumableBlindnessAntidote : IConsumableContent
 	{
-		public void GetDescription(List<LocalizationEntry> entries)
+		public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6250066)); /* The bottle contains a Cure Blindness potion. */
+			if (consumable.Identified)
+				entries.Add(new LocalizationEntry(6250066)); /* The bottle contains a Cure Blindness potion. */
 		}
 
 		public void OnConsume(MobileEntity entity, Consumable item)
@@ -285,9 +288,10 @@ namespace Kesmai.Server.Game
 			_amount = amount;
 		}
 
-		public void GetDescription(List<LocalizationEntry> entries)
+		public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6250060)); /* The bottle contains a potion to restore mana. */
+			if (consumable.Identified)
+				entries.Add(new LocalizationEntry(6250060)); /* The bottle contains a potion to restore mana. */
 		}
 
 		public void OnConsume(MobileEntity entity, Consumable item)
@@ -340,9 +344,10 @@ namespace Kesmai.Server.Game
 			_amount = amount;
 		}
 
-		public void GetDescription(List<LocalizationEntry> entries)
+		public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6250078)); /* The liquid increases mana. */
+			if (consumable.Identified)
+				entries.Add(new LocalizationEntry(6250078)); /* The liquid increases mana. */
 		}
 
 		public void OnConsume(MobileEntity entity, Consumable item)
@@ -419,9 +424,10 @@ namespace Kesmai.Server.Game
 			_amount = amount;
 		}
 
-		public virtual void GetDescription(List<LocalizationEntry> entries)
+		public virtual void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6250067)); /* The bottle contains a stamina potion. */
+			if (consumable.Identified)
+				entries.Add(new LocalizationEntry(6250067)); /* The bottle contains a stamina potion. */
 		}
 
 		public void OnConsume(MobileEntity entity, Consumable item)
@@ -467,9 +473,12 @@ namespace Kesmai.Server.Game
 		{
 		}
 		
-		public override void GetDescription(List<LocalizationEntry> entries)
+		public override void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6250062)); /* The bottle contains water. */
+			entries.Add(new LocalizationEntry(6250132)); /* Inside you see a clear liquid. */
+
+			if (consumable.Identified)
+				entries.Add(new LocalizationEntry(6250062)); /* The bottle contains water. */
 		}
 		
 		public override void Serialize(BinaryWriter writer)
@@ -506,9 +515,12 @@ namespace Kesmai.Server.Game
 			_owner = owner;
 		}
 		
-		public override void GetDescription(List<LocalizationEntry> entries)
+		public override void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6250064, _owner)); /* The bottle contains {_owner} urine. */
+			entries.Add(new LocalizationEntry(6250133)); /* Inside you see a yellow liquid. */
+
+			if (consumable.Identified)
+				entries.Add(new LocalizationEntry(6250064, _owner)); /* The bottle contains {_owner} urine. */
 		}
 		
 		public override void Serialize(BinaryWriter writer)
@@ -539,9 +551,10 @@ namespace Kesmai.Server.Game
 	[WorldForge]
 	public class ConsumableAmbrosia : IConsumableContent
 	{
-		public void GetDescription(List<LocalizationEntry> entries)
+		public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6250074)); /* The liquid inside restores youth. */
+			if (consumable.Identified)
+				entries.Add(new LocalizationEntry(6250074)); /* The liquid inside restores youth. */
 		}
 
 		public void OnConsume(MobileEntity entity, Consumable item)
@@ -583,9 +596,10 @@ namespace Kesmai.Server.Game
 	[WorldForge]
 	public class ConsumableNaphtha : IConsumableContent
 	{
-		public void GetDescription(List<LocalizationEntry> entries)
+		public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6250061)); /* The bottle contains an ounce of Naphtha. */
+			if (consumable.Identified)
+				entries.Add(new LocalizationEntry(6250061)); /* The bottle contains an ounce of Naphtha. */
 		}
 
 		public void OnConsume(MobileEntity entity, Consumable item)
@@ -637,9 +651,12 @@ namespace Kesmai.Server.Game
 	[WorldForge]
 	public class ConsumableNitro : IConsumableContent
 	{
-		public void GetDescription(List<LocalizationEntry> entries)
+		public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6250063)); /* The bottle contains Nitro. */
+			entries.Add(new LocalizationEntry(6250132)); /* Inside you see a clear liquid. */
+			
+			if (consumable.Identified)
+				entries.Add(new LocalizationEntry(6250063)); /* The bottle contains Nitro. */
 		}
 
 		public void OnConsume(MobileEntity entity, Consumable item)
@@ -692,9 +709,12 @@ namespace Kesmai.Server.Game
 	[WorldForge]
 	public class ConsumableStrengthSpell : IConsumableContent
 	{
-		public void GetDescription(List<LocalizationEntry> entries)
+		public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6250065)); /* The bottle contains a potion of temporary strength. */
+			entries.Add(new LocalizationEntry(6250131)); /* Inside you see a red liquid. */
+		
+			if (consumable.Identified)
+				entries.Add(new LocalizationEntry(6250065)); /* The bottle contains a potion of temporary strength. */
 		}
 
 		public void OnConsume(MobileEntity entity, Consumable item)
@@ -734,9 +754,10 @@ namespace Kesmai.Server.Game
 	[WorldForge]
 	public class ConsumableStrengthStat : IConsumableContent
 	{
-		public void GetDescription(List<LocalizationEntry> entries)
+		public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6250072)); /* The liquid permanently increases strength. */
+			if (consumable.Identified)
+				entries.Add(new LocalizationEntry(6250072)); /* The liquid permanently increases strength. */
 		}
 
 		public void OnConsume(MobileEntity entity, Consumable item)
@@ -779,9 +800,10 @@ namespace Kesmai.Server.Game
 	[WorldForge]
 	public class ConsumableDexterityStat : IConsumableContent
 	{
-		public void GetDescription(List<LocalizationEntry> entries)
+		public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6250069)); /* The liquid permanently increases dexterity. */
+			if (consumable.Identified)
+				entries.Add(new LocalizationEntry(6250069)); /* The liquid permanently increases dexterity. */
 		}
 
 		public void OnConsume(MobileEntity entity, Consumable item)
@@ -824,9 +846,10 @@ namespace Kesmai.Server.Game
 	[WorldForge]
 	public class ConsumableIntelligenceStat : IConsumableContent
 	{
-		public void GetDescription(List<LocalizationEntry> entries)
+		public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6250068)); /* The liquid permanently increases intelligence. */
+			if (consumable.Identified)
+				entries.Add(new LocalizationEntry(6250068)); /* The liquid permanently increases intelligence. */
 		}
 
 		public void OnConsume(MobileEntity entity, Consumable item)
@@ -864,9 +887,10 @@ namespace Kesmai.Server.Game
 	[WorldForge]
 	public class ConsumableWillpowerStat : IConsumableContent
 	{
-		public void GetDescription(List<LocalizationEntry> entries)
+		public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6250077)); /* The liquid permanently increases willpower. */
+			if (consumable.Identified)
+				entries.Add(new LocalizationEntry(6250077)); /* The liquid permanently increases willpower. */
 		}
 
 		public void OnConsume(MobileEntity entity, Consumable item)
@@ -904,9 +928,10 @@ namespace Kesmai.Server.Game
 	[WorldForge]
 	public class ConsumableWisdomStat : IConsumableContent
 	{
-		public void GetDescription(List<LocalizationEntry> entries)
+		public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6250076)); /* The liquid permanently increases wisdom. */
+			if (consumable.Identified)
+				entries.Add(new LocalizationEntry(6250076)); /* The liquid permanently increases wisdom. */
 		}
 
 		public void OnConsume(MobileEntity entity, Consumable item)
@@ -944,9 +969,10 @@ namespace Kesmai.Server.Game
 	[WorldForge]
 	public class ConsumableConstitutionStat : IConsumableContent
 	{
-		public void GetDescription(List<LocalizationEntry> entries)
+		public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6250073)); /* The liquid permanently increases constitution. */
+			if (consumable.Identified)
+				entries.Add(new LocalizationEntry(6250073)); /* The liquid permanently increases constitution. */
 		}
 
 		public void OnConsume(MobileEntity entity, Consumable item)
@@ -1018,9 +1044,12 @@ namespace Kesmai.Server.Game
 	[WorldForge]
 	public class ConsumableBalm : IConsumableContent
 	{
-		public void GetDescription(List<LocalizationEntry> entries)
+		public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6250004)); /* The bottle contains balm. */
+			entries.Add(new LocalizationEntry(6250130)); /* Inside you see a cloudy white liquid. */
+			
+			if (consumable.Identified)
+				entries.Add(new LocalizationEntry(6250004)); /* The bottle contains balm. */
 		}
 
 		public void OnConsume(MobileEntity entity, Consumable item)
