@@ -99749,7 +99749,8 @@
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Magic | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
-    
+        
+        IsTethered = true,
     };
     
     drake.AddStatus(new NightVisionStatus(drake));
@@ -99840,7 +99841,7 @@
                    CreatureImmunity.Projectile | CreatureImmunity.Web,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.Silver,
        
-    
+        IsTethered = true,
     };
     
     carfel.AddStatus(new NightVisionStatus(carfel));
@@ -99899,6 +99900,8 @@
         
         VisibilityDistance = 0,
         RangePerception = 0,
+        
+        IsTethered = true,
     };
     
     shelob.AddStatus(new NightVisionStatus(shelob));
@@ -99958,6 +99961,7 @@
         
         BasePenetration = ShieldPenetration.VeryHeavy,
     
+        IsTethered = true,
     };
     
     trollKing.AddStatus(new NightVisionStatus(trollKing));
@@ -100086,6 +100090,7 @@
                    CreatureImmunity.Projectile | CreatureImmunity.Web | CreatureImmunity.Magic | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
     
+        IsTethered = true,
     };
     
     swordmaster.Attacks = new CreatureAttackCollection()
@@ -100144,7 +100149,7 @@
     
         CanCharge = true,
     
-        
+        IsTethered = true,
     };
     
     overlord.AddStatus(new NightVisionStatus(overlord));

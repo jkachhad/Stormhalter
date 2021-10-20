@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.79.0.0">
+<segment name="Axe Glacier" version="0.81.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -106085,7 +106085,9 @@
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Magic | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
-            
+        
+        /* The entity remains tethered to it's spawn area, should it move out of a specific range. */
+        IsTethered = true,
     };
     
     /*Statuses are buffs such as players wear: fire ice protection, NightVision, Strength, WaterBreathSpell, etc. use the var set at the top of the list. AddStatus, new, 
@@ -106185,6 +106187,7 @@
         
         HideDetection = 31,
         
+        IsTethered = true,
     };
     
     dragon.AddStatus(new NightVisionStatus(dragon));
@@ -106272,6 +106275,7 @@
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
     
+        IsTethered = true,
     };
     
     yeti.AddStatus(new NightVisionStatus(yeti));
@@ -107665,6 +107669,8 @@
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
                    
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
+        
+        IsTethered = true,
     };
     
     necro.AddImmunity(typeof(PoisonCloudSpell));

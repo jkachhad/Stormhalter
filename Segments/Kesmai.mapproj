@@ -96795,6 +96795,8 @@
 
         FireProtection = 100,
         IceProtection = 80,
+        
+        IsTethered = true,
     };
     
     elderTroll.AddStatus(new NightVisionStatus(elderTroll));
@@ -100323,6 +100325,8 @@ return orc;
         IceProtection = 100,
 
         HideDetection = 20,
+        
+        IsTethered = true,
     };
     ydnac.AddStatus(new NightVisionStatus(ydnac));
     ydnac.AddStatus(new BreatheWaterStatus(ydnac));
@@ -100401,6 +100405,8 @@ return orc;
     
         FireProtection = 100,
         IceProtection = 100,
+        
+        IsTethered = true,
     };
     abesh.AddStatus(new NightVisionStatus(abesh));
     abesh.AddStatus(new BreatheWaterStatus(abesh));
@@ -100649,6 +100655,8 @@ return orc;
         IceProtection = 100,
         StunProtection = 100,
         MagicProtection = 20,
+        
+        IsTethered = true,
     };
     dragon.AddStatus(new NightVisionStatus(dragon));
     
