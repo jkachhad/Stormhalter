@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.79.0.0">
+<segment name="Leng" version="0.81.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -76215,9 +76215,11 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     //todo: add vlad model to variables
-    var vlad = new Wraith()
+    var vlad = new Humanoid()
     {
-        Name = "Vampire",
+        Name = "vampire",
+        Body = 80,
+        
         MaxHealth = 7000, Health = 7000,
         BaseDodge = 20,
         BasePenetration = ShieldPenetration.VeryHeavy,
