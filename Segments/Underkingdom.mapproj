@@ -99817,9 +99817,11 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     //todo get Carfel body type
-    var carfel = new ElderTroll()
+    var carfel = new Humanoid()
     {
-        Name = "Carfel",
+        Name = "carfel",
+        Body = 206,
+        
         MaxHealth = 2000, Health = 2000,
         BaseDodge = 21,
         HideDetection = 28,
