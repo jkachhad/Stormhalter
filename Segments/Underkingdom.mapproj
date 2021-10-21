@@ -101389,9 +101389,11 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     //todo add yasnaki models
-    var knight = new Ninja()
+    var knight = new Humanoid()
     {
         Name = "Yasnaki.Knight",
+        Body = 193,
+        
         MaxHealth = 230, Health = 230,
         BaseDodge = 14,
         HideDetection = 28,        
@@ -101562,7 +101564,7 @@
     var martialartist = new Ninja()
     {
         Name = "Yasnaki.Monk",
-        Body = 49,
+        Body = 105,
             
         MaxHealth = 260, Health = 260,
         BaseDodge = 16,
@@ -101610,7 +101612,7 @@
     var wizard = new Humanoid()
     {
         Name = "Yasnaki.Wizard",
-        Body = 37,
+        Body = 192,
         HideDetection = 28,      
         MaxHealth = 150, Health = 150,
         MaxMana = 31, Mana = 31,
@@ -101676,7 +101678,7 @@
     var thaum = new Humanoid()
     {
         Name = "Dark.Thaum",
-        Body = 48,
+        Body = 191,
         MaxHealth = 130, Health = 130,
         BaseDodge = 11,
         HideDetection = 28,
