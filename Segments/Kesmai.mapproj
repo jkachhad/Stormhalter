@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.79.0.0">
+<segment name="Kesmai" version="0.81.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -73,6 +73,14 @@
         
         item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
     }
+
+
+
+    /* We use static instances for the implementation. */
+    private static ConsumableUrine _orcUrine = new ConsumableUrine("orc");
+    private static ConsumableUrine _hobgoblincUrine = new ConsumableUrine("hobgoblin");
+    private static ConsumableUrine _trollUrine = new ConsumableUrine("troll");
+    private static ConsumableUrine _dragonUrine = new ConsumableUrine("dragon");
     
     /* Randomized Balms */
     public static Balm randomBalm(bool hasUrine = false)
@@ -93,13 +101,13 @@
             var urine = default(ConsumableUrine);
         
             if (urineChance < 0.05)
-                urine = new ConsumableUrine("dragon");
+                urine = _dragonUrine;
             else if (urineChance < 0.15)
-                urine = new ConsumableUrine("hobgoblin");
+                urine = _hobgoblincUrine;
             else if (urineChance < 0.50)
-                urine = new ConsumableUrine("troll");
+                urine = _trollUrine;
             else
-                urine = new ConsumableUrine("orc");
+                urine = _orcUrine;
             
             balm.Content = urine;
         }
@@ -102722,11 +102730,11 @@ else
       </entry>
     </treasure>
     <treasure name="dungeon2Bottles">
-      <entry weight="12">
+      <entry weight="11">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new ClearBalm();
+	return randomBalm();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -102749,13 +102757,22 @@ else
           <block><![CDATA[]]></block>
         </script>
       </entry>
-    </treasure>
-    <treasure name="dungeon3Bottles">
-      <entry weight="26">
+      <entry weight="1">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new ClearBalm();
+	return randomBalm(true);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="dungeon3Bottles">
+      <entry weight="22">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return randomBalm();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -102792,17 +102809,26 @@ else
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new NitroPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return randomBalm(true);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
       </entry>
     </treasure>
     <treasure name="dungeon4Bottles">
-      <entry weight="26">
+      <entry weight="23">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new ClearBalm();
+	return randomBalm();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -102839,6 +102865,15 @@ else
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new NitroPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return randomBalm(true);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
