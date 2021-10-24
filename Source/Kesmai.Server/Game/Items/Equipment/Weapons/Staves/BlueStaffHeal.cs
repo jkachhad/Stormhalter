@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using Kesmai.Server.Accounting;
+using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 using Kesmai.Server.Spells;
@@ -40,12 +42,16 @@ namespace Kesmai.Server.Items
 		private int _chargesMax;
 		private int _chargesCurrent;
 
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public int ChargesCurrent
 		{
 			get => _chargesCurrent;
 			set => _chargesCurrent = value;
 		}
 
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public int ChargesMax
 		{
 			get => _chargesMax;

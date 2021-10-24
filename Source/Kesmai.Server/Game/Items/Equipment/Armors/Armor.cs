@@ -1,5 +1,6 @@
 using System.IO;
-
+using Kesmai.Server.Accounting;
+using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items
@@ -22,18 +23,28 @@ namespace Kesmai.Server.Items
 		#region IArmored
 		
 		/// <inheritdoc />
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int BaseArmorBonus => 0;
 
 		/// <inheritdoc />
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int SlashingProtection => 0;
 
 		/// <inheritdoc />
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int PiercingProtection => 0;
 
 		/// <inheritdoc />
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int BashingProtection => 0;
 
 		/// <inheritdoc />
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int ProjectileProtection => 0;
 
 		#endregion

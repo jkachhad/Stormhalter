@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
-
+using Kesmai.Server.Accounting;
+using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 using Kesmai.Server.Spells;
@@ -22,6 +23,8 @@ namespace Kesmai.Server.Items
 		/// <summary>
 		/// Gets or sets the shield-value provided by this ring.
 		/// </summary>
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int Shield => 3;
 
 		public ShieldRing() : this(45)

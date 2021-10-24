@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
-
+using Kesmai.Server.Accounting;
+using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items
@@ -16,6 +17,8 @@ namespace Kesmai.Server.Items
 		/// <summary>
 		/// The dexterity bonus provided by this ring.
 		/// </summary>
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int BonusDexterity => 2;
 
 		/// <summary>

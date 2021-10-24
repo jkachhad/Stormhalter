@@ -1,4 +1,6 @@
 using System.IO;
+using Kesmai.Server.Accounting;
+using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Game;
 using Kesmai.Server.Spells;
 
@@ -19,6 +21,8 @@ namespace Kesmai.Server.Items
 		/// <summary>
 		/// Gets or sets a value indication if this instance provides <see cref="NightVisionStatus"/>
 		/// </summary>
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual bool ProvidesNightVision => false;
 		
 		/// <summary>
