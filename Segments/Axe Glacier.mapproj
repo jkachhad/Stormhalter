@@ -106981,6 +106981,8 @@
         MaxMana = 30, Mana = 30,
         
         Experience = 50,
+        
+        IsTethered = true,
     };
 
     peacekeeper.Attacks = new CreatureAttackCollection
@@ -107092,6 +107094,8 @@
         Experience = 50,
         
         Alignment = Alignment.Lawful,
+        
+        IsTethered = true,
     };
     
     griffin.Home = new RectangleBounds()
@@ -107381,7 +107385,10 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	return new Alia();
+	return new Alia()
+	{
+	   IsTethered = true,
+	};
 ]]></block>
         <block><![CDATA[]]></block>
       </script>

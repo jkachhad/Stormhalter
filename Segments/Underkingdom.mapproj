@@ -99375,6 +99375,8 @@
 	   
 	   Experience = 50,
 	   BasePenetration = ShieldPenetration.Medium,
+	   
+	   IsTethered = true,
 	   Home = new RectangleBounds()
        {
             new Rectangle2D(7, 2, 13, 14, 1)
@@ -99429,6 +99431,8 @@
        
        Experience = 50,
        BasePenetration = ShieldPenetration.Medium,
+       
+       IsTethered = true,
        Home = new RectangleBounds()
        {
             new Rectangle2D(7, 2, 13, 14, 1)
@@ -102052,6 +102056,8 @@
         MaxMana = 30, Mana = 30,
         
         Experience = 50,
+        
+        IsTethered = true,
     };
 
     peacekeeper.Attacks = new CreatureAttackCollection()

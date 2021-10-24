@@ -76070,6 +76070,7 @@
         BasePenetration = ShieldPenetration.Medium,
         CanLoot = false,
 
+        IsTethered = true,
     };
     
     ninja.AddStatus(new NightVisionStatus(ninja));
@@ -77781,6 +77782,8 @@
         MaxMana = 30, Mana = 30,
         
         Experience = 50,
+        
+        IsTethered = true,
     };
 
     peacekeeper.Attacks = new CreatureAttackCollection

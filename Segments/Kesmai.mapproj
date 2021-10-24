@@ -97264,6 +97264,8 @@
         MaxHealth = 110, Health = 110,
         
         Experience = 50,
+        
+        IsTethered = true,
     };
 
     peacekeeper.Attacks = new CreatureAttackCollection()
@@ -97313,6 +97315,8 @@
         MaxMana = 30, Mana = 30,
         
         Experience = 50,
+        
+        IsTethered = true,
     };
 
     peacekeeper.Attacks = new CreatureAttackCollection()
@@ -97360,6 +97364,8 @@
         MaxHealth = 130, Health = 130,
         
         Experience = 50,
+        
+        IsTethered = true,
     };
     
     peacekeeper.Attacks = new CreatureAttackCollection()
@@ -97442,6 +97448,8 @@
         Experience = 50,
         
         Alignment = Alignment.Lawful,
+        
+        IsTethered = true,
     };
 
     crocodile.Home = new RectangleBounds()
@@ -97498,6 +97506,8 @@
         CanSwim = true,
 
         Alignment = Alignment.Lawful,
+        
+        IsTethered = true,
     };
     
     dog.Home = new RectangleBounds()
@@ -97589,6 +97599,8 @@
         Experience = 50,
     
         Alignment = Alignment.Lawful,
+        
+        IsTethered = true,
     };
     
     shark.AddImmunity(typeof(Whirlwind));
@@ -100924,6 +100936,8 @@ else
         MaxHealth = 130, Health = 130,
         
         Experience = 50,
+        
+        IsTethered = true,
     };
     
     sheriff.Attacks = new CreatureAttackCollection()
