@@ -100321,12 +100321,13 @@ return orc;
         
         FireProtection = 100,
         IceProtection = 100,
-        StunProtection = 100,
 
         HideDetection = 20,
     };
     ydnac.AddStatus(new NightVisionStatus(ydnac));
     ydnac.AddStatus(new BreatheWaterStatus(ydnac));
+    
+    ydnac.AddImmunity(typeof(StunSpell));
     
     ydnac.Attacks = new CreatureAttackCollection()
     {
