@@ -50,7 +50,7 @@ namespace Kesmai.Server.Items
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6200000, 6200286)); /* [You are looking at] [a fan with black steel blades.] */
+			entries.Add(new LocalizationEntry(6200000, 6200302)); /* [You are looking at] [a fan with black steel blades.] */
 		}
 	}
 }
