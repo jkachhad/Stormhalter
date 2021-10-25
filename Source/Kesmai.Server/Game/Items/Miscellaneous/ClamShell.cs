@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items
 {
-	public partial class ClamShell : Gem
+	public partial class ClamShell : ItemEntity, ITreasure
 	{
 		/// <inheritdoc />
 		public override int Weight => 5;
@@ -19,7 +20,7 @@ namespace Kesmai.Server.Items
 		/// Initializes a new instance of the <see cref="ClamShell"/> class.
 		/// </summary>
 		[WorldForge]
-		public ClamShell(uint basePrice) : base(65, basePrice)
+		public ClamShell() : base(65)
 		{
 		}
 

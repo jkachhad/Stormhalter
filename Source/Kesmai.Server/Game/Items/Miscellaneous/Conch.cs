@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items
 {
-	public partial class Conch : Gem
+	public partial class Conch : ItemEntity, ITreasure
 	{
 		/// <inheritdoc />
 		public override int Weight => 5;
@@ -19,7 +20,7 @@ namespace Kesmai.Server.Items
 		/// Initializes a new instance of the <see cref="Conch"/> class.
 		/// </summary>
 		[WorldForge]
-		public Conch(uint basePrice) : base(156, basePrice)
+		public Conch() : base(156)
 		{
 		}
 

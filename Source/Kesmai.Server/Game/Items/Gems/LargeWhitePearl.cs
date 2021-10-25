@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items
 {
-	public partial class LargeBlackPearl : Gem
+	public partial class LargeWhitePearl : Gem
 	{
 		/// <inheritdoc />
 		public override int Weight => 5;
@@ -16,10 +16,10 @@ namespace Kesmai.Server.Items
 		public override int LabelNumber => 6000069;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="LargeBlackPearl"/> class.
+		/// Initializes a new instance of the <see cref="LargeWhitePearl"/> class.
 		/// </summary>
 		[WorldForge]
-		public LargeBlackPearl(uint basePrice) : base(349, basePrice)
+		public LargeWhitePearl(uint basePrice) : base(349, basePrice)
 		{
 		}
 

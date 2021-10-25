@@ -5,16 +5,16 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items
 {
-	public partial class RawSapphire : Gem
+	public partial class HeartShapedRuby : Gem
 	{
 		/// <inheritdoc />
 		public override int Weight => 5;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="RawSapphire"/> class.
+		/// Initializes a new instance of the <see cref="HeartShapedRuby"/> class.
 		/// </summary>
 		[WorldForge]
-		public RawSapphire(uint basePrice) : base(321, basePrice)
+		public HeartShapedRuby(uint basePrice) : base(321, basePrice)
 		{
 		}
 
