@@ -97589,6 +97589,9 @@
         Alignment = Alignment.Lawful,
     };
     
+    shark.AddImmunity(typeof(Whirlwind));
+    shark.AddImmunity(typeof(Poison));
+    
     shark.Home = new RectangleBounds()
     {
         new Rectangle2D(27, 34, 11, 6, 1)
@@ -100232,14 +100235,18 @@ return orc;
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    // TODO: Magic protection 50%
     var griffin = new Griffin()
     {
         MaxHealth = 120, Health = 120,
         BaseDodge = 15,
+        
         BasePenetration = ShieldPenetration.Light,
+        
         Experience = 800,
+        
         HideDetection = 15,
+        
+        MagicProtection = 50,
     };
     griffin.AddStatus(new NightVisionStatus(griffin));
         
@@ -100314,9 +100321,8 @@ return orc;
         
         FireProtection = 100,
         IceProtection = 100,
-    
-        StunResistance = 20,
-        
+        StunProtection = 100,
+
         HideDetection = 20,
     };
     ydnac.AddStatus(new NightVisionStatus(ydnac));
@@ -100641,10 +100647,18 @@ return orc;
         FireProtection = 100,
         IceProtection = 100,
         StunProtection = 100,
+        MagicProtection = 20,
     };
     dragon.AddStatus(new NightVisionStatus(dragon));
     
     dragon.AddImmunity(typeof(DragonBreathFireSpell));
+    
+    dragon.AddImmunity(typeof(Whirlwind));
+    dragon.AddImmunity(typeof(Poison));
+    
+    dragon.AddImmunity(typeof(BlindSpell));
+    dragon.AddImmunity(typeof(FearSpell));
+    dragon.AddImmunity(typeof(StunSpell));
 
     dragon.Attacks = new CreatureAttackCollection
     {
@@ -101030,6 +101044,57 @@ else
     };
         
     return crocodile;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="surfaceShark">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var shark = new Shark()
+    {
+        MaxHealth = 40, Health = 40,
+        BaseDodge = 12,
+
+        Experience = 725,
+    };
+    
+    shark.AddImmunity(typeof(Whirlwind));
+    shark.AddImmunity(typeof(Poison));
+    
+    shark.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(6, 5, 15, "You've been bitten by the shark."), 60 }, 
+        { new CreatureAttack(6, 10, 25, "The shark lashes you with its fin."), 40 }, 
+    };
+    
+    shark.Blocks = new CreatureBlockCollection
+    {
+        { new CreatureBlock(6, "the tough skin") }, 
+        { new CreatureBlock(4, "a fin") }, 
+    };
+
+    shark.AddGold(50);
+    shark.AddLoot(
+        new LootPack(
+            new LootPackEntry(true, (from, container) => new OysterPearl(3000), 7), 
+            new LootPackEntry(true, dungeon2Bottles,    20)
+        ));
+
+    return shark;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102135,6 +102200,46 @@ else
       </script>
       <entry entity="ydnacMummy" size="1" minimum="1" maximum="2" />
       <location x="21" y="12" region="4" />
+    </spawn>
+    <spawn type="LocationSpawner" name="surfaceSharkNorth">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfaceShark" size="1" minimum="1" maximum="1" />
+      <location x="122" y="16" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="surfaceSharkSouth">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfaceShark" size="1" minimum="1" maximum="1" />
+      <location x="95" y="34" region="1" />
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai -1">
       <minimumDelay>600</minimumDelay>
