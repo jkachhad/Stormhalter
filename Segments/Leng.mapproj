@@ -75991,7 +75991,8 @@
         CanLoot = false,
         
         BasePenetration = ShieldPenetration.Heavy,
-
+        
+        IsTethered = true,
     };
     
     shidosha.AddStatus(new NightVisionStatus(shidosha));
@@ -76069,6 +76070,7 @@
         BasePenetration = ShieldPenetration.Medium,
         CanLoot = false,
 
+        IsTethered = true,
     };
     
     ninja.AddStatus(new NightVisionStatus(ninja));
@@ -76146,6 +76148,8 @@
     
         FireProtection = 100,
         StunProtection = 100,
+        
+        IsTethered = true,
     };
     
     dragon.AddStatus(new NightVisionStatus(dragon));
@@ -76233,6 +76237,8 @@
         Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell,
         
         VisibilityDistance = 0,
+        
+        IsTethered = true,
     };
     
     vlad.AddStatus(new NightVisionStatus(vlad));
@@ -76314,6 +76320,7 @@
                    CreatureImmunity.Projectile | CreatureImmunity.Magic | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
     
+        IsTethered = true,
     };
     
     drake.AddStatus(new NightVisionStatus(drake));
@@ -77775,6 +77782,8 @@
         MaxMana = 30, Mana = 30,
         
         Experience = 50,
+        
+        IsTethered = true,
     };
 
     peacekeeper.Attacks = new CreatureAttackCollection

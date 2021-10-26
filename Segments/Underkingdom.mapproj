@@ -99375,6 +99375,8 @@
 	   
 	   Experience = 50,
 	   BasePenetration = ShieldPenetration.Medium,
+	   
+	   IsTethered = true,
 	   Home = new RectangleBounds()
        {
             new Rectangle2D(7, 2, 13, 14, 1)
@@ -99429,6 +99431,8 @@
        
        Experience = 50,
        BasePenetration = ShieldPenetration.Medium,
+       
+       IsTethered = true,
        Home = new RectangleBounds()
        {
             new Rectangle2D(7, 2, 13, 14, 1)
@@ -99749,7 +99753,8 @@
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Magic | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
-    
+        
+        IsTethered = true,
     };
     
     drake.AddStatus(new NightVisionStatus(drake));
@@ -99840,7 +99845,7 @@
                    CreatureImmunity.Projectile | CreatureImmunity.Web,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.Silver,
        
-    
+        IsTethered = true,
     };
     
     carfel.AddStatus(new NightVisionStatus(carfel));
@@ -99899,6 +99904,8 @@
         
         VisibilityDistance = 0,
         RangePerception = 0,
+        
+        IsTethered = true,
     };
     
     shelob.AddStatus(new NightVisionStatus(shelob));
@@ -99958,6 +99965,7 @@
         
         BasePenetration = ShieldPenetration.VeryHeavy,
     
+        IsTethered = true,
     };
     
     trollKing.AddStatus(new NightVisionStatus(trollKing));
@@ -100086,6 +100094,7 @@
                    CreatureImmunity.Projectile | CreatureImmunity.Web | CreatureImmunity.Magic | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
     
+        IsTethered = true,
     };
     
     swordmaster.Attacks = new CreatureAttackCollection()
@@ -100144,7 +100153,7 @@
     
         CanCharge = true,
     
-        
+        IsTethered = true,
     };
     
     overlord.AddStatus(new NightVisionStatus(overlord));
@@ -102047,6 +102056,8 @@
         MaxMana = 30, Mana = 30,
         
         Experience = 50,
+        
+        IsTethered = true,
     };
 
     peacekeeper.Attacks = new CreatureAttackCollection()
