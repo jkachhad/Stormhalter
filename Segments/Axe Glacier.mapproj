@@ -267,7 +267,7 @@
             var order = args.Order;
             
             /* example: craft broadsword */
-            if (_craft.TryGetMatch(order, out var craftMatch) && craftMatch.Groups[1].Value.Matches("greataxe", true))
+            if (_craft.TryGetMatch(order, out var craftMatch) && craftMatch.Groups[1].Value.Matches("axe", true))
             {
                 args.Handled = true;
                 
@@ -107418,7 +107418,7 @@
         BaseDodge = 17,
         HideDetection = 31,
         BasePenetration = ShieldPenetration.Medium,
-        Experience = 14500,
+        Experience = 18500,
         Movement = 2,
         Immunity = CreatureImmunity.Poison | CreatureImmunity.Piercing,
         
@@ -107479,7 +107479,7 @@
         BaseDodge = 17,
         HideDetection = 31,
         BasePenetration = ShieldPenetration.Medium,
-        Experience = 14500,        
+        Experience = 17500,        
         Movement = 2,
         Immunity = CreatureImmunity.Poison | CreatureImmunity.Piercing,
         
@@ -107742,7 +107742,7 @@
         MaxHealth = 175, Health = 175,
         BaseDodge = 17,
         BasePenetration = ShieldPenetration.VeryLight,
-        Experience = 10600,
+        Experience = 16600,
         
         MaxMana = 21, Mana = 21,
             
@@ -107802,7 +107802,7 @@
         BaseDodge = 24,
         Body = 242,
                 
-        Experience = 13700,
+        Experience = 18700,
     };
     
     worg.AddStatus(new NightVisionStatus(worg));
