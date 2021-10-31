@@ -85,6 +85,8 @@
         public override int GetNearbySound() => 289;
         public override int GetAttackSound() => 290;
         public override int GetDeathSound() => 291;
+        
+        public override Corpse GetCorpse() => default(Corpse);
 
         public HummingGuardian(Serial serial) : base(serial)
         {
@@ -289,6 +291,204 @@
             }
         }
     
+    }
+    
+    public class Googog : VendorEntity
+    {
+        public Googog()
+        {
+            Name = "Googog";
+            Body = 134;
+    
+            Health = MaxHealth = 50;
+            BaseDodge = 10;
+            Alignment = Alignment.Neutral;    
+            Experience = 50;
+    
+            Movement = 0;
+        }
+    
+        public Googog(Serial serial) : base(serial)
+        {
+        }
+    
+        public override void HandleOrder(OrderEventArgs args)
+        {
+            base.HandleOrder(args);
+    
+            if (args.Handled)
+                return;
+    
+            var source = args.Source;
+            var order = args.Order;
+    
+            /* example: sell key */
+            if (_sell.TryGetMatch(order, out var sellMatch) && sellMatch.Groups[1].Value.Matches("scroll", true))
+            {
+                args.Handled = true;
+    
+                if (AtCounter(source, out var counter))
+                {
+                    var items = Segment.GetItemsAt(Location).ToList();
+                    
+                    var cashOnFloor = items.OfType<Currency>();
+    
+                    if (cashOnFloor.Any())
+                    {
+                        if (ConsumeFromLocation<Currency>(counter, 50000))
+                        {
+                            new PrincessScroll().Move(counter, true, Segment);
+    
+                            Say($"The jailer is... kind of thick. Like a rock. Hand him this sealed scroll. He'll do what you ask.");
+                        }
+                        
+                        else
+                        {
+                            Say($"I tells ya, I don't work cheap!");
+                        }
+                    }
+                    else
+                    {
+                        Say($"I only work for coin, and I don't work cheap!");
+                    }
+                }
+                else
+                {
+                    Say($"Shhh closer! I don't want the other goblins hearing me talk to a human!");
+                }
+    
+                return;
+            }
+        }
+    }
+    
+    public class TrollJailer : VendorEntity
+    {
+        public TrollJailer()
+        {
+            Name = "Near Sighted Jailer";
+            Body = 148;
+    
+            Health = MaxHealth = 50;
+            BaseDodge = 10;
+    
+            Alignment = Alignment.Neutral;
+    
+            Experience = 50;
+    
+            Movement = 0;
+        }
+    
+        public TrollJailer(Serial serial) : base(serial)
+        {
+        }
+    
+        public override void HandleOrder(OrderEventArgs args)
+        {
+            base.HandleOrder(args);
+    
+            if (args.Handled)
+                return;
+    
+            var source = args.Source;
+            var order = args.Order;
+    
+            /* example: sell key */
+            if (_free.TryGetMatch(order, out var freeMatch) && freeMatch.Groups[1].Value.Matches("princess", true))
+            {
+                args.Handled = true;
+    
+                if (AtCounter(source, out var counter))
+                {
+                    var items = Segment.GetItemsAt(Location).ToList();
+    
+                    var jailScroll = items.OfType<PrincessScroll>();
+    
+                    if (jailScroll.Any())
+                    {
+                        if (ConsumeFromLocation<PrincessScroll>(counter, 1))
+                        {
+                            var tile = source.Segment.FindTile(5, 8, 10);
+    
+                            if (tile != null && tile.ContainsComponent<Obstruction>())
+                            {
+                                var component = tile.GetComponent<Obstruction>();
+                                tile.Remove(component);
+                            }
+                            Say($"Order from king... good. You feed princess. I take break.");
+    
+                            Timer.DelayCall(TimeSpan.FromSeconds(0.2), () => Delete());
+                        }
+                    }
+                    else
+                    {
+                        Say($"Me not do anyt'ing wi'fout orders.");
+                    }
+                }
+                else
+                {
+                    Say($"Me not hear great. Closer.");
+                }
+    
+                return;
+            }
+        }
+    }
+    
+    public class PrincessScroll : ItemEntity
+    {
+        /// <inheritdoc />
+        public override int LabelNumber => 6000078;
+
+        /// <inheritdoc />
+        public override uint BasePrice => 100;
+
+        /// <inheritdoc />
+        public override int Weight => 5;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PrincessScroll"/> class.
+        /// </summary>
+        public PrincessScroll() : base(128)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PrincessScroll"/> class.
+        /// </summary>
+        public PrincessScroll(Serial serial) : base(serial)
+        {
+        }
+
+        /// <inheritdoc />
+        public override void GetDescription(List<LocalizationEntry> entries)
+        {
+            entries.Add(new LocalizationEntry(6200000, 6200244)); /* [You are looking at] [a scroll entitled 'Everything is Not As It May Appear'.] */
+        }
+
+        /// <inheritdoc />
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((short)1); /* version */
+        }
+
+        /// <inheritdoc />
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+
+            var version = reader.ReadInt16();
+
+            switch (version)
+            {
+                case 1:
+                {
+                    break;
+                }
+            }
+        }
     }
 ]]></block>
     <block><![CDATA[]]></block>
@@ -43463,9 +43663,11 @@
         </component>
       </tile>
       <tile x="2" y="2">
-        <component type="WaterComponent">
-          <ground>177</ground>
-          <movementCost>3</movementCost>
+        <component type="WallComponent">
+          <wall>447</wall>
+          <destroyed>0</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="3" y="2">
@@ -54920,13 +55122,6 @@
       <tile x="5" y="8">
         <component type="FloorComponent">
           <ground>3</ground>
-        </component>
-        <component type="DoorComponent">
-          <openId>434</openId>
-          <closedId>421</closedId>
-          <secretId>384</secretId>
-          <destroyedId>436</destroyedId>
-          <isSecret>true</isSecret>
         </component>
       </tile>
       <tile x="6" y="8">
@@ -87585,7 +87780,7 @@
           <destinationRegion>16</destinationRegion>
           <lightphases select="all" />
           <moonphases select="all" />
-          <professions select="all" />
+          <professions>Thief</professions>
           <alignments select="all" />
         </component>
       </tile>
@@ -87625,7 +87820,7 @@
           <destinationRegion>16</destinationRegion>
           <lightphases select="all" />
           <moonphases select="all" />
-          <professions>Fighter,Martial Artist,Thaumaturge,Wizard,Knight</professions>
+          <professions>Thief</professions>
           <alignments select="all" />
           <message>6300344</message>
         </component>
@@ -99488,7 +99683,7 @@
         HideDetection = 25,
         
         Movement = 2,
-        
+        CanLoot = false,
         LightningResistance = 100,
         
     };
@@ -99552,7 +99747,7 @@
         Experience = 2500,
         BasePenetration = ShieldPenetration.Light,
         Movement = 2,
-        
+        CanLoot = false,
         FireProtection = 100,
         
     };
@@ -99614,6 +99809,7 @@
         HideDetection = 25,
                 
         Experience = 2500,
+        CanLoot = false,
     
         Movement = 2,
         BasePenetration = ShieldPenetration.Light,
@@ -99678,7 +99874,7 @@
         HideDetection = 25,
                 
         Experience = 2500,
-    
+        CanLoot = false,
         Movement = 2,
         BasePenetration = ShieldPenetration.Light,
         
@@ -101741,28 +101937,6 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="tkPrincessPlaceholder">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    return new ConfessorGhost();
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    source.Say($"You've got to help me!");
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
     <entity name="uk100Goblin">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
@@ -102111,7 +102285,7 @@
     wraith.Spells = new CreatureSpellCollection(100)
     {
        { new CreatureSpell<WhirlwindSpell>(
-            skillLevel: 9.5), 100, TimeSpan.FromSeconds(12.0) }
+            skillLevel: 13), 100, TimeSpan.FromSeconds(12.0) }
     };
     
     wraith.AddLoot(new LootPack(
@@ -102388,6 +102562,48 @@
     ));
     
     return orc;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="uk200Googog">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    return new Googog();
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="tkTrollJailer">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	return new TrollJailer();
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -103180,7 +103396,7 @@
       <entry entity="townTrainerThief" size="1" minimum="1" maximum="1" />
       <location x="49" y="35" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="googogTEMP">
+    <spawn type="LocationSpawner" name="googog">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -103198,7 +103414,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="townConfessorGhost" size="1" minimum="1" maximum="1" />
+      <entry entity="uk200Googog" size="1" minimum="1" maximum="1" />
       <location x="17" y="24" region="5" />
     </spawn>
     <spawn type="LocationSpawner" name="tkPrincess">
@@ -103598,6 +103814,32 @@
       <entry entity="townRecallVendor" size="1" minimum="1" maximum="1" />
       <location x="13" y="14" region="1" />
     </spawn>
+    <spawn type="LocationSpawner" name="tkJailer">
+      <minimumDelay>1800</minimumDelay>
+      <maximumDelay>2700</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is CreatureEntity creature)
+    {
+        var tile = creature.Segment.FindTile(5, 8, 10);
+        
+        if (tile != null && !tile.ContainsComponent<Obstruction>())
+            tile.Add(new Obstruction(450, true));
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="tkTrollJailer" size="1" minimum="1" maximum="1" />
+      <location x="6" y="8" region="10" />
+    </spawn>
     <spawn type="RegionSpawner" name="wyverns">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
@@ -103790,7 +104032,11 @@
       <entry entity="uk100MaGoblin" size="1" minimum="2" maximum="2" />
       <bounds region="5">
         <inclusion left="3" top="3" right="13" bottom="25" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
+        <inclusion left="14" top="8" right="14" bottom="15" />
+        <exclusion left="3" top="24" right="9" bottom="25" />
+        <exclusion left="3" top="19" right="4" bottom="23" />
+        <exclusion left="11" top="3" right="13" bottom="6" />
+        <exclusion left="7" top="16" right="13" bottom="19" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="lightningcaves">
@@ -104164,6 +104410,7 @@
       <entry entity="udStalker" size="1" minimum="3" maximum="3" />
       <bounds region="17">
         <inclusion left="2" top="3" right="37" bottom="22" />
+        <exclusion left="2" top="21" right="29" bottom="22" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="orugugra">
@@ -104242,6 +104489,30 @@
       <bounds region="16">
         <inclusion left="6" top="2" right="15" bottom="8" />
         <inclusion left="16" top="7" right="20" bottom="8" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="SpeedyHobUnsafeRoom">
+      <minimumDelay>1500</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="uk300Troll" size="1" minimum="4" maximum="4" />
+      <bounds region="12">
+        <inclusion left="31" top="12" right="33" bottom="14" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -104348,7 +104619,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallSapphire(3500u);
+	return new SwallowSapphire(3500u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104357,7 +104628,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StarRuby(5500u);
+	return new WhaleSapphire(10000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104366,7 +104637,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(23000u);
+	return new Tourmaline(23000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104396,7 +104667,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallSapphire(4000u);
+	return new SwallowSapphire(4000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104405,7 +104676,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StarRuby(6000u);
+	return new WhaleSapphire(11000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104414,7 +104685,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(26000u);
+	return new Tourmaline(26000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104444,7 +104715,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallSapphire(4000u);
+	return new SwallowSapphire(4000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104453,7 +104724,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StarRuby(6100u);
+	return new WhaleSapphire(6100u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104462,7 +104733,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(26000u);
+	return new Tourmaline(26000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104473,7 +104744,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new PearDiamond(2500u);
+	return new SwallowSapphire(4500u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104482,7 +104753,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StarRuby(7000u);
+	return new WhaleSapphire(7000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104491,7 +104762,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(28000u);
+	return new Tourmaline(28000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104560,7 +104831,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new PearDiamond(3500u);
+	return new Diamond(3500u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104569,7 +104840,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StarRuby(7500u);
+	return new SwallowSapphire(7500u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104578,7 +104849,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(32000u);
+	return new Tourmaline(32000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104587,7 +104858,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new UncutEmerald(8000u);
+	return new WhaleSapphire(8000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
