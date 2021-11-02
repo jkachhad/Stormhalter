@@ -38,6 +38,8 @@ namespace Kesmai.Server.Items
 		/// <summary>
 		/// Gets the target flags utilized by this <see cref="Wand"/>.
 		/// </summary>
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual TargetFlags TargetFlags => TargetFlags.Path;
 		
 		/// <summary>

@@ -57,7 +57,10 @@ namespace Kesmai.Server.Items
 		/// </summary>
 		public override void GetDescription(List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6200000, 6200001)); /* [You are looking at] [a gold coin.]*/
+			if (Amount > 1)
+				entries.Add(new LocalizationEntry(6199999, Amount.ToString(), 6199998)); /* You are looking at [#] [gold coins.]*/
+			else
+				entries.Add(new LocalizationEntry(6200000, 6200001)); /* [You are looking at] [a gold coin.]*/
 		}
 	}
 }

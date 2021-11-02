@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-
+using Kesmai.Server.Accounting;
+using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 using Kesmai.Server.Spells;
@@ -17,6 +18,8 @@ namespace Kesmai.Server.Items
 		public override int Weight => 4;
 		
 		/// <inheritdoc />
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int StrengthBonus => 3;
 
 		/// <summary>

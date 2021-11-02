@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.79.0.0">
+<segment name="Leng" version="0.81.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -75991,7 +75991,8 @@
         CanLoot = false,
         
         BasePenetration = ShieldPenetration.Heavy,
-
+        
+        IsTethered = true,
     };
     
     shidosha.AddStatus(new NightVisionStatus(shidosha));
@@ -76029,6 +76030,7 @@
    shidosha.AddLoot(new LootPack(
        new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100, gemsPriceMutator),
        new LootPackEntry(true, (from, container) => new Kimono(),        100),
+       new LootPackEntry(true, (from, container) => new Fan(),        100),
        new LootPackEntry(true, (from, container) => new PermanentDexterityPotion(),        50)
    ));
        
@@ -76068,6 +76070,7 @@
         BasePenetration = ShieldPenetration.Medium,
         CanLoot = false,
 
+        IsTethered = true,
     };
     
     ninja.AddStatus(new NightVisionStatus(ninja));
@@ -76145,6 +76148,8 @@
     
         FireProtection = 100,
         StunProtection = 100,
+        
+        IsTethered = true,
     };
     
     dragon.AddStatus(new NightVisionStatus(dragon));
@@ -76215,9 +76220,11 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     //todo: add vlad model to variables
-    var vlad = new Wraith()
+    var vlad = new Humanoid()
     {
-        Name = "Vampire",
+        Name = "vampire",
+        Body = 80,
+        
         MaxHealth = 7000, Health = 7000,
         BaseDodge = 20,
         BasePenetration = ShieldPenetration.VeryHeavy,
@@ -76230,6 +76237,8 @@
         Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell,
         
         VisibilityDistance = 0,
+        
+        IsTethered = true,
     };
     
     vlad.AddStatus(new NightVisionStatus(vlad));
@@ -76311,6 +76320,7 @@
                    CreatureImmunity.Projectile | CreatureImmunity.Magic | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
     
+        IsTethered = true,
     };
     
     drake.AddStatus(new NightVisionStatus(drake));
@@ -77772,6 +77782,8 @@
         MaxMana = 30, Mana = 30,
         
         Experience = 50,
+        
+        IsTethered = true,
     };
 
     peacekeeper.Attacks = new CreatureAttackCollection

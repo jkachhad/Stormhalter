@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Blackburrow" version="0.79.0.0">
+<segment name="Blackburrow" version="0.81.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -30894,6 +30894,7 @@
         
         BasePenetration = ShieldPenetration.Heavy,
 
+        IsTethered = true,
     };
     
     fippy.AddStatus(new NightVisionStatus(fippy));
@@ -31685,6 +31686,8 @@ if (spokeRecently(source))
         VisibilityDistance = 0,
         Movement = 1,
         Experience = 100000,
+        
+        IsTethered = true,
     };
     
     crocodile.AddStatus(new BreatheWaterStatus(crocodile));
@@ -32581,6 +32584,8 @@ return elemental;
     IceProtection = 100,
     Immunity = CreatureImmunity.Bashing | CreatureImmunity.Piercing | CreatureImmunity.Projectile | CreatureImmunity.Slashing | CreatureImmunity.Magic |CreatureImmunity.Poison,
     Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+    
+    IsTethered = true,
 };
 
 dragon.AddStatus(new NightVisionStatus(dragon));
@@ -32694,6 +32699,8 @@ return dragon;
     DeathResistance = 75,
     IceProtection = 80,
     Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+    
+    IsTethered = true,
 };
 
 ogre.AddImmunity(typeof(WhirlwindSpell));
@@ -32791,6 +32798,8 @@ return ogre;
     DeathResistance = 75,
     IceProtection = 100,
     Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+    
+    IsTethered = true,
 };
 
 ogre.AddImmunity(typeof(PoisonCloudSpell));

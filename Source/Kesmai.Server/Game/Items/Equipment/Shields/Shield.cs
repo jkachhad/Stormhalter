@@ -1,5 +1,6 @@
 using System.IO;
-
+using Kesmai.Server.Accounting;
+using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items
@@ -14,26 +15,36 @@ namespace Kesmai.Server.Items
 		/// <summary>
 		/// Gets the base armor bonus provided by this <see cref="Armor"/>.
 		/// </summary>
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int BaseArmorBonus { get { return 0; } }
 
 		/// <summary>
 		/// Gets the protection provided against slashing attacks.
 		/// </summary>
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int SlashingProtection { get { return 0; } }
 
 		/// <summary>
 		/// Gets the protection provided against peircing attacks.
 		/// </summary>
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int PiercingProtection { get { return 0; } }
 
 		/// <summary>
 		/// Gets the protection provided against bashing attacks.
 		/// </summary>
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int BashingProtection { get { return 0; } }
 
 		/// <summary>
 		/// Gets the protection provided against projectile attacks.
 		/// </summary>
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int ProjectileProtection { get { return 0; } }
 
 		/// <summary>
