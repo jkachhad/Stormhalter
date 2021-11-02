@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.79.0.0">
+<segment name="Kesmai" version="0.81.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -73,6 +73,14 @@
         
         item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
     }
+
+
+
+    /* We use static instances for the implementation. */
+    private static ConsumableUrine _orcUrine = new ConsumableUrine("orc");
+    private static ConsumableUrine _hobgoblincUrine = new ConsumableUrine("hobgoblin");
+    private static ConsumableUrine _trollUrine = new ConsumableUrine("troll");
+    private static ConsumableUrine _dragonUrine = new ConsumableUrine("dragon");
     
     /* Randomized Balms */
     public static Balm randomBalm(bool hasUrine = false)
@@ -93,13 +101,13 @@
             var urine = default(ConsumableUrine);
         
             if (urineChance < 0.05)
-                urine = new ConsumableUrine("dragon");
+                urine = _dragonUrine;
             else if (urineChance < 0.15)
-                urine = new ConsumableUrine("hobgoblin");
+                urine = _hobgoblincUrine;
             else if (urineChance < 0.50)
-                urine = new ConsumableUrine("troll");
+                urine = _trollUrine;
             else
-                urine = new ConsumableUrine("orc");
+                urine = _orcUrine;
             
             balm.Content = urine;
         }
@@ -96787,6 +96795,8 @@
 
         FireProtection = 100,
         IceProtection = 80,
+        
+        IsTethered = true,
     };
     
     elderTroll.AddStatus(new NightVisionStatus(elderTroll));
@@ -97254,6 +97264,8 @@
         MaxHealth = 110, Health = 110,
         
         Experience = 50,
+        
+        IsTethered = true,
     };
 
     peacekeeper.Attacks = new CreatureAttackCollection()
@@ -97303,6 +97315,8 @@
         MaxMana = 30, Mana = 30,
         
         Experience = 50,
+        
+        IsTethered = true,
     };
 
     peacekeeper.Attacks = new CreatureAttackCollection()
@@ -97350,6 +97364,8 @@
         MaxHealth = 130, Health = 130,
         
         Experience = 50,
+        
+        IsTethered = true,
     };
     
     peacekeeper.Attacks = new CreatureAttackCollection()
@@ -97432,6 +97448,8 @@
         Experience = 50,
         
         Alignment = Alignment.Lawful,
+        
+        IsTethered = true,
     };
 
     crocodile.Home = new RectangleBounds()
@@ -97488,6 +97506,8 @@
         CanSwim = true,
 
         Alignment = Alignment.Lawful,
+        
+        IsTethered = true,
     };
     
     dog.Home = new RectangleBounds()
@@ -97579,7 +97599,12 @@
         Experience = 50,
     
         Alignment = Alignment.Lawful,
+        
+        IsTethered = true,
     };
+    
+    shark.AddImmunity(typeof(Whirlwind));
+    shark.AddImmunity(typeof(Poison));
     
     shark.Home = new RectangleBounds()
     {
@@ -100224,14 +100249,18 @@ return orc;
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    // TODO: Magic protection 50%
     var griffin = new Griffin()
     {
         MaxHealth = 120, Health = 120,
         BaseDodge = 15,
+        
         BasePenetration = ShieldPenetration.Light,
+        
         Experience = 800,
+        
         HideDetection = 15,
+        
+        MagicProtection = 50,
     };
     griffin.AddStatus(new NightVisionStatus(griffin));
         
@@ -100306,13 +100335,15 @@ return orc;
         
         FireProtection = 100,
         IceProtection = 100,
-    
-        StunResistance = 20,
-        
+
         HideDetection = 20,
+        
+        IsTethered = true,
     };
     ydnac.AddStatus(new NightVisionStatus(ydnac));
     ydnac.AddStatus(new BreatheWaterStatus(ydnac));
+    
+    ydnac.AddImmunity(typeof(StunSpell));
     
     ydnac.Attacks = new CreatureAttackCollection()
     {
@@ -100386,6 +100417,8 @@ return orc;
     
         FireProtection = 100,
         IceProtection = 100,
+        
+        IsTethered = true,
     };
     abesh.AddStatus(new NightVisionStatus(abesh));
     abesh.AddStatus(new BreatheWaterStatus(abesh));
@@ -100633,10 +100666,20 @@ return orc;
         FireProtection = 100,
         IceProtection = 100,
         StunProtection = 100,
+        MagicProtection = 20,
+        
+        IsTethered = true,
     };
     dragon.AddStatus(new NightVisionStatus(dragon));
     
     dragon.AddImmunity(typeof(DragonBreathFireSpell));
+    
+    dragon.AddImmunity(typeof(Whirlwind));
+    dragon.AddImmunity(typeof(Poison));
+    
+    dragon.AddImmunity(typeof(BlindSpell));
+    dragon.AddImmunity(typeof(FearSpell));
+    dragon.AddImmunity(typeof(StunSpell));
 
     dragon.Attacks = new CreatureAttackCollection
     {
@@ -100893,6 +100936,8 @@ else
         MaxHealth = 130, Health = 130,
         
         Experience = 50,
+        
+        IsTethered = true,
     };
     
     sheriff.Attacks = new CreatureAttackCollection()
@@ -101022,6 +101067,57 @@ else
     };
         
     return crocodile;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="surfaceShark">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var shark = new Shark()
+    {
+        MaxHealth = 40, Health = 40,
+        BaseDodge = 12,
+
+        Experience = 725,
+    };
+    
+    shark.AddImmunity(typeof(Whirlwind));
+    shark.AddImmunity(typeof(Poison));
+    
+    shark.Attacks = new CreatureAttackCollection
+    {
+        { new CreatureAttack(6, 5, 15, "You've been bitten by the shark."), 60 }, 
+        { new CreatureAttack(6, 10, 25, "The shark lashes you with its fin."), 40 }, 
+    };
+    
+    shark.Blocks = new CreatureBlockCollection
+    {
+        { new CreatureBlock(6, "the tough skin") }, 
+        { new CreatureBlock(4, "a fin") }, 
+    };
+
+    shark.AddGold(50);
+    shark.AddLoot(
+        new LootPack(
+            new LootPackEntry(true, (from, container) => new OysterPearl(3000), 7), 
+            new LootPackEntry(true, dungeon2Bottles,    20)
+        ));
+
+    return shark;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102128,6 +102224,46 @@ else
       <entry entity="ydnacMummy" size="1" minimum="1" maximum="2" />
       <location x="21" y="12" region="4" />
     </spawn>
+    <spawn type="LocationSpawner" name="surfaceSharkNorth">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfaceShark" size="1" minimum="1" maximum="1" />
+      <location x="122" y="16" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="surfaceSharkSouth">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfaceShark" size="1" minimum="1" maximum="1" />
+      <location x="95" y="34" region="1" />
+    </spawn>
     <spawn type="RegionSpawner" name="Kesmai -1">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>300</maximumDelay>
@@ -102722,11 +102858,11 @@ else
       </entry>
     </treasure>
     <treasure name="dungeon2Bottles">
-      <entry weight="12">
+      <entry weight="11">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new ClearBalm();
+	return randomBalm();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -102749,13 +102885,22 @@ else
           <block><![CDATA[]]></block>
         </script>
       </entry>
-    </treasure>
-    <treasure name="dungeon3Bottles">
-      <entry weight="26">
+      <entry weight="1">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new ClearBalm();
+	return randomBalm(true);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="dungeon3Bottles">
+      <entry weight="22">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return randomBalm();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -102792,17 +102937,26 @@ else
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new NitroPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return randomBalm(true);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
       </entry>
     </treasure>
     <treasure name="dungeon4Bottles">
-      <entry weight="26">
+      <entry weight="23">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new ClearBalm();
+	return randomBalm();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -102839,6 +102993,15 @@ else
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new NitroPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return randomBalm(true);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>

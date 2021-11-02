@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
+using Kesmai.Server.Accounting;
+using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 using Kesmai.Server.Spells;
@@ -10,6 +12,8 @@ namespace Kesmai.Server.Items
 	{
 		private int _charges;
 
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public int Charges
 		{
 			get => _charges;

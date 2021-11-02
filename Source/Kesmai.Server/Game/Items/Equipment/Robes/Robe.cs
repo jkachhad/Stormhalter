@@ -1,4 +1,6 @@
 using System.IO;
+using Kesmai.Server.Accounting;
+using Kesmai.Server.Engines.Commands;
 
 namespace Kesmai.Server.Items
 {
@@ -25,6 +27,8 @@ namespace Kesmai.Server.Items
 		/// <summary>
 		/// Gets the mana regeneration provided by this <see cref="Robe"/>
 		/// </summary>
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int ManaRegeneration => 0;
 
 		/// <summary>
