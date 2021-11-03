@@ -94449,7 +94449,7 @@
         }, 
     };
 
-    griffin.AddGold(1050);
+    griffin.AddGold(300);
     griffin.AddLoot(new LootPack(
             new LootPackEntry(true, (from, container) => new OchreEgg(), 25.0), 
             new LootPackEntry(true, (from, container) => new ClearBalm(), 50.0), 
@@ -94503,7 +94503,7 @@
         new CreatureBlock(4, "a tail")
     };
 
-    crocodile.AddGold(350);
+    crocodile.AddGold(100);
     crocodile.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 0.5, gemsPriceMutator), 
@@ -94560,7 +94560,7 @@
        new CreatureBlock(4, "a claw") 
     };
 
-    largeBear.AddGold(1450);
+    largeBear.AddGold(350);
     largeBear.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 0.5, gemsPriceMutator), 
@@ -94616,7 +94616,7 @@
             { new CreatureBlock(3, "a paw") }, 
     };
 
-    wolf.AddGold(325);
+    wolf.AddGold(50);
     wolf.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 0.5, gemsPriceMutator), 
@@ -94669,7 +94669,7 @@
         new CreatureBlock(4, "a cloven hoof")
     };
 
-    boar.AddGold(200);
+    boar.AddGold(75);
     boar.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 0.5, gemsPriceMutator), 
@@ -94720,7 +94720,7 @@
         new CreatureBlock(1, "the armor")
     };
 
-    beetle.AddGold(160);
+    beetle.AddGold(50);
     
     return beetle;
 ]]></block>
@@ -94761,7 +94761,7 @@
     orc.Wield(new Katana());
     orc.Equip(new LeatherArmor());    
 
-    orc.AddGold(250);
+    orc.AddGold(50);
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 0.5, gemsPriceMutator), 
@@ -94808,7 +94808,7 @@
     orc.Wield(new Crossbow());
     orc.Equip(new LeatherArmor());    
 
-    orc.AddGold(350);
+    orc.AddGold(50);
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 0.5, gemsPriceMutator), 
@@ -94866,7 +94866,7 @@
         new CreatureBlock(4, "a fin")
     };
 
-    shark.AddGold(450);
+    shark.AddGold(250);
     shark.AddLoot(
         new LootPack(
             new LootPackEntry(true, (from, container) => new OysterPearl(3000u), 7.69),
@@ -94925,7 +94925,7 @@
         new CreatureBlock(4, "a claw")
     };
 
-    bear.AddGold(625);
+    bear.AddGold(125);
     bear.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 0.5, gemsPriceMutator), 
@@ -94989,7 +94989,7 @@
         { new CreatureBlock(4, "a tail") }, 
     };
 
-    wyrm.AddGold(850);
+    wyrm.AddGold(125);
     wyrm.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 0.5), 
@@ -95058,7 +95058,7 @@
         }, 
     };
 
-    rat.AddGold(50);
+    rat.AddGold(25);
     
     return rat;
 ]]></block>
@@ -95105,7 +95105,7 @@
         new CreatureBlock(1, "the armor")
     };
 
-    viper.AddGold(100);
+    viper.AddGold(50);
     
     return viper;
 ]]></block>
@@ -95157,7 +95157,7 @@
             new CreatureBlock(1, "a tail") 
     };
 
-    scorpion.AddGold(250);
+    scorpion.AddGold(75);
     scorpion.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 0.5, gemsPriceMutator), 
@@ -95204,7 +95204,7 @@
     kobold.Wield(new SteelMace());
     kobold.Equip(new LeatherArmor());    
 
-    kobold.AddGold(300);
+    kobold.AddGold(50);
     kobold.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 0.5, gemsPriceMutator), 
@@ -95253,7 +95253,7 @@
     orc.Wield(new Longsword());
     orc.Equip(new LeatherArmor());    
 
-    orc.AddGold(250);
+    orc.AddGold(50);
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 0.5, gemsPriceMutator), 
@@ -95300,7 +95300,7 @@
     orc.Wield(new Crossbow());
     orc.Equip(new LeatherArmor());    
 
-    orc.AddGold(350);
+    orc.AddGold(50);
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 0.5, gemsPriceMutator), 
@@ -95349,7 +95349,7 @@
     troll.Wield(new Greatsword());
     troll.Equip(new ChainmailArmor());    
 
-    troll.AddGold(300);
+    troll.AddGold(75);
     troll.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 0.5, gemsPriceMutator), 
@@ -95402,7 +95402,7 @@
         new CreatureBlock(1, "the armor")
     };
 
-    spider.AddGold(250);
+    spider.AddGold(50);
     spider.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 0.5, gemsPriceMutator), 
@@ -95449,7 +95449,7 @@
     hobgoblin.Wield(new Longsword());
     hobgoblin.Equip(new LeatherArmor());    
 
-    hobgoblin.AddGold(350);
+    hobgoblin.AddGold(80);
     hobgoblin.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 1, gemsPriceMutator), 
@@ -95496,7 +95496,7 @@
     goblin.Wield(new Longsword());
     goblin.Equip(new LeatherArmor());    
 
-    goblin.AddGold(400);
+    goblin.AddGold(75);
     goblin.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 1, gemsPriceMutator), 
@@ -95543,7 +95543,7 @@
     goblin.Wield(new Longbow());
     goblin.Equip(new LeatherArmor());    
 
-    goblin.AddGold(150);
+    goblin.AddGold(75);
     goblin.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 1, gemsPriceMutator), 
@@ -95596,7 +95596,7 @@
     troll.Wield(new Greatsword());
     troll.Equip(new ChainmailArmor());    
 
-    troll.AddGold(600);
+    troll.AddGold(90);
     troll.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 25.0, gemsPriceMutator), 
@@ -95645,7 +95645,7 @@
     orc.Wield(new Katana());
     orc.Equip(new LeatherArmor());    
 
-    orc.AddGold(200);
+    orc.AddGold(75);
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 1, gemsPriceMutator), 
@@ -95694,7 +95694,7 @@
     orc.Wield(new Crossbow());
     orc.Equip(new LeatherArmor());    
 
-    orc.AddGold(200);
+    orc.AddGold(75);
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 1, gemsPriceMutator), 
@@ -95754,7 +95754,7 @@
     orc.Wield(new WoodenStaff());
     orc.Equip(new LeatherArmor());    
 
-    orc.AddGold(250);
+    orc.AddGold(75);
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 1, gemsPriceMutator),
@@ -95813,7 +95813,7 @@
 
     spectre.Wield(new WoodenStaff());    
 
-    spectre.AddGold(600);
+    spectre.AddGold(100);
     spectre.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 1, gemsPriceMutator), 
@@ -95863,7 +95863,7 @@
     hobgoblin.Wield(new Longsword());
     hobgoblin.Equip(new LeatherArmor());    
 
-    hobgoblin.AddGold(650);
+    hobgoblin.AddGold(100);
     hobgoblin.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 2, gemsPriceMutator), 
@@ -95912,7 +95912,7 @@
     orc.Wield(new Longsword());
     orc.Equip(new LeatherArmor());    
 
-    orc.AddGold(450);
+    orc.AddGold(80);
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 2, gemsPriceMutator), 
@@ -95961,7 +95961,7 @@
     orc.Wield(new Longbow());
     orc.Equip(new LeatherArmor());    
 
-    orc.AddGold(450);
+    orc.AddGold(80);
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 2, gemsPriceMutator), 
@@ -96021,7 +96021,7 @@
     orc.Wield(new WoodenStaff());
     orc.Equip(new LeatherArmor());    
 
-    orc.AddGold(450);
+    orc.AddGold(100);
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 2, gemsPriceMutator), 
@@ -96068,7 +96068,7 @@
     troll.Wield(new Greatsword());
     troll.Equip(new ChainmailArmor());    
 
-    troll.AddGold(750);
+    troll.AddGold(125);
     troll.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 2, gemsPriceMutator), 
@@ -96137,7 +96137,7 @@
     thaum.Wield(new WoodenShield());
     thaum.Equip(new LeatherArmor());    
 
-    thaum.AddGold(800);
+    thaum.AddGold(175);
     thaum.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 2, gemsPriceMutator), 
@@ -96206,7 +96206,7 @@
     wizard.Wield(new WoodenShield());
     wizard.Equip(new LeatherArmor());    
 
-    wizard.AddGold(800);
+    wizard.AddGold(150);
     wizard.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 2 gemsPriceMutator), 
@@ -96275,7 +96275,7 @@
 
     minotaur.Wield(new IronRodChaotic());    
 
-    minotaur.AddGold(800);
+    minotaur.AddGold(200);
     minotaur.AddLoot(
         new LootPack(
             new LootPackEntry(true, (from, container) => new SerpentRobe(), 2.5),
@@ -96349,7 +96349,7 @@
 
     gargoyle.Wield(new Greatsword());    
 
-    gargoyle.AddGold(1200);
+    gargoyle.AddGold(200);
     gargoyle.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 2, gemsPriceMutator), 
@@ -96413,7 +96413,7 @@
             skillLevel: 8), 100, TimeSpan.FromSeconds(15.0) }
     };
     
-    salamander.AddGold(550);
+    salamander.AddGold(150);
     salamander.AddLoot(
         new LootPack(
             new LootPackEntry(true, (from, container) => new FieryRuby(1700u), 100, gemsPriceMutator)
@@ -96541,7 +96541,7 @@
     pescalanor.Wield(new Crossbow());
     pescalanor.Equip(new PlatemailArmor());    
 
-    pescalanor.AddGold(750);
+    pescalanor.AddGold(300);
     pescalanor.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 1.5, gemsPriceMutator), 
@@ -96611,7 +96611,7 @@
 
     gargoyle.Wield(new Greatsword());    
 
-    gargoyle.AddGold(1500);
+    gargoyle.AddGold(300);
     gargoyle.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 3.0, gemsPriceMutator), 
@@ -96679,7 +96679,7 @@
     minotaur.Wield(new Greatsword());
     minotaur.Equip(new PlatemailArmor());    
 
-    minotaur.AddGold(1250);
+    minotaur.AddGold(300);
     minotaur.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 3.0, gemsPriceMutator), 
@@ -96726,7 +96726,7 @@
     hobgoblin.Wield(new Longsword());
     hobgoblin.Equip(new ChainmailArmor());    
 
-    hobgoblin.AddGold(800);
+    hobgoblin.AddGold(150);
     hobgoblin.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 3.0, gemsPriceMutator), 
@@ -96777,7 +96777,7 @@
     troll.Wield(new Greatsword());
     troll.Equip(new ChainmailArmor());    
 
-    troll.AddGold(875);
+    troll.AddGold(225);
     troll.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 3.0, gemsPriceMutator), 
@@ -96826,7 +96826,7 @@
     orc.Wield(new Longsword());
     orc.Equip(new LeatherArmor());    
 
-    orc.AddGold(675);
+    orc.AddGold(125);
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 3.0, gemsPriceMutator), 
@@ -96875,7 +96875,7 @@
     orc.Wield(new Longbow());
     orc.Equip(new LeatherArmor());    
 
-    orc.AddGold(675);
+    orc.AddGold(125);
     orc.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 3.0, gemsPriceMutator), 
@@ -96946,7 +96946,7 @@
     thaum.Wield(new WoodenShield());
     thaum.Equip(new LeatherArmor());    
 
-    thaum.AddGold(900);
+    thaum.AddGold(225);
     thaum.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 3.0, gemsPriceMutator), 
@@ -97014,7 +97014,7 @@
     wizard.Wield(new SteelShield());
     wizard.Equip(new LeatherArmor());    
 
-    wizard.AddGold(900);
+    wizard.AddGold(225);
     wizard.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 3.0, gemsPriceMutator), 
@@ -97080,7 +97080,7 @@
             skillLevel: 9), 100, TimeSpan.FromSeconds(15.0) }
     };
 
-    salamander.AddGold(900);
+    salamander.AddGold(200);
     salamander.AddLoot(
         new LootPack(
             new LootPackEntry(true, (from, container) => new FieryRuby(1700u), 100.0, gemsPriceMutator)
@@ -97129,7 +97129,7 @@
     drizilu.Wield(new Crossbow());
     drizilu.Equip(new PlatemailArmor());    
 
-    drizilu.AddGold(900);
+    drizilu.AddGold(500);
     drizilu.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 3.0, gemsPriceMutator), 
@@ -97182,7 +97182,7 @@
     glamuzu.Wield(new Crossbow());
     glamuzu.Equip(new PlatemailArmor());    
 
-    glamuzu.AddGold(900);
+    glamuzu.AddGold(500);
     glamuzu.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 3.0, gemsPriceMutator), 
@@ -97237,7 +97237,7 @@
 
     banshee.Wield(new Spear());    
 
-    banshee.AddGold(900);
+    banshee.AddGold(175);
     banshee.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
@@ -97292,7 +97292,7 @@
 
     banshee.Wield(new Spear());    
 
-    banshee.AddGold(850);
+    banshee.AddGold(200);
     banshee.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
@@ -97352,7 +97352,7 @@
 
     wraith.Wield(new BlackStaff());    
 
-    wraith.AddGold(910);
+    wraith.AddGold(225);
     wraith.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
@@ -97424,7 +97424,7 @@
     wizard.Wield(new SteelShield());
     wizard.Equip(new LeatherArmor());    
 
-    wizard.AddGold(900);
+    wizard.AddGold(275);
     wizard.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
@@ -97492,7 +97492,7 @@
     thaum.Wield(new SteelShield());
     thaum.Equip(new LeatherArmor());    
 
-    thaum.AddGold(950);
+    thaum.AddGold(275);
     thaum.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
@@ -97553,7 +97553,7 @@
         new CreatureBlock(4, "a claw")
     };
 
-    ghoul.AddGold(1250);
+    ghoul.AddGold(250);
     ghoul.AddLoot(new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, oakvaelGems, 4.0, gemsPriceMutator),
@@ -97613,7 +97613,7 @@
 
     spectre.Wield(new WoodenStaff());    
 
-    spectre.AddGold(830);
+    spectre.AddGold(225);
     spectre.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
@@ -97672,7 +97672,7 @@
 
     wight.Wield(new WoodenStaff());    
 
-    wight.AddGold(920);
+    wight.AddGold(175);
     wight.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
@@ -97734,7 +97734,7 @@
 
     lich.Wield(new WoodenStaff());    
 
-    lich.AddGold(1430);
+    lich.AddGold(300);
     lich.AddLoot(new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
             new LootPackEntry(true, oakvaelGems, 4.0, gemsPriceMutator),
@@ -97785,7 +97785,7 @@
 
     stalker.Wield(new Spear());    
 
-    stalker.AddGold(1230);
+    stalker.AddGold(300);
     stalker.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 33.0), 
@@ -98290,11 +98290,11 @@
         
     centaur.Wield(new WarHammer());
     
-    centaur.AddGold(2500);
+    centaur.AddGold(450);
     centaur.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 60.0), 
-            new LootPackEntry(true, oakvaelGems, 10.0, gemsPriceMutator),
+            new LootPackEntry(true, oakvaelGems, 5.0, gemsPriceMutator),
             new LootPackEntry(true, groveTreasure, 0.63)
         ));
     
@@ -98346,11 +98346,11 @@
     dryad.Wield(new GiltDagger());
     dryad.Wield(new IronRod());
     
-    dryad.AddGold(1500);
+    dryad.AddGold(400);
     dryad.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 60.0), 
-            new LootPackEntry(true, oakvaelGems, 10.0, gemsPriceMutator),
+            new LootPackEntry(true, oakvaelGems, 5.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Wands, 4), 
             new LootPackEntry(true, groveTreasure, 0.63)
         ));
@@ -98653,7 +98653,7 @@
         new CreatureBlock(6, "a tail"), 
     };
     
-    piranha.AddGold(300);
+    piranha.AddGold(100);
         
     return piranha;
 ]]></block>
@@ -98815,7 +98815,7 @@
         }, 
     };
 
-    griffin.AddGold(1050);
+    griffin.AddGold(300);
     griffin.AddLoot(new LootPack(
             new LootPackEntry(true, oakvaelGems, 5.0, gemsPriceMutator), 
             new LootPackEntry(true, surfaceBottles, 20.0), 
@@ -98872,10 +98872,10 @@
        new CreatureBlock(4, "a claw") 
     };
 
-    largeBear.AddGold(1450);
+    largeBear.AddGold(300);
     largeBear.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakvaelGems, 10.0, gemsPriceMutator), 
+            new LootPackEntry(true, oakvaelGems, 5.0, gemsPriceMutator), 
             new LootPackEntry(true, surfaceBottles, 20.0), 
             new LootPackEntry(true, groveTreasure, 0.4)
         ));
@@ -98928,7 +98928,7 @@
             { new CreatureBlock(3, "a paw") }, 
     };
 
-    wolf.AddGold(325);
+    wolf.AddGold(225);
     wolf.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakvaelGems, 4.0, gemsPriceMutator), 
@@ -99016,7 +99016,7 @@
         { new CreatureBlock(4, "a tail") }, 
     };
 
-    wyrm.AddGold(850);
+    wyrm.AddGold(275);
     
     return wyrm;
 ]]></block>
@@ -99088,7 +99088,7 @@
     centaur.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 60.0), 
-            new LootPackEntry(true, oakvaelGems, 8, gemsPriceMutator),
+            new LootPackEntry(true, oakvaelGems, 6, gemsPriceMutator),
             new LootPackEntry(true, groveTreasure, 2)
         ));
     
@@ -99141,11 +99141,11 @@
     dryad.Wield(new GiltDagger());
     dryad.Wield(new IronRod());
     
-    dryad.AddGold(500);
+    dryad.AddGold(450);
     dryad.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 60.0), 
-            new LootPackEntry(true, oakvaelGems, 8, gemsPriceMutator),
+            new LootPackEntry(true, oakvaelGems, 6, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Wands, 4), 
             new LootPackEntry(true, groveTreasure, 0.63)
         ));
@@ -99187,7 +99187,7 @@
     troll.Wield(new BattleAxe());
     troll.Equip(new ChainmailArmor());    
 
-    troll.AddGold(500);
+    troll.AddGold(300);
     troll.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 30.0), 
@@ -99248,7 +99248,7 @@
     
     necro.Wield(new BlackStaff());
     
-    necro.AddGold(300);
+    necro.AddGold(1500);
     necro.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 60.0), 
