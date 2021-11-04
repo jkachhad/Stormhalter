@@ -96536,6 +96536,7 @@
     };
     
     serpent.AddStatus(new NightVisionStatus(serpent)); 
+    serpent.AddStatus(new BreatheWaterStatus(serpent));
     
     serpent.Attacks = new CreatureAttackCollection
     {
@@ -96605,6 +96606,8 @@
 
         CanWalk = false,
     };
+    
+    pescalanor.AddStatus(new BreatheWaterStatus(pescalanor));
     
     pescalanor.Attacks = new CreatureAttackCollection
     {
