@@ -107441,7 +107441,7 @@
     draugr.AddLoot(new LootPack(
         new LootPackEntry(true, UndeadGems,       5,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, upperTreasure,   0.1),
+        new LootPackEntry(true, upperTreasure,   0.63),
         new LootPackEntry(true, AxePotions,     0.2)
     ));
 
@@ -107501,7 +107501,7 @@
     draugr.AddLoot(new LootPack(
         new LootPackEntry(true, UndeadGems,       5,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, upperTreasure,   0.1),
+        new LootPackEntry(true, upperTreasure,   0.63),
         new LootPackEntry(true, AxePotions,     0.2)
     ));
 
@@ -107570,7 +107570,7 @@
         new LootPackEntry(true, UndeadGems,       5,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
         new LootPackEntry(true, UtilityItems,    5),
-        new LootPackEntry(true, upperTreasure,   0.1),
+        new LootPackEntry(true, upperTreasure,   0.63),
         new LootPackEntry(true, AxePotions,     0.2)
     ));
 
@@ -107829,7 +107829,7 @@
     worg.AddLoot(new LootPack(
         new LootPackEntry(true, UndeadGems,       4,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, upperTreasure,   0.1),
+        new LootPackEntry(true, upperTreasure,   0.3),
         new LootPackEntry(true, AxePotions,     0.2)
     ));
     return worg;
@@ -110547,7 +110547,7 @@
       </entry>
     </treasure>
     <treasure name="UndeadGems">
-      <entry weight="10">
+      <entry weight="20">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -110556,7 +110556,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="5">
+      <entry weight="15">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -110565,11 +110565,20 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="1">
+      <entry weight="4">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new SmallSapphire(70000u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new YouthPotion();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
