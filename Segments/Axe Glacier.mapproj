@@ -107441,6 +107441,7 @@
     draugr.AddLoot(new LootPack(
         new LootPackEntry(true, UndeadGems,       5,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, (from, container) => new YouthPotion(), 0.4),
         new LootPackEntry(true, upperTreasure,   0.63),
         new LootPackEntry(true, AxePotions,     0.2)
     ));
@@ -107501,6 +107502,7 @@
     draugr.AddLoot(new LootPack(
         new LootPackEntry(true, UndeadGems,       5,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, (from, container) => new YouthPotion(), 0.4),
         new LootPackEntry(true, upperTreasure,   0.63),
         new LootPackEntry(true, AxePotions,     0.2)
     ));
@@ -107569,6 +107571,7 @@
     draugr.AddLoot(new LootPack(
         new LootPackEntry(true, UndeadGems,       5,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, (from, container) => new YouthPotion(), 0.4),
         new LootPackEntry(true, UtilityItems,    5),
         new LootPackEntry(true, upperTreasure,   0.63),
         new LootPackEntry(true, AxePotions,     0.2)
@@ -107635,6 +107638,7 @@
     giant.AddLoot(new LootPack(
         new LootPackEntry(true, UndeadGems,       100,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, (from, container) => new YouthPotion(), 3),
         new LootPackEntry(true, upperTreasure,   2),
         new LootPackEntry(true, AxePotions,     0.5)
     ));
@@ -109939,7 +109943,7 @@
       <entry entity="undeadDraugrArcher" size="3" minimum="8" maximum="8" />
       <entry entity="undeadDraugrMage" size="1" minimum="7" maximum="7" />
       <entry entity="undeadCurseTroll" size="1" minimum="6" maximum="6" />
-      <entry entity="undeadWorg" size="3" minimum="9" maximum="9" />
+      <entry entity="undeadWorg" size="3" minimum="3" maximum="3" />
       <bounds region="2">
         <inclusion left="38" top="17" right="60" bottom="35" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -109964,11 +109968,11 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="undeadFrosty" size="1" minimum="1" maximum="1" />
-      <entry entity="undeadDraugrMelee" size="4" minimum="10" maximum="10" />
+      <entry entity="undeadDraugrMelee" size="4" minimum="12" maximum="12" />
       <entry entity="undeadDraugrMage" size="1" minimum="10" maximum="10" />
       <entry entity="undeadDraugrArcher" size="3" minimum="10" maximum="10" />
       <entry entity="undeadCurseTroll" size="1" minimum="8" maximum="8" />
-      <entry entity="undeadWorg" size="3" minimum="10" maximum="10" />
+      <entry entity="undeadWorg" size="3" minimum="5" maximum="5" />
       <bounds region="2">
         <inclusion left="28" top="-3" right="60" bottom="16" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -109995,9 +109999,9 @@
       <entry entity="undeadFrosty" size="1" minimum="1" maximum="1" />
       <entry entity="undeadDraugrArcher" size="3" minimum="9" maximum="9" />
       <entry entity="undeadDraugrMage" size="1" minimum="8" maximum="8" />
-      <entry entity="undeadDraugrMelee" size="4" minimum="10" maximum="10" />
+      <entry entity="undeadDraugrMelee" size="4" minimum="12" maximum="12" />
       <entry entity="undeadCurseTroll" size="1" minimum="8" maximum="8" />
-      <entry entity="undeadWorg" size="3" minimum="10" maximum="10" />
+      <entry entity="undeadWorg" size="3" minimum="5" maximum="5" />
       <bounds region="2">
         <inclusion left="-2" top="1" right="27" bottom="30" />
         <exclusion left="18" top="23" right="27" bottom="30" />
@@ -110547,7 +110551,7 @@
       </entry>
     </treasure>
     <treasure name="UndeadGems">
-      <entry weight="20">
+      <entry weight="4">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -110556,7 +110560,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="15">
+      <entry weight="3">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -110565,20 +110569,11 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="4">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new SmallSapphire(70000u);
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
       <entry weight="1">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new YouthPotion();
+	return new SmallSapphire(70000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
