@@ -495,9 +495,17 @@ namespace Kesmai.WorldForge
 						{
 							for (var x = area.Left; x < area.Right; x++)
 								for (var y = area.Top; y < area.Bottom; y++)
-									region.DeleteTile(x, y);
-						}
+								{
+									var currentFilter = _presenter.SelectedFilter;
+									var tile = region.GetTile(x,y);
+									var validComponents = tile.Components.Where(c => currentFilter.IsValid(c)).ToArray();
+									foreach (var component in validComponents){
+										tile.RemoveComponent(component);
+									}
+								}
 
+						}
+						_invalidateRender = true;
 						inputService.IsKeyboardHandled = true;
 					}
 				}
