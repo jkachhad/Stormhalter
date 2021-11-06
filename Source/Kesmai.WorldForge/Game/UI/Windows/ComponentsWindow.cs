@@ -116,6 +116,28 @@ namespace Kesmai.WorldForge.Windows
 				
 				foreach (var button in SelectedItem.Component.GetInspectorActions())
 					_actionsPanel.Children.Add(button);
+
+				var deleteButton = new Button()
+				{
+					Content = new TextBlock()
+					{
+						Foreground = Color.OrangeRed,
+						Shadow = Color.Black,
+
+						Font = "Tahoma14Bold",
+						Text = "Delete",
+
+						Margin = new Vector4F(3, 3, 3, 3)
+					}
+				};
+
+				deleteButton.Click += (o, args) =>
+				{
+					_tile.RemoveComponent(SelectedItem.Component);
+					OnLoad();
+					//todo: onLoad() causes the component window to refresh,  showing the component is removed, but I can't figure out how to get a reference to the current world render from here to invalidate it.
+				};
+				_actionsPanel.Children.Add(deleteButton);
 			}
 		}
 
