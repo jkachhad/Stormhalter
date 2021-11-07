@@ -65,7 +65,7 @@ namespace Kesmai.Server.Items
 		/// <inheritdoc />
 		[WorldForge]
 		[CommandProperty(AccessLevel.GameMaster)]
-		public virtual ShieldPenetration Penetration => ShieldPenetration.None;
+		public virtual ShieldPenetration Penetration => ShieldPenetration.Light;
 
 		/// <inheritdoc />
 		public override int Category => 8;
