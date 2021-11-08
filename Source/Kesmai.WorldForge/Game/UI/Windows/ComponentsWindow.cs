@@ -20,6 +20,7 @@ namespace Kesmai.WorldForge.Windows
 	public class ComponentsWindow : Window
 	{
 		private SegmentTile _tile;
+		private WorldGraphicsScreen _screen;
 		private PropertyGrid _propertyGrid;
 		private StackPanel _actionsPanel;
 		
@@ -33,20 +34,12 @@ namespace Kesmai.WorldForge.Windows
 			set => SetValue(SelectedItemPropertyId, value);
 		}
 		
-		public ComponentsWindow(SegmentRegion region, SegmentTile tile)
+		public ComponentsWindow(SegmentRegion region, SegmentTile tile, WorldGraphicsScreen screen)
 		{
 			_tile = tile;
+			_screen = screen;
 			
 			Title = $"Editing components for {tile.X}, {tile.Y} [{region.ID}]";
-
-			Closed += (sender, args) =>
-			{
-				var services = ServiceLocator.Current;
-				var graphicsScreen = services.GetInstance<WorldGraphicsScreen>();
-
-				if (graphicsScreen != null)
-					graphicsScreen.InvalidateRender();
-			};
 		}
 
 		protected override void OnLoad()
@@ -87,6 +80,11 @@ namespace Kesmai.WorldForge.Windows
 				VerticalAlignment = VerticalAlignment.Stretch,
 			};
 			rightPanel.Children.Add(_propertyGrid);
+			_propertyGrid.PropertyChanged += (o, args) =>
+			{
+				_tile.UpdateTerrain(); //update the tile and redraw the world screen
+				_screen.InvalidateRender();
+			};
 			
 			_actionsPanel = new StackPanel()
 			{
@@ -134,9 +132,10 @@ namespace Kesmai.WorldForge.Windows
 				deleteButton.Click += (o, args) =>
 				{
 					_tile.RemoveComponent(SelectedItem.Component);
-					OnLoad();
-					//todo: onLoad() causes the component window to refresh,  showing the component is removed, but I can't figure out how to get a reference to the current world render from here to invalidate it.
+					OnLoad(); // update the component editor UI
+					_screen.InvalidateRender(); //redraw the worldscreen
 				};
+
 				_actionsPanel.Children.Add(deleteButton);
 			}
 		}
