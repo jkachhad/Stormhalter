@@ -20,7 +20,7 @@ namespace Kesmai.Server.Items
 		/// Initializes a new instance of the <see cref="GreenTippedFeather"/> class.
 		/// </summary>
 		[WorldForge]
-		public GreenTippedFeather() : base(24)
+		public GreenTippedFeather() : base(39)
 		{
 		}
 
