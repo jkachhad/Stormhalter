@@ -690,13 +690,8 @@
     
         public void HeartSoothed()
         {
-            Brain = new IdleAI(this);
             Alignment = Alignment.Neutral;
-            Timer.DelayCall(TimeSpan.FromSeconds(0.2), () =>
-            {
-                Brain = new CombatAI(this);
-                Name = "Grove Heart";
-            });
+            Name = "Grove Heart";
         }
     
         public override int GetNearbySound() => 340;
@@ -769,13 +764,8 @@
             keepersooth++;
             if (keepersooth > 9)
             {
-                Brain = new IdleAI(this);
                 Alignment = Alignment.Neutral;
-                Timer.DelayCall(TimeSpan.FromSeconds(0.2), () =>
-                {
-                    Brain = new CombatAI(this);
-                    Name = "Grove Keeper";
-                });
+                Name = "Grove Keeper";
                 foreach (var heart in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<OakGroveHeart>())
                 heart.HeartSoothed();
             }
@@ -894,13 +884,8 @@
                 if (soothedAmount > 9)
                 {
                     Say($"The corruption has faded! I will protect the grove!");
-                    Brain = new IdleAI(this);
                     Alignment = Alignment.Neutral;
-                    Timer.DelayCall(TimeSpan.FromSeconds(0.2), () =>
-                    {
-                        Brain = new CombatAI(this);
-                        Name = "Defender of the Grove";
-                    });
+                    Name = "Defender of the Grove";
                     soothedAmount = 0;
                     changedMood = 1;
                 }
