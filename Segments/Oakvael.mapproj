@@ -98261,20 +98261,25 @@
         <block><![CDATA[
     if (killer is PlayerEntity player)
     {
-        var quest = Quests.GetQuest<KnightsDragonSlayerQuest>();
-    
-        if (quest != null && quest.InProgress(player))
-        {                        
-            var backpack = source.Backpack;
-
-            if (backpack != null)
-                backpack.AddItem(new CopperHalberd(player));
-                
-            if (quest.GetStage(player) != KnightsDragonSlayerStage.Wendy)
-                return;
-
-            quest.SetStage(player, KnightsDragonSlayerStage.WendyKilled);
+        if (player.Profession == Profession.Knight)
+        {
+        
+            var quest = Quests.GetQuest<KnightsDragonSlayerQuest>();
             
+            var backpack = source.Backpack;
+    
+                if (backpack != null)
+                    backpack.AddItem(new CopperHalberd(player));
+        
+            if (quest != null && quest.InProgress(player))
+            {                        
+                                
+                if (quest.GetStage(player) != KnightsDragonSlayerStage.Wendy)
+                    return;
+    
+                quest.SetStage(player, KnightsDragonSlayerStage.WendyKilled);
+                
+            }
         }
     }
 ]]></block>
