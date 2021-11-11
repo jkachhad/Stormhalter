@@ -360,6 +360,157 @@
             }
         }
     }
+    
+    public class KingWolf : AnimalEntity
+    {
+        public KingWolf()
+        {
+            Name = "wolf";
+            Body = 4;
+            Alignment = Alignment.Chaotic;
+        }
+    
+        public KingWolf(Serial serial) : base(serial)
+        {
+        }
+    
+        public override int GetNearbySound() => 14;
+        public override int GetAttackSound() => 26;
+        public override int GetDeathSound() => 38;
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            if (_brain != null)
+                return;
+            _brain = new CombatAI(this);
+        }
+    
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((short)1); /* version */
+        }
+    
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+            var version = reader.ReadInt16();
+            switch (version)
+            {
+                case 1:
+                    {
+                        break;
+                    }
+            }
+        }
+    }
+    
+    public class PrinceWolf : AnimalEntity
+    {
+        public PrinceWolf()
+        {
+            Name = "wolf";
+            Body = 4;
+            Alignment = Alignment.Chaotic;
+        }
+    
+        public override void OnAfterSpawn()
+        {
+            foreach (var region in segment)
+            {
+                var kwolfGroup = region.Groups.Where(g => g.Members.OfType<KingWolf>().Any());
+    
+                if (kwolfGroup != null && Utility.RandomDouble() <= 0.25)
+                {
+                    var kwolf = new KingWolf()
+                    {
+                        MaxHealth = 700,
+                        Health = 700,
+                        BaseDodge = 18,
+                        Experience = 15000,
+                        BasePenetration = ShieldPenetration.Medium,
+    
+                        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                       CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
+    
+                        /* He is immune to magic and can only be hurt by IS and Death. */
+                        Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+    
+                        FireProtection = 100,
+                        IceProtection = 100,
+                        StunProtection = 100,
+    
+                        /* He is protection from magic, all spell damage reduced by 50% */
+                        MagicProtection = 50,
+    
+                        HideDetection = 24,
+                    };
+    
+                    kwolf.Attacks = new CreatureAttackCollection()
+                    {
+                        {
+                            new CreatureAttack(12,     10, 30,   "The wolf rakes you with its claws."),  50
+                        },
+                        {
+                            new CreatureAttack(13,     15, 35,  "The wolf sinks its teeth into you."),  30
+                        },
+                        {
+                            new CreatureAttack(15,     20, 45,  "The wolf lunges at you.",
+                                                                new AttackProneComponent(10),
+                                                                new AttackStunComponent(10)),           20
+                        },
+                    };
+    
+                    kwolf.Blocks = new CreatureBlockCollection
+                    {
+                        new CreatureBlock(6, "the thick hide"),
+                        new CreatureBlock(3, "a paw"),
+                    };
+                    
+                    kwolf.Backpack.AddItem(new ObsidianEgg());
+    
+                    /* When making an entity on demand without a spawner, we have to assign them a group. This will allow them to think/move. */
+                    CreatureGroup.Instantiate(kwolf, Facet, Segment, Location);
+    
+                    Timer.DelayCall(TimeSpan.FromSeconds(0.2), () => Delete());
+                }
+            }
+        }
+    
+        public PrinceWolf(Serial serial) : base(serial)
+        {
+        }
+    
+        public override int GetNearbySound() => 14;
+        public override int GetAttackSound() => 26;
+        public override int GetDeathSound() => 38;
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            if (_brain != null)
+                return;
+            _brain = new CombatAI(this);
+        }
+    
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((short)1); /* version */
+        }
+    
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+            var version = reader.ReadInt16();
+            switch (version)
+            {
+                case 1:
+                    {
+                        break;
+                    }
+            }
+        }
+    }
 ]]></block>
     <block><![CDATA[
 ]]></block>
@@ -104629,9 +104780,9 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var wolf = new Wolf()
+    var wolf = new PrinceWolf()
     {
-        MaxHealth = 100, Health = 100,
+        MaxHealth = 150, Health = 150,
         BaseDodge = 14,
         HideDetection = 23,        
         Experience = 4500,
@@ -104648,13 +104799,13 @@
     wolf.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(8,     5, 15,   "The wolf rakes you with its claws."), 50 
+            new CreatureAttack(10,     5, 15,   "The wolf rakes you with its claws."), 50 
         }, 
         {
-            new CreatureAttack(9,     6, 16,  "The wolf sinks its teeth into you."),  30 
+            new CreatureAttack(11,     6, 16,  "The wolf sinks its teeth into you."),  30 
         }, 
         {
-            new CreatureAttack(9,     7, 18,  "The wolf lunges at you."),             20 
+            new CreatureAttack(12,     7, 18,  "The wolf lunges at you."),             20 
         }, 
     };
         
@@ -109075,7 +109226,7 @@
       <entry entity="lightningMesaOrc" size="3" minimum="3" maximum="6" />
       <entry entity="lightningMesaGargoyle" size="1" minimum="2" maximum="4" />
       <entry entity="lightningMesaGoblinMage" size="1" minimum="2" maximum="4" />
-      <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="lightningMesaPwolf" size="1" minimum="1" maximum="1" />
       <entry entity="lightningMesaRapier" size="1" minimum="1" maximum="3" />
       <entry entity="lightningMesaGoblinSentry" size="2" minimum="3" maximum="6" />
       <entry entity="lightningMesaHobgoblin" size="3" minimum="3" maximum="6" />
@@ -109105,7 +109256,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="lightningMesaWraith" size="1" minimum="2" maximum="4" />
-      <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="lightningMesaPwolf" size="1" minimum="1" maximum="1" />
       <entry entity="lightningMesaTroll" size="2" minimum="2" maximum="4" />
       <entry entity="lightningMesaGargoyle" size="1" minimum="1" maximum="2" />
       <entry entity="lightningMesaHobgoblin" size="3" minimum="3" maximum="4" />
@@ -109329,7 +109480,7 @@
       <entry entity="upperShadow" size="1" minimum="3" maximum="5" />
       <entry entity="upperHobgoblin" size="3" minimum="4" maximum="7" />
       <entry entity="upperGoblinMage" size="1" minimum="2" maximum="4" />
-      <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="2" />
+      <entry entity="lightningMesaPwolf" size="1" minimum="2" maximum="2" />
       <entry entity="upperTroll" size="2" minimum="3" maximum="6" />
       <entry entity="upperGoblin" size="3" minimum="4" maximum="7" />
       <entry entity="upperWraith" size="1" minimum="3" maximum="6" />
@@ -109510,7 +109661,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="lightningMesaPwolf" size="1" minimum="1" maximum="1" />
       <entry entity="upperLizard" size="1" minimum="2" maximum="3" />
       <bounds region="23">
         <inclusion left="2" top="8" right="7" bottom="27" />
@@ -109568,8 +109719,7 @@
       <entry entity="upperHobgoblin" size="3" minimum="1" maximum="2" />
       <entry entity="upperTroll" size="2" minimum="1" maximum="2" />
       <entry entity="upperGoblinSentry" size="3" minimum="1" maximum="2" />
-      <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="1" />
-      <entry entity="upperBossKingWolf" size="1" minimum="0" maximum="1" />
+      <entry entity="lightningMesaPwolf" size="1" minimum="1" maximum="1" />
       <entry entity="upperWraith" size="1" minimum="0" maximum="1" />
       <bounds region="23">
         <inclusion left="11" top="3" right="16" bottom="20" />
@@ -109754,7 +109904,7 @@
       <entry entity="chaosMA" size="1" minimum="1" maximum="2" />
       <entry entity="chaosWizard" size="1" minimum="1" maximum="2" />
       <entry entity="upperWolf" size="3" minimum="2" maximum="3" />
-      <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="lightningMesaPwolf" size="1" minimum="1" maximum="1" />
       <entry entity="chaosThaum" size="1" minimum="1" maximum="2" />
       <bounds region="18">
         <inclusion left="7" top="4" right="14" bottom="28" />
