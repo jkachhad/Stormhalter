@@ -93,52 +93,52 @@
         {
         }
         
-        public override void HandleOrder(OrderEventArgs args)
-        {
-            base.HandleOrder(args);
+        //public override void HandleOrder(OrderEventArgs args)
+        //{
+        //   base.HandleOrder(args);
 
-            if (args.Handled)
-                return;
+        //    if (args.Handled)
+        //        return;
             
-            var source = args.Source;
-            var order = args.Order;
+        //    var source = args.Source;
+        //   var order = args.Order;
             
             /* example: craft broadsword */
-            if (_craft.TryGetMatch(order, out var craftMatch) && craftMatch.Groups[1].Value.Matches("gauntlets", true))
-            {
-                args.Handled = true;
+        //    if (_craft.TryGetMatch(order, out var craftMatch) && craftMatch.Groups[1].Value.Matches("gauntlets", true))
+        //    {
+        //        args.Handled = true;
                 
-                if (AtCounter(source, out var counter))
-                {
-                    var items = Segment.GetItemsAt(Location).ToList();
+        //        if (AtCounter(source, out var counter))
+        //        {
+        //            var items = Segment.GetItemsAt(Location).ToList();
 
-                    var buddha = items.OfType<Kimono>();
+        //            var buddha = items.OfType<Kimono>();
 
-                    if (buddha.Any())
-                    {
-                        if (ConsumeFromLocation<Kimono>(counter, 1))
-                        {
-                            new CrystalGauntlets().Move(counter, true, Segment);
+        //            if (buddha.Any())
+        //            {
+        //                if (ConsumeFromLocation<Kimono>(counter, 1))
+        //                {
+        //                    new CrystalGauntlets().Move(counter, true, Segment);
 
-                            SayTo(source, 6300349); /* Wield this weapon with courage and honor. */
-                        }
-                    }
-                    else
-                    {
-                        SayTo(source, 6300348); /* Bring something from Shidosha and I will make you the weapon. */
-                    }
-                }
-                else
-                {
-                    if (_counters.Any())
-                        SayTo(source, 6300236); /* Please step up to a counter. */
-                    else
-                        SayTo(source, 6300237); /* Please stand closer to me. */
-                }
+        //                    SayTo(source, 6300349); /* Wield this weapon with courage and honor. */
+        //                }
+        //            }
+        //            else
+        //            {
+        //                SayTo(source, 6300348); /* Bring something from Shidosha and I will make you the weapon. */
+        //            }
+        //        }
+        //        else
+        //        {
+        //            if (_counters.Any())
+        //                SayTo(source, 6300236); /* Please step up to a counter. */
+        //            else
+        //                SayTo(source, 6300237); /* Please stand closer to me. */
+        //        }
                 
-                return;
-            }
-        }
+        //        return;
+        //    }
+        //}
     }
 ]]></block>
     <block><![CDATA[]]></block>
