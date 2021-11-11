@@ -76029,7 +76029,7 @@
    shidosha.AddGold(4000);
    shidosha.AddLoot(new LootPack(
        new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100, gemsPriceMutator),
-       new LootPackEntry(true, (from, container) => new Kimono(),        100),
+       new LootPackEntry(true, (from, container) => new Kimono(),        33),
        new LootPackEntry(true, (from, container) => new Fan(),        100),
        new LootPackEntry(true, (from, container) => new PermanentDexterityPotion(),        50)
    ));
@@ -76038,9 +76038,19 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (killer is PlayerEntity player)
+    {
+        if (player.Profession == Profession.MartialArtist)
+        {
+            var backpack = source.Backpack;
+
+            if (backpack != null)
+                backpack.AddItem(new CrystalGauntlets(player));
+        }
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>

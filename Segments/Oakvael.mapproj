@@ -98249,7 +98249,6 @@
     };
     
     dragon.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new CopperHalberd(),        100),
         new LootPackEntry(true, (from, container) => new PearDiamond(6000u),    100, gemsPriceMutator)
         ));
 
@@ -98266,10 +98265,16 @@
     
         if (quest != null && quest.InProgress(player))
         {                        
+            var backpack = source.Backpack;
+
+            if (backpack != null)
+                backpack.AddItem(new CopperHalberd(player));
+                
             if (quest.GetStage(player) != KnightsDragonSlayerStage.Wendy)
                 return;
 
             quest.SetStage(player, KnightsDragonSlayerStage.WendyKilled);
+            
         }
     }
 ]]></block>
