@@ -102326,44 +102326,6 @@ else
         <exclusion left="2" top="27" right="9" bottom="34" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Kesmai -4">
-      <minimumDelay>600</minimumDelay>
-      <maximumDelay>300</maximumDelay>
-      <maximum>50</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="dungeon4Orc" size="3" minimum="5" maximum="10" />
-      <entry entity="dungeon4OrcSentry" size="2" minimum="2" maximum="3" />
-      <entry entity="dungeon4OrcTrapper" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon4Troll" size="2" minimum="3" maximum="6" />
-      <entry entity="dungeon4Hobgoblin" size="4" minimum="3" maximum="7" />
-      <entry entity="dungeon4Gargoyle" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon4MeleeFighter" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon4RangedFighter" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon4Wizard" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon4Thaum" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon4Minotaur" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon4Wraith" size="1" minimum="3" maximum="6" />
-      <entry entity="dungeon4Salamander" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon4Spectre" size="1" minimum="2" maximum="3" />
-      <entry entity="dungeon4Ghoul" size="1" minimum="1" maximum="2" />
-      <bounds region="14">
-        <inclusion left="0" top="0" right="34" bottom="40" />
-        <exclusion left="12" top="2" right="27" bottom="6" />
-      </bounds>
-    </spawn>
     <spawn type="RegionSpawner" name="Kesmai -4 Crypt Undead">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>1800</maximumDelay>
@@ -102913,6 +102875,196 @@ else
         <inclusion left="10" top="1" right="24" bottom="38" />
         <inclusion left="2" top="24" right="9" bottom="26" />
         <exclusion left="10" top="28" right="14" bottom="38" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai -4 Oak Hallway">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>9</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="dungeon4Orc" size="3" minimum="2" maximum="2" />
+      <entry entity="dungeon4OrcSentry" size="2" minimum="1" maximum="1" />
+      <entry entity="dungeon4OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4Troll" size="2" minimum="0" maximum="1" />
+      <entry entity="dungeon4Hobgoblin" size="4" minimum="0" maximum="1" />
+      <entry entity="dungeon4Gargoyle" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4MeleeFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4RangedFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4Wizard" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon4Thaum" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4Minotaur" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon4Wraith" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4Salamander" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4Spectre" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4Ghoul" size="1" minimum="0" maximum="1" />
+      <bounds region="14">
+        <inclusion left="1" top="6" right="9" bottom="14" />
+        <inclusion left="10" top="10" right="26" bottom="12" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai -4 Dragon approach">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>6</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="dungeon4Orc" size="3" minimum="0" maximum="1" />
+      <entry entity="dungeon4OrcSentry" size="2" minimum="0" maximum="1" />
+      <entry entity="dungeon4OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4Troll" size="2" minimum="0" maximum="1" />
+      <entry entity="dungeon4Hobgoblin" size="4" minimum="0" maximum="1" />
+      <entry entity="dungeon4Gargoyle" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon4MeleeFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4RangedFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4Wizard" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4Thaum" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4Minotaur" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon4Wraith" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4Salamander" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4Spectre" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon4Ghoul" size="1" minimum="0" maximum="1" />
+      <bounds region="14">
+        <inclusion left="27" top="2" right="32" bottom="18" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai -4 West">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>15</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="dungeon4Orc" size="3" minimum="1" maximum="0" />
+      <entry entity="dungeon4OrcSentry" size="2" minimum="1" maximum="0" />
+      <entry entity="dungeon4OrcTrapper" size="1" minimum="1" maximum="0" />
+      <entry entity="dungeon4Troll" size="2" minimum="1" maximum="0" />
+      <entry entity="dungeon4Hobgoblin" size="4" minimum="1" maximum="0" />
+      <entry entity="dungeon4Gargoyle" size="1" minimum="1" maximum="0" />
+      <entry entity="dungeon4MeleeFighter" size="1" minimum="1" maximum="0" />
+      <entry entity="dungeon4RangedFighter" size="1" minimum="1" maximum="0" />
+      <entry entity="dungeon4Wizard" size="1" minimum="0" maximum="0" />
+      <entry entity="dungeon4Thaum" size="1" minimum="0" maximum="0" />
+      <entry entity="dungeon4Minotaur" size="1" minimum="0" maximum="0" />
+      <entry entity="dungeon4Wraith" size="1" minimum="0" maximum="0" />
+      <entry entity="dungeon4Salamander" size="1" minimum="1" maximum="0" />
+      <entry entity="dungeon4Spectre" size="1" minimum="0" maximum="0" />
+      <entry entity="dungeon4Ghoul" size="1" minimum="0" maximum="0" />
+      <bounds region="14">
+        <inclusion left="2" top="16" right="12" bottom="38" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai -4 Central">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>13</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="dungeon4Orc" size="3" minimum="4" maximum="6" />
+      <entry entity="dungeon4OrcSentry" size="2" minimum="0" maximum="1" />
+      <entry entity="dungeon4OrcTrapper" size="1" minimum="0" maximum="2" />
+      <entry entity="dungeon4Troll" size="2" minimum="2" maximum="2" />
+      <entry entity="dungeon4Hobgoblin" size="4" minimum="2" maximum="4" />
+      <entry entity="dungeon4Gargoyle" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon4MeleeFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4RangedFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4Wizard" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4Thaum" size="1" minimum="1" maximum="2" />
+      <entry entity="dungeon4Minotaur" size="1" minimum="1" maximum="2" />
+      <entry entity="dungeon4Wraith" size="1" minimum="2" maximum="2" />
+      <entry entity="dungeon4Salamander" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4Spectre" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4Ghoul" size="1" minimum="0" maximum="1" />
+      <bounds region="14">
+        <inclusion left="11" top="13" right="26" bottom="18" />
+        <inclusion left="13" top="19" right="32" bottom="33" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai -4 South">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>7</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="dungeon4Orc" size="3" minimum="0" maximum="2" />
+      <entry entity="dungeon4OrcSentry" size="2" minimum="0" maximum="1" />
+      <entry entity="dungeon4OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4Troll" size="2" minimum="0" maximum="1" />
+      <entry entity="dungeon4Hobgoblin" size="4" minimum="0" maximum="2" />
+      <entry entity="dungeon4Gargoyle" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4MeleeFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4RangedFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4Wizard" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4Thaum" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon4Minotaur" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4Wraith" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon4Salamander" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon4Spectre" size="1" minimum="1" maximum="2" />
+      <entry entity="dungeon4Ghoul" size="1" minimum="1" maximum="2" />
+      <bounds region="14">
+        <inclusion left="13" top="34" right="32" bottom="38" />
       </bounds>
     </spawn>
   </spawns>
