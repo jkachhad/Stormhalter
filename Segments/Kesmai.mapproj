@@ -102454,7 +102454,7 @@ else
     <spawn type="RegionSpawner" name="Kesmai Surface Near East">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>600</maximumDelay>
-      <maximum>9</maximum>
+      <maximum>6</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -102469,23 +102469,18 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="surfaceWolf" size="3" minimum="1" maximum="2" />
-      <entry entity="surfaceOrc" size="3" minimum="1" maximum="2" />
+      <entry entity="surfaceWolf" size="1" minimum="1" maximum="2" />
       <entry entity="surfaceOrcSentry" size="1" minimum="1" maximum="4" />
-      <entry entity="surfaceBoar" size="3" minimum="1" maximum="2" />
-      <entry entity="surfaceBear" size="1" minimum="1" maximum="1" />
-      <entry entity="surfaceBee" size="4" minimum="1" maximum="1" />
+      <entry entity="surfaceBoar" size="1" minimum="1" maximum="2" />
+      <entry entity="surfaceBee" size="2" minimum="1" maximum="1" />
       <bounds region="1">
-        <inclusion left="47" top="4" right="141" bottom="39" />
-        <exclusion left="65" top="34" right="69" bottom="38" />
-        <exclusion left="77" top="29" right="80" bottom="32" />
-        <exclusion left="83" top="33" right="86" bottom="36" />
+        <inclusion left="47" top="4" right="63" bottom="39" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai Surface East">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>600</maximumDelay>
-      <maximum>12</maximum>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -102500,14 +102495,13 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="surfaceWolf" size="3" minimum="1" maximum="3" />
+      <entry entity="surfaceWolf" size="3" minimum="1" maximum="4" />
       <entry entity="surfaceOrc" size="3" minimum="1" maximum="4" />
       <entry entity="surfaceBoar" size="3" minimum="1" maximum="4" />
-      <entry entity="surfaceBear" size="1" minimum="1" maximum="2" />
-      <entry entity="surfaceCentaur" size="1" minimum="1" maximum="3" />
-      <entry entity="surfaceCroc" size="1" minimum="1" maximum="1" />
+      <entry entity="surfaceBear" size="1" minimum="1" maximum="4" />
+      <entry entity="surfaceCentaur" size="1" minimum="1" maximum="4" />
       <bounds region="1">
-        <inclusion left="58" top="4" right="141" bottom="39" />
+        <inclusion left="64" top="4" right="141" bottom="39" />
         <exclusion left="65" top="34" right="69" bottom="38" />
         <exclusion left="77" top="29" right="80" bottom="32" />
         <exclusion left="83" top="33" right="86" bottom="36" />
@@ -102765,6 +102759,32 @@ else
       <bounds region="12">
         <inclusion left="20" top="25" right="25" bottom="26" />
         <inclusion left="26" top="25" right="33" bottom="31" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai Surface Crocodile">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>1800</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfaceCroc" size="1" minimum="1" maximum="2" />
+      <bounds region="1">
+        <inclusion left="52" top="10" right="68" bottom="18" />
+        <inclusion left="59" top="19" right="67" bottom="32" />
+        <inclusion left="54" top="30" right="58" bottom="35" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
