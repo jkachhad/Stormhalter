@@ -61,6 +61,7 @@
                     </ToolBar>
 
                     <ListBox Width="300" Grid.Row="1"
+                                x:Name="_locationSpawnerList"
                                 ItemsSource="{Binding Source={StaticResource collectionViewSourceLocation}}" 
                                 SelectedItem="{Binding SelectedLocationSpawner, Mode=TwoWay}"
                                 SelectionMode="Single"
@@ -191,6 +192,7 @@
                     </ToolBar>
                     
                     <ListBox Width="300" Grid.Row="1"
+                                x:Name="_regionSpawnerList"
                                 ItemsSource="{Binding Source={StaticResource collectionViewSourceRegion}}" 
                                 SelectedItem="{Binding SelectedRegionSpawner, Mode=TwoWay}"
                                 SelectedIndex="0">

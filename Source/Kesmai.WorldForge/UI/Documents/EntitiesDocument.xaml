@@ -56,6 +56,7 @@
             </ToolBar>
             
             <ListBox Width="300" Grid.Row="1"
+                        x:Name="_entityList"
                         ItemsSource="{Binding Source={StaticResource collectionViewSource}}"
                         SelectedItem="{Binding SelectedEntity, Mode=TwoWay}"
                         SelectionMode="Single">

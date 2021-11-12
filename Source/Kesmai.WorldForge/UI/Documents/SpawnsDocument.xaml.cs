@@ -70,6 +70,7 @@ namespace Kesmai.WorldForge.UI.Documents
 				_locationPresenter.Region = segment.GetRegion(spawn.Region);
 				_locationPresenter.SetLocation(spawn);
 			}
+			_locationSpawnerList.ScrollIntoView(_locationSpawnerList.SelectedItem);
 		}
 
 		private void OnRegionSpawnerChanged(SpawnsDocument recipient, SpawnsViewModel.SelectedRegionSpawnerChangedMessage message)
@@ -85,6 +86,7 @@ namespace Kesmai.WorldForge.UI.Documents
 				_regionPresenter.Region = segment.GetRegion(spawn.Region);
 				_regionPresenter.SetLocation(spawn);
 			}
+			_regionSpawnerList.ScrollIntoView(_regionSpawnerList.SelectedItem);
 		}
 
 	}

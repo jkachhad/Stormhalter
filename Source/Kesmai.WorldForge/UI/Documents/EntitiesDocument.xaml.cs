@@ -78,6 +78,7 @@ namespace Kesmai.WorldForge.UI.Documents
 			private void OnEntityChanged(EntitiesDocument recipient, EntitiesViewModel.SelectedEntityChangedMessage message)
 		{
 			_scriptsTabControl.SelectedIndex = 0;
+			_entityList.ScrollIntoView(_entityList.SelectedItem);
 		}
 	}
 
