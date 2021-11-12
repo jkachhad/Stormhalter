@@ -113,7 +113,7 @@
                 </TabControl.ItemTemplate>
                 <TabControl.ContentTemplate>
                     <DataTemplate>
-                        <scripting:ScriptEditor Script="{Binding}" IsEnabled="{Binding IsEnabled}" />
+                        <scripting:ScriptEditor Script="{Binding}" IsEnabled="{Binding IsEnabled}" x:Name="_editor"/>
                     </DataTemplate>
                 </TabControl.ContentTemplate>
             </TabControl>

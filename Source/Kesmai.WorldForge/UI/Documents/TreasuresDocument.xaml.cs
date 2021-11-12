@@ -7,6 +7,7 @@ using Kesmai.WorldForge.Scripting;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
+using Microsoft.Toolkit.Mvvm.Messaging.Messages;
 
 namespace Kesmai.WorldForge.UI.Documents
 {
@@ -24,11 +25,20 @@ namespace Kesmai.WorldForge.UI.Documents
 		public TreasuresDocument()
 		{
 			InitializeComponent();
+
+			WeakReferenceMessenger.Default
+				.Register<TreasuresDocument, TreasuresViewModel.SelectedTreasureChangedMessage>(this, (r, m) => { _treasuresList.ScrollIntoView(_treasuresList.SelectedItem); });
 		}
 	}
 
 	public class TreasuresViewModel : ObservableRecipient
 	{
+		public class SelectedTreasureChangedMessage : ValueChangedMessage<SegmentTreasure>
+		{
+			public SelectedTreasureChangedMessage(SegmentTreasure value) : base(value)
+			{
+			}
+		}
 		public string Name => "(Treasures)";
 		
 		private Segment _segment;
@@ -43,7 +53,13 @@ namespace Kesmai.WorldForge.UI.Documents
 		public SegmentTreasure SelectedTreasure
 		{
 			get => _selectedTreasure;
-			set => SetProperty(ref _selectedTreasure, value, true);
+			set
+			{
+				SetProperty(ref _selectedTreasure, value, true);
+
+				if (value != null)
+					WeakReferenceMessenger.Default.Send(new SelectedTreasureChangedMessage(value));
+			}
 		}
 		
 		public TreasureEntry SelectedTreasureEntry

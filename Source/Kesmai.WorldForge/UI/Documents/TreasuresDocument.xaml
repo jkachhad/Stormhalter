@@ -59,6 +59,7 @@
             </ToolBar>
             
             <ListBox Width="300" Grid.Row="1"
+                        x:Name="_treasuresList"
                         ItemsSource="{Binding Source={StaticResource collectionViewSourceTreasures}}" 
                         SelectedItem="{Binding SelectedTreasure}"
                         SelectionMode="Single">

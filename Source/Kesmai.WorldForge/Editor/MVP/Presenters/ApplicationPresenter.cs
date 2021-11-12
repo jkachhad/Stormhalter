@@ -288,8 +288,20 @@ namespace Kesmai.WorldForge.Editor
 						break;
 					}
 				case "Treasure": //Ctrl-T
-					//todo: Try to identify a targeted Treasure. Can I inspect a script panel and check to see if a word under the cursor matches any treasure definitions.
+					String targetTreasure = null;
+					if (ActiveDocument is EntitiesViewModel e)
+                    {
+						var treasureRequest = WeakReferenceMessenger.Default.Send<EntitiesDocument.GetCurrentScriptSelection>();
+						if (treasureRequest.HasReceivedResponse)
+							targetTreasure = treasureRequest.Response;
+                    }
 					ActiveDocument = Documents.Where(d => d is TreasuresViewModel).FirstOrDefault() as TreasuresViewModel;
+					if (targetTreasure is not null)
+                    {
+						var targetTreasureObject = (ActiveDocument as TreasuresViewModel).Treasures.Where(t => t.Name == targetTreasure).FirstOrDefault();
+						if (targetTreasureObject is not null)
+							(ActiveDocument as TreasuresViewModel).SelectedTreasure = targetTreasureObject;
+                    }
 					break;
 				case "Location": //Ctrl-L
 					{

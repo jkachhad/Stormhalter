@@ -50,6 +50,10 @@ namespace Kesmai.WorldForge.UI.Documents
 		public class GetSelectedSpawner : RequestMessage<Spawner>
 		{
 		}
+		public class GetCurrentScriptSelection : RequestMessage<String>
+		{
+		}
+
 		public EntitiesDocument()
 		{
 			InitializeComponent();
@@ -63,6 +67,9 @@ namespace Kesmai.WorldForge.UI.Documents
 
 			WeakReferenceMessenger.Default.Register<EntitiesDocument, GetSelectedSpawner>(this,
 					(r, m) => m.Reply(_spawnersList.SelectedItem as Spawner));
+
+			WeakReferenceMessenger.Default.Register<EntitiesDocument, GetCurrentScriptSelection>(this,
+				(r, m) => m.Reply(GetScriptSelection()));
 		}
 
 		private void ChangeEntity(Entity entity)
@@ -79,6 +86,18 @@ namespace Kesmai.WorldForge.UI.Documents
 		{
 			_scriptsTabControl.SelectedIndex = 0;
 			_entityList.ScrollIntoView(_entityList.SelectedItem);
+		}
+
+		public String GetScriptSelection ()
+        {
+			if (_scriptsTabControl.HasItems)
+			{
+				ContentPresenter cp = _scriptsTabControl.Template.FindName("PART_SelectedContentHost", _scriptsTabControl) as ContentPresenter;
+				ScriptEditor editor = _scriptsTabControl.ContentTemplate.FindName("_editor", cp) as ScriptEditor;
+				return editor.SelectedText;
+			} else 
+				return null;
+
 		}
 	}
 
