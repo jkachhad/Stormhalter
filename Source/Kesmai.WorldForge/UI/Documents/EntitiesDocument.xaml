@@ -55,20 +55,18 @@
                 </ToolBar.Items>
             </ToolBar>
             
-            <ScrollViewer Grid.Row="1">
-                <ListBox Width="300"
-                         ItemsSource="{Binding Source={StaticResource collectionViewSource}}"
-                         SelectedItem="{Binding SelectedEntity, Mode=TwoWay}"
-                         SelectionMode="Single">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                               <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="3" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </ScrollViewer>
+            <ListBox Width="300" Grid.Row="1"
+                        ItemsSource="{Binding Source={StaticResource collectionViewSource}}"
+                        SelectedItem="{Binding SelectedEntity, Mode=TwoWay}"
+                        SelectionMode="Single">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                            <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="3" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
             
             <syncfusion:PropertyGrid Grid.Row="2" Margin="0,3,0,0"
                                      SelectedObject="{Binding SelectedEntity}"

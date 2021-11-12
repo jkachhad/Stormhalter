@@ -58,20 +58,18 @@
                 </ToolBar.Items>
             </ToolBar>
             
-            <ScrollViewer Grid.Row="1">
-                <ListBox Width="300"
-                         ItemsSource="{Binding Source={StaticResource collectionViewSourceTreasures}}" 
-                         SelectedItem="{Binding SelectedTreasure}"
-                         SelectionMode="Single">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="3" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </ScrollViewer>
+            <ListBox Width="300" Grid.Row="1"
+                        ItemsSource="{Binding Source={StaticResource collectionViewSourceTreasures}}" 
+                        SelectedItem="{Binding SelectedTreasure}"
+                        SelectionMode="Single">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="3" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
             
             <syncfusion:PropertyGrid Grid.Row="2" Margin="0,3,0,0"
                                      SelectedObject="{Binding SelectedTreasure}"
