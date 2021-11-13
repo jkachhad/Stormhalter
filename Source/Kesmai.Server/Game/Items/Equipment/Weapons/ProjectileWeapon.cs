@@ -118,6 +118,13 @@ namespace Kesmai.Server.Items
 		{
 			IsNocked = false;
 		}
+		
+		/* Projectile weapons take two turns to use. Once to Nock, and the second to shoot.\
+		 * The skill gain should be double. */
+		public override double GetSkillMultiplier()
+		{
+			return 2.0;
+		}
 	}
 
 	public class ShootItemTarget : MobileTarget
