@@ -62,9 +62,15 @@ namespace Kesmai.Server.Items
 				entries.Add(new LocalizationEntry(6300406)); /* It has combat adds of +5 and is neutral in alignment. */
 		}
 
+		/* Bows actually take two turns to shoot, so the skill gain multiplier should be double. */
 		public override TimeSpan GetSwingDelay(MobileEntity entity)
 		{
 			return entity.GetRoundDelay(0.75);
+		}
+		
+		public override double GetSkillMultiplier()
+		{
+			return 1.5;
 		}
 	}
 }

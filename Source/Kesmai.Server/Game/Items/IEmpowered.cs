@@ -12,10 +12,4 @@ namespace Kesmai.Server.Items
 		/// </summary>
 		bool ContainsSpell(out Spell spell);
 	}
-
-	public partial interface ICharged
-	{
-		int ChargesCurrent { get; set; }
-		int ChargesMax { get; set; }
-	}
 }

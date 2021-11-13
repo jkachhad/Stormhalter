@@ -53,5 +53,10 @@ namespace Kesmai.Server.Items
 		{
 			return entity.GetRoundDelay(0.5);
 		}
+		
+		public override double GetSkillMultiplier()
+		{
+			return 0.5;
+		}
 	}
 }
