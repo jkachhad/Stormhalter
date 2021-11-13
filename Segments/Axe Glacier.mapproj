@@ -108989,6 +108989,39 @@
       <entry entity="axeRecallVendor" size="1" minimum="0" maximum="0" />
       <location x="5" y="8" region="11" />
     </spawn>
+    <spawn type="LocationSpawner" name="axeBossKingWolf">
+      <minimumDelay>7200</minimumDelay>
+      <maximumDelay>14400</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    switch (Utility.Random(1, 9))
+    {
+        case 1: break;
+        case 2: spawn.Teleport(new Point2D(2, 30, 23)); break;
+        case 3: spawn.Teleport(new Point2D(12, 8, 6)); break;
+        case 4: spawn.Teleport(new Point2D(38, 23, 6)); break;
+        case 5: spawn.Teleport(new Point2D(14, 34, 6)); break;
+        case 6: spawn.Teleport(new Point2D(13, 12, 12)); break;
+        case 7: spawn.Teleport(new Point2D(42, 19, 12)); break;
+        case 8: spawn.Teleport(new Point2D(15, 37, 8)); break;
+        case 9: spawn.Teleport(new Point2D(18, 8, 18)); break;
+   }
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="upperBossKingWolf" size="1" minimum="1" maximum="1" />
+      <location x="13" y="10" region="23" />
+    </spawn>
     <spawn type="RegionSpawner" name="Surface Dungeon">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
@@ -109569,7 +109602,6 @@
       <entry entity="upperTroll" size="2" minimum="1" maximum="2" />
       <entry entity="upperGoblinSentry" size="3" minimum="1" maximum="2" />
       <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="1" />
-      <entry entity="upperBossKingWolf" size="1" minimum="0" maximum="1" />
       <entry entity="upperWraith" size="1" minimum="0" maximum="1" />
       <bounds region="23">
         <inclusion left="11" top="3" right="16" bottom="20" />
