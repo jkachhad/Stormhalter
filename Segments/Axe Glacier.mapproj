@@ -104631,7 +104631,7 @@
         <block><![CDATA[
     var wolf = new Wolf()
     {
-        MaxHealth = 100, Health = 100,
+        MaxHealth = 150, Health = 150,
         BaseDodge = 14,
         HideDetection = 23,        
         Experience = 4500,
@@ -104648,13 +104648,13 @@
     wolf.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(8,     5, 15,   "The wolf rakes you with its claws."), 50 
+            new CreatureAttack(10,     5, 15,   "The wolf rakes you with its claws."), 50 
         }, 
         {
-            new CreatureAttack(9,     6, 16,  "The wolf sinks its teeth into you."),  30 
+            new CreatureAttack(11,     6, 16,  "The wolf sinks its teeth into you."),  30 
         }, 
         {
-            new CreatureAttack(9,     7, 18,  "The wolf lunges at you."),             20 
+            new CreatureAttack(12,     7, 18,  "The wolf lunges at you."),             20 
         }, 
     };
         
@@ -104723,13 +104723,13 @@
     wolf.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(9,     10, 30,   "The wolf rakes you with its claws."),  50 
+            new CreatureAttack(12,     10, 30,   "The wolf rakes you with its claws."),  50 
         }, 
         {
-            new CreatureAttack(11,     15, 35,  "The wolf sinks its teeth into you."),  30 
+            new CreatureAttack(13,     15, 35,  "The wolf sinks its teeth into you."),  30 
         }, 
         {
-            new CreatureAttack(11,     20, 45,  "The wolf lunges at you.",
+            new CreatureAttack(13,     20, 45,  "The wolf lunges at you.",
                                                 new AttackProneComponent(10),
                                                 new AttackStunComponent(10)),           20
         }, 
