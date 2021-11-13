@@ -690,9 +690,13 @@
     
         public void HeartSoothed()
         {
+            Brain = new IdleAI(this);
             Alignment = Alignment.Neutral;
-            Name = "Grove Heart";
-            IsInvulnerable = true;
+            Timer.DelayCall(TimeSpan.FromSeconds(0.2), () =>
+            {
+                Brain = new CombatAI(this);
+                Name = "Grove Heart";
+            });
         }
     
         public override int GetNearbySound() => 340;
@@ -765,10 +769,13 @@
             keepersooth++;
             if (keepersooth > 9)
             {
+                Brain = new IdleAI(this);
                 Alignment = Alignment.Neutral;
-                RightHand.Delete();
-                Wield(new OakGroveBow());
-                IsInvulnerable = true;
+                Timer.DelayCall(TimeSpan.FromSeconds(0.2), () =>
+                {
+                    Brain = new CombatAI(this);
+                    Name = "Grove Keeper";
+                });
                 foreach (var heart in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<OakGroveHeart>())
                 heart.HeartSoothed();
             }
@@ -884,12 +891,16 @@
             if (changedMood < 1)
             {
                 soothedAmount++;
-                Say($"Why am I so... angry?");
                 if (soothedAmount > 9)
                 {
                     Say($"The corruption has faded! I will protect the grove!");
-                    Name = "Defender of the Grove";
+                    Brain = new IdleAI(this);
                     Alignment = Alignment.Neutral;
+                    Timer.DelayCall(TimeSpan.FromSeconds(0.2), () =>
+                    {
+                        Brain = new CombatAI(this);
+                        Name = "Defender of the Grove";
+                    });
                     soothedAmount = 0;
                     changedMood = 1;
                 }
@@ -962,11 +973,6 @@
             CanLoot = false;
         }
     
-        public override void OnDeath()
-        {
-            Say($"Please, protect the grove now...");
-            base.OnDeath();
-        }
     
         public HeartDryad(Serial serial) : base(serial)
         {
@@ -3015,6 +3021,7 @@
         </component>
         <component type="ObstructionComponent">
           <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="66" y="3">
@@ -3028,6 +3035,7 @@
         </component>
         <component type="ObstructionComponent">
           <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="68" y="3">
@@ -3630,6 +3638,7 @@
         </component>
         <component type="ObstructionComponent">
           <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="56" y="4">
@@ -3643,6 +3652,7 @@
         </component>
         <component type="ObstructionComponent">
           <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="58" y="4">
@@ -3706,6 +3716,7 @@
         </component>
         <component type="ObstructionComponent">
           <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="67" y="4">
@@ -3719,6 +3730,7 @@
         </component>
         <component type="ObstructionComponent">
           <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="69" y="4">
@@ -4325,6 +4337,7 @@
         </component>
         <component type="ObstructionComponent">
           <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="56" y="5">
@@ -4333,6 +4346,7 @@
         </component>
         <component type="ObstructionComponent">
           <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="57" y="5">
@@ -4354,6 +4368,7 @@
         </component>
         <component type="ObstructionComponent">
           <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="60" y="5">
@@ -4988,6 +5003,7 @@
         </component>
         <component type="ObstructionComponent">
           <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="57" y="6">
@@ -4996,6 +5012,7 @@
         </component>
         <component type="ObstructionComponent">
           <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="58" y="6">
@@ -5017,6 +5034,7 @@
         </component>
         <component type="ObstructionComponent">
           <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="61" y="6">
@@ -5651,6 +5669,7 @@
         </component>
         <component type="ObstructionComponent">
           <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="58" y="7">
@@ -5659,6 +5678,7 @@
         </component>
         <component type="ObstructionComponent">
           <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="59" y="7">
@@ -5672,6 +5692,7 @@
         </component>
         <component type="ObstructionComponent">
           <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="61" y="7">
@@ -5680,6 +5701,7 @@
         </component>
         <component type="ObstructionComponent">
           <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="62" y="7">
@@ -6294,6 +6316,7 @@
         </component>
         <component type="ObstructionComponent">
           <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="59" y="8">
@@ -6302,6 +6325,7 @@
         </component>
         <component type="ObstructionComponent">
           <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="60" y="8">
@@ -6315,6 +6339,7 @@
         </component>
         <component type="ObstructionComponent">
           <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="62" y="8">
@@ -6961,6 +6986,7 @@
         </component>
         <component type="ObstructionComponent">
           <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="58" y="9">
@@ -6969,6 +6995,7 @@
         </component>
         <component type="ObstructionComponent">
           <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="59" y="9">
@@ -6982,6 +7009,7 @@
         </component>
         <component type="ObstructionComponent">
           <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="61" y="9">
@@ -72797,10 +72825,6 @@
           <ruins>170</ruins>
           <indestructible>true</indestructible>
         </component>
-        <component type="StaticComponent">
-          <color r="0" g="200" b="0" a="255" />
-          <static>226</static>
-        </component>
       </tile>
       <tile x="13" y="41">
         <component type="StaticComponent">
@@ -82492,6 +82516,17 @@
         </component>
         <component type="WallComponent">
           <color r="255" g="210" b="95" a="255" />
+          <wall>158</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="StaticComponent">
+          <color r="0" g="200" b="0" a="255" />
+          <static>227</static>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="210" b="95" a="255" />
           <wall>157</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
@@ -87471,6 +87506,15 @@
           <ground>23</ground>
           <movementCost>2</movementCost>
         </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>14</destinationX>
+          <destinationY>41</destinationY>
+          <destinationRegion>235</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+        </component>
       </tile>
       <tile x="36" y="20">
         <component type="WallComponent">
@@ -87504,6 +87548,15 @@
           <ground>23</ground>
           <movementCost>2</movementCost>
         </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>14</destinationX>
+          <destinationY>41</destinationY>
+          <destinationRegion>235</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+        </component>
       </tile>
       <tile x="40" y="20">
         <component type="WallComponent">
@@ -87536,6 +87589,15 @@
           <color r="255" g="61" b="50" a="255" />
           <ground>23</ground>
           <movementCost>2</movementCost>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>14</destinationX>
+          <destinationY>41</destinationY>
+          <destinationRegion>235</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
         </component>
       </tile>
       <tile x="44" y="20">
@@ -93512,6 +93574,15 @@
           <color r="3" g="82" b="255" a="255" />
           <ground>23</ground>
         </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>14</destinationX>
+          <destinationY>41</destinationY>
+          <destinationRegion>235</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+        </component>
       </tile>
       <tile x="33" y="53">
         <component type="FloorComponent">
@@ -96465,6 +96536,7 @@
     };
     
     serpent.AddStatus(new NightVisionStatus(serpent)); 
+    serpent.AddStatus(new BreatheWaterStatus(serpent));
     
     serpent.Attacks = new CreatureAttackCollection
     {
@@ -96534,6 +96606,8 @@
 
         CanWalk = false,
     };
+    
+    pescalanor.AddStatus(new BreatheWaterStatus(pescalanor));
     
     pescalanor.Attacks = new CreatureAttackCollection
     {
@@ -98387,7 +98461,7 @@
         MaxHealth = 2000, Health = 2000,
         BaseDodge = 25,
                 
-        Experience = 45500,
+        Experience = 55500,
         
         HideDetection = 31,
         Hue = Color.FromArgb(150, 255, 255, 255),
@@ -98395,6 +98469,8 @@
         
         CanSwim = true,
         CanJumpkick = true,
+
+        IsTethered = true,
         
     };
     
@@ -99089,12 +99165,12 @@
         
     centaur.Wield(new WarHammer());
     
-    centaur.AddGold(500);
+    centaur.AddGold(300);
     centaur.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 60.0), 
-            new LootPackEntry(true, groveGems, 100, gemsPriceMutator),
-            new LootPackEntry(true, groveTreasure, 2)
+            new LootPackEntry(true, groveGems, 15, gemsPriceMutator),
+            new LootPackEntry(true, groveTreasure, 1)
         ));
     
     return centaur;
@@ -99125,7 +99201,7 @@
         MaxMana = 14, Mana = 14,
         BaseDodge = 18,
         BasePenetration = ShieldPenetration.Medium,     
-        Experience = 23000,
+        Experience = 19000,
         HideDetection = 32,
     };
     
@@ -99146,11 +99222,11 @@
     dryad.Wield(new GiltDagger());
     dryad.Wield(new IronRod());
     
-    dryad.AddGold(500);
+    dryad.AddGold(300);
     dryad.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 60.0), 
-            new LootPackEntry(true, groveGems, 25.0, gemsPriceMutator),
+            new LootPackEntry(true, groveGems, 15.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Wands, 4), 
             new LootPackEntry(true, groveTreasure, 0.63)
         ));
@@ -99192,7 +99268,7 @@
     troll.Wield(new BattleAxe());
     troll.Equip(new ChainmailArmor());    
 
-    troll.AddGold(500);
+    troll.AddGold(200);
     troll.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon5Bottles, 30.0), 
@@ -99259,7 +99335,7 @@
             new LootPackEntry(true, dungeon5Bottles, 60.0), 
             new LootPackEntry(true, groveGems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Wands, 10), 
-            new LootPackEntry(true, groveTreasure, 0.63)
+            new LootPackEntry(true, groveTreasure, 3)
         ));
     
     return necro;
@@ -99292,9 +99368,9 @@
         <block><![CDATA[
 	var dryad = new OakGroveMainKeeper()
     {
-        MaxHealth = 12500, Health = 12500,
+        MaxHealth = 7500, Health = 7500,
         BaseDodge = 28,
-        MagicProtection = 90,
+        MagicProtection = 30,
         Experience = 150000,
         Movement = 0,
         HideDetection = 45,
@@ -99343,7 +99419,7 @@
         <block><![CDATA[
 	var heart = new OakGroveHeart()
     {
-        MaxHealth = 260, Health = 260,
+        MaxHealth = 1000, Health = 1000,
         BaseDodge = 18,
         Movement = 0,
 
@@ -99414,7 +99490,7 @@
             new LootPackEntry(true, dungeon5Bottles, 60.0), 
             new LootPackEntry(true, groveGems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Wands, 10), 
-            new LootPackEntry(true, groveTreasure, 0.63)
+            new LootPackEntry(true, groveTreasure, 3)
         ));
     
     return necro;
@@ -99483,7 +99559,7 @@
             new LootPackEntry(true, dungeon5Bottles, 60.0), 
             new LootPackEntry(true, groveGems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, dungeon5Wands, 10), 
-            new LootPackEntry(true, groveTreasure, 0.63)
+            new LootPackEntry(true, groveTreasure, 3)
         ));
     
     return necro;
@@ -99571,7 +99647,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="oakLowMaTrainer" size="1" minimum="1" maximum="1" />
-      <location x="19" y="20" region="10" />
+      <location x="19" y="21" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="oakWeaponTrainer">
       <minimumDelay>900</minimumDelay>
@@ -100055,7 +100131,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="oakRecallVendor" size="1" minimum="1" maximum="1" />
-      <location x="7" y="18" region="10" />
+      <location x="8" y="18" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="oakThaumTrainer">
       <minimumDelay>900</minimumDelay>
@@ -100892,8 +100968,15 @@
       <entry entity="dungeon5Thaum" size="1" minimum="2" maximum="3" />
       <entry entity="dungeon5Wizard" size="1" minimum="4" maximum="5" />
       <bounds region="227">
-        <inclusion left="0" top="4" right="26" bottom="40" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
+        <inclusion left="1" top="5" right="25" bottom="39" />
+        <exclusion left="1" top="5" right="12" bottom="8" />
+        <exclusion left="16" top="5" right="25" bottom="8" />
+        <exclusion left="23" top="9" right="25" bottom="15" />
+        <exclusion left="1" top="14" right="1" bottom="39" />
+        <exclusion left="2" top="38" right="5" bottom="39" />
+        <exclusion left="2" top="23" right="3" bottom="29" />
+        <exclusion left="4" top="25" right="5" bottom="29" />
+        <exclusion left="22" top="33" right="25" bottom="35" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="surfaceWyrm">
@@ -100915,8 +100998,9 @@
       </script>
       <entry entity="surfaceWyrm" size="1" minimum="3" maximum="3" />
       <bounds region="237">
-        <inclusion left="0" top="0" right="13" bottom="40" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
+        <inclusion left="5" top="3" right="12" bottom="39" />
+        <exclusion left="9" top="29" right="12" bottom="39" />
+        <exclusion left="5" top="18" right="6" bottom="28" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="easternLedgeSpawns">
@@ -100969,7 +101053,7 @@
       <entry entity="dungeon1OrcSentry" size="1" minimum="2" maximum="3" />
       <entry entity="dungeon1OakTroll" size="1" minimum="4" maximum="6" />
       <bounds region="251">
-        <inclusion left="0" top="0" right="50" bottom="11" />
+        <inclusion left="0" top="0" right="50" bottom="10" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -100999,7 +101083,7 @@
       <entry entity="dungeon2OrcTrapper" size="1" minimum="2" maximum="3" />
       <entry entity="dungeon2Spectre" size="1" minimum="2" maximum="3" />
       <bounds region="239">
-        <inclusion left="0" top="0" right="24" bottom="18" />
+        <inclusion left="1" top="0" right="21" bottom="17" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -101032,7 +101116,15 @@
       <entry entity="dungeon3Gargoyle" size="1" minimum="6" maximum="9" />
       <bounds region="235">
         <inclusion left="-4" top="-9" right="53" bottom="42" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="42" top="-9" right="53" bottom="6" />
+        <exclusion left="47" top="7" right="53" bottom="26" />
+        <exclusion left="51" top="27" right="53" bottom="33" />
+        <exclusion left="27" top="33" right="53" bottom="42" />
+        <exclusion left="-4" top="6" right="2" bottom="42" />
+        <exclusion left="3" top="37" right="12" bottom="42" />
+        <exclusion left="19" top="38" right="26" bottom="42" />
+        <exclusion left="11" top="-9" right="22" bottom="-6" />
+        <exclusion left="3" top="6" right="5" bottom="13" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="trollTempleSpawner">
@@ -101199,7 +101291,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="heartCorrDef" size="2" minimum="3" maximum="3" />
-      <entry entity="heartTroll" size="4" minimum="5" maximum="5" />
+      <entry entity="heartTroll" size="4" minimum="3" maximum="3" />
       <entry entity="heartCorrDry" size="1" minimum="1" maximum="1" />
       <bounds region="236">
         <inclusion left="40" top="1" right="41" bottom="16" />
@@ -101223,12 +101315,13 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="heartTroll" size="4" minimum="5" maximum="5" />
+      <entry entity="heartTroll" size="4" minimum="3" maximum="3" />
       <entry entity="heartCorrDef" size="2" minimum="3" maximum="3" />
       <entry entity="heartCorrDry" size="1" minimum="1" maximum="1" />
       <bounds region="236">
         <inclusion left="23" top="16" right="31" bottom="20" />
         <inclusion left="32" top="16" right="39" bottom="16" />
+        <inclusion left="27" top="21" right="27" bottom="21" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -101251,7 +101344,7 @@
       </script>
       <entry entity="heartCorrDef" size="2" minimum="4" maximum="4" />
       <entry entity="heartCorrDry" size="1" minimum="4" maximum="4" />
-      <entry entity="heartTroll" size="4" minimum="16" maximum="16" />
+      <entry entity="heartTroll" size="4" minimum="10" maximum="10" />
       <bounds region="236">
         <inclusion left="23" top="22" right="29" bottom="44" />
         <inclusion left="21" top="24" right="22" bottom="36" />
@@ -101279,7 +101372,7 @@
       </script>
       <entry entity="heartCorrDef" size="2" minimum="5" maximum="5" />
       <entry entity="heartCorrDry" size="1" minimum="6" maximum="6" />
-      <entry entity="heartTroll" size="4" minimum="12" maximum="12" />
+      <entry entity="heartTroll" size="4" minimum="8" maximum="8" />
       <bounds region="236">
         <inclusion left="34" top="23" right="44" bottom="27" />
         <inclusion left="33" top="28" right="43" bottom="36" />
