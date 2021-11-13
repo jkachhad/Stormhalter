@@ -70,7 +70,7 @@ namespace Kesmai.Server.Items
 		public int ChargesCurrent
 		{
 			get => _chargesCurrent;
-			set => _chargesCurrent = value;
+			set => _chargesCurrent = value.Clamp(0, _chargesMax);
 		}
 
 		/// <summary>

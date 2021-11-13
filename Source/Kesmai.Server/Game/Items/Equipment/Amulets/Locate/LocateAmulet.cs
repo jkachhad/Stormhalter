@@ -1,17 +1,40 @@
+using System;
 using System.IO;
+using Kesmai.Server.Accounting;
+using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Game;
 using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items
 {
-	public abstract partial class LocateAmulet : Amulet, ITreasure, ICharges
+	public abstract partial class LocateAmulet : Amulet, ITreasure, ICharged
 	{
+		private int _chargesCurrent;
+		private int _chargesMax;
+
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
+		public int ChargesCurrent
+		{
+			get => _chargesCurrent;
+			set => _chargesCurrent = value.Clamp(0, _chargesMax);
+		}
+		
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
+		public int ChargesMax
+		{
+			get => _chargesMax;
+			set => _chargesMax = value;
+		}
+		
 		/// <summary>
 		/// Initializes a new instance of the <see cref="LocateAmulet"/> class.
 		/// </summary>
 		protected LocateAmulet(int amuletId, int charges = 3) : base(amuletId)
 		{
-			_charges = charges;
+			_chargesCurrent = charges;
+			_chargesMax = charges;
 		}
 		
 		/// <inheritdoc />
@@ -34,7 +57,7 @@ namespace Kesmai.Server.Items
 			if (!entity.CanPerformAction)
 				return false;
 			
-			if (_charges > 0)
+			if (_chargesCurrent > 0)
 			{
 				var spell = new InstantLocateSpell()
 				{

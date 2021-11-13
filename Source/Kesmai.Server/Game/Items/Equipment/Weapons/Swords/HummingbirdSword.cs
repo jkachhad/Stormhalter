@@ -46,9 +46,16 @@ namespace Kesmai.Server.Items
 		}
 #endif
 
+		/* The swing delay for the sword is 1/2 the round timer. The skill gained per swing should
+		 * be adjusted. */
 		public override TimeSpan GetSwingDelay(MobileEntity entity)
 		{
 			return entity.GetRoundDelay(0.5);
+		}
+		
+		public override double GetSkillMultiplier()
+		{
+			return 0.5;
 		}
 	}
 }
