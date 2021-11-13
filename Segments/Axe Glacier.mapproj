@@ -267,7 +267,7 @@
             var order = args.Order;
             
             /* example: craft broadsword */
-            if (_craft.TryGetMatch(order, out var craftMatch) && craftMatch.Groups[1].Value.Matches("greataxe", true))
+            if (_craft.TryGetMatch(order, out var craftMatch) && craftMatch.Groups[1].Value.Matches("axe", true))
             {
                 args.Handled = true;
                 
@@ -107418,8 +107418,9 @@
         BaseDodge = 17,
         HideDetection = 31,
         BasePenetration = ShieldPenetration.Medium,
-        Experience = 14500,
+        Experience = 23500,
         Movement = 2,
+        Hue = Color.FromArgb(175, 255, 175, 255),
         Immunity = CreatureImmunity.Poison | CreatureImmunity.Piercing,
         
         Weakness = CreatureWeakness.Silver,
@@ -107441,7 +107442,8 @@
     draugr.AddLoot(new LootPack(
         new LootPackEntry(true, UndeadGems,       5,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, upperTreasure,   0.1),
+        new LootPackEntry(true, (from, container) => new YouthPotion(), 0.4),
+        new LootPackEntry(true, upperTreasure,   0.63),
         new LootPackEntry(true, AxePotions,     0.2)
     ));
 
@@ -107479,8 +107481,9 @@
         BaseDodge = 17,
         HideDetection = 31,
         BasePenetration = ShieldPenetration.Medium,
-        Experience = 14500,        
+        Experience = 22500,        
         Movement = 2,
+        Hue = Color.FromArgb(200, 255, 200, 200),
         Immunity = CreatureImmunity.Poison | CreatureImmunity.Piercing,
         
         Weakness = CreatureWeakness.Silver,
@@ -107501,7 +107504,8 @@
     draugr.AddLoot(new LootPack(
         new LootPackEntry(true, UndeadGems,       5,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, upperTreasure,   0.1),
+        new LootPackEntry(true, (from, container) => new YouthPotion(), 0.4),
+        new LootPackEntry(true, upperTreasure,   0.63),
         new LootPackEntry(true, AxePotions,     0.2)
     ));
 
@@ -107540,8 +107544,9 @@
         HideDetection = 31,
         Mana = 15, MaxMana = 15,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 14500,
+        Experience = 19500,
         Movement = 2,
+        Hue = Color.FromArgb(150, 255, 150, 150),
         Immunity = CreatureImmunity.Poison | CreatureImmunity.Piercing,
         
         Weakness = CreatureWeakness.Silver,
@@ -107569,8 +107574,9 @@
     draugr.AddLoot(new LootPack(
         new LootPackEntry(true, UndeadGems,       5,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, (from, container) => new YouthPotion(), 0.4),
         new LootPackEntry(true, UtilityItems,    5),
-        new LootPackEntry(true, upperTreasure,   0.1),
+        new LootPackEntry(true, upperTreasure,   0.63),
         new LootPackEntry(true, AxePotions,     0.2)
     ));
 
@@ -107608,7 +107614,7 @@
         HideDetection = 32,
         Mana = 7, MaxMana = 7,
         BasePenetration = ShieldPenetration.Heavy,
-        Experience = 52500,
+        Experience = 72500,
         Immunity = CreatureImmunity.Poison,
         
         IceProtection = 100,
@@ -107635,6 +107641,7 @@
     giant.AddLoot(new LootPack(
         new LootPackEntry(true, UndeadGems,       100,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
+        new LootPackEntry(true, (from, container) => new YouthPotion(), 3),
         new LootPackEntry(true, upperTreasure,   2),
         new LootPackEntry(true, AxePotions,     0.5)
     ));
@@ -107685,7 +107692,7 @@
     necro.AddStatus(new NightVisionStatus(necro));
     necro.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(22, 25, 40)
+        new CreatureBasicAttack(22, 20, 30)
     };
     
     necro.Spells = new CreatureSpellCollection(10.0)
@@ -107742,7 +107749,7 @@
         MaxHealth = 175, Health = 175,
         BaseDodge = 17,
         BasePenetration = ShieldPenetration.VeryLight,
-        Experience = 10600,
+        Experience = 16600,
         
         MaxMana = 21, Mana = 21,
             
@@ -107802,7 +107809,7 @@
         BaseDodge = 24,
         Body = 242,
                 
-        Experience = 13700,
+        Experience = 15700,
     };
     
     worg.AddStatus(new NightVisionStatus(worg));
@@ -107829,7 +107836,7 @@
     worg.AddLoot(new LootPack(
         new LootPackEntry(true, UndeadGems,       4,     gemsPriceMutator), 
         new LootPackEntry(true, upperTreasureBottles,    33),
-        new LootPackEntry(true, upperTreasure,   0.1),
+        new LootPackEntry(true, upperTreasure,   0.3),
         new LootPackEntry(true, AxePotions,     0.2)
     ));
     return worg;
@@ -109939,7 +109946,7 @@
       <entry entity="undeadDraugrArcher" size="3" minimum="8" maximum="8" />
       <entry entity="undeadDraugrMage" size="1" minimum="7" maximum="7" />
       <entry entity="undeadCurseTroll" size="1" minimum="6" maximum="6" />
-      <entry entity="undeadWorg" size="3" minimum="9" maximum="9" />
+      <entry entity="undeadWorg" size="3" minimum="3" maximum="3" />
       <bounds region="2">
         <inclusion left="38" top="17" right="60" bottom="35" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -109964,11 +109971,11 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="undeadFrosty" size="1" minimum="1" maximum="1" />
-      <entry entity="undeadDraugrMelee" size="4" minimum="10" maximum="10" />
+      <entry entity="undeadDraugrMelee" size="4" minimum="12" maximum="12" />
       <entry entity="undeadDraugrMage" size="1" minimum="10" maximum="10" />
       <entry entity="undeadDraugrArcher" size="3" minimum="10" maximum="10" />
       <entry entity="undeadCurseTroll" size="1" minimum="8" maximum="8" />
-      <entry entity="undeadWorg" size="3" minimum="10" maximum="10" />
+      <entry entity="undeadWorg" size="3" minimum="5" maximum="5" />
       <bounds region="2">
         <inclusion left="28" top="-3" right="60" bottom="16" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -109995,9 +110002,9 @@
       <entry entity="undeadFrosty" size="1" minimum="1" maximum="1" />
       <entry entity="undeadDraugrArcher" size="3" minimum="9" maximum="9" />
       <entry entity="undeadDraugrMage" size="1" minimum="8" maximum="8" />
-      <entry entity="undeadDraugrMelee" size="4" minimum="10" maximum="10" />
+      <entry entity="undeadDraugrMelee" size="4" minimum="12" maximum="12" />
       <entry entity="undeadCurseTroll" size="1" minimum="8" maximum="8" />
-      <entry entity="undeadWorg" size="3" minimum="10" maximum="10" />
+      <entry entity="undeadWorg" size="3" minimum="5" maximum="5" />
       <bounds region="2">
         <inclusion left="-2" top="1" right="27" bottom="30" />
         <exclusion left="18" top="23" right="27" bottom="30" />
@@ -110547,7 +110554,7 @@
       </entry>
     </treasure>
     <treasure name="UndeadGems">
-      <entry weight="10">
+      <entry weight="4">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -110556,7 +110563,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="5">
+      <entry weight="3">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
