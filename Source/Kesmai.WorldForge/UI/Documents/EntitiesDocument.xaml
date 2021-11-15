@@ -77,10 +77,19 @@
                     <syncfusion:PropertyGridItem PropertyName="Name" />
                 </syncfusion:PropertyGrid.Items>
             </syncfusion:PropertyGrid>
-            <ListBox Grid.Row="3" Margin="0,3,0,0"
-                      x:Name="_spawnersList"
-                      ItemsSource="{Binding RelatedSpawners}">
-            </ListBox>
+            <StackPanel Grid.Row="3" Margin="0,3,0,0">
+                <TextBlock Margin="7,0,0,0" FontWeight="Bold">Spawns In</TextBlock>
+                <ListBox
+                    BorderBrush="White"
+                    x:Name="_spawnersList"
+                    ItemsSource="{Binding RelatedSpawners}">
+                    <ListBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Jump to Spawn Definition" Command="{Binding JumpSpawnerCommand}"/>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
+                </ListBox>
+            </StackPanel>
         </Grid>
         
         <Border Margin="2" Grid.Column="1"

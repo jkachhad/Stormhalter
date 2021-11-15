@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using CommonServiceLocator;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Scripting;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
@@ -22,12 +24,27 @@ namespace Kesmai.WorldForge.UI.Documents
 	
 	public partial class TreasuresDocument : UserControl
 	{
+		public class GetActiveEntity : RequestMessage<Entity>
+		{
+		}
 		public TreasuresDocument()
 		{
 			InitializeComponent();
 
 			WeakReferenceMessenger.Default
 				.Register<TreasuresDocument, TreasuresViewModel.SelectedTreasureChangedMessage>(this, (r, m) => { _treasuresList.ScrollIntoView(_treasuresList.SelectedItem); });
+			
+			WeakReferenceMessenger.Default.Register<TreasuresDocument, GetActiveEntity>(this,
+				(r, m) => m.Reply(GetSelectedEntity()));
+		}
+		public Entity GetSelectedEntity()
+        {
+			var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+			if (presenter.ActiveDocument is not TreasuresViewModel)
+				return null;
+			if (_entitiesList.SelectedItem != null)
+				return _entitiesList.SelectedItem as Entity;
+			return null;
 		}
 	}
 
@@ -59,6 +76,17 @@ namespace Kesmai.WorldForge.UI.Documents
 
 				if (value != null)
 					WeakReferenceMessenger.Default.Send(new SelectedTreasureChangedMessage(value));
+
+				_relatedEntities.Clear();
+
+				foreach (Entity entity in _segment.Entities)
+                {
+					foreach (Script script in entity.Scripts)
+                    {
+						if (script.Blocks[1].Contains(_selectedTreasure.Name))
+							_relatedEntities.Add(entity);
+                    }
+                }
 			}
 		}
 		
@@ -68,6 +96,10 @@ namespace Kesmai.WorldForge.UI.Documents
 			set => SetProperty(ref _selectedTreasureEntry, value, true);
 		}
 
+		private ObservableCollection<Entity> _relatedEntities = new ObservableCollection<Entity>();
+
+		public ObservableCollection<Entity> RelatedEntities { get => _relatedEntities; }
+
 		public RelayCommand AddTreasureCommand { get; set; }
 		public RelayCommand<SegmentTreasure> RemoveTreasureCommand { get; set; }
 		public RelayCommand<SegmentTreasure> CopyTreasureCommand { get; set; }
@@ -75,7 +107,8 @@ namespace Kesmai.WorldForge.UI.Documents
 		public RelayCommand AddTreasureEntryCommand { get; set; }
 		public RelayCommand<TreasureEntry> RemoveTreasureEntryCommand { get; set; }
 		public RelayCommand<TreasureEntry> CopyTreasureEntryCommand { get; set; }
-		
+		public RelayCommand JumpEntityCommand { get; set; }
+
 		public TreasuresViewModel(Segment segment)
 		{
 			_segment = segment;
@@ -102,8 +135,17 @@ namespace Kesmai.WorldForge.UI.Documents
 			
 			WeakReferenceMessenger.Default.Register<TreasuresViewModel, TreasureEntry.TreasureEntryWeightChanged>
 				(this, OnWeightChanged);
+
+			JumpEntityCommand = new RelayCommand(JumpEntity);
+
 		}
 
+		public void JumpEntity()
+		{
+			var entityRequest = WeakReferenceMessenger.Default.Send<TreasuresDocument.GetActiveEntity>();
+			var entity = entityRequest.Response;
+			WeakReferenceMessenger.Default.Send(entity);
+		}
 		private void OnWeightChanged(TreasuresViewModel recipient, TreasureEntry.TreasureEntryWeightChanged message)
 		{
 			_selectedTreasure.InvalidateChance();

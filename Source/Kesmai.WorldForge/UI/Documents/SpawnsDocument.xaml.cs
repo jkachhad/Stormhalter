@@ -44,6 +44,9 @@ namespace Kesmai.WorldForge.UI.Documents
 		public Entity GetSelectedEntity()
 		{
 			SpawnEntry entry = null;
+			var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+			if (presenter.ActiveDocument is not SpawnsViewModel)
+				return null;
 			if (_typeSelector.SelectedIndex == 0)
 			{
 				entry = _locationEntities.SelectedItem as SpawnEntry;

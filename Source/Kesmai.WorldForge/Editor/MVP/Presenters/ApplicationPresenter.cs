@@ -279,9 +279,13 @@ namespace Kesmai.WorldForge.Editor
 				case "Entity": //Ctrl-E
 					{
 						Entity target = null;
-						var entityRequest = WeakReferenceMessenger.Default.Send<SpawnsDocument.GetActiveEntity>();
-						if (entityRequest.HasReceivedResponse) 
-							target = entityRequest.Response;
+						//There's probably a better way to do this. but I can't search one up. Can I send a more generic message and have both documents register for it but decline to respond if they are not active?
+						var spawnEntityRequest = WeakReferenceMessenger.Default.Send<SpawnsDocument.GetActiveEntity>();
+						var treasureEntityRequest = WeakReferenceMessenger.Default.Send<TreasuresDocument.GetActiveEntity>();
+						if (spawnEntityRequest.HasReceivedResponse && spawnEntityRequest.Response != null) 
+							target = spawnEntityRequest.Response;
+						if (treasureEntityRequest.HasReceivedResponse && treasureEntityRequest.Response != null)
+							target = treasureEntityRequest.Response;
 						ActiveDocument = Documents.Where(d => d is EntitiesViewModel).FirstOrDefault() as EntitiesViewModel;
 						if (target is not null)
 							(ActiveDocument as EntitiesViewModel).SelectedEntity = target;

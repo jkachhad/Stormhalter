@@ -149,6 +149,7 @@ namespace Kesmai.WorldForge.UI.Documents
 		public RelayCommand AddEntityCommand { get; set; }
 		public RelayCommand<Entity> RemoveEntityCommand { get; set; }
 		public RelayCommand<Entity> CopyEntityCommand { get; set; }
+		public RelayCommand JumpSpawnerCommand { get; set; }
 
 		public EntitiesViewModel(Segment segment)
 		{
@@ -164,8 +165,27 @@ namespace Kesmai.WorldForge.UI.Documents
 				(entity) => (SelectedEntity != null));
 			CopyEntityCommand.DependsOn(() => SelectedEntity);
 
-			
+			JumpSpawnerCommand = new RelayCommand(JumpSpawner);
 
+		}
+
+		public void JumpSpawner()
+		{
+			var spawnRequest = WeakReferenceMessenger.Default.Send<EntitiesDocument.GetSelectedSpawner>();
+			var spawn = spawnRequest.Response;
+			var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+			if (spawnRequest.HasReceivedResponse)
+			{
+				Spawner target = spawnRequest.Response;
+				var ActiveDocument = presenter.Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
+				presenter.ActiveDocument = ActiveDocument;
+				if (target is LocationSpawner)
+					(ActiveDocument as SpawnsViewModel).SelectedLocationSpawner = target as LocationSpawner;
+				if (target is RegionSpawner)
+					(ActiveDocument as SpawnsViewModel).SelectedRegionSpawner = target as RegionSpawner;
+				WeakReferenceMessenger.Default.Send(target as Spawner);
+			}
+			WeakReferenceMessenger.Default.Send(spawn as Spawner);
 		}
 
 		public void AddEntity()
