@@ -138,7 +138,10 @@ namespace Kesmai.WorldForge.UI.Documents
 				SetProperty(ref _selectedRegionSpawner, value, true);
 
 				if (value != null)
+				{
 					WeakReferenceMessenger.Default.Send(new SelectedRegionSpawnerChangedMessage(value));
+					value.CalculateStats();
+				}
 			}
 		}
 

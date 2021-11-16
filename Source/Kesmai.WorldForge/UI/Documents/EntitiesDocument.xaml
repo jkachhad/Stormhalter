@@ -31,7 +31,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="64"></RowDefinition>
+                <RowDefinition Height="114"></RowDefinition>
                 <RowDefinition Height="200"></RowDefinition>
             </Grid.RowDefinitions>
             
@@ -72,9 +72,12 @@
             <syncfusion:PropertyGrid Grid.Row="2" Margin="0,3,0,0"
                                      SelectedObject="{Binding SelectedEntity}"
                                      AutoGenerateItems="False"
+                                     SortDirection="{x:Null}"
                                      DisableAnimationOnObjectSelection="True">
                 <syncfusion:PropertyGrid.Items>
                     <syncfusion:PropertyGridItem PropertyName="Name" />
+                    <syncfusion:PropertyGridItem PropertyName="XP" />
+                    <syncfusion:PropertyGridItem PropertyName="HP" />
                 </syncfusion:PropertyGrid.Items>
             </syncfusion:PropertyGrid>
             <StackPanel Grid.Row="3" Margin="0,3,0,0">
