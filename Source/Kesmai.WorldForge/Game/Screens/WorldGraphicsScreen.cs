@@ -498,6 +498,8 @@ namespace Kesmai.WorldForge
 								{
 									var currentFilter = _presenter.SelectedFilter;
 									var tile = region.GetTile(x,y);
+									if (tile is null)
+										continue;
 									var validComponents = tile.Components.Where(c => currentFilter.IsValid(c)).ToArray();
 									foreach (var component in validComponents){
 										tile.RemoveComponent(component);
