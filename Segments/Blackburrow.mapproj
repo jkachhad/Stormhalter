@@ -30906,17 +30906,15 @@
     {
         {
             new CreatureAttack(16,      10, 30,      "Fippy Barks and gnashes you with his fangs",
-                                                        new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
         {
             new CreatureAttack(20,      30, 60,     "Fippy slashes you with his razor sharp claws.",
-                                                        new AttackProneComponent(25), 
                                                         new AttackStunComponent(10)),               40
         },
         {
             new CreatureAttack(22,      40, 60,     "Fippy impales you with his claws.",
-                                                        new AttackProneComponent(100), 
+                                                        new AttackProneComponent(25), 
                                                         new AttackStunComponent(15)),               20
         },
     };
@@ -32672,7 +32670,7 @@ return dragon;
 	var ogre = new AncientLich()
 {
     Name = "Castor",
-    MaxHealth = 7500, Health = 7500,
+    MaxHealth = 5000, Health = 5000,
     BaseDodge = 30,
     HideDetection = 36,
     BasePenetration = ShieldPenetration.VeryHeavy,
@@ -32683,7 +32681,6 @@ return dragon;
     
     FireProtection = 100,
     DeathResistance = 75,
-    IceProtection = 80,
     Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
     
     IsTethered = true,
@@ -32702,17 +32699,17 @@ ogre.Attacks = new CreatureAttackCollection()
 {
 
    {
-        new CreatureAttack(25, 30, 50, "slashes you with his Halberd.", new AttackProneComponent(15),  new AttackStunComponent(5)), 45, TimeSpan.Zero
+        new CreatureAttack(25, 30, 50, "slashes you with his Halberd.", new AttackStunComponent(5)), 45, TimeSpan.Zero
     },
     
     { 
     
-        new CreatureAttack(30, 30, 50, "kicks you in the chest", new AttackProneComponent(25), new AttackStunComponent(10)), 45, TimeSpan.Zero
+        new CreatureAttack(30, 30, 50, "kicks you in the chest", new AttackStunComponent(10)), 45, TimeSpan.Zero
     },
     
     {
     
-        new CreatureAttack(25, 30, 50, "impales you in the stomach with his halberd.", new AttackProneComponent(100), new AttackStunComponent(15)), 10, TimeSpan.Zero
+        new CreatureAttack(25, 30, 50, "impales you in the stomach with his halberd.", new AttackProneComponent(25), new AttackStunComponent(15)), 10, TimeSpan.Zero
     },
     
 };
@@ -32771,7 +32768,7 @@ return ogre;
 	var ogre = new AncientLich()
 {
     Name = "Pollux",
-    MaxHealth = 7500, Health = 7500,
+    MaxHealth = 5000, Health = 5000,
     BaseDodge = 30,
     HideDetection = 36,
     BasePenetration = ShieldPenetration.VeryHeavy,
@@ -32780,7 +32777,6 @@ return ogre;
     Experience = 100000,
     VisibilityDistance = 2,
     
-    FireProtection = 80,
     DeathResistance = 75,
     IceProtection = 100,
     Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
