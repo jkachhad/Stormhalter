@@ -107860,6 +107860,42 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="lockpickThiefTrainer">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var trainer = new ThiefTrainer()
+    {
+        Name = "Grease",
+        Body = 47,
+
+        MaxHealth = 50, Health = 50,
+        BaseDodge = 10,
+
+        Experience = 50,
+
+        Alignment = Alignment.Neutral
+    };
+    
+    trainer.SetTraining(Skill.Magic, 6, 19);
+    
+    return trainer;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="axeSEShopkeeper">
@@ -108995,6 +109031,27 @@
       </script>
       <entry entity="axeRecallVendor" size="1" minimum="0" maximum="0" />
       <location x="5" y="8" region="11" />
+    </spawn>
+    <spawn type="LocationSpawner" name="lockpickThiefTrainer">
+      <minimumDelay>60</minimumDelay>
+      <maximumDelay>60</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="lockpickThiefTrainer" size="1" minimum="1" maximum="1" />
+      <location x="10" y="7" region="15" />
     </spawn>
     <spawn type="RegionSpawner" name="Surface Dungeon">
       <minimumDelay>600</minimumDelay>
