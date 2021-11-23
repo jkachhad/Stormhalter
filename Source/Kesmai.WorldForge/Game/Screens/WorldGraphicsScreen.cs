@@ -645,7 +645,7 @@ namespace Kesmai.WorldForge
 									var spriteBounds = originalBounds;
 
 									if (sprite.Offset != Vector2F.Zero)
-										spriteBounds.Offset(sprite.Offset.X, sprite.Offset.Y);
+										spriteBounds.Offset((int)Math.Floor(sprite.Offset.X * _zoomFactor), (int)Math.Floor(sprite.Offset.Y * _zoomFactor));
 
 									spritebatch.Draw(sprite.Texture, spriteBounds.Location.ToVector2(),null,  render.Color, 0, Vector2.Zero, _zoomFactor, SpriteEffects.None, 0f);
 								}
