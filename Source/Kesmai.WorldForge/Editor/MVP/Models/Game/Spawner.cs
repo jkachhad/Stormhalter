@@ -235,6 +235,11 @@ namespace Kesmai.WorldForge
 	public class RegionSpawner : Spawner
 	{
 		private int _region;
+
+		private double _averageMobs;
+		private int? _totalXP;
+		private int? _totalHP;
+		private int _openFloortiles;
 		
 		public int Region
 		{
@@ -282,76 +287,130 @@ namespace Kesmai.WorldForge
 			}
 		}
 
-		public int OpenFloorTiles
-		{
-			get
+		public void CalculateStats()
+        {
+			//Calculate Open Floor Tiles by finding all tiles that have a floor type component and not a structural component.
+			_openFloortiles = 0;
+			var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+			var segment = segmentRequest.Response;
+			var region = segment.GetRegion(_region);
+			if (region is not null)
 			{
-				var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
-				var segment = segmentRequest.Response;
-				var region = segment.GetRegion(_region);
-				if (region is null)
-					return 0;
-
-				IEnumerable<SegmentTile> includedTiles = Enumerable.Empty<SegmentTile>() ;
+				IEnumerable<SegmentTile> includedTiles = Enumerable.Empty<SegmentTile>();
 				foreach (var rect in Inclusions)
-                {
+				{
 					var rectTiles = region.GetTiles(t => rect.ToRectangle().Contains(t.X, t.Y) &&
 									   t.Components.Any(floor => floor is Models.FloorComponent || floor is Models.IceComponent || floor is Models.WaterComponent) &&
 									   !t.Components.Any(notfloor => notfloor is Models.WallComponent || notfloor is Models.ObstructionComponent));
 					includedTiles = includedTiles.Union(rectTiles);
-                }
+				}
 				foreach (var rect in Exclusions)
-                {
-					if (rect is { Left: 0, Right: 0, Width: 0, Height: 0 })
+				{
+					if (rect is { Left: 0, Right: 0, Top: 0, Bottom: 0 })
 						continue;
-					includedTiles = includedTiles.Where(t => ! rect.ToRectangle().Contains(t.X, t.Y));
+					includedTiles = includedTiles.Where(t => !rect.ToRectangle().Contains(t.X, t.Y));
 				}
 
-				return includedTiles.Count();
+				_openFloortiles = includedTiles.Count();
+
+				//Calculate stats that require itterating through entities: Average mobs, total xp, total hp, density.
+				_averageMobs = 0;
+				_totalXP = 0;
+				_totalHP = 0;
+				if (Entries.Count != 0)
+				{
+					double averageEntry = 0;
+					double averageXP = 0;
+					double averageHP = 0;
+					int minimumMobs = 0;
+					int minimumXP = 0;
+					int minimumHP = 0;
+					int minimumSlots = 0;
+					int maximumMobs = 0;
+					int maximumXP = 0;
+					int maximumHP = 0;
+					int maximumSlots = 0;
+					foreach (var entry in Entries.Where(e=>e.Entity.HP is not null && e.Entity.XP is not null))
+					{
+						averageEntry += entry.Size;
+						averageHP += entry.Size * (int)entry.Entity.HP;
+						averageXP += entry.Size * (int)entry.Entity.XP;
+						minimumMobs += entry.Minimum * entry.Size;
+						minimumHP += entry.Minimum * entry.Size * (int)entry.Entity.HP;
+						minimumXP += entry.Minimum * entry.Size * (int)entry.Entity.XP;
+						minimumSlots += entry.Minimum;
+						maximumMobs += entry.Maximum * entry.Size;
+						maximumHP += entry.Maximum * entry.Size * (int)entry.Entity.HP;
+						maximumXP += entry.Maximum * entry.Size * (int)entry.Entity.XP;
+						maximumSlots += entry.Maximum ==0 ? Maximum : entry.Maximum;
+
+					}
+					averageEntry = averageEntry / Entries.Count();
+					averageHP = averageHP / Entries.Count();
+					averageXP = averageXP / Entries.Count();
+
+					//For spawners that have a maximum of 0 or a Maximum higher than the alotted entries, there is no cap on mobs, and all entries will spawn their maximum
+					if (Maximum == 0 || Maximum>=maximumSlots)
+					{
+						_averageMobs = maximumMobs;
+						_totalHP = maximumHP;
+						_totalXP = maximumXP;
+					}
+					//For spawners that have fewer slots available than needed to fill the minimums, average mobs is just slots times our average size.
+					else if (Maximum < minimumSlots)
+					{
+						_averageMobs = averageEntry * Maximum;
+						_totalHP = (int)(averageHP * Maximum);
+						_totalXP = (int)(averageXP * Maximum);
+					}
+					//For other spawners, we need to first fill the minimums, then add remaining slots * our average.
+					else
+					{
+						_averageMobs = minimumMobs + (Maximum - minimumSlots) * averageEntry;
+						_totalHP = (int)(minimumHP + (Maximum - minimumSlots) * averageHP);
+						_totalXP = (int)(minimumXP + (Maximum - minimumSlots) * averageXP);
+					}
+				}
+				//If any of the entities referenced have a null for HP or XP, invalidate that calculation
+				if (Entries.Any(e => e.Entity.HP is null))
+					_totalHP = null;
+				if (Entries.Any(e => e.Entity.XP is null))
+					_totalXP = null;
+				//If the Spawner has a 0 Maximum AND any of the entities also have a 0 maximum. I think this spawner will spawn without cap. Show as broken
+				if (Maximum == 0 && Entries.Any(e => e.Maximum == 0))
+                {
+					_averageMobs = 0;
+					_totalHP = null;
+					_totalXP = null;
+                }
 			}
 		}
+		public int OpenFloorTiles
+		{
+			get => _openFloortiles;
+		}
 
-		public Double AverageMobs
+		public double AverageMobs
+        {
+			get => _averageMobs;
+        }
+
+		public double Density
         {
             get
             {
-				//For a new spawner or an empty one, there is no mob count.
-				if (Entries.Count() == 0)
-					return 0.0;
-				
-				//Get some stats based on each entry. What's the average size, how many slots are used and how many mobs generated to hit the minimums.
-				Double averageEntry = 0;
-				int minimumMobs = 0;
-				int minimumSlots = 0;
-				int maximumMobs = 0;
-				foreach (var entry in Entries)
-                {
-					averageEntry += entry.Size;
-					minimumMobs += entry.Minimum * entry.Size;
-					minimumSlots += entry.Minimum;
-					maximumMobs += entry.Maximum * entry.Size;
-                }
-				averageEntry = averageEntry / Entries.Count();
-
-				//For spawners that have a maximum of 0, there is no cap on mobs, and all entries will spawn their maximum
-				if (Maximum == 0)
-					return maximumMobs;
-
-				//For spawners that have fewer slots available than needed to fill the minimums, average mobs is just slots times our average size.
-				if (Maximum < minimumSlots)
-					return averageEntry * Maximum;
-
-				//For other spawners, we need to first fill the minimums, then add remaining slots * our average.
-				return minimumMobs + (Maximum - minimumSlots) * averageEntry;
+				return _averageMobs / _openFloortiles;
             }
         }
 
-		public Double Density
+		public int? TotalXP
         {
-            get
-            {
-				return AverageMobs / OpenFloorTiles;
-            }
+			get => _totalXP;
+        }
+
+		public int? TotalHP
+        {
+			get => _totalHP;
         }
 
 		public override XElement GetXElement()
