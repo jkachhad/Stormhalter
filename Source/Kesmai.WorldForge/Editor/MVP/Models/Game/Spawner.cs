@@ -8,6 +8,7 @@ using CommonServiceLocator;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Scripting;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using System.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using Microsoft.Xna.Framework;
 
@@ -240,6 +241,7 @@ namespace Kesmai.WorldForge
 		private int? _totalXP;
 		private int? _totalHP;
 		private int _openFloortiles;
+		private int? _threat;
 		
 		public int Region
 		{
@@ -322,6 +324,7 @@ namespace Kesmai.WorldForge
 					double averageEntry = 0;
 					double averageXP = 0;
 					double averageHP = 0;
+					double averageThreat = 0;
 					int minimumMobs = 0;
 					int minimumXP = 0;
 					int minimumHP = 0;
@@ -335,6 +338,7 @@ namespace Kesmai.WorldForge
 						averageEntry += entry.Size;
 						averageHP += entry.Size * (int)entry.Entity.HP;
 						averageXP += entry.Size * (int)entry.Entity.XP;
+						averageThreat += Math.Max((int)(entry.Entity.Threat.Item1 is null ? 0 : entry.Entity.Threat.Item1), (int)(entry.Entity.Threat.Item2 is null ? 0 : entry.Entity.Threat.Item2));
 						minimumMobs += entry.Minimum * entry.Size;
 						minimumHP += entry.Minimum * entry.Size * (int)entry.Entity.HP;
 						minimumXP += entry.Minimum * entry.Size * (int)entry.Entity.XP;
@@ -348,6 +352,7 @@ namespace Kesmai.WorldForge
 					averageEntry = averageEntry / Entries.Count();
 					averageHP = averageHP / Entries.Count();
 					averageXP = averageXP / Entries.Count();
+					averageThreat = averageThreat / Entries.Count();
 
 					//For spawners that have a maximum of 0 or a Maximum higher than the alotted entries, there is no cap on mobs, and all entries will spawn their maximum
 					if (Maximum == 0 || Maximum>=maximumSlots)
@@ -370,6 +375,7 @@ namespace Kesmai.WorldForge
 						_totalHP = (int)(minimumHP + (Maximum - minimumSlots) * averageHP);
 						_totalXP = (int)(minimumXP + (Maximum - minimumSlots) * averageXP);
 					}
+					_threat = Math.Max((int)(Density * 10 * averageThreat),(int)averageThreat);
 				}
 				//If any of the entities referenced have a null for HP or XP, invalidate that calculation
 				if (Entries.Any(e => e.Entity.HP is null))
@@ -395,6 +401,7 @@ namespace Kesmai.WorldForge
 			get => _averageMobs;
         }
 
+		[Description("Approximate mobs per open floor tile")]
 		public double Density
         {
             get
@@ -403,14 +410,22 @@ namespace Kesmai.WorldForge
             }
         }
 
+		[Description("Average XP for a full clear of the spawn")]
 		public int? TotalXP
         {
 			get => _totalXP;
         }
 
+		[Description("Average damage dealt required to clear the spawn")]
 		public int? TotalHP
         {
 			get => _totalHP;
+        }
+		
+		[Description("Damage output score for the spawn. Does not take into account custom damage values. Gets wonky when evaluating lairs.")]
+		public int? Threat
+        {
+			get => _threat;
         }
 
 		public override XElement GetXElement()

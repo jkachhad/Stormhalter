@@ -7,6 +7,7 @@ using DigitalRune.Collections;
 using Kesmai.WorldForge.Scripting;
 using Kesmai.WorldForge.UI.Documents;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using System.ComponentModel;
 
 namespace Kesmai.WorldForge
 {
@@ -42,6 +43,7 @@ namespace Kesmai.WorldForge
         {
 			get
             {
+				//I think this regex is pretty safe
 				var xpPattern = new System.Text.RegularExpressions.Regex("Experience\\s*=\\s*(\\d+)\\s*,", System.Text.RegularExpressions.RegexOptions.Multiline);
 				var matches = xpPattern.Matches(this.Scripts[0].Blocks[1]);
 				if (matches.Count == 1 && int.TryParse(matches.First().Groups[1].Value, out var xp))
@@ -53,6 +55,7 @@ namespace Kesmai.WorldForge
         {
 			get
 			{
+				//I think this regex is pretty safe
 				var hpPattern = new System.Text.RegularExpressions.Regex("MaxHealth\\s*=\\s*(\\d+)\\s*,", System.Text.RegularExpressions.RegexOptions.Multiline);
 				var matches = hpPattern.Matches(this.Scripts[0].Blocks[1]);
 				if (matches.Count == 1 && int.TryParse(matches.First().Groups[1].Value, out var hp))
@@ -60,6 +63,49 @@ namespace Kesmai.WorldForge
 				return null;
 			}
 		}
+
+		[Description("Approximate offensive power (melee,ranged & magic)")]
+		public Tuple<int?,int?> Threat
+        {
+			get
+			{
+				//These regexes are fraught. They are likely to break based on developer syntax preferences, but seem to work across most mobs I've tested.
+				var skillPattern = new System.Text.RegularExpressions.Regex("Creature(?:Basic)?Attack\\(\\s*(\\d+)\\s*[,)]", System.Text.RegularExpressions.RegexOptions.Multiline);
+				var matches = skillPattern.Matches(this.Scripts[0].Blocks[1]);
+				int? meleeSkill = 0;
+				foreach (System.Text.RegularExpressions.Match match in matches)
+				{
+					if (int.TryParse(match.Groups[1].Value, out var thisAttack))
+					{
+						meleeSkill = Math.Max((int)meleeSkill, thisAttack);
+					}
+					else
+						meleeSkill = null;
+				}
+				skillPattern = new System.Text.RegularExpressions.Regex("CreatureSpell<(\\w*)>\\(\\s*(?:skillLevel:)?\\s*(\\d+)\\s*[,)]", System.Text.RegularExpressions.RegexOptions.Multiline);
+				matches = skillPattern.Matches(this.Scripts[0].Blocks[1]);
+				int? rangedSkill = 0;
+				foreach (System.Text.RegularExpressions.Match match in matches.Where(m => !new[] {"BlindSpell","StunSpell"}.Contains(m.Groups[1].Value)))
+				{
+					if (int.TryParse(match.Groups[2].Value, out var thisAttack))
+					{
+						rangedSkill = Math.Max((int)rangedSkill, thisAttack*2); //magic skills are more of a threat than melee.
+					}
+					else
+						rangedSkill = null;
+				}
+				//This regex will need attention if there are ranged weapons that aren't longbow, shortbow, crossbow, etc. RHammer trolls come to mind, but may be the only exception.
+				skillPattern = new System.Text.RegularExpressions.Regex("Wield\\([^)]*bow", System.Text.RegularExpressions.RegexOptions.Multiline);
+				matches = skillPattern.Matches(this.Scripts[0].Blocks[1]);
+				if (matches.Count > 0) // if we're equiping a bow, then the melee skill is actually ranged.
+				{
+					rangedSkill = Math.Max((int)meleeSkill, (int)rangedSkill);
+					meleeSkill = null;
+				}
+
+				return new Tuple<int?, int?>(meleeSkill, rangedSkill);
+			}
+        }
 		
 		public Entity()
 		{
