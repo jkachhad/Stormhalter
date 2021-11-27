@@ -10,16 +10,25 @@ using Kesmai.Server.Targeting;
 
 namespace Kesmai.Server.Items
 {
-	public partial class ScorpionAmulet : Amulet, ITreasure, ICharges
+	public partial class ScorpionAmulet : Amulet, ITreasure, ICharged
 	{
-		private int _charges;
+		private int _chargesCurrent;
+		private int _chargesMax;
 
 		[WorldForge]
 		[CommandProperty(AccessLevel.GameMaster)]
-		public int Charges
+		public int ChargesCurrent
 		{
-			get => _charges;
-			set => _charges = value;
+			get => _chargesCurrent;
+			set => _chargesCurrent = value.Clamp(0, _chargesMax);
+		}
+		
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
+		public int ChargesMax
+		{
+			get => _chargesMax;
+			set => _chargesMax = value;
 		}
 		
 		/// <summary>
@@ -41,7 +50,8 @@ namespace Kesmai.Server.Items
 		/// </summary>
 		public ScorpionAmulet(int charges = 3) : base(118)
 		{
-			_charges = charges;
+			_chargesCurrent = charges;
+			_chargesMax = charges;
 		}
 		
 		/// <inheritdoc />
@@ -61,7 +71,7 @@ namespace Kesmai.Server.Items
 			if (action != ActionType.Use)
 				return base.HandleInteraction(entity, action);
 			
-			if (_charges > 0)
+			if (_chargesCurrent > 0)
 				entity.Target = new InternalTarget(this);
 
 			return true;

@@ -65,7 +65,7 @@ namespace Kesmai.Server.Items
 		/// <inheritdoc />
 		[WorldForge]
 		[CommandProperty(AccessLevel.GameMaster)]
-		public virtual ShieldPenetration Penetration => ShieldPenetration.None;
+		public virtual ShieldPenetration Penetration => ShieldPenetration.Light;
 
 		/// <inheritdoc />
 		public override int Category => 8;
@@ -110,6 +110,14 @@ namespace Kesmai.Server.Items
 		public virtual TimeSpan GetSwingDelay(MobileEntity entity)
 		{
 			return entity.GetRoundDelay();
+		}
+		
+		/// <summary>
+		/// Gets the multiplier for skill gain awarded per weapon swing.
+		/// </summary>
+		public virtual double GetSkillMultiplier()
+		{
+			return 1.0;
 		}
 
 		/// <summary>
