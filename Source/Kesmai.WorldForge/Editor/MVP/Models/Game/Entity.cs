@@ -82,14 +82,14 @@ namespace Kesmai.WorldForge
 					else
 						meleeSkill = null;
 				}
-				skillPattern = new System.Text.RegularExpressions.Regex("CreatureSpell<(\\w*)>\\(\\s*(?:skillLevel:)?\\s*(\\d+)\\s*[,)]", System.Text.RegularExpressions.RegexOptions.Multiline);
+				skillPattern = new System.Text.RegularExpressions.Regex("CreatureSpell<(\\w*)>\\(\\s*(?:skillLevel:)?\\s*(\\d+\\.?\\d*)?\\s*[,)]", System.Text.RegularExpressions.RegexOptions.Multiline);
 				matches = skillPattern.Matches(this.Scripts[0].Blocks[1]);
 				int? rangedSkill = 0;
 				foreach (System.Text.RegularExpressions.Match match in matches.Where(m => !new[] {"BlindSpell","StunSpell"}.Contains(m.Groups[1].Value)))
 				{
-					if (int.TryParse(match.Groups[2].Value, out var thisAttack))
+					if (double.TryParse(match.Groups[2].Value, out var thisAttack))
 					{
-						rangedSkill = Math.Max((int)rangedSkill, thisAttack*2); //magic skills are more of a threat than melee.
+						rangedSkill = Math.Max((int)rangedSkill, (int)(thisAttack*2)); //magic skills are more of a threat than melee.
 					}
 					else
 						rangedSkill = null;
