@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.81.0.0">
+<segment name="Axe Glacier" version="0.86.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -108995,6 +108995,28 @@
       </script>
       <entry entity="axeRecallVendor" size="1" minimum="1" maximum="1" />
       <location x="5" y="8" region="11" />
+    </spawn>
+    <spawn type="LocationSpawner" name="axeThiefTrainer">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is ThiefTrainer trainer)
+        trainer.AddCounter(new Point2D(45,4,12));
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="axeThiefTrainer" size="1" minimum="1" maximum="1" />
+      <location x="45" y="3" region="12" />
     </spawn>
     <spawn type="RegionSpawner" name="Surface Dungeon">
       <minimumDelay>600</minimumDelay>
