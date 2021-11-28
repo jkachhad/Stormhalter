@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
+using System.Xml.Linq;
 using CommonServiceLocator;
 using DigitalRune;
 using DigitalRune.Game;
@@ -8,6 +11,7 @@ using DigitalRune.Game.UI;
 using DigitalRune.Game.UI.Controls;
 using DigitalRune.Mathematics.Algebra;
 using Kesmai.WorldForge.Editor;
+using Kesmai.WorldForge.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -132,8 +136,13 @@ namespace Kesmai.WorldForge.Windows
 
 				deleteButton.Click += (o, args) =>
 				{
+					var index = _tile.Components.IndexOf(SelectedItem.Component);
 					_tile.RemoveComponent(SelectedItem.Component);
 					OnLoad(); // update the component editor UI
+					if (index > _leftPanel.Children.Count - 1)
+						index = _leftPanel.Children.Count - 1;
+					if(index!= -1)
+						Select(_leftPanel.Children.ElementAt(index) as ComponentFrame);
 					_screen.InvalidateRender(); //redraw the worldscreen
 				};
 
@@ -226,6 +235,31 @@ namespace Kesmai.WorldForge.Windows
 				if (inputService.IsReleased(Keys.Escape))
 				{
 					Close();
+				}
+				if (inputService.IsDown(Keys.LeftControl) || inputService.IsDown(Keys.RightControl))
+				{
+					if (inputService.IsReleased(Keys.C))
+                    {
+						Clipboard.SetText(SelectedItem.Component.GetXElement().ToString());
+                    }
+					if (inputService.IsReleased(Keys.V))
+					{
+						try { 
+							if (Clipboard.GetText() is string clipboard && XDocument.Parse(clipboard) is XDocument element && element.Root.Name.ToString() == "component")
+							{
+								var assembly = Assembly.GetExecutingAssembly();
+								var componentTypename = $"Kesmai.WorldForge.Models.{element.Root.Attribute("type").Value}";
+								var componentType = assembly.GetType(componentTypename, true);
+
+								if (Activator.CreateInstance(componentType, element.Root) is TerrainComponent component)
+								{
+									_tile.AddComponent(component);
+									OnLoad();
+									Select(_leftPanel.Children.OfType<ComponentFrame>().LastOrDefault());
+								}
+							}
+						} catch { } // ignore errors in this section. They are probably malformatted XML or other clipboard-is-not-relevant issues
+					}
 				}
 			}
 
