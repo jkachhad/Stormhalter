@@ -23,7 +23,8 @@ namespace Kesmai.WorldForge.Windows
 		private WorldGraphicsScreen _screen;
 		private PropertyGrid _propertyGrid;
 		private StackPanel _actionsPanel;
-		
+		private StackPanel _leftPanel;
+
 		public static readonly int SelectedItemPropertyId = CreateProperty(
 			typeof(ComponentsWindow), "SelectedItem", GamePropertyCategories.Default, null, default(ComponentFrame),
 			UIPropertyOptions.AffectsRender);
@@ -52,11 +53,11 @@ namespace Kesmai.WorldForge.Windows
 			};
 
 			/* Left Panel */
-			var leftPanel = new StackPanel()
+			_leftPanel = new StackPanel()
 			{
 				Background = Color.DarkRed,
 			};
-			content.Children.Add(leftPanel);
+			content.Children.Add(_leftPanel);
 
 			foreach (var component in _tile.Components)
 			{
@@ -65,8 +66,8 @@ namespace Kesmai.WorldForge.Windows
 					Component = component,
 				};
 				frame.Click += (o, args) => { Select(o as ComponentFrame); };
-				
-				leftPanel.Children.Add(frame);
+
+				_leftPanel.Children.Add(frame);
 			}
 			
 			/* Right Panel */
@@ -97,7 +98,7 @@ namespace Kesmai.WorldForge.Windows
 			
 			Content = content;
 			
-			Select(leftPanel.Children.OfType<ComponentFrame>().FirstOrDefault());
+			Select(_leftPanel.Children.OfType<ComponentFrame>().FirstOrDefault());
 		}
 
 		public void Select(ComponentFrame frame)
@@ -136,7 +137,57 @@ namespace Kesmai.WorldForge.Windows
 					_screen.InvalidateRender(); //redraw the worldscreen
 				};
 
+				var moveUpButton = new Button()
+				{
+					Content = new TextBlock()
+					{
+						Foreground = Color.OrangeRed,
+						Shadow = Color.Black,
+
+						Font = "Tahoma14Bold",
+						Text = "Move up",
+
+						Margin = new Vector4F(3, 3, 3, 3)
+					}
+				};
+				moveUpButton.Click += (o, args) =>
+				{
+					var index = _tile.Components.IndexOf(SelectedItem.Component);
+					if (index > 0)
+					{
+						_tile.Components.Move(index, index - 1);
+						OnLoad();
+						Select(_leftPanel.Children.ElementAt(index-1) as ComponentFrame);
+					}
+				};
+
+				var moveDownButton = new Button()
+				{
+					Content = new TextBlock()
+					{
+						Foreground = Color.OrangeRed,
+						Shadow = Color.Black,
+
+						Font = "Tahoma14Bold",
+						Text = "Move down",
+
+						Margin = new Vector4F(3, 3, 3, 3)
+					}
+				};
+				moveDownButton.Click += (o, args) =>
+				{
+					var index = _tile.Components.IndexOf(SelectedItem.Component);
+					if (index < _tile.Components.Count-1)
+					{
+						_tile.Components.Move(index, index + 1);
+						OnLoad();
+						Select(_leftPanel.Children.ElementAt(index + 1) as ComponentFrame);
+					}
+				};
+
 				_actionsPanel.Children.Add(deleteButton);
+				_actionsPanel.Children.Add(moveUpButton);
+				_actionsPanel.Children.Add(moveDownButton);
 			}
 		}
 
