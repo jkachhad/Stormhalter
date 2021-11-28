@@ -104786,10 +104786,10 @@
     rockworm.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(8,     10, 15,     "The rockworm rolls over you"),        70 
+            new CreatureAttack(8,     10, 15,     "The rockworm rolls over you."),        70 
         }, 
         {
-            new CreatureAttack(9,    12, 20,     "You've been bitten by the rockworm",
+            new CreatureAttack(9,    12, 20,     "You've been bitten by the rockworm.",
                                                     new AttackPoisonComponent(4, 50)),   30
         },
     };
@@ -104949,10 +104949,10 @@
     lizard.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(8,   6, 10,  "The lizard claws at you"),               60 
+            new CreatureAttack(8,   6, 10,  "The lizard claws at you."),               60 
         },
         {
-            new CreatureAttack(8,     7, 12,  "The lizard hits you with its tail"),   40 
+            new CreatureAttack(8,     7, 12,  "The lizard hits you with its tail."),   40 
         },
     };
     
@@ -105866,10 +105866,10 @@
     lizard.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(8,     7, 13,  "The lizard claws at you"),             60 
+            new CreatureAttack(8,     7, 13,  "The lizard claws at you."),             60 
         },
         {
-            new CreatureAttack(8,     8, 16,  "The lizard hits you with its tail"),   40 
+            new CreatureAttack(8,     8, 16,  "The lizard hits you with its tail."),   40 
         },
     };
     
@@ -107463,7 +107463,7 @@
     if (spokeRecently(source))
         return;
 
-    source.Emote($"begins to lurch forward, fixing his gaze on {player.Name}");
+    source.Emote($"Lurches forward, fixing his gaze on {player.Name}.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -107525,7 +107525,7 @@
     if (spokeRecently(source))
         return;
 
-    source.Emote($"slowly draws an ancient bow, fixated on {player.Name}");
+    source.Emote($"Draws an ancient bow, a steely gaze on his face as he hunts {player.Name}.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -107596,7 +107596,7 @@
     if (spokeRecently(source))
         return;
 
-    source.Emote($"begins an ancient chant, its cold gaze focused on {player.Name}");
+    source.Emote($"Begins an ancient chant, its cold gaze focused on {player.Name}.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -107735,7 +107735,7 @@
     if (spokeRecently(source))
         return;
         
-    source.Say($"You cannot interrupt my work! I will bring him back!");
+    source.Say($"You cannot interrupt my work. I will bring him back!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -107855,7 +107855,7 @@
     if (spokeRecently(source))
         return;
 
-    source.Emote($"stands up, hackles raised, staring at {player.Name} as if offended by their existence");
+    source.Emote($"Stands up, hackles raised, staring at {player.Name} as if offended by their existence.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -107880,7 +107880,7 @@
             vendor.SayTo(player, _rarePurchaseResponses.Random());
         }
    
-        // Default wares. Pick 3 and stock them. this vendor is a generalist and carries a variety of potions, jewelry and weapons, but doesn't compete with the armorer.
+        // Default wares. Pick 3 and stock them. This vendor is a generalist and carries a variety of potions, jewelry and weapons, but doesn't compete with the armorer.
         var merchantUpsell = 3.5;
 		
         var wares = new List<StockEntry>()
