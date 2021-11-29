@@ -49,13 +49,32 @@
                     <ToolBar Padding="2" Grid.Row="0">
                         <ToolBar.Items>
                             <Button Width="24" Height="24"
-                                    Command="{Binding AddLocationSpawnerCommand}">
+                                    Command="{Binding AddLocationSpawnerCommand}"
+                                    ToolTip="Add empty Spawner">
                                 <Image Source="../../Resources/Add.png"/>
                             </Button>
                             <Button Width="24" Height="24"
                                     Command="{Binding RemoveLocationSpawnerCommand}"
+                                    ToolTip="Remove Spawner"
                                     CommandParameter="{Binding SelectedLocationSpawner}">
                                 <Image Source="../../Resources/Delete.png" />
+                            </Button>
+                            <Button Width="24" Height="24"
+                                    Command="{Binding CopyLocationSpawnerCommand}"
+                                    ToolTip="Copy Spawner to Clipboard"
+                                    CommandParameter="{Binding SelectedLocationSpawner}">
+                                <Image Source="../../Resources/Export.png" />
+                            </Button>
+                            <Button Width="24" Height="24"
+                                    Command="{Binding CloneLocationSpawnerCommand}"
+                                    ToolTip="Clone Spawner"
+                                    CommandParameter="{Binding SelectedLocationSpawner}">
+                                <Image Source="../../Resources/Copy.png" />
+                            </Button>
+                            <Button Width="24" Height="24"
+                                    Command="{Binding PasteSpawnerCommand}"
+                                    ToolTip="Paste Spawner from Clipboard">
+                                <Image Source="../../Resources/Import.png" />
                             </Button>
                         </ToolBar.Items>
                     </ToolBar>
@@ -201,13 +220,32 @@
                     <ToolBar Padding="2">
                         <ToolBar.Items>
                             <Button Width="24" Height="24"
-                                    Command="{Binding AddRegionSpawnerCommand}">
+                                    Command="{Binding AddRegionSpawnerCommand}"
+                                    ToolTip="Add empty Spawner">
                                 <Image Source="../../Resources/Add.png"/>
                             </Button>
                             <Button Width="24" Height="24"
                                     Command="{Binding RemoveRegionSpawnerCommand}"
+                                    ToolTip="Remove Spawner"
                                     CommandParameter="{Binding SelectedRegionSpawner}">
                                 <Image Source="../../Resources/Delete.png" />
+                            </Button>
+                            <Button Width="24" Height="24"
+                                    Command="{Binding CopyRegionSpawnerCommand}"
+                                    ToolTip="Copy Spawner to Clipboard"
+                                    CommandParameter="{Binding SelectedRegionSpawner}">
+                                <Image Source="../../Resources/Export.png" />
+                            </Button>
+                            <Button Width="24" Height="24"
+                                    Command="{Binding CloneRegionSpawnerCommand}"
+                                    ToolTip="Clone Spawner"
+                                    CommandParameter="{Binding SelectedRegionSpawner}">
+                                <Image Source="../../Resources/Copy.png" />
+                            </Button>
+                            <Button Width="24" Height="24"
+                                    Command="{Binding PasteSpawnerCommand}"
+                                    ToolTip="Paste Spawner from Clipboard">
+                                <Image Source="../../Resources/Import.png" />
                             </Button>
                         </ToolBar.Items>
                     </ToolBar>
