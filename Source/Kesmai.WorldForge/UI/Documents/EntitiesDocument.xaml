@@ -52,6 +52,17 @@
                             CommandParameter="{Binding SelectedEntity}">
                         <Image Source="../../Resources/Copy.png" />
                     </Button>
+                    <Button Width="24" Height="24"
+                                    Command="{Binding ExportEntityCommand}"
+                                    ToolTip="Copy Entity to Clipboard"
+                                    CommandParameter="{Binding SelectedEntity}">
+                        <Image Source="../../Resources/Export.png" />
+                    </Button>
+                    <Button Width="24" Height="24"
+                                    Command="{Binding ImportEntityComamnd}"
+                                    ToolTip="Paste Entity from Clipboard">
+                        <Image Source="../../Resources/Import.png" />
+                    </Button>
                 </ToolBar.Items>
             </ToolBar>
             
