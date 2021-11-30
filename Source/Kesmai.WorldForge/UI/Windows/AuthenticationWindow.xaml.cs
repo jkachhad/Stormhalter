@@ -252,7 +252,7 @@ namespace Kesmai.WorldForge.UI
 
 				if (!skipOfflinePrompt) {
 					var messageResult = MessageBox.Show("Do you wish to continue in offline mode?", "Unable to connect to server", MessageBoxButton.YesNo);
-					if (messageResult == MessageBoxResult.Yes)
+					if (messageResult != MessageBoxResult.Yes)
 					{
 						OnFail();
 						return;
