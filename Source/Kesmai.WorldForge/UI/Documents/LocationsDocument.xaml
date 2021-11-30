@@ -52,6 +52,17 @@
                             CommandParameter="{Binding SelectedLocation}">
                         <Image Source="../../Resources/Copy.png" />
                     </Button>
+                    <Button Width="24" Height="24"
+                                    Command="{Binding ExportLocationCommand}"
+                                    ToolTip="Copy location to Clipboard"
+                                    CommandParameter="{Binding SelectedLocation}">
+                        <Image Source="../../Resources/Export.png" />
+                    </Button>
+                    <Button Width="24" Height="24"
+                                    Command="{Binding ImportLocationCommand}"
+                                    ToolTip="Paste location from Clipboard">
+                        <Image Source="../../Resources/Import.png" />
+                    </Button>
                 </ToolBar.Items>
             </ToolBar>
             
