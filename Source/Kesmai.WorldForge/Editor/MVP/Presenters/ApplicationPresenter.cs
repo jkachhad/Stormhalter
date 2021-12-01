@@ -125,6 +125,9 @@ namespace Kesmai.WorldForge.Editor
 
 		public RelayCommand ExitApplicationCommand { get; set; }
 
+		public RelayCommand ShowChangesWindow { get; set; }
+		public RelayCommand LaunchWiki { get; set; }
+
 		public RelayCommand<String> SwapDocumentCommand { get; set; }
 		
 		public ObservableCollection<object> Documents { get; private set; }
@@ -178,6 +181,15 @@ namespace Kesmai.WorldForge.Editor
 
 			GenerateRegionCommand = new RelayCommand(GenerateRegions, () => (Segment != null));
 			GenerateRegionCommand.DependsOn(() => Segment);
+
+			ShowChangesWindow = new RelayCommand(() => { new Kesmai.WorldForge.UI.Windows.WhatsNew().ShowDialog(); });
+			LaunchWiki = new RelayCommand(() => {
+				System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+				{
+					FileName = "http://www.stormhalter.com/wiki/WorldForge",
+					UseShellExecute = true
+				}); 
+			});
 
 			SwapDocumentCommand = new RelayCommand<string>(SwapDocument);
 
