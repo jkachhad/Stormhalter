@@ -44,6 +44,9 @@ namespace Kesmai.WorldForge.UI.Documents
 		public Entity GetSelectedEntity()
 		{
 			SpawnEntry entry = null;
+			var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+			if (presenter.ActiveDocument is not SpawnsViewModel)
+				return null;
 			if (_typeSelector.SelectedIndex == 0)
 			{
 				entry = _locationEntities.SelectedItem as SpawnEntry;
@@ -70,6 +73,7 @@ namespace Kesmai.WorldForge.UI.Documents
 				_locationPresenter.Region = segment.GetRegion(spawn.Region);
 				_locationPresenter.SetLocation(spawn);
 			}
+			_locationSpawnerList.ScrollIntoView(_locationSpawnerList.SelectedItem);
 		}
 
 		private void OnRegionSpawnerChanged(SpawnsDocument recipient, SpawnsViewModel.SelectedRegionSpawnerChangedMessage message)
@@ -85,6 +89,7 @@ namespace Kesmai.WorldForge.UI.Documents
 				_regionPresenter.Region = segment.GetRegion(spawn.Region);
 				_regionPresenter.SetLocation(spawn);
 			}
+			_regionSpawnerList.ScrollIntoView(_regionSpawnerList.SelectedItem);
 		}
 
 	}
@@ -133,7 +138,10 @@ namespace Kesmai.WorldForge.UI.Documents
 				SetProperty(ref _selectedRegionSpawner, value, true);
 
 				if (value != null)
+				{
 					WeakReferenceMessenger.Default.Send(new SelectedRegionSpawnerChangedMessage(value));
+					value.CalculateStats();
+				}
 			}
 		}
 

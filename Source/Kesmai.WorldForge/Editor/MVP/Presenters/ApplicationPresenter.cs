@@ -279,17 +279,33 @@ namespace Kesmai.WorldForge.Editor
 				case "Entity": //Ctrl-E
 					{
 						Entity target = null;
-						var entityRequest = WeakReferenceMessenger.Default.Send<SpawnsDocument.GetActiveEntity>();
-						if (entityRequest.HasReceivedResponse) 
-							target = entityRequest.Response;
+						//There's probably a better way to do this. but I can't search one up. Can I send a more generic message and have both documents register for it but decline to respond if they are not active?
+						var spawnEntityRequest = WeakReferenceMessenger.Default.Send<SpawnsDocument.GetActiveEntity>();
+						var treasureEntityRequest = WeakReferenceMessenger.Default.Send<TreasuresDocument.GetActiveEntity>();
+						if (spawnEntityRequest.HasReceivedResponse && spawnEntityRequest.Response != null) 
+							target = spawnEntityRequest.Response;
+						if (treasureEntityRequest.HasReceivedResponse && treasureEntityRequest.Response != null)
+							target = treasureEntityRequest.Response;
 						ActiveDocument = Documents.Where(d => d is EntitiesViewModel).FirstOrDefault() as EntitiesViewModel;
 						if (target is not null)
 							(ActiveDocument as EntitiesViewModel).SelectedEntity = target;
 						break;
 					}
 				case "Treasure": //Ctrl-T
-					//todo: Try to identify a targeted Treasure. Can I inspect a script panel and check to see if a word under the cursor matches any treasure definitions.
+					String targetTreasure = null;
+					if (ActiveDocument is EntitiesViewModel e)
+                    {
+						var treasureRequest = WeakReferenceMessenger.Default.Send<EntitiesDocument.GetCurrentScriptSelection>();
+						if (treasureRequest.HasReceivedResponse)
+							targetTreasure = treasureRequest.Response;
+                    }
 					ActiveDocument = Documents.Where(d => d is TreasuresViewModel).FirstOrDefault() as TreasuresViewModel;
+					if (targetTreasure is not null)
+                    {
+						var targetTreasureObject = (ActiveDocument as TreasuresViewModel).Treasures.Where(t => t.Name == targetTreasure).FirstOrDefault();
+						if (targetTreasureObject is not null)
+							(ActiveDocument as TreasuresViewModel).SelectedTreasure = targetTreasureObject;
+                    }
 					break;
 				case "Location": //Ctrl-L
 					{

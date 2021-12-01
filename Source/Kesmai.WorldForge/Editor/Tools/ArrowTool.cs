@@ -204,9 +204,8 @@ namespace Kesmai.WorldForge
 
 					if (tile != null)
 					{
-						var componentWindow = new ComponentsWindow(region, tile);
+						var componentWindow = new ComponentsWindow(region, tile, graphicsScreen);
 
-						componentWindow.Closed += (o, args) => { tile.UpdateTerrain(); };
 						componentWindow.Show(graphicsScreen.UI);
 						componentWindow.Center();
 					}

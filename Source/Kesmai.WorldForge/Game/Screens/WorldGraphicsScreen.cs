@@ -495,9 +495,19 @@ namespace Kesmai.WorldForge
 						{
 							for (var x = area.Left; x < area.Right; x++)
 								for (var y = area.Top; y < area.Bottom; y++)
-									region.DeleteTile(x, y);
-						}
+								{
+									var currentFilter = _presenter.SelectedFilter;
+									var tile = region.GetTile(x,y);
+									if (tile is null)
+										continue;
+									var validComponents = tile.Components.Where(c => currentFilter.IsValid(c)).ToArray();
+									foreach (var component in validComponents){
+										tile.RemoveComponent(component);
+									}
+								}
 
+						}
+						_invalidateRender = true;
 						inputService.IsKeyboardHandled = true;
 					}
 				}
@@ -635,7 +645,7 @@ namespace Kesmai.WorldForge
 									var spriteBounds = originalBounds;
 
 									if (sprite.Offset != Vector2F.Zero)
-										spriteBounds.Offset(sprite.Offset.X, sprite.Offset.Y);
+										spriteBounds.Offset((int)Math.Floor(sprite.Offset.X * _zoomFactor), (int)Math.Floor(sprite.Offset.Y * _zoomFactor));
 
 									spritebatch.Draw(sprite.Texture, spriteBounds.Location.ToVector2(),null,  render.Color, 0, Vector2.Zero, _zoomFactor, SpriteEffects.None, 0f);
 								}
