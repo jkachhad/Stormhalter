@@ -43,6 +43,13 @@ namespace Kesmai.WorldForge.Editor
 		private object _activeDocument;
 		private object _previousDocument;
 
+		private TeleportComponent _configuringTeleporter = null;
+		public TeleportComponent ConfiguringTeleporter
+        {
+			get { return _configuringTeleporter; }
+			set { _configuringTeleporter = value; }
+        }
+
 		public TerrainSelector SelectedFilter
 		{
 			get => _filter ?? TerrainSelector.Default;

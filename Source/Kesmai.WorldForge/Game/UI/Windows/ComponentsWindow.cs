@@ -197,6 +197,33 @@ namespace Kesmai.WorldForge.Windows
 				_actionsPanel.Children.Add(deleteButton);
 				_actionsPanel.Children.Add(moveUpButton);
 				_actionsPanel.Children.Add(moveDownButton);
+
+
+				if (component is TeleportComponent)
+                {
+					var configureButton = new Button()
+					{
+						Content = new TextBlock()
+						{
+							Foreground = Color.OrangeRed,
+							Shadow = Color.Black,
+
+							Font = "Tahoma14Bold",
+							Text = "Select Destination",
+
+							Margin = new Vector4F(3, 3, 3, 3)
+						}
+					};
+					configureButton.Click += (o, args) =>
+					{
+						var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+						presenter.ConfiguringTeleporter = component as TeleportComponent;
+						Close();
+					};
+					_actionsPanel.Children.Add(configureButton);
+				}
+
+
 			}
 		}
 

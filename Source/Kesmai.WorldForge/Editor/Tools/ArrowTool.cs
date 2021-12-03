@@ -205,6 +205,8 @@ namespace Kesmai.WorldForge
 					if (tile != null)
 					{
 						var componentWindow = new ComponentsWindow(region, tile, graphicsScreen);
+						
+						selection.Clear();
 
 						componentWindow.Show(graphicsScreen.UI);
 						componentWindow.Center();

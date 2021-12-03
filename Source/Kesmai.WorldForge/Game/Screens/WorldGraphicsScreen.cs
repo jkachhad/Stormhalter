@@ -216,6 +216,7 @@ namespace Kesmai.WorldForge
 		private List<MenuItem> _pointContextItems = new List<MenuItem>();
 		private List<MenuItem> _selectionContextItems = new List<MenuItem>();
 		private List<MenuItem> _spawnerContextItems = new List<MenuItem>();
+		private List<MenuItem> _teleporterContextItems = new List<MenuItem>();
 
 		private RenderTarget2D _renderTarget;
 		private bool _invalidateRender;
@@ -319,6 +320,8 @@ namespace Kesmai.WorldForge
 			var createLocationMenuItem = new MenuItem() { Title = "Create Named Location.." };
 			var RegionSpawnerIncludeMenuItem = new MenuItem() { Title = "Add selection to Inclusions.." };
 			var RegionSpawnerExcludeMenuItem = new MenuItem() { Title = "Add selection to Exclusions.." };
+			var configureTeleporterMenuItem = new MenuItem() { Title = "Set as Teleporter Destination..", IsVisible = false };
+			var cancelConfigureTeleporterMenuItem = new MenuItem() { Title = "Cancel", IsVisible = false };
 
 			createSpawnMenuItem.Click += CreateLocationSpawner;
 			createLocationMenuItem.Click += CreateLocation;
@@ -326,6 +329,8 @@ namespace Kesmai.WorldForge
 			createSubregionMenuItem.Click += CreateSubregion;
 			RegionSpawnerIncludeMenuItem.Click += RegionSpawnerInclude;
 			RegionSpawnerExcludeMenuItem.Click += RegionSpawnerExclude;
+			configureTeleporterMenuItem.Click += ConfigureTeleporter;
+			cancelConfigureTeleporterMenuItem.Click += (o, e) => { _presenter.ConfiguringTeleporter = null; };
 
 			_contextMenu.Items.Add(createSpawnMenuItem);
 			_contextMenu.Items.Add(createLocationMenuItem);
@@ -333,6 +338,8 @@ namespace Kesmai.WorldForge
 			_contextMenu.Items.Add(createRegionSpawnerMenuItem);
 			_contextMenu.Items.Add(RegionSpawnerIncludeMenuItem);
 			_contextMenu.Items.Add(RegionSpawnerExcludeMenuItem);
+			_contextMenu.Items.Add(configureTeleporterMenuItem);
+			_contextMenu.Items.Add(cancelConfigureTeleporterMenuItem);
 
 			_pointContextItems.Add(createSpawnMenuItem);
 			_pointContextItems.Add(createLocationMenuItem);
@@ -340,6 +347,8 @@ namespace Kesmai.WorldForge
 			_selectionContextItems.Add(createSubregionMenuItem);
 			_spawnerContextItems.Add(RegionSpawnerIncludeMenuItem);
 			_spawnerContextItems.Add(RegionSpawnerExcludeMenuItem);
+			_teleporterContextItems.Add(configureTeleporterMenuItem);
+			_teleporterContextItems.Add(cancelConfigureTeleporterMenuItem);
 
 			uiService.Screens.Add(_uiScreen);
 
@@ -461,6 +470,7 @@ namespace Kesmai.WorldForge
 				var bounds = new SegmentBounds((int)rect.Left, (int)rect.Top, (int)rect.Right - 1, (int)rect.Bottom - 1);
 				currentSpawner.Inclusions.Add(bounds);
 			}
+			InvalidateRender();
 		}
 		private void RegionSpawnerExclude(object sender, EventArgs args)
 		{
@@ -472,8 +482,22 @@ namespace Kesmai.WorldForge
 				var bounds = new SegmentBounds((int)rect.Left, (int)rect.Top, (int)rect.Right - 1, (int)rect.Bottom - 1);
 				currentSpawner.Exclusions.Add(bounds);
 			}
+			InvalidateRender();
 		}
+		
+		private void ConfigureTeleporter(object sender, EventArgs args)
+        {
+			var region = _presentationTarget.Region;
+			var tile = ToWorldTile((int)Math.Floor(_contextMenu.ActualX), (int)Math.Floor(_contextMenu.ActualY));
+			if (tile == null)
+				return;
 
+			_presenter.ConfiguringTeleporter.DestinationX = tile.X;
+			_presenter.ConfiguringTeleporter.DestinationY = tile.Y;
+			_presenter.ConfiguringTeleporter.DestinationRegion = _presentationTarget.Region.ID;
+			_presenter.ConfiguringTeleporter = null;
+			InvalidateRender();
+		}
 		protected virtual void OnHandleInput(object sender, InputEventArgs args)
 		{
 		}
@@ -528,15 +552,17 @@ namespace Kesmai.WorldForge
 						var (cx, cy) = this.ToWorldCoordinates((int)currentPosition.X, (int)currentPosition.Y);
 						var isInSelection = _selection.IsSelected(cx, cy, region);
 						var isInRegionSpawner = false;
+						var configuringTeleporter = _presenter.ConfiguringTeleporter is not null;
 						if (_presenter.ActiveDocument is UI.Documents.SpawnsViewModel)
                         {
 							var response = WeakReferenceMessenger.Default.Send<Kesmai.WorldForge.UI.Documents.SpawnsDocument.GetCurrentTypeSelection>();
 							if (response.HasReceivedResponse)
 								isInRegionSpawner = response.Response == 1;
                         }
-						foreach (MenuItem item in _pointContextItems) { item.IsVisible = !isInSelection || _selection.FirstOrDefault() is { Height:1, Width:1 }; }
-						foreach (MenuItem item in _selectionContextItems) { item.IsVisible = isInSelection; }
-						foreach (MenuItem item in _spawnerContextItems) { item.IsVisible = isInRegionSpawner; }
+						foreach (MenuItem item in _pointContextItems) { item.IsVisible = !configuringTeleporter &&(!isInSelection || _selection.FirstOrDefault() is { Height:1, Width:1 }); }
+						foreach (MenuItem item in _selectionContextItems) { item.IsVisible = !configuringTeleporter	&& isInSelection; }
+						foreach (MenuItem item in _spawnerContextItems) { item.IsVisible = !configuringTeleporter && isInRegionSpawner; }
+						foreach (MenuItem item in _teleporterContextItems) { item.IsVisible = configuringTeleporter; }
 						inputService.IsMouseOrTouchHandled = true;
 						_contextMenu.Open(_uiScreen, args.Context.MousePosition);
 					}

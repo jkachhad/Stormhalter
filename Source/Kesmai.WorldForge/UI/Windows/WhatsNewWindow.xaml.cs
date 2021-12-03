@@ -35,6 +35,7 @@ $@"
 <li>Component Editor supports Ctrl-C and Ctrl-V for copying and pasting individual components. This and other Copy\Paste functions below use the clipboard to store XML.</li>
 <li>Spawners, Entities, Subregions, Locations and Treasures all have export, clone, and import buttons where the 'add' and 'delete' buttons are.</li>
 <li>Upgraded Right-Click context menu and streamlined selection of tiles. You can now right click a selection and get options to turn it into a new spawner or subregion, or add the selection as an inclusion or exclusion to the currently selection Region Spawner.</li>
+<li>Added function to specify the destination of a teleporter component. From the Component Editor, click the 'Select Destination' button, then right-click on a tile and select 'Set as Teleporter Destination..'</li>
 </ul>
 <br/>
 <h3>=== 0.86.0.0 ===</h3>
