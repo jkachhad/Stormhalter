@@ -34,6 +34,7 @@ $@"
 <li>Component Editor has two new buttons for reordering components. This generally has no effect on gameplay, but certain components can layer.</li>
 <li>Component Editor supports Ctrl-C and Ctrl-V for copying and pasting individual components. This and other Copy\Paste functions below use the clipboard to store XML.</li>
 <li>Spawners, Entities, Subregions, Locations and Treasures all have export, clone, and import buttons where the 'add' and 'delete' buttons are.</li>
+<li>Upgraded Right-Click context menu and streamlined selection of tiles. You can now right click a selection and get options to turn it into a new spawner or subregion, or add the selection as an inclusion or exclusion to the currently selection Region Spawner.</li>
 </ul>
 <br/>
 <h3>=== 0.86.0.0 ===</h3>

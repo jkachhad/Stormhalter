@@ -213,6 +213,9 @@ namespace Kesmai.WorldForge
 		protected UIScreen _uiScreen;
 		private ContextMenu _contextMenu;
 		protected BitmapFont _font;
+		private List<MenuItem> _pointContextItems = new List<MenuItem>();
+		private List<MenuItem> _selectionContextItems = new List<MenuItem>();
+		private List<MenuItem> _spawnerContextItems = new List<MenuItem>();
 
 		private RenderTarget2D _renderTarget;
 		private bool _invalidateRender;
@@ -310,14 +313,33 @@ namespace Kesmai.WorldForge
 
 			_contextMenu = new ContextMenu();
 
-			var createSpawnMenuItem = new MenuItem() { Title = "Create Spawn..", };
-			var createLocationMenuItem = new MenuItem() { Title = "Create Location..", };
+			var createSpawnMenuItem = new MenuItem() { Title = "Create Location Spawner.." };
+			var createRegionSpawnerMenuItem = new MenuItem() { Title = "Create Region Spawner.." };
+			var createSubregionMenuItem = new MenuItem() { Title = "Create Subregion.." };
+			var createLocationMenuItem = new MenuItem() { Title = "Create Named Location.." };
+			var RegionSpawnerIncludeMenuItem = new MenuItem() { Title = "Add selection to Inclusions.." };
+			var RegionSpawnerExcludeMenuItem = new MenuItem() { Title = "Add selection to Exclusions.." };
 
-			createSpawnMenuItem.Click += CreateSpawn;
+			createSpawnMenuItem.Click += CreateLocationSpawner;
 			createLocationMenuItem.Click += CreateLocation;
+			createRegionSpawnerMenuItem.Click += CreateRegionSpawner;
+			createSubregionMenuItem.Click += CreateSubregion;
+			RegionSpawnerIncludeMenuItem.Click += RegionSpawnerInclude;
+			RegionSpawnerExcludeMenuItem.Click += RegionSpawnerExclude;
 
 			_contextMenu.Items.Add(createSpawnMenuItem);
 			_contextMenu.Items.Add(createLocationMenuItem);
+			_contextMenu.Items.Add(createSubregionMenuItem);
+			_contextMenu.Items.Add(createRegionSpawnerMenuItem);
+			_contextMenu.Items.Add(RegionSpawnerIncludeMenuItem);
+			_contextMenu.Items.Add(RegionSpawnerExcludeMenuItem);
+
+			_pointContextItems.Add(createSpawnMenuItem);
+			_pointContextItems.Add(createLocationMenuItem);
+			_selectionContextItems.Add(createRegionSpawnerMenuItem);
+			_selectionContextItems.Add(createSubregionMenuItem);
+			_spawnerContextItems.Add(RegionSpawnerIncludeMenuItem);
+			_spawnerContextItems.Add(RegionSpawnerExcludeMenuItem);
 
 			uiService.Screens.Add(_uiScreen);
 
@@ -328,52 +350,127 @@ namespace Kesmai.WorldForge
 		{
 		}
 
-		private void CreateSpawn(object sender, EventArgs args)
+		private void CreateLocationSpawner(object sender, EventArgs args)
 		{
-			var inputService = _uiScreen.InputService;
-			var position = inputService.MousePosition;
 			var region = _presentationTarget.Region;
-			var tile = ToWorldTile((int)position.X, (int)position.Y);
+			var tile = ToWorldTile((int)Math.Floor(_contextMenu.ActualX), (int)Math.Floor(_contextMenu.ActualY));
+			if (tile == null)
+				return;
+			
+			var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+			var segment = segmentRequest.Response;
+			if (segment == null)
+				return;
 
-			if (tile != null)
+			var newSpawner = new LocationSpawner()
 			{
-				var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
-				var segment = segmentRequest.Response;
+				Name = $"Location Spawn {tile.X}, {tile.Y} [{region.ID}]",
+				X = tile.X,
+				Y = tile.Y,
+				Region = region.ID,
 
-				if (segment != null)
-				{
-					segment.Spawns.Location.Add(new LocationSpawner()
-					{
-						Name = $"Location Spawn {tile.X}, {tile.Y} [{region.ID}]",
-						X = tile.X, Y = tile.Y, Region = region.ID,
+				MinimumDelay = TimeSpan.FromMinutes(15.0),
+				MaximumDelay = TimeSpan.FromMinutes(15.0),
+			};
+			segment.Spawns.Location.Add(newSpawner);
 
-						MinimumDelay = TimeSpan.FromMinutes(15.0),
-						MaximumDelay = TimeSpan.FromMinutes(15.0),
-					});
-				}
-			}
+			_selection.Select(new Rectangle(tile.X, tile.Y, 1, 1), region);
+			_presenter.SwapDocument("Spawn");
 		}
 
 		private void CreateLocation(object sender, EventArgs args)
 		{
-			var inputService = _uiScreen.InputService;
-			var position = inputService.MousePosition;
 			var region = _presentationTarget.Region;
-			var tile = ToWorldTile((int)position.X, (int)position.Y);
+			var tile = ToWorldTile((int)Math.Floor(_contextMenu.ActualX), (int)Math.Floor(_contextMenu.ActualY));
+			if (tile == null)
+				return;
 
-			if (tile != null)
+			var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+			var segment = segmentRequest.Response;
+			if (segment == null)
+				return;
+
+			segment.Locations.Add(new SegmentLocation()
 			{
-				var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
-				var segment = segmentRequest.Response;
+				Name = $"Location {tile.X}, {tile.Y} [{region.ID}]",
+				X = tile.X, Y = tile.Y, Region = region.ID,
+			});
 
-				if (segment != null)
-				{
-					segment.Locations.Add(new SegmentLocation()
-					{
-						Name = $"Location {tile.X}, {tile.Y} [{region.ID}]",
-						X = tile.X, Y = tile.Y, Region = region.ID,
-					});
-				}
+			_selection.Select(new Rectangle(tile.X, tile.Y, 1, 1), region);
+			_presenter.SwapDocument("Location");
+
+		}
+
+		private void CreateRegionSpawner(object sender, EventArgs args)
+		{
+			var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+			var segment = segmentRequest.Response;
+			if (segment is null)
+				return;
+			var newSpawner = new RegionSpawner()
+			{
+				Name = $"New {_presentationTarget.Region.Name} Spawner",
+				Region = _presentationTarget.Region.ID,
+				MinimumDelay = TimeSpan.FromMinutes(15.0),
+				MaximumDelay = TimeSpan.FromMinutes(15.0),
+			};
+			newSpawner.Inclusions.Clear();
+			foreach (Rectangle rect in _selection)
+			{
+				var bounds = new SegmentBounds((int)rect.Left, (int)rect.Top, (int)rect.Right-1, (int)rect.Bottom-1);
+				newSpawner.Inclusions.Add(bounds);
+			}
+			segment.Spawns.Region.Add(newSpawner);
+
+			Rectangle insideNewSpawner = new Rectangle(_selection.First().Left, _selection.First().Top, 1, 1);
+			_selection.Select(insideNewSpawner, _presentationTarget.Region);
+			_presenter.SwapDocument("Spawn");
+			
+		}
+		private void CreateSubregion(object sender, EventArgs args)
+		{
+			var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+			var segment = segmentRequest.Response;
+			if (segment is null)
+				return;
+
+			var newSubRegion = new SegmentSubregion()
+			{
+				Name = $"New {_presentationTarget.Region.Name} Subregion",
+				Region = _presentationTarget.Region.ID
+			};
+			
+			foreach (Rectangle rect in _selection)
+			{
+				var bounds = new SegmentBounds((int)rect.Left, (int)rect.Top, (int)rect.Right - 1, (int)rect.Bottom - 1);
+				newSubRegion.Rectangles.Add(bounds);
+			}
+			segment.Subregions.Add(newSubRegion);
+
+			Rectangle insideNewSubregion = new Rectangle(_selection.First().Left, _selection.First().Top, 1, 1);
+			_selection.Select(insideNewSubregion, _presentationTarget.Region);
+			_presenter.SwapDocument("Subregion");
+		}
+		private void RegionSpawnerInclude(object sender, EventArgs args)
+		{
+			var currentSpawner = (_presenter.ActiveDocument as UI.Documents.SpawnsViewModel).SelectedRegionSpawner;
+			if (currentSpawner == null)
+				return;
+			foreach (Rectangle rect in _selection)
+			{
+				var bounds = new SegmentBounds((int)rect.Left, (int)rect.Top, (int)rect.Right - 1, (int)rect.Bottom - 1);
+				currentSpawner.Inclusions.Add(bounds);
+			}
+		}
+		private void RegionSpawnerExclude(object sender, EventArgs args)
+		{
+			var currentSpawner = (_presenter.ActiveDocument as UI.Documents.SpawnsViewModel).SelectedRegionSpawner;
+			if (currentSpawner == null)
+				return;
+			foreach (Rectangle rect in _selection)
+			{
+				var bounds = new SegmentBounds((int)rect.Left, (int)rect.Top, (int)rect.Right - 1, (int)rect.Bottom - 1);
+				currentSpawner.Exclusions.Add(bounds);
 			}
 		}
 
@@ -427,6 +524,19 @@ namespace Kesmai.WorldForge
 				{
 					if (inputService.IsReleased(MouseButtons.Right))
 					{
+						var currentPosition = inputService.MousePosition;
+						var (cx, cy) = this.ToWorldCoordinates((int)currentPosition.X, (int)currentPosition.Y);
+						var isInSelection = _selection.IsSelected(cx, cy, region);
+						var isInRegionSpawner = false;
+						if (_presenter.ActiveDocument is UI.Documents.SpawnsViewModel)
+                        {
+							var response = WeakReferenceMessenger.Default.Send<Kesmai.WorldForge.UI.Documents.SpawnsDocument.GetCurrentTypeSelection>();
+							if (response.HasReceivedResponse)
+								isInRegionSpawner = response.Response == 1;
+                        }
+						foreach (MenuItem item in _pointContextItems) { item.IsVisible = !isInSelection || _selection.FirstOrDefault() is { Height:1, Width:1 }; }
+						foreach (MenuItem item in _selectionContextItems) { item.IsVisible = isInSelection; }
+						foreach (MenuItem item in _spawnerContextItems) { item.IsVisible = isInRegionSpawner; }
 						inputService.IsMouseOrTouchHandled = true;
 						_contextMenu.Open(_uiScreen, args.Context.MousePosition);
 					}

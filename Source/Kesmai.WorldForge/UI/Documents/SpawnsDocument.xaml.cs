@@ -11,6 +11,7 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using Microsoft.Toolkit.Mvvm.Messaging.Messages;
+using Microsoft.Xna.Framework;
 using System.Xml.Linq;
 
 namespace Kesmai.WorldForge.UI.Documents
@@ -20,6 +21,9 @@ namespace Kesmai.WorldForge.UI.Documents
 		public class GetActiveEntity : RequestMessage<Entity>
         {
         }
+		public class GetCurrentTypeSelection : RequestMessage<int>
+		{
+		}
 		public SpawnsDocument()
 		{
 			InitializeComponent();
@@ -40,6 +44,9 @@ namespace Kesmai.WorldForge.UI.Documents
 
 			WeakReferenceMessenger.Default.Register<SpawnsDocument, GetActiveEntity>(this,
 				(r, m) => m.Reply(GetSelectedEntity()));
+
+			WeakReferenceMessenger.Default.Register<SpawnsDocument, GetCurrentTypeSelection>(this,
+				(r, m) => m.Reply(_typeSelector.SelectedIndex));
 		}
 
 		public Entity GetSelectedEntity()

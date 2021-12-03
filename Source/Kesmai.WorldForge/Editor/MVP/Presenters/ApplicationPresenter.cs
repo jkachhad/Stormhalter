@@ -270,8 +270,8 @@ namespace Kesmai.WorldForge.Editor
 						}
 						if (sel is { Width: 1, Height: 1 })
 						{
-							targetLS = Segment.Spawns.Location.Where(s => s.Region == _selection.Region.ID && s.X == sel.Left && s.Y == sel.Top).FirstOrDefault();
-							targetRS = Segment.Spawns.Region.Where(s => s.Region == _selection.Region.ID && s.Inclusions.Any(i => i.ToRectangle().Contains(sel.Left, sel.Top))).FirstOrDefault();
+							targetLS = Segment.Spawns.Location.Where(s => s.Region == _selection.Region.ID && s.X == sel.Left && s.Y == sel.Top).LastOrDefault();
+							targetRS = Segment.Spawns.Region.Where(s => s.Region == _selection.Region.ID && s.Inclusions.Any(i => i.ToRectangle().Contains(sel.Left, sel.Top))).LastOrDefault();
 						}
 						ActiveDocument = Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
 						if (targetRS is not null && targetLS is null)
@@ -325,7 +325,7 @@ namespace Kesmai.WorldForge.Editor
 						SegmentLocation target = null;
 						if (sel is { Width: 1, Height: 1 })
 						{
-							target = Segment.Locations.Where(l => l.Region == _selection.Region.ID && l.X == sel.Left && l.Y == sel.Top).FirstOrDefault();
+							target = Segment.Locations.Where(l => l.Region == _selection.Region.ID && l.X == sel.Left && l.Y == sel.Top).LastOrDefault();
 						}
 						ActiveDocument = Documents.Where(d => d is LocationsViewModel).FirstOrDefault() as LocationsViewModel;
 						if (target is not null)
@@ -338,7 +338,7 @@ namespace Kesmai.WorldForge.Editor
 						SegmentSubregion target = null;
 						if (sel is { Width: 1, Height: 1 })
 						{
-							target = Segment.Subregions.Where(s => s.Region == _selection.Region.ID && s.Rectangles.Any(rect => rect.ToRectangle().Contains(sel.Left, sel.Top))).FirstOrDefault();
+							target = Segment.Subregions.Where(s => s.Region == _selection.Region.ID && s.Rectangles.Any(rect => rect.ToRectangle().Contains(sel.Left, sel.Top))).LastOrDefault();
 						}
 						ActiveDocument = Documents.Where(d => d is SubregionViewModel).FirstOrDefault() as SubregionViewModel;
 						if (target is not null)
