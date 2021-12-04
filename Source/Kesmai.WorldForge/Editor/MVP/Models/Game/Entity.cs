@@ -56,8 +56,7 @@ namespace Kesmai.WorldForge
 				/* Create a syntax tree for analysis. */
 				var syntaxTree = CSharpSyntaxTree.ParseText(onSpawnScript.Blocks[1]);
 				var syntaxRoot = syntaxTree.GetCompilationUnitRoot();
-				var allNodes = syntaxRoot.DescendantNodes().Where(n => n is AssignmentExpressionSyntax assignmentSyntax);
-				
+
 				/* Find a node that is an assignment, where the left identifier is "Experience" */
 				var experienceAssignment = syntaxRoot
 					.DescendantNodes().LastOrDefault(
