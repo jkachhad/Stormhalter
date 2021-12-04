@@ -6,6 +6,10 @@ using CommonServiceLocator;
 using DigitalRune.Collections;
 using Kesmai.WorldForge.Scripting;
 using Kesmai.WorldForge.UI.Documents;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace Kesmai.WorldForge
@@ -41,14 +45,35 @@ namespace Kesmai.WorldForge
 		public int? XP
         {
 			get
-            {
-				var xpPattern = new System.Text.RegularExpressions.Regex("Experience\\s*=\\s*(\\d+)\\s*,", System.Text.RegularExpressions.RegexOptions.Multiline);
-				var matches = xpPattern.Matches(this.Scripts[0].Blocks[1]);
-				if (matches.Count == 1 && int.TryParse(matches.First().Groups[1].Value, out var xp))
-					return xp;
-				return null;
+			{
+				/* Find out instance object by name. */
+				var onSpawnScript = _scripts.FirstOrDefault(
+					s => String.Equals(s.Name, "OnSpawn", StringComparison.OrdinalIgnoreCase));
+
+				if (onSpawnScript is null)
+					return null;
+
+				/* Create a syntax tree for analysis. */
+				var syntaxTree = CSharpSyntaxTree.ParseText(onSpawnScript.Blocks[1]);
+				var syntaxRoot = syntaxTree.GetCompilationUnitRoot();
+				var allNodes = syntaxRoot.DescendantNodes().Where(n => n is AssignmentExpressionSyntax assignmentSyntax);
+				
+				/* Find a node that is an assignment, where the left identifier is "Experience" */
+				var experienceAssignment = syntaxRoot
+					.DescendantNodes().LastOrDefault(
+						n => n is AssignmentExpressionSyntax assignmentSyntax
+						     && assignmentSyntax.Left is IdentifierNameSyntax nameSyntax 
+						     && String.Equals(nameSyntax.Identifier.Text, "Experience", 
+							     StringComparison.OrdinalIgnoreCase));
+
+				if (experienceAssignment is AssignmentExpressionSyntax assignment 
+				    && assignment.Right is LiteralExpressionSyntax valueSyntax)
+					return int.Parse(valueSyntax.Token.Text);
+				
+				return 0;
             }
         }
+		
 		public int? HP
         {
 			get
