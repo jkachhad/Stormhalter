@@ -353,7 +353,15 @@
             Timer.DelayCall(Facet.TimeSpan.FromSeconds(1.0),
                 () => SayTo(Director, 6300419, Director.Name)); /* I could have done that myself. But, thanks for your assistance {0}. */
             Timer.DelayCall(Facet.TimeSpan.FromSeconds(3.0),
-                () => new Gold().Move(Location, true, Segment));
+                () => {
+                    var finery = new SilkFinery();
+                    
+                    finery.Move(Location, true, Segment);
+                    finery.Bind(Director);
+                    
+                    if (kinasho.IsAlive)
+                        kinasho.Emote("is annoyed by Konran's return.");
+                });
             Timer.DelayCall(Facet.TimeSpan.FromSeconds(4.0),
                 () => SayTo(Director, 6300420, Director.Name)); /* <![CDATA[Take this <text color="#CF9FFF">silk finery</text>.]]]]><![CDATA[> */
             
@@ -362,6 +370,68 @@
             Timer.DelayCall(Facet.TimeSpan.FromMinutes(10.0), Delete);
             
             StopTimer();
+        }
+    }
+    
+    public class SilkFinery : ItemEntity, ITreasure
+    {
+        /// <inheritdoc />
+        public override int LabelNumber => 6000027; /* Cloth */
+        
+        /// <inheritdoc />
+        public override int Weight => 2;
+        
+        /// <inheritdoc />
+        public override uint BasePrice => 200000;
+
+        /// <inheritdoc />
+        public override bool CanBind => true;
+        
+        /// <inheritdoc />
+        public override int Category => 3;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SilkFinery"/> class.
+        /// </summary>
+        public SilkFinery() : base(199)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SilkFinery"/> class.
+        /// </summary>
+        public SilkFinery(Serial serial) : base(serial)
+        {
+        }
+        
+        /// <inheritdoc />
+        public override void GetDescription(List<LocalizationEntry> entries)
+        {
+            entries.Add(new LocalizationEntry(6200000, 6200303)); /* [You are looking at] [a silk cloth with a gold chrysanthemum on it.] */
+        }
+
+        /// <inheritdoc />
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((short)1); /* version */
+        }
+
+        /// <inheritdoc />
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+
+            var version = reader.ReadInt16();
+
+            switch (version)
+            {
+                case 1:
+                {
+                    break;
+                }
+            }
         }
     }
     
