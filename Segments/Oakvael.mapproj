@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.81.0.0">
+<segment name="Oakvael" version="0.86.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -228,14 +228,17 @@
         private static string _konranBrother = "Kinasho";
         
         public override bool CanOrderFollow => true;
+        
+        private Timer _whineTimer = default(Timer);
 
         public Konran()
         {
             Name = "Konran";
             Body = 49;
 
-            Health = MaxHealth = 100;
-            BaseDodge = 10;
+            Health = MaxHealth = 250;
+            BaseDodge = 12;
+            
             Experience = 50;
             
             Alignment = Alignment.Lawful;
@@ -271,10 +274,6 @@
                 }
             }
         }
-        
-        // Please hurry. My brother must be so worried.
-        // Thank you for bringing me home. I'm sure you will be reward.
-        // Thank you for rescuing my brother. Please accept this symbol of gratitude.
 
         public override void HandleOrder(OrderEventArgs args)
         {
@@ -304,7 +303,7 @@
                 /* Get a random player name. */
                 SayTo(source, 6300418, 
                     World.Mobiles.Values.OfType<PlayerEntity>()
-                        .Where(p => p != source).Random().Name); /* Thank you! I did not trust that buffoon {0} that came earlier. */
+                        .Where(p => p != source).Random().Name); /* Thank you! I did not trust that buffoon {0} that came by earlier. */
                 
                 Director = source;
 
@@ -314,7 +313,33 @@
                     rescueAI.Aggressive = true;
                 
                 OnOrderFollow(source);
+                
+                StartTimer();
             }
+        }
+        
+        private void StartTimer()
+        {
+            if (_whineTimer != null)
+                _whineTimer.Stop();
+                
+            _whineTimer = Timer.DelayCall(Facet.TimeSpan.FromSeconds(90.0), Whine);
+        }
+        
+        private void Whine()
+        {
+            if (Utility.RandomDouble() > 0.25)
+                Say(6300421); /* Please hurry. My brother must be so worried. */
+            else
+                Emote("groans."); 
+        
+            StartTimer();
+        }
+        
+        private void StopTimer()
+        {
+            if (_whineTimer != null)
+                _whineTimer.Stop();
         }
 
         protected override void OnFinishMovement(PathingEventArgs args)
@@ -325,16 +350,18 @@
             if (kinasho is null) 
                 return;
 
-            Timer.DelayCall(TimeSpan.FromSeconds(3.0),
+            Timer.DelayCall(Facet.TimeSpan.FromSeconds(1.0),
                 () => SayTo(Director, 6300419, Director.Name)); /* I could have done that myself. But, thanks for your assistance {0}. */
-            Timer.DelayCall(TimeSpan.FromSeconds(6.0),
+            Timer.DelayCall(Facet.TimeSpan.FromSeconds(3.0),
                 () => new Gold().Move(Location, true, Segment));
-            Timer.DelayCall(TimeSpan.FromSeconds(7.0),
+            Timer.DelayCall(Facet.TimeSpan.FromSeconds(4.0),
                 () => SayTo(Director, 6300420, Director.Name)); /* <![CDATA[Take this <text color="#CF9FFF">silk finery</text>.]]]]><![CDATA[> */
             
             Brain = new IdleAI(this);
 
             Timer.DelayCall(Facet.TimeSpan.FromMinutes(10.0), Delete);
+            
+            StopTimer();
         }
     }
     
