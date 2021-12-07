@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.81.0.0">
+<segment name="Leng" version="0.86.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -73,6 +73,11 @@
         
         item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
     }
+
+    /*
+    Take the Buddha and the cloth to Puck, who resides on the rooftop garden in Leng town above the gym. Put them both on his hex and type 'Puck, train me' or 'Puck, give gauntlets'. 
+    He will present you with a pair of the legendary, armor-piercing, Crystal Gauntlets.
+    */
     
     public class Puck : VendorEntity
     {
@@ -112,20 +117,24 @@
                 {
                     var items = Segment.GetItemsAt(Location).ToList();
 
-                    var buddha = items.OfType<Kimono>();
-
-                    if (buddha.Any())
+                    var buddha = items.OfType<Buddah>();
+                    var finery = items.OfType<ItemEntity>("SilkFinery"); /* This object is from another map. */
+                    
+                    if (buddha.Any() && finery.Any())
                     {
-                        if (ConsumeFromLocation<Kimono>(counter, 1))
+                        if (ConsumeFromLocation<Buddah>(counter, 1) && ConsumeFromLocation(counter, "SilkFinery", 1))
                         {
-                            new CrystalGauntlets().Move(counter, true, Segment);
+                            var gauntlets = new CrystalGauntlets();
+                            
+                            gauntlets.Move(counter, true, Segment);
+                            gauntlets.Bind(source);
 
                             SayTo(source, 6300349); /* Wield this weapon with courage and honor. */
                         }
                     }
                     else
                     {
-                        SayTo(source, 6300348); /* Bring something from Shidosha and I will make you the weapon. */
+                        SayTo(source, 6300422); /* Bring me silk finery and an idol of worship. */
                     }
                 }
                 else
@@ -137,6 +146,69 @@
                 }
                 
                 return;
+            }
+        }
+    }
+
+    public class Buddah : ItemEntity
+    {
+        /// <inheritdoc />
+        public override int LabelNumber => 6000102; /* Idol */
+        
+        /// <inheritdoc />
+        public override int Weight => 25;
+        
+        /// <inheritdoc />
+        public override uint BasePrice => 50000;
+
+        /// <inheritdoc />
+        public override bool CanBind => true;
+        
+        /// <inheritdoc />
+        public override int Category => 3;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Buddah"/> class.
+        /// </summary>
+        public Buddah(PlayerEntity owner) : base(198)
+        {
+            Bind(owner);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Buddah"/> class.
+        /// </summary>
+        public Buddah(Serial serial) : base(serial)
+        {
+        }
+        
+        /// <inheritdoc />
+        public override void GetDescription(List<LocalizationEntry> entries)
+        {
+            entries.Add(new LocalizationEntry(6200000, 6200304)); /* [You are looking at] [a tiny gold buddha.] */
+        }
+
+        /// <inheritdoc />
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((short)1); /* version */
+        }
+
+        /// <inheritdoc />
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+
+            var version = reader.ReadInt16();
+
+            switch (version)
+            {
+                case 1:
+                {
+                    break;
+                }
             }
         }
     }
@@ -75973,14 +76045,17 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    //todo make shidosha look like shidosha, add fan/crystal gaunt quest buddha.
     var shidosha = new Ninja()
     {
-        Name = "Shidosha",
+        Body = 245,
+        Name = "shidosha",
+        
         MaxHealth = 3000, Health = 3000,
         BaseDodge = 28,
-        HideDetection = 28,
+
         Experience = 32000,
+
+        HideDetection = 28,
         
         VisibilityDistance = 0,
        
@@ -75998,7 +76073,7 @@
     shidosha.AddStatus(new NightVisionStatus(shidosha));
     shidosha.AddStatus(new BreatheWaterStatus(shidosha));
     
-    shidosha.CombatantChangeInterval = TimeSpan.FromSeconds(4.0);
+    shidosha.CombatantChangeInterval = TimeSpan.FromSeconds(21.0);
     
     shidosha.Attacks = new CreatureAttackCollection
     {
@@ -76038,9 +76113,16 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (killer is PlayerEntity player)
+    {
+        var backpack = source.Backpack;
+
+        if (backpack != null)
+            backpack.AddItem(new Buddah(player));
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
