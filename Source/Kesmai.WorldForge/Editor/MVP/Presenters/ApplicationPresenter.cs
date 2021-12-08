@@ -26,6 +26,9 @@ namespace Kesmai.WorldForge.Editor
 	{
 	}
 	
+	public class UnregisterEvents
+	{
+    }
 	public class ApplicationPresenter : ObservableRecipient
 	{
 		private int _unitSize = 55;
@@ -511,6 +514,7 @@ namespace Kesmai.WorldForge.Editor
 				throw new InvalidOperationException("Attempt to close a segment when an active segment does not exist.");
 
 			Segment = null;
+			WeakReferenceMessenger.Default.Send(new UnregisterEvents());
 			Documents.Clear();
 			
 			_segmentFilePath = String.Empty;

@@ -29,6 +29,9 @@ namespace Kesmai.WorldForge.UI.Documents
 					_presenter.SetSubregion(subregion);
 				}
 			});
+
+			WeakReferenceMessenger.Default.Register<SubregionDocument, UnregisterEvents>(this,
+				(r, m) => { WeakReferenceMessenger.Default.UnregisterAll(this); });
 		}
 	}
 

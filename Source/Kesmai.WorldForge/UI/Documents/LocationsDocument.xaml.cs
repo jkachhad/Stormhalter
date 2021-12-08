@@ -30,6 +30,9 @@ namespace Kesmai.WorldForge.UI.Documents
 					_presenter.SetLocation(location);
 				}
 			});
+
+			WeakReferenceMessenger.Default.Register<LocationsDocument, UnregisterEvents>(this,
+				(r, m) => { WeakReferenceMessenger.Default.UnregisterAll(this); });
 		}
 	}
 

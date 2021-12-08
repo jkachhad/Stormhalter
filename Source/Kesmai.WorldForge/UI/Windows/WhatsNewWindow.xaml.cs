@@ -38,6 +38,11 @@ $@"
 <li>Added function to specify the destination of a teleporter component. From the Component Editor, click the 'Select Destination' button, then right-click on a tile and select 'Set as Teleporter Destination..'</li>
 </ul>
 <br/>
+<strong>Fixes:</strong>
+<ul>
+<li>Removed a crash when using the Jump-to-Spawn or Jump-to-Entity functions after closing and opening segments.</li>
+</ul>
+</br>
 <h3>=== 0.86.0.0 ===</h3>
 <strong>Enhancements:</strong>
 <ul>

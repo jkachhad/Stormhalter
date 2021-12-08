@@ -71,6 +71,9 @@ namespace Kesmai.WorldForge.UI.Documents
 
 			WeakReferenceMessenger.Default.Register<EntitiesDocument, GetCurrentScriptSelection>(this,
 				(r, m) => m.Reply(GetScriptSelection()));
+
+			WeakReferenceMessenger.Default.Register<EntitiesDocument, UnregisterEvents>(this,
+				(r, m) => { WeakReferenceMessenger.Default.UnregisterAll(this); });
 		}
 
 		private void ChangeEntity(Entity entity)

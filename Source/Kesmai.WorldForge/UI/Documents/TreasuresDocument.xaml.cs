@@ -37,7 +37,11 @@ namespace Kesmai.WorldForge.UI.Documents
 			
 			WeakReferenceMessenger.Default.Register<TreasuresDocument, GetActiveEntity>(this,
 				(r, m) => m.Reply(GetSelectedEntity()));
+
+			WeakReferenceMessenger.Default.Register<TreasuresDocument, UnregisterEvents>(this,
+				(r, m) => { WeakReferenceMessenger.Default.UnregisterAll(this); });
 		}
+
 		public Entity GetSelectedEntity()
         {
 			var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();

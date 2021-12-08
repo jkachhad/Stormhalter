@@ -47,7 +47,11 @@ namespace Kesmai.WorldForge.UI.Documents
 
 			WeakReferenceMessenger.Default.Register<SpawnsDocument, GetCurrentTypeSelection>(this,
 				(r, m) => m.Reply(_typeSelector.SelectedIndex));
+
+			WeakReferenceMessenger.Default.Register<SpawnsDocument, UnregisterEvents>(this,
+				(r, m) => { WeakReferenceMessenger.Default.UnregisterAll(this); });
 		}
+
 
 		public Entity GetSelectedEntity()
 		{
