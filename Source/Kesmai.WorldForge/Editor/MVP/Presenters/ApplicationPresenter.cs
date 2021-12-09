@@ -554,11 +554,26 @@ namespace Kesmai.WorldForge.Editor
 
 			if (!targetFileInfo.IsZipFile())
 			{
-				var document = XDocument.Load(targetFile);
-				var rootElement = document.Root;
-
+				XElement rootElement = null;
+				try
+				{
+					var document = XDocument.Load(targetFile);
+					rootElement = document.Root;
+				} catch (System.Xml.XmlException e)
+				{
+					MessageBox.Show($"Segment File is incorrectly formatted:\n{e.Message}", "Open Segment Error", MessageBoxButton.OK);
+					return;
+				}
 				if (rootElement != null)
+                {
+					if (rootElement.Name != "segment")
+					{
+						MessageBox.Show($"Provided file is not a WorldForge Segment file.", "Open Segment Error", MessageBoxButton.OK);
+						return;
+					}
 					segment.Load(rootElement);
+				}
+					
 			}
 			else
 			{
