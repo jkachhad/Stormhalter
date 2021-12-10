@@ -79,7 +79,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            
+
             <syncfusion:PropertyGrid Grid.Row="2" Margin="0,3,0,0"
                                      SelectedObject="{Binding SelectedEntity}"
                                      AutoGenerateItems="False"
@@ -95,6 +95,7 @@
             <StackPanel Grid.Row="3" Margin="0,3,0,0">
                 <TextBlock Margin="7,0,0,0" FontWeight="Bold">Spawns In</TextBlock>
                 <ListBox
+                    Height="184"
                     BorderBrush="White"
                     x:Name="_spawnersList"
                     ItemsSource="{Binding RelatedSpawners}">
