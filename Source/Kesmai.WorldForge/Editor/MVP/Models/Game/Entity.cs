@@ -8,6 +8,9 @@ using Kesmai.WorldForge.Scripting;
 using Kesmai.WorldForge.UI.Documents;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.ComponentModel;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Collections.Generic;
 
 namespace Kesmai.WorldForge
 {
@@ -43,24 +46,58 @@ namespace Kesmai.WorldForge
         {
 			get
             {
-				//I think this regex is pretty safe
-				var xpPattern = new System.Text.RegularExpressions.Regex("Experience\\s*=\\s*(\\d+)\\s*,", System.Text.RegularExpressions.RegexOptions.Multiline);
-				var matches = xpPattern.Matches(this.Scripts[0].Blocks[1]);
-				if (matches.Count == 1 && int.TryParse(matches.First().Groups[1].Value, out var xp))
-					return xp;
-				return null;
-            }
+				var onSpawnScript = _scripts.FirstOrDefault(
+					s => string.Equals(s.Name, "OnSpawn", StringComparison.OrdinalIgnoreCase));
+
+				if (onSpawnScript is null)
+					return null;
+
+				/* Create a syntax tree for analysis. */
+				var syntaxTree = CSharpSyntaxTree.ParseText(onSpawnScript.Blocks[1]);
+				var syntaxRoot = syntaxTree.GetCompilationUnitRoot();
+
+				/* Find a node that is an assignment, where the left identifier is "Experience" */
+				var experienceAssignment = syntaxRoot
+					.DescendantNodes().LastOrDefault(
+						n => n is AssignmentExpressionSyntax assignmentSyntax
+							 && assignmentSyntax.Left is IdentifierNameSyntax nameSyntax
+							 && String.Equals(nameSyntax.Identifier.Text, "Experience",
+								 StringComparison.OrdinalIgnoreCase));
+
+				if (experienceAssignment is AssignmentExpressionSyntax assignment
+					&& assignment.Right is LiteralExpressionSyntax valueSyntax)
+					return int.Parse(valueSyntax.Token.Text);
+
+				return null; // a null value here indicates I can't trust this number
+			}
         }
 		public int? HP
         {
 			get
 			{
-				//I think this regex is pretty safe
-				var hpPattern = new System.Text.RegularExpressions.Regex("MaxHealth\\s*=\\s*(\\d+)\\s*,", System.Text.RegularExpressions.RegexOptions.Multiline);
-				var matches = hpPattern.Matches(this.Scripts[0].Blocks[1]);
-				if (matches.Count == 1 && int.TryParse(matches.First().Groups[1].Value, out var hp))
-					return hp;
-				return null;
+				var onSpawnScript = _scripts.FirstOrDefault(
+					s => string.Equals(s.Name, "OnSpawn", StringComparison.OrdinalIgnoreCase));
+
+				if (onSpawnScript is null)
+					return null;
+
+				/* Create a syntax tree for analysis. */
+				var syntaxTree = CSharpSyntaxTree.ParseText(onSpawnScript.Blocks[1]);
+				var syntaxRoot = syntaxTree.GetCompilationUnitRoot();
+
+				/* Find a node that is an assignment, where the left identifier is "MaxHealth" */
+				var experienceAssignment = syntaxRoot
+					.DescendantNodes().LastOrDefault(
+						n => n is AssignmentExpressionSyntax assignmentSyntax
+							 && assignmentSyntax.Left is IdentifierNameSyntax nameSyntax
+							 && String.Equals(nameSyntax.Identifier.Text, "MaxHealth",
+								 StringComparison.OrdinalIgnoreCase));
+
+				if (experienceAssignment is AssignmentExpressionSyntax assignment
+					&& assignment.Right is LiteralExpressionSyntax valueSyntax)
+					return int.Parse(valueSyntax.Token.Text);
+
+				return null; // a null value here indicates I can't trust this number
 			}
 		}
 
