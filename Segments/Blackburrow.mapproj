@@ -2483,7 +2483,7 @@
         </component>
         <component type="CounterComponent">
           <counter>86</counter>
-          <direction>2</direction>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="2" y="-30">
@@ -2492,7 +2492,7 @@
         </component>
         <component type="CounterComponent">
           <counter>86</counter>
-          <direction>2</direction>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="3" y="-30">
@@ -2501,7 +2501,7 @@
         </component>
         <component type="CounterComponent">
           <counter>86</counter>
-          <direction>2</direction>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="4" y="-30">
@@ -2510,7 +2510,7 @@
         </component>
         <component type="CounterComponent">
           <counter>86</counter>
-          <direction>2</direction>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="5" y="-30">
@@ -2549,7 +2549,7 @@
         </component>
         <component type="CounterComponent">
           <counter>86</counter>
-          <direction>2</direction>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="10" y="-30">
@@ -2558,7 +2558,7 @@
         </component>
         <component type="CounterComponent">
           <counter>86</counter>
-          <direction>2</direction>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="11" y="-30">
@@ -2567,7 +2567,7 @@
         </component>
         <component type="CounterComponent">
           <counter>86</counter>
-          <direction>2</direction>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="12" y="-30">
@@ -2576,7 +2576,7 @@
         </component>
         <component type="CounterComponent">
           <counter>86</counter>
-          <direction>2</direction>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="13" y="-30">
@@ -30906,17 +30906,15 @@
     {
         {
             new CreatureAttack(16,      10, 30,      "Fippy Barks and gnashes you with his fangs",
-                                                        new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
         {
             new CreatureAttack(20,      30, 60,     "Fippy slashes you with his razor sharp claws.",
-                                                        new AttackProneComponent(25), 
                                                         new AttackStunComponent(10)),               40
         },
         {
             new CreatureAttack(22,      40, 60,     "Fippy impales you with his claws.",
-                                                        new AttackProneComponent(100), 
+                                                        new AttackProneComponent(25), 
                                                         new AttackStunComponent(15)),               20
         },
     };
@@ -31128,17 +31126,14 @@ if (spokeRecently(source))
       {
         {
             new CreatureAttack(13,      10, 25,      "The guard slashes you with his Greatsword.",
-                                                        new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
         {
             new CreatureAttack(14,      25, 40,     "The guard impales you with his razor sharp claws.",
-                                                        new AttackProneComponent(25), 
                                                         new AttackStunComponent(10)),               40
         },
         {
             new CreatureAttack(15,      25, 60,     "The guard stabs you with his greatsword",
-                                                        new AttackProneComponent(35), 
                                                         new AttackStunComponent(15)),               20
         },
     };
@@ -31303,17 +31298,14 @@ if (spokeRecently(source))
     {
         {
             new CreatureAttack(16,      10, 30,      "The Officer Barks and gnashes you with his fangs",
-                                                        new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
         {
             new CreatureAttack(20,      30, 60,     "The Officer slashes you with his razor sharp claws.",
-                                                        new AttackProneComponent(25), 
                                                         new AttackStunComponent(10)),               40
         },
         {
             new CreatureAttack(22,      40, 60,     "The Officer impales you with his claws.",
-                                                        new AttackProneComponent(100), 
                                                         new AttackStunComponent(15)),               20
         },
     };
@@ -31394,17 +31386,15 @@ if (spokeRecently(source))
     {
         {
             new CreatureAttack(20,      20, 60,      "The Captain Barks and gnashes you with his fangs",
-                                                        new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
         {
             new CreatureAttack(23,      50, 80,     "The Captain slashes you with his razor sharp claws.",
-                                                        new AttackProneComponent(25), 
                                                         new AttackStunComponent(10)),               40
         },
         {
             new CreatureAttack(22,      60, 90,     "The Captain impales you with his claws.",
-                                                        new AttackProneComponent(100), 
+                                                        new AttackProneComponent(20), 
                                                         new AttackStunComponent(15)),               20
         },
     };
@@ -31547,17 +31537,14 @@ if (spokeRecently(source))
     {
         {
             new CreatureAttack(16,      10, 30,      "The Officer Barks and gnashes you with his fangs",
-                                                        new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
         {
             new CreatureAttack(20,      30, 60,     "The Officer slashes you with his razor sharp claws.",
-                                                        new AttackProneComponent(25), 
                                                         new AttackStunComponent(10)),               40
         },
         {
             new CreatureAttack(22,      40, 60,     "The Officer impales you with his claws.",
-                                                        new AttackProneComponent(100), 
                                                         new AttackStunComponent(15)),               20
         },
     };
@@ -32018,17 +32005,14 @@ return skeleton;
     {
         {
             new CreatureAttack(16,      10, 30,      "The Officer Barks and gnashes you with his fangs",
-                                                        new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
         {
             new CreatureAttack(20,      30, 60,     "The Officer slashes you with his razor sharp claws.",
-                                                        new AttackProneComponent(25), 
                                                         new AttackStunComponent(10)),               40
         },
         {
             new CreatureAttack(22,      40, 60,     "The Officer impales you with his claws.",
-                                                        new AttackProneComponent(100), 
                                                         new AttackStunComponent(15)),               20
         },
     };
@@ -32598,12 +32582,12 @@ dragon.Attacks = new CreatureAttackCollection
 
     {
     
-        new CreatureAttack(25, 60, 80, "The Dragon Slashes you with its claws.", new AttackProneComponent(15),  new AttackStunComponent(5)), 45, TimeSpan.Zero
+        new CreatureAttack(25, 60, 80, "The Dragon Slashes you with its claws.", new AttackStunComponent(5)), 45, TimeSpan.Zero
     },
     
     { 
     
-        new CreatureAttack(30, 75, 100, "The Dragon Smashes you with its Tail.", new AttackProneComponent(25), new AttackStunComponent(10)), 45, TimeSpan.Zero
+        new CreatureAttack(30, 75, 100, "The Dragon Smashes you with its Tail.", new AttackStunComponent(10)), 45, TimeSpan.Zero
     },
     
     {
@@ -32686,7 +32670,7 @@ return dragon;
 	var ogre = new AncientLich()
 {
     Name = "Castor",
-    MaxHealth = 7500, Health = 7500,
+    MaxHealth = 5000, Health = 5000,
     BaseDodge = 30,
     HideDetection = 36,
     BasePenetration = ShieldPenetration.VeryHeavy,
@@ -32697,7 +32681,6 @@ return dragon;
     
     FireProtection = 100,
     DeathResistance = 75,
-    IceProtection = 80,
     Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
     
     IsTethered = true,
@@ -32716,17 +32699,17 @@ ogre.Attacks = new CreatureAttackCollection()
 {
 
    {
-        new CreatureAttack(25, 30, 50, "slashes you with his Halberd.", new AttackProneComponent(15),  new AttackStunComponent(5)), 45, TimeSpan.Zero
+        new CreatureAttack(25, 30, 50, "slashes you with his Halberd.", new AttackStunComponent(5)), 45, TimeSpan.Zero
     },
     
     { 
     
-        new CreatureAttack(30, 30, 50, "kicks you in the chest", new AttackProneComponent(25), new AttackStunComponent(10)), 45, TimeSpan.Zero
+        new CreatureAttack(30, 30, 50, "kicks you in the chest", new AttackStunComponent(10)), 45, TimeSpan.Zero
     },
     
     {
     
-        new CreatureAttack(25, 30, 50, "impales you in the stomach with his halberd.", new AttackProneComponent(100), new AttackStunComponent(15)), 10, TimeSpan.Zero
+        new CreatureAttack(25, 30, 50, "impales you in the stomach with his halberd.", new AttackProneComponent(25), new AttackStunComponent(15)), 10, TimeSpan.Zero
     },
     
 };
@@ -32785,7 +32768,7 @@ return ogre;
 	var ogre = new AncientLich()
 {
     Name = "Pollux",
-    MaxHealth = 7500, Health = 7500,
+    MaxHealth = 5000, Health = 5000,
     BaseDodge = 30,
     HideDetection = 36,
     BasePenetration = ShieldPenetration.VeryHeavy,
@@ -32794,7 +32777,6 @@ return ogre;
     Experience = 100000,
     VisibilityDistance = 2,
     
-    FireProtection = 80,
     DeathResistance = 75,
     IceProtection = 100,
     Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
@@ -32964,17 +32946,14 @@ if (spokeRecently(source))
     {
         {
             new CreatureAttack(15,      45, 60,      "The worg slashes you with its claws.",
-                                                        new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
         {
             new CreatureAttack(16,      50, 65,     "The worg whips you with its tail.",
-                                                        new AttackProneComponent(25), 
                                                         new AttackStunComponent(10)),               40
         },
         {
             new CreatureAttack(17,      60, 80,     "The worg gnashes you with its fangs.",
-                                                        new AttackProneComponent(35), 
                                                         new AttackStunComponent(15)),               20
         },
     };

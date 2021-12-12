@@ -59,23 +59,22 @@
                             </Button>
                         </ToolBar.Items>
                     </ToolBar>
-                    
-                    <ScrollViewer Grid.Row="1">
-                        <ListBox Width="300"
-                                 ItemsSource="{Binding Source={StaticResource collectionViewSourceLocation}}" 
-                                 SelectedItem="{Binding SelectedLocationSpawner, Mode=TwoWay}"
-                                 SelectionMode="Single"
-                                 SelectedIndex="0">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                        <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="3" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </ScrollViewer>
-                    
+
+                    <ListBox Width="300" Grid.Row="1"
+                                x:Name="_locationSpawnerList"
+                                ItemsSource="{Binding Source={StaticResource collectionViewSourceLocation}}" 
+                                SelectedItem="{Binding SelectedLocationSpawner, Mode=TwoWay}"
+                                SelectionMode="Single"
+                                SelectedIndex="0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="3" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
                     <syncfusion:PropertyGrid Grid.Row="2" Margin="0,3,0,0"
                                              SelectedObject="{Binding SelectedLocationSpawner}"
                                              SortDirection="{x:Null}"
@@ -173,7 +172,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="244"></RowDefinition>
+                        <RowDefinition Height="295"></RowDefinition>
                         <RowDefinition Height="120"></RowDefinition>
                         <RowDefinition Height="120"></RowDefinition>
                     </Grid.RowDefinitions>
@@ -192,20 +191,19 @@
                         </ToolBar.Items>
                     </ToolBar>
                     
-                    <ScrollViewer Grid.Row="1">
-                        <ListBox Width="300"
-                                 ItemsSource="{Binding Source={StaticResource collectionViewSourceRegion}}" 
-                                 SelectedItem="{Binding SelectedRegionSpawner, Mode=TwoWay}"
-                                 SelectedIndex="0">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                        <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="3" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </ScrollViewer>
+                    <ListBox Width="300" Grid.Row="1"
+                                x:Name="_regionSpawnerList"
+                                ItemsSource="{Binding Source={StaticResource collectionViewSourceRegion}}" 
+                                SelectedItem="{Binding SelectedRegionSpawner, Mode=TwoWay}"
+                                SelectedIndex="0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="3" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                     
                     <syncfusion:PropertyGrid Grid.Row="2" Margin="0,3,0,0"
                                              SelectedObject="{Binding SelectedRegionSpawner}"
@@ -221,6 +219,8 @@
                             <syncfusion:PropertyGridItem PropertyName="Density" IsReadOnly="True" />
                             <syncfusion:PropertyGridItem PropertyName="AverageMobs" IsReadOnly="True" />
                             <syncfusion:PropertyGridItem PropertyName="OpenFloorTiles" IsReadOnly="True" />
+                            <syncfusion:PropertyGridItem PropertyName="TotalHP" IsReadOnly="True" />
+                            <syncfusion:PropertyGridItem PropertyName="TotalXP" IsReadOnly="True" />
                         </syncfusion:PropertyGrid.Items>
                     </syncfusion:PropertyGrid>
                     

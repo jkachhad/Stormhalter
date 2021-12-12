@@ -37,6 +37,29 @@ namespace Kesmai.WorldForge
 			get => _scripts;
 			set => SetProperty(ref _scripts, value);
 		}
+
+		public int? XP
+        {
+			get
+            {
+				var xpPattern = new System.Text.RegularExpressions.Regex("Experience\\s*=\\s*(\\d+)\\s*,", System.Text.RegularExpressions.RegexOptions.Multiline);
+				var matches = xpPattern.Matches(this.Scripts[0].Blocks[1]);
+				if (matches.Count == 1 && int.TryParse(matches.First().Groups[1].Value, out var xp))
+					return xp;
+				return null;
+            }
+        }
+		public int? HP
+        {
+			get
+			{
+				var hpPattern = new System.Text.RegularExpressions.Regex("MaxHealth\\s*=\\s*(\\d+)\\s*,", System.Text.RegularExpressions.RegexOptions.Multiline);
+				var matches = hpPattern.Matches(this.Scripts[0].Blocks[1]);
+				if (matches.Count == 1 && int.TryParse(matches.First().Groups[1].Value, out var hp))
+					return hp;
+				return null;
+			}
+		}
 		
 		public Entity()
 		{
