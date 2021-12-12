@@ -292,9 +292,7 @@
             {
                 args.Handled = true;
                 
-                var quest = Quests.GetQuest<RescueKonranQuest>();
-
-                if (!quest.InProgress(source))
+                if (source.Profession != Profession.MartialArtist)
                 {
                     SayTo(source, 6300417); /* I am uncertain that you could guarantee my safe return. I trust only a martial artist. */
                     return;
