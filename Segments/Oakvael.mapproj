@@ -365,6 +365,11 @@
             Timer.DelayCall(Facet.TimeSpan.FromSeconds(4.0),
                 () => SayTo(Director, 6300420, Director.Name)); /* <![CDATA[Take this <text color="#CF9FFF">silk finery</text>.]]]]><![CDATA[> */
             
+            var rescueKonran = Quests.GetQuest<RescueKonranQuest>();
+            
+            if (rescueKonran != null && rescueKonran.InProgress(Director) && !rescueKonran.IsComplete(Director))
+                rescueKonran.Complete(Director);
+            
             Brain = new IdleAI(this);
 
             Timer.DelayCall(Facet.TimeSpan.FromMinutes(10.0), Delete);

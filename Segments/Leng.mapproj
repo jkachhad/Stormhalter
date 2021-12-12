@@ -76122,6 +76122,11 @@
 
         if (backpack != null)
             backpack.AddItem(new Buddah(player));
+
+        var slayShidosha = Quests.GetQuest<SlayShidoshaQuest>();
+            
+        if (slayShidosha != null && slayShidosha.InProgress(player) && !slayShidosha.IsComplete(player))
+            slayShidosha.Complete(player);
     }
 ]]></block>
         <block><![CDATA[]]></block>
