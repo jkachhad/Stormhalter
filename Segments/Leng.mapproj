@@ -130,6 +130,11 @@
                             gauntlets.Bind(source);
 
                             SayTo(source, 6300349); /* Wield this weapon with courage and honor. */
+                            
+                            var quest = Quests.GetQuest<CrystalGauntletsQuest>();
+                            
+                            if (quest != null && quest.InProgress(source) && !quest.IsComplete(source))
+                                quest.Complete(source);
                         }
                     }
                     else
