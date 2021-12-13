@@ -248,12 +248,15 @@ namespace Kesmai.WorldForge.UI
 			
 			if (!complete)
 			{
-				var messageResult = MessageBox.Show("Unable to connect to server. Do you wish to continue in offline mode?", "Error", MessageBoxButton.YesNo);
+				var skipOfflinePrompt = new FileInfo($@"{_storageDirectory.FullName}\WorkOffline.flag").Exists;
 
-				if (messageResult != MessageBoxResult.Yes)
-				{
-					OnFail();
-					return;
+				if (!skipOfflinePrompt) {
+					var messageResult = MessageBox.Show("Do you wish to continue in offline mode?", "Unable to connect to server", MessageBoxButton.YesNo);
+					if (messageResult != MessageBoxResult.Yes)
+					{
+						OnFail();
+						return;
+					}
 				}
 
 				useCache = true;

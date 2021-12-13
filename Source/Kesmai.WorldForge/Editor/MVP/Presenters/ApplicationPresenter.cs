@@ -26,6 +26,9 @@ namespace Kesmai.WorldForge.Editor
 	{
 	}
 	
+	public class UnregisterEvents
+	{
+    }
 	public class ApplicationPresenter : ObservableRecipient
 	{
 		private int _unitSize = 55;
@@ -42,6 +45,13 @@ namespace Kesmai.WorldForge.Editor
 
 		private object _activeDocument;
 		private object _previousDocument;
+
+		private TeleportComponent _configuringTeleporter = null;
+		public TeleportComponent ConfiguringTeleporter
+        {
+			get { return _configuringTeleporter; }
+			set { _configuringTeleporter = value; }
+        }
 
 		public TerrainSelector SelectedFilter
 		{
@@ -125,6 +135,9 @@ namespace Kesmai.WorldForge.Editor
 
 		public RelayCommand ExitApplicationCommand { get; set; }
 
+		public RelayCommand ShowChangesWindow { get; set; }
+		public RelayCommand LaunchWiki { get; set; }
+
 		public RelayCommand<String> SwapDocumentCommand { get; set; }
 		
 		public ObservableCollection<object> Documents { get; private set; }
@@ -178,6 +191,15 @@ namespace Kesmai.WorldForge.Editor
 
 			GenerateRegionCommand = new RelayCommand(GenerateRegions, () => (Segment != null));
 			GenerateRegionCommand.DependsOn(() => Segment);
+
+			ShowChangesWindow = new RelayCommand(() => { new Kesmai.WorldForge.UI.Windows.WhatsNew().ShowDialog(); });
+			LaunchWiki = new RelayCommand(() => {
+				System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+				{
+					FileName = "http://www.stormhalter.com/wiki/WorldForge",
+					UseShellExecute = true
+				}); 
+			});
 
 			SwapDocumentCommand = new RelayCommand<string>(SwapDocument);
 
@@ -258,8 +280,8 @@ namespace Kesmai.WorldForge.Editor
 						}
 						if (sel is { Width: 1, Height: 1 })
 						{
-							targetLS = Segment.Spawns.Location.Where(s => s.Region == _selection.Region.ID && s.X == sel.Left && s.Y == sel.Top).FirstOrDefault();
-							targetRS = Segment.Spawns.Region.Where(s => s.Region == _selection.Region.ID && s.Inclusions.Any(i => i.ToRectangle().Contains(sel.Left, sel.Top))).FirstOrDefault();
+							targetLS = Segment.Spawns.Location.Where(s => s.Region == _selection.Region.ID && s.X == sel.Left && s.Y == sel.Top).LastOrDefault();
+							targetRS = Segment.Spawns.Region.Where(s => s.Region == _selection.Region.ID && s.Inclusions.Any(i => i.ToRectangle().Contains(sel.Left, sel.Top))).LastOrDefault();
 						}
 						ActiveDocument = Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
 						if (targetRS is not null && targetLS is null)
@@ -313,7 +335,7 @@ namespace Kesmai.WorldForge.Editor
 						SegmentLocation target = null;
 						if (sel is { Width: 1, Height: 1 })
 						{
-							target = Segment.Locations.Where(l => l.Region == _selection.Region.ID && l.X == sel.Left && l.Y == sel.Top).FirstOrDefault();
+							target = Segment.Locations.Where(l => l.Region == _selection.Region.ID && l.X == sel.Left && l.Y == sel.Top).LastOrDefault();
 						}
 						ActiveDocument = Documents.Where(d => d is LocationsViewModel).FirstOrDefault() as LocationsViewModel;
 						if (target is not null)
@@ -326,7 +348,7 @@ namespace Kesmai.WorldForge.Editor
 						SegmentSubregion target = null;
 						if (sel is { Width: 1, Height: 1 })
 						{
-							target = Segment.Subregions.Where(s => s.Region == _selection.Region.ID && s.Rectangles.Any(rect => rect.ToRectangle().Contains(sel.Left, sel.Top))).FirstOrDefault();
+							target = Segment.Subregions.Where(s => s.Region == _selection.Region.ID && s.Rectangles.Any(rect => rect.ToRectangle().Contains(sel.Left, sel.Top))).LastOrDefault();
 						}
 						ActiveDocument = Documents.Where(d => d is SubregionViewModel).FirstOrDefault() as SubregionViewModel;
 						if (target is not null)
@@ -492,6 +514,7 @@ namespace Kesmai.WorldForge.Editor
 				throw new InvalidOperationException("Attempt to close a segment when an active segment does not exist.");
 
 			Segment = null;
+			WeakReferenceMessenger.Default.Send(new UnregisterEvents());
 			Documents.Clear();
 			
 			_segmentFilePath = String.Empty;
@@ -531,11 +554,26 @@ namespace Kesmai.WorldForge.Editor
 
 			if (!targetFileInfo.IsZipFile())
 			{
-				var document = XDocument.Load(targetFile);
-				var rootElement = document.Root;
-
+				XElement rootElement = null;
+				try
+				{
+					var document = XDocument.Load(targetFile);
+					rootElement = document.Root;
+				} catch (System.Xml.XmlException e)
+				{
+					MessageBox.Show($"Segment File is incorrectly formatted:\n{e.Message}", "Open Segment Error", MessageBoxButton.OK);
+					return;
+				}
 				if (rootElement != null)
+                {
+					if (rootElement.Name != "segment")
+					{
+						MessageBox.Show($"Provided file is not a WorldForge Segment file.", "Open Segment Error", MessageBoxButton.OK);
+						return;
+					}
 					segment.Load(rootElement);
+				}
+					
 			}
 			else
 			{

@@ -27,12 +27,12 @@
         <!-- Menu -->
         <Menu Grid.Row="0"
               Background="#FFEEEEEE" >
-            <MenuItem Header="File">
-                <MenuItem Header="Create Segment..." Command="{Binding CreateSegmentCommand}" />
-                <MenuItem Header="Open Segment" Command="{Binding OpenSegmentCommand}" />
-                <MenuItem Header="Close Segment"  Command="{Binding CloseSegmentCommand}" />
+            <MenuItem Header="_File">
+                <MenuItem Header="_Create Segment..." Command="{Binding CreateSegmentCommand}" />
+                <MenuItem Header="_Open Segment" Command="{Binding OpenSegmentCommand}" />
+                <MenuItem Header="C_lose Segment"  Command="{Binding CloseSegmentCommand}" />
                 <Separator />
-                <MenuItem Header="Save Segment"  Command="{Binding SaveSegmentCommand}">
+                <MenuItem Header="_Save Segment"  Command="{Binding SaveSegmentCommand}">
                     <MenuItem.Icon>
                         <Image Source="../Resources/Save.png" Width="16" Height="16" />
                     </MenuItem.Icon>
@@ -40,7 +40,7 @@
                         <system:Boolean>false</system:Boolean>
                     </MenuItem.CommandParameter>
                 </MenuItem>
-                <MenuItem Header="Save Segment as..." Command="{Binding SaveSegmentCommand}">
+                <MenuItem Header="Save Segment _as..." Command="{Binding SaveSegmentCommand}">
                     <MenuItem.Icon>
                         <Image Source="../Resources/Save.png" Width="16" Height="16" />
                     </MenuItem.Icon>
@@ -49,16 +49,16 @@
                     </MenuItem.CommandParameter>
                 </MenuItem>
                 <Separator />
-                <MenuItem Header="Exit" Command="{Binding ExitApplicationCommand}" />
+                <MenuItem Header="_Exit" Command="{Binding ExitApplicationCommand}" />
             </MenuItem>
 
-            <MenuItem Header="Regions">
-                <MenuItem Header="Create.." Command="{Binding CreateRegionCommand}">
+            <MenuItem Header="_Regions">
+                <MenuItem Header="_Create.." Command="{Binding CreateRegionCommand}">
                     <MenuItem.Icon>
                         <Image Source="../Resources/Add.png" Width="16" Height="16" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Delete Region" Command="{Binding DeleteRegionCommand}" 
+                <MenuItem Header="_Delete Region" Command="{Binding DeleteRegionCommand}" 
                           CommandParameter="{Binding ActiveDocument}">
                     <MenuItem.Icon>
                         <Image Source="../Resources/Delete.png" Width="16" Height="16" />
@@ -73,12 +73,17 @@
                 </MenuItem>-->
                 
                 <Separator Visibility="{x:Static local:Core.DebugOnly}" />
-                <MenuItem Header="Generate Region..." Command="{Binding GenerateRegionCommand}"
+                <MenuItem Header="Generate _Region..." Command="{Binding GenerateRegionCommand}"
                           Visibility="{x:Static local:Core.DebugOnly}">
                     <MenuItem.Icon>
                         <Image Source="../Resources/Gear.png" Width="16" Height="16" />
                     </MenuItem.Icon>
                 </MenuItem>
+            </MenuItem>
+
+            <MenuItem Header="_Help">
+                <MenuItem Header="What's _New" Command="{Binding ShowChangesWindow}" />
+                <MenuItem Header="Launch _Wiki" Command="{Binding LaunchWiki}" />
             </MenuItem>
         </Menu>
         

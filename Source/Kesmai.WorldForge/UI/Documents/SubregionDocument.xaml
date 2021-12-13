@@ -48,6 +48,17 @@
                             CommandParameter="{Binding SelectedSubregion}">
                         <Image Source="../../Resources/Delete.png" />
                     </Button>
+                    <Button Width="24" Height="24"
+                                    Command="{Binding ExportSubregionCommand}"
+                                    ToolTip="Copy subregion to Clipboard"
+                                    CommandParameter="{Binding SelectedSubregion}">
+                        <Image Source="../../Resources/Export.png" />
+                    </Button>
+                    <Button Width="24" Height="24"
+                                    Command="{Binding ImportSubregionCommand}"
+                                    ToolTip="Paste subregion from Clipboard">
+                        <Image Source="../../Resources/Import.png" />
+                    </Button>
                 </ToolBar.Items>
             </ToolBar>
             

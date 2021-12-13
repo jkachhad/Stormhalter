@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Xml.Linq;
 using CommonServiceLocator;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Scripting;
@@ -36,7 +37,11 @@ namespace Kesmai.WorldForge.UI.Documents
 			
 			WeakReferenceMessenger.Default.Register<TreasuresDocument, GetActiveEntity>(this,
 				(r, m) => m.Reply(GetSelectedEntity()));
+
+			WeakReferenceMessenger.Default.Register<TreasuresDocument, UnregisterEvents>(this,
+				(r, m) => { WeakReferenceMessenger.Default.UnregisterAll(this); });
 		}
+
 		public Entity GetSelectedEntity()
         {
 			var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
@@ -103,7 +108,8 @@ namespace Kesmai.WorldForge.UI.Documents
 		public RelayCommand AddTreasureCommand { get; set; }
 		public RelayCommand<SegmentTreasure> RemoveTreasureCommand { get; set; }
 		public RelayCommand<SegmentTreasure> CopyTreasureCommand { get; set; }
-		
+		public RelayCommand ImportTreasureCommand { get; set; }
+		public RelayCommand<SegmentTreasure> ExportTreasureCommand { get; set; }
 		public RelayCommand AddTreasureEntryCommand { get; set; }
 		public RelayCommand<TreasureEntry> RemoveTreasureEntryCommand { get; set; }
 		public RelayCommand<TreasureEntry> CopyTreasureEntryCommand { get; set; }
@@ -122,7 +128,13 @@ namespace Kesmai.WorldForge.UI.Documents
 			CopyTreasureCommand = new RelayCommand<SegmentTreasure>(CopyTreasure, 
 				(treasure) => (SelectedTreasure != null));
 			CopyTreasureCommand.DependsOn(() => SelectedTreasure);
-			
+
+			ImportTreasureCommand = new RelayCommand(ImportTreasure);
+
+			ExportTreasureCommand = new RelayCommand<SegmentTreasure>(ExportTreasure,
+				(treasure) => (SelectedTreasure != null));
+			ExportTreasureCommand.DependsOn(() => SelectedTreasure);
+
 			AddTreasureEntryCommand = new RelayCommand(AddTreasureEntry);
 			
 			RemoveTreasureEntryCommand = new RelayCommand<TreasureEntry>(RemoveTreasureEntry,
@@ -206,5 +218,37 @@ namespace Kesmai.WorldForge.UI.Documents
 			SelectedTreasure.Entries.Add(clonedEntry);
 			SelectedTreasureEntry = clonedEntry;
 		}
+
+		public void ImportTreasure()
+        {
+			XDocument clipboard = null;
+			try
+			{
+				clipboard = XDocument.Parse(Clipboard.GetText());
+			}
+			catch { }
+			if (clipboard is null || clipboard.Root.Name.ToString() != "treasure")
+				return;
+			var newTreasure = new SegmentTreasure(clipboard.Root);
+            bool isNameTaken;
+			do // Why doesn't Treasures have linq support? Treasures.Any would have simplified this.
+			{
+				isNameTaken = false;
+				foreach (var treasure in Treasures)
+				{
+					if (treasure.Name == newTreasure.Name)
+					{
+						isNameTaken = true;
+						newTreasure.Name = $"Copy of {newTreasure.Name}";
+					}
+				}
+			} while (isNameTaken);
+			Treasures.Add(newTreasure);
+		}
+
+		public void ExportTreasure(SegmentTreasure treasure)
+        {
+			Clipboard.SetText(treasure.GetXElement().ToString());
+        }
 	}
 }

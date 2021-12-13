@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Xml.Linq;
 using CommonServiceLocator;
 using DigitalRune.ServiceLocation;
 using Kesmai.WorldForge.Editor;
@@ -70,6 +71,9 @@ namespace Kesmai.WorldForge.UI.Documents
 
 			WeakReferenceMessenger.Default.Register<EntitiesDocument, GetCurrentScriptSelection>(this,
 				(r, m) => m.Reply(GetScriptSelection()));
+
+			WeakReferenceMessenger.Default.Register<EntitiesDocument, UnregisterEvents>(this,
+				(r, m) => { WeakReferenceMessenger.Default.UnregisterAll(this); });
 		}
 
 		private void ChangeEntity(Entity entity)
@@ -149,6 +153,8 @@ namespace Kesmai.WorldForge.UI.Documents
 		public RelayCommand AddEntityCommand { get; set; }
 		public RelayCommand<Entity> RemoveEntityCommand { get; set; }
 		public RelayCommand<Entity> CopyEntityCommand { get; set; }
+		public RelayCommand<Entity> ExportEntityCommand { get; set; }
+		public RelayCommand ImportEntityComamnd { get; set; }
 		public RelayCommand JumpSpawnerCommand { get; set; }
 
 		public EntitiesViewModel(Segment segment)
@@ -164,6 +170,13 @@ namespace Kesmai.WorldForge.UI.Documents
 			CopyEntityCommand = new RelayCommand<Entity>(CopyEntity,
 				(entity) => (SelectedEntity != null));
 			CopyEntityCommand.DependsOn(() => SelectedEntity);
+
+			ExportEntityCommand = new RelayCommand<Entity>(ExportEntity,
+				(entity) => (SelectedEntity != null));
+			ExportEntityCommand.DependsOn(() => SelectedEntity);
+
+			ImportEntityComamnd = new RelayCommand(ImportEntity);
+
 
 			JumpSpawnerCommand = new RelayCommand(JumpSpawner);
 
@@ -215,6 +228,31 @@ namespace Kesmai.WorldForge.UI.Documents
 				Source.Add(clonedEntity);
 				SelectedEntity = clonedEntity;
 			}
+		}
+
+		public void ExportEntity(Entity entity)
+        {
+			Clipboard.SetText(entity.GetXElement().ToString());
+        }
+
+		public void ImportEntity()
+		{
+			XDocument clipboard = null;
+			try
+			{
+				clipboard = XDocument.Parse(Clipboard.GetText());
+			}
+			catch { }
+			if (clipboard is null || clipboard.Root.Name.ToString() != "entity")
+				return;
+
+			var newEntity = new Entity(clipboard.Root);
+
+			while (Source.Any(e => e.Name == newEntity.Name))
+				newEntity.Name = $"Copy of {newEntity.Name}";
+
+			Source.Add(newEntity);
+			SelectedEntity = newEntity;
 		}
 	}
 }

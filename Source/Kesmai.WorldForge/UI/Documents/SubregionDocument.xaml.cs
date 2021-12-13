@@ -1,6 +1,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Xml.Linq;
 using Kesmai.WorldForge.Editor;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
@@ -28,6 +29,9 @@ namespace Kesmai.WorldForge.UI.Documents
 					_presenter.SetSubregion(subregion);
 				}
 			});
+
+			WeakReferenceMessenger.Default.Register<SubregionDocument, UnregisterEvents>(this,
+				(r, m) => { WeakReferenceMessenger.Default.UnregisterAll(this); });
 		}
 	}
 
@@ -64,6 +68,9 @@ namespace Kesmai.WorldForge.UI.Documents
 		public RelayCommand AddSubregionCommand { get; private set; }
 		public RelayCommand<SegmentSubregion> RemoveSubregionCommand { get; private set; }
 
+		public RelayCommand ImportSubregionCommand { get; private set; }
+		public RelayCommand<SegmentSubregion> ExportSubregionCommand { get; private set; }
+
 		public SubregionViewModel(Segment segment)
 		{
 			_segment = segment ?? throw new ArgumentNullException(nameof(segment));
@@ -73,6 +80,12 @@ namespace Kesmai.WorldForge.UI.Documents
 			RemoveSubregionCommand = new RelayCommand<SegmentSubregion>(RemoveSubregion, 
 				(location) => SelectedSubregion != null);
 			RemoveSubregionCommand.DependsOn(() => SelectedSubregion);
+
+			ImportSubregionCommand = new RelayCommand(ImportSubregion);
+
+			ExportSubregionCommand = new RelayCommand<SegmentSubregion>(ExportSubregion,
+				(location) => SelectedSubregion != null);
+			ExportSubregionCommand.DependsOn(() => SelectedSubregion);
 		}
 		
 		private void AddSubregion()
@@ -94,5 +107,25 @@ namespace Kesmai.WorldForge.UI.Documents
 			if (result != MessageBoxResult.No)
 				Subregions.Remove(subregion);
 		}
+
+		private void ImportSubregion()
+        {
+			XDocument clipboard = null;
+			try
+			{
+				clipboard = XDocument.Parse(Clipboard.GetText());
+			}
+			catch { }
+			if (clipboard is null || clipboard.Root.Name.ToString() != "subregion")
+				return;
+
+			var newSubregion = new SegmentSubregion(clipboard.Root);
+			Subregions.Add(newSubregion);
+		}
+
+		private void ExportSubregion(SegmentSubregion subregion)
+        {
+			Clipboard.SetText(subregion.GetXElement().ToString());
+        }
 	}
 }

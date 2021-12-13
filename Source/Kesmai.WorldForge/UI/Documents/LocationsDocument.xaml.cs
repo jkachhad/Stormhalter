@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Xml.Linq;
 using Kesmai.WorldForge.Editor;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
@@ -29,6 +30,9 @@ namespace Kesmai.WorldForge.UI.Documents
 					_presenter.SetLocation(location);
 				}
 			});
+
+			WeakReferenceMessenger.Default.Register<LocationsDocument, UnregisterEvents>(this,
+				(r, m) => { WeakReferenceMessenger.Default.UnregisterAll(this); });
 		}
 	}
 
@@ -65,6 +69,8 @@ namespace Kesmai.WorldForge.UI.Documents
 		public RelayCommand AddLocationCommand { get; private set; }
 		public RelayCommand<SegmentLocation> RemoveLocationCommand { get; private set; }
 		public RelayCommand<SegmentLocation> CopyLocationCommand { get; private set; }
+		public RelayCommand ImportLocationCommand { get; private set; }
+		public RelayCommand<SegmentLocation> ExportLocationCommand { get; private set; }
 
 		public LocationsViewModel(Segment segment)
 		{
@@ -79,6 +85,12 @@ namespace Kesmai.WorldForge.UI.Documents
 			CopyLocationCommand = new RelayCommand<SegmentLocation>(CopyLocation,
 				(location) => SelectedLocation != null);
 			CopyLocationCommand.DependsOn(() => SelectedLocation);
+
+			ImportLocationCommand = new RelayCommand(ImportLocation);
+
+			ExportLocationCommand = new RelayCommand<SegmentLocation>(ExportLocation,
+				(location) => SelectedLocation != null && !SelectedLocation.IsReserved);
+			ExportLocationCommand.DependsOn(() => SelectedLocation);
 		}
 		
 		private void AddLocation()
@@ -109,5 +121,25 @@ namespace Kesmai.WorldForge.UI.Documents
 				SelectedLocation = clonedLocation;
 			}
 		}
+
+		public void ImportLocation ()
+        {
+			XDocument clipboard = null;
+			try
+			{
+				clipboard = XDocument.Parse(Clipboard.GetText());
+			}
+			catch { }
+			if (clipboard is null || clipboard.Root.Name.ToString() != "location")
+				return;
+
+			var newLocation = new SegmentLocation(clipboard.Root);
+			Locations.Add(newLocation);
+		}
+
+		public void ExportLocation (SegmentLocation location)
+        {
+			Clipboard.SetText(location.GetXElement().ToString());
+        }
 	}
 }
