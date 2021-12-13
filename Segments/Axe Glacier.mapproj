@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.86.0.0">
+<segment name="Axe Glacier" version="0.87.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -107339,8 +107339,11 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    var female = Utility.RandomBool();
     var trainer = new ThiefTrainer()
     {
+        Name = _names.Random(),
+        Body = (female ? 10 : 9), IsFemale = female,
         
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
