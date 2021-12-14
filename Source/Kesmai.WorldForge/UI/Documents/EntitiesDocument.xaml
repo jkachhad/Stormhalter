@@ -31,7 +31,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="64"></RowDefinition>
+                <RowDefinition Height="140"></RowDefinition>
                 <RowDefinition Height="200"></RowDefinition>
             </Grid.RowDefinitions>
             
@@ -52,36 +52,60 @@
                             CommandParameter="{Binding SelectedEntity}">
                         <Image Source="../../Resources/Copy.png" />
                     </Button>
+                    <Button Width="24" Height="24"
+                                    Command="{Binding ExportEntityCommand}"
+                                    ToolTip="Copy Entity to Clipboard"
+                                    CommandParameter="{Binding SelectedEntity}">
+                        <Image Source="../../Resources/Export.png" />
+                    </Button>
+                    <Button Width="24" Height="24"
+                                    Command="{Binding ImportEntityComamnd}"
+                                    ToolTip="Paste Entity from Clipboard">
+                        <Image Source="../../Resources/Import.png" />
+                    </Button>
                 </ToolBar.Items>
             </ToolBar>
             
-            <ScrollViewer Grid.Row="1">
-                <ListBox Width="300"
-                         ItemsSource="{Binding Source={StaticResource collectionViewSource}}"
-                         SelectedItem="{Binding SelectedEntity, Mode=TwoWay}"
-                         SelectionMode="Single">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                               <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="3" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </ScrollViewer>
-            
+            <ListBox Width="300" Grid.Row="1"
+                        x:Name="_entityList"
+                        ItemsSource="{Binding Source={StaticResource collectionViewSource}}"
+                        SelectedItem="{Binding SelectedEntity, Mode=TwoWay}"
+                        SelectionMode="Single">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                            <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="3" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
             <syncfusion:PropertyGrid Grid.Row="2" Margin="0,3,0,0"
                                      SelectedObject="{Binding SelectedEntity}"
                                      AutoGenerateItems="False"
+                                     SortDirection="{x:Null}"
                                      DisableAnimationOnObjectSelection="True">
                 <syncfusion:PropertyGrid.Items>
                     <syncfusion:PropertyGridItem PropertyName="Name" />
+                    <syncfusion:PropertyGridItem PropertyName="XP" />
+                    <syncfusion:PropertyGridItem PropertyName="HP" />
+                    <syncfusion:PropertyGridItem PropertyName="Threat"/>
                 </syncfusion:PropertyGrid.Items>
             </syncfusion:PropertyGrid>
-            <ListBox Grid.Row="3" Margin="0,3,0,0"
-                      x:Name="_spawnersList"
-                      ItemsSource="{Binding RelatedSpawners}">
-            </ListBox>
+            <StackPanel Grid.Row="3" Margin="0,3,0,0">
+                <TextBlock Margin="7,0,0,0" FontWeight="Bold">Spawns In</TextBlock>
+                <ListBox
+                    Height="184"
+                    BorderBrush="White"
+                    x:Name="_spawnersList"
+                    ItemsSource="{Binding RelatedSpawners}">
+                    <ListBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Jump to Spawn Definition" Command="{Binding JumpSpawnerCommand}"/>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
+                </ListBox>
+            </StackPanel>
         </Grid>
         
         <Border Margin="2" Grid.Column="1"
@@ -114,7 +138,7 @@
                 </TabControl.ItemTemplate>
                 <TabControl.ContentTemplate>
                     <DataTemplate>
-                        <scripting:ScriptEditor Script="{Binding}" IsEnabled="{Binding IsEnabled}" />
+                        <scripting:ScriptEditor Script="{Binding}" IsEnabled="{Binding IsEnabled}" x:Name="_editor"/>
                     </DataTemplate>
                 </TabControl.ContentTemplate>
             </TabControl>

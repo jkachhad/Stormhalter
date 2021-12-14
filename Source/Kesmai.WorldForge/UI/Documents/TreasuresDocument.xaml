@@ -34,7 +34,8 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="200"></RowDefinition>
+                <RowDefinition Height="64"></RowDefinition>
+                <RowDefinition Height="78"></RowDefinition>
                 <RowDefinition Height="200"></RowDefinition>
             </Grid.RowDefinitions>
             
@@ -55,23 +56,33 @@
                             CommandParameter="{Binding SelectedTreasure}">
                         <Image Source="../../Resources/Copy.png" />
                     </Button>
+                    <Button Width="24" Height="24"
+                                    Command="{Binding ExportTreasureCommand}"
+                                    ToolTip="Copy treasure to Clipboard"
+                                    CommandParameter="{Binding SelectedTreasure}">
+                        <Image Source="../../Resources/Export.png" />
+                    </Button>
+                    <Button Width="24" Height="24"
+                                    Command="{Binding ImportTreasureCommand}"
+                                    ToolTip="Paste treasure from Clipboard">
+                        <Image Source="../../Resources/Import.png" />
+                    </Button>
                 </ToolBar.Items>
             </ToolBar>
             
-            <ScrollViewer Grid.Row="1">
-                <ListBox Width="300"
-                         ItemsSource="{Binding Source={StaticResource collectionViewSourceTreasures}}" 
-                         SelectedItem="{Binding SelectedTreasure}"
-                         SelectionMode="Single">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="3" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </ScrollViewer>
+            <ListBox Width="300" Grid.Row="1"
+                        x:Name="_treasuresList"
+                        ItemsSource="{Binding Source={StaticResource collectionViewSourceTreasures}}" 
+                        SelectedItem="{Binding SelectedTreasure}"
+                        SelectionMode="Single">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="3" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
             
             <syncfusion:PropertyGrid Grid.Row="2" Margin="0,3,0,0"
                                      SelectedObject="{Binding SelectedTreasure}"
@@ -89,6 +100,20 @@
                          VerticalScrollBarVisibility="Visible"
                          Text="{Binding SelectedTreasure.Notes, UpdateSourceTrigger=PropertyChanged}"/>
             </GroupBox>
+
+            <StackPanel Grid.Row="4" Margin="0,3,0,0">
+                <TextBlock Margin="7,0,0,0" FontWeight="Bold">Dropped By</TextBlock>
+                <ListBox                    
+                    BorderBrush="White"
+                    x:Name="_entitiesList"
+                    ItemsSource="{Binding RelatedEntities}">
+                    <ListBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Jump to Entity Definition" Command="{Binding JumpEntityCommand}"/>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
+                </ListBox>
+            </StackPanel>
         </Grid>
         
         <Border Margin="2" Grid.Column="1"

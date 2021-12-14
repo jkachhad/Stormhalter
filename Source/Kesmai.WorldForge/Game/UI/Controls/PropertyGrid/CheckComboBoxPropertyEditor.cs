@@ -63,8 +63,9 @@ namespace Kesmai.WorldForge.Windows
 			{
 				var propertyInfo = parent.PropertyInfo;
 				var source = parent.Source;
+				var propValue = propertyInfo.GetValue(source);
 
-				if (propertyInfo.GetValue(source) is IList values)
+				if (propValue is IList values)
 				{
 					foreach (var value in values)
 					{
@@ -74,6 +75,12 @@ namespace Kesmai.WorldForge.Windows
 							_comboBoxButton.SelectedItems.Add(item);
 					}
 				}
+				if (propValue is Direction dir)
+                {
+					var item = sources.FirstOrDefault(i => (Direction)i.Value == dir);
+					if (item != null)
+						_comboBoxButton.SelectedItems.Add(item);
+                }
 			}
 
 			Children.Add(_comboBoxButton);
@@ -87,8 +94,9 @@ namespace Kesmai.WorldForge.Windows
 			{
 				var propertyInfo = _parent.PropertyInfo;
 				var source = _parent.Source;
+				var propValue = propertyInfo.GetValue(source);
 
-				if (propertyInfo.GetValue(source) is IList values)
+				if (propValue is IList values)
 				{
 					foreach (var newItem in e.NewItems)
 					{
@@ -103,6 +111,15 @@ namespace Kesmai.WorldForge.Windows
 					}
 					
 					propertyInfo.SetValue(source, values, null);
+				}
+
+				if (propValue is Direction dir)
+                {
+					foreach (var newItem in e.NewItems)
+					{
+						if (newItem is Item item)
+							propertyInfo.SetValue(source, (Direction)item.Value, null);
+					}
 				}
 			}
 		}

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.81.0.0">
+<segment name="Oakvael" version="0.86.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -73,6 +73,372 @@
         
         item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
     }
+    
+    #region Crystal Gauntlets
+
+    /*
+    The Martial Artist's quest consists of finding two special objects and bringing these to a trainer who 
+    will grant you +4 Crystal Gauntlets, the ultimate martial arts weapon. To have your quest set find Yuri 
+    on the Oakvael surface in the Southwest corner. Type 'Yuri, teach me'. He will ask if you want to quest 
+    for a powerful weapon and you should respond with 'Yuri, yes'. You will be given a threestaff that you 
+    can ignore. 
+    */
+    
+    public class Yuri : Questkeeper
+    {
+        public Yuri()
+        {
+            Name = "Yuri";
+            Body = 49;
+
+            Health = MaxHealth = 100;
+            BaseDodge = 10;
+
+            Experience = 50;
+            
+            Alignment = Alignment.Lawful;
+        }
+
+        public Yuri(Serial serial) : base(serial)
+        {
+        }
+        
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((short)1); /* version */
+        }
+
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+
+            var version = reader.ReadInt16();
+
+            switch (version)
+            {
+                case 1:
+                {
+                    break;
+                }
+            }
+        }
+
+        private bool CanInteract(PlayerEntity player) 
+            => (player.Profession is MartialArtist);
+
+        protected override void OnTeach(PlayerEntity player)
+        {
+            if (!CanInteract(player))
+                return;
+
+            var quest = Quests.GetQuest<CrystalGauntletsQuest>();
+
+            if (quest != null && !quest.IsComplete(player))
+            {
+                if (!quest.InProgress(player))
+                    quest.Start(player);
+
+                if (quest.TryGetRecord(player, out var record))
+                {
+                    if (quest.IsAccepted(record))
+                    {
+                        if (!quest.IsKonranRescued(player))
+                            SayTo(player, 6300414); /* I ask that you rescue Konran and help him return home. He shall give you silk finery. */
+                        else if (!quest.IsShidoshaSlain(player))
+                            SayTo(player, 6300415); /* To be considered worthy, slay the ninja shidosha in Leng and retrieve our idol of worship. */
+                        else
+                            SayTo(player, 6300416); /* Return the items to Puck in Leng, there you will find your reward. */
+                    }
+                    else
+                    {
+                        SayTo(player, 6300411); /* I can not teach you greater mastery of your hand skill. But-- */
+                        
+                        Timer.DelayCall(Facet.TimeSpan.FromSeconds(3.0), () 
+                            => Emote("pauses briefly"));
+                        Timer.DelayCall(Facet.TimeSpan.FromSeconds(6.0), () 
+                            => SayTo(player, 6300412)); /* You may be worthy of another power. */
+                        Timer.DelayCall(Facet.TimeSpan.FromSeconds(8.0), () 
+                            => SayTo(player, 6300413)); /* Do you wish to seek out a powerful weapon? */
+                    }
+                }
+            }
+            else
+            {
+                SayTo(player, 6300326); /* I can not train you further. */
+            }
+        }
+        
+        protected override void OnAccept(PlayerEntity player)
+        {
+            if (!CanInteract(player)) 
+                return;
+
+            var quest = Quests.GetQuest<CrystalGauntletsQuest>();
+
+            if (quest != null)
+            {
+                if (!quest.InProgress(player) || !quest.TryGetRecord(player, out var record) || quest.IsAccepted(record))
+                    return;
+
+                quest.Accept(record);
+
+                Timer.DelayCall(Facet.TimeSpan.FromSeconds(1.0), ()
+                    => SayTo(player, 6300414)); /* I ask that you rescue Konran and help him return home. He shall give you silk finery. */
+                Timer.DelayCall(Facet.TimeSpan.FromSeconds(4.0), ()
+                    => SayTo(player, 6300415)); /* To be considered worthy, slay the ninja shidosha in Leng and retrieve our idol of worship. */
+                Timer.DelayCall(Facet.TimeSpan.FromSeconds(7.0), ()
+                    => SayTo(player, 6300416)); /* Return the items to Puck in Leng, there you will find your reward. */
+
+                Quests.GetQuest<RescueKonranQuest>().Start(player);
+                Quests.GetQuest<SlayShidoshaQuest>().Start(player);
+            }
+            else
+            {
+                SayTo(player, 6300326); /* I can not train you further. */
+            }
+        }
+        
+        protected override void OnDecline(PlayerEntity player)
+        {
+            if (!CanInteract(player)) 
+                return;
+
+            var quest = Quests.GetQuest<CrystalGauntletsQuest>();
+
+            if (quest != null)
+            {
+                if (!quest.InProgress(player) || !quest.TryGetRecord(player, out var record) || quest.IsAccepted(record))
+                    return;
+                    
+                quest.Failed(player);
+                    
+                SayTo(player, 6300330); /* Very well, seek me out should you reconsider. */
+            }
+            else
+            {
+                SayTo(player, 6300326); /* I can not train you further. */
+            }
+        }
+    }
+    
+    public class Konran : CreatureEntity
+    {
+        private static string _konranBrother = "Kinasho";
+        
+        public override bool CanOrderFollow => true;
+        
+        private Timer _whineTimer = default(Timer);
+
+        public Konran()
+        {
+            Name = "Konran";
+            Body = 49;
+
+            Health = MaxHealth = 250;
+            BaseDodge = 12;
+            
+            Experience = 50;
+            
+            Alignment = Alignment.Lawful;
+
+            Brain = new RescueAI(this)
+            {
+                Aggressive = false,
+            };
+        }
+
+        public Konran(Serial serial) : base(serial)
+        {
+        }
+        
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((short)1); /* version */
+        }
+
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+
+            var version = reader.ReadInt16();
+
+            switch (version)
+            {
+                case 1:
+                {
+                    break;
+                }
+            }
+        }
+
+        public override void HandleOrder(OrderEventArgs args)
+        {
+            base.HandleOrder(args);
+
+            if (args.Handled)
+                return;
+            
+            var source = args.Source;
+            var order = args.Order;
+
+            if (IsSubordinate && source != Director)
+                return;
+
+            if (order.Matches("follow", true))
+            {
+                args.Handled = true;
+                
+                if (source.Profession != Profession.MartialArtist)
+                {
+                    SayTo(source, 6300417); /* I am uncertain that you could guarantee my safe return. I trust only a martial artist. */
+                    return;
+                }
+
+                /* Get a random player name. */
+                SayTo(source, 6300418, 
+                    World.Mobiles.Values.OfType<PlayerEntity>()
+                        .Where(p => p != source).Random().Name); /* Thank you! I did not trust that buffoon {0} that came by earlier. */
+                
+                Director = source;
+
+                Movement = 2;
+
+                if (Brain is RescueAI rescueAI)
+                    rescueAI.Aggressive = true;
+                
+                OnOrderFollow(source);
+                
+                StartTimer();
+            }
+        }
+        
+        private void StartTimer()
+        {
+            if (_whineTimer != null)
+                _whineTimer.Stop();
+                
+            _whineTimer = Timer.DelayCall(Facet.TimeSpan.FromSeconds(90.0), Whine);
+        }
+        
+        private void Whine()
+        {
+            if (Utility.RandomDouble() > 0.25)
+                Say(6300421); /* Please hurry. My brother must be so worried. */
+            else
+                Emote("groans."); 
+        
+            StartTimer();
+        }
+        
+        private void StopTimer()
+        {
+            if (_whineTimer != null)
+                _whineTimer.Stop();
+        }
+
+        protected override void OnFinishMovement(PathingEventArgs args)
+        {
+            var kinasho = GetBeheldInVisibility(0).SelectMany(m => m.Members)
+                .FirstOrDefault(e => e.Name.Matches(_konranBrother, true));
+
+            if (kinasho is null) 
+                return;
+
+            Timer.DelayCall(Facet.TimeSpan.FromSeconds(1.0),
+                () => SayTo(Director, 6300419, Director.Name)); /* I could have done that myself. But, thanks for your assistance {0}. */
+            Timer.DelayCall(Facet.TimeSpan.FromSeconds(3.0),
+                () => {
+                    var finery = new SilkFinery();
+                    
+                    finery.Move(Location, true, Segment);
+                    finery.Bind(Director);
+                    
+                    if (kinasho.IsAlive)
+                        kinasho.Emote("is annoyed by Konran's return.");
+                });
+            Timer.DelayCall(Facet.TimeSpan.FromSeconds(4.0),
+                () => SayTo(Director, 6300420, Director.Name)); /* <![CDATA[Take this <text color="#CF9FFF">silk finery</text>.]]]]><![CDATA[> */
+            
+            var rescueKonran = Quests.GetQuest<RescueKonranQuest>();
+            
+            if (rescueKonran != null && rescueKonran.InProgress(Director) && !rescueKonran.IsComplete(Director))
+                rescueKonran.Complete(Director);
+            
+            Brain = new IdleAI(this);
+
+            Timer.DelayCall(Facet.TimeSpan.FromMinutes(10.0), Delete);
+            
+            StopTimer();
+        }
+    }
+    
+    public partial class SilkFinery : ItemEntity, ITreasure
+    {
+        /// <inheritdoc />
+        public override int LabelNumber => 6000027; /* Cloth */
+        
+        /// <inheritdoc />
+        public override int Weight => 2;
+        
+        /// <inheritdoc />
+        public override uint BasePrice => 200000;
+
+        /// <inheritdoc />
+        public override bool CanBind => true;
+        
+        /// <inheritdoc />
+        public override int Category => 3;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SilkFinery"/> class.
+        /// </summary>
+        public SilkFinery() : base(199)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SilkFinery"/> class.
+        /// </summary>
+        public SilkFinery(Serial serial) : base(serial)
+        {
+        }
+        
+        /// <inheritdoc />
+        public override void GetDescription(List<LocalizationEntry> entries)
+        {
+            entries.Add(new LocalizationEntry(6200000, 6200303)); /* [You are looking at] [a silk cloth with a gold chrysanthemum on it.] */
+        }
+
+        /// <inheritdoc />
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((short)1); /* version */
+        }
+
+        /// <inheritdoc />
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+
+            var version = reader.ReadInt16();
+
+            switch (version)
+            {
+                case 1:
+                {
+                    break;
+                }
+            }
+        }
+    }
+    
+    #endregion
     
     public class GroveDryads : CreatureEntity
     {
@@ -99388,6 +99754,86 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="surfaceYuri">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	return new Yuri();
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="dungeon4Konran">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	return new Konran();
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="oakKinasho">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var kinasho = new Humanoid()
+	{
+	   Name = "Kinasho",
+	   Body = 49,
+	   
+	   MaxHealth = 50, Health = 50,
+	   BaseDodge = 10,
+	   
+	   Experience = 50,
+	   
+	   Alignment = Alignment.Lawful,
+	   
+	   Movement = 0,
+	};
+	
+	kinasho.Brain = new IdleAI(kinasho);
+	
+	return kinasho;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="oakSheriff">
@@ -100619,6 +101065,66 @@
       </script>
       <entry entity="heartHealer" size="1" minimum="1" maximum="1" />
       <location x="43" y="20" region="236" />
+    </spawn>
+    <spawn type="LocationSpawner" name="questYuri">
+      <minimumDelay>3600</minimumDelay>
+      <maximumDelay>10800</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfaceYuri" size="1" minimum="1" maximum="1" />
+      <location x="14" y="38" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="questKonran">
+      <minimumDelay>3600</minimumDelay>
+      <maximumDelay>10800</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="dungeon4Konran" size="1" minimum="1" maximum="1" />
+      <location x="2" y="7" region="232" />
+    </spawn>
+    <spawn type="LocationSpawner" name="questKinasho">
+      <minimumDelay>3600</minimumDelay>
+      <maximumDelay>10800</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="oakKinasho" size="1" minimum="1" maximum="1" />
+      <location x="17" y="17" region="10" />
     </spawn>
     <spawn type="RegionSpawner" name="portalPeacemakers">
       <minimumDelay>900</minimumDelay>

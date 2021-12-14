@@ -11,6 +11,8 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using Microsoft.Toolkit.Mvvm.Messaging.Messages;
+using Microsoft.Xna.Framework;
+using System.Xml.Linq;
 
 namespace Kesmai.WorldForge.UI.Documents
 {
@@ -19,6 +21,9 @@ namespace Kesmai.WorldForge.UI.Documents
 		public class GetActiveEntity : RequestMessage<Entity>
         {
         }
+		public class GetCurrentTypeSelection : RequestMessage<int>
+		{
+		}
 		public SpawnsDocument()
 		{
 			InitializeComponent();
@@ -39,11 +44,21 @@ namespace Kesmai.WorldForge.UI.Documents
 
 			WeakReferenceMessenger.Default.Register<SpawnsDocument, GetActiveEntity>(this,
 				(r, m) => m.Reply(GetSelectedEntity()));
+
+			WeakReferenceMessenger.Default.Register<SpawnsDocument, GetCurrentTypeSelection>(this,
+				(r, m) => m.Reply(_typeSelector.SelectedIndex));
+
+			WeakReferenceMessenger.Default.Register<SpawnsDocument, UnregisterEvents>(this,
+				(r, m) => { WeakReferenceMessenger.Default.UnregisterAll(this); });
 		}
+
 
 		public Entity GetSelectedEntity()
 		{
 			SpawnEntry entry = null;
+			var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+			if (presenter.ActiveDocument is not SpawnsViewModel)
+				return null;
 			if (_typeSelector.SelectedIndex == 0)
 			{
 				entry = _locationEntities.SelectedItem as SpawnEntry;
@@ -70,6 +85,7 @@ namespace Kesmai.WorldForge.UI.Documents
 				_locationPresenter.Region = segment.GetRegion(spawn.Region);
 				_locationPresenter.SetLocation(spawn);
 			}
+			_locationSpawnerList.ScrollIntoView(_locationSpawnerList.SelectedItem);
 		}
 
 		private void OnRegionSpawnerChanged(SpawnsDocument recipient, SpawnsViewModel.SelectedRegionSpawnerChangedMessage message)
@@ -85,6 +101,7 @@ namespace Kesmai.WorldForge.UI.Documents
 				_regionPresenter.Region = segment.GetRegion(spawn.Region);
 				_regionPresenter.SetLocation(spawn);
 			}
+			_regionSpawnerList.ScrollIntoView(_regionSpawnerList.SelectedItem);
 		}
 
 	}
@@ -133,7 +150,10 @@ namespace Kesmai.WorldForge.UI.Documents
 				SetProperty(ref _selectedRegionSpawner, value, true);
 
 				if (value != null)
+				{
 					WeakReferenceMessenger.Default.Send(new SelectedRegionSpawnerChangedMessage(value));
+					value.CalculateStats();
+				}
 			}
 		}
 
@@ -142,9 +162,15 @@ namespace Kesmai.WorldForge.UI.Documents
 		
 		public RelayCommand AddLocationSpawnerCommand { get; set; }
 		public RelayCommand<LocationSpawner> RemoveLocationSpawnerCommand { get; set; }
-		
+		public RelayCommand<LocationSpawner> CopyLocationSpawnerCommand { get; set; }
+		public RelayCommand<LocationSpawner> CloneLocationSpawnerCommand { get; set; }
+
 		public RelayCommand AddRegionSpawnerCommand { get; set; }
 		public RelayCommand<RegionSpawner> RemoveRegionSpawnerCommand { get; set; }
+		public RelayCommand<RegionSpawner> CopyRegionSpawnerCommand { get; set; }
+		public RelayCommand<RegionSpawner> CloneRegionSpawnerCommand { get; set; }
+
+		public RelayCommand PasteSpawnerCommand { get; set; }
 
 		public RelayCommand JumpEntityCommand { get; set; }
 		public SpawnsViewModel(Segment segment)
@@ -155,11 +181,25 @@ namespace Kesmai.WorldForge.UI.Documents
 			RemoveLocationSpawnerCommand = new RelayCommand<LocationSpawner>(RemoveLocationSpawner,
 				(spawner) => SelectedLocationSpawner != null);
 			RemoveLocationSpawnerCommand.DependsOn(() => SelectedLocationSpawner);
-			
+			CopyLocationSpawnerCommand = new RelayCommand<LocationSpawner>(CopySpawner,
+				(spawner) => SelectedLocationSpawner != null);
+			CopyLocationSpawnerCommand.DependsOn(() => SelectedLocationSpawner);
+			CloneLocationSpawnerCommand = new RelayCommand<LocationSpawner>(CloneSpawner,
+				(spawner) => SelectedLocationSpawner != null);
+			CloneLocationSpawnerCommand.DependsOn(() => SelectedLocationSpawner);
+
 			AddRegionSpawnerCommand = new RelayCommand(AddRegionSpawner);
 			RemoveRegionSpawnerCommand = new RelayCommand<RegionSpawner>(RemoveRegionSpawner,
 				(spawner) => SelectedRegionSpawner != null);
 			RemoveRegionSpawnerCommand.DependsOn(() => SelectedRegionSpawner);
+			CopyRegionSpawnerCommand = new RelayCommand<RegionSpawner>(CopySpawner,
+				(spawner) => SelectedRegionSpawner != null);
+			CopyRegionSpawnerCommand.DependsOn(() => SelectedRegionSpawner);
+			CloneRegionSpawnerCommand = new RelayCommand<RegionSpawner>(CloneSpawner,
+				(spawner) => SelectedRegionSpawner != null);
+			CloneRegionSpawnerCommand.DependsOn(() => SelectedRegionSpawner);
+
+			PasteSpawnerCommand = new RelayCommand(PasteSpawner);
 
 			JumpEntityCommand = new RelayCommand(JumpEntity);
 		}
@@ -210,5 +250,90 @@ namespace Kesmai.WorldForge.UI.Documents
 			if (result != MessageBoxResult.No)
 				Source.Region.Remove(spawner);
 		}
+
+		public void CopySpawner(Spawner spawner)
+        {
+			if (spawner is LocationSpawner l)
+				Clipboard.SetText(l.GetXElement().ToString());
+			else if (spawner is RegionSpawner r)
+				Clipboard.SetText(r.GetXElement().ToString());
+        }
+
+		public void PasteSpawner()
+		{
+			XDocument clipboard = null;
+			try
+			{
+				clipboard = XDocument.Parse(Clipboard.GetText());
+			}
+			catch { }
+			if (clipboard is null || clipboard.Root.Name.ToString() != "spawn")
+				return;
+
+			var spawner = default(Spawner);
+			if (clipboard.Root.Attribute("type").Value == "LocationSpawner")
+			{
+				spawner = new LocationSpawner(clipboard.Root);
+				while (Source.Location.Any(s => s.Name == spawner.Name)) {
+					spawner.Name = $"Copy of {spawner.Name}";
+				}
+				Source.Location.Add(spawner as LocationSpawner);
+			}
+            else
+            {
+				spawner = new RegionSpawner(clipboard.Root);
+				while (Source.Region.Any(s => s.Name == spawner.Name))
+				{
+					spawner.Name = $"Copy of {spawner.Name}";
+				}
+				Source.Region.Add(spawner as RegionSpawner);
+			}
+
+			if (spawner != null)
+			{
+				foreach (var entryElement in clipboard.Root.Elements("entry"))
+				{
+					var entry = new SpawnEntry(entryElement);
+
+					var entity = default(Entity);
+					var entityName = (string)entryElement.Attribute("entity");
+
+					if (!String.IsNullOrEmpty(entityName))
+					{
+						entity = _segment.Entities.FirstOrDefault(
+							e => String.Equals(e.Name,
+								entityName, StringComparison.Ordinal));
+					}
+
+					entry.Entity = entity;
+
+					if (entry.Entity != null)
+						spawner.Entries.Add(entry);
+				}
+
+			}
+
+		}
+
+		public void CloneSpawner(Spawner spawner)
+        {
+			var newSpawner = default(Spawner);
+			if (spawner is LocationSpawner l) {
+				newSpawner = new LocationSpawner(l.GetXElement());
+				while (Source.Location.Any(s => s.Name == newSpawner.Name))
+					newSpawner.Name = $"Copy of {newSpawner.Name}";
+				Source.Location.Add(newSpawner as LocationSpawner);
+			}
+			else if (spawner is RegionSpawner r) {
+				newSpawner = new RegionSpawner(r.GetXElement());
+				while (Source.Region.Any(s => s.Name == newSpawner.Name))
+					newSpawner.Name = $"Copy of {newSpawner.Name}";
+				Source.Region.Add(newSpawner as RegionSpawner);
+			}
+			foreach (var entity in spawner.Entries)
+            {
+				newSpawner.Entries.Add(entity);
+            }
+        }
 	}
 }

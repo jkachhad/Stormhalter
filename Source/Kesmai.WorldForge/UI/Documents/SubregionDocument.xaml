@@ -48,21 +48,30 @@
                             CommandParameter="{Binding SelectedSubregion}">
                         <Image Source="../../Resources/Delete.png" />
                     </Button>
+                    <Button Width="24" Height="24"
+                                    Command="{Binding ExportSubregionCommand}"
+                                    ToolTip="Copy subregion to Clipboard"
+                                    CommandParameter="{Binding SelectedSubregion}">
+                        <Image Source="../../Resources/Export.png" />
+                    </Button>
+                    <Button Width="24" Height="24"
+                                    Command="{Binding ImportSubregionCommand}"
+                                    ToolTip="Paste subregion from Clipboard">
+                        <Image Source="../../Resources/Import.png" />
+                    </Button>
                 </ToolBar.Items>
             </ToolBar>
             
-            <ScrollViewer Grid.Row="1">
-                <ListBox Width="300" 
-                         ItemsSource="{Binding Source={StaticResource collectionViewSource}}"
-                         SelectedItem="{Binding SelectedSubregion, Mode=TwoWay}"
-                         SelectionMode="Single">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="3" />
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </ScrollViewer>
+            <ListBox Width="300" Grid.Row="1"
+                        ItemsSource="{Binding Source={StaticResource collectionViewSource}}"
+                        SelectedItem="{Binding SelectedSubregion, Mode=TwoWay}"
+                        SelectionMode="Single">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="3" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
             
             <syncfusion:PropertyGrid Grid.Row="2" Margin="0,3,0,0"
                                      SelectedObject="{Binding SelectedSubregion}"

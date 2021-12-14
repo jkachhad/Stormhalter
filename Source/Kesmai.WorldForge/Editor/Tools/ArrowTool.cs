@@ -87,7 +87,7 @@ namespace Kesmai.WorldForge
 			{
 				if (!_isDragging)
 				{
-					if (selection.Count > 0)
+					if (selection.Count > 0 && !selection.IsSelected(cx, cy, region))
 					{
 						selection.Clear();
 						graphicsScreen.InvalidateRender();
@@ -118,7 +118,7 @@ namespace Kesmai.WorldForge
 			}
 			else if (inputService.IsDown(MouseButtons.Left))
 			{
-				if (!modify && selection.IsSelected(cx, cy, region) || _isMoving)
+				if (!_isSelecting && !modify && selection.IsSelected(cx, cy, region) || _isMoving)
 				{
 					if (_isMoving)
 						_movingEnd = currentPosition;
@@ -204,9 +204,10 @@ namespace Kesmai.WorldForge
 
 					if (tile != null)
 					{
-						var componentWindow = new ComponentsWindow(region, tile);
+						var componentWindow = new ComponentsWindow(region, tile, graphicsScreen);
+						
+						selection.Clear();
 
-						componentWindow.Closed += (o, args) => { tile.UpdateTerrain(); };
 						componentWindow.Show(graphicsScreen.UI);
 						componentWindow.Center();
 					}

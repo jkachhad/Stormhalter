@@ -49,33 +49,51 @@
                     <ToolBar Padding="2" Grid.Row="0">
                         <ToolBar.Items>
                             <Button Width="24" Height="24"
-                                    Command="{Binding AddLocationSpawnerCommand}">
+                                    Command="{Binding AddLocationSpawnerCommand}"
+                                    ToolTip="Add empty Spawner">
                                 <Image Source="../../Resources/Add.png"/>
                             </Button>
                             <Button Width="24" Height="24"
                                     Command="{Binding RemoveLocationSpawnerCommand}"
+                                    ToolTip="Remove Spawner"
                                     CommandParameter="{Binding SelectedLocationSpawner}">
                                 <Image Source="../../Resources/Delete.png" />
                             </Button>
+                            <Button Width="24" Height="24"
+                                    Command="{Binding CopyLocationSpawnerCommand}"
+                                    ToolTip="Copy Spawner to Clipboard"
+                                    CommandParameter="{Binding SelectedLocationSpawner}">
+                                <Image Source="../../Resources/Export.png" />
+                            </Button>
+                            <Button Width="24" Height="24"
+                                    Command="{Binding CloneLocationSpawnerCommand}"
+                                    ToolTip="Clone Spawner"
+                                    CommandParameter="{Binding SelectedLocationSpawner}">
+                                <Image Source="../../Resources/Copy.png" />
+                            </Button>
+                            <Button Width="24" Height="24"
+                                    Command="{Binding PasteSpawnerCommand}"
+                                    ToolTip="Paste Spawner from Clipboard">
+                                <Image Source="../../Resources/Import.png" />
+                            </Button>
                         </ToolBar.Items>
                     </ToolBar>
-                    
-                    <ScrollViewer Grid.Row="1">
-                        <ListBox Width="300"
-                                 ItemsSource="{Binding Source={StaticResource collectionViewSourceLocation}}" 
-                                 SelectedItem="{Binding SelectedLocationSpawner, Mode=TwoWay}"
-                                 SelectionMode="Single"
-                                 SelectedIndex="0">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                        <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="3" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </ScrollViewer>
-                    
+
+                    <ListBox Width="300" Grid.Row="1"
+                                x:Name="_locationSpawnerList"
+                                ItemsSource="{Binding Source={StaticResource collectionViewSourceLocation}}" 
+                                SelectedItem="{Binding SelectedLocationSpawner, Mode=TwoWay}"
+                                SelectionMode="Single"
+                                SelectedIndex="0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="3" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
                     <syncfusion:PropertyGrid Grid.Row="2" Margin="0,3,0,0"
                                              SelectedObject="{Binding SelectedLocationSpawner}"
                                              SortDirection="{x:Null}"
@@ -153,6 +171,27 @@
                             <DataGridTextColumn MinWidth="70" Header="Size" Binding="{Binding Size, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                             <DataGridTextColumn MinWidth="70" Header="Minimum" Binding="{Binding Minimum, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                             <DataGridTextColumn MinWidth="70" Header="Maximum" Binding="{Binding Maximum, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn MinWidth="70" Header="HP" Binding="{Binding Entity.HP}" IsReadOnly="True">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Background" Value="LightGray"></Setter>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn MinWidth="70" Header="XP" Binding="{Binding Entity.XP}" IsReadOnly="True">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Background" Value="LightGray"></Setter>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn MinWidth="70" Header="Threat" Binding="{Binding Entity.Threat}" IsReadOnly="True">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Background" Value="LightGray"></Setter>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                     <GridSplitter Grid.Row="3" Height="3" HorizontalAlignment="Stretch" />
@@ -173,7 +212,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="244"></RowDefinition>
+                        <RowDefinition Height="295"></RowDefinition>
                         <RowDefinition Height="120"></RowDefinition>
                         <RowDefinition Height="120"></RowDefinition>
                     </Grid.RowDefinitions>
@@ -181,31 +220,49 @@
                     <ToolBar Padding="2">
                         <ToolBar.Items>
                             <Button Width="24" Height="24"
-                                    Command="{Binding AddRegionSpawnerCommand}">
+                                    Command="{Binding AddRegionSpawnerCommand}"
+                                    ToolTip="Add empty Spawner">
                                 <Image Source="../../Resources/Add.png"/>
                             </Button>
                             <Button Width="24" Height="24"
                                     Command="{Binding RemoveRegionSpawnerCommand}"
+                                    ToolTip="Remove Spawner"
                                     CommandParameter="{Binding SelectedRegionSpawner}">
                                 <Image Source="../../Resources/Delete.png" />
+                            </Button>
+                            <Button Width="24" Height="24"
+                                    Command="{Binding CopyRegionSpawnerCommand}"
+                                    ToolTip="Copy Spawner to Clipboard"
+                                    CommandParameter="{Binding SelectedRegionSpawner}">
+                                <Image Source="../../Resources/Export.png" />
+                            </Button>
+                            <Button Width="24" Height="24"
+                                    Command="{Binding CloneRegionSpawnerCommand}"
+                                    ToolTip="Clone Spawner"
+                                    CommandParameter="{Binding SelectedRegionSpawner}">
+                                <Image Source="../../Resources/Copy.png" />
+                            </Button>
+                            <Button Width="24" Height="24"
+                                    Command="{Binding PasteSpawnerCommand}"
+                                    ToolTip="Paste Spawner from Clipboard">
+                                <Image Source="../../Resources/Import.png" />
                             </Button>
                         </ToolBar.Items>
                     </ToolBar>
                     
-                    <ScrollViewer Grid.Row="1">
-                        <ListBox Width="300"
-                                 ItemsSource="{Binding Source={StaticResource collectionViewSourceRegion}}" 
-                                 SelectedItem="{Binding SelectedRegionSpawner, Mode=TwoWay}"
-                                 SelectedIndex="0">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                        <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="3" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </ScrollViewer>
+                    <ListBox Width="300" Grid.Row="1"
+                                x:Name="_regionSpawnerList"
+                                ItemsSource="{Binding Source={StaticResource collectionViewSourceRegion}}" 
+                                SelectedItem="{Binding SelectedRegionSpawner, Mode=TwoWay}"
+                                SelectedIndex="0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="3" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                     
                     <syncfusion:PropertyGrid Grid.Row="2" Margin="0,3,0,0"
                                              SelectedObject="{Binding SelectedRegionSpawner}"
@@ -221,6 +278,11 @@
                             <syncfusion:PropertyGridItem PropertyName="Density" IsReadOnly="True" />
                             <syncfusion:PropertyGridItem PropertyName="AverageMobs" IsReadOnly="True" />
                             <syncfusion:PropertyGridItem PropertyName="OpenFloorTiles" IsReadOnly="True" />
+                            <syncfusion:PropertyGridItem PropertyName="TotalHP" IsReadOnly="True" />
+                            <syncfusion:PropertyGridItem PropertyName="TotalXP" IsReadOnly="True" />
+                            <!-- Threat calc for a spawn needs work. This may not even be something we can 'guess' at without compiling the segment
+                            <syncfusion:PropertyGridItem PropertyName="Threat" IsReadOnly="True" />
+                            -->
                         </syncfusion:PropertyGrid.Items>
                     </syncfusion:PropertyGrid>
                     
@@ -279,6 +341,27 @@
                             <DataGridTextColumn MinWidth="70" Header="Size" Binding="{Binding Size, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                             <DataGridTextColumn MinWidth="70" Header="Minimum" Binding="{Binding Minimum, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                             <DataGridTextColumn MinWidth="70" Header="Maximum" Binding="{Binding Maximum, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn MinWidth="70" Header="HP" Binding="{Binding Entity.HP}" IsReadOnly="True">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Background" Value="LightGray"></Setter>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn MinWidth="70" Header="XP" Binding="{Binding Entity.XP}" IsReadOnly="True">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Background" Value="LightGray"></Setter>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn MinWidth="70" Header="Threat" Binding="{Binding Entity.Threat}" IsReadOnly="True">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Background" Value="LightGray"></Setter>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                     <GridSplitter Grid.Row="1" Height="3" HorizontalAlignment="Stretch" />
