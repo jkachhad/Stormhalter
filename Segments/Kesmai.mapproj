@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.81.0.0">
+<segment name="Kesmai" version="0.87.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -40407,6 +40407,10 @@
         <component type="WaterComponent">
           <ground>22</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="EgressComponent">
+          <egress>318</egress>
+          <destinationSegment>28</destinationSegment>
         </component>
       </tile>
       <tile x="65" y="39">
