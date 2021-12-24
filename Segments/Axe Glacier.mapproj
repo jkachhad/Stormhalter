@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.81.0.0">
+<segment name="Axe Glacier" version="0.87.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -107751,7 +107751,7 @@
     {
         {
             new CreatureSpell<DeathSpell>(
-                skillLevel: 13),  90  
+                skillLevel: 13),  90,   TimeSpan.FromSeconds(9.0)
         },
         {
             new CreatureSpell<PoisonCloudSpell>(
