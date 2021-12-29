@@ -130,5 +130,9 @@ namespace Kesmai.Server.Items
 
 			return BaseArmorBonus;
 		}
+		
+		public virtual void OnHit(MobileEntity attacker, MobileEntity defender)
+		{
+		}
 	}
 }
