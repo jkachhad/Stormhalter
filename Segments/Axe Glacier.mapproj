@@ -360,6 +360,60 @@
             }
         }
     }
+    
+    public class FrostGiantUndead : CreatureEntity, IUndead
+        {
+            public FrostGiantUndead()
+            {
+                Body = 225;
+                Alignment = Alignment.Chaotic;
+            }
+
+            public FrostGiantUndead(Serial serial) : base(serial)
+            {
+            }
+
+            public override void OnSpellTarget(Target target, MobileEntity combatant)
+            {
+                Emote($"smashes its hammer down with unfathomable force.");
+                Teleport(combatant.Location);
+                base.OnSpellTarget(target, combatant);
+            }
+
+            public override void OnSpawn()
+            {
+                base.OnSpawn();
+                if (_brain != null)
+                    return;
+                if (RightHand is ProjectileWeapon)
+                    _brain = new RangedAI(this);
+                else
+                    _brain = new CombatAI(this);
+            }
+
+            public override int GetNearbySound() => 313;
+            public override int GetAttackSound() => 314;
+            public override int GetDeathSound() => 315;
+
+            public override void Serialize(BinaryWriter writer)
+            {
+                base.Serialize(writer);
+                writer.Write((short)1); /* version */
+            }
+
+            public override void Deserialize(BinaryReader reader)
+            {
+                base.Deserialize(reader);
+                var version = reader.ReadInt16();
+                switch (version)
+                {
+                    case 1:
+                    {
+                        break;
+                    }
+                }
+            }
+        }
 ]]></block>
     <block><![CDATA[
 ]]></block>
@@ -107505,9 +107559,9 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	var draugr = new Draugr()
+	var draugr = new Skeleton()
     {
-        Name = "draugr archer",
+        Name = "skeletal archer",
 
         MaxHealth = 225,
         Health = 225,
@@ -107516,7 +107570,6 @@
         BasePenetration = ShieldPenetration.Medium,
         Experience = 22500,        
         Movement = 2,
-        Hue = Color.FromArgb(200, 255, 200, 200),
         Immunity = CreatureImmunity.Poison | CreatureImmunity.Piercing,
         
         Weakness = CreatureWeakness.Silver,
@@ -107567,9 +107620,9 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	var draugr = new Draugr()
+	var draugr = new Spectre()
     {
-        Name = "draugr mage",
+        Name = "ancient spectre",
 
         MaxHealth = 200,
         Health = 200,
@@ -107579,7 +107632,6 @@
         BasePenetration = ShieldPenetration.Light,
         Experience = 19500,
         Movement = 2,
-        Hue = Color.FromArgb(150, 255, 150, 150),
         Immunity = CreatureImmunity.Poison | CreatureImmunity.Piercing,
         
         Weakness = CreatureWeakness.Silver,
@@ -107638,7 +107690,7 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var giant = new UndeadFrostGiant()
+    var giant = new FrostGiantUndead()
     {
         Name = "undead frost giant",
         MaxHealth = 2200,
@@ -107732,7 +107784,7 @@
     {
         {
             new CreatureSpell<DeathSpell>(
-                skillLevel: 13),  90  
+                skillLevel: 13),  90,   TimeSpan.FromSeconds(9.0)
         },
         {
             new CreatureSpell<PoisonCloudSpell>(
@@ -110246,7 +110298,7 @@
       </entry>
     </treasure>
     <treasure name="upperTreasureBottles">
-      <entry weight="16">
+      <entry weight="40">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -110255,7 +110307,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="4">
+      <entry weight="20">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[

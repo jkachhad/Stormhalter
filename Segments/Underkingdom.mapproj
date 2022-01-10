@@ -85,6 +85,8 @@
         public override int GetNearbySound() => 289;
         public override int GetAttackSound() => 290;
         public override int GetDeathSound() => 291;
+        
+        public override Corpse GetCorpse() => default(Corpse);
 
         public HummingGuardian(Serial serial) : base(serial)
         {
@@ -289,6 +291,204 @@
             }
         }
     
+    }
+    
+    public class Googog : VendorEntity
+    {
+        public Googog()
+        {
+            Name = "Googog";
+            Body = 134;
+    
+            Health = MaxHealth = 50;
+            BaseDodge = 10;
+            Alignment = Alignment.Neutral;    
+            Experience = 50;
+    
+            Movement = 0;
+        }
+    
+        public Googog(Serial serial) : base(serial)
+        {
+        }
+    
+        public override void HandleOrder(OrderEventArgs args)
+        {
+            base.HandleOrder(args);
+    
+            if (args.Handled)
+                return;
+    
+            var source = args.Source;
+            var order = args.Order;
+    
+            /* example: sell key */
+            if (_craft.TryGetMatch(order, out var craftMatch) && craftMatch.Groups[1].Value.Matches("scroll", true))
+            {
+                args.Handled = true;
+    
+                if (AtCounter(source, out var counter))
+                {
+                    var items = Segment.GetItemsAt(Location).ToList();
+                    
+                    var cashOnFloor = items.OfType<Currency>();
+    
+                    if (cashOnFloor.Any())
+                    {
+                        if (ConsumeFromLocation<Currency>(counter, 50000))
+                        {
+                            new PrincessScroll().Move(counter, true, Segment);
+    
+                            Say($"The jailer is... kind of thick. Like a rock. Hand him this sealed scroll. He'll do what you ask.");
+                        }
+                        
+                        else
+                        {
+                            Say($"I tells ya, I don't work cheap!");
+                        }
+                    }
+                    else
+                    {
+                        Say($"I only work for coin, and I don't work cheap!");
+                    }
+                }
+                else
+                {
+                    Say($"Shhh closer! I don't want the other goblins hearing me talk to a human!");
+                }
+    
+                return;
+            }
+        }
+    }
+    
+    public class TrollJailer : VendorEntity
+    {
+        public TrollJailer()
+        {
+            Name = "Near Sighted Jailer";
+            Body = 148;
+    
+            Health = MaxHealth = 50;
+            BaseDodge = 10;
+    
+            Alignment = Alignment.Neutral;
+    
+            Experience = 50;
+    
+            Movement = 0;
+        }
+    
+        public TrollJailer(Serial serial) : base(serial)
+        {
+        }
+    
+        public override void HandleOrder(OrderEventArgs args)
+        {
+            base.HandleOrder(args);
+    
+            if (args.Handled)
+                return;
+    
+            var source = args.Source;
+            var order = args.Order;
+    
+            /* example: sell key */
+            if (_craft.TryGetMatch(order, out var craftMatch) && craftMatch.Groups[1].Value.Matches("princess", true))
+            {
+                args.Handled = true;
+    
+                if (AtCounter(source, out var counter))
+                {
+                    var items = Segment.GetItemsAt(Location).ToList();
+    
+                    var jailScroll = items.OfType<PrincessScroll>();
+    
+                    if (jailScroll.Any())
+                    {
+                        if (ConsumeFromLocation<PrincessScroll>(counter, 1))
+                        {
+                            var tile = source.Segment.FindTile(5, 8, 10);
+    
+                            if (tile != null && tile.ContainsComponent<Obstruction>())
+                            {
+                                var component = tile.GetComponent<Obstruction>();
+                                tile.Remove(component);
+                            }
+                            Say($"Order from king... good. You feed princess. I take break.");
+    
+                            Timer.DelayCall(TimeSpan.FromSeconds(0.2), () => Delete());
+                        }
+                    }
+                    else
+                    {
+                        Say($"Me not do anyt'ing wi'fout orders.");
+                    }
+                }
+                else
+                {
+                    Say($"Me not hear great. Closer.");
+                }
+    
+                return;
+            }
+        }
+    }
+    
+    public class PrincessScroll : ItemEntity
+    {
+        /// <inheritdoc />
+        public override int LabelNumber => 6000078;
+
+        /// <inheritdoc />
+        public override uint BasePrice => 100;
+
+        /// <inheritdoc />
+        public override int Weight => 5;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PrincessScroll"/> class.
+        /// </summary>
+        public PrincessScroll() : base(128)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PrincessScroll"/> class.
+        /// </summary>
+        public PrincessScroll(Serial serial) : base(serial)
+        {
+        }
+
+        /// <inheritdoc />
+        public override void GetDescription(List<LocalizationEntry> entries)
+        {
+            entries.Add(new LocalizationEntry(6200000, 6200244)); /* [You are looking at] [a scroll entitled 'Everything is Not As It May Appear'.] */
+        }
+
+        /// <inheritdoc />
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((short)1); /* version */
+        }
+
+        /// <inheritdoc />
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+
+            var version = reader.ReadInt16();
+
+            switch (version)
+            {
+                case 1:
+                {
+                    break;
+                }
+            }
+        }
     }
 ]]></block>
     <block><![CDATA[]]></block>
@@ -43463,9 +43663,11 @@
         </component>
       </tile>
       <tile x="2" y="2">
-        <component type="WaterComponent">
-          <ground>177</ground>
-          <movementCost>3</movementCost>
+        <component type="WallComponent">
+          <wall>447</wall>
+          <destroyed>0</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="3" y="2">
@@ -54920,13 +55122,6 @@
       <tile x="5" y="8">
         <component type="FloorComponent">
           <ground>3</ground>
-        </component>
-        <component type="DoorComponent">
-          <openId>434</openId>
-          <closedId>421</closedId>
-          <secretId>384</secretId>
-          <destroyedId>436</destroyedId>
-          <isSecret>true</isSecret>
         </component>
       </tile>
       <tile x="6" y="8">
@@ -85055,9 +85250,6 @@
         </component>
       </tile>
       <tile x="7" y="2">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
@@ -85307,9 +85499,6 @@
         </component>
       </tile>
       <tile x="7" y="3">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
@@ -85564,9 +85753,6 @@
         </component>
       </tile>
       <tile x="2" y="4">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -85587,9 +85773,6 @@
         </component>
       </tile>
       <tile x="4" y="4">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -85598,9 +85781,6 @@
         </component>
       </tile>
       <tile x="5" y="4">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
@@ -85620,9 +85800,6 @@
         </component>
       </tile>
       <tile x="7" y="4">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
@@ -85631,9 +85808,6 @@
         </component>
       </tile>
       <tile x="8" y="4">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -85642,9 +85816,6 @@
         </component>
       </tile>
       <tile x="9" y="4">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -85653,9 +85824,6 @@
         </component>
       </tile>
       <tile x="10" y="4">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -85675,9 +85843,6 @@
         </component>
       </tile>
       <tile x="12" y="4">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -85686,9 +85851,6 @@
         </component>
       </tile>
       <tile x="13" y="4">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -85697,9 +85859,6 @@
         </component>
       </tile>
       <tile x="14" y="4">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -85708,9 +85867,6 @@
         </component>
       </tile>
       <tile x="15" y="4">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -85922,9 +86078,6 @@
         </component>
       </tile>
       <tile x="5" y="5">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
@@ -86196,9 +86349,6 @@
         </component>
       </tile>
       <tile x="1" y="6">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
@@ -86237,9 +86387,6 @@
         </component>
       </tile>
       <tile x="5" y="6">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
@@ -86253,9 +86400,6 @@
         </component>
       </tile>
       <tile x="7" y="6">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
@@ -86264,9 +86408,6 @@
         </component>
       </tile>
       <tile x="8" y="6">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -86275,9 +86416,6 @@
         </component>
       </tile>
       <tile x="9" y="6">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -86286,9 +86424,6 @@
         </component>
       </tile>
       <tile x="10" y="6">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -86308,9 +86443,6 @@
         </component>
       </tile>
       <tile x="12" y="6">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -86319,9 +86451,6 @@
         </component>
       </tile>
       <tile x="13" y="6">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -86330,9 +86459,6 @@
         </component>
       </tile>
       <tile x="14" y="6">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -86341,9 +86467,6 @@
         </component>
       </tile>
       <tile x="15" y="6">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -86584,9 +86707,6 @@
         </component>
       </tile>
       <tile x="5" y="7">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
@@ -86600,9 +86720,6 @@
         </component>
       </tile>
       <tile x="7" y="7">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
@@ -86646,9 +86763,6 @@
         </component>
       </tile>
       <tile x="15" y="7">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
@@ -86694,9 +86808,6 @@
         </component>
       </tile>
       <tile x="21" y="7">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
@@ -86865,9 +86976,6 @@
         </component>
       </tile>
       <tile x="1" y="8">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
@@ -86911,9 +87019,6 @@
         </component>
       </tile>
       <tile x="5" y="8">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
@@ -87015,9 +87120,6 @@
         </component>
       </tile>
       <tile x="21" y="8">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
@@ -87151,9 +87253,6 @@
         </component>
       </tile>
       <tile x="2" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -87162,9 +87261,6 @@
         </component>
       </tile>
       <tile x="3" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -87176,9 +87272,6 @@
         </component>
       </tile>
       <tile x="4" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -87190,9 +87283,6 @@
         </component>
       </tile>
       <tile x="5" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
@@ -87207,9 +87297,6 @@
         </component>
       </tile>
       <tile x="6" y="9">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -87218,9 +87305,6 @@
         </component>
       </tile>
       <tile x="7" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
@@ -87235,9 +87319,6 @@
         </component>
       </tile>
       <tile x="8" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -87246,9 +87327,6 @@
         </component>
       </tile>
       <tile x="9" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -87257,9 +87335,6 @@
         </component>
       </tile>
       <tile x="10" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -87268,9 +87343,6 @@
         </component>
       </tile>
       <tile x="11" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -87279,9 +87351,6 @@
         </component>
       </tile>
       <tile x="12" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -87290,9 +87359,6 @@
         </component>
       </tile>
       <tile x="13" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -87301,9 +87367,6 @@
         </component>
       </tile>
       <tile x="14" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -87312,9 +87375,6 @@
         </component>
       </tile>
       <tile x="15" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
@@ -87329,9 +87389,6 @@
         </component>
       </tile>
       <tile x="16" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -87340,9 +87397,6 @@
         </component>
       </tile>
       <tile x="17" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -87351,9 +87405,6 @@
         </component>
       </tile>
       <tile x="18" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -87362,9 +87413,6 @@
         </component>
       </tile>
       <tile x="19" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -87373,9 +87421,6 @@
         </component>
       </tile>
       <tile x="20" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
@@ -87384,9 +87429,6 @@
         </component>
       </tile>
       <tile x="21" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
@@ -87586,7 +87628,7 @@
           <destinationRegion>16</destinationRegion>
           <lightphases select="all" />
           <moonphases select="all" />
-          <professions select="all" />
+          <professions>Thief</professions>
           <alignments select="all" />
         </component>
       </tile>
@@ -87616,6 +87658,7 @@
           <secretId>336</secretId>
           <destroyedId>80</destroyedId>
           <isSecret>true</isSecret>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <static>386</static>
@@ -87626,7 +87669,7 @@
           <destinationRegion>16</destinationRegion>
           <lightphases select="all" />
           <moonphases select="all" />
-          <professions>Fighter,Martial Artist,Thaumaturge,Wizard,Knight</professions>
+          <professions>Thaumaturge,Martial Artist,Fighter,Wizard,Knight</professions>
           <alignments select="all" />
           <message>6300344</message>
         </component>
@@ -87861,48 +87904,41 @@
         </component>
       </tile>
       <tile x="2" y="11">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="3" y="11">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="4" y="11">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="5" y="11">
-        <component type="FloorComponent">
-          <ground>178</ground>
+        <component type="WallComponent">
+          <wall>335</wall>
+          <destroyed>344</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
-          <ruins>0</ruins>
-        </component>
-        <component type="WallComponent">
-          <wall>335</wall>
-          <destroyed>344</destroyed>
-          <ruins>0</ruins>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="6" y="11">
@@ -99491,7 +99527,7 @@
         HideDetection = 25,
         
         Movement = 2,
-        
+        CanLoot = false,
         LightningResistance = 100,
         
     };
@@ -99555,7 +99591,7 @@
         Experience = 2500,
         BasePenetration = ShieldPenetration.Light,
         Movement = 2,
-        
+        CanLoot = false,
         FireProtection = 100,
         
     };
@@ -99617,6 +99653,7 @@
         HideDetection = 25,
                 
         Experience = 2500,
+        CanLoot = false,
     
         Movement = 2,
         BasePenetration = ShieldPenetration.Light,
@@ -99681,7 +99718,7 @@
         HideDetection = 25,
                 
         Experience = 2500,
-    
+        CanLoot = false,
         Movement = 2,
         BasePenetration = ShieldPenetration.Light,
         
@@ -101404,10 +101441,10 @@
     //todo add yasnaki models
     var knight = new Humanoid()
     {
-        Name = "Yasnaki.Knight",
+        Name = "Yasnaki Knight",
         Body = 193,
         
-        MaxHealth = 230, Health = 230,
+        MaxHealth = 170, Health = 170,
         BaseDodge = 14,
         HideDetection = 28,        
         Experience = 10500,
@@ -101416,7 +101453,7 @@
     
     knight.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(14, 25, 40)
+        new CreatureBasicAttack(16)
     };
     
     knight.Wield(new Greatsword());
@@ -101576,10 +101613,10 @@
                     
     var martialartist = new Ninja()
     {
-        Name = "Yasnaki.Monk",
+        Name = "Yasnaki Monk",
         Body = 105,
             
-        MaxHealth = 260, Health = 260,
+        MaxHealth = 180, Health = 180,
         BaseDodge = 16,
         HideDetection = 28,
         Experience = 10550,
@@ -101589,7 +101626,7 @@
     
     martialartist.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(15, 20, 35)
+        new CreatureBasicAttack(16)
     };   
     
     martialartist.AddGold(650);
@@ -101624,10 +101661,10 @@
         <block><![CDATA[
     var wizard = new Humanoid()
     {
-        Name = "Yasnaki.Wizard",
+        Name = "Yasnaki Wizard",
         Body = 192,
         HideDetection = 28,      
-        MaxHealth = 150, Health = 150,
+        MaxHealth = 125, Health = 125,
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
         BasePenetration = ShieldPenetration.Light,
@@ -101641,7 +101678,7 @@
     
     wizard.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(10, 20, 25)
+        new CreatureBasicAttack(14)
     };
     
     wizard.Spells = new CreatureSpellCollection()
@@ -101690,7 +101727,7 @@
     //todo add all yasnaki models
     var thaum = new Humanoid()
     {
-        Name = "Dark.Thaum",
+        Name = "Yasnaki Thaum",
         Body = 191,
         MaxHealth = 130, Health = 130,
         BaseDodge = 11,
@@ -101704,7 +101741,7 @@
         
     thaum.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(12, 20, 25)
+        new CreatureBasicAttack(15)
     };
     
     thaum.Spells = new CreatureSpellCollection()
@@ -101740,28 +101777,6 @@
       <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="tkPrincessPlaceholder">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    return new ConfessorGhost();
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    source.Say($"You've got to help me!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102114,7 +102129,7 @@
     wraith.Spells = new CreatureSpellCollection(100)
     {
        { new CreatureSpell<WhirlwindSpell>(
-            skillLevel: 9.5), 100, TimeSpan.FromSeconds(12.0) }
+            skillLevel: 13), 100, TimeSpan.FromSeconds(12.0) }
     };
     
     wraith.AddLoot(new LootPack(
@@ -102391,6 +102406,48 @@
     ));
     
     return orc;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="uk200Googog">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    return new Googog();
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="tkTrollJailer">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	return new TrollJailer();
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -103183,7 +103240,7 @@
       <entry entity="townTrainerThief" size="1" minimum="1" maximum="1" />
       <location x="49" y="35" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="googogTEMP">
+    <spawn type="LocationSpawner" name="googog">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -103201,12 +103258,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="townConfessorGhost" size="1" minimum="1" maximum="1" />
+      <entry entity="uk200Googog" size="1" minimum="1" maximum="1" />
       <location x="17" y="24" region="5" />
     </spawn>
     <spawn type="LocationSpawner" name="tkPrincess">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>900</maximumDelay>
+      <minimumDelay>7200</minimumDelay>
+      <maximumDelay>5400</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -103601,6 +103658,53 @@
       <entry entity="townRecallVendor" size="1" minimum="1" maximum="1" />
       <location x="13" y="14" region="1" />
     </spawn>
+    <spawn type="LocationSpawner" name="tkJailer">
+      <minimumDelay>1800</minimumDelay>
+      <maximumDelay>2700</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is CreatureEntity creature)
+    {
+        var tile = creature.Segment.FindTile(5, 8, 10);
+        
+        if (tile != null && !tile.ContainsComponent<Obstruction>())
+            tile.Add(new Obstruction(450, true));
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="tkTrollJailer" size="1" minimum="1" maximum="1" />
+      <location x="6" y="8" region="10" />
+    </spawn>
+    <spawn type="LocationSpawner" name="UKConfessorGhost">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="townConfessorGhost" size="1" minimum="1" maximum="1" />
+      <location x="15" y="3" region="2" />
+    </spawn>
     <spawn type="RegionSpawner" name="wyverns">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
@@ -103793,7 +103897,11 @@
       <entry entity="uk100MaGoblin" size="1" minimum="2" maximum="2" />
       <bounds region="5">
         <inclusion left="3" top="3" right="13" bottom="25" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
+        <inclusion left="14" top="8" right="14" bottom="15" />
+        <exclusion left="3" top="24" right="9" bottom="25" />
+        <exclusion left="3" top="19" right="4" bottom="23" />
+        <exclusion left="11" top="3" right="13" bottom="6" />
+        <exclusion left="7" top="16" right="13" bottom="19" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="lightningcaves">
@@ -104114,7 +104222,7 @@
     <spawn type="RegionSpawner" name="yasnakilevel">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1500</maximumDelay>
-      <maximum>25</maximum>
+      <maximum>33</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -104129,11 +104237,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="yasnakiMA" size="3" minimum="4" maximum="6" />
-      <entry entity="yasnakiWizard" size="1" minimum="3" maximum="4" />
-      <entry entity="yasnakiThaum" size="3" minimum="5" maximum="5" />
-      <entry entity="yasnakiKnight" size="3" minimum="7" maximum="9" />
-      <entry entity="yasnakiMA" size="3" minimum="2" maximum="3" />
+      <entry entity="yasnakiMA" size="3" minimum="11" maximum="11" />
+      <entry entity="yasnakiWizard" size="1" minimum="6" maximum="6" />
+      <entry entity="yasnakiThaum" size="3" minimum="8" maximum="8" />
+      <entry entity="yasnakiKnight" size="3" minimum="11" maximum="11" />
       <bounds region="16">
         <inclusion left="1" top="10" right="37" bottom="21" />
         <inclusion left="22" top="1" right="37" bottom="9" />
@@ -104167,6 +104274,7 @@
       <entry entity="udStalker" size="1" minimum="3" maximum="3" />
       <bounds region="17">
         <inclusion left="2" top="3" right="37" bottom="22" />
+        <exclusion left="2" top="21" right="29" bottom="22" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="orugugra">
@@ -104245,6 +104353,30 @@
       <bounds region="16">
         <inclusion left="6" top="2" right="15" bottom="8" />
         <inclusion left="16" top="7" right="20" bottom="8" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="SpeedyHobUnsafeRoom">
+      <minimumDelay>1500</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="uk300Troll" size="1" minimum="4" maximum="4" />
+      <bounds region="12">
+        <inclusion left="31" top="12" right="33" bottom="14" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -104351,7 +104483,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallSapphire(3500u);
+	return new SwallowSapphire(3500u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104360,7 +104492,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StarRuby(5500u);
+	return new WhaleSapphire(10000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104369,7 +104501,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(23000u);
+	return new Tourmaline(23000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104399,7 +104531,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallSapphire(4000u);
+	return new SwallowSapphire(4000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104408,7 +104540,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StarRuby(6000u);
+	return new WhaleSapphire(11000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104417,7 +104549,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(26000u);
+	return new Tourmaline(26000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104447,7 +104579,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallSapphire(4000u);
+	return new SwallowSapphire(4000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104456,7 +104588,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StarRuby(6100u);
+	return new WhaleSapphire(6100u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104465,7 +104597,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(26000u);
+	return new Tourmaline(26000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104476,7 +104608,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new PearDiamond(2500u);
+	return new SwallowSapphire(4500u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104485,7 +104617,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StarRuby(7000u);
+	return new WhaleSapphire(7000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104494,7 +104626,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(28000u);
+	return new Tourmaline(28000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104563,7 +104695,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new PearDiamond(3500u);
+	return new Diamond(3500u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104572,7 +104704,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StarRuby(7500u);
+	return new SwallowSapphire(7500u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104581,7 +104713,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(32000u);
+	return new Tourmaline(32000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104590,7 +104722,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new UncutEmerald(8000u);
+	return new WhaleSapphire(8000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
