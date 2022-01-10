@@ -394,7 +394,7 @@
             var order = args.Order;
     
             /* example: sell key */
-            if (_free.TryGetMatch(order, out var freeMatch) && freeMatch.Groups[1].Value.Matches("princess", true))
+            if (_craft.TryGetMatch(order, out var craftMatch) && craftMatch.Groups[1].Value.Matches("princess", true))
             {
                 args.Handled = true;
     
