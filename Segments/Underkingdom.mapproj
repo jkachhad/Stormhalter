@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.81.0.0">
+<segment name="Underkingdom" version="0.87.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -323,7 +323,7 @@
             var order = args.Order;
     
             /* example: sell key */
-            if (_sell.TryGetMatch(order, out var sellMatch) && sellMatch.Groups[1].Value.Matches("scroll", true))
+            if (_craft.TryGetMatch(order, out var craftMatch) && craftMatch.Groups[1].Value.Matches("scroll", true))
             {
                 args.Handled = true;
     
