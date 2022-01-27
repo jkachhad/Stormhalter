@@ -109107,10 +109107,21 @@
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>14400</maximumDelay>
       <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    switch (Utility.Random(1, 9))
+    {
+        case 1: break;
+        case 2: spawn.Teleport(new Point2D(2, 30, 23)); break;
+        case 3: spawn.Teleport(new Point2D(12, 8, 6)); break;
+        case 4: spawn.Teleport(new Point2D(38, 23, 6)); break;
+        case 5: spawn.Teleport(new Point2D(14, 34, 6)); break;
+        case 6: spawn.Teleport(new Point2D(13, 12, 12)); break;
+        case 7: spawn.Teleport(new Point2D(42, 19, 12)); break;
+        case 8: spawn.Teleport(new Point2D(15, 37, 8)); break;
+        case 9: spawn.Teleport(new Point2D(18, 8, 18)); break;
+   }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
