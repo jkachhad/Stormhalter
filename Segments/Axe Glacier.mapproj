@@ -104715,8 +104715,8 @@
         <block><![CDATA[
     var wolf = new Wolf()
     {
-        MaxHealth = 100, Health = 100,
-        BaseDodge = 14,
+        MaxHealth = 150, Health = 150,
+        BaseDodge = 16,
         HideDetection = 23,        
         Experience = 4500,
         BasePenetration = ShieldPenetration.Medium,
@@ -104732,13 +104732,13 @@
     wolf.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(8,     5, 15,   "The wolf rakes you with its claws."), 50 
+            new CreatureAttack(10,     5, 15,   "The wolf rakes you with its claws."), 50 
         }, 
         {
-            new CreatureAttack(9,     6, 16,  "The wolf sinks its teeth into you."),  30 
+            new CreatureAttack(11,     6, 16,  "The wolf sinks its teeth into you."),  30 
         }, 
         {
-            new CreatureAttack(9,     7, 18,  "The wolf lunges at you."),             20 
+            new CreatureAttack(12,     7, 18,  "The wolf lunges at you."),             20 
         }, 
     };
         
@@ -104779,7 +104779,7 @@
         <block><![CDATA[
     var wolf = new Wolf()
     {
-        BaseDodge = 17,
+        BaseDodge = 24,
         MaxHealth = 700, Health = 700,
 
         Experience = 11500,
@@ -104807,13 +104807,13 @@
     wolf.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(9,     10, 30,   "The wolf rakes you with its claws."),  50 
+            new CreatureAttack(12,     10, 30,   "The wolf rakes you with its claws."),  50 
         }, 
         {
-            new CreatureAttack(11,     15, 35,  "The wolf sinks its teeth into you."),  30 
+            new CreatureAttack(13,     15, 35,  "The wolf sinks its teeth into you."),  30 
         }, 
         {
-            new CreatureAttack(11,     20, 45,  "The wolf lunges at you.",
+            new CreatureAttack(13,     20, 45,  "The wolf lunges at you.",
                                                 new AttackProneComponent(10),
                                                 new AttackStunComponent(10)),           20
         }, 
@@ -109103,6 +109103,27 @@
       <entry entity="axeThiefTrainer" size="1" minimum="1" maximum="1" />
       <location x="45" y="3" region="12" />
     </spawn>
+    <spawn type="LocationSpawner" name="KingWolf">
+      <minimumDelay>7200</minimumDelay>
+      <maximumDelay>14400</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="upperBossKingWolf" size="1" minimum="1" maximum="1" />
+      <location x="13" y="10" region="23" />
+    </spawn>
     <spawn type="RegionSpawner" name="Surface Dungeon">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
@@ -109683,7 +109704,6 @@
       <entry entity="upperTroll" size="2" minimum="1" maximum="2" />
       <entry entity="upperGoblinSentry" size="3" minimum="1" maximum="2" />
       <entry entity="lightningMesaPwolf" size="1" minimum="0" maximum="1" />
-      <entry entity="upperBossKingWolf" size="1" minimum="0" maximum="1" />
       <entry entity="upperWraith" size="1" minimum="0" maximum="1" />
       <bounds region="23">
         <inclusion left="11" top="3" right="16" bottom="20" />
