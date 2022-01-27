@@ -122,14 +122,25 @@ namespace Kesmai.WorldForge.Models
 		public override IEnumerable<ComponentRender> GetTerrain()
 		{
 			var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
-			
+			Terrain terrain;
+
 			var stages = FindStages(_tree);
-			var pair = stages.GetPair(_tree);
-			
-			if (terrainManager.TryGetValue((IsDecayed ? pair.Dead : pair.Alive), out Terrain terrain)) 
+			if (stages is not null)
+			{
+				var pair = stages.GetPair(_tree);
+
+				terrainManager.TryGetValue((IsDecayed ? pair.Dead : pair.Alive), out terrain);
+			}
+			else
+			{
+				terrainManager.TryGetValue((IsDecayed ? 101 : _tree), out terrain); // default to a dead kesmai tree if a pairing is not found
+			}
+
+			if (terrain is not null)
 				yield return new ComponentRender(terrain, Color);
+
 		}
-		
+
 		public override XElement GetXElement()
 		{
 			var element = base.GetXElement();
