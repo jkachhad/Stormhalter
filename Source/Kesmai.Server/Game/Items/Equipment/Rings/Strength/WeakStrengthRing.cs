@@ -18,7 +18,7 @@ namespace Kesmai.Server.Items
 		/// </summary>
 		public override int Weight => 20;
 
-		public override int StrengthBonus => 3;
+		public override int StrengthBonus => 1;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WeakStrengthRing"/> class.
