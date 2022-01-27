@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Xml.Linq;
 using CommonServiceLocator;
 using DigitalRune.ServiceLocation;
 using Kesmai.WorldForge.Editor;
@@ -38,6 +39,13 @@ namespace Kesmai.WorldForge.UI.Documents
 	
 	public partial class EntitiesDocument : UserControl
 	{
+		public class GetSelectedSpawner : RequestMessage<Spawner>
+		{
+		}
+		public class GetCurrentScriptSelection : RequestMessage<String>
+		{
+		}
+
 		public EntitiesDocument()
 		{
 			InitializeComponent();
@@ -48,7 +56,17 @@ namespace Kesmai.WorldForge.UI.Documents
 			WeakReferenceMessenger.Default
 				.Register<EntitiesDocument, Entity>(
 					this, (r, m) => { ChangeEntity(m); });
+
+			WeakReferenceMessenger.Default.Register<EntitiesDocument, GetSelectedSpawner>(this,
+					(r, m) => m.Reply(_spawnersList.SelectedItem as Spawner));
+
+			WeakReferenceMessenger.Default.Register<EntitiesDocument, GetCurrentScriptSelection>(this,
+				(r, m) => m.Reply(GetScriptSelection()));
+
+			WeakReferenceMessenger.Default.Register<EntitiesDocument, UnregisterEvents>(this,
+				(r, m) => { WeakReferenceMessenger.Default.UnregisterAll(this); });
 		}
+
 		private void ChangeEntity(Entity entity)
 		{
 			var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
@@ -62,6 +80,19 @@ namespace Kesmai.WorldForge.UI.Documents
 			private void OnEntityChanged(EntitiesDocument recipient, EntitiesViewModel.SelectedEntityChangedMessage message)
 		{
 			_scriptsTabControl.SelectedIndex = 0;
+			_entityList.ScrollIntoView(_entityList.SelectedItem);
+		}
+
+		public String GetScriptSelection ()
+        {
+			if (_scriptsTabControl.HasItems)
+			{
+				ContentPresenter cp = _scriptsTabControl.Template.FindName("PART_SelectedContentHost", _scriptsTabControl) as ContentPresenter;
+				ScriptEditor editor = _scriptsTabControl.ContentTemplate.FindName("_editor", cp) as ScriptEditor;
+				return editor.SelectedText;
+			} else 
+				return null;
+
 		}
 	}
 
@@ -73,9 +104,9 @@ namespace Kesmai.WorldForge.UI.Documents
 			{
 			}
 		}
-		
+
 		public string Name => "(Entities)";
-		
+
 		private int _newEntityCount = 1;
 
 		private Entity _selectedEntity;
@@ -87,17 +118,35 @@ namespace Kesmai.WorldForge.UI.Documents
 			set
 			{
 				SetProperty(ref _selectedEntity, value, true);
-					
+
+				_relatedSpawners.Clear();
+				foreach (Spawner spawner in _segment.Spawns.Location.Where(s => s.Entries.Any(e => e.Entity == SelectedEntity)))
+				{
+					_relatedSpawners.Add(spawner);
+				}
+				foreach (Spawner spawner in _segment.Spawns.Region.Where(s => s.Entries.Any(e => e.Entity == SelectedEntity)))
+				{
+					_relatedSpawners.Add(spawner);
+				}
+
+
 				if (value != null)
 					WeakReferenceMessenger.Default.Send(new SelectedEntityChangedMessage(value));
 			}
 		}
 
 		public SegmentEntities Source => _segment.Entities;
+
+		private ObservableCollection<Spawner> _relatedSpawners = new ObservableCollection<Spawner>();
+
+		public ObservableCollection<Spawner> RelatedSpawners { get=> _relatedSpawners;}
 		
 		public RelayCommand AddEntityCommand { get; set; }
 		public RelayCommand<Entity> RemoveEntityCommand { get; set; }
 		public RelayCommand<Entity> CopyEntityCommand { get; set; }
+		public RelayCommand<Entity> ExportEntityCommand { get; set; }
+		public RelayCommand ImportEntityComamnd { get; set; }
+		public RelayCommand JumpSpawnerCommand { get; set; }
 
 		public EntitiesViewModel(Segment segment)
 		{
@@ -112,6 +161,35 @@ namespace Kesmai.WorldForge.UI.Documents
 			CopyEntityCommand = new RelayCommand<Entity>(CopyEntity,
 				(entity) => (SelectedEntity != null));
 			CopyEntityCommand.DependsOn(() => SelectedEntity);
+
+			ExportEntityCommand = new RelayCommand<Entity>(ExportEntity,
+				(entity) => (SelectedEntity != null));
+			ExportEntityCommand.DependsOn(() => SelectedEntity);
+
+			ImportEntityComamnd = new RelayCommand(ImportEntity);
+
+
+			JumpSpawnerCommand = new RelayCommand(JumpSpawner);
+
+		}
+
+		public void JumpSpawner()
+		{
+			var spawnRequest = WeakReferenceMessenger.Default.Send<EntitiesDocument.GetSelectedSpawner>();
+			var spawn = spawnRequest.Response;
+			var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+			if (spawnRequest.HasReceivedResponse)
+			{
+				Spawner target = spawnRequest.Response;
+				var ActiveDocument = presenter.Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
+				presenter.ActiveDocument = ActiveDocument;
+				if (target is LocationSpawner)
+					(ActiveDocument as SpawnsViewModel).SelectedLocationSpawner = target as LocationSpawner;
+				if (target is RegionSpawner)
+					(ActiveDocument as SpawnsViewModel).SelectedRegionSpawner = target as RegionSpawner;
+				WeakReferenceMessenger.Default.Send(target as Spawner);
+			}
+			WeakReferenceMessenger.Default.Send(spawn as Spawner);
 		}
 
 		public void AddEntity()
@@ -141,6 +219,31 @@ namespace Kesmai.WorldForge.UI.Documents
 				Source.Add(clonedEntity);
 				SelectedEntity = clonedEntity;
 			}
+		}
+
+		public void ExportEntity(Entity entity)
+        {
+			Clipboard.SetText(entity.GetXElement().ToString());
+        }
+
+		public void ImportEntity()
+		{
+			XDocument clipboard = null;
+			try
+			{
+				clipboard = XDocument.Parse(Clipboard.GetText());
+			}
+			catch { }
+			if (clipboard is null || clipboard.Root.Name.ToString() != "entity")
+				return;
+
+			var newEntity = new Entity(clipboard.Root);
+
+			while (Source.Any(e => e.Name == newEntity.Name))
+				newEntity.Name = $"Copy of {newEntity.Name}";
+
+			Source.Add(newEntity);
+			SelectedEntity = newEntity;
 		}
 	}
 }

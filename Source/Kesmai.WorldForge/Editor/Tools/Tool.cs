@@ -1,11 +1,11 @@
 using System;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using CommonServiceLocator;
 using DigitalRune.Game.Input;
 using DigitalRune.Graphics;
 using DigitalRune.Mathematics.Algebra;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Messaging;
 
 namespace Kesmai.WorldForge
 {
@@ -56,10 +56,30 @@ namespace Kesmai.WorldForge
 
 		public virtual void OnActivate()
 		{
+			WeakReferenceMessenger.Default.Send(new ToolStartMessage(this));
 		}
 
 		public virtual void OnDeactivate()
 		{
+			WeakReferenceMessenger.Default.Send(new ToolStopMessage(this));
 		}
 	}
+
+	public class ToolStartMessage
+    {
+		public Tool NewTool;
+		public ToolStartMessage(Tool newTool)
+        {
+			NewTool = newTool;
+        }
+    }
+
+	public class ToolStopMessage
+    {
+		public Tool OldTool;
+		public ToolStopMessage (Tool oldTool)
+        {
+			OldTool = oldTool;
+        }
+    }
 }

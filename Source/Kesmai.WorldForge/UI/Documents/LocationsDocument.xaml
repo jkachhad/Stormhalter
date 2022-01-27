@@ -52,43 +52,52 @@
                             CommandParameter="{Binding SelectedLocation}">
                         <Image Source="../../Resources/Copy.png" />
                     </Button>
+                    <Button Width="24" Height="24"
+                                    Command="{Binding ExportLocationCommand}"
+                                    ToolTip="Copy location to Clipboard"
+                                    CommandParameter="{Binding SelectedLocation}">
+                        <Image Source="../../Resources/Export.png" />
+                    </Button>
+                    <Button Width="24" Height="24"
+                                    Command="{Binding ImportLocationCommand}"
+                                    ToolTip="Paste location from Clipboard">
+                        <Image Source="../../Resources/Import.png" />
+                    </Button>
                 </ToolBar.Items>
             </ToolBar>
             
-            <ScrollViewer Grid.Row="1">
-                <ListBox Width="300" 
-                         ItemsSource="{Binding Source={StaticResource collectionViewSource}}"
-                         SelectedItem="{Binding SelectedLocation, Mode=TwoWay}"
-                         SelectionMode="Single">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" 
-                                        VerticalAlignment="Center">
-                                <TextBlock FontWeight="Bold" x:Name="locationName" Text="{Binding Name}" Margin="3" />
-                                <TextBlock FontStyle="Italic" x:Name="locationPoint" TextAlignment="Right" Margin="3">
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="X: {0} Y: {1} Region: {2}">
-                                            <Binding Path="X" />
-                                            <Binding Path="Y" />
-                                            <Binding Path="Region" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                            </StackPanel>
+            <ListBox Width="300" Grid.Row="1"
+                        ItemsSource="{Binding Source={StaticResource collectionViewSource}}"
+                        SelectedItem="{Binding SelectedLocation, Mode=TwoWay}"
+                        SelectionMode="Single">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" 
+                                    VerticalAlignment="Center">
+                            <TextBlock FontWeight="Bold" x:Name="locationName" Text="{Binding Name}" Margin="3" />
+                            <TextBlock FontStyle="Italic" x:Name="locationPoint" TextAlignment="Right" Margin="3">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="X: {0} Y: {1} Region: {2}">
+                                        <Binding Path="X" />
+                                        <Binding Path="Y" />
+                                        <Binding Path="Region" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </StackPanel>
                         
-                            <DataTemplate.Triggers>
-                                <DataTrigger Binding="{Binding IsReserved}" Value="True">
-                                    <Setter TargetName="locationName" Property="Foreground" Value="DodgerBlue"/>
-                                </DataTrigger>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding IsReserved}" Value="True">
+                                <Setter TargetName="locationName" Property="Foreground" Value="DodgerBlue"/>
+                            </DataTrigger>
                                 
-                                <DataTrigger Binding="{Binding Region}" Value="0">
-                                    <Setter TargetName="locationPoint" Property="Foreground" Value="Red"/>
-                                </DataTrigger>
-                            </DataTemplate.Triggers>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </ScrollViewer>
+                            <DataTrigger Binding="{Binding Region}" Value="0">
+                                <Setter TargetName="locationPoint" Property="Foreground" Value="Red"/>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
             
             <syncfusion:PropertyGrid Grid.Row="2" Margin="0,3,0,0"
                                      SelectedObject="{Binding SelectedLocation}"

@@ -1,12 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Xml.Linq;
+using CommonServiceLocator;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Scripting;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
+using Microsoft.Toolkit.Mvvm.Messaging.Messages;
 
 namespace Kesmai.WorldForge.UI.Documents
 {
@@ -21,14 +25,42 @@ namespace Kesmai.WorldForge.UI.Documents
 	
 	public partial class TreasuresDocument : UserControl
 	{
+		public class GetActiveEntity : RequestMessage<Entity>
+		{
+		}
 		public TreasuresDocument()
 		{
 			InitializeComponent();
+
+			WeakReferenceMessenger.Default
+				.Register<TreasuresDocument, TreasuresViewModel.SelectedTreasureChangedMessage>(this, (r, m) => { _treasuresList.ScrollIntoView(_treasuresList.SelectedItem); });
+			
+			WeakReferenceMessenger.Default.Register<TreasuresDocument, GetActiveEntity>(this,
+				(r, m) => m.Reply(GetSelectedEntity()));
+
+			WeakReferenceMessenger.Default.Register<TreasuresDocument, UnregisterEvents>(this,
+				(r, m) => { WeakReferenceMessenger.Default.UnregisterAll(this); });
+		}
+
+		public Entity GetSelectedEntity()
+        {
+			var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+			if (presenter.ActiveDocument is not TreasuresViewModel)
+				return null;
+			if (_entitiesList.SelectedItem != null)
+				return _entitiesList.SelectedItem as Entity;
+			return null;
 		}
 	}
 
 	public class TreasuresViewModel : ObservableRecipient
 	{
+		public class SelectedTreasureChangedMessage : ValueChangedMessage<SegmentTreasure>
+		{
+			public SelectedTreasureChangedMessage(SegmentTreasure value) : base(value)
+			{
+			}
+		}
 		public string Name => "(Treasures)";
 		
 		private Segment _segment;
@@ -43,7 +75,24 @@ namespace Kesmai.WorldForge.UI.Documents
 		public SegmentTreasure SelectedTreasure
 		{
 			get => _selectedTreasure;
-			set => SetProperty(ref _selectedTreasure, value, true);
+			set
+			{
+				SetProperty(ref _selectedTreasure, value, true);
+
+				if (value != null)
+					WeakReferenceMessenger.Default.Send(new SelectedTreasureChangedMessage(value));
+
+				_relatedEntities.Clear();
+
+				foreach (Entity entity in _segment.Entities)
+                {
+					foreach (Script script in entity.Scripts)
+                    {
+						if (script.Blocks[1].Contains(_selectedTreasure.Name))
+							_relatedEntities.Add(entity);
+                    }
+                }
+			}
 		}
 		
 		public TreasureEntry SelectedTreasureEntry
@@ -52,14 +101,20 @@ namespace Kesmai.WorldForge.UI.Documents
 			set => SetProperty(ref _selectedTreasureEntry, value, true);
 		}
 
+		private ObservableCollection<Entity> _relatedEntities = new ObservableCollection<Entity>();
+
+		public ObservableCollection<Entity> RelatedEntities { get => _relatedEntities; }
+
 		public RelayCommand AddTreasureCommand { get; set; }
 		public RelayCommand<SegmentTreasure> RemoveTreasureCommand { get; set; }
 		public RelayCommand<SegmentTreasure> CopyTreasureCommand { get; set; }
-		
+		public RelayCommand ImportTreasureCommand { get; set; }
+		public RelayCommand<SegmentTreasure> ExportTreasureCommand { get; set; }
 		public RelayCommand AddTreasureEntryCommand { get; set; }
 		public RelayCommand<TreasureEntry> RemoveTreasureEntryCommand { get; set; }
 		public RelayCommand<TreasureEntry> CopyTreasureEntryCommand { get; set; }
-		
+		public RelayCommand JumpEntityCommand { get; set; }
+
 		public TreasuresViewModel(Segment segment)
 		{
 			_segment = segment;
@@ -73,7 +128,13 @@ namespace Kesmai.WorldForge.UI.Documents
 			CopyTreasureCommand = new RelayCommand<SegmentTreasure>(CopyTreasure, 
 				(treasure) => (SelectedTreasure != null));
 			CopyTreasureCommand.DependsOn(() => SelectedTreasure);
-			
+
+			ImportTreasureCommand = new RelayCommand(ImportTreasure);
+
+			ExportTreasureCommand = new RelayCommand<SegmentTreasure>(ExportTreasure,
+				(treasure) => (SelectedTreasure != null));
+			ExportTreasureCommand.DependsOn(() => SelectedTreasure);
+
 			AddTreasureEntryCommand = new RelayCommand(AddTreasureEntry);
 			
 			RemoveTreasureEntryCommand = new RelayCommand<TreasureEntry>(RemoveTreasureEntry,
@@ -86,8 +147,17 @@ namespace Kesmai.WorldForge.UI.Documents
 			
 			WeakReferenceMessenger.Default.Register<TreasuresViewModel, TreasureEntry.TreasureEntryWeightChanged>
 				(this, OnWeightChanged);
+
+			JumpEntityCommand = new RelayCommand(JumpEntity);
+
 		}
 
+		public void JumpEntity()
+		{
+			var entityRequest = WeakReferenceMessenger.Default.Send<TreasuresDocument.GetActiveEntity>();
+			var entity = entityRequest.Response;
+			WeakReferenceMessenger.Default.Send(entity);
+		}
 		private void OnWeightChanged(TreasuresViewModel recipient, TreasureEntry.TreasureEntryWeightChanged message)
 		{
 			_selectedTreasure.InvalidateChance();
@@ -148,5 +218,37 @@ namespace Kesmai.WorldForge.UI.Documents
 			SelectedTreasure.Entries.Add(clonedEntry);
 			SelectedTreasureEntry = clonedEntry;
 		}
+
+		public void ImportTreasure()
+        {
+			XDocument clipboard = null;
+			try
+			{
+				clipboard = XDocument.Parse(Clipboard.GetText());
+			}
+			catch { }
+			if (clipboard is null || clipboard.Root.Name.ToString() != "treasure")
+				return;
+			var newTreasure = new SegmentTreasure(clipboard.Root);
+            bool isNameTaken;
+			do // Why doesn't Treasures have linq support? Treasures.Any would have simplified this.
+			{
+				isNameTaken = false;
+				foreach (var treasure in Treasures)
+				{
+					if (treasure.Name == newTreasure.Name)
+					{
+						isNameTaken = true;
+						newTreasure.Name = $"Copy of {newTreasure.Name}";
+					}
+				}
+			} while (isNameTaken);
+			Treasures.Add(newTreasure);
+		}
+
+		public void ExportTreasure(SegmentTreasure treasure)
+        {
+			Clipboard.SetText(treasure.GetXElement().ToString());
+        }
 	}
 }

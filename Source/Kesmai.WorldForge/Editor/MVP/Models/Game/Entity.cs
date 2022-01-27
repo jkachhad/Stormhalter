@@ -7,6 +7,10 @@ using DigitalRune.Collections;
 using Kesmai.WorldForge.Scripting;
 using Kesmai.WorldForge.UI.Documents;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using System.ComponentModel;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Collections.Generic;
 
 namespace Kesmai.WorldForge
 {
@@ -36,6 +40,108 @@ namespace Kesmai.WorldForge
 			get => _scripts;
 			set => SetProperty(ref _scripts, value);
 		}
+
+		public int? XP
+        {
+			get
+            {
+				var onSpawnScript = _scripts.FirstOrDefault(
+					s => string.Equals(s.Name, "OnSpawn", StringComparison.OrdinalIgnoreCase));
+
+				if (onSpawnScript is null)
+					return null;
+
+				/* Create a syntax tree for analysis. */
+				var syntaxTree = CSharpSyntaxTree.ParseText(onSpawnScript.Blocks[1]);
+				var syntaxRoot = syntaxTree.GetCompilationUnitRoot();
+
+				/* Find a node that is an assignment, where the left identifier is "Experience" */
+				var experienceAssignment = syntaxRoot
+					.DescendantNodes().LastOrDefault(
+						n => n is AssignmentExpressionSyntax assignmentSyntax
+							 && assignmentSyntax.Left is IdentifierNameSyntax nameSyntax
+							 && String.Equals(nameSyntax.Identifier.Text, "Experience",
+								 StringComparison.OrdinalIgnoreCase));
+
+				if (experienceAssignment is AssignmentExpressionSyntax assignment
+					&& assignment.Right is LiteralExpressionSyntax valueSyntax)
+					return int.Parse(valueSyntax.Token.Text);
+
+				return null; // a null value here indicates I can't trust this number
+			}
+        }
+		public int? HP
+        {
+			get
+			{
+				var onSpawnScript = _scripts.FirstOrDefault(
+					s => string.Equals(s.Name, "OnSpawn", StringComparison.OrdinalIgnoreCase));
+
+				if (onSpawnScript is null)
+					return null;
+
+				/* Create a syntax tree for analysis. */
+				var syntaxTree = CSharpSyntaxTree.ParseText(onSpawnScript.Blocks[1]);
+				var syntaxRoot = syntaxTree.GetCompilationUnitRoot();
+
+				/* Find a node that is an assignment, where the left identifier is "MaxHealth" */
+				var experienceAssignment = syntaxRoot
+					.DescendantNodes().LastOrDefault(
+						n => n is AssignmentExpressionSyntax assignmentSyntax
+							 && assignmentSyntax.Left is IdentifierNameSyntax nameSyntax
+							 && String.Equals(nameSyntax.Identifier.Text, "MaxHealth",
+								 StringComparison.OrdinalIgnoreCase));
+
+				if (experienceAssignment is AssignmentExpressionSyntax assignment
+					&& assignment.Right is LiteralExpressionSyntax valueSyntax)
+					return int.Parse(valueSyntax.Token.Text);
+
+				return null; // a null value here indicates I can't trust this number
+			}
+		}
+
+		[Description("Approximate offensive power (melee,ranged & magic)")]
+		public Tuple<int?,int?> Threat
+        {
+			get
+			{
+				//These regexes are fraught. They are likely to break based on developer syntax preferences, but seem to work across most mobs I've tested.
+				var skillPattern = new System.Text.RegularExpressions.Regex("Creature(?:Basic)?Attack\\(\\s*(\\d+)\\s*[,)]", System.Text.RegularExpressions.RegexOptions.Multiline);
+				var matches = skillPattern.Matches(this.Scripts[0].Blocks[1]);
+				int? meleeSkill = 0;
+				foreach (System.Text.RegularExpressions.Match match in matches)
+				{
+					if (int.TryParse(match.Groups[1].Value, out var thisAttack))
+					{
+						meleeSkill = Math.Max((int)meleeSkill, thisAttack);
+					}
+					else
+						meleeSkill = null;
+				}
+				skillPattern = new System.Text.RegularExpressions.Regex("CreatureSpell<(\\w*)>\\(\\s*(?:skillLevel:)?\\s*(\\d+\\.?\\d*)?\\s*[,)]", System.Text.RegularExpressions.RegexOptions.Multiline);
+				matches = skillPattern.Matches(this.Scripts[0].Blocks[1]);
+				int? rangedSkill = 0;
+				foreach (System.Text.RegularExpressions.Match match in matches.Where(m => !new[] {"BlindSpell","StunSpell"}.Contains(m.Groups[1].Value)))
+				{
+					if (double.TryParse(match.Groups[2].Value, out var thisAttack))
+					{
+						rangedSkill = Math.Max((int)rangedSkill, (int)(thisAttack*2)); //magic skills are more of a threat than melee.
+					}
+					else
+						rangedSkill = null;
+				}
+				//This regex will need attention if there are ranged weapons that aren't longbow, shortbow, crossbow, etc. RHammer trolls come to mind, but may be the only exception.
+				skillPattern = new System.Text.RegularExpressions.Regex("Wield\\([^)]*bow", System.Text.RegularExpressions.RegexOptions.Multiline);
+				matches = skillPattern.Matches(this.Scripts[0].Blocks[1]);
+				if (matches.Count > 0) // if we're equiping a bow, then the melee skill is actually ranged.
+				{
+					rangedSkill = Math.Max((int)meleeSkill, (int)rangedSkill);
+					meleeSkill = null;
+				}
+
+				return new Tuple<int?, int?>(meleeSkill, rangedSkill);
+			}
+        }
 		
 		public Entity()
 		{

@@ -1,8 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.77.0.0">
+<segment name="Underkingdom" version="0.87.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
+    public static TimeSpan _speechDelay = TimeSpan.FromMinutes(1.0);
+    public static Dictionary<MobileEntity, DateTime> _speechDelays = new Dictionary<MobileEntity, DateTime>();
+    
+    public static bool spokeRecently(MobileEntity entity)
+    {
+        /* If the entity spoke recently, we're not going to speak again. */
+        if (_speechDelays.TryGetValue(entity, out var nextSpeechTime) && DateTime.Now < nextSpeechTime)
+            return true;
+        
+        /* The entity did not speak recently, add them to the delay, and allow them to talk. */
+        _speechDelays[entity] = DateTime.Now + _speechDelay;
+        return false;
+    }
+    
     public static readonly string[] _names = new string[]
     {
         "Aca", "Acha", "Achi", "Achu", "Aco", "Agua", "Ahua", "Aja", "Ala", "Ali", "Ama", "Ani", "Anu", "Apa",
@@ -71,6 +85,8 @@
         public override int GetNearbySound() => 289;
         public override int GetAttackSound() => 290;
         public override int GetDeathSound() => 291;
+        
+        public override Corpse GetCorpse() => default(Corpse);
 
         public HummingGuardian(Serial serial) : base(serial)
         {
@@ -179,7 +195,7 @@
             BaseDodge = 10;
     
             Experience = 50;
-            Movement = 1;
+            Movement = 2;
     
             Alignment = Alignment.Lawful;
 			
@@ -190,7 +206,7 @@
 
             Brain = new RescueAI(this)
             {
-                Aggressive = true,
+                Aggressive = false,
             };
 			
 			CanLoot = false;
@@ -229,6 +245,18 @@
                 Director = source;
     
                 OnOrderFollow(source);
+
+                args.Handled = true;
+                return;
+            }
+			
+			if (order.Matches("trail", true))
+            {
+                Director = source;
+    
+                OnOrderTrail(source);
+                
+                args.Handled = true;
                 return;
             }
         }
@@ -264,6 +292,204 @@
         }
     
     }
+    
+    public class Googog : VendorEntity
+    {
+        public Googog()
+        {
+            Name = "Googog";
+            Body = 134;
+    
+            Health = MaxHealth = 50;
+            BaseDodge = 10;
+            Alignment = Alignment.Neutral;    
+            Experience = 50;
+    
+            Movement = 0;
+        }
+    
+        public Googog(Serial serial) : base(serial)
+        {
+        }
+    
+        public override void HandleOrder(OrderEventArgs args)
+        {
+            base.HandleOrder(args);
+    
+            if (args.Handled)
+                return;
+    
+            var source = args.Source;
+            var order = args.Order;
+    
+            /* example: sell key */
+            if (_craft.TryGetMatch(order, out var craftMatch) && craftMatch.Groups[1].Value.Matches("scroll", true))
+            {
+                args.Handled = true;
+    
+                if (AtCounter(source, out var counter))
+                {
+                    var items = Segment.GetItemsAt(Location).ToList();
+                    
+                    var cashOnFloor = items.OfType<Currency>();
+    
+                    if (cashOnFloor.Any())
+                    {
+                        if (ConsumeFromLocation<Currency>(counter, 50000))
+                        {
+                            new PrincessScroll().Move(counter, true, Segment);
+    
+                            Say($"The jailer is... kind of thick. Like a rock. Hand him this sealed scroll. He'll do what you ask.");
+                        }
+                        
+                        else
+                        {
+                            Say($"I tells ya, I don't work cheap!");
+                        }
+                    }
+                    else
+                    {
+                        Say($"I only work for coin, and I don't work cheap!");
+                    }
+                }
+                else
+                {
+                    Say($"Shhh closer! I don't want the other goblins hearing me talk to a human!");
+                }
+    
+                return;
+            }
+        }
+    }
+    
+    public class TrollJailer : VendorEntity
+    {
+        public TrollJailer()
+        {
+            Name = "Near Sighted Jailer";
+            Body = 148;
+    
+            Health = MaxHealth = 50;
+            BaseDodge = 10;
+    
+            Alignment = Alignment.Neutral;
+    
+            Experience = 50;
+    
+            Movement = 0;
+        }
+    
+        public TrollJailer(Serial serial) : base(serial)
+        {
+        }
+    
+        public override void HandleOrder(OrderEventArgs args)
+        {
+            base.HandleOrder(args);
+    
+            if (args.Handled)
+                return;
+    
+            var source = args.Source;
+            var order = args.Order;
+    
+            /* example: sell key */
+            if (_craft.TryGetMatch(order, out var craftMatch) && craftMatch.Groups[1].Value.Matches("princess", true))
+            {
+                args.Handled = true;
+    
+                if (AtCounter(source, out var counter))
+                {
+                    var items = Segment.GetItemsAt(Location).ToList();
+    
+                    var jailScroll = items.OfType<PrincessScroll>();
+    
+                    if (jailScroll.Any())
+                    {
+                        if (ConsumeFromLocation<PrincessScroll>(counter, 1))
+                        {
+                            var tile = source.Segment.FindTile(5, 8, 10);
+    
+                            if (tile != null && tile.ContainsComponent<Obstruction>())
+                            {
+                                var component = tile.GetComponent<Obstruction>();
+                                tile.Remove(component);
+                            }
+                            Say($"Order from king... good. You feed princess. I take break.");
+    
+                            Timer.DelayCall(TimeSpan.FromSeconds(0.2), () => Delete());
+                        }
+                    }
+                    else
+                    {
+                        Say($"Me not do anyt'ing wi'fout orders.");
+                    }
+                }
+                else
+                {
+                    Say($"Me not hear great. Closer.");
+                }
+    
+                return;
+            }
+        }
+    }
+    
+    public class PrincessScroll : ItemEntity
+    {
+        /// <inheritdoc />
+        public override int LabelNumber => 6000078;
+
+        /// <inheritdoc />
+        public override uint BasePrice => 100;
+
+        /// <inheritdoc />
+        public override int Weight => 5;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PrincessScroll"/> class.
+        /// </summary>
+        public PrincessScroll() : base(128)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PrincessScroll"/> class.
+        /// </summary>
+        public PrincessScroll(Serial serial) : base(serial)
+        {
+        }
+
+        /// <inheritdoc />
+        public override void GetDescription(List<LocalizationEntry> entries)
+        {
+            entries.Add(new LocalizationEntry(6200000, 6200244)); /* [You are looking at] [a scroll entitled 'Everything is Not As It May Appear'.] */
+        }
+
+        /// <inheritdoc />
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((short)1); /* version */
+        }
+
+        /// <inheritdoc />
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+
+            var version = reader.ReadInt16();
+
+            switch (version)
+            {
+                case 1:
+                {
+                    break;
+                }
+            }
+        }
+    }
 ]]></block>
     <block><![CDATA[]]></block>
   </script>
@@ -272,6 +498,7 @@
       <id>1</id>
       <name>Kobold Town - Surface</name>
       <height>0</height>
+      <level>18</level>
       <tile x="-1" y="-2">
         <component type="WallComponent">
           <wall>447</wall>
@@ -6375,7 +6602,6 @@
           <destinationY>15</destinationY>
           <destinationRegion>2</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="3" y="13">
@@ -6792,7 +7018,6 @@
           <destinationY>16</destinationY>
           <destinationRegion>2</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="8" y="14">
@@ -7923,6 +8148,7 @@
           <moonphases select="all" />
           <professions>Fighter,Martial Artist,Thaumaturge,Wizard,Knight</professions>
           <alignments select="all" />
+          <message>6300344</message>
           <allowNPC>true</allowNPC>
         </component>
       </tile>
@@ -16887,6 +17113,7 @@
       <id>2</id>
       <name>Lower Kobold</name>
       <height>-20</height>
+      <level>18</level>
       <tile x="0" y="0">
         <component type="WallComponent">
           <wall>447</wall>
@@ -21283,7 +21510,6 @@
           <destinationY>13</destinationY>
           <destinationRegion>1</destinationRegion>
           <teleporterId>128</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="19" y="15">
@@ -21624,7 +21850,6 @@
           <destinationY>14</destinationY>
           <destinationRegion>1</destinationRegion>
           <teleporterId>130</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="24" y="16">
@@ -24401,7 +24626,6 @@
           <destinationY>7</destinationY>
           <destinationRegion>3</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="34" y="25">
@@ -25142,6 +25366,7 @@
       <id>3</id>
       <name>Orc Caverns</name>
       <height>-50</height>
+      <level>20</level>
       <tile x="0" y="0">
         <component type="WallComponent">
           <wall>447</wall>
@@ -26348,7 +26573,6 @@
           <destinationY>28</destinationY>
           <destinationRegion>4</destinationRegion>
           <teleporterId>126</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="34" y="3">
@@ -27252,7 +27476,6 @@
           <destinationY>25</destinationY>
           <destinationRegion>2</destinationRegion>
           <teleporterId>128</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="4" y="7">
@@ -29348,6 +29571,7 @@
       <id>4</id>
       <name>Goblin Jungle</name>
       <height>-100</height>
+      <level>24</level>
       <tile x="0" y="0">
         <component type="WallComponent">
           <wall>447</wall>
@@ -30427,7 +30651,6 @@
           <destinationY>2</destinationY>
           <destinationRegion>6</destinationRegion>
           <teleporterId>126</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="14" y="5">
@@ -34555,7 +34778,6 @@
           <destinationY>3</destinationY>
           <destinationRegion>3</destinationRegion>
           <teleporterId>130</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="10" y="28">
@@ -34837,6 +35059,7 @@
       <id>5</id>
       <name>Googo Jungle</name>
       <height>-200</height>
+      <level>22</level>
       <tile x="0" y="0">
         <component type="WallComponent">
           <wall>447</wall>
@@ -39632,6 +39855,7 @@
       <id>6</id>
       <name>Upper Corridor</name>
       <height>-150</height>
+      <level>22</level>
       <tile x="1" y="0">
         <component type="WallComponent">
           <wall>447</wall>
@@ -39858,7 +40082,6 @@
           <destinationY>5</destinationY>
           <destinationRegion>4</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="4" y="2">
@@ -40590,7 +40813,6 @@
           <destinationY>2</destinationY>
           <destinationRegion>7</destinationRegion>
           <teleporterId>124</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="17" y="6">
@@ -40835,6 +41057,7 @@
       <id>7</id>
       <name>Lower Corridor</name>
       <height>-200</height>
+      <level>22</level>
       <tile x="-2" y="-1">
         <component type="WallComponent">
           <wall>447</wall>
@@ -41295,6 +41518,7 @@
           <wall>333</wall>
           <destroyed>342</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="17" y="1">
@@ -41338,7 +41562,6 @@
           <destinationY>6</destinationY>
           <destinationRegion>6</destinationRegion>
           <teleporterId>128</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="2" y="2">
@@ -41461,6 +41684,7 @@
           <wall>334</wall>
           <destroyed>343</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="17" y="2">
@@ -41610,7 +41834,6 @@
           <destinationY>1</destinationY>
           <destinationRegion>8</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="16" y="3">
@@ -41621,6 +41844,7 @@
           <wall>334</wall>
           <destroyed>343</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="17" y="3">
@@ -41983,6 +42207,7 @@
       <id>8</id>
       <name>Troll King Courtyard -300</name>
       <height>-300</height>
+      <level>24</level>
       <tile x="27" y="-3">
         <component type="WallComponent">
           <wall>447</wall>
@@ -43191,7 +43416,6 @@
           <destinationY>3</destinationY>
           <destinationRegion>7</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="32" y="1">
@@ -43439,9 +43663,11 @@
         </component>
       </tile>
       <tile x="2" y="2">
-        <component type="WaterComponent">
-          <ground>177</ground>
-          <movementCost>3</movementCost>
+        <component type="WallComponent">
+          <wall>447</wall>
+          <destroyed>0</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="3" y="2">
@@ -43581,6 +43807,7 @@
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="26" y="2">
@@ -43960,6 +44187,7 @@
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="26" y="3">
@@ -44448,6 +44676,7 @@
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="26" y="4">
@@ -44856,6 +45085,7 @@
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="26" y="5">
@@ -44866,6 +45096,7 @@
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="27" y="5">
@@ -46128,6 +46359,7 @@
           <wall>357</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="38" y="8">
@@ -46352,7 +46584,6 @@
           <destinationY>7</destinationY>
           <destinationRegion>9</destinationRegion>
           <teleporterId>130</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="12" y="9">
@@ -46384,7 +46615,6 @@
           <destinationY>7</destinationY>
           <destinationRegion>9</destinationRegion>
           <teleporterId>130</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="16" y="9">
@@ -46444,6 +46674,7 @@
           <wall>357</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="26" y="9">
@@ -46454,6 +46685,7 @@
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="27" y="9">
@@ -46464,11 +46696,13 @@
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="28" y="9">
@@ -46539,6 +46773,7 @@
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="38" y="9">
@@ -46881,6 +47116,7 @@
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="26" y="10">
@@ -46979,6 +47215,7 @@
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="38" y="10">
@@ -47300,6 +47537,7 @@
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="26" y="11">
@@ -47840,6 +48078,7 @@
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="26" y="12">
@@ -48268,6 +48507,7 @@
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="26" y="13">
@@ -48692,6 +48932,7 @@
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="26" y="14">
@@ -48851,7 +49092,6 @@
           <destinationY>3</destinationY>
           <destinationRegion>13</destinationRegion>
           <teleporterId>130</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="52" y="14">
@@ -50357,6 +50597,7 @@
       <id>9</id>
       <name>Troll King</name>
       <height>-240</height>
+      <level>28</level>
       <tile x="1" y="2">
         <component type="WallComponent">
           <wall>447</wall>
@@ -50939,7 +51180,6 @@
           <destinationY>9</destinationY>
           <destinationRegion>8</destinationRegion>
           <teleporterId>126</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="7" y="7">
@@ -50972,7 +51212,6 @@
           <destinationY>9</destinationY>
           <destinationRegion>8</destinationRegion>
           <teleporterId>126</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="11" y="7">
@@ -51415,7 +51654,6 @@
           <destinationY>1</destinationY>
           <destinationRegion>10</destinationRegion>
           <teleporterId>125</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="5" y="11">
@@ -52896,7 +53134,6 @@
           <destinationY>12</destinationY>
           <destinationRegion>10</destinationRegion>
           <teleporterId>126</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="5" y="22">
@@ -52955,7 +53192,7 @@
         <component type="FloorComponent">
           <ground>6</ground>
         </component>
-        <component type="HiddenTeleporterComponent">
+        <component type="ItemTeleporter">
           <destinationX>2</destinationX>
           <destinationY>19</destinationY>
           <destinationRegion>10</destinationRegion>
@@ -52963,6 +53200,8 @@
           <moonphases select="all" />
           <professions select="all" />
           <alignments select="all" />
+          <type>HummingbirdAmulet</type>
+          <fail>Interrupted</fail>
         </component>
       </tile>
       <tile x="14" y="22">
@@ -53624,6 +53863,7 @@
       <id>10</id>
       <name>Jail</name>
       <height>-280</height>
+      <level>28</level>
       <tile x="0" y="-2">
         <component type="WallComponent">
           <wall>447</wall>
@@ -53981,7 +54221,6 @@
           <destinationY>11</destinationY>
           <destinationRegion>9</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="3" y="1">
@@ -54884,13 +55123,6 @@
         <component type="FloorComponent">
           <ground>3</ground>
         </component>
-        <component type="DoorComponent">
-          <openId>434</openId>
-          <closedId>421</closedId>
-          <secretId>384</secretId>
-          <destroyedId>436</destroyedId>
-          <isSecret>true</isSecret>
-        </component>
       </tile>
       <tile x="6" y="8">
         <component type="FloorComponent">
@@ -55404,7 +55636,6 @@
           <destinationY>22</destinationY>
           <destinationRegion>9</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="3" y="12">
@@ -56795,6 +57026,7 @@
       <height>-80</height>
       <experienceMultiplier>2.2</experienceMultiplier>
       <healthMultiplier>1.3</healthMultiplier>
+      <level>22</level>
       <tile x="0" y="0">
         <component type="WallComponent">
           <wall>447</wall>
@@ -60132,6 +60364,11 @@
           <closedId>63</closedId>
           <secretId>26</secretId>
           <destroyedId>81</destroyedId>
+        </component>
+      </tile>
+      <tile x="13" y="11">
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="14" y="11">
@@ -66219,8 +66456,8 @@
         </component>
         <component type="DoorComponent">
           <openId>74</openId>
-          <closedId>333</closedId>
-          <secretId>25</secretId>
+          <closedId>62</closedId>
+          <secretId>333</secretId>
           <destroyedId>80</destroyedId>
           <isSecret>true</isSecret>
         </component>
@@ -68143,7 +68380,6 @@
           <destinationY>7</destinationY>
           <destinationRegion>12</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="33" y="38">
@@ -69168,6 +69404,7 @@
       <id>12</id>
       <name>Speedy Hob</name>
       <height>-100</height>
+      <level>26</level>
       <tile x="50" y="0">
         <component type="WallComponent">
           <wall>447</wall>
@@ -71749,7 +71986,6 @@
           <destinationY>38</destinationY>
           <destinationRegion>11</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="13" y="7">
@@ -75298,7 +75534,6 @@
           <destinationY>20</destinationY>
           <destinationRegion>16</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="45" y="15">
@@ -76717,6 +76952,7 @@
       <id>13</id>
       <name>Connecting Level</name>
       <height>-280</height>
+      <level>26</level>
       <tile x="0" y="0">
         <component type="WallComponent">
           <wall>447</wall>
@@ -77370,7 +77606,6 @@
           <destinationY>14</destinationY>
           <destinationRegion>8</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="5" y="3">
@@ -78541,8 +78776,9 @@
         <component type="DoorComponent">
           <openId>75</openId>
           <closedId>63</closedId>
-          <secretId>26</secretId>
+          <secretId>336</secretId>
           <destroyedId>81</destroyedId>
+          <isSecret>true</isSecret>
         </component>
       </tile>
       <tile x="7" y="9">
@@ -78913,7 +79149,6 @@
           <destinationY>3</destinationY>
           <destinationRegion>17</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="13" y="11">
@@ -79453,6 +79688,7 @@
       <id>14</id>
       <name>Mummy's Crypt</name>
       <height>-350</height>
+      <level>28</level>
       <tile x="-1" y="0">
         <component type="WallComponent">
           <wall>447</wall>
@@ -79746,7 +79982,6 @@
           <destinationY>20</destinationY>
           <destinationRegion>17</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="6" y="2">
@@ -79755,7 +79990,6 @@
           <destinationY>20</destinationY>
           <destinationRegion>17</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="7" y="2">
@@ -81436,7 +81670,6 @@
           <destinationY>2</destinationY>
           <destinationRegion>15</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="7" y="17">
@@ -81728,6 +81961,7 @@
       <id>15</id>
       <name>Overlord</name>
       <height>-400</height>
+      <level>30</level>
       <tile x="-4" y="0">
         <component type="WallComponent">
           <wall>447</wall>
@@ -82005,7 +82239,6 @@
           <destinationY>17</destinationY>
           <destinationRegion>14</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="3" y="2">
@@ -84128,6 +84361,7 @@
       <id>16</id>
       <name>Yasnaki</name>
       <height>-200</height>
+      <level>28</level>
       <tile x="31" y="-1">
         <component type="WallComponent">
           <wall>447</wall>
@@ -85016,13 +85250,11 @@
         </component>
       </tile>
       <tile x="7" y="2">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <static>244</static>
@@ -85183,7 +85415,6 @@
           <destinationY>19</destinationY>
           <destinationRegion>17</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="34" y="2">
@@ -85268,13 +85499,11 @@
         </component>
       </tile>
       <tile x="7" y="3">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <static>244</static>
@@ -85524,13 +85753,11 @@
         </component>
       </tile>
       <tile x="2" y="4">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="3" y="4">
@@ -85546,28 +85773,25 @@
         </component>
       </tile>
       <tile x="4" y="4">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="5" y="4">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="6" y="4">
@@ -85576,43 +85800,35 @@
         </component>
       </tile>
       <tile x="7" y="4">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="8" y="4">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="9" y="4">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="10" y="4">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="11" y="4">
@@ -85627,43 +85843,35 @@
         </component>
       </tile>
       <tile x="12" y="4">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="13" y="4">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="14" y="4">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="15" y="4">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="16" y="4">
@@ -85870,13 +86078,11 @@
         </component>
       </tile>
       <tile x="5" y="5">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="6" y="5">
@@ -86143,13 +86349,11 @@
         </component>
       </tile>
       <tile x="1" y="6">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <static>221</static>
@@ -86183,13 +86387,11 @@
         </component>
       </tile>
       <tile x="5" y="6">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="6" y="6">
@@ -86198,43 +86400,35 @@
         </component>
       </tile>
       <tile x="7" y="6">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="8" y="6">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="9" y="6">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="10" y="6">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="11" y="6">
@@ -86249,43 +86443,35 @@
         </component>
       </tile>
       <tile x="12" y="6">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="13" y="6">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="14" y="6">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="15" y="6">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="16" y="6">
@@ -86521,13 +86707,11 @@
         </component>
       </tile>
       <tile x="5" y="7">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="6" y="7">
@@ -86536,13 +86720,11 @@
         </component>
       </tile>
       <tile x="7" y="7">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="8" y="7">
@@ -86581,13 +86763,11 @@
         </component>
       </tile>
       <tile x="15" y="7">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="16" y="7">
@@ -86628,13 +86808,11 @@
         </component>
       </tile>
       <tile x="21" y="7">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="22" y="7">
@@ -86798,13 +86976,11 @@
         </component>
       </tile>
       <tile x="1" y="8">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <static>221</static>
@@ -86843,13 +87019,11 @@
         </component>
       </tile>
       <tile x="5" y="8">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="6" y="8">
@@ -86946,13 +87120,11 @@
         </component>
       </tile>
       <tile x="21" y="8">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="22" y="8">
@@ -87081,229 +87253,193 @@
         </component>
       </tile>
       <tile x="2" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="3" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <static>220</static>
         </component>
       </tile>
       <tile x="4" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <static>220</static>
         </component>
       </tile>
       <tile x="5" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="6" y="9">
-        <component type="FloorComponent">
-          <ground>178</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="7" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="8" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="9" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="10" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="11" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="12" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="13" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="14" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="15" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="16" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="17" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="18" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="19" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="20" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="9">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="22" y="9">
@@ -87492,7 +87628,7 @@
           <destinationRegion>16</destinationRegion>
           <lightphases select="all" />
           <moonphases select="all" />
-          <professions select="all" />
+          <professions>Thief</professions>
           <alignments select="all" />
         </component>
       </tile>
@@ -87522,6 +87658,7 @@
           <secretId>336</secretId>
           <destroyedId>80</destroyedId>
           <isSecret>true</isSecret>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <static>386</static>
@@ -87532,7 +87669,7 @@
           <destinationRegion>16</destinationRegion>
           <lightphases select="all" />
           <moonphases select="all" />
-          <professions>Fighter,Martial Artist,Thaumaturge,Wizard,Knight</professions>
+          <professions>Thaumaturge,Martial Artist,Fighter,Wizard,Knight</professions>
           <alignments select="all" />
           <message>6300344</message>
         </component>
@@ -87767,48 +87904,41 @@
         </component>
       </tile>
       <tile x="2" y="11">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="3" y="11">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="4" y="11">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>335</wall>
           <destroyed>344</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="5" y="11">
-        <component type="FloorComponent">
-          <ground>178</ground>
+        <component type="WallComponent">
+          <wall>335</wall>
+          <destroyed>344</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>336</wall>
           <destroyed>345</destroyed>
-          <ruins>0</ruins>
-        </component>
-        <component type="WallComponent">
-          <wall>335</wall>
-          <destroyed>344</destroyed>
-          <ruins>0</ruins>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="6" y="11">
@@ -88192,7 +88322,6 @@
           <destinationY>10</destinationY>
           <destinationRegion>17</destinationRegion>
           <teleporterId>177</teleporterId>
-          <descends>true</descends>
         </component>
         <component type="StaticComponent">
           <static>209</static>
@@ -90390,10 +90519,12 @@
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
-        <component type="WallComponent">
-          <wall>335</wall>
-          <destroyed>344</destroyed>
-          <ruins>0</ruins>
+        <component type="DoorComponent">
+          <openId>74</openId>
+          <closedId>62</closedId>
+          <secretId>335</secretId>
+          <destroyedId>80</destroyedId>
+          <isSecret>true</isSecret>
         </component>
       </tile>
       <tile x="23" y="19">
@@ -90413,7 +90544,7 @@
         <component type="DoorComponent">
           <openId>74</openId>
           <closedId>62</closedId>
-          <secretId>336</secretId>
+          <secretId>335</secretId>
           <destroyedId>80</destroyedId>
           <isSecret>true</isSecret>
         </component>
@@ -90580,7 +90711,6 @@
           <destinationY>15</destinationY>
           <destinationRegion>12</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="6" y="20">
@@ -91846,6 +91976,7 @@
       <id>17</id>
       <name>Undead</name>
       <height>-300</height>
+      <level>28</level>
       <tile x="-1" y="1">
         <component type="WallComponent">
           <wall>447</wall>
@@ -92824,7 +92955,6 @@
           <destinationY>11</destinationY>
           <destinationRegion>13</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="33" y="3">
@@ -97382,7 +97512,6 @@
           <destinationY>2</destinationY>
           <destinationRegion>16</destinationRegion>
           <teleporterId>127</teleporterId>
-          <descends>false</descends>
         </component>
       </tile>
       <tile x="5" y="19">
@@ -97772,7 +97901,6 @@
           <destinationY>2</destinationY>
           <destinationRegion>14</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="20" y="20">
@@ -97781,7 +97909,6 @@
           <destinationY>2</destinationY>
           <destinationRegion>14</destinationRegion>
           <teleporterId>123</teleporterId>
-          <descends>true</descends>
         </component>
       </tile>
       <tile x="21" y="20">
@@ -99076,7 +99203,7 @@
     var vendor = new Shopkeeper()
     {
         Name = _names.Random(),
-        Body = (116), IsFemale = female,
+        Body = 116, IsFemale = female,
         
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
@@ -99094,9 +99221,13 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (spokeRecently(source))
+        return;
+
+    source.Say($"Come see our wares, {player.Name}. Just ask me to 'show prices'.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -99241,6 +99372,7 @@
         <block><![CDATA[
     var trainer = new WizardTrainer()
     {
+        Body = 119,
         
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
@@ -99282,6 +99414,8 @@
 	   
 	   Experience = 50,
 	   BasePenetration = ShieldPenetration.Medium,
+	   
+	   IsTethered = true,
 	   Home = new RectangleBounds()
        {
             new Rectangle2D(7, 2, 13, 14, 1)
@@ -99336,6 +99470,8 @@
        
        Experience = 50,
        BasePenetration = ShieldPenetration.Medium,
+       
+       IsTethered = true,
        Home = new RectangleBounds()
        {
             new Rectangle2D(7, 2, 13, 14, 1)
@@ -99388,9 +99524,10 @@
         BaseDodge = 12,
         BasePenetration = ShieldPenetration.Light,
         Experience = 2500,
-    
-        Movement = 2,
+        HideDetection = 25,
         
+        Movement = 2,
+        CanLoot = false,
         LightningResistance = 100,
         
     };
@@ -99449,11 +99586,12 @@
         Body = 177,
         MaxHealth = 70, Health = 70,
         BaseDodge = 12,
+        HideDetection = 25,
                 
         Experience = 2500,
         BasePenetration = ShieldPenetration.Light,
         Movement = 2,
-        
+        CanLoot = false,
         FireProtection = 100,
         
     };
@@ -99512,8 +99650,10 @@
         Body = 178,
         MaxHealth = 70, Health = 70,
         BaseDodge = 12,
+        HideDetection = 25,
                 
         Experience = 2500,
+        CanLoot = false,
     
         Movement = 2,
         BasePenetration = ShieldPenetration.Light,
@@ -99575,9 +99715,10 @@
         Body = 65,
         MaxHealth = 70, Health = 70,
         BaseDodge = 12,
+        HideDetection = 25,
                 
         Experience = 2500,
-    
+        CanLoot = false,
         Movement = 2,
         BasePenetration = ShieldPenetration.Light,
         
@@ -99641,7 +99782,7 @@
         BaseDodge = 19,
     
         Alignment = Alignment.Chaotic,
-        HideDetection = 24,
+        HideDetection = 26,
         Experience = 42000,
         
         CanFly = true,
@@ -99652,7 +99793,8 @@
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Magic | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
-    
+        
+        IsTethered = true,
     };
     
     drake.AddStatus(new NightVisionStatus(drake));
@@ -99721,12 +99863,14 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     //todo get Carfel body type
-    var carfel = new ElderTroll()
+    var carfel = new Humanoid()
     {
-        Name = "Carfel",
+        Name = "carfel",
+        Body = 206,
+        
         MaxHealth = 2000, Health = 2000,
         BaseDodge = 21,
-        HideDetection = 27,
+        HideDetection = 28,
         Alignment = Alignment.Evil,
         
         Experience = 32000,
@@ -99741,7 +99885,7 @@
                    CreatureImmunity.Projectile | CreatureImmunity.Web,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.Silver,
        
-    
+        IsTethered = true,
     };
     
     carfel.AddStatus(new NightVisionStatus(carfel));
@@ -99790,14 +99934,18 @@
     //todo add Shelob body
     var shelob = new Spider()
     {
+        Body = 147,
+        
         MaxHealth = 800, Health = 800,
         BaseDodge = 15,
-    
+        HideDetection = 28,
         Experience = 18000,
         BasePenetration = ShieldPenetration.Medium,
         
         VisibilityDistance = 0,
         RangePerception = 0,
+        
+        IsTethered = true,
     };
     
     shelob.AddStatus(new NightVisionStatus(shelob));
@@ -99857,6 +100005,7 @@
         
         BasePenetration = ShieldPenetration.VeryHeavy,
     
+        IsTethered = true,
     };
     
     trollKing.AddStatus(new NightVisionStatus(trollKing));
@@ -99910,14 +100059,12 @@
     {
         Name = "Orugugra",
         MaxHealth = 1700, Health = 1700,
-        BaseDodge = 17,
         BasePenetration = ShieldPenetration.Heavy,
         Alignment = Alignment.Chaotic,
-        HideDetection = 24,
         Experience = 27000,
         CanWalk = false,
         Immunity = CreatureImmunity.Poison,
-            
+        HideDetection = 28,    
         VisibilityDistance = 0,
     };
     
@@ -99976,7 +100123,7 @@
         Body = 163,
         MaxHealth = 2500, Health = 2500,
         BaseDodge = 21,
-        HideDetection = 25,
+        HideDetection = 28,
         Experience = 39000,
        
         CanCharge = true,
@@ -99987,6 +100134,7 @@
                    CreatureImmunity.Projectile | CreatureImmunity.Web | CreatureImmunity.Magic | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
     
+        IsTethered = true,
     };
     
     swordmaster.Attacks = new CreatureAttackCollection()
@@ -100034,7 +100182,7 @@
     
         MaxHealth = 5000, Health = 5000,
         BaseDodge = 15,
-    
+        HideDetection = 30,
         Experience = 69000,
         
         BasePenetration = ShieldPenetration.VeryHeavy,
@@ -100045,7 +100193,7 @@
     
         CanCharge = true,
     
-        
+        IsTethered = true,
     };
     
     overlord.AddStatus(new NightVisionStatus(overlord));
@@ -100102,7 +100250,7 @@
     {
         MaxHealth = 130, Health = 130,
         BaseDodge = 12,
-                
+        HideDetection = 25,            
         Experience = 5200,
         BasePenetration = ShieldPenetration.Light,
         CanFlee = true,
@@ -100110,7 +100258,7 @@
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(12, 10, 18)
+        new CreatureBasicAttack(12)
     };
     
     orc.Wield(new Longsword());
@@ -100120,7 +100268,7 @@
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       20,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.25), 
+        new LootPackEntry(true, UKPotions,    0.35), 
         new LootPackEntry(true, UpperTreasure,    0.63)
 
     ));
@@ -100150,7 +100298,7 @@
     {
         MaxHealth = 200, Health = 200,
         BaseDodge = 16,
-    
+        HideDetection = 25, 
         Experience = 10500,
     
         CanCharge = true,
@@ -100186,7 +100334,7 @@
     minotaur.AddLoot(new LootPack(
         new LootPackEntry(true, drop12gems,       33,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.2), 
+        new LootPackEntry(true, UKPotions,    0.3), 
         new LootPackEntry(true, UpperTreasure,    1.0)
     ));
     
@@ -100215,7 +100363,7 @@
     {
         MaxHealth = 200, Health = 200,
         BaseDodge = 18,
-                
+        HideDetection = 25,           
         Experience = 12000,
         BasePenetration = ShieldPenetration.Medium,
         CanStrikeCritically = false,
@@ -100241,7 +100389,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, drop12gems,       33,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.2), 
+        new LootPackEntry(true, UKPotions,    0.4), 
         new LootPackEntry(true, UpperTreasure,    2.0)
     ));
     
@@ -100271,7 +100419,7 @@
     {
         MaxHealth = 145, Health = 145,
         BaseDodge = 13,
-                
+        HideDetection = 25,            
         Experience = 6400,
                 
         Movement = 3,
@@ -100280,7 +100428,7 @@
     
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(12, 12, 18)
+        new CreatureBasicAttack(12)
     };
     
     troll.Wield(new Greatsword());
@@ -100290,7 +100438,7 @@
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, drop12gems,       20,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.2), 
+        new LootPackEntry(true, UKPotions,    0.3), 
         new LootPackEntry(true, UpperTreasure,    0.63)
     ));
     
@@ -100319,7 +100467,7 @@
     {
         MaxHealth = 100, Health = 100,
         BaseDodge = 12,
-                
+        HideDetection = 25,              
         Experience = 5600,
         
         CanFlee = true,
@@ -100338,7 +100486,7 @@
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, drop12gems,       20,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.2), 
+        new LootPackEntry(true, UKPotions,    0.3), 
         new LootPackEntry(true, UpperTreasure,    0.63)
     ));
     
@@ -100371,7 +100519,7 @@
         BasePenetration = ShieldPenetration.Light,
         Experience = 6700,
         LightningResistance = 100,
-    
+        HideDetection = 25, 
     };
     
     hobgoblin.Attacks = new CreatureAttackCollection()
@@ -100391,8 +100539,9 @@
     hobgoblin.AddGold(550);
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.25), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, lowerUtilityItems,    4),
+        new LootPackEntry(true, UKPotions,    0.35), 
         new LootPackEntry(true, UpperTreasure,    0.63)
     ));
     
@@ -100421,14 +100570,14 @@
     {
         MaxHealth = 150, Health = 150,
         BaseDodge = 14,
-    
+        HideDetection = 25,
         Experience = 6600,
         BasePenetration = ShieldPenetration.Medium,
     };
     
     hobgoblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(13, 12, 20)
+        new CreatureBasicAttack(13)
     };
     
     hobgoblin.Wield(new Longsword());
@@ -100438,7 +100587,7 @@
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       20,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.25), 
+        new LootPackEntry(true, UKPotions,    0.35), 
         new LootPackEntry(true, UpperTreasure,    0.63)
     ));
     
@@ -100470,7 +100619,7 @@
     {
         MaxHealth = 135, Health = 135,
         BaseDodge = 13,
-                
+        HideDetection = 25,           
         Experience = 6400,
         BasePenetration = ShieldPenetration.Medium,
         Movement = 3,
@@ -100490,7 +100639,7 @@
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       20,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.25), 
+        new LootPackEntry(true, UKPotions,    0.35), 
         new LootPackEntry(true, UpperTreasure,    0.63)
     ));
     
@@ -100519,7 +100668,7 @@
     {
         MaxHealth = 175, Health = 175,
         BaseDodge = 14,
-                
+        HideDetection = 25,           
         Experience = 6800,
                 
         Movement = 3,
@@ -100528,7 +100677,7 @@
     
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(13, 10, 18)
+        new CreatureBasicAttack(13)
     };
         
     troll.Wield(new Greatsword());
@@ -100538,7 +100687,7 @@
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       20,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.25), 
+        new LootPackEntry(true, UKPotions,    0.35), 
         new LootPackEntry(true, UpperTreasure,    0.63)
     ));
     
@@ -100568,7 +100717,7 @@
         Name = "Elite.Guard",
         MaxHealth = 300, Health = 300,
         BaseDodge = 15,
-            
+        HideDetection = 29,    
         Experience = 11000,
         
         CanCharge = true,
@@ -100580,7 +100729,7 @@
     
     trollguard.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(15, 20, 28)
+        new CreatureBasicAttack(15)
     };
     
     trollguard.Wield(new Halberd());
@@ -100590,7 +100739,7 @@
     trollguard.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       15,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.2), 
+        new LootPackEntry(true, UKPotions,    0.3), 
         new LootPackEntry(true, UpperTreasure,    0.63)
         ));
     
@@ -100620,14 +100769,14 @@
     {
         MaxHealth = 150, Health = 150,
         BaseDodge = 14,
-    
+        HideDetection = 25,
         Experience = 7500,
         BasePenetration = ShieldPenetration.Medium,
     };
     
     hobgoblin.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(13, 13, 19)
+        new CreatureBasicAttack(13)
     };
     
     hobgoblin.Wield(new Longsword());
@@ -100637,7 +100786,7 @@
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, speedygems,       20,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.25), 
+        new LootPackEntry(true, UKPotions,    0.35), 
         new LootPackEntry(true, UpperTreasure,    0.63)
     ));
     
@@ -100669,7 +100818,7 @@
         BaseDodge = 11,
         BasePenetration = ShieldPenetration.VeryLight,
         Experience = 2300,
-    
+        HideDetection = 25,
     };
     
     orc.Attacks = new CreatureAttackCollection()
@@ -100689,8 +100838,9 @@
     orc.AddGold(350);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       20,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.1), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, upperUtilityItems,    2),
+        new LootPackEntry(true, UKPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.3)
     ));
     
@@ -100721,14 +100871,14 @@
         BaseDodge = 11,
         BasePenetration = ShieldPenetration.VeryLight,
         Experience = 2600,
-        
+        HideDetection = 25,  
         MaxMana = 21, Mana = 21,
             
     };
         
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(10, 12, 18)
+        new CreatureBasicAttack(10)
     };
     
     troll.Spells = new CreatureSpellCollection()
@@ -100743,8 +100893,9 @@
     troll.AddGold(250);
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       20,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.1), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, upperUtilityItems,    2),
+        new LootPackEntry(true, UKPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.3)
     ));
     
@@ -100773,7 +100924,7 @@
     {
         MaxHealth = 130, Health = 130,
         BaseDodge = 12,
-    
+        HideDetection = 25,
         Experience = 6800,
         BasePenetration = ShieldPenetration.Light,
         MaxMana = 31, Mana = 31,
@@ -100782,7 +100933,7 @@
             
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(12, 13, 22)
+        new CreatureBasicAttack(13)
     };
     
     troll.Spells = new CreatureSpellCollection()
@@ -100797,8 +100948,9 @@
     troll.AddGold(380);
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       20,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.25), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, lowerUtilityItems,    4),
+        new LootPackEntry(true, UKPotions,    0.35), 
         new LootPackEntry(true, UpperTreasure,    0.63)
     ));
     
@@ -100828,7 +100980,7 @@
         MaxHealth = 90, Health = 90,
         MaxMana = 21, Mana = 21,
         BaseDodge = 11,
-    
+        HideDetection = 25,
         Experience = 2300,
         BasePenetration = ShieldPenetration.VeryLight,
     };
@@ -100853,8 +101005,9 @@
     orc.AddGold(350);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       20,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    25), 
-        new LootPackEntry(true, UKPotions,    0.1), 
+        new LootPackEntry(true, GenericBottles,    25),
+        new LootPackEntry(true, upperUtilityItems,    2),
+        new LootPackEntry(true, UKPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.3)
     ));
     
@@ -100887,11 +101040,12 @@
         BasePenetration = ShieldPenetration.VeryLight,        
         Experience = 5800,
         FireProtection = 100,
+        HideDetection = 25,
     };
     
     goblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(12, 7, 15)
+        new CreatureBasicAttack(12)
     };
     
     goblin.Spells = new CreatureSpellCollection()
@@ -100909,8 +101063,9 @@
     goblin.AddGold(120);
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, drop12gems,       20,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.2), 
+        new LootPackEntry(true, GenericBottles,    33),
+        new LootPackEntry(true, upperUtilityItems,    2),
+        new LootPackEntry(true, UKPotions,    0.3), 
         new LootPackEntry(true, UpperTreasure,    0.63)
     ));
     
@@ -100939,8 +101094,8 @@
     {
         MaxHealth = 120, Health = 120,
         BaseDodge = 13,
-    
-        Experience = 7200,
+        HideDetection = 28,
+        Experience = 8500,
         BasePenetration = ShieldPenetration.Light,
         MaxMana = 21, Mana = 21,
         DeathResistance = 100,
@@ -100964,7 +101119,8 @@
     banshee.AddLoot(new LootPack(
         new LootPackEntry(true, udGems,       20,     gemsPriceMutator), 
         new LootPackEntry(true, undeadBottles,    15), 
-        new LootPackEntry(true, UKPotions,    0.3), 
+        new LootPackEntry(true, undeadUtilityItems,    3), 
+        new LootPackEntry(true, UKPotions,    0.4), 
         new LootPackEntry(true, UndeadTreasure,    0.63)
     ));
     
@@ -100997,7 +101153,7 @@
         Experience = 9000,
         BasePenetration = ShieldPenetration.Medium,
         VisibilityDistance = 0,
-            
+        HideDetection = 28,    
         FireProtection = 50,
         IceProtection = 50,
         DeathResistance = 100,
@@ -101028,7 +101184,7 @@
     ghoul.AddLoot(new LootPack(
         new LootPackEntry(true, udGems,       33,     gemsPriceMutator), 
         new LootPackEntry(true, undeadBottles,    50), 
-        new LootPackEntry(true, UKPotions,    0.3), 
+        new LootPackEntry(true, UKPotions,    0.4), 
         new LootPackEntry(true, UndeadTreasure,    0.63)
     ));
     
@@ -101057,8 +101213,8 @@
     {
         MaxHealth = 150, Health = 150,
         BaseDodge = 14,
-
-        Experience = 6800,
+        HideDetection = 28,
+        Experience = 7500,
         BasePenetration = ShieldPenetration.Light,
         Movement = 3,
         DeathResistance = 100,
@@ -101071,7 +101227,7 @@
     
     skeleton.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(14, 11, 20)
+        new CreatureBasicAttack(14)
     };
     
     skeleton.Wield(new Spear());
@@ -101082,7 +101238,7 @@
     skeleton.AddLoot(new LootPack(
         new LootPackEntry(true, udGems,       20,     gemsPriceMutator), 
         new LootPackEntry(true, undeadBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.3), 
+        new LootPackEntry(true, UKPotions,    0.4), 
         new LootPackEntry(true, UndeadTreasure,    0.63)
     ));
     
@@ -101112,7 +101268,7 @@
         MaxHealth = 150, Health = 150,
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
-    
+        HideDetection = 28, 
         Experience = 8500,
         BasePenetration = ShieldPenetration.Light,
         VisibilityDistance = 1,
@@ -101123,7 +101279,7 @@
     
     spectre.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(14, 20, 30)
+        new CreatureBasicAttack(14)
     };
     
     spectre.Spells = new CreatureSpellCollection()
@@ -101142,7 +101298,8 @@
     spectre.AddLoot(new LootPack(
         new LootPackEntry(true, udGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, undeadBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.3), 
+        new LootPackEntry(true, undeadUtilityItems,    3), 
+        new LootPackEntry(true, UKPotions,    0.4), 
         new LootPackEntry(true, UndeadTreasure,    0.63)
     ));
     
@@ -101172,7 +101329,7 @@
         Name = "mummy",
         MaxHealth = 350, Health = 350,
         BaseDodge = 15,
-        HideDetection = 26,
+        HideDetection = 28,
         Experience = 19000,
     
         BasePenetration = ShieldPenetration.Heavy,
@@ -101206,7 +101363,8 @@
     mummy.AddLoot(new LootPack(
         new LootPackEntry(true, udGems,       33,     gemsPriceMutator), 
         new LootPackEntry(true, undeadBottles,    50), 
-        new LootPackEntry(true, UKPotions,    0.3), 
+        new LootPackEntry(true, undeadUtilityItems,    3), 
+        new LootPackEntry(true, UKPotions,    0.4), 
         new LootPackEntry(true, UndeadTreasure,    0.63)
     ));
     
@@ -101236,7 +101394,7 @@
         MaxHealth = 150, Health = 150,
         BaseDodge = 12,
         MaxMana = 10, Mana = 10,
-    
+        HideDetection = 28,
         Experience = 2725,
         
     };
@@ -101281,19 +101439,21 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     //todo add yasnaki models
-    var knight = new Ninja()
+    var knight = new Humanoid()
     {
-        Name = "Yasnaki.Knight",
-        MaxHealth = 230, Health = 230,
+        Name = "Yasnaki Knight",
+        Body = 193,
+        
+        MaxHealth = 170, Health = 170,
         BaseDodge = 14,
-                
+        HideDetection = 28,        
         Experience = 10500,
         BasePenetration = ShieldPenetration.Medium,
     };
     
     knight.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(14, 25, 40)
+        new CreatureBasicAttack(16)
     };
     
     knight.Wield(new Greatsword());
@@ -101303,7 +101463,7 @@
     knight.AddLoot(new LootPack(
         new LootPackEntry(true, yasnakiGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, yasnakiBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.3), 
+        new LootPackEntry(true, UKPotions,    0.4), 
         new LootPackEntry(true, yasnakiTreasure,    0.63)
     ));
     
@@ -101333,6 +101493,7 @@
         MaxHealth = 120, Health = 120,
         MaxMana = 19, Mana = 19,
         BaseDodge = 14,
+        HideDetection = 28,
         BasePenetration = ShieldPenetration.Light,
         Experience = 12000,
         VisibilityDistance = 0,
@@ -101342,7 +101503,7 @@
         
     lich.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(11, 20, 25)
+        new CreatureBasicAttack(14)
     };
     
     lich.Spells = new CreatureSpellCollection()
@@ -101358,7 +101519,8 @@
     lich.AddLoot(new LootPack(
         new LootPackEntry(true, udGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, undeadBottles,    50), 
-        new LootPackEntry(true, UKPotions,    0.3), 
+        new LootPackEntry(true, undeadUtilityItems,    3), 
+        new LootPackEntry(true, UKPotions,    0.4), 
         new LootPackEntry(true, UndeadTreasure,    0.63)
     ));
     
@@ -101393,6 +101555,7 @@
         CanWalk = false,
         CanCharge = true,   
         Experience = 7000,
+        HideDetection = 25,
         
         Immunity = CreatureImmunity.Poison, 
             
@@ -101450,12 +101613,12 @@
                     
     var martialartist = new Ninja()
     {
-        Name = "Yasnaki.Monk",
-        Body = 49,
+        Name = "Yasnaki Monk",
+        Body = 105,
             
-        MaxHealth = 260, Health = 260,
+        MaxHealth = 180, Health = 180,
         BaseDodge = 16,
-    
+        HideDetection = 28,
         Experience = 10550,
         BasePenetration = ShieldPenetration.Heavy,
         CanJumpkick = true,
@@ -101463,14 +101626,15 @@
     
     martialartist.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(15, 20, 35)
+        new CreatureBasicAttack(16)
     };   
     
     martialartist.AddGold(650);
     martialartist.AddLoot(new LootPack(
         new LootPackEntry(true, yasnakiGems,       25,     gemsPriceMutator), 
         new LootPackEntry(true, yasnakiBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.3), 
+        new LootPackEntry(true, undeadUtilityItems,    4), 
+        new LootPackEntry(true, UKPotions,    0.4), 
         new LootPackEntry(true, yasnakiTreasure,    0.63)
     ));
     
@@ -101497,10 +101661,10 @@
         <block><![CDATA[
     var wizard = new Humanoid()
     {
-        Name = "Yasnaki.Wizard",
-        Body = 37,
-            
-        MaxHealth = 150, Health = 150,
+        Name = "Yasnaki Wizard",
+        Body = 192,
+        HideDetection = 28,      
+        MaxHealth = 125, Health = 125,
         MaxMana = 31, Mana = 31,
         BaseDodge = 14,
         BasePenetration = ShieldPenetration.Light,
@@ -101514,7 +101678,7 @@
     
     wizard.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(10, 20, 25)
+        new CreatureBasicAttack(14)
     };
     
     wizard.Spells = new CreatureSpellCollection()
@@ -101533,8 +101697,9 @@
     wizard.AddGold(650);
     wizard.AddLoot(new LootPack(
         new LootPackEntry(true, yasnakiGems,       33,     gemsPriceMutator), 
-        new LootPackEntry(true, yasnakiBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.3), 
+        new LootPackEntry(true, yasnakiBottles,    33),
+        new LootPackEntry(true, undeadUtilityItems,    4), 
+        new LootPackEntry(true, UKPotions,    0.4), 
         new LootPackEntry(true, yasnakiTreasure,    0.63)
     ));
     
@@ -101562,11 +101727,11 @@
     //todo add all yasnaki models
     var thaum = new Humanoid()
     {
-        Name = "Dark.Thaum",
-        Body = 48,
+        Name = "Yasnaki Thaum",
+        Body = 191,
         MaxHealth = 130, Health = 130,
         BaseDodge = 11,
-    
+        HideDetection = 28,
         Experience = 9500,
         BasePenetration = ShieldPenetration.Light,
         MaxMana = 31, Mana = 31,
@@ -101576,7 +101741,7 @@
         
     thaum.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(12, 20, 25)
+        new CreatureBasicAttack(15)
     };
     
     thaum.Spells = new CreatureSpellCollection()
@@ -101593,8 +101758,9 @@
     thaum.AddGold(750);
     thaum.AddLoot(new LootPack(
         new LootPackEntry(true, yasnakiGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, yasnakiBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.3), 
+        new LootPackEntry(true, yasnakiBottles,    33),
+        new LootPackEntry(true, undeadUtilityItems,    4), 
+        new LootPackEntry(true, UKPotions,    0.4), 
         new LootPackEntry(true, yasnakiTreasure,    0.63)
     ));
     
@@ -101615,28 +101781,6 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="tkPrincessPlaceholder">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    return new ConfessorGhost();
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    source.Say($"You've got to help me!");
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
     <entity name="uk100Goblin">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
@@ -101645,14 +101789,14 @@
     {
         MaxHealth = 130, Health = 130,
         BaseDodge = 12,
-                
+        HideDetection = 25,            
         Experience = 5700,
         BasePenetration = ShieldPenetration.Light,
     };
     
     goblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(12, 10, 16)
+        new CreatureBasicAttack(12)
     };
     
     goblin.Wield(new BattleAxe());
@@ -101662,7 +101806,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, drop12gems,       20,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.2), 
+        new LootPackEntry(true, UKPotions,    0.3), 
         new LootPackEntry(true, UpperTreasure,    0.63)
     ));
     
@@ -101692,12 +101836,13 @@
         MaxHealth = 80, Health = 80,
         BaseDodge = 10,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 2200,    
+        Experience = 2200,  
+        HideDetection = 25,
     };
     
     goblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(10, 10, 16)
+        new CreatureBasicAttack(10)
     };
     
     goblin.Wield(new BattleAxe());
@@ -101707,7 +101852,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       20,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    25), 
-        new LootPackEntry(true, UKPotions,    0.1), 
+        new LootPackEntry(true, UKPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.3)
     ));
     
@@ -101738,7 +101883,7 @@
         BaseDodge = 11,
         BasePenetration = ShieldPenetration.Light,
         Experience = 2200,
-        
+        HideDetection = 25, 
         CanFlee = true,
     };
     
@@ -101754,7 +101899,7 @@
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       20,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    25), 
-        new LootPackEntry(true, UKPotions,    0.1), 
+        new LootPackEntry(true, UKPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.3)
     ));
     
@@ -101783,14 +101928,14 @@
     {
         MaxHealth = 110, Health = 110,
         BaseDodge = 12,
-                
+        HideDetection = 25,        
         Experience = 2600,
         BasePenetration = ShieldPenetration.Light,
     };
     
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(11, 10, 15)
+        new CreatureBasicAttack(11)
     };
     
     troll.Wield(new Greatsword());
@@ -101800,7 +101945,7 @@
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       20,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    25), 
-        new LootPackEntry(true, UKPotions,    0.1), 
+        new LootPackEntry(true, UKPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.3)
     ));
     
@@ -101829,7 +101974,7 @@
     {
         MaxHealth = 80, Health = 80,
         BaseDodge = 11,
-                
+        HideDetection = 25,         
         Experience = 2100,
         BasePenetration = ShieldPenetration.Light,
         CanFlee = true,
@@ -101837,7 +101982,7 @@
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(10, 10, 15)
+        new CreatureBasicAttack(10)
     };
     
     orc.Wield(new Longsword());
@@ -101847,7 +101992,7 @@
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       20,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    25), 
-        new LootPackEntry(true, UKPotions,    0.1), 
+        new LootPackEntry(true, UKPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.3)
     ));
     return orc;
@@ -101877,7 +102022,9 @@
         BaseDodge = 10,
         BasePenetration = ShieldPenetration.Light,       
         Experience = 2200,
+        HideDetection = 25,
     };
+    
     
     goblin.Attacks = new CreatureAttackCollection()
     {
@@ -101891,7 +102038,7 @@
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       20,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    25), 
-        new LootPackEntry(true, UKPotions,    0.1), 
+        new LootPackEntry(true, UKPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.3)
     ));
     
@@ -101927,6 +102074,8 @@
         MaxMana = 30, Mana = 30,
         
         Experience = 50,
+        
+        IsTethered = true,
     };
 
     peacekeeper.Attacks = new CreatureAttackCollection()
@@ -101980,7 +102129,7 @@
     wraith.Spells = new CreatureSpellCollection(100)
     {
        { new CreatureSpell<WhirlwindSpell>(
-            skillLevel: 9.5), 100, TimeSpan.FromSeconds(12.0) }
+            skillLevel: 13), 100, TimeSpan.FromSeconds(12.0) }
     };
     
     wraith.AddLoot(new LootPack(
@@ -102073,14 +102222,14 @@
     {
         MaxHealth = 90, Health = 90,
         BaseDodge = 14,
-    
+        HideDetection = 25,
         Experience = 2600,
         BasePenetration = ShieldPenetration.Medium,
     };
     
     hobgoblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(11, 10, 18)
+        new CreatureBasicAttack(11)
     };
     
     hobgoblin.Wield(new Longsword());
@@ -102090,7 +102239,7 @@
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, tunnelSewerGems,       20,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    25), 
-        new LootPackEntry(true, UKPotions,    0.1), 
+        new LootPackEntry(true, UKPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.3)
     ));
     
@@ -102122,7 +102271,7 @@
     {
         MaxHealth = 80, Health = 80,
         BaseDodge = 14,
-                
+        HideDetection = 25,        
         Experience = 2700,
         BasePenetration = ShieldPenetration.Medium,
         Movement = 3,
@@ -102142,7 +102291,7 @@
     troll.AddLoot(new LootPack(
         new LootPackEntry(true, drop3gems,       20,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.25), 
+        new LootPackEntry(true, UKPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.63)
     ));
     
@@ -102172,7 +102321,7 @@
         MaxHealth = 200, Health = 200,
         MaxMana = 17, Mana = 17,
         BaseDodge = 20,
-    
+        HideDetection = 28,  
         Experience = 14500,
         BasePenetration = ShieldPenetration.Medium,
         VisibilityDistance = 1,
@@ -102183,7 +102332,7 @@
     
     stalker.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(15, 20, 30)
+        new CreatureBasicAttack(15)
     };
     
     stalker.Spells = new CreatureSpellCollection(100)
@@ -102197,8 +102346,9 @@
     stalker.AddGold(650);
     stalker.AddLoot(new LootPack(
         new LootPackEntry(true, udGems,       25,     gemsPriceMutator), 
-        new LootPackEntry(true, undeadBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.3), 
+        new LootPackEntry(true, undeadBottles,    33),
+        new LootPackEntry(true, undeadUtilityItems,    3), 
+        new LootPackEntry(true, UKPotions,    0.4), 
         new LootPackEntry(true, UndeadTreasure,    0.63)
     ));
     
@@ -102230,7 +102380,7 @@
         BaseDodge = 14,
         BasePenetration = ShieldPenetration.VeryLight,
         Experience = 6000,
-    
+        HideDetection = 25,
     };
     
     orc.Attacks = new CreatureAttackCollection()
@@ -102251,7 +102401,7 @@
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, speedygems,       20,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33), 
-        new LootPackEntry(true, UKPotions,    0.25), 
+        new LootPackEntry(true, UKPotions,    0.35), 
         new LootPackEntry(true, UpperTreasure,    0.63)
     ));
     
@@ -102272,9 +102422,51 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="uk200Googog">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    return new Googog();
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="tkTrollJailer">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	return new TrollJailer();
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
-    <spawn type="LocationSpawner" name="nWShopkeeper">
+    <spawn type="LocationSpawner" name="UKPawner">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -102283,36 +102475,74 @@
         <block><![CDATA[
     spawn.Name = "Berrystitch";
     spawn.Body = 116;
-    if (spawn is Shopkeeper shopkeeper)
+
+    if (spawn is Shopkeeper vendor)
     {
+        vendor.AddCounter(new Point2D(2, 5, 1));
+        vendor.AddCounter(new Point2D(3, 5, 1));
         
         void onRarePurchase(PlayerEntity player, ItemEntity item)
         {
-            shopkeeper.SayTo(player, _rarePurchaseResponses.Random());
+            vendor.SayTo(player, _rarePurchaseResponses.Random());
         }
-    
-        shopkeeper.AddCounter(new Point2D(2, 5, 1));
-        shopkeeper.AddCounter(new Point2D(3, 5, 1));
-
+       
+        // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
+        var merchantUpsell = Utility.RandomDouble() + 3; // 3-4x upsell
         var wares = new List<StockEntry>()
         {
-            new StockEntry("leather armor",     () => new LeatherArmor(),       250,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("chainmail",         () => new ChainmailArmor(),     500,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("platemail",         () => new PlatemailArmor(),     1000,   Utility.RandomBetween(1, 2), null),
-           
-            new StockEntry("leather boots",     () => new LeatherBoots(),       200,    Utility.RandomBetween(1, 4), null),
-            
-            new StockEntry("leather gauntlets", () => new LeatherGauntlets(),   1000,   Utility.RandomBetween(1, 2), null),
-            
-            new StockEntry("ram skull",         () => new RamSkull(),           1500,   Utility.RandomBetween(1, 2), null),
+        //apothecary
+            new StockEntry("green balm",            () => new GreenBalm(),           (int)(16 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
+            new StockEntry("mugwort",               () => new Mugwort(),             (int)(25  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("yellow balm",           () => new YellowBalm(),          (int)(16  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("stamina potion",        () => new StaminaPotion(),       (int)(40  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+        //weaponsmith
+            new StockEntry("dagger",                () => new SteelDagger(),         (int)(30  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("spear",                 () => new Spear(),               (int)(50  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("rapier",                () => new Rapier(),              (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("staff",                 () => new WoodenStaff(),         (int)(40  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("greatsword",            () => new Greatsword(),          (int)(100 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("crossbow",              () => new Crossbow(),            (int)(100 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("shuriken",              () => new Shuriken(),            (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+        //jeweler
+            new StockEntry("scorpion amulet",       () => new ScorpionAmulet(),      (int)(250 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("black pearls",          () => new BlackPearls(),         (int)(600 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("weak strength ring",    () => new WeakStrengthRing(),    (int)(500 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("weak shield ring",      () => new WeakShieldRing(),      (int)(600 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("breathe water ring",    () => new BreatheWaterRing(),    (int)(500 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+        //armorsmith
+            new StockEntry("leather armor",         () => new LeatherArmor(),        (int)(80  * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("chainmail",             () => new ChainmailArmor(),      (int)(140 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("platemail",             () => new PlatemailArmor(),      (int)(280 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("leather boots",         () => new LeatherBoots(),        (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("leather gauntlets",     () => new LeatherGauntlets(),    (int)(280 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("ram skull",             () => new RamSkull(),            (int)(420 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
         };
-        if (Utility.RandomDouble() <= 0.30)  /* 30% chance to spawn */
-            wares.Add(new StockEntry("crocodile boots", () => new CrocodileBoots(), 2500, 1, onRarePurchase));
         
-        if (Utility.RandomDouble() <= 0.20)  /* 20% chance to spawn */
-            wares.Add(new StockEntry("steel plated gauntlets", () => new SteelGauntlets(), 4000, 1, onRarePurchase));
-        for (var i = Utility.Random(1, 3); i > 0; i--)
-            shopkeeper.Restock();
+        foreach (var stock in wares.Random(3))
+        {
+            vendor.Stock(stock);
+            vendor.Restock(stock);
+        }
+
+        // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
+        merchantUpsell = Utility.RandomDouble() * 3 + 7; // 7-10x upsell
+        var rareWares = new List<StockEntry>()
+        {
+        //Weaponsmith
+            new StockEntry("silver dagger",                  () => new SilverDagger(),                   (int)(350  * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("fire and ice protection ring",   () => new FireIceProtectionRing(),          (int)(800 * merchantUpsell),        1, onRarePurchase),
+            new StockEntry("dragon scales",                  () => new DragonScaleArmor(),               (int)(1000 * merchantUpsell),       1, onRarePurchase)
+        };
+        
+        if (Utility.RandomDouble() <= 0.10) 
+        {
+            if (Utility.RandomDouble() <= 0.50) 
+                vendor.Stock(rareWares[0]);
+            else if (Utility.RandomDouble() <= 0.60) 
+                vendor.Stock(rareWares[1]);
+            else 
+                vendor.Stock(rareWares[2]);
+        }
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -102327,7 +102557,7 @@
       <entry entity="townShopkeeper" size="1" minimum="1" maximum="1" />
       <location x="2" y="6" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="sEShopkeeper">
+    <spawn type="LocationSpawner" name="UKGeneralStore">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -102336,35 +102566,88 @@
         <block><![CDATA[
     spawn.Name = "Tibblehobble";
     spawn.Body = 117;
-    if (spawn is Shopkeeper shopkeeper)
+    var counter = new Point2D(15, 13, 1);
+
+    if (spawn is Shopkeeper vendor) 
     {
+        vendor.AddCounter(counter);
         
         void onRarePurchase(PlayerEntity player, ItemEntity item)
         {
-            shopkeeper.SayTo(player, _rarePurchaseResponses.Random());
+            vendor.SayTo(player, _rarePurchaseResponses.Random());
         }
-    
-        shopkeeper.AddCounter(new Point2D(15, 13, 1));
-
+       
+        // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
+        var merchantUpsell = Utility.RandomDouble() + 3; // 3-4x upsell
         var wares = new List<StockEntry>()
         {
-            new StockEntry("leather armor",     () => new LeatherArmor(),       250,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("chainmail",         () => new ChainmailArmor(),     500,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("platemail",         () => new PlatemailArmor(),     1000,   Utility.RandomBetween(1, 2), null),
-           
-            new StockEntry("leather boots",     () => new LeatherBoots(),       200,    Utility.RandomBetween(1, 4), null),
-            
-            new StockEntry("leather gauntlets", () => new LeatherGauntlets(),   1000,   Utility.RandomBetween(1, 2), null),
-            
-            new StockEntry("ram skull",         () => new RamSkull(),           1500,   Utility.RandomBetween(1, 2), null),
+        //apothecary
+            new StockEntry("green balm",            () => new GreenBalm(),           (int)(16 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
+            new StockEntry("mugwort",               () => new Mugwort(),             (int)(25  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("yellow balm",           () => new YellowBalm(),          (int)(16  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("stamina potion",        () => new StaminaPotion(),       (int)(40  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+        //weaponsmith
+            new StockEntry("dagger",                () => new SteelDagger(),         (int)(30  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("spear",                 () => new Spear(),               (int)(50  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("rapier",                () => new Rapier(),              (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("staff",                 () => new WoodenStaff(),         (int)(40  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("greatsword",            () => new Greatsword(),          (int)(100 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("crossbow",              () => new Crossbow(),            (int)(100 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("shuriken",              () => new Shuriken(),            (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+        //jeweler
+            new StockEntry("scorpion amulet",       () => new ScorpionAmulet(),      (int)(250 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("black pearls",          () => new BlackPearls(),         (int)(600 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("weak strength ring",    () => new WeakStrengthRing(),    (int)(500 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("weak shield ring",      () => new WeakShieldRing(),      (int)(600 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("breathe water ring",    () => new BreatheWaterRing(),    (int)(500 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+        //armorsmith
+            new StockEntry("leather armor",         () => new LeatherArmor(),        (int)(80  * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("chainmail",             () => new ChainmailArmor(),      (int)(140 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("platemail",             () => new PlatemailArmor(),      (int)(280 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("leather boots",         () => new LeatherBoots(),        (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("leather gauntlets",     () => new LeatherGauntlets(),    (int)(280 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("ram skull",             () => new RamSkull(),            (int)(420 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
         };
-        if (Utility.RandomDouble() <= 0.30)  /* 30% chance to spawn */
-            wares.Add(new StockEntry("crocodile boots", () => new CrocodileBoots(), 2500, 1, onRarePurchase));
         
-        if (Utility.RandomDouble() <= 0.20)  /* 20% chance to spawn */
-            wares.Add(new StockEntry("steel plated gauntlets", () => new SteelGauntlets(), 4000, 1, onRarePurchase));
-        for (var i = Utility.Random(1, 3); i > 0; i--)
-            shopkeeper.Restock();
+        foreach (var stock in wares.Random(3))
+        {
+            vendor.Stock(stock);
+            vendor.Restock(stock);
+        }
+            
+        //Apothecaries carry either naptha or nitro. More likely to carry one or the other based on land.
+        var naptha = new StockEntry("black ceramic bottle", () => new NaphthaPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
+        var nitro = new StockEntry("black ceramic bottle", () => new NitroPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
+        
+        if (Utility.RandomDouble() <= 0.90)
+        { // Axe likely has nitro, since the caves to the west are full of them.
+            vendor.Stock(nitro);
+            vendor.Restock(nitro);
+        } 
+        else 
+        {
+            vendor.Stock(naptha);
+            vendor.Restock(naptha);
+        }
+
+        // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
+        merchantUpsell = Utility.RandomDouble() * 3 + 7; // 7-10x upsell
+        var rareWares = new List<StockEntry>()
+        {
+            new StockEntry("steel plated gauntlets",   () => new SteelGauntlets(),                  (int)(400  * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("small porcelain vial",      () => new PermanentConstitutionPotion(),    (int)(2000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("fear and blind protection bracelet",      () => new BlindFearProtectionBracelet(),    (int)(3000 * merchantUpsell),       1, onRarePurchase)
+        };
+        
+        if (Utility.RandomDouble() <= 0.10) 
+        {
+            if (Utility.RandomDouble() <= 0.50) 
+                vendor.Stock(rareWares[0]);
+            else if (Utility.RandomDouble() <= 0.60) 
+                vendor.Stock(rareWares[1]);
+            else 
+                vendor.Stock(rareWares[2]);
+        }
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -102379,7 +102662,7 @@
       <entry entity="townShopkeeper" size="1" minimum="1" maximum="1" />
       <location x="15" y="14" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="lowershop1">
+    <spawn type="LocationSpawner" name="UKArmorer">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -102388,35 +102671,53 @@
         <block><![CDATA[
     spawn.Name = "Bafflebrand";
     spawn.Body = 116;
-    if (spawn is Shopkeeper shopkeeper)
+    var counter = new Point2D(26, 15, 2);
+
+    if (spawn is Shopkeeper vendor) 
     {
+        vendor.AddCounter(counter);
         
         void onRarePurchase(PlayerEntity player, ItemEntity item)
         {
-            shopkeeper.SayTo(player, _rarePurchaseResponses.Random());
+            vendor.SayTo(player, _rarePurchaseResponses.Random());
         }
-    
-        shopkeeper.AddCounter(new Point2D(26, 15, 2));
-
+       
+        // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
+        var merchantUpsell = Utility.RandomDouble()+3; // 3-4x upsell
         var wares = new List<StockEntry>()
         {
-            new StockEntry("leather armor",     () => new LeatherArmor(),       250,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("chainmail",         () => new ChainmailArmor(),     500,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("platemail",         () => new PlatemailArmor(),     1000,   Utility.RandomBetween(1, 2), null),
-           
-            new StockEntry("leather boots",     () => new LeatherBoots(),       200,    Utility.RandomBetween(1, 4), null),
-            
-            new StockEntry("leather gauntlets", () => new LeatherGauntlets(),   1000,   Utility.RandomBetween(1, 2), null),
-            
-            new StockEntry("ram skull",         () => new RamSkull(),           1500,   Utility.RandomBetween(1, 2), null),
+            new StockEntry("leather armor",         () => new LeatherArmor(),        (int)(80  * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("chainmail",             () => new ChainmailArmor(),      (int)(140 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("platemail",             () => new PlatemailArmor(),      (int)(280 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("leather boots",         () => new LeatherBoots(),        (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("leather gauntlets",     () => new LeatherGauntlets(),    (int)(280 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("ram skull",             () => new RamSkull(),            (int)(420 * merchantUpsell),       Utility.RandomBetween(1, 2), null)
         };
-        if (Utility.RandomDouble() <= 0.30)  /* 30% chance to spawn */
-            wares.Add(new StockEntry("crocodile boots", () => new CrocodileBoots(), 2500, 1, onRarePurchase));
         
-        if (Utility.RandomDouble() <= 0.20)  /* 20% chance to spawn */
-            wares.Add(new StockEntry("steel plated gauntlets", () => new SteelGauntlets(), 4000, 1, onRarePurchase));
-        for (var i = Utility.Random(1, 3); i > 0; i--)
-            shopkeeper.Restock();
+        foreach (var stock in wares.Random(3))
+        {
+            vendor.Stock(stock);
+            vendor.Restock(stock);
+        }
+
+        // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
+        merchantUpsell = Utility.RandomDouble()*3+7; // 7-10x upsell
+        var rareWares = new List<StockEntry>()
+        {
+            new StockEntry("bear skull",               () => new BearSkull(),                       (int)(400  * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("winged helm",              () => new WingedHelm(),                      (int)(400  * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("feather fall boots",       () => new FeatherFallBoots(),                (int)(500  * merchantUpsell),       1, onRarePurchase)
+        };
+        
+        if (Utility.RandomDouble() <= 0.10) 
+        {
+            if (Utility.RandomDouble() <= 0.50) 
+                vendor.Stock(rareWares[0]);
+            else if (Utility.RandomDouble() <= 0.60) 
+                vendor.Stock(rareWares[1]);
+            else 
+                vendor.Stock(rareWares[2]);
+        }
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -102431,7 +102732,7 @@
       <entry entity="townShopkeeper" size="1" minimum="1" maximum="1" />
       <location x="26" y="16" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="lowershop2">
+    <spawn type="LocationSpawner" name="UKWeaponsmith">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -102440,35 +102741,54 @@
         <block><![CDATA[
     spawn.Name = "Sparklebell";
     spawn.Body = 117;
-    if (spawn is Shopkeeper shopkeeper)
+    var counter = new Point2D(28, 15, 2);
+
+    if (spawn is Shopkeeper vendor) 
     {
+        vendor.AddCounter(counter);
         
         void onRarePurchase(PlayerEntity player, ItemEntity item)
         {
-            shopkeeper.SayTo(player, _rarePurchaseResponses.Random());
+            vendor.SayTo(player, _rarePurchaseResponses.Random());
         }
-    
-        shopkeeper.AddCounter(new Point2D(28, 15, 2));
-
+       
+        // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
+        var merchantUpsell = Utility.RandomDouble() + 3; // 3-4x upsell
         var wares = new List<StockEntry>()
         {
-            new StockEntry("leather armor",     () => new LeatherArmor(),       250,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("chainmail",         () => new ChainmailArmor(),     500,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("platemail",         () => new PlatemailArmor(),     1000,   Utility.RandomBetween(1, 2), null),
-           
-            new StockEntry("leather boots",     () => new LeatherBoots(),       200,    Utility.RandomBetween(1, 4), null),
-            
-            new StockEntry("leather gauntlets", () => new LeatherGauntlets(),   1000,   Utility.RandomBetween(1, 2), null),
-            
-            new StockEntry("ram skull",         () => new RamSkull(),           1500,   Utility.RandomBetween(1, 2), null),
+            new StockEntry("dagger",                () => new SteelDagger(),         (int)(30  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("spear",                 () => new Spear(),               (int)(50  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("rapier",                () => new Rapier(),              (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("staff",                 () => new WoodenStaff(),         (int)(40  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("greatsword",            () => new Greatsword(),          (int)(100 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("crossbow",              () => new Crossbow(),            (int)(100 * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("shuriken",              () => new Shuriken(),            (int)(60  * merchantUpsell),       Utility.RandomBetween(1, 4), null)
         };
-        if (Utility.RandomDouble() <= 0.30)  /* 30% chance to spawn */
-            wares.Add(new StockEntry("crocodile boots", () => new CrocodileBoots(), 2500, 1, onRarePurchase));
         
-        if (Utility.RandomDouble() <= 0.20)  /* 20% chance to spawn */
-            wares.Add(new StockEntry("steel plated gauntlets", () => new SteelGauntlets(), 4000, 1, onRarePurchase));
-        for (var i = Utility.Random(1, 3); i > 0; i--)
-            shopkeeper.Restock();
+        foreach (var stock in wares.Random(3))
+        {
+            vendor.Stock(stock);
+            vendor.Restock(stock);
+        }
+            
+        // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
+        merchantUpsell = Utility.RandomDouble() * 3 + 7; // 7-10x upsell
+        var rareWares = new List<StockEntry>()
+        {
+            new StockEntry("silver dagger",             () => new SilverDagger(),                   (int)(350  * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("longsword",                 () => new SteelLongsword(),                 (int)(350  * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("katana",                    () => new Katana(),                         (int)(90   * merchantUpsell),       1, onRarePurchase)
+        };
+        
+        if (Utility.RandomDouble() <= 0.10) 
+        {
+            if (Utility.RandomDouble() <= 0.50) 
+                vendor.Stock(rareWares[0]);
+            else if (Utility.RandomDouble() <= 0.60) 
+                vendor.Stock(rareWares[1]);
+            else 
+                vendor.Stock(rareWares[2]);
+        }
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -102483,7 +102803,7 @@
       <entry entity="townShopkeeper" size="1" minimum="1" maximum="1" />
       <location x="28" y="16" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="lowershop3">
+    <spawn type="LocationSpawner" name="UKJeweler">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -102492,35 +102812,50 @@
         <block><![CDATA[
     spawn.Name = "Lightgem";
     spawn.Body = 117;
-    if (spawn is Shopkeeper shopkeeper)
+    var counter = new Point2D(30, 15, 2);
+
+    if (spawn is Shopkeeper vendor)
     {
+        vendor.AddCounter(counter);
         
         void onRarePurchase(PlayerEntity player, ItemEntity item)
         {
-            shopkeeper.SayTo(player, _rarePurchaseResponses.Random());
+            vendor.SayTo(player, _rarePurchaseResponses.Random());
         }
-    
-        shopkeeper.AddCounter(new Point2D(30, 15, 2));
-
+       
+        // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
+        var merchantUpsell = Utility.RandomDouble() + 3; // 3-4x upsell
         var wares = new List<StockEntry>()
         {
-            new StockEntry("leather armor",     () => new LeatherArmor(),       250,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("chainmail",         () => new ChainmailArmor(),     500,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("platemail",         () => new PlatemailArmor(),     1000,   Utility.RandomBetween(1, 2), null),
-           
-            new StockEntry("leather boots",     () => new LeatherBoots(),       200,    Utility.RandomBetween(1, 4), null),
-            
-            new StockEntry("leather gauntlets", () => new LeatherGauntlets(),   1000,   Utility.RandomBetween(1, 2), null),
-            
-            new StockEntry("ram skull",         () => new RamSkull(),           1500,   Utility.RandomBetween(1, 2), null),
+            new StockEntry("scorpion amulet",       () => new ScorpionAmulet(),      (int)(250 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("black pearls",          () => new BlackPearls(),         (int)(600 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("weak strength ring",    () => new WeakStrengthRing(),    (int)(500 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("weak shield ring",      () => new WeakShieldRing(),      (int)(600 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("breathe water ring",    () => new BreatheWaterRing(),    (int)(500 * merchantUpsell),       Utility.RandomBetween(1, 2), null)
         };
-        if (Utility.RandomDouble() <= 0.30)  /* 30% chance to spawn */
-            wares.Add(new StockEntry("crocodile boots", () => new CrocodileBoots(), 2500, 1, onRarePurchase));
+        foreach (var stock in wares.Random(3)){
+            vendor.Stock(stock);
+            vendor.Restock(stock);
+        }
+            
+        // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
+        merchantUpsell = Utility.RandomDouble() * 3 + 7; // 7-10x upsell
+        var rareWares = new List<StockEntry>()
+        {
+            new StockEntry("death resistance ring",              () => new DeathResistanceRing(),         (int)(300 * merchantUpsell),  1, onRarePurchase),
+            new StockEntry("weak dexterity ring",                () => new WeakDexterityRing(),           (int)(1000 * merchantUpsell), 1, onRarePurchase),
+            new StockEntry("stun and death protection bracelet", () => new StunDeathProtectionBracelet(), (int)(3000 * merchantUpsell), 1, onRarePurchase)
+        };
         
-        if (Utility.RandomDouble() <= 0.20)  /* 20% chance to spawn */
-            wares.Add(new StockEntry("steel plated gauntlets", () => new SteelGauntlets(), 4000, 1, onRarePurchase));
-        for (var i = Utility.Random(1, 3); i > 0; i--)
-            shopkeeper.Restock();
+        if (Utility.RandomDouble() <= 0.10) 
+        {
+            if (Utility.RandomDouble() <= 0.50) 
+                vendor.Stock(rareWares[0]);
+            else if (Utility.RandomDouble() <= 0.60) 
+                vendor.Stock(rareWares[1]);
+            else 
+                vendor.Stock(rareWares[2]);
+        }
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -102535,7 +102870,7 @@
       <entry entity="townShopkeeper" size="1" minimum="1" maximum="1" />
       <location x="30" y="16" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="lowershop4">
+    <spawn type="LocationSpawner" name="UKApothecary">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -102544,35 +102879,66 @@
         <block><![CDATA[
     spawn.Name = "Rogglehaggle";
     spawn.Body = 116;
-    if (spawn is Shopkeeper shopkeeper)
+    var counter = new Point2D(32, 15, 2);
+
+    if (spawn is Shopkeeper vendor) 
     {
+        vendor.AddCounter(counter);
         
         void onRarePurchase(PlayerEntity player, ItemEntity item)
         {
-            shopkeeper.SayTo(player, _rarePurchaseResponses.Random());
+            vendor.SayTo(player, _rarePurchaseResponses.Random());
         }
-    
-        shopkeeper.AddCounter(new Point2D(32, 15, 2));
-
+       
+        // Default wares. Pick 3 and stock them. Common stuff, just flavor, might be useful to a naked crit or dock-baby.
+        var merchantUpsell = Utility.RandomDouble()+3; // 3-4x upsell
         var wares = new List<StockEntry>()
         {
-            new StockEntry("leather armor",     () => new LeatherArmor(),       250,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("chainmail",         () => new ChainmailArmor(),     500,    Utility.RandomBetween(1, 4), null),
-            new StockEntry("platemail",         () => new PlatemailArmor(),     1000,   Utility.RandomBetween(1, 2), null),
-           
-            new StockEntry("leather boots",     () => new LeatherBoots(),       200,    Utility.RandomBetween(1, 4), null),
-            
-            new StockEntry("leather gauntlets", () => new LeatherGauntlets(),   1000,   Utility.RandomBetween(1, 2), null),
-            
-            new StockEntry("ram skull",         () => new RamSkull(),           1500,   Utility.RandomBetween(1, 2), null),
+            new StockEntry("green balm",            () => new GreenBalm(),           (int)(16 * merchantUpsell),        Utility.RandomBetween(1, 4), null),
+            new StockEntry("mugwort",               () => new Mugwort(),             (int)(25  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("yellow balm",           () => new YellowBalm(),          (int)(16  * merchantUpsell),       Utility.RandomBetween(1, 4), null),
+            new StockEntry("stamina potion",        () => new StaminaPotion(),       (int)(40  * merchantUpsell),       Utility.RandomBetween(1, 4), null)
         };
-        if (Utility.RandomDouble() <= 0.30)  /* 30% chance to spawn */
-            wares.Add(new StockEntry("crocodile boots", () => new CrocodileBoots(), 2500, 1, onRarePurchase));
         
-        if (Utility.RandomDouble() <= 0.20)  /* 20% chance to spawn */
-            wares.Add(new StockEntry("steel plated gauntlets", () => new SteelGauntlets(), 4000, 1, onRarePurchase));
-        for (var i = Utility.Random(1, 3); i > 0; i--)
-            shopkeeper.Restock();
+        foreach (var stock in wares.Random(3))
+        {
+            vendor.Stock(stock);
+            vendor.Restock(stock);
+        }
+            
+        //Apothecaries carry either naptha or nitro. More likely to carry one or the other based on land.
+        var naptha = new StockEntry("black ceramic bottle", () => new NaphthaPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
+        var nitro = new StockEntry("black ceramic bottle", () => new NitroPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5),null);
+        
+        if (Utility.RandomDouble() <= 0.50)
+        {
+            vendor.Stock(nitro);
+            vendor.Restock(nitro);
+        } 
+        else 
+        {
+            vendor.Stock(naptha);
+            vendor.Restock(naptha);
+        }
+
+        // Rare Wares: Upsell increased. 10% chance to sell something shiny. 50,30,20 split on what is is
+        merchantUpsell = Utility.RandomDouble()*3+7; // 7-10x upsell
+        var rareWares = new List<StockEntry>()
+        {
+            new StockEntry("golden porcelain bottle",   () => new PermanentIntelligencePotion(),    (int)(2000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("black ceramic bottle",      () => new PermanentDexterityPotion(),       (int)(2000 * merchantUpsell),       1, onRarePurchase),
+            new StockEntry("porcelain bottle",          () => new PermanentWillpowerPotion(),       (int)(2000 * merchantUpsell),       1, onRarePurchase)
+        };
+        
+        if (Utility.RandomDouble() <= 0.10) 
+        {
+            if (Utility.RandomDouble() <= 0.50) 
+                vendor.Stock(rareWares[0]);
+            else if (Utility.RandomDouble() <= 0.60) 
+                vendor.Stock(rareWares[1]);
+            else 
+                vendor.Stock(rareWares[2]);
+        }
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -102713,7 +103079,7 @@
         
         priest.Home = new RectangleBounds()
         {  
-            new Rectangle2D(23, 4, 32, 7, 2)
+            new Rectangle2D(23, 4, 10, 4, 2)
         };
         
         priest.Wield(new SteelMace());
@@ -102874,7 +103240,7 @@
       <entry entity="townTrainerThief" size="1" minimum="1" maximum="1" />
       <location x="49" y="35" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="googogTEMP">
+    <spawn type="LocationSpawner" name="googog">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -102892,12 +103258,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="townConfessorGhost" size="1" minimum="1" maximum="1" />
+      <entry entity="uk200Googog" size="1" minimum="1" maximum="1" />
       <location x="17" y="24" region="5" />
     </spawn>
     <spawn type="LocationSpawner" name="tkPrincess">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>900</maximumDelay>
+      <minimumDelay>7200</minimumDelay>
+      <maximumDelay>5400</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -103292,6 +103658,53 @@
       <entry entity="townRecallVendor" size="1" minimum="1" maximum="1" />
       <location x="13" y="14" region="1" />
     </spawn>
+    <spawn type="LocationSpawner" name="tkJailer">
+      <minimumDelay>1800</minimumDelay>
+      <maximumDelay>2700</maximumDelay>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spawn is CreatureEntity creature)
+    {
+        var tile = creature.Segment.FindTile(5, 8, 10);
+        
+        if (tile != null && !tile.ContainsComponent<Obstruction>())
+            tile.Add(new Obstruction(450, true));
+    }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="tkTrollJailer" size="1" minimum="1" maximum="1" />
+      <location x="6" y="8" region="10" />
+    </spawn>
+    <spawn type="LocationSpawner" name="UKConfessorGhost">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="townConfessorGhost" size="1" minimum="1" maximum="1" />
+      <location x="15" y="3" region="2" />
+    </spawn>
     <spawn type="RegionSpawner" name="wyverns">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
@@ -103447,10 +103860,15 @@
       <entry entity="uk100GoblinMage" size="4" minimum="2" maximum="2" />
       <entry entity="uk100Goblin" size="3" minimum="4" maximum="4" />
       <bounds region="4">
-        <inclusion left="3" top="3" right="9" bottom="6" />
-        <inclusion left="8" top="7" right="19" bottom="12" />
-        <inclusion left="17" top="3" right="19" bottom="6" />
+        <inclusion left="3" top="3" right="19" bottom="28" />
         <exclusion left="11" top="11" right="13" bottom="13" />
+        <exclusion left="13" top="18" right="19" bottom="23" />
+        <exclusion left="15" top="24" right="19" bottom="28" />
+        <exclusion left="17" top="15" right="19" bottom="17" />
+        <exclusion left="3" top="7" right="6" bottom="11" />
+        <exclusion left="10" top="3" right="16" bottom="6" />
+        <exclusion left="3" top="23" right="5" bottom="28" />
+        <exclusion left="10" top="27" right="14" bottom="28" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="uk200">
@@ -103474,12 +103892,16 @@
       <entry entity="uk100200Mino" size="1" minimum="3" maximum="3" />
       <entry entity="uk100200Troll" size="3" minimum="6" maximum="6" />
       <entry entity="uk100200Archer" size="3" minimum="7" maximum="7" />
-      <entry entity="uk100GoblinMage" size="4" minimum="4" maximum="4" />
+      <entry entity="uk100GoblinMage" size="4" minimum="1" maximum="1" />
       <entry entity="uk100Goblin" size="3" minimum="6" maximum="6" />
       <entry entity="uk100MaGoblin" size="1" minimum="2" maximum="2" />
       <bounds region="5">
         <inclusion left="3" top="3" right="13" bottom="25" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
+        <inclusion left="14" top="8" right="14" bottom="15" />
+        <exclusion left="3" top="24" right="9" bottom="25" />
+        <exclusion left="3" top="19" right="4" bottom="23" />
+        <exclusion left="11" top="3" right="13" bottom="6" />
+        <exclusion left="7" top="16" right="13" bottom="19" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="lightningcaves">
@@ -103555,7 +103977,7 @@
       </script>
       <entry entity="tkTrollKing" size="1" minimum="1" maximum="1" />
       <bounds region="9">
-        <inclusion left="6" top="22" right="11" bottom="25" />
+        <inclusion left="6" top="21" right="11" bottom="25" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -103800,7 +104222,7 @@
     <spawn type="RegionSpawner" name="yasnakilevel">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1500</maximumDelay>
-      <maximum>25</maximum>
+      <maximum>33</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -103815,11 +104237,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="yasnakiMA" size="3" minimum="4" maximum="6" />
-      <entry entity="yasnakiWizard" size="1" minimum="3" maximum="4" />
-      <entry entity="yasnakiThaum" size="3" minimum="5" maximum="5" />
-      <entry entity="yasnakiKnight" size="3" minimum="7" maximum="9" />
-      <entry entity="yasnakiMA" size="3" minimum="2" maximum="3" />
+      <entry entity="yasnakiMA" size="3" minimum="11" maximum="11" />
+      <entry entity="yasnakiWizard" size="1" minimum="6" maximum="6" />
+      <entry entity="yasnakiThaum" size="3" minimum="8" maximum="8" />
+      <entry entity="yasnakiKnight" size="3" minimum="11" maximum="11" />
       <bounds region="16">
         <inclusion left="1" top="10" right="37" bottom="21" />
         <inclusion left="22" top="1" right="37" bottom="9" />
@@ -103853,6 +104274,7 @@
       <entry entity="udStalker" size="1" minimum="3" maximum="3" />
       <bounds region="17">
         <inclusion left="2" top="3" right="37" bottom="22" />
+        <exclusion left="2" top="21" right="29" bottom="22" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="orugugra">
@@ -103931,6 +104353,30 @@
       <bounds region="16">
         <inclusion left="6" top="2" right="15" bottom="8" />
         <inclusion left="16" top="7" right="20" bottom="8" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="SpeedyHobUnsafeRoom">
+      <minimumDelay>1500</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="uk300Troll" size="1" minimum="4" maximum="4" />
+      <bounds region="12">
+        <inclusion left="31" top="12" right="33" bottom="14" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -104037,7 +104483,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallSapphire(3500u);
+	return new SwallowSapphire(3500u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104046,7 +104492,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StarRuby(5500u);
+	return new WhaleSapphire(10000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104055,7 +104501,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(23000u);
+	return new Tourmaline(23000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104085,7 +104531,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallSapphire(4000u);
+	return new SwallowSapphire(4000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104094,7 +104540,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StarRuby(6000u);
+	return new WhaleSapphire(11000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104103,7 +104549,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(26000u);
+	return new Tourmaline(26000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104133,7 +104579,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallSapphire(4000u);
+	return new SwallowSapphire(4000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104142,7 +104588,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StarRuby(6100u);
+	return new WhaleSapphire(6100u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104151,7 +104597,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(26000u);
+	return new Tourmaline(26000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104162,7 +104608,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new PearDiamond(2500u);
+	return new SwallowSapphire(4500u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104171,7 +104617,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StarRuby(7000u);
+	return new WhaleSapphire(7000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104180,7 +104626,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(28000u);
+	return new Tourmaline(28000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104249,7 +104695,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new PearDiamond(3500u);
+	return new Diamond(3500u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104258,7 +104704,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StarRuby(7500u);
+	return new SwallowSapphire(7500u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104267,7 +104713,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Amethyst(32000u);
+	return new Tourmaline(32000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104276,7 +104722,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new UncutEmerald(8000u);
+	return new WhaleSapphire(8000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -104494,6 +104940,147 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new BlueStaffRaiseDead();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="upperUtilityItems">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new GlassWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PineWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="4">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new WebOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="4">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new FireballOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="4">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new IceStormOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="lowerUtilityItems">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new SteelWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new HickoryWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="4">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new DarknessOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="4">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new IceStormOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="4">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new FireballOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="undeadUtilityItems">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new SteelWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new DemonWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new BirchWand();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new DarknessOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new HickoryWand();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>

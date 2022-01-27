@@ -88,7 +88,7 @@ namespace Kesmai.WorldForge
 				var inclusion = rs.Inclusions.FirstOrDefault();
 				if (inclusion != null)
 					
-					CenterCameraOn(inclusion.Left, inclusion.Top);
+					CenterCameraOn((int)(inclusion.Left+inclusion.Width/2), (int)(inclusion.Top+inclusion.Height/2));
 			}
 		}
 
@@ -213,6 +213,11 @@ namespace Kesmai.WorldForge
 		protected UIScreen _uiScreen;
 		private ContextMenu _contextMenu;
 		protected BitmapFont _font;
+		private List<MenuItem> _pointContextItems = new List<MenuItem>();
+		private List<MenuItem> _selectionContextItems = new List<MenuItem>();
+		private List<MenuItem> _spawnerContextItems = new List<MenuItem>();
+		private List<MenuItem> _teleporterSourceContextItems = new List<MenuItem>();
+		private List<MenuItem> _teleporterDestinationContextItems = new List<MenuItem>();
 
 		private RenderTarget2D _renderTarget;
 		private bool _invalidateRender;
@@ -310,14 +315,46 @@ namespace Kesmai.WorldForge
 
 			_contextMenu = new ContextMenu();
 
-			var createSpawnMenuItem = new MenuItem() { Title = "Create Spawn..", };
-			var createLocationMenuItem = new MenuItem() { Title = "Create Location..", };
+			var createSpawnMenuItem = new MenuItem() { Title = "Create Location Spawner.." };
+			var createRegionSpawnerMenuItem = new MenuItem() { Title = "Create Region Spawner.." };
+			var createSubregionMenuItem = new MenuItem() { Title = "Create Subregion.." };
+			var createLocationMenuItem = new MenuItem() { Title = "Create Named Location.." };
+			var RegionSpawnerIncludeMenuItem = new MenuItem() { Title = "Add selection to Inclusions.." };
+			var RegionSpawnerExcludeMenuItem = new MenuItem() { Title = "Add selection to Exclusions.." };
+			var configureTeleporterMenuItem = new MenuItem() { Title = "Set as Teleporter Destination..", IsVisible = false };
+			var cancelConfigureTeleporterMenuItem = new MenuItem() { Title = "Cancel", IsVisible = false };
+			var configureThisTeleporterMenuItem = new MenuItem() { Title = "Choose a Destination..", IsVisible = false };
 
-			createSpawnMenuItem.Click += CreateSpawn;
+
+			createSpawnMenuItem.Click += CreateLocationSpawner;
 			createLocationMenuItem.Click += CreateLocation;
+			createRegionSpawnerMenuItem.Click += CreateRegionSpawner;
+			createSubregionMenuItem.Click += CreateSubregion;
+			RegionSpawnerIncludeMenuItem.Click += RegionSpawnerInclude;
+			RegionSpawnerExcludeMenuItem.Click += RegionSpawnerExclude;
+			configureTeleporterMenuItem.Click += ConfigureTeleporter;
+			cancelConfigureTeleporterMenuItem.Click += (o, e) => { _presenter.ConfiguringTeleporter = null; };
+			configureThisTeleporterMenuItem.Click += SetTeleporterAsConfiguring;
 
 			_contextMenu.Items.Add(createSpawnMenuItem);
 			_contextMenu.Items.Add(createLocationMenuItem);
+			_contextMenu.Items.Add(createSubregionMenuItem);
+			_contextMenu.Items.Add(createRegionSpawnerMenuItem);
+			_contextMenu.Items.Add(RegionSpawnerIncludeMenuItem);
+			_contextMenu.Items.Add(RegionSpawnerExcludeMenuItem);
+			_contextMenu.Items.Add(configureTeleporterMenuItem);
+			_contextMenu.Items.Add(cancelConfigureTeleporterMenuItem);
+			_contextMenu.Items.Add(configureThisTeleporterMenuItem);
+
+			_pointContextItems.Add(createSpawnMenuItem);
+			_pointContextItems.Add(createLocationMenuItem);
+			_selectionContextItems.Add(createRegionSpawnerMenuItem);
+			_selectionContextItems.Add(createSubregionMenuItem);
+			_spawnerContextItems.Add(RegionSpawnerIncludeMenuItem);
+			_spawnerContextItems.Add(RegionSpawnerExcludeMenuItem);
+			_teleporterDestinationContextItems.Add(configureTeleporterMenuItem);
+			_teleporterDestinationContextItems.Add(cancelConfigureTeleporterMenuItem);
+			_teleporterSourceContextItems.Add(configureThisTeleporterMenuItem);
 
 			uiService.Screens.Add(_uiScreen);
 
@@ -328,55 +365,154 @@ namespace Kesmai.WorldForge
 		{
 		}
 
-		private void CreateSpawn(object sender, EventArgs args)
+		private void CreateLocationSpawner(object sender, EventArgs args)
 		{
-			var inputService = _uiScreen.InputService;
-			var position = inputService.MousePosition;
 			var region = _presentationTarget.Region;
-			var tile = ToWorldTile((int)position.X, (int)position.Y);
+			var tile = ToWorldTile((int)Math.Floor(_contextMenu.ActualX), (int)Math.Floor(_contextMenu.ActualY));
+			if (tile == null)
+				return;
+			
+			var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+			var segment = segmentRequest.Response;
+			if (segment == null)
+				return;
 
-			if (tile != null)
+			var newSpawner = new LocationSpawner()
 			{
-				var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
-				var segment = segmentRequest.Response;
+				Name = $"Location Spawn {tile.X}, {tile.Y} [{region.ID}]",
+				X = tile.X,
+				Y = tile.Y,
+				Region = region.ID,
 
-				if (segment != null)
-				{
-					segment.Spawns.Location.Add(new LocationSpawner()
-					{
-						Name = $"Location Spawn {tile.X}, {tile.Y} [{region.ID}]",
-						X = tile.X, Y = tile.Y, Region = region.ID,
+				MinimumDelay = TimeSpan.FromMinutes(15.0),
+				MaximumDelay = TimeSpan.FromMinutes(15.0),
+			};
+			segment.Spawns.Location.Add(newSpawner);
 
-						MinimumDelay = TimeSpan.FromMinutes(15.0),
-						MaximumDelay = TimeSpan.FromMinutes(15.0),
-					});
-				}
-			}
+			_selection.Select(new Rectangle(tile.X, tile.Y, 1, 1), region);
+			_presenter.SwapDocument("Spawn");
 		}
 
 		private void CreateLocation(object sender, EventArgs args)
 		{
-			var inputService = _uiScreen.InputService;
-			var position = inputService.MousePosition;
 			var region = _presentationTarget.Region;
-			var tile = ToWorldTile((int)position.X, (int)position.Y);
+			var tile = ToWorldTile((int)Math.Floor(_contextMenu.ActualX), (int)Math.Floor(_contextMenu.ActualY));
+			if (tile == null)
+				return;
 
-			if (tile != null)
+			var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+			var segment = segmentRequest.Response;
+			if (segment == null)
+				return;
+
+			segment.Locations.Add(new SegmentLocation()
 			{
-				var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
-				var segment = segmentRequest.Response;
+				Name = $"Location {tile.X}, {tile.Y} [{region.ID}]",
+				X = tile.X, Y = tile.Y, Region = region.ID,
+			});
 
-				if (segment != null)
-				{
-					segment.Locations.Add(new SegmentLocation()
-					{
-						Name = $"Location {tile.X}, {tile.Y} [{region.ID}]",
-						X = tile.X, Y = tile.Y, Region = region.ID,
-					});
-				}
-			}
+			_selection.Select(new Rectangle(tile.X, tile.Y, 1, 1), region);
+			_presenter.SwapDocument("Location");
+
 		}
 
+		private void CreateRegionSpawner(object sender, EventArgs args)
+		{
+			var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+			var segment = segmentRequest.Response;
+			if (segment is null)
+				return;
+			var newSpawner = new RegionSpawner()
+			{
+				Name = $"New {_presentationTarget.Region.Name} Spawner",
+				Region = _presentationTarget.Region.ID,
+				MinimumDelay = TimeSpan.FromMinutes(15.0),
+				MaximumDelay = TimeSpan.FromMinutes(15.0),
+			};
+			newSpawner.Inclusions.Clear();
+			foreach (Rectangle rect in _selection)
+			{
+				var bounds = new SegmentBounds((int)rect.Left, (int)rect.Top, (int)rect.Right-1, (int)rect.Bottom-1);
+				newSpawner.Inclusions.Add(bounds);
+			}
+			segment.Spawns.Region.Add(newSpawner);
+
+			Rectangle insideNewSpawner = new Rectangle(_selection.First().Left, _selection.First().Top, 1, 1);
+			_selection.Select(insideNewSpawner, _presentationTarget.Region);
+			_presenter.SwapDocument("Spawn");
+			
+		}
+		private void CreateSubregion(object sender, EventArgs args)
+		{
+			var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+			var segment = segmentRequest.Response;
+			if (segment is null)
+				return;
+
+			var newSubRegion = new SegmentSubregion()
+			{
+				Name = $"New {_presentationTarget.Region.Name} Subregion",
+				Region = _presentationTarget.Region.ID
+			};
+			
+			foreach (Rectangle rect in _selection)
+			{
+				var bounds = new SegmentBounds((int)rect.Left, (int)rect.Top, (int)rect.Right - 1, (int)rect.Bottom - 1);
+				newSubRegion.Rectangles.Add(bounds);
+			}
+			segment.Subregions.Add(newSubRegion);
+
+			Rectangle insideNewSubregion = new Rectangle(_selection.First().Left, _selection.First().Top, 1, 1);
+			_selection.Select(insideNewSubregion, _presentationTarget.Region);
+			_presenter.SwapDocument("Subregion");
+		}
+		private void RegionSpawnerInclude(object sender, EventArgs args)
+		{
+			var currentSpawner = (_presenter.ActiveDocument as UI.Documents.SpawnsViewModel).SelectedRegionSpawner;
+			if (currentSpawner == null)
+				return;
+			foreach (Rectangle rect in _selection)
+			{
+				var bounds = new SegmentBounds((int)rect.Left, (int)rect.Top, (int)rect.Right - 1, (int)rect.Bottom - 1);
+				currentSpawner.Inclusions.Add(bounds);
+			}
+			InvalidateRender();
+		}
+		private void RegionSpawnerExclude(object sender, EventArgs args)
+		{
+			var currentSpawner = (_presenter.ActiveDocument as UI.Documents.SpawnsViewModel).SelectedRegionSpawner;
+			if (currentSpawner == null)
+				return;
+			foreach (Rectangle rect in _selection)
+			{
+				var bounds = new SegmentBounds((int)rect.Left, (int)rect.Top, (int)rect.Right - 1, (int)rect.Bottom - 1);
+				currentSpawner.Exclusions.Add(bounds);
+			}
+			InvalidateRender();
+		}
+		
+		private void ConfigureTeleporter(object sender, EventArgs args)
+        {
+			var region = _presentationTarget.Region;
+			var tile = ToWorldTile((int)Math.Floor(_contextMenu.ActualX), (int)Math.Floor(_contextMenu.ActualY));
+			if (tile == null)
+				return;
+
+			_presenter.ConfiguringTeleporter.DestinationX = tile.X;
+			_presenter.ConfiguringTeleporter.DestinationY = tile.Y;
+			_presenter.ConfiguringTeleporter.DestinationRegion = _presentationTarget.Region.ID;
+			_presenter.ConfiguringTeleporter = null;
+			InvalidateRender();
+		}
+
+		private void SetTeleporterAsConfiguring(object sender, EventArgs args)
+        {
+			var tile = ToWorldTile((int)Math.Floor(_contextMenu.ActualX), (int)Math.Floor(_contextMenu.ActualY));
+			if (tile == null)
+				return;
+			var teleporter = tile.Components.FirstOrDefault(t => t is TeleportComponent);
+			_presenter.ConfiguringTeleporter = teleporter as TeleportComponent;
+		}
 		protected virtual void OnHandleInput(object sender, InputEventArgs args)
 		{
 		}
@@ -427,6 +563,27 @@ namespace Kesmai.WorldForge
 				{
 					if (inputService.IsReleased(MouseButtons.Right))
 					{
+
+						var currentPosition = inputService.MousePosition;
+						var (cx, cy) = this.ToWorldCoordinates((int)currentPosition.X, (int)currentPosition.Y);
+						bool isInSelection = _selection.IsSelected(cx, cy, region);
+						bool isInRegionSpawner = false;
+						bool configuringTeleporter = _presenter.ConfiguringTeleporter is not null;
+						bool tileHasOneTeleporter = false;
+						if (region.GetTile(cx, cy) is SegmentTile tile && tile.Components.Where(c => c is TeleportComponent) is IEnumerable<TerrainComponent> teleporter && teleporter.Count() == 1)
+							tileHasOneTeleporter = true;
+                   
+						if (_presenter.ActiveDocument is UI.Documents.SpawnsViewModel)
+                        {
+							var response = WeakReferenceMessenger.Default.Send<Kesmai.WorldForge.UI.Documents.SpawnsDocument.GetCurrentTypeSelection>();
+							if (response.HasReceivedResponse)
+								isInRegionSpawner = response.Response == 1;
+                        }
+						foreach (MenuItem item in _pointContextItems) { item.IsVisible = !configuringTeleporter &&(!isInSelection || _selection.FirstOrDefault() is { Height:1, Width:1 }); }
+						foreach (MenuItem item in _selectionContextItems) { item.IsVisible = !configuringTeleporter	&& isInSelection; }
+						foreach (MenuItem item in _spawnerContextItems) { item.IsVisible = !configuringTeleporter && isInRegionSpawner; }
+						foreach (MenuItem item in _teleporterDestinationContextItems) { item.IsVisible = configuringTeleporter; }
+						foreach (MenuItem item in _teleporterSourceContextItems) { item.IsVisible = !configuringTeleporter && tileHasOneTeleporter; }
 						inputService.IsMouseOrTouchHandled = true;
 						_contextMenu.Open(_uiScreen, args.Context.MousePosition);
 					}
@@ -450,172 +607,106 @@ namespace Kesmai.WorldForge
 				inputService.IsKeyboardHandled = true;
 			}
 
-			if (inputService.IsDown(Keys.LeftControl) || inputService.IsDown(Keys.RightControl)) //Document Jumping hotkeys. Todo: move to a better place to capture this user input.
+			if (!(inputService.IsDown(Keys.LeftControl) || inputService.IsDown(Keys.RightControl)))
 			{
-				if (inputService.IsPressed(Keys.Left, false))
+				if (inputService.IsPressed(Keys.W, true))
 				{
-					var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
-					var segment = segmentRequest.Response;
-					var sortedRegions = segment.Regions.OrderBy(r => r.ID);
-					var nextRegion = sortedRegions.LastOrDefault(r => r.ID < region.ID);
-					if (nextRegion != null) { _presenter.ActiveDocument = nextRegion; } else { _presenter.ActiveDocument = sortedRegions.Last(); }
-					inputService.IsKeyboardHandled = true;
+					shiftMap(0, -1);
 				}
-				else if (inputService.IsPressed(Keys.Right, false))
+				else if (inputService.IsPressed(Keys.S, true))
 				{
-					var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
-					var segment = segmentRequest.Response;
-					var sortedRegions = segment.Regions.OrderBy(r => r.ID);
-					var nextRegion = sortedRegions.FirstOrDefault(r => r.ID > region.ID);
-					if (nextRegion != null) { _presenter.ActiveDocument = nextRegion; } else { _presenter.ActiveDocument = sortedRegions.First(); }
-					inputService.IsKeyboardHandled = true;
+					shiftMap(0, 1);
 				}
-				else if (inputService.IsPressed(Keys.E, false))
+				else if (inputService.IsPressed(Keys.A, true))
 				{
-					WeakReferenceMessenger.Default.Send(null as Entity);
-					inputService.IsKeyboardHandled = true;
+					shiftMap(-1, 0);
 				}
-				else if (inputService.IsPressed(Keys.S, false))
+				else if (inputService.IsPressed(Keys.D, true))
 				{
-					WeakReferenceMessenger.Default.Send(null as Segment);
-					inputService.IsKeyboardHandled = true;
+					shiftMap(1, 0);
 				}
-				else if (inputService.IsPressed(Keys.L, false))
+				else if (inputService.IsPressed(Keys.Home, false))
 				{
-					var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
-					var segment = segmentRequest.Response;
-					var sel = _selection.FirstOrDefault();
-					SegmentLocation locationHere = null;
-					if (sel is { Width: 1, Height: 1 })
+					CenterCameraOn(0, 0);
+
+					if (_selection != null)
+						_selection.Select(new Rectangle(0, 0, 1, 1), region);
+				}
+				else if (inputService.IsPressed(Keys.Back, false))
+				{
+					_presenter.JumpPrevious();
+				}
+				else if (inputService.IsPressed(Keys.Add, false))
+				{
+					ZoomFactor += 0.2f;
+				}
+				else if (inputService.IsPressed(Keys.Subtract, false))
+				{
+					ZoomFactor -= 0.2f;
+				}
+				else if (inputService.IsReleased(Keys.Delete))
+				{
+					if (region != null)
 					{
-						locationHere = segment.Locations.FirstOrDefault(l => l.Region == region.ID && l.X == sel.Left && l.Y == sel.Top);
-					}
-					WeakReferenceMessenger.Default.Send(locationHere);
-					inputService.IsKeyboardHandled = true;
-				}
-				else if (inputService.IsPressed(Keys.T, false))
-				{
-					WeakReferenceMessenger.Default.Send(null as SegmentTreasure);
-					inputService.IsKeyboardHandled = true;
-				}
-				else if (inputService.IsPressed(Keys.U, false))
-				{
-					var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
-					var segment = segmentRequest.Response;
-					var sel = _selection.FirstOrDefault();
-					SegmentSubregion subregionHere = null;
-					if (sel is { Width: 1, Height: 1 })
-                    {
-						subregionHere = segment.Subregions.FirstOrDefault(s => s.Region == region.ID && s.Rectangles.Any(r => r.ToRectangle().Contains(sel.Left, sel.Top)));
-                    }
-					WeakReferenceMessenger.Default.Send(subregionHere);
-					inputService.IsKeyboardHandled = true;
-				}
-				else if (inputService.IsPressed(Keys.P, false))
-				{
-					var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
-					var segment = segmentRequest.Response;
-					var sel = _selection.FirstOrDefault();
-					LocationSpawner locationSpawnerHere = null;
-					RegionSpawner regionSpawnerHere = null;
-					if (sel is { Width: 1, Height: 1 })
-                    {
-						locationSpawnerHere = segment.Spawns.Location.FirstOrDefault(l => l.Region == region.ID && l.X == sel.X && l.Y == sel.Y); // are there any location spawners on this region\tile
-						regionSpawnerHere = segment.Spawns.Region.FirstOrDefault(s => s.Region == region.ID && s.Inclusions.Any(i => i.ToRectangle().Contains(sel.Left, sel.Top))); //are there any region spawners containing this region\tile
-					}
-					if (locationSpawnerHere != null) { WeakReferenceMessenger.Default.Send(locationSpawnerHere as Spawner); } //if there was a location spawner, jump to it
-					else if (regionSpawnerHere != null) { WeakReferenceMessenger.Default.Send(regionSpawnerHere as Spawner); } //if no location spawner, but a region spawner, jump to that
-					else { WeakReferenceMessenger.Default.Send(null as Spawner); } // default to just jumping to the spawner tab.                   
-					inputService.IsKeyboardHandled = true;
-				}
-			}
-			if (inputService.IsPressed(Keys.W, true))
-			{
-				shiftMap(0, -1);
-			}
-			else if (inputService.IsPressed(Keys.S, true))
-			{
-				shiftMap(0, 1);
-			}
-			else if (inputService.IsPressed(Keys.A, true))
-			{
-				shiftMap(-1, 0);
-			}
-			else if (inputService.IsPressed(Keys.D, true))
-			{
-				shiftMap(1, 0);
-			}
-			else if (inputService.IsPressed(Keys.Home, false))
-			{
-				CenterCameraOn(0, 0);
+						foreach (var area in _selection)
+						{
+							for (var x = area.Left; x < area.Right; x++)
+								for (var y = area.Top; y < area.Bottom; y++)
+								{
+									var currentFilter = _presenter.SelectedFilter;
+									var tile = region.GetTile(x,y);
+									if (tile is null)
+										continue;
+									var validComponents = tile.Components.Where(c => currentFilter.IsValid(c)).ToArray();
+									foreach (var component in validComponents){
+										tile.RemoveComponent(component);
+									}
+								}
 
-				if (_selection != null)
-					_selection.Select(new Rectangle(0, 0, 1, 1), region);
-			}
-			else if (inputService.IsPressed(Keys.Back, false))
-            {
-				_presenter.JumpPrevious();
-            }
-			else if (inputService.IsPressed(Keys.Add, false))
-			{
-				ZoomFactor += 0.2f;
-			}
-			else if (inputService.IsPressed(Keys.Subtract, false))
-			{
-				ZoomFactor -= 0.2f;
-			}
-			else if (inputService.IsReleased(Keys.Delete))
-			{
-				if (region != null)
-				{
-					foreach (var area in _selection)
-					{
-						for (var x = area.Left; x < area.Right; x++)
-							for (var y = area.Top; y < area.Bottom; y++)
-								region.DeleteTile(x, y);
-					}
-
-					inputService.IsKeyboardHandled = true;
-				}
-			}
-			else if (inputService.IsPressed(Keys.Multiply, false))
-			{
-				_drawgrid = !_drawgrid;
-				_invalidateRender = true;
-			}
-			else
-			{
-				if (!inputService.IsKeyboardHandled)
-				{
-					foreach (var selectorKey in _selectorKeys)
-					{
-						if (!inputService.IsReleased(selectorKey))
-							continue;
-
-						var index = _selectorKeys.IndexOf(selectorKey);
-						var filters = _presenter.Filters;
-
-						if (index >= 0 && index < filters.Count)
-							_presenter.SelectFilter(filters[index]);
-
+						}
+						_invalidateRender = true;
 						inputService.IsKeyboardHandled = true;
 					}
 				}
-
-				if (!inputService.IsKeyboardHandled)
+				else if (inputService.IsPressed(Keys.Multiply, false))
 				{
-					foreach (var toolKey in _toolKeys)
+					_drawgrid = !_drawgrid;
+					_invalidateRender = true;
+				}
+				else
+				{
+					if (!inputService.IsKeyboardHandled)
 					{
-						if (!inputService.IsReleased(toolKey))
-							continue;
+						foreach (var selectorKey in _selectorKeys)
+						{
+							if (!inputService.IsReleased(selectorKey))
+								continue;
 
-						var index = _toolKeys.IndexOf(toolKey);
-						var tools = _presenter.Tools;
+							var index = _selectorKeys.IndexOf(selectorKey);
+							var filters = _presenter.Filters;
 
-						if (index >= 0 && index < tools.Count)
-							_presenter.SelectTool(tools[index]);
+							if (index >= 0 && index < filters.Count)
+								_presenter.SelectFilter(filters[index]);
 
-						inputService.IsKeyboardHandled = true;
+							inputService.IsKeyboardHandled = true;
+						}
+					}
+
+					if (!inputService.IsKeyboardHandled)
+					{
+						foreach (var toolKey in _toolKeys)
+						{
+							if (!inputService.IsReleased(toolKey))
+								continue;
+
+							var index = _toolKeys.IndexOf(toolKey);
+							var tools = _presenter.Tools;
+
+							if (index >= 0 && index < tools.Count)
+								_presenter.SelectTool(tools[index]);
+
+							inputService.IsKeyboardHandled = true;
+						}
 					}
 				}
 			}
@@ -711,7 +802,7 @@ namespace Kesmai.WorldForge
 									var spriteBounds = originalBounds;
 
 									if (sprite.Offset != Vector2F.Zero)
-										spriteBounds.Offset(sprite.Offset.X, sprite.Offset.Y);
+										spriteBounds.Offset((int)Math.Floor(sprite.Offset.X * _zoomFactor), (int)Math.Floor(sprite.Offset.Y * _zoomFactor));
 
 									spritebatch.Draw(sprite.Texture, spriteBounds.Location.ToVector2(),null,  render.Color, 0, Vector2.Zero, _zoomFactor, SpriteEffects.None, 0f);
 								}
@@ -726,8 +817,13 @@ namespace Kesmai.WorldForge
 
 					var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
 					var segment = segmentRequest.Response;
-
-					if (_presenter.SelectedFilter is TeleporterSelector) // Destination highlights for teleporters //todo: make this a toggle with a "tool" like button
+					if (_presenter.Visibility.ShowTeleporters||(_presenter.Visibility.ShowSpawns && _presenter.ActiveDocument is not WorldForge.UI.Documents.SpawnsViewModel))
+                    {
+						//dim the screen
+						var viewportrectangle = GetRenderRectangle(viewRectangle, viewRectangle);
+						spritebatch.FillRectangle(viewportrectangle, Color.FromNonPremultiplied(0, 0, 0, 128));
+					}
+					if (_presenter.Visibility.ShowTeleporters) // Destination highlights for teleporters //todo: make this a toggle with a "tool" like button
 					{
 						var _teleportDestinationHighlight = Color.FromNonPremultiplied(80, 255, 80, 200);
 						var _teleportSourceHighlight = Color.FromNonPremultiplied(160, 255, 20, 200);
@@ -797,7 +893,7 @@ namespace Kesmai.WorldForge
 
 						}
 					}
-					if (_presenter.SelectedFilter is SpawnSelector)
+					if (_presenter.Visibility.ShowSpawns && _presenter.ActiveDocument is not WorldForge.UI.Documents.SpawnsViewModel)
 					{
 						var _inclusionBorder = Color.FromNonPremultiplied(200, 255, 50, 255);
 						var _inclusionFill = Color.FromNonPremultiplied(200, 255, 50, 50);

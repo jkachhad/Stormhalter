@@ -8,6 +8,8 @@ using CommonServiceLocator;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Scripting;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using System.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge
@@ -48,8 +50,12 @@ namespace Kesmai.WorldForge
 			get => _name;
 			set => SetProperty(ref _name, value);
 		}
-		
-		public TimeSpan MinimumDelay
+
+        public override string ToString()
+        {
+			return Name;
+        }
+        public TimeSpan MinimumDelay
 		{
 			get => _minimumDelay;
 			set => SetProperty(ref _minimumDelay, value);
@@ -230,6 +236,12 @@ namespace Kesmai.WorldForge
 	public class RegionSpawner : Spawner
 	{
 		private int _region;
+
+		private double _averageMobs;
+		private int? _totalXP;
+		private int? _totalHP;
+		private int _openFloortiles;
+		private int? _threat;
 		
 		public int Region
 		{
@@ -276,7 +288,146 @@ namespace Kesmai.WorldForge
 				}
 			}
 		}
+
+		public void CalculateStats()
+        {
+			//Calculate Open Floor Tiles by finding all tiles that have a floor type component and not a structural component.
+			_openFloortiles = 0;
+			var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+			var segment = segmentRequest.Response;
+			var region = segment.GetRegion(_region);
+			if (region is not null)
+			{
+				IEnumerable<SegmentTile> includedTiles = Enumerable.Empty<SegmentTile>();
+				foreach (var rect in Inclusions)
+				{
+					var rectTiles = region.GetTiles(t => rect.ToRectangle().Contains(t.X, t.Y) &&
+									   t.Components.Any(floor => floor is Models.FloorComponent || floor is Models.IceComponent || floor is Models.WaterComponent) &&
+									   !t.Components.Any(notfloor => notfloor is Models.WallComponent || notfloor is Models.ObstructionComponent));
+					includedTiles = includedTiles.Union(rectTiles);
+				}
+				foreach (var rect in Exclusions)
+				{
+					if (rect is { Left: 0, Right: 0, Top: 0, Bottom: 0 })
+						continue;
+					includedTiles = includedTiles.Where(t => !rect.ToRectangle().Contains(t.X, t.Y));
+				}
+
+				_openFloortiles = includedTiles.Count();
+
+				//Calculate stats that require itterating through entities: Average mobs, total xp, total hp, density.
+				_averageMobs = 0;
+				_totalXP = 0;
+				_totalHP = 0;
+				if (Entries.Count != 0)
+				{
+					double averageEntry = 0;
+					double averageXP = 0;
+					double averageHP = 0;
+					double averageThreat = 0;
+					int minimumMobs = 0;
+					int minimumXP = 0;
+					int minimumHP = 0;
+					int minimumSlots = 0;
+					int maximumMobs = 0;
+					int maximumXP = 0;
+					int maximumHP = 0;
+					int maximumSlots = 0;
+					foreach (var entry in Entries.Where(e=>e.Entity.HP is not null && e.Entity.XP is not null))
+					{
+						averageEntry += entry.Size;
+						averageHP += entry.Size * (int)entry.Entity.HP;
+						averageXP += entry.Size * (int)entry.Entity.XP;
+						averageThreat += Math.Max((int)(entry.Entity.Threat.Item1 is null ? 0 : entry.Entity.Threat.Item1), (int)(entry.Entity.Threat.Item2 is null ? 0 : entry.Entity.Threat.Item2));
+						minimumMobs += entry.Minimum * entry.Size;
+						minimumHP += entry.Minimum * entry.Size * (int)entry.Entity.HP;
+						minimumXP += entry.Minimum * entry.Size * (int)entry.Entity.XP;
+						minimumSlots += entry.Minimum;
+						maximumMobs += entry.Maximum * entry.Size;
+						maximumHP += entry.Maximum * entry.Size * (int)entry.Entity.HP;
+						maximumXP += entry.Maximum * entry.Size * (int)entry.Entity.XP;
+						maximumSlots += entry.Maximum ==0 ? Maximum : entry.Maximum;
+
+					}
+					averageEntry = averageEntry / Entries.Count();
+					averageHP = averageHP / Entries.Count();
+					averageXP = averageXP / Entries.Count();
+					averageThreat = averageThreat / Entries.Count();
+
+					//For spawners that have a maximum of 0 or a Maximum higher than the alotted entries, there is no cap on mobs, and all entries will spawn their maximum
+					if (Maximum == 0 || Maximum>=maximumSlots)
+					{
+						_averageMobs = maximumMobs;
+						_totalHP = maximumHP;
+						_totalXP = maximumXP;
+					}
+					//For spawners that have fewer slots available than needed to fill the minimums, average mobs is just slots times our average size.
+					else if (Maximum < minimumSlots)
+					{
+						_averageMobs = averageEntry * Maximum;
+						_totalHP = (int)(averageHP * Maximum);
+						_totalXP = (int)(averageXP * Maximum);
+					}
+					//For other spawners, we need to first fill the minimums, then add remaining slots * our average.
+					else
+					{
+						_averageMobs = minimumMobs + (Maximum - minimumSlots) * averageEntry;
+						_totalHP = (int)(minimumHP + (Maximum - minimumSlots) * averageHP);
+						_totalXP = (int)(minimumXP + (Maximum - minimumSlots) * averageXP);
+					}
+					_threat = Math.Max((int)(Density * 10 * averageThreat),(int)averageThreat);
+				}
+				//If any of the entities referenced have a null for HP or XP, invalidate that calculation
+				if (Entries.Any(e => e.Entity.HP is null))
+					_totalHP = null;
+				if (Entries.Any(e => e.Entity.XP is null))
+					_totalXP = null;
+				//If the Spawner has a 0 Maximum AND any of the entities also have a 0 maximum. I think this spawner will spawn without cap. Show as broken
+				if (Maximum == 0 && Entries.Any(e => e.Maximum == 0))
+                {
+					_averageMobs = 0;
+					_totalHP = null;
+					_totalXP = null;
+                }
+			}
+		}
+		public int OpenFloorTiles
+		{
+			get => _openFloortiles;
+		}
+
+		public double AverageMobs
+        {
+			get => _averageMobs;
+        }
+
+		[Description("Approximate mobs per open floor tile")]
+		public double Density
+        {
+            get
+            {
+				return _averageMobs / _openFloortiles;
+            }
+        }
+
+		[Description("Average XP for a full clear of the spawn")]
+		public int? TotalXP
+        {
+			get => _totalXP;
+        }
+
+		[Description("Average damage dealt required to clear the spawn")]
+		public int? TotalHP
+        {
+			get => _totalHP;
+        }
 		
+		[Description("Damage output score for the spawn. Does not take into account custom damage values. Gets wonky when evaluating lairs.")]
+		public int? Threat
+        {
+			get => _threat;
+        }
+
 		public override XElement GetXElement()
 		{
 			var element = base.GetXElement();
