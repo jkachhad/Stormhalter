@@ -75815,12 +75815,13 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
 
-    //Prone 100% chance might need to be toned down but he moves 2 and doesn't charge so I thought it would be fun.
+    //Prone 100% and also movement is still 2. Someone can out run this unless in Sand. 
     var bridgeTroll = new ElderTroll()
     {
         MaxHealth = 250, Health = 250,
         BaseDodge = 13,
         HideDetection = 23,
+        CanCharge = true,
 
         Experience = 10500,
         
