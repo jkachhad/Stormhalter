@@ -75819,7 +75819,7 @@
     var bridgeTroll = new ElderTroll()
     {
         MaxHealth = 250, Health = 250,
-        BaseDodge = 13,
+        BaseDodge = 18,
         HideDetection = 23,
         CanCharge = true,
 
@@ -75830,10 +75830,19 @@
         Movement = 2,
     };
     
-    bridgeTroll.Attacks = new CreatureAttackCollection()
+    bridgeTroll.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(11, 20, 30,
-                new AttackProneComponent(100.0))
+        { 
+            new CreatureAttack(10, 12, 18, "The troll swipes at you with his club."),           40
+        }, 
+        { 
+            new CreatureAttack(11, 13, 25, "The troll headbutts you.",
+                        new AttackStunComponent(20)),                                   35
+        }, 
+        { 
+            new CreatureAttack(12, 20, 30, "The troll bashes you aside with a sweep of his spiked club.",
+                        new AttackProneComponent(100.0)),                               25
+        }, 
     };
     
     bridgeTroll.Wield(new SpikedClub());
