@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Blackburrow" version="0.81.0.0">
+<segment name="Blackburrow" version="0.87.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -22563,8 +22563,7 @@
           <lightphases select="all" />
           <moonphases select="all" />
           <professions>Fighter,Martial Artist,Thaumaturge,Wizard,Knight</professions>
-          <alignments select="all" />
-          <allowNPC>true</allowNPC>
+          <alignments>Lawful,Neutral,Evil</alignments>
         </component>
         <component type="FloorComponent">
           <ground>12</ground>
@@ -25333,6 +25332,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="LockersComponent">
           <static>119</static>
@@ -25346,6 +25346,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-10" y="8">
@@ -25773,6 +25774,7 @@
           <wall>146</wall>
           <destroyed>148</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="FloorComponent">
           <ground>4</ground>
@@ -25786,6 +25788,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-9" y="9">
@@ -26662,6 +26665,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="FloorComponent">
           <ground>4</ground>
@@ -27074,6 +27078,7 @@
           <wall>146</wall>
           <destroyed>148</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-10" y="12">
@@ -27474,6 +27479,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-11" y="13">
@@ -33020,6 +33026,55 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="Thief Bane">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var skeleton = new Skeleton()
+	{
+	   Name = "Skeletal Archer",
+	   MaxHealth = 150, Health = 150,
+	   BaseDodge = 18,
+	   BasePenetration = ShieldPenetration.Light,
+	   HideDetection = 50,
+	   Experience = 10000,
+	   CanSwim = false,
+	   Immunity = CreatureImmunity.Poison,
+	 };
+	 
+	skeleton.AddStatus(new NightVisionStatus(skeleton));
+    skeleton.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(20)
+    };
+    
+    skeleton.AddStatus(new NightVisionStatus(skeleton));
+    skeleton.Wield(new FineCrossbow());
+    
+    skeleton.AddGold(2000);
+    skeleton.AddLoot(new LootPack(
+        new LootPackEntry(true, GenericBottles, 50),
+        new LootPackEntry(true, Levelthreegems, 12)
+    ));
+    
+return skeleton;
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="TownBanker ">
@@ -33690,7 +33745,6 @@ if (spokeRecently(source))
       <entry entity="LeveloneGnollGuard" size="3" minimum="6" maximum="9" />
       <entry entity="LeveloneGnollSoothsayer" size="1" minimum="3" maximum="3" />
       <bounds region="2">
-        <inclusion left="-3" top="0" right="5" bottom="6" />
         <inclusion left="6" top="-7" right="7" bottom="15" />
         <inclusion left="8" top="8" right="17" bottom="11" />
         <inclusion left="8" top="-7" right="17" bottom="-5" />
@@ -34052,7 +34106,7 @@ if (spokeRecently(source))
     <spawn type="RegionSpawner" name="SkeeltalArchers1">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>600</maximumDelay>
-      <maximum>6</maximum>
+      <maximum>8</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -34068,6 +34122,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
       <entry entity="Levelthreearchers" size="2" minimum="6" maximum="6" />
+      <entry entity="Thief Bane" size="1" minimum="2" maximum="2" />
       <bounds region="4">
         <inclusion left="7" top="4" right="14" bottom="5" />
         <inclusion left="7" top="6" right="7" bottom="6" />
@@ -34227,6 +34282,31 @@ if (spokeRecently(source))
       <entry entity="LeveloneGnollOfficer" size="1" minimum="3" maximum="4" />
       <bounds region="2">
         <inclusion left="-2" top="23" right="2" bottom="32" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Dragonskel">
+      <minimumDelay>60</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="Thief Bane" size="1" minimum="1" maximum="2" />
+      <bounds region="4">
+        <inclusion left="23" top="8" right="26" bottom="9" />
+        <inclusion left="27" top="6" right="31" bottom="11" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -34542,7 +34622,7 @@ if (spokeRecently(source))
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="8">
+      <entry weight="2">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -34589,7 +34669,7 @@ if (spokeRecently(source))
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="8">
+      <entry weight="2">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
