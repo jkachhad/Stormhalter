@@ -14,6 +14,7 @@ using Kesmai.WorldForge.MVP;
 using Kesmai.WorldForge.Roslyn;
 using Kesmai.WorldForge.UI;
 using Kesmai.WorldForge.UI.Documents;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
@@ -603,6 +604,9 @@ namespace Kesmai.WorldForge.Editor
 		{
 			var targetFile = String.Empty;
 
+			if (!CheckScriptSyntax())
+				return;
+
 			if (!queryPath && String.IsNullOrEmpty(_segmentFilePath))
 				queryPath = true;
 
@@ -651,7 +655,95 @@ namespace Kesmai.WorldForge.Editor
 			
 			projectFile.Save(targetFile);
 		}
-		
+
+		private bool CheckScriptSyntax() //Enumerate all script segments and verify that they pass syntax checks
+		{
+			//Segment code:
+			var syntaxErrors = CSharpSyntaxTree.ParseText(Segment.Internal.Blocks[1]).GetDiagnostics();
+			if (syntaxErrors.Count()>0)
+            {
+				var errorList = String.Join('\n', syntaxErrors.Take(3).Select(err => (err.Location.GetLineSpan().StartLinePosition.Line+2) + ":" + err.GetMessage()));
+				if (syntaxErrors.Count() > 3)
+					errorList += "\n...";
+				var messageResult = MessageBox.Show($"Segment code has syntax errors.\nDo you wish to continue?\n\n{errorList}", "Syntax Errors in scripts", MessageBoxButton.YesNo);
+				if (messageResult == MessageBoxResult.No)
+				{
+					ActiveDocument = Documents.Where(d => d is SegmentViewModel).FirstOrDefault() as SegmentViewModel;
+					return false;
+				}
+			}
+
+			//Entity scripts:
+			foreach (Entity entity in Segment.Entities)
+            {
+				foreach (Scripting.Script script in entity.Scripts.Where(s=>s.IsEnabled))
+                {
+					syntaxErrors = CSharpSyntaxTree.ParseText("void OnSpawn(){" + script.Blocks[1] + "}").GetDiagnostics();
+					if (syntaxErrors.Count() > 0)
+					{
+						var errorList = String.Join('\n', syntaxErrors.Take(3).Select(err => (err.Location.GetLineSpan().StartLinePosition.Line + 3) + ":" + err.GetMessage()));
+						if (syntaxErrors.Count() > 3)
+							errorList += "\n...";
+						var messageResult = MessageBox.Show($"Entity '{entity.Name}' has syntax errors in script '{script.Name}'.\nDo you wish to continue?\n\n{errorList}", "Syntax Errors in scripts", MessageBoxButton.YesNo);
+						if (messageResult == MessageBoxResult.No)
+						{
+							ActiveDocument = Documents.Where(d => d is EntitiesViewModel).FirstOrDefault() as EntitiesViewModel;
+							(ActiveDocument as EntitiesViewModel).SelectedEntity = entity;
+							return false;
+						}
+					}
+				}
+			}
+
+			//Spawner scripts:
+			foreach (LocationSpawner spawner in Segment.Spawns.Location)
+            {
+				foreach (Scripting.Script script in spawner.Scripts.Where(script=>script.IsEnabled))
+                {
+					syntaxErrors = CSharpSyntaxTree.ParseText("void OnSpawn(){" + script.Blocks[1] + "}").GetDiagnostics();
+					if (syntaxErrors.Count() > 0)
+					{
+						var errorList = String.Join('\n', syntaxErrors.Take(3).Select(err => (err.Location.GetLineSpan().StartLinePosition.Line + 3) + ":" + err.GetMessage()));
+						if (syntaxErrors.Count() > 3)
+							errorList += "\n...";
+						var messageResult = MessageBox.Show($"Location Spawner '{spawner.Name}' has syntax errors in script '{script.Name}'.\nDo you wish to continue?\n\n{errorList}", "Syntax Errors in scripts", MessageBoxButton.YesNo);
+						if (messageResult == MessageBoxResult.No)
+						{
+							
+							ActiveDocument = Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
+							(ActiveDocument as SpawnsViewModel).SelectedLocationSpawner = spawner;
+							return false;
+						}
+					}
+				}
+            }
+
+			//Treasure scripts:
+			foreach (SegmentTreasure treasurePool in Segment.Treasures)
+            {
+				foreach (TreasureEntry entry in treasurePool.Entries)
+                {
+					foreach (Scripting.Script script in entry.Scripts.Where(s=>s.IsEnabled))
+                    {
+						syntaxErrors = CSharpSyntaxTree.ParseText("void OnCreate(){" + script.Blocks[1] + "}").GetDiagnostics();
+						if (syntaxErrors.Count() > 0)
+						{
+							var errorList = String.Join('\n', syntaxErrors.Take(3).Select(err => (err.Location.GetLineSpan().StartLinePosition.Line + 3) + ":" + err.GetMessage()));
+							if (syntaxErrors.Count() > 3)
+								errorList += "\n...";
+							var messageResult = MessageBox.Show($"Treasure '{treasurePool.Name}' has syntax errors in script '{treasurePool.Entries.IndexOf(entry)+1}'.\nDo you wish to continue?\n\n{errorList}", "Syntax Errors in scripts", MessageBoxButton.YesNo);
+							if (messageResult == MessageBoxResult.No) {
+								ActiveDocument = Documents.Where(d => d is TreasuresViewModel).FirstOrDefault() as TreasuresViewModel;
+								(ActiveDocument as TreasuresViewModel).SelectedTreasure = treasurePool;
+								return false;
+							}
+						}
+					}
+                }
+            }
+			return true;
+        }
+
 		private void CreateRegion()
 		{
 			if (_segment == null)
