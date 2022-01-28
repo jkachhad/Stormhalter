@@ -21,9 +21,9 @@ namespace Kesmai.Server.Items
 		public override int Category => 3;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ChristmasTreeGem"/> class.
+		/// Initializes a new instance of the <see cref="ChristmasTree"/> class.
 		/// </summary>
-		public ChristmasTreeGem() : base(324)
+		public ChristmasTree() : base(324)
 		{
 		}
 

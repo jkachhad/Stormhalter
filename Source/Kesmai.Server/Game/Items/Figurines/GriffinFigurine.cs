@@ -20,7 +20,7 @@ namespace Kesmai.Server.Items
 		/// Initializes a new instance of the <see cref="GriffinFigurine"/> class.
 		/// </summary>
 		[WorldForge]
-		public TigerFigurine() : base(180)
+		public GriffinFigurine() : base(180)
 		{
 		}
 
