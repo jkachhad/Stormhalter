@@ -75815,13 +75815,18 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
 
-    //Prone 100% and also movement is still 2. Someone can out run this unless in Sand. 
+    /*Prone 100% and also movement is still 2. 
+      Added Jumpkick due to Charge did not work. We need to check hex length of jumpkick after next reset. 
+      Jumpkick could be 3 hex. This issue is the SpikeClub has no ability to be used while Charging.
+      Usually CreatureAttack allows charge. (Drake for example is set to 2 movement and charges)
+    */
     var bridgeTroll = new ElderTroll()
     {
         MaxHealth = 250, Health = 250,
         BaseDodge = 13,
         HideDetection = 23,
-        CanCharge = true,
+        CanJumpkick = true,
+        CanStrikeCritically = false,
 
         Experience = 10500,
         
