@@ -100737,16 +100737,15 @@ return orc;
         <block><![CDATA[]]></block>
         <block><![CDATA[
     if (killer is PlayerEntity player)
+    
+    var backpack = source.Backpack;
+    if (backpack != null)
+                backpack.AddItem(new Agate(player));
     {
         var quest = Quests.GetQuest<KnightsPurposeQuest>();
     
         if (quest != null && quest.InProgress(player))
         {
-            var backpack = source.Backpack;
-
-            if (backpack != null)
-                backpack.AddItem(new Agate(player));
-			
             if (quest.GetStage(player) != KnightsPurposeStage.Dragon)
                 return;
 
