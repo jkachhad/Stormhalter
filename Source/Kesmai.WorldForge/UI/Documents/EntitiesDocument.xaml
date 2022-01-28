@@ -138,7 +138,17 @@
                 </TabControl.ItemTemplate>
                 <TabControl.ContentTemplate>
                     <DataTemplate>
-                        <scripting:ScriptEditor Script="{Binding}" IsEnabled="{Binding IsEnabled}" x:Name="_editor"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="72"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <scripting:ScriptEditor Script="{Binding}" IsEnabled="{Binding IsEnabled}" x:Name="_editor" Grid.Row="0"/>
+                            <Border Grid.Row="1" Margin="2" Padding="2"
+                                BorderBrush="Black" BorderThickness="1">
+                                <TextBlock Text="Here are some issues" x:Name="_scriptIssues" />
+                            </Border>
+                        </Grid>
                     </DataTemplate>
                 </TabControl.ContentTemplate>
             </TabControl>
