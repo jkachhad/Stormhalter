@@ -12,10 +12,9 @@ namespace Kesmai.Server.Game
 		public SummonedPhantom()
 		{
 			Summoned = true;
-
+			
 			Health = MaxHealth = 200;
 			BaseDodge = 19;
-
 			Movement = 3;
 			
 			Attacks = new CreatureAttackCollection

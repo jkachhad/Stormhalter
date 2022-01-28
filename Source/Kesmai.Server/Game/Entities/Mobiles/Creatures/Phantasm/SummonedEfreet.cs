@@ -18,7 +18,6 @@ namespace Kesmai.Server.Game
 			BaseDodge = 19;
 			Mana = MaxMana = 40;
 			FireProtection = 100;
-			
 			Movement = 3;
 			
 			Attacks = new CreatureAttackCollection
