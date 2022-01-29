@@ -209,7 +209,7 @@
                         </LayoutDocumentPane>
                     </LayoutDocumentPaneGroup>
                     
-                    <LayoutAnchorablePane FloatingWidth="365" DockWidth="365" DockMinWidth="365">
+                    <LayoutAnchorablePane FloatingWidth="365" DockWidth="365" DockMinWidth="365" >
                         <LayoutAnchorable x:Name="_componentsWindow" Title="Components" ContentId="component">
                                 <ui:ComponentsPanel Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" 
                                                     OpacityMask="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
@@ -231,6 +231,7 @@
             <DockingManager.LayoutItemContainerStyle>
                 <Style TargetType="{x:Type LayoutItem}" >
                     <Setter Property="Title" Value="{Binding Model.Name}" />
+                    <Setter Property="CanClose" Value="False" />
                 </Style>
             </DockingManager.LayoutItemContainerStyle>
            

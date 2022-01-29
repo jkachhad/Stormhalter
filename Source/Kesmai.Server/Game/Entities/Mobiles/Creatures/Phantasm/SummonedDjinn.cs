@@ -14,14 +14,21 @@ namespace Kesmai.Server.Game
 		{
 			Summoned = true;
 			
-			Health = MaxHealth = 150;
+			Health = MaxHealth = 200;
 			BaseDodge = 19;
+			Mana = MaxMana = 24;
+			IceProtection = 90;
 
 			Movement = 3;
 			
 			Attacks = new CreatureAttackCollection
 			{
 				{ new CreatureBasicAttack(14) },
+			};
+
+			Blocks = new CreatureBlockCollection
+			{
+				new CreatureBlock(12, "a hand"),
 			};
 			
 			Spells = new CreatureSpellCollection()

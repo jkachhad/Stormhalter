@@ -29,6 +29,17 @@ $@"
 <h3>=== {Core.Version} ===</h3>
 <strong>Enhancements:</strong>
 <ul>
+<li>When saving a segment, all script sections are checked for correct syntax. Mismatched brackets or missing semicolons should be called out here. If prompted that there are syntax errors, choosing not to continue will abort the save action and jump to the script with an issue.</li>
+</ul>
+<br/>
+<strong>Fixes:</strong>
+<ul>
+<li>Removed a crash when selecting a treeComponent if the data sent from the server does not define a live\dead sprite pair</li>
+</ul>
+</br>
+<h3>=== 0.87.0.0 ===</h3>
+<strong>Enhancements:</strong>
+<ul>
 <li>Added a Help Menu with a ""What's New"" window and a link to the WoldForge article on the wiki.</li>
 <li>Added a calculated 'Threat' metric to Entities. This (m,r) notation shows skill levels in melee and ranged damage respectively. Threat does not take into account the weapon used or any custom damage ranges, only skill. Magic skill levels are doubled. This threat metric, as well as HP and XP is now presented in the datagrid for Spawners.</li>
 <li>Component Editor has two new buttons for reordering components. This generally has no effect on gameplay, but certain components can layer.</li>
