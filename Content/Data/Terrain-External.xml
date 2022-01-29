@@ -1,5 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <data>
+  <!-- 
+	A <terrain> element represents what may be displayed by a component. It can be a collection of sprites overlayed and is uniquely 
+	identified by an id property.  When the server communications to the client about the map, it uses this id number to render various terrains.
+  
+		Attribute `id` 		=>  A unique identifer.
+		Attribute `cost` 	=>	The cost related to pathing over this terrain object. A map tile selects the highest cost from all of it's terrain.
+  
+		Property `average`	=> The average color of this terrain, used for generating heatmaps for 1 tile to 1 pixel.
+  
+	Each terrain has a collection of <sprite> elements that are part of it's final render. 
+		
+		Attribute `order`		=>  The rendering order of this sprite.
+		Attribute `underpile`	=>	If this terrain is rendered under the `treasure` sprite.
+		
+		Property `texture`	=> The path to the texture asset.
+		Property `source`	=> The rectangular bounds used for the sprites from the texture.
+		Property `offset`	=> The offset with which this sprite is rendered.
+		
+		Each sprite may have a collection of <frames>. Each <frame> is than a rectangular bounds and part of an animation.
+		
+			Attribute `step` => The ms delay between each frame.
+			Attribute `keys` => The order of the frames as part of an animation.  You could loop animation an forward then in reverse, for example, with "0-5,5-0".
+			
+			
+		How can I get a sprite to cycle colors, like fire, water, or whirlwind do? Each sprite can also have a <palette> element. It works similar to an animation.
+		The animation will transform each color to the next over the specified `step` value. 
+		
+		<palette step="140" keys="0-7">
+			<color source="(0,0,254,255)" />
+			<color source="(0,0,243,255)" />
+			<color source="(0,0,231,255)" />
+			<color source="(0,0,219,255)" />
+			<color source="(0,0,211,255)" />
+			<color source="(0,0,199,255)" />
+			<color source="(0,0,187,255)" />
+			<color source="(0,0,179,255)" />
+		</palette>
+		
+		Can I transform a color on a sprite to another? Yes! Such a transformation could allow you to change one palette cycle to another, for example water to fire 
+		on a whirlwind.
+			=> <color source="(0,0,179,255)" target="(0,0,0,255)" />
+	
+		A SPRITE CAN ONLY HAVE EITHER FRAMES OR A PALETTE FOR ANIMATIONS. IT CAN NOT HAVE BOTH.
+  -->
+
+
 
   <!-- 
 	All artwork in the Tenser directory belongs to Tenser#2262 on Discord. Any use or modification outside of this project is prohibited.
@@ -53,7 +99,7 @@
         <frame>(385,0,55,55)</frame>
         <frame>(440,0,55,55)</frame>
         <frame>(495,0,55,55)</frame>
-		<frame>(550,0,55,55)</frame>
+        <frame>(550,0,55,55)</frame>
         <frame>(605,0,55,55)</frame>
         <frame>(660,0,55,55)</frame>
         <frame>(715,0,55,55)</frame>
