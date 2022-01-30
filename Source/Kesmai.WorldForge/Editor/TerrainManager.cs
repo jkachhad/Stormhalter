@@ -24,6 +24,20 @@ namespace Kesmai.WorldForge
 				if (terrain != null)
 					Add(terrain.ID, terrain);
 			}
+
+			try
+			{
+				document = XDocument.Load(storage.OpenFile(@"Data\Terrain-External.xml"));
+			}
+			catch (System.IO.FileNotFoundException) { return; }
+
+			foreach (var terrainElement in document.Root.Elements("terrain"))
+			{
+				var terrain = new Terrain(terrainElement);
+
+				if (terrain != null)
+					Add(terrain.ID, terrain);
+			}
 		}
 
 		public Terrain FromLom(int lomID)
