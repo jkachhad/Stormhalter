@@ -32502,24 +32502,20 @@ return snake;
     IceProtection = 100,
     Immunity = CreatureImmunity.Poison,
     Experience = 25000,
-    
-    VisibilityDistance = 0,
+    HideDetection = 50,
+    VisibilityDistance = 1,
 };
 
 elemental.Attacks = new CreatureAttackCollection
 {
 
-    new CreatureBasicAttack(15),
+    {
+        new CreatureAttackEntry(12, 10, 20, "You feel poison burn through your veins as the arrow strikes", new AttackPoisonComponent(15))
+    }
 };
 
-elemental.Spells = new CreatureSpellCollection()
-    {
-       { new CreatureSpell<PoisonCloudSpell>(
-            skillLevel: 11, cost: 16, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false),   100 },
-    };
 
-elemental.Wield(new GiltDagger());
+elemental.Wield(new FineCrossbow());
 elemental.Equip(new DrakeScaleArmor());
 
 elemental.AddStatus(new BreatheWaterStatus(elemental));
@@ -32724,7 +32720,7 @@ ogre.Attacks = new CreatureAttackCollection()
 ogre.Spells = new CreatureSpellCollection(100)
     {
        { new CreatureSpell<FireStormSpell>(
-            skillLevel: 19), 100, TimeSpan.FromSeconds(6.0) }
+            skillLevel: 10), 100, TimeSpan.FromSeconds(6.0) }
     };
 
 
@@ -34106,7 +34102,7 @@ return skeleton;
     <spawn type="RegionSpawner" name="SkeeltalArchers1">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>600</maximumDelay>
-      <maximum>8</maximum>
+      <maximum>10</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -34121,13 +34117,14 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Levelthreearchers" size="2" minimum="6" maximum="6" />
+      <entry entity="Levelthreearchers" size="2" minimum="1" maximum="6" />
       <entry entity="Thief Bane" size="1" minimum="2" maximum="2" />
       <bounds region="4">
         <inclusion left="7" top="4" right="14" bottom="5" />
         <inclusion left="7" top="6" right="7" bottom="6" />
         <inclusion left="14" top="6" right="14" bottom="11" />
-        <inclusion left="7" top="12" right="14" bottom="13" />
+        <inclusion left="7" top="12" right="13" bottom="16" />
+        <inclusion left="5" top="2" right="13" bottom="3" />
         <exclusion left="9" top="2" right="10" bottom="2" />
         <exclusion left="9" top="5" right="10" bottom="5" />
         <exclusion left="7" top="12" right="12" bottom="12" />
