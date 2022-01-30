@@ -2,7 +2,7 @@
 <data>
   <!-- 
 	A <terrain> element represents what may be displayed by a component. It can be a collection of sprites overlayed and is uniquely 
-	identified by an id property.  When the server communications to the client about the map, it uses this id number to render various terrains.
+	identified by an id property.  When the server communicates to the client about the map, it uses this id number to render various terrains.
   
 		Attribute `id` 		=>  A unique identifer.
 		Attribute `cost` 	=>	The cost related to pathing over this terrain object. A map tile selects the highest cost from all of it's terrain.
@@ -21,7 +21,7 @@
 		Each sprite may have a collection of <frames>. Each <frame> is than a rectangular bounds and part of an animation.
 		
 			Attribute `step` => The ms delay between each frame.
-			Attribute `keys` => The order of the frames as part of an animation.  You could loop animation an forward then in reverse, for example, with "0-5,5-0".
+			Attribute `keys` => The order of the frames as part of an animation.  You could loop an animation forward then in reverse, for example, with "0-5,5-0".
 			
 			
 		How can I get a sprite to cycle colors, like fire, water, or whirlwind do? Each sprite can also have a <palette> element. It works similar to an animation.
@@ -42,7 +42,7 @@
 		on a whirlwind.
 			=> <color source="(0,0,179,255)" target="(0,0,0,255)" />
 	
-		A SPRITE CAN ONLY HAVE EITHER FRAMES OR A PALETTE FOR ANIMATIONS. IT CAN NOT HAVE BOTH.
+		A SPRITE CAN ONLY HAVE EITHER A FRAMES OR A PALETTE FOR ANIMATIONS. IT CAN NOT HAVE BOTH.
   -->
 
 
