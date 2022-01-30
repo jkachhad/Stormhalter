@@ -97102,7 +97102,7 @@
     {
         Name = _names.Random(),
         Body = (female ? 10 : 9), IsFemale = female,
-        
+        IsInvulnerable = true,
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
         
@@ -101335,8 +101335,6 @@ else
         };
         
         // Rare wares.
-        if (Utility.RandomDouble() <= 0.20)  /* 20% total chance to spawn. */
-            wares.Add(new StockEntry("fire and ice protection ring", () => new FireIceProtectionRing(), (int)(800 * merchantUpsell), 1, onRarePurchase));
 
         if (Utility.RandomDouble() <= 0.20)  /* 20% total chance to spawn. */
             wares.Add(new StockEntry("weak strength bracelet", () => new WeakStrengthBracelet(), (int)(500 * merchantUpsell), 1, onRarePurchase));
@@ -101346,12 +101344,6 @@ else
 
         if (Utility.RandomDouble() <= 0.10)  /* 10% total chance to spawn. */
             wares.Add(new StockEntry("death resistance ring", () => new DeathResistanceRing(), (int)(300 * merchantUpsell), 1, onRarePurchase));
-
-        if (Utility.RandomDouble() <= 0.10)  /* 10% total chance to spawn. */
-            wares.Add(new StockEntry("weak dexterity ring", () => new WeakDexterityRing(), (int)(1000 * merchantUpsell), 1, onRarePurchase));
-            
-        if (Utility.RandomDouble() <= 0.02)  /* 2% chance to spawn. */
-            wares.Add(new StockEntry("stun and death protection bracelet", () => new StunDeathProtectionBracelet(), (int)(3000 * merchantUpsell), 1, onRarePurchase));
 
         /* The vendor won't sell everything though, at least not this time around. */
         foreach (var stock in wares.Random(6))
@@ -101410,26 +101402,16 @@ else
         if (Utility.RandomDouble() <= 0.10)  /* 10% chance to spawn */
             wares.Add(new StockEntry("salamander scales", () => new SalamanderScales(), 5000, 1, onRarePurchase));
 
-        if (Utility.RandomDouble() <= 0.10)  /* 10% chance to spawn */
+        if (Utility.RandomDouble() <= 0.05)  /* 10% chance to spawn */
             wares.Add(new StockEntry("dragon scales", () => new DragonScaleArmor(), 10000, 1, onRarePurchase));
 
         /* Rare Boots */
         if (Utility.RandomDouble() <= 0.30)  /* 30% chance to spawn */
             wares.Add(new StockEntry("crocodile boots", () => new CrocodileBoots(), 2500, 1, onRarePurchase));
 
-        if (Utility.RandomDouble() <= 0.10)  /* 5% chance to spawn */
-            wares.Add(new StockEntry("feather fall boots", () => new FeatherFallBoots(), 5000, 1, onRarePurchase));
-
         /* Rare Gloves */
         if (Utility.RandomDouble() <= 0.20)  /* 20% chance to spawn */
             wares.Add(new StockEntry("steel plated gauntlets", () => new SteelGauntlets(), 4000, 1, onRarePurchase));
-        
-        /* Rare Helmets */
-        if (Utility.RandomDouble() <= 0.25)  /* 25% chance to spawn */
-            wares.Add(new StockEntry("bear skull", () => new BearSkull(), 4000, 1, onRarePurchase));
-            
-        if (Utility.RandomDouble() <= 0.10)  /* 10% chance to spawn */
-            wares.Add(new StockEntry("winged helm", () => new WingedHelm(true), 10000, 1, onRarePurchase));
         
         /* The vendor won't sell everything though, at least not this time around. */
         foreach (var stock in wares.Random(6))
@@ -101486,7 +101468,7 @@ else
             new StockEntry("katana",        () => new Katana(),         300, Utility.RandomBetween(1, 4), null),
         };
 
-        if (Utility.RandomDouble() <= 0.25)  /* 25% chance to spawn */
+        if (Utility.RandomDouble() <= 0.10)  /* 25% chance to spawn */
             wares.Add(new StockEntry("silver dagger", () => new SilverDagger(), 3500, 1, onRarePurchase));
 
         if (Utility.RandomDouble() <= 0.20)  /* 15% chance to spawn */
