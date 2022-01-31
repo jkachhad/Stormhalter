@@ -45,10 +45,10 @@ namespace Kesmai.Server.Items
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(numbers, numbers)); /* [You are looking at] [an antique Lengian parrying dagger with a gold heron inscribed in the smooth blue gilted metal. The weapon feels exceptionally well balanced. The weapon is neutral.] */
+			entries.Add(new LocalizationEntry(6200000, 6200341)); /* [You are looking at] [an antique Lengian parrying dagger with a gold heron inscribed in the smooth blue gilted metal. The weapon feels exceptionally well balanced. The weapon is neutral.] */
 
 			if (Identified)
-				entries.Add(new LocalizationEntry(numbers)); /* The combat adds for this weapon are +2. */
+				entries.Add(new LocalizationEntry(6250080)); /* The combat adds for this weapon are +2. */
 		}
 	}
 }
