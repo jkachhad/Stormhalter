@@ -12,6 +12,7 @@
 	Each terrain has a collection of <sprite> elements that are part of it's final render. 
 		
 		Attribute `order`		=>  The rendering order of this sprite.
+          
 		Attribute `underpile`	=>	If this terrain is rendered under the `treasure` sprite.
 		
 		Property `texture`	=> The path to the texture asset.
@@ -258,37 +259,37 @@
     <average>(128,108,92,255)</average>
   </terrain>
   
-   <terrain id="650">  <!-- Vase (base) -->
+   <terrain id="649">  <!-- Vase (base) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(0,0,100,100)</source>
     </sprite>
   </terrain>
-  <terrain id="651">  <!-- Vase (Single Ring) -->
+  <terrain id="650">  <!-- Vase (Single Ring) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(0,100,100,100)</source>
     </sprite>
   </terrain>
-  <terrain id="652">  <!-- Vase (Double Ring) -->
+  <terrain id="651">  <!-- Vase (Double Ring) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(100,0,100,100)</source>
     </sprite>
   </terrain>
-  <terrain id="653">  <!-- Vase (Pattern 1) -->
+  <terrain id="652">  <!-- Vase (Pattern 1) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(200,0,100,100)</source>
     </sprite>
   </terrain>
-  <terrain id="654">  <!-- Vase (Pattern 2) -->
+  <terrain id="653">  <!-- Vase (Pattern 2) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(200,100,100,100)</source>
     </sprite>
   </terrain>
-  <terrain id="655">  <!-- Vase (Pattern 3) -->
+  <terrain id="654">  <!-- Vase (Pattern 3) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(200,200,100,100)</source>
@@ -301,18 +302,452 @@
     </sprite>
   </terrain>
   
-  <terrain id="658">  <!-- Vase (Broken) -->
+  <terrain id="657">  <!-- Vase (Broken) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(0,200,100,100)</source>
     </sprite>
   </terrain>
-  <terrain id="659">  <!-- Vases -->
+  <terrain id="658">  <!-- Vases -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(100,100,100,100)</source>
     </sprite>
   </terrain>
+
+  <terrain id="659">
+    <!-- Basalt wall (H) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(0,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="660">
+    <!-- Basalt floor -->
+    <sprite>
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(100,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="661">
+    <!-- Basalt wall (V) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(200,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="662" cost="6">
+    <!-- Basalt Wall Ruins (H) -->
+    <sprite order="3">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(300,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="663" cost="6">
+    <!-- Basalt Rubble -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(400,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="664" cost="6">
+    <!-- Basalt wall ruins (V) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(500,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="665">
+    <!-- Sandstone wall (H) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(0,100,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="666">
+    <!-- Sandstone floor -->
+    <sprite>
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(100,100,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="667">
+    <!-- Sandstone wall (V) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(200,100,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="668" cost="6">
+    <!-- Sandstone Wall Ruins (H) -->
+    <sprite order="3">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(300,100,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="669" cost="6">
+    <!-- Sandstone Rubble -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(400,100,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="670" cost="6">
+    <!-- Sandstone wall ruins (V) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(500,100,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="671">
+    <!-- Rhyolite wall (H) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(0,200,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="672">
+    <!-- Rhyolite floor -->
+    <sprite>
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(100,200,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="673">
+    <!-- Rhyolite wall (V) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(200,200,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="674" cost="6">
+    <!-- Rhyolite Wall Ruins (H) -->
+    <sprite order="3">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(300,200,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="675" cost="6">
+    <!-- Rhyolite Rubble -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(400,200,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="676" cost="6">
+    <!-- Rhyloite wall ruins (V) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(500,200,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="677">
+    <!-- Gabbro wall (H) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(0,300,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="678">
+    <!-- Gabbro floor -->
+    <sprite>
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(100,300,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="679">
+    <!-- Gabbro wall (V) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(200,300,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="680" cost="6">
+    <!-- Gabbro Wall Ruins (H) -->
+    <sprite order="3">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(300,300,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="681" cost="6">
+    <!-- Gabbro Rubble -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(400,300,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="682" cost="6">
+    <!-- Gabbro wall ruins (V) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(500,300,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="683">
+    <!-- Slate wall (H) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(0,400,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="684">
+    <!-- Slate floor -->
+    <sprite>
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(100,400,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="685">
+    <!-- Slate wall (V) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(200,400,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="686" cost="6">
+    <!-- Slate Wall Ruins (H) -->
+    <sprite order="3">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(300,400,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="687" cost="6">
+    <!-- Slate Rubble -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(400,400,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="688" cost="6">
+    <!-- Slate wall ruins (V) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(500,400,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="689">
+    <!-- Andesite wall (H) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(0,500,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="690">
+    <!-- Andesite floor -->
+    <sprite>
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(100,500,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="691">
+    <!-- Andesite wall (V) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(200,500,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="692" cost="6">
+    <!-- Andesite Wall Ruins (H) -->
+    <sprite order="3">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(300,500,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="693" cost="6">
+    <!-- Andesite Rubble -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(400,500,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="694" cost="6">
+    <!-- Andesite wall ruins (V) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(500,500,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="695">
+    <!-- Granite wall (H) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(0,600,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="696">
+    <!-- Granite floor -->
+    <sprite>
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(100,600,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="697">
+    <!-- Granite wall (V) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(200,600,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="698" cost="6">
+    <!-- Granite Wall Ruins (H) -->
+    <sprite order="3">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(300,600,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="699" cost="6">
+    <!-- Granite Rubble -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(400,600,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="700" cost="6">
+    <!-- Granite wall ruins (V) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(500,600,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="701">
+    <!-- Feldspar wall (H) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(0,700,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="702">
+    <!-- Feldspar floor -->
+    <sprite>
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(100,700,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="703">
+    <!-- Feldspar wall (V) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(200,700,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="704" cost="6">
+    <!-- Feldspar Wall Ruins (H) -->
+    <sprite order="3">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(300,700,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="705" cost="6">
+    <!-- Feldspar Rubble -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(400,700,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+  <terrain id="706" cost="6">
+    <!-- Feldspar wall ruins (V) -->
+    <sprite order="7">
+      <texture>Tawnos\Terrain\ttiles</texture>
+      <source>(500,700,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+
+
 
   <terrain id="707">
     <!-- panel wall (H) -->
