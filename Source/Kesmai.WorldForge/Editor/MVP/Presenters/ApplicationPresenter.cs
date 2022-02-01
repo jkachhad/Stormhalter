@@ -694,6 +694,18 @@ namespace Kesmai.WorldForge.Editor
 					}
 				}
 			}
+			//Entity duplicate name check
+			var entityDuplicates = Segment.Entities.GroupBy(e => e.Name, StringComparer.InvariantCultureIgnoreCase).Where(g => g.Count() > 1);
+			foreach (var duplicate in entityDuplicates)
+            {
+				var messageResult = MessageBox.Show($"Entity '{duplicate.Key}' has {duplicate.Count()} definitions.\nDo you wish to continue?", "Duplicate Entities found", MessageBoxButton.YesNo);
+				if (messageResult == MessageBoxResult.No)
+				{
+					ActiveDocument = Documents.Where(d => d is EntitiesViewModel).FirstOrDefault() as EntitiesViewModel;
+					(ActiveDocument as EntitiesViewModel).SelectedEntity = duplicate.First();
+					return false;
+				}
+			}
 
 			//Spawner scripts:
 			foreach (LocationSpawner spawner in Segment.Spawns.Location)
@@ -712,11 +724,37 @@ namespace Kesmai.WorldForge.Editor
 							
 							ActiveDocument = Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
 							(ActiveDocument as SpawnsViewModel).SelectedLocationSpawner = spawner;
+							WeakReferenceMessenger.Default.Send(spawner as Spawner);
 							return false;
 						}
 					}
 				}
             }
+			//Spawner duplicate name checks
+			var locationSpawnerDuplicates = Segment.Spawns.Location.GroupBy(e => e.Name, StringComparer.InvariantCultureIgnoreCase).Where(g => g.Count() > 1);
+			foreach (var duplicate in locationSpawnerDuplicates)
+			{
+				var messageResult = MessageBox.Show($"Spawner '{duplicate.Key}' has {duplicate.Count()} definitions.\nDo you wish to continue?", "Duplicate Spawners found", MessageBoxButton.YesNo);
+				if (messageResult == MessageBoxResult.No)
+				{
+					ActiveDocument = Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
+					(ActiveDocument as SpawnsViewModel).SelectedLocationSpawner = duplicate.First();
+					WeakReferenceMessenger.Default.Send(duplicate.First() as Spawner);
+					return false;
+				}
+			}
+			var regionSpawnerDuplicates = Segment.Spawns.Region.GroupBy(e => e.Name, StringComparer.InvariantCultureIgnoreCase).Where(g => g.Count() > 1);
+			foreach (var duplicate in regionSpawnerDuplicates)
+			{
+				var messageResult = MessageBox.Show($"Spawner '{duplicate.Key}' has {duplicate.Count()} definitions.\nDo you wish to continue?", "Duplicate Spawners found", MessageBoxButton.YesNo);
+				if (messageResult == MessageBoxResult.No)
+				{
+					ActiveDocument = Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
+					(ActiveDocument as SpawnsViewModel).SelectedRegionSpawner = duplicate.First();
+					WeakReferenceMessenger.Default.Send(duplicate.First() as Spawner);
+					return false;
+				}
+			}
 
 			//Treasure scripts:
 			foreach (SegmentTreasure treasurePool in Segment.Treasures)
@@ -741,6 +779,47 @@ namespace Kesmai.WorldForge.Editor
 					}
                 }
             }
+			//Treasure duplicate name check
+			var treasureDuplicates = Segment.Treasures.GroupBy(e => e.Name, StringComparer.InvariantCultureIgnoreCase).Where(g => g.Count() > 1);
+			foreach (var duplicate in treasureDuplicates)
+			{
+				var messageResult = MessageBox.Show($"Treasure '{duplicate.Key}' has {duplicate.Count()} definitions.\nDo you wish to continue?", "Duplicate Treasures found", MessageBoxButton.YesNo);
+				if (messageResult == MessageBoxResult.No)
+				{
+					ActiveDocument = Documents.Where(d => d is TreasuresViewModel).FirstOrDefault() as TreasuresViewModel;
+					(ActiveDocument as TreasuresViewModel).SelectedTreasure = duplicate.First();
+					return false;
+				}
+			}
+
+			//Location duplicate name check
+			var locationDuplicates = Segment.Locations.GroupBy(e => e.Name, StringComparer.InvariantCultureIgnoreCase).Where(g => g.Count() > 1);
+			foreach (var duplicate in locationDuplicates)
+			{
+				var messageResult = MessageBox.Show($"Location '{duplicate.Key}' has {duplicate.Count()} definitions.\nDo you wish to continue?", "Duplicate Locations found", MessageBoxButton.YesNo);
+				if (messageResult == MessageBoxResult.No)
+				{
+					ActiveDocument = Documents.Where(d => d is LocationsViewModel).FirstOrDefault() as LocationsViewModel;
+					(ActiveDocument as LocationsViewModel).SelectedLocation = duplicate.First();
+					return false;
+				}
+			}
+
+			//Subregion duplicate name check
+			var subregionDuplicates = Segment.Subregions.GroupBy(e => e.Name, StringComparer.InvariantCultureIgnoreCase).Where(g => g.Count() > 1);
+			foreach (var duplicate in subregionDuplicates)
+			{
+				var messageResult = MessageBox.Show($"Subregion '{duplicate.Key}' has {duplicate.Count()} definitions.\nDo you wish to continue?", "Duplicate Subregions found", MessageBoxButton.YesNo);
+				if (messageResult == MessageBoxResult.No)
+				{
+					ActiveDocument = Documents.Where(d => d is SubregionViewModel).FirstOrDefault() as SubregionViewModel;
+					(ActiveDocument as SubregionViewModel).SelectedSubregion = duplicate.First();
+					return false;
+				}
+			}
+
+
+
 			return true;
         }
 
