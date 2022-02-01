@@ -99331,8 +99331,8 @@ return orc;
         
     wraith.Wield(new BlackStaff());
         
-    spectre.AddGold(84);
-    spectre.AddLoot(new LootPack(
+    wraith.AddGold(84);
+    wraith.AddLoot(new LootPack(
         new LootPackEntry(true, kesmaiwideGems,       4,     gemsPriceMutatorNormal),
         new LootPackEntry(true, dungeon4Bottles,    20),
         new LootPackEntry(true, dungeon4Treasure,   0.55),
@@ -102869,7 +102869,7 @@ else
         <inclusion left="25" top="1" right="44" bottom="14" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Kesmai -3">
+    <spawn type="RegionSpawner" name="Kesmai -3 A">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>600</maximumDelay>
       <maximum>12</maximum>
@@ -103299,7 +103299,7 @@ else
         <inclusion left="2" top="18" right="32" bottom="23" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Kesmai -3">
+    <spawn type="RegionSpawner" name="Kesmai -3 B">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>600</maximumDelay>
       <maximum>19</maximum>

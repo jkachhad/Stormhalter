@@ -1219,17 +1219,17 @@
         {
         }
     
-//        public void KeeperSoothed()
-//        {
-//            keepersooth++;
-//            if (keepersooth > 9)
-//            {
-//                Alignment = Alignment.Neutral;
-//                Name = "Grove Keeper";
-//                foreach (var heart in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<OakGroveHeart>())
-//                heart.HeartSoothed();
-//            }
-//        }
+		public void KeeperSoothed()
+		{
+			//keepersooth++;
+			//if (keepersooth > 9)
+			//{
+			//	Alignment = Alignment.Neutral;
+			//	Name = "Grove Keeper";
+			//	foreach (var heart in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<OakGroveHeart>())
+			//	heart.HeartSoothed();
+			//}
+		}
     
         public override void OnSpawn()
         {
@@ -98875,7 +98875,6 @@
     dryad.AddLoot(
         new LootPack(
             new LootPackEntry(true, (from, container) => new HickoryWand(), 100),
-            new LootPackEntry(true, dungeon5Bottles, 20.0), 
             new LootPackEntry(true, oakGenericGems, 15, gemsPriceMutatorVeryHigh),
             new LootPackEntry(true, groveTreasure, 5)
         ));
@@ -98925,7 +98924,6 @@
     centaur.AddGold(95);
     centaur.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon5Bottles, 20.0), 
             new LootPackEntry(true, oakGenericGems, 15, gemsPriceMutatorHigh),
             new LootPackEntry(true, groveTreasure, 0.25)
         ));
@@ -98982,7 +98980,6 @@
     dryad.AddLoot(
         new LootPack(
             new LootPackEntry(true, (from, container) => new HickoryWand(), 1),
-            new LootPackEntry(true, dungeon5Bottles, 20.0), 
             new LootPackEntry(true, oakGenericGems, 15, gemsPriceMutatorAboveAverage),
             new LootPackEntry(true, groveTreasure, 0.55)
         ));
@@ -99380,7 +99377,6 @@
     boar.AddGold(120);
     boar.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon5Bottles, 20.0), 
             new LootPackEntry(true, oakGenericGems, 15, gemsPriceMutatorNormal),
             new LootPackEntry(true, groveTreasure, 0.5)
         ));
@@ -99450,7 +99446,6 @@
     griffin.AddGold(140);
     griffin.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon5Bottles, 20.0), 
             new LootPackEntry(true, oakGenericGems, 15, gemsPriceMutatorHigh),
             new LootPackEntry(true, groveTreasure, 0.63)
         ));
@@ -99509,7 +99504,6 @@
     largeBear.AddGold(200);
     largeBear.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon5Bottles, 20.0), 
             new LootPackEntry(true, oakGenericGems, 15, gemsPriceMutatorHigh),
             new LootPackEntry(true, groveTreasure, 0.63)
         ));
@@ -99565,7 +99559,6 @@
     wolf.AddGold(120);
     wolf.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon5Bottles, 20.0), 
             new LootPackEntry(true, oakGenericGems, 15, gemsPriceMutatorNormal),
             new LootPackEntry(true, groveTreasure, 0.5)
         ));
@@ -99723,7 +99716,6 @@
     centaur.AddGold(135);
     centaur.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon5Bottles, 20.0), 
             new LootPackEntry(true, oakGenericGems, 15, gemsPriceMutatorVeryHigh),
             new LootPackEntry(true, groveTreasure, 0.63)
         ));
@@ -99781,7 +99773,6 @@
     dryad.AddLoot(
         new LootPack(
             new LootPackEntry(true, (from, container) => new HickoryWand(), 1),
-            new LootPackEntry(true, dungeon5Bottles, 20.0), 
             new LootPackEntry(true, oakGenericGems, 15, gemsPriceMutatorAboveAverage),
             new LootPackEntry(true, groveTreasure, 0.55)
         ));
@@ -99826,7 +99817,6 @@
     troll.AddGold(198);
     troll.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon5Bottles, 20.0), 
             new LootPackEntry(true, oakGenericGems, 15, gemsPriceMutatorAboveAverage),
             new LootPackEntry(true, groveTreasure, 0.55)
         ));
@@ -99887,9 +99877,6 @@
     necro.AddGold(300);
     necro.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon5Bottles, 60.0), 
-            new LootPackEntry(true, groveGems, 25.0, gemsPriceMutator),
-            new LootPackEntry(true, dungeon5Wands, 10), 
             new LootPackEntry(true, groveTreasure, 3)
         ));
     
@@ -99946,8 +99933,7 @@
     dryad.AddGold(500);
     dryad.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon5Bottles, 30.0), 
-            new LootPackEntry(true, groveGems, 100, gemsPriceMutator),
+
             new LootPackEntry(true, groveTreasure, 100)
         ));
 
@@ -100043,9 +100029,6 @@
     necro.AddGold(1500);
     necro.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon5Bottles, 60.0), 
-            new LootPackEntry(true, groveGems, 25.0, gemsPriceMutator),
-            new LootPackEntry(true, dungeon5Wands, 10), 
             new LootPackEntry(true, groveTreasure, 3)
         ));
     
@@ -100113,9 +100096,6 @@
     necro.AddGold(1500);
     necro.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon5Bottles, 60.0), 
-            new LootPackEntry(true, groveGems, 25.0, gemsPriceMutator),
-            new LootPackEntry(true, dungeon5Wands, 10), 
             new LootPackEntry(true, groveTreasure, 3)
         ));
     
