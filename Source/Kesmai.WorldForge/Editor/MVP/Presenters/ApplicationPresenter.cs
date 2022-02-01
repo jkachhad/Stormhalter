@@ -629,11 +629,13 @@ namespace Kesmai.WorldForge.Editor
 			{
 				targetFile = _segmentFilePath;
 			}
-			
-			if (File.Exists(targetFile))
-				File.Delete(targetFile);
 
-			_segmentFilePath = targetFile;
+			try
+			{
+				if (File.Exists(targetFile))
+					File.Delete(targetFile);
+
+				_segmentFilePath = targetFile;
 
 #if (ArchiveStorage)
 			var projectFile = new ZipFile(targetFile)
@@ -643,17 +645,21 @@ namespace Kesmai.WorldForge.Editor
 			
 			_segment.Save(projectFile);
 #else
-			var projectFile = new XDocument();
-			var segmentElement = new XElement("segment",
-				new XAttribute("name", _segment.Name ?? "(Unknown)"),
-				new XAttribute("version", Core.Version));
-			
-			_segment.Save(segmentElement);
-			
-			projectFile.Add(segmentElement);
+				var projectFile = new XDocument();
+				var segmentElement = new XElement("segment",
+					new XAttribute("name", _segment.Name ?? "(Unknown)"),
+					new XAttribute("version", Core.Version));
+
+				_segment.Save(segmentElement);
+
+				projectFile.Add(segmentElement);
 #endif
-			
-			projectFile.Save(targetFile);
+
+				projectFile.Save(targetFile);
+			} catch (Exception ex)
+            {
+				MessageBox.Show($"Error when saving project: {ex.Message}", "Unable to save", MessageBoxButton.OK, MessageBoxImage.Error);
+			}
 		}
 
 		private bool CheckScriptSyntax() //Enumerate all script segments and verify that they pass syntax checks
