@@ -54,7 +54,30 @@ namespace Kesmai.WorldForge.UI
 					}
 				}
 			}
-			
+
+			try // Try needed until Terrain-External is everywhere WorldForge is.
+			{
+				terrainDocument = XDocument.Load(storage.OpenFile(@"Data\Terrain-External.xml"));
+				terrainRootElement = terrainDocument.Root;
+
+				if (terrainRootElement != null)
+				{
+					foreach (var terrainElement in terrainRootElement.Elements("terrain"))
+					{
+						var idAttribute = terrainElement.Attribute("id");
+
+						if (idAttribute != null)
+						{
+							staticCategory.Components.Add(new StaticComponent((int)idAttribute)
+							{
+								Name = idAttribute.Value
+							});
+						}
+					}
+				}
+			}
+			catch (System.IO.FileNotFoundException) { }
+
 			collection.Add(staticCategory);
 			
 			/* Other Categories */
