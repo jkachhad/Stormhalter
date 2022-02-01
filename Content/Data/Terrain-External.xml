@@ -45,19 +45,15 @@
 	
 		A SPRITE CAN ONLY HAVE EITHER A FRAMES OR A PALETTE FOR ANIMATIONS. IT CAN NOT HAVE BOTH.
   -->
-
-
-
   <!-- 
 	All artwork in the Tenser directory belongs to Tenser#2262 on Discord. Any use or modification outside of this project is prohibited.
 	Please reach out to him if you wish to use the assets for your own purposes.
   -->
- 
   <terrain id="622" cost="6">
     <sprite>
       <texture>Tenser\Terrain\Water-Wave-Horizontal</texture>
       <source>(0,0,1100,55)</source>
-	  <offset>(45,45)</offset>
+      <offset>(45,45)</offset>
       <frames step="150" keys="0-19">
         <frame>(0,0,55,55)</frame>
         <frame>(55,0,55,55)</frame>
@@ -83,19 +79,18 @@
     </sprite>
     <average>(11,82,214,255)</average>
   </terrain>
-
   <terrain id="623" cost="6">
     <sprite>
       <texture>Tenser\Terrain\Water-Wave-Vertical</texture>
       <source>(0,0,1100,55)</source>
-	  <offset>(45,45)</offset>
+      <offset>(45,45)</offset>
       <frames step="150" keys="0-19">
         <frame>(0,0,55,55)</frame>
         <frame>(55,0,55,55)</frame>
         <frame>(110,0,55,55)</frame>
         <frame>(165,0,55,55)</frame>
         <frame>(220,0,55,55)</frame>
-		<frame>(275,0,55,55)</frame>
+        <frame>(275,0,55,55)</frame>
         <frame>(330,0,55,55)</frame>
         <frame>(385,0,55,55)</frame>
         <frame>(440,0,55,55)</frame>
@@ -105,7 +100,7 @@
         <frame>(660,0,55,55)</frame>
         <frame>(715,0,55,55)</frame>
         <frame>(770,0,55,55)</frame>
-		<frame>(825,0,55,55)</frame>
+        <frame>(825,0,55,55)</frame>
         <frame>(880,0,55,55)</frame>
         <frame>(935,0,55,55)</frame>
         <frame>(990,0,55,55)</frame>
@@ -114,7 +109,6 @@
     </sprite>
     <average>(11,82,214,255)</average>
   </terrain>
-
   <terrain id="624">
     <sprite order="1" underpile="true">
       <texture>Tenser\Terrain\Trees</texture>
@@ -143,93 +137,102 @@
     </sprite>
     <average>(52,105,23,255)</average>
   </terrain>
-  
-  <terrain id="628"> <!-- Sewer Drain -->
+  <terrain id="628">
+    <!-- Sewer Drain -->
     <sprite>
       <texture>Tenser\Terrain\Sewers</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(136,120,186,255)</average>
   </terrain>
-  <terrain id="629"> <!-- Sewer Floor -->
+  <terrain id="629">
+    <!-- Sewer Floor -->
     <sprite>
       <texture>Tenser\Terrain\Sewers</texture>
       <source>(0,100,100,100)</source>
     </sprite>
     <average>(136,120,186,255)</average>
   </terrain>
-  <terrain id="630"> <!-- Sewer Half-Wall (V) -->
+  <terrain id="630">
+    <!-- Sewer Half-Wall (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\Sewers</texture>
       <source>(100,0,100,100)</source>
     </sprite>
     <average>(115,121,114,255)</average>
   </terrain>
-  <terrain id="631"> <!-- Sewer Half-Wall (H) -->
+  <terrain id="631">
+    <!-- Sewer Half-Wall (H) -->
     <sprite order="4">
       <texture>Tenser\Terrain\Sewers</texture>
       <source>(200,0,100,100)</source>
     </sprite>
     <average>(115,121,114,255)</average>
   </terrain>
-  <terrain id="632"> <!-- Sewer Drain Round (V) -->
+  <terrain id="632">
+    <!-- Sewer Drain Round (V) -->
     <sprite order="7">
       <texture>Tenser\Terrain\Sewers</texture>
       <source>(100,100,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="633"> <!-- Sewer Drain Round (H) -->
+  <terrain id="633">
+    <!-- Sewer Drain Round (H) -->
     <sprite order="7">
       <texture>Tenser\Terrain\Sewers</texture>
       <source>(300,100,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
-  </terrain> 
-  <terrain id="634"> <!-- Sewer Drain Floor (H) -->
+  </terrain>
+  <terrain id="634">
+    <!-- Sewer Drain Floor (H) -->
     <sprite order="7">
       <texture>Tenser\Terrain\Sewers</texture>
       <source>(300,0,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="635"> <!-- Sewer Drain Floor (V) -->
+  <terrain id="635">
+    <!-- Sewer Drain Floor (V) -->
     <sprite order="7">
       <texture>Tenser\Terrain\Sewers</texture>
       <source>(200,100,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="636"> <!-- Sewer Wall Full (V) -->
+  <terrain id="636">
+    <!-- Sewer Wall Full (V) -->
     <sprite order="7">
       <texture>Tenser\Terrain\Sewers</texture>
       <source>(400,0,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
-  </terrain>  
-  <terrain id="637"> <!-- Sewer Wall Full (H) -->
+  </terrain>
+  <terrain id="637">
+    <!-- Sewer Wall Full (H) -->
     <sprite order="7">
       <texture>Tenser\Terrain\Sewers</texture>
       <source>(400,100,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
-  </terrain>  
-  <terrain id="638" cost="6"> <!-- Sewer Wall Ruins (H) -->
+  </terrain>
+  <terrain id="638" cost="6">
+    <!-- Sewer Wall Ruins (H) -->
     <sprite order="3">
       <texture>Tenser\Terrain\Sewers</texture>
       <source>(0,200,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
-  </terrain>    
-  <terrain id="639" cost="6"> <!-- Sewer Wall Ruins (V) -->
+  </terrain>
+  <terrain id="639" cost="6">
+    <!-- Sewer Wall Ruins (V) -->
     <sprite order="3">
       <texture>Tenser\Terrain\Sewers</texture>
       <source>(100,200,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
-  </terrain>    
-  
-  
+  </terrain>
   <terrain id="640">
     <sprite order="4">
       <texture>Tenser/Terrain/BrokenPortalPillar</texture>
@@ -258,63 +261,69 @@
     </sprite>
     <average>(128,108,92,255)</average>
   </terrain>
-  
-   <terrain id="649">  <!-- Vase (base) -->
+  <terrain id="649">
+    <!-- Vase (base) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(0,0,100,100)</source>
     </sprite>
   </terrain>
-  <terrain id="650">  <!-- Vase (Single Ring) -->
+  <terrain id="650">
+    <!-- Vase (Single Ring) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(0,100,100,100)</source>
     </sprite>
   </terrain>
-  <terrain id="651">  <!-- Vase (Double Ring) -->
+  <terrain id="651">
+    <!-- Vase (Double Ring) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(100,0,100,100)</source>
     </sprite>
   </terrain>
-  <terrain id="652">  <!-- Vase (Pattern 1) -->
+  <terrain id="652">
+    <!-- Vase (Pattern 1) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(200,0,100,100)</source>
     </sprite>
   </terrain>
-  <terrain id="653">  <!-- Vase (Pattern 2) -->
+  <terrain id="653">
+    <!-- Vase (Pattern 2) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(200,100,100,100)</source>
     </sprite>
   </terrain>
-  <terrain id="654">  <!-- Vase (Pattern 3) -->
+  <terrain id="654">
+    <!-- Vase (Pattern 3) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(200,200,100,100)</source>
     </sprite>
   </terrain>
-  <terrain id="656">  <!-- Vase (Shadow) -->
+  <terrain id="656">
+    <!-- Vase (Shadow) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(100,200,100,100)</source>
     </sprite>
   </terrain>
-  
-  <terrain id="657">  <!-- Vase (Broken) -->
+  <terrain id="657">
+    <!-- Vase (Broken) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(0,200,100,100)</source>
     </sprite>
   </terrain>
-  <terrain id="658">  <!-- Vases -->
+  <terrain id="658">
+    <!-- Vases -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(100,100,100,100)</source>
     </sprite>
   </terrain>
-
   <terrain id="659">
     <!-- Basalt wall (H) -->
     <sprite order="7">
@@ -323,7 +332,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="660">
     <!-- Basalt floor -->
     <sprite>
@@ -332,7 +340,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="661">
     <!-- Basalt wall (V) -->
     <sprite order="7">
@@ -341,7 +348,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="662" cost="6">
     <!-- Basalt Wall Ruins (H) -->
     <sprite order="3">
@@ -350,7 +356,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="663" cost="6">
     <!-- Basalt Rubble -->
     <sprite order="7">
@@ -359,7 +364,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="664" cost="6">
     <!-- Basalt wall ruins (V) -->
     <sprite order="7">
@@ -368,7 +372,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="665">
     <!-- Sandstone wall (H) -->
     <sprite order="7">
@@ -377,7 +380,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="666">
     <!-- Sandstone floor -->
     <sprite>
@@ -386,7 +388,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="667">
     <!-- Sandstone wall (V) -->
     <sprite order="7">
@@ -395,7 +396,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="668" cost="6">
     <!-- Sandstone Wall Ruins (H) -->
     <sprite order="3">
@@ -404,7 +404,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="669" cost="6">
     <!-- Sandstone Rubble -->
     <sprite order="7">
@@ -413,7 +412,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="670" cost="6">
     <!-- Sandstone wall ruins (V) -->
     <sprite order="7">
@@ -422,7 +420,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="671">
     <!-- Rhyolite wall (H) -->
     <sprite order="7">
@@ -431,7 +428,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="672">
     <!-- Rhyolite floor -->
     <sprite>
@@ -440,7 +436,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="673">
     <!-- Rhyolite wall (V) -->
     <sprite order="7">
@@ -449,7 +444,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="674" cost="6">
     <!-- Rhyolite Wall Ruins (H) -->
     <sprite order="3">
@@ -458,7 +452,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="675" cost="6">
     <!-- Rhyolite Rubble -->
     <sprite order="7">
@@ -467,7 +460,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="676" cost="6">
     <!-- Rhyloite wall ruins (V) -->
     <sprite order="7">
@@ -476,7 +468,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="677">
     <!-- Gabbro wall (H) -->
     <sprite order="7">
@@ -485,7 +476,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="678">
     <!-- Gabbro floor -->
     <sprite>
@@ -494,7 +484,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="679">
     <!-- Gabbro wall (V) -->
     <sprite order="7">
@@ -503,7 +492,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="680" cost="6">
     <!-- Gabbro Wall Ruins (H) -->
     <sprite order="3">
@@ -512,7 +500,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="681" cost="6">
     <!-- Gabbro Rubble -->
     <sprite order="7">
@@ -521,7 +508,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="682" cost="6">
     <!-- Gabbro wall ruins (V) -->
     <sprite order="7">
@@ -530,7 +516,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="683">
     <!-- Slate wall (H) -->
     <sprite order="7">
@@ -539,7 +524,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="684">
     <!-- Slate floor -->
     <sprite>
@@ -548,7 +532,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="685">
     <!-- Slate wall (V) -->
     <sprite order="7">
@@ -557,7 +540,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="686" cost="6">
     <!-- Slate Wall Ruins (H) -->
     <sprite order="3">
@@ -566,7 +548,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="687" cost="6">
     <!-- Slate Rubble -->
     <sprite order="7">
@@ -575,7 +556,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="688" cost="6">
     <!-- Slate wall ruins (V) -->
     <sprite order="7">
@@ -584,7 +564,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="689">
     <!-- Andesite wall (H) -->
     <sprite order="7">
@@ -593,7 +572,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="690">
     <!-- Andesite floor -->
     <sprite>
@@ -602,7 +580,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="691">
     <!-- Andesite wall (V) -->
     <sprite order="7">
@@ -611,7 +588,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="692" cost="6">
     <!-- Andesite Wall Ruins (H) -->
     <sprite order="3">
@@ -620,7 +596,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="693" cost="6">
     <!-- Andesite Rubble -->
     <sprite order="7">
@@ -629,7 +604,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="694" cost="6">
     <!-- Andesite wall ruins (V) -->
     <sprite order="7">
@@ -638,7 +612,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="695">
     <!-- Granite wall (H) -->
     <sprite order="7">
@@ -647,7 +620,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="696">
     <!-- Granite floor -->
     <sprite>
@@ -656,7 +628,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="697">
     <!-- Granite wall (V) -->
     <sprite order="7">
@@ -665,7 +636,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="698" cost="6">
     <!-- Granite Wall Ruins (H) -->
     <sprite order="3">
@@ -674,7 +644,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="699" cost="6">
     <!-- Granite Rubble -->
     <sprite order="7">
@@ -683,7 +652,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="700" cost="6">
     <!-- Granite wall ruins (V) -->
     <sprite order="7">
@@ -692,7 +660,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="701">
     <!-- Feldspar wall (H) -->
     <sprite order="7">
@@ -701,7 +668,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="702">
     <!-- Feldspar floor -->
     <sprite>
@@ -710,7 +676,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="703">
     <!-- Feldspar wall (V) -->
     <sprite order="7">
@@ -719,7 +684,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="704" cost="6">
     <!-- Feldspar Wall Ruins (H) -->
     <sprite order="3">
@@ -728,7 +692,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="705" cost="6">
     <!-- Feldspar Rubble -->
     <sprite order="7">
@@ -737,7 +700,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="706" cost="6">
     <!-- Feldspar wall ruins (V) -->
     <sprite order="7">
@@ -746,9 +708,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
-
-
   <terrain id="707">
     <!-- panel wall (H) -->
     <sprite order="7">
@@ -757,7 +716,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="708">
     <!-- panel corner post -->
     <sprite>
@@ -766,7 +724,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="709">
     <!-- panel wall (V) -->
     <sprite order="7">
@@ -775,7 +732,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="710" cost="6">
     <!-- Panel Wall Ruins (H) -->
     <sprite order="3">
@@ -784,7 +740,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="711" cost="6">
     <!-- Panel wall Rubble -->
     <sprite order="7">
@@ -793,7 +748,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="712" cost="6">
     <!-- Panel wall ruins (V) -->
     <sprite order="7">
@@ -802,7 +756,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="713">
     <!-- Lodge wall (H) -->
     <sprite order="7">
@@ -811,7 +764,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="714">
     <!-- Lodge Corner post -->
     <sprite>
@@ -820,7 +772,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="715">
     <!-- Lodge wall (V) -->
     <sprite order="7">
@@ -829,7 +780,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="716" cost="6">
     <!-- Lodge Wall Ruins (H) -->
     <sprite order="3">
@@ -838,7 +788,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="717" cost="6">
     <!-- Lodge wall Rubble -->
     <sprite order="7">
@@ -847,7 +796,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="718" cost="6">
     <!-- Lodge wall ruins (V) -->
     <sprite order="7">
@@ -856,7 +804,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="719">
     <!-- wainscoting wood wall (H) -->
     <sprite>
@@ -865,7 +812,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="720">
     <!-- wainscoting stone wall (H) -->
     <sprite>
@@ -874,7 +820,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="721">
     <!-- wall moulding (H) -->
     <sprite>
@@ -883,7 +828,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="722">
     <!-- Wainscoting wood Wall (V) -->
     <sprite>
@@ -892,7 +836,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="723">
     <!-- Wainscoting stone wall (V)-->
     <sprite>
@@ -901,7 +844,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="724">
     <!-- Wall moulding (V) -->
     <sprite>
@@ -910,7 +852,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="725">
     <!-- Plaster-Sand wall (H) -->
     <sprite>
@@ -919,7 +860,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="726">
     <!-- Plaster-set Back-board (H) -->
     <sprite>
@@ -928,7 +868,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="727">
     <!-- Plaster-gypsum wall (H) -->
     <sprite>
@@ -937,7 +876,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="728">
     <!-- Plaster-sand Wall (V) -->
     <sprite>
@@ -946,7 +884,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="729">
     <!-- Plaster-set Back-board (V)-->
     <sprite>
@@ -955,7 +892,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="730">
     <!-- Plaster-gypsum wall (V) -->
     <sprite order="7">
@@ -964,7 +900,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="731">
     <!-- front wall (H) -->
     <sprite order="7">
@@ -973,7 +908,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="732">
     <!-- inside back wall (H) -->
     <sprite order="7">
@@ -982,7 +916,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="733">
     <!-- inside left wall (V) -->
     <sprite order="7">
@@ -991,7 +924,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="734">
     <!-- outside right wall (V) -->
     <sprite order="7">
@@ -1000,7 +932,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="735">
     <!-- burnt tent wall - ash pile (H) -->
     <sprite order="3">
@@ -1009,7 +940,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="736">
     <!-- burnt tent wall - ash pile (V) -->
     <sprite order="3">
@@ -1018,7 +948,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="737">
     <!-- front wall flap-1 (H) -->
     <sprite>
@@ -1027,7 +956,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="738">
     <!-- inside-back rope (H) -->
     <sprite>
@@ -1036,7 +964,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="739">
     <!-- left-inside rope (V) -->
     <sprite>
@@ -1045,7 +972,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="740">
     <!-- right flap-1 (V) -->
     <sprite>
@@ -1054,7 +980,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="741">
     <!-- red rug -->
     <sprite>
@@ -1063,7 +988,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="742">
     <!-- gray rug -->
     <sprite>
@@ -1072,7 +996,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="743">
     <!-- front flap-2 (H) -->
     <sprite>
@@ -1081,7 +1004,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="744">
     <!-- inside back rope accent (H) -->
     <sprite>
@@ -1090,7 +1012,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="745">
     <!-- inside-left rope accent (V) -->
     <sprite>
@@ -1099,7 +1020,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="746">
     <!-- right flap-2 (V) -->
     <sprite>
@@ -1108,7 +1028,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="747">
     <!-- square fur rug -->
     <sprite>
@@ -1117,7 +1036,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="748">
     <!-- bear rug (V) -->
     <sprite>
@@ -1126,7 +1044,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="749">
     <!-- front flap-1 accent (H) -->
     <sprite>
@@ -1135,7 +1052,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="750">
     <!-- inside-back shade-screen (H) -->
     <sprite>
@@ -1144,7 +1060,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="751">
     <!-- inside left shade screen (V) -->
     <sprite>
@@ -1153,7 +1068,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="752">
     <!-- right flap-1 accent (V) -->
     <sprite>
@@ -1162,7 +1076,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="753">
     <!-- bear rug (H) -->
     <sprite>
@@ -1171,7 +1084,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="754">
     <!-- front flap-2 accent (H) -->
     <sprite>
@@ -1180,7 +1092,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="755">
     <!-- inside back stripe accent (H) -->
     <sprite>
@@ -1189,7 +1100,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="756">
     <!-- inside left stripe accent (V) -->
     <sprite>
@@ -1198,7 +1108,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="757">
     <!-- right flap-2 accent (V) -->
     <sprite order="7">
@@ -1207,7 +1116,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="758">
     <!-- front wall accent (H) -->
     <sprite>
@@ -1216,7 +1124,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="759">
     <!-- back wall accent (H) -->
     <sprite>
@@ -1225,7 +1132,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="760">
     <!-- left wall accent (V) -->
     <sprite>
@@ -1234,7 +1140,6 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-
   <terrain id="761">
     <!-- right wall accent (V) -->
     <sprite>
