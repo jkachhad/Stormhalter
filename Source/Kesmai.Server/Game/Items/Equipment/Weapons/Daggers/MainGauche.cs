@@ -42,6 +42,13 @@ namespace Kesmai.Server.Items
 		{
 		}
 		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="MainGauche"/> class.
+		/// </summary>
+		public MainGauche(Serial serial) : base(serial)
+		{
+		}
+		
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)
 		{
@@ -49,6 +56,30 @@ namespace Kesmai.Server.Items
 
 			if (Identified)
 				entries.Add(new LocalizationEntry(6250080)); /* The combat adds for this weapon are +2. */
+		}
+		
+		/// <inheritdoc />
+		public override void Serialize(BinaryWriter writer)
+		{
+			base.Serialize(writer);
+
+			writer.Write((short)1); /* version */
+		}
+
+		/// <inheritdoc />
+		public override void Deserialize(BinaryReader reader)
+		{
+			base.Deserialize(reader);
+
+			var version = reader.ReadInt16();
+
+			switch (version)
+			{
+				case 1:
+				{
+					break;
+				}
+			}
 		}
 	}
 }
