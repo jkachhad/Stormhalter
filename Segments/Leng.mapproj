@@ -78292,11 +78292,12 @@
         HideDetection = 23,
         Experience = 29700,
         BasePenetration = ShieldPenetration.Medium,
-        
+        CanSwim = true,
         FireProtection = 50,
     };
     
     powerTroll.AddStatus(new NightVisionStatus(powerTroll));
+    powerTroll.AddStatus(new BreatheWaterStatus(powerTroll));
     
     powerTroll.Attacks = new CreatureAttackCollection
     {
