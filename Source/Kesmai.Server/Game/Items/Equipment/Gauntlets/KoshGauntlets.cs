@@ -43,6 +43,13 @@ namespace Kesmai.Server.Items
 		public KoshGauntlets() : base(69)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="KoshGauntlets"/> class.
+		/// </summary>
+		public KoshGauntlets(Serial serial) : base(serial)
+		{
+		}
 	
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)
@@ -51,6 +58,30 @@ namespace Kesmai.Server.Items
 
 			if (Identified)
 				entries.Add(new LocalizationEntry(6250094)); /* The combat adds for the gauntlets are +2. */
+		}
+		
+		/// <inheritdoc />
+		public override void Serialize(BinaryWriter writer)
+		{
+			base.Serialize(writer);
+
+			writer.Write((short)1); /* version */
+		}
+
+		/// <inheritdoc />
+		public override void Deserialize(BinaryReader reader)
+		{
+			base.Deserialize(reader);
+
+			var version = reader.ReadInt16();
+
+			switch (version)
+			{
+				case 1:
+				{
+					break;
+				}
+			}
 		}
 	}
 }
