@@ -24,7 +24,7 @@ namespace Kesmai.Server.Items
 		public override int BaseAttackBonus => 2;
 		
 		/// <inheritdoc />
-		public override ShieldPenetration Penetration => ShieldPenetration.light;
+		public override ShieldPenetration Penetration => ShieldPenetration.Light;
 		
 		/// <inheritdoc />
 		protected override int PoisonedItemId => 312;
