@@ -106,41 +106,87 @@ namespace Kesmai.WorldForge
         {
 			get
 			{
-				//These regexes are fraught. They are likely to break based on developer syntax preferences, but seem to work across most mobs I've tested.
-				var skillPattern = new System.Text.RegularExpressions.Regex("Creature(?:Basic)?Attack\\(\\s*(\\d+)\\s*[,)]", System.Text.RegularExpressions.RegexOptions.Multiline);
-				var matches = skillPattern.Matches(this.Scripts[0].Blocks[1]);
-				int? meleeSkill = 0;
-				foreach (System.Text.RegularExpressions.Match match in matches)
-				{
-					if (int.TryParse(match.Groups[1].Value, out var thisAttack))
-					{
-						meleeSkill = Math.Max((int)meleeSkill, thisAttack);
+
+				var onSpawnScript = _scripts.FirstOrDefault(
+					s => string.Equals(s.Name, "OnSpawn", StringComparison.OrdinalIgnoreCase));
+				if (onSpawnScript is null)
+					return new Tuple<int?, int?>(null, null);
+
+				/* Create a syntax tree for analysis. */
+				var syntaxTree = CSharpSyntaxTree.ParseText("void OnSpawn(){"+onSpawnScript.Blocks[1]+"}");
+				var syntaxRoot = syntaxTree.GetCompilationUnitRoot();
+
+				//For melee skill, find all ObjectCreation nodes with a type of CreatureAttack or CreatureBasicAttack
+				var attacks = syntaxRoot.DescendantNodes().OfType<ObjectCreationExpressionSyntax>()
+					//.Where(node => node.DescendantNodes().OfType<IdentifierNameSyntax>().First().Identifier.Text is String objectName 
+					.Where(node => node.Type is IdentifierNameSyntax type 
+						&& type.Identifier.Text is String objectName 
+						&& (objectName == "CreatureBasicAttack" || objectName == "CreatureAttack"));
+				//For each attack, determine the value of the first argument, which is skill level, then find the maximum
+				int? meleeSkill = attacks.Select(attack => attack.ArgumentList.Arguments.First().Expression.GetFirstToken().Value as int?).Max();
+				
+
+				//For spell skill, find all GenericNameSyntax nodes of type CreatureSpell.
+				var spells = syntaxRoot.DescendantNodes().OfType<ObjectCreationExpressionSyntax>()
+					.Where(node => node.Type is GenericNameSyntax type && type.Identifier.Text == "CreatureSpell");
+				double? rangedSkill = spells.Select(node => {
+					double? skill = 0;
+					var identifiers = node.DescendantNodes().OfType<IdentifierNameSyntax>();
+						
+					var spellType = identifiers.First().Identifier.Text;
+					// Spells are more dangerous than melee hits because of the lack of dodging and resistances
+					// They get a multiplier on the skill level to determine relative threat.
+					// Some spells are more or less dangerous from a DPS output, so modify the multiplier for them
+					// These values are guesses and may need to be tweaked.
+					double? multiplier;
+					switch (spellType)
+                    {
+						case "DeathSpell": multiplier = 2.5; break;
+						case "IceSpearSpell": multiplier = 2.5; break;
+						case "LightningBoltSpell": multiplier = 2.5; break;
+						case "ConcussionSpell": multiplier = 2.5; break;
+						case "BlindSpell":
+						case "StunSpell":
+						case "CreateWebSpell": multiplier = null; break;
+						default: multiplier = 1.8;break;
 					}
-					else
-						meleeSkill = null;
-				}
-				skillPattern = new System.Text.RegularExpressions.Regex("CreatureSpell<(\\w*)>\\(\\s*(?:skillLevel:)?\\s*(\\d+\\.?\\d*)?\\s*[,)]", System.Text.RegularExpressions.RegexOptions.Multiline);
-				matches = skillPattern.Matches(this.Scripts[0].Blocks[1]);
-				int? rangedSkill = 0;
-				foreach (System.Text.RegularExpressions.Match match in matches.Where(m => !new[] {"BlindSpell","StunSpell"}.Contains(m.Groups[1].Value)))
-				{
-					if (double.TryParse(match.Groups[2].Value, out var thisAttack))
+
+
+					// The syntax used for spell definitions often (always?) uses named parameters.
+					// I can't just assume the first parameter is the right one, so see if there is a
+					// named parameter for skillLevel and use that if present.
+					var namedSkillArgument = identifiers.First(i => i.Identifier.Text == "skillLevel");
+					if (namedSkillArgument != null)
 					{
-						rangedSkill = Math.Max((int)rangedSkill, (int)(thisAttack*2)); //magic skills are more of a threat than melee.
+						var skillargument = namedSkillArgument.Parent.Parent as ArgumentSyntax;
+						var skilltoken = skillargument.Expression.GetFirstToken();
+						skill = double.Parse(skilltoken.ValueText);
+					} else
+					{
+						skill = node.ArgumentList.Arguments.First().Expression.GetFirstToken().Value as double?;
 					}
-					else
-						rangedSkill = null;
-				}
-				//This regex will need attention if there are ranged weapons that aren't longbow, shortbow, crossbow, etc. RHammer trolls come to mind, but may be the only exception.
-				skillPattern = new System.Text.RegularExpressions.Regex("Wield\\([^)]*bow", System.Text.RegularExpressions.RegexOptions.Multiline);
-				matches = skillPattern.Matches(this.Scripts[0].Blocks[1]);
-				if (matches.Count > 0) // if we're equiping a bow, then the melee skill is actually ranged.
+					return skill * multiplier;
+				}).Max();
+
+				//If a creature has a bow, then consider it's skill as ranged
+				//First find all the wielded items and see if any end with "bow". This may need to be changed if 
+				//new Ranged weapons are created, such as monster-wielded returning weapons.
+				var wieldedItems = syntaxRoot.DescendantNodes().OfType<InvocationExpressionSyntax>()
+					.Where(i => i.ChildNodes().First() is MemberAccessExpressionSyntax memberExpression
+						&& memberExpression.ChildNodes().Last() is IdentifierNameSyntax member
+						&& member.Identifier.Text == "Wield");
+				var hasRangedWeapon = wieldedItems.Any(node => node.ChildNodes().Last() is ArgumentListSyntax arguments
+					&& arguments.Arguments.First().Expression is ObjectCreationExpressionSyntax item
+					&& item.Type is IdentifierNameSyntax itemName
+					&& itemName.Identifier.Text.EndsWith("bow",StringComparison.InvariantCultureIgnoreCase));
+				if (hasRangedWeapon) // if we're equiping a bow, then the melee skill is actually ranged.
 				{
-					rangedSkill = Math.Max((int)meleeSkill, (int)rangedSkill);
+					if (meleeSkill > rangedSkill || rangedSkill is null)
+						rangedSkill = meleeSkill;
 					meleeSkill = null;
 				}
 
-				return new Tuple<int?, int?>(meleeSkill, rangedSkill);
+				return new Tuple<int?, int?>(meleeSkill, (int?)rangedSkill);
 			}
         }
 		
