@@ -28,5 +28,29 @@ namespace Kesmai.Server.Items
 			if (Identified)
 				entries.Add(new LocalizationEntry(6250039)); /* The ring appears to be nothing special. */
 		}
+		
+		/// <inheritdoc />
+		public override void Serialize(BinaryWriter writer)
+		{
+			base.Serialize(writer);
+
+			writer.Write((short)1); /* version */
+		}
+
+		/// <inheritdoc />
+		public override void Deserialize(BinaryReader reader)
+		{
+			base.Deserialize(reader);
+
+			var version = reader.ReadInt16();
+
+			switch (version)
+			{
+				case 1:
+				{
+					break;
+				}
+			}
+		}
 	}
 }
