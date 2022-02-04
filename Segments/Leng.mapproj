@@ -75519,7 +75519,7 @@
         
    ninja.AddGold(75);
    ninja.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       5,     gemsPriceMutatorLow), 
+        new LootPackEntry(true, LengGems,       20,     gemsPriceMutatorLow), 
         new LootPackEntry(true, LengPotions,    0.3),
         new LootPackEntry(true, LengBottles,    20)
    ));
@@ -75572,17 +75572,17 @@
     {
         {
             new CreatureAttack(16,      25, 45,      "The dragon slashes you with its claws.",
-                                                        new AttackProneComponent(15), 
+                                                        new AttackProneComponent(5), 
                                                         new AttackStunComponent(5)),                45
         },
         {
             new CreatureAttack(16,      40, 50,     "The dragon smashes you with its tail.",
-                                                        new AttackProneComponent(25), 
+                                                        new AttackProneComponent(10), 
                                                         new AttackStunComponent(10)),               45
         },
         {
             new CreatureAttack(16,      45, 59,     "The dragon buffets you with its wings.",
-                                                        new AttackProneComponent(100), 
+                                                        new AttackProneComponent(15), 
                                                         new AttackStunComponent(15)),               10
         },
     };
@@ -75835,7 +75835,7 @@
         
     griffin.AddGold(105);
     griffin.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       4,     gemsPriceMutatorHigh),         
+        new LootPackEntry(true, LengGems,       11.5,     gemsPriceMutatorHigh),         
         new LootPackEntry(true, (from, container) => new OchreEgg(), 25.0), 
         new LootPackEntry(true, LengPotions,    0.1),
         new LootPackEntry(true, (from, container) => new GriffinSkull(), 10),
@@ -75891,7 +75891,7 @@
     
     fighter.AddGold(130);
     fighter.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       4,     gemsPriceMutatorAboveAverage), 
+        new LootPackEntry(true, LengGems,       11.5,     gemsPriceMutatorAboveAverage), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, CliffTreasures,    0.55)
@@ -75952,7 +75952,7 @@
     
     scorpion.AddGold(90);
     scorpion.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       4,     gemsPriceMutatorAboveAverage), 
+        new LootPackEntry(true, LengGems,       11.5,     gemsPriceMutatorAboveAverage), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, CliffTreasures,    0.55)
@@ -76009,7 +76009,7 @@
         
     lich.AddGold(154);
     lich.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       10,     gemsPriceMutatorHigh), 
+        new LootPackEntry(true, LengGems,       20,     gemsPriceMutatorHigh), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, UtilityTreasures,    2),
         new LootPackEntry(true, LengPotions,    0.3),
@@ -76064,7 +76064,7 @@
     
     fighter.AddGold(130);
     fighter.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       4,     gemsPriceMutatorAboveAverage), 
+        new LootPackEntry(true, LengGems,       11.5,     gemsPriceMutatorAboveAverage), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, CliffTreasures,    0.55)
@@ -76130,7 +76130,7 @@
     
     minotaur.AddGold(180);
     minotaur.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       10,     gemsPriceMutatorHigh), 
+        new LootPackEntry(true, LengGems,       20,     gemsPriceMutatorHigh), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, LengPotions,    0.3),
         new LootPackEntry(true, MinotaurTreasures,    0.63)
@@ -76315,7 +76315,7 @@
     
     fighter.AddGold(154);
     fighter.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       10,     gemsPriceMutatorAboveAverage), 
+        new LootPackEntry(true, LengGems,       20,     gemsPriceMutatorAboveAverage), 
         new LootPackEntry(true, LengBottles,    20), 
         new LootPackEntry(true, LengPotions,    0.4),
         new LootPackEntry(true, MinotaurTreasures,  0.55)
@@ -76368,7 +76368,7 @@
     
     fighter.AddGold(154);
     fighter.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       10,     gemsPriceMutatorAboveAverage), 
+        new LootPackEntry(true, LengGems,       20,     gemsPriceMutatorAboveAverage), 
         new LootPackEntry(true, LengBottles,    20), 
         new LootPackEntry(true, LengPotions,    0.4),
         new LootPackEntry(true, MinotaurTreasures,  0.55)
@@ -76435,7 +76435,7 @@
         
     thaum.AddGold(154);
     thaum.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       10,     gemsPriceMutatorAboveAverage), 
+        new LootPackEntry(true, LengGems,       20,     gemsPriceMutatorAboveAverage), 
         new LootPackEntry(true, LengBottles,    20), 
         new LootPackEntry(true, LengPotions,    0.4),
         new LootPackEntry(true, MinotaurTreasures,  0.55), 
@@ -76480,7 +76480,7 @@
     
     centaur.AddGold(70);
     centaur.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       4,     gemsPriceMutatorHigh), 
+        new LootPackEntry(true, LengGems,       11.5,     gemsPriceMutatorHigh), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, LengPotions,    0.05),
         new LootPackEntry(true, CliffTreasures,    0.25)
@@ -76645,7 +76645,7 @@
             
     orc.AddGold(112);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       6,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, LengGems,       13.8,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, CliffTreasures,    0.5)
@@ -76701,7 +76701,7 @@
         
     wolf.AddGold(150);
     wolf.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       6,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, LengGems,       13.8,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, CliffTreasures,    0.63)
@@ -76747,7 +76747,7 @@
     
     troll.AddGold(138);
     troll.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       6,     gemsPriceMutatorAboveAverage), 
+        new LootPackEntry(true, LengGems,       13.8,     gemsPriceMutatorAboveAverage), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, CliffTreasures,    0.55)
@@ -76793,7 +76793,7 @@
             
     orc.AddGold(112);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       6,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, LengGems,       13.8,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, CliffTreasures,    0.5)
@@ -76857,7 +76857,7 @@
     
     manticora.AddGold(126);
     manticora.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       10,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, LengGems,       20,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, LengPotions,    0.3),
         new LootPackEntry(true, MinotaurTreasures,    0.5)
@@ -77047,13 +77047,14 @@
         
     lich.AddGold(154);
     lich.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       10,     gemsPriceMutatorHigh), 
+        new LootPackEntry(true, LengGems,       20,     gemsPriceMutatorHigh), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, UtilityTreasures,    2),
         new LootPackEntry(true, LengPotions,    0.3),
         new LootPackEntry(true, MinotaurTreasures,    0.63), 
         new LootPackEntry(true, (from, container) => new OakWand(),     1), 
-        new LootPackEntry(true, (from, container) => new SilverGreatAxe(),     100)
+        new LootPackEntry(true, (from, container) => new SilverGreatAxe(),     100), 
+        new LootPackEntry(true, (from, container) => new YouthPotion(),     .5)
     ));
     
     return lich;
@@ -77132,7 +77133,7 @@
     
     skeleton.AddGold(78);
     skeleton.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems, 2, gemsPriceMutatorNormal),
+        new LootPackEntry(true, LengGems, 7.7, gemsPriceMutatorNormal),
         new LootPackEntry(true, LengPotions,    0.1),
         new LootPackEntry(true, LengBottles, 20),
         new LootPackEntry(true, MausTreasure,  0.5),
@@ -77206,7 +77207,7 @@
     
     wizard.AddGold(91);
     wizard.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       2,     gemsPriceMutatorAboveAverage), 
+        new LootPackEntry(true, LengGems,       7.7,     gemsPriceMutatorAboveAverage), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, UtilityTreasures,    1),
         new LootPackEntry(true, LengPotions,    0.2),
@@ -77275,7 +77276,7 @@
     
     wizard.AddGold(91);
     wizard.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       2,     gemsPriceMutatorAboveAverage), 
+        new LootPackEntry(true, LengGems,       7.7,     gemsPriceMutatorAboveAverage), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, UtilityTreasures,    1),
         new LootPackEntry(true, LengPotions,    0.2),
@@ -77332,7 +77333,7 @@
     
     hobgoblin.AddGold(91);
     hobgoblin.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       2,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, LengGems,       7.7,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, MausTreasure,  0.5),
@@ -77380,7 +77381,7 @@
     
     hobgoblin.AddGold(91);
     hobgoblin.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       2,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, LengGems,       7.7,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, MausTreasure,  0.5),
@@ -77442,7 +77443,7 @@
     
     mummy.AddGold(156);
     mummy.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       4,     gemsPriceMutatorVeryHigh), 
+        new LootPackEntry(true, LengGems,       7.7,     gemsPriceMutatorVeryHigh), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, UtilityTreasures,    1),
         new LootPackEntry(true, LengPotions,    0.2),
@@ -77502,7 +77503,7 @@
     };
     raven.AddGold(60);
     raven.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       2,     gemsPriceMutatorHigh), 
+        new LootPackEntry(true, LengGems,       7.7,     gemsPriceMutatorHigh), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, MausTreasure,  0.63),
@@ -77566,7 +77567,7 @@
     
     spectre.AddGold(78);
     spectre.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       2,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, LengGems,       7.7,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, UtilityTreasures,    1),
         new LootPackEntry(true, LengPotions,    0.2),
@@ -77627,7 +77628,7 @@
         
     wraith.AddGold(91);
     wraith.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       2,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, LengGems,       7.7,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, UtilityTreasures,    1),
         new LootPackEntry(true, LengPotions,    0.2),
@@ -77682,7 +77683,7 @@
     
     fighter.AddGold(91);
     fighter.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       2,     gemsPriceMutatorAboveAverage), 
+        new LootPackEntry(true, LengGems,       7.7,     gemsPriceMutatorAboveAverage), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, UtilityTreasures,    1),
         new LootPackEntry(true, LengPotions,    0.2),
@@ -77981,7 +77982,7 @@
     
     centaur.AddGold(55);
     centaur.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       1,     gemsPriceMutatorHigh), 
+        new LootPackEntry(true, LengGems,       6.3,     gemsPriceMutatorHigh), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, LengPotions,    0.05),
         new LootPackEntry(true, MausTreasure,  0.25)
@@ -78258,7 +78259,7 @@
     wight.AddGold(84);
     
     wight.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       1,     gemsPriceMutator), 
+        new LootPackEntry(true, LengGems,       6.3,     gemsPriceMutator), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, UtilityTreasures,    1),
         new LootPackEntry(true, LengPotions,    0.05),
@@ -78357,7 +78358,7 @@
     
     troll.AddGold(146);
     troll.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       8,     gemsPriceMutatorAboveAverage), 
+        new LootPackEntry(true, LengGems,       16.6,     gemsPriceMutatorAboveAverage), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, CliffTreasures,    0.55)
@@ -78410,7 +78411,7 @@
     
     fighter.AddGold(154);
     fighter.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       8,     gemsPriceMutatorAboveAverage), 
+        new LootPackEntry(true, LengGems,       16.6,     gemsPriceMutatorAboveAverage), 
         new LootPackEntry(true, LengBottles,    20), 
         new LootPackEntry(true, LengPotions,    0.4),
         new LootPackEntry(true, CliffTreasures,  0.55)
@@ -78456,7 +78457,7 @@
     
     hobgoblin.AddGold(119);
     hobgoblin.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       8,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, LengGems,       16.6,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, CliffTreasures,  0.5),
@@ -78513,12 +78514,13 @@
         
     lich.AddGold(154);
     lich.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       8,     gemsPriceMutatorHigh), 
+        new LootPackEntry(true, LengGems,       16.6,     gemsPriceMutatorHigh), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, UtilityTreasures,    2),
         new LootPackEntry(true, LengPotions,    0.3),
         new LootPackEntry(true, MinotaurTreasures,    0.63), 
-        new LootPackEntry(true, (from, container) => new OakWand(),     1)
+        new LootPackEntry(true, (from, container) => new OakWand(),     1), 
+        new LootPackEntry(true, (from, container) => new YouthPotion(),     .5)
     ));
     
     return lich;
@@ -78572,7 +78574,7 @@
     
     ghoul.AddGold(146);
     ghoul.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       8,     gemsPriceMutatorHigh), 
+        new LootPackEntry(true, LengGems,       16.6,     gemsPriceMutatorHigh), 
         new LootPackEntry(true, LengBottles,    20), 
         new LootPackEntry(true, LengPotions,    0.4),
         new LootPackEntry(true, CliffTreasures,  0.63)
@@ -78631,12 +78633,13 @@
         
     wraith.AddGold(91);
     wraith.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       8,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, LengGems,       16.6,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, UtilityTreasures,    1),
         new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, CliffTreasures,  0.5), 
-        new LootPackEntry(true, (from, container) => new OakWand(),     1)
+        new LootPackEntry(true, (from, container) => new OakWand(),     1), 
+        new LootPackEntry(true, (from, container) => new YouthPotion(),     .5)
     ));
     
     return wraith;
@@ -78696,12 +78699,13 @@
     
     spectre.AddGold(78);
     spectre.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       8,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, LengGems,       16.6,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, LengBottles,    20),
         new LootPackEntry(true, UtilityTreasures,    1),
         new LootPackEntry(true, LengPotions,    0.2),
         new LootPackEntry(true, CliffTreasures,  0.5), 
-        new LootPackEntry(true, (from, container) => new OakWand(),     1)
+        new LootPackEntry(true, (from, container) => new OakWand(),     1), 
+        new LootPackEntry(true, (from, container) => new YouthPotion(),     .5)
     ));
     
     return spectre;
@@ -79505,6 +79509,27 @@
       <entry entity="lengWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="4" y="4" region="4" />
     </spawn>
+    <spawn type="LocationSpawner" name="SeaSerpent">
+      <minimumDelay>2700</minimumDelay>
+      <maximumDelay>3600</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossLevel9SeaSerpent" size="1" minimum="0" maximum="0" />
+      <location x="43" y="32" region="10" />
+    </spawn>
     <spawn type="RegionSpawner" name="mausoleumSandyPath">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
@@ -79525,73 +79550,15 @@
       </script>
       <entry entity="level9Skeleton" size="3" minimum="3" maximum="3" />
       <entry entity="level9Spectre" size="1" minimum="1" maximum="1" />
-      <entry entity="level9Wraith" size="1" minimum="2" maximum="2" />
+      <entry entity="level9Wraith" size="1" minimum="1" maximum="1" />
       <bounds region="10">
         <inclusion left="2" top="2" right="32" bottom="5" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="mausoleumWest">
-      <minimumDelay>720</minimumDelay>
-      <maximumDelay>1020</maximumDelay>
-      <maximum>16</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="level9Skeleton" size="3" minimum="2" maximum="8" />
-      <entry entity="level9Wraith" size="1" minimum="2" maximum="3" />
-      <entry entity="level9WretchFighter" size="3" minimum="2" maximum="8" />
-      <entry entity="level9Raven" size="1" minimum="2" maximum="7" />
-      <entry entity="level9Hobgoblin" size="1" minimum="4" maximum="10" />
-      <entry entity="level9HobgoblinMage" size="1" minimum="2" maximum="3" />
-      <bounds region="10">
-        <inclusion left="7" top="6" right="11" bottom="33" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
-      </bounds>
-    </spawn>
-    <spawn type="RegionSpawner" name="mausoleumInner">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>18</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="level9ConcWiz" size="1" minimum="3" maximum="7" />
-      <entry entity="level9FireWiz" size="1" minimum="4" maximum="8" />
-      <entry entity="level9Wraith" size="1" minimum="2" maximum="5" />
-      <entry entity="level9WretchFighter" size="3" minimum="4" maximum="9" />
-      <entry entity="level9Spectre" size="1" minimum="2" maximum="3" />
-      <bounds region="10">
-        <inclusion left="13" top="8" right="31" bottom="29" />
-        <inclusion left="32" top="13" right="33" bottom="29" />
-        <exclusion left="20" top="22" right="24" bottom="26" />
-      </bounds>
-    </spawn>
-    <spawn type="RegionSpawner" name="mausoleumSouth">
-      <minimumDelay>720</minimumDelay>
-      <maximumDelay>1020</maximumDelay>
       <maximum>14</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -79607,12 +79574,70 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level9Raven" size="3" minimum="2" maximum="4" />
-      <entry entity="level9WretchFighter" size="3" minimum="2" maximum="12" />
-      <entry entity="level9Hobgoblin" size="3" minimum="2" maximum="12" />
-      <entry entity="level9HobgoblinMage" size="1" minimum="2" maximum="5" />
-      <entry entity="level9Skeleton" size="3" minimum="2" maximum="12" />
-      <entry entity="level9Wraith" size="1" minimum="2" maximum="5" />
+      <entry entity="level9Skeleton" size="3" minimum="4" maximum="4" />
+      <entry entity="level9Wraith" size="1" minimum="1" maximum="1" />
+      <entry entity="level9WretchFighter" size="3" minimum="3" maximum="3" />
+      <entry entity="level9Raven" size="1" minimum="2" maximum="2" />
+      <entry entity="level9Hobgoblin" size="1" minimum="3" maximum="3" />
+      <entry entity="level9HobgoblinMage" size="1" minimum="1" maximum="1" />
+      <bounds region="10">
+        <inclusion left="7" top="6" right="11" bottom="33" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="mausoleumInner">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>24</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level9ConcWiz" size="1" minimum="5" maximum="5" />
+      <entry entity="level9FireWiz" size="1" minimum="6" maximum="6" />
+      <entry entity="level9Wraith" size="1" minimum="3" maximum="3" />
+      <entry entity="level9WretchFighter" size="3" minimum="7" maximum="7" />
+      <entry entity="level9Spectre" size="1" minimum="3" maximum="3" />
+      <bounds region="10">
+        <inclusion left="13" top="8" right="31" bottom="29" />
+        <inclusion left="32" top="13" right="33" bottom="29" />
+        <exclusion left="20" top="22" right="24" bottom="26" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="mausoleumSouth">
+      <minimumDelay>720</minimumDelay>
+      <maximumDelay>1020</maximumDelay>
+      <maximum>19</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level9Raven" size="3" minimum="3" maximum="3" />
+      <entry entity="level9WretchFighter" size="3" minimum="4" maximum="4" />
+      <entry entity="level9Hobgoblin" size="3" minimum="4" maximum="4" />
+      <entry entity="level9HobgoblinMage" size="1" minimum="1" maximum="1" />
+      <entry entity="level9Skeleton" size="3" minimum="4" maximum="4" />
+      <entry entity="level9Wraith" size="1" minimum="2" maximum="2" />
       <bounds region="10">
         <inclusion left="10" top="31" right="49" bottom="40" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -79661,8 +79686,8 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="level9Skeleton" size="3" minimum="3" maximum="3" />
-      <entry entity="level9Spectre" size="1" minimum="2" maximum="2" />
-      <entry entity="level9Wraith" size="1" minimum="2" maximum="2" />
+      <entry entity="level9Spectre" size="1" minimum="1" maximum="1" />
+      <entry entity="level9Wraith" size="1" minimum="1" maximum="1" />
       <entry entity="level9Hobgoblin" size="3" minimum="2" maximum="3" />
       <entry entity="level9WretchFighter" size="3" minimum="2" maximum="3" />
       <entry entity="level9HobgoblinMage" size="1" minimum="1" maximum="1" />
@@ -80467,8 +80492,8 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level9Wraith" size="1" minimum="2" maximum="1" />
-      <entry entity="level9Spectre" size="1" minimum="2" maximum="1" />
+      <entry entity="level9Wraith" size="1" minimum="1" maximum="1" />
+      <entry entity="level9Spectre" size="1" minimum="1" maximum="1" />
       <entry entity="level9Skeleton" size="3" minimum="4" maximum="4" />
       <entry entity="level9Hobgoblin" size="3" minimum="2" maximum="4" />
       <bounds region="10">
@@ -80496,8 +80521,7 @@
       </script>
       <entry entity="BossLevel13Wyrm" size="1" minimum="1" maximum="1" />
       <bounds region="18">
-        <inclusion left="3" top="6" right="20" bottom="28" />
-        <inclusion left="21" top="8" right="43" bottom="37" />
+        <inclusion left="23" top="11" right="29" bottom="14" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -80557,7 +80581,7 @@
       <entry entity="level13Wraith" size="1" minimum="4" maximum="6" />
       <entry entity="level13Troll" size="3" minimum="3" maximum="10" />
       <bounds region="18">
-        <inclusion left="21" top="8" right="41" bottom="22" />
+        <inclusion left="31" top="14" right="35" bottom="22" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -80587,7 +80611,8 @@
       <entry entity="level13Wraith" size="1" minimum="4" maximum="6" />
       <entry entity="level13Troll" size="3" minimum="3" maximum="10" />
       <bounds region="18">
-        <inclusion left="14" top="24" right="43" bottom="37" />
+        <inclusion left="29" top="34" right="35" bottom="37" />
+        <inclusion left="41" top="26" right="43" bottom="36" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
