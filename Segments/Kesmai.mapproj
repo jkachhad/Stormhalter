@@ -101310,7 +101310,7 @@ else
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    spawn.IsInvulnerable = true,
+    spawn.IsInvulnerable = true;
     if (spawn is Shopkeeper shopkeeper)
     {
         void onRarePurchase(PlayerEntity player, ItemEntity item)
@@ -101377,7 +101377,7 @@ else
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    spawn.IsInvulnerable = true,
+    spawn.IsInvulnerable = true;
     if (spawn is Shopkeeper shopkeeper)
     {
         void onRarePurchase(PlayerEntity player, ItemEntity item)
@@ -101507,7 +101507,7 @@ else
         <block><![CDATA[]]></block>
         <block><![CDATA[
     spawn.Name = "Dik";
-    spawn.IsInvulnerable = true,
+    spawn.IsInvulnerable = true;
 
     if (spawn is Shopkeeper shopkeeper)
         shopkeeper.AddCounter(new Point2D(40, 31, 1));
@@ -101530,7 +101530,7 @@ else
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    spawn.IsInvulnerable = true,
+    spawn.IsInvulnerable = true;
     if (spawn is Shopkeeper shopkeeper)
     {
         void onRarePurchase(PlayerEntity player, ItemEntity item)
@@ -101641,7 +101641,7 @@ else
     /* Override properties from the template. */
     spawn.Name = "Rocky.T.Orc";
     spawn.Body = 30; spawn.IsFemale = false;
-    spawn.IsInvulnerable = true,
+    spawn.IsInvulnerable = true;
     
     if (spawn is Shopkeeper rocky)
     {
