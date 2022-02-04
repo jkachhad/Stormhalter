@@ -99556,11 +99556,7 @@
     <entity name="level10WyvWhite">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
-        <block><![CDATA[#load "WorldForge"
-CreatureEntity OnSpawn()
-{#load "WorldForge"
-CreatureEntity OnSpawn()
-{
+        <block><![CDATA[
     var wyvern = new Wyvern()
     {
         Body = 176,
@@ -99607,7 +99603,7 @@ CreatureEntity OnSpawn()
     ));
     
     return wyvern;
-}}]]></block>
+]]></block>
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
@@ -99626,9 +99622,7 @@ CreatureEntity OnSpawn()
     <entity name="level10WyvRed">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
-        <block><![CDATA[#load "WorldForge"
-CreatureEntity OnSpawn()
-{
+        <block><![CDATA[
     var wyvern = new Wyvern()
     {
         Body = 177,
@@ -99675,7 +99669,7 @@ CreatureEntity OnSpawn()
     ));
     
     return wyvern;
-}]]></block>
+]]></block>
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
@@ -99760,9 +99754,7 @@ CreatureEntity OnSpawn()
     <entity name="level10WyvGreen">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
-        <block><![CDATA[#load "WorldForge"
-CreatureEntity OnSpawn()
-{
+        <block><![CDATA[
     var wyvern = new Wyvern()
     {
         Body = 65,
@@ -99808,7 +99800,7 @@ CreatureEntity OnSpawn()
     ));
     
     return wyvern;
-}]]></block>
+]]></block>
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
@@ -100358,7 +100350,7 @@ CreatureEntity OnSpawn()
         BaseDodge = 21,
         HideDetection = 25, 
         Experience = 6315,
-        MagicProtection = 17
+        MagicProtection = 17,
         CanCharge = true,
         BasePenetration = ShieldPenetration.Medium,
         Immunity = CreatureImmunity.Web
@@ -100434,7 +100426,7 @@ CreatureEntity OnSpawn()
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(18      25, 35,     "The goblin slams his fist into your chest.",
+            new CreatureAttack(18,      25, 35,     "The goblin slams his fist into your chest.",
                                                         new AttackStunComponent(10)),               40
         },
         {
@@ -101832,7 +101824,7 @@ CreatureEntity OnSpawn()
         <block><![CDATA[
     var goblin = new Goblin()
     {
-        MaxHealth = 85, Health = 85
+        MaxHealth = 85, Health = 85,
         BaseDodge = 20,
         BasePenetration = ShieldPenetration.Light,
         Experience = 3900,  
