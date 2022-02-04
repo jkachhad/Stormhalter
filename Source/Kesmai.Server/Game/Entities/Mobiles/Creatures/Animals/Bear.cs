@@ -13,6 +13,7 @@ namespace Kesmai.Server.Game
 			Alignment = Alignment.Chaotic;
 
 			CanSwim = true;
+			AddStatus(new BreatheWaterStatus(this));
 		}
 
 		protected override void OnCreate()

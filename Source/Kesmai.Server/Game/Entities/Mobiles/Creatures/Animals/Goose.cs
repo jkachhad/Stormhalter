@@ -13,6 +13,7 @@ namespace Kesmai.Server.Game
 			Body = 248;
 
 			Alignment = Alignment.Chaotic;
+			CanFly = true;
 		}
 
 		protected override void OnCreate()

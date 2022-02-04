@@ -14,8 +14,6 @@ namespace Kesmai.Server.Game
 			Body = 29;
 
 			Alignment = Alignment.Lawful;
-			
-			CanSwim = true;
 		}
 
 		/// <inheritdoc/>
