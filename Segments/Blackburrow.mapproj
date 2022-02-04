@@ -38191,8 +38191,7 @@ return skeleton;
     swordmaster.Equip(new DrakeScaleArmor());
         
     swordmaster.AddGold(5000);
-    swordmaster.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new MainGauche(),           100),
+    swordmaster.AddLoot(new LootPack(        
         new LootPackEntry(true, Miniboss, 100),
         new LootPackEntry(true, Dragongems, 100)
     ));
