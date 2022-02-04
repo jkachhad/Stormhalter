@@ -11,8 +11,7 @@ namespace Kesmai.Server.Game
 			Body = 59;
 			
 			Alignment = Alignment.Chaotic;
-			
-			CanLoot = false;
+			CanCharge = true;
 		}
 
 		protected override void OnCreate()

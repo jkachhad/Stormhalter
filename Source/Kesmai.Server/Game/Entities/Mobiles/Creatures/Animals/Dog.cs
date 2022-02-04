@@ -14,8 +14,6 @@ namespace Kesmai.Server.Game
 			Body = 21;
 
 			Alignment = Alignment.Chaotic;
-
-			CanSwim = true;
 		}
 
 		/// <inheritdoc/>

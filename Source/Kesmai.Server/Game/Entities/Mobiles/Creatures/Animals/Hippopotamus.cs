@@ -16,6 +16,7 @@ namespace Kesmai.Server.Game
 			Alignment = Alignment.Lawful;
 
 			CanSwim = true;
+			AddStatus(new BreatheWaterStatus(this));
 		}
 
 		/// <inheritdoc/>

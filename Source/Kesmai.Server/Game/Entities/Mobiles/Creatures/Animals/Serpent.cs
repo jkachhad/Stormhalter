@@ -12,6 +12,7 @@ namespace Kesmai.Server.Game
 
 			Alignment = Alignment.Chaotic;
 
+			AddStatus(new BreatheWaterStatus(this));
 			CanSwim = true;
 		}
 

@@ -11,7 +11,7 @@ namespace Kesmai.Server.Game
 			Body = 8;
 
 			Alignment = Alignment.Chaotic;
-
+			AddStatus(new BreatheWaterStatus(this));
 			CanSwim = true;
 			CanWalk = false;
 		}
