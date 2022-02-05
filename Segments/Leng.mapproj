@@ -75372,7 +75372,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="BossLevel14Shidosha">
+    <entity name="BossMinorLevel12Shidosha">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -75381,10 +75381,10 @@
         Body = 245,
         Name = "shidosha",
         
-        MaxHealth = 2100, Health = 2100,
-        BaseDodge = 35,
+        MaxHealth = 1800, Health = 1800,
+        BaseDodge = 31,
 
-        Experience = 85592,
+        Experience = 59440,
 
         HideDetection = 28,
         
@@ -75418,7 +75418,7 @@
                                                         new AttackStunComponent(25)),               40
         },
         {
-            new CreatureAttack(20,      40, 69,     "Shidosha knocks you back with a forceful kick.",
+            new CreatureAttack(20,      40, 61,     "Shidosha knocks you back with a forceful kick.",
                                                         new AttackProneComponent(100), 
                                                         new AttackStunComponent(15)),               20
         },
@@ -75431,7 +75431,7 @@
         new CreatureBlock(3, "inhuman reflexes"),
     };
         
-   shidosha.AddGold(4000);
+   shidosha.AddGold(1600);
    shidosha.AddLoot(new LootPack(
        new LootPackEntry(true, LengGems,       100,     gemsPriceMutatorVeryHigh), 
        new LootPackEntry(true, (from, container) => new Kimono(),        100),
@@ -75541,7 +75541,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="BossLevel11Kosh">
+    <entity name="BossMinorLevel11Kosh">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -75627,7 +75627,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="BossLevel14Vlad">
+    <entity name="BossMajorLevel14Vlad">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -75707,7 +75707,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="BossLevel14Sparky">
+    <entity name="BossMajorLevel14Sparky">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -75871,7 +75871,7 @@
         Body = (female ? 33 : 32), IsFemale = female,
             
         MaxHealth = 121, Health = 121,
-        BaseDodge = 21,
+        BaseDodge = 19,
         HideDetection = 26,
         BasePenetration = ShieldPenetration.Light,
         Experience = 4489,
@@ -76046,7 +76046,7 @@
         Body = (female ? 33 : 32), IsFemale = female,
             
         MaxHealth = 121, Health = 121,
-        BaseDodge = 21,
+        BaseDodge = 20,
         HideDetection = 26,    
         Experience = 4489,
         CanSwim = true,
@@ -76294,7 +76294,7 @@
         Body = (female ? 33 : 32), IsFemale = female,
         HideDetection = 28,    
         MaxHealth = 154, Health = 154,
-        BaseDodge = 24,
+        BaseDodge = 22,
         MagicProtection = 33,
         Experience = 9094,
     
@@ -76350,7 +76350,7 @@
         Body = (female ? 33 : 32), IsFemale = female,
         HideDetection = 28,    
         MaxHealth = 154, Health = 154,
-        BaseDodge = 24,
+        BaseDodge = 22,
         MagicProtection = 33,
         BasePenetration = ShieldPenetration.Medium,
     
@@ -76404,7 +76404,7 @@
         HideDetection = 28,    
         MaxHealth = 154, Health = 154,
         MaxMana = 23, Mana = 23,
-        BaseDodge = 14,
+        BaseDodge = 22,
         MagicProtection = 33,
         Experience = 9094,
     
@@ -76503,7 +76503,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="BossLevel12Tiger">
+    <entity name="BossNotableLevel12Tiger">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -76561,7 +76561,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="BossLevel12DoomDuck">
+    <entity name="BossNotableLevel12DoomDuck">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -76629,7 +76629,7 @@
     var orc = new Orc()
     {
         MaxHealth = 120, Health = 120,
-        BaseDodge = 20,
+        BaseDodge = 19,
         Experience = 5015,
         HideDetection = 26,
         CanFlee = true,
@@ -76731,7 +76731,7 @@
     var troll = new Troll()
     {
         MaxHealth = 132, Health = 132,
-        BaseDodge = 22,
+        BaseDodge = 21,
         BasePenetration = ShieldPenetration.Light,
         Experience = 5386,
         HideDetection = 26,
@@ -76777,7 +76777,7 @@
     var orc = new Orc()
     {
         MaxHealth = 120, Health = 120,
-        BaseDodge = 20,
+        BaseDodge = 19,
         Experience = 5015,
         HideDetection = 26,
         CanFlee = true,
@@ -76823,7 +76823,7 @@
     var manticora = new Manticora()
     {
         MaxHealth = 220, Health = 220,
-        BaseDodge = 14,
+        BaseDodge = 19,
         HideDetection = 26,
         BasePenetration = ShieldPenetration.Light,
         Experience = 11500,
@@ -76942,7 +76942,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="BossLevel13Wyrm">
+    <entity name="BossNotableLevel13Wyrm">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -77243,7 +77243,7 @@
         HideDetection = 23,       
         MaxHealth = 99, Health = 99,
         MaxMana = 31, Mana = 31,
-        BaseDodge = 18,
+        BaseDodge = 17,
     
         Experience = 3654,
         
@@ -77308,7 +77308,7 @@
     var hobgoblin = new Hobgoblin()
     {
         MaxHealth = 90, Health = 90,
-        BaseDodge = 18,
+        BaseDodge = 17,
         MaxMana = 31, Mana = 31,
         HideDetection = 23,   
         Experience = 2900,
@@ -77365,7 +77365,7 @@
     var hobgoblin = new Hobgoblin()
     {
         MaxHealth = 90, Health = 90,
-        BaseDodge = 18,
+        BaseDodge = 17,
         HideDetection = 23,   
         Experience = 2900,
         BasePenetration = ShieldPenetration.VeryLight,
@@ -77665,7 +77665,7 @@
         Body = (female ? 33 : 32), IsFemale = female,
         HideDetection = 23,       
         MaxHealth = 100, Health = 100,
-        BaseDodge = 18,
+        BaseDodge = 16,
         
         Movement = 2,
     
@@ -77706,7 +77706,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="BossLevel9Presence">
+    <entity name="BossMiniLevel9Presence">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -77773,14 +77773,14 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="BossLevel9Sandy">
+    <entity name="BossNotableLevel9Sandy">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var sandwyrm = new Sandwyrm()
     {
-        MaxHealth = 300, Health = 300,
-        BaseDodge = 21,
+        MaxHealth = 450, Health = 450,
+        BaseDodge = 26,
         Experience = 11608,
         BasePenetration = ShieldPenetration.Medium,
         VisibilityDistance = 1,
@@ -77800,10 +77800,10 @@
     sandwyrm.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(12,     10, 15,     "The sandwyrm rolls over you"),        70 
+            new CreatureAttack(14,     14, 15,     "The sandwyrm rolls over you"),        70 
         }, 
         {
-            new CreatureAttack(12,    12, 24,     "You've been bitten by the sandwyrm",
+            new CreatureAttack(14,    16, 30,     "You've been bitten by the sandwyrm",
                                                     new AttackPoisonComponent(8, 50)),  30 
         },
     };
@@ -77814,7 +77814,7 @@
         new CreatureBlock(4, "the toothy maw"), 
     };
     
-    sandwyrm.AddGold(1200);
+    sandwyrm.AddGold(1300);
     sandwyrm.AddLoot(new LootPack(
         new LootPackEntry(true, LengGems, 100, gemsPriceMutatorVeryHigh),
         new LootPackEntry(true, (from, container) => new StrengthRing(),       20), 
@@ -77840,7 +77840,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="BossLevel9SeaSerpent">
+    <entity name="BossMiniLevel9SeaSerpent">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -78166,13 +78166,13 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="BossLevel8BridgeTroll">
+    <entity name="BossMiniLevel8BridgeTroll">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var bridgeTroll = new ElderTroll()
     {
-        MaxHealth = 336, Health = 336,
+        MaxHealth = 260, Health = 260,
         BaseDodge = 18,
         HideDetection = 23,
         CanCharge = true,
@@ -78282,7 +78282,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="BossLevel12PowerTroll">
+    <entity name="BossNotableLevel12PowerTroll">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -78342,7 +78342,7 @@
     var troll = new Troll()
     {
         MaxHealth = 143, Health = 143,
-        BaseDodge = 23,
+        BaseDodge = 22,
         BasePenetration = ShieldPenetration.Light,
         Experience = 6464,
         HideDetection = 26,
@@ -78393,7 +78393,7 @@
         Body = (female ? 33 : 32), IsFemale = female,
         HideDetection = 28,    
         MaxHealth = 143, Health = 143,
-        BaseDodge = 23,
+        BaseDodge = 21,
         Experience = 7578,
     
         BasePenetration = ShieldPenetration.Medium,
@@ -78441,7 +78441,7 @@
     var hobgoblin = new Hobgoblin()
     {
         MaxHealth = 130, Health = 130,
-        BaseDodge = 18,
+        BaseDodge = 20,
         HideDetection = 22,   
         Experience = 6018,
         BasePenetration = ShieldPenetration.Light,
@@ -78667,7 +78667,7 @@
     {
         MaxHealth = 130, Health = 130,
         MaxMana = 23, Mana = 23,
-        BaseDodge = 23,
+        BaseDodge = 22,
         HideDetection = 23,   
         Experience = 7578,
     
@@ -79532,7 +79532,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="BossLevel9SeaSerpent" size="1" minimum="0" maximum="0" />
+      <entry entity="BossMiniLevel9SeaSerpent" size="1" minimum="0" maximum="0" />
       <location x="43" y="32" region="10" />
     </spawn>
     <spawn type="RegionSpawner" name="mausoleumSandyPath">
@@ -79666,7 +79666,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="BossLevel9Presence" size="1" minimum="1" maximum="1" />
+      <entry entity="BossMiniLevel9Presence" size="1" minimum="1" maximum="1" />
       <bounds region="10">
         <inclusion left="33" top="9" right="39" bottom="11" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -79826,7 +79826,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="BossLevel14Sparky" size="1" minimum="1" maximum="1" />
+      <entry entity="BossMajorLevel14Sparky" size="1" minimum="1" maximum="1" />
       <entry entity="level14Lich" size="1" minimum="2" maximum="2" />
       <entry entity="level14Minotaur" size="1" minimum="3" maximum="3" />
       <bounds region="43">
@@ -79852,7 +79852,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="BossLevel11Kosh" size="1" minimum="1" maximum="1" />
+      <entry entity="BossMinorLevel11Kosh" size="1" minimum="1" maximum="1" />
       <bounds region="30">
         <inclusion left="6" top="3" right="8" bottom="5" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -79876,7 +79876,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="BossLevel14Vlad" size="1" minimum="1" maximum="1" />
+      <entry entity="BossMajorLevel14Vlad" size="1" minimum="1" maximum="1" />
       <entry entity="level14VladSalamander" size="1" minimum="1" maximum="1" />
       <entry entity="level14VladGryph" size="1" minimum="2" maximum="2" />
       <entry entity="level14VladLich" size="1" minimum="1" maximum="1" />
@@ -79984,7 +79984,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="BossLevel14Shidosha" size="1" minimum="1" maximum="1" />
+      <entry entity="BossMinorLevel12Shidosha" size="1" minimum="1" maximum="1" />
       <entry entity="level14Ninja" size="1" minimum="1" maximum="1" />
       <bounds region="255">
         <inclusion left="1" top="1" right="5" bottom="7" />
@@ -80009,7 +80009,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="BossLevel9Sandy" size="1" minimum="1" maximum="1" />
+      <entry entity="BossNotableLevel9Sandy" size="1" minimum="1" maximum="1" />
       <bounds region="10">
         <inclusion left="34" top="3" right="38" bottom="5" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -80033,7 +80033,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="BossLevel8BridgeTroll" size="1" minimum="1" maximum="1" />
+      <entry entity="BossMiniLevel8BridgeTroll" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="36" top="15" right="40" bottom="16" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -80299,7 +80299,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="BossLevel12PowerTroll" size="1" minimum="1" maximum="1" />
+      <entry entity="BossNotableLevel12PowerTroll" size="1" minimum="1" maximum="1" />
       <bounds region="236">
         <inclusion left="3" top="6" right="6" bottom="8" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -80323,8 +80323,8 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="BossLevel12DoomDuck" size="1" minimum="1" maximum="1" />
-      <entry entity="BossLevel12Tiger" size="1" minimum="1" maximum="1" />
+      <entry entity="BossNotableLevel12DoomDuck" size="1" minimum="1" maximum="1" />
+      <entry entity="BossNotableLevel12Tiger" size="1" minimum="1" maximum="1" />
       <bounds region="35">
         <inclusion left="3" top="4" right="9" bottom="5" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -80524,7 +80524,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="BossLevel13Wyrm" size="1" minimum="1" maximum="1" />
+      <entry entity="BossNotableLevel13Wyrm" size="1" minimum="1" maximum="1" />
       <bounds region="18">
         <inclusion left="23" top="11" right="29" bottom="14" />
         <exclusion left="0" top="0" right="0" bottom="0" />
