@@ -75372,7 +75372,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="BossMinorLevel12Shidosha">
+    <entity name="BossMinorLevel14Shidosha">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -75381,10 +75381,10 @@
         Body = 245,
         Name = "shidosha",
         
-        MaxHealth = 1800, Health = 1800,
-        BaseDodge = 31,
+        MaxHealth = 2100, Health = 2100,
+        BaseDodge = 28,
 
-        Experience = 59440,
+        Experience = 85595,
 
         HideDetection = 28,
         
@@ -75409,17 +75409,17 @@
     {
         {
             new CreatureAttack(20,      20, 40,      "Shidosha hits you with a flurry of fists.",
-                                                        new AttackProneComponent(10), 
+                                                        new AttackProneComponent(5), 
                                                         new AttackStunComponent(10)),                40
         },
         {
             new CreatureAttack(20,      30, 50,     "Shidosha slams his fist into your chest.",
-                                                        new AttackProneComponent(10), 
+                                                        new AttackProneComponent(5), 
                                                         new AttackStunComponent(25)),               40
         },
         {
             new CreatureAttack(20,      40, 61,     "Shidosha knocks you back with a forceful kick.",
-                                                        new AttackProneComponent(100), 
+                                                        new AttackProneComponent(10), 
                                                         new AttackStunComponent(15)),               20
         },
     };
@@ -75431,7 +75431,7 @@
         new CreatureBlock(3, "inhuman reflexes"),
     };
         
-   shidosha.AddGold(1600);
+   shidosha.AddGold(1800);
    shidosha.AddLoot(new LootPack(
        new LootPackEntry(true, LengGems,       100,     gemsPriceMutatorVeryHigh), 
        new LootPackEntry(true, (from, container) => new Kimono(),        100),
@@ -75475,7 +75475,7 @@
     var ninja = new Ninja()
     {
         MaxHealth = 127, Health = 127,
-        BaseDodge = 26,
+        BaseDodge = 27,
         HideDetection = 29,
         Experience = 9094,
        
@@ -75500,12 +75500,12 @@
         },
         {
             new CreatureAttack(17,      13, 20,     "The ninja slams his fist into your chest.",
-                                                        new AttackProneComponent(10), 
+                                                        new AttackProneComponent(5), 
                                                         new AttackStunComponent(5)),               40
         },
         {
             new CreatureAttack(17,      15, 21,     "The ninja knocks you back with a forceful kick.",
-                                                        new AttackProneComponent(15), 
+                                                        new AttackProneComponent(5), 
                                                         new AttackStunComponent(5)),               20
         },
     };
@@ -75548,7 +75548,7 @@
     var dragon = new Dragon()
     {
         MaxHealth = 1650, Health = 1650,
-        BaseDodge = 30,
+        BaseDodge = 25,
         HideDetection = 26,
         Experience = 49532,
         
@@ -75636,7 +75636,7 @@
         Name = "vampire",
         
         MaxHealth = 4200, Health = 4200,
-        BaseDodge = 35,
+        BaseDodge = 32,
         BasePenetration = ShieldPenetration.VeryHeavy,
         Experience = 213980,
         HideDetection = 28,
@@ -75714,7 +75714,7 @@
     var drake = new Drake()
     {
         MaxHealth = 4200, Health = 4200,
-        BaseDodge = 35,
+        BaseDodge = 32,
         
         Alignment = Alignment.Chaotic,
         HideDetection = 28,
@@ -76510,7 +76510,7 @@
     var tiger = new Tiger()
     {
         MaxHealth = 600, Health = 600,
-        BaseDodge = 30,
+        BaseDodge = 25,
         HideDetection = 26,        
         Experience = 14860,
         BasePenetration = ShieldPenetration.Light,
@@ -76568,7 +76568,7 @@
     var duck = new Duck()
     {
         MaxHealth = 600, Health = 600,
-        BaseDodge = 30,
+        BaseDodge = 25,
         HideDetection = 26,
         CanSwim = true,
         CanJumpkick = true,
@@ -76949,7 +76949,7 @@
     var wyrm = new Wyrm()
     {
         MaxHealth = 650, Health = 650,
-        BaseDodge = 33,
+        BaseDodge = 26,
         HideDetection = 23,
         Experience = 17832,
         
@@ -77780,7 +77780,7 @@
     var sandwyrm = new Sandwyrm()
     {
         MaxHealth = 450, Health = 450,
-        BaseDodge = 26,
+        BaseDodge = 23,
         Experience = 11608,
         BasePenetration = ShieldPenetration.Medium,
         VisibilityDistance = 1,
@@ -78289,7 +78289,7 @@
     var powerTroll = new ElderTroll()
     {
         MaxHealth = 600, Health = 600,
-        BaseDodge = 18,
+        BaseDodge = 25,
         HideDetection = 23,
         Experience = 29700,
         BasePenetration = ShieldPenetration.Medium,
@@ -79984,7 +79984,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="BossMinorLevel12Shidosha" size="1" minimum="1" maximum="1" />
+      <entry entity="BossMinorLevel14Shidosha" size="1" minimum="1" maximum="1" />
       <entry entity="level14Ninja" size="1" minimum="1" maximum="1" />
       <bounds region="255">
         <inclusion left="1" top="1" right="5" bottom="7" />
@@ -80735,7 +80735,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new ManaPotion();
+	return new DeathResistanceRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -80762,7 +80762,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new DeathResistanceBracelet();
+	return new WeakDexterityRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -80800,7 +80800,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new GriffinSkull();
+	return new DeathResistanceRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>

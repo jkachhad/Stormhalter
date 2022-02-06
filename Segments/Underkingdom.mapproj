@@ -99824,7 +99824,7 @@
     {
         Name = "Drake",
         MaxHealth = 3000, Health = 3000,
-        BaseDodge = 19,
+        BaseDodge = 28,
     
         Alignment = Alignment.Chaotic,
         HideDetection = 26,
@@ -99832,6 +99832,7 @@
         
         CanFly = true,
         CanCharge = true,
+        CanStrikeCritically = false,
         
         BasePenetration = ShieldPenetration.Heavy,
 
@@ -99914,7 +99915,7 @@
         Body = 206,
         
         MaxHealth = 1800, Health = 1800,
-        BaseDodge = 31,
+        BaseDodge = 26,
         HideDetection = 28,
         Alignment = Alignment.Evil,
         
@@ -99982,7 +99983,7 @@
         Body = 147,
         
         MaxHealth = 600, Health = 600,
-        BaseDodge = 31,
+        BaseDodge = 26,
         HideDetection = 28,
         Experience = 14860,
         BasePenetration = ShieldPenetration.Medium,
@@ -100037,7 +100038,7 @@
     {
         Name = "Troll.King",
         MaxHealth = 3900, Health = 3900,
-        BaseDodge = 30,
+        BaseDodge = 28,
         Body = 133,
         
         Alignment = Alignment.Chaotic,
@@ -100065,7 +100066,7 @@
     
     trollKing.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(20, 25, 88),
+        new CreatureBasicAttack(19, 25, 88),
     };
     
     trollKing.Wield(new Greatsword());
@@ -100109,7 +100110,7 @@
         BasePenetration = ShieldPenetration.Heavy,
         Alignment = Alignment.Chaotic,
         Experience = 21398,
-        BaseDodge = 35,
+        BaseDodge = 28,
         CanWalk = false,
         Immunity = CreatureImmunity.Poison,
         HideDetection = 28,    
@@ -100170,7 +100171,7 @@
         Name = "Swordmaster",
         Body = 163,
         MaxHealth = 2100, Health = 2100,
-        BaseDodge = 31,
+        BaseDodge = 24,
         HideDetection = 28,
         Experience = 39000,
        
@@ -100230,7 +100231,7 @@
         Name = "Overlord", Alignment = Alignment.Evil,
     
         MaxHealth = 4200, Health = 4200,
-        BaseDodge = 35,
+        BaseDodge = 32,
         HideDetection = 30,
         Experience = 213980,
         
@@ -100413,7 +100414,7 @@
     var goblin = new Goblin()
     {
         MaxHealth = 179, Health = 179,
-        BaseDodge = 26,
+        BaseDodge = 25,
         HideDetection = 25,           
         Experience = 7430,
         BasePenetration = ShieldPenetration.Medium,
@@ -101640,7 +101641,7 @@
         Body = 105,
             
         MaxHealth = 150, Health = 150,
-        BaseDodge = 31,
+        BaseDodge = 28,
         HideDetection = 28,
         Experience = 10918,
         BasePenetration = ShieldPenetration.Heavy,
