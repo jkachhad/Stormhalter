@@ -14,6 +14,7 @@ namespace Kesmai.Server.Game
 			Body = 22;
 
 			Alignment = Alignment.Lawful;
+			CanFly = true;
 		}
 
 		/// <inheritdoc/>

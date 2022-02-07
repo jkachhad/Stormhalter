@@ -1,4 +1,5 @@
 using System.IO;
+using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Game
 {
@@ -10,6 +11,8 @@ namespace Kesmai.Server.Game
 			Body = 7;
 			
 			Alignment = Alignment.Chaotic;
+			AddStatus(new BreatheWaterStatus(this));
+			CanSwim = true;
 		}
 		
 		public override bool CanHide()

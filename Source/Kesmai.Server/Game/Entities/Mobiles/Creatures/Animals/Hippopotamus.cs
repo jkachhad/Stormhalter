@@ -1,5 +1,6 @@
 using System.IO;
 using Kesmai.Server.Items;
+using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Game
 {
@@ -16,6 +17,7 @@ namespace Kesmai.Server.Game
 			Alignment = Alignment.Lawful;
 
 			CanSwim = true;
+			AddStatus(new BreatheWaterStatus(this));
 		}
 
 		/// <inheritdoc/>

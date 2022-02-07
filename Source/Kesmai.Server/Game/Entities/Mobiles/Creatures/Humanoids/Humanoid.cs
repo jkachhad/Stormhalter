@@ -1,6 +1,7 @@
 using System.IO;
 using System.Linq;
 using Kesmai.Server.Items;
+using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Game
 {
@@ -9,6 +10,8 @@ namespace Kesmai.Server.Game
 		public Humanoid()
 		{
 			Alignment = Alignment.Chaotic;
+			CanSwim = true;
+			AddStatus(new BreatheWaterStatus(this));
 		}
 		
 		public override int GetDeathSound() => (IsFemale ? 83 : 79);
