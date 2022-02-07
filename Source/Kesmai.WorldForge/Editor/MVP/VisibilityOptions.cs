@@ -17,7 +17,7 @@ namespace Kesmai.WorldForge.MVP
 
 
 		/// <summary>
-		/// Gets or sets a value indicating whether to doors are open.
+		/// Gets or sets a value indicating whether walls and doors are shown as destroyed
 		/// </summary>
 		public bool BreakWalls
 		{
