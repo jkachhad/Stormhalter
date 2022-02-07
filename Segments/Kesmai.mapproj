@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.87.0.0">
+<segment name="Kesmai" version="0.90.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -97744,7 +97744,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon2Goblin">
+    <entity name="level3Goblin">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -97753,14 +97753,14 @@
         MaxHealth = 22, Health = 22,
         BaseDodge = 11,
                 
-        Experience = 500,
+        Experience = 756,
     
         CanFlee = true,
     };
                 
     goblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(4)
+        new CreatureBasicAttack(3)
     };
     
     goblin.Wield(new BattleAxe());
@@ -97793,7 +97793,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon2GoblinSentry">
+    <entity name="level3GoblinSentry">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -97802,14 +97802,14 @@
         MaxHealth = 20, Health = 20,
         BaseDodge = 11,
                 
-        Experience = 500,
+        Experience = 756,
         
         CanFlee = true,
     };
         
     goblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(4)
+        new CreatureBasicAttack(3)
     };
     
     goblin.Wield(new Shortbow());
@@ -97842,16 +97842,16 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon2Orc">
+    <entity name="level3Orc">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 21, Health = 21,
+        MaxHealth = 30, Health = 30,
         BaseDodge = 11,
                 
-        Experience = 500,
+        Experience = 972,
                 
         Movement = 2,
                 
@@ -97860,7 +97860,7 @@
                 
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(4)
+        new CreatureBasicAttack(3)
     };
     
     orc.Wield(new Longsword());
@@ -97893,13 +97893,13 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon2OrcSentry">
+    <entity name="level3OrcSentry">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 21, Health = 21,
+        MaxHealth = 27, Health = 27,
         BaseDodge = 11,
                 
         Experience = 500,
@@ -97909,7 +97909,7 @@
                 
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(4)
+        new CreatureBasicAttack(3)
     };
     
     orc.Wield(new Crossbow());
@@ -97941,16 +97941,16 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon2Skeleton">
+    <entity name="level3Skeleton">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var skeleton = new Skeleton()
     {
-        MaxHealth = 17, Health = 17,
+        MaxHealth = 30, Health = 30,
         BaseDodge = 11,
                 
-        Experience = 200,
+        Experience = 972,
                 
         Movement = 2,
         
@@ -97959,7 +97959,7 @@
                 
     skeleton.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(4)
+        new CreatureBasicAttack(3)
     };
     
     skeleton.Wield(new Rapier());
@@ -97991,16 +97991,16 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon2Troll">
+    <entity name="level3Troll">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var troll = new Troll()
     {
-        MaxHealth = 23, Health = 23,
-        BaseDodge = 11,
+        MaxHealth = 33, Health = 33,
+        BaseDodge = 12,
                 
-        Experience = 850,
+        Experience = 1044,
                 
         Movement = 2,
                 
@@ -98009,13 +98009,13 @@
                 
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(5)
+        new CreatureBasicAttack(4)
     };
     
     troll.Wield(new Greatsword());
     troll.Equip(new ChainmailArmor());
     
-    troll.AddGold(56);
+    troll.AddGold(66);
     troll.AddLoot(
         new LootPack(
         new LootPackEntry(true, kesmai12Gems,       17.2,     gemsPriceMutatorAboveAverage),
@@ -98041,7 +98041,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon2Wyvern">
+    <entity name="level3Wyvern">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -98050,7 +98050,7 @@
         MaxHealth = 22, Health = 22,
         BaseDodge = 12,
                 
-        Experience = 700,
+        Experience = 756,
     
         Movement = 2,
         
@@ -98061,13 +98061,13 @@
     wyvern.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(5,     2, 6,   "The wyvern rakes you with its claws."),        50 
+            new CreatureAttack(3,     2, 6,   "The wyvern rakes you with its claws."),        50 
         },
         {
-            new CreatureAttack(7,     3, 8,   "The wyvern bites you."),                       30 
+            new CreatureAttack(3,     3, 7,   "The wyvern bites you."),                       30 
         },
         { 
-            new CreatureAttack(7,     3, 10,  "The wyvern whips you with its tail."),   20
+            new CreatureAttack(3,     3, 8,  "The wyvern whips you with its tail."),   20
         }
     };
     wyvern.Blocks = new CreatureBlockCollection
@@ -98103,16 +98103,16 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon2Wight">
+    <entity name="level3Wight">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var wight = new Wight()
     {
-        MaxHealth = 21, Health = 21,
+        MaxHealth = 22, Health = 22,
         BaseDodge = 11,
     
-        Experience = 800,
+        Experience = 972,
     
         MaxMana = 8, Mana = 8,
             
@@ -98123,7 +98123,7 @@
         
     wight.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(4)
+        new CreatureBasicAttack(3)
     };
     
     wight.Spells = new CreatureSpellCollection()
@@ -98161,17 +98161,17 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon2OrcArsonist">
+    <entity name="level3OrcArsonist">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 21, Health = 21,
+        MaxHealth = 24, Health = 24,
         BaseDodge = 11,
         MaxMana = 13, Mana = 13,
     
-        Experience = 500,
+        Experience = 972,
     
         CanFlee = true,
         
@@ -98180,7 +98180,7 @@
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(4)
+        new CreatureBasicAttack(3)
     };
     
     orc.Spells = new CreatureSpellCollection()
@@ -98266,16 +98266,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon2Spider">
+    <entity name="level3Spider">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var spider = new Spider()
     {
-        MaxHealth = 27, Health = 27,
-        BaseDodge = 11,
+        MaxHealth = 22, Health = 22,
+        BaseDodge = 13,
     
-        Experience = 200,
+        Experience = 972,
     
         Movement = 0,
         
@@ -98288,7 +98288,7 @@ return orc;
     spider.Attacks = new CreatureAttackCollection
     {
         new CreatureAttack(7,     4, 12,      "The spider bites you", 
-                                    new AttackPoisonComponent(5, 50))
+                                    new AttackPoisonComponent(3))
     };
     
     spider.Blocks = new CreatureBlockCollection
@@ -98315,16 +98315,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon3Troll">
+    <entity name="level5Troll">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var troll = new Troll()
     {
-        MaxHealth = 60, Health = 60,
-        BaseDodge = 12,
+        MaxHealth = 55, Health = 55,
+        BaseDodge = 14,
                 
-        Experience = 900,
+        Experience = 1503,
                 
         Movement = 2,
                 
@@ -98333,7 +98333,7 @@ return orc;
                 
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(5)
+        new CreatureBasicAttack(6)
     };
     
     troll.Wield(new Greatsword());
@@ -98367,16 +98367,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon3Hobgoblin">
+    <entity name="level5Hobgoblin">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var hobgoblin = new Hobgoblin()
     {
-        MaxHealth = 42, Health = 42,
-        BaseDodge = 12,
+        MaxHealth = 50, Health = 50,
+        BaseDodge = 13,
                 
-        Experience = 750,
+        Experience = 1399,
                 
         Movement = 2,
     };
@@ -98417,16 +98417,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon3Orc">
+    <entity name="level5Orc">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 35, Health = 35,
+        MaxHealth = 50, Health = 50,
         BaseDodge = 12,
                 
-        Experience = 500,
+        Experience = 1399,
         
         CanFlee = true,
     };
@@ -98467,16 +98467,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon3OrcSentry">
+    <entity name="level5OrcSentry">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 35, Health = 35,
+        MaxHealth = 45, Health = 45,
         BaseDodge = 12,
                 
-        Experience = 500,
+        Experience = 1399,
         
         CanFlee = true,
     };
@@ -98517,7 +98517,7 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon3Goblin">
+    <entity name="level5Goblin">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -98526,7 +98526,7 @@ return orc;
         MaxHealth = 36, Health = 36,
         BaseDodge = 12,
                 
-        Experience = 600,
+        Experience = 1088,
     };
     
     goblin.Attacks = new CreatureAttackCollection()
@@ -98565,16 +98565,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon3GoblinSentry">
+    <entity name="level5GoblinSentry">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var goblin = new Goblin()
     {
-        MaxHealth = 36, Health = 36,
+        MaxHealth = 32, Health = 32,
         BaseDodge = 12,
                 
-        Experience = 600,
+        Experience = 1088,
     };
         
     goblin.Attacks = new CreatureAttackCollection()
@@ -98613,17 +98613,17 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon3OrcTrapper">
+    <entity name="level5OrcTrapper">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 35, Health = 35,
-        MaxMana = 12, Mana = 12,
+        MaxHealth = 40, Health = 40,
+        MaxMana = 13, Mana = 13,
         BaseDodge = 12,
     
-        Experience = 500,
+        Experience = 1399,
         
         CanFlee = true,
     };
@@ -98636,7 +98636,7 @@ return orc;
     orc.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CreateWebSpell>(
-            skillLevel: 5, cost: 4, 
+            skillLevel: 5, cost: 7, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
             skillLevel: 5, cost: 3,
@@ -98675,18 +98675,19 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon3Gargoyle">
+    <entity name="level5Gargoyle">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var gargoyle = new Gargoyle()
     {
-        MaxHealth = 82, Health = 82,
-        BaseDodge = 12,
+        MaxHealth = 55, Health = 55,
+        BaseDodge = 16,
                 
-        Experience = 1250,
+        Experience = 1762,
                 
         Movement = 2,
+        MagicProtection = 9,
     };
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
             
@@ -98696,7 +98697,7 @@ return orc;
             new CreatureAttack(5,     4, 8,   "The gargoyle strikes you with its claws."),    60
         },
         { 
-            new CreatureAttack(6,     6, 12,  "The gargoyle batters you with its wings."),    40 
+            new CreatureAttack(5,     6, 12,  "The gargoyle batters you with its wings."),    40 
         },
     };
     
@@ -98736,16 +98737,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon3Salamander">
+    <entity name="level5Salamander">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var salamander = new Salamander()
     {
-        MaxHealth = 40, Health = 40,
-        BaseDodge = 12,
+        MaxHealth = 50, Health = 50,
+        BaseDodge = 14,
     
-        Experience = 900,
+        Experience = 1503,
     
         Movement = 2,
         
@@ -98758,7 +98759,7 @@ return orc;
             new CreatureAttack(5,     3, 8,   "The salamander claws at you"),             60 
         }, 
         {
-            new CreatureAttack(6,     4, 12,  "The salamander hits you with its tail"),   40 
+            new CreatureAttack(5,     4, 9,  "The salamander hits you with its tail"),   40 
         },
     };
     
@@ -98802,23 +98803,23 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon3Wraith">
+    <entity name="level5Wraith">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var wraith = new Wraith()
     {
-        MaxHealth = 68, Health = 68,
+        MaxHealth = 50, Health = 50,
         MaxMana = 13, Mana = 13,
-        BaseDodge = 12,
+        BaseDodge = 14,
     
-        Experience = 1100,
+        Experience = 1503,
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
         
     wraith.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6)
+        new CreatureBasicAttack(5)
     };
     
     wraith.Spells = new CreatureSpellCollection()
@@ -98859,17 +98860,17 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon3Wight">
+    <entity name="level5Wight">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var wight = new Wight()
     {
-        MaxHealth = 55, Health = 55,
+        MaxHealth = 36, Health = 36,
         MaxMana = 8, Mana = 8,
-        BaseDodge = 12,
+        BaseDodge = 13,
     
-        Experience = 900,
+        Experience = 1399,
         
         CanFlee = true,
     };
@@ -98877,13 +98878,13 @@ return orc;
         
     wight.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6),
+        new CreatureBasicAttack(5),
     };
     
     wight.Spells =  new CreatureSpellCollection()
     {
         new CreatureSpell<CurseSpell>(
-            skillLevel: 4, cost: 3, 
+            skillLevel: 5, cost: 3, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
@@ -98918,23 +98919,23 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Orc">
+    <entity name="level8Orc">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 47, Health = 47,
-        BaseDodge = 13,
+        MaxHealth = 80, Health = 80,
+        BaseDodge = 15,
     
-        Experience = 850,
+        Experience = 2418,
     
         CanFlee = true,
     };
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(7)
+        new CreatureBasicAttack(8)
     };
     
     orc.Wield(new Longsword());
@@ -98968,23 +98969,23 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4OrcSentry">
+    <entity name="level8OrcSentry">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 47, Health = 47,
-        BaseDodge = 13,
+        MaxHealth = 72, Health = 72,
+        BaseDodge = 15,
     
-        Experience = 850,
+        Experience = 2418,
     
         CanFlee = true,
     };
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(7)
+        new CreatureBasicAttack(8)
     };
     
     orc.Wield(new Longbow());
@@ -99018,24 +99019,24 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4OrcTrapper">
+    <entity name="level8OrcTrapper">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 47, Health = 47,
-        MaxMana = 12, Mana = 12,
-        BaseDodge = 13,
+        MaxHealth = 64, Health = 64,
+        MaxMana = 13, Mana = 13,
+        BaseDodge = 15,
     
-        Experience = 600,
+        Experience = 2418,
     
         CanFlee = true,
     };
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(7)
+        new CreatureBasicAttack(8)
     };
     
     orc.Wield(new WoodenStaff());
@@ -99044,7 +99045,7 @@ return orc;
     orc.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CreateWebSpell>(
-            skillLevel: 6, cost: 4, 
+            skillLevel: 6, cost: 7, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
             skillLevel: 6, cost: 3, 
@@ -99079,21 +99080,21 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Troll">
+    <entity name="level8Troll">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var troll = new Troll()
     {
-        MaxHealth = 83, Health = 83,
-        BaseDodge = 13,
+        MaxHealth = 88, Health = 88,
+        BaseDodge = 17,
     
-        Experience = 1000,
+        Experience = 2597,
     };
     
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(8)
+        new CreatureBasicAttack(9)
     };
     
     troll.Wield(new Greatsword());
@@ -99127,16 +99128,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Hobgoblin">
+    <entity name="level8Hobgoblin">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var hobgoblin = new Hobgoblin()
     {
-        MaxHealth = 59, Health = 59,
-        BaseDodge = 13,
+        MaxHealth = 80, Health = 80,
+        BaseDodge = 16,
     
-        Experience = 600,
+        Experience = 2418,
     };
         
     hobgoblin.Attacks = new CreatureAttackCollection()
@@ -99175,26 +99176,26 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Gargoyle">
+    <entity name="level8Gargoyle">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var gargoyle = new Gargoyle()
     {
-        MaxHealth = 107, Health = 107,
-        BaseDodge = 13,
+        MaxHealth = 88, Health = 88,
+        BaseDodge = 19,
     
-        Experience = 2300,
+        Experience = 3054,
     };
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
     
     gargoyle.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(7,     6, 12,  "The gargoyle strikes you with its claws"),     60 
+            new CreatureAttack(8,     6, 12,  "The gargoyle strikes you with its claws"),     60 
         }, 
         {   
-            new CreatureAttack(8,     10, 20, "The gargoyle batters you with its wings"),     40 
+            new CreatureAttack(8,     8, 15, "The gargoyle batters you with its wings"),     40 
         }, 
     };
 
@@ -99234,16 +99235,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Salamander">
+    <entity name="level8Salamander">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var salamander = new Salamander()
     {
-        MaxHealth = 65, Health = 65,
-        BaseDodge = 13,
+        MaxHealth = 80, Health = 80,
+        BaseDodge = 17,
         
-        Experience = 1000,
+        Experience = 2597,
         
         Movement = 2,
         
@@ -99300,17 +99301,17 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Wraith">
+    <entity name="level8Wraith">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var wraith = new Wraith()
     {
-        MaxHealth = 87, Health = 87,
+        MaxHealth = 80, Health = 80,
         MaxMana = 17, Mana = 17,
-        BaseDodge = 13,
+        BaseDodge = 17,
         
-        Experience = 1500,
+        Experience = 2597,
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
         
@@ -99322,10 +99323,10 @@ return orc;
     wraith.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<BlindSpell>(
-            skillLevel: 6, cost: 4, 
+            skillLevel: 8, cost: 4, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<DeathSpell>(
-            skillLevel: 3.5, cost: 6, 
+            skillLevel: 2, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
@@ -99361,17 +99362,17 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Spectre">
+    <entity name="level8Spectre">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var spectre = new Spectre()
     {
-        MaxHealth = 88, Health = 88,
+        MaxHealth = 80, Health = 80,
         MaxMana = 17, Mana = 17,
-        BaseDodge = 14,
+        BaseDodge = 17,
     
-        Experience = 2000,
+        Experience = 3045,
     
         VisibilityDistance = 1,
     };
@@ -99385,16 +99386,16 @@ return orc;
     spectre.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<StunSpell>(
-            skillLevel: 4, cost: 4, 
+            skillLevel: 8, cost: 9, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<DeathSpell>(
-            skillLevel: 2.5, cost: 6, 
+            skillLevel: 3, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
     spectre.Wield(new WoodenStaff());
     
-    spectre.AddGold(84);
+    spectre.AddGold(72);
     spectre.AddLoot(new LootPack(
         new LootPackEntry(true, kesmaiwideGems,       10.8,     gemsPriceMutatorNormal),
         new LootPackEntry(true, dungeon4Bottles,    20),
@@ -99424,16 +99425,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Ghoul">
+    <entity name="level8Ghoul">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var ghoul = new Ghoul()
     {
-        MaxHealth = 90, Health = 90,
-        BaseDodge = 13,
+        MaxHealth = 88, Health = 88,
+        BaseDodge = 17,
     
-        Experience = 2500,
+        Experience = 3583,
     
         Movement = 2,
         BasePenetration = ShieldPenetration.Light,
@@ -99443,11 +99444,11 @@ return orc;
     ghoul.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(7,     6, 12,      "The ghoul scratches you with its claws"),  70 
+            new CreatureAttack(8,     6, 12,      "The ghoul scratches you with its claws"),  70 
         }, 
         { 
             new CreatureAttack(8,     10, 18,     "You've been bitten by the ghoul",
-                                                    new AttackPoisonComponent(7)),            30
+                                                    new AttackPoisonComponent(6)),            30
         },
     };
     
@@ -99485,16 +99486,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Minotaur">
+    <entity name="level8Minotaur">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var minotaur = new Minotaur()
     {
-        MaxHealth = 120, Health = 120,
-        BaseDodge = 13,
+        MaxHealth = 104, Health = 104,
+        BaseDodge = 17,
     
-        Experience = 2200,
+        Experience = 3045,
     
         CanCharge = true,
         BasePenetration = ShieldPenetration.Light,
@@ -99505,14 +99506,14 @@ return orc;
     minotaur.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(9,     8, 22,      "The minotaur hits with a staff"),          60 
+            new CreatureAttack(10,     8, 17,      "The minotaur hits with a staff"),          60 
         }, 
         {
-            new CreatureAttack(9,     13, 25,     "You've been gored by the minotaur",
+            new CreatureAttack(10,     9, 17,     "You've been gored by the minotaur",
                                                     new AttackStunComponent(10.0)),           30
         }, 
         {
-            new CreatureAttack(9,     16, 28,     "You've been trampled by the minotaur"),    10 
+            new CreatureAttack(10,     13, 20,     "You've been trampled by the minotaur"),    10 
         }, 
     };
     
@@ -99554,7 +99555,7 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4MeleeFighter">
+    <entity name="level8MeleeFighter">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -99565,10 +99566,10 @@ return orc;
         Name = _names.Random(),
         Body = (female ? 33 : 32), IsFemale = female,
             
-        MaxHealth = 110, Health = 110,
-        BaseDodge = 13,
+        MaxHealth = 88, Health = 88,
+        BaseDodge = 16,
     
-        Experience = 2900,
+        Experience = 3045,
     
         Movement = 2,
             
@@ -99577,10 +99578,10 @@ return orc;
     
     fighter.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(8)
+        new CreatureBasicAttack(9)
     };
     
-    fighter.Wield(new SteelLongsword());
+    fighter.Wield(new Longsword());
     fighter.Equip(new PlatemailArmor());    
     
     fighter.AddGold(96);
@@ -99611,7 +99612,7 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4RangedFighter">
+    <entity name="level8RangedFighter">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -99622,10 +99623,10 @@ return orc;
         Name = _names.Random(),
         Body = (female ? 33 : 32), IsFemale = female,
             
-        MaxHealth = 110, Health = 110,
-        BaseDodge = 13,
+        MaxHealth = 88, Health = 88,
+        BaseDodge = 16,
     
-        Experience = 2900,
+        Experience = 3045,
     
         Movement = 2,
             
@@ -99634,13 +99635,13 @@ return orc;
     
     fighter.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(8)
+        new CreatureBasicAttack(9)
     };
     
-    fighter.Wield(new FineCrossbow());
+    fighter.Wield(new Crossbow());
     fighter.Equip(new PlatemailArmor());    
     
-    fighter.AddGold(96);
+    fighter.AddGold(106);
     fighter.AddLoot(new LootPack(
         new LootPackEntry(true, kesmaiwideGems,       10.8,     gemsPriceMutatorAboveAverage),
         new LootPackEntry(true, dungeon4Bottles,    20),
@@ -99668,7 +99669,7 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Wizard">
+    <entity name="level8Wizard">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -99679,11 +99680,11 @@ return orc;
         Name = _names.Random(),
         Body = (female ? 37 : 38), IsFemale = female,
             
-        MaxHealth = 88, Health = 88,
+        MaxHealth = 70, Health = 70,
         MaxMana = 16, Mana = 16,
-        BaseDodge = 13,
+        BaseDodge = 16,
     
-        Experience = 2900,
+        Experience = 3045,
         
         CanSwim = true,
             
@@ -99692,16 +99693,16 @@ return orc;
     
     wizard.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(8)
+        new CreatureBasicAttack(9)
     };
     
     wizard.Spells = new CreatureSpellCollection
     {
         new CreatureSpell<IceStormSpell>(
-            skillLevel: 5, cost: 6, 
+            skillLevel: 8, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 5, cost: 3, 
+            skillLevel: 6, cost: 3, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
@@ -99739,7 +99740,7 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Thaum">
+    <entity name="level8Thaum">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -99750,30 +99751,30 @@ return orc;
         Name = _names.Random(),
         Body = (female ? 16 : 48), IsFemale = female,
             
-        MaxHealth = 100, Health = 100,
+        MaxHealth = 70, Health = 70,
         MaxMana = 17, Mana = 17,
-        BaseDodge = 13,
+        BaseDodge = 16,
     
-        Experience = 2900,
+        Experience = 3045,
     
         CanSwim = true,
     };
     
     thaum.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(8)
+        new CreatureBasicAttack(9)
     };
     
     thaum.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<BlindSpell>(
-            skillLevel: 7, cost: 4, 
+            skillLevel: 8, cost: 4, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<StunSpell>(
-            skillLevel: 7,cost: 4, 
+            skillLevel: 8,cost: 4, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<DeathSpell>(
-            skillLevel: 6, cost: 6, 
+            skillLevel: 3, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
@@ -100351,7 +100352,7 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="ydnac">
+    <entity name="BossNotableYdnac">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -100360,11 +100361,11 @@ return orc;
         Name = "Ydnac", Alignment = Alignment.Evil,
         Body = 48,
     
-        MaxHealth = 300, Health = 300,
-        BaseDodge = 15,
+        MaxHealth = 400, Health = 400,
+        BaseDodge = 21,
         MaxMana = 35, Mana = 35,
     
-        Experience = 7000,
+        Experience = 7166,
         
         BasePenetration = ShieldPenetration.Heavy,
     
@@ -100388,7 +100389,7 @@ return orc;
     
     ydnac.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(12)
+        new CreatureBasicAttack(14)
     };
     
     ydnac.Spells = new CreatureSpellCollection()
@@ -100400,7 +100401,7 @@ return orc;
         },
         {
             new CreatureSpell<DeathSpell>(
-                skillLevel: 9, cost: 6, 
+                skillLevel: 7, cost: 6, 
                 mantra: SpellHelper.GenerateMantra(), instantCast: false),      2
         }
     };
@@ -100408,7 +100409,7 @@ return orc;
     ydnac.Wield(new BlackStaff());
     ydnac.Equip(new LeatherArmor());
     
-    ydnac.AddGold(3000);
+    ydnac.AddGold(1200);
     ydnac.AddLoot(new LootPack(
         new LootPackEntry(true, dungeon1Bottles,    20),
         new LootPackEntry(true, ydnacTreasure,      100),
@@ -100498,16 +100499,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4CryptGhoul">
+    <entity name="BossMiniLevel8CryptGhoul">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var ghoul = new Ghoul()
     {
-        MaxHealth = 250, Health = 250,
-        BaseDodge = 14,
+        MaxHealth = 110, Health = 110,
+        BaseDodge = 19,
     
-        Experience = 3100,
+        Experience = 5159,
     
         VisibilityDistance = 0,
             
@@ -100519,11 +100520,11 @@ return orc;
     ghoul.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(9,     13, 18,     "The ghoul scratches you with its claws"),        70 
+            new CreatureAttack(11,     13, 19,     "The ghoul scratches you with its claws"),        70 
         },
         {
-            new CreatureAttack(10,    20, 30,     "You've been bitten by the ghoul",
-                                                    new AttackPoisonComponent(12, 50)),             30
+            new CreatureAttack(11,    13, 19,     "You've been bitten by the ghoul",
+                                                    new AttackPoisonComponent(7)),             30
         },
     };
         
@@ -100533,7 +100534,7 @@ return orc;
         new CreatureBlock(4, "a claw"), 
     };
     
-    ghoul.AddGold(112);
+    ghoul.AddGold(122);
     ghoul.AddLoot(new LootPack(
         new LootPackEntry(true, kesmaiwideGems,       10.8,     gemsPriceMutatorHigh),
         new LootPackEntry(true, dungeon4Bottles,    20),
@@ -100562,18 +100563,18 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4CryptWraith">
+    <entity name="BossMiniLevel8CryptWraith">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var wraith = new Wraith()
     {
-        MaxHealth = 250, Health = 250,
+        MaxHealth = 100, Health = 100,
         MaxMana = 31, Mana = 31,
-        BaseDodge = 14,
+        BaseDodge = 19,
         HideDetection = 18,
     
-        Experience = 1700,
+        Experience = 3740,
         
         FireProtection = 100,
         IceProtection = 80,
@@ -100582,22 +100583,22 @@ return orc;
     
     wraith.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(8)
+        new CreatureBasicAttack(10)
     };
     
     wraith.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<BlindSpell>(
-            skillLevel: 6, cost: 4, 
+            skillLevel: 10, cost: 4, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<DeathSpell>(
-            skillLevel: 3.5, cost: 6, 
+            skillLevel: 4, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
     wraith.Wield(new BlackStaff());
     
-    wraith.AddGold(84);
+    wraith.AddGold(98);
     wraith.AddLoot(new LootPack(
         new LootPackEntry(true, kesmaiwideGems,       10.8,     gemsPriceMutatorNormal),
         new LootPackEntry(true, dungeon4Bottles,    20),
@@ -100626,16 +100627,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4CryptPiranha">
+    <entity name="level8CryptPiranha">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var piranha = new Piranha()
     {
-        MaxHealth = 25, Health = 25,
-        BaseDodge = 13,
+        MaxHealth = 48, Health = 48,
+        BaseDodge = 19,
     
-        Experience = 225,
+        Experience = 2418,
     
         Movement = 1,
         
@@ -100655,10 +100656,10 @@ return orc;
     piranha.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(8,     3, 6,   "The piranha swarm upon you"),      70 
+            new CreatureAttack(10,     4, 10,   "The piranha swarm upon you"),      70 
         }, 
         {
-            new CreatureAttack(9,     5, 10,  "The piranha bite you"),            30 
+            new CreatureAttack(10,     5, 12,  "The piranha bite you"),            30 
         },
     };
         
@@ -100668,7 +100669,7 @@ return orc;
         new CreatureBlock(4, "a tail"), 
     };
     
-    piranha.AddGold(20);
+    piranha.AddGold(84);
         
     return piranha;
 ]]></block>
@@ -100687,17 +100688,17 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Dragon">
+    <entity name="BossMinorLevel8Dragon">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var dragon = new Dragon()
     {
-        MaxHealth = 600, Health = 600,
-        BaseDodge = 25,
+        MaxHealth = 1200, Health = 1200,
+        BaseDodge = 22,
         HideDetection = 18,
     
-        Experience = 11000,
+        Experience = 28665,
         
         CanFly = true,
         CanCharge = true,
@@ -100728,17 +100729,17 @@ return orc;
     {
         {
             new CreatureAttack(14,      8, 25,      "The dragon slashes you with its claws.",
-                                                        new AttackProneComponent(15), 
+                                                        new AttackProneComponent(5), 
                                                         new AttackStunComponent(5)),                30
         },
         {
-            new CreatureAttack(14,      10, 30,     "The dragon smashes you with its tail.",
-                                                        new AttackProneComponent(25), 
+            new CreatureAttack(14,      10, 28,     "The dragon smashes you with its tail.",
+                                                        new AttackProneComponent(10), 
                                                         new AttackStunComponent(10)),               30
         },
         {
-            new CreatureAttack(14,      20, 40,     "The dragon buffets you with its wings.",
-                                                        new AttackProneComponent(35), 
+            new CreatureAttack(14,      20, 32,     "The dragon buffets you with its wings.",
+                                                        new AttackProneComponent(15), 
                                                         new AttackStunComponent(15)),               40
         },
     };
@@ -100757,7 +100758,7 @@ return orc;
     };
     
     //todo: Add the missing the +4 Shining Steel Greatsword to items and then add to Daisy loot table.
-    dragon.AddGold(1000);
+    dragon.AddGold(1200);
     dragon.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon4DragonTreasure,     100.0),
@@ -102192,10 +102193,10 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon2Orc" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon2Skeleton" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon2Wight" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon2OrcArsonist" size="1" minimum="1" maximum="1" />
+      <entry entity="level3Orc" size="1" minimum="1" maximum="2" />
+      <entry entity="level3Skeleton" size="1" minimum="1" maximum="2" />
+      <entry entity="level3Wight" size="1" minimum="1" maximum="1" />
+      <entry entity="level3OrcArsonist" size="1" minimum="1" maximum="1" />
       <location x="18" y="30" region="12" />
     </spawn>
     <spawn type="LocationSpawner" name="cryptSpider">
@@ -102215,7 +102216,7 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon2Spider" size="1" minimum="1" maximum="1" />
+      <entry entity="level3Spider" size="1" minimum="1" maximum="1" />
       <location x="15" y="33" region="12" />
     </spawn>
     <spawn type="LocationSpawner" name="cryptTrolls">
@@ -102345,15 +102346,15 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon2Goblin" size="1" minimum="3" maximum="8" />
-      <entry entity="dungeon2GoblinSentry" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon2Orc" size="1" minimum="7" maximum="13" />
-      <entry entity="dungeon2OrcSentry" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon2Skeleton" size="1" minimum="5" maximum="12" />
-      <entry entity="dungeon2Troll" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon2Wyvern" size="1" minimum="5" maximum="10" />
-      <entry entity="dungeon2Wight" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon2OrcArsonist" size="1" minimum="1" maximum="2" />
+      <entry entity="level3Goblin" size="1" minimum="3" maximum="8" />
+      <entry entity="level3GoblinSentry" size="1" minimum="2" maximum="2" />
+      <entry entity="level3Orc" size="1" minimum="7" maximum="13" />
+      <entry entity="level3OrcSentry" size="1" minimum="2" maximum="2" />
+      <entry entity="level3Skeleton" size="1" minimum="5" maximum="12" />
+      <entry entity="level3Troll" size="1" minimum="3" maximum="5" />
+      <entry entity="level3Wyvern" size="1" minimum="5" maximum="10" />
+      <entry entity="level3Wight" size="1" minimum="3" maximum="3" />
+      <entry entity="level3OrcArsonist" size="1" minimum="1" maximum="2" />
       <bounds region="12">
         <inclusion left="0" top="2" right="33" bottom="40" />
         <exclusion left="14" top="25" right="34" bottom="38" />
@@ -102378,9 +102379,9 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon4Ghoul" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon4CryptGhoul" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4CryptWraith" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Ghoul" size="1" minimum="1" maximum="2" />
+      <entry entity="BossMiniLevel8CryptGhoul" size="1" minimum="1" maximum="1" />
+      <entry entity="BossMiniLevel8CryptWraith" size="1" minimum="1" maximum="1" />
       <bounds region="14">
         <inclusion left="12" top="2" right="13" bottom="5" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -102535,7 +102536,7 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ydnac" size="1" minimum="1" maximum="1" />
+      <entry entity="BossNotableYdnac" size="1" minimum="1" maximum="1" />
       <entry entity="ydnacAbesh" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="138" top="3" right="141" bottom="8" />
@@ -102559,7 +102560,7 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon4Dragon" size="1" minimum="1" maximum="1" />
+      <entry entity="BossMinorLevel8Dragon" size="1" minimum="1" maximum="1" />
       <bounds region="14">
         <inclusion left="17" top="3" right="19" bottom="5" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -102583,7 +102584,7 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon4CryptPiranha" size="1" minimum="1" maximum="3" />
+      <entry entity="level8CryptPiranha" size="1" minimum="1" maximum="3" />
       <bounds region="14">
         <inclusion left="12" top="6" right="16" bottom="6" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -102609,11 +102610,11 @@ else
       </script>
       <entry entity="ydnacSkelWar" size="3" minimum="1" maximum="3" />
       <entry entity="ydnacSkelArc" size="2" minimum="1" maximum="2" />
-      <entry entity="dungeon3Wraith" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon3Wight" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4Spectre" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4Thaum" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4Wizard" size="1" minimum="1" maximum="1" />
+      <entry entity="level5Wraith" size="1" minimum="1" maximum="1" />
+      <entry entity="level5Wight" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Spectre" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Thaum" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Wizard" size="1" minimum="1" maximum="1" />
       <bounds region="4">
         <inclusion left="2" top="7" right="9" bottom="12" />
         <inclusion left="2" top="14" right="13" bottom="16" />
@@ -102638,10 +102639,10 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon4Wizard" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4Thaum" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4MeleeFighter" size="1" minimum="2" maximum="2" />
-      <entry entity="dungeon4RangedFighter" size="1" minimum="1" maximum="2" />
+      <entry entity="level8Wizard" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Thaum" size="1" minimum="1" maximum="1" />
+      <entry entity="level8MeleeFighter" size="1" minimum="2" maximum="2" />
+      <entry entity="level8RangedFighter" size="1" minimum="1" maximum="2" />
       <bounds region="3">
         <inclusion left="9" top="2" right="11" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -102666,7 +102667,7 @@ else
         <block><![CDATA[]]></block>
       </script>
       <entry entity="ydnacMummy" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon4Thaum" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Thaum" size="1" minimum="1" maximum="1" />
       <entry entity="ydnacSkelWar" size="3" minimum="1" maximum="2" />
       <entry entity="ydnacSkelArc" size="2" minimum="1" maximum="2" />
       <bounds region="4">
@@ -102693,7 +102694,7 @@ else
         <block><![CDATA[]]></block>
       </script>
       <entry entity="ydnacSkelWar" size="3" minimum="1" maximum="1" />
-      <entry entity="dungeon4Spectre" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Spectre" size="1" minimum="1" maximum="1" />
       <bounds region="3">
         <inclusion left="13" top="2" right="16" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -102768,13 +102769,13 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon3Gargoyle" size="1" minimum="0" maximum="2" />
-      <entry entity="dungeon3OrcSentry" size="1" minimum="0" maximum="2" />
-      <entry entity="dungeon3Salamander" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon3Wight" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon3Goblin" size="2" minimum="0" maximum="2" />
-      <entry entity="dungeon3Troll" size="2" minimum="0" maximum="2" />
-      <entry entity="dungeon3Hobgoblin" size="3" minimum="1" maximum="2" />
+      <entry entity="level5Gargoyle" size="1" minimum="0" maximum="2" />
+      <entry entity="level5OrcSentry" size="1" minimum="0" maximum="2" />
+      <entry entity="level5Salamander" size="1" minimum="1" maximum="1" />
+      <entry entity="level5Wight" size="1" minimum="1" maximum="1" />
+      <entry entity="level5Goblin" size="2" minimum="0" maximum="2" />
+      <entry entity="level5Troll" size="2" minimum="0" maximum="2" />
+      <entry entity="level5Hobgoblin" size="3" minimum="1" maximum="2" />
       <bounds region="13">
         <inclusion left="2" top="27" right="14" bottom="38" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -102798,15 +102799,15 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon3Troll" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon3Wraith" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon3Wight" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon3Hobgoblin" size="3" minimum="0" maximum="1" />
-      <entry entity="dungeon3Orc" size="3" minimum="0" maximum="1" />
-      <entry entity="dungeon3OrcSentry" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon3OrcTrapper" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon3Gargoyle" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon3Goblin" size="2" minimum="0" maximum="1" />
+      <entry entity="level5Troll" size="1" minimum="0" maximum="1" />
+      <entry entity="level5Wraith" size="1" minimum="1" maximum="1" />
+      <entry entity="level5Wight" size="1" minimum="1" maximum="1" />
+      <entry entity="level5Hobgoblin" size="3" minimum="0" maximum="1" />
+      <entry entity="level5Orc" size="3" minimum="0" maximum="1" />
+      <entry entity="level5OrcSentry" size="1" minimum="0" maximum="1" />
+      <entry entity="level5OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="level5Gargoyle" size="1" minimum="0" maximum="1" />
+      <entry entity="level5Goblin" size="2" minimum="0" maximum="1" />
       <bounds region="13">
         <inclusion left="26" top="26" right="36" bottom="38" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -102830,16 +102831,16 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon3Troll" size="2" minimum="1" maximum="3" />
-      <entry entity="dungeon3Hobgoblin" size="3" minimum="2" maximum="3" />
-      <entry entity="dungeon3Orc" size="3" minimum="2" maximum="3" />
-      <entry entity="dungeon3OrcSentry" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon3Goblin" size="2" minimum="1" maximum="2" />
-      <entry entity="dungeon3GoblinSentry" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon3OrcTrapper" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon3Gargoyle" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon3Salamander" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon3Wraith" size="1" minimum="1" maximum="2" />
+      <entry entity="level5Troll" size="2" minimum="1" maximum="3" />
+      <entry entity="level5Hobgoblin" size="3" minimum="2" maximum="3" />
+      <entry entity="level5Orc" size="3" minimum="2" maximum="3" />
+      <entry entity="level5OrcSentry" size="1" minimum="0" maximum="1" />
+      <entry entity="level5Goblin" size="2" minimum="1" maximum="2" />
+      <entry entity="level5GoblinSentry" size="1" minimum="0" maximum="1" />
+      <entry entity="level5OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="level5Gargoyle" size="1" minimum="0" maximum="1" />
+      <entry entity="level5Salamander" size="1" minimum="1" maximum="1" />
+      <entry entity="level5Wraith" size="1" minimum="1" maximum="2" />
       <bounds region="13">
         <inclusion left="26" top="15" right="44" bottom="38" />
         <exclusion left="26" top="26" right="36" bottom="38" />
@@ -102863,16 +102864,16 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon3Troll" size="2" minimum="1" maximum="2" />
-      <entry entity="dungeon3Hobgoblin" size="3" minimum="1" maximum="1" />
-      <entry entity="dungeon3Orc" size="3" minimum="0" maximum="3" />
-      <entry entity="dungeon3OrcSentry" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon3Goblin" size="2" minimum="1" maximum="3" />
-      <entry entity="dungeon3GoblinSentry" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon3OrcTrapper" size="1" minimum="0" maximum="2" />
-      <entry entity="dungeon3Gargoyle" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon3Salamander" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon3Wraith" size="1" minimum="1" maximum="1" />
+      <entry entity="level5Troll" size="2" minimum="1" maximum="2" />
+      <entry entity="level5Hobgoblin" size="3" minimum="1" maximum="1" />
+      <entry entity="level5Orc" size="3" minimum="0" maximum="3" />
+      <entry entity="level5OrcSentry" size="1" minimum="0" maximum="1" />
+      <entry entity="level5Goblin" size="2" minimum="1" maximum="3" />
+      <entry entity="level5GoblinSentry" size="1" minimum="0" maximum="1" />
+      <entry entity="level5OrcTrapper" size="1" minimum="0" maximum="2" />
+      <entry entity="level5Gargoyle" size="1" minimum="1" maximum="1" />
+      <entry entity="level5Salamander" size="1" minimum="1" maximum="2" />
+      <entry entity="level5Wraith" size="1" minimum="1" maximum="1" />
       <bounds region="13">
         <inclusion left="25" top="1" right="44" bottom="14" />
       </bounds>
@@ -102895,16 +102896,16 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon3Troll" size="2" minimum="1" maximum="2" />
-      <entry entity="dungeon3Hobgoblin" size="3" minimum="1" maximum="2" />
-      <entry entity="dungeon3Orc" size="3" minimum="1" maximum="2" />
-      <entry entity="dungeon3OrcSentry" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon3Goblin" size="2" minimum="1" maximum="2" />
-      <entry entity="dungeon3GoblinSentry" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon3OrcTrapper" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon3Gargoyle" size="1" minimum="3" maximum="4" />
-      <entry entity="dungeon3Salamander" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon3Wraith" size="1" minimum="0" maximum="1" />
+      <entry entity="level5Troll" size="2" minimum="1" maximum="2" />
+      <entry entity="level5Hobgoblin" size="3" minimum="1" maximum="2" />
+      <entry entity="level5Orc" size="3" minimum="1" maximum="2" />
+      <entry entity="level5OrcSentry" size="1" minimum="0" maximum="2" />
+      <entry entity="level5Goblin" size="2" minimum="1" maximum="2" />
+      <entry entity="level5GoblinSentry" size="1" minimum="1" maximum="2" />
+      <entry entity="level5OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="level5Gargoyle" size="1" minimum="3" maximum="4" />
+      <entry entity="level5Salamander" size="1" minimum="1" maximum="1" />
+      <entry entity="level5Wraith" size="1" minimum="0" maximum="1" />
       <bounds region="13">
         <inclusion left="17" top="2" right="44" bottom="38" />
         <inclusion left="2" top="24" right="9" bottom="26" />
@@ -102930,21 +102931,21 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon4Orc" size="3" minimum="2" maximum="2" />
-      <entry entity="dungeon4OrcSentry" size="2" minimum="1" maximum="1" />
-      <entry entity="dungeon4OrcTrapper" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Troll" size="2" minimum="0" maximum="1" />
-      <entry entity="dungeon4Hobgoblin" size="4" minimum="0" maximum="1" />
-      <entry entity="dungeon4Gargoyle" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4MeleeFighter" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4RangedFighter" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Wizard" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4Thaum" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Minotaur" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4Wraith" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Salamander" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Spectre" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Ghoul" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Orc" size="3" minimum="2" maximum="2" />
+      <entry entity="level8OrcSentry" size="2" minimum="1" maximum="1" />
+      <entry entity="level8OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Troll" size="2" minimum="0" maximum="1" />
+      <entry entity="level8Hobgoblin" size="4" minimum="0" maximum="1" />
+      <entry entity="level8Gargoyle" size="1" minimum="0" maximum="1" />
+      <entry entity="level8MeleeFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="level8RangedFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Wizard" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Thaum" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Minotaur" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Wraith" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Salamander" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Spectre" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Ghoul" size="1" minimum="0" maximum="1" />
       <bounds region="14">
         <inclusion left="1" top="6" right="9" bottom="14" />
         <inclusion left="10" top="10" right="26" bottom="12" />
@@ -102969,21 +102970,21 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon4Orc" size="3" minimum="0" maximum="1" />
-      <entry entity="dungeon4OrcSentry" size="2" minimum="0" maximum="1" />
-      <entry entity="dungeon4OrcTrapper" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Troll" size="2" minimum="0" maximum="1" />
-      <entry entity="dungeon4Hobgoblin" size="4" minimum="0" maximum="1" />
-      <entry entity="dungeon4Gargoyle" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4MeleeFighter" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4RangedFighter" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Wizard" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Thaum" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Minotaur" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4Wraith" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Salamander" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Spectre" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4Ghoul" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Orc" size="3" minimum="0" maximum="1" />
+      <entry entity="level8OrcSentry" size="2" minimum="0" maximum="1" />
+      <entry entity="level8OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Troll" size="2" minimum="0" maximum="1" />
+      <entry entity="level8Hobgoblin" size="4" minimum="0" maximum="1" />
+      <entry entity="level8Gargoyle" size="1" minimum="1" maximum="1" />
+      <entry entity="level8MeleeFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="level8RangedFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Wizard" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Thaum" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Minotaur" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Wraith" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Salamander" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Spectre" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Ghoul" size="1" minimum="0" maximum="1" />
       <bounds region="14">
         <inclusion left="27" top="2" right="32" bottom="18" />
       </bounds>
@@ -103006,21 +103007,21 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon4Orc" size="3" minimum="1" maximum="0" />
-      <entry entity="dungeon4OrcSentry" size="2" minimum="1" maximum="0" />
-      <entry entity="dungeon4OrcTrapper" size="1" minimum="1" maximum="0" />
-      <entry entity="dungeon4Troll" size="2" minimum="1" maximum="0" />
-      <entry entity="dungeon4Hobgoblin" size="4" minimum="1" maximum="0" />
-      <entry entity="dungeon4Gargoyle" size="1" minimum="1" maximum="0" />
-      <entry entity="dungeon4MeleeFighter" size="1" minimum="1" maximum="0" />
-      <entry entity="dungeon4RangedFighter" size="1" minimum="1" maximum="0" />
-      <entry entity="dungeon4Wizard" size="1" minimum="0" maximum="0" />
-      <entry entity="dungeon4Thaum" size="1" minimum="0" maximum="0" />
-      <entry entity="dungeon4Minotaur" size="1" minimum="0" maximum="0" />
-      <entry entity="dungeon4Wraith" size="1" minimum="0" maximum="0" />
-      <entry entity="dungeon4Salamander" size="1" minimum="1" maximum="0" />
-      <entry entity="dungeon4Spectre" size="1" minimum="0" maximum="0" />
-      <entry entity="dungeon4Ghoul" size="1" minimum="0" maximum="0" />
+      <entry entity="level8Orc" size="3" minimum="1" maximum="0" />
+      <entry entity="level8OrcSentry" size="2" minimum="1" maximum="0" />
+      <entry entity="level8OrcTrapper" size="1" minimum="1" maximum="0" />
+      <entry entity="level8Troll" size="2" minimum="1" maximum="0" />
+      <entry entity="level8Hobgoblin" size="4" minimum="1" maximum="0" />
+      <entry entity="level8Gargoyle" size="1" minimum="1" maximum="0" />
+      <entry entity="level8MeleeFighter" size="1" minimum="1" maximum="0" />
+      <entry entity="level8RangedFighter" size="1" minimum="1" maximum="0" />
+      <entry entity="level8Wizard" size="1" minimum="0" maximum="0" />
+      <entry entity="level8Thaum" size="1" minimum="0" maximum="0" />
+      <entry entity="level8Minotaur" size="1" minimum="0" maximum="0" />
+      <entry entity="level8Wraith" size="1" minimum="0" maximum="0" />
+      <entry entity="level8Salamander" size="1" minimum="1" maximum="0" />
+      <entry entity="level8Spectre" size="1" minimum="0" maximum="0" />
+      <entry entity="level8Ghoul" size="1" minimum="0" maximum="0" />
       <bounds region="14">
         <inclusion left="2" top="16" right="12" bottom="38" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -103044,21 +103045,21 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon4Orc" size="3" minimum="4" maximum="6" />
-      <entry entity="dungeon4OrcSentry" size="2" minimum="0" maximum="1" />
-      <entry entity="dungeon4OrcTrapper" size="1" minimum="0" maximum="2" />
-      <entry entity="dungeon4Troll" size="2" minimum="2" maximum="2" />
-      <entry entity="dungeon4Hobgoblin" size="4" minimum="2" maximum="4" />
-      <entry entity="dungeon4Gargoyle" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4MeleeFighter" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4RangedFighter" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Wizard" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Thaum" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon4Minotaur" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon4Wraith" size="1" minimum="2" maximum="2" />
-      <entry entity="dungeon4Salamander" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Spectre" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Ghoul" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Orc" size="3" minimum="4" maximum="6" />
+      <entry entity="level8OrcSentry" size="2" minimum="0" maximum="1" />
+      <entry entity="level8OrcTrapper" size="1" minimum="0" maximum="2" />
+      <entry entity="level8Troll" size="2" minimum="2" maximum="2" />
+      <entry entity="level8Hobgoblin" size="4" minimum="2" maximum="4" />
+      <entry entity="level8Gargoyle" size="1" minimum="1" maximum="1" />
+      <entry entity="level8MeleeFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="level8RangedFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Wizard" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Thaum" size="1" minimum="1" maximum="2" />
+      <entry entity="level8Minotaur" size="1" minimum="1" maximum="2" />
+      <entry entity="level8Wraith" size="1" minimum="2" maximum="2" />
+      <entry entity="level8Salamander" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Spectre" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Ghoul" size="1" minimum="0" maximum="1" />
       <bounds region="14">
         <inclusion left="11" top="13" right="26" bottom="18" />
         <inclusion left="13" top="19" right="32" bottom="33" />
@@ -103083,21 +103084,21 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon4Orc" size="3" minimum="0" maximum="2" />
-      <entry entity="dungeon4OrcSentry" size="2" minimum="0" maximum="1" />
-      <entry entity="dungeon4OrcTrapper" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Troll" size="2" minimum="0" maximum="1" />
-      <entry entity="dungeon4Hobgoblin" size="4" minimum="0" maximum="2" />
-      <entry entity="dungeon4Gargoyle" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4MeleeFighter" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4RangedFighter" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Wizard" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Thaum" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4Minotaur" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Wraith" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4Salamander" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Spectre" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon4Ghoul" size="1" minimum="1" maximum="2" />
+      <entry entity="level8Orc" size="3" minimum="0" maximum="2" />
+      <entry entity="level8OrcSentry" size="2" minimum="0" maximum="1" />
+      <entry entity="level8OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Troll" size="2" minimum="0" maximum="1" />
+      <entry entity="level8Hobgoblin" size="4" minimum="0" maximum="2" />
+      <entry entity="level8Gargoyle" size="1" minimum="0" maximum="1" />
+      <entry entity="level8MeleeFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="level8RangedFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Wizard" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Thaum" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Minotaur" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Wraith" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Salamander" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Spectre" size="1" minimum="1" maximum="2" />
+      <entry entity="level8Ghoul" size="1" minimum="1" maximum="2" />
       <bounds region="14">
         <inclusion left="13" top="34" right="32" bottom="38" />
       </bounds>
@@ -103232,15 +103233,15 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon2Goblin" size="1" minimum="3" maximum="8" />
-      <entry entity="dungeon2GoblinSentry" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon2Orc" size="1" minimum="7" maximum="13" />
-      <entry entity="dungeon2OrcSentry" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon2Skeleton" size="1" minimum="5" maximum="12" />
-      <entry entity="dungeon2Troll" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon2Wyvern" size="1" minimum="5" maximum="10" />
-      <entry entity="dungeon2Wight" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon2OrcArsonist" size="1" minimum="1" maximum="2" />
+      <entry entity="level3Goblin" size="1" minimum="3" maximum="8" />
+      <entry entity="level3GoblinSentry" size="1" minimum="1" maximum="1" />
+      <entry entity="level3Orc" size="1" minimum="7" maximum="13" />
+      <entry entity="level3OrcSentry" size="1" minimum="1" maximum="1" />
+      <entry entity="level3Skeleton" size="1" minimum="5" maximum="12" />
+      <entry entity="level3Troll" size="1" minimum="3" maximum="5" />
+      <entry entity="level3Wyvern" size="1" minimum="5" maximum="10" />
+      <entry entity="level3Wight" size="1" minimum="1" maximum="1" />
+      <entry entity="level3OrcArsonist" size="1" minimum="1" maximum="2" />
       <bounds region="12">
         <inclusion left="0" top="2" right="14" bottom="17" />
       </bounds>
@@ -103263,15 +103264,15 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon2Goblin" size="1" minimum="3" maximum="8" />
-      <entry entity="dungeon2GoblinSentry" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon2Orc" size="1" minimum="7" maximum="13" />
-      <entry entity="dungeon2OrcSentry" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon2Skeleton" size="1" minimum="5" maximum="12" />
-      <entry entity="dungeon2Troll" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon2Wyvern" size="1" minimum="5" maximum="10" />
-      <entry entity="dungeon2Wight" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon2OrcArsonist" size="1" minimum="1" maximum="2" />
+      <entry entity="level3Goblin" size="1" minimum="3" maximum="8" />
+      <entry entity="level3GoblinSentry" size="1" minimum="1" maximum="1" />
+      <entry entity="level3Orc" size="1" minimum="7" maximum="13" />
+      <entry entity="level3OrcSentry" size="1" minimum="1" maximum="1" />
+      <entry entity="level3Skeleton" size="1" minimum="5" maximum="12" />
+      <entry entity="level3Troll" size="1" minimum="3" maximum="5" />
+      <entry entity="level3Wyvern" size="1" minimum="5" maximum="10" />
+      <entry entity="level3Wight" size="1" minimum="1" maximum="1" />
+      <entry entity="level3OrcArsonist" size="1" minimum="1" maximum="1" />
       <bounds region="12">
         <inclusion left="15" top="3" right="32" bottom="17" />
       </bounds>
@@ -103294,15 +103295,15 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon2Goblin" size="1" minimum="3" maximum="8" />
-      <entry entity="dungeon2GoblinSentry" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon2Orc" size="1" minimum="7" maximum="13" />
-      <entry entity="dungeon2OrcSentry" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon2Skeleton" size="1" minimum="5" maximum="12" />
-      <entry entity="dungeon2Troll" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon2Wyvern" size="1" minimum="5" maximum="10" />
-      <entry entity="dungeon2Wight" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon2OrcArsonist" size="1" minimum="1" maximum="2" />
+      <entry entity="level3Goblin" size="1" minimum="3" maximum="8" />
+      <entry entity="level3GoblinSentry" size="1" minimum="1" maximum="1" />
+      <entry entity="level3Orc" size="1" minimum="7" maximum="13" />
+      <entry entity="level3OrcSentry" size="1" minimum="1" maximum="1" />
+      <entry entity="level3Skeleton" size="1" minimum="5" maximum="12" />
+      <entry entity="level3Troll" size="1" minimum="3" maximum="5" />
+      <entry entity="level3Wyvern" size="1" minimum="5" maximum="10" />
+      <entry entity="level3Wight" size="1" minimum="2" maximum="2" />
+      <entry entity="level3OrcArsonist" size="1" minimum="1" maximum="2" />
       <bounds region="12">
         <inclusion left="2" top="18" right="32" bottom="23" />
       </bounds>
@@ -103325,16 +103326,16 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon3Troll" size="2" minimum="1" maximum="2" />
-      <entry entity="dungeon3Hobgoblin" size="3" minimum="1" maximum="2" />
-      <entry entity="dungeon3Orc" size="3" minimum="1" maximum="2" />
-      <entry entity="dungeon3OrcSentry" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon3Goblin" size="2" minimum="1" maximum="2" />
-      <entry entity="dungeon3GoblinSentry" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon3OrcTrapper" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon3Gargoyle" size="1" minimum="3" maximum="4" />
-      <entry entity="dungeon3Salamander" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon3Wraith" size="1" minimum="0" maximum="1" />
+      <entry entity="level5Troll" size="2" minimum="1" maximum="2" />
+      <entry entity="level5Hobgoblin" size="3" minimum="1" maximum="2" />
+      <entry entity="level5Orc" size="3" minimum="1" maximum="2" />
+      <entry entity="level5OrcSentry" size="1" minimum="0" maximum="2" />
+      <entry entity="level5Goblin" size="2" minimum="1" maximum="2" />
+      <entry entity="level5GoblinSentry" size="1" minimum="0" maximum="2" />
+      <entry entity="level5OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="level5Gargoyle" size="1" minimum="3" maximum="4" />
+      <entry entity="level5Salamander" size="1" minimum="1" maximum="1" />
+      <entry entity="level5Wraith" size="1" minimum="0" maximum="1" />
       <bounds region="13">
         <inclusion left="10" top="1" right="24" bottom="38" />
         <inclusion left="2" top="24" right="9" bottom="26" />
@@ -103359,21 +103360,21 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon4Orc" size="3" minimum="2" maximum="2" />
-      <entry entity="dungeon4OrcSentry" size="2" minimum="1" maximum="1" />
-      <entry entity="dungeon4OrcTrapper" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Troll" size="2" minimum="0" maximum="1" />
-      <entry entity="dungeon4Hobgoblin" size="4" minimum="0" maximum="1" />
-      <entry entity="dungeon4Gargoyle" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4MeleeFighter" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4RangedFighter" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Wizard" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4Thaum" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Minotaur" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4Wraith" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Salamander" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Spectre" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Ghoul" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Orc" size="3" minimum="2" maximum="2" />
+      <entry entity="level8OrcSentry" size="2" minimum="1" maximum="1" />
+      <entry entity="level8OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Troll" size="2" minimum="0" maximum="1" />
+      <entry entity="level8Hobgoblin" size="4" minimum="0" maximum="1" />
+      <entry entity="level8Gargoyle" size="1" minimum="0" maximum="1" />
+      <entry entity="level8MeleeFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="level8RangedFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Wizard" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Thaum" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Minotaur" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Wraith" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Salamander" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Spectre" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Ghoul" size="1" minimum="0" maximum="1" />
       <bounds region="14">
         <inclusion left="1" top="10" right="32" bottom="38" />
         <exclusion left="0" top="0" right="0" bottom="0" />
