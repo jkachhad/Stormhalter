@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Blackburrow" version="0.87.0.0">
+<segment name="Blackburrow" version="0.90.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -38193,6 +38193,7 @@ return skeleton;
     swordmaster.AddGold(5000);
     swordmaster.AddLoot(new LootPack(        
         new LootPackEntry(true, Miniboss, 100),
+        new LootPackEntry(true, (from, container) => new MainGauche(),        100),
         new LootPackEntry(true, Dragongems, 100)
     ));
     
