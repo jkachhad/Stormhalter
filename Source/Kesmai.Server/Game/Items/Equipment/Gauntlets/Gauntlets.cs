@@ -99,9 +99,15 @@ namespace Kesmai.Server.Items
 		/// <remarks>
 		/// Attack bonus provided by gloves is dependent on hand skill, hindrance, and <see cref="Penetration"/>.
 		/// </remarks>
-		public virtual int GetAttackBonus(MobileEntity attacker, MobileEntity defender)
+		public virtual double GetAttackBonus(MobileEntity attacker, MobileEntity defender)
 		{
-			return BaseAttackBonus;
+			var attackBonus = BaseAttackBonus + (double)Penetration;
+			
+			var skillLevel = attacker.GetSkillLevel(Skill.Hand);
+			var hindrance = attacker.CalculateHindrance();
+			var hindrancePenalty = (hindrance.Total * skillLevel) * 0.25;
+
+			return attackBonus - hindrancePenalty;
 		}
 
 		/// <summary>
