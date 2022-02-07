@@ -1,6 +1,7 @@
 using System.IO;
 using System.Linq;
 using Kesmai.Server.Items;
+using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Game
 {

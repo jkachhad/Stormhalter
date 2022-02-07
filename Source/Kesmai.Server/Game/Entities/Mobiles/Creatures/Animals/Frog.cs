@@ -1,4 +1,5 @@
 using System.IO;
+using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Game
 {
