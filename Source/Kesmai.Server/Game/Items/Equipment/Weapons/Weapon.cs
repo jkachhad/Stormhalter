@@ -12,7 +12,7 @@ namespace Kesmai.Server.Items
 		/// Attack bonus provided by weapons is dependent on weapon skill, <see cref="PlayerEntity.Dexterity"/>, 
 		/// and <see cref="BaseAttackBonus"/>.
 		/// </remarks>
-		public virtual int GetAttackBonus(MobileEntity attacker, MobileEntity defender)
+		public virtual double GetAttackBonus(MobileEntity attacker, MobileEntity defender)
 		{
 			var attackBonus = BaseAttackBonus;
 

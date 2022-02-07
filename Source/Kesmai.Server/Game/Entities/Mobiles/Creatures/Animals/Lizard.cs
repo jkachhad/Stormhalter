@@ -12,7 +12,6 @@ namespace Kesmai.Server.Game
 
 			Alignment = Alignment.Chaotic;
 
-			CanSwim = true;
 		}
 
 		protected override void OnCreate()

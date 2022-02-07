@@ -12,38 +12,30 @@ namespace Kesmai.Server.Game
 		/// </summary>
 		public override double CalculateAttackBonus(ItemEntity item, MobileEntity defender)
 		{
-			if (item is Weapon weapon)
+			var skill = Skill.Hand;
+			var skillLevel = 0d;
+
+			var weaponBonus = 0d;
+
+			if (item is IWeapon weapon)
 			{
-				var attackBonus = weapon.GetAttackBonus(this, defender) + GetSkillLevel(weapon.Skill);
-
-				var dexterity = Stats.Dexterity;
-
-				if (dexterity > 17)
-					attackBonus += (dexterity - 17);
-
-				return attackBonus;
+				skill = weapon.Skill;
+				weaponBonus = weapon.GetAttackBonus(this, defender);
 			}
 
-			var skillLevel = GetSkillLevel(Skill.Hand);
+			if (skill != Skill.Hand)
+				skillLevel = GetSkillLevel(skill);
+			else
+				skillLevel = GetSkillLevel(Skill.Hand) * 1.2 - 2.0;
 
-			var hindrance = CalculateHindrance();
-			var hindrancePenalty = (hindrance.Total * skillLevel) * 0.25;
+			/* Dexterity */
+			var dexterityBonus = 0.0d;
+			var dexterity = Stats.Dexterity;
 
-			if (item != null)
-			{
-				if (item is Gauntlets gauntlets)
-				{
-					skillLevel += (int)gauntlets.Penetration;
-				}
-				else
-				{
-					return 0;
-				}
-			}
-
-			var skillBonus = (skillLevel * 1.2) - 2.0;
-
-			return (skillBonus - hindrancePenalty);
+			if (dexterity > 17)
+				dexterityBonus = (dexterity - 17);
+			
+			return skillLevel + weaponBonus + dexterityBonus;
 		}
 		
 				/// <summary>
@@ -148,7 +140,7 @@ namespace Kesmai.Server.Game
 				var hitAdds = 0;
 
 				if ((weapon.Flags & WeaponFlags.Throwable) != 0)
-					hitAdds += Stats.StrengthAdds + weapon.GetAttackBonus(this, defender);
+					hitAdds += Stats.StrengthAdds + (int)weapon.GetAttackBonus(this, defender);
 
 				if (Stats.BaseStrength >= 18)
 					hitAdds++;
