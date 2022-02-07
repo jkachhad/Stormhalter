@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.87.0.0">
+<segment name="Underkingdom" version="0.90.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -99824,7 +99824,7 @@
     {
         Name = "Drake",
         MaxHealth = 3000, Health = 3000,
-        BaseDodge = 19,
+        BaseDodge = 28,
     
         Alignment = Alignment.Chaotic,
         HideDetection = 26,
@@ -99832,6 +99832,7 @@
         
         CanFly = true,
         CanCharge = true,
+        CanStrikeCritically = false,
         
         BasePenetration = ShieldPenetration.Heavy,
 
@@ -99914,7 +99915,7 @@
         Body = 206,
         
         MaxHealth = 1800, Health = 1800,
-        BaseDodge = 31,
+        BaseDodge = 26,
         HideDetection = 28,
         Alignment = Alignment.Evil,
         
@@ -99982,7 +99983,7 @@
         Body = 147,
         
         MaxHealth = 600, Health = 600,
-        BaseDodge = 31,
+        BaseDodge = 26,
         HideDetection = 28,
         Experience = 14860,
         BasePenetration = ShieldPenetration.Medium,
@@ -100037,7 +100038,7 @@
     {
         Name = "Troll.King",
         MaxHealth = 3900, Health = 3900,
-        BaseDodge = 30,
+        BaseDodge = 28,
         Body = 133,
         
         Alignment = Alignment.Chaotic,
@@ -100065,7 +100066,7 @@
     
     trollKing.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(20, 25, 88),
+        new CreatureBasicAttack(19, 25, 88),
     };
     
     trollKing.Wield(new Greatsword());
@@ -100109,7 +100110,7 @@
         BasePenetration = ShieldPenetration.Heavy,
         Alignment = Alignment.Chaotic,
         Experience = 21398,
-        BaseDodge = 35,
+        BaseDodge = 28,
         CanWalk = false,
         Immunity = CreatureImmunity.Poison,
         HideDetection = 28,    
@@ -100170,7 +100171,7 @@
         Name = "Swordmaster",
         Body = 163,
         MaxHealth = 2100, Health = 2100,
-        BaseDodge = 31,
+        BaseDodge = 24,
         HideDetection = 28,
         Experience = 39000,
        
@@ -100230,7 +100231,7 @@
         Name = "Overlord", Alignment = Alignment.Evil,
     
         MaxHealth = 4200, Health = 4200,
-        BaseDodge = 35,
+        BaseDodge = 32,
         HideDetection = 30,
         Experience = 213980,
         
@@ -100413,7 +100414,7 @@
     var goblin = new Goblin()
     {
         MaxHealth = 179, Health = 179,
-        BaseDodge = 26,
+        BaseDodge = 25,
         HideDetection = 25,           
         Experience = 7430,
         BasePenetration = ShieldPenetration.Medium,
@@ -101640,7 +101641,7 @@
         Body = 105,
             
         MaxHealth = 150, Health = 150,
-        BaseDodge = 31,
+        BaseDodge = 28,
         HideDetection = 28,
         Experience = 10918,
         BasePenetration = ShieldPenetration.Heavy,
@@ -104406,12 +104407,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level14Banshee" size="4" minimum="2" maximum="2" />
-      <entry entity="level14Ghoul" size="1" minimum="1" maximum="1" />
-      <entry entity="level14Skeleton" size="4" minimum="2" maximum="2" />
-      <entry entity="level14Spectre" size="1" minimum="1" maximum="1" />
-      <entry entity="level14Lich" size="1" minimum="1" maximum="1" />
-      <entry entity="level14Stalker" size="1" minimum="1" maximum="1" />
+      <entry entity="level14Banshee" size="4" minimum="6" maximum="6" />
+      <entry entity="level14Ghoul" size="1" minimum="1" maximum="3" />
+      <entry entity="level14Skeleton" size="4" minimum="7" maximum="7" />
+      <entry entity="level14Spectre" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Lich" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Stalker" size="1" minimum="1" maximum="2" />
       <bounds region="17">
         <inclusion left="2" top="3" right="37" bottom="22" />
         <exclusion left="2" top="21" right="29" bottom="22" />
@@ -105415,7 +105416,7 @@
       </entry>
     </treasure>
     <treasure name="yasnakiTreasure">
-      <entry weight="5">
+      <entry weight="8">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -105424,7 +105425,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="5">
+      <entry weight="8">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -105433,7 +105434,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="5">
+      <entry weight="8">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -105518,11 +105519,11 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="1">
+      <entry weight="5">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StrongShieldBracelet();
+	return new BlueStaffRaiseDead();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -105531,7 +105532,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new BlueStaffRaiseDead();
+	return new BlindFearProtectionBracelet();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>

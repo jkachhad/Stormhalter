@@ -104845,7 +104845,7 @@
     var wolf = new Wolf()
     {
         MaxHealth = 119, Health = 119,
-        BaseDodge = 20,
+        BaseDodge = 21,
         HideDetection = 23,        
         Experience = 3583,
         BasePenetration = ShieldPenetration.Medium,
@@ -104909,7 +104909,7 @@
         <block><![CDATA[
     var wolf = new Wolf()
     {
-        BaseDodge = 30,
+        BaseDodge = 25,
         MaxHealth = 550, Health = 550,
 
         Experience = 12383,
@@ -104988,7 +104988,7 @@
     var rockworm = new Rockwyrm()
     {
         MaxHealth = 100, Health = 100,
-        BaseDodge = 20,
+        BaseDodge = 21,
         HideDetection = 23,
         Experience = 3740,
         BasePenetration = ShieldPenetration.Light,
@@ -105726,7 +105726,7 @@
         Body = (female ? 35 : 49), IsFemale = female,
         HideDetection = 23,    
         MaxHealth = 110, Health = 110,
-        BaseDodge = 25,
+        BaseDodge = 24,
     
         Experience = 5262,
     
@@ -106217,7 +106217,7 @@
     var bear = new Bear()
     {
         MaxHealth = 200, Health = 200,
-        BaseDodge = 25,
+        BaseDodge = 23,
         HideDetection = 23,        
         Experience = 10319,
         FireProtection = 30,
@@ -106418,7 +106418,7 @@
     var dragon = new Dragon()
     {
         MaxHealth = 4200, Health = 4200,
-        BaseDodge = 35,
+        BaseDodge = 32,
         Body = 135,
         Experience = 213980,
         
@@ -106511,7 +106511,7 @@
     var yeti = new Yeti()
     {
         MaxHealth = 3600, Health = 3600,
-        BaseDodge = 31,
+        BaseDodge = 30,
     
         Experience = 148600,
         HideDetection = 27,
@@ -106559,7 +106559,7 @@
     yeti.Spells = new CreatureSpellCollection(20.0)
     {
         new CreatureSpell<IceStormSpell>(
-            skillLevel: 21)
+            skillLevel: 30)
     };
         
    yeti.AddGold(16000);
@@ -107867,7 +107867,7 @@
         Name = "undead frost giant",
         MaxHealth = 800,
         Health = 800,
-        BaseDodge = 39,
+        BaseDodge = 31,
         HideDetection = 32,
         Mana = 7, MaxMana = 7,
         BasePenetration = ShieldPenetration.Heavy,
@@ -107929,9 +107929,9 @@
     {
         Name = "Vile Necromancer",
 
-        MaxHealth = 8000,
-        Health = 8000,
-        BaseDodge = 32,
+        MaxHealth = 9000,
+        Health = 9000,
+        BaseDodge = 31,
         HideDetection = 40,
         BasePenetration = ShieldPenetration.Heavy,
         Experience = 308140,
@@ -107950,7 +107950,7 @@
     necro.AddStatus(new NightVisionStatus(necro));
     necro.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(24, 13, 23)
+        new CreatureBasicAttack(22, 13, 23)
     };
     
     necro.Spells = new CreatureSpellCollection(10.0)
