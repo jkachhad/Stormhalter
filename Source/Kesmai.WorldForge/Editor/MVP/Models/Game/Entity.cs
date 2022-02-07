@@ -11,6 +11,8 @@ using System.ComponentModel;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Generic;
+using Microsoft.Toolkit.Mvvm.Messaging;
+using Microsoft.CodeAnalysis;
 
 namespace Kesmai.WorldForge
 {
@@ -155,7 +157,7 @@ namespace Kesmai.WorldForge
 					// The syntax used for spell definitions often (always?) uses named parameters.
 					// I can't just assume the first parameter is the right one, so see if there is a
 					// named parameter for skillLevel and use that if present.
-					var namedSkillArgument = identifiers.First(i => i.Identifier.Text == "skillLevel");
+					var namedSkillArgument = identifiers.FirstOrDefault(i => i.Identifier.Text == "skillLevel");
 					if (namedSkillArgument != null)
 					{
 						var skillargument = namedSkillArgument.Parent.Parent as ArgumentSyntax;
@@ -168,7 +170,7 @@ namespace Kesmai.WorldForge
 					return skill * multiplier;
 				}).Max();
 
-				//If a creature has a bow, then consider it's skill as ranged
+				//If a creature has a bow, then consider its melee skill as ranged
 				//First find all the wielded items and see if any end with "bow". This may need to be changed if 
 				//new Ranged weapons are created, such as monster-wielded returning weapons.
 				var wieldedItems = syntaxRoot.DescendantNodes().OfType<InvocationExpressionSyntax>()
@@ -179,7 +181,7 @@ namespace Kesmai.WorldForge
 					&& arguments.Arguments.First().Expression is ObjectCreationExpressionSyntax item
 					&& item.Type is IdentifierNameSyntax itemName
 					&& itemName.Identifier.Text.EndsWith("bow",StringComparison.InvariantCultureIgnoreCase));
-				if (hasRangedWeapon) // if we're equiping a bow, then the melee skill is actually ranged.
+				if (hasRangedWeapon)
 				{
 					if (meleeSkill > rangedSkill || rangedSkill is null)
 						rangedSkill = meleeSkill;
@@ -189,7 +191,53 @@ namespace Kesmai.WorldForge
 				return new Tuple<int?, int?>(meleeSkill, (int?)rangedSkill);
 			}
         }
-		
+
+		[Description("Indicators for various modifiers on a mob like NightVision, swimming, etc")]
+		public String Flags
+		{
+			get
+			{
+				var flags = "";
+				var onSpawnScript = _scripts.FirstOrDefault(
+					s => string.Equals(s.Name, "OnSpawn", StringComparison.OrdinalIgnoreCase));
+
+				if (onSpawnScript is null)
+					return flags;
+
+				/* Create a syntax tree for analysis. */
+				var parseOptions = new CSharpParseOptions(
+					kind: SourceCodeKind.Script,
+					languageVersion: LanguageVersion.CSharp8
+				);
+				var syntaxTree = CSharpSyntaxTree.ParseText("#load \"WorldForge\"\nusing System;\nCreatureEntity OnSpawn(){" + onSpawnScript.Blocks[1] + "}", parseOptions);
+				var syntaxRoot = syntaxTree.GetCompilationUnitRoot();
+
+				var assignments = syntaxRoot.DescendantNodes().OfType<AssignmentExpressionSyntax>();
+
+				if (syntaxRoot.DescendantNodes().Any(n => n is IdentifierNameSyntax identifier && identifier.Identifier.Text == "NightVisionStatus"))
+					flags += "NV ";
+				if (syntaxRoot.DescendantNodes().Any(n => n is IdentifierNameSyntax identifier && identifier.Identifier.Text == "BreatheWaterStatus"))
+					flags += "BW ";
+
+
+				if (assignments.Where(n => n.ChildNodes().OfType<IdentifierNameSyntax>().FirstOrDefault() is IdentifierNameSyntax i && i.Identifier.Text == "CanSwim")
+					.Any(n => n.ChildNodes().OfType<LiteralExpressionSyntax>().FirstOrDefault() is LiteralExpressionSyntax l && l.Kind() == SyntaxKind.TrueLiteralExpression))
+					flags += "Swim ";
+				if (assignments.Where(n => n.ChildNodes().OfType<IdentifierNameSyntax>().FirstOrDefault() is IdentifierNameSyntax i && i.Identifier.Text == "CanFly")
+					.Any(n => n.ChildNodes().OfType<LiteralExpressionSyntax>().FirstOrDefault() is LiteralExpressionSyntax l && l.Kind() == SyntaxKind.TrueLiteralExpression))
+					flags += "Fly ";
+				if (assignments.Where(n => n.ChildNodes().OfType<IdentifierNameSyntax>().FirstOrDefault() is IdentifierNameSyntax i && i.Identifier.Text == "CanLoot")
+					.Any(n => n.ChildNodes().OfType<LiteralExpressionSyntax>().FirstOrDefault() is LiteralExpressionSyntax l && l.Kind() == SyntaxKind.TrueLiteralExpression))
+					flags += "Loot ";
+
+				if (syntaxRoot.DescendantNodes().Any(n => n is IdentifierNameSyntax identifier && identifier.Identifier.Text == "AttackPoisonComponent"))
+					flags += "Pois ";
+				if (syntaxRoot.DescendantNodes().Any(n => n is IdentifierNameSyntax identifier && identifier.Identifier.Text == "AttackProneComponent"))
+					flags += "Prone ";
+
+				return flags;
+			}
+		}
 		public Entity()
 		{
 			ValidateScripts();
