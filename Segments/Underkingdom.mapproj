@@ -99595,11 +99595,11 @@
             
     wyvern.AddGold(98);
     wyvern.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomPotions,    0.05),
-        new LootPackEntry(true, UnderkingdomGems,       7,     gemsPriceMutatorMedium), 
+        new LootPackEntry(true, UnderkingdomPotions,    0.025),
+        new LootPackEntry(true, UnderkingdomGems,       2,     gemsPriceMutatorMedium), 
         new LootPackEntry(true, UnderkingdomBottles,    10), 
-        new LootPackEntry(true, UtilityItems,    1), 
-        new LootPackEntry(true, UpperTreasure,    0.25)
+        new LootPackEntry(true, UtilityItems,    .3), 
+        new LootPackEntry(true, UpperTreasure,    0.15)
     ));
     
     return wyvern;
@@ -99661,11 +99661,11 @@
             
     wyvern.AddGold(98);
     wyvern.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomPotions,    0.05),
-        new LootPackEntry(true, UnderkingdomGems,       7,     gemsPriceMutatorMedium), 
+        new LootPackEntry(true, UnderkingdomPotions,    0.025),
+        new LootPackEntry(true, UnderkingdomGems,       2,     gemsPriceMutatorMedium), 
         new LootPackEntry(true, UnderkingdomBottles,    10), 
-        new LootPackEntry(true, UtilityItems,    1), 
-        new LootPackEntry(true, UpperTreasure,    0.25)
+        new LootPackEntry(true, UtilityItems,    .3), 
+        new LootPackEntry(true, UpperTreasure,    0.15)
     ));
     
     return wyvern;
@@ -99727,11 +99727,11 @@
             
     wyvern.AddGold(98);
     wyvern.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomPotions,    0.05),
-        new LootPackEntry(true, UnderkingdomGems,       7,     gemsPriceMutatorMedium), 
+        new LootPackEntry(true, UnderkingdomPotions,    0.025),
+        new LootPackEntry(true, UnderkingdomGems,       2,     gemsPriceMutatorMedium), 
         new LootPackEntry(true, UnderkingdomBottles,    10), 
-        new LootPackEntry(true, UtilityItems,    1), 
-        new LootPackEntry(true, UpperTreasure,    0.25)
+        new LootPackEntry(true, UtilityItems,    .3), 
+        new LootPackEntry(true, UpperTreasure,    0.15)
     ));
     
     return wyvern;
@@ -99792,11 +99792,11 @@
             
     wyvern.AddGold(98);
     wyvern.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomPotions,    0.05),
-        new LootPackEntry(true, UnderkingdomGems,       7,     gemsPriceMutatorMedium), 
+        new LootPackEntry(true, UnderkingdomPotions,    0.025),
+        new LootPackEntry(true, UnderkingdomGems,       2,     gemsPriceMutatorMedium), 
         new LootPackEntry(true, UnderkingdomBottles,    10), 
-        new LootPackEntry(true, UtilityItems,    1), 
-        new LootPackEntry(true, UpperTreasure,    0.25)
+        new LootPackEntry(true, UtilityItems,    .3), 
+        new LootPackEntry(true, UpperTreasure,    0.15)
     ));
     
     return wyvern;
@@ -100316,7 +100316,7 @@
             
     orc.AddGold(119);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       12.2,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       10.4,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.5), 
@@ -100382,7 +100382,7 @@
     
     minotaur.AddGold(160);
     minotaur.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       10.2,     gemsPriceMutatorHigh), 
+        new LootPackEntry(true, UnderkingdomGems,       8.7,     gemsPriceMutatorHigh), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.63), 
@@ -100469,7 +100469,7 @@
     var troll = new Troll()
     {
         MaxHealth = 132, Health = 132,
-        BaseDodge = 22,
+        BaseDodge = 21,
         HideDetection = 25,        
         Experience = 5386,
         BasePenetration = ShieldPenetration.Light,
@@ -100485,7 +100485,7 @@
     
     troll.AddGold(138);
     troll.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       10.2,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       8.7,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.55), 
@@ -100533,7 +100533,7 @@
             
     orc.AddGold(112);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       10.2,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       8.7,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.5), 
@@ -100589,7 +100589,7 @@
     hobgoblin.AddGold(119);
     hobgoblin.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new SteelWand(), 1),
-        new LootPackEntry(true, UnderkingdomGems,       12.2,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       10.4,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.5), 
@@ -100622,7 +100622,7 @@
     var troll = new Troll()
     {
         MaxHealth = 128, Health = 128,
-        BaseDodge = 23,
+        BaseDodge = 22,
         HideDetection = 25,        
         Experience = 6464,
         BasePenetration = ShieldPenetration.Medium,
@@ -100640,7 +100640,7 @@
     
     troll.AddGold(146);
     troll.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       12.2,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       10.4,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.55), 
@@ -100671,7 +100671,7 @@
     var troll = new Troll()
     {
         MaxHealth = 143, Health = 143,
-        BaseDodge = 23,
+        BaseDodge = 22,
         HideDetection = 25,           
         Experience = 6800,
         BasePenetration = ShieldPenetration.Medium,
@@ -100687,7 +100687,7 @@
     
     troll.AddGold(146);
     troll.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       12.2,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       10.4,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.55), 
@@ -100719,7 +100719,7 @@
     {
         Name = "Elite Guard",
         MaxHealth = 209, Health = 209,
-        BaseDodge = 29,
+        BaseDodge = 27,
         HideDetection = 29,    
         Experience = 11000,
         
@@ -100740,7 +100740,7 @@
     
     trollguard.AddGold(216);
     trollguard.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       14.5,     gemsPriceMutatorHigh), 
+        new LootPackEntry(true, UnderkingdomGems,       12.3,     gemsPriceMutatorHigh), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.55), 
@@ -100772,7 +100772,7 @@
     var hobgoblin = new Hobgoblin()
     {
         MaxHealth = 130, Health = 130,
-        BaseDodge = 20,
+        BaseDodge = 21,
         HideDetection = 25,
         Experience = 6018,
         BasePenetration = ShieldPenetration.Medium,
@@ -100788,7 +100788,7 @@
     
     hobgoblin.AddGold(119);
     hobgoblin.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       12.2,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       10.4,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.5), 
@@ -100820,7 +100820,7 @@
     {
         MaxHealth = 96, Health = 96,
         MaxMana = 13, Mana = 13,
-        BaseDodge = 20,
+        BaseDodge = 21,
         BasePenetration = ShieldPenetration.VeryLight,
         Experience = 5015,
         HideDetection = 25,
@@ -100843,7 +100843,7 @@
     orc.AddGold(112);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new SteelWand(), 1),
-        new LootPackEntry(true, UnderkingdomGems,       10.2,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       8.7,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.5), 
@@ -100898,7 +100898,7 @@
         
     troll.AddGold(130);
     troll.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       8.4,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       7.2,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.55), 
@@ -100953,7 +100953,7 @@
         
     troll.AddGold(146);
     troll.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       12.2,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       10.4,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.55), 
@@ -100985,7 +100985,7 @@
     {
         MaxHealth = 88, Health = 88,
         MaxMana = 21, Mana = 21,
-        BaseDodge = 19,
+        BaseDodge = 18,
         HideDetection = 25,
         Experience = 4179,
         BasePenetration = ShieldPenetration.VeryLight,
@@ -101011,7 +101011,7 @@
     orc.AddGold(105);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new HickoryWand(), 1),
-        new LootPackEntry(true, UnderkingdomGems,       8.4,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       7.2,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.5), 
@@ -101043,7 +101043,7 @@
     {
         MaxHealth = 68, Health = 68,
         MaxMana = 16, Mana = 16,
-        BaseDodge = 11,
+        BaseDodge = 20,
         BasePenetration = ShieldPenetration.VeryLight,        
         Experience = 3900,
         FireProtection = 100,
@@ -101070,7 +101070,7 @@
     goblin.AddGold(96);
     goblin.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new HickoryWand(), 1),
-        new LootPackEntry(true, UnderkingdomGems,       10.2,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       8.7,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.37), 
@@ -101126,7 +101126,7 @@
     banshee.AddGold(108);
     banshee.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new YouthPotion(), .05),
-        new LootPackEntry(true, UnderkingdomGems,       14.5,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       12.3,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UndeadTreasure,    0.5), 
@@ -101192,7 +101192,7 @@
     ghoul.AddGold(154);
     ghoul.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new YouthPotion(), .1),
-        new LootPackEntry(true, UnderkingdomGems,       14.5,     gemsPriceMutatorHigh), 
+        new LootPackEntry(true, UnderkingdomGems,       12.3,     gemsPriceMutatorHigh), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UndeadTreasure,    0.63), 
@@ -101249,7 +101249,7 @@
     skeleton.AddGold(108);
     skeleton.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new YouthPotion(), .05),
-        new LootPackEntry(true, UnderkingdomGems,       14.5,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       12.3,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UndeadTreasure,    0.5), 
@@ -101312,7 +101312,7 @@
     spectre.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new YouthPotion(), .1),
         new LootPackEntry(true, (from, container) => new OakWand(), 1),
-        new LootPackEntry(true, UnderkingdomGems,       14.5,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       12.3,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UndeadTreasure,    0.5), 
@@ -101378,7 +101378,7 @@
     mummy.AddGold(216);
     mummy.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new YouthPotion(), .1),
-        new LootPackEntry(true, UnderkingdomGems,       14.5,     gemsPriceMutatorVeryHigh), 
+        new LootPackEntry(true, UnderkingdomGems,       12.3,     gemsPriceMutatorVeryHigh), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UndeadTreasure,    0.63), 
@@ -101459,10 +101459,10 @@
     var knight = new Humanoid()
     {
         Name = "Yasnaki Knight",
-        Body = 25,
+        Body = 193,
         
         MaxHealth = 167, Health = 167,
-        BaseDodge = 25,
+        BaseDodge = 23,
         HideDetection = 28,        
         Experience = 10913,
         BasePenetration = ShieldPenetration.Medium,
@@ -101478,7 +101478,7 @@
     
     knight.AddGold(162);
     knight.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       17.2,     gemsPriceMutatorAboveAverage), 
+        new LootPackEntry(true, UnderkingdomGems,       14.6,     gemsPriceMutatorAboveAverage), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, yasnakiTreasure,    0.55), 
@@ -101537,7 +101537,7 @@
     lich.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new YouthPotion(), .1),
         new LootPackEntry(true, (from, container) => new OakWand(), 1),
-        new LootPackEntry(true, UnderkingdomGems,       14.5,     gemsPriceMutatorHigh), 
+        new LootPackEntry(true, UnderkingdomGems,       12.3,     gemsPriceMutatorHigh), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UndeadTreasure,    0.63), 
@@ -101606,7 +101606,7 @@
         new LootPackEntry(true, (from, container) => new YouthPotion(),       5),
         new LootPackEntry(true, (from, container) => new ManaPotion(),       5), 
         new LootPackEntry(true, UnderkingdomPotions,    0.05),
-        new LootPackEntry(true, UnderkingdomGems,       8.4,     gemsPriceMutatorHigh), 
+        new LootPackEntry(true, UnderkingdomGems,       7.2,     gemsPriceMutatorHigh), 
         new LootPackEntry(true, UnderkingdomBottles,    50), 
         new LootPackEntry(true, UtilityItems,    3), 
         new LootPackEntry(true, UpperTreasure,    0.63)
@@ -101666,7 +101666,7 @@
     
     martialartist.AddGold(162);
     martialartist.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       17.2,     gemsPriceMutatorAboveAverage), 
+        new LootPackEntry(true, UnderkingdomGems,       14.6,     gemsPriceMutatorAboveAverage), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, yasnakiTreasure,    0.55), 
@@ -101701,7 +101701,7 @@
         HideDetection = 28,      
         MaxHealth = 133, Health = 133,
         MaxMana = 31, Mana = 31,
-        BaseDodge = 25,
+        BaseDodge = 23,
         BasePenetration = ShieldPenetration.Light,
         Experience = 10918,
                     
@@ -101732,7 +101732,7 @@
     wizard.AddGold(162);
     wizard.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new GlassWand(), 1),
-        new LootPackEntry(true, UnderkingdomGems,       17.2,     gemsPriceMutatorAboveAverage), 
+        new LootPackEntry(true, UnderkingdomGems,       14.6,     gemsPriceMutatorAboveAverage), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, yasnakiTreasure,    0.55), 
@@ -101766,7 +101766,7 @@
         Name = "Yasnaki Thaumaturge",
         Body = 191,
         MaxHealth = 133, Health = 133,
-        BaseDodge = 25,
+        BaseDodge = 23,
         HideDetection = 28,
         Experience = 10918,
         BasePenetration = ShieldPenetration.Light,
@@ -101794,7 +101794,7 @@
     thaum.AddGold(162);
     thaum.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new OakWand(), 1),
-        new LootPackEntry(true, UnderkingdomGems,       17.2,     gemsPriceMutatorAboveAverage), 
+        new LootPackEntry(true, UnderkingdomGems,       14.6,     gemsPriceMutatorAboveAverage), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, yasnakiTreasure,    0.55), 
@@ -101825,7 +101825,7 @@
     var goblin = new Goblin()
     {
         MaxHealth = 85, Health = 85,
-        BaseDodge = 20,
+        BaseDodge = 19,
         BasePenetration = ShieldPenetration.Light,
         Experience = 3900,  
         HideDetection = 25,
@@ -101841,7 +101841,7 @@
             
     goblin.AddGold(96);
     goblin.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       10.2,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       8.7,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.37), 
@@ -101872,7 +101872,7 @@
     var goblin = new Goblin()
     {
         MaxHealth = 78, Health = 78,
-        BaseDodge = 19,
+        BaseDodge = 18,
         BasePenetration = ShieldPenetration.Light,
         Experience = 3250,  
         HideDetection = 25,
@@ -101888,7 +101888,7 @@
             
     goblin.AddGold(90);
     goblin.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       8.4,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       7.2,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.37), 
@@ -101919,7 +101919,7 @@
     var orc = new Orc()
     {
         MaxHealth = 99, Health = 99,
-        BaseDodge = 19,
+        BaseDodge = 18,
         BasePenetration = ShieldPenetration.Light,
         Experience = 4179,
         HideDetection = 25, 
@@ -101936,7 +101936,7 @@
             
     orc.AddGold(105);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       8.4,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       7.2,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.5), 
@@ -101967,7 +101967,7 @@
     var troll = new Troll()
     {
         MaxHealth = 121, Health = 121,
-        BaseDodge = 21,
+        BaseDodge = 20,
         HideDetection = 25,        
         Experience = 4489,
         BasePenetration = ShieldPenetration.Light,
@@ -101983,7 +101983,7 @@
     
     troll.AddGold(130);
     troll.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       8.4,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       7.2,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.55), 
@@ -102014,7 +102014,7 @@
     var orc = new Orc()
     {
         MaxHealth = 110, Health = 110,
-        BaseDodge = 19,
+        BaseDodge = 18,
         HideDetection = 25,         
         Experience = 4179,
         BasePenetration = ShieldPenetration.Light,
@@ -102031,7 +102031,7 @@
             
     orc.AddGold(105);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       8.4,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       7.2,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.5), 
@@ -102061,7 +102061,7 @@
     var goblin = new Goblin()
     {
         MaxHealth = 70, Health = 70,
-        BaseDodge = 19,
+        BaseDodge = 18,
         BasePenetration = ShieldPenetration.Light,       
         Experience = 3250,
         HideDetection = 25,
@@ -102078,7 +102078,7 @@
             
     goblin.AddGold(90);
     goblin.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       8.4,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       7.2,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.37), 
@@ -102280,7 +102280,7 @@
     
     hobgoblin.AddGold(112);
     hobgoblin.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       10.2,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       8.7,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.5), 
@@ -102312,7 +102312,7 @@
     var troll = new Troll()
     {
         MaxHealth = 118, Health = 118,
-        BaseDodge = 22,
+        BaseDodge = 21,
         HideDetection = 25,        
         Experience = 5386,
         BasePenetration = ShieldPenetration.Medium,
@@ -102331,7 +102331,7 @@
     
     troll.AddGold(138);
     troll.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       10.2,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       8.7,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.55), 
@@ -102388,7 +102388,7 @@
     
     stalker.AddGold(154);
     stalker.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       14.5,     gemsPriceMutatorHigh), 
+        new LootPackEntry(true, UnderkingdomGems,       12.3,     gemsPriceMutatorHigh), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UndeadTreasure,    0.63), 
@@ -102420,7 +102420,7 @@
     {
         MaxHealth = 104, Health = 104,
         MaxMana = 13, Mana = 13,
-        BaseDodge = 21,
+        BaseDodge = 22,
         BasePenetration = ShieldPenetration.VeryLight,
         Experience = 6018,
         HideDetection = 25,
@@ -102443,7 +102443,7 @@
     orc.AddGold(119);
     orc.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new SteelWand(), 1),
-        new LootPackEntry(true, UnderkingdomGems,       12.2,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       10.4,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.5), 
@@ -102540,7 +102540,7 @@
         
     troll.AddGold(138);
     troll.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       10.2,     gemsPriceMutatorAboveAverage), 
+        new LootPackEntry(true, UnderkingdomGems,       8.7,     gemsPriceMutatorAboveAverage), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.55), 
@@ -102588,7 +102588,7 @@
             
     orc.AddGold(112);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       10.2,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomGems,       8.7,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
         new LootPackEntry(true, UpperTreasure,    0.5), 
@@ -105292,20 +105292,20 @@
       </entry>
     </treasure>
     <treasure name="UnderkingdomGems">
-      <entry weight="10">
+      <entry weight="50">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Diamond(3500u);
+	return new Diamond(6500u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="5">
+      <entry weight="25">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StarSapphire(7500u);
+	return new StarSapphire(9500u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -105314,16 +105314,16 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new Tourmaline(32000u);
+	return new Tourmaline(100000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="3">
+      <entry weight="10">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new FlawlessSapphire(8000u);
+	return new FlawlessSapphire(13000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
