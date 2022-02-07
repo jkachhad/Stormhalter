@@ -126,6 +126,12 @@
             <!-- Visibility -->
             <ToolBar ItemsSource="{Binding Visibility, Source={StaticResource applicationPresenter}}" 
                      Background="LightPink" ToolTip="Filters" OverflowMode="Never">
+                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding Visibility.BreakWalls}">
+                    <ToggleButton.ToolTip>
+                        <TextBlock Text="Toggle walls and doors as Destroyed" />
+                    </ToggleButton.ToolTip>
+                    <Image Source="../Resources/Door.png" VerticalAlignment="Center" Height="26" Width="26" />
+                </ToggleButton>
                 <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding Visibility.OpenDoors}">
                     <ToggleButton.ToolTip>
                         <TextBlock Text="Toggle Doors Open\Close" />

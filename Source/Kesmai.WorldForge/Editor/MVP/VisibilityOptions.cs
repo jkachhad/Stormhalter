@@ -9,11 +9,26 @@ namespace Kesmai.WorldForge.MVP
 {
 	public class VisibilityOptions : ObservableRecipient
 	{
+		private bool _breakWalls;
 		private bool _openDoors;
 		private bool _hideSecretDoors;
 		private bool _showTeleporters;
 		private bool _showSpawns;
-		
+
+
+		/// <summary>
+		/// Gets or sets a value indicating whether to doors are open.
+		/// </summary>
+		public bool BreakWalls
+		{
+			get => _breakWalls;
+			set
+			{
+				SetProperty(ref _breakWalls, value);
+				WeakReferenceMessenger.Default.Send<VisibilityOptionsChanged>();
+			}
+		}
+
 		/// <summary>
 		/// Gets or sets a value indicating whether to doors are open.
 		/// </summary>

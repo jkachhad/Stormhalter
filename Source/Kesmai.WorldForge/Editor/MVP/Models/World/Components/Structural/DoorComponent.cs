@@ -155,6 +155,7 @@ namespace Kesmai.WorldForge.Models
 			var visibility = presenter.Visibility;
 			var showOpened = IsOpen || visibility.OpenDoors;
 			var showHidden = visibility.HideSecretDoors;
+			var showDestroyed = visibility.BreakWalls;
 			
 			var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
 
@@ -163,7 +164,7 @@ namespace Kesmai.WorldForge.Models
 			if (_isSecret && showHidden)
 				id = _secretId;
 			
-			if (_isDestroyed)
+			if (_isDestroyed || (showDestroyed && ! IsIndestructible))
 				id = _destroyedId;
 			
 			if (terrainManager.TryGetValue(id, out Terrain terrain))
