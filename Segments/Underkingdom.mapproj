@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.87.0.0">
+<segment name="Underkingdom" version="0.90.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -104407,9 +104407,9 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level14Banshee" size="4" minimum="2" maximum="6" />
+      <entry entity="level14Banshee" size="4" minimum="6" maximum="6" />
       <entry entity="level14Ghoul" size="1" minimum="1" maximum="3" />
-      <entry entity="level14Skeleton" size="4" minimum="2" maximum="7" />
+      <entry entity="level14Skeleton" size="4" minimum="7" maximum="7" />
       <entry entity="level14Spectre" size="1" minimum="1" maximum="2" />
       <entry entity="level14Lich" size="1" minimum="1" maximum="2" />
       <entry entity="level14Stalker" size="1" minimum="1" maximum="2" />
@@ -105519,11 +105519,11 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="1">
+      <entry weight="5">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StrongShieldBracelet();
+	return new BlueStaffRaiseDead();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
