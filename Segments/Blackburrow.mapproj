@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Blackburrow" version="0.87.0.0">
+<segment name="Blackburrow" version="0.90.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -26068,15 +26068,6 @@
         <component type="StaticComponent">
           <static>167</static>
         </component>
-        <component type="HiddenTeleporterComponent">
-          <destinationX>8</destinationX>
-          <destinationY>8</destinationY>
-          <destinationRegion>6</destinationRegion>
-          <lightphases select="all" />
-          <moonphases select="all" />
-          <professions>Thief</professions>
-          <alignments select="all" />
-        </component>
       </tile>
       <tile x="32" y="9">
         <component type="StaticComponent">
@@ -28775,10 +28766,15 @@
         </component>
       </tile>
       <tile x="21" y="16">
-        <component type="WallComponent">
-          <wall>151</wall>
-          <destroyed>153</destroyed>
-          <ruins>46</ruins>
+        <component type="StaticComponent">
+          <static>385</static>
+        </component>
+        <component type="DoorComponent">
+          <openId>78</openId>
+          <closedId>151</closedId>
+          <secretId>151</secretId>
+          <destroyedId>84</destroyedId>
+          <isSecret>true</isSecret>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -28924,9 +28920,117 @@
           <ruins>398</ruins>
         </component>
       </tile>
+      <tile x="19" y="17">
+        <component type="WallComponent">
+          <wall>158</wall>
+          <destroyed>161</destroyed>
+          <ruins>170</ruins>
+        </component>
+      </tile>
+      <tile x="20" y="17">
+        <component type="FloorComponent">
+          <ground>184</ground>
+        </component>
+      </tile>
+      <tile x="21" y="17">
+        <component type="FloorComponent">
+          <ground>184</ground>
+        </component>
+      </tile>
+      <tile x="22" y="17">
+        <component type="FloorComponent">
+          <ground>184</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>158</wall>
+          <destroyed>161</destroyed>
+          <ruins>170</ruins>
+        </component>
+      </tile>
       <tile x="6" y="18" />
       <tile x="7" y="18" />
       <tile x="8" y="18" />
+      <tile x="19" y="18">
+        <component type="WallComponent">
+          <wall>158</wall>
+          <destroyed>161</destroyed>
+          <ruins>170</ruins>
+        </component>
+      </tile>
+      <tile x="20" y="18">
+        <component type="FloorComponent">
+          <ground>184</ground>
+        </component>
+        <component type="StaticComponent">
+          <static>167</static>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>7</destinationX>
+          <destinationY>7</destinationY>
+          <destinationRegion>6</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions>Thief</professions>
+          <alignments>Neutral</alignments>
+        </component>
+      </tile>
+      <tile x="21" y="18">
+        <component type="FloorComponent">
+          <ground>184</ground>
+        </component>
+      </tile>
+      <tile x="22" y="18">
+        <component type="FloorComponent">
+          <ground>184</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>158</wall>
+          <destroyed>161</destroyed>
+          <ruins>170</ruins>
+        </component>
+      </tile>
+      <tile x="19" y="19">
+        <component type="WallComponent">
+          <wall>158</wall>
+          <destroyed>161</destroyed>
+          <ruins>170</ruins>
+        </component>
+      </tile>
+      <tile x="20" y="19">
+        <component type="FloorComponent">
+          <ground>184</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+        </component>
+      </tile>
+      <tile x="21" y="19">
+        <component type="FloorComponent">
+          <ground>184</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+        </component>
+      </tile>
+      <tile x="22" y="19">
+        <component type="FloorComponent">
+          <ground>184</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>158</wall>
+          <destroyed>161</destroyed>
+          <ruins>170</ruins>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+        </component>
+      </tile>
     </region>
     <region>
       <id>5</id>
@@ -36682,7 +36786,7 @@ if (spokeRecently(source))
         CanSwim = true,
         Alignment = Alignment.Evil,
         Immunity = CreatureImmunity.Poison,
-        VisibilityDistance = 0,
+        VisibilityDistance = 1,
         Movement = 1,
         Experience = 100000,
         
@@ -36815,7 +36919,7 @@ if (spokeRecently(source))
                 
         Experience = 6500,
     
-        Movement = 2,
+        Movement = 1,
         CanSwim = true,
         BasePenetration = ShieldPenetration.Light,
         Immunity = CreatureImmunity.Poison,
@@ -36887,11 +36991,11 @@ if (spokeRecently(source))
 	skeleton.AddStatus(new NightVisionStatus(skeleton));
     skeleton.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(15)
+        new CreatureBasicAttack(10)
     };
     
     skeleton.AddStatus(new NightVisionStatus(skeleton));
-    skeleton.Wield(new FineCrossbow());
+    skeleton.Wield(new Longbow());
     
     skeleton.AddGold(2000);
     skeleton.AddLoot(new LootPack(
@@ -37510,6 +37614,7 @@ return snake;
     Experience = 25000,
     HideDetection = 50,
     VisibilityDistance = 2,
+    Movement = 1,
 };
 
 elemental.Attacks = new CreatureAttackCollection
@@ -37564,7 +37669,7 @@ return elemental;
     Body = 135,
     MaxHealth = 15000, Health = 15000,
     BaseDodge = 31,
-    BasePenetration = ShieldPenetration.VeryHeavy,
+    BasePenetration = ShieldPenetration.Heavy,
     HideDetection = 37,
     Experience = 200000,
     CanStrikeCritically = false,
@@ -37575,7 +37680,7 @@ return elemental;
     FireProtection = 100,
     IceProtection = 100,
     Immunity = CreatureImmunity.Bashing | CreatureImmunity.Piercing | CreatureImmunity.Projectile | CreatureImmunity.Slashing | CreatureImmunity.Magic |CreatureImmunity.Poison,
-    Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+    Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell | CreatureWeakness.BlueGlowing,
     
     IsTethered = true,
 };
@@ -38573,6 +38678,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="EntranceGnollGuard" size="1" minimum="1" maximum="1" />
       <location x="21" y="3" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="LevelonePrisoner2">
@@ -39062,7 +39168,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Thief Lair Dartanian" size="1" minimum="0" maximum="0" />
+      <entry entity="Thief Lair Dartanian" size="1" minimum="1" maximum="1" />
       <location x="38" y="24" region="6" />
     </spawn>
     <spawn type="RegionSpawner" name="EntranceBlacksmith">
