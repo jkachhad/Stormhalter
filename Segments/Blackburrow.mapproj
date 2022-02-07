@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Blackburrow" version="0.87.0.0">
+<segment name="Blackburrow" version="0.90.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -36815,7 +36815,7 @@ if (spokeRecently(source))
                 
         Experience = 6500,
     
-        Movement = 2,
+        Movement = 1,
         CanSwim = true,
         BasePenetration = ShieldPenetration.Light,
         Immunity = CreatureImmunity.Poison,
@@ -36887,7 +36887,7 @@ if (spokeRecently(source))
 	skeleton.AddStatus(new NightVisionStatus(skeleton));
     skeleton.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(15)
+        new CreatureBasicAttack(10)
     };
     
     skeleton.AddStatus(new NightVisionStatus(skeleton));
@@ -37510,13 +37510,14 @@ return snake;
     Experience = 25000,
     HideDetection = 50,
     VisibilityDistance = 2,
+    Movement = 1,
 };
 
 elemental.Attacks = new CreatureAttackCollection
 {
 
     {
-        new CreatureAttackEntry(12, 10, 20, "You feel poison burn through your veins as the arrow strikes", new AttackPoisonComponent(15))
+        new CreatureAttackEntry(12, 10, 20, "You feel poison burn through your veins as the arrow strikes"), new AttackPoisonComponent(15)
     }
 };
 
@@ -37575,7 +37576,7 @@ return elemental;
     FireProtection = 100,
     IceProtection = 100,
     Immunity = CreatureImmunity.Bashing | CreatureImmunity.Piercing | CreatureImmunity.Projectile | CreatureImmunity.Slashing | CreatureImmunity.Magic |CreatureImmunity.Poison,
-    Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+    Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell | CreatureWeakness.BlueGlowing,
     
     IsTethered = true,
 };
@@ -38574,6 +38575,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="EntranceGnollGuard" size="1" minimum="1" maximum="1" />
       <location x="21" y="3" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="LevelonePrisoner2">
@@ -38920,8 +38922,8 @@ return skeleton;
       <location x="5" y="15" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Bane 6">
-      <minimumDelay>180</minimumDelay>
-      <maximumDelay>300</maximumDelay>
+      <minimumDelay>-180</minimumDelay>
+      <maximumDelay>-300</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -39063,7 +39065,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Thief Lair Dartanian" size="1" minimum="0" maximum="0" />
+      <entry entity="Thief Lair Dartanian" size="1" minimum="1" maximum="1" />
       <location x="38" y="24" region="6" />
     </spawn>
     <spawn type="RegionSpawner" name="EntranceBlacksmith">
@@ -39733,7 +39735,7 @@ return skeleton;
     <spawn type="RegionSpawner" name="Skel Ninja">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>18</maximum>
+      <maximum>9</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -39757,7 +39759,7 @@ return skeleton;
     <spawn type="RegionSpawner" name="Skel Ninja 2">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>18</maximum>
+      <maximum>9</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -39781,7 +39783,7 @@ return skeleton;
     <spawn type="RegionSpawner" name="Skel Ninja 3">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>18</maximum>
+      <maximum>9</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
