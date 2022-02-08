@@ -97,8 +97,25 @@ namespace Kesmai.WorldForge.Models
 		{
 			var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
 
-			if (terrainManager.TryGetValue(_wall, out Terrain terrain))
-				yield return new ComponentRender(terrain, Color);
+			var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+			var visibility = presenter.Visibility;
+			var showDestroyed = visibility.BreakWalls;
+
+			Terrain terrain;
+
+			if (showDestroyed && !IsIndestructible)
+			{
+				if (_ruins != 0 && terrainManager.TryGetValue(_ruins, out terrain))
+					yield return new ComponentRender(terrain, Color);
+
+				if (terrainManager.TryGetValue(_destroyed, out terrain))
+					yield return new ComponentRender(terrain, Color);
+			}
+			else
+			{
+				if (terrainManager.TryGetValue(_wall, out terrain))
+					yield return new ComponentRender(terrain, Color);
+			}
 		}
 		
 		public override XElement GetXElement()
