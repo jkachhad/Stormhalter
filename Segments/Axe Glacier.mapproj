@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.87.0.0">
+<segment name="Axe Glacier" version="0.90.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -4712,14 +4712,13 @@
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
-        <component type="HiddenTeleporterComponent">
-          <destinationX>27</destinationX>
-          <destinationY>13</destinationY>
-          <destinationRegion>1</destinationRegion>
+        <component type="ItemTeleporter">
           <lightphases select="all" />
           <moonphases select="all" />
           <professions select="all" />
           <alignments select="all" />
+          <type>MoonstoneRing</type>
+          <fail>Interrupted</fail>
         </component>
       </tile>
       <tile x="30" y="13">
@@ -53623,14 +53622,13 @@
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
-        <component type="HiddenTeleporterComponent">
-          <destinationX>14</destinationX>
-          <destinationY>23</destinationY>
-          <destinationRegion>23</destinationRegion>
+        <component type="ItemTeleporter">
           <lightphases select="all" />
           <moonphases select="all" />
           <professions select="all" />
           <alignments select="all" />
+          <type>MoonstoneRing</type>
+          <fail>Interrupted</fail>
         </component>
       </tile>
       <tile x="15" y="21">
@@ -110481,7 +110479,7 @@
       </entry>
     </treasure>
     <treasure name="upperTreasure">
-      <entry weight="15">
+      <entry weight="10">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -110522,6 +110520,15 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new ShieldRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="10">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new MoonstoneRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
