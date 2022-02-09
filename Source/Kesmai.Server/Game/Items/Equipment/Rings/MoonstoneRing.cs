@@ -17,7 +17,14 @@ namespace Kesmai.Server.Items
 		public MoonstoneRing() : base(57)
 		{
 		}
-		
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="MoonstoneRing"/> class.
+		/// </summary>
+		public MoonstoneRing(Serial serial) : base(serial)
+		{
+		}
+
 		/// <summary>
 		/// Gets the description for this instance.
 		/// </summary>
