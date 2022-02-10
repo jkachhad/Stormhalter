@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.90.0.0">
+<segment name="Axe Glacier" version="0.87.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -2656,6 +2656,17 @@
         <component type="TreeComponent">
           <tree>199</tree>
           <canGrow>true</canGrow>
+        </component>
+        <component type="ItemTeleporter">
+          <destinationX>27</destinationX>
+          <destinationY>13</destinationY>
+          <destinationRegion>1</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+          <type>MoonstoneRing</type>
+          <fail>Interrupted</fail>
         </component>
       </tile>
       <tile x="29" y="6">
