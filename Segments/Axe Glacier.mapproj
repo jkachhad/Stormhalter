@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.90.0.0">
+<segment name="Axe Glacier" version="0.87.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -2657,6 +2657,17 @@
           <tree>199</tree>
           <canGrow>true</canGrow>
         </component>
+        <component type="ItemTeleporter">
+          <destinationX>27</destinationX>
+          <destinationY>13</destinationY>
+          <destinationRegion>1</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+          <type>MoonstoneRing</type>
+          <fail>Interrupted</fail>
+        </component>
       </tile>
       <tile x="29" y="6">
         <component type="FloorComponent">
@@ -4770,13 +4781,14 @@
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
-        <component type="ItemTeleporter">
+        <component type="HiddenTeleporterComponent">
+          <destinationX>27</destinationX>
+          <destinationY>13</destinationY>
+          <destinationRegion>1</destinationRegion>
           <lightphases select="all" />
           <moonphases select="all" />
           <professions select="all" />
           <alignments select="all" />
-          <type>MoonstoneRing</type>
-          <fail>Interrupted</fail>
         </component>
       </tile>
       <tile x="30" y="13">
@@ -53680,13 +53692,14 @@
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
-        <component type="ItemTeleporter">
+        <component type="HiddenTeleporterComponent">
+          <destinationX>14</destinationX>
+          <destinationY>23</destinationY>
+          <destinationRegion>23</destinationRegion>
           <lightphases select="all" />
           <moonphases select="all" />
           <professions select="all" />
           <alignments select="all" />
-          <type>MoonstoneRing</type>
-          <fail>Interrupted</fail>
         </component>
       </tile>
       <tile x="15" y="21">
