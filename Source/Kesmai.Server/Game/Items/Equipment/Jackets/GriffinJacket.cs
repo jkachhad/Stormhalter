@@ -11,6 +11,13 @@ namespace Kesmai.Server.Items
 
         /// <inheritdoc />
 		public override int Weight => 1500;
+		
+		/// <inheritdoc />
+		/// <remarks>Robes have a default <see cref="Hindrance"/> value of 1.</remarks>
+		public override int Hindrance => 0;
+		
+		/// <inheritdoc />
+		public override int ProtectionFromFire => 10;
 
         /// <summary>
 		/// Initializes a new instance of the <see cref="GriffinJacket"/> class.
