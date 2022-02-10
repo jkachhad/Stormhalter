@@ -156,6 +156,12 @@
                     </ToggleButton.ToolTip>
                     <Image Source="../Resources/Spawns.png" VerticalAlignment="Center" Height="26" Width="26" />
                 </ToggleButton>
+                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding Visibility.ShowComments}">
+                    <ToggleButton.ToolTip>
+                        <TextBlock Text="Highlight Comments" />
+                    </ToggleButton.ToolTip>
+                    <Image Source="../Resources/Comment.png" VerticalAlignment="Center" Height="26" Width="26" />
+                </ToggleButton>
             </ToolBar>
         </ToolBarTray>
         
