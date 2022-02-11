@@ -362,7 +362,7 @@ namespace Kesmai.WorldForge
 
 			_font = renderer.GetFont("Tahoma14Bold");
 
-			var commentStream = System.Windows.Application.GetResourceStream(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/Comment.png")).Stream;
+			var commentStream = System.Windows.Application.GetResourceStream(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/Comment-White.png")).Stream;
 			_commentSprite = Texture2D.FromStream(graphicsDevice, commentStream);
 		}
 
