@@ -101182,6 +101182,71 @@ else
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="BossMiniLevel7Bear">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var bear = new Bear()
+    {
+        Name = "Big.Bear",
+        MaxHealth = 200, Health = 200,
+        BaseDodge = 21,
+        HideDetection = 23,        
+        Experience = 6000,
+        BasePenetration = ShieldPenetration.Light,
+        CanSwim = true,
+        CanCharge = true,
+        FireProtection = 100,
+        CanStrikeCritically = false,
+    };
+    bear.AddStatus(new NightVisionStatus(bear));
+        
+    bear.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(12,     8, 18,  "The bear slashes you with its claws."),        50 
+        },
+        {
+            new CreatureAttack(12,     12, 20,  "You've been mauled by the bear."),             40 
+        },
+        {
+            new CreatureAttack(12,     15, 23, "The bear crushes you within its embrace."),     10
+        }
+    };
+        
+    bear.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the tough hide"),
+        new CreatureBlock(4, "a claw"),
+    };
+        
+    bear.AddGold(54);
+    bear.AddLoot(new LootPack(
+        new LootPackEntry(true, kesmai12Gems,       17.2,     gemsPriceMutatorHigh),
+        new LootPackEntry(true, dungeon1Bottles,    20),
+        new LootPackEntry(true, surfaceTreasure,   1.5),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1.6),
+        new LootPackEntry(true, (from, container) => new GrizzlyJacket(), 100)
+    ));
+        
+    return bear;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+     source.SayTo(killer, $"Only you can prevent forest fires {killer.Name}.");
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="Elder.Troll">
@@ -103377,6 +103442,29 @@ else
       <entry entity="level8Ghoul" size="1" minimum="0" maximum="1" />
       <bounds region="14">
         <inclusion left="1" top="10" right="32" bottom="38" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai Surface BigBear">
+      <minimumDelay>3600</minimumDelay>
+      <maximumDelay>4500</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossMiniLevel7Bear" size="1" minimum="1" maximum="1" />
+      <bounds region="1">
+        <inclusion left="51" top="4" right="95" bottom="29" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
