@@ -12,7 +12,7 @@ namespace Kesmai.Server.Items
 
 		/// <inheritdoc />
 		public override int Weight => 2200;
-		
+
 		/// <inheritdoc />
 		public override int MinimumDamage => 1;
 
