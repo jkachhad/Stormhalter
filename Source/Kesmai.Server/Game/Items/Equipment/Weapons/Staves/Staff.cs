@@ -13,7 +13,10 @@ namespace Kesmai.Server.Items
 		
 		/// <inheritdoc />
 		public override Skill Skill => Skill.Staff;
-		
+
+		/// <inheritdoc />
+		public override ShieldPenetration Penetration => ShieldPenetration.Light;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Staff"/> class.
 		/// </summary>

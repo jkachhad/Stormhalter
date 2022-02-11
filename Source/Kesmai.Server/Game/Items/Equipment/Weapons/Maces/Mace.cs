@@ -11,7 +11,10 @@ namespace Kesmai.Server.Items
 
 		/// <inheritdoc />
 		public override int Category => 2;
-		
+
+		/// <inheritdoc />
+		public override ShieldPenetration Penetration => ShieldPenetration.Light;
+
 		/// <inheritdoc />
 		public override Skill Skill => Skill.Mace;
 

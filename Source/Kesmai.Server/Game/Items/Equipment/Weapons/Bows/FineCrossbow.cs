@@ -11,7 +11,10 @@ namespace Kesmai.Server.Items
 		
 		/// <inheritdoc />
 		public override int BaseAttackBonus => 2;
-		
+
+		/// <inheritdoc />
+		public override ShieldPenetration Penetration => ShieldPenetration.Light;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FineCrossbow"/> class.
 		/// </summary>
