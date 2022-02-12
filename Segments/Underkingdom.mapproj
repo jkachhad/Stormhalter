@@ -102179,16 +102179,14 @@
             skillLevel: 13), 100, TimeSpan.FromSeconds(12.0) }
     };
     
-    wraith.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new HummingbirdSword(),     100)
-    ));
     return wraith;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    new HummingbirdSword().Move(Location, true, Segment);
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
