@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.IO;
+using Kesmai.Server.Miscellaneous;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items
 {
+	[TypeAlias("Kesmai.Server.Internal.AxeGlacier.Cache+MoonstoneRing")]
 	public partial class MoonstoneRing : Ring
 	{
 		/// <summary>
@@ -54,9 +56,9 @@ namespace Kesmai.Server.Items
 			switch (version)
 			{
 				case 1:
-					{
-						break;
-					}
+				{
+					break;
+				}
 			}
 		}
 	}

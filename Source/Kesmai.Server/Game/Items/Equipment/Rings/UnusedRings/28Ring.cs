@@ -24,6 +24,13 @@ namespace Kesmai.Server.Items
 		public TwentyEightRing() : base(28)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TwentyEightRing"/> class.
+		/// </summary>
+		public TwentyEightRing(Serial serial) : base(serial)
+		{
+		}
 
 		/// <summary>
 		/// Gets the description for this instance.
@@ -68,6 +75,34 @@ namespace Kesmai.Server.Items
 				resistance.RemoveSourceFor(this);
 
 			return true;
+		}
+		
+		/// <summary>
+		/// Serializes this instance into binary data for persistence.
+		/// </summary>
+		public override void Serialize(BinaryWriter writer)
+		{
+			base.Serialize(writer);
+
+			writer.Write((short)1);	/* version */
+		}
+
+		/// <summary>
+		/// Deserializes this instance from persisted binary data.
+		/// </summary>
+		public override void Deserialize(BinaryReader reader)
+		{
+			base.Deserialize(reader);
+
+			var version = reader.ReadInt16();
+
+			switch (version)
+			{
+				case 1:
+				{
+					break;
+				}
+			}
 		}
 	}
 }
