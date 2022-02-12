@@ -23,6 +23,13 @@ namespace Kesmai.Server.Items
 		public ToriiBook() : base(297)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ToriiBook"/> class.
+		/// </summary>
+		public ToriiBook(Serial serial) : base(serial)
+		{
+		}
 
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)

@@ -23,6 +23,13 @@ namespace Kesmai.Server.Items
 		public UnfurledScroll() : base(141)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="RolledScroll"/> class.
+		/// </summary>
+		public UnfurledScroll(Serial serial) : base(serial)
+		{
+		}
 
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)

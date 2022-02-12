@@ -24,6 +24,13 @@ namespace Kesmai.Server.Items
 		public TwoSeventyNineRing() : base(279)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TwoSeventyNineRing"/> class.
+		/// </summary>
+		public TwoSeventyNineRing(Serial serial) : base(serial)
+		{
+		}
 
 		/// <summary>
 		/// Gets the description for this instance.

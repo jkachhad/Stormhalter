@@ -23,6 +23,13 @@ namespace Kesmai.Server.Items
 		public GreenTippedFeather() : base(39)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GreenTippedFeather"/> class.
+		/// </summary>
+		public GreenTippedFeather(Serial serial) : base(serial)
+		{
+		}
 
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)

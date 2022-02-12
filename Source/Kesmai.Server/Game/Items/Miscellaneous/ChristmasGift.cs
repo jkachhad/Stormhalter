@@ -27,6 +27,13 @@ namespace Kesmai.Server.Items
 		{
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="PetrifiedWood"/> class.
+		/// </summary>
+		public ChristmasGift(Serial serial) : base(serial)
+		{
+		}
+		
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)
 		{

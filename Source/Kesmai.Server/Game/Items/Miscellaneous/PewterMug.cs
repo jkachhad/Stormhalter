@@ -26,6 +26,13 @@ namespace Kesmai.Server.Items
 		public PewterMug() : base(283)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="PewterMug"/> class.
+		/// </summary>
+		public PewterMug(Serial serial) : base(serial)
+		{
+		}
 
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)

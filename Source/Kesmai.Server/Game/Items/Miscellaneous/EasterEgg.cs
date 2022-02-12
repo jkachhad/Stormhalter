@@ -26,6 +26,13 @@ namespace Kesmai.Server.Items
 		public EasterEgg() : base(319)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="EasterEgg"/> class.
+		/// </summary>
+		public EasterEgg(Serial serial) : base(serial)
+		{
+		}
 
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)

@@ -24,7 +24,14 @@ namespace Kesmai.Server.Items
 		public FiftyFourRing() : base(54)
 		{
 		}
-
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FiftyFourRing"/> class.
+		/// </summary>
+		public FiftyFourRing(Serial serial) : base(serial)
+		{
+		}
+		
 		/// <summary>
 		/// Gets the description for this instance.
 		/// </summary>

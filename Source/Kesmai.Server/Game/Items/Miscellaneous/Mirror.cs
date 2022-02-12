@@ -26,6 +26,13 @@ namespace Kesmai.Server.Items
 		public Mirror() : base(149)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Mirror"/> class.
+		/// </summary>
+		public Mirror(Serial serial) : base(serial)
+		{
+		}
 
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)

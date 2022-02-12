@@ -23,6 +23,13 @@ namespace Kesmai.Server.Items
 		public HorseStatue() : base(12)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="HorseStatue"/> class.
+		/// </summary>
+		public HorseStatue(Serial serial) : base(serial)
+		{
+		}
 
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)

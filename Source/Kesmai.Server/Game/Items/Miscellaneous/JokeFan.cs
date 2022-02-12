@@ -26,6 +26,13 @@ namespace Kesmai.Server.Items
 		public JokeFan() : base(194)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="JokeFan"/> class.
+		/// </summary>
+		public JokeFan(Serial serial) : base(serial)
+		{
+		}
 
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)

@@ -26,6 +26,13 @@ namespace Kesmai.Server.Items
 		}
 
 		/// <summary>
+		/// Initializes a new instance of the <see cref="TwoSeventeenRing"/> class.
+		/// </summary>
+		public TwoSeventeenRing(Serial serial) : base(serial)
+		{
+		}
+
+		/// <summary>
 		/// Gets the description for this instance.
 		/// </summary>
 		public override void GetDescription(List<LocalizationEntry> entries)

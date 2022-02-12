@@ -23,6 +23,13 @@ namespace Kesmai.Server.Items
 		public MisoSoup() : base(24)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="MisoSoup"/> class.
+		/// </summary>
+		public MisoSoup(Serial serial) : base(serial)
+		{
+		}
 
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)

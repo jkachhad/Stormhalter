@@ -26,6 +26,13 @@ namespace Kesmai.Server.Items
 		public JeweledKey() : base(103)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="JeweledKey"/> class.
+		/// </summary>
+		public JeweledKey(Serial serial) : base(serial)
+		{
+		}
 
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)

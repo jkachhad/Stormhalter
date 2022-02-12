@@ -23,6 +23,13 @@ namespace Kesmai.Server.Items
 		public DemonFigurine() : base(376)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="DemonFigurine"/> class.
+		/// </summary>
+		public DemonFigurine(Serial serial) : base(serial)
+		{
+		}
 
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)

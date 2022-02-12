@@ -23,6 +23,13 @@ namespace Kesmai.Server.Items
 		public GriffinFigurine() : base(180)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GriffinFigurine"/> class.
+		/// </summary>
+		public GriffinFigurine(Serial serial) : base(serial)
+		{
+		}
 
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)

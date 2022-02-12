@@ -24,6 +24,13 @@ namespace Kesmai.Server.Items
 		public SixtySixRing() : base(66)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="SixtySixRing"/> class.
+		/// </summary>
+		public SixtySixRing(Serial serial) : base(serial)
+		{
+		}
 
 		/// <summary>
 		/// Gets the description for this instance.

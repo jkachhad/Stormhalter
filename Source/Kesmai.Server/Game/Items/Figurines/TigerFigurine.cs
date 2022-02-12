@@ -23,6 +23,13 @@ namespace Kesmai.Server.Items
 		public TigerFigurine() : base(49)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TigerFigurine"/> class.
+		/// </summary>
+		public TigerFigurine(Serial serial) : base(serial)
+		{
+		}
 
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)

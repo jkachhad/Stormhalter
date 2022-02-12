@@ -23,6 +23,13 @@ namespace Kesmai.Server.Items
 		public TigerStatuette() : base(50)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TigerStatuette"/> class.
+		/// </summary>
+		public TigerStatuette(Serial serial) : base(serial)
+		{
+		}
 
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)

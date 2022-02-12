@@ -26,6 +26,13 @@ namespace Kesmai.Server.Items
 		}
 
 		/// <summary>
+		/// Initializes a new instance of the <see cref="SixtyEightRing"/> class.
+		/// </summary>
+		public SixtyEightRing(Serial serial) : base(serial)
+		{
+		}
+		
+		/// <summary>
 		/// Gets the description for this instance.
 		/// </summary>
 		public override void GetDescription(List<LocalizationEntry> entries)

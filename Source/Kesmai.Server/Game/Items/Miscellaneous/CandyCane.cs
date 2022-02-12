@@ -26,6 +26,13 @@ namespace Kesmai.Server.Items
 		public CandyCane() : base(322)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="PetrifiedWood"/> class.
+		/// </summary>
+		public CandyCane(Serial serial) : base(serial)
+		{
+		}
 
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)

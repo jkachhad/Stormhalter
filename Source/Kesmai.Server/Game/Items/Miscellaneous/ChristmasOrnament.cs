@@ -26,6 +26,13 @@ namespace Kesmai.Server.Items
 		public ChristmasOrnament() : base(323)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="PetrifiedWood"/> class.
+		/// </summary>
+		public ChristmasOrnament(Serial serial) : base(serial)
+		{
+		}
 
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)

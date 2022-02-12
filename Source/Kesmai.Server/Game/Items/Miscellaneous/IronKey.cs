@@ -26,6 +26,13 @@ namespace Kesmai.Server.Items
 		public IronKey() : base(284)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="IronKey"/> class.
+		/// </summary>
+		public IronKey(Serial serial) : base(serial)
+		{
+		}
 
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)

@@ -23,6 +23,13 @@ namespace Kesmai.Server.Items
 		public IceDragonFigurine() : base(375)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="IceDragonFigurine"/> class.
+		/// </summary>
+		public IceDragonFigurine(Serial serial) : base(serial)
+		{
+		}
 
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)

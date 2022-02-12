@@ -23,6 +23,13 @@ namespace Kesmai.Server.Items
 		public AncientCoin() : base(73)
 		{
 		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="AncientCoin"/> class.
+		/// </summary>
+		public AncientCoin(Serial serial) : base(serial)
+		{
+		}
 
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)

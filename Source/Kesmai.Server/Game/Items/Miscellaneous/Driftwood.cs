@@ -26,7 +26,14 @@ namespace Kesmai.Server.Items
 		public PetrifiedWood() : base(13)
 		{
 		}
-
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="PetrifiedWood"/> class.
+		/// </summary>
+		public PetrifiedWood(Serial serial) : base(serial)
+		{
+		}
+		
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)
 		{
