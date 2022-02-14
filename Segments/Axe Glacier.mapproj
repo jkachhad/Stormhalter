@@ -2599,17 +2599,6 @@
           <tree>199</tree>
           <canGrow>true</canGrow>
         </component>
-        <component type="ItemTeleporter">
-          <destinationX>27</destinationX>
-          <destinationY>13</destinationY>
-          <destinationRegion>1</destinationRegion>
-          <lightphases select="all" />
-          <moonphases select="all" />
-          <professions select="all" />
-          <alignments select="all" />
-          <type>MoonstoneRing</type>
-          <fail>Interrupted</fail>
-        </component>
       </tile>
       <tile x="29" y="6">
         <component type="FloorComponent">
@@ -4723,14 +4712,16 @@
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
-        <component type="HiddenTeleporterComponent">
+        <component type="ItemTeleporter">
           <destinationX>27</destinationX>
           <destinationY>13</destinationY>
           <destinationRegion>1</destinationRegion>
-          <lightphases select="all" />
+          <lightphases>midnight,nighttime</lightphases>
           <moonphases select="all" />
           <professions select="all" />
           <alignments select="all" />
+          <type>MoonstoneRing</type>
+          <fail>Interrupted</fail>
         </component>
       </tile>
       <tile x="30" y="13">
@@ -53634,14 +53625,16 @@
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
-        <component type="HiddenTeleporterComponent">
+        <component type="ItemTeleporter">
           <destinationX>14</destinationX>
           <destinationY>23</destinationY>
           <destinationRegion>23</destinationRegion>
-          <lightphases select="all" />
+          <lightphases>midnight,nighttime</lightphases>
           <moonphases select="all" />
           <professions select="all" />
           <alignments select="all" />
+          <type>MoonstoneRing</type>
+          <fail>Interrupted</fail>
         </component>
       </tile>
       <tile x="15" y="21">

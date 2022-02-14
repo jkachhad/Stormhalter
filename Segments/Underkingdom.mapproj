@@ -99080,6 +99080,11 @@
         <rectangle left="4" top="11" right="13" bottom="25" />
       </rectangles>
     </subregion>
+    <subregion name="guardianLair" type="Lair" region="10">
+      <rectangles>
+        <rectangle left="2" top="17" right="11" bottom="21" />
+      </rectangles>
+    </subregion>
   </subregions>
   <entities>
     <entity name="uktownBalmVendor">
@@ -102179,16 +102184,14 @@
             skillLevel: 13), 100, TimeSpan.FromSeconds(12.0) }
     };
     
-    wraith.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new HummingbirdSword(),     100)
-    ));
     return wraith;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    new HummingbirdSword().Move(Location, true, Segment);
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
