@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.87.0.0">
+<segment name="Kesmai" version="0.90.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -48319,6 +48319,16 @@
       <tile x="8" y="21">
         <component type="FloorComponent">
           <ground>1</ground>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>11</destinationX>
+          <destinationY>21</destinationY>
+          <destinationRegion>11</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="none" />
+          <allowNPC>true</allowNPC>
         </component>
       </tile>
       <tile x="9" y="21">
