@@ -151,7 +151,7 @@ namespace Kesmai.Server.Items
 			if (!base.OnUnequip(entity))
 				return false;
 
-			if (_isActive)
+			if (_isActive && entity.IsAlive) /* Only teleport the entity if they are alive. */
 			{
 				var sourceSegment = entity.Segment;
 				var sourceLocation = entity.Location;
