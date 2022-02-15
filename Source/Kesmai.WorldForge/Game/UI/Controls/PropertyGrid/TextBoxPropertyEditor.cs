@@ -10,7 +10,14 @@ namespace Kesmai.WorldForge.Windows
 	public class TextBoxPropertyEditor : PropertyEditor
 	{
 		private TextBox _internal;
+		private bool _multiline = false;
+		private bool _canBeNull;
 
+		public TextBoxPropertyEditor(bool multiline, bool canBeNull) : base ()
+        {
+			_multiline = multiline;
+			_canBeNull = canBeNull;
+        }
 		protected override void OnLoad()
 		{
 			base.OnLoad();
@@ -22,6 +29,9 @@ namespace Kesmai.WorldForge.Windows
 				Font = "Tahoma14Bold",
 				Foreground = Color.Black,
 			});
+
+			if (_multiline)
+				_internal.MaxLines = 10;
 
 			var parent = this.GetAncestors().OfType<PropertyFrame>().FirstOrDefault();
 
@@ -43,7 +53,7 @@ namespace Kesmai.WorldForge.Windows
 
 					try
 					{
-						if (!String.IsNullOrEmpty(value) && converter.CanConvertFrom(typeof(string)))
+						if ((!String.IsNullOrEmpty(value) || _canBeNull) && converter.CanConvertFrom(typeof(string)))
 							propertyInfo.SetValue(source, converter.ConvertFrom(value), null);
 						else
 							color = Color.Red;
@@ -60,5 +70,6 @@ namespace Kesmai.WorldForge.Windows
 				throw new Exception("Unable to find parent frame for PropertyEditor");
 			}
 		}
+
 	}
 }
