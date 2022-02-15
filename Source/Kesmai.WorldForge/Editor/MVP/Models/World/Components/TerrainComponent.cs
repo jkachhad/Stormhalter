@@ -108,7 +108,7 @@ namespace Kesmai.WorldForge.Models
 					new XAttribute("a", Color.A)
 				));
 			}
-			if (Comment != null)
+			if (!String.IsNullOrWhiteSpace(Comment))
             {
 				element.Add(new XElement("comment", Comment));
             }

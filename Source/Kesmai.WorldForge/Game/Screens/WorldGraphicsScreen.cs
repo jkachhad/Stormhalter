@@ -952,7 +952,7 @@ namespace Kesmai.WorldForge
 					}
 					if (_presenter.Visibility.ShowComments)
                     {
-						var visibleComments = region.GetTiles().Where(t => t.Components.Any(c => c.Comment != null) && viewRectangle.Contains(t.X, t.Y));
+						var visibleComments = region.GetTiles().Where(t => t.Components.Any(c => !string.IsNullOrWhiteSpace(c.Comment)) && viewRectangle.Contains(t.X, t.Y));
 
 						var spriteWidth = 32 * _zoomFactor;
 
@@ -961,8 +961,7 @@ namespace Kesmai.WorldForge
 							bounds.X = (int)Math.Floor(bounds.Right - spriteWidth);
 							bounds.Width = (int)Math.Floor(spriteWidth);
 							bounds.Height = (int)Math.Floor(spriteWidth);
-							spritebatch.FillRectangle(bounds, Color.Aqua);
-							spritebatch.Draw(_commentSprite, bounds, Color.White);
+							spritebatch.Draw(_commentSprite, bounds, Color.Aqua);
 
 						}
                     }
