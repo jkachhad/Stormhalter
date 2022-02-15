@@ -102191,7 +102191,8 @@
       <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    new HummingbirdSword().Move(source.Location, true, source.Segment);
+    var hummerLocation = new Point2D(7,19,10);
+    new HummingbirdSword().Move(hummerLocation, true, killer.Location);
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
