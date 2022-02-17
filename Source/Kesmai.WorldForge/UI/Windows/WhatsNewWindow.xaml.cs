@@ -29,6 +29,12 @@ $@"
 <h3>=== {Core.Version} ===</h3>
 <strong>Enhancements:</strong>
 <ul>
+<li>Added the ability to add comments to components. Tiles with comments can be highlighted from the Visibility Options toolbar.</li>
+</ul>
+<br/>
+<h3>=== 0.91.0.0 ===</h3>
+<strong>Enhancements:</strong>
+<ul>
 <li>Added a visibility option to show walls and doors as their destroyed images.</li>
 <li>Added a Flags field to Entities. Visible on the Entity tab as well as the grid view on a Spawner. Shows statuses and attributes like canFly, canLoot, NightVisionStatus, Poison and Prone. Can only show values if they are explicitly specified in the entity OnSpawn() script.</li>
 </ul>
