@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.90.0.0">
+<segment name="Underkingdom" version="0.91.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -173,7 +173,7 @@
         {
             Name = "guardian";
             Alignment = Alignment.Chaotic;
-            Body = 45;
+            Body = 51;
         }
 
         public override int GetNearbySound() => 289;
@@ -100057,7 +100057,6 @@
         FireProtection = 100,
         IceProtection = 100,
         CanCharge = true,
-        CanStrikeCritically = false,
         
         BasePenetration = ShieldPenetration.VeryHeavy,
     
@@ -102178,15 +102177,15 @@
         new CreatureBasicAttack(7)
     };
     
-    wraith.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new HummingbirdSword(),     100)
-    ));
-    
     wraith.Spells = new CreatureSpellCollection(100)
     {
        { new CreatureSpell<WhirlwindSpell>(
             skillLevel: 13), 100, TimeSpan.FromSeconds(12.0) }
     };
+    
+    wraith.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new HummingbirdSword(),     100)
+    ));
     
     return wraith;
 ]]></block>
@@ -102195,7 +102194,6 @@
       <script name="OnDeath" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
