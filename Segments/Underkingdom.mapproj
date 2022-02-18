@@ -102178,6 +102178,10 @@
         new CreatureBasicAttack(7)
     };
     
+    wraith.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new HummingbirdSword(),     100)
+    ));
+    
     wraith.Spells = new CreatureSpellCollection(100)
     {
        { new CreatureSpell<WhirlwindSpell>(
@@ -102188,11 +102192,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="true">
+      <script name="OnDeath" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var hummerLocation = new Point2D(7,19,10);
-    new HummingbirdSword().Move(hummerLocation, true, killer.Segment);
+    
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
