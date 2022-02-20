@@ -38,6 +38,12 @@ namespace Kesmai.WorldForge.Models
 		[Browsable(true)]
 		public Color Color { get; set; }
 
+		/// <summary>
+		/// Gets or sets a comment
+		/// </summary>
+		[Browsable(true)]
+		public String Comment { get; set; }
+
 		#endregion
 
 		#region Constructors and Cleanup
@@ -74,6 +80,12 @@ namespace Kesmai.WorldForge.Models
 		    {
 			    Color = _defaultColor;
 		    }
+
+			var commentElement = element.Element("comment");
+			if (commentElement != null)
+            {
+				Comment = commentElement.Value;
+            }
 	    }
 
 		#endregion
@@ -96,6 +108,11 @@ namespace Kesmai.WorldForge.Models
 					new XAttribute("a", Color.A)
 				));
 			}
+			if (!String.IsNullOrWhiteSpace(Comment))
+            {
+				element.Add(new XElement("comment", Comment));
+            }
+
 
 			return element;
 		}

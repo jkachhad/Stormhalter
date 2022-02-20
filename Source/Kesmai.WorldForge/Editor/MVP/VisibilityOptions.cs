@@ -14,6 +14,7 @@ namespace Kesmai.WorldForge.MVP
 		private bool _hideSecretDoors;
 		private bool _showTeleporters;
 		private bool _showSpawns;
+		private bool _showComments;
 
 
 		/// <summary>
@@ -77,6 +78,19 @@ namespace Kesmai.WorldForge.MVP
 			set
 			{
 				SetProperty(ref _showSpawns, value);
+				WeakReferenceMessenger.Default.Send<VisibilityOptionsChanged>();
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets a value indicating whether components with comments are highlighted
+		/// </summary>
+		public bool ShowComments
+		{
+			get => _showComments;
+			set
+			{
+				SetProperty(ref _showComments, value);
 				WeakReferenceMessenger.Default.Send<VisibilityOptionsChanged>();
 			}
 		}
