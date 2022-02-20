@@ -153,22 +153,24 @@ namespace Kesmai.Server.Items
 
 			if (_isActive)
 			{
-				var sourceSegment = entity.Segment;
-				var sourceLocation = entity.Location;
+				if (!entity.Deleted && entity.IsAlive) /* Only teleport the entity if they are alive. */
+				{
+					var sourceSegment = entity.Segment;
+					var sourceLocation = entity.Location;
 
-				var targetSegment = BoundSegment;
-				var targetLocation = BoundLocation;
+					var targetSegment = BoundSegment;
+					var targetLocation = BoundLocation;
 
-				var sourceSound = targetLocation.GetDistanceToMax(sourceLocation) > 3;
+					var sourceSound = targetLocation.GetDistanceToMax(sourceLocation) > 3;
 
-				if (targetSegment != default(Segment))
-					targetSegment.PlaySound(targetLocation, 66, 3, 6);
+					if (targetSegment != default(Segment))
+						targetSegment.PlaySound(targetLocation, 66, 3, 6);
 
-				if (sourceSound)
-					sourceSegment.PlaySound(sourceLocation, 66, 3, 6);
+					if (sourceSound)
+						sourceSegment.PlaySound(sourceLocation, 66, 3, 6);
 
-				if (!entity.Deleted && entity.IsAlive)
 					entity.Teleport(targetLocation, targetSegment);
+				}
 
 				_isActive = false;
 
