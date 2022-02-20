@@ -79140,12 +79140,10 @@
             new StockEntry("mystery item",       () => new ShieldBracelet(),              (int)(10000),      1, onRarePurchase, false),
             new StockEntry("mystery item",       () => new StrongStrengthRing(),          (int)(10000),      1, onRarePurchase, false),
             new StockEntry("mystery item",       () => new WeakDexterityRing(),           (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery item",       () => new StunDeathProtectionBracelet(), (int)(10000),      1, onRarePurchase, false),
             new StockEntry("mystery item",       () => new BlindFearProtectionBracelet(), (int)(10000),      1, onRarePurchase, false),
             new StockEntry("mystery item",       () => new LightningResistanceRing(),     (int)(10000),      1, onRarePurchase, false),
             new StockEntry("mystery item",       () => new SilverDaggerAmulet(),          (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery item",       () => new HummingbirdAmulet(),           (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery item",       () => new DexterityRing(),               (int)(10000),      1, onRarePurchase, false)
+            new StockEntry("mystery item",       () => new HummingbirdAmulet(),           (int)(10000),      1, onRarePurchase, false)
         }).Random();
         
         var armor = (new List<StockEntry>()
@@ -79167,8 +79165,7 @@
             new StockEntry("mystery armor",      () => new BearSkull(),           (int)(10000),      1, onRarePurchase, false),
             new StockEntry("mystery armor",      () => new WingedHelm(),          (int)(10000),      1, onRarePurchase, false),
             new StockEntry("mystery armor",      () => new FeatherFallBoots(),    (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery armor",      () => new IceDragonScaleArmor(), (int)(10000),      1, onRarePurchase, false),
-            new StockEntry("mystery armor",      () => new DragonSkull(),         (int)(10000),      1, onRarePurchase, false),
+            new StockEntry("mystery armor",      () => new DragonSkull(),         (int)(10000),      1, onRarePurchase, false)
         }).Random();
         
         vendor.Stock(bottle);
