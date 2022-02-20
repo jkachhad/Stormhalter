@@ -121,9 +121,13 @@ namespace Kesmai.WorldForge.Windows
 
 			
 			var converter = TypeDescriptor.GetConverter(propertyType);
-			
+
 			if (converter.CanConvertFrom(typeof(string)))
-				return new TextBoxPropertyEditor();
+			{
+				bool isMultiLine = propertyInfo.Name == "Comment";
+				bool canBeNull = propertyInfo.Name == "Comment";
+				return new TextBoxPropertyEditor(isMultiLine, canBeNull);				
+			}
 
 			return default(PropertyEditor);
 		}

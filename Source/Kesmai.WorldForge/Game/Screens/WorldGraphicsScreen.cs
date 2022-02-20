@@ -230,6 +230,8 @@ namespace Kesmai.WorldForge
 		private bool _drawgrid = false;
 		private Color _gridcolor = Color.FromNonPremultiplied(255, 255, 0, 75);
 
+		private Texture2D _commentSprite = null;
+
 		private bool _isMouseOver;
 		private bool _isMouseDirectlyOver;
 
@@ -359,6 +361,9 @@ namespace Kesmai.WorldForge
 			uiService.Screens.Add(_uiScreen);
 
 			_font = renderer.GetFont("Tahoma14Bold");
+
+			var commentStream = System.Windows.Application.GetResourceStream(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/Comment-White.png")).Stream;
+			_commentSprite = Texture2D.FromStream(graphicsDevice, commentStream);
 		}
 
 		public virtual void Initialize()
@@ -817,7 +822,7 @@ namespace Kesmai.WorldForge
 
 					var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
 					var segment = segmentRequest.Response;
-					if (_presenter.Visibility.ShowTeleporters||(_presenter.Visibility.ShowSpawns && _presenter.ActiveDocument is not WorldForge.UI.Documents.SpawnsViewModel))
+					if (_presenter.Visibility.ShowComments ||_presenter.Visibility.ShowTeleporters||(_presenter.Visibility.ShowSpawns && _presenter.ActiveDocument is not WorldForge.UI.Documents.SpawnsViewModel))
                     {
 						//dim the screen
 						var viewportrectangle = GetRenderRectangle(viewRectangle, viewRectangle);
@@ -945,6 +950,21 @@ namespace Kesmai.WorldForge
 							}
 						}
 					}
+					if (_presenter.Visibility.ShowComments)
+                    {
+						var visibleComments = region.GetTiles().Where(t => t.Components.Any(c => !string.IsNullOrWhiteSpace(c.Comment)) && viewRectangle.Contains(t.X, t.Y));
+
+						var spriteWidth = 32 * _zoomFactor;
+
+						foreach (var tile in visibleComments) { //todo: this looks hideous. Find something better.
+							var bounds = GetRenderRectangle(viewRectangle, tile.X, tile.Y);
+							bounds.X = (int)Math.Floor(bounds.Right - spriteWidth);
+							bounds.Width = (int)Math.Floor(spriteWidth);
+							bounds.Height = (int)Math.Floor(spriteWidth);
+							spritebatch.Draw(_commentSprite, bounds, Color.Aqua);
+
+						}
+                    }
 				}
 				
 				graphicsService.GraphicsDevice.SetRenderTargets(oldTargets);
