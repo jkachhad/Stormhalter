@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.90.0.0">
+<segment name="Axe Glacier" version="0.92.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -1755,6 +1755,66 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
+      <tile x="37" y="3">
+        <component type="WallComponent">
+          <wall>155</wall>
+          <destroyed>156</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="38" y="3">
+        <component type="WallComponent">
+          <wall>151</wall>
+          <destroyed>153</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="StaticComponent">
+          <static>764</static>
+        </component>
+      </tile>
+      <tile x="39" y="3">
+        <component type="WallComponent">
+          <wall>151</wall>
+          <destroyed>153</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="StaticComponent">
+          <static>764</static>
+        </component>
+      </tile>
+      <tile x="40" y="3">
+        <component type="WallComponent">
+          <wall>151</wall>
+          <destroyed>153</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="41" y="3">
+        <component type="WallComponent">
+          <wall>151</wall>
+          <destroyed>153</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="42" y="3">
+        <component type="WallComponent">
+          <wall>151</wall>
+          <destroyed>153</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>155</wall>
+          <destroyed>156</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
       <tile x="0" y="4">
         <component type="StaticComponent">
           <static>179</static>
@@ -2032,6 +2092,17 @@
         <component type="StaticComponent">
           <static>111</static>
         </component>
+        <component type="ItemTeleporter">
+          <destinationX>40</destinationX>
+          <destinationY>5</destinationY>
+          <destinationRegion>1</destinationRegion>
+          <lightphases>midnight,nighttime</lightphases>
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+          <type>MoonstoneRing</type>
+          <fail>Interrupted</fail>
+        </component>
       </tile>
       <tile x="36" y="4">
         <component type="StaticComponent">
@@ -2041,6 +2112,48 @@
           <wall>158</wall>
           <destroyed>161</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="37" y="4">
+        <component type="WallComponent">
+          <wall>152</wall>
+          <destroyed>154</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="StaticComponent">
+          <static>765</static>
+        </component>
+      </tile>
+      <tile x="38" y="4">
+        <component type="FloorComponent">
+          <ground>186</ground>
+        </component>
+      </tile>
+      <tile x="39" y="4">
+        <component type="FloorComponent">
+          <ground>186</ground>
+        </component>
+        <component type="StaticComponent">
+          <static>317</static>
+        </component>
+      </tile>
+      <tile x="40" y="4">
+        <component type="FloorComponent">
+          <ground>186</ground>
+        </component>
+      </tile>
+      <tile x="41" y="4">
+        <component type="FloorComponent">
+          <ground>186</ground>
+        </component>
+      </tile>
+      <tile x="42" y="4">
+        <component type="WallComponent">
+          <wall>152</wall>
+          <destroyed>154</destroyed>
+          <ruins>46</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -2360,6 +2473,57 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
+      <tile x="37" y="5">
+        <component type="WallComponent">
+          <wall>152</wall>
+          <destroyed>154</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="StaticComponent">
+          <static>765</static>
+        </component>
+      </tile>
+      <tile x="38" y="5">
+        <component type="FloorComponent">
+          <ground>186</ground>
+        </component>
+      </tile>
+      <tile x="39" y="5">
+        <component type="FloorComponent">
+          <ground>186</ground>
+        </component>
+        <component type="StaticComponent">
+          <static>317</static>
+        </component>
+      </tile>
+      <tile x="40" y="5">
+        <component type="FloorComponent">
+          <ground>186</ground>
+        </component>
+      </tile>
+      <tile x="41" y="5">
+        <component type="FloorComponent">
+          <ground>5</ground>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>35</destinationX>
+          <destinationY>5</destinationY>
+          <destinationRegion>1</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+        </component>
+      </tile>
+      <tile x="42" y="5">
+        <component type="WallComponent">
+          <wall>152</wall>
+          <destroyed>154</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
       <tile x="0" y="6">
         <component type="StaticComponent">
           <static>179</static>
@@ -2657,6 +2821,51 @@
           <wall>158</wall>
           <destroyed>161</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="37" y="6">
+        <component type="WallComponent">
+          <wall>152</wall>
+          <destroyed>154</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="StaticComponent">
+          <static>765</static>
+        </component>
+      </tile>
+      <tile x="38" y="6">
+        <component type="FloorComponent">
+          <ground>186</ground>
+        </component>
+        <component type="StaticComponent">
+          <static>401</static>
+        </component>
+      </tile>
+      <tile x="39" y="6">
+        <component type="FloorComponent">
+          <ground>186</ground>
+        </component>
+        <component type="StaticComponent">
+          <static>317</static>
+        </component>
+      </tile>
+      <tile x="40" y="6">
+        <component type="FloorComponent">
+          <ground>186</ground>
+        </component>
+      </tile>
+      <tile x="41" y="6">
+        <component type="FloorComponent">
+          <ground>186</ground>
+        </component>
+      </tile>
+      <tile x="42" y="6">
+        <component type="WallComponent">
+          <wall>152</wall>
+          <destroyed>154</destroyed>
+          <ruins>46</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -3001,6 +3210,69 @@
           <wall>157</wall>
           <destroyed>160</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="37" y="7">
+        <component type="WallComponent">
+          <wall>152</wall>
+          <destroyed>154</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>155</wall>
+          <destroyed>156</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="38" y="7">
+        <component type="WallComponent">
+          <wall>151</wall>
+          <destroyed>153</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="39" y="7">
+        <component type="WallComponent">
+          <wall>151</wall>
+          <destroyed>153</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="40" y="7">
+        <component type="WallComponent">
+          <wall>151</wall>
+          <destroyed>153</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="41" y="7">
+        <component type="WallComponent">
+          <wall>151</wall>
+          <destroyed>153</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="42" y="7">
+        <component type="StaticComponent">
+          <static>2</static>
+        </component>
+        <component type="WallComponent">
+          <wall>152</wall>
+          <destroyed>154</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>151</wall>
+          <destroyed>153</destroyed>
+          <ruins>46</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -4717,7 +4989,7 @@
           <destinationY>13</destinationY>
           <destinationRegion>1</destinationRegion>
           <lightphases>midnight,nighttime</lightphases>
-          <moonphases select="all" />
+          <moonphases>waxing crescent,first half,waxing gibbous,full,waning gibbous,last half,waning crescent</moonphases>
           <professions select="all" />
           <alignments select="all" />
           <type>MoonstoneRing</type>
