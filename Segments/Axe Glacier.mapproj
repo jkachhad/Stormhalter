@@ -395,7 +395,7 @@
         }      
     }
     
-    public partial class ReturningStaff : Staff, IReturningWeapon, ITreasure
+    public partial class ReturningWand : Wand, IReturningWeapon, ITreasure
     {
         /// <inheritdoc />
         public override uint BasePrice => 1;
@@ -494,7 +494,7 @@
                     {
                         if (ConsumeFromLocation<ObsidianEgg>(counter, 1))
                         {
-                            new ReturningStaff().Move(counter, true, Segment);
+                            new ReturningWand().Move(counter, true, Segment);
 
                             SayTo(source, 6300349); /* Wield this weapon with courage and honor. */
                         }
@@ -1589,6 +1589,17 @@
         <component type="FloorComponent">
           <ground>179</ground>
         </component>
+        <component type="ItemTeleporter">
+          <destinationX>40</destinationX>
+          <destinationY>5</destinationY>
+          <destinationRegion>1</destinationRegion>
+          <lightphases>midnight,nighttime</lightphases>
+          <moonphases select="all" />
+          <professions>Thaumaturge,Wizard</professions>
+          <alignments select="all" />
+          <type>MoonstoneRing</type>
+          <fail>Interrupted</fail>
+        </component>
       </tile>
       <tile x="2" y="3">
         <component type="StaticComponent">
@@ -2213,17 +2224,6 @@
         </component>
         <component type="StaticComponent">
           <static>111</static>
-        </component>
-        <component type="ItemTeleporter">
-          <destinationX>40</destinationX>
-          <destinationY>5</destinationY>
-          <destinationRegion>1</destinationRegion>
-          <lightphases>midnight,nighttime</lightphases>
-          <moonphases select="all" />
-          <professions select="all" />
-          <alignments select="all" />
-          <type>MoonstoneRing</type>
-          <fail>Interrupted</fail>
         </component>
       </tile>
       <tile x="36" y="4">
