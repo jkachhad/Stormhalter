@@ -465,7 +465,7 @@
             public FrostGiantUndead(Serial serial) : base(serial)
             {
             }
-
+            
             public override void OnSpellTarget(Target target, MobileEntity combatant)
             {
                 Emote($"smashes its hammer down with unfathomable force.");
@@ -107884,7 +107884,6 @@
         Health = 800,
         BaseDodge = 31,
         HideDetection = 32,
-        Mana = 8, MaxMana = 8,
         BasePenetration = ShieldPenetration.Heavy,
         Experience = 30814,
         Immunity = CreatureImmunity.Poison,
@@ -107900,11 +107899,10 @@
         new CreatureBasicAttack(24)
     };
     
-    giant.Spells = new CreatureSpellCollection()
+    giant.Spells = new CreatureSpellCollection(10.0)
     {
-        new CreatureSpell<ConcussionSpell>(
-            skillLevel: 12, cost: 7,  
-            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+        { new CreatureSpell<ConcussionSpell>(
+            skillLevel: 12), 100, TimeSpan.FromSeconds(15.0) }
     };
 
     giant.Wield(new WarHammer());
