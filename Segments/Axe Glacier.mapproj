@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.90.0.0">
+<segment name="Axe Glacier" version="0.92.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -107911,7 +107911,7 @@
     
     giant.AddGold(2000);
     giant.AddLoot(new LootPack(
-        new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
+        new LootPackEntry(true, UndeadGems,       100,     gemsPriceMutatorVeryHigh), 
         new LootPackEntry(true, AxeBottles,    100),
         new LootPackEntry(true, UtilityItems,    1),
         new LootPackEntry(true, upperTreasure,   0.55),
