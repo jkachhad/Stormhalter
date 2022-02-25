@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.92.0.0">
+<segment name="Axe Glacier" version="0.90.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -373,128 +373,6 @@
                         if (ConsumeFromLocation<ObsidianEgg>(counter, 1))
                         {
                             new ReturningAxe().Move(counter, true, Segment);
-
-                            SayTo(source, 6300349); /* Wield this weapon with courage and honor. */
-                        }
-                    }
-                    else
-                    {
-                        SayTo(source, 6300396); /* Bring me an obsidian egg and I will make you the weapon. */
-                    }
-                }
-                else
-                {
-                    if (_counters.Any())
-                        SayTo(source, 6300236); /* Please step up to a counter. */
-                    else
-                        SayTo(source, 6300237); /* Please stand closer to me. */
-                }
-                
-                return;
-            }
-        }      
-    }
-    
-    public partial class ReturningWand : Wand, IReturningWeapon, ITreasure
-    {
-        /// <inheritdoc />
-        public override uint BasePrice => 1;
-
-        /// <inheritdoc />
-        public override int Weight => 1400;
-
-        /// <inheritdoc />
-        public override ShieldPenetration Penetration => ShieldPenetration.Heavy;
-
-        /// <inheritdoc />
-        public override int MinimumDamage => 1;
-
-        /// <inheritdoc />
-        public override int MaximumDamage => 8;
-
-        /// <inheritdoc />
-        public override int BaseArmorBonus => 3;
-
-        /// <inheritdoc />
-        public override int BaseAttackBonus => 3;
-        
-        /// <inheritdoc />
-        public override int ProjectileProtection  => 3;
-
-        /// <inheritdoc />
-        public override WeaponFlags Flags => WeaponFlags.BlueGlowing | WeaponFlags.Returning | WeaponFlags.Throwable 
-                                             | WeaponFlags.Bashing;
-
-        /// <inheritdoc />
-        public override bool CanBind => true;
-        
-        public override bool CanEquip(MobileEntity entity)
-        {
-            if (entity is PlayerEntity player && (player.Profession is Wizard || player.Profession is Thaumaturge))
-                return true;
-
-            entity.SendMessage("The wand slips from your hand.");
-            return false;
-        }
-
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ReturningStaff"/> class.
-        /// </summary>
-        public ReturningStaff() : base(145)
-        {
-        }
-
-        /// <inheritdoc />
-        public override void GetDescription(List<LocalizationEntry> entries)
-        {
-            entries.Add("A fine staff covered with elaborate carvings.");
-        }
-    }
-    
-    public class Starfall : VendorEntity
-    {
-        public Starfall()
-        {
-            Name = "Starfall";
-            Body = 87;
-
-            Health = MaxHealth = 50;
-            BaseDodge = 10;
-
-            Experience = 50;
-
-            Movement = 0;
-        }
-
-        public Starfall(Serial serial) : base(serial)
-        {
-        }
-        
-        public override void HandleOrder(OrderEventArgs args)
-        {
-            base.HandleOrder(args);
-
-            if (args.Handled)
-                return;
-            
-            var source = args.Source;
-            var order = args.Order;
-            
-            
-            if (_craft.TryGetMatch(order, out var craftMatch) && craftMatch.Groups[1].Value.Matches("staff", true))
-            {
-                args.Handled = true;
-                
-                if (AtCounter(source, out var counter))
-                {
-                    var obsidianEggs = Segment.GetItemsAt(Location).OfType<ObsidianEgg>();
-
-                    if (obsidianEggs.Any())
-                    {
-                        if (ConsumeFromLocation<ObsidianEgg>(counter, 1))
-                        {
-                            new ReturningWand().Move(counter, true, Segment);
 
                             SayTo(source, 6300349); /* Wield this weapon with courage and honor. */
                         }
@@ -1589,17 +1467,6 @@
         <component type="FloorComponent">
           <ground>179</ground>
         </component>
-        <component type="ItemTeleporter">
-          <destinationX>40</destinationX>
-          <destinationY>5</destinationY>
-          <destinationRegion>1</destinationRegion>
-          <lightphases>midnight,nighttime</lightphases>
-          <moonphases select="all" />
-          <professions>Thaumaturge,Wizard</professions>
-          <alignments select="all" />
-          <type>MoonstoneRing</type>
-          <fail>Interrupted</fail>
-        </component>
       </tile>
       <tile x="2" y="3">
         <component type="StaticComponent">
@@ -1885,66 +1752,6 @@
           <wall>157</wall>
           <destroyed>160</destroyed>
           <ruins>170</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="37" y="3">
-        <component type="WallComponent">
-          <wall>155</wall>
-          <destroyed>156</destroyed>
-          <ruins>0</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="38" y="3">
-        <component type="WallComponent">
-          <wall>151</wall>
-          <destroyed>153</destroyed>
-          <ruins>46</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="StaticComponent">
-          <static>764</static>
-        </component>
-      </tile>
-      <tile x="39" y="3">
-        <component type="WallComponent">
-          <wall>151</wall>
-          <destroyed>153</destroyed>
-          <ruins>46</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="StaticComponent">
-          <static>764</static>
-        </component>
-      </tile>
-      <tile x="40" y="3">
-        <component type="WallComponent">
-          <wall>151</wall>
-          <destroyed>153</destroyed>
-          <ruins>46</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="41" y="3">
-        <component type="WallComponent">
-          <wall>151</wall>
-          <destroyed>153</destroyed>
-          <ruins>46</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="42" y="3">
-        <component type="WallComponent">
-          <wall>151</wall>
-          <destroyed>153</destroyed>
-          <ruins>46</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="WallComponent">
-          <wall>155</wall>
-          <destroyed>156</destroyed>
-          <ruins>0</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -2234,48 +2041,6 @@
           <wall>158</wall>
           <destroyed>161</destroyed>
           <ruins>170</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="37" y="4">
-        <component type="WallComponent">
-          <wall>152</wall>
-          <destroyed>154</destroyed>
-          <ruins>46</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="StaticComponent">
-          <static>765</static>
-        </component>
-      </tile>
-      <tile x="38" y="4">
-        <component type="FloorComponent">
-          <ground>186</ground>
-        </component>
-      </tile>
-      <tile x="39" y="4">
-        <component type="FloorComponent">
-          <ground>186</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>317</static>
-        </component>
-      </tile>
-      <tile x="40" y="4">
-        <component type="FloorComponent">
-          <ground>186</ground>
-        </component>
-      </tile>
-      <tile x="41" y="4">
-        <component type="FloorComponent">
-          <ground>186</ground>
-        </component>
-      </tile>
-      <tile x="42" y="4">
-        <component type="WallComponent">
-          <wall>152</wall>
-          <destroyed>154</destroyed>
-          <ruins>46</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -2595,57 +2360,6 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
-      <tile x="37" y="5">
-        <component type="WallComponent">
-          <wall>152</wall>
-          <destroyed>154</destroyed>
-          <ruins>46</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="StaticComponent">
-          <static>765</static>
-        </component>
-      </tile>
-      <tile x="38" y="5">
-        <component type="FloorComponent">
-          <ground>186</ground>
-        </component>
-      </tile>
-      <tile x="39" y="5">
-        <component type="FloorComponent">
-          <ground>186</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>317</static>
-        </component>
-      </tile>
-      <tile x="40" y="5">
-        <component type="FloorComponent">
-          <ground>186</ground>
-        </component>
-      </tile>
-      <tile x="41" y="5">
-        <component type="FloorComponent">
-          <ground>5</ground>
-        </component>
-        <component type="HiddenTeleporterComponent">
-          <destinationX>35</destinationX>
-          <destinationY>5</destinationY>
-          <destinationRegion>1</destinationRegion>
-          <lightphases select="all" />
-          <moonphases select="all" />
-          <professions select="all" />
-          <alignments select="all" />
-        </component>
-      </tile>
-      <tile x="42" y="5">
-        <component type="WallComponent">
-          <wall>152</wall>
-          <destroyed>154</destroyed>
-          <ruins>46</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
       <tile x="0" y="6">
         <component type="StaticComponent">
           <static>179</static>
@@ -2943,51 +2657,6 @@
           <wall>158</wall>
           <destroyed>161</destroyed>
           <ruins>170</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="37" y="6">
-        <component type="WallComponent">
-          <wall>152</wall>
-          <destroyed>154</destroyed>
-          <ruins>46</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="StaticComponent">
-          <static>765</static>
-        </component>
-      </tile>
-      <tile x="38" y="6">
-        <component type="FloorComponent">
-          <ground>186</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>401</static>
-        </component>
-      </tile>
-      <tile x="39" y="6">
-        <component type="FloorComponent">
-          <ground>186</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>317</static>
-        </component>
-      </tile>
-      <tile x="40" y="6">
-        <component type="FloorComponent">
-          <ground>186</ground>
-        </component>
-      </tile>
-      <tile x="41" y="6">
-        <component type="FloorComponent">
-          <ground>186</ground>
-        </component>
-      </tile>
-      <tile x="42" y="6">
-        <component type="WallComponent">
-          <wall>152</wall>
-          <destroyed>154</destroyed>
-          <ruins>46</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -3332,69 +3001,6 @@
           <wall>157</wall>
           <destroyed>160</destroyed>
           <ruins>170</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="37" y="7">
-        <component type="WallComponent">
-          <wall>152</wall>
-          <destroyed>154</destroyed>
-          <ruins>46</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="WallComponent">
-          <wall>155</wall>
-          <destroyed>156</destroyed>
-          <ruins>0</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="38" y="7">
-        <component type="WallComponent">
-          <wall>151</wall>
-          <destroyed>153</destroyed>
-          <ruins>46</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="39" y="7">
-        <component type="WallComponent">
-          <wall>151</wall>
-          <destroyed>153</destroyed>
-          <ruins>46</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="40" y="7">
-        <component type="WallComponent">
-          <wall>151</wall>
-          <destroyed>153</destroyed>
-          <ruins>46</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="41" y="7">
-        <component type="WallComponent">
-          <wall>151</wall>
-          <destroyed>153</destroyed>
-          <ruins>46</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="42" y="7">
-        <component type="StaticComponent">
-          <static>2</static>
-        </component>
-        <component type="WallComponent">
-          <wall>152</wall>
-          <destroyed>154</destroyed>
-          <ruins>46</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="WallComponent">
-          <wall>151</wall>
-          <destroyed>153</destroyed>
-          <ruins>46</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -108529,27 +108135,6 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="axeStarfall">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    return new Starfall();
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="axeSEShopkeeper">
@@ -109743,27 +109328,6 @@
       </script>
       <entry entity="BossNotableLevel11KWolf" size="1" minimum="1" maximum="1" />
       <location x="13" y="10" region="23" />
-    </spawn>
-    <spawn type="LocationSpawner" name="Starfall">
-      <minimumDelay>-60</minimumDelay>
-      <maximumDelay>-120</maximumDelay>
-      <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="axeSilvermoon" size="1" minimum="1" maximum="1" />
-      <location x="38" y="4" region="1" />
     </spawn>
     <spawn type="RegionSpawner" name="Surface Dungeon">
       <minimumDelay>600</minimumDelay>
