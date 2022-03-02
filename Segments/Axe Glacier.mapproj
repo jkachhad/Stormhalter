@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.90.0.0">
+<segment name="Axe Glacier" version="0.92.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -465,7 +465,7 @@
             public FrostGiantUndead(Serial serial) : base(serial)
             {
             }
-
+            
             public override void OnSpellTarget(Target target, MobileEntity combatant)
             {
                 Emote($"smashes its hammer down with unfathomable force.");
@@ -107884,7 +107884,6 @@
         Health = 800,
         BaseDodge = 31,
         HideDetection = 32,
-        Mana = 7, MaxMana = 7,
         BasePenetration = ShieldPenetration.Heavy,
         Experience = 30814,
         Immunity = CreatureImmunity.Poison,
@@ -107900,18 +107899,17 @@
         new CreatureBasicAttack(24)
     };
     
-    giant.Spells = new CreatureSpellCollection()
+    giant.Spells = new CreatureSpellCollection(10.0)
     {
-        new CreatureSpell<ConcussionSpell>(
-            skillLevel: 12, cost: 7,  
-            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+        { new CreatureSpell<ConcussionSpell>(
+            skillLevel: 12), 100, TimeSpan.FromSeconds(15.0) }
     };
 
     giant.Wield(new WarHammer());
     
     giant.AddGold(2000);
     giant.AddLoot(new LootPack(
-        new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
+        new LootPackEntry(true, UndeadGems,       45,     gemsPriceMutatorVeryHigh), 
         new LootPackEntry(true, AxeBottles,    100),
         new LootPackEntry(true, UtilityItems,    1),
         new LootPackEntry(true, upperTreasure,   0.55),
