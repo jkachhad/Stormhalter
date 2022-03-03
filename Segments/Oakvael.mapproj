@@ -1372,8 +1372,6 @@
     
         public override void OnDeath()
         {
-            foreach (var defender in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<HeartDefender>())
-                defender.DefenderSoothed();
             foreach (var keeper in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<OakGroveMainKeeper>())
                 keeper.KeeperSoothed();
             base.OnDeath();
