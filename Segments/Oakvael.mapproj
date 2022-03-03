@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.90.0.0">
+<segment name="Oakvael" version="0.92.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -1247,149 +1247,6 @@
         public override int GetNearbySound() => 0;
         public override int GetAttackSound() => 83;
         public override int GetDeathSound() => 84;
-        public override void Serialize(BinaryWriter writer)
-        {
-            base.Serialize(writer);
-            writer.Write((short)1); /* version */
-        }
-    
-        public override void Deserialize(BinaryReader reader)
-        {
-            base.Deserialize(reader);
-            var version = reader.ReadInt16();
-            switch (version)
-            {
-                case 1:
-                    {
-                        break;
-                    }
-            }
-        }
-    }
-    
-    public class HeartTrolls : CreatureEntity
-    {
-        public HeartTrolls()
-        {
-            Name = "Pillager";
-            Body = 64;
-            Alignment = Alignment.Evil;
-        }
-    
-        public override void OnDeath()
-        {
-            foreach (var defender in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<HeartDefender>())
-                defender.DefenderSoothed();
-            foreach (var keeper in GetBeholdersInVisibility().SelectMany(g => g.Members).OfType<OakGroveMainKeeper>())
-                keeper.KeeperSoothed();
-            base.OnDeath();
-        }
-    
-        public HeartTrolls(Serial serial) : base(serial)
-        {
-        }
-    
-        public override int GetNearbySound() => 109;
-        public override int GetAttackSound() => 95;
-        public override int GetDeathSound() => 102;
-    
-        public override void OnSpawn()
-        {
-            base.OnSpawn();
-            if (_brain != null)
-                return;
-            if (RightHand is ProjectileWeapon)
-                _brain = new RangedAI(this);
-            else
-                _brain = new CombatAI(this);
-        }
-    
-        public override void Serialize(BinaryWriter writer)
-        {
-            base.Serialize(writer);
-            writer.Write((short)1); /* version */
-        }
-    
-        public override void Deserialize(BinaryReader reader)
-        {
-            base.Deserialize(reader);
-            var version = reader.ReadInt16();
-            switch (version)
-            {
-                case 1:
-                    {
-                        break;
-                    }
-            }
-        }
-    }
-    
-    public class HeartDefender : CreatureEntity
-    {
-        public HeartDefender()
-        {
-            Name = "Corrupted Defender";
-            Body = 3;
-            Alignment = Alignment.Evil;
-            CanLoot = false;
-            CanSwim = true;
-        }
-    
-        public int soothedAmount = 0;
-        public int changedMood = 0;
-    
-        public void DefenderSoothed()
-        {
-            if (changedMood < 1)
-            {
-                soothedAmount++;
-                if (soothedAmount > 9)
-                {
-                    Say($"The corruption has faded! I will protect the grove!");
-                    Alignment = Alignment.Neutral;
-                    Name = "Defender of the Grove";
-                    soothedAmount = 0;
-                    changedMood = 1;
-                }
-            }
-        }
-    
-        public override int CalculateMeleeDamage(ItemEntity item, MobileEntity defender)
-        {
-            var damage = (double)base.CalculateMeleeDamage(item, defender);
-    
-            damage *= 1.0 - (soothedAmount * 0.1);
-    
-            return (int)damage;
-        }
-    
-        public override void OnDeath()
-        {
-            if (soothedAmount > 0)
-            {
-                Say($"My mind has cleared... too late...");
-            }
-            base.OnDeath();
-        }
-    
-        public HeartDefender(Serial serial) : base(serial)
-        {
-        }
-    
-        public override void OnSpawn()
-        {
-            base.OnSpawn();
-            if (_brain != null)
-                return;
-            if (RightHand is ProjectileWeapon)
-                _brain = new RangedAI(this);
-            else
-                _brain = new CombatAI(this);
-        }
-    
-        public override int GetNearbySound() => 136;
-        public override int GetAttackSound() => 155;
-        public override int GetDeathSound() => 174;
         public override void Serialize(BinaryWriter writer)
         {
             base.Serialize(writer);
@@ -99745,6 +99602,7 @@
         Name = "Grove Defender",
         MaxHealth = 234, Health = 234,
         BaseDodge = 32,
+        Alignment = Alignment.Evil,
         BasePenetration = ShieldPenetration.Medium,     
         Experience = 13095,
         HideDetection = 30,
@@ -99850,8 +99708,8 @@
     {
         MaxHealth = 198, Health = 198,
         BaseDodge = 26,
-
         Experience = 11170,
+        Alignment = Alignment.Evil,
         BasePenetration = ShieldPenetration.Medium,
     };
     
