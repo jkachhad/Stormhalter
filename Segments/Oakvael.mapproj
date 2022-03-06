@@ -98642,7 +98642,7 @@
         Name = "dragon",
         
         MaxHealth = 2100, Health = 2100,
-        MaxMana = 100, Mana = 100,
+        MaxMana = 40, Mana = 40,
         BaseDodge = 28,
         
         Experience = 85594,
@@ -98696,7 +98696,7 @@
     {
         /* Expected output of damage is 60 per turn based on replay from Indi..DOOM. */
         new CreatureSpell<WhirlwindSpell>(
-            skillLevel: 15, cost: 100)
+            skillLevel: 15, cost: 40)
     };
     
     dragon.AddLoot(new LootPack(
