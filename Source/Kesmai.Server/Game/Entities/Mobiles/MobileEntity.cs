@@ -20,8 +20,8 @@ namespace Kesmai.Server.Game
 			{
 				var armorBonus = armor.GetArmorBonus(item);
 
-				if (armorBonus > 3)
-					damageModifier = armorBonus - 3;
+				if (armorBonus > 0)
+					damageModifier = armorBonus;
 			}
 
 			return damageModifier;
