@@ -106212,6 +106212,8 @@
         CanSwim = true,
         FireProtection = 20,
     };
+    
+    bear.AddStatus(new NightVisionStatus(bear));
             
     bear.Attacks = new CreatureAttackCollection
     {
