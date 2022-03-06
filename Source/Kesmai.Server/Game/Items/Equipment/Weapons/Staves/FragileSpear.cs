@@ -32,6 +32,9 @@ namespace Kesmai.Server.Items
             set => _durabilityMax = value;
         }
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FragileSpear"/> class.
+        /// </summary>
         protected FragileSpear(int durability = 1) : base(124)
         {
             _durabilityCurrent = durability;
@@ -61,10 +64,6 @@ namespace Kesmai.Server.Items
 
         /// <inheritdoc />
         public override WeaponFlags Flags => WeaponFlags.TwoHanded | WeaponFlags.Piercing | WeaponFlags.Bashing | WeaponFlags.Silver;
-		
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FragileSpear"/> class.
-        /// </summary>
 
         public override void OnStrip(Corpse corpse)
         {
