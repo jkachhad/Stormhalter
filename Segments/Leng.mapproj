@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.90.0.0">
+<segment name="Leng" version="0.92.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -70804,6 +70804,10 @@
         <component type="FloorComponent">
           <ground>16</ground>
         </component>
+        <component type="ObstructionComponent">
+          <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
+        </component>
       </tile>
       <tile x="9" y="24">
         <component type="FloorComponent">
@@ -70813,6 +70817,10 @@
       <tile x="10" y="24">
         <component type="FloorComponent">
           <ground>16</ground>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>266</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="11" y="24">
@@ -71003,6 +71011,7 @@
           <wall>159</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="9" y="25">
@@ -71024,16 +71033,18 @@
           <wall>157</wall>
           <destroyed>160</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="11" y="25">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>112523</ground>
         </component>
         <component type="WallComponent">
           <wall>157</wall>
           <destroyed>160</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="12" y="25">
@@ -71237,6 +71248,7 @@
           <wall>158</wall>
           <destroyed>161</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="12" y="26">
@@ -79606,8 +79618,8 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level9ConcWiz" size="1" minimum="5" maximum="5" />
-      <entry entity="level9FireWiz" size="1" minimum="6" maximum="6" />
+      <entry entity="level9ConcWiz" size="1" minimum="2" maximum="2" />
+      <entry entity="level9FireWiz" size="1" minimum="8" maximum="8" />
       <entry entity="level9Wraith" size="1" minimum="3" maximum="3" />
       <entry entity="level9WretchFighter" size="3" minimum="7" maximum="7" />
       <entry entity="level9Spectre" size="1" minimum="3" maximum="3" />
@@ -79825,10 +79837,9 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="BossMajorLevel14Sparky" size="1" minimum="1" maximum="1" />
-      <entry entity="level14Lich" size="1" minimum="2" maximum="2" />
-      <entry entity="level14Minotaur" size="1" minimum="3" maximum="3" />
       <bounds region="43">
         <inclusion left="28" top="3" right="31" bottom="8" />
+        <inclusion left="20" top="5" right="27" bottom="5" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -80275,8 +80286,8 @@
       <entry entity="level14Lich" size="1" minimum="2" maximum="2" />
       <entry entity="level14Minotaur" size="2" minimum="2" maximum="2" />
       <bounds region="43">
-        <inclusion left="8" top="2" right="18" bottom="9" />
-        <exclusion left="8" top="6" right="12" bottom="9" />
+        <inclusion left="5" top="2" right="18" bottom="9" />
+        <exclusion left="6" top="6" right="12" bottom="9" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="BossLevel12PowerTroll">
@@ -80352,9 +80363,9 @@
       <entry entity="level12Troll" size="3" minimum="10" maximum="10" />
       <entry entity="level12OrcArcher" size="3" minimum="5" maximum="5" />
       <bounds region="35">
-        <inclusion left="1" top="9" right="24" bottom="27" />
-        <exclusion left="8" top="25" right="11" bottom="27" />
-        <exclusion left="17" top="9" right="24" bottom="12" />
+        <inclusion left="1" top="9" right="8" bottom="27" />
+        <inclusion left="9" top="9" right="10" bottom="25" />
+        <inclusion left="11" top="13" right="24" bottom="27" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="priest">
@@ -80616,6 +80627,33 @@
       <bounds region="18">
         <inclusion left="29" top="34" right="35" bottom="37" />
         <inclusion left="41" top="26" right="43" bottom="36" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="drakeMinions">
+      <minimumDelay>1800</minimumDelay>
+      <maximumDelay>2100</maximumDelay>
+      <maximum>6</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level14Lich" size="1" minimum="3" maximum="3" />
+      <entry entity="level14Minotaur" size="1" minimum="2" maximum="2" />
+      <entry entity="level14Manticora" size="1" minimum="2" maximum="2" />
+      <bounds region="43">
+        <inclusion left="28" top="3" right="31" bottom="8" />
+        <inclusion left="20" top="5" right="27" bottom="5" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>

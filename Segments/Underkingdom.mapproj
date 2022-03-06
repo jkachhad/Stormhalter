@@ -99607,7 +99607,7 @@
         new LootPackEntry(true, UnderkingdomGems,       2,     gemsPriceMutatorMedium), 
         new LootPackEntry(true, UnderkingdomBottles,    10), 
         new LootPackEntry(true, UtilityItems,    .3), 
-        new LootPackEntry(true, UpperTreasure,    0.15)
+        new LootPackEntry(true, LowerTreasure,    0.15)
     ));
     
     return wyvern;
@@ -99673,7 +99673,7 @@
         new LootPackEntry(true, UnderkingdomGems,       2,     gemsPriceMutatorMedium), 
         new LootPackEntry(true, UnderkingdomBottles,    10), 
         new LootPackEntry(true, UtilityItems,    .3), 
-        new LootPackEntry(true, UpperTreasure,    0.15)
+        new LootPackEntry(true, LowerTreasure,    0.15)
     ));
     
     return wyvern;
@@ -99739,7 +99739,7 @@
         new LootPackEntry(true, UnderkingdomGems,       2,     gemsPriceMutatorMedium), 
         new LootPackEntry(true, UnderkingdomBottles,    10), 
         new LootPackEntry(true, UtilityItems,    .3), 
-        new LootPackEntry(true, UpperTreasure,    0.15)
+        new LootPackEntry(true, LowerTreasure,    0.15)
     ));
     
     return wyvern;
@@ -99804,7 +99804,7 @@
         new LootPackEntry(true, UnderkingdomGems,       2,     gemsPriceMutatorMedium), 
         new LootPackEntry(true, UnderkingdomBottles,    10), 
         new LootPackEntry(true, UtilityItems,    .3), 
-        new LootPackEntry(true, UpperTreasure,    0.15)
+        new LootPackEntry(true, LowerTreasure,    0.15)
     ));
     
     return wyvern;
@@ -100538,6 +100538,7 @@
     
     orc.Wield(new Longbow());
     orc.Equip(new LeatherArmor());
+    orc.AddStatus(new NightVisionStatus(orc));
             
     orc.AddGold(112);
     orc.AddLoot(new LootPack(
@@ -100909,7 +100910,7 @@
         new LootPackEntry(true, UnderkingdomGems,       7.2,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
-        new LootPackEntry(true, UpperTreasure,    0.55), 
+        new LootPackEntry(true, LowerTreasure,    0.55), 
         new LootPackEntry(true, UtilityItems,    1)
     ));
     
@@ -101022,7 +101023,7 @@
         new LootPackEntry(true, UnderkingdomGems,       7.2,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
-        new LootPackEntry(true, UpperTreasure,    0.5), 
+        new LootPackEntry(true, LowerTreasure,    0.5), 
         new LootPackEntry(true, UtilityItems,    1)
     ));
     
@@ -101617,7 +101618,7 @@
         new LootPackEntry(true, UnderkingdomGems,       7.2,     gemsPriceMutatorHigh), 
         new LootPackEntry(true, UnderkingdomBottles,    50), 
         new LootPackEntry(true, UtilityItems,    3), 
-        new LootPackEntry(true, UpperTreasure,    0.63)
+        new LootPackEntry(true, LowerTreasure,    0.63)
     ));
     
     return lurker;
@@ -101899,7 +101900,7 @@
         new LootPackEntry(true, UnderkingdomGems,       7.2,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
-        new LootPackEntry(true, UpperTreasure,    0.37), 
+        new LootPackEntry(true, LowerTreasure,    0.37), 
         new LootPackEntry(true, UtilityItems,    1)
     ));
     
@@ -101947,7 +101948,7 @@
         new LootPackEntry(true, UnderkingdomGems,       7.2,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
-        new LootPackEntry(true, UpperTreasure,    0.5), 
+        new LootPackEntry(true, LowerTreasure,    0.5), 
         new LootPackEntry(true, UtilityItems,    1)
     ));
     
@@ -101994,7 +101995,7 @@
         new LootPackEntry(true, UnderkingdomGems,       7.2,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
-        new LootPackEntry(true, UpperTreasure,    0.55), 
+        new LootPackEntry(true, LowerTreasure,    0.55), 
         new LootPackEntry(true, UtilityItems,    1)
     ));
     
@@ -102042,7 +102043,7 @@
         new LootPackEntry(true, UnderkingdomGems,       7.2,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
-        new LootPackEntry(true, UpperTreasure,    0.5), 
+        new LootPackEntry(true, LowerTreasure,    0.5), 
         new LootPackEntry(true, UtilityItems,    1)
     ));
     return orc;
@@ -102089,7 +102090,7 @@
         new LootPackEntry(true, UnderkingdomGems,       7.2,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, UnderkingdomBottles,    20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.2), 
-        new LootPackEntry(true, UpperTreasure,    0.37), 
+        new LootPackEntry(true, LowerTreasure,    0.37), 
         new LootPackEntry(true, UtilityItems,    1)
     ));
     
@@ -102605,6 +102606,76 @@
         new LootPackEntry(true, UtilityItems,    1)
     ));
     return orc;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="level13Gargoyle">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+var gargoyle = new Gargoyle()
+    {
+        MaxHealth = 145, Health = 145,
+        BaseDodge = 24,
+        HideDetection = 28,
+        Experience = 6825,
+        MagicProtection = 17,
+        Movement = 3,
+        CanFly = true,
+        BasePenetration = ShieldPenetration.Heavy,
+        
+        Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Poison,
+        Weakness = CreatureWeakness.Silver,
+
+        FireProtection = 100,
+    };
+    
+    gargoyle.AddStatus(new NightVisionStatus(gargoyle));
+    
+    gargoyle.Attacks = new CreatureAttackCollection
+    {
+        { 
+            new CreatureAttack(11, 15, 20, "The gargoyle strikes you with its claws.",
+                                                     new AttackPoisonComponent(10)),     60
+        }, 
+        {
+            new CreatureAttack(11, 16, 22, "The gargoyle batters you with its wings."),      40
+        }, 
+    };
+    
+    gargoyle.Blocks = new CreatureBlockCollection
+    {
+            new CreatureBlock(6, "the armor"),
+            new CreatureBlock(3, "a claw"),
+            new CreatureBlock(1, "a wing")
+    };
+
+    gargoyle.Wield(new Greatsword());    
+
+    gargoyle.AddGold(115);
+    gargoyle.AddLoot(
+        new LootPack(
+        new LootPackEntry(true, UnderkingdomGems,       10.4,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomBottles,    20), 
+        new LootPackEntry(true, UnderkingdomPotions,    0.2), 
+        new LootPackEntry(true, UpperTreasure,    0.55), 
+        new LootPackEntry(true, UtilityItems,    1)
+        ));
+
+    return gargoyle;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -104104,6 +104175,7 @@
       <entry entity="Level14EliteTrollGuard" size="1" minimum="11" maximum="11" />
       <bounds region="9">
         <inclusion left="4" top="11" right="13" bottom="20" />
+        <inclusion left="6" top="22" right="11" bottom="25" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -104553,6 +104625,7 @@
       <entry entity="level12Cursetroll" size="1" minimum="1" maximum="1" />
       <entry entity="level12TrollRHammer" size="3" minimum="1" maximum="1" />
       <entry entity="level12Hob" size="3" minimum="3" maximum="3" />
+      <entry entity="level12OrcArcher" size="1" minimum="3" maximum="4" />
       <bounds region="11">
         <inclusion left="3" top="3" right="17" bottom="19" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -104609,6 +104682,7 @@
       <entry entity="level12Cursetroll" size="1" minimum="1" maximum="1" />
       <entry entity="level12TrollRHammer" size="3" minimum="1" maximum="1" />
       <entry entity="level12Hob" size="3" minimum="3" maximum="3" />
+      <entry entity="level12OrcArcher" size="1" minimum="3" maximum="4" />
       <bounds region="11">
         <inclusion left="3" top="24" right="17" bottom="39" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -105234,6 +105308,55 @@
         <inclusion left="17" top="2" right="49" bottom="21" />
       </bounds>
     </spawn>
+    <spawn type="RegionSpawner" name="tk300courtyardGarg">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>3</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level13Gargoyle" size="1" minimum="2" maximum="3" />
+      <bounds region="8">
+        <inclusion left="2" top="2" right="15" bottom="6" />
+        <exclusion left="2" top="7" right="15" bottom="7" />
+        <exclusion left="16" top="2" right="16" bottom="7" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="tk300DungeonNotSafe">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level13Gargoyle" size="1" minimum="1" maximum="2" />
+      <bounds region="8">
+        <inclusion left="28" top="4" right="36" bottom="10" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
   </spawns>
   <treasures>
     <treasure name="UnderkingdomBottles">
@@ -105463,7 +105586,7 @@
       </entry>
     </treasure>
     <treasure name="UpperTreasure">
-      <entry weight="1">
+      <entry weight="5">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -105472,7 +105595,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="1">
+      <entry weight="5">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -105481,7 +105604,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="1">
+      <entry weight="5">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -105494,7 +105617,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new FireIceProtectionRing();
+	return new DexterityRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -105580,6 +105703,44 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new FireballOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="LowerTreasure">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StrongStrengthRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new ShieldBracelet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new ShieldRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new FireIceProtectionRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>

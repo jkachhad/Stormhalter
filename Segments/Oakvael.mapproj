@@ -95999,7 +95999,9 @@
     };
 
     goblin.Wield(new Longbow());
-    goblin.Equip(new LeatherArmor());    
+    goblin.Equip(new LeatherArmor());  
+    
+    goblin.AddStatus(new NightVisionStatus(goblin));
 
     goblin.AddGold(66);
     goblin.AddLoot(
@@ -96153,7 +96155,9 @@
     };
 
     orc.Wield(new Crossbow());
-    orc.Equip(new LeatherArmor());    
+    orc.Equip(new LeatherArmor());   
+    
+    orc.AddStatus(new NightVisionStatus(orc));
 
     orc.AddGold(79);
     orc.AddLoot(
@@ -98638,7 +98642,7 @@
         Name = "dragon",
         
         MaxHealth = 2100, Health = 2100,
-        MaxMana = 20, Mana = 20,
+        MaxMana = 100, Mana = 100,
         BaseDodge = 28,
         
         Experience = 85594,
@@ -98692,7 +98696,7 @@
     {
         /* Expected output of damage is 60 per turn based on replay from Indi..DOOM. */
         new CreatureSpell<WhirlwindSpell>(
-            skillLevel: 15, cost: 20)
+            skillLevel: 15, cost: 100)
     };
     
     dragon.AddLoot(new LootPack(
