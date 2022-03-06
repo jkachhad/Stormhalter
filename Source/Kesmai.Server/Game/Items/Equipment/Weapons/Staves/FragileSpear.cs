@@ -46,12 +46,12 @@ namespace Kesmai.Server.Items
         
         /// <inheritdoc />
         public override int MaximumDamage => _maximumDamage;
-        
+
         /// <inheritdoc />
-        public override int BaseArmorBonus => Utility.RandomBetween(1, 5)
-        
+        public override int BaseArmorBonus => Utility.RandomBetween(1, 5);
+
         /// <inheritdoc />
-        public override int BaseAttackBonus => Utility.RandomBetween(1, 5)
+        public override int BaseAttackBonus => Utility.RandomBetween(1, 5);
         
         // /// <inheritdoc />
         // public override int BaseArmorBonus => _baseArmorBonus;
