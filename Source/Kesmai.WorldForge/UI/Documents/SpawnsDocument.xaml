@@ -9,7 +9,7 @@
              xmlns:scripting="clr-namespace:Kesmai.WorldForge.Scripting"
              xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300"
+             d:DesignHeight="800" d:DesignWidth="600"
              
              FontFamily="Tahoma" FontSize="14">
     <UserControl.Resources>
@@ -326,9 +326,44 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="3"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="3"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <DataGrid Grid.Row="0" Margin="5" Height="300"
+                    
+                    <TabControl Grid.Row="0" ItemsSource="{Binding SelectedRegionSpawner.Scripts}" x:Name="_scriptsRegionTabControl" 
+                                Margin="5" MinHeight="300">
+                        <TabControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="2">
+                                    <CheckBox IsChecked="{Binding IsEnabled}" Margin="5,2" />
+                                    <Image Source="..\..\Resources/CSharp-Script.png" Width="16" Height="16" />
+                                    <TextBlock Text="{Binding Name}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=TabItem}}" Value="True">
+                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                    </DataTrigger>
+                                            
+                                                    <DataTrigger Binding="{Binding IsEnabled}" Value="False">
+                                                        <Setter Property="Foreground" Value="Gray"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </TabControl.ItemTemplate>
+                        <TabControl.ContentTemplate>
+                            <DataTemplate>
+                                <scripting:ScriptEditor Script="{Binding}" IsEnabled="{Binding IsEnabled}" />
+                            </DataTemplate>
+                        </TabControl.ContentTemplate>
+                    </TabControl>
+                    <GridSplitter Grid.Row="1" Height="3" HorizontalAlignment="Stretch" />
+                    <DataGrid Grid.Row="2" Margin="5" Height="300"
                               AutoGenerateColumns="False"
                               x:Name="_regionEntities"
                               ItemsSource="{Binding SelectedRegionSpawner.Entries}">
@@ -378,8 +413,8 @@
                             </DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <GridSplitter Grid.Row="1" Height="3" HorizontalAlignment="Stretch" />
-                    <worldForge:SpawnsPresentationTarget Grid.Row="2" x:Name="_regionPresenter" Margin="2" />
+                    <GridSplitter Grid.Row="3" Height="3" HorizontalAlignment="Stretch" />
+                    <worldForge:SpawnsPresentationTarget Grid.Row="4" x:Name="_regionPresenter" Margin="2" />
                 </Grid>
             </Grid>
         </TabItem>

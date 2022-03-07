@@ -7,22 +7,18 @@ namespace Kesmai.Server.Game
 		/// </summary>
 		public int CalculateDamageModifier(ItemEntity item)
 		{
+			var damageModifier = 0;
+
+			/* Calculate armor bonus from chest pieces. */
 			var paperdoll = Paperdoll;
 			
 			if (paperdoll is null)
 				return 0;
 			
-			var damageModifier = 0;
-			
 			var armor = paperdoll.Armor;
-
+			
 			if (armor != null)
-			{
-				var armorBonus = armor.GetArmorBonus(item);
-
-				if (armorBonus > 3)
-					damageModifier = armorBonus - 3;
-			}
+				damageModifier += armor.GetArmorBonus(item);
 
 			return damageModifier;
 		}
