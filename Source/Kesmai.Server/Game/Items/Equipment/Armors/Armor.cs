@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Game;
@@ -74,14 +76,18 @@ namespace Kesmai.Server.Items
 			}
 			else
 			{
+				var armorProtections = new int[3] { 0, 0, 0 };
+
 				if ((flags & WeaponFlags.Piercing) != 0)
-					armorBonus += PiercingProtection;
+					armorProtections[0] = PiercingProtection;
 
 				if ((flags & WeaponFlags.Slashing) != 0)
-					armorBonus += SlashingProtection;
+					armorProtections[1] = SlashingProtection;
 
 				if ((flags & WeaponFlags.Bashing) != 0)
-					armorBonus += BashingProtection;
+					armorProtections[2] = BashingProtection;
+
+				armorBonus += armorProtections.Min();
 			}
 
 			return armorBonus + BaseArmorBonus;
