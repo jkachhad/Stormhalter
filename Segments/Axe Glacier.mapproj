@@ -105295,8 +105295,8 @@
         },
         {
             new CreatureAttack(14,      29, 45,     "The giant stomps on you.",
-                                                        new AttackProneComponent(25), 
-                                                        new AttackStunComponent(10)),               40
+                                                        new AttackProneComponent(15), 
+                                                        new AttackStunComponent(5)),               45
         },
         {
             new CreatureAttack(15,      34, 54,     "The giant slams you across the room.",
@@ -105318,7 +105318,7 @@
         new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
         new LootPackEntry(true, (from, container) => new ReturningHammer(),        100),
         new LootPackEntry(true, (from, container) => new MoonstoneRing(),        100),
-        new LootPackEntry(true, (from, container) => new PermanentIntelligencePotion(),        50)
+        new LootPackEntry(true, AxePotions,        50)
     ));
        
     return giant;
@@ -107751,7 +107751,7 @@
         new LootPackEntry(true, UndeadGems,       4.5,     gemsPriceMutatorAboveAverage), 
         new LootPackEntry(true, AxeBottles,    20),
         new LootPackEntry(true, UtilityItems,    1),
-        new LootPackEntry(true, upperTreasure,   0.55),
+        new LootPackEntry(true, undeadTreasure,   0.55),
         new LootPackEntry(true, AxePotions,     0.1),
         new LootPackEntry(true, (from, container) => new YouthPotion(), 0.4)
     ));
@@ -107810,7 +107810,7 @@
         new LootPackEntry(true, UndeadGems,       4.5,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, AxeBottles,    20),
         new LootPackEntry(true, UtilityItems,    1),
-        new LootPackEntry(true, upperTreasure,   0.5),
+        new LootPackEntry(true, undeadTreasure,   0.5),
         new LootPackEntry(true, AxePotions,     0.1),
         new LootPackEntry(true, (from, container) => new YouthPotion(), 0.4)
     ));
@@ -107881,7 +107881,7 @@
         new LootPackEntry(true, UndeadGems,       4.5,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, AxeBottles,    20),
         new LootPackEntry(true, UtilityItems,    1),
-        new LootPackEntry(true, upperTreasure,   0.5),
+        new LootPackEntry(true, undeadTreasure,   0.5),
         new LootPackEntry(true, AxePotions,     0.1),
         new LootPackEntry(true, (from, container) => new YouthPotion(), 0.4)
     ));
@@ -107946,8 +107946,8 @@
         new LootPackEntry(true, UndeadGems,       45,     gemsPriceMutatorVeryHigh), 
         new LootPackEntry(true, AxeBottles,    100),
         new LootPackEntry(true, UtilityItems,    1),
-        new LootPackEntry(true, upperTreasure,   0.55),
-        new LootPackEntry(true, AxePotions,     0.1),
+        new LootPackEntry(true, undeadTreasure,   5),
+        new LootPackEntry(true, AxePotions,     5),
         new LootPackEntry(true, (from, container) => new YouthPotion(), 1)
     ));
 
@@ -108078,7 +108078,7 @@
         new LootPackEntry(true, UndeadGems,       4.5,     gemsPriceMutatorAboveAverage), 
         new LootPackEntry(true, AxeBottles,    20),
         new LootPackEntry(true, UtilityItems,    1),
-        new LootPackEntry(true, upperTreasure,   0.55),
+        new LootPackEntry(true, undeadTreasure,   0.55),
         new LootPackEntry(true, AxePotions,     0.1)
     ));
     
@@ -108143,7 +108143,7 @@
         new LootPackEntry(true, UndeadGems,       4.5,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, AxeBottles,    20),
         new LootPackEntry(true, UtilityItems,    1),
-        new LootPackEntry(true, upperTreasure,   0.5),
+        new LootPackEntry(true, undeadTreasure,   0.5),
         new LootPackEntry(true, AxePotions,     0.1)
     ));
     return worg;
@@ -110164,8 +110164,8 @@
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Mama">
-      <minimumDelay>10800</minimumDelay>
-      <maximumDelay>21600</maximumDelay>
+      <minimumDelay>7200</minimumDelay>
+      <maximumDelay>10800</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -110183,7 +110183,7 @@
       </script>
       <entry entity="BossMajorLevel14Dragon" size="1" minimum="1" maximum="1" />
       <bounds region="39">
-        <inclusion left="0" top="0" right="5" bottom="8" />
+        <inclusion left="0" top="0" right="5" bottom="6" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -110543,6 +110543,53 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new FireIceProtectionRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="3">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new ShieldBracelet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="7">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StrongStrengthRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new ShieldRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="10">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new MoonstoneRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="undeadTreasure">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new DexterityRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
