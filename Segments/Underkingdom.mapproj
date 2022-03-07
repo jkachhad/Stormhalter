@@ -55163,6 +55163,13 @@
         <component type="FloorComponent">
           <ground>3</ground>
         </component>
+        <component type="DoorComponent">
+          <openId>434</openId>
+          <closedId>421</closedId>
+          <secretId>384</secretId>
+          <destroyedId>436</destroyedId>
+          <isSecret>true</isSecret>
+        </component>
       </tile>
       <tile x="6" y="8">
         <component type="FloorComponent">
@@ -103831,7 +103838,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukTrollJailer" size="1" minimum="1" maximum="1" />
+      <entry entity="ukTrollJailer" size="0" minimum="0" maximum="0" />
       <location x="6" y="8" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="UKConfessorGhost">
