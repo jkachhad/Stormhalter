@@ -75,6 +75,7 @@ namespace Kesmai.Server.Items
 			writer.Write((short)2); /* version */
 			
 			writer.Write((byte)_baseArmorBonus);
+			//Do we need to Serialize/Deserialize the Hue?
 		}
 
 		/// <inheritdoc />
