@@ -4,7 +4,8 @@
     <block><![CDATA[]]></block>
     <block><![CDATA[
     public static TimeSpan _speechDelay = TimeSpan.FromMinutes(1.0);
-
+    public static Dictionary<MobileEntity, DateTime> _speechDelays = new Dictionary<MobileEntity, DateTime>();
+    
     public static bool spokeRecently(MobileEntity entity)
     {
         /* If the entity spoke recently, we're not going to speak again. */
