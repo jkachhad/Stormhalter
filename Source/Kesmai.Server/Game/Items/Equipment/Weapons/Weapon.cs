@@ -3,7 +3,7 @@ using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items
 {
-	public abstract partial class Weapon : ItemEntity, IWeapon, IArmored
+	public abstract partial class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	{
 		/// <summary>
 		/// Gets the attack bonus provided by this <see cref="IWeapon" /> for <see cref="MobileEntity" />.
@@ -62,6 +62,14 @@ namespace Kesmai.Server.Items
 			// Skill Level = 3 =>  ((3 + 1)^2) * 10 = 160 => 1 / 160;
 			// Skill Level = 4 =>  ((4 + 1)^2) * 10 = 250 => 1 / 250;
 			return 1 / (10 * Math.Pow(entity.GetSkillLevel(Skill) + 1, 2));
+		}
+
+		public virtual void OnWield(MobileEntity entity)
+		{
+		}
+		
+		public virtual void OnUnwield(MobileEntity entity)
+		{
 		}
 	}
 }

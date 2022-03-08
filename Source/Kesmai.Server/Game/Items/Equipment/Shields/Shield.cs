@@ -5,7 +5,7 @@ using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items
 {
-	public abstract partial class Shield : ItemEntity, IArmored
+	public abstract partial class Shield : ItemEntity, IArmored, IWieldable
 	{
 		/// <summary>
 		/// Gets the label number.
@@ -64,6 +64,14 @@ namespace Kesmai.Server.Items
 				return ProjectileProtection;
 
 			return BaseArmorBonus;
+		}
+		
+		public virtual void OnWield(MobileEntity entity)
+		{
+		}
+		
+		public virtual void OnUnwield(MobileEntity entity)
+		{
 		}
 	}
 }

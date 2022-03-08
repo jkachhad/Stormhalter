@@ -40,10 +40,9 @@ namespace Kesmai.Server.Items
 				entries.Add(new LocalizationEntry(6250109)); /* The shield contains the spell of Lightning Resist. */
 		}
 
-		protected override bool OnEquip(MobileEntity entity)
+		public override void OnWield(MobileEntity entity)
 		{
-			if (!base.OnEquip(entity))
-				return false;
+			base.OnWield(entity);
 
 			if (!entity.GetStatus(typeof(LightningResistanceStatus), out var resistStatus))
 			{
@@ -59,19 +58,14 @@ namespace Kesmai.Server.Items
 			{
 				resistStatus.AddSource(new ItemSource(this));
 			}
-
-			return true;
 		}
 
-		protected override bool OnUnequip(MobileEntity entity)
+		public override void OnUnwield(MobileEntity entity)
 		{
-			if (!base.OnUnequip(entity))
-				return false;
-			
-			if (entity.GetStatus(typeof(LightningResistanceStatus), out var iceStatus))
-				iceStatus.RemoveSourceFor(this);
+			base.OnUnequip(entity);
 
-			return true;
+			if (entity.GetStatus(typeof(LightningResistanceStatus), out var lightningStatus))
+				lightningStatus.RemoveSourceFor(this);
 		}
 	}
 }
