@@ -19,13 +19,19 @@ namespace Kesmai.Server.Items
 		public override int Hindrance => 1;
 
 		/// <inheritdoc />
-		public override int SlashingProtection => 1;
+		public override int SlashingProtection => 2;
 
 		/// <inheritdoc />
-		public override int PiercingProtection => 1;
+		public override int PiercingProtection => 2;
 
 		/// <inheritdoc />
-		public override int BashingProtection => 1;
+		public override int BashingProtection => 2;
+
+		/// <inheritdoc />
+		public override int ProjectileProtection => 2;
+
+		/// <inheritdoc />
+		public override int ProtectionFromIce => 5;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="LizardScales"/> class.

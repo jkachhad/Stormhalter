@@ -16,9 +16,6 @@ namespace Kesmai.Server.Items
 		/// <remarks>Robes have a default <see cref="Hindrance"/> value of 1.</remarks>
 		public override int Hindrance => 0;
 		
-		/// <inheritdoc />
-		public override int ProtectionFromFire => 10;
-
         /// <summary>
 		/// Initializes a new instance of the <see cref="GriffinJacket"/> class.
 		/// </summary>
@@ -31,5 +28,40 @@ namespace Kesmai.Server.Items
 		{
 			entries.Add(new LocalizationEntry(6200000, 6200195)); /* [You are looking at] [a vest made from the feathers of a griffin.] */
 		}
+
+				protected override bool OnEquip(MobileEntity entity)
+		{
+			if (!base.OnEquip(entity))
+				return false;
+
+			if (!entity.GetStatus(typeof(BlindResistanceStatus), out var resistance))
+			{
+				resistance = new BlindResistanceStatus(entity)
+				{
+					Inscription = new SpellInscription() { SpellId = 47 }
+				};
+				resistance.AddSource(new ItemSource(this));
+				
+				entity.AddStatus(resistance);
+			}
+			else
+			{
+				resistance.AddSource(new ItemSource(this));
+			}
+
+			return true;
+		}
+
+		protected override bool OnUnequip(MobileEntity entity)
+		{
+			if (!base.OnUnequip(entity))
+				return false;
+			
+			if (entity.GetStatus(typeof(BlindResistanceStatus), out var resistance))
+				resistance.RemoveSourceFor(this);
+
+			return true;
+		}
+	}
 	}
 }
