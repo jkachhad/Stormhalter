@@ -107926,6 +107926,7 @@
     };
     
     giant.AddImmunity(typeof(PoisonCloudSpell));
+    giant.AddImmunity(typeof(ConcussionSpell));
 
     giant.AddStatus(new NightVisionStatus(giant));
     giant.Attacks = new CreatureAttackCollection()
