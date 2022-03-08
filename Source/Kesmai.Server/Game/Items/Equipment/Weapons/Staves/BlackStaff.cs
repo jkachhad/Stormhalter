@@ -23,7 +23,7 @@ namespace Kesmai.Server.Items
 		public override int MaximumDamage => 8;
 
 		/// <inheritdoc />
-		public override int BaseArmorBonus => 1;
+		public override int BaseArmorBonus => 2;
 
 		/// <inheritdoc />
 		public override int BaseAttackBonus => 1;
