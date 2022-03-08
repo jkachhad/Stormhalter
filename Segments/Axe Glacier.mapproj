@@ -107795,8 +107795,6 @@
         
         IceProtection = 100,
     };
-
-    draugr.AddImmunity(typeof(PoisonCloudSpell));
     
     draugr.Attacks = new CreatureAttackCollection()
     {
@@ -107864,7 +107862,6 @@
         new CreatureBasicAttack(16)
     };
     
-    draugr.AddImmunity(typeof(PoisonCloudSpell));
     
     draugr.Spells = new CreatureSpellCollection()
     {
@@ -107926,6 +107923,7 @@
     };
     
     giant.AddImmunity(typeof(PoisonCloudSpell));
+    giant.AddImmunity(typeof(ConcussionSpell));
 
     giant.AddStatus(new NightVisionStatus(giant));
     giant.Attacks = new CreatureAttackCollection()
