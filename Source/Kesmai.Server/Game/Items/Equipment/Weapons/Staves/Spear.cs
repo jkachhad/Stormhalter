@@ -25,8 +25,6 @@ namespace Kesmai.Server.Items
 		/// <inheritdoc />
 		public override int BaseArmorBonus => 2;
 
-		public override int BaseAttackBonus => 4;
-
 		/// <inheritdoc />
 		public override WeaponFlags Flags => WeaponFlags.TwoHanded | WeaponFlags.Piercing;
 		
