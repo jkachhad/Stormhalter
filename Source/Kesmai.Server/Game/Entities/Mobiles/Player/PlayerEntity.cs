@@ -81,9 +81,10 @@ namespace Kesmai.Server.Game
 			
 			var skillLevel = GetSkillLevel(skill);
 			var skillMultiplier = 1.0 + (skillLevel / skillFactor);
+			var speedMultiplier = weapon.GetSkillMultiplier();
 			
-			var minimumDamage = (int)((baseMinimumDamage + hitAdds) * skillMultiplier);
-			var maximumDamage = (int)((baseMaximumDamage + hitAdds) * skillMultiplier);
+			var minimumDamage = (int)((baseMinimumDamage + hitAdds) * skillMultiplier * speedMultiplier);
+			var maximumDamage = (int)((baseMaximumDamage + hitAdds) * skillMultiplier * speedMultiplier);
 
 			return (Math.Max(1, minimumDamage), Math.Max(1, maximumDamage));
 		}
