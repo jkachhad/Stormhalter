@@ -53,5 +53,15 @@ namespace Kesmai.Server.Items
 
 			return BaseArmorBonus;
 		}
+		
+		/// <summary>
+		/// Calculates the fumble chance as a percent.
+		/// </summary>
+		public override double CalculateFumbleChance(MobileEntity entity)
+		{
+			// Skill Level = 3 =>  ((3 + 1)^2) * 10 = 160 => 1 / 160;
+			// Skill Level = 4 =>  ((4 + 1)^2) * 10 = 250 => 1 / 250;
+			return 1 / (10 * Math.Pow(entity.GetSkillLevel(Skill) + 1, 2));
+		}
 	}
 }
