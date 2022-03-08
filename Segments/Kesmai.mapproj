@@ -61806,8 +61806,8 @@
           <indestructible>true</indestructible>
         </component>
         <component type="RopeComponent">
-          <destinationX>16</destinationX>
-          <destinationY>36</destinationY>
+          <destinationX>17</destinationX>
+          <destinationY>35</destinationY>
           <destinationRegion>11</destinationRegion>
           <teleporterId>255</teleporterId>
         </component>
@@ -96855,7 +96855,7 @@
                 
     elderTroll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(7, 25, 30,
+        new CreatureBasicAttack(5, 10, 25,
             new AttackProneComponent(15.0), new AttackStunComponent(15.0))
     };
                 
@@ -100768,7 +100768,8 @@ return orc;
         new LootPackEntry(true, kesmaiwideGems,       100,     gemsPriceMutatorVeryHigh),
         new LootPackEntry(true, kesmaiwideGems,       100,     gemsPriceMutatorVeryHigh),
             new LootPackEntry(true, (from, container) => new ScorpionRobe(),        100),
-            new LootPackEntry(true, (from, container) => new SteelLongsword(),        50.0)
+            new LootPackEntry(true, (from, container) => new SteelLongsword(),        50.0),
+            new LootPackEntry(true, (from, container) => new TigerSkull(), 100)
         ));
     
     return dragon;
@@ -103501,20 +103502,11 @@ else
       </entry>
     </treasure>
     <treasure name="dungeon1Treasure">
-      <entry weight="14">
+      <entry weight="9">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new WeakStrengthRing();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="5">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new RamSkull();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -103716,15 +103708,6 @@ else
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="2">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new TigerSkull();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
     </treasure>
     <treasure name="dungeon3Treasure">
       <entry weight="20">
@@ -103741,15 +103724,6 @@ else
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new FireProtectionAmulet();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="20">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new TigerSkull();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -103877,24 +103851,6 @@ else
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="2">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new IceProtectionRing();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="1">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new BlindResistanceRing();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
     </treasure>
     <treasure name="dungeon4Rings">
       <entry weight="1">
@@ -104014,15 +103970,6 @@ else
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new WeakShieldRing();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="1">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new RamSkull();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
