@@ -107924,6 +107924,7 @@
     
     giant.AddImmunity(typeof(PoisonCloudSpell));
     giant.AddImmunity(typeof(ConcussionSpell));
+    giant.AddImmunity(typeof(Whirlwind));
 
     giant.AddStatus(new NightVisionStatus(giant));
     giant.Attacks = new CreatureAttackCollection()
