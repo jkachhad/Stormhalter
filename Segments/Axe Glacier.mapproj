@@ -106464,7 +106464,7 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     //todo add Ice Dragon model / corpse.
-    var dragon = new Dragon()
+    var dragon = new IceDragon()
     {
         MaxHealth = 4200, Health = 4200,
         BaseDodge = 32,
@@ -106529,7 +106529,6 @@
         new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
         new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
         new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
-        new LootPackEntry(true, (from, container) => new IceDragonScaleArmor(),        100),
         new LootPackEntry(true, (from, container) => new DragonSkull(),        100),
         new LootPackEntry(true, MamaTreasure,     100.0), 
         new LootPackEntry(true, MamaTreasure2,     100.0),
