@@ -102943,6 +102943,7 @@ else
       <entry entity="level5Wraith" size="1" minimum="1" maximum="1" />
       <bounds region="13">
         <inclusion left="25" top="1" right="44" bottom="14" />
+        <inclusion left="22" top="2" right="24" bottom="5" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai -3 A">
@@ -103131,6 +103132,7 @@ else
         <inclusion left="11" top="13" right="26" bottom="18" />
         <inclusion left="13" top="19" right="32" bottom="33" />
         <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="25" top="32" right="26" bottom="33" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai -4 South">
@@ -103195,7 +103197,7 @@ else
       <entry entity="dungeon1SkeletonSentry" size="1" minimum="2" maximum="3" />
       <entry entity="dungeon1Wyvern" size="1" minimum="6" maximum="12" />
       <bounds region="11">
-        <inclusion left="19" top="3" right="33" bottom="15" />
+        <inclusion left="19" top="3" right="33" bottom="14" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai -1 Northwest">
@@ -103252,6 +103254,9 @@ else
       <entry entity="dungeon1Wyvern" size="1" minimum="6" maximum="12" />
       <bounds region="11">
         <inclusion left="3" top="21" right="14" bottom="39" />
+        <inclusion left="15" top="33" right="16" bottom="33" />
+        <exclusion left="7" top="21" right="9" bottom="27" />
+        <exclusion left="5" top="25" right="6" bottom="27" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai -1 Southeast">
@@ -103373,6 +103378,9 @@ else
       <entry entity="level3OrcArsonist" size="1" minimum="1" maximum="2" />
       <bounds region="12">
         <inclusion left="2" top="18" right="32" bottom="23" />
+        <inclusion left="2" top="15" right="14" bottom="17" />
+        <inclusion left="2" top="24" right="12" bottom="25" />
+        <inclusion left="10" top="26" right="12" bottom="32" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai -3 B">
@@ -103444,6 +103452,7 @@ else
       <entry entity="level8Ghoul" size="1" minimum="0" maximum="1" />
       <bounds region="14">
         <inclusion left="1" top="10" right="32" bottom="38" />
+        <inclusion left="1" top="6" right="9" bottom="9" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -103467,6 +103476,28 @@ else
       <entry entity="BossMiniLevel7Bear" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="51" top="4" right="95" bottom="29" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai -1 Library Spawn">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <bounds region="11">
+        <inclusion left="3" top="3" right="8" bottom="6" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
