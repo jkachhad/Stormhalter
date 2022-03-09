@@ -106473,7 +106473,7 @@
         
         CanFly = true,
         CanCharge = true,
-        CanStrikeCritically = true,
+        CanStrikeCritically = false,
         BasePenetration = ShieldPenetration.VeryHeavy,
 
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
@@ -106493,16 +106493,23 @@
     
     dragon.Attacks = new CreatureAttackCollection
     {
+         {
+            new CreatureAttack(20,      100, 160,      "The Ice Dragon spins around and slams you to the ground with its mace-like tail."),5
+                                                                                                   
+                                                                                                    },
+        
         {
             new CreatureAttack(20,      50, 70,      "The Ice Dragon slashes you with a claw.",
                                                         new AttackProneComponent(5), 
-                                                        new AttackStunComponent(5)),                40
+                                                        new AttackStunComponent(5)),                35
         },
+        
         {
             new CreatureAttack(20,      55, 75,     "The Ice Dragon smashes you against the ice with its tail.",
                                                         new AttackProneComponent(10), 
                                                         new AttackStunComponent(10)),               40
         },
+        
         {
             new CreatureAttack(20,      75, 92,     "The Ice Dragon buffets you with its wings.",
                                                         new AttackProneComponent(15), 
