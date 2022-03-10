@@ -50,7 +50,17 @@ namespace Kesmai.Server.Items
 			entries.Add(new LocalizationEntry(6200000, 6200043)); /* [You are looking at] [a steel helm set with white wings.] */
 
 			if (Identified)
-				entries.Add(new LocalizationEntry(6250033)); /* The helm appears quite ordinary. */
+			{
+				if(ProvidesNightVision)
+				{
+					entries.Add(new LocalizationEntry(6250104))
+				}
+				else
+				{
+					entries.Add(new LocalizationEntry(6250033)); /* The helm appears quite ordinary. */
+				}
+			}
+
 		}
 	}
 }

@@ -22,6 +22,9 @@ namespace Kesmai.Server.Items
 		/// <inheritdoc />
 		public override int BaseArmorBonus => 1;
 
+				/// <inheritdoc />
+		public override int BaseAttackBonus => 2;
+
 		/// <inheritdoc />
 		public override Skill Skill => Skill.Mace;
 
@@ -41,7 +44,7 @@ namespace Kesmai.Server.Items
 			entries.Add(new LocalizationEntry(6200000, 6200139)); /* [You are looking at] [a huge wooden club with a metal spike.] */
 
 			if (Identified)
-				entries.Add(new LocalizationEntry(6250081)); /* The club appears quite ordinary. */
+				entries.Add(new LocalizationEntry(6250080)); /* The combat adds for this weapon are +2. */
 		}
 	}
 }

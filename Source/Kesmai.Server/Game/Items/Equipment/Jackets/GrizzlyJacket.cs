@@ -12,6 +12,12 @@ namespace Kesmai.Server.Items
         /// <inheritdoc />
 		public override int Weight => 2000;
         
+		/// <inheritdoc />
+		public override int Hindrance => 0;
+		
+		/// <inheritdoc />
+		public override int ProtectionFromFire => 10;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="GrizzlyJacket"/> class.
 		/// </summary>

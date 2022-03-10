@@ -20,13 +20,13 @@ namespace Kesmai.Server.Items
 		public override int MinimumDamage => 1;
 
 		/// <inheritdoc />
-		public override int MaximumDamage => 6;
+		public override int MaximumDamage => 8;
 
 		/// <inheritdoc />
-		public override int BaseArmorBonus => 1;
+		public override int BaseArmorBonus => 2;
 
 		/// <inheritdoc />
-		public override int BaseAttackBonus => 3;
+		public override int BaseAttackBonus => 4;
 
 		/// <inheritdoc />
 		public override WeaponFlags Flags => WeaponFlags.TwoHanded | WeaponFlags.Bashing | WeaponFlags.Lawful;
