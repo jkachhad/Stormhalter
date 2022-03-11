@@ -108168,6 +108168,68 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="BossMiniLevel12Elemental">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var elemental = new WaterElemental()
+	{
+	    MaxHealth = 600, Health = 600,
+        BaseDodge = 21,
+    
+        Experience = 100001,
+        HideDetection = 29,
+        IsTethered = true,
+	};
+    
+    elemental.Spells = new CreatureSpellCollection(10.0)
+    {
+        {
+            new CreatureSpell<MagicMissileSpell>(
+                skillLevel: 8),  90,   TimeSpan.FromSeconds(10.0)
+        },
+    };
+    
+    elemental.AddStatus(new NightVisionStatus(elemental));
+    
+    elemental.Attacks = new CreatureAttackCollection
+    {
+        new CreatureAttack(15,     15, 32,   "The elemental attempts to drown you"),
+    };
+    
+    elemental.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(10, "a wall of water"),
+        new CreatureBlock(5, "a spout of water"),
+    };
+    
+    elemental.AddGold(1600);
+    elemental.AddLoot(new LootPack(
+        new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
+        new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
+        new LootPackEntry(true, (from, container) => new BreatheWaterBracelet(),        50),
+        new LootPackEntry(true, (from, container) => new ShieldBracelet(),        50),
+        new LootPackEntry(true, AxePotions,        50)
+    ));
+       
+    return elemental;
+    
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="axeSEShopkeeper">
@@ -110428,6 +110490,29 @@
         <inclusion left="28" top="-3" right="60" bottom="16" />
         <inclusion left="-2" top="1" right="27" bottom="30" />
         <inclusion left="38" top="17" right="60" bottom="35" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Chaos Town Elemental">
+      <minimumDelay>3720</minimumDelay>
+      <maximumDelay>4500</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossMiniLevel12Elemental" size="1" minimum="1" maximum="1" />
+      <bounds region="18">
+        <inclusion left="21" top="21" right="24" bottom="25" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
