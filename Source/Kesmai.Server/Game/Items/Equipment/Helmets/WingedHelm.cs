@@ -51,16 +51,11 @@ namespace Kesmai.Server.Items
 
 			if (Identified)
 			{
-				if(ProvidesNightVision)
-				{
-					entries.Add(new LocalizationEntry(6250104))
-				}
-				else
-				{
-					entries.Add(new LocalizationEntry(6250033)); /* The helm appears quite ordinary. */
-				}
+				entries.Add(
+					new LocalizationEntry(ProvidesNightVision 
+						? 6250104 /* The helm contains the spell of Night Vision. */
+						: 6250033)); /* The helm appears quite ordinary. */
 			}
-
 		}
 	}
 }
