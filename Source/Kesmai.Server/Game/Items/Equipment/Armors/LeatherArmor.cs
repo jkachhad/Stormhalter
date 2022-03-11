@@ -38,7 +38,7 @@ namespace Kesmai.Server.Items
 		/// <summary>
 		/// Initializes a new instance of the <see cref="LeatherArmor"/> class.
 		/// </summary>
-		public LeatherArmor() : this(ItemQuality.Legendary)
+		public LeatherArmor() : this(ItemQuality.Common)
 		{
 		}
 		
