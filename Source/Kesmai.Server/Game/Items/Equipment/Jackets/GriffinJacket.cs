@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
+using Kesmai.Server.Game;
 using Kesmai.Server.Network;
+using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items
 {
@@ -29,39 +31,40 @@ namespace Kesmai.Server.Items
 			entries.Add(new LocalizationEntry(6200000, 6200195)); /* [You are looking at] [a vest made from the feathers of a griffin.] */
 		}
 
-				protected override bool OnEquip(MobileEntity entity)
-		{
-			if (!base.OnEquip(entity))
-				return false;
+        /// <inheritdoc />
+        protected override bool OnEquip(MobileEntity entity)
+        {
+	        if (!base.OnEquip(entity))
+		        return false;
 
-			if (!entity.GetStatus(typeof(BlindResistanceStatus), out var resistance))
-			{
-				resistance = new BlindResistanceStatus(entity)
-				{
-					Inscription = new SpellInscription() { SpellId = 47 }
-				};
-				resistance.AddSource(new ItemSource(this));
+	        if (!entity.GetStatus(typeof(BlindResistanceStatus), out var resistance))
+	        {
+		        resistance = new BlindResistanceStatus(entity)
+		        {
+			        Inscription = new SpellInscription() { SpellId = 47 }
+		        };
+		        resistance.AddSource(new ItemSource(this));
 				
-				entity.AddStatus(resistance);
-			}
-			else
-			{
-				resistance.AddSource(new ItemSource(this));
-			}
+		        entity.AddStatus(resistance);
+	        }
+	        else
+	        {
+		        resistance.AddSource(new ItemSource(this));
+	        }
 
-			return true;
-		}
+	        return true;
+        }
 
-		protected override bool OnUnequip(MobileEntity entity)
-		{
-			if (!base.OnUnequip(entity))
-				return false;
+        /// <inheritdoc />
+        protected override bool OnUnequip(MobileEntity entity)
+        {
+	        if (!base.OnUnequip(entity))
+		        return false;
 			
-			if (entity.GetStatus(typeof(BlindResistanceStatus), out var resistance))
-				resistance.RemoveSourceFor(this);
+	        if (entity.GetStatus(typeof(BlindResistanceStatus), out var resistance))
+		        resistance.RemoveSourceFor(this);
 
-			return true;
-		}
-	}
+	        return true;
+        }
 	}
 }
