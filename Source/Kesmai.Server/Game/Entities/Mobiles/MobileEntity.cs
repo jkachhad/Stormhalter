@@ -22,6 +22,25 @@ namespace Kesmai.Server.Game
 			
 			if (armor != null)
 				damageModifier += armor.GetArmorBonus(item);
+			
+			/* Calculate armor bonus from held items. */
+			var leftHand = LeftHand;
+			var rightHand = RightHand;
+
+			if (leftHand is Shield shield)
+			{
+				damageModifier += leftHand.CalculateBlockingBonus(item);
+				if (rightHand is IWeapon weapon & !weapon.Flags.HasFlag(WeaponFlags.TwoHanded))
+					damageModifier += rightHand.CalculateBlockingBonus(item);
+			}
+			else if (leftHand is IWeapon weapon)
+			{
+				damageModifier += leftHand.CalculateBlockingBonus(item);
+			}
+			else if (leftHand == null && rightHand is IWeapon weapon)
+			{
+				damageModifier += rightHand.CalculateBlockingBonus(item);
+			}
 
 			return damageModifier;
 		}

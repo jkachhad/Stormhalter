@@ -60,12 +60,37 @@ namespace Kesmai.Server.Items
 		/// </remarks>
 		public override int CalculateBlockingBonus(ItemEntity item)
 		{
-			if (item is IWeapon weapon && weapon.Flags.HasFlag(WeaponFlags.Projectile))
-				return ProjectileProtection;
+			var flags = WeaponFlags.Bashing;
 
-			return BaseArmorBonus;
+			if (item is IWeapon weapon)
+				flags = weapon.Flags;
+
+			var blockingBonus = 0;
+
+			if ((flags & WeaponFlags.Projectile) != 0)
+			{
+				blockingBonus += ProjectileProtection;
+			}
+			else
+			{
+				var itemProtections = new List<int>();
+
+				if ((flags & WeaponFlags.Piercing) != 0)
+					itemProtections.Add(PiercingProtection);
+
+				if ((flags & WeaponFlags.Slashing) != 0)
+					itemProtections.Add(SlashingProtection);
+
+				if ((flags & WeaponFlags.Bashing) != 0)
+					itemProtections.Add(BashingProtection);
+
+				if (itemProtections.Any())
+					blockingBonus += itemProtections.Min();
+			}
+
+			return blockingBonus + BaseArmorBonus;
 		}
-		
+
 		public virtual void OnWield(MobileEntity entity)
 		{
 		}
