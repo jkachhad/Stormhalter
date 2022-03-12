@@ -27,19 +27,22 @@ namespace Kesmai.Server.Game
 			var leftHand = LeftHand;
 			var rightHand = RightHand;
 
+			/// Shield in left hand mitigates. If using shield and 1h, both mitigate.
+			/// Mitigate if left hand is one-handed.
+			/// Always mitigate with right hand weapon if left is empty.
 			if (leftHand is Shield shield)
 			{
-				damageModifier += leftHand.CalculateBlockingBonus(item);
+				damageModifier += leftHand.GetShieldBonus(item);
 				if (rightHand is IWeapon weapon & !weapon.Flags.HasFlag(WeaponFlags.TwoHanded))
-					damageModifier += rightHand.CalculateBlockingBonus(item);
+					damageModifier += rightHand.GetWeaponBonus(item);
 			}
-			else if (leftHand is IWeapon weapon)
+			else if (leftHand is IWeapon weapon & !weapon.Flags.HasFlag(WeaponFlags.TwoHanded)
 			{
-				damageModifier += leftHand.CalculateBlockingBonus(item);
+				damageModifier += leftHand.GetWeaponBonus(item);
 			}
 			else if (leftHand == null && rightHand is IWeapon weapon)
 			{
-				damageModifier += rightHand.CalculateBlockingBonus(item);
+				damageModifier += rightHand.GetWeaponBonus(item);
 			}
 
 			return damageModifier;

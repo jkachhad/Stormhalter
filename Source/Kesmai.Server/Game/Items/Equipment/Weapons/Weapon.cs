@@ -41,10 +41,34 @@ namespace Kesmai.Server.Items
 			return attackBonus;
 		}
 		
+		/// <summary>
+		/// Protection Bonus vs. Melee Damage Types
+		/// </summary>
+		public int GetMeleeBonus(ItemEntity item, WeaponFlags flags)
+		{
+			var protectionBonus = 0
+			var itemProtections = new List<int>();
+
+			if ((flags & WeaponFlags.Piercing) != 0)
+				itemProtections.Add(PiercingProtection);
+
+			if ((flags & WeaponFlags.Slashing) != 0)
+				itemProtections.Add(SlashingProtection);
+
+			if ((flags & WeaponFlags.Bashing) != 0)
+				itemProtections.Add(BashingProtection);
+
+			if (itemProtections.Any())
+				protectionBonus += itemProtections.Min();
+
+			return protectionBonus;
+		}
+		
 		/// <inheritdoc/>
 		/// <remarks>
 		/// Weapons only provide a blocking bonus against other weapons. Two-handed weapons
-		/// should only provide a benefit if equipped in the right-hand.
+		/// should only provide a benefit if equipped in the right-hand. Used for DR calculations.
+		/// Weapon BaseArmorBonus does not help block projectiles.
 		/// </remarks>
 		public override int CalculateBlockingBonus(ItemEntity item)
 		{
@@ -53,7 +77,7 @@ namespace Kesmai.Server.Items
 			if (item is IWeapon weapon)
 				flags = weapon.Flags;
 
-			var blockingBonus = 0;
+			var bonusBlock = 0;
 
 			if ((flags & WeaponFlags.Projectile) != 0)
 			{
@@ -61,24 +85,39 @@ namespace Kesmai.Server.Items
 			}
 			else
 			{
-				var itemProtections = new List<int>();
-
-				if ((flags & WeaponFlags.Piercing) != 0)
-					itemProtections.Add(PiercingProtection);
-
-				if ((flags & WeaponFlags.Slashing) != 0)
-					itemProtections.Add(SlashingProtection);
-
-				if ((flags & WeaponFlags.Bashing) != 0)
-					itemProtections.Add(BashingProtection);
-
-				if (itemProtections.Any())
-					blockingBonus += itemProtections.Min();
+				bonusBlock += GetMeleeBonus(item, flags)
 			}
 
-			return blockingBonus + BaseArmorBonus;
+			return bonusBlock + BaseArmorBonus;
 		}
+		
+		/// <inheritdoc/>
+		/// <remarks>
+		/// Weapons only provide a blocking bonus against other weapons. Two-handed weapons
+		/// should only provide a benefit if equipped in the right-hand.
+		/// Used for mitigation calculation. Weapon BaseArmorBonus does not help mitigate.
+		/// </remarks>
+		public int GetWeaponBonus(ItemEntity item)
+		{
+			var flags = WeaponFlags.Bashing;
 
+			if (item is IWeapon weapon)
+				flags = weapon.Flags;
+
+			var weaponBonus = 0;
+
+			if ((flags & WeaponFlags.Projectile) != 0)
+			{
+				weaponBonus += ProjectileProtection;
+			}
+			else
+			{
+				weaponBonus += GetMeleeBonus(item, flags)
+			}
+
+			return weaponBonus;
+		}
+		
 		/// <summary>
 		/// Calculates the fumble chance as a percent.
 		/// </summary>
