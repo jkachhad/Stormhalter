@@ -57,7 +57,7 @@ namespace Kesmai.Server.Items
 
 			if ((flags & WeaponFlags.Projectile) != 0)
 			{
-				blockingBonus += ProjectileProtection;
+				return ProjectileProtection;
 			}
 			else
 			{
