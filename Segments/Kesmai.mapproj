@@ -77,22 +77,44 @@
       * additional entries.
       */
     public static readonly Dictionary<Area, LootPackEntry[]> lootTable = new Dictionary<Area, LootPackEntry[]>() {
-        [Area.KesSurface] = {new LootPackEntry(true, randomBalm(), 10)}
+        [Area.KesSurface] = le(new LootPackEntry(true, randomBalm(), 10))
     };
     
+    /**
+     * C# doesn't really do autoboxing wihtout a helper
+     */
+    public static LootPackEntry[] le(params LootPackEntry[] l)
+    {
+        return l;
+    }
+    
+    /**
+     * Attack collections
+     */
     public static CreatureAttackCollection defaultAttack(int level) {
         return new CreatureAttackCollection() {
             {new CreatureBasicAttack(level)}
         };
     }
     
-    public static LootPack trashMobLeveledLoot(int area, params LootPackEntry[] extras)
-        {
-            List<LootPackEntry> lpe = new List<LootPackEntry>(lootTable[(Area)area]);
-            lpe.AddRange(extras);
-            return new LootPack(lpe.ToArray());
-        }
+    /**
+     * Loot collections and helpers
+     */
+    public static LootPack trashMobLeveledLoot(int area)
+    {
+        return new LootPack(lootTable[(Area)area]);
+    }
     
+    public static LootPack trashMobLeveledLootAnd(int area, params LootPackEntry[] extras)
+    {
+        List<LootPackEntry> lpe = new List<LootPackEntry>(lootTable[(Area)area]);
+        lpe.AddRange(extras);
+        return new LootPack(lpe.ToArray());
+    }
+    
+    /**
+     * Spell collections and helpers
+     */
     public static CreatureSpellCollection leveledPriestSpells(int level) {
         return new CreatureSpellCollection() {
             new CreatureSpell<CurseSpell> (
@@ -102,6 +124,10 @@
             instantCast: false)
         };
     }
+    
+    /**
+     * Equipment collections and helpers
+     */
     public static List<Equipment> randomPriestEquipment(int level) {
         List<Equipment> equip = new List<Equipment>() { new LeatherArmor()};
         var equipTypeChance = Utility.RandomDouble();
@@ -186,6 +212,9 @@
         public eq hideEQ {get; set;} = progressionMXPlusB;
     };
     
+    /**
+     * Behaviors
+     */
     public class MobBehavior {
         public attEQ makeAttack {get; set;} = defaultAttack;
         public blockEQ makeBlock {get; set;} = null;
@@ -101474,7 +101503,7 @@ else
         <block><![CDATA[]]></block>
         <block><![CDATA[
 	var wraith = generateMob<Wraith, PriestBehavior>(8, Area.kesmaiSurface);
-	wraith.AddLoot(trashMobLeveledLoot(Area.KesSurface, new LootPackEntry(true, surfaceTreasure, 20)));
+	wraith.AddLoot(trashMobLeveledLootAnd(Area.KesSurface, new LootPackEntry(true, surfaceTreasure, 20)));
     return wraith;
 ]]></block>
         <block><![CDATA[]]></block>
