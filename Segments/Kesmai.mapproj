@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.92.0.0">
+<segment name="Kesmai" version="0.93.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -56,6 +56,155 @@
         "Yupo", "Yuqui", "Yura", "Yuri", "Yuta", "Yuti", "Yuto", "Yutu", "Yuxi", "Yuya"
     };
     
+    public delegate int eq(int x, float y, float z);
+    public delegate CreatureAttackCollection attEQ(int level);
+    public delegate CreatureBlockCollection blockEQ(int level);
+    public delegate LootPack lootEQ(int area);
+    public delegate CreatureSpellCollection spellEQ(int level);
+    public delegate List<Equipment> equipEQ(int level);
+    
+    public enum Area {
+        KesSurface,
+        KesDungeon1,
+        KesDungeon2,
+        KesDungeon3,
+        KesDungeon4
+    }
+    
+    /**
+      * This is a specific area loot table, anything that all the trash mobs will potentially have
+      * on them will go here.  For specialty mobs, you can use the default loot table then add
+      * additional entries.
+      */
+    public static readonly Dictionary<Area, LootPackEntry[]> lootTable = new Dictionary<Area, LootPackEntry[]>() {
+        [Area.KesSurface] = {new LootPackEntry(true, randomBalm(), 10)}
+    };
+    
+    public static CreatureAttackCollection defaultAttack(int level) {
+        return new CreatureAttackCollection() {
+            {new CreatureBasicAttack(level)}
+        };
+    }
+    
+    public static LootPack trashMobLeveledLoot(int area, params LootPackEntry[] extras)
+        {
+            List<LootPackEntry> lpe = new List<LootPackEntry>(lootTable[(Area)area]);
+            lpe.AddRange(extras);
+            return new LootPack(lpe.ToArray());
+        }
+    
+    public static CreatureSpellCollection leveledPriestSpells(int level) {
+        return new CreatureSpellCollection() {
+            new CreatureSpell<CurseSpell> (
+            skillLevel: level, 
+            cost: 3,
+            mantra: SpellHelper.GenerateMantra(),
+            instantCast: false)
+        };
+    }
+    public static List<Equipment> randomPriestEquipment(int level) {
+        List<Equipment> equip = new List<Equipment>() { new LeatherArmor()};
+        var equipTypeChance = Utility.RandomDouble();
+        if(equipTypeChance < 0.5) {
+            equip.Add(new BlackStaff());
+        } else {
+            equip.Add(new ShortSword());
+        }
+    }
+    
+    /**
+     * This is the equation code for generating a mob progression table - should be not too far off from what
+     * a normal PC would progress as.  The expectation is that this would be consistent across creatures
+     * from different lands but the same level.
+     * You should also be able to generate a table value if the progression is more complicated or needs tweaking.
+     */
+    public static int progressionMXPlusB(int x, float y, float z) {
+        //level, baseline, multiplier
+        return (int) Math.Ceiling(y + z*(x-1));
+    }
+    public static int progressionGeometric(int x, float y, float z) {
+        //level, baseline, multiplier
+        return (int)Math.Ceiling(y * Math.Pow(z, (x - 1)));
+    }
+    public static int linearSimpleProgression(int x, float y, float z) {
+        //level, val/lev, unused
+        return (int) Math.Ceiling(y*x);
+    }
+    
+    /**
+     * This is the master list of creatures - our monster manual.
+     * Any changes here will affect every creature in the land, so be very sure that something here should change
+     * or if there's a specific attribute to change fore a specific mob in the lands it can be overriden directly upon generation.
+     */
+    public static readonly Dictionary<string,MobMutator> mobMutator = new Dictionary<string, MobMutator>() {
+        [typeof(Bear).Name] = new MobMutator {healthBase=13, dodgeBase=12, damageBase=10, damagePerLv=1.5f, attackBase=3, goldBase=30, goldPerLv=6, expBase=850},
+        [typeof(Bee).Name] = new MobMutator {healthBase=6, dodgeBase=14, damageBase=4, damagePerLv=1.5f, attackBase=1, goldBase=20, goldPerLv=5, expBase=525},
+        [typeof(Wraith).Name] = new MobMutator {healthBase=10, manaBase=17, dodgeBase=10, damageBase=8, attackBase=1, goldBase=35, goldPerLv=7, expBase=725},
+    };
+
+    public class MobMutator {
+        public string name {get; set;} = null;
+        
+        public int healthBase {get; set;}
+        public float healthPerLv {get; set;} = 0;
+        public eq healthEQ {get; set;} = linearSimpleProgression;
+        
+        public int manaBase {get; set;} = 0;
+        public float manaPerLv {get; set;} = 0;
+        public eq manaEQ {get; set;} = progressionMXPlusB;
+        
+        public int dodgeBase {get; set;}
+        public float dodgePerLv {get; set;} = 1;
+        public eq dodgeEQ {get; set;} = progressionMXPlusB;
+        
+        public int damageBase {get; set;}
+        public float damagePerLv {get; set;} = 1;
+        public eq damageEQ = progressionMXPlusB;
+        
+        public int attackBase {get; set;}
+        public float attackPerLv {get; set;} = 1;
+        public eq attackEQ = progressionMXPlusB;
+        
+        public int spellLv {get; set;} = -7;
+        public float spellPerLv {get; set;} = 1;
+        public eq spellEQ = progressionMXPlusB;
+        
+        public int goldBase {get; set;}
+        public float goldPerLv {get; set;}
+        public eq goldEQ = progressionMXPlusB;
+        
+        public int expBase {get; set;}
+        public float expPerLv {get; set;} = 1.2f;
+        public eq expEQ = progressionGeometric;
+        
+        public int spellRes {get; set;} = 0;
+        public float spellResPerLv {get; set;} = 0;
+        public eq spellResEQ = progressionMXPlusB;
+        
+        public int hideBase {get; set;} = 1;
+        public float hidePerLv {get; set;} = 2;
+        public eq hideEQ {get; set;} = progressionMXPlusB;
+    };
+    
+    public class MobBehavior {
+        public attEQ makeAttack {get; set;} = defaultAttack;
+        public blockEQ makeBlock {get; set;} = null;
+        public lootEQ makeLoot {get; set;} = trashMobLeveledLoot;
+        public spellEQ makeSpell {get; set;} = null;
+        public equipEQ makeEquipment {get; set;} = null;
+    }
+    
+    public class AnimalBehavior : MobBehavior {
+        
+    }
+    
+    public class PriestBehavior : MobBehavior {
+        public Priest() {
+            makeSpell = leveledPriestSpells;
+            makeEquipment = randomPriestEquipment;
+        }
+    }
+    
     public static string[] _rarePurchaseResponses = new string[]
     {
         "That's quite a bargain.", 
@@ -64,6 +213,53 @@
         "It was left here, pray the owner doesn't come back.",
         "Don't go losing it."
     };
+    
+    /**
+     * This is the creature creator, it should cut down on about 90% of creature building code
+     * Example usage:
+     * var bear = generateMob<Bear, AnimalBehavior>(3, Area.kesmaiSurface);
+     * this will generate a complete bear with all attributes set with the kesmai surface loot pack.
+     * 
+     */
+    public static MOB generateMob<MOB,BEHAVIOR>(int level, Area area) 
+        where MOB : CreatureEntity, new() 
+        where BEHAVIOR : MobBehavior, new() {
+        
+        MobMutator mutator = mobMutator[typeof(MOB).Name];
+        BEHAVIOR behavior = new BEHAVIOR();
+        MOB mobType = new MOB(){
+            MaxHealth = mutator.healthEQ(level, mutator.healthBase, mutator.healthPerLv),
+            Health = mutator.healthEQ(level, mutator.healthBase, mutator.healthPerLv),
+            MaxMana = mutator.manaEQ(level, mutator.manaBase, mutator.manaPerLv),
+            Mana = mutator.manaEQ(level, mutator.manaBase, mutator.manaPerLv),
+            BaseDodge = mutator.dodgeEQ(level, mutator.dodgeBase, mutator.dodgePerLv),
+            Experience = mutator.expEQ(level, mutator.expBase, mutator.expPerLv),
+        };
+        if(mutator.name != null) {
+            mobType.Name = mutator.name;
+        }
+        mobType.Attacks = behavior.makeAttack(mutator.attackEQ(level,mutator.attackBase,mutator.attackPerLv));
+        if(behavior.makeBlock != null) {
+            mobType.Blocks = behavior.makeBlock(mutator.attackEQ(level,mutator.attackBase,mutator.attackPerLv));
+        }
+        if(behavior.makeSpell != null) {
+            mobType.Spells = behavior.makeSpell(mutator.spellEQ(level,mutator.spellLv,mutator.spellPerLv));
+        }
+        if(behavior.makeEquipment != null) {
+            List<Equipment> equipList = behavior.makeEquipment(level);
+            foreach(Equipment e in equipList) {
+                if(e is Weapon) {
+                    mobType.Wield(e);
+                } else {
+                    mobType.Equip(e);
+                }
+            }
+        }
+        
+        mobType.AddGold(mutator.goldEQ(level, mutator.goldBase, mutator.goldPerLv));
+        
+        return mobType;
+    }
     
     public static void gemsPriceMutator(MobileEntity entity, Container source, ItemEntity item)
     {
@@ -101249,6 +101445,53 @@ else
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="surfaceBearTest">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var bear = generateMob<Bear, AnimalBehavior>(3, Area.kesmaiSurface);
+    bear.Movement=2;
+    bear.AddStatus(new NightVisionStatus(bear));
+	return bear;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="surfaceWraithTest">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var wraith = generateMob<Wraith, PriestBehavior>(8, Area.kesmaiSurface);
+	wraith.AddLoot(trashMobLeveledLoot(Area.KesSurface, new LootPackEntry(true, surfaceTreasure, 20)));
+    return wraith;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="Elder.Troll">
@@ -103498,6 +103741,31 @@ else
       </script>
       <bounds region="11">
         <inclusion left="3" top="3" right="8" bottom="6" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="TestSpawn">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfaceBearTest" size="1" minimum="1" maximum="1" />
+      <entry entity="surfaceWraithTest" size="1" minimum="1" maximum="1" />
+      <bounds region="1">
+        <inclusion left="135" top="35" right="136" bottom="35" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
