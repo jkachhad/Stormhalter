@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.92.0.0">
+<segment name="Underkingdom" version="0.93.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -100657,7 +100657,7 @@
         new CreatureBasicAttack(12)
     };
     
-    orc.Wield(new Longbow());
+    orc.Wield(new Bow());
     orc.Equip(new LeatherArmor());
     orc.AddStatus(new NightVisionStatus(orc));
             
@@ -102813,6 +102813,54 @@ var gargoyle = new Gargoyle()
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="level12OrcArcherCrossbow">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[{
+    var orc = new Orc()
+    {
+        MaxHealth = 99, Health = 99,
+        BaseDodge = 18,
+        BasePenetration = ShieldPenetration.Light,
+        Experience = 4179,
+        HideDetection = 25, 
+        CanFlee = true,
+    };
+    
+    orc.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(11)
+    };
+    
+    orc.Wield(new Crossbow());
+    orc.Equip(new LeatherArmor());
+            
+    orc.AddGold(105);
+    orc.AddLoot(new LootPack(
+        new LootPackEntry(true, UnderkingdomGems,       7.2,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomBottles,    20), 
+        new LootPackEntry(true, UnderkingdomPotions,    0.2), 
+        new LootPackEntry(true, UpperTreasure,    0.5), 
+        new LootPackEntry(true, UtilityItems,    1)
+    ));
+    
+    return orc;
+}]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="UKPawner">
@@ -104756,7 +104804,7 @@ var gargoyle = new Gargoyle()
       <entry entity="level12Cursetroll" size="1" minimum="1" maximum="1" />
       <entry entity="level12TrollRHammer" size="3" minimum="1" maximum="1" />
       <entry entity="level12Hob" size="3" minimum="3" maximum="3" />
-      <entry entity="level12OrcArcher" size="1" minimum="3" maximum="4" />
+      <entry entity="level12OrcArcherCrossbow" size="1" minimum="3" maximum="4" />
       <bounds region="11">
         <inclusion left="3" top="3" right="17" bottom="19" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -104813,7 +104861,7 @@ var gargoyle = new Gargoyle()
       <entry entity="level12Cursetroll" size="1" minimum="1" maximum="1" />
       <entry entity="level12TrollRHammer" size="3" minimum="1" maximum="1" />
       <entry entity="level12Hob" size="3" minimum="3" maximum="3" />
-      <entry entity="level12OrcArcher" size="1" minimum="3" maximum="4" />
+      <entry entity="level12OrcArcherCrossbow" size="1" minimum="3" maximum="4" />
       <bounds region="11">
         <inclusion left="3" top="24" right="17" bottom="39" />
         <exclusion left="0" top="0" right="0" bottom="0" />
