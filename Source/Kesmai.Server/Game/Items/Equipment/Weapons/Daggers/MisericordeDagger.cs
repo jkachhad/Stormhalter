@@ -11,7 +11,19 @@ namespace Kesmai.Server.Items
 		public override uint BasePrice => 30;
 
 		/// <inheritdoc />
-		public override int BaseAttackBonus => 3;
+		public override ShieldPenetration Penetration => ShieldPenetration.VeryHeavy;
+
+		/// <inheritdoc />
+		public override int BaseArmorBonus => 3;
+
+		/// <inheritdoc />
+		public override int BaseAttackBonus => 4;
+
+		/// <inheritdoc />
+		public override int MinimumDamage => 1;
+
+		/// <inheritdoc />
+		public override int MaximumDamage => 10;
 
 		/// <inheritdoc />
 		public override WeaponFlags Flags => base.Flags | WeaponFlags.BlueGlowing | WeaponFlags.Neutral;
@@ -35,7 +47,7 @@ namespace Kesmai.Server.Items
 			entries.Add(new LocalizationEntry(6200000, 6200159)); /* [You are looking at] [an exquisite lemurian misericorde dagger whose honed finish reveals the wood grained texture of the metal. The dagger is emitting a faint blue glow. The weapon is neutral.] */
 
 			if (Identified)
-				entries.Add(new LocalizationEntry(6250007)); /* The combat adds for this weapon are +3. */
+				entries.Add(new LocalizationEntry(6250003)); /* The combat adds for this weapon are +4. */
 		}
 	}
 }
