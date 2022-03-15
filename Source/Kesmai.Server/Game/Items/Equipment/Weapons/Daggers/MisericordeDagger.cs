@@ -11,10 +11,10 @@ namespace Kesmai.Server.Items
 		public override uint BasePrice => 30;
 
 		/// <inheritdoc />
-		public override ShieldPenetration Penetration => ShieldPenetration.VeryHeavy;
+		public override ShieldPenetration Penetration => ShieldPenetration.Medium;
 
 		/// <inheritdoc />
-		public override int BaseArmorBonus => 3;
+		public override int BaseArmorBonus => 2;
 
 		/// <inheritdoc />
 		public override int BaseAttackBonus => 4;
@@ -23,7 +23,7 @@ namespace Kesmai.Server.Items
 		public override int MinimumDamage => 1;
 
 		/// <inheritdoc />
-		public override int MaximumDamage => 10;
+		public override int MaximumDamage => 8;
 
 		/// <inheritdoc />
 		public override WeaponFlags Flags => base.Flags | WeaponFlags.BlueGlowing | WeaponFlags.Neutral;
