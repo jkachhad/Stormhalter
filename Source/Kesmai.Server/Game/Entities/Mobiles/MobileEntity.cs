@@ -6,50 +6,51 @@ namespace Kesmai.Server.Game
 	public abstract partial class MobileEntity : WorldEntity
 	{
 		/// <summary>
-		/// Calculates the damage modifier against the specified item.
+		/// Calculates the damage mitigation against the specified item.
 		/// </summary>
-		public int CalculateDamageModifier(ItemEntity item)
+		public int CalculateDamageMitigation(ItemEntity item)
 		{
-			var damageModifier = 0;
+			var damageMitigation = 0;
 
 			/* Calculate armor bonus from chest pieces. */
 			var paperdoll = Paperdoll;
-			
-			if (paperdoll is null)
-				return 0;
-			
-			var armor = paperdoll.Armor;
-			
-			if (armor != null)
-				damageModifier += armor.GetArmorBonus(item);
-			
+
+			if (paperdoll is not null)
+			{
+				var armor = paperdoll.Armor;
+
+				if (armor != null)
+					damageMitigation += armor.GetArmorBonus(item);
+			}
+
 			/* Calculate armor bonus from held items. */
 			var leftHand = LeftHand;
 			var rightHand = RightHand;
-
-			// Shield in left hand mitigates. If using shield and 1h, both mitigate.
-			// Mitigate if left hand is one-handed.
-			// Always mitigate with right hand weapon if left is empty.
+			
 			var leftWeapon = leftHand as IWeapon;
 			var rightWeapon = rightHand as IWeapon;
 			
-			if (leftHand is Shield shield)
+			if (leftHand is Shield leftShield)
 			{
-				damageModifier += shield.GetShieldBonus(item);
+				/* Shields in the left hand apply mitigation. */
+				damageMitigation += leftShield.GetShieldBonus(item);
 				
+				/* If used in combination with a 1-handed weapon, it can also mitigate. */
 				if (rightWeapon != null && !rightWeapon.Flags.HasFlag(WeaponFlags.TwoHanded))
-					damageModifier += rightWeapon.GetWeaponBonus(item);
+					damageMitigation += rightWeapon.GetWeaponBonus(item);
 			}
 			else if (leftWeapon != null && !leftWeapon.Flags.HasFlag(WeaponFlags.TwoHanded))
 			{
-				damageModifier += leftWeapon.GetWeaponBonus(item);
+				/* Only one handed weapons can mitigate in the left hand.  */
+				damageMitigation += leftWeapon.GetWeaponBonus(item);
 			}
 			else if (leftHand == null && rightWeapon != null)
 			{
-				damageModifier += rightWeapon.GetWeaponBonus(item);
+				/* Right handed weapons always mitigate if left hand empty, 1h or 2h. */
+				damageMitigation += rightWeapon.GetWeaponBonus(item);
 			}
 
-			return damageModifier;
+			return damageMitigation;
 		}
 		
 		/// <summary>
