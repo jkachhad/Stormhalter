@@ -11,7 +11,11 @@ namespace Kesmai.Server.Items
 		public override int LabelNumber => 6000019;
 
 		/// <inheritdoc />
-		public override uint BasePrice => 1;
+		/// <remarks>
+		/// The individual components give 1700. If the item were to be broken by a player,
+		/// it would award better experience.
+		/// </remarks>
+		public override uint BasePrice => 1000;
 
 		/// <inheritdoc />
 		public override int Weight => 4160;
