@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Game;
@@ -135,6 +137,22 @@ namespace Kesmai.Server.Items
 				return ProjectileProtection;
 
 			return BaseArmorBonus;
+		}
+		
+		/// <summary>
+		/// Gauntlets at this time do not provide mitigation against weapons.
+		/// </summary>
+		public int GetWeaponBonus(ItemEntity item)
+		{
+			return 0;
+		}
+		
+		/// <summary>
+		/// Protection Bonus vs. Melee Damage Types
+		/// </summary>
+		public int GetMeleeBonus(ItemEntity item, WeaponFlags flags)
+		{
+			return 0;
 		}
 		
 		public virtual void OnHit(MobileEntity attacker, MobileEntity defender)
