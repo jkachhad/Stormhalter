@@ -56,7 +56,7 @@ namespace Kesmai.Server.Items
 
 		public int GetMeleeBonus(ItemEntity item, WeaponFlags flags)
 		{
-			var protectionBonus = 0
+			var protectionBonus = 0;
 			var itemProtections = new List<int>();
 
 			if ((flags & WeaponFlags.Piercing) != 0)
@@ -78,7 +78,7 @@ namespace Kesmai.Server.Items
 		/// <remarks>
 		/// Shields only provide a blocking bonus against weapons when equipped in the left-hand.
 		/// Used for DR calculations.
-		/// </remarks?
+		/// </remarks>
 		public override int CalculateBlockingBonus(ItemEntity item)
 		{
 			var flags = WeaponFlags.Bashing;
@@ -86,7 +86,7 @@ namespace Kesmai.Server.Items
 			if (item is IWeapon weapon)
 				flags = weapon.Flags;
 
-			var bonusBlock = 0
+			var bonusBlock = 0;
 			/// Let shields use BaseArmorBonus to avoid projectiles	
 			if ((flags & WeaponFlags.Projectile) != 0)
 				bonusBlock += ProjectileProtection;
@@ -100,7 +100,7 @@ namespace Kesmai.Server.Items
 		/// <remarks>
 		/// Shields only provide a blocking bonus against weapons when equipped in the left-hand.
 		/// Used for mitigation calculations.
-		/// </remarks?
+		/// </remarks>
 		public int GetShieldBonus(ItemEntity item)
 		{
 			var flags = WeaponFlags.Bashing;
@@ -116,7 +116,7 @@ namespace Kesmai.Server.Items
 			}
 			else
 			{
-				shieldBonus += GetMeleeBonus(item, flags)
+				shieldBonus += GetMeleeBonus(item, flags);
 			}
 
 			return shieldBonus + BaseArmorBonus;

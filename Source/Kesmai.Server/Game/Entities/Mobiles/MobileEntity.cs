@@ -27,22 +27,26 @@ namespace Kesmai.Server.Game
 			var leftHand = LeftHand;
 			var rightHand = RightHand;
 
-			/// Shield in left hand mitigates. If using shield and 1h, both mitigate.
-			/// Mitigate if left hand is one-handed.
-			/// Always mitigate with right hand weapon if left is empty.
+			// Shield in left hand mitigates. If using shield and 1h, both mitigate.
+			// Mitigate if left hand is one-handed.
+			// Always mitigate with right hand weapon if left is empty.
+			var leftWeapon = leftHand as IWeapon;
+			var rightWeapon = rightHand as IWeapon;
+			
 			if (leftHand is Shield shield)
 			{
-				damageModifier += leftHand.GetShieldBonus(item);
-				if (rightHand is IWeapon weapon & !weapon.Flags.HasFlag(WeaponFlags.TwoHanded))
-					damageModifier += rightHand.GetWeaponBonus(item);
+				damageModifier += shield.GetShieldBonus(item);
+				
+				if (rightWeapon != null && !rightWeapon.Flags.HasFlag(WeaponFlags.TwoHanded))
+					damageModifier += rightWeapon.GetWeaponBonus(item);
 			}
-			else if (leftHand is IWeapon weapon & !weapon.Flags.HasFlag(WeaponFlags.TwoHanded)
+			else if (leftWeapon != null && !leftWeapon.Flags.HasFlag(WeaponFlags.TwoHanded))
 			{
-				damageModifier += leftHand.GetWeaponBonus(item);
+				damageModifier += leftWeapon.GetWeaponBonus(item);
 			}
-			else if (leftHand == null && rightHand is IWeapon weapon)
+			else if (leftHand == null && rightWeapon != null)
 			{
-				damageModifier += rightHand.GetWeaponBonus(item);
+				damageModifier += rightWeapon.GetWeaponBonus(item);
 			}
 
 			return damageModifier;

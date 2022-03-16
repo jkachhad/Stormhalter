@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items
@@ -46,7 +48,7 @@ namespace Kesmai.Server.Items
 		/// </summary>
 		public int GetMeleeBonus(ItemEntity item, WeaponFlags flags)
 		{
-			var protectionBonus = 0
+			var protectionBonus = 0;
 			var itemProtections = new List<int>();
 
 			if ((flags & WeaponFlags.Piercing) != 0)
@@ -85,7 +87,7 @@ namespace Kesmai.Server.Items
 			}
 			else
 			{
-				bonusBlock += GetMeleeBonus(item, flags)
+				bonusBlock += GetMeleeBonus(item, flags);
 			}
 
 			return bonusBlock + BaseArmorBonus;
@@ -112,7 +114,7 @@ namespace Kesmai.Server.Items
 			}
 			else
 			{
-				weaponBonus += GetMeleeBonus(item, flags)
+				weaponBonus += GetMeleeBonus(item, flags);
 			}
 
 			return weaponBonus;
