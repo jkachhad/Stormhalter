@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -14,7 +15,8 @@ namespace Kesmai.WorldForge.UI
 
 		private static string ComponentsName = "Components.cache";
 		private static string ScriptingName = "Scripting.cache";
-		
+		private static string CustomArtConfigName = "CustomArt.cfg";
+
 		private static Brush _errorBrush = new SolidColorBrush(Colors.Red);
 		private static Brush _normalBrush = new SolidColorBrush(Colors.Black);
 		
@@ -22,7 +24,8 @@ namespace Kesmai.WorldForge.UI
 		
 		private FileInfo _componentsFile;
 		private FileInfo _scriptsFile;
-		
+		private FileInfo _customArtConfig;
+
 		private NetClient _client;
 		private NetPeerConfiguration _configuration;
 		private NetConnection _connection;
@@ -38,7 +41,8 @@ namespace Kesmai.WorldForge.UI
 			
 			_componentsFile = new FileInfo($@"{_storageDirectory.FullName}\{ComponentsName}");
 			_scriptsFile = new FileInfo($@"{_storageDirectory.FullName}\{ScriptingName}");
-			
+			_customArtConfig = new FileInfo($@"{_storageDirectory.FullName}\{CustomArtConfigName}");
+
 			InitializeComponent();
 
 			if (_authenticate)
@@ -73,6 +77,14 @@ namespace Kesmai.WorldForge.UI
 					if (_scriptsFile.Exists)
 						Core.ScriptingData = File.ReadAllBytes(_scriptsFile.FullName);
 				}
+
+				if (!_customArtConfig.Exists)
+                {
+					File.WriteAllText(_customArtConfig.FullName, $"{_storageDirectory.FullName}\nModify the above line to point to your GitHub local repo's 'Content' directory.\nIf the folder does not exists, WorldForge will default to the .storage folder.\nCreate a Data\\Terrain-External.xml, a WorldForge\\Compontents.xml (get these from the GitHub repo under Content), and then a folder to contain your texture sheets.");
+                }
+				var CustomArtConfigPath = File.ReadLines(_customArtConfig.FullName).FirstOrDefault();
+				if (Directory.Exists(CustomArtConfigPath)) { Core.CustomArtPath = CustomArtConfigPath; } else { Core.CustomArtPath = _storageDirectory.FullName; }
+
 
 				var applicationWindow = Application.Current.MainWindow = new ApplicationWindow();
 
