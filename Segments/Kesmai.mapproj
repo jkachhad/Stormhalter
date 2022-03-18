@@ -56,12 +56,17 @@
         "Yupo", "Yuqui", "Yura", "Yuri", "Yuta", "Yuti", "Yuto", "Yutu", "Yuxi", "Yuya"
     };
     
+    /**
+     * Definition of delegate functions to be used as function pointers
+     * Here, we're setting up what the blank templates will look like to be overridden
+     */
     public delegate int eq(int x, float y, float z);
     public delegate CreatureAttackCollection attEQ(int level);
     public delegate CreatureBlockCollection blockEQ(int level);
     public delegate LootPack lootEQ(int area);
     public delegate CreatureSpellCollection spellEQ(int level);
     public delegate List<Equipment> equipEQ(int level);
+    public delegate void itemMutator(MobileEntity entity, Container source, ItemEntity item);
     
     public enum Area {
         KesSurface,
@@ -168,6 +173,9 @@
         [typeof(Wraith).Name] = new MobMutator {healthBase=10, manaBase=17, dodgeBase=10, damageBase=8, attackBase=1, goldBase=35, goldPerLv=7, expBase=725},
     };
 
+    /**
+     * This is just a storage convenience class for mob generation
+     */
     public class MobMutator {
         public string name {get; set;} = null;
         
@@ -227,6 +235,10 @@
         
     }
     
+    /**
+     * We can make priest figures consistent, and scale their power non-linearly using table values
+     */
+     
     public class PriestBehavior : MobBehavior {
         public Priest() {
             makeSpell = leveledPriestSpells;
