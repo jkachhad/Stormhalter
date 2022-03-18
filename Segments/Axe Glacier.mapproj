@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.92.0.0">
+<segment name="Axe Glacier" version="0.93.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -108154,10 +108154,11 @@
         <block><![CDATA[
 	var elemental = new WaterElemental()
 	{
-	    MaxHealth = 600, Health = 600,
+	    MaxHealth = 1000, Health = 1000,
         BaseDodge = 21,
-    
-        Experience = 100001,
+        Mana = 24,
+        MaxMana = 24,
+        Experience = 65000,
         HideDetection = 29,
         IsTethered = true,
 	};
@@ -108166,7 +108167,7 @@
     {
         {
             new CreatureSpell<MagicMissileSpell>(
-                skillLevel: 8),  90,   TimeSpan.FromSeconds(10.0)
+                skillLevel: 11),  90,   TimeSpan.FromSeconds(5.0)
         },
     };
     
