@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.92.0.0">
+<segment name="Leng" version="0.93.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -52803,6 +52803,46 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
+      <tile x="-5" y="2">
+        <component type="WallComponent">
+          <wall>32</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-4" y="2">
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-3" y="2">
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-2" y="2">
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-1" y="2">
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
       <tile x="0" y="2">
         <component type="StaticComponent">
           <static>301</static>
@@ -52812,6 +52852,11 @@
           <destroyed>39</destroyed>
           <ruins>44</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="1" y="2">
@@ -52939,6 +52984,43 @@
           <destroyed>39</destroyed>
           <ruins>44</ruins>
           <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-5" y="3">
+        <component type="WallComponent">
+          <wall>26</wall>
+          <destroyed>39</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-4" y="3">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="-3" y="3">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="-2" y="3">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="-1" y="3">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>1</destinationX>
+          <destinationY>4</destinationY>
+          <destinationRegion>255</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions>Fighter,Martial Artist,Thaumaturge,Wizard,Knight</professions>
+          <alignments select="all" />
         </component>
       </tile>
       <tile x="0" y="3">
@@ -53110,15 +53192,60 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
-      <tile x="0" y="4">
-        <component type="StaticComponent">
-          <static>301</static>
-        </component>
+      <tile x="-5" y="4">
         <component type="WallComponent">
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
           <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-4" y="4">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="StaircaseComponent">
+          <destinationX>-3</destinationX>
+          <destinationY>16</destinationY>
+          <destinationRegion>255</destinationRegion>
+          <teleporterId>125</teleporterId>
+        </component>
+      </tile>
+      <tile x="-3" y="4">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="-2" y="4">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="-1" y="4">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>1</destinationX>
+          <destinationY>4</destinationY>
+          <destinationRegion>255</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions>Fighter,Martial Artist,Thaumaturge,Wizard,Knight</professions>
+          <alignments select="all" />
+        </component>
+      </tile>
+      <tile x="0" y="4">
+        <component type="DoorComponent">
+          <openId>75</openId>
+          <closedId>63</closedId>
+          <secretId>26</secretId>
+          <destroyedId>81</destroyedId>
+          <isSecret>true</isSecret>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="StaticComponent">
+          <static>386</static>
         </component>
       </tile>
       <tile x="1" y="4">
@@ -53258,6 +53385,58 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
+      <tile x="-5" y="5">
+        <component type="WallComponent">
+          <wall>26</wall>
+          <destroyed>39</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-4" y="5">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-3" y="5">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-2" y="5">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-1" y="5">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
       <tile x="0" y="5">
         <component type="StaticComponent">
           <static>301</static>
@@ -53267,6 +53446,11 @@
           <destroyed>39</destroyed>
           <ruins>44</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>25</wall>
+          <destroyed>38</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="1" y="5">
@@ -53572,6 +53756,7 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
+      <tile x="-6" y="7" />
       <tile x="0" y="7">
         <component type="StaticComponent">
           <static>301</static>
@@ -53981,6 +54166,431 @@
           <destroyed>38</destroyed>
           <ruins>44</ruins>
           <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-4" y="13">
+        <component type="WallComponent">
+          <wall>355</wall>
+          <destroyed>356</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-3" y="13">
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>342</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="-2" y="13">
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>342</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="-1" y="13">
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>342</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="0" y="13">
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>342</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="1" y="13">
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>342</destroyed>
+          <ruins>44</ruins>
+        </component>
+        <component type="StaticComponent">
+          <static>245</static>
+        </component>
+      </tile>
+      <tile x="2" y="13">
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>342</destroyed>
+          <ruins>44</ruins>
+        </component>
+        <component type="StaticComponent">
+          <static>220</static>
+        </component>
+      </tile>
+      <tile x="3" y="13">
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>342</destroyed>
+          <ruins>44</ruins>
+        </component>
+        <component type="StaticComponent">
+          <static>245</static>
+        </component>
+      </tile>
+      <tile x="4" y="13">
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>342</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="-4" y="14">
+        <component type="WallComponent">
+          <wall>334</wall>
+          <destroyed>343</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="-3" y="14">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="-2" y="14">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="-1" y="14">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="0" y="14">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>334</wall>
+          <destroyed>343</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="1" y="14">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="Fire">
+          <allowDispel>true</allowDispel>
+        </component>
+      </tile>
+      <tile x="2" y="14">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="3" y="14">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="Fire">
+          <allowDispel>true</allowDispel>
+        </component>
+      </tile>
+      <tile x="4" y="14">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>334</wall>
+          <destroyed>343</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="-4" y="15">
+        <component type="WallComponent">
+          <wall>334</wall>
+          <destroyed>343</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="-3" y="15">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="-2" y="15">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="-1" y="15">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="0" y="15">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="DoorComponent">
+          <openId>75</openId>
+          <closedId>63</closedId>
+          <secretId>26</secretId>
+          <destroyedId>81</destroyedId>
+        </component>
+      </tile>
+      <tile x="1" y="15">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="2" y="15">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="3" y="15">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="4" y="15">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>334</wall>
+          <destroyed>343</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="-4" y="16">
+        <component type="WallComponent">
+          <wall>334</wall>
+          <destroyed>343</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="-3" y="16">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="StaircaseComponent">
+          <destinationX>-4</destinationX>
+          <destinationY>4</destinationY>
+          <destinationRegion>255</destinationRegion>
+          <teleporterId>128</teleporterId>
+        </component>
+      </tile>
+      <tile x="-2" y="16">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="-1" y="16">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="0" y="16">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="DoorComponent">
+          <openId>75</openId>
+          <closedId>63</closedId>
+          <secretId>26</secretId>
+          <destroyedId>81</destroyedId>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="1" y="16">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="2" y="16">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="3" y="16">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="4" y="16">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>334</wall>
+          <destroyed>343</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="-4" y="17">
+        <component type="WallComponent">
+          <wall>334</wall>
+          <destroyed>343</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="-3" y="17">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="-2" y="17">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="-1" y="17">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="0" y="17">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="DoorComponent">
+          <openId>75</openId>
+          <closedId>63</closedId>
+          <secretId>26</secretId>
+          <destroyedId>81</destroyedId>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="1" y="17">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="Fire">
+          <allowDispel>true</allowDispel>
+        </component>
+      </tile>
+      <tile x="2" y="17">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+      </tile>
+      <tile x="3" y="17">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="Fire">
+          <allowDispel>true</allowDispel>
+        </component>
+      </tile>
+      <tile x="4" y="17">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>334</wall>
+          <destroyed>343</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="-4" y="18">
+        <component type="WallComponent">
+          <wall>334</wall>
+          <destroyed>343</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="-3" y="18">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>342</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="-2" y="18">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>342</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="-1" y="18">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>342</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="0" y="18">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>334</wall>
+          <destroyed>343</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>342</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="1" y="18">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>342</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="2" y="18">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>342</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="3" y="18">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>342</destroyed>
+          <ruins>44</ruins>
+        </component>
+      </tile>
+      <tile x="4" y="18">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>342</destroyed>
+          <ruins>44</ruins>
+        </component>
+        <component type="WallComponent">
+          <wall>334</wall>
+          <destroyed>343</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
     </region>
@@ -78738,6 +79348,68 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="BossMinorLevel12Jarfel">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+  
+    var Jarfel = new Humanoid()
+    {
+        Name = "Jarfel",
+        Body = 206,
+        
+        MaxHealth = 1800, Health = 1800,
+        BaseDodge = 26,
+        HideDetection = 28,
+        Alignment = Alignment.Evil,
+        
+        Experience = 59440,
+       
+        CanJumpkick = true,
+        CanStrikeCritically = true,
+        VisibilityDistance = 0,
+        
+        BasePenetration = ShieldPenetration.Heavy,
+
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Web,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.Silver,
+       
+        IsTethered = true,
+    };
+    
+    Jarfel.AddStatus(new NightVisionStatus(carfel));
+    
+    Jarfel.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
+    
+    Jarfel.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(18, 18, 30)
+    };
+    
+    Jarfel.Wield(new MainGauche());
+    Jarfel.Wield(new Rapier());
+        
+    Jarfel.AddGold(4800);
+        
+    
+    return Jarfel;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="Priest">
@@ -80682,6 +81354,54 @@
       <entry entity="level11Centaur" size="1" minimum="1" maximum="1" />
       <bounds region="35">
         <inclusion left="19" top="4" right="23" bottom="11" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Jarfelguardians">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level14Ninja" size="3" minimum="1" maximum="1" />
+      <bounds region="255">
+        <inclusion left="-3" top="14" right="-1" bottom="17" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="JarfelBoss">
+      <minimumDelay>7200</minimumDelay>
+      <maximumDelay>8100</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossMinorLevel12Jarfel" size="1" minimum="1" maximum="1" />
+      <bounds region="255">
+        <inclusion left="1" top="14" right="3" bottom="17" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
