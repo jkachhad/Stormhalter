@@ -14,10 +14,11 @@ namespace Kesmai.Server.Game
 		{
 			Summoned = true;
 			
-			Health = MaxHealth = 200;
-			BaseDodge = 19;
+			Health = MaxHealth = 300;
+			BaseDodge = 25;
 			Mana = MaxMana = 24;
 			IceProtection = 90;
+			MagicProtection = 50;
 
 			Movement = 3;
 			
