@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -55,33 +58,53 @@ namespace Kesmai.WorldForge.UI
 				}
 			}
 
-			try // Try needed until Terrain-External is everywhere WorldForge is.
+			terrainDocument = XDocument.Load(storage.OpenFile(@"Data\Terrain-External.xml"));
+			var customTerrainPath = $@"{Core.CustomArtPath}\Data\Terrain-External.xml";
+			if (File.Exists(customTerrainPath))
 			{
-				terrainDocument = XDocument.Load(storage.OpenFile(@"Data\Terrain-External.xml"));
-				terrainRootElement = terrainDocument.Root;
-
-				if (terrainRootElement != null)
+				try
 				{
-					foreach (var terrainElement in terrainRootElement.Elements("terrain"))
-					{
-						var idAttribute = terrainElement.Attribute("id");
+					terrainDocument = XDocument.Load(customTerrainPath);
+				}
+				catch { }// dealt with when loading Terrain-External.xml in TerrainManager.
+			}
+			terrainRootElement = terrainDocument.Root;
 
-						if (idAttribute != null)
+			if (terrainRootElement != null)
+			{
+				foreach (var terrainElement in terrainRootElement.Elements("terrain"))
+				{
+					var idAttribute = terrainElement.Attribute("id");
+
+					if (idAttribute != null)
+					{
+						staticCategory.Components.Add(new StaticComponent((int)idAttribute)
 						{
-							staticCategory.Components.Add(new StaticComponent((int)idAttribute)
-							{
-								Name = idAttribute.Value
-							});
-						}
+							Name = idAttribute.Value
+						});
 					}
 				}
 			}
-			catch (System.IO.FileNotFoundException) { }
 
 			collection.Add(staticCategory);
 			
 			/* Other Categories */
 			var document = Core.ComponentsResource;
+
+			// If a custom components.xml exists, load that instead.
+			var customComponentsPath = $@"{Core.CustomArtPath}\WorldForge\components.xml";
+			if (File.Exists(customComponentsPath))
+            {
+				try
+				{
+					document = XDocument.Load(customComponentsPath);
+					document.Save(customComponentsPath); // pretty prints the document, should help keep tabs consistent and avoid ugly git commits
+				}
+				catch (Exception e)
+				{
+					System.Windows.MessageBox.Show(e.Message,"Custom Components.xml failed to load", System.Windows.MessageBoxButton.OK);
+				}
+			}
 
 			if (document != null)
 			{
@@ -98,11 +121,17 @@ namespace Kesmai.WorldForge.UI
 
 						foreach (var element in categoryElement.Elements())
 						{
-							var componentTypename = $"Kesmai.WorldForge.Models.{element.Name}";
-							var componentType = assembly.GetType(componentTypename, true);
+							try
+							{
+								var componentTypename = $"Kesmai.WorldForge.Models.{element.Name}";
+								var componentType = assembly.GetType(componentTypename, true);
 
-							if (Activator.CreateInstance(componentType, element) is TerrainComponent component)
-								category.Components.Add(component);
+								if (Activator.CreateInstance(componentType, element) is TerrainComponent component)
+									category.Components.Add(component);
+							} catch (Exception e)
+                            {
+								System.Windows.MessageBox.Show($"Component failed to parse:\n${element}\n{e.Message}", "Custom Components.xml failed to load", System.Windows.MessageBoxButton.OK);
+							}
 						}
 
 						collection.Add(category);
