@@ -106612,7 +106612,7 @@
         var backpack = source.Backpack;
     
         if (backpack != null)
-            backpack.AddItem(new MisericordeDagger(player));
+            backpack.AddItem(new MisericordeDagger());
             
         var quest = Quests.GetQuest<KnightsDragonSlayerQuest>();
     
