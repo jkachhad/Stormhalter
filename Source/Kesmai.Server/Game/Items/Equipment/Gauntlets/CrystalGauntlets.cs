@@ -11,7 +11,7 @@ namespace Kesmai.Server.Items
 		public override int LabelNumber => 6000041;
 
         /// <inheritdoc />
-		public override uint BasePrice => 1;
+		public override uint BasePrice => 1500;
 
         /// <inheritdoc />
 		public override int Weight => 200;

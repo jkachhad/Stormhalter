@@ -106596,8 +106596,7 @@
         new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
         new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
        new LootPackEntry(true, YetiTreasure,     100.0),       
-       new LootPackEntry(true, (from, container) => new ManaPotion(),        100),
-       new LootPackEntry(true, (from, container) => new MisericordeDagger(),        100)
+       new LootPackEntry(true, (from, container) => new ManaPotion(),        100)
    ));
     
    return yeti;
@@ -106609,6 +106608,12 @@
         <block><![CDATA[
     if (killer is PlayerEntity player)
     {
+    
+        var backpack = source.Backpack;
+    
+        if (backpack != null)
+            backpack.AddItem(new MisericordeDagger(player));
+            
         var quest = Quests.GetQuest<KnightsDragonSlayerQuest>();
     
         if (quest != null && quest.InProgress(player))

@@ -29,6 +29,12 @@ $@"
 <h3>=== {Core.Version} ===</h3>
 <strong>Enhancements:</strong>
 <ul>
+<li>Added Custom Art functionality. Cloning the StormHalter GitHub repo and pointing the new .storage/CustomArt.cfg to the Content folder allows artists to add new art texture sheets, terrain and components.</li>
+</ul>
+<br/>
+<h3>=== 0.93.0.0 ===</h3>
+<strong>Enhancements:</strong>
+<ul>
 <li>Added the ability to add comments to components. Tiles with comments can be highlighted from the Visibility Options toolbar.</li>
 </ul>
 <br/>
