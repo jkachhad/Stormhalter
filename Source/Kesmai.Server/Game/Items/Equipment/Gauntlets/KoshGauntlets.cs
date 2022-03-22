@@ -54,7 +54,7 @@ namespace Kesmai.Server.Items
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6200000, 6200170)); /* [You are looking at] [a pair of leather gauntlets with steel plates.] */
+			entries.Add(new LocalizationEntry(6200000, 6200342)); /* [You are looking at] [a pair of gauntlets made from leathery dragon skin with shiny blue-steel plates. The Gauntlets emit a Blue Glow.] */
 
 			if (Identified)
 				entries.Add(new LocalizationEntry(6250094)); /* The combat adds for the gauntlets are +2. */
