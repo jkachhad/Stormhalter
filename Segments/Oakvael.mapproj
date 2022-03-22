@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.92.0.0">
+<segment name="Oakvael" version="0.93.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -98451,6 +98451,7 @@
             new LootPackEntry(true, oakGenericGems, 25.0, gemsPriceMutator),
             new LootPackEntry(true, (from, container) => new ManaPotion(), 100.0),
             new LootPackEntry(true, (from, container) => new PermanentDexterityPotion(), 100.0),
+            new LootPackEntry(true, (from, container) => new MainGauche(), 100.0),
             new LootPackEntry(true, dungeon5Rings, 100.0)
         ));
 
