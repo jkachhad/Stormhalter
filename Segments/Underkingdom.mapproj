@@ -100851,18 +100851,15 @@
         MaxHealth = 209, Health = 209,
         BaseDodge = 27,
         HideDetection = 29,    
-        Experience = 11000,
+        Experience = 10699,
         
         CanCharge = true,
-        
-        BasePenetration = ShieldPenetration.Heavy,
-    
     };
     
     
     trollguard.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(18)
+        new CreatureBasicAttack(16)
     };
     
     trollguard.Wield(new Halberd());
@@ -101773,22 +101770,22 @@
         BaseDodge = 28,
         HideDetection = 28,
         Experience = 10918,
-        BasePenetration = ShieldPenetration.Heavy,
+        BasePenetration = ShieldPenetration.Medium,
         CanJumpkick = true,
     };
     
     martialartist.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(20,      10, 18,      "The ninja hits you with a flurry of fists.",
+            new CreatureAttack(18,      10, 18,      "The ninja hits you with a flurry of fists.",
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(20,      11, 20,     "The ninja slams his fist into your chest.",
+            new CreatureAttack(18,      11, 20,     "The ninja slams his fist into your chest.",
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(20,      13, 22,     "The ninja knocks you back with a forceful kick.",
+            new CreatureAttack(18,      13, 22,     "The ninja knocks you back with a forceful kick.",
                                                         new AttackProneComponent(5), 
                                                         new AttackStunComponent(5)),               20
         },
