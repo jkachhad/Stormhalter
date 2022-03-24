@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.92.0.0">
+<segment name="Axe Glacier" version="0.93.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -108277,7 +108277,6 @@
         IceProtection = 100,
     };
     
-    draugr.AddImmunity(typeof(PoisonCloudSpell));
 
     draugr.Attacks = new CreatureAttackCollection()
     {
@@ -108338,7 +108337,6 @@
         IceProtection = 100,
     };
 
-    draugr.AddImmunity(typeof(PoisonCloudSpell));
     
     draugr.Attacks = new CreatureAttackCollection()
     {
@@ -108406,7 +108404,6 @@
         new CreatureBasicAttack(16)
     };
     
-    draugr.AddImmunity(typeof(PoisonCloudSpell));
     
     draugr.Spells = new CreatureSpellCollection()
     {
