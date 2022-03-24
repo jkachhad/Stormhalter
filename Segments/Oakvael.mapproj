@@ -80706,6 +80706,7 @@
           <wall>158</wall>
           <destroyed>161</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <color r="0" g="200" b="0" a="255" />
@@ -81127,6 +81128,7 @@
           <wall>158</wall>
           <destroyed>161</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <color r="0" g="200" b="0" a="255" />
@@ -81394,6 +81396,7 @@
           <wall>158</wall>
           <destroyed>161</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <color r="0" g="200" b="0" a="255" />
@@ -81849,6 +81852,7 @@
           <wall>158</wall>
           <destroyed>161</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <color r="0" g="200" b="0" a="255" />
@@ -81865,6 +81869,7 @@
           <wall>157</wall>
           <destroyed>160</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <color r="0" g="200" b="0" a="255" />
@@ -95999,7 +96004,9 @@
     };
 
     goblin.Wield(new Longbow());
-    goblin.Equip(new LeatherArmor());    
+    goblin.Equip(new LeatherArmor());  
+    
+    goblin.AddStatus(new NightVisionStatus(goblin));
 
     goblin.AddGold(66);
     goblin.AddLoot(
@@ -96153,7 +96160,9 @@
     };
 
     orc.Wield(new Crossbow());
-    orc.Equip(new LeatherArmor());    
+    orc.Equip(new LeatherArmor());   
+    
+    orc.AddStatus(new NightVisionStatus(orc));
 
     orc.AddGold(79);
     orc.AddLoot(
@@ -101646,7 +101655,7 @@
         <exclusion left="2" top="23" right="3" bottom="29" />
         <exclusion left="4" top="25" right="5" bottom="29" />
         <exclusion left="22" top="33" right="25" bottom="35" />
-        <exclusion left="13" top="35" right="20" bottom="39" />
+        <exclusion left="13" top="36" right="20" bottom="39" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="surfaceWyrm">
@@ -101881,13 +101890,13 @@
       <entry entity="level15Defender" size="2" minimum="8" maximum="8" />
       <entry entity="level15Dryad" size="1" minimum="4" maximum="4" />
       <bounds region="236">
-        <inclusion left="1" top="1" right="11" bottom="7" />
+        <inclusion left="1" top="2" right="11" bottom="7" />
         <inclusion left="4" top="8" right="16" bottom="13" />
         <inclusion left="12" top="5" right="16" bottom="8" />
         <inclusion left="17" top="9" right="34" bottom="13" />
         <inclusion left="28" top="-3" right="34" bottom="8" />
         <inclusion left="35" top="-3" right="38" bottom="-2" />
-        <exclusion left="9" top="1" right="11" bottom="2" />
+        <inclusion left="1" top="1" right="8" bottom="1" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="groveVipers">
@@ -102110,7 +102119,7 @@
       <entry entity="level9Troll" size="1" minimum="7" maximum="10" />
       <entry entity="level9Gargoyle" size="1" minimum="6" maximum="9" />
       <bounds region="235">
-        <inclusion left="23" top="-7" right="41" bottom="7" />
+        <inclusion left="23" top="-8" right="41" bottom="7" />
         <inclusion left="29" top="8" right="46" bottom="14" />
       </bounds>
     </spawn>
