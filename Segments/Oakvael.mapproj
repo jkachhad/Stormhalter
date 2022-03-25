@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.93.0.0">
+<segment name="Oakvael" version="0.92.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -95809,6 +95809,7 @@
         Experience = 482,
 
         Movement = 2,
+        CanFlee = true,
     };
     
     kobold.Attacks = new CreatureAttackCollection
@@ -96103,6 +96104,7 @@
         HideDetection = 21,
         Experience = 1567,
         BasePenetration = ShieldPenetration.VeryLight,
+        CanFlee = true,
     };
     
     goblin.Attacks = new CreatureAttackCollection
@@ -96151,6 +96153,7 @@
         HideDetection = 21,
         Experience = 1567,
         BasePenetration = ShieldPenetration.VeryLight,
+        CanFlee = true,
     };
     
     goblin.Attacks = new CreatureAttackCollection
@@ -96203,8 +96206,6 @@
         HideDetection = 21,
         Movement = 2,
         BasePenetration = ShieldPenetration.VeryLight,
-
-        CanFlee = true,
     };
     
     troll.AddStatus(new NightVisionStatus(troll));
@@ -97420,8 +97421,6 @@
         BasePenetration = ShieldPenetration.Light,
 
         Movement = 2,
-
-        CanFlee = true,
     };
     
     troll.Attacks = new CreatureAttackCollection
@@ -97471,8 +97470,6 @@
         BasePenetration = ShieldPenetration.Light,
 
         Experience = 4179,
-
-        CanFlee = true,
     };
     
     orc.Attacks = new CreatureAttackCollection
@@ -97522,8 +97519,6 @@
         BasePenetration = ShieldPenetration.Light,
 
         Experience = 4179,
-
-        CanFlee = true,
     };
     
     orc.Attacks = new CreatureAttackCollection
