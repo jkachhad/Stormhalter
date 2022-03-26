@@ -20,34 +20,34 @@ namespace Kesmai.Server.Game
 				var armor = paperdoll.Armor;
 
 				if (armor != null)
-					damageMitigation += armor.GetArmorBonus(item);
+					damageMitigation += armor.CalculateMitigationBonus(item);
 			}
 
 			/* Calculate armor bonus from held items. */
 			var leftHand = LeftHand;
 			var rightHand = RightHand;
 			
-			var leftWeapon = leftHand as IWeapon;
-			var rightWeapon = rightHand as IWeapon;
+			var leftWeapon = leftHand as Weapon;
+			var rightWeapon = rightHand as Weapon;
 			
 			if (leftHand is Shield leftShield)
 			{
 				/* Shields in the left hand apply mitigation. */
-				damageMitigation += leftShield.GetShieldBonus(item);
+				damageMitigation += leftShield.CalculateMitigationBonus(item);
 				
 				/* If used in combination with a 1-handed weapon, it can also mitigate. */
 				if (rightWeapon != null && !rightWeapon.Flags.HasFlag(WeaponFlags.TwoHanded))
-					damageMitigation += rightWeapon.GetWeaponBonus(item);
+					damageMitigation += rightWeapon.CalculateMitigationBonus(item);
 			}
 			else if (leftWeapon != null && !leftWeapon.Flags.HasFlag(WeaponFlags.TwoHanded))
 			{
 				/* Only one handed weapons can mitigate in the left hand.  */
-				damageMitigation += leftWeapon.GetWeaponBonus(item);
+				damageMitigation += leftWeapon.CalculateMitigationBonus(item);
 			}
 			else if (leftHand == null && rightWeapon != null)
 			{
 				/* Right handed weapons always mitigate if left hand empty, 1h or 2h. */
-				damageMitigation += rightWeapon.GetWeaponBonus(item);
+				damageMitigation += rightWeapon.CalculateMitigationBonus(item);
 			}
 
 			return damageMitigation;

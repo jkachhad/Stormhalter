@@ -101,7 +101,7 @@ namespace Kesmai.Server.Items
 		/// <remarks>
 		/// Attack bonus provided by gloves is dependent on hand skill, hindrance, and <see cref="Penetration"/>.
 		/// </remarks>
-		public virtual double GetAttackBonus(MobileEntity attacker, MobileEntity defender)
+		public virtual double CalculateAttackBonus(MobileEntity attacker, MobileEntity defender)
 		{
 			var attackBonus = BaseAttackBonus + (double)Penetration;
 			
@@ -128,14 +128,41 @@ namespace Kesmai.Server.Items
 			return 1.0;
 		}
 
-		/// <summary>
-		/// Calculates the blocking benefit of this instance against the specified item.
-		/// </summary>
+		/// <inheritdoc/>
+		public int CalculateMitigationBonus(ItemEntity item)
+		{
+			var itemProtections = new List<int>();
+
+			/* Determine the type of weapon attacking us. For hands, we use bashing damage. */
+			var flags = WeaponFlags.Bashing;
+
+			if (item is IWeapon weapon)
+				flags = weapon.Flags;
+			
+			/* Determine mitigation. */
+			var protectionBonus = 0;
+			
+			if ((flags & WeaponFlags.Projectile) != 0)
+				itemProtections.Add(ProjectileMitigation);
+
+			if ((flags & WeaponFlags.Piercing) != 0)
+				itemProtections.Add(PiercingMitigation);
+
+			if ((flags & WeaponFlags.Slashing) != 0)
+				itemProtections.Add(SlashingMitigation);
+
+			if ((flags & WeaponFlags.Bashing) != 0)
+				itemProtections.Add(BashingMitigation);
+
+			if (itemProtections.Any())
+				protectionBonus += itemProtections.Min();
+
+			return protectionBonus;
+		}
+		
+		/// <inheritdoc/>
 		public override int CalculateBlockingBonus(ItemEntity item)
 		{
-			if (item is IWeapon weapon && weapon.Flags.HasFlag(WeaponFlags.Projectile))
-				return ProjectileProtection;
-
 			return BaseArmorBonus;
 		}
 		

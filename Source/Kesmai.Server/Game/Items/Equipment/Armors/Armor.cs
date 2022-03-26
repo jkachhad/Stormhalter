@@ -61,40 +61,42 @@ namespace Kesmai.Server.Items
 		{
 		}
 		
-		/// <summary>
-		/// Gets the armor bonus against the specified <see cref="ItemEntity"/>.
-		/// </summary>
-		public int GetArmorBonus(ItemEntity item)
+		/// <inheritdoc/>
+		public int CalculateMitigationBonus(ItemEntity item)
 		{
+			var itemProtections = new List<int>();
+
+			/* Determine the type of weapon attacking us. For hands, we use bashing damage. */
 			var flags = WeaponFlags.Bashing;
 
 			if (item is IWeapon weapon)
 				flags = weapon.Flags;
-
-			var armorBonus = 0;
-
+			
+			/* Determine mitigation. */
+			var protectionBonus = 0;
+			
 			if ((flags & WeaponFlags.Projectile) != 0)
-			{
-				armorBonus += ProjectileProtection;
-			}
-			else
-			{
-				var armorProtections = new List<int>();
+				itemProtections.Add(ProjectileMitigation);
 
-				if ((flags & WeaponFlags.Piercing) != 0)
-					armorProtections.Add(PiercingProtection);
+			if ((flags & WeaponFlags.Piercing) != 0)
+				itemProtections.Add(PiercingMitigation);
 
-				if ((flags & WeaponFlags.Slashing) != 0)
-					armorProtections.Add(SlashingProtection);
+			if ((flags & WeaponFlags.Slashing) != 0)
+				itemProtections.Add(SlashingMitigation);
 
-				if ((flags & WeaponFlags.Bashing) != 0)
-					armorProtections.Add(BashingProtection);
+			if ((flags & WeaponFlags.Bashing) != 0)
+				itemProtections.Add(BashingMitigation);
 
-				if (armorProtections.Any())
-					armorBonus += armorProtections.Min();
-			}
+			if (itemProtections.Any())
+				protectionBonus += itemProtections.Min();
 
-			return armorBonus + BaseArmorBonus;
+			return protectionBonus;
+		}
+		
+		/// <inheritdoc/>
+		public override int CalculateBlockingBonus(ItemEntity item)
+		{
+			return BaseArmorBonus;
 		}
 
 		protected ItemQuality _armorQuality = ItemQuality.Common;

@@ -1,7 +1,19 @@
+using Kesmai.Server.Game;
+
 namespace Kesmai.Server.Items
 {
 	public partial interface IArmored
 	{
+		/// <summary>
+		/// Gets the blocking provided by this <see cref="IArmored"/> against a specified <see cref="ItemEntity"/>.
+		/// </summary>
+		int CalculateBlockingBonus(ItemEntity item);
+		
+		/// <summary>
+		/// Gets the damage mitigation provided by this <see cref="IArmored"/> against a specified <see cref="ItemEntity"/>.
+		/// </summary>
+		int CalculateMitigationBonus(ItemEntity item);
+		
 		/// <summary>
 		/// Gets the base armor bonus provided by this <see cref="IArmored"/> against all attack types.
 		/// </summary>

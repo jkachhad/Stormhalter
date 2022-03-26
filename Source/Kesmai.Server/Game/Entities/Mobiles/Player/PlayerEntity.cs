@@ -20,7 +20,7 @@ namespace Kesmai.Server.Game
 			if (item is IWeapon weapon)
 			{
 				skill = weapon.Skill;
-				weaponBonus = weapon.GetAttackBonus(this, defender);
+				weaponBonus = weapon.CalculateAttackBonus(this, defender);
 			}
 
 			if (skill != Skill.Hand)
@@ -58,7 +58,7 @@ namespace Kesmai.Server.Game
 					baseMinimumDamage = weapon.MinimumDamage;
 					baseMaximumDamage = weapon.MaximumDamage;
 				
-					hitAdds += (int)weapon.GetAttackBonus(this, defender);
+					hitAdds += (int)weapon.CalculateAttackBonus(this, defender);
 
 					skill = weapon.Skill;
 					skillFactor = 10.0;
@@ -116,7 +116,7 @@ namespace Kesmai.Server.Game
 				var baseMinimumDamage = weapon.MinimumDamage;
 				var baseMaximumDamage = weapon.MaximumDamage;
 
-				var hitAdds = Stats.DexterityAdds + weapon.GetAttackBonus(this, defender);
+				var hitAdds = Stats.DexterityAdds + weapon.CalculateAttackBonus(this, defender);
 
 				var skillLevel = GetSkillLevel(Skill.Bow);
 				var skillMultiplier = (skillLevel * 0.1 + 1.0);
@@ -140,7 +140,7 @@ namespace Kesmai.Server.Game
 				var hitAdds = 0;
 
 				if ((weapon.Flags & WeaponFlags.Throwable) != 0)
-					hitAdds += Stats.StrengthAdds + (int)weapon.GetAttackBonus(this, defender);
+					hitAdds += Stats.StrengthAdds + (int)weapon.CalculateAttackBonus(this, defender);
 
 				if (Stats.BaseStrength >= 18)
 					hitAdds++;

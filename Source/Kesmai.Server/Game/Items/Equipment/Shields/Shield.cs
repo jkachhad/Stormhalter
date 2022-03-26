@@ -45,19 +45,30 @@ namespace Kesmai.Server.Items
 		{
 		}
 
-		public int GetMeleeBonus(ItemEntity item, WeaponFlags flags)
+		public int CalculateMitigationBonus(ItemEntity item)
 		{
-			var protectionBonus = 0;
 			var itemProtections = new List<int>();
 
+			/* Determine the type of weapon attacking us. For hands, we use bashing damage. */
+			var flags = WeaponFlags.Bashing;
+
+			if (item is IWeapon weapon)
+				flags = weapon.Flags;
+			
+			/* Determine mitigation. */
+			var protectionBonus = 0;
+			
+			if ((flags & WeaponFlags.Projectile) != 0)
+				itemProtections.Add(ProjectileMitigation);
+
 			if ((flags & WeaponFlags.Piercing) != 0)
-				itemProtections.Add(PiercingProtection);
+				itemProtections.Add(PiercingMitigation);
 
 			if ((flags & WeaponFlags.Slashing) != 0)
-				itemProtections.Add(SlashingProtection);
+				itemProtections.Add(SlashingMitigation);
 
 			if ((flags & WeaponFlags.Bashing) != 0)
-				itemProtections.Add(BashingProtection);
+				itemProtections.Add(BashingMitigation);
 
 			if (itemProtections.Any())
 				protectionBonus += itemProtections.Min();
@@ -66,51 +77,9 @@ namespace Kesmai.Server.Items
 		}
 		
 		/// <inheritdoc/>
-		/// <remarks>
-		/// Shields only provide a blocking bonus against weapons when equipped in the left-hand.
-		/// Used for DR calculations.
-		/// </remarks>
 		public override int CalculateBlockingBonus(ItemEntity item)
 		{
-			var flags = WeaponFlags.Bashing;
-
-			if (item is IWeapon weapon)
-				flags = weapon.Flags;
-
-			var bonusBlock = 0;
-			/// Let shields use BaseArmorBonus to avoid projectiles	
-			if ((flags & WeaponFlags.Projectile) != 0)
-				bonusBlock += ProjectileProtection;
-			else
-				bonusBlock += GetMeleeBonus(item, flags);
-
-			return BaseArmorBonus + bonusBlock;
-		}
-
-		/// <inheritdoc/>
-		/// <remarks>
-		/// Shields only provide a blocking bonus against weapons when equipped in the left-hand.
-		/// Used for mitigation calculations.
-		/// </remarks>
-		public int GetShieldBonus(ItemEntity item)
-		{
-			var flags = WeaponFlags.Bashing;
-
-			if (item is IWeapon weapon)
-				flags = weapon.Flags;
-
-			var shieldBonus = 0;
-
-			if ((flags & WeaponFlags.Projectile) != 0)
-			{
-				shieldBonus += ProjectileProtection;
-			}
-			else
-			{
-				shieldBonus += GetMeleeBonus(item, flags);
-			}
-
-			return shieldBonus + BaseArmorBonus;
+			return BaseArmorBonus;
 		}
 
 		public virtual void OnWield(MobileEntity entity)
