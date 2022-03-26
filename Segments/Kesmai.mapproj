@@ -65,7 +65,7 @@
     public delegate CreatureBlockCollection blockEQ(int level);
     public delegate LootPack lootEQ(int area);
     public delegate CreatureSpellCollection spellEQ(int level);
-    public delegate List<Equipment> equipEQ(int level);
+    public delegate List<ItemEntity> equipEQ(int level);
     public delegate void itemMutator(MobileEntity entity, Container source, ItemEntity item);
     
     public enum Area {
@@ -82,7 +82,7 @@
       * additional entries.
       */
     public static readonly Dictionary<Area, LootPackEntry[]> lootTable = new Dictionary<Area, LootPackEntry[]>() {
-        [Area.KesSurface] = le(new LootPackEntry(true, randomBalm(), 10))
+        [Area.KesSurface] = le(new LootPackEntry(true, (mobile, container) => randomBalm(true), 0.1))
     };
     
     /**
@@ -110,7 +110,7 @@
         return new LootPack(lootTable[(Area)area]);
     }
     
-    public static LootPack trashMobLeveledLootAnd(int area, params LootPackEntry[] extras)
+    public static LootPack trashMobLeveledLootAnd(Area area, params LootPackEntry[] extras)
     {
         List<LootPackEntry> lpe = new List<LootPackEntry>(lootTable[(Area)area]);
         lpe.AddRange(extras);
@@ -133,14 +133,15 @@
     /**
      * Equipment collections and helpers
      */
-    public static List<Equipment> randomPriestEquipment(int level) {
-        List<Equipment> equip = new List<Equipment>() { new LeatherArmor()};
+    public static List<ItemEntity> randomPriestEquipment(int level) {
+        List<ItemEntity> equip = new List<ItemEntity>() { new LeatherArmor()};
         var equipTypeChance = Utility.RandomDouble();
         if(equipTypeChance < 0.5) {
             equip.Add(new BlackStaff());
         } else {
             equip.Add(new ShortSword());
         }
+		return equip;
     }
     
     /**
@@ -240,7 +241,7 @@
      */
      
     public class PriestBehavior : MobBehavior {
-        public Priest() {
+        public PriestBehavior() {
             makeSpell = leveledPriestSpells;
             makeEquipment = randomPriestEquipment;
         }
@@ -258,7 +259,7 @@
     /**
      * This is the creature creator, it should cut down on about 90% of creature building code
      * Example usage:
-     * var bear = generateMob<Bear, AnimalBehavior>(3, Area.kesmaiSurface);
+     * var bear = generateMob<Bear, AnimalBehavior>(3, Area.KesSurface);
      * this will generate a complete bear with all attributes set with the kesmai surface loot pack.
      * 
      */
@@ -287,12 +288,12 @@
             mobType.Spells = behavior.makeSpell(mutator.spellEQ(level,mutator.spellLv,mutator.spellPerLv));
         }
         if(behavior.makeEquipment != null) {
-            List<Equipment> equipList = behavior.makeEquipment(level);
-            foreach(Equipment e in equipList) {
-                if(e is Weapon) {
-                    mobType.Wield(e);
-                } else {
-                    mobType.Equip(e);
+            List<ItemEntity> equipList = behavior.makeEquipment(level);
+            foreach(var e in equipList) {
+                if(e is Weapon weapon) {
+                    mobType.Wield(weapon);
+                } else if (e is Equipment equipment) {
+                    mobType.Equip(equipment);
                 }
             }
         }
@@ -101490,7 +101491,7 @@ else
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var bear = generateMob<Bear, AnimalBehavior>(3, Area.kesmaiSurface);
+    var bear = generateMob<Bear, AnimalBehavior>(3, Area.KesSurface);
     bear.Movement=2;
     bear.AddStatus(new NightVisionStatus(bear));
 	return bear;
@@ -101514,7 +101515,7 @@ else
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	var wraith = generateMob<Wraith, PriestBehavior>(8, Area.kesmaiSurface);
+	var wraith = generateMob<Wraith, PriestBehavior>(8, Area.KesSurface);
 	wraith.AddLoot(trashMobLeveledLootAnd(Area.KesSurface, new LootPackEntry(true, surfaceTreasure, 20)));
     return wraith;
 ]]></block>
