@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.93.0.0">
+<segment name="Underkingdom" version="0.92.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -100044,7 +100044,7 @@
         Body = 206,
         
         MaxHealth = 1800, Health = 1800,
-        BaseDodge = 26,
+        BaseDodge = 24,
         HideDetection = 28,
         Alignment = Alignment.Evil,
         
@@ -100073,7 +100073,8 @@
     };
     
     carfel.Wield(new YasnakiDagger());
-    carfel.Wield(new YasnakiDagger());
+    carfel.Wield(new MainGauche());
+    
         
     carfel.AddGold(4800);
     carfel.AddLoot(new LootPack(
@@ -100851,18 +100852,15 @@
         MaxHealth = 209, Health = 209,
         BaseDodge = 27,
         HideDetection = 29,    
-        Experience = 11000,
+        Experience = 10699,
         
         CanCharge = true,
-        
-        BasePenetration = ShieldPenetration.Heavy,
-    
     };
     
     
     trollguard.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(18)
+        new CreatureBasicAttack(16)
     };
     
     trollguard.Wield(new Halberd());
@@ -101773,22 +101771,22 @@
         BaseDodge = 28,
         HideDetection = 28,
         Experience = 10918,
-        BasePenetration = ShieldPenetration.Heavy,
+        BasePenetration = ShieldPenetration.Medium,
         CanJumpkick = true,
     };
     
     martialartist.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(20,      10, 18,      "The ninja hits you with a flurry of fists.",
+            new CreatureAttack(18,      10, 18,      "The ninja hits you with a flurry of fists.",
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(20,      11, 20,     "The ninja slams his fist into your chest.",
+            new CreatureAttack(18,      11, 20,     "The ninja slams his fist into your chest.",
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(20,      13, 22,     "The ninja knocks you back with a forceful kick.",
+            new CreatureAttack(18,      13, 22,     "The ninja knocks you back with a forceful kick.",
                                                         new AttackProneComponent(5), 
                                                         new AttackStunComponent(5)),               20
         },
@@ -102846,6 +102844,76 @@ var gargoyle = new Gargoyle()
     
     return orc;
 }]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="level13Lurker">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var lurker = new Lurker()
+    {
+        Name = "lurker",
+        MaxHealth = 143, Health = 143,
+        BaseDodge = 24,
+        BasePenetration = ShieldPenetration.Medium,
+        CanSwim = true,
+        CanWalk = false,  
+        Experience = 7578,
+        HideDetection = 25,
+        
+        
+        Immunity = CreatureImmunity.Poison | CreatureImmunity.Magic,
+            
+        VisibilityDistance = 0,
+    };
+    
+    lurker.AddStatus(new NightVisionStatus(lurker));
+    lurker.AddStatus(new BreatheWaterStatus(lurker));
+    
+    lurker.Attacks = new CreatureAttackCollection()
+    {
+        { 
+            new CreatureAttack(14,     10, 20,      "The lurker whips you with a tentacle"),  50 
+        }, 
+        {
+            new CreatureAttack(14,     5, 22,     "The lurker bites you.",
+                                                    new AttackPoisonComponent(12)),           50
+        }
+    };
+    
+    lurker.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "a tentacle"),
+        new CreatureBlock(4, "sharp fangs")
+    };
+    
+    lurker.AddGold(146);
+    lurker.AddLoot(new LootPack(
+        new LootPackEntry(true, (from, container) => new PermanentStrengthPotion(),       5),
+        new LootPackEntry(true, (from, container) => new YouthPotion(),       5),
+        new LootPackEntry(true, (from, container) => new ManaPotion(),       5), 
+        new LootPackEntry(true, UnderkingdomPotions,    0.05),
+        new LootPackEntry(true, UnderkingdomGems,       7.2,     gemsPriceMutatorHigh), 
+        new LootPackEntry(true, UnderkingdomBottles,    50), 
+        new LootPackEntry(true, UtilityItems,    3), 
+        new LootPackEntry(true, UpperTreasure,    0.63)
+    ));
+    
+    return lurker;
+]]></block>
         <block><![CDATA[]]></block>
       </script>
       <script name="OnDeath" enabled="false">
@@ -105488,10 +105556,10 @@ var gargoyle = new Gargoyle()
         <inclusion left="17" top="2" right="49" bottom="21" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="tk300courtyardGarg">
-      <minimumDelay>600</minimumDelay>
-      <maximumDelay>900</maximumDelay>
-      <maximum>3</maximum>
+    <spawn type="RegionSpawner" name="tk300poolLurker">
+      <minimumDelay>1200</minimumDelay>
+      <maximumDelay>1800</maximumDelay>
+      <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -105506,11 +105574,9 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level13Gargoyle" size="1" minimum="2" maximum="3" />
+      <entry entity="level13Lurker" size="1" minimum="1" maximum="1" />
       <bounds region="8">
-        <inclusion left="2" top="2" right="15" bottom="6" />
-        <exclusion left="2" top="7" right="15" bottom="7" />
-        <exclusion left="16" top="2" right="16" bottom="7" />
+        <inclusion left="2" top="2" right="5" bottom="5" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="tk300DungeonNotSafe">

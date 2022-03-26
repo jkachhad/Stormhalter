@@ -30,7 +30,7 @@ namespace Kesmai.Server.Items
 		protected override int PoisonedItemId => 312;
 		
 		/// <inherit />
-		public override WeaponFlags Flags => base.Flags | WeaponFlags.Silver | WeaponFlags.Neutral;
+		public override WeaponFlags Flags => WeaponFlags.Piercing | WeaponFlags.Silver | WeaponFlags.Neutral;
 
 		/// <inherit />
 		public override bool CanBind => true;
