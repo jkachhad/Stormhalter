@@ -35,22 +35,22 @@ namespace Kesmai.Server.Items
 		/// <inheritdoc />
 		[WorldForge]
 		[CommandProperty(AccessLevel.GameMaster)]
-		public virtual int SlashingProtection => 0;
+		public virtual int SlashingMitigation => 0;
 
 		/// <inheritdoc />
 		[WorldForge]
 		[CommandProperty(AccessLevel.GameMaster)]
-		public virtual int PiercingProtection => 0;
+		public virtual int PiercingMitigation => 0;
 
 		/// <inheritdoc />
 		[WorldForge]
 		[CommandProperty(AccessLevel.GameMaster)]
-		public virtual int BashingProtection => 0;
+		public virtual int BashingMitigation => 0;
 
 		/// <inheritdoc />
 		[WorldForge]
 		[CommandProperty(AccessLevel.GameMaster)]
-		public virtual int ProjectileProtection => 0;
+		public virtual int ProjectileMitigation => 0;
 
 		#endregion
 

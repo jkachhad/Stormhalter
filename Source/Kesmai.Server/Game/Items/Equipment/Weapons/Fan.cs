@@ -23,7 +23,7 @@ namespace Kesmai.Server.Items
 		public override int BaseArmorBonus => 4;
 
 		/// <inherit />
-		public override int ProjectileProtection => 4;
+		public override int ProjectileMitigation => 4;
 		
 		/// <inheritdoc />
 		public override ShieldPenetration Penetration => ShieldPenetration.None;

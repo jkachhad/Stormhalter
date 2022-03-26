@@ -27,7 +27,7 @@ namespace Kesmai.Server.Items
 		public override WeaponFlags Flags => base.Flags | WeaponFlags.Neutral | WeaponFlags.Slashing;
 		
 		/// <inheritdoc />
-		public override int ProjectileProtection => 1;
+		public override int ProjectileMitigation => 1;
 		
 		public SwiftGauntlets() : base(396)
 		{

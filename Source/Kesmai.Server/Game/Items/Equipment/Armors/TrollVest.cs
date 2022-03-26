@@ -19,16 +19,16 @@ namespace Kesmai.Server.Items
 		public override int Hindrance => 1;
 
 		/// <inheritdoc />
-		public override int SlashingProtection => 2;
+		public override int SlashingMitigation => 2;
 
 		/// <inheritdoc />
-		public override int PiercingProtection => 2;
+		public override int PiercingMitigation => 2;
 
 		/// <inheritdoc />
-		public override int BashingProtection => 2;
+		public override int BashingMitigation => 2;
 
 		/// <inheritdoc />
-		public override int ProjectileProtection => 2;
+		public override int ProjectileMitigation => 2;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TrollVest"/> class.

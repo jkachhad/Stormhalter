@@ -16,16 +16,16 @@ namespace Kesmai.Server.Items
 		public override int Hindrance => 2;
 
 		/// <inheritdoc />
-		public override int SlashingProtection => 2;
+		public override int SlashingMitigation => 2;
 
 		/// <inheritdoc />
-		public override int PiercingProtection => 2;
+		public override int PiercingMitigation => 2;
 
 		/// <inheritdoc />
-		public override int BashingProtection => 2;
+		public override int BashingMitigation => 2;
 
 		/// <inheritdoc />
-		public override int ProjectileProtection => 1;
+		public override int ProjectileMitigation => 1;
 
 		/// <inheritdoc />
 		public override bool BlockSpellcast => true;

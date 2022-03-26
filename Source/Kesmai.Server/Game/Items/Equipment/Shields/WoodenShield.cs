@@ -23,7 +23,7 @@ namespace Kesmai.Server.Items
 		public override int BaseArmorBonus => 1;
 
 
-		public override int ProjectileProtection => 1;
+		public override int ProjectileMitigation => 1;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WoodenShield"/> class.

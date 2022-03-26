@@ -8,23 +8,23 @@ namespace Kesmai.Server.Items
 		int BaseArmorBonus { get; }
 
 		/// <summary>
-		/// Gets the protection provided against slashing attacks.
+		/// Gets the damage mitigation provided against slashing attacks.
 		/// </summary>
-		int SlashingProtection { get; }
+		int SlashingMitigation { get; }
 
 		/// <summary>
-		/// Gets the protection provided against piercing attacks.
+		/// Gets the damage mitigation provided against piercing attacks.
 		/// </summary>
-		int PiercingProtection { get; }
+		int PiercingMitigation { get; }
 
 		/// <summary>
-		/// Gets the protection provided against bashing attacks.
+		/// Gets the damage mitigation provided against bashing attacks.
 		/// </summary>
-		int BashingProtection { get; }
+		int BashingMitigation { get; }
 
 		/// <summary>
-		/// Gets the protection provided against projectile attacks.
+		/// Gets the damage mitigation provided against projectile attacks.
 		/// </summary>
-		int ProjectileProtection { get; }
+		int ProjectileMitigation { get; }
 	}
 }

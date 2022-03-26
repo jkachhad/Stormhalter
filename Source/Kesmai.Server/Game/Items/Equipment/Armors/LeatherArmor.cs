@@ -18,10 +18,10 @@ namespace Kesmai.Server.Items
 		public override int Hindrance => 1;
 
 		/// <inheritdoc />
-		public override int SlashingProtection => 1;
+		public override int SlashingMitigation => 1;
 
 		/// <inheritdoc />
-		public override int BashingProtection => 1;
+		public override int BashingMitigation => 1;
 		
 		public override int BaseArmorBonus
 		{

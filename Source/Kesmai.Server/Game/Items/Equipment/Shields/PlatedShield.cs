@@ -21,7 +21,7 @@ namespace Kesmai.Server.Items
 		public override int BaseArmorBonus => 1;
 
 		/// <inheritdoc />
-		public override int ProjectileProtection => 2;
+		public override int ProjectileMitigation => 2;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PlatedShield"/> class.

@@ -29,7 +29,7 @@ namespace Kesmai.Server.Items
 		public override int BaseArmorBonus => 5;
 
 		        /// <inheritdoc />
-        public override int ProjectileProtection  => 3;
+        public override int ProjectileMitigation  => 3;
 
 		/// <inheritdoc />
 		public override WeaponFlags Flags => WeaponFlags.TwoHanded | WeaponFlags.Bashing | WeaponFlags.Lawful;

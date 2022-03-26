@@ -19,16 +19,16 @@ namespace Kesmai.Server.Items
 		public override int Hindrance => 2;
 
 		/// <inheritdoc />
-		public override int SlashingProtection => 5;
+		public override int SlashingMitigation => 5;
 
 		/// <inheritdoc />
-		public override int PiercingProtection => 5;
+		public override int PiercingMitigation => 5;
 
 		/// <inheritdoc />
-		public override int BashingProtection => 5;
+		public override int BashingMitigation => 5;
 
 		/// <inheritdoc />
-		public override int ProjectileProtection => 5;
+		public override int ProjectileMitigation => 5;
 
 
 		/// <inheritdoc />

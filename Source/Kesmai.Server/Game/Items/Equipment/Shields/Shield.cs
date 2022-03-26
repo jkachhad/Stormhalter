@@ -13,40 +13,30 @@ namespace Kesmai.Server.Items
 		/// </summary>
 		public override int LabelNumber => 6000082;
 
-		/// <summary>
-		/// Gets the base armor bonus provided by this <see cref="Armor"/>.
-		/// </summary>
+		/// <inheritdoc />
 		[WorldForge]
 		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int BaseArmorBonus { get { return 0; } }
 
-		/// <summary>
-		/// Gets the protection provided against slashing attacks.
-		/// </summary>
+		/// <inheritdoc />
 		[WorldForge]
 		[CommandProperty(AccessLevel.GameMaster)]
-		public virtual int SlashingProtection { get { return 0; } }
+		public virtual int SlashingMitigation { get { return 0; } }
 
-		/// <summary>
-		/// Gets the protection provided against peircing attacks.
-		/// </summary>
+		/// <inheritdoc />
 		[WorldForge]
 		[CommandProperty(AccessLevel.GameMaster)]
-		public virtual int PiercingProtection { get { return 0; } }
+		public virtual int PiercingMitigation { get { return 0; } }
 
-		/// <summary>
-		/// Gets the protection provided against bashing attacks.
-		/// </summary>
+		/// <inheritdoc />
 		[WorldForge]
 		[CommandProperty(AccessLevel.GameMaster)]
-		public virtual int BashingProtection { get { return 0; } }
+		public virtual int BashingMitigation { get { return 0; } }
 
-		/// <summary>
-		/// Gets the protection provided against projectile attacks.
-		/// </summary>
+		/// <inheritdoc />
 		[WorldForge]
 		[CommandProperty(AccessLevel.GameMaster)]
-		public virtual int ProjectileProtection { get { return 0; } }
+		public virtual int ProjectileMitigation { get { return 0; } }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Shield"/> class.
