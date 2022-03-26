@@ -66,6 +66,11 @@ namespace Kesmai.Server.Items
 		/// </remarks>
 		protected override bool OnReceiveDrop(MobileEntity entity, ItemEntity dropped)
 		{
+			return Consume(dropped);
+		}
+
+		public bool Consume(ItemEntity dropped)
+		{
 			if (dropped is not Gold || Container is not Rings)
 				return false; /* The item will bounce back to the original location. */
 
@@ -111,10 +116,32 @@ namespace Kesmai.Server.Items
 			if (action != ActionType.Use)
 				return base.HandleInteraction(entity, action);
 
-			if (Consumed is 0 || Container is not Rings)
+			if (Container is not Rings)
 				return false;
+
+			if (Consumed > 0)
+			{
+				var segmentTile = entity.SegmentTile;
+
+				var counter = entity.GetComponentInNeighbor<Counter>();
+				var alter = entity.GetComponentInNeighbor<Altar>();
+
+				var destinationTile = segmentTile;
+
+				if (counter != null)
+					destinationTile = counter.Parent;
+
+				if (destinationTile is null && alter != null)
+					destinationTile = alter.Parent;
+
+				/* Find the neighbor and place the gold from the ring. */
+				PlaceGold(destinationTile);
+			}
+			else
+			{
+				entity.Target = new InternalTarget(this);
+			}
 			
-			entity.Target = new InternalTarget(this);
 			return true;
 		}
 		
@@ -122,35 +149,22 @@ namespace Kesmai.Server.Items
 		{
 			private BankerRing _ring;
 			
-			/* Allow this to be targeted only 1 hex as a path, with a direction. */
-			public InternalTarget(BankerRing ring) : base(1, TargetFlags.Path | TargetFlags.Direction)
+			public InternalTarget(BankerRing ring) : base(1, TargetFlags.Items)
 			{
 				_ring = ring;
 			}
 			
 			/// <inheritdoc />
-			protected override void OnPath(MobileEntity source, List<Direction> path)
+			protected override void OnTarget(MobileEntity source, object target)
 			{
-				if (!source.IsAlive && path.Count > 0) /* Can't finish the target if you died between. */
+				if (!source.IsAlive || !source.CanPerformLift || target is not Gold gold) /* Can't finish the target if you died between. */
 					return;
-				
-				var segmentTile = source.SegmentTile;
-				var direction = path.First();
 
-				/* Find the neighbor and place the gold from the ring. */
-				if (direction != Direction.None)
-				{
-					var destination = segmentTile.GetNeighbor(direction);
+				if (!gold.OnDragLift(source))
+					return;
 
-					if (destination != null)
-					{
-						var containsCounter = destination.ContainsComponent<Counter>();
-						var containsAltar = destination.ContainsComponent<Altar>();
-
-						if (containsCounter || containsAltar)
-							_ring.PlaceGold(destination);
-					}
-				}
+				if (_ring.Consume(gold))
+					return;
 			}
 		}
 
@@ -159,7 +173,7 @@ namespace Kesmai.Server.Items
 		{
 			entries.Add(new LocalizationEntry(6200000, 6200343)); /* [You are looking at] [a heavy gold ring with a faded inscription that reads "Pr..-rt. of .a-.er's G'.ld."] */
 
-			if (Identified && Parent is PlayerEntity player)
+			if (Identified)
 				entries.Add(new LocalizationEntry(6300424, Consumed.ToString())); /* The ring whispers: {0}. */
 		}
 
