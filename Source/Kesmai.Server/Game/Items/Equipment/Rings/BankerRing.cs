@@ -66,7 +66,12 @@ namespace Kesmai.Server.Items
 		/// </remarks>
 		protected override bool OnReceiveDrop(MobileEntity entity, ItemEntity dropped)
 		{
-			return Consume(dropped);
+			var consumed = Consume(dropped);
+
+			if (consumed)
+				entity.SendLocalizedMessage(6200348); /* The ring holds the gold. */
+
+			return consumed;
 		}
 
 		public bool Consume(ItemEntity dropped)
@@ -126,7 +131,7 @@ namespace Kesmai.Server.Items
 				var counter = entity.GetComponentInNeighbor<Counter>();
 				var alter = entity.GetComponentInNeighbor<Altar>();
 
-				var destinationTile = segmentTile;
+				var destinationTile = default(SegmentTile);
 
 				if (counter != null)
 					destinationTile = counter.Parent;
@@ -134,11 +139,22 @@ namespace Kesmai.Server.Items
 				if (destinationTile is null && alter != null)
 					destinationTile = alter.Parent;
 
+				if (destinationTile is null)
+					destinationTile = segmentTile;
+
 				/* Find the neighbor and place the gold from the ring. */
 				PlaceGold(destinationTile);
+
+				if (segmentTile != destinationTile)
+					entity.SendLocalizedMessage(6200345); /* The gold is placed near to you. */
+				else
+					entity.SendLocalizedMessage(6200346); /* The gold is placed at your feet. */
+				
+				entity.QueueRoundTimer();
 			}
 			else
 			{
+				entity.SendLocalizedMessage(6200347); /* Target the gold you want to hold. */
 				entity.Target = new InternalTarget(this);
 			}
 			
@@ -164,7 +180,10 @@ namespace Kesmai.Server.Items
 					return;
 
 				if (_ring.Consume(gold))
-					return;
+				{
+					source.SendLocalizedMessage(6200348); /* The ring holds the gold. */
+					source.QueueRoundTimer();
+				}
 			}
 		}
 
