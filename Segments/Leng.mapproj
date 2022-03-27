@@ -78791,7 +78791,7 @@
         <block><![CDATA[
 	var knight = new Humanoid()
     {
-        Name = "Yasnaki Knight",
+        Name = "Black Knight",
         Body = 193,
         
         MaxHealth = 167, Health = 167,
@@ -78811,11 +78811,7 @@
     
     knight.AddGold(162);
     knight.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       14.6,     gemsPriceMutatorAboveAverage), 
-        new LootPackEntry(true, UnderkingdomBottles,    20), 
-        new LootPackEntry(true, UnderkingdomPotions,    0.2), 
-        new LootPackEntry(true, yasnakiTreasure,    0.55), 
-        new LootPackEntry(true, UtilityItems,    1)
+       new LootPackEntry(true, LengGems,       100,     gemsPriceMutatorVeryHigh)
     ));
     
     return knight;
@@ -78869,7 +78865,7 @@
     critter.Attacks = new CreatureAttackCollection()
     {
         {
-            new CreatureAttack(14,      30, 40,      "The creature thumbs you with its back two feet",
+            new CreatureAttack(14,      30, 40,      "The creature thumps you with its back two feet.",
                                                         new AttackStunComponent(5)),                40
         },
         {
@@ -78894,13 +78890,7 @@
     critter.AddGold(5000);
      critter.AddGold(1000);
       critter.AddLoot(new LootPack(
-        new LootPackEntry(true, drop3gems,       10,     gemsPriceMutator), 
-        new LootPackEntry(true, GenericBottles,    33),
-        new LootPackEntry(true, SemiRare, 3),
-         new LootPackEntry(true, SemiRare, 40),
-        new LootPackEntry(true, (from, container) => new StunDeathProtectionBracelet(),        15),
-        new LootPackEntry(true, (from, container) => new BrightFeather(), 40),
-        new LootPackEntry(true, UltraRare, 10)
+        new LootPackEntry(true, LengGems,       100,     gemsPriceMutatorVeryHigh)
     ));
     
     return critter;
@@ -78924,7 +78914,48 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	return new MobileEntity();
+	
+    var wizard = new Humanoid()
+    {
+        Name = "Jim the Enchanter",
+        Body = 192,
+        HideDetection = 28,      
+        MaxHealth = 133, Health = 133,
+        MaxMana = 31, Mana = 31,
+        BaseDodge = 23,
+        BasePenetration = ShieldPenetration.Light,
+        Experience = 10918,
+                    
+        IceProtection = 100,
+    };
+    
+    wizard.Wield(new BlackStaff());
+    wizard.Equip(new LeatherArmor());
+    
+    wizard.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(14)
+    };
+    
+    wizard.Spells = new CreatureSpellCollection()
+    {
+        { new CreatureSpell<ConcussionSpell>(
+            skillLevel: 13, cost: 16, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),   50 },
+        { new CreatureSpell<MagicMissileSpell>(
+            skillLevel: 10, cost: 6, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 },
+        { new CreatureSpell<IceStormSpell>(
+            skillLevel: 15, cost: 6, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 }
+    };
+    
+    wizard.AddGold(162);
+    wizard.AddLoot(new LootPack(
+        new LootPackEntry(true, LengGems,       100,     gemsPriceMutatorVeryHigh)
+    ));
+    
+    return wizard;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
