@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using Kesmai.Server.Accounting;
@@ -12,13 +13,16 @@ namespace Kesmai.Server.Items
 {
 	public partial class JewelerRing : Ring, ITreasure
 	{
+		public static int TransmuteDelayRounds = 60;
+		
 		/// <inheritdoc />
 		public override uint BasePrice => 2000;
 
 		private ulong _transmuted;
+		private Timer _cooldownTimer;
 		
 		/// <summary>
-		/// Gets the gold value converted by this ring.
+		/// Gets the total gold value converted by this ring.
 		/// </summary>
 		[WorldForge]
 		[CommandProperty(AccessLevel.GameMaster)]
@@ -27,6 +31,8 @@ namespace Kesmai.Server.Items
 			get => _transmuted;
 			set => _transmuted = value; /* The amount has been transmuted. */
 		}
+
+		public bool CanTransmute => _cooldownTimer is null;
 		
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JewelerRing"/> class.
@@ -41,12 +47,46 @@ namespace Kesmai.Server.Items
 		public JewelerRing(Serial serial) : base(serial)
 		{
 		}
-		
+
+		protected override bool OnEquip(MobileEntity entity)
+		{
+			var delay = entity.Facet.TimeSpan.FromRounds(TransmuteDelayRounds);
+			
+			if (delay > TimeSpan.Zero)
+				StartCooldown(delay);
+
+			entity.SendLocalizedMessage(6200349); /* The ring's power fades and begins to recharge. */
+			
+			return base.OnEquip(entity);
+		}
+
+		private void StartCooldown(TimeSpan delay)
+		{
+			_cooldownTimer = Timer.DelayCall(delay, ClearCooldown); /* Delay use by TransmuteDelayRounds. */
+
+			Hue = Color.Gray;
+			
+			Delta(ItemDelta.UpdateAction);
+		}
+
+		private void ClearCooldown()
+		{
+			if (_cooldownTimer != null)
+			{
+				_cooldownTimer.Stop();
+				_cooldownTimer = null;
+			}
+
+			Hue = Color.Transparent;
+
+			Delta(ItemDelta.UpdateAction);
+		}
+
 		/* Feature 1: Double-clicking the ring while equipped allows a target to convert gem into gold. */
 		/// <inheritdoc />
 		public override ActionType GetAction()
 		{
-			if (Container is Rings)
+			if (Container is Rings && CanTransmute)
 				return ActionType.Use;
 			
 			return base.GetAction();
@@ -57,9 +97,10 @@ namespace Kesmai.Server.Items
 			if (action != ActionType.Use)
 				return base.HandleInteraction(entity, action);
 
-			if (Container is not Rings)
+			if (Container is not Rings || !CanTransmute)
 				return false;
 			
+			entity.SendLocalizedMessage(6200350); /* Target a gem to transmute. */
 			entity.Target = new InternalTarget(this);
 			return true;
 		}
@@ -102,10 +143,21 @@ namespace Kesmai.Server.Items
 					gold.DropToContainer(backpack, slot.Value);
 				else
 					gold.Move(source.Location, true, source.Segment);
+
+				source.SendLocalizedMessage(slot.HasValue ? 
+					6200351 : 6200352); /* The gem turns to gold in your backpack. */ /* The gem turns to gold at your feet. */
+				source.QueueRoundTimer();
 				
 				gem.Delete();
 
 				_ring.Transmuted += gem.ActualPrice;
+				
+				var delay = source.Facet.TimeSpan.FromRounds(TransmuteDelayRounds);
+			
+				if (delay > TimeSpan.Zero)
+					_ring.StartCooldown(delay);
+				
+				source.SendLocalizedMessage(6200349); /* The ring's power fades and begins to recharge. */
 			}
 		}
 
