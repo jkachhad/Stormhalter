@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.93.0.0">
+<segment name="Kesmai" version="0.94.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -65,7 +65,7 @@
     public delegate CreatureBlockCollection blockEQ(int level);
     public delegate LootPack lootEQ(int area);
     public delegate CreatureSpellCollection spellEQ(int level);
-    public delegate List<ItemEntity> equipEQ(int level);
+    public delegate List<Equipment> equipEQ(int level);
     public delegate void itemMutator(MobileEntity entity, Container source, ItemEntity item);
     
     public enum Area {
@@ -82,7 +82,7 @@
       * additional entries.
       */
     public static readonly Dictionary<Area, LootPackEntry[]> lootTable = new Dictionary<Area, LootPackEntry[]>() {
-        [Area.KesSurface] = le(new LootPackEntry(true, (mobile, container) => randomBalm(true), 0.1))
+        [Area.KesSurface] = le(new LootPackEntry(true, randomBalm(), 10))
     };
     
     /**
@@ -110,7 +110,7 @@
         return new LootPack(lootTable[(Area)area]);
     }
     
-    public static LootPack trashMobLeveledLootAnd(Area area, params LootPackEntry[] extras)
+    public static LootPack trashMobLeveledLootAnd(int area, params LootPackEntry[] extras)
     {
         List<LootPackEntry> lpe = new List<LootPackEntry>(lootTable[(Area)area]);
         lpe.AddRange(extras);
@@ -133,15 +133,14 @@
     /**
      * Equipment collections and helpers
      */
-    public static List<ItemEntity> randomPriestEquipment(int level) {
-        List<ItemEntity> equip = new List<ItemEntity>() { new LeatherArmor()};
+    public static List<Equipment> randomPriestEquipment(int level) {
+        List<Equipment> equip = new List<Equipment>() { new LeatherArmor()};
         var equipTypeChance = Utility.RandomDouble();
         if(equipTypeChance < 0.5) {
             equip.Add(new BlackStaff());
         } else {
             equip.Add(new ShortSword());
         }
-		return equip;
     }
     
     /**
@@ -241,7 +240,7 @@
      */
      
     public class PriestBehavior : MobBehavior {
-        public PriestBehavior() {
+        public Priest() {
             makeSpell = leveledPriestSpells;
             makeEquipment = randomPriestEquipment;
         }
@@ -259,7 +258,7 @@
     /**
      * This is the creature creator, it should cut down on about 90% of creature building code
      * Example usage:
-     * var bear = generateMob<Bear, AnimalBehavior>(3, Area.KesSurface);
+     * var bear = generateMob<Bear, AnimalBehavior>(3, Area.kesmaiSurface);
      * this will generate a complete bear with all attributes set with the kesmai surface loot pack.
      * 
      */
@@ -288,12 +287,12 @@
             mobType.Spells = behavior.makeSpell(mutator.spellEQ(level,mutator.spellLv,mutator.spellPerLv));
         }
         if(behavior.makeEquipment != null) {
-            List<ItemEntity> equipList = behavior.makeEquipment(level);
-            foreach(var e in equipList) {
-                if(e is Weapon weapon) {
-                    mobType.Wield(weapon);
-                } else if (e is Equipment equipment) {
-                    mobType.Equip(equipment);
+            List<Equipment> equipList = behavior.makeEquipment(level);
+            foreach(Equipment e in equipList) {
+                if(e is Weapon) {
+                    mobType.Wield(e);
+                } else {
+                    mobType.Equip(e);
                 }
             }
         }
@@ -44201,8 +44200,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="27" y="4">
@@ -44837,8 +44836,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="5" y="7">
@@ -45188,8 +45187,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="15" y="8">
@@ -46802,8 +46801,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="21" y="14">
@@ -47777,8 +47776,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="13" y="18">
@@ -101491,7 +101490,7 @@ else
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var bear = generateMob<Bear, AnimalBehavior>(3, Area.KesSurface);
+    var bear = generateMob<Bear, AnimalBehavior>(3, Area.kesmaiSurface);
     bear.Movement=2;
     bear.AddStatus(new NightVisionStatus(bear));
 	return bear;
@@ -101515,7 +101514,7 @@ else
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	var wraith = generateMob<Wraith, PriestBehavior>(8, Area.KesSurface);
+	var wraith = generateMob<Wraith, PriestBehavior>(8, Area.kesmaiSurface);
 	wraith.AddLoot(trashMobLeveledLootAnd(Area.KesSurface, new LootPackEntry(true, surfaceTreasure, 20)));
     return wraith;
 ]]></block>
