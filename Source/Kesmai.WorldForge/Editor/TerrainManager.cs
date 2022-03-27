@@ -85,6 +85,7 @@ namespace Kesmai.WorldForge
 				var mgcb = File.ReadAllLines(mgcbFile).ToList();
 				var existingTextures = mgcb.Where(line => line.StartsWith("#begin ")).Select(line => line.Substring(7,line.Length-11)); // get just the texture filename, exclude the header (7) and extension(4)
 				var newTextures = externalTextures.Except(existingTextures, StringComparer.InvariantCultureIgnoreCase).Except(missingTextures, StringComparer.InvariantCultureIgnoreCase).ToList();
+				newTextures = newTextures.Where(t => File.Exists($@"{Core.CustomArtPath}\{t}.png")).ToList(); // Only modify mgcb file if the new texture actually exists.
 				if (newTextures.Count > 0)
 				{
 					foreach (var texture in newTextures)
