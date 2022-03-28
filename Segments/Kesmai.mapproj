@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.94.0.0">
+<segment name="Kesmai" version="0.93.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -101710,18 +101710,6 @@ else
         // TODO: Can we move this logic to the template?
         for (var i = Utility.Random(3, 5); i > 0; i--)
             shopkeeper.Restock();
-            
-        //Give the Kes Jeweler the new jeweler's ring and banker's ring for testing. To be removed when these items are vetted and have an intended drop location.
-        var ringTesting = new List<StockEntry>()
-        {
-           new StockEntry("bankers ring",   () => new BankerRing(),     1, 100, null),
-           new StockEntry("jewelers ring ", () => new JewelerRing(),    1, 100, null),
-        };
-        
-        foreach (var ring in ringTesting){
-            shopkeeper.Stock(ring);
-            shopkeeper.Restock(ring);
-        }
     }
 ]]></block>
         <block><![CDATA[]]></block>
