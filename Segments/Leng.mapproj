@@ -78879,9 +78879,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    source.SayTo(killer, $"Only a flesh wound! {killer.Name}.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -79037,9 +79038,13 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (spokeRecently(source))
+        return;
+
+    source.Say($"If you do doubt your courage or your strength, come no further, {player.Name}.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
