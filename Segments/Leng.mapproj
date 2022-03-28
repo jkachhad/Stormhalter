@@ -18224,6 +18224,9 @@
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
+        <component type="StaticComponent">
+          <static>173</static>
+        </component>
       </tile>
       <tile x="42" y="7">
         <component type="FloorComponent">
@@ -18244,7 +18247,7 @@
           <ground>13</ground>
         </component>
         <component type="StaticComponent">
-          <static>206</static>
+          <static>222</static>
         </component>
       </tile>
       <tile x="45" y="7">
@@ -18260,6 +18263,9 @@
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
+        <component type="StaticComponent">
+          <static>173</static>
+        </component>
       </tile>
       <tile x="47" y="7">
         <component type="FloorComponent">
@@ -18273,6 +18279,9 @@
           <moonphases select="all" />
           <professions select="all" />
           <alignments select="all" />
+        </component>
+        <component type="StaticComponent">
+          <static>167</static>
         </component>
       </tile>
       <tile x="48" y="7">
@@ -18538,18 +18547,6 @@
       <tile x="39" y="8">
         <component type="FloorComponent">
           <ground>176</ground>
-        </component>
-        <component type="HiddenTeleporterComponent">
-          <destinationX>44</destinationX>
-          <destinationY>7</destinationY>
-          <destinationRegion>20</destinationRegion>
-          <lightphases select="all" />
-          <moonphases select="all" />
-          <professions select="all" />
-          <alignments select="all" />
-        </component>
-        <component type="StaticComponent">
-          <static>167</static>
         </component>
       </tile>
       <tile x="40" y="8">
@@ -19267,6 +19264,9 @@
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
+        <component type="StaticComponent">
+          <static>173</static>
+        </component>
       </tile>
       <tile x="42" y="10">
         <component type="FloorComponent">
@@ -19302,6 +19302,9 @@
       <tile x="46" y="10">
         <component type="FloorComponent">
           <ground>176</ground>
+        </component>
+        <component type="StaticComponent">
+          <static>173</static>
         </component>
       </tile>
       <tile x="47" y="10">
@@ -19879,19 +19882,31 @@
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
       </tile>
       <tile x="42" y="12">
         <component type="FloorComponent">
           <ground>176</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="43" y="12">
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
-        <component type="TreeComponent">
-          <tree>98</tree>
-          <canGrow>true</canGrow>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="44" y="12">
@@ -19901,33 +19916,60 @@
         <component type="StaticComponent">
           <static>207</static>
         </component>
+        <component type="DoorComponent">
+          <openId>74</openId>
+          <closedId>62</closedId>
+          <secretId>25</secretId>
+          <destroyedId>80</destroyedId>
+          <isSecret>true</isSecret>
+          <indestructible>true</indestructible>
+        </component>
       </tile>
       <tile x="45" y="12">
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
-        <component type="TreeComponent">
-          <tree>98</tree>
-          <canGrow>true</canGrow>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="46" y="12">
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
       </tile>
       <tile x="47" y="12">
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
       </tile>
       <tile x="48" y="12">
         <component type="StaticComponent">
-          <static>176</static>
+          <static>179</static>
         </component>
         <component type="WallComponent">
           <wall>158</wall>
           <destroyed>161</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
           <ruins>170</ruins>
           <indestructible>true</indestructible>
         </component>
@@ -20280,6 +20322,7 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
+      <tile x="49" y="13" />
       <tile x="2" y="14">
         <component type="StaticComponent">
           <static>13</static>
@@ -21899,6 +21942,9 @@
           <moonphases select="all" />
           <professions select="all" />
           <alignments select="all" />
+        </component>
+        <component type="StaticComponent">
+          <static>167</static>
         </component>
       </tile>
       <tile x="48" y="18">
@@ -78785,21 +78831,33 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="BossMajorLevel13BlackKnight">
+    <entity name="BossMinorLevel13BlackKnight">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 	var knight = new Humanoid()
     {
-        Name = "Black Knight",
+        Name = "Black.Knight",
         Body = 193,
         
-        MaxHealth = 167, Health = 167,
-        BaseDodge = 23,
+        MaxHealth = 800, Health = 800,
+        BaseDodge = 25,
         HideDetection = 28,        
-        Experience = 10913,
+        Experience = 32000,
         BasePenetration = ShieldPenetration.Medium,
+        IceProtection = 100,
+        FireProtection = 100,
+        CanLoot = false,
+        Immunity = CreatureImmunity.Poison
+        
     };
+    
+    knight.AddImmunity(typeof(Whirlwind));
+    knight.AddImmunity(typeof(PoisonCloudSpell));
+    
+    knight.AddImmunity(typeof(BlindSpell));
+    knight.AddImmunity(typeof(FearSpell));
+    knight.AddImmunity(typeof(StunSpell));
     
     knight.Attacks = new CreatureAttackCollection()
     {
@@ -78824,27 +78882,31 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (spokeRecently(source))
+        return;
+
+    source.Say($"I move for no man or woman!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="BossMajorLevel13BunnyRabbit">
+    <entity name="BossMinorLevel13BunnyRabbit">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 	var critter = new Drake()
     {
-        Name = "Killer Rabbit",
-        MaxHealth = 4500, Health = 4500,
+        Name = "Killer.Rabbit",
+        MaxHealth = 1300, Health = 1300,
         BaseDodge = 25,
         Body = 179,
     
         Alignment = Alignment.Evil,
-        HideDetection = 30,
-        Experience = 80000,
+        HideDetection = 45,
+        Experience = 30000,
         CanLoot = false,
         
         
@@ -78903,50 +78965,57 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (spokeRecently(source))
+        return;
+
+    source.Say($"Sqqqqquuuuuuueeeaaaaaaaakkk");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="BossMajorLevel13Enchanter">
+    <entity name="BossMinorLevel13Enchanter">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 	
     var wizard = new Humanoid()
     {
-        Name = "Jim the Enchanter",
+        Name = "Jim.The.Enchanter",
         Body = 192,
         HideDetection = 28,      
-        MaxHealth = 133, Health = 133,
-        MaxMana = 31, Mana = 31,
-        BaseDodge = 23,
-        BasePenetration = ShieldPenetration.Light,
-        Experience = 10918,
-                    
+        MaxHealth = 500, Health = 500,
+        MaxMana = 40, Mana = 40,
+        BaseDodge = 25,
+        Experience = 28000,
+        Movement = 0,
+        FireProtection = 100,            
         IceProtection = 100,
+        CanLoot = false
     };
     
     wizard.Wield(new BlackStaff());
     wizard.Equip(new LeatherArmor());
     
-    wizard.Attacks = new CreatureAttackCollection()
-    {
-        new CreatureBasicAttack(14)
-    };
+    wizard.AddImmunity(typeof(Whirlwind));
+    wizard.AddImmunity(typeof(PoisonCloudSpell));
+    
+    wizard.AddImmunity(typeof(BlindSpell));
+    wizard.AddImmunity(typeof(FearSpell));
+    wizard.AddImmunity(typeof(StunSpell));
     
     wizard.Spells = new CreatureSpellCollection()
     {
         { new CreatureSpell<ConcussionSpell>(
             skillLevel: 13, cost: 16, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   50 },
-        { new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 10, cost: 6, 
+        { new CreatureSpell<FireBoltSpell>(
+            skillLevel: 11, cost: 12, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 },
-        { new CreatureSpell<IceStormSpell>(
-            skillLevel: 15, cost: 6, 
+        { new CreatureSpell<LightningBoltSpell>(
+            skillLevel: 8, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 }
     };
     
@@ -79779,9 +79848,9 @@
       <entry entity="BossMiniLevel9SeaSerpent" size="1" minimum="0" maximum="0" />
       <location x="43" y="32" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="BunnyRabbit">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>-2700</maximumDelay>
+    <spawn type="LocationSpawner" name="bunnyRabbit">
+      <minimumDelay>3600</minimumDelay>
+      <maximumDelay>4500</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -79796,11 +79865,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <location x="47" y="14" region="20" />
+      <entry entity="BossMinorLevel13BunnyRabbit" size="1" minimum="1" maximum="1" />
+      <location x="44" y="9" region="20" />
     </spawn>
-    <spawn type="LocationSpawner" name="BlackKnight">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>900</maximumDelay>
+    <spawn type="LocationSpawner" name="blackKnight">
+      <minimumDelay>3600</minimumDelay>
+      <maximumDelay>4500</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -79815,12 +79885,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="BossMajorLevel13BlackKnight" size="1" minimum="0" maximum="0" />
-      <location x="47" y="9" region="20" />
+      <entry entity="BossMinorLevel13BlackKnight" size="1" minimum="1" maximum="1" />
+      <location x="44" y="15" region="20" />
     </spawn>
-    <spawn type="LocationSpawner" name="Enchanter">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>900</maximumDelay>
+    <spawn type="LocationSpawner" name="enchanter">
+      <minimumDelay>3600</minimumDelay>
+      <maximumDelay>4500</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -79835,8 +79905,8 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="BossMajorLevel13Enchanter" size="1" minimum="1" maximum="1" />
-      <location x="41" y="11" region="20" />
+      <entry entity="BossMinorLevel13Enchanter" size="1" minimum="1" maximum="1" />
+      <location x="44" y="13" region="20" />
     </spawn>
     <spawn type="RegionSpawner" name="mausoleumSandyPath">
       <minimumDelay>600</minimumDelay>
