@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.93.0.0">
+<segment name="Oakvael" version="0.94.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -94335,7 +94335,6 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    // Missing from CS.
     return new ConfessorGhost();
 ]]></block>
         <block><![CDATA[]]></block>
@@ -101671,6 +101670,26 @@
       </script>
       <entry entity="oakKinasho" size="1" minimum="1" maximum="1" />
       <location x="17" y="17" region="10" />
+    </spawn>
+    <spawn type="LocationSpawner" name="oakGhost">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="oakConfessorGhost" size="1" minimum="1" maximum="1" />
+      <location x="6" y="7" region="12" />
     </spawn>
     <spawn type="RegionSpawner" name="portalPeacemakers">
       <minimumDelay>900</minimumDelay>
