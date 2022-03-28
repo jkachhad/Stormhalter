@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Drawing;
@@ -23,15 +24,18 @@ namespace Kesmai.Server.Items
 		/// <inheritdoc />
 		public override int BashingMitigation => 1;
 		
+		/// <inheritdoc />
 		public override int BaseArmorBonus
 		{
 			get
 			{
+				var baseArmorBonus = 1;
+				
 				/* Do not apply the armor bonus if on a hostile. */
 				if (Parent is PlayerEntity)
-					return Quality.Value; /* BaseArmorBonus matches rarity. */
+					baseArmorBonus += Quality.Value; /* BaseArmorBonus matches rarity. */
 
-				return 0;
+				return Math.Min(baseArmorBonus, 3);
 			}
 		}
 		

@@ -25,6 +25,9 @@ namespace Kesmai.Server.Items
 		public override int BashingMitigation => 1;
 		
 		/// <inheritdoc />
+		public override int BaseArmorBonus => 2;
+		
+		/// <inheritdoc />
 		public override bool BlockSpellcast => true;
 
 		/// <summary>

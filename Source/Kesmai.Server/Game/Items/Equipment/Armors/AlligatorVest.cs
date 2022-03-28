@@ -27,6 +27,9 @@ namespace Kesmai.Server.Items
 
 		/// <inheritdoc />
 		public override int BashingMitigation => 1;
+		
+		/// <inheritdoc />
+		public override int BaseArmorBonus => 1;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AlligatorVest"/> class.

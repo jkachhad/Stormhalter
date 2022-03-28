@@ -29,6 +29,9 @@ namespace Kesmai.Server.Items
 
 		/// <inheritdoc />
 		public override int ProjectileMitigation => 3;
+		
+		/// <inheritdoc />
+		public override int BaseArmorBonus => 3;
 
 		/// <inheritdoc />
 		public override int ProtectionFromFire => 5;

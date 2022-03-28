@@ -29,6 +29,9 @@ namespace Kesmai.Server.Items
 
 		/// <inheritdoc />
 		public override int ProjectileMitigation => 2;
+		
+		/// <inheritdoc />
+		public override int BaseArmorBonus => 2;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TrollVest"/> class.
