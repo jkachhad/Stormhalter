@@ -2525,7 +2525,7 @@
   </terrain>
   <terrain id="931">
     <!-- Torch Wall Decal (H) -->
-    <sprite order="0">
+    <sprite order="5">
       <texture>Tenser\Terrain\torchdecals</texture>
       <source>(0,0,900,100)</source>
       <frames step="200" keys="0-2">
@@ -2538,9 +2538,10 @@
   </terrain>
   <terrain id="932">
     <!-- Torch Wall Decal (V) -->
-    <sprite order="0">
+    <sprite order="5">
       <texture>Tenser\Terrain\torchdecals</texture>
       <source>(0,0,900,100)</source>
+      <offset>(1,1)</offset>
       <frames step="200" keys="0-2">
         <frame>(300,0,100,100)</frame>
         <frame>(400,0,100,100)</frame>
@@ -2552,6 +2553,7 @@
   <terrain id="933">
     <!-- Darkened Wall Decal (H) -->
     <sprite order="5">
+      <offset>(0,0)</offset>
       <texture>Tenser\Terrain\torchdecals</texture>
       <source>(600,0,100,100)</source>
     </sprite>
@@ -2560,6 +2562,7 @@
   <terrain id="934">
     <!-- Darkened Wall Decal (V) -->
     <sprite order="5">
+      <offset>(0,0)</offset>
       <texture>Tenser\Terrain\torchdecals</texture>
       <source>(700,0,100,100)</source>
     </sprite>
@@ -2888,20 +2891,22 @@
   <terrain id="975">
     <!-- Floor Brazier (H) -->
     <sprite order="0">
+      <offset>(-10,-10)</offset>
       <texture>Tenser\Terrain\firebowl-Sheet</texture>
-      <source>(0,0,400,100)</source>
+      <source>(0,0,440,110)</source>
       <frames step="200" keys="0-3">
-        <frame>(0,0,100,100)</frame>
-        <frame>(100,0,100,100)</frame>
-        <frame>(200,0,100,100)</frame>
-        <frame>(300,0,100,100)</frame>
+        <frame>(0,0,110,110)</frame>
+        <frame>(110,0,110,110)</frame>
+        <frame>(220,0,110,110)</frame>
+        <frame>(330,0,110,110)</frame>
       </frames>
     </sprite>
     <average>(11,82,214,255)</average>
   </terrain>
   <terrain id="976">
     <!-- Wall Brazier (H) -->
-    <sprite order="0">
+    <sprite order="5">
+      <offset>(0,0)</offset>
       <texture>Tenser\Terrain\wall brazier</texture>
       <source>(0,0,600,100)</source>
       <frames step="200" keys="0-2">
@@ -2914,7 +2919,8 @@
   </terrain>
   <terrain id="977">
     <!-- Wall Brazier (V) -->
-    <sprite order="0">
+    <sprite order="5">
+      <offset>(2,1)</offset>
       <texture>Tenser\Terrain\wall brazier</texture>
       <source>(0,0,600,100)</source>
       <frames step="200" keys="0-2">
@@ -2927,7 +2933,7 @@
   </terrain>
   <terrain id="978">
     <!-- Wall Brazier - green fire (H) -->
-    <sprite order="0">
+    <sprite order="5">
       <texture>Tenser\Terrain\wall brazier-greenfire</texture>
       <source>(0,0,600,100)</source>
       <frames step="200" keys="0-2">
@@ -2940,7 +2946,8 @@
   </terrain>
   <terrain id="979">
     <!-- Wall Brazier - green fire (V) -->
-    <sprite order="0">
+    <sprite order="5">
+      <offset>(2,1)</offset>
       <texture>Tenser\Terrain\wall brazier-greenfire</texture>
       <source>(0,0,600,100)</source>
       <frames step="200" keys="0-2">
@@ -2953,7 +2960,7 @@
   </terrain>
   <terrain id="980">
     <!-- Wall Brazier - blue fire (H) -->
-    <sprite order="0">
+    <sprite order="5">
       <texture>Tenser\Terrain\wall brazier-bluefire</texture>
       <source>(0,0,600,100)</source>
       <frames step="200" keys="0-2">
@@ -2966,7 +2973,8 @@
   </terrain>
   <terrain id="981">
     <!-- Wall Brazier - blue fire (V) -->
-    <sprite order="0">
+    <sprite order="5">
+      <offset>(2,1)</offset>
       <texture>Tenser\Terrain\wall brazier-bluefire</texture>
       <source>(0,0,600,100)</source>
       <frames step="200" keys="0-2">
@@ -2980,6 +2988,7 @@
   <terrain id="982">
     <!-- Candelabra -->
     <sprite order="0">
+      <offset>(-1,0)</offset>
       <texture>Tenser\Terrain\candelabra-DARKSheet</texture>
       <source>(0,0,300,100)</source>
       <frames step="200" keys="0-2">
