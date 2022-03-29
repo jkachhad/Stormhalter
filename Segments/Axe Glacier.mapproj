@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.92.0.0">
+<segment name="Axe Glacier" version="0.94.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -108806,6 +108806,365 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="level13GoblinSentry">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var goblin = new Goblin()
+    {
+        MaxHealth = 91, Health = 91,
+        BaseDodge = 19,
+        HideDetection = 23,        
+        Experience = 4513,
+        BasePenetration = ShieldPenetration.VeryLight,
+    };
+    
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(12)
+    };
+    
+    goblin.Wield(new Longbow());
+    goblin.Equip(new LeatherArmor());
+            
+    goblin.AddGold(84);
+    goblin.AddLoot(new LootPack(
+        new LootPackEntry(true, AxeGems,       12,     gemsPriceMutatorMedium), 
+        new LootPackEntry(true, AxeBottles,    20),
+        new LootPackEntry(true, AxePotions,     0.3),
+        new LootPackEntry(true, upperTreasure,   0.37),
+        new LootPackEntry(true, UtilityItems,     1)
+    ));
+    
+    return goblin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="level13GoblinMage">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var goblin = new Goblin()
+    {
+        MaxHealth = 91, Health = 91,
+        MaxMana = 16, Mana = 16,
+        BaseDodge = 20,
+        HideDetection = 23,        
+        Experience = 4513,
+        BasePenetration = ShieldPenetration.VeryLight,
+    };
+    
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(9)
+    };
+    
+    goblin.Spells = new CreatureSpellCollection
+    {
+        new CreatureSpell<FireballSpell>(
+            skillLevel: 12, cost: 6, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<MagicMissileSpell>(
+            skillLevel: 8, cost: 3, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
+    
+    goblin.Wield(new BlackStaff());
+            
+    goblin.AddGold(84);
+    goblin.AddLoot(new LootPack(
+        new LootPackEntry(true, AxeGems,       12,     gemsPriceMutatorMedium), 
+        new LootPackEntry(true, AxeBottles,    20),
+        new LootPackEntry(true, AxePotions,     0.3),
+        new LootPackEntry(true, upperTreasure,   0.37),
+        new LootPackEntry(true, UtilityItems,     1),
+        new LootPackEntry(true, (from, container) => new PineWand(), 1)
+    ));
+    
+    return goblin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="level13Troll">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var troll = new Troll()
+    {
+        MaxHealth = 143, Health = 143,
+        BaseDodge = 22,
+        BasePenetration = ShieldPenetration.Light,
+        Experience = 6464,
+        HideDetection = 26,
+    };
+    
+    troll.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(14)
+    };
+    
+    troll.Wield(new Greatsword());
+    troll.Equip(new ChainmailArmor());
+    
+    troll.AddGold(146);
+    troll.AddLoot(new LootPack(
+        new LootPackEntry(true, AxeGems,       16.6,     gemsPriceMutatorAboveAverage), 
+        new LootPackEntry(true, AxeBottles,    20),
+        new LootPackEntry(true, AxePotions,     0.3),
+        new LootPackEntry(true, upperTreasure,   0.55),
+        new LootPackEntry(true, UtilityItems,     1)
+    ));
+    
+    return troll;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="level13Wraith">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var wraith = new Wraith()
+    {
+        MaxHealth = 130, Health = 130,
+        MaxMana = 23, Mana = 23,
+        BaseDodge = 22,
+        HideDetection = 23,   
+        Experience = 6464,
+    };
+        
+    wraith.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(13),
+    };
+    
+    wraith.Spells = new CreatureSpellCollection()
+    {
+        {
+            new CreatureSpell<BlindSpell>(
+                skillLevel: 13, cost: 16, 
+                mantra: SpellHelper.GenerateMantra(), instantCast: false),   75 
+        },
+        {
+            new CreatureSpell<DeathSpell>(
+                skillLevel: 8, cost: 6, 
+                mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 
+        }
+    };
+        
+    wraith.Wield(new BlackStaff());
+        
+    wraith.AddGold(91);
+    wraith.AddLoot(new LootPack(
+        new LootPackEntry(true, AxeGems,       16.6,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, AxeBottles,    20),
+        new LootPackEntry(true, UtilityItems,    1),
+        new LootPackEntry(true, AxePotions,     0.3),
+        new LootPackEntry(true, upperTreasure,   0.5),
+        new LootPackEntry(true, (from, container) => new YouthPotion(), 0.5)
+    ));
+    
+    return wraith;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="level13Ogre">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var ogre = new Ogre()
+    {
+        MaxHealth = 165, Health = 165,
+        BaseDodge = 21,
+        HideDetection = 23,
+        Experience = 7018,
+        BasePenetration = ShieldPenetration.Medium,
+        Immunity = CreatureImmunity.Web,
+        MagicProtection = 18,
+    };
+        
+    ogre.AddStatus(new NightVisionStatus(ogre));
+    
+    ogre.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(14)
+    };
+
+    ogre.Wield(new Halberd());    
+    
+    ogre.AddGold(150);
+    ogre.AddLoot(new LootPack(
+        new LootPackEntry(true, AxeGems,       16.6,     gemsPriceMutatorAboveAverage), 
+        new LootPackEntry(true, AxeBottles,    20),
+        new LootPackEntry(true, upperTreasure,   0.5),
+        new LootPackEntry(true, AxePotions,     0.3),
+        new LootPackEntry(true, (from, container) => new SteelGauntlets(), 6.67),
+        new LootPackEntry(true, UtilityItems,     1)
+    ));
+    
+    return ogre;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="level13Orc">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var orc = new Orc()
+    {
+        MaxHealth = 130, Health = 130,
+        BaseDodge = 20,
+        HideDetection = 22,   
+        Experience = 6018,
+        BasePenetration = ShieldPenetration.Light,
+        CanFlee = true,
+    };
+    
+    orc.Attacks = new CreatureAttackCollection()
+    {
+            new CreatureBasicAttack(13)
+    };
+    
+    orc.Wield(new Longsword());
+    orc.Equip(new LeatherArmor());
+            
+    orc.AddGold(119);
+    orc.AddLoot(new LootPack(
+        new LootPackEntry(true, AxeGems,       16.6,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, AxeBottles,    20),
+        new LootPackEntry(true, AxePotions,     0.3),
+        new LootPackEntry(true, upperTreasure,   0.5),
+        new LootPackEntry(true, UtilityItems,     1)
+    ));
+    
+    return orc;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="level13Goblin">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var goblin = new Goblin()
+    {
+        MaxHealth = 91, Health = 91,
+        BaseDodge = 19,
+        HideDetection = 23,        
+        Experience = 4513,
+        BasePenetration = ShieldPenetration.VeryLight,
+    };
+    
+    goblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(12)
+    };
+    
+    goblin.Wield(new BattleAxe());
+    goblin.Equip(new LeatherArmor());
+            
+    goblin.AddGold(84);
+    goblin.AddLoot(new LootPack(
+        new LootPackEntry(true, AxeGems,       12,     gemsPriceMutatorMedium), 
+        new LootPackEntry(true, AxeBottles,    20),
+        new LootPackEntry(true, AxePotions,     0.3),
+        new LootPackEntry(true, upperTreasure,   0.37),
+        new LootPackEntry(true, UtilityItems,     1)
+    ));
+    
+    return goblin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="axeSEShopkeeper">
@@ -110478,17 +110837,17 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level6GoblinSentry" size="3" minimum="8" maximum="8" />
-      <entry entity="level8GoblinMage" size="1" minimum="4" maximum="4" />
-      <entry entity="level8Troll" size="3" minimum="8" maximum="8" />
-      <entry entity="level8Wraith" size="1" minimum="3" maximum="3" />
-      <entry entity="level8Ogre" size="1" minimum="4" maximum="4" />
-      <entry entity="level8Orc" size="3" minimum="9" maximum="9" />
+      <entry entity="level10GoblinSentry" size="3" minimum="8" maximum="8" />
+      <entry entity="level13GoblinMage" size="1" minimum="4" maximum="4" />
+      <entry entity="level13Troll" size="3" minimum="8" maximum="8" />
+      <entry entity="level13Wraith" size="1" minimum="3" maximum="3" />
+      <entry entity="level13Ogre" size="1" minimum="4" maximum="4" />
+      <entry entity="level13Orc" size="3" minimum="9" maximum="9" />
       <entry entity="BossMiniLevel8Pwolf" size="1" minimum="2" maximum="2" />
       <entry entity="level10Bear" size="1" minimum="4" maximum="4" />
       <entry entity="BossMiniLevel10Bear" size="1" minimum="1" maximum="1" />
       <entry entity="level10RockWorm" size="1" minimum="1" maximum="1" />
-      <entry entity="level8Goblin" size="3" minimum="7" maximum="7" />
+      <entry entity="level13Goblin" size="3" minimum="7" maximum="7" />
       <bounds region="10">
         <inclusion left="8" top="4" right="25" bottom="13" />
         <inclusion left="2" top="4" right="7" bottom="8" />
