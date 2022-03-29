@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.94.0.0">
+<segment name="Axe Glacier" version="0.92.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -108,7 +108,7 @@
     
         public static void gemsPriceMutatorLow(MobileEntity entity, Container source, ItemEntity item)
     {
-        /* Item values fall between 0.4 to 0.8 of base price. */
+        /* Item values fall between 0.8 to 1.2 of base price. */
         var lesserPrice = (int)(item.BasePrice * 0.6);
         var higherPrice = (int)(item.BasePrice * 0.2);
         
@@ -117,9 +117,9 @@
     
     public static void gemsPriceMutatorMedium(MobileEntity entity, Container source, ItemEntity item)
     {
-        /* Item values fall between 0.6 to 1.0 of base price. */
+        /* Item values fall between 0.8 to 1.2 of base price. */
         var lesserPrice = (int)(item.BasePrice * 0.4);
-        var higherPrice = (int)(0);
+        var higherPrice = (int)(item.BasePrice * 1.0);
         
         item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
     }
@@ -135,8 +135,8 @@
     
     public static void gemsPriceMutatorAboveAverage(MobileEntity entity, Container source, ItemEntity item)
     {
-        /* Item values fall between 1.0 to 1.4 of base price. */
-        var lesserPrice = (int)(0);
+        /* Item values fall between 0.8 to 1.2 of base price. */
+        var lesserPrice = (int)(item.BasePrice * 1);
         var higherPrice = (int)(item.BasePrice * 0.4);
         
         item.Price = Utility.RandomBetween(lesserPrice, higherPrice);
@@ -144,7 +144,7 @@
     
     public static void gemsPriceMutatorHigh(MobileEntity entity, Container source, ItemEntity item)
     {
-        /* Item values fall between 1.2 to 1.6 of base price. */
+        /* Item values fall between 0.8 to 1.2 of base price. */
         var lesserPrice = (int)(item.BasePrice * 0.2);
         var higherPrice = (int)(item.BasePrice * 0.6);
         
@@ -153,7 +153,7 @@
     
     public static void gemsPriceMutatorVeryHigh(MobileEntity entity, Container source, ItemEntity item)
     {
-        /* Item values fall between 1.4 to 1.8 of base price. */
+        /* Item values fall between 0.8 to 1.2 of base price. */
         var lesserPrice = (int)(item.BasePrice * 0.4);
         var higherPrice = (int)(item.BasePrice * 0.8);
         
