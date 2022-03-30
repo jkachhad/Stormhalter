@@ -78842,10 +78842,11 @@
     {
         Name = "Black.Knight",
         Body = 193,
+        Alignment = Alignment.Evil,
         
         MaxHealth = 800, Health = 800,
         BaseDodge = 25,
-        HideDetection = 28,        
+        HideDetection = 30,        
         Experience = 32000,
         BasePenetration = ShieldPenetration.Medium,
         IceProtection = 100,
@@ -78857,6 +78858,7 @@
     
     knight.AddImmunity(typeof(Whirlwind));
     knight.AddImmunity(typeof(PoisonCloudSpell));
+    knight.AddStatus(new NightVisionStatus(critter));
     
     knight.AddImmunity(typeof(BlindSpell));
     knight.AddImmunity(typeof(FearSpell));
@@ -78907,9 +78909,9 @@
         MaxHealth = 1300, Health = 1300,
         BaseDodge = 25,
         Body = 179,
-    
         Alignment = Alignment.Evil,
-        HideDetection = 45,
+        
+        HideDetection = 30,
         Experience = 30000,
         CanLoot = false,
         
@@ -78939,7 +78941,7 @@
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(16,      50, 60,     "The creature flies at you and gnaws at your head.",
+            new CreatureAttack(17,      50, 60,     "The creature flies at you and gnaws at your head.",
                                                         new AttackProneComponent(20), 
                                                         new AttackStunComponent(15)),               20
         },
@@ -78953,7 +78955,7 @@
     };
         
     
-    critter.AddGold(5000);
+    critter.AddGold(10000);
      critter.AddGold(1000);
       critter.AddLoot(new LootPack(
         new LootPackEntry(true, LengGems,       100,     gemsPriceMutatorVeryHigh)
@@ -78989,9 +78991,11 @@
     {
         Name = "Jim.The.Enchanter",
         Body = 192,
-        HideDetection = 28,      
+        Alignment = Alignment.Evil,
+        
+        HideDetection = 30,      
         MaxHealth = 500, Health = 500,
-        MaxMana = 40, Mana = 40,
+        MaxMana = 50, Mana = 50,
         BaseDodge = 25,
         Experience = 28000,
         Movement = 0,
@@ -79002,6 +79006,7 @@
     
     wizard.Wield(new BlackStaff());
     wizard.Equip(new LeatherArmor());
+    wizard.AddStatus(new NightVisionStatus(wizard));
     
     wizard.AddImmunity(typeof(Whirlwind));
     wizard.AddImmunity(typeof(PoisonCloudSpell));
@@ -79032,9 +79037,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    source.SayTo(killer, $"Death awaits you with nasty, big, pointy teeth {killer.Name}.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
