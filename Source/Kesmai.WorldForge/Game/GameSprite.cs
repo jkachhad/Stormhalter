@@ -70,22 +70,25 @@ namespace Kesmai.WorldForge
 			var bounds = Vector4F.Parse((string)sourceElement);
 
 			Texture2D sourceTexture = null;
-			try
-			{ // how can I test if a file is in the contentManager's storage?
-				sourceTexture = contentManager.Load<Texture2D>((string)textureElement);
-			} catch { }
 
-			if (sourceTexture == null) { 
-				var customTexturePath = $@"{Core.CustomArtPath}\{(string)textureElement}.png";
-				if (File.Exists(customTexturePath)){
-					using (var sourceStream = File.Open(customTexturePath, FileMode.Open, FileAccess.Read, FileShare.None))
-						sourceTexture = Texture2D.FromStream(graphicsDevice.GraphicsDevice, sourceStream);
-				} else {
-					throw(new MissingTextureException((string)textureElement));
-				}
+			//Prefer loose art files, if they exist.
+			var customTexturePath = $@"{Core.CustomArtPath}\{(string)textureElement}.png";
+			if (File.Exists(customTexturePath))
+			{
+				using (var sourceStream = File.Open(customTexturePath, FileMode.Open, FileAccess.Read, FileShare.None))
+					sourceTexture = Texture2D.FromStream(graphicsDevice.GraphicsDevice, sourceStream);
 			}
 
-			if (sourceTexture == null) { return; }
+			if (sourceTexture == null) {
+				try
+				{
+					sourceTexture = contentManager.Load<Texture2D>((string)textureElement);
+				} 
+				catch
+				{
+					throw (new MissingTextureException((string)textureElement));
+				}
+			}
 
 			var sourceBounds = new Rectangle((int)bounds.X, (int)bounds.Y, (int)bounds.Z, (int)bounds.W);
 			var sourceWidth = sourceBounds.Width;
