@@ -108411,7 +108411,7 @@
     draugr.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<IceStormSpell>(
-            skillLevel: 30, cost: 7, intensity: 3,
+            skillLevel: 30, cost: 7,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
 
@@ -108601,6 +108601,9 @@
         MaxMana = 21, Mana = 21,
             
     };
+    
+    
+    troll.AddStatus(new NightVisionStatus(troll));
         
     troll.Attacks = new CreatureAttackCollection()
     {
@@ -110327,7 +110330,7 @@
       <entry entity="axeThiefTrainer" size="1" minimum="1" maximum="1" />
       <location x="45" y="3" region="12" />
     </spawn>
-    <spawn type="LocationSpawner" name="KingWolf">
+    <spawn type="LocationSpawner" name="BossKingWolf">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>14400</maximumDelay>
       <maximum>1</maximum>
@@ -110440,7 +110443,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Griff Cliffs Outside">
+    <spawn type="RegionSpawner" name="LM Pathway">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>16</maximum>
@@ -110476,7 +110479,7 @@
         <exclusion left="3" top="14" right="4" bottom="22" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Griff Cliff Dungeon">
+    <spawn type="RegionSpawner" name="LM Dungeon">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>25</maximum>
@@ -110544,7 +110547,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Outside Giant Castle">
+    <spawn type="RegionSpawner" name="Lower Glacier Outside Castle">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>600</maximumDelay>
       <maximum>42</maximum>
@@ -110586,7 +110589,7 @@
         <exclusion left="23" top="14" right="31" bottom="24" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Inside Giants Castle">
+    <spawn type="RegionSpawner" name="Lower Glacier Giants Castle">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>13</maximum>
@@ -110615,7 +110618,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Giants Castle Main">
+    <spawn type="RegionSpawner" name="LM Giants Castle">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>12</maximum>
@@ -110643,7 +110646,7 @@
         <exclusion left="8" top="14" right="11" bottom="15" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Giant and Goose">
+    <spawn type="RegionSpawner" name="Boss Giant and Goose">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <maximum>2</maximum>
@@ -110668,7 +110671,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="BehindGiant">
+    <spawn type="RegionSpawner" name="LM Behind Giant">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>10</maximum>
@@ -110965,7 +110968,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Yeti Den Outside">
+    <spawn type="RegionSpawner" name="Boss Yeti Den Outside">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>7</maximum>
@@ -110991,7 +110994,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Yeti Lair">
+    <spawn type="RegionSpawner" name="Boss Yeti Lair">
       <minimumDelay>9000</minimumDelay>
       <maximumDelay>18000</maximumDelay>
       <maximum>7</maximum>
@@ -111042,7 +111045,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="ChaosTempleMiddle">
+    <spawn type="RegionSpawner" name="Chaos Temple Middle">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>4</maximum>
@@ -111181,7 +111184,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Mama">
+    <spawn type="RegionSpawner" name="Boss Mama">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <maximum>1</maximum>
@@ -111205,7 +111208,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Drake">
+    <spawn type="RegionSpawner" name="Boss Drake">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <maximum>1</maximum>
@@ -111229,7 +111232,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Presence">
+    <spawn type="RegionSpawner" name="Boss Presence">
       <minimumDelay>2700</minimumDelay>
       <maximumDelay>3600</maximumDelay>
       <maximum>1</maximum>
@@ -111282,7 +111285,7 @@
         <exclusion left="42" top="11" right="54" bottom="14" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Undead Necro Boss">
+    <spawn type="RegionSpawner" name="Boss Necro">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>14400</maximumDelay>
       <maximum>1</maximum>
@@ -111418,7 +111421,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="UndeadOverspawn">
+    <spawn type="RegionSpawner" name="Undead Overspawn">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1500</maximumDelay>
       <maximum>61</maximum>
