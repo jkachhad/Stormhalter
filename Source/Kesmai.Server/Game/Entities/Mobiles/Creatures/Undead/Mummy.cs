@@ -33,9 +33,9 @@ namespace Kesmai.Server.Game
 		/// <summary>
 		/// Gets the death sound.
 		/// </summary>
-		public override int GetNearbySound() => 253;
-		public override int GetAttackSound() => 254;
-		public override int GetDeathSound() => 255;
+		public override int GetNearbySound() => 250;
+		public override int GetAttackSound() => 251;
+		public override int GetDeathSound() => 252;
 
 		public override Corpse GetCorpse() => default(Corpse);
 	}
