@@ -78858,7 +78858,7 @@
     
     knight.AddImmunity(typeof(Whirlwind));
     knight.AddImmunity(typeof(PoisonCloudSpell));
-    knight.AddStatus(new NightVisionStatus(critter));
+    knight.AddStatus(new NightVisionStatus(knight));
     
     knight.AddImmunity(typeof(BlindSpell));
     knight.AddImmunity(typeof(FearSpell));
