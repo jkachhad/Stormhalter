@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.92.0.0">
+<segment name="Underkingdom" version="0.94.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -20225,6 +20225,9 @@
       <tile x="31" y="10">
         <component type="StaticComponent">
           <static>114</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>3</ground>
         </component>
       </tile>
       <tile x="32" y="10">
@@ -64929,8 +64932,9 @@
         </component>
       </tile>
       <tile x="30" y="26">
-        <component type="StaticComponent">
-          <static>177</static>
+        <component type="WaterComponent">
+          <ground>177</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="31" y="26">
