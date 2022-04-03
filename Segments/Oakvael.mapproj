@@ -97942,7 +97942,7 @@
 	var banshee = new Banshee()
     {
         MaxHealth = 99, Health = 99,
-        MaxMana = 11, Mana = 11,
+        MaxMana = 6, Mana = 6,
         BaseDodge = 23,
         HideDetection = 26,
         Experience = 7222,
@@ -97959,7 +97959,7 @@
     banshee.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CurseSpell>(
-            skillLevel: 2.7, cost: 3)
+            skillLevel: 2, cost: 3)
     };
 
     banshee.Wield(new Spear());    
