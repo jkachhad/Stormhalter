@@ -17,12 +17,12 @@ namespace Kesmai.Server.Items
 		public override int BaseAttackBonus => 3;
 		
 		/// <inheritdoc />
-		protected override int PoisonedItemId => 312;
+		protected override int PoisonedItemId => 900;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="GiltDagger"/> class.
 		/// </summary>
-		public GiltDagger() : base(171)
+		public GiltDagger() : base(900)
 		{
 		}
 		
