@@ -82,8 +82,6 @@ namespace Kesmai.Server.Game
 			public InternalTimer(Merchant<T> entity) : base(TimeSpan.Zero, entity.GetRoundDelay())
 			{
 				_entity = entity;
-
-				Priority = TimerPriority.OneSecond;
 			}
 
 			protected override void OnExecute()
