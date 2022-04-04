@@ -16,6 +16,7 @@ namespace Kesmai.Server.Items
 		/// <inheritdoc />
 		public override int Weight => 1400;
 
+        /// <inheritdoc />
         public override ShieldPenetration Penetration => ShieldPenetration.Medium;
 
 		/// <inheritdoc />
@@ -27,14 +28,20 @@ namespace Kesmai.Server.Items
 		/// <inheritdoc />
 		public override int MaximumDamage => 8;
 
+        /// <inheritdoc />
+        public override bool CanBind => true;
+
 		/// <inheritdoc />
 		public override int BaseArmorBonus => 4;
 
 		/// <inheritdoc />
 		public override int BaseAttackBonus => 2;
 
+        /// <inheritdoc />
+        public override int ProjectileProtection  => 1;
+
 		/// <inheritdoc />
-		public override WeaponFlags Flags => WeaponFlags.TwoHanded | WeaponFlags.Bashing;
+		public override WeaponFlags Flags => WeaponFlags.TwoHanded | WeaponFlags.Bashing | WeaponFlags.Lawful
 		
 		/// <summary>
 		/// Initializes a new instance of the <see cref="BlackStaff"/> class.
@@ -49,7 +56,7 @@ namespace Kesmai.Server.Items
 			entries.Add(new LocalizationEntry(6200000, 6200353)); /* [You are looking at] [a staff large gnarled staff with a ram skull attached.] */
 
             if (Identified)
-				entries.Add(new LocalizationEntry(6250080)); /* The combat adds for this weapon are +1. */
+				entries.Add(new LocalizationEntry(6250080)); /* The combat adds for this weapon are +2. */
 		}
 	}
 }
