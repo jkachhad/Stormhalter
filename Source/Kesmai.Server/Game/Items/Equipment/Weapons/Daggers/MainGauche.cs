@@ -27,7 +27,7 @@ namespace Kesmai.Server.Items
 		public override ShieldPenetration Penetration => ShieldPenetration.Light;
 		
 		/// <inheritdoc />
-		protected override int PoisonedItemId => 902;
+		protected override int PoisonedItemId => 901;
 		
 		/// <inherit />
 		public override WeaponFlags Flags => WeaponFlags.Piercing | WeaponFlags.Silver | WeaponFlags.Neutral;
