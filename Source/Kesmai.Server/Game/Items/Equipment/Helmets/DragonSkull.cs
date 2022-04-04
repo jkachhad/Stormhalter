@@ -19,10 +19,10 @@ namespace Kesmai.Server.Items
 		public override int ProtectionFromStun => 10;
 		
 		/// <inheritdoc />
-		public override int ProtectionFromFire => 5;
+		public override int ProtectionFromFire => 15;
 		
 		/// <inheritdoc />
-		public override int ProtectionFromIce => 0;
+		public override int ProtectionFromIce => 15;
 		
 		/// <inheritdoc />
         public override bool ProvidesNightVision => true;
