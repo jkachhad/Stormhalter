@@ -30,9 +30,9 @@ namespace Kesmai.Server.Game
 			_brain = new CombatAI(this);
 		}
 
-		public override int GetNearbySound() => 259;
-		public override int GetAttackSound() => 260;
-		public override int GetDeathSound() => 261;
+		public override int GetNearbySound() => 238;
+		public override int GetAttackSound() => 239;
+		public override int GetDeathSound() => 240;
 		
 		public override ItemEntity OnCorpseTanned()
 		{
