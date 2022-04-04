@@ -41,12 +41,12 @@ namespace Kesmai.Server.Items
         public override int ProjectileProtection  => 1;
 
 		/// <inheritdoc />
-		public override WeaponFlags Flags => WeaponFlags.TwoHanded | WeaponFlags.Bashing | WeaponFlags.Lawful
+		public override WeaponFlags Flags => WeaponFlags.TwoHanded | WeaponFlags.Bashing | WeaponFlags.Lawful;
 		
 		/// <summary>
-		/// Initializes a new instance of the <see cref="BlackStaff"/> class.
+		/// Initializes a new instance of the <see cref="RamStaff"/> class.
 		/// </summary>
-		public BlackStaff() : base(901)
+		public RamStaff() : base(901)
 		{
 		}
 		
