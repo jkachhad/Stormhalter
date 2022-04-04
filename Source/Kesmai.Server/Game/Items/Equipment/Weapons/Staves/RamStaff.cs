@@ -46,7 +46,7 @@ namespace Kesmai.Server.Items
 		/// <summary>
 		/// Initializes a new instance of the <see cref="RamStaff"/> class.
 		/// </summary>
-		public RamStaff() : base(901)
+		public RamStaff() : base(902)
 		{
 		}
 		
