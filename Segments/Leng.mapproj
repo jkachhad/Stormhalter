@@ -77277,7 +77277,7 @@
         Body = (isFemale ? 37 : 38), IsFemale = isFemale,
         HideDetection = 23,    
         MaxHealth = 99, Health = 99,
-        MaxMana = 31, Mana = 31,
+        MaxMana = 12, Mana = 12,
         BaseDodge = 18,
     
         Experience = 3654,
@@ -77296,7 +77296,7 @@
     {
         { 
             new CreatureSpell<ConcussionSpell>(
-                skillLevel: 7, cost: 16, instantCast: false,
+                skillLevel: 7, cost: 6, instantCast: false,
                 mantra: SpellHelper.GenerateMantra()),   50
         },
         {
@@ -77351,7 +77351,7 @@
         Body = 38,
         HideDetection = 23,       
         MaxHealth = 99, Health = 99,
-        MaxMana = 31, Mana = 31,
+        MaxMana = 12, Mana = 12,
         BaseDodge = 17,
     
         Experience = 3654,
@@ -77370,12 +77370,12 @@
     {
         { 
             new CreatureSpell<CreateWebSpell>(
-                skillLevel: 9, cost: 16, 
+                skillLevel: 9, cost: 6, 
                 mantra: SpellHelper.GenerateMantra(), instantCast: false),   75
         },
         {
             new CreatureSpell<MagicMissileSpell>(
-                skillLevel: 6, cost: 6, 
+                skillLevel: 6, cost: 5, 
                 mantra: SpellHelper.GenerateMantra(), instantCast: false),   25
         }
     };
