@@ -78859,6 +78859,8 @@
     knight.AddImmunity(typeof(Whirlwind));
     knight.AddImmunity(typeof(PoisonCloudSpell));
     knight.AddStatus(new NightVisionStatus(knight));
+    knight.AddImmunity(typeof(ConcussionSpell));
+    
     
     knight.AddImmunity(typeof(BlindSpell));
     knight.AddImmunity(typeof(FearSpell));
@@ -78927,6 +78929,7 @@
     };
     
     critter.AddStatus(new NightVisionStatus(critter));
+    critter.AddImmunity(typeof(ConcussionSpell));
     
     critter.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
     
@@ -79010,6 +79013,8 @@
     
     wizard.AddImmunity(typeof(Whirlwind));
     wizard.AddImmunity(typeof(PoisonCloudSpell));
+    wizard.AddImmunity(typeof(ConcussionSpell));
+    wizard.AddImmunity(typeof(LightningBoltSpell));
     
     wizard.AddImmunity(typeof(BlindSpell));
     wizard.AddImmunity(typeof(FearSpell));
