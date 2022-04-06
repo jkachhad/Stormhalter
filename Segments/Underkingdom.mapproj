@@ -101020,7 +101020,7 @@
     troll.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CurseSpell>(
-            skillLevel: 8, cost: 10, 
+            skillLevel: 6, cost: 10, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
@@ -101114,7 +101114,7 @@
     var orc = new Orc()
     {
         MaxHealth = 88, Health = 88,
-        MaxMana = 21, Mana = 21,
+        MaxMana = 12, Mana = 12,
         BaseDodge = 18,
         HideDetection = 25,
         Experience = 4179,
@@ -101129,7 +101129,7 @@
     orc.Spells = new CreatureSpellCollection()
     {
        { new CreatureSpell<CreateWebSpell>(
-            skillLevel: 11, cost: 10, 
+            skillLevel: 11, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),  75, TimeSpan.Zero },
        { new CreatureSpell<MagicMissileSpell>(
             skillLevel: 8, cost: 5, 
@@ -101172,7 +101172,7 @@
     var goblin = new Goblin()
     {
         MaxHealth = 68, Health = 68,
-        MaxMana = 16, Mana = 16,
+        MaxMana = 12, Mana = 12,
         BaseDodge = 20,
         BasePenetration = ShieldPenetration.VeryLight,        
         Experience = 3900,
@@ -101191,7 +101191,7 @@
             skillLevel: 12, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 3, cost: 3, 
+            skillLevel: 3, cost: 5, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
@@ -101410,7 +101410,7 @@
     var spectre = new Spectre()
     {
         MaxHealth = 140, Health = 140,
-        MaxMana = 31, Mana = 31,
+        MaxMana = 16, Mana = 16,
         BaseDodge = 23,
         HideDetection = 28, 
         Experience = 10699,
@@ -101429,10 +101429,10 @@
     spectre.Spells = new CreatureSpellCollection()
     {
        { new CreatureSpell<StunSpell>(
-            skillLevel: 14, cost: 16, 
+            skillLevel: 14, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   75 },
        { new CreatureSpell<DeathSpell>(
-            skillLevel: 9, cost: 6, 
+            skillLevel: 9, cost: 5, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 }
     };
     
@@ -101830,7 +101830,7 @@
         Body = 192,
         HideDetection = 28,      
         MaxHealth = 133, Health = 133,
-        MaxMana = 31, Mana = 31,
+        MaxMana = 16, Mana = 16,
         BaseDodge = 23,
         BasePenetration = ShieldPenetration.Light,
         Experience = 10918,
@@ -101849,13 +101849,13 @@
     wizard.Spells = new CreatureSpellCollection()
     {
         { new CreatureSpell<ConcussionSpell>(
-            skillLevel: 13, cost: 16, 
+            skillLevel: 13, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   50 },
         { new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 10, cost: 6, 
+            skillLevel: 10, cost: 5, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 },
         { new CreatureSpell<IceStormSpell>(
-            skillLevel: 15, cost: 6, 
+            skillLevel: 15, cost: 5, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 }
     };
     
@@ -101900,7 +101900,7 @@
         HideDetection = 28,
         Experience = 10918,
         BasePenetration = ShieldPenetration.Light,
-        MaxMana = 31, Mana = 31,
+        MaxMana = 21, Mana = 21,
             
     };
     thaum.AddStatus(new NightVisionStatus(thaum));
@@ -101913,7 +101913,7 @@
     thaum.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CurseSpell>(
-            skillLevel: 7, cost: 10, 
+            skillLevel: 4, cost: 10, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
@@ -102664,7 +102664,7 @@
     troll.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CurseSpell>(
-            skillLevel: 8, cost: 10, 
+            skillLevel: 7, cost: 10, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
