@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Game.Items.Magical
 {
-	public partial class Spellbook : ItemEntity
+	public partial class Spellbook : ItemEntity, ITreasure
 	{
 		/// <summary>
 		/// Gets the label number.
