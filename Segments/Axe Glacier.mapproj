@@ -108281,14 +108281,9 @@
         Experience = 13095,
         Movement = 2,
         Hue = Color.FromArgb(175, 255, 175, 255),
-        Immunity = CreatureImmunity.Poison | CreatureImmunity.Piercing,
-        
-        Weakness = CreatureWeakness.Silver,
         
         IceProtection = 100,
     };
-    
-    draugr.AddImmunity(typeof(PoisonCloudSpell));
 
     draugr.Attacks = new CreatureAttackCollection()
     {
@@ -108473,12 +108468,10 @@
         HideDetection = 32,
         BasePenetration = ShieldPenetration.Heavy,
         Experience = 30814,
-        Immunity = CreatureImmunity.Poison,
         
         IceProtection = 100,
     };
     
-    giant.AddImmunity(typeof(PoisonCloudSpell));
     giant.AddImmunity(typeof(ConcussionSpell));
 
     giant.AddStatus(new NightVisionStatus(giant));
