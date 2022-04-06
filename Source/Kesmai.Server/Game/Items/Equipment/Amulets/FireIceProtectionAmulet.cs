@@ -120,5 +120,16 @@ namespace Kesmai.Server.Items
 					_chargesCurrent--;
 			}
 		}
+
+		/// <summary>
+		/// Gets the description for this instance.
+		/// </summary>
+		public override void GetDescription(List<LocalizationEntry> entries)
+		{
+			entries.Add(new LocalizationEntry(6200000, 6200066)); /* [You are looking at] [a gold necklace with sparkling sapphires.] */
+
+			if (Identified)
+				entries.Add(new LocalizationEntry(6250050)); /* The amulet contains the spell of Protection from Fire and Ice. */
+		}
 	}
 }
