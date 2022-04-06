@@ -110370,7 +110370,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="BossNotableLevel11KWolf" size="1" minimum="1" maximum="1" />
+      <entry entity="BossMiniLevel8Pwolf" size="1" minimum="5" maximum="5" />
       <location x="13" y="10" region="23" />
     </spawn>
     <spawn type="LocationSpawner" name="lockpickThiefTrainer">
@@ -110392,6 +110392,38 @@
         <block><![CDATA[]]></block>
       </script>
       <location x="7" y="-1" region="15" />
+    </spawn>
+    <spawn type="LocationSpawner" name="BossPrinceWolf">
+      <minimumDelay>3600</minimumDelay>
+      <maximumDelay>7200</maximumDelay>
+      <maximum>5</maximum>
+      <script name="OnAfterSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    switch (Utility.Random(1, 9))
+    {
+        case 1: break;
+        case 2: spawn.Teleport(new Point2D(2, 30, 23)); break;
+        case 3: spawn.Teleport(new Point2D(12, 8, 6)); break;
+        case 4: spawn.Teleport(new Point2D(38, 23, 6)); break;
+        case 5: spawn.Teleport(new Point2D(14, 34, 6)); break;
+        case 6: spawn.Teleport(new Point2D(13, 12, 12)); break;
+        case 7: spawn.Teleport(new Point2D(42, 19, 12)); break;
+        case 8: spawn.Teleport(new Point2D(15, 37, 8)); break;
+        case 9: spawn.Teleport(new Point2D(18, 8, 18)); break;
+   }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossMiniLevel8Pwolf" size="1" minimum="5" maximum="5" />
+      <location x="13" y="10" region="23" />
     </spawn>
     <spawn type="RegionSpawner" name="Surface Dungeon">
       <minimumDelay>600</minimumDelay>
@@ -110479,7 +110511,6 @@
       <entry entity="level8Orc" size="3" minimum="3" maximum="6" />
       <entry entity="level8Gargoyle" size="1" minimum="2" maximum="4" />
       <entry entity="level8GoblinMage" size="1" minimum="2" maximum="4" />
-      <entry entity="BossMiniLevel8Pwolf" size="1" minimum="0" maximum="1" />
       <entry entity="level8Rapier" size="1" minimum="1" maximum="3" />
       <entry entity="level8GoblinSentry" size="2" minimum="3" maximum="6" />
       <entry entity="level8Hobgoblin" size="3" minimum="3" maximum="6" />
@@ -110493,7 +110524,7 @@
     <spawn type="RegionSpawner" name="LM Dungeon">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>25</maximum>
+      <maximum>23</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -110508,13 +110539,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level8Wraith" size="1" minimum="2" maximum="4" />
-      <entry entity="BossMiniLevel8Pwolf" size="1" minimum="0" maximum="1" />
-      <entry entity="level8Troll" size="2" minimum="2" maximum="4" />
+      <entry entity="level8Wraith" size="1" minimum="4" maximum="4" />
+      <entry entity="level8Troll" size="2" minimum="4" maximum="4" />
       <entry entity="level8Gargoyle" size="1" minimum="1" maximum="2" />
-      <entry entity="level8Hobgoblin" size="3" minimum="3" maximum="4" />
-      <entry entity="level8Wolf" size="3" minimum="2" maximum="4" />
-      <entry entity="level8Orc" size="3" minimum="3" maximum="5" />
+      <entry entity="level8Hobgoblin" size="3" minimum="4" maximum="4" />
+      <entry entity="level8Wolf" size="3" minimum="4" maximum="4" />
+      <entry entity="level8Orc" size="3" minimum="5" maximum="5" />
       <bounds region="8">
         <inclusion left="11" top="33" right="21" bottom="40" />
         <inclusion left="22" top="25" right="33" bottom="40" />
@@ -110524,7 +110554,7 @@
     <spawn type="RegionSpawner" name="Lower Glacier Dungeon">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>600</maximumDelay>
-      <maximum>39</maximum>
+      <maximum>38</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -110546,7 +110576,6 @@
       <entry entity="level8MA" size="1" minimum="2" maximum="2" />
       <entry entity="level8Orc" size="3" minimum="7" maximum="7" />
       <entry entity="level10RockWorm" size="1" minimum="1" maximum="1" />
-      <entry entity="BossMiniLevel8Pwolf" size="1" minimum="1" maximum="1" />
       <entry entity="level8Wraith" size="1" minimum="2" maximum="2" />
       <entry entity="level8GoblinSentry" size="3" minimum="6" maximum="6" />
       <entry entity="level8Ogre" size="1" minimum="2" maximum="2" />
@@ -110586,8 +110615,6 @@
       <entry entity="level8GoblinMage" size="1" minimum="3" maximum="3" />
       <entry entity="level8Rapier" size="1" minimum="3" maximum="3" />
       <entry entity="level8GoblinSentry" size="3" minimum="5" maximum="5" />
-      <entry entity="level10RockWorm" size="1" minimum="1" maximum="1" />
-      <entry entity="BossMiniLevel8Pwolf" size="1" minimum="1" maximum="1" />
       <bounds region="6">
         <inclusion left="2" top="4" right="25" bottom="12" />
         <inclusion left="5" top="13" right="7" bottom="21" />
@@ -110733,7 +110760,6 @@
       <entry entity="level10Shadow" size="1" minimum="3" maximum="3" />
       <entry entity="level10Hobgoblin" size="3" minimum="4" maximum="7" />
       <entry entity="level10GoblinMage" size="1" minimum="2" maximum="2" />
-      <entry entity="BossMiniLevel8Pwolf" size="1" minimum="0" maximum="2" />
       <entry entity="level10Troll" size="2" minimum="3" maximum="6" />
       <entry entity="level10Goblin" size="3" minimum="4" maximum="7" />
       <entry entity="level10Wraith" size="1" minimum="3" maximum="3" />
@@ -110776,7 +110802,6 @@
       </script>
       <entry entity="level10Lizard" size="1" minimum="2" maximum="2" />
       <entry entity="level10Wolf" size="3" minimum="2" maximum="4" />
-      <entry entity="BossMiniLevel8Pwolf" size="1" minimum="1" maximum="1" />
       <entry entity="level10Bear" size="1" minimum="2" maximum="2" />
       <bounds region="12">
         <inclusion left="25" top="3" right="32" bottom="8" />
@@ -110813,7 +110838,6 @@
       <entry entity="level10Shadow" size="1" minimum="1" maximum="1" />
       <entry entity="level10Bear" size="1" minimum="2" maximum="2" />
       <entry entity="level10RockWorm" size="1" minimum="1" maximum="1" />
-      <entry entity="BossMiniLevel8Pwolf" size="1" minimum="1" maximum="1" />
       <entry entity="level10Orc" size="3" minimum="6" maximum="6" />
       <bounds region="12">
         <inclusion left="39" top="3" right="42" bottom="3" />
@@ -110836,7 +110860,7 @@
     <spawn type="RegionSpawner" name="Dungeons of Doom">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>52</maximum>
+      <maximum>50</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -110857,7 +110881,6 @@
       <entry entity="level13Wraith" size="1" minimum="3" maximum="3" />
       <entry entity="level13Ogre" size="1" minimum="4" maximum="4" />
       <entry entity="level13Orc" size="3" minimum="9" maximum="9" />
-      <entry entity="BossMiniLevel8Pwolf" size="1" minimum="2" maximum="2" />
       <entry entity="level10Bear" size="1" minimum="4" maximum="4" />
       <entry entity="BossMiniLevel10Bear" size="1" minimum="1" maximum="1" />
       <entry entity="level10RockWorm" size="1" minimum="1" maximum="1" />
@@ -110914,8 +110937,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="BossMiniLevel8Pwolf" size="1" minimum="0" maximum="1" />
-      <entry entity="level10Lizard" size="1" minimum="2" maximum="3" />
+      <entry entity="level10Lizard" size="1" minimum="3" maximum="3" />
       <bounds region="23">
         <inclusion left="2" top="8" right="7" bottom="27" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -110972,7 +110994,6 @@
       <entry entity="level10Hobgoblin" size="3" minimum="1" maximum="2" />
       <entry entity="level10Troll" size="2" minimum="1" maximum="2" />
       <entry entity="level10GoblinSentry" size="3" minimum="1" maximum="2" />
-      <entry entity="BossMiniLevel8Pwolf" size="1" minimum="0" maximum="1" />
       <entry entity="level10Wraith" size="1" minimum="0" maximum="1" />
       <bounds region="23">
         <inclusion left="11" top="3" right="16" bottom="20" />
@@ -111138,7 +111159,7 @@
     <spawn type="RegionSpawner" name="Chaos Town West">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>12</maximum>
+      <maximum>10</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -111153,11 +111174,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level11RapierFighter" size="1" minimum="2" maximum="3" />
+      <entry entity="level11RapierFighter" size="1" minimum="3" maximum="3" />
       <entry entity="level11MA" size="1" minimum="1" maximum="2" />
       <entry entity="level11Wizard" size="1" minimum="1" maximum="1" />
-      <entry entity="level10Wolf" size="3" minimum="2" maximum="3" />
-      <entry entity="BossMiniLevel8Pwolf" size="1" minimum="0" maximum="1" />
+      <entry entity="level10Wolf" size="3" minimum="3" maximum="3" />
       <entry entity="level11Thaum" size="1" minimum="1" maximum="1" />
       <bounds region="18">
         <inclusion left="7" top="4" right="14" bottom="28" />
