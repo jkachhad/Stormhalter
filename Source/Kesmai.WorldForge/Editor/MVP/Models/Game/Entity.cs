@@ -103,8 +103,35 @@ namespace Kesmai.WorldForge
 			}
 		}
 
-		[Description("Approximate offensive power (melee,ranged & magic)")]
-		public Tuple<int?,int?> Threat
+		public double? MeleeXPPerThreat
+		{
+			get {
+				if(XP == null || XP < 1 || Threat.Item1 is null) return null;
+
+				return Math.Round( (double) XP / (double) Threat.Item1 / (double)HP, 2);
+			}
+		}
+
+		public double? RangedXPPerThreat
+		{
+			get {
+				if(XP == null || XP < 1 || Threat.Item2 is null) return null;
+
+				return Math.Round( (double) XP / (double) Threat.Item2 / (double)HP, 2 );
+			}
+		}
+
+		public double? MagicXPPerThreat
+		{
+			get {
+				if(XP == null || XP < 1 || Threat.Item3 is null) return null;
+
+				return Math.Round( (double) XP / (double) Threat.Item3 / (double)HP, 2);
+			}
+		}
+
+		[Description("Approximate offensive power (melee,ranged,magic)")]
+		public Tuple<int?,int?,int?> Threat
         {
 			get
 			{
@@ -112,7 +139,7 @@ namespace Kesmai.WorldForge
 				var onSpawnScript = _scripts.FirstOrDefault(
 					s => string.Equals(s.Name, "OnSpawn", StringComparison.OrdinalIgnoreCase));
 				if (onSpawnScript is null)
-					return new Tuple<int?, int?>(null, null);
+					return new Tuple<int?, int?, int?>(null, null, null);
 
 				/* Create a syntax tree for analysis. */
 				var syntaxTree = CSharpSyntaxTree.ParseText("void OnSpawn(){"+onSpawnScript.Blocks[1]+"}");
@@ -126,12 +153,16 @@ namespace Kesmai.WorldForge
 						&& (objectName == "CreatureBasicAttack" || objectName == "CreatureAttack"));
 				//For each attack, determine the value of the first argument, which is skill level, then find the maximum
 				int? meleeSkill = attacks.Select(attack => attack.ArgumentList.Arguments.First().Expression.GetFirstToken().Value as int?).Max();
-				
+				//TODO: When we have a collection of attacks, Would be great here to not just get max but an Average based on the chance of each attack. a 10% chance stronger attack shouldnt be considdered the attack value.
+				//TODO: When we have custom damage from attacks, would also be nice to factor in average damage to the threat. A level 20 attack doing 1 damage is no real threat.
+				//      Maybe we could have a formular for how much damage a given skill level is "expected" to do and then scale the threat based on deviance.
+				//		The expected value could be based on how much an average melee unit does damage for example. 
 
 				//For spell skill, find all GenericNameSyntax nodes of type CreatureSpell.
+				//TODO: should take into account the chance of a spell possibly - and instant cast!
 				var spells = syntaxRoot.DescendantNodes().OfType<ObjectCreationExpressionSyntax>()
 					.Where(node => node.Type is GenericNameSyntax type && type.Identifier.Text == "CreatureSpell");
-				double? rangedSkill = spells.Select(node => {
+				double? magicSkill = spells.Select(node => {
 					double? skill = 0;
 					var identifiers = node.DescendantNodes().OfType<IdentifierNameSyntax>();
 						
@@ -142,17 +173,25 @@ namespace Kesmai.WorldForge
 					// These values are guesses and may need to be tweaked.
 					double? multiplier;
 					switch (spellType)
-                    {
-						case "DeathSpell": multiplier = 2.5; break;
+					{
+						case "DeathSpell": multiplier = 2.3; break; //Hard to say because Death Prot Halves the damage. At one point you have to assume people have this. Lets do a sliding scale
 						case "IceSpearSpell": multiplier = 2.5; break;
-						case "LightningBoltSpell": multiplier = 2.5; break;
-						case "ConcussionSpell": multiplier = 2.5; break;
+						case "LightningBoltSpell": multiplier = 2.0; break;
+						case "ConcussionSpell": multiplier = 1.25; break;
+						case "MagicMissileSpell": multiplier = 1.7; break;
+						case "CurseSpell": multiplier = 1.5; break;
+						case "DragonBreathFireSpell": multiplier = 1.3; break;
+						case "FirewallSpell": multiplier = 1; break;
+						case "FireBoltSpell": multiplier = 1.1; break;
+						case "IceStormSpell": //these are not currently dangerous 
+						case "FireballSpell":
+						case "DarknessSpell":
 						case "BlindSpell":
 						case "StunSpell":
+						case "FearSpell": //Ignored because simple to mitigate 
 						case "CreateWebSpell": multiplier = null; break;
-						default: multiplier = 1.8;break;
+						default: multiplier = 1.3; break;
 					}
-
 
 					// The syntax used for spell definitions often (always?) uses named parameters.
 					// I can't just assume the first parameter is the right one, so see if there is a
@@ -167,11 +206,10 @@ namespace Kesmai.WorldForge
 					{
 						skill = node.ArgumentList.Arguments.First().Expression.GetFirstToken().Value as double?;
 					}
+
 					return skill * multiplier;
 				}).Max();
 
-				//If a creature has a bow, then consider its melee skill as ranged
-				//First find all the wielded items and see if any end with "bow". This may need to be changed if 
 				//new Ranged weapons are created, such as monster-wielded returning weapons.
 				var wieldedItems = syntaxRoot.DescendantNodes().OfType<InvocationExpressionSyntax>()
 					.Where(i => i.ChildNodes().First() is MemberAccessExpressionSyntax memberExpression
@@ -181,14 +219,32 @@ namespace Kesmai.WorldForge
 					&& arguments.Arguments.First().Expression is ObjectCreationExpressionSyntax item
 					&& item.Type is IdentifierNameSyntax itemName
 					&& itemName.Identifier.Text.EndsWith("bow",StringComparison.InvariantCultureIgnoreCase));
+				int? rangedSkill = null;
 				if (hasRangedWeapon)
 				{
-					if (meleeSkill > rangedSkill || rangedSkill is null)
-						rangedSkill = meleeSkill;
+					rangedSkill = meleeSkill;
 					meleeSkill = null;
 				}
 
-				return new Tuple<int?, int?>(meleeSkill, (int?)rangedSkill);
+				//factor in some threat from flags
+				String flags = Flags;
+				if (flags.Contains("Pois"))
+				{
+					meleeSkill += Math.Max(1, (int)(meleeSkill * 0.3)); //scale up the threat of melee if they cause poison At least 1 level
+				}
+				if (flags.Contains("Prone"))
+				{
+					meleeSkill += 1; //slightly more threat due to prone
+				}
+				if (flags.Contains("NV"))
+				{
+					//slightly more threat due to night vision
+					if (meleeSkill is not null) meleeSkill += 1; 
+					if (rangedSkill is not null) rangedSkill += 1;
+					if (magicSkill is not null) magicSkill += 1;
+				}
+
+				return new Tuple<int?, int?, int?>(meleeSkill, rangedSkill, (int?)magicSkill);
 			}
         }
 
