@@ -111009,11 +111009,10 @@
       <minimumDelay>9000</minimumDelay>
       <maximumDelay>18000</maximumDelay>
       <maximum>7</maximum>
-      <script name="OnAfterSpawn" enabled="true">
+      <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    spawn.Teleport(new Point2D(13, 12, 45));
-    announceEarthquake(spawn.Segment, spawn.Location);
+
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -111024,6 +111023,8 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="level10EvilGoblin" size="1" minimum="3" maximum="4" />
+      <entry entity="level10EvilGoblinSentry" size="1" minimum="3" maximum="4" />
       <entry entity="BossMajorLevel12Yeti" size="1" minimum="1" maximum="1" />
       <bounds region="45">
         <inclusion left="11" top="9" right="15" bottom="14" />
@@ -111198,11 +111199,10 @@
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="true">
+      <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    spawn.Teleport(new Point2D(3, 3, 39));
-    announceEarthquake(spawn.Segment, spawn.Location);
+
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -111226,7 +111226,6 @@
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    spawn.Teleport(new Point2D(4, 4, 36));
     announceEarthquake(spawn.Segment, spawn.Location);
 ]]></block>
         <block><![CDATA[]]></block>
@@ -111301,11 +111300,10 @@
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>14400</maximumDelay>
       <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="true">
+      <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    spawn.Teleport(new Point2D(52, 40, 2);
-    announceEarthquake(spawn.Segment, spawn.Location);
+
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -111485,31 +111483,6 @@
       <entry entity="BossMiniLevel12Elemental" size="1" minimum="1" maximum="1" />
       <bounds region="18">
         <inclusion left="21" top="21" right="24" bottom="25" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
-      </bounds>
-    </spawn>
-    <spawn type="RegionSpawner" name="Boss Yeti Lair gobs">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>1200</maximumDelay>
-      <maximum>7</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="level10EvilGoblin" size="1" minimum="3" maximum="4" />
-      <entry entity="level10EvilGoblinSentry" size="1" minimum="3" maximum="4" />
-      <bounds region="45">
-        <inclusion left="11" top="9" right="15" bottom="14" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
