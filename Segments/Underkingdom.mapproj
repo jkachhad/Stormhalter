@@ -3,6 +3,38 @@
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
+    public static void announceEarthquake(Segment segment, Point2D location, bool fire = true)
+    {
+        var packet = new AsciiMessagePacket(AsciiMessageType.System, Color.Yellow, 
+                $"You feel the earth shudder beneath your feet.");
+                
+        foreach (var client in segment.Clients)
+        {
+            var character = client.Character;
+            
+            if (character is null || !character.IsAlive)
+                return;
+                
+            character.PlaySound(65);
+            character.SendPacket(packet);
+        }
+    
+        if (!fire)
+            return;
+        
+        var bonfireSpell = new BonfireSpell();
+        
+        foreach (var direction in Direction.All)
+        {
+            var segmentTile = segment.FindTile(location, direction);
+            
+            if (segmentTile is null || !segmentTile.AllowsSpellPath(null, bonfireSpell))
+                continue;
+                
+            segmentTile.Add(new Fire(bonfireSpell, 12, segment.Facet.TimeSpan.FromRounds(1)));
+        }
+    }
+    
     public static TimeSpan _speechDelay = TimeSpan.FromMinutes(1.0);
     public static Dictionary<MobileEntity, DateTime> _speechDelays = new Dictionary<MobileEntity, DateTime>();
     
@@ -86110,7 +86142,6 @@
         </component>
         <component type="Web">
           <static>131</static>
-          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="3" y="5">
@@ -86119,7 +86150,6 @@
         </component>
         <component type="Web">
           <static>131</static>
-          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="4" y="5">
@@ -86128,7 +86158,6 @@
         </component>
         <component type="Web">
           <static>131</static>
-          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="5" y="5">
@@ -86419,7 +86448,6 @@
         </component>
         <component type="Web">
           <static>131</static>
-          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="3" y="6">
@@ -86428,7 +86456,6 @@
         </component>
         <component type="Web">
           <static>131</static>
-          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="4" y="6">
@@ -86437,7 +86464,6 @@
         </component>
         <component type="Web">
           <static>131</static>
-          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="5" y="6">
@@ -86742,7 +86768,6 @@
         </component>
         <component type="Web">
           <static>131</static>
-          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="3" y="7">
@@ -86751,7 +86776,6 @@
         </component>
         <component type="Web">
           <static>131</static>
-          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="4" y="7">
@@ -86760,7 +86784,6 @@
         </component>
         <component type="Web">
           <static>131</static>
-          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="5" y="7">
@@ -87055,7 +87078,6 @@
         </component>
         <component type="Web">
           <static>131</static>
-          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="3" y="8">
@@ -87071,6 +87093,9 @@
           <professions select="all" />
           <alignments select="all" />
         </component>
+        <component type="Web">
+          <static>131</static>
+        </component>
       </tile>
       <tile x="4" y="8">
         <component type="FloorComponent">
@@ -87078,7 +87103,6 @@
         </component>
         <component type="Web">
           <static>131</static>
-          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="5" y="8">
@@ -104198,10 +104222,10 @@ var gargoyle = new Gargoyle()
       <minimumDelay>5400</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    announceEarthquake(spawn.Segment, spawn.Location, false);
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -104432,10 +104456,10 @@ var gargoyle = new Gargoyle()
       <minimumDelay>10800</minimumDelay>
       <maximumDelay>14400</maximumDelay>
       <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    announceEarthquake(spawn.Segment, spawn.Location);
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -104623,10 +104647,11 @@ var gargoyle = new Gargoyle()
       <minimumDelay>14400</minimumDelay>
       <maximumDelay>21600</maximumDelay>
       <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    spawn.Teleport(new Point2D(2, 17, 15));
+    announceEarthquake(spawn.Segment, spawn.Location);
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -104647,10 +104672,11 @@ var gargoyle = new Gargoyle()
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    spawn.Teleport(new Point2D(19, 4, 16));
+    announceEarthquake(spawn.Segment, spawn.Location);
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -104671,10 +104697,10 @@ var gargoyle = new Gargoyle()
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>14400</maximumDelay>
       <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    announceEarthquake(spawn.Segment, spawn.Location);
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -104780,10 +104806,10 @@ var gargoyle = new Gargoyle()
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    announceEarthquake(spawn.Segment, spawn.Location);
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
