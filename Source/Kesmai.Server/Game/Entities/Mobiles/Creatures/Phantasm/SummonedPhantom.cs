@@ -16,7 +16,7 @@ namespace Kesmai.Server.Game
 			Health = MaxHealth = 300;
 			BaseDodge = 24;
 			Movement = 3;
-			MagicProtection = 30;
+			MagicProtection = 15;
 			
 			Attacks = new CreatureAttackCollection
 			{
