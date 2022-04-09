@@ -76084,7 +76084,7 @@
         },
         { 
             new CreatureAttack(11,     12, 18,     "The scorpion stings you with his tail.", 
-                                                    new AttackPoisonComponent(12)),                 50
+                                                    new AttackPoisonComponent(10)),                 50
         },
     };
     
@@ -76204,7 +76204,7 @@
         new CreatureBasicAttack(12)
     };
     
-    fighter.Wield(new Longbow());
+    fighter.Wield(new Shortbow());
     fighter.Equip(new LeatherArmor());    
     
     fighter.AddGold(130);
