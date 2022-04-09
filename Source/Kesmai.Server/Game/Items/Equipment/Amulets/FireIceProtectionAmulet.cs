@@ -43,7 +43,7 @@ namespace Kesmai.Server.Items
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FireIceProtectionAmulet"/> class.
 		/// </summary>
-		public FireIceProtectionAmulet() : this(5)
+		public FireIceProtectionAmulet() : this(3)
 		{
 		}
 
