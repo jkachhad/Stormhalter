@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items
 {
-	public partial class TrollVest : Armor
+	public partial class TrollVest : Armor, ITreasure
 	{
 		/// <inheritdoc />
 		public override int LabelNumber => 6000096; /* vest */

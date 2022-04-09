@@ -6,7 +6,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items
 {
-	public partial class GriffinJacket : Jacket
+	public partial class GriffinJacket : Jacket, ITreasure
 	{
 		/// <inheritdoc />
 		public override uint BasePrice => 30;

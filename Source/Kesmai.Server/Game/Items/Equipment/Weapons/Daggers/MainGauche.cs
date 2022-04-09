@@ -27,7 +27,7 @@ namespace Kesmai.Server.Items
 		public override ShieldPenetration Penetration => ShieldPenetration.Light;
 		
 		/// <inheritdoc />
-		protected override int PoisonedItemId => 312;
+		protected override int PoisonedItemId => 901;
 		
 		/// <inherit />
 		public override WeaponFlags Flags => WeaponFlags.Piercing | WeaponFlags.Silver | WeaponFlags.Neutral;
@@ -38,7 +38,7 @@ namespace Kesmai.Server.Items
 		/// <summary>
 		/// Initializes a new instance of the <see cref="MainGauche"/> class.
 		/// </summary>
-		public MainGauche() : base(171)
+		public MainGauche() : base(900)
 		{
 		}
 		

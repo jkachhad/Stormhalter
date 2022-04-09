@@ -241,7 +241,10 @@ namespace Kesmai.WorldForge
 		private int? _totalXP;
 		private int? _totalHP;
 		private int _openFloortiles;
-		private int? _threat;
+		private Tuple<int?, int?, int?> _threat;
+		private double? _meleeXPPerThreat;
+		private double? _rangedXPPerThreat;
+		private double? _magicXPPerThreat;
 		
 		public int Region
 		{
@@ -323,8 +326,19 @@ namespace Kesmai.WorldForge
 				{
 					double averageEntry = 0;
 					double averageXP = 0;
+					double averageXPMelee = 0;
+					double averageXPRanged = 0;
+					double averageXPMagic = 0;
 					double averageHP = 0;
-					double averageThreat = 0;
+					double averageHPMelee = 0;
+					double averageHPRanged = 0;
+					double averageHPMagic = 0;
+					double averageMeleeThreat = 0;
+					double averageRangedThreat = 0;
+					double averageMagicThreat = 0;
+					double countMeleeThreat = 0;
+					double countRangedThreat = 0;
+					double countMagicThreat = 0;
 					int minimumMobs = 0;
 					int minimumXP = 0;
 					int minimumHP = 0;
@@ -338,7 +352,27 @@ namespace Kesmai.WorldForge
 						averageEntry += entry.Size;
 						averageHP += entry.Size * (int)entry.Entity.HP;
 						averageXP += entry.Size * (int)entry.Entity.XP;
-						averageThreat += Math.Max((int)(entry.Entity.Threat.Item1 is null ? 0 : entry.Entity.Threat.Item1), (int)(entry.Entity.Threat.Item2 is null ? 0 : entry.Entity.Threat.Item2));
+						if(entry.Entity.Threat.Item1 is not null)
+                        {
+							averageMeleeThreat += (int)entry.Entity.Threat.Item1;
+							countMeleeThreat++;
+							averageHPMelee += entry.Size * (int)entry.Entity.HP;
+							averageXPMelee += entry.Size * (int)entry.Entity.XP;
+						}
+						if(entry.Entity.Threat.Item2 is not null)
+                        {
+							averageRangedThreat += (int)entry.Entity.Threat.Item2;
+							countRangedThreat++;
+							averageHPRanged += entry.Size * (int)entry.Entity.HP;
+							averageXPRanged += entry.Size * (int)entry.Entity.XP;
+						}
+						if (entry.Entity.Threat.Item3 is not null)
+                        {
+							averageMagicThreat += (int)entry.Entity.Threat.Item3;
+							countMagicThreat++;
+							averageHPMagic += entry.Size * (int)entry.Entity.HP;
+							averageXPMagic += entry.Size * (int)entry.Entity.XP;
+						}
 						minimumMobs += entry.Minimum * entry.Size;
 						minimumHP += entry.Minimum * entry.Size * (int)entry.Entity.HP;
 						minimumXP += entry.Minimum * entry.Size * (int)entry.Entity.XP;
@@ -352,7 +386,27 @@ namespace Kesmai.WorldForge
 					averageEntry = averageEntry / Entries.Count();
 					averageHP = averageHP / Entries.Count();
 					averageXP = averageXP / Entries.Count();
-					averageThreat = averageThreat / Entries.Count();
+					if (countMeleeThreat > 0)
+					{
+						averageMeleeThreat = averageMeleeThreat / countMeleeThreat;
+						averageXPMelee = averageXPMelee / countMeleeThreat;
+						averageHPMelee = averageHPMelee / countMeleeThreat;
+						_meleeXPPerThreat = (averageXPMelee / averageMeleeThreat) / averageHPMelee;
+					}
+					if (countRangedThreat > 0)
+					{
+						averageRangedThreat = averageRangedThreat / countRangedThreat;
+						averageXPRanged = averageXPRanged / countRangedThreat;
+						averageHPRanged = averageHPRanged / countRangedThreat;
+						_rangedXPPerThreat = (averageXPRanged / averageRangedThreat) / averageHPRanged;
+					}
+					if (countMagicThreat > 0)
+					{
+						averageMagicThreat = averageMagicThreat / countMagicThreat;
+						averageXPMagic = averageXPMagic / countMagicThreat;
+						averageHPMagic = averageHPMagic / countMagicThreat;
+						_magicXPPerThreat = (averageXPMagic / averageMagicThreat) / averageHPMagic;
+					}
 
 					//For spawners that have a maximum of 0 or a Maximum higher than the alotted entries, there is no cap on mobs, and all entries will spawn their maximum
 					if (Maximum == 0 || Maximum>=maximumSlots)
@@ -375,7 +429,7 @@ namespace Kesmai.WorldForge
 						_totalHP = (int)(minimumHP + (Maximum - minimumSlots) * averageHP);
 						_totalXP = (int)(minimumXP + (Maximum - minimumSlots) * averageXP);
 					}
-					_threat = Math.Max((int)(Density * 10 * averageThreat),(int)averageThreat);
+					_threat = new Tuple<int?, int?, int?>(averageMeleeThreat>0?(int)averageMeleeThreat:null, averageRangedThreat>0?(int)averageRangedThreat:null, averageMagicThreat>0?(int)averageMagicThreat:null);
 				}
 				//If any of the entities referenced have a null for HP or XP, invalidate that calculation
 				if (Entries.Any(e => e.Entity.HP is null))
@@ -423,9 +477,24 @@ namespace Kesmai.WorldForge
         }
 		
 		[Description("Damage output score for the spawn. Does not take into account custom damage values. Gets wonky when evaluating lairs.")]
-		public int? Threat
+		public Tuple<int?, int?, int?> Threat
         {
 			get => _threat;
+        }
+
+		public double? MeleeXPPerThreat
+        {
+			get => _meleeXPPerThreat;
+        }
+
+		public double? RangedXPPerThreat
+		{
+			get => _rangedXPPerThreat;
+        }
+
+		public double? MagicXPPerThreat
+		{
+			get => _magicXPPerThreat;
         }
 
 		public override XElement GetXElement()

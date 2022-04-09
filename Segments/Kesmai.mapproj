@@ -3,6 +3,38 @@
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
+    public static void announceEarthquake(Segment segment, Point2D location, bool fire = true)
+    {
+        var packet = new AsciiMessagePacket(AsciiMessageType.System, Color.Yellow, 
+                $"You feel the earth shudder beneath your feet.");
+                
+        foreach (var client in segment.Clients)
+        {
+            var character = client.Character;
+            
+            if (character is null || !character.IsAlive)
+                return;
+                
+            character.PlaySound(65);
+            character.SendPacket(packet);
+        }
+    
+        if (!fire)
+            return;
+        
+        var bonfireSpell = new BonfireSpell();
+        
+        foreach (var direction in Direction.All)
+        {
+            var segmentTile = segment.FindTile(location, direction);
+            
+            if (segmentTile is null || !segmentTile.AllowsSpellPath(null, bonfireSpell))
+                continue;
+                
+            segmentTile.Add(new Fire(bonfireSpell, 12, segment.Facet.TimeSpan.FromRounds(1)));
+        }
+    }
+    
     public static TimeSpan _speechDelay = TimeSpan.FromMinutes(1.0);
     public static Dictionary<MobileEntity, DateTime> _speechDelays = new Dictionary<MobileEntity, DateTime>();
     
@@ -15302,6 +15334,9 @@
       <tile x="37" y="15">
         <component type="StaticComponent">
           <static>114</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>3</ground>
         </component>
       </tile>
       <tile x="38" y="15">
@@ -98888,7 +98923,7 @@ return orc;
             skillLevel: 5, cost: 7, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 5, cost: 3,
+            skillLevel: 5, cost: 5,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
@@ -99297,7 +99332,7 @@ return orc;
             skillLevel: 6, cost: 7, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 6, cost: 3, 
+            skillLevel: 6, cost: 5, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
@@ -99930,7 +99965,7 @@ return orc;
         Body = (female ? 37 : 38), IsFemale = female,
             
         MaxHealth = 70, Health = 70,
-        MaxMana = 16, Mana = 16,
+        MaxMana = 12, Mana = 12,
         BaseDodge = 16,
     
         Experience = 3045,
@@ -99951,7 +99986,7 @@ return orc;
             skillLevel: 8, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 6, cost: 3, 
+            skillLevel: 6, cost: 5, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
@@ -101549,10 +101584,10 @@ else
     <spawn type="LocationSpawner" name="Elder.Troll">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>1800</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    announceEarthquake(spawn.Segment, spawn.Location);
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -101564,7 +101599,7 @@ else
         <block><![CDATA[]]></block>
       </script>
       <entry entity="dungeon1BossTrogg" size="1" minimum="1" maximum="1" />
-      <location x="15" y="39" region="11" />
+      <location x="16" y="38" region="11" />
     </spawn>
     <spawn type="LocationSpawner" name="kesmaiRecallVendor">
       <minimumDelay>900</minimumDelay>
@@ -102884,10 +102919,11 @@ else
     <spawn type="RegionSpawner" name="Ydnac Lair">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>3600</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    spawn.Teleport(new Point2D(140, 5, 1));
+    announceEarthquake(spawn.Segment, spawn.Location);
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102899,7 +102935,6 @@ else
         <block><![CDATA[]]></block>
       </script>
       <entry entity="BossNotableYdnac" size="1" minimum="1" maximum="1" />
-      <entry entity="ydnacAbesh" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="138" top="3" right="141" bottom="8" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -102908,10 +102943,11 @@ else
     <spawn type="RegionSpawner" name="Kesmai -4 Dragon">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>3600</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    spawn.Teleport(new Point2D(18, 4, 14));
+    announceEarthquake(spawn.Segment, spawn.Location);
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -103818,6 +103854,29 @@ else
       <entry entity="surfaceWraithTest" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="135" top="35" right="136" bottom="35" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Ydnac Lair Abesh">
+      <minimumDelay>7200</minimumDelay>
+      <maximumDelay>3600</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="ydnacAbesh" size="1" minimum="1" maximum="1" />
+      <bounds region="1">
+        <inclusion left="138" top="3" right="141" bottom="8" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>

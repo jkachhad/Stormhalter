@@ -14,7 +14,7 @@ namespace Kesmai.Server.Items
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WebOrb"/> class.
 		/// </summary>
-		public WebOrb() : base(201)
+		public WebOrb() : base(181)
 		{
 		}
 

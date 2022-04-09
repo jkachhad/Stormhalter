@@ -3,6 +3,38 @@
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
+    public static void announceEarthquake(Segment segment, Point2D location, bool fire = true)
+    {
+        var packet = new AsciiMessagePacket(AsciiMessageType.System, Color.Yellow, 
+                $"You feel the earth shudder beneath your feet.");
+                
+        foreach (var client in segment.Clients)
+        {
+            var character = client.Character;
+            
+            if (character is null || !character.IsAlive)
+                return;
+                
+            character.PlaySound(65);
+            character.SendPacket(packet);
+        }
+    
+        if (!fire)
+            return;
+        
+        var bonfireSpell = new BonfireSpell();
+        
+        foreach (var direction in Direction.All)
+        {
+            var segmentTile = segment.FindTile(location, direction);
+            
+            if (segmentTile is null || !segmentTile.AllowsSpellPath(null, bonfireSpell))
+                continue;
+                
+            segmentTile.Add(new Fire(bonfireSpell, 12, segment.Facet.TimeSpan.FromRounds(1)));
+        }
+    }
+    
     public static TimeSpan _speechDelay = TimeSpan.FromMinutes(1.0);
     public static Dictionary<MobileEntity, DateTime> _speechDelays = new Dictionary<MobileEntity, DateTime>();
     
@@ -43347,6 +43379,9 @@
       <tile x="5" y="4">
         <component type="StaticComponent">
           <static>114</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>3</ground>
         </component>
       </tile>
       <tile x="6" y="4">
@@ -96371,10 +96406,10 @@
     orc.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CreateWebSpell>(
-            skillLevel: 7, cost: 4,
+            skillLevel: 7, cost: 6,
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 6, cost: 3,
+            skillLevel: 6, cost: 5,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
 
@@ -96643,10 +96678,10 @@
     orc.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CreateWebSpell>(
-            skillLevel: 9, cost: 4,
+            skillLevel: 9, cost: 6,
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 6, cost: 4,
+            skillLevel: 6, cost: 5,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
 
@@ -96815,7 +96850,7 @@
         Body = (female ? 37 : 38), IsFemale = female,
         HideDetection = 25,       
         MaxHealth = 72, Health = 72,
-        MaxMana = 21, Mana = 21,
+        MaxMana = 12, Mana = 12,
         BaseDodge = 15,
         BasePenetration = ShieldPenetration.VeryLight,
 
@@ -96838,7 +96873,7 @@
             skillLevel: 9, cost: 6,
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 9, cost: 3, 
+            skillLevel: 9, cost: 5, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
 
@@ -97178,7 +97213,7 @@
         Experience = 5262,
         BasePenetration = ShieldPenetration.Medium,
         Body = 216,
-        IsFemale = female,
+        IsFemale = true,
         CanWalk = false,
     };
     
@@ -97650,7 +97685,7 @@
         Body = (female ? 37 : 38), IsFemale = female,
         HideDetection = 26,     
         MaxHealth = 96, Health = 96,
-        MaxMana = 21, Mana = 21,
+        MaxMana = 12, Mana = 12,
         BaseDodge = 19,
         BasePenetration = ShieldPenetration.Light,
 
@@ -97671,7 +97706,7 @@
             skillLevel: 11, cost: 6,
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 9, cost: 3,
+            skillLevel: 9, cost: 5,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
 
@@ -97942,7 +97977,7 @@
 	var banshee = new Banshee()
     {
         MaxHealth = 99, Health = 99,
-        MaxMana = 11, Mana = 11,
+        MaxMana = 6, Mana = 6,
         BaseDodge = 23,
         HideDetection = 26,
         Experience = 7222,
@@ -97959,7 +97994,7 @@
     banshee.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CurseSpell>(
-            skillLevel: 2.7, cost: 3)
+            skillLevel: 2.3, cost: 3)
     };
 
     banshee.Wield(new Spear());    
@@ -98265,7 +98300,7 @@
 	var spectre = new Spectre()
     {
         MaxHealth = 140, Health = 140,
-        MaxMana = 18, Mana = 18,
+        MaxMana = 12, Mana = 12,
         BaseDodge = 23,
         HideDetection = 26,
         Experience = 9094,
@@ -98349,7 +98384,7 @@
     wight.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CurseSpell>(
-            skillLevel: 11, cost: 3,
+            skillLevel: 11, cost: 5,
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
     };
 
@@ -101224,10 +101259,10 @@
     <spawn type="LocationSpawner" name="templeLichTwins">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>3600</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    announceEarthquake(spawn.Segment, spawn.Location);
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -101287,10 +101322,10 @@
       <minimumDelay>12600</minimumDelay>
       <maximumDelay>15300</maximumDelay>
       <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    announceEarthquake(spawn.Segment, spawn.Location);
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -101302,7 +101337,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="BossMinorLevel14Dragon" size="1" minimum="1" maximum="1" />
-      <location x="9" y="9" region="225" />
+      <location x="10" y="9" region="225" />
     </spawn>
     <spawn type="LocationSpawner" name="groveBear">
       <minimumDelay>1200</minimumDelay>

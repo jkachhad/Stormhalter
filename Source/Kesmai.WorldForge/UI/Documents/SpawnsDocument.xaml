@@ -287,9 +287,11 @@
                             <syncfusion:PropertyGridItem PropertyName="OpenFloorTiles" IsReadOnly="True" />
                             <syncfusion:PropertyGridItem PropertyName="TotalHP" IsReadOnly="True" />
                             <syncfusion:PropertyGridItem PropertyName="TotalXP" IsReadOnly="True" />
-                            <!-- Threat calc for a spawn needs work. This may not even be something we can 'guess' at without compiling the segment
-                            <syncfusion:PropertyGridItem PropertyName="Threat" IsReadOnly="True" />
-                            -->
+							<!-- Threat calc for a spawn needs work. This may not even be something we can 'guess' at without compiling the segment-->
+							<syncfusion:PropertyGridItem PropertyName="Threat" IsReadOnly="True" />
+                            <syncfusion:PropertyGridItem PropertyName="MeleeXPPerThreat" DisplayName="XP/Melee Threat"/>
+                            <syncfusion:PropertyGridItem PropertyName="RangedXPPerThreat" DisplayName="XP/Range Threat"/>
+                            <syncfusion:PropertyGridItem PropertyName="MagicXPPerThreat" DisplayName="XP/Magic Threat"/>
                         </syncfusion:PropertyGrid.Items>
                     </syncfusion:PropertyGrid>
                     
@@ -405,6 +407,27 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
                             <DataGridTextColumn MinWidth="70" Header="Flags" Binding="{Binding Entity.Flags}" IsReadOnly="True">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Background" Value="LightGray"></Setter>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn MinWidth="70" Header="XP/Melee Threat" Binding="{Binding Entity.MeleeXPPerThreat}" IsReadOnly="True">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Background" Value="LightGray"></Setter>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn MinWidth="70" Header="XP/Range Threat" Binding="{Binding Entity.RangedXPPerThreat}" IsReadOnly="True">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Background" Value="LightGray"></Setter>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn MinWidth="70" Header="XP/Magic Threat" Binding="{Binding Entity.MagicXPPerThreat}" IsReadOnly="True">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Background" Value="LightGray"></Setter>

@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items
 {
-	public partial class WyvernScales : Armor
+	public partial class WyvernScales : Armor, ITreasure
 	{
 		/// <inheritdoc />
 		public override int LabelNumber => 6000096;

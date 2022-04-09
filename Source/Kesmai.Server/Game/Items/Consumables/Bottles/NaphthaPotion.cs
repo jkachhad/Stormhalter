@@ -7,7 +7,7 @@ using Kesmai.Server.Targeting;
 
 namespace Kesmai.Server.Game
 {
-	public partial class NaphthaPotion : Bottle, ITreasure
+	public partial class NaphthaPotion : Bottle
 	{
 		private static ConsumableNaphtha content = new ConsumableNaphtha();
 		
