@@ -299,6 +299,8 @@ namespace Kesmai.WorldForge
 			var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
 			var segment = segmentRequest.Response;
 			var region = segment.GetRegion(_region);
+			_threat = new Tuple<int?, int?, int?>(null, null, null);
+
 			if (region is not null)
 			{
 				IEnumerable<SegmentTile> includedTiles = Enumerable.Empty<SegmentTile>();
