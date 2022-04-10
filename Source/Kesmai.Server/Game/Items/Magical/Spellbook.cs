@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Kesmai.Server.Items;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Game.Items.Magical
