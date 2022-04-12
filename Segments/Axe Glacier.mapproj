@@ -109226,8 +109226,8 @@
         }
         
         //Apothecaries carry either naptha or nitro. More likely to carry one or the other based on land.
-        var naptha = new StockEntry("black ceramic bottle", () => new FireIceProtectionRing(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5), null);
-        var nitro = new StockEntry("black ceramic bottle", () => new FireIceProtectionAmulet(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5), null);
+        var naptha = new StockEntry("black ceramic bottle", () => new NaphthaPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5), null);
+        var nitro = new StockEntry("black ceramic bottle", () => new NitroPotion(), (int)(600 * merchantUpsell), Utility.RandomBetween(2,5), null);
 		
         if (Utility.RandomDouble() <= 0.08) 
 		{ // Axe shopkeeper likely has nitro, since the caves to the west are full of them.
