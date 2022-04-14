@@ -98891,9 +98891,9 @@
 
     dragon.Spells = new CreatureSpellCollection()
     {
-        /* Expected output of damage is 60 per turn based on replay from Indi..DOOM. */
+        /* Expected output of damage is 28 per tick. 84 per turn */
         new CreatureSpell<WhirlwindSpell>(
-            skillLevel: 15, cost: 20)
+            skillLevel: 7, cost: 20)
     };
     
     dragon.AddLoot(new LootPack(
