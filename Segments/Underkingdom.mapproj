@@ -103323,7 +103323,8 @@ var gargoyle = new Gargoyle()
             new StockEntry("black pearls",          () => new BlackPearls(),         (int)(600 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
             new StockEntry("weak strength ring",    () => new WeakStrengthRing(),    (int)(500 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
             new StockEntry("weak shield ring",      () => new WeakShieldRing(),      (int)(600 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
-            new StockEntry("breathe water ring",    () => new BreatheWaterRing(),    (int)(500 * merchantUpsell),       Utility.RandomBetween(1, 2), null)
+            new StockEntry("breathe water ring",    () => new BreatheWaterRing(),    (int)(500 * merchantUpsell),       Utility.RandomBetween(1, 2), null),
+            new StockEntry("bankers ring",   () => new BankerRing(),     1000000, 7, null)
         };
         foreach (var stock in wares.Random(3)){
             vendor.Stock(stock);
