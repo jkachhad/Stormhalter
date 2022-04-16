@@ -208,7 +208,7 @@
             Body = 26; //air elemental body
         }
         
-        /* Called when someone */
+        /* Called when someone enters the centre of the room */
         public void StartGuardianEncounter()
         {
             RangePerception = 3;
@@ -104254,6 +104254,7 @@ var gargoyle = new Gargoyle()
     <spawn type="LocationSpawner" name="Humming Portal">
       <minimumDelay>0</minimumDelay>
       <maximumDelay>0</maximumDelay>
+      <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
