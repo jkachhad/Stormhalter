@@ -102956,7 +102956,9 @@ var gargoyle = new Gargoyle()
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+	// Can't do it like this, need to create a new type that inherits from VendorEntity
     /* This is a special entity that will use to do custom code "onIncommingPlayer" and check if they are allowed to enter the hummer guardian*/
+	/*
     var portal = new VendorEntity()
     {
         Name = "HummingPortal",
@@ -102967,6 +102969,8 @@ var gargoyle = new Gargoyle()
     };
     
     return portal;
+	*/
+	return default;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102980,6 +102984,7 @@ var gargoyle = new Gargoyle()
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+	/*
     //First, get the hummer ammuklet in either hand
     ItemEntity hummerAmmulet = (player.LeftHand != null && player.LeftHand is HummingbirdAmulet ? player.LeftHand : (player.RightHand != null && player.RightHand is HummingbirdAmulet ? player.RightHand : null) );
     
@@ -103011,7 +103016,7 @@ var gargoyle = new Gargoyle()
     //no one in there so destroy ammulet and teleport them in..
     hummerAmmulet.Delete();
     player.Teleport(new Point2D(2, 19, 10));
-    
+    */
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -104269,7 +104274,7 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukHummerPortal" size="1" minimum="1" maximum="1" />
+      <entry entity="ukHummerPortal" size="1" minimum="0" maximum="0" />
       <location x="13" y="22" region="9" />
     </spawn>
     <spawn type="RegionSpawner" name="wyverns">
