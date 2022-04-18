@@ -77988,7 +77988,7 @@
         BaseDodge = 23,
         HideDetection = 23,   
         Experience = 14616,
-        
+        VisibilityDistance = 0,
         CanWalk = false,
         
         BasePenetration = ShieldPenetration.VeryHeavy,
@@ -78028,7 +78028,7 @@
         }, 
     };
 
-    seaserpent.AddGold(1500);
+    seaserpent.AddGold(3500);
     seaserpent.AddLoot(new LootPack(
         new LootPackEntry(true, LengGems,       10,     gemsPriceMutatorAboveAverage), 
         new LootPackEntry(true, LengBottles,    20),
@@ -78910,7 +78910,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="true">
+      <script name="OnDeath" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     source.SayTo(killer, $"Only a flesh wound! {killer.Name}.");
@@ -79040,15 +79040,6 @@
     wizard.Equip(new LeatherArmor());
     wizard.AddStatus(new NightVisionStatus(wizard));
     
-    wizard.AddImmunity(typeof(Whirlwind));
-    wizard.AddImmunity(typeof(PoisonCloudSpell));
-    wizard.AddImmunity(typeof(ConcussionSpell));
-    wizard.AddImmunity(typeof(LightningBoltSpell));
-    
-    wizard.AddImmunity(typeof(BlindSpell));
-    wizard.AddImmunity(typeof(FearSpell));
-    wizard.AddImmunity(typeof(StunSpell));
-    
     wizard.Spells = new CreatureSpellCollection()
     {
         { new CreatureSpell<ConcussionSpell>(
@@ -79071,7 +79062,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="true">
+      <script name="OnDeath" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     source.SayTo(killer, $"Death awaits you with nasty, big, pointy teeth {killer.Name}.");
@@ -80030,9 +80021,9 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="level9ConcWiz" size="1" minimum="2" maximum="2" />
-      <entry entity="level9FireWiz" size="1" minimum="8" maximum="8" />
+      <entry entity="level9FireWiz" size="1" minimum="4" maximum="4" />
       <entry entity="level9Wraith" size="1" minimum="3" maximum="3" />
-      <entry entity="level9WretchFighter" size="3" minimum="7" maximum="7" />
+      <entry entity="level9WretchFighter" size="3" minimum="12" maximum="12" />
       <entry entity="level9Spectre" size="1" minimum="3" maximum="3" />
       <bounds region="10">
         <inclusion left="13" top="8" right="31" bottom="29" />
