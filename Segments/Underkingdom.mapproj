@@ -616,6 +616,65 @@
             }
         }
     }
+    
+    public class PrincessStone : Gem
+    {
+        /// <inheritdoc />
+        public override int LabelNumber => 6000075;
+
+        /// <inheritdoc />
+        public override uint BasePrice => 5000;
+
+        /// <inheritdoc />
+        public override int Weight => 500;
+
+        /// <inheritdoc />
+        public override int Category => 3;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PrincessStone"/> class.
+        /// </summary>
+        public PrincessStone() : base(110, 5000)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PrincessStone"/> class.
+        /// </summary>
+        public PrincessStone(Serial serial) : base(serial)
+        {
+        }
+
+        /// <inheritdoc />
+        public override void GetDescription(List<LocalizationEntry> entries)
+        {
+            entries.Add(new LocalizationEntry("A rock with that sparkles with intensity. It's very shiny."));
+        }
+
+        /// <inheritdoc />
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((short)1); /* version */
+        }
+
+        /// <inheritdoc />
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+
+            var version = reader.ReadInt16();
+
+            switch (version)
+            {
+                case 1:
+                {
+                    break;
+                }
+            }
+        }
+    }
 ]]></block>
     <block><![CDATA[]]></block>
   </script>
@@ -102649,7 +102708,28 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	return new TrollJailer();
+    var trollguard = new Shopkeeper()
+    {
+        Name = "Distracted Jailer",
+        Alignment = Alignment.Neutral,
+        MaxHealth = 209, Health = 209,
+        BaseDodge = 27,
+        HideDetection = 29,    
+        Experience = 50,
+        RangePerception = 0,
+        Movement = 0,
+    };
+    
+    
+    trollguard.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(16)
+    };
+    
+    trollguard.Wield(new Halberd());
+    trollguard.Equip(new PlatemailArmor());
+    
+    return trollguard;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102659,9 +102739,31 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
-        <block><![CDATA[
+        <block><![CDATA[    
+    ItemEntity corruptstone = (player.LeftHand != null && player.LeftHand is PrincessStone ? player.LeftHand : (player.RightHand != null && player.RightHand is PrincessStone ? player.RightHand : null) );
+    
+    if( corruptstone == null ) 
+    {
+        source.Say("Bored bored bored, me need something to do!");
+        return;
+    }
+    
+    source.Emote("snatches the stone from your hand and walks away.");
+    source.Say("Da shiniest thing I ever seen! King will love dis!");
+    
+    corruptstone.Delete();
+    
+    var tile = source.Segment.FindTile(5, 8, 10);    
+    if (tile != null && tile.ContainsComponent<Obstruction>())
+    {
+        var component = tile.GetComponent<Obstruction>();
+        tile.Remove(component);
+    }
+
+    Timer.DelayCall(TimeSpan.FromSeconds(0.2), () => Delete());
+    
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102952,6 +103054,43 @@ var gargoyle = new Gargoyle()
       <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="GoogogVendor">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var vendor = new Merchant<PrincessStone>(50000, 1, byte.MaxValue)
+    {
+        Name = _names.Random(),
+        
+        Body = 134,
+        RangePerception = 0,
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+
+    return vendor;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    if (spokeRecently(source))
+        return;
+
+    source.Say($"Shiniest rocks you've ever seen! Just 50,000 coins! Want a gift for the king? Buy it here!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -103751,7 +103890,7 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="uk200Googog" size="1" minimum="1" maximum="1" />
+      <entry entity="GoogogVendor" size="1" minimum="1" maximum="1" />
       <location x="17" y="24" region="5" />
     </spawn>
     <spawn type="LocationSpawner" name="tkPrincess">
