@@ -98839,7 +98839,7 @@
         Name = "dragon",
         
         MaxHealth = 2100, Health = 2100,
-        MaxMana = 20, Mana = 20,
+        MaxMana = 6, Mana = 6,
         BaseDodge = 28,
         
         Experience = 85594,
@@ -98893,7 +98893,7 @@
     {
         /* Expected output of damage is 28 per tick. 84 per turn */
         new CreatureSpell<WhirlwindSpell>(
-            skillLevel: 7, cost: 20)
+            skillLevel: 7, cost: 6)
     };
     
     dragon.AddLoot(new LootPack(
