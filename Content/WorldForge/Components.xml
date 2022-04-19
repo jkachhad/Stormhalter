@@ -65,6 +65,10 @@
       <ground>20</ground>
       <movementCost>1</movementCost>
     </IceComponent>
+    <IceComponent name="Ice Labyrinth Floor">
+      <ground>992</ground>
+      <movementCost>1</movementCost>
+    </IceComponent>
     <FloorComponent name="Bog">
       <ground>21</ground>
       <movementCost>1</movementCost>
@@ -333,6 +337,10 @@
     <FloorComponent name=" Feldspar floor ">
       <ground>702</ground>
     </FloorComponent>
+    <FloorComponent name="Lava Tube Floor">
+      <ground>1000</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
   </category>
   <category name="Water">
     <WaterComponent name="Water">
@@ -388,12 +396,6 @@
     </WaterComponent>
   </category>
   <category name="Structural">
-    <WallComponent name="Town (V)">
-      <wall>28</wall>
-      <destroyed>41</destroyed>
-      <ruins>45</ruins>
-      <indestructible>false</indestructible>
-    </WallComponent>
     <WallComponent name="Town (H)">
       <wall>27</wall>
       <destroyed>40</destroyed>
@@ -403,6 +405,12 @@
     <WallComponent name="Town (C)">
       <wall>33</wall>
       <destroyed>784</destroyed>
+      <ruins>45</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Town (V)">
+      <wall>28</wall>
+      <destroyed>41</destroyed>
       <ruins>45</ruins>
       <indestructible>false</indestructible>
     </WallComponent>
@@ -1126,6 +1134,42 @@
       <ruins>0</ruins>
       <indestructible>false</indestructible>
     </WallComponent>
+    <WallComponent name="Ice Labyrinth(H)">
+      <wall>991</wall>
+      <destroyed>994</destroyed>
+      <ruins>995</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Ice Labyrinth (V)">
+      <wall>993</wall>
+      <destroyed>996</destroyed>
+      <ruins>995</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Ice Labyrinth Corner Pillar">
+      <wall>997</wall>
+      <destroyed>998</destroyed>
+      <ruins>995</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Lava Tube Wall (H)">
+      <wall>999</wall>
+      <destroyed>1002</destroyed>
+      <ruins>1003</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Lava Tube Wall (V)">
+      <wall>1001</wall>
+      <destroyed>1004</destroyed>
+      <ruins>1003</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Lava Tube Corner Pillar">
+      <wall>1005</wall>
+      <destroyed>1006</destroyed>
+      <ruins>1003</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
   </category>
   <category name="Ruins">
     <RuinsComponent name="Dungeon">
@@ -1265,6 +1309,24 @@
     </RuinsComponent>
     <RuinsComponent name=" Lodge wall ruins (V) ">
       <ruins>718</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Ice Labyrinth Wall ruins(H)">
+      <ruins>994</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Ice Labyrinth Wall ruins (V)">
+      <ruins>996</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Ice Labyrinth Corner pillar ruins">
+      <ruins>998</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Lava Tube Wall ruins (H)">
+      <ruins>1002</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Lava Tube Wall ruins (V)">
+      <ruins>1004</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Lava Tube Corner pillar ruins">
+      <ruins>1006</ruins>
     </RuinsComponent>
   </category>
   <category name="Doors">
