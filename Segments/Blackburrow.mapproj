@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Blackburrow" version="0.94.0.0">
+<segment name="Blackburrow" version="0.95.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -36019,15 +36019,15 @@
     fippy.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(16,      20, 41.5,      "Fippy Barks and gnashes you with his fangs",
+            new CreatureAttack(16,      20, 42,      "Fippy Barks and gnashes you with his fangs",
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(16,      20, 41.5,     "Fippy slashes you with his razor sharp claws.",
+            new CreatureAttack(16,      20, 42,     "Fippy slashes you with his razor sharp claws.",
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(18,      38, 41.5,     "Fippy impales you with his claws.",
+            new CreatureAttack(18,      38, 42,     "Fippy impales you with his claws.",
                                                         new AttackProneComponent(25), 
                                                         new AttackStunComponent(15)),               20
         },
