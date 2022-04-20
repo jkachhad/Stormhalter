@@ -19915,33 +19915,19 @@
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
-        <component type="WallComponent">
-          <wall>157</wall>
-          <destroyed>160</destroyed>
-          <ruins>170</ruins>
-          <indestructible>true</indestructible>
-        </component>
       </tile>
       <tile x="42" y="12">
         <component type="FloorComponent">
           <ground>176</ground>
-        </component>
-        <component type="WallComponent">
-          <wall>157</wall>
-          <destroyed>160</destroyed>
-          <ruins>170</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="43" y="12">
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
-        <component type="WallComponent">
-          <wall>157</wall>
-          <destroyed>160</destroyed>
-          <ruins>170</ruins>
-          <indestructible>true</indestructible>
+        <component type="TreeComponent">
+          <tree>98</tree>
+          <canGrow>true</canGrow>
         </component>
       </tile>
       <tile x="44" y="12">
@@ -19951,61 +19937,33 @@
         <component type="StaticComponent">
           <static>207</static>
         </component>
-        <component type="DoorComponent">
-          <openId>74</openId>
-          <closedId>62</closedId>
-          <secretId>25</secretId>
-          <destroyedId>80</destroyedId>
-          <isSecret>true</isSecret>
-          <indestructible>true</indestructible>
-        </component>
       </tile>
       <tile x="45" y="12">
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
-        <component type="WallComponent">
-          <wall>157</wall>
-          <destroyed>160</destroyed>
-          <ruins>170</ruins>
-          <indestructible>true</indestructible>
+        <component type="TreeComponent">
+          <tree>98</tree>
+          <canGrow>true</canGrow>
         </component>
       </tile>
       <tile x="46" y="12">
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
-        <component type="WallComponent">
-          <wall>157</wall>
-          <destroyed>160</destroyed>
-          <ruins>170</ruins>
-          <indestructible>true</indestructible>
-        </component>
       </tile>
       <tile x="47" y="12">
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
-        <component type="WallComponent">
-          <wall>157</wall>
-          <destroyed>160</destroyed>
-          <ruins>170</ruins>
-          <indestructible>true</indestructible>
-        </component>
       </tile>
       <tile x="48" y="12">
         <component type="StaticComponent">
-          <static>179</static>
+          <static>176</static>
         </component>
         <component type="WallComponent">
           <wall>158</wall>
           <destroyed>161</destroyed>
-          <ruins>170</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="WallComponent">
-          <wall>157</wall>
-          <destroyed>160</destroyed>
           <ruins>170</ruins>
           <indestructible>true</indestructible>
         </component>
@@ -20305,55 +20263,90 @@
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
       </tile>
       <tile x="42" y="13">
         <component type="FloorComponent">
           <ground>176</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="43" y="13">
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
-        <component type="TreeComponent">
-          <tree>98</tree>
-          <canGrow>true</canGrow>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="44" y="13">
         <component type="FloorComponent">
-          <ground>13</ground>
+          <ground>1</ground>
         </component>
-        <component type="StaticComponent">
-          <static>206</static>
+        <component type="DoorComponent">
+          <openId>74</openId>
+          <closedId>62</closedId>
+          <secretId>25</secretId>
+          <destroyedId>80</destroyedId>
+          <isSecret>true</isSecret>
         </component>
       </tile>
       <tile x="45" y="13">
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
-        <component type="TreeComponent">
-          <tree>98</tree>
-          <canGrow>true</canGrow>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="46" y="13">
         <component type="FloorComponent">
-          <ground>176</ground>
+          <ground>12</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="47" y="13">
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
       </tile>
       <tile x="48" y="13">
         <component type="StaticComponent">
-          <static>176</static>
+          <static>178</static>
         </component>
         <component type="WallComponent">
           <wall>158</wall>
           <destroyed>161</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
           <ruins>170</ruins>
           <indestructible>true</indestructible>
         </component>
@@ -75355,6 +75348,7 @@
     {
         Name = _names.Random(),
         Body = (9),
+        IsInvulnerable = true,
         
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
@@ -76084,7 +76078,7 @@
         },
         { 
             new CreatureAttack(11,     12, 18,     "The scorpion stings you with his tail.", 
-                                                    new AttackPoisonComponent(12)),                 50
+                                                    new AttackPoisonComponent(10)),                 50
         },
     };
     
@@ -76204,7 +76198,7 @@
         new CreatureBasicAttack(12)
     };
     
-    fighter.Wield(new Longbow());
+    fighter.Wield(new Shortbow());
     fighter.Equip(new LeatherArmor());    
     
     fighter.AddGold(130);
@@ -77995,7 +77989,7 @@
         BaseDodge = 23,
         HideDetection = 23,   
         Experience = 14616,
-        
+        VisibilityDistance = 0,
         CanWalk = false,
         
         BasePenetration = ShieldPenetration.VeryHeavy,
@@ -78035,7 +78029,7 @@
         }, 
     };
 
-    seaserpent.AddGold(1500);
+    seaserpent.AddGold(3500);
     seaserpent.AddLoot(new LootPack(
         new LootPackEntry(true, LengGems,       10,     gemsPriceMutatorAboveAverage), 
         new LootPackEntry(true, LengBottles,    20),
@@ -78885,27 +78879,24 @@
         HideDetection = 30,        
         Experience = 32000,
         BasePenetration = ShieldPenetration.Medium,
+        Movement = 2,
         IceProtection = 100,
         FireProtection = 100,
         CanLoot = false,
-        Immunity = CreatureImmunity.Poison
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Magic | CreatureImmunity.Poison,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell, 
         
     };
     
-    knight.AddImmunity(typeof(Whirlwind));
-    knight.AddImmunity(typeof(PoisonCloudSpell));
     knight.AddStatus(new NightVisionStatus(knight));
     knight.AddImmunity(typeof(ConcussionSpell));
     knight.AddImmunity(typeof(LightningBoltSpell));
     
     
-    knight.AddImmunity(typeof(BlindSpell));
-    knight.AddImmunity(typeof(FearSpell));
-    knight.AddImmunity(typeof(StunSpell));
-    
     knight.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(16)
+        new CreatureBasicAttack(18)
     };
     
     knight.Wield(new Greatsword());
@@ -78920,7 +78911,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="true">
+      <script name="OnDeath" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     source.SayTo(killer, $"Only a flesh wound! {killer.Name}.");
@@ -78953,9 +78944,8 @@
         HideDetection = 30,
         Experience = 30000,
         CanLoot = false,
-        
-        
         CanCharge = true,
+        Movement = 3,
         
         BasePenetration = ShieldPenetration.Heavy,
 
@@ -78973,15 +78963,15 @@
     critter.Attacks = new CreatureAttackCollection()
     {
         {
-            new CreatureAttack(14,      30, 40,      "The creature thumps you with its back two feet.",
+            new CreatureAttack(15,      30, 40,      "The creature thumps you with its back two feet.",
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(14,      30, 40,     "The creature lets out a ferocious squeak and charges you.",
+            new CreatureAttack(15,      30, 40,     "The creature lets out a ferocious squeak and charges you.",
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(17,      50, 60,     "The creature flies at you and gnaws at your head.",
+            new CreatureAttack(18,      60, 80,     "The creature flies at you and gnaws at your head.",
                                                         new AttackProneComponent(20), 
                                                         new AttackStunComponent(15)),               20
         },
@@ -79039,23 +79029,17 @@
         BaseDodge = 25,
         Experience = 28000,
         Movement = 0,
-        FireProtection = 100,            
-        IceProtection = 100,
-        CanLoot = false
+        CanLoot = false,
+        
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Magic | CreatureImmunity.Poison,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell, 
+        
     };
     
     wizard.Wield(new BlackStaff());
     wizard.Equip(new LeatherArmor());
     wizard.AddStatus(new NightVisionStatus(wizard));
-    
-    wizard.AddImmunity(typeof(Whirlwind));
-    wizard.AddImmunity(typeof(PoisonCloudSpell));
-    wizard.AddImmunity(typeof(ConcussionSpell));
-    wizard.AddImmunity(typeof(LightningBoltSpell));
-    
-    wizard.AddImmunity(typeof(BlindSpell));
-    wizard.AddImmunity(typeof(FearSpell));
-    wizard.AddImmunity(typeof(StunSpell));
     
     wizard.Spells = new CreatureSpellCollection()
     {
@@ -79079,7 +79063,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="true">
+      <script name="OnDeath" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     source.SayTo(killer, $"Death awaits you with nasty, big, pointy teeth {killer.Name}.");
@@ -79901,7 +79885,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="BossMiniLevel9SeaSerpent" size="1" minimum="0" maximum="0" />
+      <entry entity="BossMiniLevel9SeaSerpent" size="1" minimum="1" maximum="1" />
       <location x="43" y="32" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="bunnyRabbit">
@@ -79942,7 +79926,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="BossMinorLevel13BlackKnight" size="1" minimum="1" maximum="1" />
-      <location x="44" y="15" region="20" />
+      <location x="42" y="15" region="20" />
     </spawn>
     <spawn type="LocationSpawner" name="enchanter">
       <minimumDelay>3600</minimumDelay>
@@ -79962,7 +79946,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="BossMinorLevel13Enchanter" size="1" minimum="1" maximum="1" />
-      <location x="44" y="13" region="20" />
+      <location x="44" y="14" region="20" />
     </spawn>
     <spawn type="RegionSpawner" name="mausoleumSandyPath">
       <minimumDelay>600</minimumDelay>
@@ -80038,9 +80022,9 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="level9ConcWiz" size="1" minimum="2" maximum="2" />
-      <entry entity="level9FireWiz" size="1" minimum="8" maximum="8" />
+      <entry entity="level9FireWiz" size="1" minimum="4" maximum="4" />
       <entry entity="level9Wraith" size="1" minimum="3" maximum="3" />
-      <entry entity="level9WretchFighter" size="3" minimum="7" maximum="7" />
+      <entry entity="level9WretchFighter" size="3" minimum="12" maximum="12" />
       <entry entity="level9Spectre" size="1" minimum="3" maximum="3" />
       <bounds region="10">
         <inclusion left="13" top="8" right="31" bottom="29" />
@@ -80148,12 +80132,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level11Archer" size="3" minimum="3" maximum="3" />
-      <entry entity="level11Fighter" size="3" minimum="7" maximum="7" />
-      <entry entity="level11Centaur" size="1" minimum="1" maximum="1" />
+      <entry entity="level11Archer" size="3" minimum="5" maximum="5" />
+      <entry entity="level11Fighter" size="3" minimum="9" maximum="9" />
+      <entry entity="level11Centaur" size="1" minimum="2" maximum="2" />
       <entry entity="level11Scorpion" size="1" minimum="3" maximum="3" />
-      <entry entity="level8Bee" size="3" minimum="2" maximum="2" />
-      <entry entity="level9Raven" size="1" minimum="3" maximum="3" />
       <bounds region="20">
         <inclusion left="26" top="8" right="33" bottom="14" />
         <inclusion left="5" top="10" right="25" bottom="23" />

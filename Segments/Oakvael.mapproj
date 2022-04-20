@@ -94532,6 +94532,7 @@
     {
         Name = _names.Random(),
         Body = (female ? 10 : 9), IsFemale = female,
+        IsInvulnerable = true,
         
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
@@ -98839,7 +98840,7 @@
         Name = "dragon",
         
         MaxHealth = 2100, Health = 2100,
-        MaxMana = 20, Mana = 20,
+        MaxMana = 6, Mana = 6,
         BaseDodge = 28,
         
         Experience = 85594,
@@ -98891,9 +98892,9 @@
 
     dragon.Spells = new CreatureSpellCollection()
     {
-        /* Expected output of damage is 60 per turn based on replay from Indi..DOOM. */
+        /* Expected output of damage is 28 per tick. 84 per turn */
         new CreatureSpell<WhirlwindSpell>(
-            skillLevel: 15, cost: 20)
+            skillLevel: 7, cost: 6)
     };
     
     dragon.AddLoot(new LootPack(
@@ -102000,14 +102001,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level9Hobgoblin" size="3" minimum="9" maximum="12" />
-      <entry entity="level9Orc" size="3" minimum="10" maximum="14" />
+      <entry entity="level9Hobgoblin" size="3" minimum="12" maximum="15" />
+      <entry entity="level9Orc" size="3" minimum="12" maximum="15" />
       <entry entity="level9OrcSentry" size="2" minimum="4" maximum="6" />
       <entry entity="level9OrcTrapper" size="1" minimum="4" maximum="6" />
-      <entry entity="level9Thaum" size="1" minimum="3" maximum="6" />
-      <entry entity="level9Wizard" size="1" minimum="3" maximum="6" />
+      <entry entity="level9Thaum" size="1" minimum="2" maximum="3" />
+      <entry entity="level9Wizard" size="1" minimum="2" maximum="3" />
       <entry entity="level9Minotaur" size="1" minimum="6" maximum="8" />
-      <entry entity="level9Salamander" size="1" minimum="3" maximum="6" />
+      <entry entity="level9Salamander" size="1" minimum="1" maximum="2" />
       <entry entity="level9Troll" size="1" minimum="7" maximum="10" />
       <entry entity="level9Gargoyle" size="1" minimum="6" maximum="9" />
       <bounds region="235">
@@ -102288,14 +102289,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level9Hobgoblin" size="3" minimum="9" maximum="12" />
-      <entry entity="level9Orc" size="3" minimum="10" maximum="14" />
+      <entry entity="level9Hobgoblin" size="3" minimum="12" maximum="15" />
+      <entry entity="level9Orc" size="3" minimum="12" maximum="15" />
       <entry entity="level9OrcSentry" size="2" minimum="4" maximum="6" />
       <entry entity="level9OrcTrapper" size="1" minimum="4" maximum="6" />
-      <entry entity="level9Thaum" size="1" minimum="3" maximum="6" />
-      <entry entity="level9Wizard" size="1" minimum="3" maximum="6" />
+      <entry entity="level9Thaum" size="1" minimum="2" maximum="3" />
+      <entry entity="level9Wizard" size="1" minimum="2" maximum="3" />
       <entry entity="level9Minotaur" size="1" minimum="6" maximum="8" />
-      <entry entity="level9Salamander" size="1" minimum="3" maximum="6" />
+      <entry entity="level9Salamander" size="1" minimum="1" maximum="2" />
       <entry entity="level9Troll" size="1" minimum="7" maximum="10" />
       <entry entity="level9Gargoyle" size="1" minimum="6" maximum="9" />
       <bounds region="235">
@@ -102320,14 +102321,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level9Hobgoblin" size="3" minimum="9" maximum="12" />
-      <entry entity="level9Orc" size="3" minimum="10" maximum="14" />
+      <entry entity="level9Hobgoblin" size="3" minimum="12" maximum="15" />
+      <entry entity="level9Orc" size="3" minimum="12" maximum="15" />
       <entry entity="level9OrcSentry" size="2" minimum="4" maximum="6" />
       <entry entity="level9OrcTrapper" size="1" minimum="4" maximum="6" />
-      <entry entity="level9Thaum" size="1" minimum="3" maximum="6" />
-      <entry entity="level9Wizard" size="1" minimum="3" maximum="6" />
+      <entry entity="level9Thaum" size="1" minimum="2" maximum="3" />
+      <entry entity="level9Wizard" size="1" minimum="2" maximum="3" />
       <entry entity="level9Minotaur" size="1" minimum="6" maximum="8" />
-      <entry entity="level9Salamander" size="1" minimum="3" maximum="6" />
+      <entry entity="level9Salamander" size="1" minimum="1" maximum="2" />
       <entry entity="level9Troll" size="1" minimum="7" maximum="10" />
       <entry entity="level9Gargoyle" size="1" minimum="6" maximum="9" />
       <bounds region="235">
@@ -102353,14 +102354,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level9Hobgoblin" size="3" minimum="9" maximum="12" />
-      <entry entity="level9Orc" size="3" minimum="10" maximum="14" />
+      <entry entity="level9Hobgoblin" size="3" minimum="12" maximum="15" />
+      <entry entity="level9Orc" size="3" minimum="12" maximum="15" />
       <entry entity="level9OrcSentry" size="2" minimum="4" maximum="6" />
       <entry entity="level9OrcTrapper" size="1" minimum="4" maximum="6" />
-      <entry entity="level9Thaum" size="1" minimum="3" maximum="6" />
-      <entry entity="level9Wizard" size="1" minimum="3" maximum="6" />
+      <entry entity="level9Thaum" size="1" minimum="2" maximum="3" />
+      <entry entity="level9Wizard" size="1" minimum="2" maximum="3" />
       <entry entity="level9Minotaur" size="1" minimum="6" maximum="8" />
-      <entry entity="level9Salamander" size="1" minimum="3" maximum="6" />
+      <entry entity="level9Salamander" size="1" minimum="1" maximum="2" />
       <entry entity="level9Troll" size="1" minimum="7" maximum="10" />
       <entry entity="level9Gargoyle" size="1" minimum="6" maximum="9" />
       <bounds region="235">
@@ -102385,14 +102386,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level9Hobgoblin" size="3" minimum="9" maximum="12" />
-      <entry entity="level9Orc" size="3" minimum="10" maximum="14" />
+      <entry entity="level9Hobgoblin" size="3" minimum="12" maximum="15" />
+      <entry entity="level9Orc" size="3" minimum="12" maximum="15" />
       <entry entity="level9OrcSentry" size="2" minimum="4" maximum="6" />
       <entry entity="level9OrcTrapper" size="1" minimum="4" maximum="6" />
-      <entry entity="level9Thaum" size="1" minimum="3" maximum="6" />
-      <entry entity="level9Wizard" size="1" minimum="3" maximum="6" />
+      <entry entity="level9Thaum" size="1" minimum="2" maximum="3" />
+      <entry entity="level9Wizard" size="1" minimum="2" maximum="3" />
       <entry entity="level9Minotaur" size="1" minimum="6" maximum="8" />
-      <entry entity="level9Salamander" size="1" minimum="3" maximum="6" />
+      <entry entity="level9Salamander" size="1" minimum="1" maximum="2" />
       <entry entity="level9Troll" size="1" minimum="7" maximum="10" />
       <entry entity="level9Gargoyle" size="1" minimum="6" maximum="9" />
       <bounds region="235">
