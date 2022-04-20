@@ -3191,4 +3191,29 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
+  <terrain id="1007">
+    <!-- Dark Cloud Skyhex -->
+    <sprite order="5">
+      <offset>(45,45)</offset>
+      <texture>Tenser\Terrain\darkcloud</texture>
+      <source>(0,0,55,55)</source>
+    </sprite>
+    <average>(149,149,149,255)</average>
+  </terrain>
+  <terrain id="1008">
+    <!-- Dark Cloud Animated Skyhex -->
+    <sprite order="5">
+      <offset>(45,45)</offset>
+      <texture>Tenser\Terrain\stormcloud-Sheet</texture>
+      <source>(0,0,275,55)</source>
+      <frames step="200" keys="0-4">
+        <frame>(0,0,55,55)</frame>
+        <frame>(55,0,55,55)</frame>
+        <frame>(110,0,55,55)</frame>
+        <frame>(165,0,55,55)</frame>
+        <frame>(220,0,55,55)</frame>
+      </frames>
+    </sprite>
+    <average>(11,82,214,255)</average>
+  </terrain>
 </data>
