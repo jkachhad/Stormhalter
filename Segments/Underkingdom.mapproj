@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.94.0.0">
+<segment name="Underkingdom" version="0.95.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -571,7 +571,12 @@
 
         /// <inheritdoc />
         public override int Weight => 5;
-        
+
+        /// <inheritdoc />
+        public override int Category => 3;
+
+
+   
         /// <summary>
         /// Initializes a new instance of the <see cref="PrincessScroll"/> class.
         /// </summary>
