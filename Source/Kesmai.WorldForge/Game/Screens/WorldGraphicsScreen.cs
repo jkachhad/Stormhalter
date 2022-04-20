@@ -996,11 +996,11 @@ namespace Kesmai.WorldForge
 								_drawStrings.Add(Tuple.Create($"{r.Name} " + r.Threat.ToString(), new Vector2(bounds.Left + 2, bounds.Top + 2 + (offset * 15)), Color.Black));
 							}
 						}
-						//draw all strings on top..
-						foreach (Tuple<String, Vector2, Color> _drawString in _drawStrings)
-                        {
-							spritebatch.DrawString(_font, _drawString.Item1, _drawString.Item2, _drawString.Item3);
-						}
+					}
+					//draw all strings on top..
+					foreach (Tuple<String, Vector2, Color> _drawString in _drawStrings)
+					{
+						spritebatch.DrawString(_font, _drawString.Item1, _drawString.Item2, _drawString.Item3);
 					}
 					if (_presenter.Visibility.ShowComments)
                     {
