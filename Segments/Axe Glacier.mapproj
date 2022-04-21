@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.94.0.0">
+<segment name="Axe Glacier" version="0.95.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -110369,6 +110369,7 @@
     <spawn type="LocationSpawner" name="lockpickThiefTrainer">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -110384,6 +110385,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="axeThiefTrainer" size="1" minimum="1" maximum="1" />
       <location x="7" y="-1" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="BossPrinceWolf">
