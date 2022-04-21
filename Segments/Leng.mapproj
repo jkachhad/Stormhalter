@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.94.0.0">
+<segment name="Leng" version="0.95.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -75820,6 +75820,7 @@
     vlad.AddGold(25000);
     vlad.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new DragonSkull(),        100),
+        new LootPackEntry(true, (from, container) => new JewelerRing(),        100),
         new LootPackEntry(true, (from, container) => new LionRobe(),        50),
         new LootPackEntry(true, (from, container) => new GoldenTorc(),        33),
         new LootPackEntry(true, (from, container) => new FeatherFallBoots(),        100),
@@ -78988,7 +78989,8 @@
     critter.AddGold(10000);
      critter.AddGold(1000);
       critter.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       100,     gemsPriceMutatorVeryHigh)
+        new LootPackEntry(true, LengGems,       100,     gemsPriceMutatorVeryHigh),
+        new LootPackEntry(true, (from, container) => new RamStaff(),        100)
     ));
     
     return critter;

@@ -103336,9 +103336,9 @@ var gargoyle = new Gargoyle()
         merchantUpsell = Utility.RandomDouble() * 3 + 7; // 7-10x upsell
         var rareWares = new List<StockEntry>()
         {
-            new StockEntry("death resistance ring",              () => new DeathResistanceRing(),         (int)(300 * merchantUpsell),  1, onRarePurchase),
-            new StockEntry("weak dexterity ring",                () => new WeakDexterityRing(),           (int)(1000 * merchantUpsell), 1, onRarePurchase),
-            new StockEntry("stun and death protection bracelet", () => new StrongStrengthRing(), (int)(3000 * merchantUpsell), 1, onRarePurchase)
+            new StockEntry("death resistance ring", () => new DeathResistanceRing(),         (int)(300 * merchantUpsell),  1, onRarePurchase),
+            new StockEntry("weak dexterity ring", () => new WeakDexterityRing(),           (int)(1000 * merchantUpsell), 1, onRarePurchase),
+            new StockEntry("glowing red ring", () => new StrongStrengthRing(),          (int)(3000 * merchantUpsell), 1, onRarePurchase)
         };
         
         if (Utility.RandomDouble() <= 0.10) 
