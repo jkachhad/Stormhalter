@@ -280,6 +280,116 @@
             }
         }
     }
+    
+    public class KoboldPrincess : CreatureEntity
+    {
+       public override bool CanOrderFollow => true;
+    
+        public KoboldPrincess()
+        {
+            Name = "Ianta";
+            Body = 117;
+    
+            Health = MaxHealth = 150;
+            BaseDodge = 10;
+    
+            Experience = 50;
+            Movement = 2;
+    
+            Alignment = Alignment.Lawful;
+            
+            Attacks = new CreatureAttackCollection()
+            {
+                new CreatureBasicAttack(10),
+            };
+
+            Brain = new RescueAI(this)
+            {
+                Aggressive = false,
+            };
+            
+            CanLoot = false;
+        }
+    
+        protected override void OnFinishMovement(PathingEventArgs args)
+        {
+            var king = GetBeheldInVisibility(0).SelectMany(m => m.Members).OfType<KoboldKing>().FirstOrDefault();
+            
+            if (king != null)
+            {
+                new PermanentManaPotion().Move(Location, true, Segment);
+                Say($"Hi dad! What's for dinner?!");
+                king.Elated();
+                
+                /* We won't delete the entity on the same frame. Server will crash. This call is part of a an optimized loop. */
+                Timer.DelayCall(TimeSpan.FromSeconds(0.2), () => Delete());
+            }
+        }
+    
+        public override void HandleOrder(OrderEventArgs args)
+        {
+            base.HandleOrder(args);
+    
+            if (args.Handled)
+                return;
+    
+            var source = args.Source;
+            var order = args.Order;
+    
+            if (IsSubordinate && source != Director)
+                return;
+    
+            if (order.Matches("follow", true))
+            {
+                Director = source;
+    
+                OnOrderFollow(source);
+
+                args.Handled = true;
+                return;
+            }
+            
+            if (order.Matches("trail", true))
+            {
+                Director = source;
+    
+                OnOrderTrail(source);
+                
+                args.Handled = true;
+                return;
+            }
+        }
+    
+        public KoboldPrincess(Serial serial) : base(serial)
+        {
+        }
+    
+        public override int GetNearbySound() => 256;
+        public override int GetAttackSound() => 257;
+        public override int GetDeathSound() => 258;
+    
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+    
+            writer.Write((short)1); /* version */
+        }
+    
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+    
+            var version = reader.ReadInt16();
+    
+            switch (version)
+            {
+                case 1:
+                    {
+                        break;
+                    }
+            }
+        }
+    }
 
     public class Buddah : ItemEntity
     {
@@ -20289,6 +20399,7 @@
           <wall>157</wall>
           <destroyed>160</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="44" y="13">
@@ -20298,9 +20409,9 @@
         <component type="DoorComponent">
           <openId>74</openId>
           <closedId>62</closedId>
-          <secretId>25</secretId>
+          <secretId>157</secretId>
           <destroyedId>80</destroyedId>
-          <isSecret>true</isSecret>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="45" y="13">
@@ -20311,6 +20422,7 @@
           <wall>157</wall>
           <destroyed>160</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="46" y="13">
@@ -20321,6 +20433,7 @@
           <wall>157</wall>
           <destroyed>160</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="47" y="13">
@@ -79079,6 +79192,69 @@
         return;
 
     source.Say($"If you do doubt your courage or your strength, come no further, {player.Name}.");
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="lengIanta">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	return new KoboldPrincess();
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="lengQueen">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	return new MobileEntity();
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="lengKing">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	return new MobileEntity();
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
