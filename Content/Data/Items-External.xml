@@ -1,6 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <data>
+  <!--
+	Categories define where items may be stored.
+	Category	Definition
+	1		Large Weapon/Back Belt
+	2		Small Weapon/Belt
+	3		Misc Sack :  ex: A Gem
+	4		Ring/Sack
+	5		Helmet/Head/Belt/Sack
+	6		Amulet/Neck/Sack/Belt
+	7		Bracelet/Sack
+	8		Gauntlets/Belt/Sack
+	9		Armor/Back Belt
+	10		Robe/Back Belt
+	11		Boots/Belt/Sack
+	12		Consumable/Sack
+	13		Coin
+	14		Dagger/Sack/Belt/throw from belt
+	15		Halberd/Back Belt/etc
+	16		Corpse
+  -->
+	
 
   <!-- Example 
   <item id="900">
@@ -8,7 +29,6 @@
     <source>(855,855,45,45)</source>
   </item>
   -->
-  
   <!-- Corpse all start at 5000 + bodyId, but can be configured in Body.xml -->
   <!-- Example
   <item id="5001" category="16">
@@ -16,17 +36,19 @@
     <source>(10,10,45,45)</source>
   </item>
   -->
+
+
   <!-- Heron Main-Gauche -->
   <item id="900" category="14">
     <offset>(-5,-5)</offset>
-    <texture>Tenser/Items/heron_main-gauche_small</texture>
-    <source>(0,0,55,55)</source>
+    <texture>Tenser/Items/daggers</texture>
+    <source>(55,0,55,55)</source>
   </item>
   <!-- Poisoned Heron Main-Gauche -->
   <item id="901" category="14">
     <offset>(-5,-5)</offset>
-    <texture>Tenser/Items/heron_main-gauche_Psmall</texture>
-    <source>(0,0,55,55)</source>
+    <texture>Tenser/Items/daggers</texture>
+    <source>(220,0,55,55)</source>
   </item>
   <!-- Jim the Enchanter Staff -->
   <item id="902" category="1">
@@ -434,5 +456,10 @@
   <item id="5311" category="16">
     <texture>Tenser/Items/whitebunny</texture>
     <source>(75,15,60,60)</source>
+  </item>
+  <!-- Eye Tyrant Corpse -->
+  <item id="5314" category="16">
+    <texture>Tenser/Items/beholderdead</texture>
+    <source>(15,15,60,60)</source>
   </item>
 </data>
