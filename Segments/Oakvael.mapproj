@@ -96105,7 +96105,7 @@
     hobgoblin.AddGold(77);
     hobgoblin.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakLowLevelGems, 21.6, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorNormal), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
             new LootPackEntry(true, dungeon2Treasure, 0.5), 
             new LootPackEntry(true, dungeon2Rings, 0.5), 
@@ -96153,7 +96153,7 @@
     goblin.AddGold(66);
     goblin.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakLowLevelGems, 21.6, gemsPriceMutatorMedium), 
+            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorMedium), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
             new LootPackEntry(true, dungeon2Treasure, 0.37), 
             new LootPackEntry(true, dungeon2Rings, 0.37), 
@@ -96203,7 +96203,7 @@
     goblin.AddGold(66);
     goblin.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakLowLevelGems, 21.6, gemsPriceMutatorMedium), 
+            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorMedium), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
             new LootPackEntry(true, dungeon2Treasure, 0.37), 
             new LootPackEntry(true, dungeon2Rings, 0.37), 
@@ -96257,7 +96257,7 @@
     troll.AddGold(98);
     troll.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakLowLevelGems, 21.6, gemsPriceMutatorAboveAverage), 
+            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorAboveAverage), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
             new LootPackEntry(true, dungeon2Treasure, 0.55), 
             new LootPackEntry(true, dungeon2Rings, 0.55), 
@@ -96307,7 +96307,7 @@
     orc.AddGold(79);
     orc.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakLowLevelGems, 21.6, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorNormal), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
             new LootPackEntry(true, dungeon2Treasure, 0.5), 
             new LootPackEntry(true, dungeon2Rings, 0.5), 
@@ -96359,7 +96359,7 @@
     orc.AddGold(79);
     orc.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakLowLevelGems, 21.6, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorNormal), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
             new LootPackEntry(true, dungeon2Treasure, 0.5), 
             new LootPackEntry(true, dungeon2Rings, 0.5), 
@@ -96417,7 +96417,7 @@
     orc.AddGold(77);
     orc.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakLowLevelGems, 21.6, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorNormal), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
             new LootPackEntry(true, dungeon2Treasure, 0.5), 
             new LootPackEntry(true, dungeon2Rings, 0.5), 
@@ -96478,7 +96478,7 @@
     spectre.AddGold(66);
     spectre.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakLowLevelGems, 21.6, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorNormal), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
             new LootPackEntry(true, dungeon2Treasure, 0.5), 
             new LootPackEntry(true, dungeon2Rings, 0.5), 
@@ -103249,7 +103249,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new TigerEye(1500u);
+	return new TigerEye(750u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -103258,7 +103258,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallRuby(3000u);
+	return new SmallRuby(1200u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -103267,7 +103267,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new BloodRuby(6000u);
+	return new BloodRuby(3000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -103277,6 +103277,44 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new LargeEmerald(15000u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="oakMidLevelGems">
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new TigerEye(1700u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new SmallRuby(3400u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new BloodRuby(6800u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new LargeEmerald(17000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
