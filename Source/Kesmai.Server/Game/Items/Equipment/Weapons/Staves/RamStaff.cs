@@ -7,9 +7,6 @@ namespace Kesmai.Server.Items
 {
 	public partial class RamStaff : Staff
 	{
-        /// <inheritdoc />
-        public override int LabelNumber => 6000088;
-
 		/// <inheritdoc />
 		public override uint BasePrice => 800;
 
@@ -19,10 +16,7 @@ namespace Kesmai.Server.Items
         /// <inheritdoc />
         public override ShieldPenetration Penetration => ShieldPenetration.Medium;
 
-		/// <inheritdoc />
-		public override int Category => 1;
-
-		/// <inheritdoc />
+        /// <inheritdoc />
 		public override int MinimumDamage => 1;
 
 		/// <inheritdoc />
@@ -47,6 +41,13 @@ namespace Kesmai.Server.Items
 		/// Initializes a new instance of the <see cref="RamStaff"/> class.
 		/// </summary>
 		public RamStaff() : base(902)
+		{
+		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="RamStaff"/> class.
+		/// </summary>
+		public RamStaff(Serial serial) : base(serial)
 		{
 		}
 		
