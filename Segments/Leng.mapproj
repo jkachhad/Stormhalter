@@ -281,14 +281,69 @@
         }
     }
     
-    public class KoboldPrincess : CreatureEntity
+    public class LengQueen : CreatureEntity
+    {
+        public LengQueen()
+        {
+            Body = 69;
+            Alignment = Alignment.Lawful;
+            
+            CanLoot = false;
+        }
+    
+        public LengQueen(Serial serial) : base(serial)
+        {
+        }
+    
+        public override void OnSpawn()
+        {
+            base.OnSpawn();
+            if (_brain != null)
+                return;
+            if (RightHand is ProjectileWeapon)
+                _brain = new RangedAI(this);
+            else
+                _brain = new CombatAI(this);
+        }
+    
+        public override int GetNearbySound() => 92;
+        public override int GetAttackSound() => 99;
+        public override int GetDeathSound() => 106;
+        public override Corpse GetCorpse() => default(Corpse);
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((short)1); /* version */
+        }
+    
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+            var version = reader.ReadInt16();
+            switch (version)
+            {
+                case 1:
+                    {
+                        break;
+                    }
+            }
+        }
+        public void Elated()
+        {
+            Say($"My daughter! You've rescued her from the top of the Water Falls!");
+            EmitSound(92, 3, 9);
+        }
+    }
+    
+    
+    public class LengIanta : CreatureEntity
     {
        public override bool CanOrderFollow => true;
     
-        public KoboldPrincess()
+        public LengIanta()
         {
             Name = "Ianta";
-            Body = 117;
+            Body = 247;
     
             Health = MaxHealth = 150;
             BaseDodge = 10;
@@ -313,13 +368,13 @@
     
         protected override void OnFinishMovement(PathingEventArgs args)
         {
-            var king = GetBeheldInVisibility(0).SelectMany(m => m.Members).OfType<KoboldKing>().FirstOrDefault();
+            var queen = GetBeheldInVisibility(0).SelectMany(m => m.Members).OfType<LengQueen>().FirstOrDefault();
             
             if (king != null)
             {
-                new PermanentManaPotion().Move(Location, true, Segment);
-                Say($"Hi dad! What's for dinner?!");
-                king.Elated();
+                new PermanentStrengthPotion().Move(Location, true, Segment);
+                Say($"Hi Mom! What's for dinner?!");
+                queen.Elated();
                 
                 /* We won't delete the entity on the same frame. Server will crash. This call is part of a an optimized loop. */
                 Timer.DelayCall(TimeSpan.FromSeconds(0.2), () => Delete());
@@ -360,7 +415,7 @@
             }
         }
     
-        public KoboldPrincess(Serial serial) : base(serial)
+        public LengIanta(Serial serial) : base(serial)
         {
         }
     
@@ -79200,7 +79255,7 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	return new KoboldPrincess();
+	return new LengIanta();
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -79221,7 +79276,7 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	return new MobileEntity();
+	return new LengQueen();
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -79945,7 +80000,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="lengConfessorGhost" size="1" minimum="1" maximum="1" />
+      <entry entity="lengQueen" size="1" minimum="1" maximum="1" />
       <location x="12" y="20" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="confessorghost">
@@ -79970,8 +80025,8 @@
       <location x="1" y="6" region="254" />
     </spawn>
     <spawn type="LocationSpawner" name="Iantaplaceholder">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>900</maximumDelay>
+      <minimumDelay>3600</minimumDelay>
+      <maximumDelay>4500</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -79987,8 +80042,8 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="lengConfessorGhost" size="1" minimum="1" maximum="1" />
-      <location x="24" y="4" region="35" />
+      <entry entity="lengIanta" size="1" minimum="1" maximum="1" />
+      <location x="23" y="4" region="35" />
     </spawn>
     <spawn type="LocationSpawner" name="thiefTrainer">
       <minimumDelay>900</minimumDelay>
@@ -81264,28 +81319,6 @@
       <entry entity="level11Centaur" size="1" minimum="1" maximum="1" />
       <bounds region="35">
         <inclusion left="19" top="4" right="23" bottom="11" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
-      </bounds>
-    </spawn>
-    <spawn type="RegionSpawner" name="Spawner 1">
-      <minimumDelay>0</minimumDelay>
-      <maximumDelay>0</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <bounds region="0">
-        <inclusion left="0" top="0" right="0" bottom="0" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
