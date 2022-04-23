@@ -370,7 +370,7 @@
         {
             var queen = GetBeheldInVisibility(0).SelectMany(m => m.Members).OfType<LengQueen>().FirstOrDefault();
             
-            if (king != null)
+            if (queen != null)
             {
                 new PermanentStrengthPotion().Move(Location, true, Segment);
                 Say($"Hi Mom! What's for dinner?!");
