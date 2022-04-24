@@ -77402,7 +77402,12 @@
         { 
             new CreatureSpell<CreateWebSpell>(
                 skillLevel: 9, cost: 6, 
-                mantra: SpellHelper.GenerateMantra(), instantCast: false),   75
+                mantra: SpellHelper.GenerateMantra(), instantCast: false),   25
+        },
+        {
+            new CreatureSpell<FireballSpell>(
+                skillLevel: 9, cost: 5, 
+                mantra: SpellHelper.GenerateMantra(), instantCast: false),   50
         },
         {
             new CreatureSpell<MagicMissileSpell>(
