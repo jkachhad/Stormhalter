@@ -1243,8 +1243,6 @@
             Name = "Grove Keeper";
     
             CanLoot = false;
-			
-			Alignment = Alignment.Chaotic;
         }
     
         public int keepersooth = 0;
@@ -100023,6 +100021,7 @@
         Experience = 50,
         Movement = 0,
         HideDetection = 45,
+        Alignment = Alignment.Neutral,
     };
     
     dryad.AddStatus(new NightVisionStatus(dryad));
@@ -100037,12 +100036,7 @@
     dryad.Wield(new FineCrossbow());
     dryad.Equip(new ChainmailArmor());    
 
-    dryad.AddGold(500);
-    dryad.AddLoot(
-        new LootPack(
-
-            new LootPackEntry(true, groveTreasure, 100)
-        ));
+    dryad.AddGold(10);
 
     return dryad;
 ]]></block>
