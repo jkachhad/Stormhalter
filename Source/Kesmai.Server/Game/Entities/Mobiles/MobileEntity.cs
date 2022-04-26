@@ -21,6 +21,13 @@ namespace Kesmai.Server.Game
 
 				if (armor != null)
 					damageMitigation += armor.CalculateMitigationBonus(item);
+
+				var gauntlets = paperdoll.Gauntlets;
+
+				if (gauntlets !=null)
+					damageMitigation += gauntlets.CalculateMitigationBonus(item);
+
+			
 			}
 
 			/* Calculate armor bonus from held items. */
