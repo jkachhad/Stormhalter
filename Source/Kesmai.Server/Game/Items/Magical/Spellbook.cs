@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Kesmai.Server.Items;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Game.Items.Magical
 {
-	public partial class Spellbook : ItemEntity
+	public partial class Spellbook : ItemEntity, ITreasure
 	{
 		/// <summary>
 		/// Gets the label number.

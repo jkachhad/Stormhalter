@@ -11,15 +11,12 @@ namespace Kesmai.Server.Game
 			Body = 7;
 			
 			Alignment = Alignment.Chaotic;
-			AddStatus(new BreatheWaterStatus(this));
+			
 			CanSwim = true;
+			
+			AddStatus(new BreatheWaterStatus(this));
 		}
-		
-		public override bool CanHide()
-		{
-			return true;
-		}
-		
+
 		public override int GetNearbySound() => 138;
 		public override int GetAttackSound() => 157;
 		public override int GetDeathSound() => 176;

@@ -9,7 +9,7 @@ namespace Kesmai.Server.Items
 	public partial class HummingbirdSword : ShortSword, ITreasure
 	{
 		/// <inheritdoc />
-		public override uint BasePrice => 1;
+		public override uint BasePrice => 2000;
 		
 		/// <inheritdoc />
 		public override int BaseAttackBonus => 4;

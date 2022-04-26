@@ -1,8 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.92.0.0">
+<segment name="Kesmai" version="0.94.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
+    public static void announceEarthquake(Segment segment, Point2D location, bool fire = true)
+    {
+        var packet = new AsciiMessagePacket(AsciiMessageType.System, Color.Yellow, 
+                $"You feel the earth shudder beneath your feet.");
+                
+        foreach (var client in segment.Clients)
+        {
+            var character = client.Character;
+            
+            if (character is null || !character.IsAlive)
+                return;
+                
+            character.PlaySound(65);
+            character.SendPacket(packet);
+        }
+    
+        if (!fire)
+            return;
+        
+        var bonfireSpell = new BonfireSpell();
+        
+        foreach (var direction in Direction.All)
+        {
+            var segmentTile = segment.FindTile(location, direction);
+            
+            if (segmentTile is null || !segmentTile.AllowsSpellPath(null, bonfireSpell))
+                continue;
+                
+            segmentTile.Add(new Fire(bonfireSpell, 12, segment.Facet.TimeSpan.FromRounds(1)));
+        }
+    }
+    
     public static TimeSpan _speechDelay = TimeSpan.FromMinutes(1.0);
     public static Dictionary<MobileEntity, DateTime> _speechDelays = new Dictionary<MobileEntity, DateTime>();
     
@@ -56,6 +88,197 @@
         "Yupo", "Yuqui", "Yura", "Yuri", "Yuta", "Yuti", "Yuto", "Yutu", "Yuxi", "Yuya"
     };
     
+    /**
+     * Definition of delegate functions to be used as function pointers
+     * Here, we're setting up what the blank templates will look like to be overridden
+     */
+    public delegate int eq(int x, float y, float z);
+    public delegate CreatureAttackCollection attEQ(int level);
+    public delegate CreatureBlockCollection blockEQ(int level);
+    public delegate LootPack lootEQ(int area);
+    public delegate CreatureSpellCollection spellEQ(int level);
+    public delegate List<ItemEntity> equipEQ(int level);
+    public delegate void itemMutator(MobileEntity entity, Container source, ItemEntity item);
+    
+    public enum Area {
+        KesSurface,
+        KesDungeon1,
+        KesDungeon2,
+        KesDungeon3,
+        KesDungeon4
+    }
+    
+    /**
+      * This is a specific area loot table, anything that all the trash mobs will potentially have
+      * on them will go here.  For specialty mobs, you can use the default loot table then add
+      * additional entries.
+      */
+    public static readonly Dictionary<Area, LootPackEntry[]> lootTable = new Dictionary<Area, LootPackEntry[]>() {
+        [Area.KesSurface] = le(new LootPackEntry(true, (mobile, container) => randomBalm(true), 0.1))
+    };
+    
+    /**
+     * C# doesn't really do autoboxing wihtout a helper
+     */
+    public static LootPackEntry[] le(params LootPackEntry[] l)
+    {
+        return l;
+    }
+    
+    /**
+     * Attack collections
+     */
+    public static CreatureAttackCollection defaultAttack(int level) {
+        return new CreatureAttackCollection() {
+            {new CreatureBasicAttack(level)}
+        };
+    }
+    
+    /**
+     * Loot collections and helpers
+     */
+    public static LootPack trashMobLeveledLoot(int area)
+    {
+        return new LootPack(lootTable[(Area)area]);
+    }
+    
+    public static LootPack trashMobLeveledLootAnd(Area area, params LootPackEntry[] extras)
+    {
+        List<LootPackEntry> lpe = new List<LootPackEntry>(lootTable[(Area)area]);
+        lpe.AddRange(extras);
+        return new LootPack(lpe.ToArray());
+    }
+    
+    /**
+     * Spell collections and helpers
+     */
+    public static CreatureSpellCollection leveledPriestSpells(int level) {
+        return new CreatureSpellCollection() {
+            new CreatureSpell<CurseSpell> (
+            skillLevel: level, 
+            cost: 3,
+            mantra: SpellHelper.GenerateMantra(),
+            instantCast: false)
+        };
+    }
+    
+    /**
+     * Equipment collections and helpers
+     */
+    public static List<ItemEntity> randomPriestEquipment(int level) {
+        List<ItemEntity> equip = new List<ItemEntity>() { new LeatherArmor()};
+        var equipTypeChance = Utility.RandomDouble();
+        if(equipTypeChance < 0.5) {
+            equip.Add(new BlackStaff());
+        } else {
+            equip.Add(new ShortSword());
+        }
+        return equip;
+    }
+    
+    /**
+     * This is the equation code for generating a mob progression table - should be not too far off from what
+     * a normal PC would progress as.  The expectation is that this would be consistent across creatures
+     * from different lands but the same level.
+     * You should also be able to generate a table value if the progression is more complicated or needs tweaking.
+     */
+    public static int progressionMXPlusB(int x, float y, float z) {
+        //level, baseline, multiplier
+        return (int) Math.Ceiling(y + z*(x-1));
+    }
+    public static int progressionGeometric(int x, float y, float z) {
+        //level, baseline, multiplier
+        return (int)Math.Ceiling(y * Math.Pow(z, (x - 1)));
+    }
+    public static int linearSimpleProgression(int x, float y, float z) {
+        //level, val/lev, unused
+        return (int) Math.Ceiling(y*x);
+    }
+    
+    /**
+     * This is the master list of creatures - our monster manual.
+     * Any changes here will affect every creature in the land, so be very sure that something here should change
+     * or if there's a specific attribute to change fore a specific mob in the lands it can be overriden directly upon generation.
+     */
+    public static readonly Dictionary<string,MobMutator> mobMutator = new Dictionary<string, MobMutator>() {
+        [typeof(Bear).Name] = new MobMutator {healthBase=13, dodgeBase=12, damageBase=10, damagePerLv=1.5f, attackBase=3, goldBase=30, goldPerLv=6, expBase=850},
+        [typeof(Bee).Name] = new MobMutator {healthBase=6, dodgeBase=14, damageBase=4, damagePerLv=1.5f, attackBase=1, goldBase=20, goldPerLv=5, expBase=525},
+        [typeof(Wraith).Name] = new MobMutator {healthBase=10, manaBase=17, dodgeBase=10, damageBase=8, attackBase=1, goldBase=35, goldPerLv=7, expBase=725},
+    };
+
+    /**
+     * This is just a storage convenience class for mob generation
+     */
+    public class MobMutator {
+        public string name {get; set;} = null;
+        
+        public int healthBase {get; set;}
+        public float healthPerLv {get; set;} = 0;
+        public eq healthEQ {get; set;} = linearSimpleProgression;
+        
+        public int manaBase {get; set;} = 0;
+        public float manaPerLv {get; set;} = 0;
+        public eq manaEQ {get; set;} = progressionMXPlusB;
+        
+        public int dodgeBase {get; set;}
+        public float dodgePerLv {get; set;} = 1;
+        public eq dodgeEQ {get; set;} = progressionMXPlusB;
+        
+        public int damageBase {get; set;}
+        public float damagePerLv {get; set;} = 1;
+        public eq damageEQ = progressionMXPlusB;
+        
+        public int attackBase {get; set;}
+        public float attackPerLv {get; set;} = 1;
+        public eq attackEQ = progressionMXPlusB;
+        
+        public int spellLv {get; set;} = -7;
+        public float spellPerLv {get; set;} = 1;
+        public eq spellEQ = progressionMXPlusB;
+        
+        public int goldBase {get; set;}
+        public float goldPerLv {get; set;}
+        public eq goldEQ = progressionMXPlusB;
+        
+        public int expBase {get; set;}
+        public float expPerLv {get; set;} = 1.2f;
+        public eq expEQ = progressionGeometric;
+        
+        public int spellRes {get; set;} = 0;
+        public float spellResPerLv {get; set;} = 0;
+        public eq spellResEQ = progressionMXPlusB;
+        
+        public int hideBase {get; set;} = 1;
+        public float hidePerLv {get; set;} = 2;
+        public eq hideEQ {get; set;} = progressionMXPlusB;
+    };
+    
+    /**
+     * Behaviors
+     */
+    public class MobBehavior {
+        public attEQ makeAttack {get; set;} = defaultAttack;
+        public blockEQ makeBlock {get; set;} = null;
+        public lootEQ makeLoot {get; set;} = trashMobLeveledLoot;
+        public spellEQ makeSpell {get; set;} = null;
+        public equipEQ makeEquipment {get; set;} = null;
+    }
+    
+    public class AnimalBehavior : MobBehavior {
+        
+    }
+    
+    /**
+     * We can make priest figures consistent, and scale their power non-linearly using table values
+     */
+     
+    public class PriestBehavior : MobBehavior {
+        public PriestBehavior() {
+            makeSpell = leveledPriestSpells;
+            makeEquipment = randomPriestEquipment;
+        }
+    }
+    
     public static string[] _rarePurchaseResponses = new string[]
     {
         "That's quite a bargain.", 
@@ -64,6 +287,53 @@
         "It was left here, pray the owner doesn't come back.",
         "Don't go losing it."
     };
+    
+    /**
+     * This is the creature creator, it should cut down on about 90% of creature building code
+     * Example usage:
+     * var bear = generateMob<Bear, AnimalBehavior>(3, Area.KesSurface);
+     * this will generate a complete bear with all attributes set with the kesmai surface loot pack.
+     * 
+     */
+    public static MOB generateMob<MOB,BEHAVIOR>(int level, Area area) 
+        where MOB : CreatureEntity, new() 
+        where BEHAVIOR : MobBehavior, new() {
+        
+        MobMutator mutator = mobMutator[typeof(MOB).Name];
+        BEHAVIOR behavior = new BEHAVIOR();
+        MOB mobType = new MOB(){
+            MaxHealth = mutator.healthEQ(level, mutator.healthBase, mutator.healthPerLv),
+            Health = mutator.healthEQ(level, mutator.healthBase, mutator.healthPerLv),
+            MaxMana = mutator.manaEQ(level, mutator.manaBase, mutator.manaPerLv),
+            Mana = mutator.manaEQ(level, mutator.manaBase, mutator.manaPerLv),
+            BaseDodge = mutator.dodgeEQ(level, mutator.dodgeBase, mutator.dodgePerLv),
+            Experience = mutator.expEQ(level, mutator.expBase, mutator.expPerLv),
+        };
+        if(mutator.name != null) {
+            mobType.Name = mutator.name;
+        }
+        mobType.Attacks = behavior.makeAttack(mutator.attackEQ(level,mutator.attackBase,mutator.attackPerLv));
+        if(behavior.makeBlock != null) {
+            mobType.Blocks = behavior.makeBlock(mutator.attackEQ(level,mutator.attackBase,mutator.attackPerLv));
+        }
+        if(behavior.makeSpell != null) {
+            mobType.Spells = behavior.makeSpell(mutator.spellEQ(level,mutator.spellLv,mutator.spellPerLv));
+        }
+        if(behavior.makeEquipment != null) {
+            List<ItemEntity> equipList = behavior.makeEquipment(level);
+            foreach(var e in equipList) {
+                if(e is Weapon weapon) {
+                    mobType.Wield(weapon);
+                } else if (e is Equipment equipment) {
+                    mobType.Equip(equipment);
+                }
+            }
+        }
+        
+        mobType.AddGold(mutator.goldEQ(level, mutator.goldBase, mutator.goldPerLv));
+        
+        return mobType;
+    }
     
     public static void gemsPriceMutator(MobileEntity entity, Container source, ItemEntity item)
     {
@@ -76,7 +346,7 @@
     
     public static void gemsPriceMutatorLow(MobileEntity entity, Container source, ItemEntity item)
     {
-        /* Item values fall between 0.8 to 1.2 of base price. */
+        /* Item values fall between 0.4 to 0.8 of base price. */
         var lesserPrice = (int)(item.BasePrice * 0.6);
         var higherPrice = (int)(item.BasePrice * 0.2);
         
@@ -85,9 +355,9 @@
     
     public static void gemsPriceMutatorMedium(MobileEntity entity, Container source, ItemEntity item)
     {
-        /* Item values fall between 0.8 to 1.2 of base price. */
+        /* Item values fall between 0.6 to 1.0 of base price. */
         var lesserPrice = (int)(item.BasePrice * 0.4);
-        var higherPrice = (int)(item.BasePrice * 1.0);
+        var higherPrice = (int)(0);
         
         item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
     }
@@ -103,8 +373,8 @@
     
     public static void gemsPriceMutatorAboveAverage(MobileEntity entity, Container source, ItemEntity item)
     {
-        /* Item values fall between 0.8 to 1.2 of base price. */
-        var lesserPrice = (int)(item.BasePrice * 1);
+        /* Item values fall between 1 to 1.4 of base price. */
+        var lesserPrice = (int)(0);
         var higherPrice = (int)(item.BasePrice * 0.4);
         
         item.Price = Utility.RandomBetween(lesserPrice, higherPrice);
@@ -112,7 +382,7 @@
     
     public static void gemsPriceMutatorHigh(MobileEntity entity, Container source, ItemEntity item)
     {
-        /* Item values fall between 0.8 to 1.2 of base price. */
+        /* Item values fall between 1.2 to 1.6 of base price. */
         var lesserPrice = (int)(item.BasePrice * 0.2);
         var higherPrice = (int)(item.BasePrice * 0.6);
         
@@ -121,7 +391,7 @@
     
     public static void gemsPriceMutatorVeryHigh(MobileEntity entity, Container source, ItemEntity item)
     {
-        /* Item values fall between 0.8 to 1.2 of base price. */
+        /* Item values fall between 1.4 to 1.8 of base price. */
         var lesserPrice = (int)(item.BasePrice * 0.4);
         var higherPrice = (int)(item.BasePrice * 0.8);
         
@@ -174,7 +444,6 @@
       <id>1</id>
       <name>Surface</name>
       <height>0</height>
-      <experienceMultiplier>1.1</experienceMultiplier>
       <level>5</level>
       <tile x="0" y="0">
         <component type="ObstructionComponent">
@@ -15065,6 +15334,9 @@
       <tile x="37" y="15">
         <component type="StaticComponent">
           <static>114</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>3</ground>
         </component>
       </tile>
       <tile x="38" y="15">
@@ -43171,7 +43443,6 @@
       <id>11</id>
       <name>Dungeon -1</name>
       <height>-10</height>
-      <experienceMultiplier>1.05</experienceMultiplier>
       <level>3</level>
       <tile x="2" y="2">
         <component type="StaticComponent">
@@ -43963,8 +44234,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="27" y="4">
@@ -44599,8 +44870,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="5" y="7">
@@ -44950,8 +45221,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="15" y="8">
@@ -46564,8 +46835,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="21" y="14">
@@ -47539,8 +47810,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="13" y="18">
@@ -50135,8 +50406,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -51647,8 +51918,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -52328,8 +52599,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -52589,8 +52860,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -54108,7 +54379,6 @@
       <id>12</id>
       <name>Dungeon -2</name>
       <height>-20</height>
-      <experienceMultiplier>1.1</experienceMultiplier>
       <level>5</level>
       <tile x="1" y="2">
         <component type="WallComponent">
@@ -54984,8 +55254,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="4" y="6">
@@ -55105,8 +55375,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="16" y="6">
@@ -57093,8 +57363,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="16" y="14">
@@ -57133,8 +57403,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="20" y="14">
@@ -59696,6 +59966,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
@@ -59757,6 +60028,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="20" y="24">
@@ -59800,6 +60072,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
@@ -59871,6 +60144,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
@@ -63425,6 +63699,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
@@ -63491,6 +63766,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="22" y="38">
@@ -63779,6 +64055,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
@@ -63828,6 +64105,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
@@ -64001,7 +64279,6 @@
       <id>13</id>
       <name>Dungeon -3</name>
       <height>-30</height>
-      <experienceMultiplier>1.15</experienceMultiplier>
       <level>8</level>
       <tile x="10" y="0" />
       <tile x="11" y="0" />
@@ -64831,8 +65108,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="40" y="3">
@@ -65339,8 +65616,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="38" y="5">
@@ -65777,8 +66054,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="28" y="7">
@@ -66865,8 +67142,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="34" y="11">
@@ -67300,8 +67577,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="20" y="13">
@@ -67546,6 +67823,7 @@
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="46" y="13" />
@@ -68504,8 +68782,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="38" y="17">
@@ -68835,8 +69113,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="16" y="19">
@@ -69056,8 +69334,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="42" y="19">
@@ -70008,8 +70286,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="22" y="23">
@@ -70962,6 +71240,7 @@
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="46" y="25" />
@@ -71338,8 +71617,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="4" y="27">
@@ -71447,8 +71726,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="14" y="27">
@@ -72186,8 +72465,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="18" y="29">
@@ -72281,6 +72560,7 @@
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="26" y="29">
@@ -72465,6 +72745,7 @@
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="46" y="29" />
@@ -73028,6 +73309,7 @@
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="26" y="31">
@@ -74602,6 +74884,7 @@
           <wall>25</wall>
           <destroyed>38</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="46" y="35" />
@@ -76352,8 +76635,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -76434,8 +76717,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -76661,8 +76944,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -77785,8 +78068,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -79191,8 +79474,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -79355,8 +79638,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="30" y="11">
@@ -79821,8 +80104,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="18" y="13">
@@ -80093,8 +80376,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -81629,8 +81912,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="24" y="19">
@@ -82216,8 +82499,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="26" y="21">
@@ -82616,8 +82899,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="10" y="23">
@@ -84875,8 +85158,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="25" y="31">
@@ -84935,8 +85218,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="32" y="31">
@@ -85308,8 +85591,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="8" y="33">
@@ -85622,8 +85905,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="14" y="34">
@@ -85894,8 +86177,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="10" y="35">
@@ -88141,8 +88424,8 @@
       <tile x="7" y="3">
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -88240,8 +88523,8 @@
       <tile x="14" y="5">
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -88340,8 +88623,8 @@
       <tile x="1" y="6">
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -89352,8 +89635,8 @@
       <tile x="6" y="13">
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -98640,7 +98923,7 @@ return orc;
             skillLevel: 5, cost: 7, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 5, cost: 3,
+            skillLevel: 5, cost: 5,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
@@ -99049,7 +99332,7 @@ return orc;
             skillLevel: 6, cost: 7, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 6, cost: 3, 
+            skillLevel: 6, cost: 5, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
@@ -99682,7 +99965,7 @@ return orc;
         Body = (female ? 37 : 38), IsFemale = female,
             
         MaxHealth = 70, Health = 70,
-        MaxMana = 16, Mana = 16,
+        MaxMana = 12, Mana = 12,
         BaseDodge = 16,
     
         Experience = 3045,
@@ -99703,7 +99986,7 @@ return orc;
             skillLevel: 8, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 6, cost: 3, 
+            skillLevel: 6, cost: 5, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
@@ -101249,15 +101532,62 @@ else
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="surfaceBearTest">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    var bear = generateMob<Bear, AnimalBehavior>(3, Area.KesSurface);
+    bear.Movement=2;
+    bear.AddStatus(new NightVisionStatus(bear));
+	return bear;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="surfaceWraithTest">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var wraith = generateMob<Wraith, PriestBehavior>(8, Area.KesSurface);
+	wraith.AddLoot(trashMobLeveledLootAnd(Area.KesSurface, new LootPackEntry(true, surfaceTreasure, 20)));
+    return wraith;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="Elder.Troll">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>1800</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    announceEarthquake(spawn.Segment, spawn.Location);
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -101269,7 +101599,7 @@ else
         <block><![CDATA[]]></block>
       </script>
       <entry entity="dungeon1BossTrogg" size="1" minimum="1" maximum="1" />
-      <location x="15" y="39" region="11" />
+      <location x="16" y="38" region="11" />
     </spawn>
     <spawn type="LocationSpawner" name="kesmaiRecallVendor">
       <minimumDelay>900</minimumDelay>
@@ -102589,10 +102919,11 @@ else
     <spawn type="RegionSpawner" name="Ydnac Lair">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>3600</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    spawn.Teleport(new Point2D(140, 5, 1));
+    announceEarthquake(spawn.Segment, spawn.Location);
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102604,7 +102935,6 @@ else
         <block><![CDATA[]]></block>
       </script>
       <entry entity="BossNotableYdnac" size="1" minimum="1" maximum="1" />
-      <entry entity="ydnacAbesh" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="138" top="3" right="141" bottom="8" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -102613,10 +102943,11 @@ else
     <spawn type="RegionSpawner" name="Kesmai -4 Dragon">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>3600</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    spawn.Teleport(new Point2D(18, 4, 14));
+    announceEarthquake(spawn.Segment, spawn.Location);
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102943,6 +103274,7 @@ else
       <entry entity="level5Wraith" size="1" minimum="1" maximum="1" />
       <bounds region="13">
         <inclusion left="25" top="1" right="44" bottom="14" />
+        <inclusion left="22" top="2" right="24" bottom="5" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai -3 A">
@@ -103131,6 +103463,7 @@ else
         <inclusion left="11" top="13" right="26" bottom="18" />
         <inclusion left="13" top="19" right="32" bottom="33" />
         <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="25" top="32" right="26" bottom="33" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai -4 South">
@@ -103195,7 +103528,7 @@ else
       <entry entity="dungeon1SkeletonSentry" size="1" minimum="2" maximum="3" />
       <entry entity="dungeon1Wyvern" size="1" minimum="6" maximum="12" />
       <bounds region="11">
-        <inclusion left="19" top="3" right="33" bottom="15" />
+        <inclusion left="19" top="3" right="33" bottom="14" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai -1 Northwest">
@@ -103252,6 +103585,9 @@ else
       <entry entity="dungeon1Wyvern" size="1" minimum="6" maximum="12" />
       <bounds region="11">
         <inclusion left="3" top="21" right="14" bottom="39" />
+        <inclusion left="15" top="33" right="16" bottom="33" />
+        <exclusion left="7" top="21" right="9" bottom="27" />
+        <exclusion left="5" top="25" right="6" bottom="27" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai -1 Southeast">
@@ -103373,6 +103709,9 @@ else
       <entry entity="level3OrcArsonist" size="1" minimum="1" maximum="2" />
       <bounds region="12">
         <inclusion left="2" top="18" right="32" bottom="23" />
+        <inclusion left="2" top="15" right="14" bottom="17" />
+        <inclusion left="2" top="24" right="12" bottom="25" />
+        <inclusion left="10" top="26" right="12" bottom="32" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai -3 B">
@@ -103444,6 +103783,7 @@ else
       <entry entity="level8Ghoul" size="1" minimum="0" maximum="1" />
       <bounds region="14">
         <inclusion left="1" top="10" right="32" bottom="38" />
+        <inclusion left="1" top="6" right="9" bottom="9" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -103467,6 +103807,76 @@ else
       <entry entity="BossMiniLevel7Bear" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="51" top="4" right="95" bottom="29" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai -1 Library Spawn">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <bounds region="11">
+        <inclusion left="3" top="3" right="8" bottom="6" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="TestSpawn">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="surfaceBearTest" size="1" minimum="1" maximum="1" />
+      <entry entity="surfaceWraithTest" size="1" minimum="1" maximum="1" />
+      <bounds region="1">
+        <inclusion left="135" top="35" right="136" bottom="35" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Ydnac Lair Abesh">
+      <minimumDelay>7200</minimumDelay>
+      <maximumDelay>3600</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="ydnacAbesh" size="1" minimum="1" maximum="1" />
+      <bounds region="1">
+        <inclusion left="138" top="3" right="141" bottom="8" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>

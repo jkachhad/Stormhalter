@@ -64,6 +64,8 @@ namespace Kesmai.WorldForge
 		
 		public static byte[] ScriptingData { get; set; }
 
+		public static string CustomArtPath { get; set; }
+
 		#endregion
 
 		#region Fields

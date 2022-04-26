@@ -1,0 +1,465 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<data>
+  <!--
+	Categories define where items may be stored.
+	Category	Definition
+	1		Large Weapon/Back Belt
+	2		Small Weapon/Belt
+	3		Misc Sack :  ex: A Gem
+	4		Ring/Sack
+	5		Helmet/Head/Belt/Sack
+	6		Amulet/Neck/Sack/Belt
+	7		Bracelet/Sack
+	8		Gauntlets/Belt/Sack
+	9		Armor/Back Belt
+	10		Robe/Back Belt
+	11		Boots/Belt/Sack
+	12		Consumable/Sack
+	13		Coin
+	14		Dagger/Sack/Belt/throw from belt
+	15		Halberd/Back Belt/etc
+	16		Corpse
+  -->
+	
+
+  <!-- Example 
+  <item id="900">
+    <texture>Sprites/Items/Items-1</texture>
+    <source>(855,855,45,45)</source>
+  </item>
+  -->
+  <!-- Corpse all start at 5000 + bodyId, but can be configured in Body.xml -->
+  <!-- Example
+  <item id="5001" category="16">
+    <texture>Bitmaps\002</texture>
+    <source>(10,10,45,45)</source>
+  </item>
+  -->
+
+
+  <!-- Heron Main-Gauche -->
+  <item id="900" category="14">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/daggers</texture>
+    <source>(55,0,55,55)</source>
+  </item>
+  <!-- Poisoned Heron Main-Gauche -->
+  <item id="901" category="14">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/daggers</texture>
+    <source>(220,0,55,55)</source>
+  </item>
+  <!-- Jim the Enchanter Staff -->
+  <item id="902" category="1">
+    <texture>Tenser/Items/jimstaffv2</texture>
+    <source>(0,0,55,55)</source>
+  </item>
+  <!-- Poisoned Rapier -->
+  <item id="903" category="2">
+    <texture>Tenser/Items/poison_rapier</texture>
+    <source>(0,0,55,55)</source>
+  </item>
+  <!-- Poisoned Black Rapier -->
+  <item id="904" category="2">
+    <texture>Tenser/Items/poison_brapier</texture>
+    <source>(0,0,55,55)</source>
+  </item>
+  <!-- Illyrian Field Sabre -->
+  <item id="905" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/rapiers</texture>
+    <source>(0,0,55,55)</source>
+  </item>
+  <!-- Poisoned Illyrian Field Sabre -->
+  <item id="906" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/rapiersPoisoned</texture>
+    <source>(0,0,55,55)</source>
+  </item>
+  <!-- Illyrian Common Sabre -->
+  <item id="907" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/rapiers</texture>
+    <source>(55,0,55,55)</source>
+  </item>
+  <!-- Poisoned Illyrian Common Sabre -->
+  <item id="908" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/rapiersPoisoned</texture>
+    <source>(55,0,55,55)</source>
+  </item>
+  <!-- Illyrian Shiny Sabre -->
+  <item id="909" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/rapiers</texture>
+    <source>(110,0,55,55)</source>
+  </item>
+  <!-- Poisoned Illyrian Shiny Sabre -->
+  <item id="910" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/rapiersPoisoned</texture>
+    <source>(110,0,55,55)</source>
+  </item>
+  <!-- Silver Cutlass -->
+  <item id="911" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/rapiers</texture>
+    <source>(165,0,55,55)</source>
+  </item>
+  <!-- Poisoned Silver Cutlass -->
+  <item id="912" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/rapiersPoisoned</texture>
+    <source>(165,0,55,55)</source>
+  </item>
+  <!-- Silver Sabre -->
+  <item id="913" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/rapiers</texture>
+    <source>(220,0,55,55)</source>
+  </item>
+  <!-- Poisoned Silver Sabre -->
+  <item id="914" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/rapiersPoisoned</texture>
+    <source>(220,0,55,55)</source>
+  </item>
+  <!-- Fancy Cutlass -->
+  <item id="915" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/rapiers</texture>
+    <source>(275,0,55,55)</source>
+  </item>
+  <!-- Poisoned Fancy Cutlass -->
+  <item id="916" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/rapiersPoisoned</texture>
+    <source>(275,0,55,55)</source>
+  </item>
+  <!-- Fancy Sabre -->
+  <item id="917" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/rapiers</texture>
+    <source>(330,0,55,55)</source>
+  </item>
+  <!-- Poisoned Fancy Sabre -->
+  <item id="918" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/rapiersPoisoned</texture>
+    <source>(330,0,55,55)</source>
+  </item>
+  <!-- Khanjar -->
+  <item id="919" category="14">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/daggers</texture>
+    <source>(0,0,55,55)</source>
+  </item>
+  <!-- Poisoned Khanjar -->
+  <item id="920" category="14">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/daggers</texture>
+    <source>(220,0,55,55)</source>
+  </item>
+  <!-- Tanto -->
+  <item id="921" category="14">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/daggers</texture>
+    <source>(165,0,55,55)</source>
+  </item>
+  <!-- Poisoned Tanto -->
+  <item id="922" category="14">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/daggers</texture>
+    <source>(275,0,55,55)</source>
+  </item>
+  <!-- DemonCleaver plain -->
+  <item id="923" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/1hSwords</texture>
+    <source>(0,0,55,55)</source>
+  </item>
+  <!-- DemonCleaver Blue Glow -->
+  <item id="924" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/1hSwords</texture>
+    <source>(330,0,55,55)</source>
+  </item>
+  <!-- DragonFang Plain -->
+  <item id="925" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/1hSwords</texture>
+    <source>(55,0,55,55)</source>
+  </item>
+  <!-- DragonFang Blue Glow -->
+  <item id="926" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/bg_asstd</texture>
+    <source>(110,0,55,55)</source>
+  </item>
+  <!-- Shamshir -->
+  <item id="927" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/1hSwords</texture>
+    <source>(110,0,55,55)</source>
+  </item>
+  <!-- Shamshir Blue Glow -->
+  <item id="928" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/bg_asstd</texture>
+    <source>(165,0,55,55)</source>
+  </item>
+  <!-- Orc Scimitar -->
+  <item id="929" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/1hSwords</texture>
+    <source>(165,0,55,55)</source>
+  </item>
+  <!-- Scimitar -->
+  <item id="930" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/1hSwords</texture>
+    <source>(220,0,55,55)</source>
+  </item>
+  <!-- Kopesh -->
+  <item id="931" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/1hSwords</texture>
+    <source>(275,0,55,55)</source>
+  </item>
+  <!-- 2h Hammer -->
+  <item id="932" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/2hand</texture>
+    <source>(0,0,55,55)</source>
+  </item>
+  <!-- Muian Great Axe -->
+  <item id="933" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/2hand</texture>
+    <source>(55,0,55,55)</source>
+  </item>
+  <!-- Blue Glowing Muian Great Axe -->
+  <item id="934" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/bg_asstd</texture>
+    <source>(0,0,55,55)</source>
+  </item>
+  <!-- Great Axe -->
+  <item id="935" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/2hand</texture>
+    <source>(110,0,55,55)</source>
+  </item>
+  <!-- Hofud (Heimdalls' Sword)-->
+  <item id="936" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/2hand</texture>
+    <source>(165,0,55,55)</source>
+  </item>
+  <!-- Blue Glow Hofud -->
+  <item id="937" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/bg_asstd</texture>
+    <source>(55,0,55,55)</source>
+  </item>
+  <!-- Dadao -->
+  <item id="938" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/rapiersPoisoned</texture>
+    <source>(220,0,55,55)</source>
+  </item>
+  <!-- Odachi -->
+  <item id="939" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/2hand</texture>
+    <source>(275,0,55,55)</source>
+  </item>
+  <!-- Flamberg -->
+  <item id="940" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/rapiersPoisoned</texture>
+    <source>(330,0,55,55)</source>
+  </item>
+  <!-- Manriki Chain -->
+  <item id="941" category="14">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/flails</texture>
+    <source>(0,0,55,55)</source>
+  </item>
+  <!-- Studded Flail -->
+  <item id="942" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/flails</texture>
+    <source>(55,0,55,55)</source>
+  </item>
+  <!-- Skull Flail -->
+  <item id="943" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/flails</texture>
+    <source>(110,0,55,55)</source>
+  </item>
+  <!-- Bladed Flail -->
+  <item id="944" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/rapiersPoisoned</texture>
+    <source>(165,0,55,55)</source>
+  </item>
+  <!-- Dual flail -->
+  <item id="945" category="2">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/rapiersPoisoned</texture>
+    <source>(220,0,55,55)</source>
+  </item>
+  <!-- Bec de Corbin -->
+  <item id="946" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/polearms</texture>
+    <source>(0,0,55,55)</source>
+  </item>
+  <!-- Glaive -->
+  <item id="947" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/polearms</texture>
+    <source>(55,0,55,55)</source>
+  </item>
+  <!-- Bardiche -->
+  <item id="948" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/polearms</texture>
+    <source>(110,0,55,55)</source>
+  </item>
+  <!-- Voulge -->
+  <item id="949" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/polearms</texture>
+    <source>(165,0,55,55)</source>
+  </item>
+  <!-- Guisarme -->
+  <item id="950" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/polearms</texture>
+    <source>(220,0,55,55)</source>
+  </item>
+  <!-- 6pt Shuriken -->
+  <item id="951" category="14">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/shuriken</texture>
+    <source>(0,0,55,55)</source>
+  </item>
+  <!-- Kunai/Flachette -->
+  <item id="952" category="14">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/shuriken</texture>
+    <source>(55,0,55,55)</source>
+  </item>
+  <!-- 8pt Shuriken -->
+  <item id="953" category="14">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/shuriken</texture>
+    <source>(110,0,55,55)</source>
+  </item>
+  <!-- 4pt Shuriken -->
+  <item id="954" category="14">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/shuriken</texture>
+    <source>(165,0,55,55)</source>
+  </item>
+  <!-- Blade Shuriken -->
+  <item id="955" category="14">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/shuriken</texture>
+    <source>(220,0,55,55)</source>
+  </item>
+  <!-- Yari -->
+  <item id="956" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/spears</texture>
+    <source>(0,0,55,55)</source>
+  </item>
+  <!-- Spear -->
+  <item id="957" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/spears</texture>
+    <source>(55,0,55,55)</source>
+  </item>
+  <!-- Spetum -->
+  <item id="958" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/spears</texture>
+    <source>(110,0,55,55)</source>
+  </item>
+  <!-- Staff of Smiting -->
+  <item id="959" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/staves1</texture>
+    <source>(0,0,55,55)</source>
+  </item>
+  <!-- Gem Staff - Blue -->
+  <item id="960" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/staves1</texture>
+    <source>(55,0,55,55)</source>
+  </item>
+  <!-- twisted staff -->
+  <item id="961" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/staves1</texture>
+    <source>(110,0,55,55)</source>
+  </item>
+  <!-- Gythka -->
+  <item id="962" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/staves1</texture>
+    <source>(165,0,55,55)</source>
+  </item>
+  <!-- Dragon staff -->
+  <item id="963" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/staves1</texture>
+    <source>(220,0,55,55)</source>
+  </item>
+  <!-- Lion staff -->
+  <item id="964" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/staves1</texture>
+    <source>(275,0,55,55)</source>
+  </item>
+  <!-- Pheonix staff -->
+  <item id="965" category="1">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/staves1</texture>
+    <source>(330,0,55,55)</source>
+  </item>
+  <!-- Mage Hat -->
+  <item id="966" category="5">
+    <texture>Tenser/Items/magehatblue</texture>
+    <source>(0,0,55,55)</source>
+  </item>
+  <!-- Yeti Skull -->
+  <item id="967" category="5">
+    <offset>(-5,-5)</offset>
+    <texture>Tenser/Items/yetiskull</texture>
+    <source>(0,0,55,55)</source>
+  </item>
+  <!-- Scorpion Corpse -->
+  <item id="5300" category="16">
+    <texture>Tenser/monsters/deadscorp</texture>
+    <source>(15,15,45,45)</source>
+  </item>
+  <!-- White Rabbit Corpse -->
+  <item id="5310" category="16">
+    <texture>Tenser/monsters/whiterabbit</texture>
+    <source>(75,15,45,45)</source>
+  </item>
+  <!-- White Bunny Corpse -->
+  <item id="5311" category="16">
+    <texture>Tenser/monsters/whitebunny</texture>
+    <source>(75,15,45,45)</source>
+  </item>
+  <!-- Eye Tyrant Corpse -->
+  <item id="5314" category="16">
+    <texture>Tenser/monsters/beholderdead</texture>
+    <source>(15,15,45,45)</source>
+  </item>
+</data>

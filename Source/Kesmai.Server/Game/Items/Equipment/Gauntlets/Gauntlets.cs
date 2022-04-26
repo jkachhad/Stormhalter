@@ -185,5 +185,25 @@ namespace Kesmai.Server.Items
 		public virtual void OnHit(MobileEntity attacker, MobileEntity defender)
 		{
 		}
+
+		/// <summary>
+		/// Overridable. Determines whether the specified instance can use this item.
+		/// </summary>
+		public override bool CanUse(MobileEntity entity)
+		{
+			if (!base.CanUse(entity))
+				return false;
+
+			/* We prevent the weapon from being beneficial if alignment values do not match. */
+			var flags = Flags;
+			var alignment = entity.Alignment;
+
+			if ((flags.HasFlag(WeaponFlags.Lawful) && alignment != Alignment.Lawful) ||
+			    (flags.HasFlag(WeaponFlags.Neutral) && alignment != Alignment.Neutral) ||
+			    (flags.HasFlag(WeaponFlags.Chaotic) && alignment != Alignment.Chaotic && alignment != Alignment.Evil))
+				return false;
+			
+			return true;
+		}
 	}
 }

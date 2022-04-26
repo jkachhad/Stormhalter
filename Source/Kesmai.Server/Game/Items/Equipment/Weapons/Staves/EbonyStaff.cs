@@ -28,26 +28,26 @@ namespace Kesmai.Server.Items
 		/// <inheritdoc />
 		public override int BaseArmorBonus => 5;
 
-		        /// <inheritdoc />
-        public override int ProjectileMitigation  => 3;
+		/// <inheritdoc />
+    public override int ProjectileMitigation  => 3;
 
 		/// <inheritdoc />
 		public override WeaponFlags Flags => WeaponFlags.TwoHanded | WeaponFlags.Bashing | WeaponFlags.Lawful;
 
-        /// <inheritdoc />
+    /// <inheritdoc />
 		public override bool CanBind => true;
 
-        /// <inheritdoc />
-        public override int ManaRegeneration => 1;
+    /// <inheritdoc />
+    public override int ManaRegeneration => 1;
 
-        /// <summary>
+    /// <summary>
 		/// Initializes a new instance of the <see cref="EbonyStaff"/> class.
 		/// </summary>
 		public EbonyStaff() : base(307)
 		{
 		}
 
-        /// <inheritdoc />
+    /// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)
 		{
 			entries.Add(new LocalizationEntry(6200000, 6200163)); /* [You are looking at] [an ebony staff encrusted with diamonds. The weapon emanates power. The weapon is lawful.] */

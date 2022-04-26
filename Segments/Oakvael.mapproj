@@ -1,8 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.92.0.0">
+<segment name="Oakvael" version="0.95.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
+    public static void announceEarthquake(Segment segment, Point2D location, bool fire = true)
+    {
+        var packet = new AsciiMessagePacket(AsciiMessageType.System, Color.Yellow, 
+                $"You feel the earth shudder beneath your feet.");
+                
+        foreach (var client in segment.Clients)
+        {
+            var character = client.Character;
+            
+            if (character is null || !character.IsAlive)
+                return;
+                
+            character.PlaySound(65);
+            character.SendPacket(packet);
+        }
+    
+        if (!fire)
+            return;
+        
+        var bonfireSpell = new BonfireSpell();
+        
+        foreach (var direction in Direction.All)
+        {
+            var segmentTile = segment.FindTile(location, direction);
+            
+            if (segmentTile is null || !segmentTile.AllowsSpellPath(null, bonfireSpell))
+                continue;
+                
+            segmentTile.Add(new Fire(bonfireSpell, 12, segment.Facet.TimeSpan.FromRounds(1)));
+        }
+    }
+    
     public static TimeSpan _speechDelay = TimeSpan.FromMinutes(1.0);
     public static Dictionary<MobileEntity, DateTime> _speechDelays = new Dictionary<MobileEntity, DateTime>();
     
@@ -74,9 +106,9 @@
         item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
     }
     
-        public static void gemsPriceMutatorLow(MobileEntity entity, Container source, ItemEntity item)
+    public static void gemsPriceMutatorLow(MobileEntity entity, Container source, ItemEntity item)
     {
-        /* Item values fall between 0.8 to 1.2 of base price. */
+        /* Item values fall between 0.4 to 0.8 of base price. */
         var lesserPrice = (int)(item.BasePrice * 0.6);
         var higherPrice = (int)(item.BasePrice * 0.2);
         
@@ -85,9 +117,9 @@
     
     public static void gemsPriceMutatorMedium(MobileEntity entity, Container source, ItemEntity item)
     {
-        /* Item values fall between 0.8 to 1.2 of base price. */
+        /* Item values fall between 0.6 to 1.0 of base price. */
         var lesserPrice = (int)(item.BasePrice * 0.4);
-        var higherPrice = (int)(item.BasePrice * 1.0);
+        var higherPrice = (int)(0);
         
         item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
     }
@@ -103,16 +135,16 @@
     
     public static void gemsPriceMutatorAboveAverage(MobileEntity entity, Container source, ItemEntity item)
     {
-        /* Item values fall between 0.8 to 1.2 of base price. */
-        var lesserPrice = (int)(item.BasePrice * 1);
+        /* Item values fall between 1 to 1.4 of base price. */
+        var lesserPrice = (int)(0);
         var higherPrice = (int)(item.BasePrice * 0.4);
         
-        item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
+        item.Price = Utility.RandomBetween(lesserPrice, higherPrice);
     }
     
     public static void gemsPriceMutatorHigh(MobileEntity entity, Container source, ItemEntity item)
     {
-        /* Item values fall between 0.8 to 1.2 of base price. */
+        /* Item values fall between 1.2 to 1.6 of base price. */
         var lesserPrice = (int)(item.BasePrice * 0.2);
         var higherPrice = (int)(item.BasePrice * 0.6);
         
@@ -121,7 +153,7 @@
     
     public static void gemsPriceMutatorVeryHigh(MobileEntity entity, Container source, ItemEntity item)
     {
-        /* Item values fall between 0.8 to 1.2 of base price. */
+        /* Item values fall between 1.4 to 1.8 of base price. */
         var lesserPrice = (int)(item.BasePrice * 0.4);
         var higherPrice = (int)(item.BasePrice * 0.8);
         
@@ -1211,8 +1243,6 @@
             Name = "Grove Keeper";
     
             CanLoot = false;
-			
-			Alignment = Alignment.Chaotic;
         }
     
         public int keepersooth = 0;
@@ -4892,7 +4922,7 @@
           <openId>77</openId>
           <closedId>65</closedId>
           <secretId>224</secretId>
-          <destroyedId>80</destroyedId>
+          <destroyedId>81</destroyedId>
           <isSecret>true</isSecret>
         </component>
       </tile>
@@ -13492,8 +13522,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="47" y="19">
@@ -17701,8 +17731,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="16" y="26">
@@ -23396,8 +23426,8 @@
         </component>
         <component type="WallComponent">
           <wall>33</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>183</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="12" y="35">
@@ -28703,12 +28733,13 @@
       <tile x="51" y="0" />
       <tile x="24" y="5">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>225</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="25" y="5">
@@ -28818,6 +28849,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="25" y="6">
@@ -28838,6 +28870,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="28" y="6">
@@ -28910,6 +28943,7 @@
           <wall>225</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="7">
@@ -28920,11 +28954,13 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="25" y="7">
@@ -28959,6 +28995,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="29" y="7">
@@ -29038,6 +29075,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <static>361</static>
@@ -29060,6 +29098,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="10" y="8">
@@ -29125,6 +29164,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="8">
@@ -29163,6 +29203,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="37" y="8">
@@ -29244,6 +29285,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="11" y="9">
@@ -29332,6 +29374,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="9">
@@ -29370,6 +29413,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="30" y="9">
@@ -29527,6 +29571,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="8" y="10">
@@ -29548,6 +29593,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="10" y="10">
@@ -29558,11 +29604,13 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="11" y="10">
@@ -29647,6 +29695,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="10">
@@ -29682,6 +29731,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="30" y="10">
@@ -29815,6 +29865,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="7" y="11">
@@ -29953,6 +30004,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="11">
@@ -29963,6 +30015,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="25" y="11">
@@ -29973,6 +30026,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="26" y="11">
@@ -29994,6 +30048,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="28" y="11">
@@ -30004,6 +30059,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="29" y="11">
@@ -30014,11 +30070,13 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="30" y="11">
@@ -30172,6 +30230,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="6" y="12">
@@ -30182,11 +30241,13 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="7" y="12">
@@ -30396,6 +30457,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="41" y="12">
@@ -30415,6 +30477,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="43" y="12">
@@ -30650,6 +30713,7 @@
           <wall>225</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="40" y="13">
@@ -30660,11 +30724,13 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="41" y="13">
@@ -30684,6 +30750,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="43" y="13">
@@ -30733,6 +30800,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="6" y="14">
@@ -30803,22 +30871,24 @@
       </tile>
       <tile x="15" y="14">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>225</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="16" y="14">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="17" y="14">
@@ -30840,6 +30910,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="19" y="14">
@@ -30989,12 +31060,13 @@
       </tile>
       <tile x="39" y="14">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="40" y="14">
@@ -31015,6 +31087,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="2" y="15">
@@ -31044,6 +31117,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="5" y="15">
@@ -31054,11 +31128,13 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="6" y="15">
@@ -31131,12 +31207,13 @@
       </tile>
       <tile x="15" y="15">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="16" y="15">
@@ -31157,6 +31234,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="19" y="15">
@@ -31318,6 +31396,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="2" y="16" />
@@ -31345,6 +31424,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="6" y="16">
@@ -31415,12 +31495,13 @@
       </tile>
       <tile x="15" y="16">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="16" y="16">
@@ -31441,6 +31522,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="19" y="16">
@@ -31567,12 +31649,13 @@
       </tile>
       <tile x="39" y="16">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="40" y="16">
@@ -31593,6 +31676,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="2" y="17">
@@ -31640,11 +31724,13 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="6" y="17">
@@ -31716,12 +31802,13 @@
       </tile>
       <tile x="15" y="17">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="16" y="17">
@@ -31742,6 +31829,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="19" y="17">
@@ -31881,6 +31969,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="40" y="17">
@@ -31891,6 +31980,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="41" y="17">
@@ -31901,6 +31991,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="42" y="17">
@@ -31911,11 +32002,13 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="2" y="18">
@@ -32023,6 +32116,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="16" y="18">
@@ -32033,6 +32127,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="17" y="18">
@@ -32043,6 +32138,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="18" y="18">
@@ -32053,21 +32149,24 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="19" y="18">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="20" y="18">
@@ -32078,6 +32177,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="18">
@@ -32227,6 +32327,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="6" y="19">
@@ -32313,6 +32414,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="19">
@@ -32380,32 +32482,35 @@
       </tile>
       <tile x="33" y="19">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>225</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="34" y="19">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="35" y="19">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="36" y="19">
@@ -32416,6 +32521,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="37" y="19">
@@ -32512,6 +32618,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="8" y="20">
@@ -32522,6 +32629,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="LockersComponent">
           <static>119</static>
@@ -32535,6 +32643,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="10" y="20">
@@ -32545,6 +32654,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="11" y="20">
@@ -32560,32 +32670,35 @@
       </tile>
       <tile x="12" y="20">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="13" y="20">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="14" y="20">
         <component type="FloorComponent">
-          <ground>9</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="15" y="20">
@@ -32609,6 +32722,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="18" y="20">
@@ -32629,6 +32743,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="20">
@@ -32682,12 +32797,13 @@
       </tile>
       <tile x="33" y="20">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="34" y="20">
@@ -32708,6 +32824,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="5" y="21">
@@ -32750,6 +32867,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="10" y="21">
@@ -32780,6 +32898,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="15" y="21">
@@ -32803,6 +32922,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="18" y="21">
@@ -32823,6 +32943,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="21">
@@ -32900,6 +33021,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="5" y="22">
@@ -32926,6 +33048,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="8" y="22">
@@ -32944,6 +33067,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <static>348</static>
@@ -32980,6 +33104,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="15" y="22">
@@ -33003,6 +33128,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="18" y="22">
@@ -33013,6 +33139,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="19" y="22">
@@ -33023,6 +33150,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="20" y="22">
@@ -33033,11 +33161,13 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="22">
@@ -33091,12 +33221,13 @@
       </tile>
       <tile x="33" y="22">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="34" y="22">
@@ -33117,6 +33248,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="5" y="23">
@@ -33153,11 +33285,13 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="8" y="23">
@@ -33168,6 +33302,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="9" y="23">
@@ -33178,11 +33313,13 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="10" y="23">
@@ -33193,6 +33330,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="11" y="23">
@@ -33221,6 +33359,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="14" y="23">
@@ -33231,11 +33370,13 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="15" y="23">
@@ -33332,12 +33473,13 @@
       </tile>
       <tile x="33" y="23">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>225</wall>
@@ -33353,6 +33495,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="35" y="23">
@@ -33363,6 +33506,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="36" y="23">
@@ -33373,11 +33517,13 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="5" y="24">
@@ -33414,6 +33560,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="10" y="24">
@@ -33444,6 +33591,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="15" y="24">
@@ -33456,22 +33604,24 @@
       </tile>
       <tile x="16" y="24">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>225</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="17" y="24">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="18" y="24">
@@ -33493,6 +33643,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="20" y="24">
@@ -33526,22 +33677,24 @@
       </tile>
       <tile x="29" y="24">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>225</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="30" y="24">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="31" y="24">
@@ -33557,27 +33710,30 @@
       </tile>
       <tile x="32" y="24">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="33" y="24">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="5" y="25">
@@ -33709,12 +33865,13 @@
       </tile>
       <tile x="16" y="25">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <static>348</static>
@@ -33738,6 +33895,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="20" y="25">
@@ -33764,12 +33922,13 @@
       </tile>
       <tile x="29" y="25">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <static>348</static>
@@ -33798,6 +33957,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="14" y="26">
@@ -33816,12 +33976,13 @@
       </tile>
       <tile x="16" y="26">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>225</wall>
@@ -33846,6 +34007,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="19" y="26">
@@ -33856,11 +34018,13 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="20" y="26">
@@ -33877,12 +34041,13 @@
       </tile>
       <tile x="29" y="26">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>225</wall>
@@ -33925,11 +34090,13 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="15" y="27">
@@ -33941,12 +34108,13 @@
       </tile>
       <tile x="16" y="27">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>3</ground>
         </component>
         <component type="WallComponent">
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="17" y="27">
@@ -33967,6 +34135,7 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="20" y="27">
@@ -34034,6 +34203,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="18" y="28">
@@ -34044,6 +34214,7 @@
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="19" y="28">
@@ -34054,11 +34225,13 @@
           <wall>224</wall>
           <destroyed>227</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>223</wall>
           <destroyed>226</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="20" y="28">
@@ -35946,8 +36119,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="27" y="4">
@@ -36778,8 +36951,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="31" y="6">
@@ -36818,8 +36991,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="35" y="6">
@@ -37435,8 +37608,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="18" y="8">
@@ -37845,8 +38018,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="17" y="9">
@@ -38040,6 +38213,7 @@
           <wall>159</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="49" y="9">
@@ -39443,8 +39617,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="12" y="4">
@@ -39488,8 +39662,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="18" y="4">
@@ -39802,8 +39976,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="17" y="6">
@@ -39890,8 +40064,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="6" y="7">
@@ -40074,8 +40248,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="3" y="8">
@@ -40825,8 +40999,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="12" y="12">
@@ -43203,6 +43377,9 @@
       <tile x="5" y="4">
         <component type="StaticComponent">
           <static>114</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>3</ground>
         </component>
       </tile>
       <tile x="6" y="4">
@@ -47490,8 +47667,8 @@
         </component>
         <component type="WallComponent">
           <wall>143</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>144</destroyed>
+          <ruins>46</ruins>
         </component>
       </tile>
       <tile x="12" y="5">
@@ -47606,8 +47783,8 @@
         </component>
         <component type="WallComponent">
           <wall>143</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>144</destroyed>
+          <ruins>46</ruins>
         </component>
       </tile>
       <tile x="22" y="5">
@@ -47644,6 +47821,7 @@
           <wall>139</wall>
           <destroyed>141</destroyed>
           <ruins>46</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="1" y="6">
@@ -48228,6 +48406,7 @@
           <wall>139</wall>
           <destroyed>141</destroyed>
           <ruins>46</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="1" y="9">
@@ -48541,9 +48720,8 @@
         </component>
         <component type="WallComponent">
           <wall>33</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
-          <indestructible>true</indestructible>
+          <destroyed>784</destroyed>
+          <ruins>45</ruins>
         </component>
       </tile>
       <tile x="18" y="10">
@@ -48605,6 +48783,7 @@
           <wall>27</wall>
           <destroyed>40</destroyed>
           <ruins>45</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="1" y="11">
@@ -49194,6 +49373,7 @@
           <wall>27</wall>
           <destroyed>40</destroyed>
           <ruins>45</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="1" y="14">
@@ -49250,8 +49430,8 @@
         </component>
         <component type="WallComponent">
           <wall>33</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>784</destroyed>
+          <ruins>45</ruins>
         </component>
       </tile>
       <tile x="8" y="14">
@@ -49843,6 +50023,7 @@
           <wall>27</wall>
           <destroyed>40</destroyed>
           <ruins>45</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-1" y="17">
@@ -50252,6 +50433,7 @@
           <wall>27</wall>
           <destroyed>40</destroyed>
           <ruins>45</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="1" y="19">
@@ -50439,8 +50621,8 @@
         </component>
         <component type="WallComponent">
           <wall>143</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>144</destroyed>
+          <ruins>46</ruins>
         </component>
       </tile>
       <tile x="8" y="20">
@@ -57559,8 +57741,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="5" y="-8">
@@ -57779,8 +57961,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="2" y="-7">
@@ -58078,8 +58260,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="7" y="-6">
@@ -58376,6 +58558,7 @@
           <wall>157</wall>
           <destroyed>160</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-4" y="-5">
@@ -58392,8 +58575,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="-2" y="-5">
@@ -58437,8 +58620,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="4" y="-5">
@@ -58830,8 +59013,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="9" y="-4">
@@ -59149,8 +59332,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="0" y="-3">
@@ -59200,8 +59383,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="6" y="-3">
@@ -59676,6 +59859,9 @@
           <ruins>170</ruins>
           <indestructible>true</indestructible>
         </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
+        </component>
       </tile>
       <tile x="23" y="-2">
         <component type="FloorComponent">
@@ -59847,8 +60033,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="2" y="-1">
@@ -59901,8 +60087,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="8" y="-1">
@@ -60570,8 +60756,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="-1" y="1">
@@ -60610,8 +60796,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="4" y="1">
@@ -60844,8 +61030,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="34" y="1">
@@ -60979,8 +61165,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="2" y="2">
@@ -61028,8 +61214,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="7" y="2">
@@ -61341,8 +61527,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="1" y="3">
@@ -61381,8 +61567,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="6" y="3">
@@ -61674,6 +61860,7 @@
           <wall>157</wall>
           <destroyed>160</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-4" y="4">
@@ -61735,8 +61922,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="5" y="4">
@@ -63230,8 +63417,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="35" y="8">
@@ -64297,8 +64484,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -64663,8 +64850,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -64954,8 +65141,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -65039,8 +65226,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="15" y="14">
@@ -65299,8 +65486,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -65332,8 +65519,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="6" y="15">
@@ -65624,8 +65811,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="5" y="16">
@@ -65716,8 +65903,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="17" y="16">
@@ -66396,8 +66583,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="19" y="18">
@@ -66617,8 +66804,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -66711,8 +66898,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="14" y="19">
@@ -67016,8 +67203,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="14" y="20">
@@ -67076,8 +67263,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="21" y="20">
@@ -67324,8 +67511,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="8" y="21">
@@ -67736,8 +67923,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="17" y="22">
@@ -67781,8 +67968,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="23" y="22">
@@ -68065,8 +68252,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="13" y="23">
@@ -68095,8 +68282,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="16" y="23">
@@ -68448,8 +68635,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="15" y="24">
@@ -68493,8 +68680,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="19" y="24">
@@ -68538,8 +68725,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -69534,8 +69721,8 @@
         </component>
         <component type="WallComponent">
           <wall>32</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>783</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="14" y="27">
@@ -71607,8 +71794,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -74313,8 +74500,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="7" y="11">
@@ -74481,6 +74668,7 @@
           <wall>157</wall>
           <destroyed>160</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="0" y="12">
@@ -74865,6 +75053,7 @@
           <wall>157</wall>
           <destroyed>160</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="0" y="14">
@@ -75225,6 +75414,7 @@
           <wall>157</wall>
           <destroyed>160</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="24" y="15">
@@ -76057,8 +76247,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="15" y="20">
@@ -77339,8 +77529,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="10" y="27">
@@ -77489,8 +77679,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="9" y="28">
@@ -77730,8 +77920,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="12" y="29">
@@ -77887,8 +78077,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="8" y="30">
@@ -78089,8 +78279,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="11" y="31">
@@ -78266,8 +78456,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="10" y="32">
@@ -78491,8 +78681,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="13" y="33">
@@ -78671,8 +78861,8 @@
         </component>
         <component type="WallComponent">
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>162</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="12" y="34">
@@ -80706,6 +80896,7 @@
           <wall>158</wall>
           <destroyed>161</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <color r="0" g="200" b="0" a="255" />
@@ -80820,8 +81011,8 @@
         <component type="WallComponent">
           <color r="255" g="210" b="95" a="255" />
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>228</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="33" y="-1">
@@ -80864,8 +81055,8 @@
         <component type="WallComponent">
           <color r="255" g="210" b="95" a="255" />
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>228</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="36" y="-1">
@@ -81127,6 +81318,7 @@
           <wall>158</wall>
           <destroyed>161</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <color r="0" g="200" b="0" a="255" />
@@ -81205,8 +81397,8 @@
         <component type="WallComponent">
           <color r="255" g="210" b="95" a="255" />
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>228</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="32" y="0">
@@ -81394,6 +81586,7 @@
           <wall>158</wall>
           <destroyed>161</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <color r="0" g="200" b="0" a="255" />
@@ -81605,8 +81798,8 @@
         <component type="WallComponent">
           <color r="255" g="210" b="95" a="255" />
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>228</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="31" y="1">
@@ -81849,6 +82042,7 @@
           <wall>158</wall>
           <destroyed>161</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <color r="0" g="200" b="0" a="255" />
@@ -81865,6 +82059,7 @@
           <wall>157</wall>
           <destroyed>160</destroyed>
           <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="StaticComponent">
           <color r="0" g="200" b="0" a="255" />
@@ -82014,8 +82209,8 @@
         <component type="WallComponent">
           <color r="255" g="210" b="95" a="255" />
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>228</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="30" y="2">
@@ -82847,8 +83042,8 @@
         <component type="WallComponent">
           <color r="255" g="210" b="95" a="255" />
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>228</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="33" y="4">
@@ -83246,8 +83441,8 @@
         <component type="WallComponent">
           <color r="255" g="210" b="95" a="255" />
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>228</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="32" y="5">
@@ -83629,8 +83824,8 @@
         <component type="WallComponent">
           <color r="255" g="210" b="95" a="255" />
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>228</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="31" y="6">
@@ -85191,8 +85386,8 @@
         <component type="WallComponent">
           <color r="255" g="210" b="95" a="255" />
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>228</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="32" y="10">
@@ -85499,8 +85694,8 @@
         <component type="WallComponent">
           <color r="255" g="210" b="95" a="255" />
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>228</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="31" y="11">
@@ -85775,8 +85970,8 @@
         <component type="WallComponent">
           <color r="255" g="210" b="95" a="255" />
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>228</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="24" y="12">
@@ -87367,8 +87562,8 @@
         <component type="WallComponent">
           <color r="255" g="210" b="95" a="255" />
           <wall>159</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <destroyed>228</destroyed>
+          <ruins>170</ruins>
         </component>
       </tile>
       <tile x="20" y="17">
@@ -94175,7 +94370,6 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    // Missing from CS.
     return new ConfessorGhost();
 ]]></block>
         <block><![CDATA[]]></block>
@@ -94336,6 +94530,7 @@
     {
         Name = _names.Random(),
         Body = (female ? 10 : 9), IsFemale = female,
+        IsInvulnerable = true,
         
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
@@ -95908,7 +96103,7 @@
     hobgoblin.AddGold(77);
     hobgoblin.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakLowLevelGems, 21.6, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorNormal), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
             new LootPackEntry(true, dungeon2Treasure, 0.5), 
             new LootPackEntry(true, dungeon2Rings, 0.5), 
@@ -95956,7 +96151,7 @@
     goblin.AddGold(66);
     goblin.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakLowLevelGems, 21.6, gemsPriceMutatorMedium), 
+            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorMedium), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
             new LootPackEntry(true, dungeon2Treasure, 0.37), 
             new LootPackEntry(true, dungeon2Rings, 0.37), 
@@ -95999,12 +96194,14 @@
     };
 
     goblin.Wield(new Longbow());
-    goblin.Equip(new LeatherArmor());    
+    goblin.Equip(new LeatherArmor());  
+    
+    goblin.AddStatus(new NightVisionStatus(goblin));
 
     goblin.AddGold(66);
     goblin.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakLowLevelGems, 21.6, gemsPriceMutatorMedium), 
+            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorMedium), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
             new LootPackEntry(true, dungeon2Treasure, 0.37), 
             new LootPackEntry(true, dungeon2Rings, 0.37), 
@@ -96058,7 +96255,7 @@
     troll.AddGold(98);
     troll.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakLowLevelGems, 21.6, gemsPriceMutatorAboveAverage), 
+            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorAboveAverage), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
             new LootPackEntry(true, dungeon2Treasure, 0.55), 
             new LootPackEntry(true, dungeon2Rings, 0.55), 
@@ -96108,7 +96305,7 @@
     orc.AddGold(79);
     orc.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakLowLevelGems, 21.6, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorNormal), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
             new LootPackEntry(true, dungeon2Treasure, 0.5), 
             new LootPackEntry(true, dungeon2Rings, 0.5), 
@@ -96153,12 +96350,14 @@
     };
 
     orc.Wield(new Crossbow());
-    orc.Equip(new LeatherArmor());    
+    orc.Equip(new LeatherArmor());   
+    
+    orc.AddStatus(new NightVisionStatus(orc));
 
     orc.AddGold(79);
     orc.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakLowLevelGems, 21.6, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorNormal), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
             new LootPackEntry(true, dungeon2Treasure, 0.5), 
             new LootPackEntry(true, dungeon2Rings, 0.5), 
@@ -96206,17 +96405,17 @@
     orc.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CreateWebSpell>(
-            skillLevel: 7, cost: 4,
+            skillLevel: 7, cost: 6,
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 6, cost: 3,
+            skillLevel: 6, cost: 5,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
 
     orc.AddGold(77);
     orc.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakLowLevelGems, 21.6, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorNormal), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
             new LootPackEntry(true, dungeon2Treasure, 0.5), 
             new LootPackEntry(true, dungeon2Rings, 0.5), 
@@ -96277,7 +96476,7 @@
     spectre.AddGold(66);
     spectre.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakLowLevelGems, 21.6, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorNormal), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
             new LootPackEntry(true, dungeon2Treasure, 0.5), 
             new LootPackEntry(true, dungeon2Rings, 0.5), 
@@ -96478,10 +96677,10 @@
     orc.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CreateWebSpell>(
-            skillLevel: 9, cost: 4,
+            skillLevel: 9, cost: 6,
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 6, cost: 4,
+            skillLevel: 6, cost: 5,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
 
@@ -96650,7 +96849,7 @@
         Body = (female ? 37 : 38), IsFemale = female,
         HideDetection = 25,       
         MaxHealth = 72, Health = 72,
-        MaxMana = 21, Mana = 21,
+        MaxMana = 12, Mana = 12,
         BaseDodge = 15,
         BasePenetration = ShieldPenetration.VeryLight,
 
@@ -96673,7 +96872,7 @@
             skillLevel: 9, cost: 6,
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 9, cost: 3, 
+            skillLevel: 9, cost: 5, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
 
@@ -97012,7 +97211,8 @@
         HideDetection = 25,
         Experience = 5262,
         BasePenetration = ShieldPenetration.Medium,
-
+        Body = 216,
+        IsFemale = true,
         CanWalk = false,
     };
     
@@ -97484,7 +97684,7 @@
         Body = (female ? 37 : 38), IsFemale = female,
         HideDetection = 26,     
         MaxHealth = 96, Health = 96,
-        MaxMana = 21, Mana = 21,
+        MaxMana = 12, Mana = 12,
         BaseDodge = 19,
         BasePenetration = ShieldPenetration.Light,
 
@@ -97505,7 +97705,7 @@
             skillLevel: 11, cost: 6,
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 9, cost: 3,
+            skillLevel: 9, cost: 5,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
 
@@ -97776,7 +97976,7 @@
 	var banshee = new Banshee()
     {
         MaxHealth = 99, Health = 99,
-        MaxMana = 11, Mana = 11,
+        MaxMana = 6, Mana = 6,
         BaseDodge = 23,
         HideDetection = 26,
         Experience = 7222,
@@ -97793,7 +97993,7 @@
     banshee.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CurseSpell>(
-            skillLevel: 2.7, cost: 3)
+            skillLevel: 2.3, cost: 3)
     };
 
     banshee.Wield(new Spear());    
@@ -98099,7 +98299,7 @@
 	var spectre = new Spectre()
     {
         MaxHealth = 140, Health = 140,
-        MaxMana = 18, Mana = 18,
+        MaxMana = 12, Mana = 12,
         BaseDodge = 23,
         HideDetection = 26,
         Experience = 9094,
@@ -98183,7 +98383,7 @@
     wight.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CurseSpell>(
-            skillLevel: 11, cost: 3,
+            skillLevel: 11, cost: 5,
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
     };
 
@@ -98638,7 +98838,7 @@
         Name = "dragon",
         
         MaxHealth = 2100, Health = 2100,
-        MaxMana = 20, Mana = 20,
+        MaxMana = 6, Mana = 6,
         BaseDodge = 28,
         
         Experience = 85594,
@@ -98690,9 +98890,9 @@
 
     dragon.Spells = new CreatureSpellCollection()
     {
-        /* Expected output of damage is 60 per turn based on replay from Indi..DOOM. */
+        /* Expected output of damage is 28 per tick. 84 per turn */
         new CreatureSpell<WhirlwindSpell>(
-            skillLevel: 15, cost: 20)
+            skillLevel: 7, cost: 6)
     };
     
     dragon.AddLoot(new LootPack(
@@ -99821,6 +100021,7 @@
         Experience = 50,
         Movement = 0,
         HideDetection = 45,
+        Alignment = Alignment.Neutral,
     };
     
     dryad.AddStatus(new NightVisionStatus(dryad));
@@ -99835,12 +100036,7 @@
     dryad.Wield(new FineCrossbow());
     dryad.Equip(new ChainmailArmor());    
 
-    dryad.AddGold(500);
-    dryad.AddLoot(
-        new LootPack(
-
-            new LootPackEntry(true, groveTreasure, 100)
-        ));
+    dryad.AddGold(10);
 
     return dryad;
 ]]></block>
@@ -101058,10 +101254,10 @@
     <spawn type="LocationSpawner" name="templeLichTwins">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>3600</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    announceEarthquake(spawn.Segment, spawn.Location);
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -101121,10 +101317,10 @@
       <minimumDelay>12600</minimumDelay>
       <maximumDelay>15300</maximumDelay>
       <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    announceEarthquake(spawn.Segment, spawn.Location);
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -101136,7 +101332,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="BossMinorLevel14Dragon" size="1" minimum="1" maximum="1" />
-      <location x="9" y="9" region="225" />
+      <location x="10" y="9" region="225" />
     </spawn>
     <spawn type="LocationSpawner" name="groveBear">
       <minimumDelay>1200</minimumDelay>
@@ -101508,6 +101704,26 @@
       <entry entity="oakKinasho" size="1" minimum="1" maximum="1" />
       <location x="17" y="17" region="10" />
     </spawn>
+    <spawn type="LocationSpawner" name="oakGhost">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="oakConfessorGhost" size="1" minimum="1" maximum="1" />
+      <location x="6" y="7" region="12" />
+    </spawn>
     <spawn type="RegionSpawner" name="portalPeacemakers">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
@@ -101646,7 +101862,7 @@
         <exclusion left="2" top="23" right="3" bottom="29" />
         <exclusion left="4" top="25" right="5" bottom="29" />
         <exclusion left="22" top="33" right="25" bottom="35" />
-        <exclusion left="13" top="35" right="20" bottom="39" />
+        <exclusion left="13" top="36" right="20" bottom="39" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="surfaceWyrm">
@@ -101779,14 +101995,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level9Hobgoblin" size="3" minimum="9" maximum="12" />
-      <entry entity="level9Orc" size="3" minimum="10" maximum="14" />
+      <entry entity="level9Hobgoblin" size="3" minimum="12" maximum="15" />
+      <entry entity="level9Orc" size="3" minimum="12" maximum="15" />
       <entry entity="level9OrcSentry" size="2" minimum="4" maximum="6" />
       <entry entity="level9OrcTrapper" size="1" minimum="4" maximum="6" />
-      <entry entity="level9Thaum" size="1" minimum="3" maximum="6" />
-      <entry entity="level9Wizard" size="1" minimum="3" maximum="6" />
+      <entry entity="level9Thaum" size="1" minimum="2" maximum="3" />
+      <entry entity="level9Wizard" size="1" minimum="2" maximum="3" />
       <entry entity="level9Minotaur" size="1" minimum="6" maximum="8" />
-      <entry entity="level9Salamander" size="1" minimum="3" maximum="6" />
+      <entry entity="level9Salamander" size="1" minimum="1" maximum="2" />
       <entry entity="level9Troll" size="1" minimum="7" maximum="10" />
       <entry entity="level9Gargoyle" size="1" minimum="6" maximum="9" />
       <bounds region="235">
@@ -101881,13 +102097,13 @@
       <entry entity="level15Defender" size="2" minimum="8" maximum="8" />
       <entry entity="level15Dryad" size="1" minimum="4" maximum="4" />
       <bounds region="236">
-        <inclusion left="1" top="1" right="11" bottom="7" />
+        <inclusion left="1" top="2" right="11" bottom="7" />
         <inclusion left="4" top="8" right="16" bottom="13" />
         <inclusion left="12" top="5" right="16" bottom="8" />
         <inclusion left="17" top="9" right="34" bottom="13" />
         <inclusion left="28" top="-3" right="34" bottom="8" />
         <inclusion left="35" top="-3" right="38" bottom="-2" />
-        <exclusion left="9" top="1" right="11" bottom="2" />
+        <inclusion left="1" top="1" right="8" bottom="1" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="groveVipers">
@@ -102067,14 +102283,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level9Hobgoblin" size="3" minimum="9" maximum="12" />
-      <entry entity="level9Orc" size="3" minimum="10" maximum="14" />
+      <entry entity="level9Hobgoblin" size="3" minimum="12" maximum="15" />
+      <entry entity="level9Orc" size="3" minimum="12" maximum="15" />
       <entry entity="level9OrcSentry" size="2" minimum="4" maximum="6" />
       <entry entity="level9OrcTrapper" size="1" minimum="4" maximum="6" />
-      <entry entity="level9Thaum" size="1" minimum="3" maximum="6" />
-      <entry entity="level9Wizard" size="1" minimum="3" maximum="6" />
+      <entry entity="level9Thaum" size="1" minimum="2" maximum="3" />
+      <entry entity="level9Wizard" size="1" minimum="2" maximum="3" />
       <entry entity="level9Minotaur" size="1" minimum="6" maximum="8" />
-      <entry entity="level9Salamander" size="1" minimum="3" maximum="6" />
+      <entry entity="level9Salamander" size="1" minimum="1" maximum="2" />
       <entry entity="level9Troll" size="1" minimum="7" maximum="10" />
       <entry entity="level9Gargoyle" size="1" minimum="6" maximum="9" />
       <bounds region="235">
@@ -102099,18 +102315,18 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level9Hobgoblin" size="3" minimum="9" maximum="12" />
-      <entry entity="level9Orc" size="3" minimum="10" maximum="14" />
+      <entry entity="level9Hobgoblin" size="3" minimum="12" maximum="15" />
+      <entry entity="level9Orc" size="3" minimum="12" maximum="15" />
       <entry entity="level9OrcSentry" size="2" minimum="4" maximum="6" />
       <entry entity="level9OrcTrapper" size="1" minimum="4" maximum="6" />
-      <entry entity="level9Thaum" size="1" minimum="3" maximum="6" />
-      <entry entity="level9Wizard" size="1" minimum="3" maximum="6" />
+      <entry entity="level9Thaum" size="1" minimum="2" maximum="3" />
+      <entry entity="level9Wizard" size="1" minimum="2" maximum="3" />
       <entry entity="level9Minotaur" size="1" minimum="6" maximum="8" />
-      <entry entity="level9Salamander" size="1" minimum="3" maximum="6" />
+      <entry entity="level9Salamander" size="1" minimum="1" maximum="2" />
       <entry entity="level9Troll" size="1" minimum="7" maximum="10" />
       <entry entity="level9Gargoyle" size="1" minimum="6" maximum="9" />
       <bounds region="235">
-        <inclusion left="23" top="-7" right="41" bottom="7" />
+        <inclusion left="23" top="-8" right="41" bottom="7" />
         <inclusion left="29" top="8" right="46" bottom="14" />
       </bounds>
     </spawn>
@@ -102132,14 +102348,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level9Hobgoblin" size="3" minimum="9" maximum="12" />
-      <entry entity="level9Orc" size="3" minimum="10" maximum="14" />
+      <entry entity="level9Hobgoblin" size="3" minimum="12" maximum="15" />
+      <entry entity="level9Orc" size="3" minimum="12" maximum="15" />
       <entry entity="level9OrcSentry" size="2" minimum="4" maximum="6" />
       <entry entity="level9OrcTrapper" size="1" minimum="4" maximum="6" />
-      <entry entity="level9Thaum" size="1" minimum="3" maximum="6" />
-      <entry entity="level9Wizard" size="1" minimum="3" maximum="6" />
+      <entry entity="level9Thaum" size="1" minimum="2" maximum="3" />
+      <entry entity="level9Wizard" size="1" minimum="2" maximum="3" />
       <entry entity="level9Minotaur" size="1" minimum="6" maximum="8" />
-      <entry entity="level9Salamander" size="1" minimum="3" maximum="6" />
+      <entry entity="level9Salamander" size="1" minimum="1" maximum="2" />
       <entry entity="level9Troll" size="1" minimum="7" maximum="10" />
       <entry entity="level9Gargoyle" size="1" minimum="6" maximum="9" />
       <bounds region="235">
@@ -102164,14 +102380,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level9Hobgoblin" size="3" minimum="9" maximum="12" />
-      <entry entity="level9Orc" size="3" minimum="10" maximum="14" />
+      <entry entity="level9Hobgoblin" size="3" minimum="12" maximum="15" />
+      <entry entity="level9Orc" size="3" minimum="12" maximum="15" />
       <entry entity="level9OrcSentry" size="2" minimum="4" maximum="6" />
       <entry entity="level9OrcTrapper" size="1" minimum="4" maximum="6" />
-      <entry entity="level9Thaum" size="1" minimum="3" maximum="6" />
-      <entry entity="level9Wizard" size="1" minimum="3" maximum="6" />
+      <entry entity="level9Thaum" size="1" minimum="2" maximum="3" />
+      <entry entity="level9Wizard" size="1" minimum="2" maximum="3" />
       <entry entity="level9Minotaur" size="1" minimum="6" maximum="8" />
-      <entry entity="level9Salamander" size="1" minimum="3" maximum="6" />
+      <entry entity="level9Salamander" size="1" minimum="1" maximum="2" />
       <entry entity="level9Troll" size="1" minimum="7" maximum="10" />
       <entry entity="level9Gargoyle" size="1" minimum="6" maximum="9" />
       <bounds region="235">
@@ -102886,7 +103102,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new TigerEye(5500u);
+	return new TigerEye(7000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -103055,6 +103271,44 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new LargeEmerald(15000u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="oakMidLevelGems">
+      <entry weight="25">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new TigerEye(1700u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="15">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new SmallRuby(3400u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new BloodRuby(6800u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new LargeEmerald(17000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>

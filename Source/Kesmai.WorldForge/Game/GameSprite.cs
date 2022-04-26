@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
@@ -11,7 +12,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Kesmai.WorldForge
 {
-	public class GameSprite
+	[Serializable]
+	public class MissingTextureException : Exception
+    {
+		public MissingTextureException() : base() { }
+		public MissingTextureException(string message) : base(message) { }
+    }
+
+    public class GameSprite
 	{
 		public int ID { get; protected set; }
 		public Texture2D Texture { get; protected set; }
@@ -61,7 +69,27 @@ namespace Kesmai.WorldForge
 
 			var bounds = Vector4F.Parse((string)sourceElement);
 
-			var sourceTexture = contentManager.Load<Texture2D>((string)textureElement);
+			Texture2D sourceTexture = null;
+
+			//Prefer loose art files, if they exist.
+			var customTexturePath = $@"{Core.CustomArtPath}\{(string)textureElement}.png";
+			if (File.Exists(customTexturePath))
+			{
+				using (var sourceStream = File.Open(customTexturePath, FileMode.Open, FileAccess.Read, FileShare.None))
+					sourceTexture = Texture2D.FromStream(graphicsDevice.GraphicsDevice, sourceStream);
+			}
+
+			if (sourceTexture == null) {
+				try
+				{
+					sourceTexture = contentManager.Load<Texture2D>((string)textureElement);
+				} 
+				catch
+				{
+					throw (new MissingTextureException((string)textureElement));
+				}
+			}
+
 			var sourceBounds = new Rectangle((int)bounds.X, (int)bounds.Y, (int)bounds.Z, (int)bounds.W);
 			var sourceWidth = sourceBounds.Width;
 			var sourceHeight = sourceBounds.Height;

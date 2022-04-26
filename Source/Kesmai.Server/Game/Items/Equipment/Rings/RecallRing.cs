@@ -91,7 +91,7 @@ namespace Kesmai.Server.Items
 
 			var worldTile = segment.FindTile(location);
 
-			if (!worldTile.CanEnter(entity))
+			if (!worldTile.CanEnter(entity) || worldTile.IsImpassable || worldTile.ContainsComponent<Portal>())
 			{	
 				entity.SendLocalizedMessage(Color.Red, 6300062); /* You may not put on that ring here. */
 				return false;

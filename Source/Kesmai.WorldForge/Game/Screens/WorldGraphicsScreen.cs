@@ -726,25 +726,38 @@ namespace Kesmai.WorldForge
 			_invalidateRender = true;
 		}
 
+		public Rectangle GetRenderRectangle(Rectangle viewRectangle, Rectangle inlay, int offset) {
+			var ox = inlay.Left - viewRectangle.Left;
+			var oy = inlay.Top - viewRectangle.Top;
+
+			var x = (int)Math.Floor(ox * _presenter.UnitSize * _zoomFactor) + (offset * 2) + 1;
+			var y = (int)Math.Floor(oy * _presenter.UnitSize * _zoomFactor) + (offset * 2) + 1;
+
+			var width = (int)Math.Floor(inlay.Width * _presenter.UnitSize * _zoomFactor) - (offset * 4) - 2;
+			var height = (int)Math.Floor(inlay.Height * _presenter.UnitSize * _zoomFactor) - (offset * 4) - 2;
+
+			var bounds = new Rectangle(x, y, width, height);
+			return bounds;
+		}
 		public Rectangle GetRenderRectangle(Rectangle viewRectangle, Rectangle inlay) {
 			var ox = inlay.Left - viewRectangle.Left;
 			var oy = inlay.Top - viewRectangle.Top;
 
-			var x = (int)Math.Floor(ox * _presenter.UnitSize * _zoomFactor);
-			var y = (int)Math.Floor(oy * _presenter.UnitSize * _zoomFactor);
+			var x = (int)Math.Floor(ox * _presenter.UnitSize * _zoomFactor) + 1;
+			var y = (int)Math.Floor(oy * _presenter.UnitSize * _zoomFactor) + 1;
 
-			var width = (int)Math.Floor(inlay.Width * _presenter.UnitSize * _zoomFactor);
-			var height = (int)Math.Floor(inlay.Height * _presenter.UnitSize * _zoomFactor);
+			var width = (int)Math.Floor(inlay.Width * _presenter.UnitSize * _zoomFactor) - 2;
+			var height = (int)Math.Floor(inlay.Height * _presenter.UnitSize * _zoomFactor) - 2;
 
 			var bounds = new Rectangle(x, y, width, height);
 			return bounds;
 		}
 		public Rectangle GetRenderRectangle(Rectangle viewRectangle, int x, int y)
 		{
-				var rx = (x - viewRectangle.Left) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
-				var ry = (y - viewRectangle.Top) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
+				var rx = (x - viewRectangle.Left) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor) + 1;
+				var ry = (y - viewRectangle.Top) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor) + 1;
 				var bounds = new Rectangle(rx, ry,
-					(int)Math.Floor(_presenter.UnitSize * _zoomFactor), (int)Math.Floor(_presenter.UnitSize * _zoomFactor));
+					(int)Math.Floor(_presenter.UnitSize * _zoomFactor) - 2, (int)Math.Floor(_presenter.UnitSize * _zoomFactor) - 2);
 				return bounds;
 		}
 
@@ -828,12 +841,13 @@ namespace Kesmai.WorldForge
 						var viewportrectangle = GetRenderRectangle(viewRectangle, viewRectangle);
 						spritebatch.FillRectangle(viewportrectangle, Color.FromNonPremultiplied(0, 0, 0, 128));
 					}
+					var _drawStrings = new List<Tuple<String, Vector2, Color>>();
 					if (_presenter.Visibility.ShowTeleporters) // Destination highlights for teleporters //todo: make this a toggle with a "tool" like button
 					{
 						var _teleportDestinationHighlight = Color.FromNonPremultiplied(80, 255, 80, 200);
 						var _teleportSourceHighlight = Color.FromNonPremultiplied(160, 255, 20, 200);
 						var _teleportSelectedHighlight = Color.FromNonPremultiplied(255, 255, 80, 255);
-						var destinationCounter = new System.Collections.Hashtable();
+						var _destinationCounter = new System.Collections.Hashtable();
 						int porterCount;
 						foreach (SegmentRegion searchRegion in segment.Regions) //for each region in the segment
 						{
@@ -847,15 +861,15 @@ namespace Kesmai.WorldForge
 									var _my = component.DestinationY;
 									if (viewRectangle.Contains(_mx, _my))
                                     {
-										if (!destinationCounter.ContainsKey($"{_mx}{_my}"))
+										if (!_destinationCounter.ContainsKey($"{_mx}{_my}"))
                                         {
-											destinationCounter.Add($"{_mx}{_my}", 0);
+											_destinationCounter.Add($"{_mx}{_my}", 0);
 											porterCount = 0;
                                         } 
 										else
                                         {
-											destinationCounter[$"{_mx}{_my}"] = (int)destinationCounter[$"{_mx}{_my}"] + 1;
-											porterCount = (int)destinationCounter[$"{_mx}{_my}"];
+											_destinationCounter[$"{_mx}{_my}"] = (int)_destinationCounter[$"{_mx}{_my}"] + 1;
+											porterCount = (int)_destinationCounter[$"{_mx}{_my}"];
 										}
 
 										var bounds = GetRenderRectangle(viewRectangle, _mx, _my);
@@ -863,9 +877,8 @@ namespace Kesmai.WorldForge
 
 										spritebatch.DrawRectangle(bounds, highlight);
 										spritebatch.FillRectangle(innerRectangle, highlight);
-
-										spritebatch.DrawString(_font, $"{searchRegion.Name}",
-											new Vector2(bounds.Left + 2, bounds.Top + 2 + 16 * porterCount), Color.Black);
+										
+										_drawStrings.Add(Tuple.Create($"{searchRegion.Name}", new Vector2(bounds.Left + 2, bounds.Top + 2 + 16 * porterCount), Color.Black));
 									}
 								}
 							}
@@ -891,8 +904,7 @@ namespace Kesmai.WorldForge
 
 									spritebatch.FillRectangle(innerRectangle, highlight);
 	
-									spritebatch.DrawString(_font, $"{targetRegionName}",
-										new Vector2(bounds.Left + 2, bounds.Bottom - 14), Color.Black);
+									_drawStrings.Add(Tuple.Create($"{targetRegionName}", new Vector2(bounds.Left + 2, bounds.Bottom - 14), Color.Black));
 								}
 							}
 
@@ -900,25 +912,59 @@ namespace Kesmai.WorldForge
 					}
 					if (_presenter.Visibility.ShowSpawns && _presenter.ActiveDocument is not WorldForge.UI.Documents.SpawnsViewModel)
 					{
-						var _inclusionBorder = Color.FromNonPremultiplied(200, 255, 50, 255);
+						var _inclusionBorder = Color.FromNonPremultiplied(200, 255, 50, 200);
 						var _inclusionFill = Color.FromNonPremultiplied(200, 255, 50, 50);
-						var _exclusionBorder = Color.FromNonPremultiplied(0, 0, 0, 255);
+						var _exclusionBorder = Color.FromNonPremultiplied(255, 0, 0, 200);
 						var _exclusionFill = Color.FromNonPremultiplied(50, 50, 50, 200);
 						var _locationBorder = Color.FromNonPremultiplied(0, 255, 255, 200);
+						var _textAtLocation = new Dictionary<(int, int), int>();
+
+						//doing exclusions first for visibility. They are very opaque so obscure anything below
+						foreach (RegionSpawner r in segment.Spawns.Region.Where<RegionSpawner>(r => r.Region == region.ID))
+						{
+							foreach (SegmentBounds exc in r.Exclusions)
+							{
+								if (exc is { Left: 0, Right: 0, Top: 0, Bottom: 0 } || !viewRectangle.Intersects(exc.ToRectangle())) { continue; }
+
+								var bounds = GetRenderRectangle(viewRectangle, exc.ToRectangle());
+
+								spritebatch.FillRectangle(bounds, _exclusionFill);
+								spritebatch.DrawRectangle(bounds, _exclusionBorder);
+
+								if (_textAtLocation.ContainsKey((exc.Left, exc.Top)))
+								{
+									_textAtLocation[(exc.Left, exc.Top)] += 1;
+								}
+								else
+								{
+									_textAtLocation.Add((exc.Left, exc.Top), 0);
+								}
+
+								_drawStrings.Add(Tuple.Create($"Exclusion {r.Name}", new Vector2(bounds.Left + 2, bounds.Top + 2 + (_textAtLocation[(exc.Left, exc.Top)] * 15)), Color.Red));
+							}
+						}
 						foreach (LocationSpawner l in segment.Spawns.Location.Where<LocationSpawner>(l => l.Region == region.ID))
 						{
 							var _mx = l.X;
 							var _my = l.Y;
 							if (viewRectangle.Contains(_mx,_my))
 							{
+								if (_textAtLocation.ContainsKey((_mx, _my)))
+								{
+									_textAtLocation[(_mx, _my)] += 1;
+								}
+								else
+								{
+									_textAtLocation.Add((_mx, _my), 0);
+								}
+
 								var bounds = GetRenderRectangle(viewRectangle, _mx, _my);
-								var innerRectangle = new Rectangle(bounds.Left, bounds.Top, (int)Math.Floor(55 * _zoomFactor), 16);
+								var innerRectangle = new Rectangle(bounds.Left, bounds.Top, (int)Math.Floor(55 * _zoomFactor) - (_textAtLocation[(_mx, _my)] * 2) - 2, 16);
 
 								spritebatch.DrawRectangle(bounds, _locationBorder);
 								spritebatch.FillRectangle(innerRectangle, _locationBorder);
 
-								spritebatch.DrawString(_font, $"{l.Name}",
-									new Vector2(bounds.Left + 2, bounds.Top + 2), Color.Black);
+								_drawStrings.Add(Tuple.Create($"{l.Name}", new Vector2(bounds.Left + 2, bounds.Top + 2 + (_textAtLocation[(_mx, _my)] * 15)), Color.Black));
 
 							}
 						}
@@ -928,27 +974,33 @@ namespace Kesmai.WorldForge
 							{
 								if (!viewRectangle.Intersects(inc.ToRectangle())) { continue; }
 
-								var bounds = GetRenderRectangle(viewRectangle, inc.ToRectangle());
+								if (_textAtLocation.ContainsKey((inc.Left, inc.Top)))
+								{
+									_textAtLocation[(inc.Left, inc.Top)] += 1;
+								}
+								else
+								{
+									_textAtLocation.Add((inc.Left, inc.Top), 0);
+								}
+								var offset = _textAtLocation[(inc.Left, inc.Top)];
+
+								var bounds = GetRenderRectangle(viewRectangle, inc.ToRectangle(), offset);
 
 								spritebatch.DrawRectangle(bounds, _inclusionBorder);
 								spritebatch.FillRectangle(bounds, _inclusionFill);
 
-								spritebatch.DrawString(_font, $"{r.Name}",
-									new Vector2(bounds.Left + 2, bounds.Top + 2), Color.Black);
-							}
-							foreach (SegmentBounds exc in r.Exclusions)
-							{
-								if (exc is {Left:0, Right:0, Top:0, Bottom:0 } ||!viewRectangle.Intersects(exc.ToRectangle())) { continue; }
-
-								var bounds = GetRenderRectangle(viewRectangle, exc.ToRectangle());
-
-								spritebatch.DrawRectangle(bounds, _exclusionBorder);
-								spritebatch.FillRectangle(bounds, _exclusionFill);
-
-								spritebatch.DrawString(_font, "Exclusion",
-									new Vector2(bounds.Left + 2, bounds.Top + 2), Color.Black);
+								if (r.Threat is null)
+								{
+									r.CalculateStats();
+								}
+								_drawStrings.Add(Tuple.Create($"{r.Name} " + r.Threat.ToString(), new Vector2(bounds.Left + 2, bounds.Top + 2 + (offset * 15)), Color.Black));
 							}
 						}
+					}
+					//draw all strings on top..
+					foreach (Tuple<String, Vector2, Color> _drawString in _drawStrings)
+					{
+						spritebatch.DrawString(_font, _drawString.Item1, _drawString.Item2, _drawString.Item3);
 					}
 					if (_presenter.Visibility.ShowComments)
                     {

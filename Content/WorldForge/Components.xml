@@ -1,2612 +1,3279 @@
-<?xml version="1.0" encoding="utf-8"?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <data>
-    <category name="Floors">
-        <FloorComponent name="Light">
-            <ground>1</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Tile">
-            <ground>2</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Hardwood (H)">
-            <ground>3</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Hardwood (V)">
-            <ground>4</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Temple">
-            <ground>5</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Burnt Stone">
-            <ground>6</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-		
-		<FloorComponent name="(Lava)">
-			<ground>10</ground>
-			<movementCost>1</movementCost>
-		</FloorComponent>
-		
-		<FloorComponent name="(PH)">
-			<ground>11</ground>
-			<movementCost>1</movementCost>
-		</FloorComponent>
-
-        <FloorComponent name="Dirt">
-            <ground>12</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Short Grass">
-            <ground>13</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Wood (H)">
-            <ground>14</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Wood (V)">
-            <ground>15</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Beaten Path">
-            <ground>16</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <IceComponent name="Snow">
-            <ground>17</ground>
-            <movementCost>1</movementCost>
-        </IceComponent>
-
-        <FloorComponent name="Sand">
-            <ground>18</ground>
-            <movementCost>2</movementCost>
-        </FloorComponent>
-		
-		<IceComponent name="Ice">
-			<ground>20</ground>
-			<movementCost>1</movementCost>
-		</IceComponent>
-
-        <FloorComponent name="Bog">
-            <ground>21</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Forest">
-            <ground>23</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Honeycomb Flagstone">
-            <ground>24</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Jungle">
-            <ground>89</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Jungle (Moss)">
-            <ground>90</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Jungle (Foliage)">
-            <ground>91</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Bridge (H)">
-            <ground>115</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-        <FloorComponent name="Bridge (V)">
-            <ground>116</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-		
-		<FloorComponent name="Rope Bridge (H)">
-            <ground>239</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Giant Logs">
-            <ground>175</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Worn Marble">
-            <ground>176</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Gray Tile">
-            <ground>178</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Dusty Cave">
-            <ground>179</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Slate Flagstone">
-            <ground>182</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Mossy Granite">
-            <ground>183</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Worn Cobblestone">
-            <ground>184</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Tidal Mud">
-            <ground>185</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Fine Marble">
-            <ground>186</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Oriental Rug">
-            <ground>196</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Stone Bridge (H)">
-            <ground>252</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Gravel Road">
-            <ground>264</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Sandstone Slabs">
-            <ground>265</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Sandstone Cobblestones">
-            <ground>277</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Green Alfalfa">
-            <ground>289</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Rosey Viens Granite">
-            <ground>301</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Yellow Brick Road">
-            <ground>325</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Jade Bricks">
-            <ground>341</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Mossy Cave Floor">
-            <ground>369</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Torn Cobblestones">
-            <ground>375</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Skulls">
-            <ground>387</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Blue Marble">
-            <ground>388</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Sandstone Cobblestones">
-            <ground>393</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="(PH)">
-            <ground>406</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Ash">
-            <ground>419</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Blue Brick Road">
-            <ground>445</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Dark Wood">
-            <ground>492</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Bamboo">
-            <ground>493</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Sand [Zrikz]">
-            <ground>602</ground>
-            <movementCost>2</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Sand [Zrikz]">
-            <ground>603</ground>
-            <movementCost>2</movementCost>
-        </FloorComponent>
-		
-		<FloorComponent name="Sandflats [Zrikz]">
-            <ground>604</ground>
-            <movementCost>2</movementCost>
-        </FloorComponent>
-		
-		<FloorComponent name="Reef [Zrikz]">
-            <ground>605</ground>
-            <movementCost>2</movementCost>
-        </FloorComponent>
-
-        <FloorComponent name="Aqua [Fireal]">
-			<ground>606</ground>
-			<movementCost>1</movementCost>
-		</FloorComponent>
-		
-        <FloorComponent name="Cobblestone [Fireal]">
-			<ground>607</ground>
-			<movementCost>1</movementCost>
-		</FloorComponent>
-		
-        <FloorComponent name="Cut Wood [Fireal]">
-			<ground>608</ground>
-			<movementCost>1</movementCost>
-		</FloorComponent>
-		
-        <FloorComponent name="Druid Cove [Fireal]">
-			<ground>609</ground>
-			<movementCost>1</movementCost>
-		</FloorComponent>
-		
-        <FloorComponent name="Egypt (1) [Fireal]">
-			<ground>610</ground>
-			<movementCost>1</movementCost>
-		</FloorComponent>
-		
-        <FloorComponent name="Egypt (2) [Fireal]">
-			<ground>611</ground>
-			<movementCost>1</movementCost>
-		</FloorComponent>
-		
-        <FloorComponent name="Fantasy Flower [Fireal]">
-			<ground>612</ground>
-			<movementCost>1</movementCost>
-		</FloorComponent>
-		
-        <FloorComponent name="Glass Lava [Fireal]">
-			<ground>613</ground>
-			<movementCost>1</movementCost>
-		</FloorComponent>
-		
-        <FloorComponent name="Grass [Fireal]">
-			<ground>614</ground>
-			<movementCost>1</movementCost>
-		</FloorComponent>
-		
-        <FloorComponent name="Ice [Fireal]">
-			<ground>615</ground>
-			<movementCost>1</movementCost>
-		</FloorComponent>
-		
-        <FloorComponent name="Labyrinth [Fireal]">
-			<ground>616</ground>
-			<movementCost>1</movementCost>
-		</FloorComponent>
-		
-        <FloorComponent name="Ornate [Fireal]">
-			<ground>617</ground>
-			<movementCost>1</movementCost>
-		</FloorComponent>
-		
-        <FloorComponent name="Paving Slabs [Fireal]">
-			<ground>618</ground>
-			<movementCost>1</movementCost>
-		</FloorComponent>
-		
-        <FloorComponent name="Skulls [Fireal]">
-			<ground>619</ground>
-			<movementCost>1</movementCost>
-		</FloorComponent>
-		
-        <FloorComponent name="Cobble Puzzle [Fireal]">
-			<ground>620</ground>
-			<movementCost>1</movementCost>
-		</FloorComponent>
-		
-        <FloorComponent name="Cobbles [Fireal]">
-			<ground>621</ground>
-			<movementCost>1</movementCost>
-		</FloorComponent>
-		
-		<FloorComponent name="Bedrock [Lux]">
-			<ground>1003</ground>
-			<movementCost>1</movementCost>
-		</FloorComponent>
-		
-		<FloorComponent name="Roots [Lux]">
-			<ground>1004</ground>
-			<movementCost>1</movementCost>
-		</FloorComponent>
-
-        <FloorComponent name="Sewer Drain [Tenser]">
-            <ground>628</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-        <FloorComponent name="Sewer Floor [Tenser]">
-            <ground>629</ground>
-            <movementCost>1</movementCost>
-        </FloorComponent>
-
-      <FloorComponent name=" Basalt floor ">
-        <ground>660</ground>
-      </FloorComponent>
-
-      <FloorComponent name=" Sandstone floor ">
-        <ground>666</ground>
-      </FloorComponent>
-
-      <FloorComponent name=" Rhyolite floor ">
-        <ground>672</ground>
-      </FloorComponent>
-
-      <FloorComponent name=" Gabbro floor ">
-        <ground>678</ground>
-      </FloorComponent>
-
-      <FloorComponent name=" Slate floor ">
-        <ground>684</ground>
-      </FloorComponent>
-
-      <FloorComponent name=" Andesite floor ">
-        <ground>690</ground>
-      </FloorComponent>
-
-      <FloorComponent name=" Granite floor ">
-        <ground>696</ground>
-      </FloorComponent>
-
-      <FloorComponent name=" Feldspar floor ">
-        <ground>702</ground>
-      </FloorComponent>
-
-
-    </category>
-
-    <category name="Water">
-        <WaterComponent name="Water">
-            <ground>22</ground>
-            <depth>3</depth>
-            <movementCost>3</movementCost>
-        </WaterComponent>
-
-        <WaterComponent name="Fresh Water">
-            <ground>177</ground>
-            <depth>3</depth>
-            <movementCost>3</movementCost>
-        </WaterComponent>
-
-        <WaterComponent name="Dark and Cloudy Water">
-            <ground>180</ground>
-            <depth>3</depth>
-            <movementCost>3</movementCost>
-        </WaterComponent>
-
-        <PoisonedWaterComponent name="Poisoned Water">
-            <color r="0" g="255" b="0" a="255" />
-            <ground>180</ground>
-            <movementCost>3</movementCost>
-        </PoisonedWaterComponent>
-
-        <WaterComponent name="Dark Red Liquid">
-            <ground>374</ground>
-            <depth>3</depth>
-            <movementCost>3</movementCost>
-        </WaterComponent>
-
-        <WaterComponent name="Shoreline (Shallow) [Zrikz]">
-            <ground>601</ground>
-            <depth>3</depth>
-            <movementCost>3</movementCost>
-        </WaterComponent>
-		
-        <WaterComponent name="Shoreline [Zrikz]">
-            <ground>601</ground>
-            <depth>3</depth>
-            <movementCost>3</movementCost>
-            <color r="100" g="150" b="255" a="255" />
-        </WaterComponent>
-
-        <WaterComponent name="Sewer [Zrikz]">
-            <ground>602</ground>
-            <depth>3</depth>
-            <movementCost>3</movementCost>
-        </WaterComponent>
-
-        <WaterComponent name="Waves (H) [Tenser]">
-            <ground>622</ground>
-            <depth>3</depth>
-            <movementCost>3</movementCost>
-        </WaterComponent>
-        <WaterComponent name="Waves (V) [Tenser]">
-            <ground>623</ground>
-            <depth>3</depth>
-            <movementCost>3</movementCost>
-        </WaterComponent>
-    </category>
-
-    <category name="Structural">
-        <WallComponent name="Town (V)">
-            <wall>28</wall>
-            <destroyed>41</destroyed>
-            <ruins>45</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-        <WallComponent name="Town (H)">
-            <wall>27</wall>
-            <destroyed>40</destroyed>
-            <ruins>45</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-        <WallComponent name="Town (C)">
-            <wall>33</wall>
-            <destroyed>0</destroyed>
-            <ruins>0</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-
-        <WallComponent name="Temple (V)">
-            <wall>30</wall>
-            <destroyed>43</destroyed>
-            <ruins>46</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-        <WallComponent name="Temple (H)">
-            <wall>29</wall>
-            <destroyed>42</destroyed>
-            <ruins>46</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-        <WallComponent name="Temple (C)">
-            <wall>34</wall>
-            <destroyed>0</destroyed>
-            <ruins>0</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-
-        <WallComponent name="Dirty Marble (V)">
-            <wall>140</wall>
-            <destroyed>142</destroyed>
-            <ruins>46</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Dirty Marble (H)">
-            <wall>139</wall>
-            <destroyed>141</destroyed>
-            <ruins>46</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-        <WallComponent name="Dirty Marble (C)">
-            <wall>143</wall>
-            <destroyed>144</destroyed>
-            <ruins>0</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Heavy Logs (V)">
-            <wall>146</wall>
-            <destroyed>148</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Heavy Logs (H)">
-            <wall>145</wall>
-            <destroyed>147</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-        <WallComponent name="Heavy Logs (C)">
-            <wall>149</wall>
-            <destroyed>150</destroyed>
-            <ruins>0</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-
-        <WallComponent name="Dragon (H)">
-            <wall>151</wall>
-            <destroyed>153</destroyed>
-            <ruins>46</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-        <WallComponent name="Dragon (V)">
-            <wall>152</wall>
-            <destroyed>154</destroyed>
-            <ruins>46</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-        <WallComponent name="Dragon (C)">
-            <wall>155</wall>
-            <destroyed>156</destroyed>
-            <ruins>0</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-
-        <WallComponent name="Cave (V)">
-            <wall>158</wall>
-            <destroyed>161</destroyed>
-            <ruins>170</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-        <WallComponent name="Cave (H)">
-            <wall>157</wall>
-            <destroyed>160</destroyed>
-            <ruins>170</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-        <WallComponent name="Cave (C)">
-            <wall>159</wall>
-            <destroyed>162</destroyed>
-            <ruins>0</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-
-        <WallComponent name="Dungeon (V)">
-            <wall>26</wall>
-            <destroyed>39</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Dungeon (H)">
-            <wall>25</wall>
-            <destroyed>38</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-        <WallComponent name="Dungeon (C)">
-            <wall>32</wall>
-            <destroyed>0</destroyed>
-            <ruins>0</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-
-        
-		
-        <WallComponent name="Granite (V)">
-            <wall>336</wall>
-            <destroyed>345</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Granite (H)">
-            <wall>335</wall>
-            <destroyed>344</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-        <WallComponent name="Granite (C)">
-            <wall>357</wall>
-            <destroyed>358</destroyed>
-            <ruins>44</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-
-        <WallComponent name="Sandstone (V)">
-            <wall>347</wall>
-            <destroyed>339</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Sandstone (H)">
-            <wall>346</wall>
-            <destroyed>338</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-        <WallComponent name="Sandstone (C)">
-            <wall>359</wall>
-            <destroyed>360</destroyed>
-            <ruins>44</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-
-        <WallComponent name="Dirt (V)">
-            <wall>334</wall>
-            <destroyed>343</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-        <WallComponent name="Dirt (H)">
-            <wall>333</wall>
-            <destroyed>342</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-        <WallComponent name="Dirt (C)">
-            <wall>355</wall>
-            <destroyed>356</destroyed>
-            <ruins>44</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-
-        <WallComponent name="Undead (V)">
-            <wall>382</wall>
-            <destroyed>395</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Undead (H)">
-            <wall>381</wall>
-            <destroyed>394</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-        <WallComponent name="Undead (C)">
-            <wall>407</wall>
-            <destroyed>408</destroyed>
-            <ruins>0</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Blue Marble (V)">
-            <wall>384</wall>
-            <destroyed>397</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Blue Marble (H)">
-            <wall>383</wall>
-            <destroyed>396</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-        <WallComponent name="Blue Marble (C)">
-            <wall>409</wall>
-            <destroyed>410</destroyed>
-            <ruins>0</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Mines (V)">
-            <wall>414</wall>
-            <destroyed>416</destroyed>
-            <ruins>398</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Mines (H)">
-            <wall>413</wall>
-            <destroyed>415</destroyed>
-            <ruins>398</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-        <WallComponent name="Mines (C)">
-            <wall>417</wall>
-            <destroyed>418</destroyed>
-            <ruins>0</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Thicket (V)">
-            <wall>224</wall>
-            <destroyed>227</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Thicket (H)">
-            <wall>223</wall>
-            <destroyed>226</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-        <WallComponent name="Thicket (C)">
-            <wall>225</wall>
-            <destroyed>228</destroyed>
-            <ruins>0</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-		
-
-		<WallComponent name="Red Shoji (V)">
-            <wall>363</wall>
-            <destroyed>365</destroyed>
-            <ruins>380</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Red Shoji (H)">
-            <wall>362</wall>
-            <destroyed>364</destroyed>
-            <ruins>380</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-        <WallComponent name="Red Shoji (C)">
-            <wall>366</wall>
-            <destroyed>367</destroyed>
-            <ruins>0</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Dragon (V)">
-            <wall>429</wall>
-            <destroyed>442</destroyed>
-            <ruins>432</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Dragon (H)">
-            <wall>428</wall>
-            <destroyed>441</destroyed>
-            <ruins>432</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Dragon Window (V)">
-            <wall>431</wall>
-            <destroyed>442</destroyed>
-            <ruins>432</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Dragon Window (H)">
-            <wall>430</wall>
-            <destroyed>441</destroyed>
-            <ruins>432</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-        <WallComponent name="Dragon (C)">
-            <wall>443</wall>
-            <destroyed>444</destroyed>
-            <ruins>0</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Highmountain (V)">
-            <wall>460</wall>
-            <destroyed>462</destroyed>
-            <ruins>465</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Highmountain (H)">
-            <wall>459</wall>
-            <destroyed>461</destroyed>
-            <ruins>465</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-        <WallComponent name="Highmountain (C)">
-            <wall>463</wall>
-            <destroyed>464</destroyed>
-            <ruins>0</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Pagoda Shoji (V)">
-            <wall>471</wall>
-            <destroyed>473</destroyed>
-            <ruins>45</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Pagoda Shoji (H)">
-            <wall>470</wall>
-            <destroyed>472</destroyed>
-            <ruins>45</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Pagoda Framed (V)">
-            <wall>475</wall>
-            <destroyed>477</destroyed>
-            <ruins>45</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Pagoda Framed (H)">
-            <wall>474</wall>
-            <destroyed>476</destroyed>
-            <ruins>45</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Pagoda Framed (V)">
-            <wall>483</wall>
-            <destroyed>485</destroyed>
-            <ruins>45</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Pagoda Framed (H)">
-            <wall>482</wall>
-            <destroyed>484</destroyed>
-            <ruins>45</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Pagoda (V)">
-            <wall>487</wall>
-            <destroyed>489</destroyed>
-            <ruins>45</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Pagoda (H)">
-            <wall>486</wall>
-            <destroyed>488</destroyed>
-            <ruins>45</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Pagoda (C)">
-            <wall>480</wall>
-            <destroyed>481</destroyed>
-            <ruins>0</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Egyptian (V)">
-            <wall>259</wall>
-            <destroyed>261</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Egyptian (H)">
-            <wall>258</wall>
-            <destroyed>260</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Egyptian Life (V)">
-            <wall>272</wall>
-            <destroyed>261</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Egyptian Life (H)">
-            <wall>271</wall>
-            <destroyed>260</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Egyptian Life (V)">
-            <wall>274</wall>
-            <destroyed>261</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Egyptian Life (H)">
-            <wall>273</wall>
-            <destroyed>260</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Egyptian Sobet (V)">
-            <wall>276</wall>
-            <destroyed>261</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Egyptian Sobet (H)">
-            <wall>275</wall>
-            <destroyed>260</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Egyptian Horus (V)">
-            <wall>284</wall>
-            <destroyed>261</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Egyptian Horus (H)">
-            <wall>283</wall>
-            <destroyed>260</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Egyptian Osiris (V)">
-            <wall>286</wall>
-            <destroyed>261</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Egyptian Osiris (H)">
-            <wall>285</wall>
-            <destroyed>260</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Egyptian Sekhmet (V)">
-            <wall>288</wall>
-            <destroyed>261</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Egyptian Sekhmet (H)">
-            <wall>287</wall>
-            <destroyed>260</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Egyptian Re.Harakhti (V)">
-            <wall>296</wall>
-            <destroyed>261</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Egyptian Re.Harakhti (H)">
-            <wall>295</wall>
-            <destroyed>260</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Egyptian Anubis (V)">
-            <wall>297</wall>
-            <destroyed>261</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Egyptian Anubis (H)">
-            <wall>298</wall>
-            <destroyed>260</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Egyptian Iris (V)">
-            <wall>300</wall>
-            <destroyed>261</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		<WallComponent name="Egyptian Iris (H)">
-            <wall>299</wall>
-            <destroyed>260</destroyed>
-            <ruins>44</ruins>
-            <indestructible>false</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Egyptian (C)">
-            <wall>262</wall>
-            <destroyed>263</destroyed>
-            <ruins>44</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Solid Rock">
-            <wall>31</wall>
-            <destroyed>0</destroyed>
-            <ruins>44</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-		<WallComponent name="Solid Granite">
-            <wall>447</wall>
-            <destroyed>0</destroyed>
-            <ruins>44</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-		<WallComponent name="Solid Sandstone">
-            <wall>448</wall>
-            <destroyed>0</destroyed>
-            <ruins>44</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-		<WallComponent name="Solid Dirt">
-            <wall>446</wall>
-            <destroyed>0</destroyed>
-            <ruins>44</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-		
-		<WallComponent name="Portal Pillar">
-            <wall>104</wall>
-            <destroyed>640</destroyed>
-            <ruins>46</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-		<WallComponent name="Stalagmite">
-            <wall>371</wall>
-            <destroyed>641</destroyed>
-            <ruins>170</ruins>
-            <indestructible>true</indestructible>
-        </WallComponent>
-
-      <WallComponent name=" Basalt wall (H) ">
-        <wall>659</wall>
-        <destroyed>662</destroyed>
-        <ruins>663</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" Basalt wall (V) ">
-        <wall>661</wall>
-        <destroyed>664</destroyed>
-        <ruins>663</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" Sandstone wall (H) ">
-        <wall>665</wall>
-        <destroyed>668</destroyed>
-        <ruins>669</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" Sandstone wall (V) ">
-        <wall>667</wall>
-        <destroyed>670</destroyed>
-        <ruins>669</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" Rhyolite wall (H) ">
-        <wall>671</wall>
-        <destroyed>674</destroyed>
-        <ruins>675</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" Rhyolite wall (V) ">
-        <wall>673</wall>
-        <destroyed>676</destroyed>
-        <ruins>675</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" Gabbro wall (H) ">
-        <wall>677</wall>
-        <destroyed>680</destroyed>
-        <ruins>681</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" Gabbro wall (V) ">
-        <wall>679</wall>
-        <destroyed>682</destroyed>
-        <ruins>681</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" Slate wall (H) ">
-        <wall>683</wall>
-        <destroyed>686</destroyed>
-        <ruins>687</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" Slate wall (V) ">
-        <wall>685</wall>
-        <destroyed>688</destroyed>
-        <ruins>687</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" Andesite wall (H) ">
-        <wall>689</wall>
-        <destroyed>692</destroyed>
-        <ruins>693</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" Andesite wall (V) ">
-        <wall>691</wall>
-        <destroyed>694</destroyed>
-        <ruins>693</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" Granite wall (H) ">
-        <wall>695</wall>
-        <destroyed>698</destroyed>
-        <ruins>699</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" Granite wall (V) ">
-        <wall>697</wall>
-        <destroyed>700</destroyed>
-        <ruins>699</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" Feldspar wall (H) ">
-        <wall>701</wall>
-        <destroyed>704</destroyed>
-        <ruins>705</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" Feldspar wall (V) ">
-        <wall>703</wall>
-        <destroyed>706</destroyed>
-        <ruins>705</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" panel wall (H) ">
-        <wall>707</wall>
-        <destroyed>710</destroyed>
-        <ruins>711</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" panel wall (V) ">
-        <wall>709</wall>
-        <destroyed>712</destroyed>
-        <ruins>711</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" panel corner post ">
-        <wall>708</wall>
-        <destroyed>0</destroyed>
-        <ruins>711</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" Lodge wall (H) ">
-        <wall>713</wall>
-        <destroyed>716</destroyed>
-        <ruins>717</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" Lodge wall (V) ">
-        <wall>715</wall>
-        <destroyed>718</destroyed>
-        <ruins>717</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" Lodge corner post ">
-        <wall>714</wall>
-        <destroyed>0</destroyed>
-        <ruins>717</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" front wall (H) ">
-        <wall>731</wall>
-        <destroyed>735</destroyed>
-        <ruins>0</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" inside back wall (H) ">
-        <wall>732</wall>
-        <destroyed>735</destroyed>
-        <ruins>0</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" inside left wall (V) ">
-        <wall>733</wall>
-        <destroyed>736</destroyed>
-        <ruins>0</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-      <WallComponent name=" outside right wall (V) ">
-        <wall>734</wall>
-        <destroyed>736</destroyed>
-        <ruins>0</ruins>
-        <indestructible>false</indestructible>
-      </WallComponent>
-
-    </category>
-
-    <category name="Ruins">
-        <RuinsComponent name="Dungeon">
-            <ruins>44</ruins>
-        </RuinsComponent>
-		
-        <RuinsComponent name="Town">
-            <ruins>45</ruins>
-        </RuinsComponent>
-		
-        <RuinsComponent name="Temple">
-            <ruins>46</ruins>
-        </RuinsComponent>
-
-        <RuinsComponent name="Cave">
-            <ruins>170</ruins>
-        </RuinsComponent>
-
-        <RuinsComponent name="Red Shoji">
-            <ruins>380</ruins>
-        </RuinsComponent>
-		
-        <RuinsComponent name="Mines">
-            <ruins>398</ruins>
-        </RuinsComponent>
-		
-        <RuinsComponent name="Dragon">
-            <ruins>432</ruins>
-        </RuinsComponent>
-		
-        <RuinsComponent name="Highmountain">
-            <ruins>465</ruins>
-        </RuinsComponent>
-
-      <RuinsComponent name=" Basalt Rubble ">
-        <ruins>663</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Sandstone Rubble ">
-        <ruins>669</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Rhyolite Rubble ">
-        <ruins>675</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Gabbro Rubble ">
-        <ruins>681</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Slate Rubble ">
-        <ruins>687</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Andesite Rubble ">
-        <ruins>693</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Granite Rubble ">
-        <ruins>699</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Feldspar Rubble ">
-        <ruins>705</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Sewer Wall Ruins (H) ">
-        <ruins>638</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Sewer Wall Ruins (V) ">
-        <ruins>639</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Basalt Wall Ruins (H) ">
-        <ruins>662</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Basalt wall ruins (V) ">
-        <ruins>664</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Sandstone Wall Ruins (H) ">
-        <ruins>668</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Sandstone wall ruins (V) ">
-        <ruins>670</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Rhyolite Wall Ruins (H) ">
-        <ruins>674</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Rhyloite wall ruins (V) ">
-        <ruins>676</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Gabbro Wall Ruins (H) ">
-        <ruins>680</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Gabbro wall ruins (V) ">
-        <ruins>682</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Slate Wall Ruins (H) ">
-        <ruins>686</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Slate wall ruins (V) ">
-        <ruins>688</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Andesite Wall Ruins (H) ">
-        <ruins>692</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Andesite wall ruins (V) ">
-        <ruins>694</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Granite Wall Ruins (H) ">
-        <ruins>698</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Granite wall ruins (V) ">
-        <ruins>700</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Feldspar Wall Ruins (H) ">
-        <ruins>704</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Feldspar wall ruins (V) ">
-        <ruins>706</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Panel Wall Ruins (H) ">
-        <ruins>710</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Panel wall ruins (V) ">
-        <ruins>712</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Lodge Wall Ruins (H) ">
-        <ruins>716</ruins>
-      </RuinsComponent>
-
-      <RuinsComponent name=" Lodge wall ruins (V) ">
-        <ruins>718</ruins>
-      </RuinsComponent>
-    </category>
-
-    <category name="Doors">
-	     <DoorComponent name="Town (V)">
-            <openId>77</openId>
-            <closedId>65</closedId>
-            <secretId>28</secretId>
-            <destroyedId>83</destroyedId>
-            <isSecret>false</isSecret>
-            <isOpen>false</isOpen>
-        </DoorComponent>
-		<DoorComponent name="Town (H)">
-            <openId>76</openId>
-            <closedId>64</closedId>
-            <secretId>27</secretId>
-            <destroyedId>82</destroyedId>
-            <isSecret>false</isSecret>
-            <isOpen>false</isOpen>
-        </DoorComponent>
-		
-        <DoorComponent name="Temple (V)">
-            <openId>79</openId>
-            <closedId>67</closedId>
-            <secretId>152</secretId>
-            <destroyedId>85</destroyedId>
-            <isSecret>false</isSecret>
-            <isOpen>false</isOpen>
-        </DoorComponent>
-		<DoorComponent name="Temple (H)">
-            <openId>78</openId>
-            <closedId>66</closedId>
-            <secretId>151</secretId>
-            <destroyedId>84</destroyedId>
-            <isSecret>false</isSecret>
-            <isOpen>false</isOpen>
-        </DoorComponent>
-		
-		<DoorComponent name="Marble (V)">
-            <openId>48</openId>
-            <closedId>36</closedId>
-            <secretId>140</secretId>
-            <destroyedId>49</destroyedId>
-            <isSecret>false</isSecret>
-            <isOpen>false</isOpen>
-        </DoorComponent>
-		<DoorComponent name="Marble (H)">
-            <openId>47</openId>
-            <closedId>35</closedId>
-            <secretId>139</secretId>
-            <destroyedId>37</destroyedId>
-            <isSecret>false</isSecret>
-            <isOpen>false</isOpen>
-        </DoorComponent>
-		
-        <DoorComponent name="Dungeon (V)">
-            <openId>75</openId>
-            <closedId>63</closedId>
-            <secretId>26</secretId>
-            <destroyedId>81</destroyedId>
-            <isSecret>false</isSecret>
-            <isOpen>false</isOpen>
-        </DoorComponent>
-        <DoorComponent name="Dungeon (H)">
-            <openId>74</openId>
-            <closedId>62</closedId>
-            <secretId>25</secretId>
-            <destroyedId>80</destroyedId>
-            <isSecret>false</isSecret>
-            <isOpen>false</isOpen>
-        </DoorComponent>
-		
-        <DoorComponent name="Runic (V)">
-            <openId>232</openId>
-            <closedId>230</closedId>
-            <secretId>28</secretId>
-            <destroyedId>234</destroyedId>
-            <isSecret>false</isSecret>
-            <isOpen>false</isOpen>
-        </DoorComponent>
-        <DoorComponent name="Runic (H)">
-            <openId>231</openId>
-            <closedId>229</closedId>
-            <secretId>27</secretId>
-            <destroyedId>233</destroyedId>
-            <isSecret>false</isSecret>
-            <isOpen>false</isOpen>
-        </DoorComponent>
-		
-        <DoorComponent name="Egyptian (V)">
-            <openId>308</openId>
-            <closedId>312</closedId>
-            <secretId>300</secretId>
-            <destroyedId>310</destroyedId>
-            <isSecret>false</isSecret>
-            <isOpen>false</isOpen>
-        </DoorComponent>
-        <DoorComponent name="Egyptian (H)">
-            <openId>307</openId>
-            <closedId>311</closedId>
-            <secretId>299</secretId>
-            <destroyedId>309</destroyedId>
-            <isSecret>false</isSecret>
-            <isOpen>false</isOpen>
-        </DoorComponent>
-
-        <DoorComponent name="Red Shoji (V)">
-            <openId>392</openId>
-            <closedId>379</closedId>
-            <secretId>363</secretId>
-            <destroyedId>405</destroyedId>
-            <isSecret>false</isSecret>
-            <isOpen>false</isOpen>
-        </DoorComponent>
-        <DoorComponent name="Red Shoji (H)">
-            <openId>391</openId>
-            <closedId>378</closedId>
-            <secretId>362</secretId>
-            <destroyedId>404</destroyedId>
-            <isSecret>false</isSecret>
-            <isOpen>false</isOpen>
-        </DoorComponent>
-
-        <DoorComponent name="Jail (V)">
-            <openId>434</openId>
-            <closedId>421</closedId>
-            <secretId>450</secretId>
-            <destroyedId>436</destroyedId>
-            <isSecret>false</isSecret>
-            <isOpen>false</isOpen>
-        </DoorComponent>
-        <DoorComponent name="Jail (H)">
-            <openId>433</openId>
-            <closedId>420</closedId>
-            <secretId>449</secretId>
-            <destroyedId>435</destroyedId>
-            <isSecret>false</isSecret>
-            <isOpen>false</isOpen>
-        </DoorComponent>
-		
-        <DoorComponent name="Steel (V)">
-            <openId>456</openId>
-            <closedId>454</closedId>
-            <secretId>429</secretId>
-            <destroyedId>458</destroyedId>
-            <isSecret>false</isSecret>
-            <isOpen>false</isOpen>
-        </DoorComponent>
-        <DoorComponent name="Steel (H)">
-            <openId>455</openId>
-            <closedId>453</closedId>
-            <secretId>428</secretId>
-            <destroyedId>457</destroyedId>
-            <isSecret>false</isSecret>
-            <isOpen>false</isOpen>
-        </DoorComponent>
-
-        <DoorComponent name="Dirty Marble (V)">
-            <openId>497</openId>
-            <closedId>495</closedId>
-            <secretId>140</secretId>
-            <destroyedId>499</destroyedId>
-            <isSecret>false</isSecret>
-            <isOpen>false</isOpen>
-        </DoorComponent>
-        <DoorComponent name="Dirty Marble (H)">
-            <openId>496</openId>
-            <closedId>494</closedId>
-            <secretId>139</secretId>
-            <destroyedId>498</destroyedId>
-            <isSecret>false</isSecret>
-            <isOpen>false</isOpen>
-        </DoorComponent>
-
-        <DoorComponent name="Dragon (H)">
-            <openId>506</openId>
-            <closedId>504</closedId>
-            <secretId>151</secretId>
-            <destroyedId>508</destroyedId>
-            <isSecret>false</isSecret>
-            <isOpen>false</isOpen>
-        </DoorComponent>
-        <DoorComponent name="Dragon (V)">
-            <openId>507</openId>
-            <closedId>505</closedId>
-            <secretId>152</secretId>
-            <destroyedId>509</destroyedId>
-            <isSecret>false</isSecret>
-            <isOpen>false</isOpen>
-        </DoorComponent>
-    </category>
-
-    <category name="Stairs">
-        <StaircaseComponent name="Down (NS)">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-            <teleporterId>123</teleporterId>
-            <descends>true</descends>
-        </StaircaseComponent>
-        <StaircaseComponent name="Down (WE)">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-            <teleporterId>124</teleporterId>
-            <descends>true</descends>
-        </StaircaseComponent>
-        <StaircaseComponent name="Down (EW)">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-            <teleporterId>125</teleporterId>
-            <descends>true</descends>
-        </StaircaseComponent>
-        <StaircaseComponent name="Down (SN)">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-            <teleporterId>126</teleporterId>
-            <descends>true</descends>
-        </StaircaseComponent>
-
-        <StaircaseComponent name="Up (NS)">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-            <teleporterId>127</teleporterId>
-            <descends>false</descends>
-        </StaircaseComponent>
-        <StaircaseComponent name="Up (WE)">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-            <teleporterId>128</teleporterId>
-            <descends>false</descends>
-        </StaircaseComponent>
-        <StaircaseComponent name="Up (EW)">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-            <teleporterId>129</teleporterId>
-            <descends>false</descends>
-        </StaircaseComponent>
-        <StaircaseComponent name="Up (SN)">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-            <teleporterId>130</teleporterId>
-            <descends>false</descends>
-        </StaircaseComponent>
-		
-		<StaircaseComponent name="Down (Spiral)">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-            <teleporterId>254</teleporterId>
-            <descends>true</descends>
-        </StaircaseComponent>
-
-        <StaircaseComponent name="Up (Spiral)">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-            <teleporterId>253</teleporterId>
-            <descends>false</descends>
-        </StaircaseComponent>
-		
-		 <StaircaseComponent name="Pit">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-            <teleporterId>8</teleporterId>
-            <descends>true</descends>
-        </StaircaseComponent>
-		
-		<StaircaseComponent name="Pit (Caved)">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-            <teleporterId>181</teleporterId>
-            <descends>true</descends>
-        </StaircaseComponent>
-    </category>
-
-    <category name="Teleport">
-        <SkyComponent name="Air">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-            <teleporterId>9</teleporterId>
-        </SkyComponent>
-
-        <EgressComponent name="Leng">
-            <egress>315</egress>
-            <destinationSegment>2</destinationSegment>
-        </EgressComponent>
-		
-        <EgressComponent name="Kesmai">
-            <egress>316</egress>
-            <destinationSegment>1</destinationSegment>
-        </EgressComponent>
-		
-        <EgressComponent name="Oakvael">
-            <egress>328</egress>
-            <destinationSegment>4</destinationSegment>
-        </EgressComponent>
-		
-        <EgressComponent name="Axe Glacier">
-            <egress>329</egress>
-            <destinationSegment>3</destinationSegment>
-        </EgressComponent>
-		
-        <EgressComponent name="Underkingdom">
-            <egress>330</egress>
-            <destinationSegment>5</destinationSegment>
-        </EgressComponent>
-		
-		<EgressComponent name="Torii">
-            <egress>332</egress>
-        </EgressComponent>
-		<EgressComponent name="Rift Glacier">
-            <egress>319</egress>
-        </EgressComponent>
-		<EgressComponent name="Shukumei">
-            <egress>331</egress>
-        </EgressComponent>
-		<EgressComponent name="Annwn">
-            <egress>318</egress>
-        </EgressComponent>
-		
-		<EgressComponent name="Generic">
-            <egress>318</egress>
-        </EgressComponent>
-		
-		<EgressComponent name="Moongate">
-            <egress>189</egress>
-        </EgressComponent>
-		<EgressComponent name="Moongate">
-            <egress>190</egress>
-        </EgressComponent>
-		
-        <HiddenTeleporterComponent name="Hidden">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-        </HiddenTeleporterComponent>
-
-        <ItemTeleporter name="Star Ruby">
-            <Type>StarRuby</Type>
-            <OnFail>Stun</OnFail>
-        </ItemTeleporter>
-
-        <ItemTeleporter name="Hummingbird Amulet">
-            <Type>HummingbirdAmulet</Type>
-            <OnFail>Interrupted</OnFail>
-        </ItemTeleporter>
-    </category>
-
-    <category name="Ropes">
-        <RopeComponent name="Up (West)">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-            <teleporterId>237</teleporterId>
-            <isSecret>false</isSecret>
-        </RopeComponent>
-		
-        <RopeComponent name="Up (North)">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-            <teleporterId>238</teleporterId>
-            <isSecret>false</isSecret>
-        </RopeComponent>
-		
-        <RopeComponent name="Down (East)">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-            <teleporterId>241</teleporterId>
-            <isSecret>false</isSecret>
-        </RopeComponent>
-		
-        <RopeComponent name="Up (East)">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-            <teleporterId>255</teleporterId>
-            <isSecret>false</isSecret>
-        </RopeComponent>
-		
-        <RopeComponent name="Down (South)">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-            <teleporterId>256</teleporterId>
-            <isSecret>false</isSecret>
-        </RopeComponent>
-		
-        <RopeComponent name="Up (South)">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-            <teleporterId>257</teleporterId>
-            <isSecret>false</isSecret>
-        </RopeComponent>
-
-        <RopeComponent name="Rope">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-            <teleporterId>512</teleporterId>
-            <isSecret>false</isSecret>
-        </RopeComponent>
-        <RopeComponent name="Rope">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-            <teleporterId>513</teleporterId>
-            <isSecret>false</isSecret>
-        </RopeComponent>
-        <RopeComponent name="Rope">
-            <destinationX>0</destinationX>
-            <destinationY>0</destinationY>
-            <destinationRegion>0</destinationRegion>
-            <teleporterId>514</teleporterId>
-            <isSecret>false</isSecret>
-        </RopeComponent>
-    </category>
-
-    <category name="Vegetation">
-        <StaticComponent name="Jungle Foliage">
-            <static>92</static>
-        </StaticComponent>
-		
-        <StaticComponent name="Jungle Foliage">
-            <static>93</static>
-        </StaticComponent>
-		
-        <StaticComponent name="Jungle Foliage">
-            <static>94</static>
-        </StaticComponent>
-		
-        <StaticComponent name="Jungle Foliage">
-            <static>95</static>
-        </StaticComponent>
-		
-        <TreeComponent name="Large Tree">
-            <tree>98</tree>
-            <canGrow>true</canGrow>
-        </TreeComponent>
-		
-        <TreeComponent name="Medium Tree">
-            <tree>99</tree>
-            <canGrow>true</canGrow>
-        </TreeComponent>
-		
-        <TreeComponent name="Small Tree">
-            <tree>100</tree>
-            <canGrow>true</canGrow>
-        </TreeComponent>
-		
-        <StaticComponent name="Tall Grass">
-            <static>105</static>
-        </StaticComponent>
-        <StaticComponent name="Tall Reeds">
-            <static>106</static>
-        </StaticComponent>
-		
-        <StaticComponent name="Tall Grass">
-            <static>107</static>
-        </StaticComponent>
-        <StaticComponent name="Tall Reeds">
-            <static>108</static>
-        </StaticComponent>
-		
-        <StaticComponent name="Tall Bamboo">
-            <static>109</static>
-        </StaticComponent>
-        <StaticComponent name="Tall Bamboo">
-            <static>110</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Heavy Snow">
-            <static>121</static>
-        </StaticComponent>
-        <StaticComponent name="Heavy Snow">
-            <static>122</static>
-        </StaticComponent>
-		
-        <TreeComponent name="Large Pine Tree">
-            <tree>199</tree>
-            <canGrow>true</canGrow>
-        </TreeComponent>
-		
-        <TreeComponent name="Medium Pine Tree">
-            <tree>200</tree>
-            <canGrow>true</canGrow>
-        </TreeComponent>
-		
-        <TreeComponent name="Small Pine Tree">
-            <tree>201</tree>
-            <canGrow>true</canGrow>
-        </TreeComponent>
-		
-        <TreeComponent name="Large Pine Tree (Snow)">
-            <tree>202</tree>
-            <canGrow>true</canGrow>
-        </TreeComponent>
-		
-        <TreeComponent name="Medium Pine Tree (Snow)">
-            <tree>203</tree>
-            <canGrow>true</canGrow>
-        </TreeComponent>
-		
-        <TreeComponent name="Small Pine Tree (Snow)">
-            <tree>204</tree>
-            <canGrow>true</canGrow>
-        </TreeComponent>
-		
-        <StaticComponent name="Creosote Bush">
-            <static>205</static>
-        </StaticComponent>
-		
-        <StaticComponent name="Red Flowers">
-            <static>206</static>
-        </StaticComponent>
-		
-        <StaticComponent name="Yellow Flowers">
-            <static>207</static>
-        </StaticComponent>
-		
-        <StaticComponent name="Large Oak Trunk">
-            <static>208</static>
-        </StaticComponent>
-		
-        <TreeComponent name="Small Jungle Tree">
-            <tree>247</tree>
-            <canGrow>true</canGrow>
-        </TreeComponent>
-		
-        <StaticComponent name="Fig Tree">
-            <static>326</static>
-        </StaticComponent>
-		
-        <TreeComponent name="Wierd Tree">
-            <tree>370</tree>
-            <canGrow>true</canGrow>
-        </TreeComponent>
-		
-		<TreeComponent name="Bamboo">
-            <tree>403</tree>
-            <canGrow>true</canGrow>
-        </TreeComponent>
-		
-		<StaticComponent name="Burnt Tree (L)">
-            <static>101</static>
-        </StaticComponent>
-		<StaticComponent name="Burnt Tree (M)">
-            <static>102</static>
-        </StaticComponent>
-		<StaticComponent name="Burnt Tree (S)">
-            <static>103</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Burnt Wierd Tree">
-            <static>372</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Dead Shrubs">
-            <static>1002</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Dead Tree">
-            <static>1005</static>
-        </StaticComponent>
-
-        <TreeComponent name="Palm Tree [Tenser]">
-            <tree>624</tree>
-            <canGrow>false</canGrow>
-        </TreeComponent>
-
-        <TreeComponent name="Large Palm Tree (1) [Tenser]">
-            <tree>625</tree>
-            <canGrow>false</canGrow>
-        </TreeComponent>
-
-        <TreeComponent name="Large Palm Tree (2) [Tenser]">
-            <tree>626</tree>
-            <canGrow>false</canGrow>
-        </TreeComponent>
-
-        <TreeComponent name="Banana Tree [Tenser]">
-            <tree>627</tree>
-            <canGrow>false</canGrow>
-        </TreeComponent>
-    </category>
-
-    <category name="Obstructions">
-	    <ObstructionComponent name="Reef">
-            <obstruction>19</obstruction>
-            <blockVision>false</blockVision>
-        </ObstructionComponent>
-		
-        <ObstructionComponent name="Reef [Zrikz]">
-            <obstruction>605</obstruction>
-            <blockVision>false</blockVision>
-        </ObstructionComponent>
-				
-        <ObstructionComponent name="Iron Porticullus (H)">
-            <obstruction>165</obstruction>
-            <blockVision>false</blockVision>
-        </ObstructionComponent>
-		
-        <ObstructionComponent name="Iron Porticullus (V)">
-            <obstruction>166</obstruction>
-            <blockVision>false</blockVision>
-        </ObstructionComponent>
-		
-        <ObstructionComponent name="Jail (H)">
-            <obstruction>449</obstruction>
-            <blockVision>false</blockVision>
-        </ObstructionComponent>
-		
-        <ObstructionComponent name="Jail (V)">
-            <obstruction>450</obstruction>
-            <blockVision>false</blockVision>
-        </ObstructionComponent>
-		
-		<ObstructionComponent name="Massive Anvil">
-            <obstruction>164</obstruction>
-            <blockVision>false</blockVision>
-        </ObstructionComponent>
-		
-		<ObstructionComponent name="Heavy Oak">
-            <obstruction>266</obstruction>
-            <blockVision>true</blockVision>
-        </ObstructionComponent>
-		
-		<ObstructionComponent name="Dirty Marble Pillar">
-            <obstruction>168</obstruction>
-            <blockVision>true</blockVision>
-        </ObstructionComponent>
-		
-		<ObstructionComponent name="Sandstone Pillar">
-            <obstruction>313</obstruction>
-            <blockVision>true</blockVision>
-        </ObstructionComponent>
-	</category>
-	
-	<category name="Counters and Altars">
-		<CounterComponent name="Wood (H)">
-			<counter>86</counter>
-		</CounterComponent>
-		
-		<CounterComponent name="Wood (V)">
-			<counter>87</counter>
-		</CounterComponent>
-		
-		<CounterComponent name="Slate (H)">
-			<counter>96</counter>
-		</CounterComponent>
-		
-		<CounterComponent name="Slate (V)">
-			<counter>97</counter>
-		</CounterComponent>
-		
-		<CounterComponent name="Gilded (H)">
-			<counter>248</counter>
-		</CounterComponent>
-		
-		<CounterComponent name="Gilded (V)">
-			<counter>249</counter>
-		</CounterComponent>
-		
-		<CounterComponent name="Table (H)">
-			<counter>267</counter>
-		</CounterComponent>
-		
-		<CounterComponent name="Table (V)">
-			<counter>268</counter>
-		</CounterComponent>
-		
-		<CounterComponent name="Alchemy Table (H)">
-			<counter>269</counter>
-		</CounterComponent>
-		
-		<CounterComponent name="Alchemy Table (V)">
-			<counter>270</counter>
-		</CounterComponent>
-		
-		<CounterComponent name="Stone Table (H)">
-			<counter>399</counter>
-		</CounterComponent>
-		
-		<CounterComponent name="Stone Table (V)">
-			<counter>400</counter>
-		</CounterComponent>
-		
-		<AltarComponent name="Temple Altar">
-            <altar>113</altar>
-        </AltarComponent>
-		
-        <AltarComponent name="Granite Altar (1)">
-            <altar>138</altar>
-        </AltarComponent>
-		
-        <AltarComponent name="Granite Altar (2)">
-            <altar>163</altar>
-        </AltarComponent>
-		
-        <AltarComponent name="Skull Altar">
-            <altar>169</altar>
-        </AltarComponent>
-		
-        <AltarComponent name="Carved Wood Altar">
-            <altar>174</altar>
-        </AltarComponent>
-		
-        <AltarComponent name="Egyptian Altar (1)">
-            <altar>278</altar>
-        </AltarComponent>
-		
-        <AltarComponent name="Egyptian Altar (2)">
-            <altar>290</altar>
-        </AltarComponent>
-		
-        <AltarComponent name="Egyptian Altar (3)">
-            <altar>302</altar>
-        </AltarComponent>
-		
-        <AltarComponent name="Egyptian Altar (4)">
-            <altar>314</altar>
-        </AltarComponent>
-		
-        <AltarComponent name="Egyptian Altar (5)">
-            <altar>324</altar>
-        </AltarComponent>
-		
-        <AltarComponent name="Egyptian Altar (6)">
-            <altar>327</altar>
-        </AltarComponent>
-		
-		<AltarComponent name="Blue Marble (6)">
-            <altar>368</altar>
-        </AltarComponent>
-    </category>
-
-    <category name="Decorations">
-		<StaticComponent name="Boxing Ring">
-            <static>114</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Small Spring">
-            <static>242</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Fountain Pool">
-            <static>209</static>
-        </StaticComponent>
-		<StaticComponent name="Fountain Center">
-            <static>210</static>
-        </StaticComponent>
-		
-        <StaticComponent name="Blood over Altar">
-            <static>236</static>
-        </StaticComponent>
-		<StaticComponent name="Blood Stains">
-            <static>167</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Gravestone (1)">
-            <static>213</static>
-        </StaticComponent>
-		<StaticComponent name="Gravestone (2)">
-            <static>214</static>
-        </StaticComponent>
-		<StaticComponent name="Gravestone (3)">
-            <static>215</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Grave (1)">
-            <static>216</static>
-        </StaticComponent>
-		<StaticComponent name="Grave (2)">
-            <static>217</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Mirror (H)">
-            <static>117</static>
-        </StaticComponent>
-		<StaticComponent name="Mirror (V)">
-            <static>118</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Torn Tapestry (H)">
-            <static>171</static>
-        </StaticComponent>
-		<StaticComponent name="Torn Tapestry (V)">
-            <static>172</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Oriental Tapestry (H)">
-            <static>197</static>
-        </StaticComponent>
-		<StaticComponent name="Oriental Tapestry (V)">
-            <static>198</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Red Carpet">
-            <static>317</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Crushed Bones">
-            <static>173</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Sordid Remains (H)">
-            <static>211</static>
-        </StaticComponent>
-		<StaticComponent name="Sordid Remains (V)">
-            <static>212</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Hanging Skeleton (H)">
-            <static>220</static>
-        </StaticComponent>
-		<StaticComponent name="Hanging Skeleton (V)">
-            <static>221</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Bookshelf (H)">
-            <static>243</static>
-        </StaticComponent>
-		<StaticComponent name="Bookshelf (V)">
-            <static>244</static>
-        </StaticComponent>
-
+  <category name="Floors">
+    <FloorComponent name="Light">
+      <ground>1</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Tile">
+      <ground>2</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Hardwood (H)">
+      <ground>3</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Hardwood (V)">
+      <ground>4</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Temple">
+      <ground>5</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Burnt Stone">
+      <ground>6</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="(Lava)">
+      <ground>10</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="(PH)">
+      <ground>11</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Dirt">
+      <ground>12</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Short Grass">
+      <ground>13</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Wood (H)">
+      <ground>14</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Wood (V)">
+      <ground>15</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Beaten Path">
+      <ground>16</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <IceComponent name="Snow">
+      <ground>17</ground>
+      <movementCost>1</movementCost>
+    </IceComponent>
+    <FloorComponent name="Sand">
+      <ground>18</ground>
+      <movementCost>2</movementCost>
+    </FloorComponent>
+    <IceComponent name="Ice">
+      <ground>20</ground>
+      <movementCost>1</movementCost>
+    </IceComponent>
+    <IceComponent name="Ice Labyrinth Floor">
+      <ground>992</ground>
+      <movementCost>1</movementCost>
+    </IceComponent>
+    <FloorComponent name="Bog">
+      <ground>21</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Forest">
+      <ground>23</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Honeycomb Flagstone">
+      <ground>24</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Jungle">
+      <ground>89</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Jungle (Moss)">
+      <ground>90</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Jungle (Foliage)">
+      <ground>91</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Bridge (H)">
+      <ground>115</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Bridge (V)">
+      <ground>116</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Rope Bridge (H)">
+      <ground>239</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Giant Logs">
+      <ground>175</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Worn Marble">
+      <ground>176</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Gray Tile">
+      <ground>178</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Dusty Cave">
+      <ground>179</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Slate Flagstone">
+      <ground>182</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Mossy Granite">
+      <ground>183</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Worn Cobblestone">
+      <ground>184</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Tidal Mud">
+      <ground>185</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Fine Marble">
+      <ground>186</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Oriental Rug">
+      <ground>196</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Stone Bridge (H)">
+      <ground>252</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Gravel Road">
+      <ground>264</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Sandstone Slabs">
+      <ground>265</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Sandstone Cobblestones">
+      <ground>277</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Green Alfalfa">
+      <ground>289</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Rosey Viens Granite">
+      <ground>301</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Yellow Brick Road">
+      <ground>325</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Jade Bricks">
+      <ground>341</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Mossy Cave Floor">
+      <ground>369</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Torn Cobblestones">
+      <ground>375</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Skulls">
+      <ground>387</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Blue Marble">
+      <ground>388</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Sandstone Cobblestones">
+      <ground>393</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="(PH)">
+      <ground>406</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Ash">
+      <ground>419</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Blue Brick Road">
+      <ground>445</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Dark Wood">
+      <ground>492</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Bamboo">
+      <ground>493</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Sand [Zrikz]">
+      <ground>602</ground>
+      <movementCost>2</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Sand [Zrikz]">
+      <ground>603</ground>
+      <movementCost>2</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Sandflats [Zrikz]">
+      <ground>604</ground>
+      <movementCost>2</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Reef [Zrikz]">
+      <ground>605</ground>
+      <movementCost>2</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Aqua [Fireal]">
+      <ground>606</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Cobblestone [Fireal]">
+      <ground>607</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Cut Wood [Fireal]">
+      <ground>608</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Druid Cove [Fireal]">
+      <ground>609</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Egypt (1) [Fireal]">
+      <ground>610</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Egypt (2) [Fireal]">
+      <ground>611</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Fantasy Flower [Fireal]">
+      <ground>612</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Glass Lava [Fireal]">
+      <ground>613</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Grass [Fireal]">
+      <ground>614</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Ice [Fireal]">
+      <ground>615</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Labyrinth [Fireal]">
+      <ground>616</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Ornate [Fireal]">
+      <ground>617</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Paving Slabs [Fireal]">
+      <ground>618</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Skulls [Fireal]">
+      <ground>619</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Cobble Puzzle [Fireal]">
+      <ground>620</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Cobbles [Fireal]">
+      <ground>621</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Bedrock [Lux]">
+      <ground>1003</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Roots [Lux]">
+      <ground>1004</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Sewer Drain [Tenser]">
+      <ground>628</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Sewer Floor [Tenser]">
+      <ground>629</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name=" Basalt floor ">
+      <ground>660</ground>
+    </FloorComponent>
+    <FloorComponent name=" Sandstone floor ">
+      <ground>666</ground>
+    </FloorComponent>
+    <FloorComponent name=" Rhyolite floor ">
+      <ground>672</ground>
+    </FloorComponent>
+    <FloorComponent name=" Gabbro floor ">
+      <ground>678</ground>
+    </FloorComponent>
+    <FloorComponent name=" Slate floor ">
+      <ground>684</ground>
+    </FloorComponent>
+    <FloorComponent name=" Andesite floor ">
+      <ground>690</ground>
+    </FloorComponent>
+    <FloorComponent name=" Granite floor ">
+      <ground>696</ground>
+    </FloorComponent>
+    <FloorComponent name=" Feldspar floor ">
+      <ground>702</ground>
+    </FloorComponent>
+    <FloorComponent name="Lava Tube Floor">
+      <ground>1009</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+  </category>
+  <category name="Water">
+    <WaterComponent name="Water">
+      <ground>22</ground>
+      <depth>3</depth>
+      <movementCost>3</movementCost>
+    </WaterComponent>
+    <WaterComponent name="Fresh Water">
+      <ground>177</ground>
+      <depth>3</depth>
+      <movementCost>3</movementCost>
+    </WaterComponent>
+    <WaterComponent name="Dark and Cloudy Water">
+      <ground>180</ground>
+      <depth>3</depth>
+      <movementCost>3</movementCost>
+    </WaterComponent>
+    <PoisonedWaterComponent name="Poisoned Water">
+      <color r="0" g="255" b="0" a="255" />
+      <ground>180</ground>
+      <movementCost>3</movementCost>
+    </PoisonedWaterComponent>
+    <WaterComponent name="Dark Red Liquid">
+      <ground>374</ground>
+      <depth>3</depth>
+      <movementCost>3</movementCost>
+    </WaterComponent>
+    <WaterComponent name="Shoreline (Shallow) [Zrikz]">
+      <ground>601</ground>
+      <depth>3</depth>
+      <movementCost>3</movementCost>
+    </WaterComponent>
+    <WaterComponent name="Shoreline [Zrikz]">
+      <ground>601</ground>
+      <depth>3</depth>
+      <movementCost>3</movementCost>
+      <color r="100" g="150" b="255" a="255" />
+    </WaterComponent>
+    <WaterComponent name="Sewer [Zrikz]">
+      <ground>602</ground>
+      <depth>3</depth>
+      <movementCost>3</movementCost>
+    </WaterComponent>
+    <WaterComponent name="Waves (H) [Tenser]">
+      <ground>622</ground>
+      <depth>3</depth>
+      <movementCost>3</movementCost>
+    </WaterComponent>
+    <WaterComponent name="Waves (V) [Tenser]">
+      <ground>623</ground>
+      <depth>3</depth>
+      <movementCost>3</movementCost>
+    </WaterComponent>
+    <WaterComponent name="Waves (E) [Tenser]">
+      <ground>1018</ground>
+      <depth>3</depth>
+      <movementCost>3</movementCost>
+    </WaterComponent>
+    <WaterComponent name="Waves (S) [Tenser]">
+      <ground>1019</ground>
+      <depth>3</depth>
+      <movementCost>3</movementCost>
+    </WaterComponent>
+  </category>
+  <category name="Structural">
+    <WallComponent name="Town (H)">
+      <wall>27</wall>
+      <destroyed>40</destroyed>
+      <ruins>45</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Town (C)">
+      <wall>33</wall>
+      <destroyed>784</destroyed>
+      <ruins>45</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Town (V)">
+      <wall>28</wall>
+      <destroyed>41</destroyed>
+      <ruins>45</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Temple (V)">
+      <wall>30</wall>
+      <destroyed>43</destroyed>
+      <ruins>46</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Temple (H)">
+      <wall>29</wall>
+      <destroyed>42</destroyed>
+      <ruins>46</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Temple (C)">
+      <wall>34</wall>
+      <destroyed>144</destroyed>
+      <ruins>46</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Dirty Marble (V)">
+      <wall>140</wall>
+      <destroyed>142</destroyed>
+      <ruins>46</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Dirty Marble (H)">
+      <wall>139</wall>
+      <destroyed>141</destroyed>
+      <ruins>46</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Dirty Marble (C)">
+      <wall>143</wall>
+      <destroyed>144</destroyed>
+      <ruins>46</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Heavy Logs (V)">
+      <wall>146</wall>
+      <destroyed>148</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Heavy Logs (H)">
+      <wall>145</wall>
+      <destroyed>147</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Heavy Logs (C)">
+      <wall>149</wall>
+      <destroyed>150</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Dragon (H)">
+      <wall>151</wall>
+      <destroyed>153</destroyed>
+      <ruins>46</ruins>
+      <indestructible>true</indestructible>
+    </WallComponent>
+    <WallComponent name="Dragon (V)">
+      <wall>152</wall>
+      <destroyed>154</destroyed>
+      <ruins>46</ruins>
+      <indestructible>true</indestructible>
+    </WallComponent>
+    <WallComponent name="Dragon (C)">
+      <wall>155</wall>
+      <destroyed>156</destroyed>
+      <ruins>46</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Cave (V)">
+      <wall>158</wall>
+      <destroyed>161</destroyed>
+      <ruins>170</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Cave (H)">
+      <wall>157</wall>
+      <destroyed>160</destroyed>
+      <ruins>170</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Cave (C)">
+      <wall>159</wall>
+      <destroyed>162</destroyed>
+      <ruins>170</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Dungeon (V)">
+      <wall>26</wall>
+      <destroyed>39</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Dungeon (H)">
+      <wall>25</wall>
+      <destroyed>38</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Dungeon (C)">
+      <wall>32</wall>
+      <destroyed>783</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Granite (V)">
+      <wall>336</wall>
+      <destroyed>345</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Granite (H)">
+      <wall>335</wall>
+      <destroyed>344</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Granite (C)">
+      <wall>357</wall>
+      <destroyed>358</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Sandstone (V)">
+      <wall>347</wall>
+      <destroyed>339</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Sandstone (H)">
+      <wall>346</wall>
+      <destroyed>338</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Sandstone (C)">
+      <wall>359</wall>
+      <destroyed>360</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Dirt (V)">
+      <wall>334</wall>
+      <destroyed>343</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Dirt (H)">
+      <wall>333</wall>
+      <destroyed>342</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Dirt (C)">
+      <wall>355</wall>
+      <destroyed>356</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Undead (V)">
+      <wall>382</wall>
+      <destroyed>395</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Undead (H)">
+      <wall>381</wall>
+      <destroyed>394</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Undead (C)">
+      <wall>407</wall>
+      <destroyed>408</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Blue Marble (V)">
+      <wall>384</wall>
+      <destroyed>397</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Blue Marble (H)">
+      <wall>383</wall>
+      <destroyed>396</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Blue Marble (C)">
+      <wall>409</wall>
+      <destroyed>410</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Mines (V)">
+      <wall>414</wall>
+      <destroyed>416</destroyed>
+      <ruins>398</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Mines (H)">
+      <wall>413</wall>
+      <destroyed>415</destroyed>
+      <ruins>398</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Mines (C)">
+      <wall>417</wall>
+      <destroyed>418</destroyed>
+      <ruins>398</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Thicket (V)">
+      <wall>224</wall>
+      <destroyed>227</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Thicket (H)">
+      <wall>223</wall>
+      <destroyed>226</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Thicket (C)">
+      <wall>225</wall>
+      <destroyed>228</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Red Shoji (V)">
+      <wall>363</wall>
+      <destroyed>365</destroyed>
+      <ruins>380</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Red Shoji (H)">
+      <wall>362</wall>
+      <destroyed>364</destroyed>
+      <ruins>380</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Red Shoji (C)">
+      <wall>366</wall>
+      <destroyed>367</destroyed>
+      <ruins>380</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Dragon (V)">
+      <wall>429</wall>
+      <destroyed>442</destroyed>
+      <ruins>432</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Dragon (H)">
+      <wall>428</wall>
+      <destroyed>441</destroyed>
+      <ruins>432</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Dragon Window (V)">
+      <wall>431</wall>
+      <destroyed>442</destroyed>
+      <ruins>432</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Dragon Window (H)">
+      <wall>430</wall>
+      <destroyed>441</destroyed>
+      <ruins>432</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Dragon (C)">
+      <wall>443</wall>
+      <destroyed>444</destroyed>
+      <ruins>432</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Highmountain (V)">
+      <wall>460</wall>
+      <destroyed>462</destroyed>
+      <ruins>465</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Highmountain (H)">
+      <wall>459</wall>
+      <destroyed>461</destroyed>
+      <ruins>465</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Highmountain (C)">
+      <wall>463</wall>
+      <destroyed>464</destroyed>
+      <ruins>465</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Pagoda Shoji (V)">
+      <wall>471</wall>
+      <destroyed>473</destroyed>
+      <ruins>45</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Pagoda Shoji (H)">
+      <wall>470</wall>
+      <destroyed>472</destroyed>
+      <ruins>45</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Pagoda Framed (V)">
+      <wall>475</wall>
+      <destroyed>477</destroyed>
+      <ruins>45</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Pagoda Framed (H)">
+      <wall>474</wall>
+      <destroyed>476</destroyed>
+      <ruins>45</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Pagoda Framed (V)">
+      <wall>483</wall>
+      <destroyed>485</destroyed>
+      <ruins>45</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Pagoda Framed (H)">
+      <wall>482</wall>
+      <destroyed>484</destroyed>
+      <ruins>45</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Pagoda (V)">
+      <wall>487</wall>
+      <destroyed>489</destroyed>
+      <ruins>45</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Pagoda (H)">
+      <wall>486</wall>
+      <destroyed>488</destroyed>
+      <ruins>45</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Pagoda (C)">
+      <wall>480</wall>
+      <destroyed>481</destroyed>
+      <ruins>45</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Egyptian (V)">
+      <wall>259</wall>
+      <destroyed>261</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Egyptian (H)">
+      <wall>258</wall>
+      <destroyed>260</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Egyptian Life (V)">
+      <wall>272</wall>
+      <destroyed>261</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Egyptian Life (H)">
+      <wall>271</wall>
+      <destroyed>260</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Egyptian Life (V)">
+      <wall>274</wall>
+      <destroyed>261</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Egyptian Life (H)">
+      <wall>273</wall>
+      <destroyed>260</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Egyptian Sobet (V)">
+      <wall>276</wall>
+      <destroyed>261</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Egyptian Sobet (H)">
+      <wall>275</wall>
+      <destroyed>260</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Egyptian Horus (V)">
+      <wall>284</wall>
+      <destroyed>261</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Egyptian Horus (H)">
+      <wall>283</wall>
+      <destroyed>260</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Egyptian Osiris (V)">
+      <wall>286</wall>
+      <destroyed>261</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Egyptian Osiris (H)">
+      <wall>285</wall>
+      <destroyed>260</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Egyptian Sekhmet (V)">
+      <wall>288</wall>
+      <destroyed>261</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Egyptian Sekhmet (H)">
+      <wall>287</wall>
+      <destroyed>260</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Egyptian Re.Harakhti (V)">
+      <wall>296</wall>
+      <destroyed>261</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Egyptian Re.Harakhti (H)">
+      <wall>295</wall>
+      <destroyed>260</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Egyptian Anubis (V)">
+      <wall>297</wall>
+      <destroyed>261</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Egyptian Anubis (H)">
+      <wall>298</wall>
+      <destroyed>260</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Egyptian Iris (V)">
+      <wall>300</wall>
+      <destroyed>261</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Egyptian Iris (H)">
+      <wall>299</wall>
+      <destroyed>260</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Egyptian (C)">
+      <wall>262</wall>
+      <destroyed>263</destroyed>
+      <ruins>44</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Solid Rock">
+      <wall>31</wall>
+      <destroyed>0</destroyed>
+      <ruins>44</ruins>
+      <indestructible>true</indestructible>
+    </WallComponent>
+    <WallComponent name="Solid Granite">
+      <wall>447</wall>
+      <destroyed>0</destroyed>
+      <ruins>44</ruins>
+      <indestructible>true</indestructible>
+    </WallComponent>
+    <WallComponent name="Solid Sandstone">
+      <wall>448</wall>
+      <destroyed>0</destroyed>
+      <ruins>44</ruins>
+      <indestructible>true</indestructible>
+    </WallComponent>
+    <WallComponent name="Solid Dirt">
+      <wall>446</wall>
+      <destroyed>0</destroyed>
+      <ruins>44</ruins>
+      <indestructible>true</indestructible>
+    </WallComponent>
+    <WallComponent name="Portal Pillar">
+      <wall>104</wall>
+      <destroyed>640</destroyed>
+      <ruins>46</ruins>
+      <indestructible>true</indestructible>
+    </WallComponent>
+    <WallComponent name="Stalagmite">
+      <wall>371</wall>
+      <destroyed>641</destroyed>
+      <ruins>170</ruins>
+      <indestructible>true</indestructible>
+    </WallComponent>
+    <WallComponent name=" Basalt wall (H) ">
+      <wall>659</wall>
+      <destroyed>662</destroyed>
+      <ruins>663</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Basalt wall (V) ">
+      <wall>661</wall>
+      <destroyed>664</destroyed>
+      <ruins>663</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Basalt wall (C) ">
+      <wall>857</wall>
+      <destroyed>858</destroyed>
+      <ruins>663</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Sandstone wall (H) ">
+      <wall>665</wall>
+      <destroyed>668</destroyed>
+      <ruins>669</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Sandstone wall (V) ">
+      <wall>667</wall>
+      <destroyed>670</destroyed>
+      <ruins>669</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Sandstone wall (C) ">
+      <wall>859</wall>
+      <destroyed>860</destroyed>
+      <ruins>669</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Rhyolite wall (H) ">
+      <wall>671</wall>
+      <destroyed>674</destroyed>
+      <ruins>675</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Rhyolite wall (V) ">
+      <wall>673</wall>
+      <destroyed>676</destroyed>
+      <ruins>675</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Rhyolite wall (C) ">
+      <wall>861</wall>
+      <destroyed>862</destroyed>
+      <ruins>675</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Gabbro wall (H) ">
+      <wall>677</wall>
+      <destroyed>680</destroyed>
+      <ruins>681</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Gabbro wall (V) ">
+      <wall>679</wall>
+      <destroyed>682</destroyed>
+      <ruins>681</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Gabbro wall (C) ">
+      <wall>863</wall>
+      <destroyed>864</destroyed>
+      <ruins>681</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Slate wall (H) ">
+      <wall>683</wall>
+      <destroyed>686</destroyed>
+      <ruins>687</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Slate wall (V) ">
+      <wall>685</wall>
+      <destroyed>688</destroyed>
+      <ruins>687</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Slate wall (C) ">
+      <wall>865</wall>
+      <destroyed>866</destroyed>
+      <ruins>687</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Andesite wall (H) ">
+      <wall>689</wall>
+      <destroyed>692</destroyed>
+      <ruins>693</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Andesite wall (V) ">
+      <wall>691</wall>
+      <destroyed>694</destroyed>
+      <ruins>693</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Andesite wall (C) ">
+      <wall>867</wall>
+      <destroyed>868</destroyed>
+      <ruins>693</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Granite wall (H) ">
+      <wall>695</wall>
+      <destroyed>698</destroyed>
+      <ruins>699</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Granite wall (V) ">
+      <wall>697</wall>
+      <destroyed>700</destroyed>
+      <ruins>699</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Granite wall (C) ">
+      <wall>869</wall>
+      <destroyed>870</destroyed>
+      <ruins>699</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Feldspar wall (H) ">
+      <wall>701</wall>
+      <destroyed>704</destroyed>
+      <ruins>705</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Feldspar wall (V) ">
+      <wall>703</wall>
+      <destroyed>706</destroyed>
+      <ruins>705</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Feldspar wall (C) ">
+      <wall>871</wall>
+      <destroyed>872</destroyed>
+      <ruins>705</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" panel wall (H) ">
+      <wall>707</wall>
+      <destroyed>710</destroyed>
+      <ruins>711</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" panel wall (V) ">
+      <wall>709</wall>
+      <destroyed>712</destroyed>
+      <ruins>711</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" panel corner post ">
+      <wall>708</wall>
+      <destroyed>0</destroyed>
+      <ruins>711</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Lodge wall (H) ">
+      <wall>713</wall>
+      <destroyed>716</destroyed>
+      <ruins>717</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Lodge wall (V) ">
+      <wall>715</wall>
+      <destroyed>718</destroyed>
+      <ruins>717</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" Lodge corner post ">
+      <wall>714</wall>
+      <destroyed>0</destroyed>
+      <ruins>717</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" front wall (H) ">
+      <wall>731</wall>
+      <destroyed>735</destroyed>
+      <ruins>0</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" inside back wall (H) ">
+      <wall>732</wall>
+      <destroyed>735</destroyed>
+      <ruins>0</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" inside left wall (V) ">
+      <wall>733</wall>
+      <destroyed>736</destroyed>
+      <ruins>0</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name=" outside right wall (V) ">
+      <wall>734</wall>
+      <destroyed>736</destroyed>
+      <ruins>0</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Ice Labyrinth(H)">
+      <wall>991</wall>
+      <destroyed>994</destroyed>
+      <ruins>995</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Ice Labyrinth (V)">
+      <wall>993</wall>
+      <destroyed>996</destroyed>
+      <ruins>995</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Ice Labyrinth Corner Pillar">
+      <wall>997</wall>
+      <destroyed>998</destroyed>
+      <ruins>995</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Lava Tube Wall (H)">
+      <wall>1008</wall>
+      <destroyed>1011</destroyed>
+      <ruins>1012</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Lava Tube Wall (V)">
+      <wall>1010</wall>
+      <destroyed>1013</destroyed>
+      <ruins>1012</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Lava Tube Corner Pillar">
+      <wall>1014</wall>
+      <destroyed>1015</destroyed>
+      <ruins>1012</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+  </category>
+  <category name="Ruins">
+    <RuinsComponent name="Dungeon">
+      <ruins>44</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Town">
+      <ruins>45</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Temple">
+      <ruins>46</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Cave">
+      <ruins>170</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Red Shoji">
+      <ruins>380</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Mines">
+      <ruins>398</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dragon">
+      <ruins>432</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Highmountain">
+      <ruins>465</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Basalt Rubble ">
+      <ruins>663</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Sandstone Rubble ">
+      <ruins>669</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Rhyolite Rubble ">
+      <ruins>675</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Gabbro Rubble ">
+      <ruins>681</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Slate Rubble ">
+      <ruins>687</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Andesite Rubble ">
+      <ruins>693</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Granite Rubble ">
+      <ruins>699</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Feldspar Rubble ">
+      <ruins>705</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Ice Wall Rubble">
+      <ruins>995</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Lava Tube Rubble">
+      <ruins>1012</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Broken Portal Pillar">
+      <ruins>642</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Broken Portal Pillar (Clean)">
+      <ruins>640</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Broken Stalagmite">
+      <ruins>643</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Broken Stalagmite (Clean)">
+      <ruins>641</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dirty Marble Ruins (H)">
+      <ruins>141</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dirty Marble Ruins (V)">
+      <ruins>142</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dirty Marble Ruins (C)">
+      <ruins>144</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dragon Ruins (H)">
+      <ruins>153</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dragon Ruins (V)">
+      <ruins>154</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dragon Ruins (C)">
+      <ruins>156</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dragon Ruins Blue (H)">
+      <ruins>441</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dragon Ruins Blue (V)">
+      <ruins>442</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dragon Ruins Blue (C)">
+      <ruins>444</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="High Mountain Ruins (H)">
+      <ruins>461</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="High Mountain Ruins (V)">
+      <ruins>462</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="High Mountain Ruins (C)">
+      <ruins>464</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Red Shoji Ruins (H)">
+      <ruins>364</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Red Shoji Ruins (V)">
+      <ruins>365</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Red Shoji Ruins (C)">
+      <ruins>367</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Shoji Ruins (H)">
+      <ruins>472</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Shoji Ruins (V)">
+      <ruins>473</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Shoji Ruins (C)">
+      <ruins>481</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Framed Ruins (H)">
+      <ruins>476</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Framed Ruins (V)">
+      <ruins>477</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Framed Ruins (C)">
+      <ruins>481</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Framed Ruins (H)">
+      <ruins>484</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Framed Ruins (V)">
+      <ruins>485</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Framed Ruins (C)">
+      <ruins>481</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Ruins (H)">
+      <ruins>488</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Ruins (V)">
+      <ruins>489</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Ruins (C)">
+      <ruins>481</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Blue Marble Ruins (H)">
+      <ruins>396</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Blue Marble Ruins (V)">
+      <ruins>397</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Blue Marble Ruins (C)">
+      <ruins>410</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Egyptian Ruins (H)">
+      <ruins>260</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Egyptian Ruins (V)">
+      <ruins>261</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Egyptian Ruins (C)">
+      <ruins>263</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Heavy Log Ruins (H)">
+      <ruins>147</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Heavy Log Ruins (V)">
+      <ruins>148</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Heavy Log Ruins (C)">
+      <ruins>150</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Thicket Ruins (H)">
+      <ruins>226</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Thicket Ruins (V)">
+      <ruins>227</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Thicket Ruins (C)">
+      <ruins>228</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Sewer Wall Ruins (H) ">
+      <ruins>638</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Sewer Wall Ruins (V) ">
+      <ruins>639</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Basalt Wall Ruins (H) ">
+      <ruins>662</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Basalt wall ruins (V) ">
+      <ruins>664</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Basalt wall ruins (C) ">
+      <ruins>858</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Sandstone Wall Ruins (H) ">
+      <ruins>668</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Sandstone wall ruins (V) ">
+      <ruins>670</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Sandstone wall ruins (C) ">
+      <ruins>860</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Rhyolite Wall Ruins (H) ">
+      <ruins>674</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Rhyloite wall ruins (V) ">
+      <ruins>676</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Rhyloite wall ruins (C) ">
+      <ruins>862</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Gabbro Wall Ruins (H) ">
+      <ruins>680</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Gabbro wall ruins (V) ">
+      <ruins>682</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Gabbro wall ruins (C) ">
+      <ruins>864</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Slate Wall Ruins (H) ">
+      <ruins>686</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Slate wall ruins (V) ">
+      <ruins>688</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Slate wall ruins (C) ">
+      <ruins>866</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Andesite Wall Ruins (H) ">
+      <ruins>692</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Andesite wall ruins (V) ">
+      <ruins>694</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Andesite wall ruins (C) ">
+      <ruins>868</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Granite Wall Ruins (H) ">
+      <ruins>698</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Granite wall ruins (V) ">
+      <ruins>700</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Granite wall ruins (C) ">
+      <ruins>870</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Feldspar Wall Ruins (H) ">
+      <ruins>704</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Feldspar wall ruins (V) ">
+      <ruins>706</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Feldspar wall ruins (C) ">
+      <ruins>872</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Panel Wall Ruins (H) ">
+      <ruins>710</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Panel wall ruins (V) ">
+      <ruins>712</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Lodge Wall Ruins (H) ">
+      <ruins>716</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Lodge wall ruins (V) ">
+      <ruins>718</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Ice Labyrinth Wall ruins(H)">
+      <ruins>994</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Ice Labyrinth Wall ruins (V)">
+      <ruins>996</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Ice Labyrinth Corner pillar ruins">
+      <ruins>998</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Lava Tube Wall ruins (H)">
+      <ruins>1011</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Lava Tube Wall ruins (V)">
+      <ruins>1013</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Lava Tube Corner pillar ruins">
+      <ruins>1015</ruins>
+    </RuinsComponent>
+  </category>
+  <category name="Doors">
+    <DoorComponent name="Town (V)">
+      <openId>77</openId>
+      <closedId>65</closedId>
+      <secretId>28</secretId>
+      <destroyedId>83</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="Town (H)">
+      <openId>76</openId>
+      <closedId>64</closedId>
+      <secretId>27</secretId>
+      <destroyedId>82</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="TrapCellar Door">
+      <openId>973</openId>
+      <closedId>972</closedId>
+      <secretId>15</secretId>
+      <destroyedId>8</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="Temple (V)">
+      <openId>79</openId>
+      <closedId>67</closedId>
+      <secretId>152</secretId>
+      <destroyedId>85</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="Temple (H)">
+      <openId>78</openId>
+      <closedId>66</closedId>
+      <secretId>151</secretId>
+      <destroyedId>84</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="Marble (V)">
+      <openId>48</openId>
+      <closedId>36</closedId>
+      <secretId>140</secretId>
+      <destroyedId>49</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="Marble (H)">
+      <openId>47</openId>
+      <closedId>35</closedId>
+      <secretId>139</secretId>
+      <destroyedId>37</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="Dungeon (V)">
+      <openId>75</openId>
+      <closedId>63</closedId>
+      <secretId>26</secretId>
+      <destroyedId>81</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="Dungeon (H)">
+      <openId>74</openId>
+      <closedId>62</closedId>
+      <secretId>25</secretId>
+      <destroyedId>80</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="Runic (V)">
+      <openId>232</openId>
+      <closedId>230</closedId>
+      <secretId>28</secretId>
+      <destroyedId>234</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="Runic (H)">
+      <openId>231</openId>
+      <closedId>229</closedId>
+      <secretId>27</secretId>
+      <destroyedId>233</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="Egyptian (V)">
+      <openId>308</openId>
+      <closedId>312</closedId>
+      <secretId>300</secretId>
+      <destroyedId>310</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="Egyptian (H)">
+      <openId>307</openId>
+      <closedId>311</closedId>
+      <secretId>299</secretId>
+      <destroyedId>309</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="Red Shoji (V)">
+      <openId>392</openId>
+      <closedId>379</closedId>
+      <secretId>363</secretId>
+      <destroyedId>405</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="Red Shoji (H)">
+      <openId>391</openId>
+      <closedId>378</closedId>
+      <secretId>362</secretId>
+      <destroyedId>404</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="Jail (V)">
+      <openId>434</openId>
+      <closedId>421</closedId>
+      <secretId>450</secretId>
+      <destroyedId>436</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="Jail (H)">
+      <openId>433</openId>
+      <closedId>420</closedId>
+      <secretId>449</secretId>
+      <destroyedId>435</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="Steel (V)">
+      <openId>456</openId>
+      <closedId>454</closedId>
+      <secretId>429</secretId>
+      <destroyedId>458</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="Steel (H)">
+      <openId>455</openId>
+      <closedId>453</closedId>
+      <secretId>428</secretId>
+      <destroyedId>457</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="Dirty Marble (V)">
+      <openId>497</openId>
+      <closedId>495</closedId>
+      <secretId>140</secretId>
+      <destroyedId>499</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="Dirty Marble (H)">
+      <openId>496</openId>
+      <closedId>494</closedId>
+      <secretId>139</secretId>
+      <destroyedId>498</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="Dragon (H)">
+      <openId>506</openId>
+      <closedId>504</closedId>
+      <secretId>151</secretId>
+      <destroyedId>508</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="Dragon (V)">
+      <openId>507</openId>
+      <closedId>505</closedId>
+      <secretId>152</secretId>
+      <destroyedId>509</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+  </category>
+  <category name="Stairs">
+    <StaircaseComponent name="Down (NS)">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>123</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Down (WE)">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>124</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Down (EW)">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>125</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Down (SN)">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>126</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Up (NS)">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>127</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Up (WE)">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>128</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Up (EW)">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>129</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Up (SN)">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>130</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Down (Spiral)">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>254</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Up (Spiral)">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>253</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Pit">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>8</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Pit (Caved)">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>181</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="BW Marble Stairs Down South">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>785</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="BW Marble Stairs Down East">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>786</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="BW Marble Stairs Down West">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>787</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="BW Marble Stairs Down North">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>788</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="BW Marble Stairs Up North">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>789</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="BW Marble Stairs Up West">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>790</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="BW Marble Stairs Up East">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>791</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="BW Marble Stairs Up South">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>792</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Blue Marble Stairs Down South">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>793</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Blue Marble Stairs Down East">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>794</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Blue Marble Stairs Down West">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>795</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Blue Marble Stairs Down North">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>796</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Blue Marble Stairs Up North">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>797</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Blue Marble Stairs Up West">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>798</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Blue Marble Stairs Up East">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>799</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Blue Marble Stairs Up South">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>800</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Rough Wood Stairs Down South">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>801</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Rough Wood Stairs Down East">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>802</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Rough Wood Stairs Down West">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>803</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Rough Wood Stairs Down South">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>804</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Rough Wood Stairs Up North">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>805</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Rough Wood Stairs Up West">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>806</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Rough Wood Stairs Up East">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>807</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Rough Wood Stairs Up South">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>808</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Fine Wood Stairs Down South">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>809</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Fine Wood Stairs Down East">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>810</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Fine Wood Stairs Down West">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>811</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Fine Wood Stairs Down North">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>812</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Fine Wood Stairs Up North">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>813</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Fine Wood Stairs Up West">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>814</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Fine Wood Stairs Up East">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>815</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Fine Wood Stairs Up South">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>816</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Rickety Wood Stairs Down South">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>825</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Rickety Wood Stairs Down East">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>826</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Rickety Wood Stairs Down West">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>827</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Rickety Wood Stairs Down North">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>828</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Rickety Wood Stairs Up North">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>829</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Rickety Wood Stairs Up West">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>830</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Rickety Wood Stairs Up East">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>831</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Rickety Wood Stairs Up South">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>832</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Decrepit Wood Stairs Down South">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>833</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Decrepit Wood Stairs Down East">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>834</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Decrepit Wood Stairs Down West">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>835</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Decrepit Wood Stairs Down North">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>836</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Decrepit Wood Stairs Up North">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>837</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Decrepit Wood Stairs Up West">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>838</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Decrepit Wood Stairs Up East">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>839</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Decrepit Wood Stairs Up South">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>840</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Dry Well">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>968</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Tunnel Entrance">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>971</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Dirt Hole">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>969</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Grassy Hole">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>970</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="TrapCellar Door Down">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>973</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Sand Hole">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>974</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Ladder Down South">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>983</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Ladder Down East">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>984</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Ladder Down West">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>985</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Ladder Down North">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>986</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Ladder Up North">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>987</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Ladder Up West">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>988</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Ladder Up East">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>989</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Ladder Up South">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>990</teleporterId>
+      <descends>false</descends>
+    </StaircaseComponent>
+  </category>
+  <category name="Teleport">
+    <SkyComponent name="Air">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>9</teleporterId>
+    </SkyComponent>
+    <SkyComponent name="Dark Air">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1016</teleporterId>
+    </SkyComponent>
+    <SkyComponent name="Dark Air Animated">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1017</teleporterId>
+    </SkyComponent>
+    <EgressComponent name="Leng">
+      <egress>315</egress>
+      <destinationSegment>2</destinationSegment>
+    </EgressComponent>
+    <EgressComponent name="Kesmai">
+      <egress>316</egress>
+      <destinationSegment>1</destinationSegment>
+    </EgressComponent>
+    <EgressComponent name="Oakvael">
+      <egress>328</egress>
+      <destinationSegment>4</destinationSegment>
+    </EgressComponent>
+    <EgressComponent name="Axe Glacier">
+      <egress>329</egress>
+      <destinationSegment>3</destinationSegment>
+    </EgressComponent>
+    <EgressComponent name="Underkingdom">
+      <egress>330</egress>
+      <destinationSegment>5</destinationSegment>
+    </EgressComponent>
+    <EgressComponent name="Torii">
+      <egress>332</egress>
+    </EgressComponent>
+    <EgressComponent name="Rift Glacier">
+      <egress>319</egress>
+    </EgressComponent>
+    <EgressComponent name="Shukumei">
+      <egress>331</egress>
+    </EgressComponent>
+    <EgressComponent name="Annwn">
+      <egress>318</egress>
+    </EgressComponent>
+    <EgressComponent name="Generic">
+      <egress>318</egress>
+    </EgressComponent>
+    <EgressComponent name="Moongate">
+      <egress>189</egress>
+    </EgressComponent>
+    <EgressComponent name="Moongate">
+      <egress>190</egress>
+    </EgressComponent>
+    <HiddenTeleporterComponent name="Hidden">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+    </HiddenTeleporterComponent>
+    <ItemTeleporter name="Star Ruby">
+      <Type>StarRuby</Type>
+      <OnFail>Stun</OnFail>
+    </ItemTeleporter>
+    <ItemTeleporter name="Hummingbird Amulet">
+      <Type>HummingbirdAmulet</Type>
+      <OnFail>Interrupted</OnFail>
+    </ItemTeleporter>
+  </category>
+  <category name="Ropes">
+    <RopeComponent name="Up (West)">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>237</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Up (North)">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>238</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Down (East)">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>241</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Up (East)">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>255</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Down (South)">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>256</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Up (South)">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>257</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Rope">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>512</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Rope">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>513</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Rope">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>514</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+  </category>
+  <category name="Vegetation">
+    <StaticComponent name="Jungle Foliage">
+      <static>92</static>
+    </StaticComponent>
+    <StaticComponent name="Jungle Foliage">
+      <static>93</static>
+    </StaticComponent>
+    <StaticComponent name="Jungle Foliage">
+      <static>94</static>
+    </StaticComponent>
+    <StaticComponent name="Jungle Foliage">
+      <static>95</static>
+    </StaticComponent>
+    <TreeComponent name="Large Tree">
+      <tree>98</tree>
+      <canGrow>true</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Medium Tree">
+      <tree>99</tree>
+      <canGrow>true</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Small Tree">
+      <tree>100</tree>
+      <canGrow>true</canGrow>
+    </TreeComponent>
+    <StaticComponent name="Tall Grass">
+      <static>105</static>
+    </StaticComponent>
+    <StaticComponent name="Tall Reeds">
+      <static>106</static>
+    </StaticComponent>
+    <StaticComponent name="Tall Grass">
+      <static>107</static>
+    </StaticComponent>
+    <StaticComponent name="Wheat">
+      <static>875</static>
+    </StaticComponent>
+    <StaticComponent name="Burnt Wheat">
+      <static>876</static>
+    </StaticComponent>
+    <StaticComponent name="Corn">
+      <static>873</static>
+    </StaticComponent>
+    <StaticComponent name="Burnt Corn">
+      <static>874</static>
+    </StaticComponent>
+    <StaticComponent name="Grapevines">
+      <static>877</static>
+    </StaticComponent>
+    <StaticComponent name="Burnt Grapevines">
+      <static>878</static>
+    </StaticComponent>
+    <StaticComponent name="Tall Reeds">
+      <static>108</static>
+    </StaticComponent>
+    <StaticComponent name="Tall Bamboo">
+      <static>109</static>
+    </StaticComponent>
+    <StaticComponent name="Tall Bamboo">
+      <static>110</static>
+    </StaticComponent>
+    <StaticComponent name="Heavy Snow">
+      <static>121</static>
+    </StaticComponent>
+    <StaticComponent name="Heavy Snow">
+      <static>122</static>
+    </StaticComponent>
+    <TreeComponent name="Large Pine Tree">
+      <tree>199</tree>
+      <canGrow>true</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Medium Pine Tree">
+      <tree>200</tree>
+      <canGrow>true</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Small Pine Tree">
+      <tree>201</tree>
+      <canGrow>true</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Large Pine Tree (Snow)">
+      <tree>202</tree>
+      <canGrow>true</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Medium Pine Tree (Snow)">
+      <tree>203</tree>
+      <canGrow>true</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Small Pine Tree (Snow)">
+      <tree>204</tree>
+      <canGrow>true</canGrow>
+    </TreeComponent>
+    <StaticComponent name="Creosote Bush">
+      <static>205</static>
+    </StaticComponent>
+    <StaticComponent name="Red Flowers">
+      <static>206</static>
+    </StaticComponent>
+    <StaticComponent name="Yellow Flowers">
+      <static>207</static>
+    </StaticComponent>
+    <StaticComponent name="Large Oak Trunk">
+      <static>208</static>
+    </StaticComponent>
+    <TreeComponent name="Small Jungle Tree">
+      <tree>247</tree>
+      <canGrow>true</canGrow>
+    </TreeComponent>
+    <StaticComponent name="Fig Tree">
+      <static>326</static>
+    </StaticComponent>
+    <TreeComponent name="Wierd Tree">
+      <tree>370</tree>
+      <canGrow>true</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Bamboo">
+      <tree>403</tree>
+      <canGrow>true</canGrow>
+    </TreeComponent>
+    <StaticComponent name="Burnt Tree (L)">
+      <static>101</static>
+    </StaticComponent>
+    <StaticComponent name="Burnt Tree (M)">
+      <static>102</static>
+    </StaticComponent>
+    <StaticComponent name="Burnt Tree (S)">
+      <static>103</static>
+    </StaticComponent>
+    <StaticComponent name="Burnt Wierd Tree">
+      <static>372</static>
+    </StaticComponent>
+    <StaticComponent name="Burnt Fruit Tree">
+      <static>897</static>
+    </StaticComponent>
+    <StaticComponent name="Dead Shrubs">
+      <static>1002</static>
+    </StaticComponent>
+    <StaticComponent name="Dead Tree">
+      <static>1005</static>
+    </StaticComponent>
+    <TreeComponent name="Palm Tree [Tenser]">
+      <tree>624</tree>
+      <canGrow>false</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Large Palm Tree (1) [Tenser]">
+      <tree>625</tree>
+      <canGrow>false</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Large Palm Tree (2) [Tenser]">
+      <tree>626</tree>
+      <canGrow>false</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Banana Tree [Tenser]">
+      <tree>627</tree>
+      <canGrow>false</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Pear Tree">
+      <tree>893</tree>
+      <canGrow>false</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Peach Tree">
+      <tree>894</tree>
+      <canGrow>false</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Apple Tree">
+      <tree>895</tree>
+      <canGrow>false</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Orange Tree">
+      <tree>896</tree>
+      <canGrow>false</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Cherry Tree">
+      <tree>905</tree>
+      <canGrow>false</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Cherry Tree (Blossoms)">
+      <tree>906</tree>
+      <canGrow>false</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Autumn Brown Tree">
+      <tree>898</tree>
+      <canGrow>false</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Autumn Orange Tree">
+      <tree>899</tree>
+      <canGrow>false</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Autumn Light Red Tree">
+      <tree>901</tree>
+      <canGrow>false</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Autumn Dark Red Tree">
+      <tree>900</tree>
+      <canGrow>false</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Autumn Yellow Tree">
+      <tree>902</tree>
+      <canGrow>false</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Dormant Deciduous Tree">
+      <tree>903</tree>
+      <canGrow>false</canGrow>
+    </TreeComponent>
+    <TreeComponent name="Frozen Deciduous Tree">
+      <tree>904</tree>
+      <canGrow>false</canGrow>
+    </TreeComponent>
+  </category>
+  <category name="Obstructions">
+    <ObstructionComponent name="Reef">
+      <obstruction>19</obstruction>
+      <blockVision>false</blockVision>
+    </ObstructionComponent>
+    <ObstructionComponent name="Reef [Zrikz]">
+      <obstruction>605</obstruction>
+      <blockVision>false</blockVision>
+    </ObstructionComponent>
+    <ObstructionComponent name="Iron Porticullus (H)">
+      <obstruction>165</obstruction>
+      <blockVision>false</blockVision>
+    </ObstructionComponent>
+    <ObstructionComponent name="Iron Porticullus (V)">
+      <obstruction>166</obstruction>
+      <blockVision>false</blockVision>
+    </ObstructionComponent>
+    <ObstructionComponent name="Jail (H)">
+      <obstruction>449</obstruction>
+      <blockVision>false</blockVision>
+    </ObstructionComponent>
+    <ObstructionComponent name="Jail (V)">
+      <obstruction>450</obstruction>
+      <blockVision>false</blockVision>
+    </ObstructionComponent>
+    <ObstructionComponent name="Massive Anvil">
+      <obstruction>164</obstruction>
+      <blockVision>false</blockVision>
+    </ObstructionComponent>
+    <ObstructionComponent name="Cart (H)">
+      <obstruction>892</obstruction>
+      <blockVision>false</blockVision>
+    </ObstructionComponent>
+    <ObstructionComponent name="Cart (V)">
+      <obstruction>887</obstruction>
+      <blockVision>false</blockVision>
+    </ObstructionComponent>
+    <ObstructionComponent name="Crate (L)">
+      <obstruction>879</obstruction>
+      <blockVision>false</blockVision>
+    </ObstructionComponent>
+    <ObstructionComponent name="Crate of Grains">
+      <obstruction>882</obstruction>
+      <blockVision>false</blockVision>
+    </ObstructionComponent>
+    <ObstructionComponent name="Mace Display Crate">
+      <obstruction>883</obstruction>
+      <blockVision>false</blockVision>
+    </ObstructionComponent>
+    <ObstructionComponent name="Greataxe Display Crate">
+      <obstruction>884</obstruction>
+      <blockVision>false</blockVision>
+    </ObstructionComponent>
+    <ObstructionComponent name="Sword Display Crate">
+      <obstruction>885</obstruction>
+      <blockVision>false</blockVision>
+    </ObstructionComponent>
+    <ObstructionComponent name="Heavy Oak">
+      <obstruction>266</obstruction>
+      <blockVision>true</blockVision>
+    </ObstructionComponent>
+    <ObstructionComponent name="Dirty Marble Pillar">
+      <obstruction>168</obstruction>
+      <blockVision>true</blockVision>
+    </ObstructionComponent>
+    <ObstructionComponent name="Sandstone Pillar">
+      <obstruction>313</obstruction>
+      <blockVision>true</blockVision>
+    </ObstructionComponent>
+  </category>
+  <category name="Counters and Altars">
+    <CounterComponent name="Wood (H)">
+      <counter>86</counter>
+    </CounterComponent>
+    <CounterComponent name="Wood (V)">
+      <counter>87</counter>
+    </CounterComponent>
+    <CounterComponent name="Slate (H)">
+      <counter>96</counter>
+    </CounterComponent>
+    <CounterComponent name="Slate (V)">
+      <counter>97</counter>
+    </CounterComponent>
+    <CounterComponent name="Gilded (H)">
+      <counter>248</counter>
+    </CounterComponent>
+    <CounterComponent name="Gilded (V)">
+      <counter>249</counter>
+    </CounterComponent>
+    <CounterComponent name="Table (H)">
+      <counter>267</counter>
+    </CounterComponent>
+    <CounterComponent name="Table (V)">
+      <counter>268</counter>
+    </CounterComponent>
+    <CounterComponent name="Alchemy Table (H)">
+      <counter>269</counter>
+    </CounterComponent>
+    <CounterComponent name="Alchemy Table (V)">
+      <counter>270</counter>
+    </CounterComponent>
+    <CounterComponent name="Stone Table (H)">
+      <counter>399</counter>
+    </CounterComponent>
+    <CounterComponent name="Stone Table (V)">
+      <counter>400</counter>
+    </CounterComponent>
+    <AltarComponent name="Temple Altar">
+      <altar>113</altar>
+    </AltarComponent>
+    <AltarComponent name="Granite Altar (1)">
+      <altar>138</altar>
+    </AltarComponent>
+    <AltarComponent name="Granite Altar (2)">
+      <altar>163</altar>
+    </AltarComponent>
+    <AltarComponent name="Skull Altar">
+      <altar>169</altar>
+    </AltarComponent>
+    <AltarComponent name="Carved Wood Altar">
+      <altar>174</altar>
+    </AltarComponent>
+    <AltarComponent name="Egyptian Altar (1)">
+      <altar>278</altar>
+    </AltarComponent>
+    <AltarComponent name="Egyptian Altar (2)">
+      <altar>290</altar>
+    </AltarComponent>
+    <AltarComponent name="Egyptian Altar (3)">
+      <altar>302</altar>
+    </AltarComponent>
+    <AltarComponent name="Egyptian Altar (4)">
+      <altar>314</altar>
+    </AltarComponent>
+    <AltarComponent name="Egyptian Altar (5)">
+      <altar>324</altar>
+    </AltarComponent>
+    <AltarComponent name="Egyptian Altar (6)">
+      <altar>327</altar>
+    </AltarComponent>
+    <AltarComponent name="Blue Marble (6)">
+      <altar>368</altar>
+    </AltarComponent>
+  </category>
+  <category name="Decorations">
+    <StaticComponent name="Boxing Ring">
+      <static>114</static>
+    </StaticComponent>
+    <StaticComponent name="Small Spring">
+      <static>242</static>
+    </StaticComponent>
+    <StaticComponent name="Fountain Pool">
+      <static>209</static>
+    </StaticComponent>
+    <StaticComponent name="Fountain Center">
+      <static>210</static>
+    </StaticComponent>
+    <StaticComponent name="Blood over Altar">
+      <static>236</static>
+    </StaticComponent>
+    <StaticComponent name="Blood Stains">
+      <static>167</static>
+    </StaticComponent>
+    <StaticComponent name="Gravestone (1)">
+      <static>213</static>
+    </StaticComponent>
+    <StaticComponent name="Gravestone (2)">
+      <static>214</static>
+    </StaticComponent>
+    <StaticComponent name="Gravestone (3)">
+      <static>215</static>
+    </StaticComponent>
+    <StaticComponent name="Grave (1)">
+      <static>216</static>
+    </StaticComponent>
+    <StaticComponent name="Grave (2)">
+      <static>217</static>
+    </StaticComponent>
+    <StaticComponent name="Mirror (H)">
+      <static>117</static>
+    </StaticComponent>
+    <StaticComponent name="Mirror (V)">
+      <static>118</static>
+    </StaticComponent>
+    <StaticComponent name="Torn Tapestry (H)">
+      <static>171</static>
+    </StaticComponent>
+    <StaticComponent name="Torn Tapestry (V)">
+      <static>172</static>
+    </StaticComponent>
+    <StaticComponent name="Oriental Tapestry (H)">
+      <static>197</static>
+    </StaticComponent>
+    <StaticComponent name="Oriental Tapestry (V)">
+      <static>198</static>
+    </StaticComponent>
+    <StaticComponent name="Red Carpet">
+      <static>317</static>
+    </StaticComponent>
+    <StaticComponent name="Crushed Bones">
+      <static>173</static>
+    </StaticComponent>
+    <StaticComponent name="Sordid Remains (H)">
+      <static>211</static>
+    </StaticComponent>
+    <StaticComponent name="Sordid Remains (V)">
+      <static>212</static>
+    </StaticComponent>
+    <StaticComponent name="Hanging Skeleton (H)">
+      <static>220</static>
+    </StaticComponent>
+    <StaticComponent name="Hanging Skeleton (V)">
+      <static>221</static>
+    </StaticComponent>
+    <StaticComponent name="Bookshelf (H)">
+      <static>243</static>
+    </StaticComponent>
+    <StaticComponent name="Bookshelf (V)">
+      <static>244</static>
+    </StaticComponent>
     <StaticComponent name="librarybookshelf (H)">
       <static>764</static>
     </StaticComponent>
     <StaticComponent name="librarybookshelf2 (V)">
       <static>765</static>
     </StaticComponent>
-		
-		<StaticComponent name="Storage Shelf (H)">
-            <static>439</static>
-        </StaticComponent>
-		<StaticComponent name="Storage Shelf (V)">
-            <static>440</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Wizard Emblems (H)">
-            <static>245</static>
-        </StaticComponent>
-		<StaticComponent name="Wizard Emblems (V)">
-            <static>246</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Tailor Scraps">
-            <static>250</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Iron Throne">
-            <static>219</static>
-        </StaticComponent>
-		<StaticComponent name="Dragon Throne">
-            <static>222</static>
-        </StaticComponent>
-		<StaticComponent name="Oak Throne">
-            <static>251</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Treasure">
-            <static>349</static>
-        </StaticComponent>
-		<StaticComponent name="Campfire">
-            <static>373</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Price List (H)">
-            <static>348</static>
-        </StaticComponent>
-		<StaticComponent name="Price List (V)">
-            <static>361</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Dagger (H)">
-            <static>385</static>
-        </StaticComponent>
-		<StaticComponent name="Dagger (V)">
-            <static>386</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Mace (H)">
-            <static>305</static>
-        </StaticComponent>
-		<StaticComponent name="Mace (V)">
-            <static>306</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Jail Cot (H)">
-            <static>411</static>
-        </StaticComponent>
-		<StaticComponent name="Jail Cot (V)">
-            <static>412</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Crane (H)">
-            <static>478</static>
-        </StaticComponent>
-		<StaticComponent name="Crane (V)">
-            <static>479</static>
-        </StaticComponent>
-		<StaticComponent name="Fuji (H)">
-            <static>490</static>
-        </StaticComponent>
-		<StaticComponent name="Fuji (V)">
-            <static>491</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Wine Cask (V)">
-            <static>401</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Shimmering Wall (H)">
-            <static>194</static>
-        </StaticComponent>
-		<StaticComponent name="Shimmering Wall (V)">
-            <static>195</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Waterfall (H)">
-            <static>191</static>
-        </StaticComponent>
-		<StaticComponent name="Waterfall (V)">
-            <static>192</static>
-        </StaticComponent>
-		<StaticComponent name="Waterfall Animated (H)">
-            <static>1006</static>
-        </StaticComponent>
-		<StaticComponent name="Waterfall Animated (V)">
-            <static>1007</static>
-        </StaticComponent>
-
+    <StaticComponent name="Storage Shelf (H)">
+      <static>439</static>
+    </StaticComponent>
+    <StaticComponent name="Storage Shelf (V)">
+      <static>440</static>
+    </StaticComponent>
+    <StaticComponent name="Wizard Emblems (H)">
+      <static>245</static>
+    </StaticComponent>
+    <StaticComponent name="Wizard Emblems (V)">
+      <static>246</static>
+    </StaticComponent>
+    <StaticComponent name="Tailor Scraps">
+      <static>250</static>
+    </StaticComponent>
+    <StaticComponent name="Iron Throne">
+      <static>219</static>
+    </StaticComponent>
+    <StaticComponent name="Dragon Throne">
+      <static>222</static>
+    </StaticComponent>
+    <StaticComponent name="Oak Throne">
+      <static>251</static>
+    </StaticComponent>
+    <StaticComponent name="Treasure">
+      <static>349</static>
+    </StaticComponent>
+    <StaticComponent name="Campfire">
+      <static>373</static>
+    </StaticComponent>
+    <StaticComponent name="Crated Fruits">
+      <static>880</static>
+    </StaticComponent>
+    <StaticComponent name="Crated Veggies and Grains">
+      <static>881</static>
+    </StaticComponent>
+    <StaticComponent name="Sealed Crate (L)">
+      <static>879</static>
+    </StaticComponent>
+    <StaticComponent name="Open Crate (L)">
+      <static>888</static>
+    </StaticComponent>
+    <StaticComponent name="Destroyed Crate (L)">
+      <static>889</static>
+    </StaticComponent>
+    <StaticComponent name="Sealed Crate (S)">
+      <static>886</static>
+    </StaticComponent>
+    <StaticComponent name="Open Crate (S)">
+      <static>890</static>
+    </StaticComponent>
+    <StaticComponent name="Destroyed Crate (S)">
+      <static>891</static>
+    </StaticComponent>
+    <StaticComponent name="Price List (H)">
+      <static>348</static>
+    </StaticComponent>
+    <StaticComponent name="Price List (V)">
+      <static>361</static>
+    </StaticComponent>
+    <StaticComponent name="Dagger (H)">
+      <static>385</static>
+    </StaticComponent>
+    <StaticComponent name="Dagger (V)">
+      <static>386</static>
+    </StaticComponent>
+    <StaticComponent name="Mace (H)">
+      <static>305</static>
+    </StaticComponent>
+    <StaticComponent name="Mace (V)">
+      <static>306</static>
+    </StaticComponent>
+    <StaticComponent name="Jail Cot (H)">
+      <static>411</static>
+    </StaticComponent>
+    <StaticComponent name="Jail Cot (V)">
+      <static>412</static>
+    </StaticComponent>
+    <StaticComponent name="Crane (H)">
+      <static>478</static>
+    </StaticComponent>
+    <StaticComponent name="Crane (V)">
+      <static>479</static>
+    </StaticComponent>
+    <StaticComponent name="Fuji (H)">
+      <static>490</static>
+    </StaticComponent>
+    <StaticComponent name="Fuji (V)">
+      <static>491</static>
+    </StaticComponent>
+    <StaticComponent name="Wine Cask (V)">
+      <static>401</static>
+    </StaticComponent>
+    <StaticComponent name="Shimmering Wall (H)">
+      <static>194</static>
+    </StaticComponent>
+    <StaticComponent name="Shimmering Wall (V)">
+      <static>195</static>
+    </StaticComponent>
+    <StaticComponent name="Waterfall (H)">
+      <static>191</static>
+    </StaticComponent>
+    <StaticComponent name="Waterfall (V)">
+      <static>192</static>
+    </StaticComponent>
+    <StaticComponent name="Waterfall Animated (H)">
+      <static>1006</static>
+    </StaticComponent>
+    <StaticComponent name="Waterfall Animated (V)">
+      <static>1007</static>
+    </StaticComponent>
     <StaticComponent name="snowdrift (H)">
       <static>762</static>
     </StaticComponent>
     <StaticComponent name="snowdrift2 (V)">
       <static>763</static>
     </StaticComponent>
-		
-		<StaticComponent name="Closed Sarcophagus (H)">
-            <static>424</static>
-        </StaticComponent>
-		<StaticComponent name="Closed Sarcophagus (V)">
-            <static>425</static>
-        </StaticComponent>
-		<StaticComponent name="Open Sarcophagus (H)">
-            <static>437</static>
-        </StaticComponent>
-		<StaticComponent name="Open Sarcophagus (V)">
-            <static>438</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Torii (H)">
-            <static>422</static>
-        </StaticComponent>
-		<StaticComponent name="Torii (V)">
-            <static>423</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Congealed Lava">
-            <static>137</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Fog">
-            <static>193</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Barrel Water">
-            <static>235</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Mossy Pillar">
-            <static>1001</static>
-        </StaticComponent>
-		
-		<StaticComponent name="Open Stones">
-            <static>218</static>
-        </StaticComponent>
-
-        <StaticComponent name="Sewer Wall Drain (1)">
-            <static>632</static>
-        </StaticComponent>
-        <StaticComponent name="Sewer Wall Drain (2)">
-            <static>633</static>
-        </StaticComponent>
-        <StaticComponent name="Sewer Wall Drain (3)">
-            <static>634</static>
-        </StaticComponent>
-        <StaticComponent name="Sewer Wall Drain (4)">
-            <static>635</static>
-        </StaticComponent>
-
-
-
-        <StaticComponent name="Sewer Wall (V)">
-          <static>630</static>
-        </StaticComponent>
-        <StaticComponent name="Sewer Wall (H)">
-          <static>631</static>
-        </StaticComponent>
-        <StaticComponent name="Sewer Wall Full (V)">
-            <static>636</static>
-        </StaticComponent>
-        <StaticComponent name="Sewer Wall Full (H)">
-            <static>637</static>
-        </StaticComponent>
-
-      <StaticComponent name="Collapsed Portal Pillar">
-        <static>642</static>
-      </StaticComponent>
-
-      <StaticComponent name="Shattered Stalagmite">
-        <static>643</static>
-      </StaticComponent>
-
-
-
-      <StaticComponent name="Vase (Base)">
-            <static>649</static>
-        </StaticComponent>
-        <StaticComponent name="Vase (Single Ring)">
-            <static>650</static>
-        </StaticComponent>
-        <StaticComponent name="Vase (Double Ring)">
-            <static>651</static>
-        </StaticComponent>
-        <StaticComponent name="Vase (Pattern 1)">
-            <static>652</static>
-        </StaticComponent>
-        <StaticComponent name="Vase (Pattern 2)">
-            <static>653</static>
-        </StaticComponent>
-        <StaticComponent name="Vase (Pattern 3)">
-            <static>654</static>
-        </StaticComponent>
-        <StaticComponent name="Vase (Shadow)">
-            <static>655</static>
-        </StaticComponent>
-        <StaticComponent name="Vase (Broken)">
-            <static>656</static>
-        </StaticComponent>
-        <StaticComponent name="Vases">
-            <static>657</static>
-        </StaticComponent>
-      
-      <StaticComponent name=" Plaster-set Back-board (H) ">
-        <static>726</static>
-      </StaticComponent>
-
-      <StaticComponent name=" Plaster-set Back-board (V)">
-        <static>729</static>
-      </StaticComponent>
-
-      <StaticComponent name=" inside-back rope (H) ">
-        <static>738</static>
-      </StaticComponent>
-
-      <StaticComponent name=" left-inside rope (V) ">
-        <static>739</static>
-      </StaticComponent>
-
-      <StaticComponent name=" right flap-1 (V) ">
-        <static>740</static>
-      </StaticComponent>
-
-      <StaticComponent name=" red rug ">
-        <static>741</static>
-      </StaticComponent>
-
-      <StaticComponent name=" gray rug ">
-        <static>742</static>
-      </StaticComponent>
-
-      <StaticComponent name=" front flap-2 (H) ">
-        <static>743</static>
-      </StaticComponent>
-
-      <StaticComponent name=" inside back rope accent (H) ">
-        <static>744</static>
-      </StaticComponent>
-
-      <StaticComponent name=" inside-left rope accent (V) ">
-        <static>745</static>
-      </StaticComponent>
-
-      <StaticComponent name=" right flap-2 (V) ">
-        <static>746</static>
-      </StaticComponent>
-
-      <StaticComponent name=" square fur rug ">
-        <static>747</static>
-      </StaticComponent>
-
-      <StaticComponent name=" bear rug (V) ">
-        <static>748</static>
-      </StaticComponent>
-
-      <StaticComponent name=" front flap-1 accent (H) ">
-        <static>749</static>
-      </StaticComponent>
-
-      <StaticComponent name=" inside-back shade-screen (H) ">
-        <static>750</static>
-      </StaticComponent>
-
-      <StaticComponent name=" inside left shade screen (V) ">
-        <static>751</static>
-      </StaticComponent>
-
-      <StaticComponent name=" right flap-1 accent (V) ">
-        <static>752</static>
-      </StaticComponent>
-
-      <StaticComponent name=" bear rug (H) ">
-        <static>753</static>
-      </StaticComponent>
-
-      <StaticComponent name=" front flap-2 accent (H) ">
-        <static>754</static>
-      </StaticComponent>
-
-      <StaticComponent name=" inside back stripe accent (H) ">
-        <static>755</static>
-      </StaticComponent>
-
-      <StaticComponent name=" inside left stripe accent (V) ">
-        <static>756</static>
-      </StaticComponent>
-
-      <StaticComponent name=" right flap-2 accent (V) ">
-        <static>757</static>
-      </StaticComponent>
-
-
-    </category>
-
-    <category name="Magical">
-        <Web>
-            <static>131</static>
-            <allowDispel>true</allowDispel>
-        </Web>
-        <Fire>
-            <allowDispel>true</allowDispel>
-        </Fire>
-        <Darkness>
-            <allowDispel>true</allowDispel>
-        </Darkness>
-        <Whirlwind>
-            <allowDispel>true</allowDispel>
-        </Whirlwind>
-    </category>
-
-    <category name="Misc.">
-		<LockersComponent name="Lockers (H)">
-            <static>119</static>
-        </LockersComponent>
-		<LockersComponent name="Lockers (V)">
-            <static>120</static>
-        </LockersComponent>
-		
-        <TrashComponent name="Trash Barrel">
-            <static>88</static>
-        </TrashComponent>
-
-      <StaticComponent name="Animated campfire">
-        <static>766</static>
-      </StaticComponent>
-    </category>
-
-    <category name="Grove">
-        <FloorComponent>
-            <color r="0" g="255" b="0" a="255" />
-            <ground>23</ground>
-        </FloorComponent>
-        <FloorComponent>
-            <color r="100" g="255" b="0" a="255" />
-            <ground>23</ground>
-        </FloorComponent>
-        <FloorComponent>
-            <color r="0" g="210" b="0" a="255" />
-            <ground>23</ground>
-        </FloorComponent>
-        <WallComponent>
-            <color r="135" g="210" b="100" a="255" />
-            <wall>157</wall>
-            <destroyed>160</destroyed>
-            <ruins>170</ruins>
-        </WallComponent>
-        <StaticComponent>
-            <color r="0" g="200" b="0" a="255" />
-            <static>226</static>
-        </StaticComponent>
-        <WallComponent>
-            <color r="135" g="210" b="100" a="255" />
-            <wall>158</wall>
-            <destroyed>161</destroyed>
-            <ruins>170</ruins>
-        </WallComponent>
-        <StaticComponent>
-            <color r="0" g="200" b="0" a="255" />
-            <static>227</static>
-        </StaticComponent>
-    </category>
-
-  <category name ="Wall Doodads (H)">
+    <StaticComponent name="Closed Sarcophagus (H)">
+      <static>424</static>
+    </StaticComponent>
+    <StaticComponent name="Closed Sarcophagus (V)">
+      <static>425</static>
+    </StaticComponent>
+    <StaticComponent name="Open Sarcophagus (H)">
+      <static>437</static>
+    </StaticComponent>
+    <StaticComponent name="Open Sarcophagus (V)">
+      <static>438</static>
+    </StaticComponent>
+    <StaticComponent name="Torii (H)">
+      <static>422</static>
+    </StaticComponent>
+    <StaticComponent name="Torii (V)">
+      <static>423</static>
+    </StaticComponent>
+    <StaticComponent name="Congealed Lava">
+      <static>137</static>
+    </StaticComponent>
+    <StaticComponent name="Fog">
+      <static>193</static>
+    </StaticComponent>
+    <StaticComponent name="Barrel Water">
+      <static>235</static>
+    </StaticComponent>
+    <StaticComponent name="Mossy Pillar">
+      <static>1001</static>
+    </StaticComponent>
+    <StaticComponent name="Open Stones">
+      <static>218</static>
+    </StaticComponent>
+    <StaticComponent name="Sewer Wall Drain (1)">
+      <static>632</static>
+    </StaticComponent>
+    <StaticComponent name="Sewer Wall Drain (2)">
+      <static>633</static>
+    </StaticComponent>
+    <StaticComponent name="Sewer Wall Drain (3)">
+      <static>634</static>
+    </StaticComponent>
+    <StaticComponent name="Sewer Wall Drain (4)">
+      <static>635</static>
+    </StaticComponent>
+    <StaticComponent name="Sewer Wall (V)">
+      <static>630</static>
+    </StaticComponent>
+    <StaticComponent name="Sewer Wall (H)">
+      <static>631</static>
+    </StaticComponent>
+    <StaticComponent name="Sewer Wall Full (V)">
+      <static>636</static>
+    </StaticComponent>
+    <StaticComponent name="Sewer Wall Full (H)">
+      <static>637</static>
+    </StaticComponent>
+    <StaticComponent name="Collapsed Portal Pillar">
+      <static>642</static>
+    </StaticComponent>
+    <StaticComponent name="Shattered Stalagmite">
+      <static>643</static>
+    </StaticComponent>
+    <StaticComponent name="Vase (Base)">
+      <static>649</static>
+    </StaticComponent>
+    <StaticComponent name="Vase (Single Ring)">
+      <static>650</static>
+    </StaticComponent>
+    <StaticComponent name="Vase (Double Ring)">
+      <static>651</static>
+    </StaticComponent>
+    <StaticComponent name="Vase (Pattern 1)">
+      <static>652</static>
+    </StaticComponent>
+    <StaticComponent name="Vase (Pattern 2)">
+      <static>653</static>
+    </StaticComponent>
+    <StaticComponent name="Vase (Pattern 3)">
+      <static>654</static>
+    </StaticComponent>
+    <StaticComponent name="Vase (Shadow)">
+      <static>655</static>
+    </StaticComponent>
+    <StaticComponent name="Vase (Broken)">
+      <static>656</static>
+    </StaticComponent>
+    <StaticComponent name="Vases">
+      <static>657</static>
+    </StaticComponent>
+    <StaticComponent name=" Plaster-set Back-board (H) ">
+      <static>726</static>
+    </StaticComponent>
+    <StaticComponent name=" Plaster-set Back-board (V)">
+      <static>729</static>
+    </StaticComponent>
+    <StaticComponent name=" inside-back rope (H) ">
+      <static>738</static>
+    </StaticComponent>
+    <StaticComponent name=" left-inside rope (V) ">
+      <static>739</static>
+    </StaticComponent>
+    <StaticComponent name=" right flap-1 (V) ">
+      <static>740</static>
+    </StaticComponent>
+    <StaticComponent name=" red rug ">
+      <static>741</static>
+    </StaticComponent>
+    <StaticComponent name=" gray rug ">
+      <static>742</static>
+    </StaticComponent>
+    <StaticComponent name=" front flap-2 (H) ">
+      <static>743</static>
+    </StaticComponent>
+    <StaticComponent name=" inside back rope accent (H) ">
+      <static>744</static>
+    </StaticComponent>
+    <StaticComponent name=" inside-left rope accent (V) ">
+      <static>745</static>
+    </StaticComponent>
+    <StaticComponent name=" right flap-2 (V) ">
+      <static>746</static>
+    </StaticComponent>
+    <StaticComponent name=" square fur rug ">
+      <static>747</static>
+    </StaticComponent>
+    <StaticComponent name=" bear rug (V) ">
+      <static>748</static>
+    </StaticComponent>
+    <StaticComponent name=" front flap-1 accent (H) ">
+      <static>749</static>
+    </StaticComponent>
+    <StaticComponent name=" inside-back shade-screen (H) ">
+      <static>750</static>
+    </StaticComponent>
+    <StaticComponent name=" inside left shade screen (V) ">
+      <static>751</static>
+    </StaticComponent>
+    <StaticComponent name=" right flap-1 accent (V) ">
+      <static>752</static>
+    </StaticComponent>
+    <StaticComponent name=" bear rug (H) ">
+      <static>753</static>
+    </StaticComponent>
+    <StaticComponent name=" front flap-2 accent (H) ">
+      <static>754</static>
+    </StaticComponent>
+    <StaticComponent name=" inside back stripe accent (H) ">
+      <static>755</static>
+    </StaticComponent>
+    <StaticComponent name=" inside left stripe accent (V) ">
+      <static>756</static>
+    </StaticComponent>
+    <StaticComponent name=" right flap-2 accent (V) ">
+      <static>757</static>
+    </StaticComponent>
+    <StaticComponent name="Stair Rug Down South">
+      <static>817</static>
+    </StaticComponent>
+    <StaticComponent name="Stair Rug Down East">
+      <static>818</static>
+    </StaticComponent>
+    <StaticComponent name="Stair Rug Down West">
+      <static>819</static>
+    </StaticComponent>
+    <StaticComponent name="Stair Rug Down North">
+      <static>820</static>
+    </StaticComponent>
+    <StaticComponent name="Stair Rug Up North">
+      <static>821</static>
+    </StaticComponent>
+    <StaticComponent name="Stair Rug Up West">
+      <static>822</static>
+    </StaticComponent>
+    <StaticComponent name="Stair Rug Up East">
+      <static>823</static>
+    </StaticComponent>
+    <StaticComponent name="Stair Rug Up South">
+      <static>824</static>
+    </StaticComponent>
+    <StaticComponent name="Snow and Icey Stair Down South">
+      <static>841</static>
+    </StaticComponent>
+    <StaticComponent name="Snow and Icey Stair Down East">
+      <static>842</static>
+    </StaticComponent>
+    <StaticComponent name="Snow and Icey Stair Down West">
+      <static>843</static>
+    </StaticComponent>
+    <StaticComponent name="Snow and Icey Stair Down North">
+      <static>844</static>
+    </StaticComponent>
+    <StaticComponent name="Snow and Icey Stair Up North">
+      <static>845</static>
+    </StaticComponent>
+    <StaticComponent name="Snow and Icey Stair Up West">
+      <static>846</static>
+    </StaticComponent>
+    <StaticComponent name="Snow and Icey Stair Up East">
+      <static>847</static>
+    </StaticComponent>
+    <StaticComponent name="Snow and Icey Stair Up South">
+      <static>848</static>
+    </StaticComponent>
+    <StaticComponent name="Bloodied Stair Down South">
+      <static>849</static>
+    </StaticComponent>
+    <StaticComponent name="Bloodied Stair Down East">
+      <static>850</static>
+    </StaticComponent>
+    <StaticComponent name="Bloodied Stair Down West">
+      <static>851</static>
+    </StaticComponent>
+    <StaticComponent name="Bloodied Stair Down North">
+      <static>852</static>
+    </StaticComponent>
+    <StaticComponent name="Bloodied Stair Up North">
+      <static>853</static>
+    </StaticComponent>
+    <StaticComponent name="Bloodied Stair Up West">
+      <static>854</static>
+    </StaticComponent>
+    <StaticComponent name="Bloodied Stair Up East">
+      <static>855</static>
+    </StaticComponent>
+    <StaticComponent name="Bloodied Stair Up South">
+      <static>856</static>
+    </StaticComponent>
+    <StaticComponent name="Mossy Stairs Down South">
+      <static>907</static>
+    </StaticComponent>
+    <StaticComponent name="Mossy Stairs Down East">
+      <static>908</static>
+    </StaticComponent>
+    <StaticComponent name="Mossy Stairs Down West">
+      <static>909</static>
+    </StaticComponent>
+    <StaticComponent name="Mossy Stairs Down North">
+      <static>910</static>
+    </StaticComponent>
+    <StaticComponent name="Mossy Stairs Up North">
+      <static>911</static>
+    </StaticComponent>
+    <StaticComponent name="Mossy Stairs Up West">
+      <static>912</static>
+    </StaticComponent>
+    <StaticComponent name="Mossy Stairs Up East">
+      <static>913</static>
+    </StaticComponent>
+    <StaticComponent name="Mossy Stairs Up South">
+      <static>914</static>
+    </StaticComponent>
+    <StaticComponent name="Grassy Stairs Down South">
+      <static>915</static>
+    </StaticComponent>
+    <StaticComponent name="Grassy Stairs Down East">
+      <static>916</static>
+    </StaticComponent>
+    <StaticComponent name="Grassy Stairs Down West">
+      <static>917</static>
+    </StaticComponent>
+    <StaticComponent name="Grassy Stairs Down North">
+      <static>918</static>
+    </StaticComponent>
+    <StaticComponent name="Grassy Stairs Up North">
+      <static>919</static>
+    </StaticComponent>
+    <StaticComponent name="Grassy Stairs Up West">
+      <static>920</static>
+    </StaticComponent>
+    <StaticComponent name="Grassy Stairs Up East">
+      <static>921</static>
+    </StaticComponent>
+    <StaticComponent name="Grassy Stairs Up South">
+      <static>922</static>
+    </StaticComponent>
+    <StaticComponent name="Floral Stair Accent Down South">
+      <static>923</static>
+    </StaticComponent>
+    <StaticComponent name="Floral Stair Accent Down East">
+      <static>924</static>
+    </StaticComponent>
+    <StaticComponent name="Floral Stair Accent Down West">
+      <static>925</static>
+    </StaticComponent>
+    <StaticComponent name="Floral Stair Accent Down North">
+      <static>926</static>
+    </StaticComponent>
+    <StaticComponent name="Floral Stair Accent Up North">
+      <static>927</static>
+    </StaticComponent>
+    <StaticComponent name="Floral Stair Accent Up West">
+      <static>928</static>
+    </StaticComponent>
+    <StaticComponent name="Floral Stair Accent Up East">
+      <static>929</static>
+    </StaticComponent>
+    <StaticComponent name="Floral Stair Accent Up South">
+      <static>930</static>
+    </StaticComponent>
+    <StaticComponent name="Torchlight (H)">
+      <static>931</static>
+    </StaticComponent>
+    <StaticComponent name="Torchlight (V)">
+      <static>932</static>
+    </StaticComponent>
+    <StaticComponent name="Wall Brazier (H)">
+      <static>976</static>
+    </StaticComponent>
+    <StaticComponent name="Wall Brazier (V)">
+      <static>977</static>
+    </StaticComponent>
+    <StaticComponent name="Wall Brazier Greenfire(H)">
+      <static>978</static>
+    </StaticComponent>
+    <StaticComponent name="Wall Brazier Greenfire(V)">
+      <static>979</static>
+    </StaticComponent>
+    <StaticComponent name="Wall Brazier Bluefire(H)">
+      <static>980</static>
+    </StaticComponent>
+    <StaticComponent name="Wall Brazier Bluefire(V)">
+      <static>981</static>
+    </StaticComponent>
+    <StaticComponent name="Wall Darkened (H)">
+      <static>933</static>
+    </StaticComponent>
+    <StaticComponent name="Wall Darkened (V)">
+      <static>934</static>
+    </StaticComponent>
+    <StaticComponent name="Floor Darkened">
+      <static>935</static>
+    </StaticComponent>
+    <StaticComponent name="Floor Brazier">
+      <static>975</static>
+    </StaticComponent>
+    <StaticComponent name="Candelabra">
+      <static>982</static>
+    </StaticComponent>
+  </category>
+  <category name="Magical">
+    <Web>
+      <static>131</static>
+      <allowDispel>true</allowDispel>
+    </Web>
+    <Fire>
+      <allowDispel>true</allowDispel>
+    </Fire>
+    <Darkness>
+      <allowDispel>true</allowDispel>
+    </Darkness>
+    <Whirlwind>
+      <allowDispel>true</allowDispel>
+    </Whirlwind>
+  </category>
+  <category name="Misc.">
+    <LockersComponent name="Lockers (H)">
+      <static>119</static>
+    </LockersComponent>
+    <LockersComponent name="Lockers (V)">
+      <static>120</static>
+    </LockersComponent>
+    <TrashComponent name="Trash Barrel">
+      <static>88</static>
+    </TrashComponent>
+    <StaticComponent name="Animated campfire">
+      <static>766</static>
+    </StaticComponent>
+  </category>
+  <category name="Grove">
+    <FloorComponent>
+      <color r="0" g="255" b="0" a="255" />
+      <ground>23</ground>
+    </FloorComponent>
+    <FloorComponent>
+      <color r="100" g="255" b="0" a="255" />
+      <ground>23</ground>
+    </FloorComponent>
+    <FloorComponent>
+      <color r="0" g="210" b="0" a="255" />
+      <ground>23</ground>
+    </FloorComponent>
+    <WallComponent>
+      <color r="135" g="210" b="100" a="255" />
+      <wall>157</wall>
+      <destroyed>160</destroyed>
+      <ruins>170</ruins>
+    </WallComponent>
+    <StaticComponent>
+      <color r="0" g="200" b="0" a="255" />
+      <static>226</static>
+    </StaticComponent>
+    <WallComponent>
+      <color r="135" g="210" b="100" a="255" />
+      <wall>158</wall>
+      <destroyed>161</destroyed>
+      <ruins>170</ruins>
+    </WallComponent>
+    <StaticComponent>
+      <color r="0" g="200" b="0" a="255" />
+      <static>227</static>
+    </StaticComponent>
+  </category>
+  <category name="Wall Doodads (H)">
     <StaticComponent name="Shield Ornamental (for the shadow) (H)">
       <static>767</static>
     </StaticComponent>

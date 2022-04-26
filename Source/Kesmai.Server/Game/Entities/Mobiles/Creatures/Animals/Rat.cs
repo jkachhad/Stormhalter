@@ -19,12 +19,7 @@ namespace Kesmai.Server.Game
 
 			_brain = new CombatAI(this);
 		}
-		
-		public override bool CanHide()
-		{
-			return true;
-		}
-		
+
 		public override int GetNearbySound() => 142;
 		public override int GetAttackSound() => 161;
 		public override int GetDeathSound() => 180;
