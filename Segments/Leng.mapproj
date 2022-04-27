@@ -290,6 +290,7 @@
             
             CanLoot = false;
         }
+        
     
         public LengQueen(Serial serial) : base(serial)
         {
@@ -350,6 +351,8 @@
     
             Experience = 50;
             Movement = 2;
+            
+            AddStatus(new BreatheWaterStatus(this));
     
             Alignment = Alignment.Lawful;
             
@@ -372,7 +375,7 @@
             
             if (queen != null)
             {
-                new PermanentStrengthPotion().Move(Location, true, Segment);
+                new PermanentWillpowerPotion().Move(Location, true, Segment);
                 Say($"Hi Mom! What's for dinner?!");
                 queen.Elated();
                 
