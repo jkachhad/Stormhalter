@@ -350,6 +350,8 @@
     
             Experience = 50;
             Movement = 2;
+            
+            AddStatus(new BreatheWaterStatus(this));
     
             Alignment = Alignment.Lawful;
             
@@ -372,7 +374,7 @@
             
             if (queen != null)
             {
-                new PermanentStrengthPotion().Move(Location, true, Segment);
+                new PermanentWillpowerPotion().Move(Location, true, Segment);
                 Say($"Hi Mom! What's for dinner?!");
                 queen.Elated();
                 
@@ -79278,7 +79280,16 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	return new LengQueen();
+	var queen = new LengQueen()
+    {
+        Name = "Queen",
+        
+        BaseDodge = 10,
+        MaxHealth = 100, Health = 100,
+        Movement = 0,
+        Experience = 50,
+    };
+    return queen;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
