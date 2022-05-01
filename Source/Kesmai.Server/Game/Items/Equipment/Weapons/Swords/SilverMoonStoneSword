@@ -1,0 +1,68 @@
+using System.Collections.Generic;
+using System.IO;
+using Kesmai.Server.Game;
+using Kesmai.Server.Network;
+
+namespace Kesmai.Server.Items
+{
+	public partial class SilverMoonStoneSword : Sword, ITreasure
+	{
+		
+		/// <inheritdoc />
+		/// <remarks>
+		/// The individual components give 1700. If the item were to be broken by a player,
+		/// it would award better experience.
+		/// </remarks>
+		public override uint BasePrice => 1000;
+
+		/// <inheritdoc />
+		public override int Weight => 4160;
+		
+		/// <inheritdoc />
+		public override ShieldPenetration Penetration => ShieldPenetration.VeryHeavy;
+
+		/// <inheritdoc />
+		public override int MinimumDamage => 8;
+
+		/// <inheritdoc />
+		public override int MaximumDamage => 20;
+
+		/// <inheritdoc />
+		public override int BaseArmorBonus => 4;
+
+		/// <inheritdoc />
+		public override int BaseAttackBonus => 5;
+
+		/// <inheritdoc />
+		public override Skill Skill => Skill.Sword;
+
+		/// <inheritdoc />
+		public override WeaponFlags Flags => WeaponFlags.BlueGlowing | WeaponFlags.Silver | WeaponFlags.Slashing | WeaponFlags.Lawful;
+
+        /// <inheritdoc />
+		public override bool CanBind => true;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="SilverMoonStoneSword"/> class.
+		/// </summary>
+		public SilverMoonStoneSword() : base(384)
+		{
+		}
+
+        /// <summary>
+		/// Initializes a new instance of the <see cref="SilverMoonStoneSword"/> class.
+		/// </summary>
+		public SilverMoonStoneSword(Serial serial) : base(serial)
+		{
+		}
+
+		/// <inheritdoc />
+		public override void GetDescription(List<LocalizationEntry> entries)
+		{
+			entries.Add(new LocalizationEntry(6200000, 6200356)); /* [You are looking at] [a sword that shimmers with the shine of the crecent moon.] */
+
+			if (Identified)
+				entries.Add(new LocalizationEntry(6300425)); /* The combat adds for this weapon are +5. */
+		}
+	}
+}
