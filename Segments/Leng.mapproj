@@ -76030,6 +76030,7 @@
         CanFly = true,
         CanCharge = true,
         CanLoot = false,
+        CanStrikeCritically = false,
         
         BasePenetration = ShieldPenetration.VeryHeavy,
 
@@ -76074,7 +76075,7 @@
     drake.Spells = new CreatureSpellCollection(20.0)
     {
         new CreatureSpell<LightningBoltSpell>(
-            skillLevel: 13)
+            skillLevel: 12)
     };
     
     drake.AddGold(1800);
