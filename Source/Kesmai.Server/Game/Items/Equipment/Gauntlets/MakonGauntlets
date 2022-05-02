@@ -1,0 +1,69 @@
+using System.Collections.Generic;
+using System.IO;
+using Kesmai.Server.Game;
+using Kesmai.Server.Network;
+
+namespace Kesmai.Server.Items
+{
+	public partial class MakonGauntlets : Gauntlets, ITreasure
+	{
+		/// <inheritdoc />
+		public override int LabelNumber => 6000041;
+
+        /// <inheritdoc />
+		public override uint BasePrice => 1500;
+
+        /// <inheritdoc />
+		public override int Weight => 200;
+
+        /// <inheritdoc />
+		public override ShieldPenetration Penetration => ShieldPenetration.VeryHeavy;
+
+        /// <inheritdoc />
+		public override int MinimumDamage => 8;
+
+        /// <inheritdoc />
+		public override int MaximumDamage => 16;
+
+        /// <inheritdoc />
+		public override int BaseArmorBonus => 4;
+
+        /// <inheritdoc />
+		public override int BaseAttackBonus => 6;
+
+        /// <inheritdoc />
+		public override WeaponFlags Flags => base.Flags | WeaponFlags.BlueGlowing | WeaponFlags.Lawful | WeaponFlags.Silver;
+
+        /// <inheritdoc />
+		public override bool CanBind => true;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="MakonGauntlets"/> class.
+		/// </summary>
+		public MakonGauntlets() : base(380)
+		{
+		}
+        
+        /// <summary>
+		/// Initializes a new instance of the <see cref="MakonGauntlets"/> class.
+		/// </summary>
+		public MakonGauntlets(Serial serial) : base(serial)
+		{
+		}
+
+		/// <inheritdoc />
+		public override bool CanEquip(MobileEntity entity)
+		{
+			if (entity is PlayerEntity { Profession: MartialArtist })
+				return true;
+
+			return false;
+		}
+		
+        /// <inheritdoc />
+		public override void GetDescription(List<LocalizationEntry> entries)
+		{
+			entries.Add(new LocalizationEntry(6200000, 6200359)); /* [You are looking at] [a pair of gauntlets with crystalline claws which have an odd metalic sheen. The long cuffs of thick leather are covered with thick green fur.] */
+		}
+	}
+}
