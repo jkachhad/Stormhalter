@@ -19,7 +19,7 @@ namespace Kesmai.Server.Game
 			Mana = MaxMana = 40;
 			FireProtection = 100;
 			Movement = 3;
-			MagicProtection = 35;
+			MagicProtection = 30;
 			
 			Attacks = new CreatureAttackCollection
 			{
