@@ -11,7 +11,7 @@ namespace Kesmai.Server.Game
 		public BLWishMaster()
 		{
 			Name = "Master of Wishes";
-			Body = 75;
+			Body = 1;
 
 			Health = MaxHealth = 50;
 			BaseDodge = 10;

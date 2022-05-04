@@ -6,11 +6,11 @@ using Kesmai.Server.Items;
 
 namespace Kesmai.Server.Game
 {
-	public partial class BLWishMaster : VendorEntity
+	public partial class BLAlchemist : VendorEntity
 	{
-		public BLWishMaster()
+		public BLAlchemist()
 		{
-			Name = "Master of Wishes";
+			Name = "Alchemist";
 			Body = 75;
 
 			Health = MaxHealth = 50;
