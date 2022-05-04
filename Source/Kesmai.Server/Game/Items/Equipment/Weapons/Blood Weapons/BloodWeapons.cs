@@ -290,9 +290,6 @@ namespace Kesmai.Server.Items
 		/// <inheritdoc />
 		public override int MinimumDamage => 1;
 
-		/// <inherit />
-		public override Skill Skill => Skill.Flail;
-
 		/// <inheritdoc />
 		public override int MaximumDamage => 8;
 
@@ -380,7 +377,7 @@ namespace Kesmai.Server.Items
 		public override int BaseAttackBonus => 5;
 
 		/// <inheritdoc />
-		public override int Category => 1;
+		public override int Category => 15;
 
 		/// <inheritdoc />
 		public override WeaponFlags Flags => base.Flags | WeaponFlags.BlueGlowing | WeaponFlags.Silver | WeaponFlags.Slashing | WeaponFlags.Piercing | WeaponFlags.TwoHanded;
@@ -625,7 +622,7 @@ namespace Kesmai.Server.Items
 		public override int BaseAttackBonus => 5;
 
 		/// <inheritdoc />
-		public override WeaponFlags Flags => base.Flags | WeaponFlags.BlueGlowing | WeaponFlags.Silver | WeaponFlags.Bashing;
+		public override WeaponFlags Flags => base.Flags | WeaponFlags.BlueGlowing | WeaponFlags.Silver | WeaponFlags.Bashing | WeaponFlags.TwoHanded;
 
 		/// <inheritdoc />
 		public override bool CanBind => true;
