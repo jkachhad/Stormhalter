@@ -59,7 +59,7 @@ namespace Kesmai.Server.Items
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6200000, 6200357)); /* [You are looking at] [a sword that shines as bright as the sun.] */
+			entries.Add(new LocalizationEntry(6200000, 6200379)); /* [You are looking at] [a sword that shines as bright as the sun.] */
 
 			if (Identified)
 				entries.Add(new LocalizationEntry(6300426)); /* The combat adds for this weapon are +6. */
