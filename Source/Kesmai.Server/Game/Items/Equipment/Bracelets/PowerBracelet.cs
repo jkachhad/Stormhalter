@@ -25,7 +25,7 @@ namespace Kesmai.Server.Items
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6200000, 6200355)); /* [You are looking at] [a golden bracelet embued with sapphires.] */
+			entries.Add(new LocalizationEntry(6200000, 6200377)); /* [You are looking at] [a golden bracelet embued with sapphires.] */
 		}
 
         /// <summary>
