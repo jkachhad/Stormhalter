@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.94.0.0">
+<segment name="Leng" version="0.95.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -277,6 +277,173 @@
                 }
                 
                 return;
+            }
+        }
+    }
+    
+    public class LengQueen : CreatureEntity
+    {
+        public LengQueen()
+        {
+            Body = 69;
+            Alignment = Alignment.Lawful;
+            
+            CanLoot = false;
+        }
+    
+        public LengQueen(Serial serial) : base(serial)
+        {
+        }
+    
+        public override void OnSpawn()
+        {
+            base.OnSpawn();
+            if (_brain != null)
+                return;
+            if (RightHand is ProjectileWeapon)
+                _brain = new RangedAI(this);
+            else
+                _brain = new CombatAI(this);
+        }
+    
+        public override int GetNearbySound() => 92;
+        public override int GetAttackSound() => 99;
+        public override int GetDeathSound() => 106;
+        public override Corpse GetCorpse() => default(Corpse);
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((short)1); /* version */
+        }
+    
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+            var version = reader.ReadInt16();
+            switch (version)
+            {
+                case 1:
+                    {
+                        break;
+                    }
+            }
+        }
+        public void Elated()
+        {
+            Say($"My daughter! You've rescued her from the top of the Water Falls!");
+            EmitSound(92, 3, 9);
+        }
+    }
+    
+    
+    public class LengIanta : CreatureEntity
+    {
+       public override bool CanOrderFollow => true;
+    
+        public LengIanta()
+        {
+            Name = "Ianta";
+            Body = 247;
+    
+            Health = MaxHealth = 150;
+            BaseDodge = 10;
+    
+            Experience = 50;
+            Movement = 2;
+            
+            AddStatus(new BreatheWaterStatus(this));
+    
+            Alignment = Alignment.Lawful;
+            
+            Attacks = new CreatureAttackCollection()
+            {
+                new CreatureBasicAttack(10),
+            };
+
+            Brain = new RescueAI(this)
+            {
+                Aggressive = false,
+            };
+            
+            CanLoot = false;
+        }
+    
+        protected override void OnFinishMovement(PathingEventArgs args)
+        {
+            var queen = GetBeheldInVisibility(0).SelectMany(m => m.Members).OfType<LengQueen>().FirstOrDefault();
+            
+            if (queen != null)
+            {
+                new PermanentWillpowerPotion().Move(Location, true, Segment);
+                Say($"Hi Mom! What's for dinner?!");
+                queen.Elated();
+                
+                /* We won't delete the entity on the same frame. Server will crash. This call is part of a an optimized loop. */
+                Timer.DelayCall(TimeSpan.FromSeconds(0.2), () => Delete());
+            }
+        }
+    
+        public override void HandleOrder(OrderEventArgs args)
+        {
+            base.HandleOrder(args);
+    
+            if (args.Handled)
+                return;
+    
+            var source = args.Source;
+            var order = args.Order;
+    
+            if (IsSubordinate && source != Director)
+                return;
+    
+            if (order.Matches("follow", true))
+            {
+                Director = source;
+    
+                OnOrderFollow(source);
+
+                args.Handled = true;
+                return;
+            }
+            
+            if (order.Matches("trail", true))
+            {
+                Director = source;
+    
+                OnOrderTrail(source);
+                
+                args.Handled = true;
+                return;
+            }
+        }
+    
+        public LengIanta(Serial serial) : base(serial)
+        {
+        }
+    
+        public override int GetNearbySound() => 256;
+        public override int GetAttackSound() => 257;
+        public override int GetDeathSound() => 258;
+    
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+    
+            writer.Write((short)1); /* version */
+        }
+    
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+    
+            var version = reader.ReadInt16();
+    
+            switch (version)
+            {
+                case 1:
+                    {
+                        break;
+                    }
             }
         }
     }
@@ -75348,6 +75515,7 @@
     {
         Name = _names.Random(),
         Body = (9),
+        IsInvulnerable = true,
         
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
@@ -75819,6 +75987,7 @@
     vlad.AddGold(25000);
     vlad.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new DragonSkull(),        100),
+        new LootPackEntry(true, (from, container) => new JewelerRing(),        100),
         new LootPackEntry(true, (from, container) => new LionRobe(),        50),
         new LootPackEntry(true, (from, container) => new GoldenTorc(),        33),
         new LootPackEntry(true, (from, container) => new FeatherFallBoots(),        100),
@@ -77400,7 +77569,12 @@
         { 
             new CreatureSpell<CreateWebSpell>(
                 skillLevel: 9, cost: 6, 
-                mantra: SpellHelper.GenerateMantra(), instantCast: false),   75
+                mantra: SpellHelper.GenerateMantra(), instantCast: false),   25
+        },
+        {
+            new CreatureSpell<FireballSpell>(
+                skillLevel: 9, cost: 5, 
+                mantra: SpellHelper.GenerateMantra(), instantCast: false),   50
         },
         {
             new CreatureSpell<MagicMissileSpell>(
@@ -77988,7 +78162,7 @@
         BaseDodge = 23,
         HideDetection = 23,   
         Experience = 14616,
-        
+        VisibilityDistance = 0,
         CanWalk = false,
         
         BasePenetration = ShieldPenetration.VeryHeavy,
@@ -78028,7 +78202,7 @@
         }, 
     };
 
-    seaserpent.AddGold(1500);
+    seaserpent.AddGold(3500);
     seaserpent.AddLoot(new LootPack(
         new LootPackEntry(true, LengGems,       10,     gemsPriceMutatorAboveAverage), 
         new LootPackEntry(true, LengBottles,    20),
@@ -78910,7 +79084,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="true">
+      <script name="OnDeath" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     source.SayTo(killer, $"Only a flesh wound! {killer.Name}.");
@@ -78987,7 +79161,8 @@
     critter.AddGold(10000);
      critter.AddGold(1000);
       critter.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       100,     gemsPriceMutatorVeryHigh)
+        new LootPackEntry(true, LengGems,       100,     gemsPriceMutatorVeryHigh),
+        new LootPackEntry(true, (from, container) => new RamStaff(),        100)
     ));
     
     return critter;
@@ -79040,15 +79215,6 @@
     wizard.Equip(new LeatherArmor());
     wizard.AddStatus(new NightVisionStatus(wizard));
     
-    wizard.AddImmunity(typeof(Whirlwind));
-    wizard.AddImmunity(typeof(PoisonCloudSpell));
-    wizard.AddImmunity(typeof(ConcussionSpell));
-    wizard.AddImmunity(typeof(LightningBoltSpell));
-    
-    wizard.AddImmunity(typeof(BlindSpell));
-    wizard.AddImmunity(typeof(FearSpell));
-    wizard.AddImmunity(typeof(StunSpell));
-    
     wizard.Spells = new CreatureSpellCollection()
     {
         { new CreatureSpell<ConcussionSpell>(
@@ -79071,7 +79237,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="true">
+      <script name="OnDeath" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     source.SayTo(killer, $"Death awaits you with nasty, big, pointy teeth {killer.Name}.");
@@ -79085,6 +79251,57 @@
         return;
 
     source.Say($"If you do doubt your courage or your strength, come no further, {player.Name}.");
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="lengIanta">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	return new LengIanta();
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="lengQueen">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var queen = new LengQueen()
+    {
+        Name = "Queen",
+        
+        BaseDodge = 10,
+        MaxHealth = 100, Health = 100,
+        Movement = 0,
+        Experience = 50,
+    };
+    return queen;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -79775,7 +79992,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="lengConfessorGhost" size="1" minimum="1" maximum="1" />
+      <entry entity="lengQueen" size="1" minimum="1" maximum="1" />
       <location x="12" y="20" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="confessorghost">
@@ -79800,8 +80017,8 @@
       <location x="1" y="6" region="254" />
     </spawn>
     <spawn type="LocationSpawner" name="Iantaplaceholder">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>900</maximumDelay>
+      <minimumDelay>3600</minimumDelay>
+      <maximumDelay>4500</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -79817,8 +80034,8 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="lengConfessorGhost" size="1" minimum="1" maximum="1" />
-      <location x="24" y="4" region="35" />
+      <entry entity="lengIanta" size="1" minimum="1" maximum="1" />
+      <location x="23" y="4" region="35" />
     </spawn>
     <spawn type="LocationSpawner" name="thiefTrainer">
       <minimumDelay>900</minimumDelay>
@@ -80030,9 +80247,9 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="level9ConcWiz" size="1" minimum="2" maximum="2" />
-      <entry entity="level9FireWiz" size="1" minimum="8" maximum="8" />
+      <entry entity="level9FireWiz" size="1" minimum="4" maximum="4" />
       <entry entity="level9Wraith" size="1" minimum="3" maximum="3" />
-      <entry entity="level9WretchFighter" size="3" minimum="7" maximum="7" />
+      <entry entity="level9WretchFighter" size="3" minimum="12" maximum="12" />
       <entry entity="level9Spectre" size="1" minimum="3" maximum="3" />
       <bounds region="10">
         <inclusion left="13" top="8" right="31" bottom="29" />
@@ -80281,7 +80498,7 @@
     <spawn type="RegionSpawner" name="Vlad">
       <minimumDelay>10800</minimumDelay>
       <maximumDelay>18000</maximumDelay>
-      <maximum>4</maximum>
+      <maximum>5</maximum>
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -80337,7 +80554,7 @@
     <spawn type="RegionSpawner" name="vladTower2">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>8</maximum>
+      <maximum>6</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -81094,28 +81311,6 @@
       <entry entity="level11Centaur" size="1" minimum="1" maximum="1" />
       <bounds region="35">
         <inclusion left="19" top="4" right="23" bottom="11" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
-      </bounds>
-    </spawn>
-    <spawn type="RegionSpawner" name="Spawner 1">
-      <minimumDelay>0</minimumDelay>
-      <maximumDelay>0</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <bounds region="0">
-        <inclusion left="0" top="0" right="0" bottom="0" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Blackburrow" version="0.90.0.0">
+<segment name="Blackburrow" version="0.95.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -154,7 +154,7 @@
   <regions>
     <region>
       <id>1</id>
-      <name>Entrance To Mine</name>
+      <name>Entrance To Mine (Level 12)</name>
       <height>500</height>
       <level>25</level>
       <tile x="-3" y="-41">
@@ -13712,7 +13712,7 @@
     </region>
     <region>
       <id>2</id>
-      <name>Level 1 of Mine</name>
+      <name>Level 1 of Mine (level 13)</name>
       <height>400</height>
       <level>25</level>
       <tile x="5" y="-8">
@@ -19453,7 +19453,7 @@
     </region>
     <region>
       <id>3</id>
-      <name>Level 2 of Mine</name>
+      <name>Level 2 of Mine (level 14)</name>
       <height>350</height>
       <level>25</level>
       <tile x="7" y="-4">
@@ -22270,7 +22270,7 @@
     </region>
     <region>
       <id>4</id>
-      <name>Level 3 of Mine</name>
+      <name>Level 3 of Mine (level 15 &amp; 16)</name>
       <height>300</height>
       <level>30</level>
       <tile x="-12" y="-13">
@@ -35622,7 +35622,7 @@
     </subregion>
   </subregions>
   <entities>
-    <entity name="EntranceGnollGuard">
+    <entity name="Level12NormEntranceGnollGuard">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -35630,8 +35630,8 @@
     var GnollGuard = new Troll()
     {
         Name = "Gnoll Guard",
-        MaxHealth = 175, Health = 175,
-        BaseDodge = 14,
+        MaxHealth = 120, Health = 120,
+        BaseDodge = 21,
                 
         Experience = 6800,
                 
@@ -35641,7 +35641,7 @@
     
     GnollGuard.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(11, 15, 30)
+        new CreatureBasicAttack(12, 15, 19)
     };
         
         GnollGuard.Home = new RectangleBounds()
@@ -35652,7 +35652,7 @@
     GnollGuard.Wield(new Greatsword());
     GnollGuard.Equip(new ChainmailArmor());
     
-    GnollGuard.AddGold(450);
+    GnollGuard.AddGold(5000);
     GnollGuard.AddLoot(new LootPack(
         new LootPackEntry(true, SurfaceGems,       15,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33), 
@@ -35676,7 +35676,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="TownBanker">
+    <entity name="NPCTownBanker">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -35708,7 +35708,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="TownShopkeep">
+    <entity name="NPCTownShopkeep">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -35740,7 +35740,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="TownMATrainer">
+    <entity name="NPCTownMATrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -35772,7 +35772,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="TownWeaponTrainer">
+    <entity name="NPCTownWeaponTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -35804,7 +35804,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="TownMagicTrainer">
+    <entity name="NPCTownMagicTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -35840,7 +35840,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="TownThaumTrainer">
+    <entity name="NPCTownThaumTrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -35879,7 +35879,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="TownBalmSeller">
+    <entity name="NPCTownBalmSeller">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -35913,7 +35913,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="TownRecallSeller">
+    <entity name="NPCTownRecallSeller">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -35947,7 +35947,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="TownPriest">
+    <entity name="NPCTownPriest">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -35986,7 +35986,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="EntranceFippyDarkpaw">
+    <entity name="BossNotableLevel12Fippy">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -35994,9 +35994,9 @@
     var fippy = new ElderTroll()
     {
         Name = "Fippy Darkpaw",
-        MaxHealth = 1500, Health = 1500,
-        BaseDodge = 28,
-        HideDetection = 24,
+        MaxHealth = 600, Health = 600,
+        BaseDodge = 26,
+        HideDetection = 28,
         Experience = 32000,
         
         VisibilityDistance = 3,
@@ -36004,11 +36004,9 @@
        
         CanCharge = true,
         CanSwim = true,
-        CanStrikeCritically = true,
 
-        CanLoot = false,
         
-        BasePenetration = ShieldPenetration.Heavy,
+        BasePenetration = ShieldPenetration.Medium,
 
         IsTethered = true,
     };
@@ -36021,15 +36019,15 @@
     fippy.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(16,      10, 30,      "Fippy Barks and gnashes you with his fangs",
+            new CreatureAttack(16,      20, 42,      "Fippy Barks and gnashes you with his fangs",
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(20,      30, 60,     "Fippy slashes you with his razor sharp claws.",
+            new CreatureAttack(16,      20, 42,     "Fippy slashes you with his razor sharp claws.",
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(22,      40, 60,     "Fippy impales you with his claws.",
+            new CreatureAttack(18,      38, 42,     "Fippy impales you with his claws.",
                                                         new AttackProneComponent(25), 
                                                         new AttackStunComponent(15)),               20
         },
@@ -36079,24 +36077,23 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="EntranceGnollBlacksmith">
+    <entity name="BossNotableLevel12Smith">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 	var smith = new TrollGuard()
     {
         Name = "Gnoll Blacksmith",
-        MaxHealth = 1000, Health = 1000,
-        BaseDodge = 21,
+        MaxHealth = 600, Health = 600,
+        BaseDodge = 26,
     
-        Experience = 19000,
+        Experience = 148860,
         
-        HideDetection = 21,
+        HideDetection = 28,
         
         CanJumpkick = true,
-        CanStrikeCritically = false,
         
-        BasePenetration = ShieldPenetration.Heavy,
+        BasePenetration = ShieldPenetration.Medium,
 
     };
     
@@ -36108,19 +36105,19 @@ if (spokeRecently(source))
     smith.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(15,      50, 75,      "The Blacksmith slashes you with his claws.",
-                                                        new AttackProneComponent(15), 
-                                                        new AttackStunComponent(5)),                40
+            new CreatureAttack(16,      25, 47,      "The Blacksmith slashes you with his claws.",
+                                                        new AttackProneComponent(5), 
+                                                        new AttackStunComponent(5)),                50
         },
         {
-            new CreatureAttack(15,      60, 85,     "The Blacksmith smashes you with his massive hammer.",
-                                                        new AttackProneComponent(25), 
-                                                        new AttackStunComponent(10)),               40
+            new CreatureAttack(16,      20, 47,     "The Blacksmith smashes you with his massive hammer.",
+                                                        new AttackProneComponent(5), 
+                                                        new AttackStunComponent(5)),               40
         },
         {
-            new CreatureAttack(20,      70, 100,     "The Blacksmith kicks you in the chest.",
+            new CreatureAttack(18,      40, 47,     "The Blacksmith kicks you in the chest.",
                                                         new AttackProneComponent(100), 
-                                                        new AttackStunComponent(15)),               20
+                                                        new AttackStunComponent(15)),               10
         },
     };
     
@@ -36160,18 +36157,18 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="EntranceGnollSoothsayer">
+    <entity name="Level12NormEntranceGnollSoothsayer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 	var sooth = new Troll()
     {
         Name = "Gnoll Soothsayer",
-        MaxHealth = 300, Health = 300,
-        MaxMana = 19, Mana = 19,
-        BaseDodge = 14,
+        MaxHealth = 120, Health = 120,
+        MaxMana = 12, Mana = 12,
+        BaseDodge = 21,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 12000,
+        Experience = 5000,
         VisibilityDistance = 3,
         HideDetection = 31
     };
@@ -36181,16 +36178,16 @@ if (spokeRecently(source))
         
     sooth.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(9, 20, 25)
+        new CreatureBasicAttack(12, 15, 20)
     };
     
     sooth.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<DeathSpell>(
-            skillLevel: 10, cost: 6, 
+            skillLevel: 6, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<LightningBoltSpell>(
-            skillLevel: 10, cost: 5,
+            skillLevel: 6, cost: 5,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
@@ -36220,7 +36217,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="LeveloneGnollGuard">
+    <entity name="Level13NormGnollGuard">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -36228,11 +36225,11 @@ if (spokeRecently(source))
     var GnollGuard = new Troll()
     {
         Name = "Gnoll Veteran",
-        MaxHealth = 350, Health = 350,
-        BaseDodge = 14,
+        MaxHealth = 130, Health = 130,
+        BaseDodge = 22,
         CanCharge = true,
                 
-        Experience = 10000,
+        Experience = 6000,
                 
         Movement = 2,
         BasePenetration = ShieldPenetration.Medium,
@@ -36242,15 +36239,15 @@ if (spokeRecently(source))
       {
         {
             new CreatureAttack(13,      10, 25,      "The guard slashes you with his Greatsword.",
-                                                        new AttackStunComponent(5)),                40
+                                                        new AttackStunComponent(5)),                50
         },
         {
-            new CreatureAttack(14,      25, 40,     "The guard impales you with his razor sharp claws.",
-                                                        new AttackStunComponent(10)),               40
+            new CreatureAttack(13,      25, 40,     "The guard impales you with his razor sharp claws.",
+                                                        new AttackStunComponent(5)),               40
         },
         {
-            new CreatureAttack(15,      25, 60,     "The guard stabs you with his greatsword",
-                                                        new AttackStunComponent(15)),               20
+            new CreatureAttack(14,      50, 60,     "The guard stabs you with his greatsword",
+                                                        new AttackStunComponent(15)),               10
         },
     };
         
@@ -36282,18 +36279,18 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="LeveloneGnollSoothsayer">
+    <entity name="Level13NormGnollSoothsayer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 	var sooth = new Troll()
     {
         Name = "Gnoll Soothsayer",
-        MaxHealth = 300, Health = 300,
-        MaxMana = 19, Mana = 19,
-        BaseDodge = 14,
+        MaxHealth = 130, Health = 130,
+        MaxMana = 15, Mana = 15,
+        BaseDodge = 22,
         BasePenetration = ShieldPenetration.Light,
-        Experience = 12000,
+        Experience = 6018,
         VisibilityDistance = 3,
         HideDetection = 31
     };
@@ -36303,16 +36300,16 @@ if (spokeRecently(source))
         
     sooth.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(9, 20, 25)
+        new CreatureBasicAttack(13, 20, 22)
     };
     
     sooth.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<DeathSpell>(
-            skillLevel: 12, cost: 6, 
+            skillLevel: 7, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<LightningBoltSpell>(
-            skillLevel: 12, cost: 5,
+            skillLevel: 7, cost: 5,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
@@ -36343,7 +36340,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="LevelonePrisoner">
+    <entity name="NPCPrisoner">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -36380,7 +36377,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="LeveloneGnollOfficer">
+    <entity name="Level13HighGnollOfficer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -36388,10 +36385,10 @@ if (spokeRecently(source))
     var fippy = new ElderTroll()
     {
         Name = "Gnoll Officer",
-        MaxHealth = 1500, Health = 1500,
-        BaseDodge = 28,
+        MaxHealth = 169, Health = 169,
+        BaseDodge = 24,
         HideDetection = 24,
-        Experience = 32000,
+        Experience = 7578,
         
         VisibilityDistance = 3,
        
@@ -36408,20 +36405,20 @@ if (spokeRecently(source))
     fippy.AddStatus(new NightVisionStatus(fippy));
     fippy.AddStatus(new BreatheWaterStatus(fippy));
     
-    fippy.CombatantChangeInterval = TimeSpan.FromSeconds(4.0);
+    fippy.CombatantChangeInterval = TimeSpan.FromSeconds(12.0);
     
     fippy.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(16,      10, 30,      "The Officer Barks and gnashes you with his fangs",
+            new CreatureAttack(15,      15, 28,      "The Officer Barks and gnashes you with his fangs",
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(20,      30, 60,     "The Officer slashes you with his razor sharp claws.",
+            new CreatureAttack(15,      15, 28,     "The Officer slashes you with his razor sharp claws.",
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(22,      40, 60,     "The Officer impales you with his claws.",
+            new CreatureAttack(16,      26, 28,     "The Officer impales you with his claws.",
                                                         new AttackStunComponent(15)),               20
         },
     };
@@ -36468,7 +36465,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="LeveloneGnollCaptain">
+    <entity name="BossMiniLevel13GnollCaptain">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -36476,10 +36473,10 @@ if (spokeRecently(source))
     var fippy = new ElderTroll()
     {
         Name = "Captain of the Guard",
-        MaxHealth = 3000, Health = 3000,
-        BaseDodge = 28,
+        MaxHealth = 1950, Health = 1950,
+        BaseDodge = 27,
         HideDetection = 24,
-        Experience = 40000,
+        Experience = 71000,
         
         VisibilityDistance = 3,
        
@@ -36489,29 +36486,29 @@ if (spokeRecently(source))
 
         CanLoot = false,
         
-        BasePenetration = ShieldPenetration.VeryHeavy,
+        BasePenetration = ShieldPenetration.Heavy,
 
     };
     
     fippy.AddStatus(new NightVisionStatus(fippy));
     fippy.AddStatus(new BreatheWaterStatus(fippy));
     
-    fippy.CombatantChangeInterval = TimeSpan.FromSeconds(4.0);
+    fippy.CombatantChangeInterval = TimeSpan.FromSeconds(12.0);
     
     fippy.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(20,      20, 60,      "The Captain Barks and gnashes you with his fangs",
-                                                        new AttackStunComponent(5)),                40
+            new CreatureAttack(18,      30, 60,      "The Captain Barks and gnashes you with his fangs",
+                                                        new AttackStunComponent(5)),                50
         },
         {
-            new CreatureAttack(23,      50, 80,     "The Captain slashes you with his razor sharp claws.",
-                                                        new AttackStunComponent(10)),               40
+            new CreatureAttack(19,      30, 66,     "The Captain slashes you with his razor sharp claws.",
+                                                        new AttackStunComponent(5)),               40
         },
         {
-            new CreatureAttack(22,      60, 90,     "The Captain impales you with his claws.",
+            new CreatureAttack(19,      60, 66,     "The Captain impales you with his claws.",
                                                         new AttackProneComponent(20), 
-                                                        new AttackStunComponent(15)),               20
+                                                        new AttackStunComponent(15)),               10
         },
     };
     
@@ -36559,7 +36556,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="LeveltwoSpider">
+    <entity name="Level14HighSpider">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -36567,11 +36564,11 @@ if (spokeRecently(source))
     var shelob = new Spider()
     {
         Name = "Widowmaker",
-        MaxHealth = 800, Health = 800,
-        BaseDodge = 15,
+        MaxHealth = 182, Health = 182,
+        BaseDodge = 25,
         Movement = 2,
     
-        Experience = 18000,
+        Experience = 9000,
         BasePenetration = ShieldPenetration.Medium,
         CanCharge = true,
         CanLoot = false,
@@ -36586,7 +36583,7 @@ if (spokeRecently(source))
     shelob.Attacks = new CreatureAttackCollection()
     {
         { 
-            new CreatureAttack(12,     10, 20,      "The spider bites you", new AttackPoisonComponent(25), new AttackProneComponent(10))
+            new CreatureAttack(16,     10, 30,      "The spider bites you", new AttackPoisonComponent(15), new AttackProneComponent(10))
         }, 
     };
     
@@ -36623,7 +36620,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="LeveltwoGnollGuard">
+    <entity name="Level14NormGnollGuard">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -36631,14 +36628,13 @@ if (spokeRecently(source))
     var fippy = new ElderTroll()
     {
         Name = "Gnoll Guard",
-        MaxHealth = 1200, Health = 1200,
-        BaseDodge = 20,
+        MaxHealth = 140, Health = 140,
+        BaseDodge = 23,
         HideDetection = 24,
         Experience = 32000,
         Movement = 2,
         
         VisibilityDistance = 3,
-        CanStrikeCritically = false,
         
         BasePenetration = ShieldPenetration.Medium,
 
@@ -36647,20 +36643,20 @@ if (spokeRecently(source))
     fippy.AddStatus(new NightVisionStatus(fippy));
     fippy.AddStatus(new BreatheWaterStatus(fippy));
     
-    fippy.CombatantChangeInterval = TimeSpan.FromSeconds(4.0);
+    fippy.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
     
     fippy.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(16,      10, 30,      "The Officer Barks and gnashes you with his fangs",
+            new CreatureAttack(14,      10, 21,      "The Officer Barks and gnashes you with his fangs",
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(20,      30, 60,     "The Officer slashes you with his razor sharp claws.",
+            new CreatureAttack(14,      15, 21,     "The Officer slashes you with his razor sharp claws.",
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(22,      40, 60,     "The Officer impales you with his claws.",
+            new CreatureAttack(15,      20, 21,     "The Officer impales you with his claws.",
                                                         new AttackStunComponent(15)),               20
         },
     };
@@ -36706,7 +36702,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="LeveltwoEvilLurker">
+    <entity name="BossMiniLevel14EvilLurker">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -36715,12 +36711,12 @@ if (spokeRecently(source))
     {
         Name = "Undead Prisoner", Alignment = Alignment.Chaotic,
     
-        MaxHealth = 5000, Health = 5000,
-        BaseDodge = 15,
+        MaxHealth = 2100, Health = 2100,
+        BaseDodge = 28,
     
-        Experience = 69000,
+        Experience = 85000,
         
-        BasePenetration = ShieldPenetration.VeryHeavy,
+        BasePenetration = ShieldPenetration.Heavy,
     
         CanCharge = true,
         
@@ -36738,12 +36734,12 @@ if (spokeRecently(source))
     
     overlord.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(20, 30, 60, new AttackStunComponent (25), new AttackProneComponent(12))
+        new CreatureBasicAttack(20, 30, 69, new AttackStunComponent (10), new AttackProneComponent(5))
     };
     
     overlord.Spells = new CreatureSpellCollection(35.0)
     {
-       { new CreatureSpell<IceSpearSpell>(skillLevel: 10), 100, TimeSpan.FromSeconds(6.0) }
+       { new CreatureSpell<IceSpearSpell>(skillLevel: 8), 100, TimeSpan.FromSeconds(12.0) }
     };
     
     overlord.AddGold(3000);
@@ -36772,7 +36768,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="PitBoss">
+    <entity name="BossMiniLevel16Lockjaw">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -36780,15 +36776,14 @@ if (spokeRecently(source))
     {
         Name = "LockJaw",
         BaseDodge = 31,
-        MaxHealth = 10000, Health = 10000,
+        MaxHealth = 2700, Health = 2700,
         HideDetection = 33,
-        BasePenetration = ShieldPenetration.Heavy,
+        BasePenetration = ShieldPenetration.Medium,
         CanSwim = true,
         Alignment = Alignment.Evil,
-        Immunity = CreatureImmunity.Poison,
         VisibilityDistance = 1,
         Movement = 1,
-        Experience = 100000,
+        Experience = 123000,
         
         IsTethered = true,
     };
@@ -36799,10 +36794,10 @@ if (spokeRecently(source))
     crocodile.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(20,     20, 120,   "The crocodile snaps his massive jaws shut upon you."), 60 
+            new CreatureAttack(22,     30, 60,   "The crocodile snaps his massive jaws shut upon you."), 60 
         },
         { 
-            new CreatureAttack(25,     30, 90,  "The crocodile hits you with its tail."),               40 
+            new CreatureAttack(22,     40, 77,  "The crocodile hits you with its tail."),               40 
         },
     };
     
@@ -36837,7 +36832,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="PitGhostofmemp">
+    <entity name="Level16NormPitGhostofmemp">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -36845,10 +36840,10 @@ if (spokeRecently(source))
     {
         Name = "Ghost of Memp",
         Alignment = Alignment.Evil,
-        MaxHealth = 120, Health = 120,
-        BaseDodge = 13,
-        Experience = 7200,
-        CanSwim = false,
+        MaxHealth = 180, Health = 180,
+        BaseDodge = 25,
+        Experience = 10399,
+        CanSwim = true,
         BasePenetration = ShieldPenetration.Light,
         MaxMana = 40, Mana = 40,
         DeathResistance = 100,
@@ -36856,10 +36851,11 @@ if (spokeRecently(source))
     };
     
     banshee.AddStatus(new NightVisionStatus(banshee));
+    banshee.AddStatus(new BreatheWaterStatus(banshee));
         
     banshee.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(14)
+        new CreatureBasicAttack(16)
     };
     
     banshee.Spells = new CreatureSpellCollection(50.0)
@@ -36906,7 +36902,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="PitCroc">
+    <entity name="Level16NormPitCroc">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -36914,10 +36910,10 @@ if (spokeRecently(source))
     {
         Name = "Crocodile",
         Alignment = Alignment.Evil,
-        MaxHealth = 190, Health = 190,
-        BaseDodge = 22,
+        MaxHealth = 180, Health = 180,
+        BaseDodge = 25,
                 
-        Experience = 6500,
+        Experience = 10399,
     
         Movement = 1,
         CanSwim = true,
@@ -36932,13 +36928,13 @@ if (spokeRecently(source))
     
     {
         {
-            new CreatureAttack(14,     22, 32,   "The crocodile slams you against the rocks."),        50 
+            new CreatureAttack(14,     15, 23,   "The crocodile slams you against the rocks."),        50 
         },
         {
-            new CreatureAttack(15,     28, 34,   "The crocodile bites you."),                     30 
+            new CreatureAttack(15,     18, 23,   "The crocodile bites you."),                     30 
         },
         {
-            new CreatureAttack(16,     31, 35,  "The crocodile rakes whips you with its tail."),  20 
+            new CreatureAttack(16,     22, 23,  "The crocodile rakes whips you with its tail."),  20 
         }
     };
     
@@ -36972,7 +36968,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="PitSkeletalArchers">
+    <entity name="Level16NormPitSkeletalArchers">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -36980,10 +36976,10 @@ if (spokeRecently(source))
 	{
 	   Name = "Skeletal Archer",
 	   Alignment = Alignment.Evil,
-	   MaxHealth = 150, Health = 150,
-	   BaseDodge = 18,
-	   BasePenetration = ShieldPenetration.Medium,
-	   Experience = 10000,
+	   MaxHealth = 180, Health = 180,
+	   BaseDodge = 25,
+	   BasePenetration = ShieldPenetration.Light,
+	   Experience = 10399,
 	   CanSwim = false,
 	   Immunity = CreatureImmunity.Poison,
 	 };
@@ -36991,10 +36987,9 @@ if (spokeRecently(source))
 	skeleton.AddStatus(new NightVisionStatus(skeleton));
     skeleton.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(10)
+        new CreatureBasicAttack(16)
     };
     
-    skeleton.AddStatus(new NightVisionStatus(skeleton));
     skeleton.Wield(new Longbow());
     
     skeleton.AddGold(2000);
@@ -37021,7 +37016,7 @@ return skeleton;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="LevelthreeSpiritofDark">
+    <entity name="NPCSpiritofDark">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -37057,7 +37052,7 @@ return skeleton;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Kobold Miners">
+    <entity name="NPCKobold Miners">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -37088,7 +37083,7 @@ return skeleton;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="LevelthreeGnollWorgHandle">
+    <entity name="Level15HighGnollWorgHandle">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -37096,17 +37091,14 @@ return skeleton;
     var fippy = new ElderTroll()
     {
         Name = "Gnoll Handler",
-        MaxHealth = 1500, Health = 1500,
+        MaxHealth = 208, Health = 208,
         BaseDodge = 28,
         HideDetection = 31,
-        Experience = 32000,
+        Experience = 10913,
         Movement = 2,
         
         VisibilityDistance = 3,
-       
-        CanJumpkick = false,
-        CanStrikeCritically = false,
-        
+      
         BasePenetration = ShieldPenetration.Medium,
 
     };
@@ -37120,15 +37112,15 @@ return skeleton;
     fippy.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(16,      10, 30,      "The Officer Barks and gnashes you with his fangs",
+            new CreatureAttack(17,      20, 31,      "The Officer Barks and gnashes you with his fangs",
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(20,      30, 60,     "The Officer slashes you with his razor sharp claws.",
+            new CreatureAttack(17,      20, 31,     "The Officer slashes you with his razor sharp claws.",
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(22,      40, 60,     "The Officer impales you with his claws.",
+            new CreatureAttack(18,      30, 31,     "The Officer impales you with his claws.",
                                                         new AttackStunComponent(15)),               20
         },
     };
@@ -37173,22 +37165,22 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="LevelthreeWorg">
+    <entity name="Level15ExtremeWorg">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 	 var worg = new BlackWolf()
     {
         Name = "Worg",
-        MaxHealth = 2200, Health = 2200,
-        BaseDodge = 19,
+        MaxHealth = 800, Health = 800,
+        BaseDodge = 30,
     
         Alignment = Alignment.Chaotic,
         HideDetection = 35,
-        Experience = 42000,
+        Experience = 25600,
         CanCharge = true,
         
-        BasePenetration = ShieldPenetration.Heavy,
+        BasePenetration = ShieldPenetration.Medium,
     
     };
     
@@ -37201,17 +37193,17 @@ if (spokeRecently(source))
     worg.Attacks = new CreatureAttackCollection()
     {
         {
-            new CreatureAttack(20,      45, 60,      "The worg slashes you with its claws.",
+            new CreatureAttack(21,      25, 50,      "The worg slashes you with its claws.",
                                                         new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(21,      50, 65,     "The worg whips you with its tail.",
+            new CreatureAttack(21,      30, 50,     "The worg whips you with its tail.",
                                                         new AttackProneComponent(25), 
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(22,      60, 80,     "The worg gnashes you with its fangs.",
+            new CreatureAttack(21,      45, 50,     "The worg gnashes you with its fangs.",
                                                         new AttackProneComponent(35), 
                                                         new AttackStunComponent(15)),               20
         },
@@ -37253,7 +37245,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="LevelthreeGiant">
+    <entity name="BossMiniLevel15Jym">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -37263,12 +37255,12 @@ if (spokeRecently(source))
     // This guy's meant to be hard. He is the gatekeeper to the final boss area.
 
     Name = "Cave Giant Jym",
-    MaxHealth  =  4000, Health = 4000,
+    MaxHealth  =  2400, Health = 2400,
     BaseDodge = 30,
     BasePenetration = ShieldPenetration.VeryHeavy,
     Experience = 100000,
     HideDetection = 35,
-    CanJumpkick = true,
+    CanCharge = true,
     CanStrikeCritically = true,
     
     Immunity = CreatureImmunity.Web | CreatureImmunity.Magic,
@@ -37286,19 +37278,19 @@ giant.Attacks = new CreatureAttackCollection
 
      // Attack #1, 50% chance
     {
-        new CreatureAttack(25, 50, 75, "The Giant punches you with his massive fist.", new AttackProneComponent(15), new AttackStunComponent(5)), 50, TimeSpan.Zero
+        new CreatureAttack(21, 30, 75, "The Giant punches you with his massive fist.", new AttackProneComponent(15), new AttackStunComponent(5)), 50, TimeSpan.Zero
     },
     
     // Attack #2, 30% chance... higher damage, better chance of knocking you back
     
     {
-        new CreatureAttack(27, 60, 85, "The Giant spartan kicks you square in the chest.", new AttackProneComponent(25)), 30, TimeSpan.Zero
+        new CreatureAttack(21, 36, 73, "The Giant spartan kicks you square in the chest.", new AttackProneComponent(25)), 30, TimeSpan.Zero
     },
     
     // Attack #3, 10% Chance... whollop you good.
     
     {
-        new CreatureAttack(30, 80, 100, "The Giant winds up and levels you with a haymaker."), 10, TimeSpan.Zero
+        new CreatureAttack(22, 70, 73, "The Giant winds up and levels you with a haymaker."), 10, TimeSpan.Zero
     },
 };
     
@@ -37350,18 +37342,18 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Levelthreestalker">
+    <entity name="Level15HighStalker">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 	 var stalker = new Stalker()
     {
         Name = "Undead Warrior",
-        MaxHealth = 750, Health = 750,
+        MaxHealth = 208, Health = 208,
         MaxMana = 7, Mana = 7,
-        BaseDodge = 30,
+        BaseDodge = 26,
     
-        Experience = 25000,
+        Experience = 10913,
         BasePenetration = ShieldPenetration.Medium,
         VisibilityDistance = 1,
         DeathResistance = 100,
@@ -37373,7 +37365,7 @@ if (spokeRecently(source))
     
     stalker.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(20, 20, 50)
+        new CreatureBasicAttack(17, 20, 31)
     };
     
     stalker.Spells = new CreatureSpellCollection(100)
@@ -37409,19 +37401,19 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Levelthreespectres">
+    <entity name="Level15Normspectres">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 	 var spectre = new Spectre()
     {
         Name = "Undead Thaum",
-        MaxHealth = 250, Health = 250,
+        MaxHealth = 160, Health = 160,
         MaxMana = 31, Mana = 31,
-        BaseDodge = 14,
+        BaseDodge = 24,
     
-        Experience = 20000,
-        BasePenetration = ShieldPenetration.Light,
+        Experience = 6740,
+        BasePenetration = ShieldPenetration.Medium,
         VisibilityDistance = 1,
         DeathResistance = 100,
     };
@@ -37430,16 +37422,16 @@ if (spokeRecently(source))
     
     spectre.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(14, 20, 30)
+        new CreatureBasicAttack(15, 20, 22)
     };
     
     spectre.Spells = new CreatureSpellCollection()
     {
        { new CreatureSpell<DeathSpell>(
-            skillLevel: 11, cost: 16, 
+            skillLevel: 8, cost: 16, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   75 },
        { new CreatureSpell<LightningBoltSpell>(
-            skillLevel: 7, cost: 6, 
+            skillLevel: 8, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 }
     };
     
@@ -37470,18 +37462,18 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Levelthreearchers">
+    <entity name="Level15NormArchers">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 	var skeleton = new Skeleton()
 	{
 	   Name = "Skeletal Archer",
-	   MaxHealth = 150, Health = 150,
-	   BaseDodge = 18,
+	   MaxHealth = 160, Health = 160,
+	   BaseDodge = 24,
 	   BasePenetration = ShieldPenetration.Medium,
-	   HideDetection = 36,
-	   Experience = 10000,
+	   HideDetection = 30,
+	   Experience = 8666,
 	   CanSwim = false,
 	   Immunity = CreatureImmunity.Poison,
 	 };
@@ -37489,10 +37481,11 @@ if (spokeRecently(source))
 	skeleton.AddStatus(new NightVisionStatus(skeleton));
     skeleton.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(20)
+        new CreatureBasicAttack(15)
     };
     
     skeleton.AddStatus(new NightVisionStatus(skeleton));
+    
     skeleton.Wield(new Longbow());
     
     skeleton.AddGold(2000);
@@ -37519,7 +37512,7 @@ return skeleton;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Levelthreemoccasins">
+    <entity name="Level16Highmoccasins">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -37527,16 +37520,15 @@ return skeleton;
 {
 
     Name = "Water Moccasin",
-    MaxHealth = 425, Health = 425,
-    BaseDodge = 16,
+    MaxHealth = 234, Health = 234,
+    BaseDodge = 27,
     BasePenetration = ShieldPenetration.Medium,
     CanSwim = true,
     CanWalk = true,
     Immunity = CreatureImmunity.Magic | CreatureImmunity.Poison,
     Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
-    Experience = 40000,
+    Experience = 13095,
     VisibilityDistance = 2,
-    CanCharge = false,
     Movement = 2,
 };
 
@@ -37546,12 +37538,12 @@ snake.Attacks = new CreatureAttackCollection()
 
     {
     
-        new CreatureAttack(13, 25, 35, "The snake bites you on the ankle", new AttackPoisonComponent(10,25)),75
+        new CreatureAttack(18, 15, 33, "The snake bites you on the ankle", new AttackPoisonComponent(10,25)),75
     },
     
     {
     
-        new CreatureAttack(14, 40, 60, "The snake bites you on the neck", new AttackPoisonComponent(30)),25
+        new CreatureAttack(18, 30, 33, "The snake bites you on the neck", new AttackPoisonComponent(20)),25
         
     },
 };
@@ -37594,19 +37586,17 @@ return snake;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="LevelthreePoisonElemental">
+    <entity name="BossNoteableLevel16PoisonElemental">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 	var elemental = new Lich()
 {
 
-    // Set body to Lich, because i'm not sure how to flag a creature as undead
     
     Name = "ThiefBane",
-    MaxHealth = 250, Health = 250,
-    Mana = 40, MaxMana = 40,
-    BaseDodge = 16,
+    MaxHealth = 900, Health = 900,
+    BaseDodge = 31,
     CanSwim = true,
     FireProtection = 100,
     IceProtection = 100,
@@ -37614,19 +37604,19 @@ return snake;
     Experience = 25000,
     HideDetection = 50,
     VisibilityDistance = 2,
-    Movement = 1,
+ 
 };
 
 elemental.Attacks = new CreatureAttackCollection
 {
 
     {
-        new CreatureAttack(12, 10, 20, "You feel poison burn through your veins as the arrow strikes", new AttackPoisonComponent(15))
+        new CreatureAttack(22, 10, 40, "You feel poison burn through your veins as the dagger strikes", new AttackPoisonComponent(5))
     }
 };
 
 
-elemental.Wield(new FineCrossbow());
+elemental.Wield(new SilverDagger());
 elemental.Equip(new DrakeScaleArmor());
 
 elemental.AddStatus(new BreatheWaterStatus(elemental));
@@ -37658,7 +37648,7 @@ return elemental;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="UndeadDragon">
+    <entity name="BoneZoneLevel16UndeadDragon">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -37667,11 +37657,11 @@ return elemental;
     Name = "Undead Dragon",
     Alignment = Alignment.Chaotic,
     Body = 135,
-    MaxHealth = 15000, Health = 15000,
-    BaseDodge = 31,
+    MaxHealth = 18000, Health = 18000,
+    BaseDodge = 37,
     BasePenetration = ShieldPenetration.Heavy,
-    HideDetection = 37,
-    Experience = 200000,
+    HideDetection = 40,
+    Experience = 616000,
     CanStrikeCritically = false,
     CanFly = true,
     CanCharge = true,
@@ -37695,17 +37685,17 @@ dragon.Attacks = new CreatureAttackCollection
 
     {
     
-        new CreatureAttack(25, 60, 80, "The Dragon Slashes you with its claws.", new AttackStunComponent(5)), 45, TimeSpan.Zero
+        new CreatureAttack(19, 60, 80, "The Dragon Slashes you with its claws.", new AttackStunComponent(5)), 45, TimeSpan.Zero
     },
     
     { 
     
-        new CreatureAttack(30, 75, 100, "The Dragon Smashes you with its Tail.", new AttackStunComponent(10)), 45, TimeSpan.Zero
+        new CreatureAttack(20, 75, 100, "The Dragon Smashes you with its Tail.", new AttackStunComponent(10)), 45, TimeSpan.Zero
     },
     
     {
     
-        new CreatureAttack(25, 60, 120, "The Dragon buffets you with its wings.", new AttackProneComponent(100), new AttackStunComponent(15)), 10, TimeSpan.Zero
+        new CreatureAttack(23, 60, 113, "The Dragon buffets you with its wings.", new AttackProneComponent(100), new AttackStunComponent(15)), 10, TimeSpan.Zero
     },
 };
 
@@ -37772,7 +37762,7 @@ return dragon;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Castor">
+    <entity name="BossMajorLevel16Castor">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -37783,13 +37773,13 @@ return dragon;
 	var ogre = new AncientLich()
 {
     Name = "Castor",
-    MaxHealth = 5000, Health = 5000,
-    BaseDodge = 30,
+    MaxHealth = 4500, Health = 4500,
+    BaseDodge = 35,
     HideDetection = 36,
     BasePenetration = ShieldPenetration.VeryHeavy,
     CanCharge = true,
     CanSwim = true,
-    Experience = 100000,
+    Experience = 308140,
     VisibilityDistance = 2,
     
     FireProtection = 100,
@@ -37812,17 +37802,17 @@ ogre.Attacks = new CreatureAttackCollection()
 {
 
    {
-        new CreatureAttack(25, 30, 50, "slashes you with his Halberd.", new AttackStunComponent(5)), 45, TimeSpan.Zero
+        new CreatureAttack(22, 30, 50, "slashes you with his Halberd.", new AttackStunComponent(5)), 45, TimeSpan.Zero
     },
     
     { 
     
-        new CreatureAttack(30, 30, 50, "kicks you in the chest", new AttackStunComponent(10)), 45, TimeSpan.Zero
+        new CreatureAttack(22, 30, 50, "kicks you in the chest", new AttackStunComponent(10)), 45, TimeSpan.Zero
     },
     
     {
     
-        new CreatureAttack(25, 30, 50, "impales you in the stomach with his halberd.", new AttackProneComponent(25), new AttackStunComponent(15)), 10, TimeSpan.Zero
+        new CreatureAttack(22, 30, 50, "impales you in the stomach with his halberd.", new AttackProneComponent(25), new AttackStunComponent(15)), 10, TimeSpan.Zero
     },
     
 };
@@ -37831,7 +37821,7 @@ ogre.Attacks = new CreatureAttackCollection()
 ogre.Spells = new CreatureSpellCollection(100)
     {
        { new CreatureSpell<FireStormSpell>(
-            skillLevel: 5), 100, TimeSpan.FromSeconds(6.0) }
+            skillLevel: 4), 100, TimeSpan.FromSeconds(6.0) }
     };
 
 
@@ -37870,7 +37860,7 @@ return ogre;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Pollux">
+    <entity name="BossMajorLevel16Pollux">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -37881,8 +37871,8 @@ return ogre;
 	var ogre = new AncientLich()
 {
     Name = "Pollux",
-    MaxHealth = 5000, Health = 5000,
-    BaseDodge = 30,
+    MaxHealth = 4500, Health = 4500,
+    BaseDodge = 35,
     HideDetection = 36,
     BasePenetration = ShieldPenetration.VeryHeavy,
     CanCharge = true,
@@ -37890,7 +37880,7 @@ return ogre;
     Experience = 100000,
     VisibilityDistance = 2,
     
-    DeathResistance = 75,
+    DeathResistance = 25,
     IceProtection = 100,
     Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
     
@@ -37908,14 +37898,14 @@ ogre.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
 
 ogre.Attacks = new CreatureAttackCollection()
 {
-    new CreatureBasicAttack(30, 50, 75),
+    new CreatureBasicAttack(22, 45, 50),
 };
 
 
 ogre.Spells = new CreatureSpellCollection(100)
     {
        { new CreatureSpell<IceStormSpell>(
-            skillLevel: 19), 100, TimeSpan.FromSeconds(6.0) }
+            skillLevel: 16), 100, TimeSpan.FromSeconds(6.0) }
     };
 
 
@@ -37954,7 +37944,7 @@ return ogre;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Townthieftrainer">
+    <entity name="NPCTownthieftrainer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -37990,7 +37980,7 @@ return ogre;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="DungeonBalmSeller">
+    <entity name="NPCDungeonBalmSeller">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -38030,22 +38020,22 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="LeveloneWorg">
+    <entity name="Level13NormWorg">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 	 var worg = new BlackWolf()
     {
-        Name = "Worg Puppy",
-        MaxHealth = 750, Health = 750,
-        BaseDodge = 19,
+        Name = "Lightning Puppy",
+        MaxHealth = 130, Health = 130,
+        BaseDodge = 22,
     
         Alignment = Alignment.Chaotic,
         HideDetection = 31,
-        Experience = 42000,
+        Experience = 6018,
         CanCharge = true,
         
-        BasePenetration = ShieldPenetration.Heavy,
+        BasePenetration = ShieldPenetration.Medium,
     
     };
     
@@ -38058,15 +38048,15 @@ if (spokeRecently(source))
     worg.Attacks = new CreatureAttackCollection()
     {
         {
-            new CreatureAttack(15,      45, 60,      "The worg slashes you with its claws.",
+            new CreatureAttack(13,      15, 20,      "The worg slashes you with its claws.",
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(16,      50, 65,     "The worg whips you with its tail.",
+            new CreatureAttack(13,      15, 20,     "The worg whips you with its tail.",
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(17,      60, 80,     "The worg gnashes you with its fangs.",
+            new CreatureAttack(13,      20, 25,     "The worg gnashes you with its fangs.",
                                                         new AttackStunComponent(15)),               20
         },
     };
@@ -38107,41 +38097,15 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="crafterDestiny">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-	return new Destiny();
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-if (spokeRecently(source))
-        return;
-
-    source.Say($"Bring me a Strong Strength ring and a Star Ruby and I will exchange it for something more useful!"); 
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="Thief Bane">
+    <entity name="Level16NormThiefBane">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 	var skeleton = new Skeleton()
 	{
 	   Name = "Skeletal Archer",
-	   MaxHealth = 150, Health = 150,
-	   BaseDodge = 18,
+	   MaxHealth = 180, Health = 180,
+	   BaseDodge = 25,
 	   BasePenetration = ShieldPenetration.Light,
 	   HideDetection = 50,
 	   Experience = 10000,
@@ -38152,7 +38116,7 @@ if (spokeRecently(source))
 	skeleton.AddStatus(new NightVisionStatus(skeleton));
     skeleton.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(20)
+        new CreatureBasicAttack(16)
     };
     
     skeleton.AddStatus(new NightVisionStatus(skeleton));
@@ -38182,7 +38146,7 @@ return skeleton;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Thief Lair Ninja">
+    <entity name="Level16HighThiefNinja">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -38190,15 +38154,13 @@ return skeleton;
     var skelninja = new Skeleton()
     {
         Name = "Skeleton Assassin",
-        MaxHealth = 250, Health = 250,
-        BaseDodge = 20,
+        MaxHealth = 234, Health = 234,
+        BaseDodge = 27,
         HideDetection = 50,
-        Experience = 12000,
-       
+        Experience = 13000,  
         CanJumpkick = true,
         CanSwim = true,
         VisibilityDistance = 1,
-        CanStrikeCritically = false,
         BasePenetration = ShieldPenetration.Medium,
         CanLoot = false,
 
@@ -38218,12 +38180,12 @@ return skeleton;
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(19,      25, 35,     "The ninja slams his boney fist into your chest.",
+            new CreatureAttack(18,      25, 35,     "The ninja slams his boney fist into your chest.",
                                                         new AttackProneComponent(10), 
                                                         new AttackStunComponent(5)),               40
         },
         {
-            new CreatureAttack(20,      30, 45,     "The ninja knocks you back with a forceful kick.",
+            new CreatureAttack(19,      30, 45,     "The ninja knocks you back with a forceful kick.",
                                                         new AttackProneComponent(15), 
                                                         new AttackStunComponent(5)),               20
         },
@@ -38259,7 +38221,7 @@ return skeleton;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Thief Lair Dartanian">
+    <entity name="BossMinorLevel16Dartanian">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -38268,10 +38230,10 @@ return skeleton;
     {
         Name = "Dartanian",
         Body = 163,
-        MaxHealth = 3500, Health = 3500,
+        MaxHealth = 2700, Health = 2700,
         BaseDodge = 21,
         HideDetection = 50,
-        Experience = 39000,
+        Experience = 123000,
        
         CanCharge = true,
                 
@@ -38286,7 +38248,7 @@ return skeleton;
     
     swordmaster.Attacks = new CreatureAttackCollection()
     {
-        new CreatureAttack(19,    55, 85,     "The swordmaster pierces you with his rapier.",
+        new CreatureAttack(19,    55, 77,     "The swordmaster pierces you with his rapier.",
                                                     new AttackAgeComponent(250, 50))
     };
     
@@ -38346,7 +38308,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="TownBanker" size="1" minimum="1" maximum="1" />
+      <entry entity="NPCTownBanker" size="1" minimum="1" maximum="1" />
       <location x="2" y="-31" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="Shopkeep ">
@@ -38428,7 +38390,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="TownShopkeep" size="1" minimum="1" maximum="1" />
+      <entry entity="NPCTownShopkeep" size="1" minimum="1" maximum="1" />
       <location x="10" y="-31" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="MATrainer ">
@@ -38458,7 +38420,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="TownMATrainer" size="1" minimum="1" maximum="1" />
+      <entry entity="NPCTownMATrainer" size="1" minimum="1" maximum="1" />
       <location x="9" y="-24" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="WeaponTrainer">
@@ -38488,7 +38450,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="TownWeaponTrainer" size="1" minimum="1" maximum="1" />
+      <entry entity="NPCTownWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="11" y="-22" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="MagicTrainer">
@@ -38509,7 +38471,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="TownMagicTrainer" size="1" minimum="1" maximum="1" />
+      <entry entity="NPCTownMagicTrainer" size="1" minimum="1" maximum="1" />
       <location x="4" y="-22" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="TownBalm">
@@ -38530,7 +38492,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="TownBalmSeller" size="1" minimum="1" maximum="1" />
+      <entry entity="NPCTownBalmSeller" size="1" minimum="1" maximum="1" />
       <location x="3" y="-20" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="TownRecall">
@@ -38551,7 +38513,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="TownRecallSeller" size="1" minimum="1" maximum="1" />
+      <entry entity="NPCTownRecallSeller" size="1" minimum="1" maximum="1" />
       <location x="11" y="-20" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="ThaumTrainer">
@@ -38572,7 +38534,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="TownThaumTrainer" size="1" minimum="1" maximum="1" />
+      <entry entity="NPCTownThaumTrainer" size="1" minimum="1" maximum="1" />
       <location x="7" y="-38" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="TownPriest">
@@ -38615,7 +38577,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="TownPriest" size="1" minimum="0" maximum="0" />
+      <entry entity="NPCTownPriest" size="1" minimum="0" maximum="0" />
       <location x="2" y="-37" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="EntranceFippy">
@@ -38636,7 +38598,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="EntranceFippyDarkpaw" size="1" minimum="1" maximum="1" />
+      <entry entity="BossNotableLevel12Fippy" size="1" minimum="1" maximum="1" />
       <location x="20" y="1" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="EntranceGnollGuardN">
@@ -38657,7 +38619,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="EntranceGnollGuard" size="1" minimum="1" maximum="1" />
+      <entry entity="Level12NormEntranceGnollGuard" size="1" minimum="1" maximum="1" />
       <location x="21" y="-1" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="EntranceGnollGuardS">
@@ -38678,7 +38640,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="EntranceGnollGuard" size="1" minimum="1" maximum="1" />
+      <entry entity="Level12NormEntranceGnollGuard" size="1" minimum="1" maximum="1" />
       <location x="21" y="3" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="LevelonePrisoner2">
@@ -38699,7 +38661,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="LevelonePrisoner" size="1" minimum="1" maximum="1" />
+      <entry entity="NPCPrisoner" size="1" minimum="1" maximum="1" />
       <location x="-15" y="18" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="LevelonePrisoner3">
@@ -38720,7 +38682,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="LevelonePrisoner" size="1" minimum="1" maximum="1" />
+      <entry entity="NPCPrisoner" size="1" minimum="1" maximum="1" />
       <location x="-15" y="21" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="LevelonePrisoner4">
@@ -38741,7 +38703,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="LevelonePrisoner" size="1" minimum="1" maximum="1" />
+      <entry entity="NPCPrisoner" size="1" minimum="1" maximum="1" />
       <location x="-15" y="23" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="LevelonePrisoner5">
@@ -38762,7 +38724,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="LevelonePrisoner" size="1" minimum="1" maximum="1" />
+      <entry entity="NPCPrisoner" size="1" minimum="1" maximum="1" />
       <location x="-15" y="26" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="LevelonePrisoner6">
@@ -38783,7 +38745,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="LevelonePrisoner" size="1" minimum="1" maximum="1" />
+      <entry entity="NPCPrisoner" size="1" minimum="1" maximum="1" />
       <location x="-15" y="31" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="Leveloneprisoner">
@@ -38804,7 +38766,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="LevelonePrisoner" size="1" minimum="1" maximum="1" />
+      <entry entity="NPCPrisoner" size="1" minimum="1" maximum="1" />
       <location x="-15" y="15" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="GhostofDark">
@@ -38824,7 +38786,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="LevelthreeSpiritofDark" size="1" minimum="1" maximum="1" />
+      <entry entity="NPCSpiritofDark" size="1" minimum="1" maximum="1" />
       <location x="1" y="8" region="4" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Trainer">
@@ -38845,7 +38807,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Townthieftrainer" size="1" minimum="1" maximum="1" />
+      <entry entity="NPCTownthieftrainer" size="1" minimum="1" maximum="1" />
       <location x="37" y="-29" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="Thiefweapontrainer">
@@ -38874,7 +38836,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="TownWeaponTrainer" size="1" minimum="1" maximum="1" />
+      <entry entity="NPCTownWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="38" y="-25" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="DungeonBalm">
@@ -38895,29 +38857,8 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="DungeonBalmSeller" size="1" minimum="1" maximum="1" />
+      <entry entity="NPCDungeonBalmSeller" size="1" minimum="1" maximum="1" />
       <location x="22" y="5" region="5" />
-    </spawn>
-    <spawn type="LocationSpawner" name="spawnDestiny">
-      <minimumDelay>0</minimumDelay>
-      <maximumDelay>0</maximumDelay>
-      <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="crafterDestiny" size="1" minimum="0" maximum="0" />
-      <location x="11" y="-15" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Bane 1">
       <minimumDelay>180</minimumDelay>
@@ -38937,7 +38878,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Thief Bane" size="1" minimum="1" maximum="1" />
+      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="1" />
       <location x="5" y="11" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Bane 2">
@@ -38958,7 +38899,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Thief Bane" size="1" minimum="1" maximum="1" />
+      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="1" />
       <location x="10" y="12" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Bane 3">
@@ -38979,7 +38920,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Thief Bane" size="1" minimum="1" maximum="1" />
+      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="1" />
       <location x="5" y="13" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Bane 4">
@@ -39000,7 +38941,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Thief Bane" size="1" minimum="1" maximum="1" />
+      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="1" />
       <location x="10" y="14" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Bane 5">
@@ -39021,7 +38962,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Thief Bane" size="1" minimum="1" maximum="1" />
+      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="1" />
       <location x="5" y="15" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Bane 6">
@@ -39042,7 +38983,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Thief Bane" size="1" minimum="1" maximum="1" />
+      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="1" />
       <location x="10" y="16" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Bane 7">
@@ -39063,7 +39004,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Thief Bane" size="1" minimum="1" maximum="1" />
+      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="1" />
       <location x="5" y="17" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Bane 8">
@@ -39084,7 +39025,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Thief Bane" size="1" minimum="1" maximum="1" />
+      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="1" />
       <location x="10" y="18" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Bane 9">
@@ -39105,7 +39046,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Thief Bane" size="1" minimum="1" maximum="1" />
+      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="1" />
       <location x="5" y="19" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Bane 10">
@@ -39126,7 +39067,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Thief Bane" size="1" minimum="1" maximum="1" />
+      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="1" />
       <location x="10" y="20" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Bane 11">
@@ -39147,7 +39088,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Thief Bane" size="1" minimum="1" maximum="1" />
+      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="1" />
       <location x="5" y="21" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Lair">
@@ -39168,7 +39109,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Thief Lair Dartanian" size="1" minimum="1" maximum="1" />
+      <entry entity="BossMinorLevel16Dartanian" size="1" minimum="1" maximum="1" />
       <location x="38" y="24" region="6" />
     </spawn>
     <spawn type="RegionSpawner" name="EntranceBlacksmith">
@@ -39189,7 +39130,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="EntranceGnollBlacksmith" size="1" minimum="1" maximum="1" />
+      <entry entity="BossNotableLevel12Smith" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="26" top="-9" right="30" bottom="-6" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -39213,8 +39154,8 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="EntranceGnollGuard" size="3" minimum="4" maximum="4" />
-      <entry entity="EntranceGnollSoothsayer" size="1" minimum="3" maximum="3" />
+      <entry entity="Level12NormEntranceGnollGuard" size="3" minimum="4" maximum="4" />
+      <entry entity="Level12NormEntranceGnollSoothsayer" size="1" minimum="3" maximum="3" />
       <bounds region="1">
         <inclusion left="23" top="-11" right="33" bottom="12" />
         <exclusion left="26" top="-9" right="30" bottom="-6" />
@@ -39238,8 +39179,8 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="LeveloneGnollGuard" size="3" minimum="6" maximum="9" />
-      <entry entity="LeveloneGnollSoothsayer" size="1" minimum="3" maximum="3" />
+      <entry entity="Level13NormGnollGuard" size="3" minimum="6" maximum="9" />
+      <entry entity="Level13NormGnollSoothsayer" size="1" minimum="3" maximum="3" />
       <bounds region="2">
         <inclusion left="6" top="-7" right="7" bottom="15" />
         <inclusion left="8" top="8" right="17" bottom="11" />
@@ -39266,8 +39207,8 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="EntranceGnollGuard" size="3" minimum="7" maximum="7" />
-      <entry entity="LeveloneWorg" size="1" minimum="3" maximum="3" />
+      <entry entity="Level12NormEntranceGnollGuard" size="3" minimum="7" maximum="7" />
+      <entry entity="Level13NormWorg" size="1" minimum="3" maximum="3" />
       <bounds region="2">
         <inclusion left="-12" top="14" right="-4" bottom="32" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -39291,7 +39232,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="LeveloneGnollOfficer" size="1" minimum="3" maximum="3" />
+      <entry entity="Level13HighGnollOfficer" size="1" minimum="3" maximum="3" />
       <bounds region="2">
         <inclusion left="6" top="-7" right="17" bottom="11" />
         <inclusion left="6" top="12" right="7" bottom="15" />
@@ -39316,7 +39257,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="LeveloneGnollCaptain" size="1" minimum="1" maximum="1" />
+      <entry entity="BossMiniLevel13GnollCaptain" size="1" minimum="1" maximum="1" />
       <bounds region="2">
         <inclusion left="-2" top="17" right="2" bottom="21" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -39340,7 +39281,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="LeveltwoSpider" size="1" minimum="4" maximum="4" />
+      <entry entity="Level14HighSpider" size="1" minimum="4" maximum="4" />
       <bounds region="3">
         <inclusion left="9" top="7" right="12" bottom="13" />
         <inclusion left="9" top="14" right="9" bottom="14" />
@@ -39370,7 +39311,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="LeveltwoGnollGuard" size="1" minimum="6" maximum="8" />
+      <entry entity="Level14NormGnollGuard" size="1" minimum="6" maximum="8" />
       <bounds region="3">
         <inclusion left="4" top="1" right="15" bottom="19" />
         <exclusion left="7" top="4" right="13" bottom="15" />
@@ -39394,7 +39335,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="LeveltwoEvilLurker" size="1" minimum="1" maximum="1" />
+      <entry entity="BossMiniLevel14EvilLurker" size="1" minimum="1" maximum="1" />
       <bounds region="3">
         <inclusion left="8" top="-3" right="13" bottom="-1" />
         <exclusion left="10" top="-2" right="12" bottom="-1" />
@@ -39418,7 +39359,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="PitGhostofmemp" size="1" minimum="3" maximum="3" />
+      <entry entity="Level16NormPitGhostofmemp" size="1" minimum="3" maximum="3" />
       <bounds region="5">
         <inclusion left="5" top="3" right="5" bottom="14" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -39442,8 +39383,8 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="PitBoss" size="1" minimum="1" maximum="1" />
-      <entry entity="PitCroc" size="1" minimum="8" maximum="8" />
+      <entry entity="BossMiniLevel16Lockjaw" size="1" minimum="1" maximum="1" />
+      <entry entity="Level16NormPitCroc" size="1" minimum="8" maximum="8" />
       <bounds region="5">
         <inclusion left="6" top="3" right="9" bottom="14" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -39467,7 +39408,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="PitSkeletalArchers" size="2" minimum="6" maximum="6" />
+      <entry entity="Level16NormPitSkeletalArchers" size="2" minimum="6" maximum="6" />
       <bounds region="5">
         <inclusion left="4" top="3" right="5" bottom="14" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -39491,8 +39432,8 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="LevelthreeWorg" size="1" minimum="1" maximum="1" />
-      <entry entity="LevelthreeGnollWorgHandle" size="1" minimum="2" maximum="2" />
+      <entry entity="Level15ExtremeWorg" size="1" minimum="1" maximum="1" />
+      <entry entity="Level15HighGnollWorgHandle" size="1" minimum="2" maximum="2" />
       <bounds region="4">
         <inclusion left="-23" top="4" right="-18" bottom="14" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -39516,8 +39457,8 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="LevelthreeWorg" size="1" minimum="1" maximum="1" />
-      <entry entity="LevelthreeGnollWorgHandle" size="1" minimum="21" maximum="2" />
+      <entry entity="Level15ExtremeWorg" size="1" minimum="1" maximum="1" />
+      <entry entity="Level15HighGnollWorgHandle" size="1" minimum="21" maximum="2" />
       <bounds region="4">
         <inclusion left="-17" top="3" right="-10" bottom="15" />
         <exclusion left="-15" top="9" right="-12" bottom="12" />
@@ -39542,7 +39483,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="LevelthreeGiant" size="1" minimum="1" maximum="1" />
+      <entry entity="BossMiniLevel15Jym" size="1" minimum="1" maximum="1" />
       <bounds region="4">
         <inclusion left="-15" top="9" right="-12" bottom="12" />
         <inclusion left="-11" top="10" right="-11" bottom="10" />
@@ -39567,7 +39508,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Levelthreestalker" size="1" minimum="3" maximum="3" />
+      <entry entity="Level15HighStalker" size="1" minimum="3" maximum="3" />
       <bounds region="4">
         <inclusion left="-11" top="-12" right="-11" bottom="-6" />
         <inclusion left="-10" top="-12" right="-7" bottom="-12" />
@@ -39592,8 +39533,8 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Levelthreestalker" size="1" minimum="9" maximum="9" />
-      <entry entity="Levelthreespectres" size="1" minimum="4" maximum="4" />
+      <entry entity="Level15HighStalker" size="1" minimum="9" maximum="9" />
+      <entry entity="Level15Normspectres" size="1" minimum="4" maximum="4" />
       <bounds region="4">
         <inclusion left="-8" top="3" right="-3" bottom="15" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -39617,8 +39558,8 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Levelthreearchers" size="2" minimum="1" maximum="6" />
-      <entry entity="Thief Bane" size="1" minimum="2" maximum="2" />
+      <entry entity="Level15NormArchers" size="2" minimum="1" maximum="6" />
+      <entry entity="Level16NormThiefBane" size="1" minimum="2" maximum="2" />
       <bounds region="4">
         <inclusion left="7" top="4" right="14" bottom="5" />
         <inclusion left="7" top="6" right="7" bottom="6" />
@@ -39648,7 +39589,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Levelthreemoccasins" size="1" minimum="4" maximum="4" />
+      <entry entity="Level16Highmoccasins" size="1" minimum="4" maximum="4" />
       <bounds region="4">
         <inclusion left="7" top="4" right="14" bottom="14" />
         <inclusion left="9" top="2" right="10" bottom="3" />
@@ -39673,7 +39614,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="LevelthreePoisonElemental" size="1" minimum="1" maximum="2" />
+      <entry entity="BossNoteableLevel16PoisonElemental" size="1" minimum="1" maximum="2" />
       <bounds region="4">
         <inclusion left="7" top="4" right="21" bottom="14" />
         <inclusion left="22" top="8" right="26" bottom="9" />
@@ -39699,7 +39640,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="UndeadDragon" size="1" minimum="1" maximum="1" />
+      <entry entity="BoneZoneLevel16UndeadDragon" size="1" minimum="1" maximum="1" />
       <bounds region="4">
         <inclusion left="27" top="6" right="32" bottom="12" />
         <inclusion left="25" top="8" right="26" bottom="9" />
@@ -39724,8 +39665,8 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Castor" size="1" minimum="1" maximum="1" />
-      <entry entity="Pollux" size="1" minimum="1" maximum="1" />
+      <entry entity="BossMajorLevel16Castor" size="1" minimum="1" maximum="1" />
+      <entry entity="BossMajorLevel16Pollux" size="1" minimum="1" maximum="1" />
       <bounds region="4">
         <inclusion left="18" top="7" right="20" bottom="11" />
         <exclusion left="19" top="5" right="19" bottom="5" />
@@ -39752,7 +39693,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Levelthreearchers" size="1" minimum="4" maximum="4" />
+      <entry entity="Level15NormArchers" size="1" minimum="4" maximum="4" />
       <bounds region="4">
         <inclusion left="20" top="6" right="21" bottom="12" />
         <inclusion left="22" top="8" right="23" bottom="9" />
@@ -39777,7 +39718,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="LeveloneGnollOfficer" size="1" minimum="3" maximum="4" />
+      <entry entity="Level13HighGnollOfficer" size="1" minimum="3" maximum="4" />
       <bounds region="2">
         <inclusion left="-2" top="23" right="2" bottom="32" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -39801,7 +39742,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Thief Bane" size="1" minimum="1" maximum="2" />
+      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="2" />
       <bounds region="4">
         <inclusion left="23" top="8" right="26" bottom="9" />
         <inclusion left="27" top="6" right="31" bottom="11" />
@@ -39826,7 +39767,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Thief Bane" size="1" minimum="6" maximum="6" />
+      <entry entity="Level16NormThiefBane" size="1" minimum="6" maximum="6" />
       <bounds region="6">
         <inclusion left="18" top="17" right="28" bottom="17" />
         <inclusion left="0" top="0" right="0" bottom="0" />
@@ -39853,7 +39794,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Thief Lair Ninja" size="3" minimum="3" maximum="3" />
+      <entry entity="Level16HighThiefNinja" size="3" minimum="3" maximum="3" />
       <bounds region="6">
         <inclusion left="7" top="24" right="21" bottom="26" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -39877,7 +39818,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Thief Lair Ninja" size="3" minimum="3" maximum="3" />
+      <entry entity="Level16HighThiefNinja" size="3" minimum="3" maximum="3" />
       <bounds region="6">
         <inclusion left="16" top="19" right="28" bottom="20" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -39901,7 +39842,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Thief Lair Ninja" size="3" minimum="3" maximum="3" />
+      <entry entity="Level16HighThiefNinja" size="3" minimum="3" maximum="3" />
       <bounds region="6">
         <inclusion left="26" top="21" right="28" bottom="26" />
         <exclusion left="0" top="0" right="0" bottom="0" />

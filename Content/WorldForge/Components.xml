@@ -65,6 +65,10 @@
       <ground>20</ground>
       <movementCost>1</movementCost>
     </IceComponent>
+    <IceComponent name="Ice Labyrinth Floor">
+      <ground>992</ground>
+      <movementCost>1</movementCost>
+    </IceComponent>
     <FloorComponent name="Bog">
       <ground>21</ground>
       <movementCost>1</movementCost>
@@ -333,6 +337,10 @@
     <FloorComponent name=" Feldspar floor ">
       <ground>702</ground>
     </FloorComponent>
+    <FloorComponent name="Lava Tube Floor">
+      <ground>1009</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
   </category>
   <category name="Water">
     <WaterComponent name="Water">
@@ -386,14 +394,18 @@
       <depth>3</depth>
       <movementCost>3</movementCost>
     </WaterComponent>
+    <WaterComponent name="Waves (E) [Tenser]">
+      <ground>1018</ground>
+      <depth>3</depth>
+      <movementCost>3</movementCost>
+    </WaterComponent>
+    <WaterComponent name="Waves (S) [Tenser]">
+      <ground>1019</ground>
+      <depth>3</depth>
+      <movementCost>3</movementCost>
+    </WaterComponent>
   </category>
   <category name="Structural">
-    <WallComponent name="Town (V)">
-      <wall>28</wall>
-      <destroyed>41</destroyed>
-      <ruins>45</ruins>
-      <indestructible>false</indestructible>
-    </WallComponent>
     <WallComponent name="Town (H)">
       <wall>27</wall>
       <destroyed>40</destroyed>
@@ -403,6 +415,12 @@
     <WallComponent name="Town (C)">
       <wall>33</wall>
       <destroyed>784</destroyed>
+      <ruins>45</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Town (V)">
+      <wall>28</wall>
+      <destroyed>41</destroyed>
       <ruins>45</ruins>
       <indestructible>false</indestructible>
     </WallComponent>
@@ -1126,6 +1144,42 @@
       <ruins>0</ruins>
       <indestructible>false</indestructible>
     </WallComponent>
+    <WallComponent name="Ice Labyrinth(H)">
+      <wall>991</wall>
+      <destroyed>994</destroyed>
+      <ruins>995</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Ice Labyrinth (V)">
+      <wall>993</wall>
+      <destroyed>996</destroyed>
+      <ruins>995</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Ice Labyrinth Corner Pillar">
+      <wall>997</wall>
+      <destroyed>998</destroyed>
+      <ruins>995</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Lava Tube Wall (H)">
+      <wall>1008</wall>
+      <destroyed>1011</destroyed>
+      <ruins>1012</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Lava Tube Wall (V)">
+      <wall>1010</wall>
+      <destroyed>1013</destroyed>
+      <ruins>1012</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="Lava Tube Corner Pillar">
+      <wall>1014</wall>
+      <destroyed>1015</destroyed>
+      <ruins>1012</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
   </category>
   <category name="Ruins">
     <RuinsComponent name="Dungeon">
@@ -1136,6 +1190,9 @@
     </RuinsComponent>
     <RuinsComponent name="Temple">
       <ruins>46</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Heavy Logs Rubble">
+      <ruins>717</ruins>
     </RuinsComponent>
     <RuinsComponent name="Cave">
       <ruins>170</ruins>
@@ -1151,6 +1208,21 @@
     </RuinsComponent>
     <RuinsComponent name="Highmountain">
       <ruins>465</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Sandstone Rubble">
+      <ruins>1020</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Blue Marble Rubble">
+      <ruins>1021</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Egyptian Rubble">
+      <ruins>1022</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Rubble">
+      <ruins>1023</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Thicket Rubbish">
+      <ruins>1024</ruins>
     </RuinsComponent>
     <RuinsComponent name=" Basalt Rubble ">
       <ruins>663</ruins>
@@ -1175,6 +1247,177 @@
     </RuinsComponent>
     <RuinsComponent name=" Feldspar Rubble ">
       <ruins>705</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Ice Wall Rubble">
+      <ruins>995</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Lava Tube Rubble">
+      <ruins>1012</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Broken Portal Pillar">
+      <ruins>642</ruins>
+    </RuinsComponent>
+    <RuinsComponent name=" Broken Portal Pillar (Clean)">
+      <ruins>640</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Broken Stalagmite">
+      <ruins>643</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Broken Stalagmite (Clean)">
+      <ruins>641</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Town Wall Ruins (H)">
+      <ruins>40</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Town Wall Ruins (V)">
+      <ruins>41</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Town Wall Ruins (C)">
+      <ruins>784</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Temple Wall Ruins (H)">
+      <ruins>42</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Temple Wall Ruins (V)">
+      <ruins>43</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Temple Wall Ruins (C)">
+      <ruins>144</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dungeon Wall Ruins (H)">
+      <ruins>38</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dungeon Wall Ruins (V)">
+      <ruins>39</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dungeon Wall Ruins (C)">
+      <ruins>783</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Sandstone Wall Ruins (H)">
+      <ruins>338</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Sandstone Wall Ruins (V)">
+      <ruins>339</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Sandstone Wall Ruins (C)">
+      <ruins>360</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dirty Marble Ruins (H)">
+      <ruins>141</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dirty Marble Ruins (V)">
+      <ruins>142</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dirty Marble Ruins (C)">
+      <ruins>144</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dragon Ruins (H)">
+      <ruins>153</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dragon Ruins (V)">
+      <ruins>154</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dragon Ruins (C)">
+      <ruins>156</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dragon Ruins Blue (H)">
+      <ruins>441</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dragon Ruins Blue (V)">
+      <ruins>442</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dragon Ruins Blue (C)">
+      <ruins>444</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="High Mountain Ruins (H)">
+      <ruins>461</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="High Mountain Ruins (V)">
+      <ruins>462</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="High Mountain Ruins (C)">
+      <ruins>464</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Red Shoji Ruins (H)">
+      <ruins>364</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Red Shoji Ruins (V)">
+      <ruins>365</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Red Shoji Ruins (C)">
+      <ruins>367</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Shoji Ruins (H)">
+      <ruins>472</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Shoji Ruins (V)">
+      <ruins>473</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Shoji Ruins (C)">
+      <ruins>481</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Framed Ruins (H)">
+      <ruins>476</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Framed Ruins (V)">
+      <ruins>477</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Framed Ruins (C)">
+      <ruins>481</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Framed Ruins (H)">
+      <ruins>484</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Framed Ruins (V)">
+      <ruins>485</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Framed Ruins (C)">
+      <ruins>481</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Ruins (H)">
+      <ruins>488</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Ruins (V)">
+      <ruins>489</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Ruins (C)">
+      <ruins>481</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Blue Marble Ruins (H)">
+      <ruins>396</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Blue Marble Ruins (V)">
+      <ruins>397</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Blue Marble Ruins (C)">
+      <ruins>410</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Egyptian Ruins (H)">
+      <ruins>260</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Egyptian Ruins (V)">
+      <ruins>261</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Egyptian Ruins (C)">
+      <ruins>263</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Heavy Log Ruins (H)">
+      <ruins>147</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Heavy Log Ruins (V)">
+      <ruins>148</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Heavy Log Ruins (C)">
+      <ruins>150</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Thicket Ruins (H)">
+      <ruins>226</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Thicket Ruins (V)">
+      <ruins>227</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Thicket Ruins (C)">
+      <ruins>228</ruins>
     </RuinsComponent>
     <RuinsComponent name=" Sewer Wall Ruins (H) ">
       <ruins>638</ruins>
@@ -1265,6 +1508,24 @@
     </RuinsComponent>
     <RuinsComponent name=" Lodge wall ruins (V) ">
       <ruins>718</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Ice Labyrinth Wall ruins(H)">
+      <ruins>994</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Ice Labyrinth Wall ruins (V)">
+      <ruins>996</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Ice Labyrinth Corner pillar ruins">
+      <ruins>998</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Lava Tube Wall ruins (H)">
+      <ruins>1011</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Lava Tube Wall ruins (V)">
+      <ruins>1013</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Lava Tube Corner pillar ruins">
+      <ruins>1015</ruins>
     </RuinsComponent>
   </category>
   <category name="Doors">
@@ -1979,6 +2240,18 @@
       <destinationY>0</destinationY>
       <destinationRegion>0</destinationRegion>
       <teleporterId>9</teleporterId>
+    </SkyComponent>
+    <SkyComponent name="Dark Air">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1016</teleporterId>
+    </SkyComponent>
+    <SkyComponent name="Dark Air Animated">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1017</teleporterId>
     </SkyComponent>
     <EgressComponent name="Leng">
       <egress>315</egress>

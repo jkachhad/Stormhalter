@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.94.0.0">
+<segment name="Axe Glacier" version="0.95.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -15053,6 +15053,7 @@
           <wall>149</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="13" y="12">
@@ -16157,6 +16158,7 @@
           <wall>149</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="12" y="15">
@@ -16523,6 +16525,7 @@
           <wall>149</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="9" y="16">
@@ -17835,11 +17838,13 @@
           <wall>146</wall>
           <destroyed>148</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>149</wall>
           <destroyed>150</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="16" y="19">
@@ -19155,6 +19160,7 @@
           <wall>149</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="21" y="22">
@@ -68494,11 +68500,13 @@
           <wall>146</wall>
           <destroyed>148</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>149</wall>
           <destroyed>150</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="16" y="12">
@@ -70332,11 +70340,13 @@
           <wall>146</wall>
           <destroyed>148</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>149</wall>
           <destroyed>150</destroyed>
           <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="18" y="17">
@@ -92087,6 +92097,11 @@
           <destroyed>161</destroyed>
           <ruins>170</ruins>
         </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+        </component>
       </tile>
       <tile x="28" y="5">
         <component type="FloorComponent">
@@ -104339,7 +104354,7 @@
         
     wraith.AddGold(70);
     wraith.AddLoot(new LootPack(
-        new LootPackEntry(true, AxeSurfaceGems,       14.7,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, AxeSurfaceGems,       7.4,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
         new LootPackEntry(true, UtilityItems,    1),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.5),
@@ -104398,7 +104413,7 @@
         
     wolf.AddGold(70);
     wolf.AddLoot(new LootPack(
-        new LootPackEntry(true, AxeSurfaceGems,       14.7,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, AxeSurfaceGems,       7.4,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
         new LootPackEntry(true, AxePotions,     0.15),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.5),
@@ -104446,7 +104461,7 @@
             
     skeleton.AddGold(60);
     skeleton.AddLoot(new LootPack(
-        new LootPackEntry(true, AxeSurfaceGems,       6.8,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, AxeSurfaceGems,       7.4,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.5),
         new LootPackEntry(true, AxePotions,     0.15),
@@ -104493,7 +104508,7 @@
             
     goblin.AddGold(60);
     goblin.AddLoot(new LootPack(
-        new LootPackEntry(true, AxeSurfaceGems,       14.7,     gemsPriceMutatorMedium), 
+        new LootPackEntry(true, AxeSurfaceGems,       7.4,     gemsPriceMutatorMedium), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
         new LootPackEntry(true, AxePotions,     0.15),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.37),
@@ -104541,7 +104556,7 @@
             
     orc.AddGold(70);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, AxeSurfaceGems,       14.7,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, AxeSurfaceGems,       7.4,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
         new LootPackEntry(true, AxePotions,     0.15),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.5),
@@ -104592,7 +104607,7 @@
     
     troll.AddGold(90);
     troll.AddLoot(new LootPack(
-        new LootPackEntry(true, AxeSurfaceGems,       14.7,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, AxeSurfaceGems,       7.4,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.55),
         new LootPackEntry(true, AxePotions,     0.15),
@@ -104639,7 +104654,7 @@
             
     goblin.AddGold(60);
     goblin.AddLoot(new LootPack(
-        new LootPackEntry(true, AxeSurfaceGems,       14.7,     gemsPriceMutatorMedium), 
+        new LootPackEntry(true, AxeSurfaceGems,       7.4,     gemsPriceMutatorMedium), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
         new LootPackEntry(true, AxePotions,     0.15),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.37),
@@ -104700,7 +104715,7 @@
 
     gargoyle.AddGold(70);
     gargoyle.AddLoot(new LootPack(
-        new LootPackEntry(true, AxeSurfaceGems,       14.7,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, AxeSurfaceGems,       7.4,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.25),
         new LootPackEntry(true, AxePotions,     0.15),
@@ -104757,7 +104772,7 @@
             
     goblin.AddGold(60);
     goblin.AddLoot(new LootPack(
-        new LootPackEntry(true, AxeSurfaceGems,       14.7,     gemsPriceMutatorMedium), 
+        new LootPackEntry(true, AxeSurfaceGems,       7.4,     gemsPriceMutatorMedium), 
         new LootPackEntry(true, surfaceTreasureBottles,    20),
         new LootPackEntry(true, AxePotions,     0.15),
         new LootPackEntry(true, surfaceTreasureTreasure,   0.37),
@@ -107023,8 +107038,6 @@
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
         
         HideDetection = 31,
-        
-        IsTethered = true,
     };
     
     dragon.AddStatus(new NightVisionStatus(dragon));
@@ -107270,6 +107283,7 @@
     {
         Name = _names.Random(),
         Body = (female ? 10 : 9), IsFemale = female,
+        IsInvulnerable = true,
         
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
@@ -110364,12 +110378,13 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="BossMiniLevel8Pwolf" size="1" minimum="5" maximum="5" />
+      <entry entity="BossNotableLevel11KWolf" size="1" minimum="1" maximum="1" />
       <location x="13" y="10" region="23" />
     </spawn>
     <spawn type="LocationSpawner" name="lockpickThiefTrainer">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -110385,6 +110400,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="axeThiefTrainer" size="1" minimum="1" maximum="1" />
       <location x="7" y="-1" region="15" />
     </spawn>
     <spawn type="LocationSpawner" name="BossPrinceWolf">
@@ -111574,7 +111590,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new GoldNugget(10000u);
+	return new GoldNugget(20000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -111583,7 +111599,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new UncutEmerald(850u);
+	return new UncutEmerald(1700u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -111592,7 +111608,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new UncutDiamond(1600u);
+	return new UncutDiamond(3200u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
