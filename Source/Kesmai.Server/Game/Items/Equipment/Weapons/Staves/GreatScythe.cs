@@ -54,7 +54,7 @@ namespace Kesmai.Server.Items
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6200000, 6200354)); /* [You are looking at] [a bloodied great scythe with magical runes embued within.] */
+			entries.Add(new LocalizationEntry(6200000, 6200376)); /* [You are looking at] [a bloodied great scythe with magical runes embued within.] */
 
             if (Identified)
 				entries.Add(new LocalizationEntry(6300426)); /* The combat adds for this weapon are +6. */
