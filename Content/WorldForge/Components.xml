@@ -101,6 +101,14 @@
       <ground>116</ground>
       <movementCost>1</movementCost>
     </FloorComponent>
+    <FloorComponent name="Flat Stone Bridge (H)">
+      <ground>1027</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Flat Stone Bridge (V)">
+      <ground>1028</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
     <FloorComponent name="Rope Bridge (H)">
       <ground>239</ground>
       <movementCost>1</movementCost>
@@ -1785,6 +1793,13 @@
       <teleporterId>253</teleporterId>
       <descends>false</descends>
     </StaircaseComponent>
+    <StaircaseComponent name="Blank Down (Spiral)">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1026</teleporterId>
+      <descends>true</descends>
+    </StaircaseComponent>
     <StaircaseComponent name="Pit">
       <destinationX>0</destinationX>
       <destinationY>0</destinationY>
@@ -3262,6 +3277,9 @@
     </StaticComponent>
     <StaticComponent name="Candelabra">
       <static>982</static>
+    </StaticComponent>
+    <StaticComponent name="Candelabra without Shade">
+      <static>1025</static>
     </StaticComponent>
   </category>
   <category name="Magical">
