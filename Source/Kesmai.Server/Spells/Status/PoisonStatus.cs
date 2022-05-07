@@ -36,11 +36,13 @@ namespace Kesmai.Server.Spells
 		{
 			if (_entity is null)
 				return;
+
+			var potency = Potency;
 			
-			if (!_entity.Deleted && _entity.IsAlive && Potency > 0)
+			if (!_entity.Deleted && _entity.IsAlive && potency > 0)
 			{
 				/* Calculate damage. */
-				var damage = Potency;
+				var damage = potency;
 
 				if (_entity.HasStatus(typeof(PoisonProtectionStatus)))
 					damage /= 2;
@@ -52,11 +54,9 @@ namespace Kesmai.Server.Spells
 				
 				/* Determine if direct damage. */
 				var direct = false;
-
-				var totalPotency = _poisons.Sum(p => p.Potency);
 				var directPotency = _poisons.Where(p => p.IsDirect).Sum(p => p.Potency);
 
-				if (Utility.RandomBetween(1, totalPotency) <= directPotency)
+				if (Utility.RandomBetween(1, potency) <= directPotency)
 					direct = true;
 				
 				/* Apply damage */
@@ -67,8 +67,10 @@ namespace Kesmai.Server.Spells
 				
 				_entity.ApplyDamage(_source, damage);
 
+				/* Reduce the potency of each stack. */
 				_poisons.ForEach(p => p.Potency--);
 
+				/* If after reduction the new potency is 0, we remove the status effect. */
 				if (Potency <= 0)
 					_entity.RemoveStatus(this);
 			}
@@ -82,8 +84,14 @@ namespace Kesmai.Server.Spells
 	public partial class Poison
 	{
 		public TimeSpan Delay { get; set; }
+
+		private int _potency;
 		
-		public int Potency { get; set; }
+		public int Potency
+		{
+			get => _potency;
+			set => _potency = Math.Max(0, value);
+		}
 
 		public bool IsDirect { get; set; }
 
