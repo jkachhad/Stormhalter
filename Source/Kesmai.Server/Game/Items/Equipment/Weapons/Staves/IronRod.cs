@@ -44,7 +44,7 @@ namespace Kesmai.Server.Items
 			entries.Add(new LocalizationEntry(6200000, 6200008)); /* [You are looking at] [a long black iron rod with glowing red gems arranged in a ring near the center.  The weapon is lawful.] */
 
 			if (Identified)
-				entries.Add(new LocalizationEntry(6250007)); /* The combat adds for this weapon are +3. */
+				entries.Add(new LocalizationEntry(6250003)); /* The combat adds for this weapon are +4. */
 		}
 	}
 }

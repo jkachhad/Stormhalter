@@ -14,6 +14,12 @@ namespace Kesmai.Server.Items
 		public override int Weight => 5760;
 
 		/// <inheritdoc />
+		public override int LabelNumber => 6000044;
+
+		/// <inheritdoc />
+		public override int Category => 1;
+
+		/// <inheritdoc />
 		public override ShieldPenetration Penetration => ShieldPenetration.VeryHeavy;
 
 		/// <inheritdoc />
