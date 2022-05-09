@@ -616,6 +616,65 @@
             }
         }
     }
+    
+    public class PrincessKey : Gem
+    {
+        /// <inheritdoc />
+        public override int LabelNumber => 6000055;
+
+        /// <inheritdoc />
+        public override uint BasePrice => 5000;
+
+        /// <inheritdoc />
+        public override int Weight => 500;
+
+        /// <inheritdoc />
+        public override int Category => 3;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PrincessKey"/> class.
+        /// </summary>
+        public PrincessKey() : base(103, 5000)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PrincessKey"/> class.
+        /// </summary>
+        public PrincessKey(Serial serial) : base(serial)
+        {
+        }
+
+        /// <inheritdoc />
+        public override void GetDescription(List<LocalizationEntry> entries)
+        {
+            entries.Add(new LocalizationEntry("a key similar in design to a jailer's key, covered in gems and designs."));
+        }
+
+        /// <inheritdoc />
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((short)1); /* version */
+        }
+
+        /// <inheritdoc />
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+
+            var version = reader.ReadInt16();
+
+            switch (version)
+            {
+                case 1:
+                {
+                    break;
+                }
+            }
+        }
+    }
 ]]></block>
     <block><![CDATA[]]></block>
   </script>
@@ -102629,7 +102688,19 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    return new Googog();
+    var vendor = new Merchant<PrincessKey>(50000, 1, byte.MaxValue)
+    {
+        Name = "Googog",
+        
+        Body = 134,
+        RangePerception = 0,
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+
+    return vendor;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102639,18 +102710,42 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (spokeRecently(source))
+        return;
+
+    source.Say($"Hey, I have a great deal for you! 50,000 coins for a key to the troll kings treasure room.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="ukTrollJailer">
+    <entity name="ukTrollDoor">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	return new TrollJailer();
+	var door = new Shopkeeper()
+    {
+        Name = "The jail door",
+        Alignment = Alignment.Neutral,
+        MaxHealth = 209, Health = 209,
+        IsInvulnerable = true,
+        IsInvisible = true,
+        BaseDodge = 27,
+        HideDetection = 29,    
+        Experience = 50,
+        RangePerception = 0,
+        Movement = 0,
+    };
+    
+    
+    door.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(1)
+    };
+    
+    return door;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102660,9 +102755,28 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    ItemEntity corruptstone = (player.LeftHand != null && player.LeftHand is PrincessKey ? player.LeftHand : (player.RightHand != null && player.RightHand is PrincessKey ? player.RightHand : null) );
+    
+    if( corruptstone == null ) 
+    {
+        return;
+    }
+    
+    source.Emote("opens with a creak as key is inserted and turned in the lock.");
+    
+    corruptstone.Delete();
+    
+    var tile = source.Segment.FindTile(5, 8, 10);    
+    if (tile != null && tile.ContainsComponent<Obstruction>())
+    {
+        var component = tile.GetComponent<Obstruction>();
+        tile.Remove(component);
+    }
+
+    Timer.DelayCall(TimeSpan.FromSeconds(0.2), () => Delete());
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -104145,7 +104259,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownRecallVendor" size="1" minimum="1" maximum="1" />
       <location x="13" y="14" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="tkJailer">
+    <spawn type="LocationSpawner" name="tkInvisibleDoor">
       <minimumDelay>1800</minimumDelay>
       <maximumDelay>2700</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -104168,7 +104282,7 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukTrollJailer" size="1" minimum="1" maximum="1" />
+      <entry entity="ukTrollDoor" size="1" minimum="1" maximum="1" />
       <location x="6" y="8" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="UKConfessorGhost">
