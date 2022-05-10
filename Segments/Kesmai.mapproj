@@ -111607,9 +111607,9 @@ else
         MaxHealth = 80, Health = 80,
         MaxMana = 3, Mana = 3,
         BaseDodge = 16,
-        HideDetection = 16,
+        HideDetection = 12,
         Experience = 4100 ,
-        BasePenetration = ShieldPenetration.Light,
+        
         
       
     };
@@ -111637,6 +111637,156 @@ else
         );
 
     return banshee;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="dungeon3.5PrinceBedwyn">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var bedwyn = new Skeleton()
+    {
+        Name = "Prince Bedwyn",
+        MaxHealth = 400, Health = 400,
+        BaseDodge = 18,
+        Body = 313,
+    
+        Experience = 12000,
+        CanCharge = true,
+        
+        FireProtection = 100,
+        IceProtection = 100,
+        BasePenetration = ShieldPenetration.Light,
+        
+        IsTethered = true,
+    };
+    
+    skeleton.AddStatus(new NightVisionStatus(skeleton));
+    
+    skeleton.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(11,      10, 16,      "Bedwyn pokes you with his spear.",
+                                                        new AttackProneComponent(5), 
+                                                        new AttackStunComponent(5)),                50
+        },
+        {
+            new CreatureAttack(12,      10, 20,     "Bedwyn bashes you with his shield.",
+                                                        new AttackProneComponent(5), 
+                                                        new AttackStunComponent(20)),               30
+        },
+        {
+            new CreatureAttack(8,      6, 10,     "Bedwyn kicks you.",
+                                                        new AttackProneComponent(5), 
+                                                        new AttackStunComponent(5)),               20
+        },
+    };
+    
+    skeleton.Wield(new Spear());
+    skeleton.Equip(new PlatemailArmor());
+    skeleton.Equip(new SteelShield());
+    
+    skeleton.AddGold(450);
+    skeleton.AddLoot(new LootPack(
+        new LootPackEntry(true, kesmaiwideGems,       100,     gemsPriceMutatorVeryHigh),
+        new LootPackEntry(true, kesmaiwideGems,       100,     gemsPriceMutatorVeryHigh),
+        new LootPackEntry(true, dungeon4Bottles,    20),
+        new LootPackEntry(true, dungeon4Treasure,   1),
+        new LootPackEntry(true, dungeon4Rings,      15),
+        new LootPackEntry(true, dungeon3Potions,    7)
+        
+        
+    ));
+
+    return skeleton;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="dungeon3.5PrinceGodwyn">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var godwyn = new Skeleton()
+    {
+        Name = "Prince Godwyn",
+        MaxHealth = 400, Health = 400,
+        BaseDodge = 18,
+        Body = 313,
+    
+        Experience = 12000,
+        CanCharge = true,
+        
+        FireProtection = 100,
+        IceProtection = 100,
+        BasePenetration = ShieldPenetration.Light,
+        
+        IsTethered = true,
+    };
+    
+    skeleton.AddStatus(new NightVisionStatus(skeleton));
+    
+    skeleton.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(11,      10, 16,      "Godwyn pokes you with his spear.",
+                                                        new AttackProneComponent(5), 
+                                                        new AttackStunComponent(5)),                50
+        },
+        {
+            new CreatureAttack(12,      10, 20,     "Godwyn bashes you with his shield.",
+                                                        new AttackProneComponent(5), 
+                                                        new AttackStunComponent(20)),               30
+        },
+        {
+            new CreatureAttack(8,      6, 10,     "Godwyn kicks you.",
+                                                        new AttackProneComponent(5), 
+                                                        new AttackStunComponent(5)),               20
+        },
+    };
+    
+    skeleton.Wield(new Spear());
+    skeleton.Equip(new PlatemailArmor());
+    skeleton.Equip(new SteelShield());
+    
+    skeleton.AddGold(450);
+    skeleton.AddLoot(new LootPack(
+        new LootPackEntry(true, kesmaiwideGems,       100,     gemsPriceMutatorVeryHigh),
+        new LootPackEntry(true, kesmaiwideGems,       100,     gemsPriceMutatorVeryHigh),
+        new LootPackEntry(true, dungeon4Bottles,    20),
+        new LootPackEntry(true, dungeon4Treasure,   1),
+        new LootPackEntry(true, dungeon4Rings,      15),
+        new LootPackEntry(true, dungeon3Potions,    7)
+        
+        
+    ));
+
+    return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
