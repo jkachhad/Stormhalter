@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.94.0.0">
+<segment name="Kesmai" version="0.95.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -76933,6 +76933,12 @@
         <component type="FloorComponent">
           <ground>183</ground>
         </component>
+        <component type="StaircaseComponent">
+          <destinationX>31</destinationX>
+          <destinationY>37</destinationY>
+          <destinationRegion>71</destinationRegion>
+          <teleporterId>126</teleporterId>
+        </component>
       </tile>
       <tile x="15" y="2">
         <component type="StaticComponent">
@@ -97888,7 +97894,7 @@
         </component>
       </tile>
     </region>
-      <region>
+    <region>
       <id>71</id>
       <name>Dungeon -5</name>
       <height>0</height>
@@ -114178,6 +114184,9 @@
           <ground>1</ground>
         </component>
         <component type="StaircaseComponent">
+          <destinationX>14</destinationX>
+          <destinationY>2</destinationY>
+          <destinationRegion>14</destinationRegion>
           <teleporterId>130</teleporterId>
         </component>
       </tile>
