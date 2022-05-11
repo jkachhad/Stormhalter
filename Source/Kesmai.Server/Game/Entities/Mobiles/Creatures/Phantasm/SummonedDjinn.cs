@@ -18,7 +18,7 @@ namespace Kesmai.Server.Game
 			BaseDodge = 25;
 			Mana = MaxMana = 24;
 			IceProtection = 90;
-			MagicProtection = 50;
+			MagicProtection = 15;
 
 			Movement = 3;
 			

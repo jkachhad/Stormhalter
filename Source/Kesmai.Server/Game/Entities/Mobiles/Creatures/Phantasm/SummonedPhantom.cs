@@ -13,10 +13,10 @@ namespace Kesmai.Server.Game
 		{
 			Summoned = true;
 			
-			Health = MaxHealth = 300;
+			Health = MaxHealth = 250;
 			BaseDodge = 24;
 			Movement = 3;
-			MagicProtection = 30;
+			MagicProtection = 10;
 			
 			Attacks = new CreatureAttackCollection
 			{
@@ -25,7 +25,7 @@ namespace Kesmai.Server.Game
 
 			Blocks = new CreatureBlockCollection
 			{
-				new CreatureBlock(11, "a hand"),
+				new CreatureBlock(12, "a hand"),
 			};
 			
 			AddStatus(new NightVisionStatus(this));

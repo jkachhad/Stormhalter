@@ -101,6 +101,14 @@
       <ground>116</ground>
       <movementCost>1</movementCost>
     </FloorComponent>
+    <FloorComponent name="Flat Stone Bridge (H)">
+      <ground>1027</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="Flat Stone Bridge (V)">
+      <ground>1028</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
     <FloorComponent name="Rope Bridge (H)">
       <ground>239</ground>
       <movementCost>1</movementCost>
@@ -1191,6 +1199,9 @@
     <RuinsComponent name="Temple">
       <ruins>46</ruins>
     </RuinsComponent>
+    <RuinsComponent name="Heavy Logs Rubble">
+      <ruins>717</ruins>
+    </RuinsComponent>
     <RuinsComponent name="Cave">
       <ruins>170</ruins>
     </RuinsComponent>
@@ -1205,6 +1216,21 @@
     </RuinsComponent>
     <RuinsComponent name="Highmountain">
       <ruins>465</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Sandstone Rubble">
+      <ruins>1020</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Blue Marble Rubble">
+      <ruins>1021</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Egyptian Rubble">
+      <ruins>1022</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Pagoda Rubble">
+      <ruins>1023</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Thicket Rubbish">
+      <ruins>1024</ruins>
     </RuinsComponent>
     <RuinsComponent name=" Basalt Rubble ">
       <ruins>663</ruins>
@@ -1247,6 +1273,42 @@
     </RuinsComponent>
     <RuinsComponent name="Broken Stalagmite (Clean)">
       <ruins>641</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Town Wall Ruins (H)">
+      <ruins>40</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Town Wall Ruins (V)">
+      <ruins>41</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Town Wall Ruins (C)">
+      <ruins>784</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Temple Wall Ruins (H)">
+      <ruins>42</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Temple Wall Ruins (V)">
+      <ruins>43</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Temple Wall Ruins (C)">
+      <ruins>144</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dungeon Wall Ruins (H)">
+      <ruins>38</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dungeon Wall Ruins (V)">
+      <ruins>39</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Dungeon Wall Ruins (C)">
+      <ruins>783</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Sandstone Wall Ruins (H)">
+      <ruins>338</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Sandstone Wall Ruins (V)">
+      <ruins>339</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="Sandstone Wall Ruins (C)">
+      <ruins>360</ruins>
     </RuinsComponent>
     <RuinsComponent name="Dirty Marble Ruins (H)">
       <ruins>141</ruins>
@@ -1730,6 +1792,13 @@
       <destinationRegion>0</destinationRegion>
       <teleporterId>253</teleporterId>
       <descends>false</descends>
+    </StaircaseComponent>
+    <StaircaseComponent name="Blank Down (Spiral)">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1026</teleporterId>
+      <descends>true</descends>
     </StaircaseComponent>
     <StaircaseComponent name="Pit">
       <destinationX>0</destinationX>
@@ -3208,6 +3277,9 @@
     </StaticComponent>
     <StaticComponent name="Candelabra">
       <static>982</static>
+    </StaticComponent>
+    <StaticComponent name="Candelabra without Shade">
+      <static>1025</static>
     </StaticComponent>
   </category>
   <category name="Magical">
