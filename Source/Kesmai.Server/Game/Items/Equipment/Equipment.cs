@@ -30,9 +30,12 @@ namespace Kesmai.Server.Items
 		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int ProtectionFromConcussion => 0;
 
+		/// <summary>
+		/// Gets a value indicating if this instance restricts spell casting for certain professions.
+		/// </summary>
 		[WorldForge]
 		[CommandProperty(AccessLevel.GameMaster)]
-		public virtual bool BlockSpellcast => false;
+		public virtual bool RestrictSpellcast => false;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Equipment"/> class.
