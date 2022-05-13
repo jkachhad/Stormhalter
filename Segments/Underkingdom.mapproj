@@ -419,148 +419,6 @@
     
     }
     
-    public class Googog : VendorEntity
-    {
-        public Googog()
-        {
-            Name = "Googog";
-            Body = 134;
-    
-            Health = MaxHealth = 50;
-            BaseDodge = 10;
-            Alignment = Alignment.Neutral;    
-            Experience = 50;
-    
-            Movement = 0;
-        }
-    
-        public Googog(Serial serial) : base(serial)
-        {
-        }
-    
-        public override void HandleOrder(OrderEventArgs args)
-        {
-            base.HandleOrder(args);
-    
-            if (args.Handled)
-                return;
-    
-            var source = args.Source;
-            var order = args.Order;
-    
-            /* example: sell key */
-            if (_craft.TryGetMatch(order, out var craftMatch) && craftMatch.Groups[1].Value.Matches("scroll", true))
-            {
-                args.Handled = true;
-    
-                if (AtCounter(source, out var counter))
-                {
-                    var items = Segment.GetItemsAt(Location).ToList();
-                    
-                    var cashOnFloor = items.OfType<Currency>();
-    
-                    if (cashOnFloor.Any())
-                    {
-                        if (ConsumeFromLocation<Currency>(counter, 50000))
-                        {
-                            new PrincessScroll().Move(counter, true, Segment);
-    
-                            Say($"The jailer is... kind of thick. Like a rock. Hand him this sealed scroll. He'll do what you ask.");
-                        }
-                        
-                        else
-                        {
-                            Say($"I tells ya, I don't work cheap!");
-                        }
-                    }
-                    else
-                    {
-                        Say($"I only work for coin, and I don't work cheap!");
-                    }
-                }
-                else
-                {
-                    Say($"Shhh closer! I don't want the other goblins hearing me talk to a human!");
-                }
-    
-                return;
-            }
-        }
-    }
-    
-    public class TrollJailer : VendorEntity
-    {
-        public TrollJailer()
-        {
-            Name = "Near Sighted Jailer";
-            Body = 148;
-    
-            Health = MaxHealth = 50;
-            BaseDodge = 10;
-    
-            Alignment = Alignment.Neutral;
-    
-            Experience = 50;
-    
-            Movement = 0;
-        }
-    
-        public TrollJailer(Serial serial) : base(serial)
-        {
-        }
-    
-        public override void HandleOrder(OrderEventArgs args)
-        {
-            base.HandleOrder(args);
-    
-            if (args.Handled)
-                return;
-    
-            var source = args.Source;
-            var order = args.Order;
-    
-            /* example: sell key */
-            if (_craft.TryGetMatch(order, out var craftMatch) && craftMatch.Groups[1].Value.Matches("princess", true))
-            {
-                args.Handled = true;
-    
-                if (AtCounter(source, out var counter))
-                {
-                    var items = Segment.GetItemsAt(Location).ToList();
-    
-                    var jailScroll = items.OfType<PrincessScroll>();
-    
-                    if (jailScroll.Any())
-                    {
-                        if (ConsumeFromLocation<PrincessScroll>(counter, 1))
-                        {
-                            var tile = source.Segment.FindTile(5, 8, 10);
-    
-                            if (tile != null && tile.ContainsComponent<Obstruction>())
-                            {
-                                var component = tile.GetComponent<Obstruction>();
-                                tile.Remove(component);
-                            }
-                            Say($"Order from king... good. You feed princess. I take break.");
-    
-                            Timer.DelayCall(TimeSpan.FromSeconds(0.2), () => Delete());
-                        }
-                    }
-                    else
-                    {
-                        Say($"Me not do anyt'ing wi'fout orders.");
-                    }
-                }
-                else
-                {
-                    Say($"Me not hear great. Closer.");
-                }
-    
-                return;
-            }
-        }
-    }
-    
     public class PrincessScroll : ItemEntity
     {
         /// <inheritdoc />
@@ -102629,7 +102487,19 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    return new Googog();
+    var vendor = new Merchant<JeweledKey>(50000, 1, byte.MaxValue)
+    {
+        Name = "Googog",
+        
+        Body = 134,
+        RangePerception = 0,
+        BaseDodge = 10,
+        MaxHealth = 50, Health = 50,
+        
+        Experience = 50,
+    };
+
+    return vendor;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102639,18 +102509,35 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (spokeRecently(source))
+        return;
+
+    source.Say($"Hey, I have a great deal for you! 50,000 coins for a key to the troll kings treasure room.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="ukTrollJailer">
+    <entity name="ukTrollDoor">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	return new TrollJailer();
+	var door = new Shopkeeper()
+    {
+        Name = "The jail door",
+        Alignment = Alignment.Neutral,
+        MaxHealth = 209, Health = 209,
+        IsInvulnerable = true,
+        IsInvisible = true,
+        BaseDodge = 27,
+        Experience = 50,
+        RangePerception = 0,
+        Movement = 0,
+    };
+    
+    return door;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102660,9 +102547,28 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="false">
+      <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    ItemEntity princesskey = (player.LeftHand != null && player.LeftHand is JeweledKey ? player.LeftHand : (player.RightHand != null && player.RightHand is JeweledKey ? player.RightHand : null) );
+    
+    if( princesskey == null ) 
+    {
+        return;
+    }
+    
+    source.Emote("opens with a creak as key is inserted and turned in the lock.");
+    
+    princesskey.Delete();
+    
+    var tile = source.Segment.FindTile(5, 8, 10);    
+    if (tile != null && tile.ContainsComponent<Obstruction>())
+    {
+        var component = tile.GetComponent<Obstruction>();
+        tile.Remove(component);
+    }
+
+    Timer.DelayCall(TimeSpan.FromSeconds(0.2), () => source.Delete());
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -104145,7 +104051,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownRecallVendor" size="1" minimum="1" maximum="1" />
       <location x="13" y="14" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="tkJailer">
+    <spawn type="LocationSpawner" name="tkInvisibleDoor">
       <minimumDelay>1800</minimumDelay>
       <maximumDelay>2700</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -104168,7 +104074,7 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ukTrollJailer" size="1" minimum="1" maximum="1" />
+      <entry entity="ukTrollDoor" size="1" minimum="1" maximum="1" />
       <location x="6" y="8" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="UKConfessorGhost">
