@@ -102568,7 +102568,7 @@
         tile.Remove(component);
     }
 
-    Timer.DelayCall(TimeSpan.FromSeconds(0.2), () => Delete());
+    Timer.DelayCall(TimeSpan.FromSeconds(0.2), () => source.Delete());
 ]]></block>
         <block><![CDATA[]]></block>
       </script>

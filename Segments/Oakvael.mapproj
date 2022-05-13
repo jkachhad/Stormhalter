@@ -1238,7 +1238,7 @@
                 
                 EmitSound(228, 3, 9);
                 
-                var tile = source.Segment.FindTile(72, 11, 236);
+                var tile = Segment.FindTile(72, 11, 236);
     
                 if (tile != null && tile.ContainsComponent<Obstruction>())
                 {
@@ -1246,7 +1246,7 @@
                     tile.Remove(component);
                 }
                 
-                var tile2 = source.Segment.FindTile(77, 17, 236);
+                var tile2 = Segment.FindTile(77, 17, 236);
             
                 if (tile2 != null && tile2.ContainsComponent<Obstruction>())
                 {
