@@ -421,9 +421,10 @@
         {
         }
     
-        public override int GetNearbySound() => 256;
-        public override int GetAttackSound() => 257;
-        public override int GetDeathSound() => 258;
+        public override int GetNearbySound() => 30101;
+        public override int GetAttackSound() => 30099;
+        public override int GetDeathSound() => 30100;
+  
     
         public override void Serialize(BinaryWriter writer)
         {
@@ -447,6 +448,55 @@
             }
         }
     }
+    
+    public class KillerRabbit : CreatureEntity
+    {
+        public KillerRabbit()
+        {
+            Name = "Killer Rabbit";
+            Body = 310;
+        }
+        
+        public KillerRabbit(Serial serial) : base(serial)
+        {
+        }
+    
+        public override int GetNearbySound() => 30105;
+        public override int GetAttackSound() => 30103;
+        public override int GetDeathSound() => 30104;
+    
+        protected override void OnLoad()
+        {
+            if (_brain != null)
+                return;
+            if (RightHand is ProjectileWeapon)
+                _brain = new RangedAI(this);
+            else
+                _brain = new CombatAI(this);
+
+            base.OnLoad();
+        }
+    
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((short)1); /* version */
+        }
+    
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+            var version = reader.ReadInt16();
+            switch (version)
+            {
+                case 1:
+                    {
+                        break;
+                    }
+            }
+        }
+    }
+    
 
     public class Buddah : ItemEntity
     {
@@ -79106,12 +79156,10 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	var critter = new Drake()
+	var critter = new KillerRabbit()
     {
-        Name = "Killer.Rabbit",
         MaxHealth = 1300, Health = 1300,
         BaseDodge = 25,
-        Body = 179,
         Alignment = Alignment.Evil,
         
         HideDetection = 30,
@@ -79125,7 +79173,7 @@
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Magic | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
-    
+        
     };
     
     critter.AddStatus(new NightVisionStatus(critter));
@@ -79156,7 +79204,6 @@
         new CreatureBlock(8, "a pair of thumping feet"),
         new CreatureBlock(7, "a cotton tail"),
     };
-        
     
     critter.AddGold(10000);
      critter.AddGold(1000);
