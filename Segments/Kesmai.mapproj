@@ -91710,12 +91710,10 @@
         <component type="FloorComponent">
           <ground>264</ground>
         </component>
-        <component type="DoorComponent">
-          <openId>75</openId>
-          <closedId>63</closedId>
-          <secretId>679</secretId>
-          <destroyedId>81</destroyedId>
-          <isSecret>true</isSecret>
+        <component type="WallComponent">
+          <wall>679</wall>
+          <destroyed>682</destroyed>
+          <ruins>681</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -92067,12 +92065,10 @@
         <component type="FloorComponent">
           <ground>184</ground>
         </component>
-        <component type="DoorComponent">
-          <openId>74</openId>
-          <closedId>62</closedId>
-          <secretId>683</secretId>
-          <destroyedId>80</destroyedId>
-          <isSecret>true</isSecret>
+        <component type="WallComponent">
+          <wall>683</wall>
+          <destroyed>686</destroyed>
+          <ruins>687</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -92216,8 +92212,10 @@
         <component type="DoorComponent">
           <openId>74</openId>
           <closedId>62</closedId>
-          <secretId>25</secretId>
+          <secretId>677</secretId>
           <destroyedId>80</destroyedId>
+          <isSecret>true</isSecret>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="46" y="8">
@@ -92274,10 +92272,12 @@
         <component type="FloorComponent">
           <ground>264</ground>
         </component>
-        <component type="WallComponent">
-          <wall>683</wall>
-          <destroyed>686</destroyed>
-          <ruins>687</ruins>
+        <component type="DoorComponent">
+          <openId>74</openId>
+          <closedId>62</closedId>
+          <secretId>677</secretId>
+          <destroyedId>80</destroyedId>
+          <isSecret>true</isSecret>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -92598,26 +92598,20 @@
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
-        <component type="WallComponent">
-          <wall>685</wall>
-          <destroyed>688</destroyed>
-          <ruins>687</ruins>
-          <indestructible>true</indestructible>
-        </component>
       </tile>
       <tile x="44" y="9">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="45" y="9">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="46" y="9">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="47" y="9">
@@ -92628,6 +92622,7 @@
           <wall>685</wall>
           <destroyed>688</destroyed>
           <ruins>687</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="48" y="9">
@@ -93011,26 +93006,20 @@
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
-        <component type="WallComponent">
-          <wall>685</wall>
-          <destroyed>688</destroyed>
-          <ruins>687</ruins>
-          <indestructible>true</indestructible>
-        </component>
       </tile>
       <tile x="44" y="10">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="45" y="10">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="46" y="10">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="47" y="10">
@@ -93041,6 +93030,7 @@
           <wall>679</wall>
           <destroyed>682</destroyed>
           <ruins>681</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="48" y="10">
@@ -93372,35 +93362,29 @@
         </component>
       </tile>
       <tile x="43" y="11">
-        <component type="WallComponent">
-          <wall>685</wall>
-          <destroyed>688</destroyed>
-          <ruins>687</ruins>
-          <indestructible>true</indestructible>
-        </component>
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
       </tile>
       <tile x="44" y="11">
-        <component type="WallComponent">
-          <wall>683</wall>
-          <destroyed>686</destroyed>
-          <ruins>687</ruins>
-          <indestructible>true</indestructible>
-        </component>
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="45" y="11">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="46" y="11">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>12</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>159</wall>
+          <destroyed>162</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="47" y="11">
@@ -93408,9 +93392,16 @@
           <wall>685</wall>
           <destroyed>688</destroyed>
           <ruins>687</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="FloorComponent">
           <ground>264</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>677</wall>
+          <destroyed>680</destroyed>
+          <ruins>681</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="48" y="11">
@@ -93421,6 +93412,7 @@
           <wall>683</wall>
           <destroyed>686</destroyed>
           <ruins>687</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="49" y="11">
@@ -93431,6 +93423,7 @@
           <wall>683</wall>
           <destroyed>686</destroyed>
           <ruins>687</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="50" y="11">
@@ -93441,6 +93434,7 @@
           <wall>683</wall>
           <destroyed>686</destroyed>
           <ruins>687</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="51" y="11">
@@ -93452,6 +93446,8 @@
           <closedId>62</closedId>
           <secretId>25</secretId>
           <destroyedId>80</destroyedId>
+          <isOpen>true</isOpen>
+          <isDestroyed>false</isDestroyed>
         </component>
       </tile>
       <tile x="52" y="11">
@@ -93462,6 +93458,7 @@
           <wall>683</wall>
           <destroyed>686</destroyed>
           <ruins>687</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="53" y="11">
@@ -93608,6 +93605,8 @@
           <closedId>230</closedId>
           <secretId>28</secretId>
           <destroyedId>234</destroyedId>
+          <isOpen>true</isOpen>
+          <isDestroyed>true</isDestroyed>
         </component>
       </tile>
       <tile x="21" y="12">
@@ -93767,33 +93766,21 @@
         <component type="StaticComponent">
           <static>206</static>
         </component>
-        <component type="WallComponent">
-          <wall>685</wall>
-          <destroyed>688</destroyed>
-          <ruins>687</ruins>
-          <indestructible>true</indestructible>
-        </component>
       </tile>
       <tile x="45" y="12">
         <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
-        <component type="WallComponent">
-          <wall>683</wall>
-          <destroyed>686</destroyed>
-          <ruins>687</ruins>
-          <indestructible>true</indestructible>
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="46" y="12">
-        <component type="WallComponent">
-          <wall>683</wall>
-          <destroyed>686</destroyed>
-          <ruins>687</ruins>
-          <indestructible>true</indestructible>
-        </component>
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>12</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>679</wall>
+          <destroyed>682</destroyed>
+          <ruins>681</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="47" y="12">
@@ -94000,6 +93987,8 @@
           <closedId>230</closedId>
           <secretId>28</secretId>
           <destroyedId>234</destroyedId>
+          <isOpen>true</isOpen>
+          <isDestroyed>true</isDestroyed>
         </component>
       </tile>
       <tile x="21" y="13">
@@ -94515,6 +94504,8 @@
           <closedId>229</closedId>
           <secretId>27</secretId>
           <destroyedId>233</destroyedId>
+          <isOpen>true</isOpen>
+          <isDestroyed>true</isDestroyed>
         </component>
       </tile>
       <tile x="37" y="14">
@@ -94526,6 +94517,8 @@
           <closedId>229</closedId>
           <secretId>27</secretId>
           <destroyedId>233</destroyedId>
+          <isOpen>true</isOpen>
+          <isDestroyed>true</isDestroyed>
         </component>
       </tile>
       <tile x="38" y="14">
@@ -112249,6 +112242,7 @@ else
         new LootPackEntry(true, dungeon4Bottles,    20),
         new LootPackEntry(true, dungeon4Treasure,   1),
         new LootPackEntry(true, dungeon4Rings,      15),
+        new LootPackEntry(true, BlindResistanceRing, 50),
         new LootPackEntry(true, dungeon3Potions,    7)
         
         
@@ -112324,12 +112318,81 @@ else
         new LootPackEntry(true, dungeon4Bottles,    20),
         new LootPackEntry(true, dungeon4Treasure,   1),
         new LootPackEntry(true, dungeon4Rings,      15),
-        new LootPackEntry(true, dungeon3Potions,    7)
+       new LootPackEntry(true, BlindResistanceRing, 50),
+       new LootPackEntry(true, dungeon3Potions,    7)
         
         
     ));
 
     return skeleton;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="dungeon3.5Griffin">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var griffin = new Griffin()
+    {
+        MaxHealth = 120, Health = 120,
+        BaseDodge = 15,
+        
+        BasePenetration = ShieldPenetration.Light,
+        
+        Experience = 3500,
+        
+        HideDetection = 15,
+        
+        MagicProtection = 50,
+    };
+    griffin.AddStatus(new NightVisionStatus(griffin));
+        
+    griffin.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(7,     8, 16,      "The griffin tears your flesh with its beak."),     30 
+        },
+        {
+            new CreatureAttack(7,     10, 21,     "The griffin buries its talons into you."),         30 
+        },
+        {
+            new CreatureAttack(8,     17, 28,     "The griffin pummels you with its wings.", 
+                                                    new AttackStunComponent(5.0)),                   40
+        }
+    };
+    
+    griffin.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "a large wing"),
+        new CreatureBlock(4, "a talon"),
+        new CreatureBlock(3, "a beak"),
+    };
+        
+    griffin.AddGold(77);
+    griffin.AddLoot(new LootPack(
+        new LootPackEntry(true, kesmaiwideGems,       5.3,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon3Bottles,    20),
+        new LootPackEntry(true, dungeon3Treasure,   1.1),
+        new LootPackEntry(true, dungeon3Rings,      1.1),
+        new LootPackEntry(true, dungeon3Potions,    0.55),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1),
+        new LootPackEntry(true, (from, container) => new OchreEgg(), 1.2)
+    ));
+        
+    return griffin;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -114622,7 +114685,7 @@ else
     <spawn type="RegionSpawner" name="Kesmai -3.5 North">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>13</maximum>
+      <maximum>16</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -114642,14 +114705,17 @@ else
       <entry entity="dungeon3.5SkeletonMage" size="1" minimum="1" maximum="2" />
       <entry entity="dungeon3.5Banshee" size="1" minimum="0" maximum="1" />
       <entry entity="level8MeleeFighter" size="1" minimum="0" maximum="1" />
-      <entry entity="level8Ghoul" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Spectre" size="1" minimum="0" maximum="1" />
       <entry entity="level8Minotaur" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon3.5Mummy" size="1" minimum="0" maximum="3" />
       <bounds region="4">
         <inclusion left="11" top="-4" right="53" bottom="13" />
         <exclusion left="0" top="0" right="0" bottom="0" />
         <exclusion left="0" top="0" right="0" bottom="0" />
         <exclusion left="0" top="0" right="0" bottom="0" />
         <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="44" top="6" right="45" bottom="7" />
+        <exclusion left="14" top="8" right="45" bottom="13" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai -3.5 South">
@@ -114682,6 +114748,7 @@ else
         <exclusion left="0" top="0" right="0" bottom="0" />
         <exclusion left="0" top="0" right="0" bottom="0" />
         <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="27" top="25" right="44" bottom="29" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai -3.5 Lobby">
@@ -114706,6 +114773,34 @@ else
       <entry entity="dungeon3.5SkeletonMage" size="1" minimum="1" maximum="2" />
       <bounds region="4">
         <inclusion left="2" top="7" right="9" bottom="16" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai -3.5 South Temple">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>5</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level8Thaum" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Wizard" size="1" minimum="1" maximum="1" />
+      <entry entity="level8MeleeFighter" size="2" minimum="1" maximum="2" />
+      <entry entity="level8RangedFighter" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon3.5Griffin" size="1" minimum="1" maximum="1" />
+      <bounds region="4">
+        <inclusion left="27" top="24" right="46" bottom="29" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
