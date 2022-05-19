@@ -64080,8 +64080,8 @@
         <block><![CDATA[
 	var hobgoblin = new Hobgoblin()
     {
-        MaxHealth = 104, Health = 104,
-        MaxMana = 13, Mana = 13,
+        MaxHealth = 200, Health = 200,
+        MaxMana = 18, Mana = 18,
         BaseDodge = 27,
         BasePenetration = ShieldPenetration.Light,
         Experience = 11000,
@@ -64091,7 +64091,7 @@
     
     hobgoblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(11)
+        new CreatureBasicAttack(15)
     };
     
     hobgoblin.Spells = new CreatureSpellCollection()
