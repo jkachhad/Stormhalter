@@ -63987,6 +63987,7 @@
     {
         MaxHealth = 240, Health = 240,
         BaseDodge = 27,
+        HideDetection = 34,
 
         Experience = 11000,
     };    
@@ -64003,8 +64004,8 @@
     
     boar.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(15, "the armor"),
-        new CreatureBlock(15, "a cloven hoof")
+        new CreatureBlock(16, "the armor"),
+        new CreatureBlock(16, "a cloven hoof")
     };
 
     boar.AddGold(54);
@@ -64086,7 +64087,7 @@
         BasePenetration = ShieldPenetration.Light,
         Experience = 11000,
         LightningResistance = 100,
-        HideDetection = 25, 
+        HideDetection = 32, 
     };
     
     hobgoblin.Attacks = new CreatureAttackCollection()
@@ -64129,15 +64130,15 @@
 	var troll = new Troll()
     {
         MaxHealth = 230, Health = 230,
-        BaseDodge = 22,
-        HideDetection = 25,           
+        BaseDodge = 27,
+        HideDetection = 32,           
         Experience = 12000,
         BasePenetration = ShieldPenetration.Medium,
     };
     
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(14)
+        new CreatureBasicAttack(16)
     };
         
     troll.Wield(new Greatsword());
