@@ -125231,11 +125231,11 @@ else
     }
     
     //check if there is someone alredy in there...
-    var player = hummingGuardian.GetBeheldInVisibility(9).SelectMany(m => m.Members).OfType<PlayerEntity>().FirstOrDefault();
-    if( player != null ) 
+    var existingPlayer = hummingGuardian.GetBeheldInVisibility(9).SelectMany(m => m.Members).OfType<PlayerEntity>().FirstOrDefault();
+    if( existingPlayer != null ) 
     {
         //someone in there already
-        source.Say($"This is a challenge that {player.Name} must complete alone");
+        source.Say($"This is a challenge that {existingPlayer.Name} must complete alone");
         return;
     }
         
