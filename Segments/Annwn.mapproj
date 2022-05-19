@@ -63979,6 +63979,189 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="level15Boar">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var boar = new Boar()
+    {
+        MaxHealth = 240, Health = 240,
+        BaseDodge = 27,
+
+        Experience = 11000,
+    };    
+    
+    boar.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(16, 24, 48, "You have been gored by the boar."),    60
+        },
+        {
+            new CreatureAttack(16, 36, 52, "The boar tramples you."),              40
+        },
+    };
+    
+    boar.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(15, "the armor"),
+        new CreatureBlock(15, "a cloven hoof")
+    };
+
+    boar.AddGold(54);
+   
+    return boar;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="level15DeathTroll">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	 var troll = new Troll()
+    {
+        MaxHealth = 200, Health = 200,
+        BaseDodge = 27,
+        HideDetection = 25,
+        Experience = 10000,
+        BasePenetration = ShieldPenetration.Light,
+        MaxMana = 31, Mana = 31,
+            
+    };
+            
+    troll.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(16)
+    };
+    
+    troll.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<DeathSpell>(
+            skillLevel: 9, cost: 10, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+    };
+        
+    troll.Wield(new Longsword());
+        
+    troll.AddGold(146);
+    
+    return troll;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="level15LightningHob">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var hobgoblin = new Hobgoblin()
+    {
+        MaxHealth = 104, Health = 104,
+        MaxMana = 13, Mana = 13,
+        BaseDodge = 27,
+        BasePenetration = ShieldPenetration.Light,
+        Experience = 11000,
+        LightningResistance = 100,
+        HideDetection = 25, 
+    };
+    
+    hobgoblin.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(11)
+    };
+    
+    hobgoblin.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<LightningBoltSpell>(
+            skillLevel: 10, cost: 6, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+    };
+    
+    hobgoblin.Wield(new SteelMace());
+    
+    hobgoblin.AddGold(119);
+  
+    return hobgoblin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="level15Troll">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var troll = new Troll()
+    {
+        MaxHealth = 230, Health = 230,
+        BaseDodge = 22,
+        HideDetection = 25,           
+        Experience = 12000,
+        BasePenetration = ShieldPenetration.Medium,
+    };
+    
+    troll.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(14)
+    };
+        
+    troll.Wield(new Greatsword());
+    troll.Equip(new ChainmailArmor());
+    
+    troll.AddGold(146);
+    
+    return troll;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="evilWizard">
@@ -64143,6 +64326,145 @@
       <bounds region="6">
         <inclusion left="27" top="1" right="36" bottom="10" />
         <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="surfaceMiddle">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>25</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level15Troll" size="1" minimum="4" maximum="1" />
+      <entry entity="level15LightningHob" size="1" minimum="4" maximum="1" />
+      <entry entity="level15DeathTroll" size="4" minimum="5" maximum="5" />
+      <entry entity="level15Boar" size="4" minimum="6" maximum="6" />
+      <bounds region="1">
+        <inclusion left="29" top="11" right="61" bottom="37" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="surfaceEast">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>25</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level15DeathTroll" size="1" minimum="4" maximum="4" />
+      <entry entity="level15LightningHob" size="1" minimum="4" maximum="4" />
+      <entry entity="level15Boar" size="4" minimum="5" maximum="5" />
+      <entry entity="level15Troll" size="4" minimum="6" maximum="6" />
+      <bounds region="1">
+        <inclusion left="62" top="11" right="94" bottom="38" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="64" top="25" right="73" bottom="34" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="surfaceWest">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>25</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level15Boar" size="4" minimum="6" maximum="6" />
+      <entry entity="level15LightningHob" size="1" minimum="4" maximum="4" />
+      <entry entity="level15DeathTroll" size="1" minimum="4" maximum="4" />
+      <entry entity="level15Troll" size="4" minimum="5" maximum="5" />
+      <bounds region="1">
+        <inclusion left="0" top="15" right="28" bottom="37" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="67" top="8" right="77" bottom="17" />
+        <exclusion left="12" top="25" right="17" bottom="30" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="surfaceNorth">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>25</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level15Troll" size="4" minimum="5" maximum="5" />
+      <entry entity="level15LightningHob" size="1" minimum="4" maximum="4" />
+      <entry entity="level15DeathTroll" size="1" minimum="4" maximum="4" />
+      <entry entity="level15Boar" size="4" minimum="6" maximum="6" />
+      <bounds region="1">
+        <inclusion left="22" top="1" right="65" bottom="14" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="surfaceNorthEast">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>20</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level15Troll" size="4" minimum="3" maximum="5" />
+      <entry entity="level15LightningHob" size="1" minimum="2" maximum="4" />
+      <entry entity="level15DeathTroll" size="1" minimum="2" maximum="4" />
+      <entry entity="level15Boar" size="4" minimum="3" maximum="3" />
+      <bounds region="1">
+        <inclusion left="66" top="1" right="89" bottom="15" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="66" top="7" right="78" bottom="17" />
       </bounds>
     </spawn>
   </spawns>
