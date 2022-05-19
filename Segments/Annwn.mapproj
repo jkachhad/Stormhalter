@@ -63988,6 +63988,8 @@
         MaxHealth = 240, Health = 240,
         BaseDodge = 27,
         HideDetection = 34,
+        CanJumpkick = true,
+        BasePenetration = ShieldPenetration.VeryHeavy,
 
         Experience = 11000,
     };    
@@ -64031,7 +64033,7 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	 var troll = new Troll()
+	var troll = new Troll()
     {
         MaxHealth = 200, Health = 200,
         BaseDodge = 27,
