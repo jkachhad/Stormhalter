@@ -488,6 +488,42 @@
             Movement = 3;
         }
 
+        public override void OnSpellTarget(Target target, MobileEntity combatant)
+        {
+            //Start a timer - if we don't restart this timer again then we have lost sight of them for a long time and we reset the guardian
+            StartResetTimer();
+            base.OnSpellTarget(target, combatant);
+        }
+
+        private Timer _resetTimer = null;
+        
+        private void StartResetTimer()
+        {
+            if (_resetTimer != null)
+                _resetTimer.Stop();
+                
+            //if the guardian doesnt see someone for 120 seconds then reset him
+            _resetTimer = Timer.DelayCall(Facet.TimeSpan.FromSeconds(120.0), ResetGuardianEncounter);
+        }
+        
+        private void ResetGuardianEncounter()
+        {
+            if(!IsAlive) return;
+         
+            //put the guardian back to sleep and in his place
+            _resetTimer = null;
+            RangePerception = 0;
+            Movement = 0;
+            Teleport(new Point2D(7, 19, 5));
+            Health = MaxHealth;
+        }
+        
+        private void StopResetTimer()
+        {
+            if (_resetTimer != null)
+                _resetTimer.Stop();
+        }
+
         public override int GetNearbySound() => 289;
         public override int GetAttackSound() => 290;
         public override int GetDeathSound() => 291;
@@ -97835,18 +97871,6 @@
         <component type="FloorComponent">
           <ground>1</ground>
         </component>
-        <component type="DoorComponent">
-          <openId>76</openId>
-          <closedId>64</closedId>
-          <secretId>27</secretId>
-          <destroyedId>82</destroyedId>
-        </component>
-        <component type="DoorComponent">
-          <openId>0</openId>
-          <closedId>385</closedId>
-          <secretId>27</secretId>
-          <destroyedId>0</destroyedId>
-        </component>
       </tile>
       <tile x="6" y="8">
         <component type="FloorComponent">
@@ -120316,6 +120340,11 @@
         <rectangle left="0" top="0" right="5" bottom="8" />
       </rectangles>
     </subregion>
+    <subregion name="TEST Humming Lair" type="Lair" region="5">
+      <rectangles>
+        <rectangle left="0" top="16" right="9" bottom="21" />
+      </rectangles>
+    </subregion>
   </subregions>
   <entities>
     <entity name="dungeon1Kobold">
@@ -125153,13 +125182,13 @@ else
         <block><![CDATA[]]></block>
         <block><![CDATA[
     //create a new hummer and bind it to the player who killed the guardian
-    if (killer is PlayerEntity)
+    if (killer is PlayerEntity player)
     {
         //var sword = new HummingbirdSword(); 
         var sword = new ReturningHammer(); //For this TEST - we will just try binding a rhammer but this would be HummingbirdSword when live
         //Bind to the killer and drop at their feet
-        sword.Bind( killer );
-        sword.Move( killer.Location );
+        sword.Move( player.Location, true, player.Segment );
+        sword.Bind( player );
     }
 ]]></block>
         <block><![CDATA[]]></block>
@@ -125167,10 +125196,12 @@ else
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    source.Say($"Are.... you... worthy?.");
-    
     //start the encounter - it can now see full range. We want them to have to enter the centre of the room before being attacked.
     ((TESTHummingGuardian)source).StartGuardianEncounter();
+    
+    if (spokeRecently(source)) return;
+            
+    source.Say($"Are.... you... worthy?.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -125216,27 +125247,35 @@ else
     //if no ammulet then refuse
     if( hummerAmulet == null ) 
     {
-        source.Say("You must offer a worthy gift in your hand to enter");
         return;
     }
     
-    //Find the guardian, so we can check if he can see a player
+    //Find the guardian, so someone doesnt go in and waist an amulet 
     TESTHummingGuardian hummingGuardian = World.Mobiles.Values.OfType<TESTHummingGuardian>().Where((h) => source.Segment == h.Segment).FirstOrDefault();
     
     if( hummingGuardian == null )
     {
         //guardian is currently dead
-        source.Say($"The guardian is not ready for you yet");
+        if (!spokeRecently(source)) source.Say("The guardian is not ready for you yet");
         return;
     }
-    
-    //check if there is someone alredy in there...
-    var existingPlayer = hummingGuardian.GetBeheldInVisibility(9).SelectMany(m => m.Members).OfType<PlayerEntity>().FirstOrDefault();
-    if( existingPlayer != null ) 
+
+    //make sure someone doesnt go in at the same time as another player
+    var segment = source.Segment;
+    foreach (var client in segment.Clients)
     {
-        //someone in there already
-        source.Say($"This is a challenge that {existingPlayer.Name} must complete alone");
-        return;
+        var character = client.Character;
+        
+        if (character is null || !character.IsAlive) continue;
+        
+        var subregion = segment.GetSubregion(character.Location);
+        
+        if( subregion.Name == "TEST Humming Lair" )
+        {
+            //someone in there already. Don't allow the player to portal in
+            if (!spokeRecently(source)) source.Say($"This is a challenge that {character.Name} must complete alone");
+            return;
+        }
     }
         
     //no one in there so destroy ammulet and teleport them in..
