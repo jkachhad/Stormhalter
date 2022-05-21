@@ -125270,7 +125270,7 @@ else
         
         var subregion = segment.GetSubregion(character.Location);
         
-        if( subregion.Name == "TEST Humming Lair" )
+        if( subregion != null && subregion.Name == "TEST Humming Lair" )
         {
             //someone in there already. Don't allow the player to portal in
             if (!spokeRecently(source)) source.Say($"This is a challenge that {character.Name} must complete alone");
