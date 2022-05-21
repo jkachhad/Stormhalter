@@ -5,6 +5,18 @@
 	identified by an id property.  When the server communicates to the client about the map, it uses this id number to render various terrains.
   
 		Attribute `id` 		=>  A unique identifer.
+                Attribute 'action'      =>  
+   						Default Actions
+     							 1 - Climb Down
+    						         2 - Climb Up
+      							 3 - Close (door)
+      							 4 - Open (door)
+     							 5 - Up (stairs)
+    							 6 - down (stairs)
+    							13 - Search
+     							31 - Open (locker)
+      							33 - Look
+      							37 - Portal
 		Attribute `cost` 	=>	The cost related to pathing over this terrain object. A map tile selects the highest cost from all of it's terrain.
   
 		Property `average`	=> The average color of this terrain, used for generating heatmaps for 1 tile to 1 pixel.
@@ -12,15 +24,15 @@
 	Each terrain has a collection of <sprite> elements that are part of it's final render. 
 		
 		Attribute `order`		=>  The rendering order of this sprite.
-         Order values from existing Terrain.xml
-         0 - Floors, Water
-         1 - Doors open H , Decorations (barrels, trees, tall grass)
-         2 - Doors open V
-         3 - Rubble, Ruins, Bridges, Magic effects
-         4 - Walls V, Wall decorations V, Broken Walls V, Corner Posts, Counters, Obstructions (stagmites\pillars)
-         5 - Walls H, Wall decorations H, Broken Walls H
-         6 - Doors closed V
-         7 - Doors closed H
+         						Order values from existing Terrain.xml
+         						0 - Floors, Water
+         						1 - Doors open H , Decorations (barrels, trees, tall grass)
+         						2 - Doors open V
+        						3 - Rubble, Ruins, Bridges, Magic effects
+         						4 - Walls V, Wall decorations V, Broken Walls V, Corner Posts, Counters, Obstructions (stagmites\pillars)
+         						5 - Walls H, Wall decorations H, Broken Walls H
+         						6 - Doors closed V
+         						7 - Doors closed H
          
 		Attribute `underpile`	=>	If this terrain is rendered under the `treasure` sprite.
 		
@@ -58,7 +70,7 @@
 	All artwork in the Tenser directory belongs to Tenser#2262 on Discord. Any use or modification outside of this project is prohibited.
 	Please reach out to him if you wish to use the assets for your own purposes.
   -->
-  <terrain id="622" cost="6">
+  <terrain id="622" action="0" cost="6">
     <sprite order="0">
       <texture>Tenser\Terrain\Water-Wave-Horizontal</texture>
       <source>(0,0,1100,55)</source>
@@ -88,7 +100,7 @@
     </sprite>
     <average>(11,82,214,255)</average>
   </terrain>
-  <terrain id="623" cost="6">
+  <terrain id="623" action="0" cost="6">
     <sprite order="0">
       <texture>Tenser\Terrain\Water-Wave-Vertical</texture>
       <source>(0,0,1100,55)</source>
@@ -118,35 +130,35 @@
     </sprite>
     <average>(11,82,214,255)</average>
   </terrain>
-  <terrain id="624">
+  <terrain id="624" action="0">
     <sprite order="1" underpile="true">
       <texture>Tenser\Terrain\Trees</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(52,105,23,255)</average>
   </terrain>
-  <terrain id="625">
+  <terrain id="625" action="0">
     <sprite order="1" underpile="true">
       <texture>Tenser\Terrain\Trees</texture>
       <source>(0,100,100,100)</source>
     </sprite>
     <average>(52,105,23,255)</average>
   </terrain>
-  <terrain id="626">
+  <terrain id="626" action="0">
     <sprite order="1" underpile="true">
       <texture>Tenser\Terrain\Trees</texture>
       <source>(100,100,100,100)</source>
     </sprite>
     <average>(52,105,23,255)</average>
   </terrain>
-  <terrain id="627">
+  <terrain id="627" action="0">
     <sprite order="1" underpile="true">
       <texture>Tenser\Terrain\Trees</texture>
       <source>(100,0,100,100)</source>
     </sprite>
     <average>(52,105,23,255)</average>
   </terrain>
-  <terrain id="628">
+  <terrain id="628" action="0">
     <!-- Sewer Drain -->
     <sprite order="0">
       <texture>Tenser\Terrain\Sewers</texture>
@@ -154,7 +166,7 @@
     </sprite>
     <average>(136,120,186,255)</average>
   </terrain>
-  <terrain id="629">
+  <terrain id="629" action="0">
     <!-- Sewer Floor -->
     <sprite order="0">
       <texture>Tenser\Terrain\Sewers</texture>
@@ -162,7 +174,7 @@
     </sprite>
     <average>(136,120,186,255)</average>
   </terrain>
-  <terrain id="630">
+  <terrain id="630" action="0">
     <!-- Sewer Half-Wall (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\Sewers</texture>
@@ -170,7 +182,7 @@
     </sprite>
     <average>(115,121,114,255)</average>
   </terrain>
-  <terrain id="631">
+  <terrain id="631" action="0">
     <!-- Sewer Half-Wall (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\Sewers</texture>
@@ -178,15 +190,15 @@
     </sprite>
     <average>(115,121,114,255)</average>
   </terrain>
-  <terrain id="632">
+  <terrain id="632" action="0">
     <!-- Sewer Drain Round (V) -->
-    <sprite order="7">
+    <sprite order="4">
       <texture>Tenser\Terrain\Sewers</texture>
       <source>(100,100,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="633">
+  <terrain id="633" action="0">
     <!-- Sewer Drain Round (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\Sewers</texture>
@@ -194,7 +206,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="634">
+  <terrain id="634" action="0">
     <!-- Sewer Drain Floor (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\Sewers</texture>
@@ -202,23 +214,23 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="635">
+  <terrain id="635" action="0">
     <!-- Sewer Drain Floor (V) -->
-    <sprite order="7">
+    <sprite order="4">
       <texture>Tenser\Terrain\Sewers</texture>
       <source>(200,100,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="636">
+  <terrain id="636" action="0">
     <!-- Sewer Wall Full (V) -->
-    <sprite order="7">
+    <sprite order="4">
       <texture>Tenser\Terrain\Sewers</texture>
       <source>(400,0,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="637">
+  <terrain id="637" action="0">
     <!-- Sewer Wall Full (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\Sewers</texture>
@@ -226,7 +238,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="638" cost="6">
+  <terrain id="638" action="0" cost="6">
     <!-- Sewer Wall Ruins (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\Sewers</texture>
@@ -234,7 +246,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="639" cost="6">
+  <terrain id="639" action="0" cost="6">
     <!-- Sewer Wall Ruins (V) -->
     <sprite order="3">
       <texture>Tenser\Terrain\Sewers</texture>
@@ -242,98 +254,98 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="640">
+  <terrain id="640" action="0">
     <sprite order="4">
       <texture>Tenser/Terrain/BrokenPortalPillar</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(174,174,174,255)</average>
   </terrain>
-  <terrain id="641">
+  <terrain id="641" action="0">
     <sprite order="4">
       <texture>Tenser/Terrain/BrokenStalagmite</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(128,108,92,255)</average>
   </terrain>
-  <terrain id="642">
+  <terrain id="642" action="0">
     <sprite order="4">
       <texture>Tenser/Terrain/BrokenPortalPillar-2</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(174,174,174,255)</average>
   </terrain>
-  <terrain id="643">
+  <terrain id="643" action="0">
     <sprite order="4">
       <texture>Tenser/Terrain/BrokenStalagmite-2</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(128,108,92,255)</average>
   </terrain>
-  <terrain id="649">
+  <terrain id="649" action="0">
     <!-- Vase (base) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(0,0,100,100)</source>
     </sprite>
   </terrain>
-  <terrain id="650">
+  <terrain id="650" action="0">
     <!-- Vase (Single Ring) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(0,100,100,100)</source>
     </sprite>
   </terrain>
-  <terrain id="651">
+  <terrain id="651" action="0">
     <!-- Vase (Double Ring) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(100,0,100,100)</source>
     </sprite>
   </terrain>
-  <terrain id="652">
+  <terrain id="652" action="0">
     <!-- Vase (Pattern 1) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(200,0,100,100)</source>
     </sprite>
   </terrain>
-  <terrain id="653">
+  <terrain id="653" action="0">
     <!-- Vase (Pattern 2) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(200,100,100,100)</source>
     </sprite>
   </terrain>
-  <terrain id="654">
+  <terrain id="654" action="0">
     <!-- Vase (Pattern 3) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(200,200,100,100)</source>
     </sprite>
   </terrain>
-  <terrain id="655">
+  <terrain id="655" action="0">
     <!-- Vase (Shadow) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(100,200,100,100)</source>
     </sprite>
   </terrain>
-  <terrain id="656">
+  <terrain id="656" action="0">
     <!-- Vase (Broken) -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(0,200,100,100)</source>
     </sprite>
   </terrain>
-  <terrain id="657">
+  <terrain id="657" action="0">
     <!-- Vases -->
     <sprite order="1">
       <texture>Tenser/Terrain/Pottery</texture>
       <source>(100,100,100,100)</source>
     </sprite>
   </terrain>
-  <terrain id="659">
+  <terrain id="659" action="0">
     <!-- Basalt wall (H) -->
     <sprite order="5">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -341,7 +353,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="660">
+  <terrain id="660" action="0">
     <!-- Basalt floor -->
     <sprite order="0">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -349,7 +361,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="661">
+  <terrain id="661" action="0">
     <!-- Basalt wall (V) -->
     <sprite order="4">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -357,7 +369,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="662" cost="6">
+  <terrain id="662" action="0" cost="6">
     <!-- Basalt Wall Ruins (H) -->
     <sprite order="5">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -365,23 +377,23 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="663" cost="6">
+  <terrain id="663" action="0" cost="6">
     <!-- Basalt Rubble -->
-    <sprite order="7">
+    <sprite order="3">
       <texture>Tawnos\Terrain\ttiles</texture>
       <source>(400,0,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="664" cost="6">
+  <terrain id="664" action="0" cost="6">
     <!-- Basalt wall ruins (V) -->
-    <sprite order="7">
+    <sprite order="4">
       <texture>Tawnos\Terrain\ttiles</texture>
       <source>(500,0,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="665">
+  <terrain id="665" action="0">
     <!-- Sandstone wall (H) -->
     <sprite order="5">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -389,7 +401,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="666">
+  <terrain id="666" action="0">
     <!-- Sandstone floor -->
     <sprite order="0">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -397,7 +409,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="667">
+  <terrain id="667" action="0">
     <!-- Sandstone wall (V) -->
     <sprite order="4">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -405,7 +417,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="668" cost="6">
+  <terrain id="668" action="0" cost="6">
     <!-- Sandstone Wall Ruins (H) -->
     <sprite order="5">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -413,23 +425,23 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="669" cost="6">
+  <terrain id="669" action="0" cost="6">
     <!-- Sandstone Rubble -->
-    <sprite order="7">
+    <sprite order="3">
       <texture>Tawnos\Terrain\ttiles</texture>
       <source>(400,100,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="670" cost="6">
+  <terrain id="670" action="0" cost="6">
     <!-- Sandstone wall ruins (V) -->
-    <sprite order="7">
+    <sprite order="4">
       <texture>Tawnos\Terrain\ttiles</texture>
       <source>(500,100,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="671">
+  <terrain id="671" action="0">
     <!-- Rhyolite wall (H) -->
     <sprite order="5">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -437,7 +449,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="672">
+  <terrain id="672" action="0">
     <!-- Rhyolite floor -->
     <sprite order="0">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -445,7 +457,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="673">
+  <terrain id="673" action="0">
     <!-- Rhyolite wall (V) -->
     <sprite order="4">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -453,7 +465,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="674" cost="6">
+  <terrain id="674" action="0" cost="6">
     <!-- Rhyolite Wall Ruins (H) -->
     <sprite order="5">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -461,23 +473,23 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="675" cost="6">
+  <terrain id="675" action="0" cost="6">
     <!-- Rhyolite Rubble -->
-    <sprite order="7">
+    <sprite order="3">
       <texture>Tawnos\Terrain\ttiles</texture>
       <source>(400,200,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="676" cost="6">
+  <terrain id="676" action="0" cost="6">
     <!-- Rhyloite wall ruins (V) -->
-    <sprite order="7">
+    <sprite order="4">
       <texture>Tawnos\Terrain\ttiles</texture>
       <source>(500,200,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="677">
+  <terrain id="677" action="0">
     <!-- Gabbro wall (H) -->
     <sprite order="5">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -485,7 +497,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="678">
+  <terrain id="678" action="0">
     <!-- Gabbro floor -->
     <sprite order="0">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -493,7 +505,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="679">
+  <terrain id="679" action="0">
     <!-- Gabbro wall (V) -->
     <sprite order="4">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -501,7 +513,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="680" cost="6">
+  <terrain id="680" action="0" cost="6">
     <!-- Gabbro Wall Ruins (H) -->
     <sprite order="5">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -509,23 +521,23 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="681" cost="6">
+  <terrain id="681" action="0" cost="6">
     <!-- Gabbro Rubble -->
-    <sprite order="7">
+    <sprite order="3">
       <texture>Tawnos\Terrain\ttiles</texture>
       <source>(400,300,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="682" cost="6">
+  <terrain id="682" action="0" cost="6">
     <!-- Gabbro wall ruins (V) -->
-    <sprite order="7">
+    <sprite order="4">
       <texture>Tawnos\Terrain\ttiles</texture>
       <source>(500,300,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="683">
+  <terrain id="683" action="0">
     <!-- Slate wall (H) -->
     <sprite order="5">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -533,7 +545,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="684">
+  <terrain id="684" action="0">
     <!-- Slate floor -->
     <sprite order="0">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -541,7 +553,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="685">
+  <terrain id="685" action="0">
     <!-- Slate wall (V) -->
     <sprite order="4">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -549,31 +561,31 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="686" cost="6">
+  <terrain id="686" action="0" cost="6">
     <!-- Slate Wall Ruins (H) -->
-    <sprite order="3">
+    <sprite order="5">
       <texture>Tawnos\Terrain\ttiles</texture>
       <source>(300,400,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="687" cost="6">
+  <terrain id="687" action="0" cost="6">
     <!-- Slate Rubble -->
-    <sprite order="7">
+    <sprite order="3">
       <texture>Tawnos\Terrain\ttiles</texture>
       <source>(400,400,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="688" cost="6">
+  <terrain id="688" action="0" cost="6">
     <!-- Slate wall ruins (V) -->
-    <sprite order="7">
+    <sprite order="4">
       <texture>Tawnos\Terrain\ttiles</texture>
       <source>(500,400,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="689">
+  <terrain id="689" action="0">
     <!-- Andesite wall (H) -->
     <sprite order="5">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -581,7 +593,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="690">
+  <terrain id="690" action="0">
     <!-- Andesite floor -->
     <sprite order="0">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -589,7 +601,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="691">
+  <terrain id="691" action="0">
     <!-- Andesite wall (V) -->
     <sprite order="4">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -597,7 +609,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="692" cost="6">
+  <terrain id="692" action="0" cost="6">
     <!-- Andesite Wall Ruins (H) -->
     <sprite order="5">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -605,23 +617,23 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="693" cost="6">
+  <terrain id="693" action="0" cost="6">
     <!-- Andesite Rubble -->
-    <sprite order="7">
+    <sprite order="3">
       <texture>Tawnos\Terrain\ttiles</texture>
       <source>(400,500,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="694" cost="6">
+  <terrain id="694" action="0" cost="6">
     <!-- Andesite wall ruins (V) -->
-    <sprite order="7">
+    <sprite order="4">
       <texture>Tawnos\Terrain\ttiles</texture>
       <source>(500,500,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="695">
+  <terrain id="695" action="0">
     <!-- Granite wall (H) -->
     <sprite order="5">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -629,15 +641,15 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="696">
+  <terrain id="696" action="0">
     <!-- Granite floor -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tawnos\Terrain\ttiles</texture>
       <source>(100,600,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="697">
+  <terrain id="697" action="0">
     <!-- Granite wall (V) -->
     <sprite order="4">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -645,7 +657,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="698" cost="6">
+  <terrain id="698" action="0" cost="6">
     <!-- Granite Wall Ruins (H) -->
     <sprite order="5">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -653,23 +665,23 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="699" cost="6">
+  <terrain id="699" action="0" cost="6">
     <!-- Granite Rubble -->
-    <sprite order="7">
+    <sprite order="3">
       <texture>Tawnos\Terrain\ttiles</texture>
       <source>(400,600,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="700" cost="6">
+  <terrain id="700" action="0" cost="6">
     <!-- Granite wall ruins (V) -->
-    <sprite order="7">
+    <sprite order="4">
       <texture>Tawnos\Terrain\ttiles</texture>
       <source>(500,600,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="701">
+  <terrain id="701" action="0">
     <!-- Feldspar wall (H) -->
     <sprite order="5">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -677,7 +689,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="702">
+  <terrain id="702" action="0">
     <!-- Feldspar floor -->
     <sprite order="0">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -685,7 +697,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="703">
+  <terrain id="703" action="0">
     <!-- Feldspar wall (V) -->
     <sprite order="4">
       <texture>Tawnos\Terrain\ttiles</texture>
@@ -693,31 +705,31 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="704" cost="6">
+  <terrain id="704" action="0" cost="6">
     <!-- Feldspar Wall Ruins (H) -->
-    <sprite order="3">
+    <sprite order="5">
       <texture>Tawnos\Terrain\ttiles</texture>
       <source>(300,700,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="705" cost="6">
+  <terrain id="705" action="0" cost="6">
     <!-- Feldspar Rubble -->
-    <sprite order="7">
+    <sprite order="3">
       <texture>Tawnos\Terrain\ttiles</texture>
       <source>(400,700,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="706" cost="6">
+  <terrain id="706" action="0" cost="6">
     <!-- Feldspar wall ruins (V) -->
-    <sprite order="7">
+    <sprite order="4">
       <texture>Tawnos\Terrain\ttiles</texture>
       <source>(500,700,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="707">
+  <terrain id="707" action="0">
     <!-- panel wall (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\millwork</texture>
@@ -725,7 +737,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="708">
+  <terrain id="708" action="0">
     <!-- panel corner post -->
     <sprite order="4">
       <texture>Tenser\Terrain\millwork</texture>
@@ -733,7 +745,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="709">
+  <terrain id="709" action="0">
     <!-- panel wall (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\millwork</texture>
@@ -741,7 +753,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="710" cost="6">
+  <terrain id="710" action="0" cost="6">
     <!-- Panel Wall Ruins (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\millwork</texture>
@@ -749,23 +761,23 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="711" cost="6">
+  <terrain id="711" action="0" cost="6">
     <!-- Panel wall Rubble -->
-    <sprite order="7">
+    <sprite order="3">
       <texture>Tenser\Terrain\millwork</texture>
       <source>(400,0,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="712" cost="6">
+  <terrain id="712" action="0" cost="6">
     <!-- Panel wall ruins (V) -->
-    <sprite order="7">
+    <sprite order="4">
       <texture>Tenser\Terrain\millwork</texture>
       <source>(500,0,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="713">
+  <terrain id="713" action="0">
     <!-- Lodge wall (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\millwork</texture>
@@ -773,7 +785,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="714">
+  <terrain id="714" action="0">
     <!-- Lodge Corner post -->
     <sprite order="4">
       <texture>Tenser\Terrain\millwork</texture>
@@ -781,7 +793,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="715">
+  <terrain id="715" action="0">
     <!-- Lodge wall (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\millwork</texture>
@@ -789,7 +801,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="716" cost="6">
+  <terrain id="716" action="0" cost="6">
     <!-- Lodge Wall Ruins (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\millwork</texture>
@@ -797,23 +809,23 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="717" cost="6">
+  <terrain id="717" action="0" cost="6">
     <!-- Lodge wall Rubble -->
-    <sprite order="7">
+    <sprite order="3">
       <texture>Tenser\Terrain\millwork</texture>
       <source>(400,100,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="718" cost="6">
+  <terrain id="718" action="0" cost="6">
     <!-- Lodge wall ruins (V) -->
-    <sprite order="7">
+    <sprite order="4">
       <texture>Tenser\Terrain\millwork</texture>
       <source>(500,100,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="719">
+  <terrain id="719" action="0">
     <!-- wainscoting wood wall (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\millwork</texture>
@@ -821,7 +833,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="720">
+  <terrain id="720" action="0">
     <!-- wainscoting stone wall (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\millwork</texture>
@@ -829,7 +841,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="721">
+  <terrain id="721" action="0">
     <!-- wall moulding (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\millwork</texture>
@@ -837,7 +849,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="722">
+  <terrain id="722" action="0">
     <!-- Wainscoting wood Wall (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\millwork</texture>
@@ -845,7 +857,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="723">
+  <terrain id="723" action="0">
     <!-- Wainscoting stone wall (V)-->
     <sprite order="4">
       <texture>Tenser\Terrain\millwork</texture>
@@ -853,7 +865,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="724">
+  <terrain id="724" action="0">
     <!-- Wall moulding (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\millwork</texture>
@@ -861,7 +873,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="725">
+  <terrain id="725" action="0">
     <!-- Plaster-Sand wall (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\millwork</texture>
@@ -869,7 +881,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="726">
+  <terrain id="726" action="0">
     <!-- Plaster-set Back-board (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\millwork</texture>
@@ -877,7 +889,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="727">
+  <terrain id="727" action="0">
     <!-- Plaster-gypsum wall (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\millwork</texture>
@@ -885,7 +897,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="728">
+  <terrain id="728" action="0">
     <!-- Plaster-sand Wall (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\millwork</texture>
@@ -893,7 +905,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="729">
+  <terrain id="729" action="0">
     <!-- Plaster-set Back-board (V)-->
     <sprite order="4">
       <texture>Tenser\Terrain\millwork</texture>
@@ -901,7 +913,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="730">
+  <terrain id="730" action="0">
     <!-- Plaster-gypsum wall (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\millwork</texture>
@@ -909,7 +921,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="731">
+  <terrain id="731" action="0">
     <!-- front wall (H) -->
     <sprite order="5">
       <offset>(0,9)</offset>
@@ -918,7 +930,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="732">
+  <terrain id="732" action="0">
     <!-- inside back wall (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\tents</texture>
@@ -926,7 +938,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="733">
+  <terrain id="733" action="0">
     <!-- inside left wall (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\tents</texture>
@@ -934,7 +946,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="734">
+  <terrain id="734" action="0">
     <!-- outside right wall (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\tents</texture>
@@ -942,7 +954,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="735">
+  <terrain id="735" action="0">
     <!-- burnt tent wall - ash pile (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\tents</texture>
@@ -950,7 +962,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="736">
+  <terrain id="736" action="0">
     <!-- burnt tent wall - ash pile (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\tents</texture>
@@ -958,7 +970,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="737">
+  <terrain id="737" action="0">
     <!-- front wall flap-1 (H) -->
     <sprite order="5">
       <offset>(0,9)</offset>
@@ -967,7 +979,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="738">
+  <terrain id="738" action="0">
     <!-- inside-back rope (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\tents</texture>
@@ -975,7 +987,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="739">
+  <terrain id="739" action="0">
     <!-- left-inside rope (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\tents</texture>
@@ -983,7 +995,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="740">
+  <terrain id="740" action="0">
     <!-- right flap-1 (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\tents</texture>
@@ -991,7 +1003,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="741">
+  <terrain id="741" action="0">
     <!-- red rug -->
     <sprite order="0">
       <texture>Tenser\Terrain\tents</texture>
@@ -999,7 +1011,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="742">
+  <terrain id="742" action="0">
     <!-- gray rug -->
     <sprite order="0">
       <texture>Tenser\Terrain\tents</texture>
@@ -1007,7 +1019,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="743">
+  <terrain id="743" action="0">
     <!-- front flap-2 (H) -->
     <sprite order="5">
       <offset>(0,9)</offset>
@@ -1016,7 +1028,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="744">
+  <terrain id="744" action="0">
     <!-- inside back rope accent (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\tents</texture>
@@ -1024,7 +1036,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="745">
+  <terrain id="745" action="0">
     <!-- inside-left rope accent (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\tents</texture>
@@ -1032,7 +1044,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="746">
+  <terrain id="746" action="0">
     <!-- right flap-2 (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\tents</texture>
@@ -1040,7 +1052,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="747">
+  <terrain id="747" action="0">
     <!-- square fur rug -->
     <sprite order="0">
       <texture>Tenser\Terrain\tents</texture>
@@ -1048,7 +1060,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="748">
+  <terrain id="748" action="0">
     <!-- bear rug (V) -->
     <sprite order="0">
       <texture>Tenser\Terrain\tents</texture>
@@ -1056,7 +1068,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="749">
+  <terrain id="749" action="0">
     <!-- front flap-1 accent (H) -->
     <sprite order="5">
       <offset>(0,9)</offset>
@@ -1065,7 +1077,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="750">
+  <terrain id="750" action="0">
     <!-- inside-back shade-screen (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\tents</texture>
@@ -1073,7 +1085,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="751">
+  <terrain id="751" action="0">
     <!-- inside left shade screen (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\tents</texture>
@@ -1081,7 +1093,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="752">
+  <terrain id="752" action="0">
     <!-- right flap-1 accent (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\tents</texture>
@@ -1089,7 +1101,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="753">
+  <terrain id="753" action="0">
     <!-- bear rug (H) -->
     <sprite order="0">
       <texture>Tenser\Terrain\tents</texture>
@@ -1097,7 +1109,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="754">
+  <terrain id="754" action="0">
     <!-- front flap-2 accent (H) -->
     <sprite order="5">
       <offset>(0,9)</offset>
@@ -1106,7 +1118,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="755">
+  <terrain id="755" action="0">
     <!-- inside back stripe accent (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\tents</texture>
@@ -1114,7 +1126,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="756">
+  <terrain id="756" action="0">
     <!-- inside left stripe accent (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\tents</texture>
@@ -1122,15 +1134,15 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="757">
+  <terrain id="757" action="0">
     <!-- right flap-2 accent (V) -->
-    <sprite order="7">
+    <sprite order="4">
       <texture>Tenser\Terrain\tents</texture>
       <source>(300,400,100,100)</source>
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="758">
+  <terrain id="758" action="0">
     <!-- front wall accent (H) -->
     <sprite order="5">
       <offset>(0,9)</offset>
@@ -1139,7 +1151,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="759">
+  <terrain id="759" action="0">
     <!-- back wall accent (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\tents</texture>
@@ -1147,7 +1159,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="760">
+  <terrain id="760" action="0">
     <!-- left wall accent (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\tents</texture>
@@ -1155,7 +1167,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="761">
+  <terrain id="761" action="0">
     <!-- right wall accent (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\tents</texture>
@@ -1163,7 +1175,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="762">
+  <terrain id="762" action="0">
     <!-- snowdrift (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\snowdrift</texture>
@@ -1171,7 +1183,7 @@
     </sprite>
     <average>(225,225,225,255)</average>
   </terrain>
-  <terrain id="763">
+  <terrain id="763" action="0">
     <!-- snowdrift2 (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\snowdrift2</texture>
@@ -1179,7 +1191,7 @@
     </sprite>
     <average>(225,225,225,255)</average>
   </terrain>
-  <terrain id="764">
+  <terrain id="764" action="0">
     <!-- librarybookshelf (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\bookshelf</texture>
@@ -1187,7 +1199,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="765">
+  <terrain id="765" action="0">
     <!-- librarybookshelf2 (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\bookshelf2</texture>
@@ -1195,7 +1207,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="766" cost="6">
+  <terrain id="766" action="0" cost="6">
     <!-- animated campfire -->
     <sprite order="0">
       <texture>Tenser\Terrain\fire-Sheet</texture>
@@ -1211,7 +1223,7 @@
     </sprite>
     <average>(252,120,0,255)</average>
   </terrain>
-  <terrain id="767">
+  <terrain id="767" action="0">
     <!-- Shield Ornamental (for the shadow) (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\shielddeco</texture>
@@ -1219,7 +1231,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="768">
+  <terrain id="768" action="0">
     <!-- Crossed swords (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\shielddeco</texture>
@@ -1227,7 +1239,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="769">
+  <terrain id="769" action="0">
     <!-- Shiny Shield Ornamental (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\shielddeco</texture>
@@ -1235,7 +1247,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="770">
+  <terrain id="770" action="0">
     <!-- Shield Ornamental Trim 1 (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\shielddeco</texture>
@@ -1243,7 +1255,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="771">
+  <terrain id="771" action="0">
     <!-- Shield Ornamental Trim 2 (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\shielddeco</texture>
@@ -1251,7 +1263,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="772">
+  <terrain id="772" action="0">
     <!-- Shield Ornamental Matte Shield (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\shielddeco</texture>
@@ -1259,7 +1271,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="773">
+  <terrain id="773" action="0">
     <!-- Shield Ornamental Chevron (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\shielddeco</texture>
@@ -1267,7 +1279,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="774">
+  <terrain id="774" action="0">
     <!-- Shield Ornamental inverted Chevron (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\shielddeco</texture>
@@ -1275,7 +1287,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="775">
+  <terrain id="775" action="0">
     <!-- Banner Low Contrast (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\banners</texture>
@@ -1283,7 +1295,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="776">
+  <terrain id="776" action="0">
     <!-- Banner trim 1 (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\banners</texture>
@@ -1291,7 +1303,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="777">
+  <terrain id="777" action="0">
     <!-- Banner Yasnaki symbol (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\banners</texture>
@@ -1299,7 +1311,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="778">
+  <terrain id="778" action="0">
     <!-- Banner High contrast (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\banners</texture>
@@ -1307,7 +1319,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="779">
+  <terrain id="779" action="0">
     <!-- Banner Mu Symbol (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\banners</texture>
@@ -1315,7 +1327,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="780">
+  <terrain id="780" action="0">
     <!-- Banner pole (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\banners</texture>
@@ -1323,7 +1335,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="781">
+  <terrain id="781" action="0">
     <!-- Banner trim 2 (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\banners</texture>
@@ -1331,7 +1343,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="782">
+  <terrain id="782" action="0">
     <!-- Banner Kesmai Dragon symbol (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\banners</texture>
@@ -1339,7 +1351,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="783">
+  <terrain id="783" action="0">
     <!-- Dungeon (C) -->
     <sprite order="4">
       <texture>Tenser\Terrain\kesbrokenpillars</texture>
@@ -1347,7 +1359,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="784">
+  <terrain id="784" action="0">
     <!-- Town (C) -->
     <sprite order="4">
       <texture>Tenser\Terrain\kesbrokenpillars</texture>
@@ -1355,7 +1367,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="785">
+  <terrain id="785" action="6">
     <!-- B&W Marble Stairs down and south -->
     <sprite order="0">
       <texture>Tenser\Terrain\bwmarblestairs</texture>
@@ -1363,7 +1375,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="786">
+  <terrain id="786" action="6">
     <!-- B&W Marble Stairs down and east -->
     <sprite order="0">
       <texture>Tenser\Terrain\bwmarblestairs</texture>
@@ -1371,7 +1383,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="787">
+  <terrain id="787" action="6">
     <!-- B&W Marble Stairs down and west -->
     <sprite order="0">
       <texture>Tenser\Terrain\bwmarblestairs</texture>
@@ -1379,7 +1391,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="788">
+  <terrain id="788" action="6">
     <!-- B&W Marble Stairs down and north -->
     <sprite order="0">
       <texture>Tenser\Terrain\bwmarblestairs</texture>
@@ -1387,7 +1399,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="789">
+  <terrain id="789" action="5">
     <!-- B&W Marble Stairs up and north -->
     <sprite order="0">
       <texture>Tenser\Terrain\bwmarblestairs</texture>
@@ -1395,7 +1407,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="790">
+  <terrain id="790" action="5">
     <!-- B&W Marble Stairs up and west -->
     <sprite order="0">
       <texture>Tenser\Terrain\bwmarblestairs</texture>
@@ -1403,7 +1415,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="791">
+  <terrain id="791" action="5">
     <!-- B&W Marble Stairs up and east -->
     <sprite order="0">
       <texture>Tenser\Terrain\bwmarblestairs</texture>
@@ -1411,7 +1423,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="792">
+  <terrain id="792" action="5">
     <!-- B&W Marble Stairs up and south -->
     <sprite order="0">
       <texture>Tenser\Terrain\bwmarblestairs</texture>
@@ -1419,7 +1431,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="793">
+  <terrain id="793" action="6">
     <!-- Blue Marble Stairs down and south -->
     <sprite order="0">
       <texture>Tenser\Terrain\bluemarblestairs</texture>
@@ -1427,7 +1439,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="794">
+  <terrain id="794" action="6">
     <!-- Blue Marble Stairs down and east -->
     <sprite order="0">
       <texture>Tenser\Terrain\bluemarblestairs</texture>
@@ -1435,7 +1447,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="795">
+  <terrain id="795" action="6">
     <!-- Blue Marble Stairs down and west -->
     <sprite order="0">
       <texture>Tenser\Terrain\bluemarblestairs</texture>
@@ -1443,7 +1455,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="796">
+  <terrain id="796" action="6">
     <!-- Blue Marble Stairs down and north -->
     <sprite order="0">
       <texture>Tenser\Terrain\bluemarblestairs</texture>
@@ -1451,7 +1463,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="797">
+  <terrain id="797" action="5">
     <!-- Blue Marble Stairs up and north -->
     <sprite order="0">
       <texture>Tenser\Terrain\bluemarblestairs</texture>
@@ -1459,7 +1471,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="798">
+  <terrain id="798" action="5">
     <!-- Blue Marble Stairs up and west -->
     <sprite order="0">
       <texture>Tenser\Terrain\bluemarblestairs</texture>
@@ -1467,7 +1479,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="799">
+  <terrain id="799" action="5">
     <!-- Blue Marble Stairs up and east -->
     <sprite order="0">
       <texture>Tenser\Terrain\bluemarblestairs</texture>
@@ -1475,7 +1487,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="800">
+  <terrain id="800" action="5">
     <!-- Blue Marble Stairs up and south -->
     <sprite order="0">
       <texture>Tenser\Terrain\bluemarblestairs</texture>
@@ -1483,7 +1495,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="801">
+  <terrain id="801" action="6">
     <!-- Rough Wood Stairs down and south -->
     <sprite order="0">
       <texture>Tenser\Terrain\roughwoodstairs</texture>
@@ -1491,7 +1503,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="802">
+  <terrain id="802" action="6">
     <!-- Rough Wood Stairs down and east -->
     <sprite order="0">
       <texture>Tenser\Terrain\roughwoodstairs</texture>
@@ -1499,7 +1511,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="803">
+  <terrain id="803" action="6">
     <!-- Rough Wood Stairs down and west -->
     <sprite order="0">
       <texture>Tenser\Terrain\roughwoodstairs</texture>
@@ -1507,7 +1519,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="804">
+  <terrain id="804" action="6">
     <!-- Rough Wood Stairs down and north -->
     <sprite order="0">
       <texture>Tenser\Terrain\roughwoodstairs</texture>
@@ -1515,7 +1527,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="805">
+  <terrain id="805" action="5">
     <!-- Rough Wood Stairs up and north -->
     <sprite order="0">
       <texture>Tenser\Terrain\roughwoodstairs</texture>
@@ -1523,7 +1535,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="806">
+  <terrain id="806" action="5">
     <!-- Rough Wood Stairs up and west -->
     <sprite order="0">
       <texture>Tenser\Terrain\roughwoodstairs</texture>
@@ -1531,7 +1543,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="807">
+  <terrain id="807" action="5">
     <!-- Rough Wood Stairs up and east -->
     <sprite order="0">
       <texture>Tenser\Terrain\roughwoodstairs</texture>
@@ -1539,7 +1551,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="808">
+  <terrain id="808" action="5">
     <!-- Rough Wood Stairs up and south -->
     <sprite order="0">
       <texture>Tenser\Terrain\roughwoodstairs</texture>
@@ -1547,7 +1559,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="809">
+  <terrain id="809" action="6">
     <!-- Fine Wood Stairs down and south -->
     <sprite order="0">
       <texture>Tenser\Terrain\finewoodstairs</texture>
@@ -1555,7 +1567,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="810">
+  <terrain id="810" action="6">
     <!-- Fine Wood Stairs down and east -->
     <sprite order="0">
       <texture>Tenser\Terrain\finewoodstairs</texture>
@@ -1563,7 +1575,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="811">
+  <terrain id="811" action="6">
     <!-- Fine Wood Stairs down and west -->
     <sprite order="0">
       <texture>Tenser\Terrain\finewoodstairs</texture>
@@ -1571,7 +1583,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="812">
+  <terrain id="812" action="6">
     <!-- Fine Wood Stairs down and north -->
     <sprite order="0">
       <texture>Tenser\Terrain\finewoodstairs</texture>
@@ -1579,7 +1591,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="813">
+  <terrain id="813" action="5">
     <!-- Fine Wood Stairs up and north -->
     <sprite order="0">
       <texture>Tenser\Terrain\finewoodstairs</texture>
@@ -1587,7 +1599,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="814">
+  <terrain id="814" action="5">
     <!-- Fine Wood Stairs up and west -->
     <sprite order="0">
       <texture>Tenser\Terrain\finewoodstairs</texture>
@@ -1595,7 +1607,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="815">
+  <terrain id="815" action="5">
     <!-- Fine Wood Stairs up and east -->
     <sprite order="0">
       <texture>Tenser\Terrain\finewoodstairs</texture>
@@ -1603,7 +1615,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="816">
+  <terrain id="816" action="5">
     <!-- Fine Wood Stairs up and south -->
     <sprite order="0">
       <texture>Tenser\Terrain\finewoodstairs</texture>
@@ -1611,71 +1623,71 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="817">
+  <terrain id="817" action="6">
     <!-- Fine Stairs Carpet down and south -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\finestairscarpet</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="818">
+  <terrain id="818" action="6">
     <!-- Fine Stairs Carpet down and east -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\finestairscarpet</texture>
       <source>(100,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="819">
+  <terrain id="819" action="6">
     <!-- Fine Stairs Carpet down and west -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\finestairscarpet</texture>
       <source>(200,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="820">
+  <terrain id="820" action="6">
     <!-- Fine Stairs Carpet down and north -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\finestairscarpet</texture>
       <source>(300,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="821">
+  <terrain id="821" action="5">
     <!-- Fine Stairs Carpet up and north -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\finestairscarpet</texture>
       <source>(400,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="822">
+  <terrain id="822" action="5">
     <!-- Fine Stairs Carpet up and west -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\finestairscarpet</texture>
       <source>(500,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="823">
+  <terrain id="823" action="5">
     <!-- Fine Stairs Carpet up and east -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\finestairscarpet</texture>
       <source>(600,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="824">
+  <terrain id="824" action="5">
     <!-- Fine Stairs Carpet up and south -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\finestairscarpet</texture>
       <source>(700,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="825">
+  <terrain id="825" action="6">
     <!-- Rickety Wood Stairs down and south -->
     <sprite order="0">
       <texture>Tenser\Terrain\ricketywoodstairs</texture>
@@ -1683,7 +1695,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="826">
+  <terrain id="826" action="6">
     <!-- Rickety Wood Stairs down and east -->
     <sprite order="0">
       <texture>Tenser\Terrain\ricketywoodstairs</texture>
@@ -1691,7 +1703,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="827">
+  <terrain id="827" action="6">
     <!-- Rickety Wood Stairs down and west -->
     <sprite order="0">
       <texture>Tenser\Terrain\ricketywoodstairs</texture>
@@ -1699,7 +1711,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="828">
+  <terrain id="828" action="6">
     <!-- Rickety Wood Stairs down and north -->
     <sprite order="0">
       <texture>Tenser\Terrain\ricketywoodstairs</texture>
@@ -1707,7 +1719,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="829">
+  <terrain id="829" action="5">
     <!-- Rickety Wood Stairs up and north -->
     <sprite order="0">
       <texture>Tenser\Terrain\ricketywoodstairs</texture>
@@ -1715,7 +1727,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="830">
+  <terrain id="830" action="5">
     <!-- Rickety Wood Stairs up and west -->
     <sprite order="0">
       <texture>Tenser\Terrain\ricketywoodstairs</texture>
@@ -1723,7 +1735,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="831">
+  <terrain id="831" action="5">
     <!-- Rickety Wood Stairs up and east -->
     <sprite order="0">
       <texture>Tenser\Terrain\ricketywoodstairs</texture>
@@ -1731,7 +1743,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="832">
+  <terrain id="832" action="5">
     <!-- Rickety Wood Stairs up and south -->
     <sprite order="0">
       <texture>Tenser\Terrain\ricketywoodstairs</texture>
@@ -1739,7 +1751,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="833">
+  <terrain id="833" action="6">
     <!-- Decrepit Wood Stairs down and south -->
     <sprite order="0">
       <texture>Tenser\Terrain\decrepitwoodstairs</texture>
@@ -1747,7 +1759,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="834">
+  <terrain id="834" action="6">
     <!-- Decrepit Wood Stairs down and east -->
     <sprite order="0">
       <texture>Tenser\Terrain\decrepitwoodstairs</texture>
@@ -1755,7 +1767,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="835">
+  <terrain id="835" action="6">
     <!-- Decrepit Wood Stairs down and west -->
     <sprite order="0">
       <texture>Tenser\Terrain\decrepitwoodstairs</texture>
@@ -1763,7 +1775,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="836">
+  <terrain id="836" action="6">
     <!-- Decrepit Wood Stairs down and north -->
     <sprite order="0">
       <texture>Tenser\Terrain\decrepitwoodstairs</texture>
@@ -1771,7 +1783,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="837">
+  <terrain id="837" action="5">
     <!-- Decrepit Wood Stairs up and north -->
     <sprite order="0">
       <texture>Tenser\Terrain\decrepitwoodstairs</texture>
@@ -1779,7 +1791,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="838">
+  <terrain id="838" action="5">
     <!-- Decrepit Wood Stairs up and west -->
     <sprite order="0">
       <texture>Tenser\Terrain\decrepitwoodstairs</texture>
@@ -1787,7 +1799,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="839">
+  <terrain id="839" action="5">
     <!-- Decrepit Wood Stairs up and east -->
     <sprite order="0">
       <texture>Tenser\Terrain\decrepitwoodstairs</texture>
@@ -1795,7 +1807,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="840">
+  <terrain id="840" action="5">
     <!-- Decrepit Wood Stairs up and south -->
     <sprite order="0">
       <texture>Tenser\Terrain\decrepitwoodstairs</texture>
@@ -1803,135 +1815,135 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="841">
+  <terrain id="841" action="6">
     <!-- Snow & Icey Stairs down and south -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\snowiceystairs</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="842">
+  <terrain id="842" action="6">
     <!-- Snow & Icey Stairs down and east -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\snowiceystairs</texture>
       <source>(100,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="843">
+  <terrain id="843" action="6">
     <!-- Snow & Icey Stairs down and west -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\snowiceystairs</texture>
       <source>(200,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="844">
+  <terrain id="844" action="6">
     <!-- Snow & Icey Stairs down and north -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\snowiceystairs</texture>
       <source>(300,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="845">
+  <terrain id="845" action="5">
     <!-- Snow & Icey Stairs up and north -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\snowiceystairs</texture>
       <source>(400,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="846">
+  <terrain id="846" action="5">
     <!-- Snow & Icey Stairs up and west -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\snowiceystairs</texture>
       <source>(500,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="847">
+  <terrain id="847" action="5">
     <!-- Snow & Icey Stairs up and east -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\snowiceystairs</texture>
       <source>(600,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="848">
+  <terrain id="848" action="5">
     <!-- Snow & Icey Stairs up and south -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\snowiceystairs</texture>
       <source>(700,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="849">
+  <terrain id="849" action="6">
     <!-- Bloodied Stairs down and south -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\bloodiedstairs</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="850">
+  <terrain id="850" action="6">
     <!-- Bloodied Stairs down and east -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\bloodiedstairs</texture>
       <source>(100,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="851">
+  <terrain id="851" action="6">
     <!-- Bloodied Stairs down and west -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\bloodiedstairs</texture>
       <source>(200,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="852">
+  <terrain id="852" action="6">
     <!-- Bloodied Stairs down and north -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\bloodiedstairs</texture>
       <source>(300,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="853">
+  <terrain id="853" action="5">
     <!-- Bloodied Stairs up and north -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\bloodiedstairs</texture>
       <source>(400,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="854">
+  <terrain id="854" action="5">
     <!-- Bloodied Stairs up and west -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\bloodiedstairs</texture>
       <source>(500,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="855">
+  <terrain id="855" action="5">
     <!-- Bloodied Stairs up and east -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\bloodiedstairs</texture>
       <source>(600,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="856">
+  <terrain id="856" action="5">
     <!-- Bloodied Stairs up and south -->
-    <sprite order="1">
+    <sprite order="0">
       <texture>Tenser\Terrain\bloodiedstairs</texture>
       <source>(700,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="857">
+  <terrain id="857" action="0">
     <!-- Tawnos Tiles Columns Basalt -->
     <sprite order="4">
       <texture>Tenser\Terrain\TawnosTilesColumns</texture>
@@ -1939,7 +1951,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="858">
+  <terrain id="858" action="0">
     <!-- Tawnos Tiles Columns Basalt Broken -->
     <sprite order="3">
       <texture>Tenser\Terrain\TawnosTilesColumns</texture>
@@ -1947,7 +1959,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="859">
+  <terrain id="859" action="0">
     <!-- Tawnos Tiles Columns Sandstone -->
     <sprite order="4">
       <texture>Tenser\Terrain\TawnosTilesColumns</texture>
@@ -1955,7 +1967,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="860">
+  <terrain id="860" action="0">
     <!-- Tawnos Tiles Columns Sandstone Broken -->
     <sprite order="3">
       <texture>Tenser\Terrain\TawnosTilesColumns</texture>
@@ -1963,7 +1975,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="861">
+  <terrain id="861" action="0">
     <!-- Tawnos Tiles Columns Rhyolite -->
     <sprite order="4">
       <texture>Tenser\Terrain\TawnosTilesColumns</texture>
@@ -1971,7 +1983,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="862">
+  <terrain id="862" action="0">
     <!-- Tawnos Tiles Columns Rhyolite Broken -->
     <sprite order="3">
       <texture>Tenser\Terrain\TawnosTilesColumns</texture>
@@ -1979,7 +1991,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="863">
+  <terrain id="863" action="0">
     <!-- Tawnos Tiles Columns Gabbro -->
     <sprite order="4">
       <texture>Tenser\Terrain\TawnosTilesColumns</texture>
@@ -1987,7 +1999,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="864">
+  <terrain id="864" action="0">
     <!-- Tawnos Tiles Columns Gabbro Broken -->
     <sprite order="3">
       <texture>Tenser\Terrain\TawnosTilesColumns</texture>
@@ -1995,7 +2007,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="865">
+  <terrain id="865" action="0">
     <!-- Tawnos Tiles Columns Slate -->
     <sprite order="4">
       <texture>Tenser\Terrain\TawnosTilesColumns</texture>
@@ -2003,7 +2015,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="866">
+  <terrain id="866" action="0">
     <!-- Tawnos Tiles Columns Slate Broken -->
     <sprite order="3">
       <texture>Tenser\Terrain\TawnosTilesColumns</texture>
@@ -2011,7 +2023,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="867">
+  <terrain id="867" action="0">
     <!-- Tawnos Tiles Columns Andesite -->
     <sprite order="4">
       <texture>Tenser\Terrain\TawnosTilesColumns</texture>
@@ -2019,7 +2031,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="868">
+  <terrain id="868" action="0">
     <!-- Tawnos Tiles Columns Andesite Broken -->
     <sprite order="3">
       <texture>Tenser\Terrain\TawnosTilesColumns</texture>
@@ -2027,7 +2039,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="869">
+  <terrain id="869" action="0">
     <!-- Tawnos Tiles Columns Granite -->
     <sprite order="4">
       <texture>Tenser\Terrain\TawnosTilesColumns</texture>
@@ -2035,7 +2047,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="870">
+  <terrain id="870" action="0">
     <!-- Tawnos Tiles Columns Granite Broken -->
     <sprite order="3">
       <texture>Tenser\Terrain\TawnosTilesColumns</texture>
@@ -2043,7 +2055,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="871">
+  <terrain id="871" action="0">
     <!-- Tawnos Tiles Columns Feldspar -->
     <sprite order="4">
       <texture>Tenser\Terrain\TawnosTilesColumns</texture>
@@ -2051,7 +2063,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="872">
+  <terrain id="872" action="0">
     <!-- Tawnos Tiles Columns Feldspar Broken -->
     <sprite order="3">
       <texture>Tenser\Terrain\TawnosTilesColumns</texture>
@@ -2059,7 +2071,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="873">
+  <terrain id="873" action="0">
     <!-- Cornfield -->
     <sprite order="1">
       <texture>Tenser\Terrain\market</texture>
@@ -2067,7 +2079,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="874">
+  <terrain id="874" action="0">
     <!-- Cornfield Burned -->
     <sprite order="1">
       <texture>Tenser\Terrain\market</texture>
@@ -2075,7 +2087,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="875">
+  <terrain id="875" action="0">
     <!-- Wheatfield -->
     <sprite order="1">
       <texture>Tenser\Terrain\market</texture>
@@ -2083,7 +2095,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="876">
+  <terrain id="876" action="0">
     <!-- Wheatfield Burned -->
     <sprite order="1">
       <texture>Tenser\Terrain\market</texture>
@@ -2091,7 +2103,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="877">
+  <terrain id="877" action="0">
     <!-- Grapevines -->
     <sprite order="1">
       <texture>Tenser\Terrain\market</texture>
@@ -2099,7 +2111,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="878">
+  <terrain id="878" action="0">
     <!-- Grapevines Burned -->
     <sprite order="1">
       <texture>Tenser\Terrain\market</texture>
@@ -2107,7 +2119,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="879">
+  <terrain id="879" action="0">
     <!-- Large Crate -->
     <sprite order="1">
       <texture>Tenser\Terrain\market</texture>
@@ -2115,7 +2127,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="880">
+  <terrain id="880" action="0">
     <!-- Fruit crate - Apples, Pears and Oranges. -->
     <sprite order="1">
       <texture>Tenser\Terrain\market</texture>
@@ -2123,7 +2135,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="881">
+  <terrain id="881" action="0">
     <!-- Veggie crate - Lettuce, tomatoe, corn, and bags of grain -->
     <sprite order="1">
       <texture>Tenser\Terrain\market</texture>
@@ -2131,7 +2143,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="882">
+  <terrain id="882" action="0">
     <!-- Crate of grain w Scoop -->
     <sprite order="1">
       <texture>Tenser\Terrain\market</texture>
@@ -2139,7 +2151,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="883">
+  <terrain id="883" action="0">
     <!-- Axe Display -->
     <sprite order="1">
       <texture>Tenser\Terrain\market</texture>
@@ -2147,7 +2159,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="884">
+  <terrain id="884" action="0">
     <!-- Greataxe Display -->
     <sprite order="1">
       <texture>Tenser\Terrain\market</texture>
@@ -2155,7 +2167,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="885">
+  <terrain id="885" action="0">
     <!-- Sword Display -->
     <sprite order="1">
       <texture>Tenser\Terrain\market</texture>
@@ -2163,7 +2175,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="886">
+  <terrain id="886" action="0">
     <!-- Small Crate -->
     <sprite order="1">
       <texture>Tenser\Terrain\market</texture>
@@ -2171,7 +2183,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="887">
+  <terrain id="887" action="0">
     <!-- Cart (v) -->
     <sprite order="1">
       <texture>Tenser\Terrain\market</texture>
@@ -2179,7 +2191,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="888">
+  <terrain id="888" action="0">
     <!-- Large Crate Open -->
     <sprite order="1">
       <texture>Tenser\Terrain\market</texture>
@@ -2187,7 +2199,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="889">
+  <terrain id="889" action="0">
     <!-- Large Crate Ruined -->
     <sprite order="1">
       <texture>Tenser\Terrain\market</texture>
@@ -2195,7 +2207,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="890">
+  <terrain id="890" action="0">
     <!-- Small Crate Open -->
     <sprite order="1">
       <texture>Tenser\Terrain\market</texture>
@@ -2203,7 +2215,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="891">
+  <terrain id="891" action="0">
     <!-- Small Crate Ruined -->
     <sprite order="1">
       <texture>Tenser\Terrain\market</texture>
@@ -2211,7 +2223,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="892">
+  <terrain id="892" action="0">
     <!-- Cart (H) -->
     <sprite order="1">
       <texture>Tenser\Terrain\market</texture>
@@ -2219,7 +2231,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="893">
+  <terrain id="893" action="0">
     <!-- Pear tree -->
     <sprite order="1">
       <texture>Tenser\Terrain\deciduoustree-expansion</texture>
@@ -2227,7 +2239,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="894">
+  <terrain id="894" action="0">
     <!-- Peach tree -->
     <sprite order="1">
       <texture>Tenser\Terrain\deciduoustree-expansion</texture>
@@ -2235,7 +2247,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="895">
+  <terrain id="895" action="0">
     <!-- Apple tree -->
     <sprite order="1">
       <texture>Tenser\Terrain\deciduoustree-expansion</texture>
@@ -2243,7 +2255,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="896">
+  <terrain id="896" action="0">
     <!-- Orange tree -->
     <sprite order="1">
       <texture>Tenser\Terrain\deciduoustree-expansion</texture>
@@ -2251,7 +2263,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="897">
+  <terrain id="897" action="0">
     <!-- Burned Fruit tree (all) -->
     <sprite order="1">
       <texture>Tenser\Terrain\deciduoustree-expansion</texture>
@@ -2259,7 +2271,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="898">
+  <terrain id="898" action="0">
     <!-- Brown Fall tree -->
     <sprite order="1">
       <texture>Tenser\Terrain\deciduoustree-expansion</texture>
@@ -2267,7 +2279,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="899">
+  <terrain id="899" action="0">
     <!-- Orange Fall tree -->
     <sprite order="1">
       <texture>Tenser\Terrain\deciduoustree-expansion</texture>
@@ -2275,7 +2287,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="900">
+  <terrain id="900" action="0">
     <!-- Deep Red Fall tree -->
     <sprite order="1">
       <texture>Tenser\Terrain\deciduoustree-expansion</texture>
@@ -2283,7 +2295,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="901">
+  <terrain id="901" action="0">
     <!-- Red Fall tree -->
     <sprite order="1">
       <texture>Tenser\Terrain\deciduoustree-expansion</texture>
@@ -2291,7 +2303,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="902">
+  <terrain id="902" action="0">
     <!-- Yellow Fall tree -->
     <sprite order="1">
       <texture>Tenser\Terrain\deciduoustree-expansion</texture>
@@ -2299,7 +2311,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="903">
+  <terrain id="903" action="0">
     <!-- Dormant tree -->
     <sprite order="1">
       <texture>Tenser\Terrain\deciduoustree-expansion</texture>
@@ -2307,7 +2319,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="904">
+  <terrain id="904" action="0">
     <!-- Icey Dormant tree -->
     <sprite order="1">
       <texture>Tenser\Terrain\deciduoustree-expansion</texture>
@@ -2315,7 +2327,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="905">
+  <terrain id="905" action="0">
     <!-- Cherry tree -->
     <sprite order="1">
       <texture>Tenser\Terrain\deciduoustree-expansion</texture>
@@ -2323,7 +2335,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="906">
+  <terrain id="906" action="0">
     <!-- Cherry tree blossom -->
     <sprite order="1">
       <texture>Tenser\Terrain\deciduoustree-expansion</texture>
@@ -2331,199 +2343,199 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="907">
+  <terrain id="907" action="6">
     <!-- Mossy Stair Down South -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\mossystairs</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="908">
+  <terrain id="908" action="6">
     <!-- Mossy Stair Down East -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\mossystairs</texture>
       <source>(100,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="909">
+  <terrain id="909" action="6">
     <!-- Mossy Stair Down West -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\mossystairs</texture>
       <source>(200,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="910">
+  <terrain id="910" action="6">
     <!-- Mossy Stair Down North -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\mossystairs</texture>
       <source>(300,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="911">
+  <terrain id="911" action="5">
     <!-- Mossy Stair Up North -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\mossystairs</texture>
       <source>(400,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="912">
+  <terrain id="912" action="5">
     <!-- Mossy Stair Up West -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\mossystairs</texture>
       <source>(500,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="913">
+  <terrain id="913" action="5">
     <!-- Mossy Stair Up East -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\mossystairs</texture>
       <source>(600,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="914">
+  <terrain id="914" action="5">
     <!-- Mossy Stair Up South -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\mossystairs</texture>
       <source>(700,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="915">
+  <terrain id="915" action="6">
     <!-- Grassy Stair Down South -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\grassystairs</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="916">
+  <terrain id="916" action="6">
     <!-- Grassy Stair Down East -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\grassystairs</texture>
       <source>(100,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="917">
+  <terrain id="917" action="6">
     <!-- Grassy Stair Down West -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\grassystairs</texture>
       <source>(200,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="918">
+  <terrain id="918" action="6">
     <!-- Grassy Stair Down North -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\grassystairs</texture>
       <source>(300,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="919">
+  <terrain id="919" action="5">
     <!-- Grassy Stair Up North -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\grassystairs</texture>
       <source>(400,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="920">
+  <terrain id="920" action="5">
     <!-- Grassy Stair Up West -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\grassystairs</texture>
       <source>(500,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="921">
+  <terrain id="921" action="5">
     <!-- Grassy Stair Up East -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\grassystairs</texture>
       <source>(600,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="922">
+  <terrain id="922" action="5">
     <!-- Grassy Stair Up South -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\grassystairs</texture>
       <source>(700,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="923">
+  <terrain id="923" action="6">
     <!-- Flower Stair Down South -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\flowerstairs</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="924">
+  <terrain id="924" action="6">
     <!-- Flower Stair Down East -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\flowerstairs</texture>
       <source>(100,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="925">
+  <terrain id="925" action="6">
     <!-- Flower Stair Down West -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\flowerstairs</texture>
       <source>(200,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="926">
+  <terrain id="926" action="6">
     <!-- Flower Stair Down North -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\flowerstairs</texture>
       <source>(300,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="927">
+  <terrain id="927" action="5">
     <!-- Flower Stair Up North -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\flowerstairs</texture>
       <source>(400,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="928">
+  <terrain id="928" action="5">
     <!-- Flower Stair Up West -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\flowerstairs</texture>
       <source>(500,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="929">
+  <terrain id="929" action="5">
     <!-- Flower Stair Up East -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\flowerstairs</texture>
       <source>(600,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="930">
+  <terrain id="930" action="5">
     <!-- Flower Stair Up South -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\flowerstairs</texture>
       <source>(700,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="931">
+  <terrain id="931" action="0">
     <!-- Torch Wall Decal (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\torchdecals</texture>
@@ -2536,9 +2548,9 @@
     </sprite>
     <average>(11,82,214,255)</average>
   </terrain>
-  <terrain id="932">
+  <terrain id="932" action="0">
     <!-- Torch Wall Decal (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\torchdecals</texture>
       <source>(0,0,900,100)</source>
       <offset>(1,1)</offset>
@@ -2550,7 +2562,7 @@
     </sprite>
     <average>(11,82,214,255)</average>
   </terrain>
-  <terrain id="933">
+  <terrain id="933" action="0">
     <!-- Darkened Wall Decal (H) -->
     <sprite order="5">
       <offset>(0,0)</offset>
@@ -2559,24 +2571,24 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="934">
+  <terrain id="934" action="0">
     <!-- Darkened Wall Decal (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <offset>(0,0)</offset>
       <texture>Tenser\Terrain\torchdecals</texture>
       <source>(700,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="935">
+  <terrain id="935" action="0">
     <!-- Darkened Floor Decal -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\torchdecals</texture>
       <source>(800,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="936">
+  <terrain id="936" action="0">
     <!-- Basalt Doorjam (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
@@ -2584,15 +2596,15 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="937">
+  <terrain id="937" action="0">
     <!-- Basalt Doorjam (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
       <source>(100,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="938">
+  <terrain id="938" action="0">
     <!-- Basalt Doorjam Ruin (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
@@ -2600,15 +2612,15 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="939">
+  <terrain id="939" action="0">
     <!-- Basalt Doorjam Ruin (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
       <source>(300,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="940">
+  <terrain id="940" action="0">
     <!-- Sandstone Doorjam (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
@@ -2616,15 +2628,15 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="941">
+  <terrain id="941" action="0">
     <!-- Sandstone Doorjam (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
       <source>(100,100,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="942">
+  <terrain id="942" action="0">
     <!-- Sandstone Doorjam Ruin (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
@@ -2632,15 +2644,15 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="943">
+  <terrain id="943" action="0">
     <!-- Sandstone Doorjam Ruin (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
       <source>(300,100,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="944">
+  <terrain id="944" action="0">
     <!-- Rhyolite Doorjam (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
@@ -2648,15 +2660,15 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="945">
+  <terrain id="945" action="0">
     <!-- Rhyolite Doorjam (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
       <source>(100,200,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="946">
+  <terrain id="946" action="0">
     <!-- Rhyolite Doorjam Ruin (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
@@ -2664,15 +2676,15 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="947">
+  <terrain id="947" action="0">
     <!-- Rhyolite Doorjam Ruin (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
       <source>(300,200,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="948">
+  <terrain id="948" action="0">
     <!-- Gabbro Doorjam (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
@@ -2680,15 +2692,15 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="949">
+  <terrain id="949" action="0">
     <!-- Gabbro Doorjam (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
       <source>(100,300,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="950">
+  <terrain id="950" action="0">
     <!-- Gabbro Doorjam Ruin (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
@@ -2696,15 +2708,15 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="951">
+  <terrain id="951" action="0">
     <!-- Gabbro Doorjam Ruin (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
       <source>(300,300,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="952">
+  <terrain id="952" action="0">
     <!-- Slate Doorjam (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
@@ -2712,15 +2724,15 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="953">
+  <terrain id="953" action="0">
     <!-- Slate Doorjam (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
       <source>(100,400,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="954">
+  <terrain id="954" action="0">
     <!-- Slate Doorjam Ruin (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
@@ -2728,15 +2740,15 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="955">
+  <terrain id="955" action="0">
     <!-- Slate Doorjam Ruin (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
       <source>(300,400,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="956">
+  <terrain id="956" action="0">
     <!-- Andesite Doorjam (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
@@ -2744,15 +2756,15 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="957">
+  <terrain id="957" action="0">
     <!-- Andesite Doorjam (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
       <source>(100,500,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="958">
+  <terrain id="958" action="0">
     <!-- Andesite Doorjam Ruin (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
@@ -2760,15 +2772,15 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="959">
+  <terrain id="959" action="0">
     <!-- Andesite Doorjam Ruin (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
       <source>(300,500,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="960">
+  <terrain id="960" action="0">
     <!-- Granite Doorjam (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
@@ -2776,15 +2788,15 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="961">
+  <terrain id="961" action="0">
     <!-- Granite Doorjam (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
       <source>(100,600,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="962">
+  <terrain id="962" action="0">
     <!-- Granite Doorjam Ruin (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
@@ -2792,15 +2804,15 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="963">
+  <terrain id="963" action="0">
     <!-- Granite Doorjam Ruin (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
       <source>(300,600,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="964">
+  <terrain id="964" action="0">
     <!-- Feldspar Doorjam (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
@@ -2808,15 +2820,15 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="965">
+  <terrain id="965" action="0">
     <!-- Feldspar Doorjam (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
       <source>(100,700,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="966">
+  <terrain id="966" action="0">
     <!-- Feldspar Doorjam Ruin (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
@@ -2824,71 +2836,71 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="967">
+  <terrain id="967" action="0">
     <!-- Feldspar Doorjam Ruin (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\Tawnosdoorjams</texture>
       <source>(300,700,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="968">
+  <terrain id="968" action="1">
     <!-- Dry Well -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\drywell</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="969">
+  <terrain id="969" action="1">
     <!-- Dirt Hole -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\dirthole</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="970">
+  <terrain id="970" action="1">
     <!-- Grassy Hole -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\grassyhole</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="971">
+  <terrain id="971" action="1">
     <!-- Tunnel Entrance -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\tunnelentrance</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="972">
+  <terrain id="972" action="4">
     <!-- Trap Door Closed -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\trapdoor</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="973">
+  <terrain id="973" action="1">
     <!-- Trap Door Open -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\trapdooropen</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="974">
+  <terrain id="974" action="1">
     <!-- Sand Hole -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\sandhole</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="975">
+  <terrain id="975" action="0">
     <!-- Floor Brazier (H) -->
     <sprite order="0">
       <offset>(-10,-10)</offset>
@@ -2903,7 +2915,7 @@
     </sprite>
     <average>(11,82,214,255)</average>
   </terrain>
-  <terrain id="976">
+  <terrain id="976" action="0">
     <!-- Wall Brazier (H) -->
     <sprite order="5">
       <offset>(0,0)</offset>
@@ -2917,9 +2929,9 @@
     </sprite>
     <average>(11,82,214,255)</average>
   </terrain>
-  <terrain id="977">
+  <terrain id="977" action="0">
     <!-- Wall Brazier (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <offset>(2,1)</offset>
       <texture>Tenser\Terrain\wall brazier</texture>
       <source>(0,0,600,100)</source>
@@ -2931,7 +2943,7 @@
     </sprite>
     <average>(11,82,214,255)</average>
   </terrain>
-  <terrain id="978">
+  <terrain id="978" action="0">
     <!-- Wall Brazier - green fire (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\wall brazier-greenfire</texture>
@@ -2944,9 +2956,9 @@
     </sprite>
     <average>(11,82,214,255)</average>
   </terrain>
-  <terrain id="979">
+  <terrain id="979" action="0">
     <!-- Wall Brazier - green fire (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <offset>(2,1)</offset>
       <texture>Tenser\Terrain\wall brazier-greenfire</texture>
       <source>(0,0,600,100)</source>
@@ -2958,7 +2970,7 @@
     </sprite>
     <average>(11,82,214,255)</average>
   </terrain>
-  <terrain id="980">
+  <terrain id="980" action="0">
     <!-- Wall Brazier - blue fire (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\wall brazier-bluefire</texture>
@@ -2971,9 +2983,9 @@
     </sprite>
     <average>(11,82,214,255)</average>
   </terrain>
-  <terrain id="981">
+  <terrain id="981" action="0">
     <!-- Wall Brazier - blue fire (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <offset>(2,1)</offset>
       <texture>Tenser\Terrain\wall brazier-bluefire</texture>
       <source>(0,0,600,100)</source>
@@ -2985,7 +2997,7 @@
     </sprite>
     <average>(11,82,214,255)</average>
   </terrain>
-  <terrain id="982">
+  <terrain id="982" action="0">
     <!-- Candelabra -->
     <sprite order="0">
       <offset>(-1,0)</offset>
@@ -2999,7 +3011,7 @@
     </sprite>
     <average>(11,82,214,255)</average>
   </terrain>
-  <terrain id="983">
+  <terrain id="983" action="6">
     <!-- Ladder Down South -->
     <sprite order="5">
       <texture>Tenser\Terrain\ladders</texture>
@@ -3007,7 +3019,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="984">
+  <terrain id="984" action="6">
     <!-- Ladder Down East -->
     <sprite order="5">
       <texture>Tenser\Terrain\ladders</texture>
@@ -3015,7 +3027,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="985">
+  <terrain id="985" action="6">
     <!-- Ladder Down West -->
     <sprite order="5">
       <texture>Tenser\Terrain\ladders</texture>
@@ -3023,7 +3035,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="986">
+  <terrain id="986" action="6">
     <!-- Ladder Down North -->
     <sprite order="5">
       <texture>Tenser\Terrain\ladders</texture>
@@ -3031,7 +3043,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="987">
+  <terrain id="987" action="5">
     <!-- Ladder Up North -->
     <sprite order="5">
       <texture>Tenser\Terrain\ladders</texture>
@@ -3039,7 +3051,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="988">
+  <terrain id="988" action="5">
     <!-- Ladder Up West -->
     <sprite order="5">
       <texture>Tenser\Terrain\ladders</texture>
@@ -3047,7 +3059,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="989">
+  <terrain id="989" action="5">
     <!-- Ladder Up East -->
     <sprite order="5">
       <texture>Tenser\Terrain\ladders</texture>
@@ -3055,7 +3067,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="990">
+  <terrain id="990" action="5">
     <!-- Ladder Up South -->
     <sprite order="5">
       <texture>Tenser\Terrain\ladders</texture>
@@ -3063,7 +3075,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="991">
+  <terrain id="991" action="0">
     <!-- Ice Labyrinth Wall (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\ice</texture>
@@ -3071,23 +3083,23 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="992">
+  <terrain id="992" action="0">
     <!-- Ice Labyrinth Floor -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\ice</texture>
       <source>(100,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="993">
+  <terrain id="993" action="0">
     <!-- Ice Labyrinth Wall (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\ice</texture>
       <source>(200,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="994">
+  <terrain id="994" action="0">
     <!-- Ice Labyrinth Wall ruin (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\ice</texture>
@@ -3095,39 +3107,39 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="995">
+  <terrain id="995" action="0">
     <!-- Ice Labyrinth rubble -->
-    <sprite order="5">
+    <sprite order="3">
       <texture>Tenser\Terrain\ice</texture>
       <source>(400,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="996">
+  <terrain id="996" action="0">
     <!-- Ice Labyrinth Wall ruin (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\ice</texture>
       <source>(500,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="997">
+  <terrain id="997" action="0">
     <!-- Ice Labyrinth Wall Corner Pillar -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\ice</texture>
       <source>(600,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="998">
+  <terrain id="998" action="0">
     <!-- Ice Labyrinth Corner Pillar ruin -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\ice</texture>
       <source>(700,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="1008">
+  <terrain id="1008" action="0">
     <!-- Lava Tube Wall (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\volcanic</texture>
@@ -3135,23 +3147,23 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="1009">
+  <terrain id="1009" action="0">
     <!-- Lava Tube Floor -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\volcanic</texture>
       <source>(100,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="1010">
+  <terrain id="1010" action="0">
     <!-- Lava Tube Wall (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\volcanic</texture>
       <source>(200,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="1011">
+  <terrain id="1011" action="0">
     <!-- Lava Tube Wall ruin (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\volcanic</texture>
@@ -3159,50 +3171,50 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="1012">
+  <terrain id="1012" action="0">
     <!-- Lava Tube rubble -->
-    <sprite order="5">
+    <sprite order="3">
       <texture>Tenser\Terrain\volcanic</texture>
       <source>(400,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="1013">
+  <terrain id="1013" action="0">
     <!-- Lava Tube Wall ruin (V) -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\volcanic</texture>
       <source>(500,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="1014">
+  <terrain id="1014" action="0">
     <!-- Lava Tube Wall Corner Pillar -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\volcanic</texture>
       <source>(600,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="1015">
+  <terrain id="1015" action="0">
     <!-- Lava Tube Corner Pillar ruin -->
-    <sprite order="5">
+    <sprite order="4">
       <texture>Tenser\Terrain\volcanic</texture>
       <source>(700,0,100,100)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="1016">
+  <terrain id="1016" action="0">
     <!-- Dark Cloud Skyhex -->
-    <sprite order="5">
+    <sprite order="0">
       <offset>(45,45)</offset>
       <texture>Tenser\Terrain\darkcloud</texture>
       <source>(0,0,55,55)</source>
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="1017">
+  <terrain id="1017" action="0">
     <!-- Dark Cloud Animated Skyhex -->
-    <sprite order="5">
+    <sprite order="0">
       <offset>(45,45)</offset>
       <texture>Tenser\Terrain\stormcloud-Sheet</texture>
       <source>(0,0,275,55)</source>
@@ -3216,7 +3228,7 @@
     </sprite>
     <average>(11,82,214,255)</average>
   </terrain>
-  <terrain id="1018" cost="6">
+  <terrain id="1018" action="0" cost="6">
     <!-- Animated Wave East -->
     <sprite order="0">
       <texture>Tenser\Terrain\EastWave-Sheet</texture>
@@ -3247,7 +3259,7 @@
     </sprite>
     <average>(11,82,214,255)</average>
   </terrain>
-  <terrain id="1019" cost="6">
+  <terrain id="1019" action="0" cost="6">
     <!-- Animated Wave South -->
     <sprite order="0">
       <texture>Tenser\Terrain\SouthWave-Sheet</texture>
@@ -3278,47 +3290,47 @@
     </sprite>
     <average>(11,82,214,255)</average>
   </terrain>
-  <terrain id="1020">
+  <terrain id="1020" action="0">
     <!-- Sandstone Rubble -->
-    <sprite order="5">
+    <sprite order="3">
       <texture>Tenser\Terrain\rubble_sandstone</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(115,121,114,255)</average>
   </terrain>
-  <terrain id="1021">
+  <terrain id="1021" action="0">
     <!-- Blue Marble Rubble -->
-    <sprite order="5">
+    <sprite order="3">
       <texture>Tenser\Terrain\rubble_bluemarble</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(115,121,114,255)</average>
   </terrain>
-  <terrain id="1022">
+  <terrain id="1022" action="0">
     <!-- Egyptian Rubble -->
-    <sprite order="5">
+    <sprite order="3">
       <texture>Tenser\Terrain\rubble_egyptian</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(115,121,114,255)</average>
   </terrain>
-  <terrain id="1023">
+  <terrain id="1023" action="0">
     <!-- Pagoda Rubble -->
-    <sprite order="5">
+    <sprite order="3">
       <texture>Tenser\Terrain\rubble_pagoda</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(115,121,114,255)</average>
   </terrain>
-  <terrain id="1024">
+  <terrain id="1024" action="0">
     <!-- Thicket Rubbish -->
-    <sprite order="5">
+    <sprite order="3">
       <texture>Tenser\Terrain\rubble_thicket</texture>
       <source>(0,0,100,100)</source>
     </sprite>
     <average>(115,121,114,255)</average>
   </terrain>
-  <terrain id="1025">
+  <terrain id="1025" action="0">
     <!-- Candelabra - no shade -->
     <sprite order="0">
       <texture>Tenser\Terrain\candelabraLight</texture>
@@ -3331,27 +3343,27 @@
     </sprite>
     <average>(115,121,114,255)</average>
   </terrain>
-  <terrain id="1026">
+  <terrain id="1026" action="6">
     <!-- Blank Spiral Staircase -->
-    <sprite order="5">
+    <sprite order="0">
       <texture>Tenser\Terrain\spiralstaircase_blank</texture>
       <source>(0,0,55,55)</source>
       <offset>(45,45)</offset>
     </sprite>
     <average>(115,121,114,255)</average>
   </terrain>
-  <terrain id="1027">
+  <terrain id="1027" action="0">
     <!-- Flat Stone Bridge (H) -->
-    <sprite order="5">
+    <sprite order="3">
       <texture>Tenser\Terrain\flatstonebridge</texture>
       <source>(0,0,55,55)</source>
       <offset>(45,45)</offset>
     </sprite>
     <average>(115,121,114,255)</average>
   </terrain>
-  <terrain id="1028">
+  <terrain id="1028" action="0">
     <!-- Flat Stone Bridge (V) -->
-    <sprite order="5">
+    <sprite order="3">
       <texture>Tenser\Terrain\flatstonebridge2</texture>
       <source>(0,0,55,55)</source>
       <offset>(45,45)</offset>
@@ -3359,4 +3371,3 @@
     <average>(115,121,114,255)</average>
   </terrain>
 </data>
-
