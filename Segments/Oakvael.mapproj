@@ -118106,6 +118106,15 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StunResistanceBracelet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
     </treasure>
     <treasure name="dungeon2Rings">
       <entry weight="3">
@@ -118122,15 +118131,6 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new WeakShieldRing();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="1">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new ShieldRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
