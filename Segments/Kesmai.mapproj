@@ -90447,22 +90447,22 @@
       </tile>
       <tile x="3" y="4">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="4" y="4">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="5" y="4">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="6" y="4">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="7" y="4">
@@ -90769,27 +90769,27 @@
       </tile>
       <tile x="2" y="5">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="3" y="5">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="4" y="5">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="5" y="5">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="6" y="5">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="7" y="5">
@@ -91334,6 +91334,9 @@
           <ground>601</ground>
           <movementCost>3</movementCost>
         </component>
+        <component type="FloorComponent">
+          <ground>116</ground>
+        </component>
       </tile>
       <tile x="21" y="6">
         <component type="FloorComponent">
@@ -91678,6 +91681,9 @@
         <component type="WaterComponent">
           <ground>601</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="FloorComponent">
+          <ground>116</ground>
         </component>
       </tile>
       <tile x="21" y="7">
@@ -92042,18 +92048,24 @@
         </component>
       </tile>
       <tile x="20" y="8">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
         <component type="FloorComponent">
-          <ground>12</ground>
+          <ground>116</ground>
         </component>
       </tile>
       <tile x="21" y="8">
-        <component type="FloorComponent">
-          <ground>375</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="22" y="8">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="23" y="8">
@@ -92184,7 +92196,6 @@
           <wall>683</wall>
           <destroyed>686</destroyed>
           <ruins>687</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="34" y="8">
@@ -92429,6 +92440,7 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
+      <tile x="0" y="9" />
       <tile x="1" y="9">
         <component type="WallComponent">
           <wall>685</wall>
@@ -92564,8 +92576,12 @@
         </component>
       </tile>
       <tile x="21" y="9">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
         <component type="FloorComponent">
-          <ground>12</ground>
+          <ground>115</ground>
         </component>
       </tile>
       <tile x="22" y="9">
@@ -92798,6 +92814,9 @@
           <ruins>681</ruins>
           <indestructible>true</indestructible>
         </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
       </tile>
       <tile x="2" y="10">
         <component type="FloorComponent">
@@ -92811,7 +92830,7 @@
       </tile>
       <tile x="4" y="10">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>264</ground>
         </component>
       </tile>
       <tile x="5" y="10">
@@ -92927,8 +92946,9 @@
         </component>
       </tile>
       <tile x="21" y="10">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="22" y="10">
@@ -93207,7 +93227,7 @@
       </tile>
       <tile x="4" y="11">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>264</ground>
         </component>
       </tile>
       <tile x="5" y="11">
@@ -93895,37 +93915,36 @@
           <wall>679</wall>
           <destroyed>682</destroyed>
           <ruins>681</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="47" y="12">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="48" y="12">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="49" y="12">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="50" y="12">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="51" y="12">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="52" y="12">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="53" y="12">
@@ -93936,7 +93955,7 @@
           <indestructible>true</indestructible>
         </component>
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="54" y="12">
@@ -93985,6 +94004,9 @@
           <ruins>0</ruins>
           <indestructible>true</indestructible>
         </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
       </tile>
       <tile x="7" y="13">
         <component type="WallComponent">
@@ -93992,6 +94014,9 @@
           <destroyed>686</destroyed>
           <ruins>687</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
         </component>
       </tile>
       <tile x="8" y="13">
@@ -94310,42 +94335,41 @@
           <wall>685</wall>
           <destroyed>688</destroyed>
           <ruins>687</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="47" y="13">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="48" y="13">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="49" y="13">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="50" y="13">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="51" y="13">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="52" y="13">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="53" y="13">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="54" y="13">
@@ -94376,7 +94400,7 @@
       </tile>
       <tile x="4" y="14">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>264</ground>
         </component>
       </tile>
       <tile x="5" y="14">
@@ -94767,17 +94791,17 @@
           <indestructible>true</indestructible>
         </component>
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="52" y="14">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="53" y="14">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="54" y="14">
@@ -94811,7 +94835,7 @@
       </tile>
       <tile x="4" y="15">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>264</ground>
         </component>
       </tile>
       <tile x="5" y="15">
@@ -94840,7 +94864,7 @@
       </tile>
       <tile x="8" y="15">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>264</ground>
         </component>
       </tile>
       <tile x="9" y="15">
@@ -94953,8 +94977,9 @@
         </component>
       </tile>
       <tile x="23" y="15">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="24" y="15">
@@ -94966,8 +94991,9 @@
         </component>
       </tile>
       <tile x="25" y="15">
-        <component type="FloorComponent">
-          <ground>375</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="26" y="15">
@@ -94997,6 +95023,9 @@
           <ground>601</ground>
           <movementCost>3</movementCost>
         </component>
+        <component type="FloorComponent">
+          <ground>115</ground>
+        </component>
       </tile>
       <tile x="30" y="15">
         <component type="FloorComponent">
@@ -95015,19 +95044,15 @@
         </component>
       </tile>
       <tile x="32" y="15">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>206</static>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="33" y="15">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>206</static>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="34" y="15">
@@ -95082,8 +95107,9 @@
         </component>
       </tile>
       <tile x="43" y="15">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="44" y="15">
@@ -95136,24 +95162,24 @@
         </component>
       </tile>
       <tile x="51" y="15">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>685</wall>
           <destroyed>688</destroyed>
           <ruins>687</ruins>
           <indestructible>true</indestructible>
         </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
+        </component>
       </tile>
       <tile x="52" y="15">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="53" y="15">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="54" y="15">
@@ -95187,12 +95213,12 @@
       </tile>
       <tile x="4" y="16">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>264</ground>
         </component>
       </tile>
       <tile x="5" y="16">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>264</ground>
         </component>
       </tile>
       <tile x="6" y="16">
@@ -95210,7 +95236,7 @@
       </tile>
       <tile x="8" y="16">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>264</ground>
         </component>
       </tile>
       <tile x="9" y="16">
@@ -95334,18 +95360,21 @@
         </component>
       </tile>
       <tile x="23" y="16">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="24" y="16">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="25" y="16">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="26" y="16">
@@ -95367,36 +95396,39 @@
         </component>
       </tile>
       <tile x="29" y="16">
-        <component type="FloorComponent">
-          <ground>375</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="30" y="16">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="31" y="16">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="32" y="16">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="33" y="16">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>206</static>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="34" y="16">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="35" y="16">
@@ -95461,8 +95493,9 @@
         </component>
       </tile>
       <tile x="44" y="16">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="45" y="16">
@@ -95512,24 +95545,23 @@
         </component>
       </tile>
       <tile x="51" y="16">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>685</wall>
           <destroyed>688</destroyed>
           <ruins>687</ruins>
-          <indestructible>true</indestructible>
+        </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="52" y="16">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="53" y="16">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="54" y="16">
@@ -95579,6 +95611,9 @@
           <ruins>687</ruins>
           <indestructible>true</indestructible>
         </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
       </tile>
       <tile x="6" y="17">
         <component type="WallComponent">
@@ -95603,6 +95638,9 @@
           <ruins>687</ruins>
           <indestructible>true</indestructible>
         </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
       </tile>
       <tile x="9" y="17">
         <component type="WallComponent">
@@ -95610,6 +95648,9 @@
           <destroyed>686</destroyed>
           <ruins>687</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
         </component>
       </tile>
       <tile x="10" y="17">
@@ -95659,40 +95700,33 @@
         </component>
       </tile>
       <tile x="15" y="17">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>206</static>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="16" y="17">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>206</static>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="17" y="17">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>206</static>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="18" y="17">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>206</static>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="19" y="17">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="20" y="17">
@@ -95720,25 +95754,25 @@
         </component>
       </tile>
       <tile x="24" y="17">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>159</wall>
           <destroyed>162</destroyed>
           <ruins>0</ruins>
           <indestructible>true</indestructible>
         </component>
+        <component type="FloorComponent">
+          <ground>5</ground>
+        </component>
       </tile>
       <tile x="25" y="17">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>683</wall>
           <destroyed>686</destroyed>
           <ruins>687</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="FloorComponent">
+          <ground>5</ground>
         </component>
       </tile>
       <tile x="26" y="17">
@@ -95756,9 +95790,6 @@
         </component>
       </tile>
       <tile x="27" y="17">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="StaticComponent">
           <static>211</static>
         </component>
@@ -95768,16 +95799,19 @@
           <ruins>681</ruins>
           <indestructible>true</indestructible>
         </component>
+        <component type="FloorComponent">
+          <ground>5</ground>
+        </component>
       </tile>
       <tile x="28" y="17">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>683</wall>
           <destroyed>686</destroyed>
           <ruins>687</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="FloorComponent">
+          <ground>5</ground>
         </component>
       </tile>
       <tile x="29" y="17">
@@ -95802,8 +95836,9 @@
         </component>
       </tile>
       <tile x="32" y="17">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="33" y="17">
@@ -95816,13 +95851,18 @@
         </component>
       </tile>
       <tile x="34" y="17">
-        <component type="FloorComponent">
-          <ground>375</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="35" y="17">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
         <component type="FloorComponent">
-          <ground>12</ground>
+          <ground>116</ground>
         </component>
       </tile>
       <tile x="36" y="17">
@@ -95845,13 +95885,15 @@
         </component>
       </tile>
       <tile x="39" y="17">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="40" y="17">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="41" y="17">
@@ -95860,13 +95902,15 @@
         </component>
       </tile>
       <tile x="42" y="17">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="43" y="17">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="44" y="17">
@@ -95876,8 +95920,9 @@
         </component>
       </tile>
       <tile x="45" y="17">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="46" y="17">
@@ -95922,19 +95967,18 @@
         </component>
       </tile>
       <tile x="51" y="17">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>685</wall>
           <destroyed>688</destroyed>
           <ruins>687</ruins>
-          <indestructible>true</indestructible>
+        </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="52" y="17">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="53" y="17">
@@ -95959,25 +96003,66 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
+      <tile x="5" y="18" />
+      <tile x="6" y="18" />
+      <tile x="8" y="18">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="9" y="18">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="10" y="18">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="11" y="18">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="12" y="18">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>605</obstruction>
+        </component>
+      </tile>
       <tile x="13" y="18">
-        <component type="WallComponent">
-          <wall>685</wall>
-          <destroyed>688</destroyed>
-          <ruins>687</ruins>
-          <indestructible>true</indestructible>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="14" y="18">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>207</static>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="15" y="18">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="16" y="18">
@@ -95990,21 +96075,21 @@
         </component>
       </tile>
       <tile x="17" y="18">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="18" y="18">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>207</static>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="19" y="18">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="20" y="18">
@@ -96037,25 +96122,25 @@
         </component>
       </tile>
       <tile x="24" y="18">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>685</wall>
           <destroyed>688</destroyed>
           <ruins>687</ruins>
           <indestructible>true</indestructible>
         </component>
+        <component type="FloorComponent">
+          <ground>5</ground>
+        </component>
       </tile>
       <tile x="25" y="18">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="StaticComponent">
           <static>216</static>
         </component>
         <component type="StaticComponent">
           <static>213</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="26" y="18">
@@ -96069,25 +96154,25 @@
         </component>
       </tile>
       <tile x="28" y="18">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="StaticComponent">
           <static>216</static>
         </component>
         <component type="StaticComponent">
           <static>213</static>
         </component>
-      </tile>
-      <tile x="29" y="18">
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
+      </tile>
+      <tile x="29" y="18">
         <component type="WallComponent">
           <wall>685</wall>
           <destroyed>688</destroyed>
           <ruins>687</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="30" y="18">
@@ -96202,8 +96287,9 @@
         </component>
       </tile>
       <tile x="45" y="18">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="46" y="18">
@@ -96262,7 +96348,7 @@
       </tile>
       <tile x="52" y="18">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="53" y="18">
@@ -96273,42 +96359,75 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
+      <tile x="6" y="19" />
+      <tile x="8" y="19">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="9" y="19">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="10" y="19">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="11" y="19">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="12" y="19">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>605</obstruction>
+        </component>
+      </tile>
       <tile x="13" y="19">
-        <component type="WallComponent">
-          <wall>685</wall>
-          <destroyed>688</destroyed>
-          <ruins>687</ruins>
-          <indestructible>true</indestructible>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>605</obstruction>
         </component>
       </tile>
       <tile x="14" y="19">
-        <component type="WallComponent">
-          <wall>683</wall>
-          <destroyed>686</destroyed>
-          <ruins>687</ruins>
-          <indestructible>true</indestructible>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="15" y="19">
-        <component type="FloorComponent">
-          <ground>176</ground>
-        </component>
-        <component type="WallComponent">
-          <wall>683</wall>
-          <destroyed>686</destroyed>
-          <ruins>687</ruins>
-          <indestructible>true</indestructible>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="16" y="19">
-        <component type="FloorComponent">
-          <ground>176</ground>
-        </component>
-        <component type="WallComponent">
-          <wall>683</wall>
-          <destroyed>686</destroyed>
-          <ruins>687</ruins>
-          <indestructible>true</indestructible>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="17" y="19">
@@ -96411,20 +96530,20 @@
           <secretId>26</secretId>
           <destroyedId>81</destroyedId>
           <isOpen>true</isOpen>
-          <isDestroyed>false</isDestroyed>
+          <isDestroyed>true</isDestroyed>
         </component>
       </tile>
       <tile x="30" y="19">
         <component type="FloorComponent">
-          <ground>375</ground>
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="31" y="19">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="StaticComponent">
           <static>206</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="32" y="19">
@@ -96437,7 +96556,7 @@
       </tile>
       <tile x="33" y="19">
         <component type="FloorComponent">
-          <ground>375</ground>
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="34" y="19">
@@ -96544,19 +96663,15 @@
         </component>
       </tile>
       <tile x="47" y="19">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>206</static>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="48" y="19">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>206</static>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="49" y="19">
@@ -96580,12 +96695,12 @@
       </tile>
       <tile x="51" y="19">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="52" y="19">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="53" y="19">
@@ -96596,9 +96711,86 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
-      <tile x="14" y="20" />
-      <tile x="15" y="20" />
-      <tile x="16" y="20" />
+      <tile x="6" y="20" />
+      <tile x="7" y="20" />
+      <tile x="8" y="20">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="9" y="20">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="10" y="20">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="11" y="20">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="12" y="20">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="13" y="20">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>605</obstruction>
+        </component>
+      </tile>
+      <tile x="14" y="20">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>605</obstruction>
+        </component>
+      </tile>
+      <tile x="15" y="20">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>605</obstruction>
+        </component>
+      </tile>
+      <tile x="16" y="20">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>605</obstruction>
+        </component>
+      </tile>
       <tile x="17" y="20">
         <component type="WallComponent">
           <wall>685</wall>
@@ -96689,14 +96881,14 @@
         </component>
       </tile>
       <tile x="25" y="20">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="StaticComponent">
           <static>216</static>
         </component>
         <component type="StaticComponent">
           <static>213</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="26" y="20">
@@ -96721,14 +96913,14 @@
         </component>
       </tile>
       <tile x="29" y="20">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="WallComponent">
           <wall>685</wall>
           <destroyed>688</destroyed>
           <ruins>687</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="30" y="20">
@@ -96746,11 +96938,11 @@
         </component>
       </tile>
       <tile x="32" y="20">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="StaticComponent">
           <static>206</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="33" y="20">
@@ -96864,19 +97056,15 @@
         </component>
       </tile>
       <tile x="47" y="20">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>206</static>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="48" y="20">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>206</static>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="49" y="20">
@@ -96901,7 +97089,7 @@
       </tile>
       <tile x="51" y="20">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="52" y="20">
@@ -96926,6 +97114,77 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
+      <tile x="7" y="21" />
+      <tile x="8" y="21">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="9" y="21">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="10" y="21">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="11" y="21">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="12" y="21">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="13" y="21">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="14" y="21">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="15" y="21">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="16" y="21">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
       <tile x="17" y="21">
         <component type="WallComponent">
           <wall>685</wall>
@@ -96936,43 +97195,43 @@
       </tile>
       <tile x="18" y="21">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="19" y="21">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="20" y="21">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="21" y="21">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="22" y="21">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="23" y="21">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="24" y="21">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>685</wall>
           <destroyed>688</destroyed>
           <ruins>687</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="25" y="21">
@@ -97100,16 +97359,15 @@
         </component>
       </tile>
       <tile x="48" y="21">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>207</static>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="49" y="21">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="50" y="21">
@@ -97132,7 +97390,6 @@
           <closedId>62</closedId>
           <secretId>683</secretId>
           <destroyedId>80</destroyedId>
-          <isSecret>true</isSecret>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -97150,6 +97407,86 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
+      <tile x="53" y="21">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="54" y="21">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="8" y="22">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="9" y="22">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="10" y="22">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="11" y="22">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="12" y="22">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="13" y="22">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="14" y="22">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="15" y="22">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="16" y="22">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
       <tile x="17" y="22">
         <component type="WallComponent">
           <wall>679</wall>
@@ -97160,32 +97497,32 @@
       </tile>
       <tile x="18" y="22">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="19" y="22">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="20" y="22">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="21" y="22">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="22" y="22">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="23" y="22">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="24" y="22">
@@ -97194,9 +97531,11 @@
           <closedId>63</closedId>
           <secretId>26</secretId>
           <destroyedId>81</destroyedId>
+          <isOpen>true</isOpen>
+          <isDestroyed>true</isDestroyed>
         </component>
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="25" y="22">
@@ -97270,28 +97609,28 @@
       </tile>
       <tile x="35" y="22">
         <component type="FloorComponent">
-          <ground>375</ground>
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="36" y="22">
         <component type="FloorComponent">
-          <ground>375</ground>
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="37" y="22">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="StaticComponent">
           <static>206</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="38" y="22">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="StaticComponent">
           <static>206</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="39" y="22">
@@ -97353,24 +97692,30 @@
         </component>
       </tile>
       <tile x="48" y="22">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>207</static>
+        <component type="FloorComponent">
+          <ground>115</ground>
         </component>
       </tile>
       <tile x="49" y="22">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
-        <component type="StaticComponent">
-          <static>207</static>
+        <component type="FloorComponent">
+          <ground>115</ground>
         </component>
       </tile>
       <tile x="50" y="22">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
         <component type="FloorComponent">
-          <ground>12</ground>
+          <ground>115</ground>
         </component>
       </tile>
       <tile x="51" y="22">
@@ -97386,6 +97731,110 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
+      <tile x="53" y="22">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="54" y="22">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="55" y="22">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="56" y="22">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="57" y="22">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="58" y="22">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="8" y="23">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="9" y="23">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="10" y="23">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="11" y="23">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="12" y="23">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="13" y="23">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="14" y="23">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="15" y="23">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="16" y="23">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
       <tile x="17" y="23">
         <component type="WallComponent">
           <wall>685</wall>
@@ -97396,32 +97845,32 @@
       </tile>
       <tile x="18" y="23">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="19" y="23">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="20" y="23">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="21" y="23">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="22" y="23">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="23" y="23">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="24" y="23">
@@ -97454,11 +97903,11 @@
         </component>
       </tile>
       <tile x="28" y="23">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="StaticComponent">
           <static>205</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="29" y="23">
@@ -97549,50 +97998,49 @@
         </component>
       </tile>
       <tile x="38" y="23">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="TreeComponent">
           <tree>98</tree>
           <canGrow>true</canGrow>
         </component>
-      </tile>
-      <tile x="39" y="23">
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
+      </tile>
+      <tile x="39" y="23">
         <component type="StaticComponent">
           <static>206</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="40" y="23">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
         <component type="StaticComponent">
           <static>206</static>
         </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
+        </component>
       </tile>
       <tile x="41" y="23">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>143</wall>
           <destroyed>144</destroyed>
           <ruins>0</ruins>
           <indestructible>true</indestructible>
         </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
+        </component>
       </tile>
       <tile x="42" y="23">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>139</wall>
           <destroyed>141</destroyed>
           <ruins>46</ruins>
-          <indestructible>true</indestructible>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="43" y="23">
@@ -97624,9 +98072,6 @@
         </component>
       </tile>
       <tile x="45" y="23">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>139</wall>
           <destroyed>141</destroyed>
@@ -97636,16 +98081,18 @@
         <component type="StaticComponent">
           <static>220</static>
         </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
+        </component>
       </tile>
       <tile x="46" y="23">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>139</wall>
           <destroyed>141</destroyed>
           <ruins>46</ruins>
-          <indestructible>true</indestructible>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="47" y="23">
@@ -97660,8 +98107,9 @@
         </component>
       </tile>
       <tile x="48" y="23">
-        <component type="FloorComponent">
-          <ground>12</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="49" y="23">
@@ -97674,11 +98122,9 @@
         </component>
       </tile>
       <tile x="50" y="23">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>206</static>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="51" y="23">
@@ -97687,6 +98133,9 @@
           <destroyed>162</destroyed>
           <ruins>0</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="52" y="23">
@@ -97703,6 +98152,113 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
+      <tile x="53" y="23">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>605</obstruction>
+        </component>
+      </tile>
+      <tile x="54" y="23">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="55" y="23">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="56" y="23">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="57" y="23">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="58" y="23">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="8" y="24">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="9" y="24">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="10" y="24">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="11" y="24">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="12" y="24">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="13" y="24">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="14" y="24">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="15" y="24">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="16" y="24">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
       <tile x="17" y="24">
         <component type="WallComponent">
           <wall>685</wall>
@@ -97713,58 +98269,58 @@
       </tile>
       <tile x="18" y="24">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="19" y="24">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>159</wall>
           <destroyed>162</destroyed>
           <ruins>0</ruins>
           <indestructible>true</indestructible>
         </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
+        </component>
       </tile>
       <tile x="20" y="24">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>683</wall>
           <destroyed>686</destroyed>
           <ruins>687</ruins>
+        </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="21" y="24">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>683</wall>
           <destroyed>686</destroyed>
           <ruins>687</ruins>
+        </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="22" y="24">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>683</wall>
           <destroyed>686</destroyed>
           <ruins>687</ruins>
         </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
+        </component>
       </tile>
       <tile x="23" y="24">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>677</wall>
           <destroyed>680</destroyed>
           <ruins>681</ruins>
+        </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="24" y="24">
@@ -97838,9 +98394,6 @@
         </component>
       </tile>
       <tile x="29" y="24">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="StaticComponent">
           <static>243</static>
         </component>
@@ -97855,6 +98408,9 @@
           <destroyed>141</destroyed>
           <ruins>46</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="FloorComponent">
+          <ground>5</ground>
         </component>
       </tile>
       <tile x="30" y="24">
@@ -97968,9 +98524,6 @@
         </component>
       </tile>
       <tile x="39" y="24">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>139</wall>
           <destroyed>141</destroyed>
@@ -97980,16 +98533,18 @@
         <component type="StaticComponent">
           <static>220</static>
         </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
+        </component>
       </tile>
       <tile x="40" y="24">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>139</wall>
           <destroyed>141</destroyed>
           <ruins>46</ruins>
-          <indestructible>true</indestructible>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="41" y="24">
@@ -98020,11 +98575,11 @@
         </component>
       </tile>
       <tile x="44" y="24">
-        <component type="FloorComponent">
-          <ground>5</ground>
-        </component>
         <component type="StaticComponent">
           <static>399</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>5</ground>
         </component>
       </tile>
       <tile x="45" y="24">
@@ -98038,52 +98593,86 @@
         </component>
       </tile>
       <tile x="47" y="24">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>140</wall>
           <destroyed>142</destroyed>
           <ruins>46</ruins>
           <indestructible>true</indestructible>
         </component>
+        <component type="FloorComponent">
+          <ground>5</ground>
+        </component>
       </tile>
       <tile x="48" y="24">
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
-        <component type="StaticComponent">
-          <static>206</static>
-        </component>
       </tile>
       <tile x="49" y="24">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>206</static>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="50" y="24">
-        <component type="WallComponent">
-          <wall>159</wall>
-          <destroyed>162</destroyed>
-          <ruins>0</ruins>
-          <indestructible>true</indestructible>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="51" y="24">
-        <component type="WallComponent">
-          <wall>685</wall>
-          <destroyed>688</destroyed>
-          <ruins>687</ruins>
-          <indestructible>true</indestructible>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
-        <component type="WallComponent">
-          <wall>683</wall>
-          <destroyed>686</destroyed>
-          <ruins>687</ruins>
-          <indestructible>true</indestructible>
+      </tile>
+      <tile x="52" y="24">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="53" y="24">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>605</obstruction>
+        </component>
+      </tile>
+      <tile x="54" y="24">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="55" y="24">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="56" y="24">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="57" y="24">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="58" y="24">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="17" y="25">
@@ -98096,7 +98685,7 @@
       </tile>
       <tile x="18" y="25">
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="19" y="25">
@@ -98105,9 +98694,11 @@
           <closedId>63</closedId>
           <secretId>26</secretId>
           <destroyedId>81</destroyedId>
+          <isOpen>true</isOpen>
+          <isDestroyed>true</isDestroyed>
         </component>
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="20" y="25">
@@ -98184,11 +98775,11 @@
         </component>
       </tile>
       <tile x="30" y="25">
-        <component type="FloorComponent">
-          <ground>5</ground>
-        </component>
         <component type="StaticComponent">
           <static>399</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>5</ground>
         </component>
       </tile>
       <tile x="31" y="25">
@@ -98277,44 +98868,88 @@
         </component>
       </tile>
       <tile x="47" y="25">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>140</wall>
           <destroyed>142</destroyed>
           <ruins>46</ruins>
-          <indestructible>true</indestructible>
+        </component>
+        <component type="FloorComponent">
+          <ground>5</ground>
         </component>
       </tile>
       <tile x="48" y="25">
         <component type="FloorComponent">
           <ground>12</ground>
         </component>
-        <component type="StaticComponent">
-          <static>206</static>
-        </component>
       </tile>
       <tile x="49" y="25">
-        <component type="WallComponent">
-          <wall>159</wall>
-          <destroyed>162</destroyed>
-          <ruins>0</ruins>
-          <indestructible>true</indestructible>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="50" y="25">
-        <component type="WallComponent">
-          <wall>685</wall>
-          <destroyed>688</destroyed>
-          <ruins>687</ruins>
-          <indestructible>true</indestructible>
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
         </component>
-        <component type="WallComponent">
-          <wall>683</wall>
-          <destroyed>686</destroyed>
-          <ruins>687</ruins>
-          <indestructible>true</indestructible>
+      </tile>
+      <tile x="51" y="25">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="52" y="25">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="53" y="25">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>605</obstruction>
+        </component>
+      </tile>
+      <tile x="54" y="25">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>605</obstruction>
+        </component>
+      </tile>
+      <tile x="55" y="25">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="56" y="25">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="57" y="25">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="58" y="25">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="17" y="26">
@@ -98327,17 +98962,17 @@
       </tile>
       <tile x="18" y="26">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="19" y="26">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>685</wall>
           <destroyed>688</destroyed>
           <ruins>687</ruins>
+        </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="20" y="26">
@@ -98572,6 +99207,83 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
+      <tile x="50" y="26">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>605</obstruction>
+        </component>
+      </tile>
+      <tile x="51" y="26">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>605</obstruction>
+        </component>
+      </tile>
+      <tile x="52" y="26">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>605</obstruction>
+        </component>
+      </tile>
+      <tile x="53" y="26">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>605</obstruction>
+        </component>
+      </tile>
+      <tile x="54" y="26">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="55" y="26">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="56" y="26">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="57" y="26">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="58" y="26">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
       <tile x="17" y="27">
         <component type="WallComponent">
           <wall>685</wall>
@@ -98582,27 +99294,27 @@
       </tile>
       <tile x="18" y="27">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="19" y="27">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>685</wall>
           <destroyed>688</destroyed>
           <ruins>687</ruins>
         </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
+        </component>
       </tile>
       <tile x="20" y="27">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>683</wall>
           <destroyed>686</destroyed>
           <ruins>687</ruins>
+        </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="21" y="27">
@@ -98663,11 +99375,11 @@
         </component>
       </tile>
       <tile x="29" y="27">
-        <component type="FloorComponent">
-          <ground>5</ground>
-        </component>
         <component type="StaticComponent">
           <static>209</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>5</ground>
         </component>
       </tile>
       <tile x="30" y="27">
@@ -98778,8 +99490,96 @@
         </component>
       </tile>
       <tile x="46" y="27" />
-      <tile x="47" y="27" />
-      <tile x="48" y="27" />
+      <tile x="47" y="27">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="48" y="27">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="49" y="27">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="50" y="27">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="51" y="27">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>605</obstruction>
+        </component>
+      </tile>
+      <tile x="52" y="27">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>605</obstruction>
+        </component>
+      </tile>
+      <tile x="53" y="27">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="54" y="27">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="55" y="27">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="56" y="27">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="57" y="27">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="58" y="27">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
       <tile x="17" y="28">
         <component type="WallComponent">
           <wall>685</wall>
@@ -98790,22 +99590,22 @@
       </tile>
       <tile x="18" y="28">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="19" y="28">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="20" y="28">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>685</wall>
           <destroyed>688</destroyed>
           <ruins>687</ruins>
+        </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="21" y="28">
@@ -98954,7 +99754,90 @@
       </tile>
       <tile x="45" y="28" />
       <tile x="46" y="28" />
-      <tile x="47" y="28" />
+      <tile x="47" y="28">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="48" y="28">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="49" y="28">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="50" y="28">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="51" y="28">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="52" y="28">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="53" y="28">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="54" y="28">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>19</obstruction>
+        </component>
+      </tile>
+      <tile x="55" y="28">
+        <component type="WaterComponent">
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="56" y="28">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="57" y="28">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="58" y="28">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
       <tile x="17" y="29">
         <component type="WallComponent">
           <wall>685</wall>
@@ -98965,22 +99848,22 @@
       </tile>
       <tile x="18" y="29">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="19" y="29">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="20" y="29">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>685</wall>
           <destroyed>688</destroyed>
           <ruins>687</ruins>
+        </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="21" y="29">
@@ -99024,11 +99907,12 @@
           <ground>12</ground>
         </component>
         <component type="DoorComponent">
-          <openId>449</openId>
-          <closedId>450</closedId>
-          <secretId>152</secretId>
-          <destroyedId>85</destroyedId>
-          <indestructible>true</indestructible>
+          <openId>232</openId>
+          <closedId>230</closedId>
+          <secretId>28</secretId>
+          <destroyedId>234</destroyedId>
+          <isOpen>true</isOpen>
+          <isDestroyed>true</isDestroyed>
         </component>
       </tile>
       <tile x="27" y="29">
@@ -99116,44 +100000,43 @@
           <ground>5</ground>
         </component>
         <component type="DoorComponent">
-          <openId>450</openId>
-          <closedId>449</closedId>
-          <secretId>25</secretId>
-          <destroyedId>80</destroyedId>
-          <indestructible>true</indestructible>
+          <openId>433</openId>
+          <closedId>420</closedId>
+          <secretId>449</secretId>
+          <destroyedId>435</destroyedId>
+          <isOpen>true</isOpen>
+          <isDestroyed>true</isDestroyed>
         </component>
       </tile>
       <tile x="41" y="29">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>139</wall>
           <destroyed>141</destroyed>
           <ruins>46</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="FloorComponent">
+          <ground>5</ground>
         </component>
       </tile>
       <tile x="42" y="29">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>139</wall>
           <destroyed>141</destroyed>
           <ruins>46</ruins>
-          <indestructible>true</indestructible>
+        </component>
+        <component type="FloorComponent">
+          <ground>5</ground>
         </component>
       </tile>
       <tile x="43" y="29">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>139</wall>
           <destroyed>141</destroyed>
           <ruins>46</ruins>
-          <indestructible>true</indestructible>
+        </component>
+        <component type="FloorComponent">
+          <ground>5</ground>
         </component>
       </tile>
       <tile x="44" y="29">
@@ -99175,6 +100058,84 @@
       </tile>
       <tile x="45" y="29" />
       <tile x="46" y="29" />
+      <tile x="47" y="29">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="48" y="29">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="49" y="29">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="50" y="29">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="51" y="29">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="52" y="29">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="53" y="29">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="54" y="29">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="55" y="29">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="56" y="29">
+        <component type="WaterComponent">
+          <color r="100" g="150" b="255" a="255" />
+          <ground>601</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="57" y="29">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="58" y="29">
+        <component type="WaterComponent">
+          <ground>22</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
       <tile x="17" y="30">
         <component type="WallComponent">
           <wall>679</wall>
@@ -99185,22 +100146,22 @@
       </tile>
       <tile x="18" y="30">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="19" y="30">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="20" y="30">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>685</wall>
           <destroyed>688</destroyed>
           <ruins>687</ruins>
+        </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="21" y="30">
@@ -99260,25 +100221,24 @@
         </component>
       </tile>
       <tile x="27" y="30">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>139</wall>
           <destroyed>141</destroyed>
           <ruins>46</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="FloorComponent">
+          <ground>5</ground>
         </component>
       </tile>
       <tile x="28" y="30">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>139</wall>
           <destroyed>141</destroyed>
           <ruins>46</ruins>
-          <indestructible>true</indestructible>
+        </component>
+        <component type="FloorComponent">
+          <ground>5</ground>
         </component>
       </tile>
       <tile x="29" y="30">
@@ -99297,11 +100257,12 @@
           <ground>5</ground>
         </component>
         <component type="DoorComponent">
-          <openId>450</openId>
-          <closedId>449</closedId>
-          <secretId>151</secretId>
-          <destroyedId>84</destroyedId>
-          <indestructible>true</indestructible>
+          <openId>433</openId>
+          <closedId>420</closedId>
+          <secretId>449</secretId>
+          <destroyedId>435</destroyedId>
+          <isOpen>true</isOpen>
+          <isDestroyed>true</isDestroyed>
         </component>
       </tile>
       <tile x="31" y="30">
@@ -99338,36 +100299,34 @@
         </component>
       </tile>
       <tile x="34" y="30">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>139</wall>
           <destroyed>141</destroyed>
           <ruins>46</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="FloorComponent">
+          <ground>5</ground>
         </component>
       </tile>
       <tile x="35" y="30">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>139</wall>
           <destroyed>141</destroyed>
           <ruins>46</ruins>
-          <indestructible>true</indestructible>
+        </component>
+        <component type="FloorComponent">
+          <ground>5</ground>
         </component>
       </tile>
       <tile x="36" y="30">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="WallComponent">
           <wall>139</wall>
           <destroyed>141</destroyed>
           <ruins>46</ruins>
-          <indestructible>true</indestructible>
+        </component>
+        <component type="FloorComponent">
+          <ground>5</ground>
         </component>
       </tile>
       <tile x="37" y="30">
@@ -99388,45 +100347,45 @@
         </component>
       </tile>
       <tile x="38" y="30">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="StaticComponent">
           <static>88</static>
         </component>
         <component type="StaticComponent">
           <static>235</static>
         </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
+        </component>
       </tile>
       <tile x="39" y="30">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="40" y="30">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="StaticComponent">
           <static>167</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="41" y="30">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="42" y="30">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="43" y="30">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="StaticComponent">
           <static>411</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="44" y="30">
@@ -99517,44 +100476,44 @@
         </component>
       </tile>
       <tile x="26" y="31">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="StaticComponent">
           <static>88</static>
         </component>
         <component type="StaticComponent">
           <static>235</static>
         </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
+        </component>
       </tile>
       <tile x="27" y="31">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="28" y="31">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="29" y="31">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="30" y="31">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="31" y="31">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="32" y="31">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="33" y="31">
@@ -99570,50 +100529,50 @@
       </tile>
       <tile x="34" y="31">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="35" y="31">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="36" y="31">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="StaticComponent">
           <static>167</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="37" y="31">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="38" y="31">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="39" y="31">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="40" y="31">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="41" y="31">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="42" y="31">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="43" y="31">
@@ -99692,43 +100651,43 @@
       </tile>
       <tile x="26" y="32">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="27" y="32">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="StaticComponent">
           <static>167</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="28" y="32">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="29" y="32">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="30" y="32">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="31" y="32">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="StaticComponent">
           <static>167</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="32" y="32">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="33" y="32">
@@ -99743,34 +100702,34 @@
         </component>
       </tile>
       <tile x="34" y="32">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="StaticComponent">
           <static>411</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="35" y="32">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="36" y="32">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="37" y="32">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="38" y="32">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="StaticComponent">
           <static>411</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="39" y="32">
@@ -99859,43 +100818,43 @@
       </tile>
       <tile x="26" y="33">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="27" y="33">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="StaticComponent">
           <static>411</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="28" y="33">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="29" y="33">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="30" y="33">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="31" y="33">
-        <component type="FloorComponent">
-          <ground>264</ground>
-        </component>
         <component type="StaticComponent">
           <static>411</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="32" y="33">
         <component type="FloorComponent">
-          <ground>264</ground>
+          <ground>179</ground>
         </component>
       </tile>
       <tile x="33" y="33">
@@ -134647,7 +135606,7 @@ else
     };
     
     skeleton.Wield(new Longsword());
-    skeleton.Equip(new LeatherArmor());    
+    skeleton.Equip(new ChainmailArmor());    
     
     skeleton.AddGold(84);
     skeleton.AddLoot(new LootPack(
@@ -137480,7 +138439,7 @@ else
     <spawn type="RegionSpawner" name="Kesmai -3.5 North">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>24</maximum>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137499,10 +138458,10 @@ else
       <entry entity="dungeon3.5Wight" size="1" minimum="0" maximum="1" />
       <entry entity="dungeon3.5SkeletonMage" size="1" minimum="1" maximum="2" />
       <entry entity="dungeon3.5Banshee" size="1" minimum="3" maximum="5" />
-      <entry entity="level8MeleeFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Thaum" size="1" minimum="1" maximum="1" />
       <entry entity="level8Spectre" size="1" minimum="0" maximum="1" />
       <entry entity="level8Minotaur" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon3.5Mummy" size="1" minimum="0" maximum="3" />
+      <entry entity="dungeon3.5Mummy" size="1" minimum="1" maximum="3" />
       <bounds region="4">
         <inclusion left="11" top="-4" right="53" bottom="13" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -137516,7 +138475,7 @@ else
     <spawn type="RegionSpawner" name="Kesmai -3.5 South">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>23</maximum>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137537,7 +138496,7 @@ else
       <entry entity="dungeon3.5Banshee" size="1" minimum="1" maximum="5" />
       <entry entity="level8Ghoul" size="1" minimum="0" maximum="1" />
       <entry entity="level8Minotaur" size="1" minimum="0" maximum="1" />
-      <entry entity="level8Thaum" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon3.5Mummy" size="1" minimum="1" maximum="3" />
       <bounds region="4">
         <inclusion left="11" top="14" right="54" bottom="29" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -137589,14 +138548,15 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level8Thaum" size="1" minimum="1" maximum="1" />
-      <entry entity="level8Wizard" size="1" minimum="1" maximum="1" />
-      <entry entity="level8MeleeFighter" size="2" minimum="1" maximum="2" />
-      <entry entity="level8RangedFighter" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon3.5Mummy" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon3.5SkeletonMage" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon3.5Skeleton" size="3" minimum="3" maximum="3" />
+      <entry entity="dungeon3.5Wight" size="1" minimum="1" maximum="1" />
       <entry entity="dungeon3.5Griffin" size="1" minimum="1" maximum="1" />
       <entry entity="dungeon3.5Banshee" size="1" minimum="1" maximum="2" />
       <bounds region="4">
         <inclusion left="27" top="24" right="46" bottom="29" />
+        <inclusion left="26" top="30" right="44" bottom="34" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -137645,6 +138605,30 @@ else
       <entry entity="dungeon3.5PrinceBedwyn" size="1" minimum="1" maximum="1" />
       <bounds region="4">
         <inclusion left="17" top="9" right="18" bottom="15" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai -3.5 Entire">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>15</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="dungeon3.5Banshee" size="1" minimum="15" maximum="15" />
+      <bounds region="4">
+        <inclusion left="0" top="-5" right="54" bottom="34" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
