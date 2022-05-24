@@ -134883,10 +134883,10 @@ else
     
     
 
-    banshee.Wield(new Mace());    
+    banshee.Wield(new SteelMace());    
 
     banshee.AddGold(92);
-    banshee.AddLoot(
+    banshee.AddLoot(new LootPack(
         new LootPackEntry(true, kesmaiwideGems,       10.8,     gemsPriceMutatorHigh),
         new LootPackEntry(true, dungeon4Bottles,    20),
         new LootPackEntry(true, dungeon4Treasure,   1.26),
@@ -134894,7 +134894,7 @@ else
         new LootPackEntry(true, dungeon3Potions,    0.63),
         new LootPackEntry(true, (from, container) => new Yttril(), 1),
         new LootPackEntry(true, utilityItems,   1)
-        );
+    ));
 
     return banshee;
 ]]></block>
@@ -134926,7 +134926,7 @@ else
     
         Experience = 12000,
         CanCharge = true,
-        CanSwim - true,
+        CanSwim = true,
         
         FireProtection = 100,
         IceProtection = 100,
@@ -134935,9 +134935,9 @@ else
         IsTethered = false,
     };
     
-    skeleton.AddStatus(new NightVisionStatus(skeleton));
+    bedwyn.AddStatus(new NightVisionStatus(bedwyn));
     
-    skeleton.Attacks = new CreatureAttackCollection
+    bedwyn.Attacks = new CreatureAttackCollection
     {
         {
             new CreatureAttack(11,      10, 16,      "Bedwyn pokes you with his spear.",
@@ -134956,12 +134956,12 @@ else
         },
     };
     
-    skeleton.Wield(new Spear());
-    skeleton.Equip(new PlatemailArmor());
-    skeleton.Equip(new SteelShield());
+    bedwyn.Wield(new Spear());
+    bedwyn.Equip(new PlatemailArmor());
+    bedwyn.Wield(new SteelShield());
     
-    skeleton.AddGold(450);
-    skeleton.AddLoot(new LootPack(
+    bedwyn.AddGold(450);
+    bedwyn.AddLoot(new LootPack(
         new LootPackEntry(true, kesmaiwideGems,       100,     gemsPriceMutatorVeryHigh),
         new LootPackEntry(true, kesmaiwideGems,       100,     gemsPriceMutatorVeryHigh),
         new LootPackEntry(true, dungeon4Bottles,    20),
@@ -134973,7 +134973,7 @@ else
         
     ));
 
-    return skeleton;
+    return bedwyn;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -135011,9 +135011,9 @@ else
         IsTethered = false,
     };
     
-    skeleton.AddStatus(new NightVisionStatus(skeleton));
+    godwyn.AddStatus(new NightVisionStatus(godwyn));
     
-    skeleton.Attacks = new CreatureAttackCollection
+    godwyn.Attacks = new CreatureAttackCollection
     {
         {
             new CreatureAttack(11,      10, 16,      "Godwyn pokes you with his spear.",
@@ -135032,12 +135032,12 @@ else
         },
     };
     
-    skeleton.Wield(new Spear());
-    skeleton.Equip(new PlatemailArmor());
-    skeleton.Equip(new SteelShield());
+    godwyn.Wield(new Spear());
+    godwyn.Equip(new PlatemailArmor());
+    godwyn.Wield(new SteelShield());
     
-    skeleton.AddGold(450);
-    skeleton.AddLoot(new LootPack(
+    godwyn.AddGold(450);
+    godwyn.AddLoot(new LootPack(
         new LootPackEntry(true, kesmaiwideGems,       100,     gemsPriceMutatorVeryHigh),
         new LootPackEntry(true, kesmaiwideGems,       100,     gemsPriceMutatorVeryHigh),
         new LootPackEntry(true, dungeon4Bottles,    20),
@@ -135049,7 +135049,7 @@ else
         
     ));
 
-    return skeleton;
+    return godwyn;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
