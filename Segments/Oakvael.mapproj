@@ -41519,25 +41519,25 @@
         </component>
       </tile>
       <tile x="15" y="15">
-        <component type="StaticComponent">
-          <static>179</static>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
         <component type="WallComponent">
           <wall>158</wall>
           <destroyed>161</destroyed>
           <ruins>170</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="16" y="15">
-        <component type="StaticComponent">
-          <static>179</static>
+        <component type="FloorComponent">
+          <ground>179</ground>
         </component>
-        <component type="WallComponent">
-          <wall>157</wall>
-          <destroyed>160</destroyed>
-          <ruins>170</ruins>
-          <indestructible>true</indestructible>
+        <component type="DoorComponent">
+          <openId>74</openId>
+          <closedId>62</closedId>
+          <secretId>157</secretId>
+          <destroyedId>82</destroyedId>
+          <isSecret>true</isSecret>
         </component>
       </tile>
       <tile x="17" y="15">
@@ -111253,8 +111253,8 @@
     
     spider.Attacks = new CreatureAttackCollection
     {
-        new CreatureAttack(6, 4, 8, "The spider bites you.",
-                            new AttackPoisonComponent(7))
+        new CreatureAttack(5, 1, 3, "The spider bites you.",
+                            new AttackPoisonComponent(6))
     };
     
     spider.Blocks = new CreatureBlockCollection
@@ -111280,37 +111280,37 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="level7Hobgoblin">
+    <entity name="level8Hobgoblin">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 	var hobgoblin = new Hobgoblin()
     {
-        MaxHealth = 70, Health = 70,
-        BaseDodge = 15,
-        HideDetection = 21,
-        Experience = 2015,
+        MaxHealth = 80, Health = 80,
+        BaseDodge = 16,
+        HideDetection = 23,
+        Experience = 2485,
         BasePenetration = ShieldPenetration.VeryLight,
-
-        Movement = 2,
+        
     };
     
     hobgoblin.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(7)
+        new CreatureBasicAttack(8)
     };
 
     hobgoblin.Wield(new Longsword());
     hobgoblin.Equip(new LeatherArmor());    
 
-    hobgoblin.AddGold(77);
+    hobgoblin.AddGold(87);
     hobgoblin.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakMidLevelGems, 11.6, gemsPriceMutatorAboveAverage), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
             new LootPackEntry(true, dungeon2Treasure, 0.5), 
             new LootPackEntry(true, dungeon2Rings, 0.5), 
-            new LootPackEntry(true, oakvaelPotions, 0.05)
+            new LootPackEntry(true, oakvaelPotions, 0.05),
+            new LootPackEntry(true, utilityOrbs,    0.5)
         ));
 
     return hobgoblin;
@@ -111330,22 +111330,22 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="level7Goblin">
+    <entity name="level8Goblin">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 	var goblin = new Goblin()
     {
-        MaxHealth = 50, Health = 60,
-        BaseDodge = 14,
-        HideDetection = 21,
-        Experience = 1567,
+        MaxHealth = 69, Health = 69,
+        BaseDodge = 16,
+        HideDetection = 20,
+        Experience = 1907,
         BasePenetration = ShieldPenetration.VeryLight,
     };
     
     goblin.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(6)
+        new CreatureBasicAttack(7)
     };
 
     goblin.Wield(new Longsword());
@@ -111354,11 +111354,11 @@
     goblin.AddGold(66);
     goblin.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorMedium), 
+            new LootPackEntry(true, oakMidLevelGems, 11.6, gemsPriceMutatorNormal), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
             new LootPackEntry(true, dungeon2Treasure, 0.37), 
             new LootPackEntry(true, dungeon2Rings, 0.37), 
-            new LootPackEntry(true, oakvaelPotions, 0.05)
+            new LootPackEntry(true, oakvaelPotions, 0.1)
         ));
 
     return goblin;
@@ -111384,10 +111384,10 @@
         <block><![CDATA[
 	var goblin = new Goblin()
     {
-        MaxHealth = 45, Health = 45,
+        MaxHealth = 52, Health = 52,
         BaseDodge = 14,
         HideDetection = 21,
-        Experience = 1567,
+        Experience = 1507,
         BasePenetration = ShieldPenetration.VeryLight,
     };
     
@@ -111404,11 +111404,11 @@
     goblin.AddGold(66);
     goblin.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorMedium), 
+            new LootPackEntry(true, oakMidLevelGems, 11.6, gemsPriceMutatorNormal), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
             new LootPackEntry(true, dungeon2Treasure, 0.37), 
             new LootPackEntry(true, dungeon2Rings, 0.37), 
-            new LootPackEntry(true, oakvaelPotions, 0.05)
+            new LootPackEntry(true, oakvaelPotions, 0.1)
         ));
 
     return goblin;
@@ -111428,17 +111428,17 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="level7Troll">
+    <entity name="level8Troll">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 	var troll = new Troll()
     {
-        MaxHealth = 77, Health = 77,
+        MaxHealth = 87, Health = 87,
         BaseDodge = 16,
 
-        Experience = 2164,
-        HideDetection = 21,
+        Experience = 2764,
+        HideDetection = 23,
         Movement = 2,
         BasePenetration = ShieldPenetration.VeryLight,
 
@@ -111455,10 +111455,10 @@
     troll.Wield(new Greatsword());
     troll.Equip(new ChainmailArmor());    
 
-    troll.AddGold(98);
+    troll.AddGold(88);
     troll.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorAboveAverage), 
+            new LootPackEntry(true, oakMidLevelGems, 11.6, gemsPriceMutatorNormal), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
             new LootPackEntry(true, dungeon2Treasure, 0.55), 
             new LootPackEntry(true, dungeon2Rings, 0.55), 
@@ -111482,37 +111482,37 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="level7Orc">
+    <entity name="level8Orc">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 	var orc = new Orc()
     {
-        MaxHealth = 50, Health = 50,
-        BaseDodge = 14,
-        HideDetection = 21,
-        Experience = 2015,
+        MaxHealth = 80, Health = 80,
+        BaseDodge = 15,
+        HideDetection = 23,
+        Experience = 2415,
         BasePenetration = ShieldPenetration.VeryLight,
-        
         CanFlee = true,
     };
     
     orc.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(7)
+        new CreatureBasicAttack(8)
     };
 
     orc.Wield(new Katana());
     orc.Equip(new LeatherArmor());    
 
-    orc.AddGold(79);
+    orc.AddGold(89);
     orc.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakMidLevelGems, 12.6, gemsPriceMutatorNormal), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
             new LootPackEntry(true, dungeon2Treasure, 0.5), 
             new LootPackEntry(true, dungeon2Rings, 0.5), 
-            new LootPackEntry(true, oakvaelPotions, 0.05)
+            new LootPackEntry(true, oakvaelPotions, 0.1),
+            new LootPackEntry(true, utilityOrbs,    0.5)
         ));
 
     return orc;
@@ -111538,12 +111538,11 @@
         <block><![CDATA[
 	var orc = new Orc()
     {
-        MaxHealth = 45, Health = 45,
+        MaxHealth = 57, Health = 57,
         BaseDodge = 14,
         HideDetection = 21,
-        Experience = 2015,
+        Experience = 1755,
         BasePenetration = ShieldPenetration.VeryLight,
-
         CanFlee = true,
     };
     
@@ -111560,11 +111559,12 @@
     orc.AddGold(79);
     orc.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakMidLevelGems, 11.6, gemsPriceMutatorNormal), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
-            new LootPackEntry(true, dungeon2Treasure, 0.5), 
-            new LootPackEntry(true, dungeon2Rings, 0.5), 
-            new LootPackEntry(true, oakvaelPotions, 0.05)
+            new LootPackEntry(true, dungeon2Treasure, 0.37), 
+            new LootPackEntry(true, dungeon2Rings, 0.37), 
+            new LootPackEntry(true, oakvaelPotions, 0.1),
+            new LootPackEntry(true, utilityOrbs,    1)
         ));
 
     return orc;
@@ -111590,10 +111590,10 @@
         <block><![CDATA[
 	var orc = new Orc()
     {
-        MaxHealth = 40, Health = 40,
+        MaxHealth = 60, Health = 60,
         MaxMana = 12, Mana = 12,
-        BaseDodge = 14,
-        HideDetection = 21,
+        BaseDodge = 16,
+        HideDetection = 23,
         Experience = 2015,
         BasePenetration = ShieldPenetration.VeryLight,
         
@@ -111611,18 +111611,19 @@
             skillLevel: 7, cost: 6,
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 6, cost: 5,
+            skillLevel: 5, cost: 5,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
 
     orc.AddGold(77);
     orc.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakMidLevelGems, 11.6, gemsPriceMutatorNormal), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
-            new LootPackEntry(true, dungeon2Treasure, 0.5), 
-            new LootPackEntry(true, dungeon2Rings, 0.5), 
-            new LootPackEntry(true, oakvaelPotions, 0.05)
+            new LootPackEntry(true, dungeon2Treasure, 0.37), 
+            new LootPackEntry(true, dungeon2Rings, 0.37), 
+            new LootPackEntry(true, oakvaelPotions, 0.1),
+            new LootPackEntry(true, utilityOrbs,    2)
         ));
 
     return orc;
@@ -111649,10 +111650,10 @@
 	var spectre = new Spectre()
     {
         MaxHealth = 70, Health = 70,
-        MaxMana = 17, Mana = 17,
+        MaxMana = 15, Mana = 15,
         BaseDodge = 16,
         HideDetection = 21,
-        Experience = 2538,
+        Experience = 2498,
         BasePenetration = ShieldPenetration.VeryLight,
 
         VisibilityDistance = 1,
@@ -111670,7 +111671,7 @@
             skillLevel: 7, cost: 4,
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<DeathSpell>(
-            skillLevel: 2, cost: 6, 
+            skillLevel: 3, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
 
@@ -111679,11 +111680,12 @@
     spectre.AddGold(66);
     spectre.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakMidLevelGems, 21.6, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakMidLevelGems, 15.6, gemsPriceMutatorNormal), 
             new LootPackEntry(true, oakGenericBottles, 20.0),
             new LootPackEntry(true, dungeon2Treasure, 0.5), 
             new LootPackEntry(true, dungeon2Rings, 0.5), 
-            new LootPackEntry(true, oakvaelPotions, 0.05)
+            new LootPackEntry(true, oakvaelPotions, 0.1),
+            new LootPackEntry(true, utilityOrbs,    0.5)
         ));
 
     return spectre;
@@ -115604,6 +115606,52 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="level7Spider">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var spider = new Spider()
+    {
+        MaxHealth = 67, Health = 67,
+        BaseDodge = 18,
+
+        Experience = 2622,
+
+        Movement = 0,
+        
+        VisibilityDistance = 0,
+        RangePerception = 0,
+    };
+    
+    spider.Attacks = new CreatureAttackCollection
+    {
+        new CreatureAttack(6, 1, 3, "The spider bites you.",
+                            new AttackPoisonComponent(7))
+    };
+    
+    spider.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "a leg"),
+        new CreatureBlock(2, "the fur")
+    };
+
+    return spider;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="oakSheriff">
@@ -116407,7 +116455,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level6Spider" size="1" minimum="1" maximum="1" />
+      <entry entity="level7Spider" size="1" minimum="1" maximum="1" />
       <location x="10" y="8" region="239" />
     </spawn>
     <spawn type="LocationSpawner" name="dungeon3Serpent">
@@ -117112,7 +117160,7 @@
       </script>
       <entry entity="surfaceOrc" size="3" minimum="2" maximum="2" />
       <entry entity="level6OrcSentry" size="1" minimum="2" maximum="2" />
-      <entry entity="level7Goblin" size="3" minimum="2" maximum="2" />
+      <entry entity="level8Goblin" size="3" minimum="2" maximum="2" />
       <bounds region="241">
         <inclusion left="2" top="2" right="13" bottom="21" />
         <exclusion left="4" top="8" right="6" bottom="21" />
@@ -117152,7 +117200,7 @@
     <spawn type="RegionSpawner" name="hobgoblinCavesSpawn">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>12</maximum>
+      <maximum>7</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -117167,17 +117215,18 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level7Hobgoblin" size="3" minimum="6" maximum="8" />
-      <entry entity="level7Goblin" size="3" minimum="3" maximum="5" />
-      <entry entity="level7GoblinSentry" size="2" minimum="2" maximum="3" />
-      <entry entity="level7Orc" size="3" minimum="3" maximum="5" />
-      <entry entity="level7OrcSentry" size="1" minimum="2" maximum="3" />
-      <entry entity="level7Troll" size="2" minimum="3" maximum="4" />
-      <entry entity="level7OrcTrapper" size="1" minimum="2" maximum="3" />
-      <entry entity="level7Spectre" size="1" minimum="2" maximum="3" />
+      <entry entity="level8Hobgoblin" size="3" minimum="1" maximum="3" />
+      <entry entity="level8Goblin" size="3" minimum="0" maximum="2" />
+      <entry entity="level7GoblinSentry" size="2" minimum="1" maximum="1" />
+      <entry entity="level8Orc" size="3" minimum="0" maximum="2" />
+      <entry entity="level7OrcSentry" size="2" minimum="1" maximum="1" />
+      <entry entity="level8Troll" size="2" minimum="0" maximum="2" />
+      <entry entity="level7OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="level7Spectre" size="1" minimum="0" maximum="1" />
       <bounds region="239">
-        <inclusion left="1" top="0" right="21" bottom="17" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
+        <inclusion left="1" top="1" right="21" bottom="17" />
+        <exclusion left="1" top="1" right="6" bottom="7" />
+        <exclusion left="7" top="1" right="7" bottom="1" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="serpentsSeaSpawner">
@@ -117395,10 +117444,10 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="hobgoblinCavesNorth">
+    <spawn type="RegionSpawner" name="hobgoblinCavesNorthEast">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>6</maximum>
+      <maximum>9</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -117413,23 +117462,23 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level7Hobgoblin" size="3" minimum="6" maximum="8" />
-      <entry entity="level7Goblin" size="3" minimum="3" maximum="5" />
-      <entry entity="level7GoblinSentry" size="2" minimum="2" maximum="3" />
-      <entry entity="level7Orc" size="3" minimum="3" maximum="5" />
-      <entry entity="level7OrcSentry" size="1" minimum="2" maximum="3" />
-      <entry entity="level7Troll" size="2" minimum="3" maximum="4" />
-      <entry entity="level7OrcTrapper" size="1" minimum="2" maximum="3" />
-      <entry entity="level7Spectre" size="1" minimum="2" maximum="3" />
+      <entry entity="level8Hobgoblin" size="3" minimum="2" maximum="2" />
+      <entry entity="level8Goblin" size="3" minimum="0" maximum="2" />
+      <entry entity="level7GoblinSentry" size="2" minimum="0" maximum="1" />
+      <entry entity="level8Orc" size="3" minimum="0" maximum="2" />
+      <entry entity="level7OrcSentry" size="2" minimum="0" maximum="1" />
+      <entry entity="level8Troll" size="2" minimum="0" maximum="2" />
+      <entry entity="level7OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="level7Spectre" size="1" minimum="1" maximum="1" />
       <bounds region="239">
-        <inclusion left="1" top="0" right="21" bottom="7" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
+        <inclusion left="12" top="1" right="21" bottom="9" />
+        <inclusion left="14" top="10" right="19" bottom="14" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="hobgoblinCavesSouth">
+    <spawn type="RegionSpawner" name="hobgoblinCavesSouthWest">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>6</maximum>
+      <maximum>3</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -117444,16 +117493,48 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level7Hobgoblin" size="3" minimum="6" maximum="8" />
-      <entry entity="level7Goblin" size="3" minimum="3" maximum="5" />
-      <entry entity="level7GoblinSentry" size="2" minimum="2" maximum="3" />
-      <entry entity="level7Orc" size="3" minimum="3" maximum="5" />
-      <entry entity="level7OrcSentry" size="1" minimum="2" maximum="3" />
-      <entry entity="level7Troll" size="2" minimum="3" maximum="4" />
-      <entry entity="level7OrcTrapper" size="1" minimum="2" maximum="3" />
-      <entry entity="level7Spectre" size="1" minimum="2" maximum="3" />
+      <entry entity="level8Hobgoblin" size="3" minimum="1" maximum="2" />
+      <entry entity="level8Goblin" size="3" minimum="0" maximum="2" />
+      <entry entity="level7GoblinSentry" size="2" minimum="0" maximum="2" />
+      <entry entity="level8Orc" size="3" minimum="0" maximum="2" />
+      <entry entity="level7OrcSentry" size="2" minimum="0" maximum="1" />
+      <entry entity="level8Troll" size="2" minimum="0" maximum="2" />
+      <entry entity="level7OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="level7Spectre" size="1" minimum="0" maximum="1" />
       <bounds region="239">
-        <inclusion left="1" top="9" right="19" bottom="17" />
+        <inclusion left="1" top="9" right="13" bottom="17" />
+        <exclusion left="12" top="13" right="13" bottom="17" />
+        <exclusion left="3" top="11" right="7" bottom="15" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="hobgoblinCavesNorthWest">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>4</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level8Hobgoblin" size="3" minimum="1" maximum="2" />
+      <entry entity="level8Goblin" size="3" minimum="0" maximum="2" />
+      <entry entity="level7GoblinSentry" size="2" minimum="0" maximum="1" />
+      <entry entity="level8Orc" size="3" minimum="0" maximum="2" />
+      <entry entity="level7OrcSentry" size="2" minimum="0" maximum="1" />
+      <entry entity="level8Troll" size="2" minimum="0" maximum="2" />
+      <entry entity="level7OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="level7Spectre" size="1" minimum="1" maximum="1" />
+      <bounds region="239">
+        <inclusion left="1" top="1" right="8" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -117859,6 +117940,37 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
+    <spawn type="RegionSpawner" name="hobgoblinCavesSouthEast">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>3</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level8Hobgoblin" size="3" minimum="1" maximum="2" />
+      <entry entity="level8Goblin" size="3" minimum="0" maximum="2" />
+      <entry entity="level7GoblinSentry" size="2" minimum="0" maximum="2" />
+      <entry entity="level8Orc" size="3" minimum="0" maximum="2" />
+      <entry entity="level7OrcSentry" size="2" minimum="0" maximum="1" />
+      <entry entity="level8Troll" size="2" minimum="0" maximum="2" />
+      <entry entity="level7OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="level7Spectre" size="1" minimum="0" maximum="1" />
+      <bounds region="239">
+        <inclusion left="12" top="14" right="16" bottom="17" />
+        <exclusion left="15" top="14" right="16" bottom="15" />
+      </bounds>
+    </spawn>
   </spawns>
   <treasures>
     <treasure name="oakvaelPotions">
@@ -118001,9 +118113,18 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StunResistanceBracelet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
     </treasure>
     <treasure name="dungeon2Rings">
-      <entry weight="2">
+      <entry weight="3">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -118012,7 +118133,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="2">
+      <entry weight="3">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -118021,16 +118142,7 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="1">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new VermeilRing();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="1">
+      <entry weight="3">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
