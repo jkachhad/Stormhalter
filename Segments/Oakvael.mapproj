@@ -110896,7 +110896,7 @@
         MaxHealth = 30, Health = 30,
         BaseDodge = 18,
         HideDetection = 18,
-        Experience = 810,
+        Experience = 895,
         VisibilityDistance = 1,
         Movement = 2,
         BasePenetration = ShieldPenetration.Light,
@@ -110956,7 +110956,7 @@
         MaxHealth = 46, Health = 46,
         BaseDodge = 16,
 
-        Experience = 1594,
+        Experience = 1694,
 
         Movement = 2,
     };
@@ -110964,7 +110964,7 @@
     viper.Attacks = new CreatureAttackCollection
     {
         new CreatureAttack(6, 3, 10, "The viper strikes you.",
-                            new AttackPoisonComponent(8, 30),
+                            new AttackPoisonComponent(6, 30),
                             new AttackStunComponent(10))
     };
     
@@ -111000,7 +111000,7 @@
         MaxHealth = 50, Health = 50,
         BaseDodge = 13,
 
-        Experience = 1694,
+        Experience = 1794,
 
         Movement = 2,
     };    
@@ -111008,11 +111008,11 @@
     scorpion.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(6, 7, 20, "The scorpion crushes you with its claws."), 60 
+            new CreatureAttack(6, 7, 18, "The scorpion crushes you with its claws."), 60 
         }, 
         {
             new CreatureAttack(6, 4, 8, "The scorpion stings you with its tail.",
-                    new AttackPoisonComponent(6),
+                    new AttackPoisonComponent(5),
                     new AttackStunComponent(10)),                                    40 
         }, 
     };
@@ -111145,13 +111145,13 @@
         MaxHealth = 60, Health = 60,
         BaseDodge = 14,
         HideDetection = 18,         
-        Experience = 1779,
+        Experience = 1709,
         CanFlee = true,
     };
     
     orc.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(5)
+        new CreatureBasicAttack(6)
     };
 
     orc.Wield(new Crossbow());
@@ -111244,7 +111244,7 @@
         MaxHealth = 58, Health = 58,
         BaseDodge = 16,
 
-        Experience = 1824,
+        Experience = 1994,
 
         Movement = 0,
         VisibilityDistance = 0,
@@ -117122,7 +117122,7 @@
     <spawn type="RegionSpawner" name="spiderCavesSpawner">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>24</maximum>
+      <maximum>12</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -117137,13 +117137,13 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level6Rat" size="1" minimum="6" maximum="6" />
-      <entry entity="level6Kobold" size="2" minimum="3" maximum="3" />
-      <entry entity="level6Viper" size="1" minimum="2" maximum="2" />
-      <entry entity="level6Scorpion" size="1" minimum="2" maximum="2" />
-      <entry entity="level6Orc" size="3" minimum="4" maximum="4" />
-      <entry entity="level6OrcSentry" size="2" minimum="2" maximum="2" />
-      <entry entity="level6Troll" size="2" minimum="4" maximum="4" />
+      <entry entity="level6Rat" size="1" minimum="1" maximum="3" />
+      <entry entity="level6Kobold" size="2" minimum="1" maximum="3" />
+      <entry entity="level6Viper" size="1" minimum="1" maximum="2" />
+      <entry entity="level6Scorpion" size="1" minimum="1" maximum="1" />
+      <entry entity="level6Orc" size="3" minimum="1" maximum="3" />
+      <entry entity="level6OrcSentry" size="2" minimum="1" maximum="2" />
+      <entry entity="level6Troll" size="2" minimum="0" maximum="2" />
       <bounds region="251">
         <inclusion left="1" top="1" right="49" bottom="10" />
         <exclusion left="39" top="3" right="43" bottom="7" />
@@ -117589,36 +117589,6 @@
     <spawn type="RegionSpawner" name="spiderCavesWest">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>11</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="level6Rat" size="1" minimum="1" maximum="6" />
-      <entry entity="level6Kobold" size="1" minimum="1" maximum="5" />
-      <entry entity="level6Viper" size="1" minimum="1" maximum="3" />
-      <entry entity="level6Scorpion" size="1" minimum="1" maximum="2" />
-      <entry entity="level6Orc" size="1" minimum="1" maximum="2" />
-      <entry entity="level6OrcSentry" size="1" minimum="1" maximum="2" />
-      <entry entity="level6Troll" size="1" minimum="1" maximum="3" />
-      <bounds region="251">
-        <inclusion left="1" top="2" right="17" bottom="9" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
-      </bounds>
-    </spawn>
-    <spawn type="RegionSpawner" name="spiderCavesEast">
-      <minimumDelay>600</minimumDelay>
-      <maximumDelay>900</maximumDelay>
       <maximum>10</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -117634,8 +117604,38 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="level6Rat" size="1" minimum="1" maximum="3" />
+      <entry entity="level6Kobold" size="2" minimum="1" maximum="3" />
+      <entry entity="level6Viper" size="1" minimum="0" maximum="1" />
+      <entry entity="level6Scorpion" size="1" minimum="1" maximum="1" />
+      <entry entity="level6Orc" size="3" minimum="1" maximum="2" />
+      <entry entity="level6OrcSentry" size="2" minimum="1" maximum="2" />
+      <entry entity="level6Troll" size="2" minimum="1" maximum="3" />
+      <bounds region="251">
+        <inclusion left="1" top="3" right="17" bottom="9" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="spiderCavesEast">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>15</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
       <entry entity="level6Rat" size="1" minimum="1" maximum="4" />
-      <entry entity="level6Kobold" size="1" minimum="1" maximum="4" />
+      <entry entity="level6Kobold" size="2" minimum="1" maximum="4" />
       <entry entity="level6Viper" size="1" minimum="1" maximum="3" />
       <entry entity="level6Scorpion" size="1" minimum="1" maximum="1" />
       <entry entity="level6Orc" size="3" minimum="1" maximum="4" />
