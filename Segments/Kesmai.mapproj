@@ -134940,12 +134940,12 @@ else
     bedwyn.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(11,      10, 16,      "Bedwyn pokes you with his spear.",
+            new CreatureAttack(11,      10, 25,      "Bedwyn pokes you with his spear.",
                                                         new AttackProneComponent(5), 
                                                         new AttackStunComponent(5)),                50
         },
         {
-            new CreatureAttack(12,      10, 20,     "Bedwyn bashes you with his shield.",
+            new CreatureAttack(12,      10, 35,     "Bedwyn bashes you with his shield.",
                                                         new AttackProneComponent(5), 
                                                         new AttackStunComponent(20)),               30
         },
@@ -135016,12 +135016,12 @@ else
     godwyn.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(11,      10, 16,      "Godwyn pokes you with his spear.",
+            new CreatureAttack(11,      10, 25,      "Godwyn pokes you with his spear.",
                                                         new AttackProneComponent(5), 
                                                         new AttackStunComponent(5)),                50
         },
         {
-            new CreatureAttack(12,      10, 20,     "Godwyn bashes you with his shield.",
+            new CreatureAttack(12,      10, 35,     "Godwyn bashes you with his shield.",
                                                         new AttackProneComponent(5), 
                                                         new AttackStunComponent(20)),               30
         },
@@ -135155,105 +135155,6 @@ else
       </script>
       <entry entity="dungeon1BossTrogg" size="1" minimum="1" maximum="1" />
       <location x="16" y="38" region="11" />
-    </spawn>
-    <spawn type="LocationSpawner" name="dungeon3.5TempleMummy">
-      <minimumDelay>600</minimumDelay>
-      <maximumDelay>900</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="dungeon3.5Mummy" size="1" minimum="1" maximum="1" />
-      <location x="23" y="27" region="4" />
-    </spawn>
-    <spawn type="LocationSpawner" name="dungeon3.5TempleJailSkeletonMage">
-      <minimumDelay>600</minimumDelay>
-      <maximumDelay>900</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="dungeon3.5SkeletonMage" size="2" minimum="1" maximum="1" />
-      <location x="31" y="31" region="4" />
-    </spawn>
-    <spawn type="LocationSpawner" name="dungeon3.5TempleJailSkeleton">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>900</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="dungeon3.5Skeleton" size="3" minimum="1" maximum="1" />
-      <location x="40" y="30" region="4" />
-    </spawn>
-    <spawn type="LocationSpawner" name="dungeon3.5Bedwyn">
-      <minimumDelay>2700</minimumDelay>
-      <maximumDelay>3300</maximumDelay>
-      <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="dungeon3.5PrinceBedwyn" size="1" minimum="1" maximum="1" />
-      <location x="19" y="12" region="4" />
-    </spawn>
-    <spawn type="LocationSpawner" name="dungeon3.5Godwyn">
-      <minimumDelay>2700</minimumDelay>
-      <maximumDelay>3300</maximumDelay>
-      <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="dungeon3.5PrinceGodwyn" size="1" minimum="1" maximum="1" />
-      <location x="36" y="13" region="4" />
     </spawn>
     <spawn type="LocationSpawner" name="kesmaiRecallVendor">
       <minimumDelay>900</minimumDelay>
@@ -137579,7 +137480,7 @@ else
     <spawn type="RegionSpawner" name="Kesmai -3.5 North">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>16</maximum>
+      <maximum>24</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137594,10 +137495,10 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon3.5Skeleton" size="4" minimum="4" maximum="6" />
+      <entry entity="dungeon3.5Skeleton" size="3" minimum="6" maximum="10" />
       <entry entity="dungeon3.5Wight" size="1" minimum="0" maximum="1" />
       <entry entity="dungeon3.5SkeletonMage" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon3.5Banshee" size="1" minimum="0" maximum="1" />
+      <entry entity="dungeon3.5Banshee" size="1" minimum="3" maximum="5" />
       <entry entity="level8MeleeFighter" size="1" minimum="0" maximum="1" />
       <entry entity="level8Spectre" size="1" minimum="0" maximum="1" />
       <entry entity="level8Minotaur" size="1" minimum="0" maximum="1" />
@@ -137609,13 +137510,13 @@ else
         <exclusion left="0" top="0" right="0" bottom="0" />
         <exclusion left="0" top="0" right="0" bottom="0" />
         <exclusion left="44" top="6" right="45" bottom="7" />
-        <exclusion left="14" top="8" right="45" bottom="13" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai -3.5 South">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>10</maximum>
+      <maximum>23</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137630,10 +137531,10 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon3.5Skeleton" size="4" minimum="4" maximum="6" />
+      <entry entity="dungeon3.5Skeleton" size="3" minimum="6" maximum="10" />
       <entry entity="dungeon3.5Wight" size="1" minimum="0" maximum="2" />
       <entry entity="dungeon3.5SkeletonMage" size="1" minimum="1" maximum="3" />
-      <entry entity="dungeon3.5Banshee" size="1" minimum="1" maximum="2" />
+      <entry entity="dungeon3.5Banshee" size="1" minimum="1" maximum="5" />
       <entry entity="level8Ghoul" size="1" minimum="0" maximum="1" />
       <entry entity="level8Minotaur" size="1" minimum="0" maximum="1" />
       <entry entity="level8Thaum" size="1" minimum="1" maximum="1" />
@@ -137648,7 +137549,7 @@ else
     <spawn type="RegionSpawner" name="Kesmai -3.5 Lobby">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>4</maximum>
+      <maximum>6</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137663,7 +137564,7 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon3.5Skeleton" size="3" minimum="1" maximum="2" />
+      <entry entity="dungeon3.5Skeleton" size="3" minimum="1" maximum="4" />
       <entry entity="dungeon3.5SkeletonMage" size="1" minimum="1" maximum="2" />
       <bounds region="4">
         <inclusion left="2" top="7" right="9" bottom="16" />
@@ -137673,7 +137574,7 @@ else
     <spawn type="RegionSpawner" name="Kesmai -3.5 South Temple">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>5</maximum>
+      <maximum>8</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137693,8 +137594,57 @@ else
       <entry entity="level8MeleeFighter" size="2" minimum="1" maximum="2" />
       <entry entity="level8RangedFighter" size="1" minimum="1" maximum="1" />
       <entry entity="dungeon3.5Griffin" size="1" minimum="1" maximum="1" />
+      <entry entity="dungeon3.5Banshee" size="1" minimum="1" maximum="2" />
       <bounds region="4">
         <inclusion left="27" top="24" right="46" bottom="29" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai -3.5 Godwyn">
+      <minimumDelay>2700</minimumDelay>
+      <maximumDelay>3300</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="dungeon3.5PrinceGodwyn" size="1" minimum="1" maximum="1" />
+      <bounds region="4">
+        <inclusion left="33" top="11" right="39" bottom="12" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai -3.5 Bedwyn">
+      <minimumDelay>2700</minimumDelay>
+      <maximumDelay>3300</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="dungeon3.5PrinceBedwyn" size="1" minimum="1" maximum="1" />
+      <bounds region="4">
+        <inclusion left="17" top="9" right="18" bottom="15" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
