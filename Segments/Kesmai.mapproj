@@ -89801,7 +89801,6 @@
           <closedId>62</closedId>
           <secretId>683</secretId>
           <destroyedId>80</destroyedId>
-          <isSecret>true</isSecret>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -91216,7 +91215,6 @@
           <closedId>62</closedId>
           <secretId>683</secretId>
           <destroyedId>80</destroyedId>
-          <isSecret>true</isSecret>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -91389,15 +91387,14 @@
         </component>
       </tile>
       <tile x="27" y="6">
+        <component type="FloorComponent">
+          <ground>184</ground>
+        </component>
         <component type="DoorComponent">
           <openId>75</openId>
           <closedId>63</closedId>
           <secretId>679</secretId>
           <destroyedId>81</destroyedId>
-          <isSecret>true</isSecret>
-        </component>
-        <component type="FloorComponent">
-          <ground>184</ground>
         </component>
       </tile>
       <tile x="28" y="6">
@@ -92417,7 +92414,6 @@
           <closedId>62</closedId>
           <secretId>677</secretId>
           <destroyedId>80</destroyedId>
-          <isSecret>true</isSecret>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -135674,7 +135670,7 @@ else
         MaxHealth = 70, Health = 70,
         BaseDodge = 16,
     
-        Experience = 2700,
+        Experience = 2100,
     
         CanFlee = false,
         CanSwim = true,
@@ -135726,7 +135722,7 @@ else
         MaxMana = 8, Mana = 8,
         BaseDodge = 13,
     
-        Experience = 1899,
+        Experience = 1999,
         
         CanFlee = true,
     };
@@ -135785,7 +135781,7 @@ else
         MaxMana = 9, Mana = 9,
         BaseDodge = 13,
     
-        Experience = 2599,
+        Experience = 2100,
         
         CanFlee = true,
     };
@@ -135843,7 +135839,7 @@ else
         MaxHealth = 80, Health = 80,
         BaseDodge = 15,
     
-        Experience = 3500,
+        Experience = 2700,
     
         VisibilityDistance = 0,
             
@@ -135905,7 +135901,7 @@ else
     {
         MaxHealth = 75, Health =75 ,
         BaseDodge = 16,
-        Experience = 3400,
+        Experience = 2700,
         
         CanFly = true,
         
@@ -136111,7 +136107,7 @@ else
         
         BasePenetration = ShieldPenetration.Light,
         
-        Experience = 3000,
+        Experience = 2700,
         
         HideDetection = 15,
         
@@ -136122,13 +136118,13 @@ else
     griffin.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(7,     8, 16,      "The griffin tears your flesh with its beak."),     30 
+            new CreatureAttack(7,     8, 13,      "The griffin tears your flesh with its beak."),     30 
         },
         {
-            new CreatureAttack(7,     10, 21,     "The griffin buries its talons into you."),         30 
+            new CreatureAttack(7,     10, 17,     "The griffin buries its talons into you."),         30 
         },
         {
-            new CreatureAttack(8,     17, 28,     "The griffin pummels you with its wings.", 
+            new CreatureAttack(8,     10, 21,     "The griffin pummels you with its wings.", 
                                                     new AttackStunComponent(5.0)),                   40
         }
     };
