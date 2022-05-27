@@ -135019,165 +135019,6 @@ else
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="ydnacSkelWar">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-	var skeleton = new Skeleton()
-    {
-        MaxHealth = 40, Health = 40,
-        BaseDodge = 10,
-
-        Experience = 525,
-
-        Movement = 2,
-
-    };
-    
-    skeleton.Attacks = new CreatureAttackCollection()
-    {
-        new CreatureBasicAttack(6)
-    };
-    
-    skeleton.Wield(new Rapier());
-    
-    skeleton.AddGold(60);
-    skeleton.AddLoot(new LootPack(
-        new LootPackEntry(true, kesmaiwideGems,       16,     gemsPriceMutatorHigh),
-        new LootPackEntry(true, dungeon3Bottles,    20),
-        new LootPackEntry(true, dungeon3Treasure,   0.37),
-        new LootPackEntry(true, dungeon3Rings,      0.37),
-        new LootPackEntry(true, dungeon3Potions,    0.37),
-        new LootPackEntry(true, (from, container) => new Yttril(), 1),
-        new LootPackEntry(true, utilityItems,   1)
-    ));
-    
-    return skeleton;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="ydnacSkelArc">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-	var skeleton = new Skeleton()
-    {
-        MaxHealth = 35, Health = 35,
-        BaseDodge = 10,
-
-        Experience = 485,
-                
-        Movement = 2,
-    };
-    
-    skeleton.Attacks = new CreatureAttackCollection()
-    {
-        new CreatureBasicAttack(6)
-    };
-    
-    skeleton.Wield(new Shortbow());
-            
-    skeleton.AddGold(60);
-    skeleton.AddLoot(new LootPack(
-        new LootPackEntry(true, kesmaiwideGems,       16,     gemsPriceMutatorHigh),
-        new LootPackEntry(true, dungeon3Bottles,    20),
-        new LootPackEntry(true, dungeon3Treasure,   0.37),
-        new LootPackEntry(true, dungeon3Rings,      0.37),
-        new LootPackEntry(true, dungeon3Potions,    0.37),
-        new LootPackEntry(true, (from, container) => new Yttril(), 1),
-        new LootPackEntry(true, utilityItems,   1)
-    ));
-    
-    return skeleton;;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="ydnacMummy">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-	var mummy = new Mummy()
-    {
-        MaxHealth = 90, Health = 90,
-        BaseDodge = 13,
-    
-        Experience = 2500,
-    
-        Movement = 2,
-        BasePenetration = ShieldPenetration.Light,
-        VisibilityDistance = 1,
-    };
-    
-    mummy.Attacks = new CreatureAttackCollection
-    {
-        { 
-            new CreatureAttack(7,     6, 12,      "The mummy scratches you with its claws"),  70 
-        }, 
-        {
-            new CreatureAttack(8,     10, 18,     "You've been bitten by the mummy"),         30 
-        },
-    };
-    
-    mummy.Blocks = new CreatureBlockCollection
-    {
-        new CreatureBlock(6, "the armor"), 
-        new CreatureBlock(4, "a decaying limb"),
-    };
-    
-    mummy.AddGold(200);
-    mummy.AddLoot(new LootPack(
-        new LootPackEntry(true, kesmaiwideGems,       16,     gemsPriceMutatorHigh),
-        new LootPackEntry(true, dungeon4Bottles,    20),
-        new LootPackEntry(true, dungeon4Treasure,   0.63),
-        new LootPackEntry(true, dungeon4Rings,      0.63),
-        new LootPackEntry(true, dungeon3Potions,    0.63),
-        new LootPackEntry(true, (from, container) => new Yttril(), 1),
-        new LootPackEntry(true, utilityItems,   1)
-    ));
-    
-    return mummy;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
     <entity name="kesSherriff">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
@@ -135903,7 +135744,7 @@ else
         BaseDodge = 16,
         Experience = 2700,
         
-        CanFly = true,
+        CanSwim = true,
         
         };
     
@@ -136148,6 +135989,61 @@ else
     ));
         
     return griffin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="level7MinorDjinn">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var minordjinn = new Djinn()
+    {
+        Name = "minor djinn", Alignment = Alignment.Chaotic,
+    
+        MaxHealth = 100, Health = 100,
+        BaseDodge = 10,
+    
+        Experience = 1700,
+    
+        Movement = 2,
+        HideDetection = 12,
+        CanSwim = true,
+        
+        FireProtection = 50,
+        IceProtection = 50,
+        
+        
+    };
+    minordjinn.AddStatus(new NightVisionStatus(minordjinn));
+    minordjinn.AddStatus(new BreatheWaterStatus(minordjinn));
+    
+    minordjinn.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(7)
+    };
+    
+    minordjinn.Wield(new Longsword());
+    minordjinn.Equip(new PlatemailArmor());
+    
+    minordjinn.AddGold(300);
+    minordjinn.AddLoot(new LootPack(
+        
+    ));
+    
+    return minordjinn;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -137615,116 +137511,6 @@ else
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Ydnac -1">
-      <minimumDelay>300</minimumDelay>
-      <maximumDelay>600</maximumDelay>
-      <maximum>12</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="ydnacSkelWar" size="3" minimum="1" maximum="3" />
-      <entry entity="ydnacSkelArc" size="2" minimum="1" maximum="2" />
-      <entry entity="level5Wraith" size="1" minimum="1" maximum="1" />
-      <entry entity="level5Wight" size="1" minimum="1" maximum="1" />
-      <entry entity="level8Spectre" size="1" minimum="1" maximum="1" />
-      <entry entity="level8Thaum" size="1" minimum="1" maximum="1" />
-      <entry entity="level8Wizard" size="1" minimum="1" maximum="1" />
-      <bounds region="4">
-        <inclusion left="2" top="7" right="9" bottom="12" />
-        <inclusion left="2" top="14" right="13" bottom="16" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
-      </bounds>
-    </spawn>
-    <spawn type="RegionSpawner" name="Ydnac Secret">
-      <minimumDelay>300</minimumDelay>
-      <maximumDelay>600</maximumDelay>
-      <maximum>4</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="level8Wizard" size="1" minimum="1" maximum="1" />
-      <entry entity="level8Thaum" size="1" minimum="1" maximum="1" />
-      <entry entity="level8MeleeFighter" size="1" minimum="2" maximum="2" />
-      <entry entity="level8RangedFighter" size="1" minimum="1" maximum="2" />
-      <bounds region="3">
-        <inclusion left="9" top="2" right="11" bottom="7" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
-      </bounds>
-    </spawn>
-    <spawn type="RegionSpawner" name="Ydnac -1 Blood Room">
-      <minimumDelay>300</minimumDelay>
-      <maximumDelay>600</maximumDelay>
-      <maximum>10</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="ydnacMummy" size="1" minimum="3" maximum="5" />
-      <entry entity="level8Thaum" size="1" minimum="1" maximum="1" />
-      <entry entity="ydnacSkelWar" size="3" minimum="1" maximum="2" />
-      <entry entity="ydnacSkelArc" size="2" minimum="1" maximum="2" />
-      <bounds region="4">
-        <inclusion left="15" top="6" right="23" bottom="18" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
-      </bounds>
-    </spawn>
-    <spawn type="RegionSpawner" name="Ydnac Secret Right Side">
-      <minimumDelay>300</minimumDelay>
-      <maximumDelay>600</maximumDelay>
-      <maximum>2</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="ydnacSkelWar" size="3" minimum="1" maximum="1" />
-      <entry entity="level8Spectre" size="1" minimum="1" maximum="1" />
-      <bounds region="3">
-        <inclusion left="13" top="2" right="16" bottom="7" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
-      </bounds>
-    </spawn>
     <spawn type="RegionSpawner" name="Kesmai -2 Bloodlands Portal">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>720</maximumDelay>
@@ -138575,6 +138361,10 @@ else
         <exclusion left="0" top="0" right="0" bottom="0" />
         <exclusion left="27" top="25" right="44" bottom="29" />
         <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="8" top="18" right="16" bottom="24" />
+        <exclusion left="53" top="21" right="58" bottom="29" />
+        <exclusion left="46" top="26" right="52" bottom="29" />
+        <exclusion left="50" top="24" right="52" bottom="25" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai -3.5 Lobby">
@@ -138683,7 +138473,7 @@ else
     <spawn type="RegionSpawner" name="Kesmai -3.5 Entire">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>25</maximum>
+      <maximum>35</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -138700,8 +138490,38 @@ else
       </script>
       <entry entity="level7Banshee" size="1" minimum="15" maximum="15" />
       <entry entity="level7Skeleton" size="1" minimum="10" maximum="10" />
+      <entry entity="level7MinorDjinn" size="1" minimum="10" maximum="10" />
       <bounds region="4">
         <inclusion left="0" top="-5" right="54" bottom="34" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="8" top="18" right="16" bottom="24" />
+        <exclusion left="53" top="21" right="58" bottom="29" />
+        <exclusion left="47" top="27" right="52" bottom="29" />
+        <exclusion left="50" top="24" right="52" bottom="26" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Behind Ydnac">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level7MinorDjinn" size="3" minimum="2" maximum="2" />
+      <bounds region="1">
+        <inclusion left="135" top="1" right="140" bottom="2" />
+        <inclusion left="135" top="3" right="136" bottom="3" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
