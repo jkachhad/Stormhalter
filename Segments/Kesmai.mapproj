@@ -136005,13 +136005,13 @@ else
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="level7MinorDjinn">
+    <entity name="level7Djinn">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	var minordjinn = new Djinn()
+	var djinn = new Djinn()
     {
-        Name = "minor djinn", Alignment = Alignment.Chaotic,
+        Name = "djinn", Alignment = Alignment.Evil,
     
         MaxHealth = 100, Health = 100,
         BaseDodge = 10,
@@ -136027,23 +136027,24 @@ else
         
         
     };
-    minordjinn.AddStatus(new NightVisionStatus(minordjinn));
-    minordjinn.AddStatus(new BreatheWaterStatus(minordjinn));
+    djinn.AddStatus(new NightVisionStatus(djinn));
+    djinn.AddStatus(new BreatheWaterStatus(djinn));
     
-    minordjinn.Attacks = new CreatureAttackCollection()
+    djinn.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(7)
     };
     
-    minordjinn.Wield(new Longsword());
-    minordjinn.Equip(new PlatemailArmor());
+    djinn.Wield(new Longsword());
+    djinn.Equip(new PlatemailArmor());
     
-    minordjinn.AddGold(300);
-    minordjinn.AddLoot(new LootPack(
+    djinn.AddGold(300);
+	
+    
         
     ));
     
-    return minordjinn;
+    return djinn;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
