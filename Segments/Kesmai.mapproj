@@ -135749,6 +135749,7 @@ else
         };
     
     banshee.AddStatus(new NightVisionStatus(banshee));
+	banshee.AddStatus(new BreatheWaterStatus(banshee));
     
     banshee.Attacks = new CreatureAttackCollection
     {
@@ -135807,6 +135808,7 @@ else
     };
     
     bedwyn.AddStatus(new NightVisionStatus(bedwyn));
+	bedwyn.AddStatus(new BreatheWaterStatus(bedwyn));
     
     bedwyn.Attacks = new CreatureAttackCollection
     {
@@ -135883,6 +135885,7 @@ else
     };
     
     godwyn.AddStatus(new NightVisionStatus(godwyn));
+	godwyn.AddStatus(new BreatheWaterStatus(godwyn));
     
     godwyn.Attacks = new CreatureAttackCollection
     {
