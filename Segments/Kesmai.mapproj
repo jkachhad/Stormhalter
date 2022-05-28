@@ -92658,11 +92658,8 @@
         </component>
       </tile>
       <tile x="36" y="9">
-        <component type="StaticComponent">
-          <static>206</static>
-        </component>
         <component type="FloorComponent">
-          <ground>179</ground>
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="37" y="9">
@@ -134456,8 +134453,8 @@ else
         <block><![CDATA[
 	var skeleton = new Skeleton()
     {
-        MaxHealth = 80, Health = 80,
-        BaseDodge = 15,
+        MaxHealth = 70, Health = 70,
+        BaseDodge = 16,
     
         Experience = 2100,
     
@@ -134569,7 +134566,7 @@ else
     {
         MaxHealth = 60, Health = 60,
         MaxMana = 9, Mana = 9,
-        BaseDodge = 13,
+        BaseDodge = 15,
     
         Experience = 2100,
         
@@ -137327,6 +137324,8 @@ else
       <bounds region="4">
         <inclusion left="0" top="-5" right="54" bottom="34" />
         <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="2" top="4" right="6" bottom="5" />
+        <exclusion left="44" top="6" right="45" bottom="7" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Undead Godwyn">
