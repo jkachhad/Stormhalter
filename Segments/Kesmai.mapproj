@@ -77179,7 +77179,7 @@
       <tile x="14" y="2">
         <component type="StaircaseComponent">
           <destinationX>31</destinationX>
-          <destinationY>37</destinationY>
+          <destinationY>36</destinationY>
           <destinationRegion>71</destinationRegion>
           <teleporterId>123</teleporterId>
         </component>
@@ -108353,7 +108353,8 @@
     <region>
       <id>71</id>
       <name>Dungeon -5</name>
-      <height>0</height>
+      <height>-50</height>
+      <level>12</level>
       <tile x="-6" y="-15">
         <component type="WallComponent">
           <wall>417</wall>
@@ -124157,8 +124158,11 @@
         </component>
       </tile>
       <tile x="31" y="36">
-        <component type="FloorComponent">
-          <ground>1</ground>
+        <component type="StaircaseComponent">
+          <destinationX>14</destinationX>
+          <destinationY>2</destinationY>
+          <destinationRegion>14</destinationRegion>
+          <teleporterId>130</teleporterId>
         </component>
       </tile>
       <tile x="32" y="36">
@@ -124639,11 +124643,8 @@
         </component>
       </tile>
       <tile x="31" y="37">
-        <component type="StaircaseComponent">
-          <destinationX>14</destinationX>
-          <destinationY>2</destinationY>
-          <destinationRegion>14</destinationRegion>
-          <teleporterId>130</teleporterId>
+        <component type="FloorComponent">
+          <ground>1</ground>
         </component>
       </tile>
       <tile x="32" y="37">
