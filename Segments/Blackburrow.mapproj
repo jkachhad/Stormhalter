@@ -827,6 +827,15 @@
         </component>
       </tile>
       <tile x="4" y="-38">
+        <component type="StaticComponent">
+          <static>210</static>
+        </component>
+        <component type="WaterComponent">
+          <ground>177</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="5" y="-38">
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
@@ -834,11 +843,6 @@
           <wall>140</wall>
           <destroyed>142</destroyed>
           <ruins>46</ruins>
-        </component>
-      </tile>
-      <tile x="5" y="-38">
-        <component type="FloorComponent">
-          <ground>176</ground>
         </component>
       </tile>
       <tile x="6" y="-38">
@@ -855,15 +859,19 @@
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
-      </tile>
-      <tile x="9" y="-38">
-        <component type="FloorComponent">
-          <ground>176</ground>
-        </component>
         <component type="WallComponent">
           <wall>140</wall>
           <destroyed>142</destroyed>
           <ruins>46</ruins>
+        </component>
+      </tile>
+      <tile x="9" y="-38">
+        <component type="StaticComponent">
+          <static>210</static>
+        </component>
+        <component type="WaterComponent">
+          <ground>177</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="10" y="-38">
@@ -1006,16 +1014,21 @@
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
-        <component type="AltarComponent">
-          <altar>113</altar>
-        </component>
       </tile>
       <tile x="5" y="-37">
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
-        <component type="AltarComponent">
-          <altar>113</altar>
+        <component type="WallComponent">
+          <wall>29</wall>
+          <destroyed>42</destroyed>
+          <ruins>46</ruins>
+        </component>
+        <component type="WallComponent">
+          <wall>140</wall>
+          <destroyed>154</destroyed>
+          <ruins>46</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="6" y="-37">
@@ -1038,16 +1051,20 @@
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
-        <component type="AltarComponent">
-          <altar>113</altar>
+        <component type="WallComponent">
+          <wall>140</wall>
+          <destroyed>142</destroyed>
+          <ruins>46</ruins>
         </component>
       </tile>
       <tile x="9" y="-37">
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
-        <component type="AltarComponent">
-          <altar>113</altar>
+        <component type="WallComponent">
+          <wall>29</wall>
+          <destroyed>42</destroyed>
+          <ruins>46</ruins>
         </component>
       </tile>
       <tile x="10" y="-37">
