@@ -134752,6 +134752,7 @@ else
         CanCharge = true,
         CanSwim = true,
         
+        HideDetection = 18,
         FireProtection = 100,
         IceProtection = 100,
         BasePenetration = ShieldPenetration.Medium,
@@ -134829,6 +134830,8 @@ else
         Experience = 12000,
         CanCharge = true,
         CanSwim = true,
+        
+        HideDetection = 18,
         FireProtection = 100,
         IceProtection = 100,
         BasePenetration = ShieldPenetration.Medium,
@@ -137328,7 +137331,7 @@ else
         <exclusion left="44" top="6" right="45" bottom="7" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Undead Godwyn">
+    <spawn type="RegionSpawner" name="Kesmai -3.5 Godwyn">
       <minimumDelay>2700</minimumDelay>
       <maximumDelay>3300</maximumDelay>
       <maximum>1</maximum>
@@ -137349,10 +137352,12 @@ else
       <entry entity="BossMiniLevel9Godwyn" size="1" minimum="1" maximum="1" />
       <bounds region="4">
         <inclusion left="35" top="11" right="37" bottom="13" />
+        <inclusion left="33" top="11" right="34" bottom="12" />
+        <inclusion left="38" top="11" right="39" bottom="12" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Undead Bedwyn">
+    <spawn type="RegionSpawner" name="Kesmai -3.5 Bedwyn">
       <minimumDelay>2700</minimumDelay>
       <maximumDelay>3300</maximumDelay>
       <maximum>1</maximum>
@@ -137373,6 +137378,8 @@ else
       <entry entity="BossMiniLevel9Bedwyn" size="1" minimum="1" maximum="1" />
       <bounds region="4">
         <inclusion left="17" top="11" right="19" bottom="13" />
+        <inclusion left="17" top="9" right="18" bottom="10" />
+        <inclusion left="17" top="14" right="18" bottom="15" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
