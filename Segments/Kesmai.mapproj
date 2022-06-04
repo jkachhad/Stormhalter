@@ -134530,7 +134530,7 @@ else
         <block><![CDATA[
 	var skeleton = new Skeleton()
     {
-        MaxHealth = 70, Health = 70,
+        MaxHealth = 75, Health = 75,
         BaseDodge = 16,
     
         Experience = 2100,
@@ -134546,7 +134546,7 @@ else
     };
     
     skeleton.Wield(new Longsword());
-    skeleton.Equip(new LeatherArmor());    
+    skeleton.Equip(new ChainmailArmor());    
     
     skeleton.AddGold(84);
     skeleton.AddLoot(new LootPack(
@@ -134583,10 +134583,10 @@ else
 	var wight = new Wight()
     {
         MaxHealth = 70, Health = 70,
-        MaxMana = 8, Mana = 8,
+        MaxMana = 7, Mana = 7,
         BaseDodge = 13,
     
-        Experience = 1899,
+        Experience = 2100,
         
         CanFlee = true,
     };
@@ -134641,9 +134641,9 @@ else
         <block><![CDATA[
 	var skeleton = new Skeleton()
     {
-        MaxHealth = 60, Health = 60,
-        MaxMana = 9, Mana = 9,
-        BaseDodge = 15,
+        MaxHealth = 65, Health = 65,
+        MaxMana = 7, Mana = 7,
+        BaseDodge = 16,
     
         Experience = 2100,
         
@@ -134701,7 +134701,7 @@ else
 	var mummy = new Mummy()
     {
         MaxHealth = 75, Health = 75,
-        BaseDodge = 17,
+        BaseDodge = 18,
     
         Experience = 2700,
     
@@ -134736,6 +134736,7 @@ else
         new LootPackEntry(true, dungeon4Rings,      1.26),
         new LootPackEntry(true, dungeon3Potions,    0.63),
         new LootPackEntry(true, (from, container) => new Yttril(), 1),
+        new LootPackEntry(true, (from, container) => new SteelGauntlets(), 6.67),
         new LootPackEntry(true, utilityItems,   1)
     ));
     
