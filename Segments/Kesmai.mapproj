@@ -134923,10 +134923,9 @@ else
         new LootPackEntry(true, kesmaiwideGems,       100,     gemsPriceMutatorVeryHigh),
         new LootPackEntry(true, dungeon4Bottles,    20),
         new LootPackEntry(true, dungeon4Treasure,   1),
-        new LootPackEntry(true, dungeon4Rings,      15),
         
-        new LootPackEntry(true, dungeon3Potions,    7)
-        
+        new LootPackEntry(true, dungeon3Potions,    7),
+        new LootPackEntry(true, (from, container) => new StrengthRing(), 100)
         
     ));
 
@@ -135002,10 +135001,9 @@ else
         new LootPackEntry(true, kesmaiwideGems,       100,     gemsPriceMutatorVeryHigh),
         new LootPackEntry(true, dungeon4Bottles,    20),
         new LootPackEntry(true, dungeon4Treasure,   1),
-        new LootPackEntry(true, dungeon4Rings,      15),
-       
-       new LootPackEntry(true, dungeon3Potions,    7)
         
+        new LootPackEntry(true, dungeon3Potions,    7),
+        new LootPackEntry(true, (from, container) => new ShieldRing(), 100)
         
     ));
 
