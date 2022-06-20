@@ -35861,25 +35861,20 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	var shven = new ThaumaturgeTrainer()
-    {
-        Name = "Shven", Body = 48,
-        
+	var trainer = new ThaumaturgeTrainer()
+    { 
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
 
         Experience = 50,
     };
     
-    shven.AddCounter(new Point2D(30, 7, 1));
-    shven.AddCounter(new Point2D(31, 7, 1));
-    
     foreach (var skill in Skill.Weapons)
-        shven.SetTraining(skill, 0, 8);
+        trainer.SetTraining(skill, 0, 4);
+
+    trainer.SetTraining(Skill.Magic, 1, 19);
     
-    shven.SetTraining(Skill.Magic, 0, 19);
-    
-    return shven;
+    return trainer;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -38537,9 +38532,19 @@ return skeleton;
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (spawn is ThaumaturgeTrainer trainer)
+    {
+        trainer.Name = "Shven";
+        trainer.Body = 48;
+        
+        trainer.AddCounter(new Point2D(6, -37, 1));
+        trainer.AddCounter(new Point2D(7, -37, 1));
+        
+        trainer.SetTraining(Skill.Magic, 1, 19);
+    }
 
 ]]></block>
         <block><![CDATA[]]></block>
