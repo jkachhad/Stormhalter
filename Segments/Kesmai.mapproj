@@ -106183,7 +106183,8 @@
     <region>
       <id>71</id>
       <name>Dungeon -5</name>
-      <height>0</height>
+      <height>-50</height>
+      <level>12</level>
       <tile x="-6" y="-15">
         <component type="WallComponent">
           <wall>417</wall>
@@ -134225,7 +134226,7 @@ else
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Lvl9 Ghoul">
+    <entity name="level9Ghoul">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -134286,7 +134287,7 @@ else
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Lvl9 Spider">
+    <entity name="level9Spider">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -134388,7 +134389,7 @@ var spider = new Spider()
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="BossMinorlevel9Ghoulx2">
+    <entity name="BossMinorLevel9Ghoulx2">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -134451,7 +134452,7 @@ var spider = new Spider()
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Lvl9 Wraith">
+    <entity name="level9Wraith">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -134513,7 +134514,7 @@ var spider = new Spider()
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Lvl9 Skeleton">
+    <entity name="level9Skeleton">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -135659,6 +135660,246 @@ var spider = new Spider()
       </script>
       <entry entity="surfaceShark" size="1" minimum="1" maximum="1" />
       <location x="95" y="34" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="kes5Emondeus">
+      <minimumDelay>2100</minimumDelay>
+      <maximumDelay>3180</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossNotablelevel9Demon" size="1" minimum="1" maximum="1" />
+      <location x="-1" y="-12" region="71" />
+    </spawn>
+    <spawn type="LocationSpawner" name="kes5Spider1">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level9Spider" size="1" minimum="1" maximum="1" />
+      <location x="11" y="2" region="71" />
+    </spawn>
+    <spawn type="LocationSpawner" name="kes5Spider2">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level9Spider" size="1" minimum="1" maximum="1" />
+      <location x="14" y="2" region="71" />
+    </spawn>
+    <spawn type="LocationSpawner" name="kes5Spider3">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level9Spider" size="1" minimum="1" maximum="1" />
+      <location x="48" y="12" region="71" />
+    </spawn>
+    <spawn type="LocationSpawner" name="kes5Spider4">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level9Spider" size="1" minimum="1" maximum="1" />
+      <location x="44" y="18" region="71" />
+    </spawn>
+    <spawn type="LocationSpawner" name="kes5Spider5">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level9Spider" size="1" minimum="1" maximum="1" />
+      <location x="46" y="27" region="71" />
+    </spawn>
+    <spawn type="LocationSpawner" name="kes5Spider6">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level9Spider" size="1" minimum="1" maximum="1" />
+      <location x="31" y="45" region="71" />
+    </spawn>
+    <spawn type="LocationSpawner" name="kes5Spider7">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level9Spider" size="1" minimum="1" maximum="1" />
+      <location x="35" y="45" region="71" />
+    </spawn>
+    <spawn type="LocationSpawner" name="kes5PiranhZa">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level8CryptPiranha" size="1" minimum="5" maximum="10" />
+      <location x="15" y="12" region="71" />
+    </spawn>
+    <spawn type="LocationSpawner" name="kes5BloodGhoul1">
+      <minimumDelay>2100</minimumDelay>
+      <maximumDelay>2100</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossMiniLevel8CryptGhoul" size="1" minimum="1" maximum="1" />
+      <location x="49" y="41" region="71" />
+    </spawn>
+    <spawn type="LocationSpawner" name="kes5BloodGhoul2">
+      <minimumDelay>2100</minimumDelay>
+      <maximumDelay>2100</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossMinorLevel9Ghoulx2" size="1" minimum="1" maximum="1" />
+      <location x="53" y="41" region="71" />
+    </spawn>
+    <spawn type="LocationSpawner" name="kes5GhoulTrap">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level9Ghoul" size="3" minimum="1" maximum="1" />
+      <location x="41" y="38" region="71" />
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai -1">
       <minimumDelay>600</minimumDelay>
@@ -136966,9 +137207,10 @@ var spider = new Spider()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-     <spawn type="RegionSpawner" name="Kesmai -5 SE Darkness">
+    <spawn type="RegionSpawner" name="Kesmai -5 SE Darkness">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>600</maximumDelay>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -136983,17 +137225,18 @@ var spider = new Spider()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Lvl9 Ghoul" size="1" minimum="1" maximum="3" />
-      <entry entity="Lvl9 Wraith" size="1" minimum="1" maximum="2" />
-      <entry entity="Lvl9 Skeleton" size="4" minimum="2" maximum="2" />
+      <entry entity="level9Ghoul" size="1" minimum="1" maximum="3" />
+      <entry entity="level9Wraith" size="1" minimum="1" maximum="2" />
+      <entry entity="level9Skeleton" size="4" minimum="2" maximum="2" />
       <bounds region="71">
         <inclusion left="8" top="38" right="19" bottom="45" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="kesmai -5 spidershortcut">
+    <spawn type="RegionSpawner" name="kesmai -5 Spider Shortcut">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137008,15 +137251,16 @@ var spider = new Spider()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Lvl9 Spider" size="1" minimum="4" maximum="4" />
+      <entry entity="level9Spider" size="1" minimum="4" maximum="4" />
       <bounds region="71">
         <inclusion left="61" top="24" right="62" bottom="42" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="kesmai -5 ghoulwebs">
+    <spawn type="RegionSpawner" name="kesmai -5 Ghoulwebs">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137031,16 +137275,17 @@ var spider = new Spider()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Lvl9 Ghoul" size="1" minimum="2" maximum="2" />
-      <entry entity="Lvl9 Spider" size="1" minimum="1" maximum="2" />
+      <entry entity="level9Ghoul" size="1" minimum="2" maximum="2" />
+      <entry entity="level9Spider" size="1" minimum="1" maximum="2" />
       <bounds region="71">
         <inclusion left="31" top="42" right="35" bottom="43" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="kesmai -5 NEmonsters">
+    <spawn type="RegionSpawner" name="kesmai -5 NE">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137055,18 +137300,19 @@ var spider = new Spider()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Lvl9 Ghoul" size="1" minimum="1" maximum="6" />
-      <entry entity="Lvl9 Wraith" size="1" minimum="1" maximum="2" />
+      <entry entity="level9Ghoul" size="1" minimum="1" maximum="6" />
+      <entry entity="level9Wraith" size="1" minimum="1" maximum="2" />
       <entry entity="level8Spectre" size="1" minimum="1" maximum="1" />
-      <entry entity="Lvl9 Skeleton" size="3" minimum="4" maximum="4" />
+      <entry entity="level9Skeleton" size="3" minimum="4" maximum="4" />
       <bounds region="71">
         <inclusion left="38" top="4" right="55" bottom="9" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="kesmai -5 darkness middle">
+    <spawn type="RegionSpawner" name="kesmai -5 Darkness Middle">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137082,17 +137328,18 @@ var spider = new Spider()
         <block><![CDATA[]]></block>
       </script>
       <entry entity="level8Spectre" size="1" minimum="1" maximum="2" />
-      <entry entity="Lvl9 Ghoul" size="1" minimum="1" maximum="3" />
-      <entry entity="Lvl9 Wraith" size="1" minimum="1" maximum="1" />
-      <entry entity="Lvl9 Skeleton" size="3" minimum="2" maximum="2" />
+      <entry entity="level9Ghoul" size="1" minimum="1" maximum="3" />
+      <entry entity="level9Wraith" size="1" minimum="1" maximum="1" />
+      <entry entity="level9Skeleton" size="3" minimum="2" maximum="2" />
       <bounds region="71">
         <inclusion left="26" top="14" right="33" bottom="18" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Kesmai -5 west S">
+    <spawn type="RegionSpawner" name="Kesmai -5 West S">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137107,10 +137354,10 @@ var spider = new Spider()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Lvl9 Ghoul" size="1" minimum="6" maximum="9" />
-      <entry entity="Lvl9 Spider" size="1" minimum="3" maximum="3" />
-      <entry entity="Lvl9 Skeleton" size="3" minimum="3" maximum="6" />
-      <entry entity="Lvl9 Wraith" size="1" minimum="3" maximum="3" />
+      <entry entity="level9Ghoul" size="1" minimum="6" maximum="9" />
+      <entry entity="level9Spider" size="1" minimum="3" maximum="3" />
+      <entry entity="level9Skeleton" size="3" minimum="3" maximum="6" />
+      <entry entity="level9Wraith" size="1" minimum="3" maximum="3" />
       <bounds region="71">
         <inclusion left="4" top="22" right="25" bottom="30" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -137119,6 +137366,7 @@ var spider = new Spider()
     <spawn type="RegionSpawner" name="kesmai -5 NE corner">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137133,17 +137381,18 @@ var spider = new Spider()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Lvl9 Skeleton" size="1" minimum="10" maximum="15" />
-      <entry entity="Lvl9 Ghoul" size="1" minimum="4" maximum="4" />
-      <entry entity="Lvl9 Wraith" size="1" minimum="5" maximum="5" />
+      <entry entity="level9Skeleton" size="1" minimum="10" maximum="15" />
+      <entry entity="level9Ghoul" size="1" minimum="4" maximum="4" />
+      <entry entity="level9Wraith" size="1" minimum="5" maximum="5" />
       <bounds region="71">
         <inclusion left="58" top="2" right="59" bottom="34" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="kesmai -5 darkness S2">
+    <spawn type="RegionSpawner" name="kesmai -5 Darkness S2">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137158,18 +137407,19 @@ var spider = new Spider()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Lvl9 Spider" size="1" minimum="3" maximum="3" />
-      <entry entity="Lvl9 Wraith" size="1" minimum="1" maximum="1" />
-      <entry entity="Lvl9 Ghoul" size="1" minimum="2" maximum="2" />
-      <entry entity="Lvl9 Skeleton" size="4" minimum="1" maximum="1" />
+      <entry entity="level9Spider" size="1" minimum="3" maximum="3" />
+      <entry entity="level9Wraith" size="1" minimum="1" maximum="1" />
+      <entry entity="level9Ghoul" size="1" minimum="2" maximum="2" />
+      <entry entity="level9Skeleton" size="4" minimum="1" maximum="1" />
       <bounds region="71">
         <inclusion left="41" top="45" right="56" bottom="45" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="kesmai -5 entrance West">
+    <spawn type="RegionSpawner" name="kesmai -5 Entrance West">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137184,16 +137434,16 @@ var spider = new Spider()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Lvl9 Skeleton" size="3" minimum="4" maximum="6" />
-      <entry entity="Lvl9 Ghoul" size="1" minimum="2" maximum="2" />
-      <entry entity="Lvl9 Spider" size="1" minimum="1" maximum="1" />
-      <entry entity="Lvl9 Wraith" size="1" minimum="1" maximum="1" />
+      <entry entity="level9Skeleton" size="3" minimum="4" maximum="6" />
+      <entry entity="level9Ghoul" size="1" minimum="2" maximum="2" />
+      <entry entity="level9Spider" size="1" minimum="1" maximum="1" />
+      <entry entity="level9Wraith" size="1" minimum="1" maximum="1" />
       <bounds region="71">
         <inclusion left="5" top="32" right="28" bottom="36" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="kesmai -5 entrance SW">
+    <spawn type="RegionSpawner" name="kesmai -5 Entrance SW">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -137210,8 +137460,8 @@ var spider = new Spider()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Lvl9 Wraith" size="1" minimum="1" maximum="1" />
-      <entry entity="Lvl9 Skeleton" size="1" minimum="3" maximum="6" />
+      <entry entity="level9Wraith" size="1" minimum="1" maximum="1" />
+      <entry entity="level9Skeleton" size="1" minimum="3" maximum="6" />
       <bounds region="71">
         <inclusion left="4" top="38" right="6" bottom="45" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -137240,9 +137490,10 @@ var spider = new Spider()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="kesmai -5 sewer range">
+    <spawn type="RegionSpawner" name="kesmai -5 Sewer Range">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137257,15 +137508,16 @@ var spider = new Spider()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Lvl9 Wraith" size="1" minimum="3" maximum="3" />
+      <entry entity="level9Wraith" size="1" minimum="3" maximum="3" />
       <bounds region="71">
         <inclusion left="43" top="32" right="54" bottom="34" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="kesmai -5 sewer rooms">
+    <spawn type="RegionSpawner" name="kesmai -5 Sewer Rooms">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137280,17 +137532,18 @@ var spider = new Spider()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Lvl9 Skeleton" size="2" minimum="8" maximum="8" />
-      <entry entity="Lvl9 Wraith" size="1" minimum="3" maximum="3" />
-      <entry entity="Lvl9 Spider" size="1" minimum="2" maximum="2" />
+      <entry entity="level9Skeleton" size="2" minimum="8" maximum="8" />
+      <entry entity="level9Wraith" size="1" minimum="3" maximum="3" />
+      <entry entity="level9Spider" size="1" minimum="2" maximum="2" />
       <bounds region="71">
         <inclusion left="52" top="12" right="53" bottom="25" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="kesmai -5 darkness Sewer ">
+    <spawn type="RegionSpawner" name="kesmai -5 Darkness Sewer ">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137305,9 +137558,9 @@ var spider = new Spider()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Lvl9 Ghoul" size="1" minimum="2" maximum="2" />
-      <entry entity="Lvl9 Wraith" size="1" minimum="1" maximum="1" />
-      <entry entity="Lvl9 Skeleton" size="2" minimum="2" maximum="4" />
+      <entry entity="level9Ghoul" size="1" minimum="2" maximum="2" />
+      <entry entity="level9Wraith" size="1" minimum="1" maximum="1" />
+      <entry entity="level9Skeleton" size="2" minimum="2" maximum="4" />
       <bounds region="71">
         <inclusion left="42" top="20" right="46" bottom="23" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -137316,6 +137569,7 @@ var spider = new Spider()
     <spawn type="RegionSpawner" name="Kesmai -5 Darkness S1">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137330,17 +137584,18 @@ var spider = new Spider()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Lvl9 Ghoul" size="1" minimum="2" maximum="2" />
-      <entry entity="Lvl9 Wraith" size="1" minimum="1" maximum="1" />
-      <entry entity="Lvl9 Skeleton" size="1" minimum="3" maximum="3" />
+      <entry entity="level9Ghoul" size="1" minimum="2" maximum="2" />
+      <entry entity="level9Wraith" size="1" minimum="1" maximum="1" />
+      <entry entity="level9Skeleton" size="1" minimum="3" maximum="3" />
       <bounds region="71">
         <inclusion left="46" top="36" right="56" bottom="36" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Kesmai -5 sewerside west">
+    <spawn type="RegionSpawner" name="Kesmai -5 Sewer West">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137355,16 +137610,17 @@ var spider = new Spider()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Lvl9 Skeleton" size="2" minimum="6" maximum="6" />
-      <entry entity="Lvl9 Wraith" size="1" minimum="1" maximum="1" />
+      <entry entity="level9Skeleton" size="2" minimum="6" maximum="6" />
+      <entry entity="level9Wraith" size="1" minimum="1" maximum="1" />
       <bounds region="71">
         <inclusion left="35" top="12" right="37" bottom="20" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="kesmai -5 west N">
+    <spawn type="RegionSpawner" name="kesmai -5 West N">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137379,10 +137635,10 @@ var spider = new Spider()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Lvl9 Skeleton" size="3" minimum="3" maximum="3" />
-      <entry entity="Lvl9 Wraith" size="1" minimum="1" maximum="1" />
-      <entry entity="Lvl9 Spider" size="1" minimum="3" maximum="3" />
-      <entry entity="Lvl9 Ghoul" size="1" minimum="2" maximum="2" />
+      <entry entity="level9Skeleton" size="3" minimum="3" maximum="3" />
+      <entry entity="level9Wraith" size="1" minimum="1" maximum="1" />
+      <entry entity="level9Spider" size="1" minimum="3" maximum="3" />
+      <entry entity="level9Ghoul" size="1" minimum="2" maximum="2" />
       <bounds region="71">
         <inclusion left="12" top="14" right="22" bottom="21" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -137391,6 +137647,7 @@ var spider = new Spider()
     <spawn type="RegionSpawner" name="Kesmai -5 Bloodriver">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137405,8 +137662,8 @@ var spider = new Spider()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Lvl9 Wraith" size="1" minimum="3" maximum="3" />
-      <entry entity="Lvl9 Skeleton" size="1" minimum="9" maximum="9" />
+      <entry entity="level9Wraith" size="1" minimum="3" maximum="3" />
+      <entry entity="level9Skeleton" size="1" minimum="9" maximum="9" />
       <bounds region="71">
         <inclusion left="11" top="6" right="16" bottom="9" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -137415,6 +137672,7 @@ var spider = new Spider()
     <spawn type="RegionSpawner" name="Kesmai -5 Bloodriver East">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137429,9 +137687,9 @@ var spider = new Spider()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Lvl9 Skeleton" size="4" minimum="2" maximum="2" />
-      <entry entity="Lvl9 Ghoul" size="1" minimum="1" maximum="1" />
-      <entry entity="Lvl9 Spider" size="1" minimum="1" maximum="1" />
+      <entry entity="level9Skeleton" size="4" minimum="2" maximum="2" />
+      <entry entity="level9Ghoul" size="1" minimum="1" maximum="1" />
+      <entry entity="level9Spider" size="1" minimum="1" maximum="1" />
       <bounds region="71">
         <inclusion left="20" top="5" right="25" bottom="13" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -137440,6 +137698,7 @@ var spider = new Spider()
     <spawn type="RegionSpawner" name="Kesmai -5 North Mid">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137454,17 +137713,18 @@ var spider = new Spider()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Lvl9 Skeleton" size="1" minimum="4" maximum="4" />
-      <entry entity="Lvl9 Wraith" size="1" minimum="1" maximum="1" />
-      <entry entity="Lvl9 Ghoul" size="1" minimum="1" maximum="1" />
+      <entry entity="level9Skeleton" size="1" minimum="4" maximum="4" />
+      <entry entity="level9Wraith" size="1" minimum="1" maximum="1" />
+      <entry entity="level9Ghoul" size="1" minimum="1" maximum="1" />
       <bounds region="71">
         <inclusion left="29" top="2" right="33" bottom="13" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="kesmai -5 middle">
+    <spawn type="RegionSpawner" name="kesmai -5 Middle">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -137479,7 +137739,7 @@ var spider = new Spider()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Lvl9 Spider" size="1" minimum="3" maximum="3" />
+      <entry entity="level9Spider" size="1" minimum="3" maximum="3" />
       <entry entity="level8Minotaur" size="1" minimum="1" maximum="1" />
       <bounds region="71">
         <inclusion left="20" top="15" right="24" bottom="18" />
