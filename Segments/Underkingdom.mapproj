@@ -199,13 +199,88 @@
         return balm;
     }
     
+    public class HummingPortal : CreatureEntity
+    {
+        public HummingPortal()
+        {
+            Name = "HummingPortal";
+            IsInvisible = true;
+            IsInvulnerable = true;
+            Movement = 0; // static (its a portal)
+            RangePerception = 0; //only trigger for players on this hex
+            Alignment = Alignment.Chaotic;
+            Body = 26;
+            CanLoot = false;
+        }
+        
+        public override Corpse GetCorpse() => default(Corpse);
+
+        public HummingPortal(Serial serial) : base(serial)
+        {
+        }
+
+        public override void OnSpawn()
+        {
+            base.OnSpawn();
+
+            if (_brain != null)
+                return;
+                
+            _brain = new IdleAI(this);
+        }
+
+    }
+    
     public class HummingGuardian : CreatureEntity
     {
         public HummingGuardian()
         {
             Name = "guardian";
             Alignment = Alignment.Chaotic;
-            Body = 45;
+            Body = 26; //air elemental body
+        }
+        
+        /* Called when someone enters the centre of the room */
+        public void StartGuardianEncounter()
+        {
+            RangePerception = 3;
+            Movement = 3;
+        }
+
+        public override void OnSpellTarget(Target target, MobileEntity combatant)
+        {
+            //Start a timer - if we don't restart this timer again then we have lost sight of them for a long time and we reset the guardian
+            StartResetTimer();
+            base.OnSpellTarget(target, combatant);
+        }
+
+        private Timer _resetTimer = null;
+        
+        private void StartResetTimer()
+        {
+            if (_resetTimer != null)
+                _resetTimer.Stop();
+                
+            //if the guardian doesnt see someone for 120 seconds then reset him
+            _resetTimer = Timer.DelayCall(Facet.TimeSpan.FromSeconds(120.0), ResetGuardianEncounter);
+        }
+        
+        private void ResetGuardianEncounter()
+        {
+            if(!IsAlive) return;
+         
+            //put the guardian back to sleep and in his place
+            _resetTimer = null;
+            RangePerception = 0;
+            Movement = 0;
+            Teleport(new Point2D(7, 19, 5));
+            Health = MaxHealth;
+        }
+        
+        private void StopResetTimer()
+        {
+            if (_resetTimer != null)
+                _resetTimer.Stop();
         }
 
         public override int GetNearbySound() => 289;
@@ -224,32 +299,10 @@
 
             if (_brain != null)
                 return;
-
-            if (RightHand is ProjectileWeapon)
-                _brain = new RangedAI(this);
-            else
-                _brain = new CombatAI(this);
+                
+            _brain = new CombatAI(this);
         }
 
-        public override void OnSpellTarget(Target target, MobileEntity combatant)
-        {
-            if (Spell is WhirlwindSpell whirlwind)
-            {
-                var direction = GetDirectionTo(combatant.Location);
-                var distance = GetDistanceToMax(combatant.Location);
-
-                direction = Direction.Cardinal.Random();
-
-                whirlwind.CastAt(combatant.Location, direction.Opposite);
-
-                if (target != null)
-                    target.Cancel(this, TargetCancel.Canceled);
-            }
-            else
-            {
-                base.OnSpellTarget(target, combatant);
-            }
-        }
     }
     
     public class KoboldKing : CreatureEntity
@@ -53125,17 +53178,6 @@
         <component type="FloorComponent">
           <ground>6</ground>
         </component>
-        <component type="ItemTeleporter">
-          <destinationX>2</destinationX>
-          <destinationY>19</destinationY>
-          <destinationRegion>10</destinationRegion>
-          <lightphases select="all" />
-          <moonphases select="all" />
-          <professions select="all" />
-          <alignments select="all" />
-          <type>HummingbirdAmulet</type>
-          <fail>Interrupted</fail>
-        </component>
       </tile>
       <tile x="14" y="22">
         <component type="StaticComponent">
@@ -102161,52 +102203,76 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    var wraith = new HummingGuardian()
+    var guardian = new HummingGuardian()
     {
         Name = "Guardian",
-        MaxHealth = 50, Health = 50,
-        BaseDodge = 12,
-        IsInvisible = true,
-        Experience = 1,
-        Movement = 0,
-        FireProtection = 100,
-        IceProtection = 100,
-        LightningResistance = 100,
-    };
-    
-    wraith.AddStatus(new NightVisionStatus(wraith));
+        MaxHealth = 250, Health = 250,
+        MaxMana = 13, Mana = 13, //almost enough to cast 2 
+        BaseDodge = 27,
+        HideDetection = 29,    
+        Experience = 15699,
 
-    /* wraith.Weakness(WhirlwindSpell); */
+        Movement = 0, //gets updated when they land on his square
+        VisibilityDistance = 0, //only visible on same square
+        RangePerception = 0, //gets updated when they land on his square
+        IsTethered = true,
+        CanCharge = true,
         
-    wraith.Attacks = new CreatureAttackCollection()
-    {
-        new CreatureBasicAttack(7)
+        //should be immune to Everything except physical attacks. This is a show of strength
+        Immunity = CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
     };
     
-    wraith.AddLoot(new LootPack(
+    guardian.AddImmunity(typeof(Lightning));
+    guardian.AddImmunity(typeof(WhirlwindSpell));
+    
+    guardian.AddStatus(new NightVisionStatus(guardian));
+
+    guardian.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(19, 25, 35),
+    };
+
+/** Note: This loot is now created and bound to the killer on Guardians death. See: OnDeath
+    guardian.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new HummingbirdSword(),     100)
     ));
+*/
     
-    wraith.Spells = new CreatureSpellCollection(100)
+    guardian.Spells = new CreatureSpellCollection()
     {
-       { new CreatureSpell<WhirlwindSpell>(
-            skillLevel: 13), 100, TimeSpan.FromSeconds(12.0) }
+        /* Expected output of damage is 12 per tick. 36 per turn. It should cast 2 of these initially in short succession so double */
+        new CreatureSpell<WhirlwindSpell>(
+            skillLevel: 3, cost: 7, instantCast: true)
     };
-    
-    return wraith;
+        
+    return guardian;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    
+    //create a new hummer and bind it to the player who killed the guardian
+    if (killer is PlayerEntity player)
+    {
+        //var sword = new HummingbirdSword(); 
+        var sword = new HummingbirdSword();
+        //Bind to the killer and drop at their feet
+        sword.Move( player.Location, true, player.Segment );
+        sword.Bind( player );
+    }
+
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
       <script name="OnIncomingPlayer" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    //start the encounter - it can now see full range. We want them to have to enter the centre of the room before being attacked.
+    ((HummingGuardian)source).StartGuardianEncounter();
+    
+    if (spokeRecently(source)) return;
+            
     source.Say($"Are.... you... worthy?.");
 ]]></block>
         <block><![CDATA[]]></block>
@@ -102859,6 +102925,86 @@ var gargoyle = new Gargoyle()
       <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="UKHummerPortal">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    /* This is a special entity that will use to do custom code "onIncommingPlayer" and check if they are allowed to enter the hummer guardian*/
+    var portal = new HummingPortal()
+    {
+        Name = "HummingPortal",
+        IsInvisible = true,
+        IsInvulnerable = true,
+
+        MaxHealth = 25000, Health = 25000,
+        Experience = 1,
+
+        Movement = 0, // static (its a portal)
+        VisibilityDistance = 0, //only visible on same square
+        RangePerception = 0, //only trigger for players on this hex
+        IsTethered = true,
+        CanCharge = true,
+
+    };
+    
+    return portal;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    //First, get the hummer amulet in either hand
+    ItemEntity hummerAmulet = (player.LeftHand != null && player.LeftHand is HummingbirdAmulet ? player.LeftHand : (player.RightHand != null && player.RightHand is HummingbirdAmulet ? player.RightHand : null) );
+    
+    //if no ammulet then refuse
+    if( hummerAmulet == null ) 
+    {
+        return;
+    }
+    
+    //Find the guardian, so someone doesnt go in and waist an amulet 
+    HummingGuardian hummingGuardian = World.Mobiles.Values.OfType<HummingGuardian>().Where((h) => source.Segment == h.Segment).FirstOrDefault();
+    
+    if( hummingGuardian == null )
+    {
+        //guardian is currently dead
+        if (!spokeRecently(source)) source.Say("The guardian is not ready for you yet");
+        return;
+    }
+
+    //make sure someone doesnt go in at the same time as another player
+    var segment = source.Segment;
+    foreach (var client in segment.Clients)
+    {
+        var character = client.Character;
+        
+        if (character is null || !character.IsAlive) continue;
+        
+        var subregion = segment.GetSubregion(character.Location);
+        
+        if( subregion != null && subregion.Name == "guardianLair" )
+        {
+            //someone in there already. Don't allow the player to portal in
+            if (!spokeRecently(source)) source.Say($"This is a challenge that {character.Name} must complete alone");
+            return;
+        }
+    }
+        
+    //no one in there so destroy ammulet and teleport them in..
+    hummerAmulet.Delete();
+    //player.Teleport(new Point2D(2, 19, 10)); this is for when Live
+    player.Teleport(new Point2D(2, 19, 5));
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -104097,6 +104243,27 @@ var gargoyle = new Gargoyle()
       </script>
       <entry entity="uktownConfessorGhost" size="1" minimum="1" maximum="1" />
       <location x="15" y="3" region="2" />
+    </spawn>
+    <spawn type="LocationSpawner" name="hummingbirdPortal">
+      <minimumDelay>60</minimumDelay>
+      <maximumDelay>300</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="UKHummerPortal" size="1" minimum="1" maximum="1" />
+      <location x="13" y="22" region="9" />
     </spawn>
     <spawn type="RegionSpawner" name="wyverns">
       <minimumDelay>900</minimumDelay>
