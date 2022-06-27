@@ -102929,7 +102929,7 @@ var gargoyle = new Gargoyle()
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="UKHummerPortal">
+    <entity name="ukHummerPortal">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -103003,8 +103003,7 @@ var gargoyle = new Gargoyle()
         
     //no one in there so destroy ammulet and teleport them in..
     hummerAmulet.Delete();
-    //player.Teleport(new Point2D(2, 19, 10)); this is for when Live
-    player.Teleport(new Point2D(2, 19, 5));
+    player.Teleport(new Point2D(2, 19, 10));
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -104262,7 +104261,7 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="UKHummerPortal" size="1" minimum="1" maximum="1" />
+      <entry entity="ukHummerPortal" size="1" minimum="1" maximum="1" />
       <location x="13" y="22" region="9" />
     </spawn>
     <spawn type="RegionSpawner" name="wyverns">
