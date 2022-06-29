@@ -136757,7 +136757,7 @@ else
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="BossNotablelevel9Demon">
+    <entity name="BossNotablelevel9Dragon">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[ 
@@ -136881,10 +136881,10 @@ else
     ghoul.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(8,     6, 12,      "The ghoul scratches you with its claws"),  70 
+            new CreatureAttack(9,     6, 12,      "The ghoul scratches you with its claws"),  70 
         }, 
         { 
-            new CreatureAttack(8,     10, 18,     "You've been bitten by the ghoul",
+            new CreatureAttack(9,     10, 18,     "You've been bitten by the ghoul",
                                                     new AttackPoisonComponent(6)),            30
         },
     };
@@ -136945,7 +136945,7 @@ var spider = new Spider()
     
     spider.Attacks = new CreatureAttackCollection
     {
-        new CreatureAttack(7,     4, 12,      "The spider nibbles at you", 
+        new CreatureAttack(9,     4, 12,      "The spider nibbles at you", 
                                     new AttackPoisonComponent(3))
     };
     
@@ -137172,7 +137172,7 @@ var spider = new Spider()
                 
     skeleton.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(3)
+        new CreatureBasicAttack(9)
     };
     
     skeleton.Wield(new Rapier());
@@ -137180,11 +137180,13 @@ var spider = new Spider()
             
     skeleton.AddGold(42);
     skeleton.AddLoot(new LootPack(
-        new LootPackEntry(true, kesmai12Gems,       17.2,     gemsPriceMutatorNormal),
-        new LootPackEntry(true, dungeon2Bottles,    20),
-        new LootPackEntry(true, dungeon2Treasure,   1),
-        new LootPackEntry(true, dungeon2Rings,      1),
-        new LootPackEntry(true, utilityItems,   0.5)
+        new LootPackEntry(true, kesmaiwideGems,       10.8,     gemsPriceMutatorHigh),
+        new LootPackEntry(true, dungeon4Bottles,    20),
+        new LootPackEntry(true, dungeon4Treasure,   1.26),
+        new LootPackEntry(true, dungeon4Rings,      1.26),
+        new LootPackEntry(true, dungeon3Potions,    0.63),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1),
+        new LootPackEntry(true, utilityItems,   1)
     ));
     
     return skeleton;]]></block>
@@ -138317,7 +138319,7 @@ var spider = new Spider()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="BossNotablelevel9Demon" size="1" minimum="1" maximum="1" />
+      <entry entity="BossNotablelevel9Dragon" size="1" minimum="1" maximum="1" />
       <location x="-1" y="-12" region="71" />
     </spawn>
     <spawn type="LocationSpawner" name="kes5Spider1">
