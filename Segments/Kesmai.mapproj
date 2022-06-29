@@ -136757,7 +136757,7 @@ else
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="BossNotablelevel9Dragon">
+    <entity name="BossNotablelevel9Demon">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[ 
@@ -136767,6 +136767,7 @@ else
         MaxHealth = 2700, Health = 2700,
         BaseDodge = 28,
         HideDetection = 20,
+        Body = 63,
     
         Experience = 42069,
         
@@ -136829,8 +136830,7 @@ else
             skillLevel: 9)
     };
     
-    //todo: Add the missing the +4 Shining Steel Greatsword to items and then add to Daisy loot table.
-    dragon.AddGold(1200);
+    dragon.AddGold(5500);
     dragon.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon4DragonTreasure,     100.0),
@@ -137049,13 +137049,15 @@ var spider = new Spider()
     ghoul.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(8,     6, 12,      "The bloodghoul scratches at your soul"),  70 
+            new CreatureAttack(9,     6, 12,      "The bloodghoul scratches at your soul"),  70 
         }, 
         { 
-            new CreatureAttack(8,     10, 18,     "You've been bitten by the bloodghoul",
+            new CreatureAttack(9,     10, 18,     "You've been bitten by the bloodghoul",
                                                     new AttackPoisonComponent(6)),            30
         },
     };
+    
+    ghoul.AddStatus(new NightVisionStatus(ghoul));
     
     ghoul.Blocks = new CreatureBlockCollection
     {
@@ -138319,7 +138321,7 @@ var spider = new Spider()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="BossNotablelevel9Dragon" size="1" minimum="1" maximum="1" />
+      <entry entity="BossNotablelevel9Demon" size="1" minimum="1" maximum="1" />
       <location x="-1" y="-12" region="71" />
     </spawn>
     <spawn type="LocationSpawner" name="kes5Spider1">
