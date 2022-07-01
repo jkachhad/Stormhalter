@@ -109422,8 +109422,8 @@
       <location x="32" y="11" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="Statue 1">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>900</maximumDelay>
+      <minimumDelay>-2700</minimumDelay>
+      <maximumDelay>-2700</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -110434,6 +110434,26 @@
       </script>
       <entry entity="BossMiniLevel8Pwolf" size="1" minimum="5" maximum="5" />
       <location x="13" y="10" region="23" />
+    </spawn>
+    <spawn type="LocationSpawner" name="Statue 4">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="axeStatue" size="1" minimum="1" maximum="1" />
+      <location x="32" y="24" region="1" />
     </spawn>
     <spawn type="RegionSpawner" name="surfaceDungeonSpawner">
       <minimumDelay>600</minimumDelay>
