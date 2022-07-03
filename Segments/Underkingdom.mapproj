@@ -199,6 +199,8 @@
         return balm;
     }
     
+    
+    
     public class HummingPortal : CreatureEntity
     {
         public HummingPortal()
@@ -230,6 +232,53 @@
         }
 
     }
+    
+    public class SpeedyHob : Hobgoblin
+    {
+            /// <summary>
+        /// Initializes a new instance of the <see cref="Hobgoblin"/> class.
+        /// </summary>
+        public SpeedyHob()
+        {
+            Name = "hobgoblin";
+            Body = 78;
+
+            Alignment = Alignment.Chaotic;
+        }
+
+        /// <inheritdoc/>
+        public override void OnSpawn()
+        {
+            base.OnSpawn();
+            
+            if (_brain != null)
+                return;
+            
+            if (RightHand is ProjectileWeapon)
+                _brain = new RangedAI(this);
+            else
+                _brain = new CombatAI(this);
+        }
+
+        /// <summary>
+        /// Gets the death sound.
+        /// </summary>
+        public override int GetDeathSound() => 108;
+        public override int GetNearbySound() => 94;
+        public override int GetAttackSound() => 101;
+        
+        public override ItemEntity OnCorpseTanned()
+        {
+            return new LeatherArmor();
+        }
+        
+        public override TimeSpan GetSwingDelay(MobileEntity entity)
+        {
+            return entity.GetRoundDelay(0.5);
+        }
+        
+    }
+    
     
     public class HummingGuardian : CreatureEntity
     {
@@ -99617,7 +99666,7 @@
         BaseDodge = 19,
         HideDetection = 25,
                 
-        Experience = 2708,
+        Experience = 3708,
         CanLoot = false,
     
         Movement = 2,
@@ -99632,13 +99681,13 @@
     wyvern.Attacks = new CreatureAttackCollection()
     {
         { 
-            new CreatureAttack(9,     6, 10,   "The wyvern rakes you with its claws."),        50 
+            new CreatureAttack(10,     10, 15,   "The wyvern rakes you with its claws."),        50 
         },
         {
-            new CreatureAttack(9,     8, 12,   "The wyvern bites you."),                     30 
+            new CreatureAttack(10,     12, 16,   "The wyvern bites you."),                     30 
         },
         {
-            new CreatureAttack(9,     10, 13,  "The wyvern rakes whips you with its tail."),  20
+            new CreatureAttack(10,     13, 20,  "The wyvern rakes whips you with its tail."),  20
         }
     };
     
@@ -99686,7 +99735,7 @@
         BaseDodge = 19,
         HideDetection = 25,
                 
-        Experience = 2708,
+        Experience = 3708,
         CanLoot = false,
     
         Movement = 2,
@@ -99697,14 +99746,14 @@
     
     wyvern.Attacks = new CreatureAttackCollection()
     {
-        { 
-            new CreatureAttack(9,     6, 10,   "The wyvern rakes you with its claws."),        50 
+         { 
+            new CreatureAttack(10,     10, 15,   "The wyvern rakes you with its claws."),        50 
         },
         {
-            new CreatureAttack(9,     8, 12,   "The wyvern bites you."),                     30 
+            new CreatureAttack(10,     12, 16,   "The wyvern bites you."),                     30 
         },
         {
-            new CreatureAttack(9,     10, 13,  "The wyvern rakes whips you with its tail."),  20
+            new CreatureAttack(10,     13, 20,  "The wyvern rakes whips you with its tail."),  20
         }
     };
     
@@ -99752,7 +99801,7 @@
         BaseDodge = 19,
         HideDetection = 25,
                 
-        Experience = 2708,
+        Experience = 3708,
         CanLoot = false,
     
         Movement = 2,
@@ -99764,13 +99813,13 @@
     wyvern.Attacks = new CreatureAttackCollection()
     {
         { 
-            new CreatureAttack(9,     6, 10,   "The wyvern rakes you with its claws."),        50 
+            new CreatureAttack(10,     10, 15,   "The wyvern rakes you with its claws."),        50 
         },
         {
-            new CreatureAttack(9,     8, 12,   "The wyvern bites you."),                     30 
+            new CreatureAttack(10,     12, 16,   "The wyvern bites you."),                     30 
         },
         {
-            new CreatureAttack(9,     10, 13,  "The wyvern rakes whips you with its tail."),  20
+            new CreatureAttack(10,     13, 20,  "The wyvern rakes whips you with its tail."),  20
         }
     };
     
@@ -99818,7 +99867,7 @@
         BaseDodge = 19,
         HideDetection = 25,
                 
-        Experience = 2708,
+        Experience = 3708,
         CanLoot = false,
     
         Movement = 2,
@@ -99828,14 +99877,14 @@
     
     wyvern.Attacks = new CreatureAttackCollection()
     {
-        { 
-            new CreatureAttack(9,     6, 10,   "The wyvern rakes you with its claws."),        50 
+         { 
+            new CreatureAttack(10,     10, 15,   "The wyvern rakes you with its claws."),        50 
         },
         {
-            new CreatureAttack(9,     8, 12,   "The wyvern bites you."),                     30 
+            new CreatureAttack(10,     12, 16,   "The wyvern bites you."),                     30 
         },
         {
-            new CreatureAttack(9,     10, 13,  "The wyvern rakes whips you with its tail."),  20
+            new CreatureAttack(10,     13, 20,  "The wyvern rakes whips you with its tail."),  20
         }
     };
     
@@ -103008,6 +103057,56 @@ var gargoyle = new Gargoyle()
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="level13SpeedyHob">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    /* New speedy Hob
+        Trying to make it more realistic here and upping exp in case difficulty goes to hummer speed. 
+    */
+	var hobgoblin = new SpeedyHob()
+    {
+        MaxHealth = 130, Health = 130,
+        BaseDodge = 21,
+        HideDetection = 25,
+        Experience = 7500,
+        BasePenetration = ShieldPenetration.Medium,
+    };
+    
+    hobgoblin.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(13)
+    };
+    
+    hobgoblin.Wield(new Longsword());
+    hobgoblin.Equip(new LeatherArmor());    
+    
+    hobgoblin.AddGold(119);
+    hobgoblin.AddLoot(new LootPack(
+        new LootPackEntry(true, UnderkingdomGems,       10.4,     gemsPriceMutatorNormal), 
+        new LootPackEntry(true, UnderkingdomBottles,    20), 
+        new LootPackEntry(true, UnderkingdomPotions,    0.2), 
+        new LootPackEntry(true, UpperTreasure,    0.5), 
+        new LootPackEntry(true, UtilityItems,    1)
+    ));
+    
+    return hobgoblin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="UKPawner">
@@ -104653,7 +104752,7 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level13Hobs" size="4" minimum="3" maximum="3" />
+      <entry entity="level13SpeedyHob" size="4" minimum="3" maximum="3" />
       <entry entity="level13Orc" size="3" minimum="3" maximum="3" />
       <entry entity="level13RhammerTroll" size="3" minimum="3" maximum="3" />
       <entry entity="level13LightningOrc" size="1" minimum="2" maximum="2" />
@@ -105144,7 +105243,7 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level13Hobs" size="4" minimum="3" maximum="3" />
+      <entry entity="level13SpeedyHob" size="4" minimum="3" maximum="3" />
       <entry entity="level13Orc" size="3" minimum="3" maximum="3" />
       <entry entity="level13RhammerTroll" size="3" minimum="3" maximum="3" />
       <entry entity="level13LightningOrc" size="1" minimum="2" maximum="2" />
@@ -105171,7 +105270,7 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level13Hobs" size="4" minimum="3" maximum="3" />
+      <entry entity="level13SpeedyHob" size="4" minimum="3" maximum="3" />
       <entry entity="level13Orc" size="3" minimum="3" maximum="3" />
       <entry entity="level13RhammerTroll" size="3" minimum="3" maximum="3" />
       <entry entity="level13LightningOrc" size="1" minimum="2" maximum="2" />
@@ -105199,7 +105298,7 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level13Hobs" size="4" minimum="3" maximum="3" />
+      <entry entity="level13SpeedyHob" size="4" minimum="3" maximum="3" />
       <entry entity="level13Orc" size="3" minimum="3" maximum="3" />
       <entry entity="level13RhammerTroll" size="3" minimum="3" maximum="3" />
       <entry entity="level13LightningOrc" size="1" minimum="2" maximum="2" />
