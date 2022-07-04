@@ -17,10 +17,10 @@ namespace Kesmai.Server.Items
 		public override int MinimumDamage => 1;
 
 		/// <inheritdoc />
-		public override int MaximumDamage => 1;
+		public override int MaximumDamage => 10;
 
 		/// <inheritdoc />
-		public override int BaseArmorBonus => 10;
+		public override int BaseArmorBonus => 1;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WoodenFlail"/> class.
