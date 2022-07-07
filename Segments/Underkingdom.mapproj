@@ -21437,6 +21437,15 @@
         <component type="FloorComponent">
           <ground>182</ground>
         </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>2</destinationX>
+          <destinationY>17</destinationY>
+          <destinationRegion>2</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+        </component>
       </tile>
       <tile x="3" y="15">
         <component type="FloorComponent">
@@ -21735,14 +21744,14 @@
         </component>
       </tile>
       <tile x="3" y="16">
-        <component type="FloorComponent">
-          <ground>182</ground>
+        <component type="StaticComponent">
+          <static>182</static>
         </component>
-        <component type="DoorComponent">
-          <openId>74</openId>
-          <closedId>62</closedId>
-          <secretId>25</secretId>
-          <destroyedId>80</destroyedId>
+        <component type="WallComponent">
+          <wall>346</wall>
+          <destroyed>338</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="4" y="16">
@@ -22000,6 +22009,15 @@
       <tile x="3" y="17">
         <component type="FloorComponent">
           <ground>182</ground>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>3</destinationX>
+          <destinationY>15</destinationY>
+          <destinationRegion>2</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
         </component>
       </tile>
       <tile x="4" y="17">
@@ -104361,6 +104379,27 @@ var gargoyle = new Gargoyle()
       <entry entity="ukHummerPortal" size="1" minimum="1" maximum="1" />
       <location x="13" y="22" region="9" />
     </spawn>
+    <spawn type="LocationSpawner" name="speedyHobTest">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>3</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level13SpeedyHob" size="4" minimum="1" maximum="1" />
+      <location x="3" y="13" region="2" />
+    </spawn>
     <spawn type="RegionSpawner" name="wyverns">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
@@ -104750,7 +104789,7 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level13SpeedyHob" size="4" minimum="3" maximum="3" />
+      <entry entity="level13Hobs" size="4" minimum="3" maximum="3" />
       <entry entity="level13Orc" size="3" minimum="3" maximum="3" />
       <entry entity="level13RhammerTroll" size="3" minimum="3" maximum="3" />
       <entry entity="level13LightningOrc" size="1" minimum="2" maximum="2" />
@@ -105241,7 +105280,7 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level13SpeedyHob" size="4" minimum="3" maximum="3" />
+      <entry entity="level13Hobs" size="4" minimum="3" maximum="3" />
       <entry entity="level13Orc" size="3" minimum="3" maximum="3" />
       <entry entity="level13RhammerTroll" size="3" minimum="3" maximum="3" />
       <entry entity="level13LightningOrc" size="1" minimum="2" maximum="2" />
@@ -105268,7 +105307,7 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level13SpeedyHob" size="4" minimum="3" maximum="3" />
+      <entry entity="level13Hobs" size="4" minimum="3" maximum="3" />
       <entry entity="level13Orc" size="3" minimum="3" maximum="3" />
       <entry entity="level13RhammerTroll" size="3" minimum="3" maximum="3" />
       <entry entity="level13LightningOrc" size="1" minimum="2" maximum="2" />
@@ -105296,7 +105335,7 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level13SpeedyHob" size="4" minimum="3" maximum="3" />
+      <entry entity="level13Hobs" size="4" minimum="3" maximum="3" />
       <entry entity="level13Orc" size="3" minimum="3" maximum="3" />
       <entry entity="level13RhammerTroll" size="3" minimum="3" maximum="3" />
       <entry entity="level13LightningOrc" size="1" minimum="2" maximum="2" />
