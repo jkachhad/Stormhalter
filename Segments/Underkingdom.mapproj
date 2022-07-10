@@ -269,12 +269,6 @@
         {
             return new LeatherArmor();
         }
-        
-        public override TimeSpan GetSwingDelay(MobileEntity entity)
-        {
-            return entity.GetRoundDelay(0.5);
-        }
-        
     }
     
     
