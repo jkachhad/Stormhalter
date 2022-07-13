@@ -135507,10 +135507,13 @@ return orc;
         
         IsTethered = true,
     };
+    
+    ydnac.AddImmunity(typeof(BlindSpell));
+    ydnac.AddImmunity(typeof(FearSpell));
+    ydnac.AddImmunity(typeof(StunSpell));
     ydnac.AddStatus(new NightVisionStatus(ydnac));
     ydnac.AddStatus(new BreatheWaterStatus(ydnac));
     
-    ydnac.AddImmunity(typeof(StunSpell));
     
     ydnac.Attacks = new CreatureAttackCollection()
     {
@@ -136577,6 +136580,13 @@ else
     bedwyn.AddStatus(new NightVisionStatus(bedwyn));
     bedwyn.AddStatus(new BreatheWaterStatus(bedwyn));
     
+    bedwyn.AddImmunity(typeof(BlindSpell));
+    bedwyn.AddImmunity(typeof(FearSpell));
+    bedwyn.AddImmunity(typeof(StunSpell));
+    
+    bedwyn.AddImmunity(typeof(Whirlwind));
+    bedwyn.AddImmunity(typeof(Poison));
+    
     bedwyn.Attacks = new CreatureAttackCollection
     {
         {
@@ -136654,6 +136664,13 @@ else
     
     godwyn.AddStatus(new NightVisionStatus(godwyn));
     godwyn.AddStatus(new BreatheWaterStatus(godwyn));
+    
+    godwyn.AddImmunity(typeof(BlindSpell));
+    godwyn.AddImmunity(typeof(FearSpell));
+    godwyn.AddImmunity(typeof(StunSpell));
+    
+    godwyn.AddImmunity(typeof(Whirlwind));
+    godwyn.AddImmunity(typeof(Poison));
     
     godwyn.Attacks = new CreatureAttackCollection
     {
@@ -137063,6 +137080,14 @@ var spider = new Spider()
         BasePenetration = ShieldPenetration.Light,
         VisibilityDistance = 3,
     };
+    
+    ghoul.AddImmunity(typeof(Whirlwind));
+    ghoul.AddImmunity(typeof(Poison));
+    
+    ghoul.AddImmunity(typeof(BlindSpell));
+    ghoul.AddImmunity(typeof(FearSpell));
+    ghoul.AddImmunity(typeof(StunSpell));
+
     
     ghoul.Attacks = new CreatureAttackCollection
     {
