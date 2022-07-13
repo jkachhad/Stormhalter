@@ -135495,7 +135495,8 @@ return orc;
         BasePenetration = ShieldPenetration.Heavy,
     
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
+                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Fear | 
+                   CreatureImmunity.Blind | CreatureImmunity.Stun,
         Weakness = CreatureWeakness.BlueGlowing,
     
         CanSwim = true,
