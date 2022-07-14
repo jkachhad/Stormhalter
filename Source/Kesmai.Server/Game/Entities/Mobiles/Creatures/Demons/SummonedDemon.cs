@@ -33,7 +33,7 @@ namespace Kesmai.Server.Game
 			
 			Spells = new CreatureSpellCollection()
 			{
-				{ new CreatureSpellEntry(spell, 50, TimeSpan.Zero ), }
+				{ new CreatureSpellEntry(spell, 50, TimeSpan.Zero ) }
 			};
 			
 			AddStatus(new NightVisionStatus(this));
