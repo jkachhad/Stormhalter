@@ -125,16 +125,312 @@
   <!-- Bloatrex -->
   <body id="319" corpse="5319">
     <texture>Azimuth\monsters\bloatrex\bloatrex</texture>
-    <source>(0,0,210,70)</source>
-    <frames step="1000" keys="0-2">
+    <source>(0,0,70,70)</source>
+    <!-- <frames step="1000" keys="0-2">
       <frame>(0,0,70,70)</frame>
       <frame>(70,0,70,70)</frame>
       <frame>(140,0,70,70)</frame>
     </frames>
+    -->
   </body>
   <!-- Red Drake -->
   <body id="320" corpse="5320">
     <texture>Azimuth\monsters\drakes\drake_red</texture>
     <source>(0,0,90,90)</source>
+  </body>
+  <!--Skeleton Boots-->
+  <body id="321" corpse="">
+    <texture>Tenser\monsters\aod</texture>
+    <source>(0,0,60,60)</source>
+  </body>
+  <!--Skeleton Archer-->
+  <body id="322" corpse="">
+    <texture>Tenser\monsters\aod</texture>
+    <source>(60,0,60,60)</source>
+  </body>
+  <!--Skeleton Scimitar-->
+  <body id="323" corpse="">
+    <texture>Tenser\monsters\aod</texture>
+    <source>(120,0,60,60)</source>
+  </body>
+  <!--Skeleton Warrior 1-->
+  <body id="324" corpse="">
+    <texture>Tenser\monsters\aod</texture>
+    <source>(0,60,60,60)</source>
+  </body>
+  <!--Skeleton Warrior 2-->
+  <body id="325" corpse="">
+    <texture>Tenser\monsters\aod</texture>
+    <source>(60,60,60,60)</source>
+  </body>
+  <!--Floating Skeleton-->
+  <body id="326" corpse="">
+    <texture>Tenser\monsters\aod</texture>
+    <source>(120,60,60,60)</source>
+  </body>
+  <!--Skeleton Warrior Spear-->
+  <body id="327" corpse="">
+    <texture>Tenser\monsters\aod</texture>
+    <source>(0,120,60,60)</source>
+  </body>
+  <!--Skeleton Warrior 3-->
+  <body id="328" corpse="">
+    <texture>Tenser\monsters\aod</texture>
+    <source>(60,120,60,60)</source>
+  </body>
+  <!--Skeleton Witch-->
+  <body id="329" corpse="">
+    <texture>Tenser\monsters\aod</texture>
+    <source>(120,120,60,60)</source>
+  </body>
+  <!--Messy Pharoah Mummy-->
+  <body id="330" corpse="">
+    <texture>Tenser\monsters\messypharoah</texture>
+    <source>(0,0,60,60)</source>
+  </body>
+  <!--Skeleton Base-->
+  <body id="331" corpse="">
+    <texture>Tenser\monsters\mummyreturnsagain</texture>
+    <source>(0,0,60,60)</source>
+  </body>
+  <!--Mummy Alt-->
+  <body id="332" corpse="">
+    <texture>Tenser\monsters\mummyreturnsagain</texture>
+    <source>(60,0,60,60)</source>
+  </body>
+  <!--Flayed Mummy-->
+  <body id="333" corpse="">
+    <texture>Tenser\monsters\mummyreturnsagain</texture>
+    <source>(120,0,60,60)</source>
+  </body>
+  <!--Pharoah Skeleton (No headdress)-->
+  <body id="334" corpse="">
+    <texture>Tenser\monsters\mummyreturnsagain</texture>
+    <source>(0,60,60,60)</source>
+  </body>
+  <!--Mummy Pharoah (No headdress)-->
+  <body id="335" corpse="">
+    <texture>Tenser\monsters\mummyreturnsagain</texture>
+    <source>(60,60,60,60)</source>
+  </body>
+  <!--Flayed Pharoah (No headdress)-->
+  <body id="336" corpse="">
+    <texture>Tenser\monsters\mummyreturnsagain</texture>
+    <source>(120,60,60,60)</source>
+  </body>
+  <!--Pharoah Skeleton (No feather)-->
+  <body id="337" corpse="">
+    <texture>Tenser\monsters\mummyreturnsagain</texture>
+    <source>(0,120,60,60)</source>
+  </body>
+  <!--Pharoah Mummy (No feather)-->
+  <body id="338" corpse="">
+    <texture>Tenser\monsters\mummyreturnsagain</texture>
+    <source>(60,120,60,60)</source>
+  </body>
+  <!--Flayed Pharoah (No feather)-->
+  <body id="339" corpse="">
+    <texture>Tenser\monsters\mummyreturnsagain</texture>
+    <source>(120,120,60,60)</source>
+  </body>
+  <!--Skeleton Pharoah-->
+  <body id="340" corpse="">
+    <texture>Tenser\monsters\mummyalts</texture>
+    <source>(0,0,60,60)</source>
+  </body>
+  <!--Mummy Pharoah-->
+  <body id="341" corpse="">
+    <texture>Tenser\monsters\mummyalts</texture>
+    <source>(60,0,60,60)</source>
+  </body>
+  <!--Flayed Pharoah-->
+  <body id="342" corpse="">
+    <texture>Tenser\monsters\mummyreturnsagain</texture>
+    <source>(120,0,60,60)</source>
+  </body>
+  <!--Juju Zombie-->
+  <body id="343" corpse="">
+    <texture>Tenser\monsters\juju</texture>
+    <source>(0,0,60,60)</source>
+  </body>
+  <!--Messy Mummy Alt-->
+  <body id="344" corpse="">
+    <texture>Tenser\monsters\messymummy</texture>
+    <source>(0,0,60,60)</source>
+  </body>
+  <!--Greatsword Orc-->
+  <body id="345" corpse="5345">
+    <texture>Tenser\monsters\basic_orc_pk1</texture>
+    <source>(0,0,60,60)</source>
+  </body>
+  <!--Scimitar and Shield Orc-->
+  <body id="346" corpse="5345">
+    <texture>Tenser\monsters\basic_orc_pk1</texture>
+    <source>(60,0,60,60)</source>
+  </body>
+  <!--Crossbow Orc-->
+  <body id="347" corpse="5345">
+    <texture>Tenser\monsters\basic_orc_pk1</texture>
+    <source>(120,0,60,60)</source>
+  </body>
+  <!--Longsword Orc-->
+  <body id="348" corpse="5345">
+    <texture>Tenser\monsters\basic_orc_pk1</texture>
+    <source>(60,60,60,60)</source>
+  </body>
+  <!--Bow Orc-->
+  <body id="349" corpse="5345">
+    <texture>Tenser\monsters\basic_armored_orc_pk1</texture>
+    <source>(120,60,60,60)</source>
+  </body>
+  <!--Basic Crossbow Armored Orc-->
+  <body id="350" corpse="5350">
+    <texture>Tenser\monsters\basic_armored_orc_pk1</texture>
+    <source>(0,0,60,60)</source>
+  </body>
+  <!--Basic Bow Armored Orc-->
+  <body id="351" corpse="5350">
+    <texture>Tenser\monsters\basic_armored_orc_pk1</texture>
+    <source>(60,0,60,60)</source>
+  </body>
+  <!--Basic Armored Axe and Shield Orc-->
+  <body id="352" corpse="5350">
+    <texture>Tenser\monsters\basic_armored_orc_pk1</texture>
+    <source>(120,0,60,60)</source>
+  </body>
+  <!--Basic Armored Scimitar and Shield Orc-->
+  <body id="353" corpse="5350">
+    <texture>Tenser\monsters\basic_armored_orc_pk1</texture>
+    <source>(0,60,60,60)</source>
+  </body>
+  <!--Basic Armored Greataxe Orc-->
+  <body id="354" corpse="5350">
+    <texture>Tenser\monsters\basic_armored_orc_pk1</texture>
+    <source>(60,60,60,60)</source>
+  </body>
+  <!--Basic Armored Spear Orc-->
+  <body id="355" corpse="5350">
+    <texture>Tenser\monsters\basic_armored_orc_pk1</texture>
+    <source>(120,60,60,60)</source>
+  </body>
+  <!--Basic Longsword Orc w Horned Helm-->
+  <body id="356" corpse="5345">
+    <texture>Tenser\monsters\basic_orc_pk2</texture>
+    <source>(0,0,60,60)</source>
+  </body>
+  <!--Basic Longsword Orc w Spiked Helm-->
+  <body id="357" corpse="5345">
+    <texture>Tenser\monsters\basic_orc_pk2</texture>
+    <source>(60,0,60,60)</source>
+  </body>
+  <!--Basic Kopesh Orc w Helm and Shield-->
+  <body id="358" corpse="5345">
+    <texture>Tenser\monsters\basic_orc_pk2</texture>
+    <source>(120,0,60,60)</source>
+  </body>
+  <!--Basic Axe Orc w Helm and Shield-->
+  <body id="359" corpse="5345">
+    <texture>Tenser\monsters\basic_orc_pk2</texture>
+    <source>(0,60,60,60)</source>
+  </body>
+  <!--Helmed Bow Orc-->
+  <body id="360" corpse="5345">
+    <texture>Tenser\monsters\basic_orc_pk2</texture>
+    <source>(60,60,60,60)</source>
+  </body>
+  <!--Helmed Crossbow Orc-->
+  <body id="361" corpse="5345">
+    <texture>Tenser\monsters\basic_orc_pk2</texture>
+    <source>(120,60,60,60)</source>
+  </body>
+  <!--Armored Orc w Axe and Shield-->
+  <body id="362" corpse="5362">
+    <texture>Tenser\monsters\armored_orc</texture>
+    <source>(0,0,60,60)</source>
+  </body>
+  <!--Armored Orc w Longsword and Shield-->
+  <body id="363" corpse="5362">
+    <texture>Tenser\monsters\armored_orc</texture>
+    <source>(60,0,60,60)</source>
+  </body>
+  <!--Armored Orc w Greatsword-->
+  <body id="364" corpse="5362">
+    <texture>Tenser\monsters\armored_orc</texture>
+    <source>(120,0,60,60)</source>
+  </body>
+  <!--Armored Orc w Crossbow-->
+  <body id="365" corpse="5362">
+    <texture>Tenser\monsters\armored_orc</texture>
+    <source>(0,60,60,60)</source>
+  </body>
+  <!--Armored Orc w Kopesh and Shield-->
+  <body id="366" corpse="5362">
+    <texture>Tenser\monsters\armored_orc</texture>
+    <source>(60,60,60,60)</source>
+  </body>
+  <!--Armored Orc with Bow-->
+  <body id="367" corpse="5362">
+    <texture>Tenser\monsters\armored_orc</texture>
+    <source>(120,60,60,60)</source>
+  </body>
+  <!--Orc Caster Basic (red)-->
+  <body id="368" corpse="5368">
+    <texture>Tenser\monsters\orc_casters</texture>
+    <source>(0,0,60,60)</source>
+  </body>
+  <!--Orc Caster Shaman-->
+  <body id="369" corpse="5345">
+    <texture>Tenser\monsters\orc_casters</texture>
+    <source>(60,0,60,60)</source>
+  </body>
+  <!--Orc Caster with Helm (red)-->
+  <body id="370" corpse="5368">
+    <texture>Tenser\monsters\orc_casters</texture>
+    <source>(120,0,60,60)</source>
+  </body>
+  <!--Orc Caster (black)-->
+  <body id="371" corpse="5371">
+    <texture>Tenser\monsters\orc_casters</texture>
+    <source>(0,60,60,60)</source>
+  </body>
+  <!--Basic Armored Orc Caster (Black)-->
+  <body id="372" corpse="5371">
+    <texture>Tenser\monsters\orc_casters</texture>
+    <source>(60,60,60,60)</source>
+  </body>
+  <!--Armored Orc caster (Black)-->
+  <body id="373" corpse="5371">
+    <texture>Tenser\monsters\orc_casters</texture>
+    <source>(120,60,60,60)</source>
+  </body>
+  <!--Orc Praetor Scimitar and Shield-->
+  <body id="374" corpse="5374">
+    <texture>Tenser\monsters\orc_praetorean</texture>
+    <source>(0,0,60,60)</source>
+  </body>
+  <!--Orc Praetor with Greataxe-->
+  <body id="375" corpse="5374">
+    <texture>Tenser\monsters\orc_praetorean</texture>
+    <source>(60,0,60,60)</source>
+  </body>
+  <!--Orc Praetor with Axe-->
+  <body id="376" corpse="5374">
+    <texture>Tenser\monsters\orc_praetorean</texture>
+    <source>(120,0,60,60)</source>
+  </body>
+  <!--Orc Praetorian Raider Longsword and Shield-->
+  <body id="377" corpse="5377">
+    <texture>Tenser\monsters\orc_praetorean</texture>
+    <source>(0,60,60,60)</source>
+  </body>
+  <!--Orc Praetorian Raider with Greatsword-->
+  <body id="378" corpse="5377">
+    <texture>Tenser\monsters\orc_praetorean</texture>
+    <source>(60,60,60,60)</source>
+  </body>
+  <!--Orc Praetorian Raider w Kopesh and Shield-->
+  <body id="379" corpse="5377">
+    <texture>Tenser\monsters\orc_praetorean</texture>
+    <source>(120,60,60,60)</source>
   </body>
 </data>
