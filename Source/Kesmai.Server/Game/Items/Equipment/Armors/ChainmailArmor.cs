@@ -25,7 +25,7 @@ namespace Kesmai.Server.Items
 		public override int BashingProtection => 1;
 		
 		/// <inheritdoc />
-		public override bool BlockSpellcast => true;
+		public override bool RestrictSpellcast => true;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ChainmailArmor"/> class.
