@@ -15,6 +15,8 @@ namespace Kesmai.Server.Game
 			Body = 12;
 
 			Alignment = Alignment.Chaotic;
+			/* https://www.themonstersknow.com/banshee-tactics/ - Nightvision add*/
+			AddStatus(new NightVisionStatus(this));
 		}
 
 		/// <inheritdoc/>

@@ -14,6 +14,8 @@ namespace Kesmai.Server.Game
 			Body = 41;
 
 			Alignment = Alignment.Chaotic;
+			/* https://www.themonstersknow.com/undead-tactics-specters-wights-wraiths/ - Nightvision add*/
+			AddStatus(new NightVisionStatus(this));
 		}
 
 		public override void OnSpawn()

@@ -21,6 +21,8 @@ namespace Kesmai.Server.Game
 			Body = 51;
 
 			Alignment = Alignment.Chaotic;
+			/* https://www.dragonsfoot.org/forums/viewtopic.php?t=59544 - Nightvision add*/
+			AddStatus(new NightVisionStatus(this));
 		}
 
 		public override void OnSpawn()

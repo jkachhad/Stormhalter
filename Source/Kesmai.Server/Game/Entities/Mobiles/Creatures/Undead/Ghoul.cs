@@ -15,6 +15,8 @@ namespace Kesmai.Server.Game
 			Body = 77;
 
 			Alignment = Alignment.Chaotic;
+			/* https://www.themonstersknow.com/undead-tactics-ghouls-ghasts/ - Nightvision add */
+			AddStatus(new NightVisionStatus(this));
 		}
 
 		/// <inheritdoc/>

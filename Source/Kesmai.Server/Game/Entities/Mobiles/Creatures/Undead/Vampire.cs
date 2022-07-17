@@ -14,6 +14,8 @@ namespace Kesmai.Server.Game
 			Body = 80;
 			CanLoot = false;
 			Alignment = Alignment.Chaotic;
+			/* https://theoldones.fandom.com/wiki/Vampire_Senses Vampire sees in the dark*/
+			AddStatus(new NightVisionStatus(this));
 		}
 
 		/// <inheritdoc/>
