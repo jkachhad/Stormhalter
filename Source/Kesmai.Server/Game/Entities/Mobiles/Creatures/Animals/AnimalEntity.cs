@@ -8,6 +8,7 @@ namespace Kesmai.Server.Game
 		protected AnimalEntity() : base()
 		{
 			CanLoot = false;
+			AddStatus(new NightVisionStatus(this));
 		}
 
 		/// <inheritdoc />

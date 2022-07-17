@@ -15,7 +15,6 @@ namespace Kesmai.Server.Game
 
 			CanSwim = true;
 			AddStatus(new BreatheWaterStatus(this));
-			AddStatus(new NightVisionStatus(this));
 		}
 
 		protected override void OnCreate()
