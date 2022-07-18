@@ -67,7 +67,7 @@ namespace Kesmai.Server.Items
 
 			if(leftWeapon != null && rightHand != null && rightWeapon.Flags.HasFlag(WeaponFlags.TwoHanded))
 			{
-				return 100.00;
+				return 1.00;
 			}
 			else
 			{
