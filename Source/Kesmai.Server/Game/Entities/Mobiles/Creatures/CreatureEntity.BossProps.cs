@@ -22,9 +22,18 @@ namespace Kesmai.Server.Game
 
                 To what extent this could be used would be determined by the person implementing the bosses. 
             */
-        public CreatureEntity SetBossProperties(BossType bossType)
+        public CreatureEntity SetBossProperties(BossType bossType, CreatureImmunity immunities = null, CreatureWeakness weakness = null)
         {
-            
+            if (immunities != null)
+            {
+                _creatureEntity.CreatureImmunity = immunities;
+            }
+
+            if (weakness != null)
+            {
+                _creatureEntity.CreatureWeakness = weakness;
+            }
+
             switch(bossType)
             {
                 case BossType.Minor:
