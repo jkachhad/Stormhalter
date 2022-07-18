@@ -39,12 +39,19 @@ namespace Kesmai.Server.Game
                 case BossType.Minor:
                     _creatureEntity.CreatureImmunity = setMinorBossProps().Immunity;
                     _creatureEntity.CreatureWeaknesss = setMinorBossProps().Weakness;
+                    break;
                 case BossType.Major:
                     _creatureEntity.CreatureImmunity = setMajorBossProps().Immunity;
                     _creatureEntity.CreatureWeaknesss = setMajorBossProps().Weakness;
+                    break;
                 case BossType.Notable:
                     _creatureEntity.CreatureImmunity = setNotableBossProps().Immunity;
                     _creatureEntity.CreatureWeaknesss = setNotableBossProps().Weakness;
+                    break;
+                default: 
+                    _creatureEntity.CreatureImmunity = setMinorBossProps().Immunity;
+                    _creatureEntity.CreatureWeaknesss = setMinorBossProps().Weakness;
+                    break;
             }
 
             return _creatureEntity;
