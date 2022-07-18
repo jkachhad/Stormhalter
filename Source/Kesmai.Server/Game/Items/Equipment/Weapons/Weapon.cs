@@ -59,9 +59,22 @@ namespace Kesmai.Server.Items
 		/// </summary>
 		public override double CalculateFumbleChance(MobileEntity entity)
 		{
-			// Skill Level = 3 =>  ((3 + 1)^2) * 10 = 160 => 1 / 160;
-			// Skill Level = 4 =>  ((4 + 1)^2) * 10 = 250 => 1 / 250;
-			return 1 / (10 * Math.Pow(entity.GetSkillLevel(Skill) + 1, 2));
+			var leftHand = LeftHand;
+			var rightHand = RightHand;
+
+			var leftWeapon = leftHand as IWeapon;
+			var rightWeapon = rightHand as IWeapon;
+
+			if(leftWeapon != null && rightHand != null && rightWeapon.Flags.HasFlag(WeaponFlags.TwoHanded))
+			{
+				return 100.00;
+			}
+			else
+			{
+				// Skill Level = 3 =>  ((3 + 1)^2) * 10 = 160 => 1 / 160;
+				// Skill Level = 4 =>  ((4 + 1)^2) * 10 = 250 => 1 / 250;
+				return 1 / (10 * Math.Pow(entity.GetSkillLevel(Skill) + 1, 2));
+			}
 		}
 
 		public virtual void OnWield(MobileEntity entity)
