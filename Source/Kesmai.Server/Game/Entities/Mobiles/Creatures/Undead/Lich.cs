@@ -9,6 +9,12 @@ namespace Kesmai.Server.Game
 {
 	public partial class Lich : CreatureEntity, IUndead
 	{
+		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Piercing;
+		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Slashing;
+		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Bashing;
+		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Projectile;
+		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Poison;
+		public override CreatureWeakness Weakness { get; set; } = CreatureWeakness.BlueGlowing;
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Lich"/> class.
 		/// </summary>
@@ -18,6 +24,14 @@ namespace Kesmai.Server.Game
 			Body = 83;
 
 			Alignment = Alignment.Chaotic;
+			DeathResistance = 100;
+			IceProtection = 100;
+			HideDetection = 100;
+			StunProtection = 100;
+			AddStatus(new BreatheWaterStatus(this));
+			AddStatus(new BlindFearProtectionStatus(this));
+			AddImmunity(typeof(StunSpell));
+			AddImmunity(typeof(PoisonCloudSpell));
 		}
 
 		/// <inheritdoc/>

@@ -10,6 +10,10 @@ namespace Kesmai.Server.Game
 	public partial class Swordmaster : CreatureEntity, IUndead
 	{
 		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Piercing;
+		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Slashing;
+		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Bashing;
+		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Projectile;
+		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Poison;
 		public override CreatureWeakness Weakness { get; set; } = CreatureWeakness.Silver;
 
 		/// <summary>

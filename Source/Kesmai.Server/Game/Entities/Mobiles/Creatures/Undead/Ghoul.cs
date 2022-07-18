@@ -6,6 +6,7 @@ namespace Kesmai.Server.Game
 {
 	public partial class Ghoul : CreatureEntity, IUndead
 	{
+		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Poison;
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Ghoul"/> class.
 		/// </summary>
@@ -15,6 +16,14 @@ namespace Kesmai.Server.Game
 			Body = 77;
 
 			Alignment = Alignment.Chaotic;
+			DeathResistance = 100;
+			IceProtection = 100;
+			HideDetection = 100;
+			StunProtection = 100;
+			AddStatus(new BreatheWaterStatus(this));
+			AddStatus(new BlindFearProtectionStatus(this));
+			AddImmunity(typeof(StunSpell));
+			AddImmunity(typeof(PoisonCloudSpell));
 		}
 
 		/// <inheritdoc/>

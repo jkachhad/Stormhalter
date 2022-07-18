@@ -6,6 +6,13 @@ namespace Kesmai.Server.Game
 {
 	public partial class Spectre : CreatureEntity, IUndead
 	{
+		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Piercing;
+		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Slashing;
+		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Bashing;
+		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Projectile;
+		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Poison;
+		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Magic;
+		public override CreatureWeakness Weakness { get; set; } = CreatureWeakness.BlueGlowing;
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Spectre"/> class.
 		/// </summary>
@@ -15,6 +22,14 @@ namespace Kesmai.Server.Game
 			Body = 62;
 
 			Alignment = Alignment.Chaotic;
+			StunProtection = 100;
+			VisibilityDistance = 0;
+			HideDetection = 100;
+			CanFly = true;
+			AddStatus(new BreatheWaterStatus(this));
+			AddStatus(new BlindFearProtectionStatus(this));
+			AddImmunity(typeof(StunSpell));
+			AddImmunity(typeof(PoisonCloudSpell));
 		}
 
 		/// <inheritdoc/>
