@@ -5,12 +5,7 @@ namespace Kesmai.Server.Game
 {
 	public partial class Wraith : CreatureEntity, IUndead
 	{
-		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Piercing;
-		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Slashing;
-		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Bashing;
-		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Projectile;
-		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Poison;
-		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Magic;
+		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Piercing || CreatureImmunity.Slashing || CreatureImmunity.Bashing || CreatureImmunity.Projectile || CreatureImmunity.Poison;
 		public override CreatureWeakness Weakness { get; set; } = CreatureWeakness.Silver;
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Wraith"/> class.
@@ -28,6 +23,7 @@ namespace Kesmai.Server.Game
 			AddStatus(new BreatheWaterStatus(this));
 			AddStatus(new BlindFearProtectionStatus(this));
 			AddImmunity(typeof(StunSpell));
+			AddImmunity(typeof(DeathSpell));
 			AddImmunity(typeof(PoisonCloudSpell));
 		}
 

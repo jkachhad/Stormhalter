@@ -5,6 +5,7 @@ namespace Kesmai.Server.Game
 {
 	public partial class Overlord : CreatureEntity, IUndead
 	{
+		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Piercing || CreatureImmunity.Slashing || CreatureImmunity.Bashing || CreatureImmunity.Projectile || CreatureImmunity.Poison || CreatureImmunity.Magic;
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Overlord"/> class.
 		/// </summary>

@@ -5,11 +5,7 @@ namespace Kesmai.Server.Game
 {
 	public partial class Waft : CreatureEntity, IUndead
 	{
-		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Piercing;
-		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Slashing;
-		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Bashing;
-		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Projectile;
-		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Poison;
+		public override CreatureImmunity Immunity { get; set; } = CreatureImmunity.Piercing || CreatureImmunity.Slashing || CreatureImmunity.Bashing || CreatureImmunity.Projectile || CreatureImmunity.Poison;
 		public override CreatureWeakness Weakness { get; set; } = CreatureWeakness.Silver;
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Waft"/> class.
@@ -20,7 +16,6 @@ namespace Kesmai.Server.Game
 			Body = 41;
 
 			Alignment = Alignment.Chaotic;
-			DeathResistance = 100;
 			IceProtection = 100;
 			HideDetection = 100;
 			StunProtection = 100;
@@ -29,6 +24,7 @@ namespace Kesmai.Server.Game
 			AddStatus(new BreatheWaterStatus(this));
 			AddStatus(new BlindFearProtectionStatus(this));
 			AddImmunity(typeof(StunSpell));
+			AddImmunity(typeof(DeathSpell));
 			AddImmunity(typeof(PoisonCloudSpell));
 		}
 
