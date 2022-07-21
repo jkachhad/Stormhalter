@@ -22,14 +22,14 @@ namespace Kesmai.Server.Items
 		/// </summary>
 		public override int Weight => 150;
 		
-		public GoldenTorc() : this(2)
+		public GoldenTorc() : this(4)
 		{
 		}
 		
 		/// <summary>
 		/// Initializes a new instance of the <see cref="GoldenTorc"/> class.
 		/// </summary>
-		public GoldenTorc(int charges = 2) : base(300, charges)
+		public GoldenTorc(int charges = 4) : base(300, charges)
 		{
 		}
 
