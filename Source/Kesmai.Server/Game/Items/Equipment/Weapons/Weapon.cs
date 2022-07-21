@@ -55,26 +55,37 @@ namespace Kesmai.Server.Items
 		}
 		
 		/// <summary>
-		/// Calculates the fumble chance as a percent.
+		/// Calculates the fumble chance as a percent. Add Two Hand to fumble. 
+		/// Can have another property for "Two Hands that act as one hand" 
 		/// </summary>
 		public override double CalculateFumbleChance(MobileEntity entity)
 		{
 			var leftHand = LeftHand;
 			var rightHand = RightHand;
+			double fumbleRate = 0.00;
 
-			var leftWeapon = leftHand as IWeapon;
-			var rightWeapon = rightHand as IWeapon;
+			try{
+				var leftWeapon = leftHand as IWeapon;
+				var rightWeapon = rightHand as IWeapon;
 
-			if(leftWeapon != null && rightHand != null && rightWeapon.Flags.HasFlag(WeaponFlags.TwoHanded))
-			{
-				return 1.00;
+				if(leftWeapon != null && rightWeapon != null && rightWeapon.Flags.HasFlag(WeaponFlags.TwoHanded))
+				{
+					fumbleRate = 1.00;
+				}
 			}
-			else
+			catch(Exception ex){
+				Console.WriteLine(ex.ToString());
+				fumbleRate = 0.00;
+			}
+
+			if (fumbleRate = 0.00)
 			{
 				// Skill Level = 3 =>  ((3 + 1)^2) * 10 = 160 => 1 / 160;
 				// Skill Level = 4 =>  ((4 + 1)^2) * 10 = 250 => 1 / 250;
-				return 1 / (10 * Math.Pow(entity.GetSkillLevel(Skill) + 1, 2));
+				fumbleRate = 1 / (10 * Math.Pow(entity.GetSkillLevel(Skill) + 1, 2));
 			}
+
+			return fumbleRate;
 		}
 
 		public virtual void OnWield(MobileEntity entity)
