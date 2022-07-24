@@ -75921,6 +75921,10 @@
     
     dragon.AddStatus(new NightVisionStatus(dragon));
     
+    dragon.AddImmunity(typeof(BlindSpell));
+    dragon.AddImmunity(typeof(FearSpell));
+    dragon.AddImmunity(typeof(StunSpell));
+    
     dragon.CombatantChangeInterval = TimeSpan.FromSeconds(20.0);
     
     dragon.Attacks = new CreatureAttackCollection
@@ -76022,6 +76026,11 @@
         },
     };
     
+        
+    vlad.AddImmunity(typeof(BlindSpell));
+    vlad.AddImmunity(typeof(FearSpell));
+    vlad.AddImmunity(typeof(StunSpell));
+    
     vlad.Blocks = new CreatureBlockCollection
     {
         new CreatureBlock(6, "an impossibly dark flowing cape"), 
@@ -76091,6 +76100,10 @@
     };
     
     drake.AddStatus(new NightVisionStatus(drake));
+    
+    drake.AddImmunity(typeof(BlindSpell));
+    drake.AddImmunity(typeof(FearSpell));
+    drake.AddImmunity(typeof(StunSpell));
 	
 	drake.AddImmunity(typeof(Lightning));
     

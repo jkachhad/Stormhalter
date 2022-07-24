@@ -11,6 +11,12 @@ namespace Kesmai.Server.Items
 		public override uint BasePrice => 500;
 
 		/// <inheritdoc />
+		public override int MinimumDamage => 3;
+
+		/// <inheritdoc />
+		public override int MaximumDamage => 7;
+
+		/// <inheritdoc />
 		public override int BaseArmorBonus => 1;
 
 		/// <inheritdoc />
