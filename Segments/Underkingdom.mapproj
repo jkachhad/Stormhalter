@@ -100365,8 +100365,7 @@
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
     
-        CanCharge = true,
-        CanStrikeCritically = false,
+        CanJumpkick = true,
     
         IsTethered = true,
     };
@@ -100385,7 +100384,7 @@
     
     overlord.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(21, 45, 92, new AttackStunComponent (25))
+        new CreatureBasicAttack(21, 65, 92, new AttackStunComponent (25))
     };
     
     overlord.Spells = new CreatureSpellCollection(35.0)
