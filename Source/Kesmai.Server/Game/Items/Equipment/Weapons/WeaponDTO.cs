@@ -766,8 +766,8 @@ using System.Collections.Generic;
         {
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
-             weaponProps.Add("Axe 1", new BaseWeaponProperties(){
-                _WeaponTypes = WeaponTypes.Axe,
+             weaponProps.Add("Longsword 1", new BaseWeaponProperties(){
+                _WeaponTypes = WeaponTypes.Longsword,
                 WeaponLevel = 1,
                 BasePrice = 2400,
                 Weight = 1000,
@@ -775,11 +775,11 @@ using System.Collections.Generic;
                 MinimumDamage = 1,
                 MaximumDamage = 8,
                 BaseAttackBonus = 1,
-                BaseArmorBonus = 0
+                BaseArmorBonus = 1
              } );
 
-             weaponProps.Add("Axe 2", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Axe,
+             weaponProps.Add("Longsword 2", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Longsword,
                 WeaponLevel = 2,
                 BasePrice = 2400,
                 Weight = 1000,
@@ -787,67 +787,67 @@ using System.Collections.Generic;
                 MinimumDamage = 1,
                 MaximumDamage = 9,
                 BaseAttackBonus = 2,
-                BaseArmorBonus = 0
+                BaseArmorBonus = 2
              } );
 
-             weaponProps.Add("Axe 3", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Axe,
+             weaponProps.Add("Longsword 3", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Longsword,
                 WeaponLevel = 3,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
-                MinimumDamage = 2,
+                MinimumDamage = 1,
                 MaximumDamage = 10,
-                BaseAttackBonus = 3,
-                BaseArmorBonus = 1
+                BaseAttackBonus = 2,
+                BaseArmorBonus = 2
              } );
 
-             weaponProps.Add("Axe 4", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Axe,
+             weaponProps.Add("Longsword 4", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Longsword,
                 WeaponLevel = 4,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
                 MinimumDamage = 2,
                 MaximumDamage = 11,
-                BaseAttackBonus = 4,
-                BaseArmorBonus = 1
+                BaseAttackBonus = 3,
+                BaseArmorBonus = 3
              } );
 
-             weaponProps.Add("Axe 5", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Axe,
+             weaponProps.Add("Longsword 5", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Longsword,
                 WeaponLevel = 5,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
-                MinimumDamage = 3,
+                MinimumDamage = 2,
                 MaximumDamage = 12,
-                BaseAttackBonus = 5,
-                BaseArmorBonus = 2
+                BaseAttackBonus = 4,
+                BaseArmorBonus = 4
              } );
 
-             weaponProps.Add("Axe 6", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Axe,
+             weaponProps.Add("Longsword 6", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Longsword,
                 WeaponLevel = 6,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
-                MinimumDamage = 3,
+                MinimumDamage = 2,
                 MaximumDamage = 13,
-                BaseAttackBonus = 6,
-                BaseArmorBonus = 2
+                BaseAttackBonus = 4,
+                BaseArmorBonus = 4
              } );
 
-             weaponProps.Add("Axe 7", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Axe,
+             weaponProps.Add("Longsword 7", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Longsword,
                 WeaponLevel = 7,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
-                MinimumDamage = 4,
+                MinimumDamage = 3,
                 MaximumDamage = 14,
-                BaseAttackBonus = 7,
-                BaseArmorBonus = 3
+                BaseAttackBonus = 5,
+                BaseArmorBonus = 5
              } );
 
              return weaponProps;
