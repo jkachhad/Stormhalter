@@ -857,87 +857,87 @@ using System.Collections.Generic;
         {
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
-             weaponProps.Add("Axe 1", new BaseWeaponProperties(){
-                _WeaponTypes = WeaponTypes.Axe,
+             weaponProps.Add("Pike 1", new BaseWeaponProperties(){
+                _WeaponTypes = WeaponTypes.Pike,
                 WeaponLevel = 1,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
-                MinimumDamage = 1,
+                MinimumDamage = 2,
                 MaximumDamage = 8,
                 BaseAttackBonus = 1,
                 BaseArmorBonus = 0
              } );
 
-             weaponProps.Add("Axe 2", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Axe,
+             weaponProps.Add("Pike 2", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Pike,
                 WeaponLevel = 2,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
-                MinimumDamage = 1,
+                MinimumDamage = 2,
                 MaximumDamage = 9,
-                BaseAttackBonus = 2,
+                BaseAttackBonus = 1,
                 BaseArmorBonus = 0
              } );
 
-             weaponProps.Add("Axe 3", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Axe,
+             weaponProps.Add("Pike 3", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Pike,
                 WeaponLevel = 3,
-                BasePrice = 2400,
-                Weight = 1000,
-                Penetration = ShieldPenetration.VeryLight,
-                MinimumDamage = 2,
-                MaximumDamage = 10,
-                BaseAttackBonus = 3,
-                BaseArmorBonus = 1
-             } );
-
-             weaponProps.Add("Axe 4", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Axe,
-                WeaponLevel = 4,
-                BasePrice = 2400,
-                Weight = 1000,
-                Penetration = ShieldPenetration.VeryLight,
-                MinimumDamage = 2,
-                MaximumDamage = 11,
-                BaseAttackBonus = 4,
-                BaseArmorBonus = 1
-             } );
-
-             weaponProps.Add("Axe 5", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Axe,
-                WeaponLevel = 5,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
                 MinimumDamage = 3,
-                MaximumDamage = 12,
-                BaseAttackBonus = 5,
-                BaseArmorBonus = 2
+                MaximumDamage = 10,
+                BaseAttackBonus = 2,
+                BaseArmorBonus = 1
              } );
 
-             weaponProps.Add("Axe 6", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Axe,
-                WeaponLevel = 6,
+             weaponProps.Add("Pike 4", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Pike,
+                WeaponLevel = 4,
                 BasePrice = 2400,
                 Weight = 1000,
-                Penetration = ShieldPenetration.VeryLight,
+                Penetration = ShieldPenetration.Light,
                 MinimumDamage = 3,
-                MaximumDamage = 13,
-                BaseAttackBonus = 6,
-                BaseArmorBonus = 2
+                MaximumDamage = 11,
+                BaseAttackBonus = 3,
+                BaseArmorBonus = 1
              } );
 
-             weaponProps.Add("Axe 7", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Axe,
-                WeaponLevel = 7,
+             weaponProps.Add("Pike 5", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Pike,
+                WeaponLevel = 5,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
                 MinimumDamage = 4,
+                MaximumDamage = 12,
+                BaseAttackBonus = 4,
+                BaseArmorBonus = 2
+             } );
+
+             weaponProps.Add("Pike 6", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Pike,
+                WeaponLevel = 6,
+                BasePrice = 2400,
+                Weight = 1000,
+                Penetration = ShieldPenetration.Medium,
+                MinimumDamage = 4,
+                MaximumDamage = 13,
+                BaseAttackBonus = 4,
+                BaseArmorBonus = 2
+             } );
+
+             weaponProps.Add("Pike 7", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Pike,
+                WeaponLevel = 7,
+                BasePrice = 2400,
+                Weight = 1000,
+                Penetration = ShieldPenetration.Heavy,
+                MinimumDamage = 5,
                 MaximumDamage = 14,
-                BaseAttackBonus = 7,
+                BaseAttackBonus = 5,
                 BaseArmorBonus = 3
              } );
 
