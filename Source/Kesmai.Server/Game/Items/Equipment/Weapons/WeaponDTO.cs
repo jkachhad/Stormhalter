@@ -125,11 +125,11 @@ using System.Collections.Generic;
              return weaponProps;
         }
 
-        public Dictionary<string, BaseWeaponProperties> SetupCrossBowProperties(WeaponTypes weaponType, int weaponLevel)
+        public Dictionary<string, BaseWeaponProperties> SetupCrossbowProperties(WeaponTypes weaponType, int weaponLevel)
         {
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
-             weaponProps.Add("CrossBow 1", new BaseWeaponProperties(){
+             weaponProps.Add("Crossbow 1", new BaseWeaponProperties(){
                 _WeaponTypes = WeaponTypes.Crossbow,
                 WeaponLevel = 1,
                 BasePrice = 2400,
@@ -141,7 +141,7 @@ using System.Collections.Generic;
                 BaseArmorBonus = 0
              } );
 
-             weaponProps.Add("CrossBow 2", new BaseWeaponProperties(){
+             weaponProps.Add("Crossbow 2", new BaseWeaponProperties(){
                 weaponTypes = WeaponTypes.Crossbow,
                 WeaponLevel = 2,
                 BasePrice = 2400,
@@ -153,7 +153,7 @@ using System.Collections.Generic;
                 BaseArmorBonus = 0
              } );
 
-             weaponProps.Add("CrossBow 3", new BaseWeaponProperties(){
+             weaponProps.Add("Crossbow 3", new BaseWeaponProperties(){
                 weaponTypes = WeaponTypes.Crossbow,
                 WeaponLevel = 3,
                 BasePrice = 2400,
@@ -165,7 +165,7 @@ using System.Collections.Generic;
                 BaseArmorBonus = 0
              } );
 
-             weaponProps.Add("CrossBow 4", new BaseWeaponProperties(){
+             weaponProps.Add("Crossbow 4", new BaseWeaponProperties(){
                 weaponTypes = WeaponTypes.Crossbow,
                 WeaponLevel = 4,
                 BasePrice = 2400,
@@ -177,7 +177,7 @@ using System.Collections.Generic;
                 BaseArmorBonus = 0
              } );
 
-             weaponProps.Add("CrossBow 5", new BaseWeaponProperties(){
+             weaponProps.Add("Crossbow 5", new BaseWeaponProperties(){
                 weaponTypes = WeaponTypes.Crossbow,
                 WeaponLevel = 5,
                 BasePrice = 2400,
@@ -189,7 +189,7 @@ using System.Collections.Generic;
                 BaseArmorBonus = 0
              } );
 
-             weaponProps.Add("CrossBow 6", new BaseWeaponProperties(){
+             weaponProps.Add("Crossbow 6", new BaseWeaponProperties(){
                 weaponTypes = WeaponTypes.Crossbow,
                 WeaponLevel = 6,
                 BasePrice = 2400,
@@ -201,8 +201,8 @@ using System.Collections.Generic;
                 BaseArmorBonus = 0
              } );
 
-             weaponProps.Add("CrossBow 7", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.CrossBow,
+             weaponProps.Add("Crossbow 7", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Crossbow,
                 WeaponLevel = 7,
                 BasePrice = 2400,
                 Weight = 1000,
@@ -306,8 +306,190 @@ using System.Collections.Generic;
 
              return weaponProps;
         }
-
+        
         public Dictionary<string, BaseWeaponProperties> SetupFlailProperties(WeaponTypes weaponType, int weaponLevel)
+        {
+             Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
+             
+             weaponProps.Add("Flail 1", new BaseWeaponProperties(){
+                _WeaponTypes = WeaponTypes.Flail,
+                WeaponLevel = 1,
+                BasePrice = 2400,
+                Weight = 1000,
+                Penetration = ShieldPenetration.VeryLight,
+                MinimumDamage = 2,
+                MaximumDamage = 8,
+                BaseAttackBonus = 1,
+                BaseArmorBonus = 0
+             } );
+
+             weaponProps.Add("Flail 2", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Flail,
+                WeaponLevel = 2,
+                BasePrice = 2400,
+                Weight = 1000,
+                Penetration = ShieldPenetration.VeryLight,
+                MinimumDamage = 2,
+                MaximumDamage = 9,
+                BaseAttackBonus = 2,
+                BaseArmorBonus = 0
+             } );
+
+             weaponProps.Add("Flail 3", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Flail,
+                WeaponLevel = 3,
+                BasePrice = 2400,
+                Weight = 1000,
+                Penetration = ShieldPenetration.VeryLight,
+                MinimumDamage = 3,
+                MaximumDamage = 10,
+                BaseAttackBonus = 3,
+                BaseArmorBonus = 1
+             } );
+
+             weaponProps.Add("Flail 4", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Flail,
+                WeaponLevel = 4,
+                BasePrice = 2400,
+                Weight = 1000,
+                Penetration = ShieldPenetration.Light,
+                MinimumDamage = 3,
+                MaximumDamage = 11,
+                BaseAttackBonus = 4,
+                BaseArmorBonus = 1
+             } );
+
+             weaponProps.Add("Flail 5", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Flail,
+                WeaponLevel = 5,
+                BasePrice = 2400,
+                Weight = 1000,
+                Penetration = ShieldPenetration.Light,
+                MinimumDamage = 4,
+                MaximumDamage = 12,
+                BaseAttackBonus = 5,
+                BaseArmorBonus = 2
+             } );
+
+             weaponProps.Add("Flail 6", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Flail,
+                WeaponLevel = 6,
+                BasePrice = 2400,
+                Weight = 1000,
+                Penetration = ShieldPenetration.Medium,
+                MinimumDamage = 4,
+                MaximumDamage = 13,
+                BaseAttackBonus = 6,
+                BaseArmorBonus = 2
+             } );
+
+             weaponProps.Add("Flail 7", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Flail,
+                WeaponLevel = 7,
+                BasePrice = 2400,
+                Weight = 1000,
+                Penetration = ShieldPenetration.Medium,
+                MinimumDamage = 5,
+                MaximumDamage = 14,
+                BaseAttackBonus = 7,
+                BaseArmorBonus = 3
+             } );
+
+             return weaponProps;
+        }
+        
+        public Dictionary<string, BaseWeaponProperties> SetupGreatAxeProperties(WeaponTypes weaponType, int weaponLevel)
+        {
+             Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
+             
+             weaponProps.Add("Greataxe 1", new BaseWeaponProperties(){
+                _WeaponTypes = WeaponTypes.Greataxe,
+                WeaponLevel = 1,
+                BasePrice = 2400,
+                Weight = 1000,
+                Penetration = ShieldPenetration.VeryLight,
+                MinimumDamage = 2,
+                MaximumDamage = 8,
+                BaseAttackBonus = 1,
+                BaseArmorBonus = 0
+             } );
+
+             weaponProps.Add("Greataxe 2", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Greataxe,
+                WeaponLevel = 2,
+                BasePrice = 2400,
+                Weight = 1000,
+                Penetration = ShieldPenetration.VeryLight,
+                MinimumDamage = 2,
+                MaximumDamage = 9,
+                BaseAttackBonus = 2,
+                BaseArmorBonus = 0
+             } );
+
+             weaponProps.Add("Greataxe 3", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Greataxe,
+                WeaponLevel = 3,
+                BasePrice = 2400,
+                Weight = 1000,
+                Penetration = ShieldPenetration.VeryLight,
+                MinimumDamage = 3,
+                MaximumDamage = 10,
+                BaseAttackBonus = 3,
+                BaseArmorBonus = 1
+             } );
+
+             weaponProps.Add("Greataxe 4", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Greataxe,
+                WeaponLevel = 4,
+                BasePrice = 2400,
+                Weight = 1000,
+                Penetration = ShieldPenetration.VeryLight,
+                MinimumDamage = 3,
+                MaximumDamage = 11,
+                BaseAttackBonus = 4,
+                BaseArmorBonus = 1
+             } );
+
+             weaponProps.Add("Greataxe 5", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Greataxe,
+                WeaponLevel = 5,
+                BasePrice = 2400,
+                Weight = 1000,
+                Penetration = ShieldPenetration.Light,
+                MinimumDamage = 4,
+                MaximumDamage = 12,
+                BaseAttackBonus = 5,
+                BaseArmorBonus = 2
+             } );
+
+             weaponProps.Add("Greataxe 6", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Greataxe,
+                WeaponLevel = 6,
+                BasePrice = 2400,
+                Weight = 1000,
+                Penetration = ShieldPenetration.Light,
+                MinimumDamage = 4,
+                MaximumDamage = 13,
+                BaseAttackBonus = 6,
+                BaseArmorBonus = 2
+             } );
+
+             weaponProps.Add("Greataxe 7", new BaseWeaponProperties(){
+                weaponTypes = WeaponTypes.Greataxe,
+                WeaponLevel = 7,
+                BasePrice = 2400,
+                Weight = 1000,
+                Penetration = ShieldPenetration.Medium,
+                MinimumDamage = 5,
+                MaximumDamage = 14,
+                BaseAttackBonus = 7,
+                BaseArmorBonus = 3
+             } );
+
+             return weaponProps;
+        }
+        
+        public Dictionary<string, BaseWeaponProperties> SetupSwordProperties(WeaponTypes weaponType, int weaponLevel)
         {
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
@@ -397,7 +579,7 @@ using System.Collections.Generic;
 
              return weaponProps;
         }
-
+        
         public Dictionary<string, BaseWeaponProperties> SetupHalberdProperties(WeaponTypes weaponType, int weaponLevel)
         {
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
@@ -1406,6 +1588,7 @@ using System.Collections.Generic;
             Dagger,
             Flail,
             Greataxe,
+            Greatsword,
             Halberd,
             Longbow,
             Longsword,
