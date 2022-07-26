@@ -8,7 +8,7 @@ namespace Kesmai.Server.Items
     {
         public class BaseWeaponProperties
         {
-            public WeaponTypes _WeaponTypes {get;set;} = WeaponTypes.Axe; 
+            public WeaponTypes weaponTypes {get;set;} = WeaponTypes.Axe; 
             public int WeaponLevel {get;set;} = 1;
             public override uint BasePrice {get;set;} = 20;
 
@@ -41,7 +41,7 @@ namespace Kesmai.Server.Items
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Axe 1", new BaseWeaponProperties(){
-                _WeaponTypes = WeaponTypes.Axe,
+                weaponTypes = WeaponTypes.Axe,
                 WeaponLevel = 1,
                 BasePrice = 2400,
                 Weight = 1000,
@@ -132,7 +132,7 @@ namespace Kesmai.Server.Items
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Crossbow 1", new BaseWeaponProperties(){
-                _WeaponTypes = WeaponTypes.Crossbow,
+                weaponTypes = WeaponTypes.Crossbow,
                 WeaponLevel = 1,
                 BasePrice = 2400,
                 Weight = 1000,
@@ -223,7 +223,7 @@ namespace Kesmai.Server.Items
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Dagger 1", new BaseWeaponProperties(){
-                _WeaponTypes = WeaponTypes.Dagger,
+                weaponTypes = WeaponTypes.Dagger,
                 WeaponLevel = 1,
                 BasePrice = 2400,
                 Weight = 1000,
@@ -314,7 +314,7 @@ namespace Kesmai.Server.Items
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Flail 1", new BaseWeaponProperties(){
-                _WeaponTypes = WeaponTypes.Flail,
+                weaponTypes = WeaponTypes.Flail,
                 WeaponLevel = 1,
                 BasePrice = 2400,
                 Weight = 1000,
@@ -405,7 +405,7 @@ namespace Kesmai.Server.Items
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Greataxe 1", new BaseWeaponProperties(){
-                _WeaponTypes = WeaponTypes.Greataxe,
+                weaponTypes = WeaponTypes.Greataxe,
                 WeaponLevel = 1,
                 BasePrice = 2400,
                 Weight = 1000,
@@ -496,7 +496,7 @@ namespace Kesmai.Server.Items
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Greatsword 1", new BaseWeaponProperties(){
-                _WeaponTypes = WeaponTypes.Greatsword,
+                weaponTypes = WeaponTypes.Greatsword,
                 WeaponLevel = 1,
                 BasePrice = 2400,
                 Weight = 1000,
@@ -587,7 +587,7 @@ namespace Kesmai.Server.Items
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Halberd 1", new BaseWeaponProperties(){
-                _WeaponTypes = WeaponTypes.Halberd,
+                weaponTypes = WeaponTypes.Halberd,
                 WeaponLevel = 1,
                 BasePrice = 2400,
                 Weight = 1000,
@@ -678,7 +678,7 @@ namespace Kesmai.Server.Items
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Longbow 1", new BaseWeaponProperties(){
-                _WeaponTypes = WeaponTypes.Longbow,
+                weaponTypes = WeaponTypes.Longbow,
                 WeaponLevel = 1,
                 BasePrice = 2400,
                 Weight = 1000,
@@ -769,7 +769,7 @@ namespace Kesmai.Server.Items
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Longsword 1", new BaseWeaponProperties(){
-                _WeaponTypes = WeaponTypes.Longsword,
+                weaponTypes = WeaponTypes.Longsword,
                 WeaponLevel = 1,
                 BasePrice = 2400,
                 Weight = 1000,
@@ -860,7 +860,7 @@ namespace Kesmai.Server.Items
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Pike 1", new BaseWeaponProperties(){
-                _WeaponTypes = WeaponTypes.Pike,
+                weaponTypes = WeaponTypes.Pike,
                 WeaponLevel = 1,
                 BasePrice = 2400,
                 Weight = 1000,
@@ -951,7 +951,7 @@ namespace Kesmai.Server.Items
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Rapier 1", new BaseWeaponProperties(){
-                _WeaponTypes = WeaponTypes.Rapier,
+                weaponTypes = WeaponTypes.Rapier,
                 WeaponLevel = 1,
                 BasePrice = 2400,
                 Weight = 1000,
@@ -1042,7 +1042,7 @@ namespace Kesmai.Server.Items
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Shortsword 1", new BaseWeaponProperties(){
-                _WeaponTypes = WeaponTypes.Shortsword,
+                weaponTypes = WeaponTypes.Shortsword,
                 WeaponLevel = 1,
                 BasePrice = 2400,
                 Weight = 1000,
@@ -1133,7 +1133,7 @@ namespace Kesmai.Server.Items
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Spear 1", new BaseWeaponProperties(){
-                _WeaponTypes = WeaponTypes.Spear,
+                weaponTypes = WeaponTypes.Spear,
                 WeaponLevel = 1,
                 BasePrice = 2400,
                 Weight = 1000,
@@ -1224,7 +1224,7 @@ namespace Kesmai.Server.Items
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Staff 1", new BaseWeaponProperties(){
-                _WeaponTypes = WeaponTypes.Staff,
+                weaponTypes = WeaponTypes.Staff,
                 WeaponLevel = 1,
                 BasePrice = 2400,
                 Weight = 1000,
@@ -1315,7 +1315,7 @@ namespace Kesmai.Server.Items
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("ThrowingHammer 1", new BaseWeaponProperties(){
-                _WeaponTypes = WeaponTypes.ThrowingHammer,
+                weaponTypes = WeaponTypes.ThrowingHammer,
                 WeaponLevel = 1,
                 BasePrice = 2400,
                 Weight = 1000,
@@ -1406,7 +1406,7 @@ namespace Kesmai.Server.Items
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("TwoHandFlail 1", new BaseWeaponProperties(){
-                _WeaponTypes = WeaponTypes.TwoHandFlail,
+                weaponTypes = WeaponTypes.TwoHandFlail,
                 WeaponLevel = 1,
                 BasePrice = 2400,
                 Weight = 1000,
@@ -1497,7 +1497,7 @@ namespace Kesmai.Server.Items
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Warhammer 1", new BaseWeaponProperties(){
-                _WeaponTypes = WeaponTypes.Warhammer,
+                weaponTypes = WeaponTypes.Warhammer,
                 WeaponLevel = 1,
                 BasePrice = 2400,
                 Weight = 1000,
