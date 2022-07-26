@@ -12,6 +12,7 @@ namespace Kesmai.Server.Game
 
 			Alignment = Alignment.Chaotic;
 			CanFly = true;
+			AddStatus(new NightVisionStatus(this));
 		}
 
 		protected override void OnCreate()

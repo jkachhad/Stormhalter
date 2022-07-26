@@ -11,6 +11,7 @@ namespace Kesmai.Server.Game
 			Body = 24;
 
 			Alignment = Alignment.Chaotic;
+			AddStatus(new NightVisionStatus(this));
 		}
 
 		protected override void OnCreate()
