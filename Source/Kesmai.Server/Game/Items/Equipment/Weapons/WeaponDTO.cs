@@ -8,8 +8,8 @@ namespace Kesmai.Server.Items
     {
         public class BaseWeaponProperties
         {
-            public WeaponTypes weaponTypes {get;set;} = WeaponTypes.Axe; 
-            public int WeaponLevel {get;set;} = 1;
+            public WeaponTypes WeaponType {get;set;} = WeaponTypes.Axe; 
+            public WeaponLevels weaponLevel {get;set;} = 1;
             public override uint BasePrice {get;set;} = 20;
 
             /// <inheritdoc />
@@ -36,13 +36,13 @@ namespace Kesmai.Server.Items
         
         /* Stormhalter charts https://docs.google.com/spreadsheets/d/16CxfCJLUUMPGuWnDws4UgOnKPOrr-2vzlaG_5F5y0uc/edit#gid=0 */
         #region 
-        public Dictionary<string, BaseWeaponProperties> SetupAxeProperties(WeaponTypes weaponType, int weaponLevel)
+        public Dictionary<string, BaseWeaponProperties> SetupAxeProperties(WeaponTypes weaponType, WeaponLevels weaponLevel)
         {
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Axe 1", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Axe,
-                WeaponLevel = 1,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -53,8 +53,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Axe 2", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Axe,
-                WeaponLevel = 2,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -65,8 +65,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Axe 3", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Axe,
-                WeaponLevel = 3,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -77,8 +77,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Axe 4", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Axe,
-                WeaponLevel = 4,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -89,8 +89,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Axe 5", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Axe,
-                WeaponLevel = 5,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -101,8 +101,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Axe 6", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Axe,
-                WeaponLevel = 6,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -113,8 +113,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Axe 7", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Axe,
-                WeaponLevel = 7,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -127,13 +127,13 @@ namespace Kesmai.Server.Items
              return weaponProps;
         }
 
-        public Dictionary<string, BaseWeaponProperties> SetupCrossbowProperties(WeaponTypes weaponType, int weaponLevel)
+        public Dictionary<string, BaseWeaponProperties> SetupCrossbowProperties(WeaponTypes weaponType, WeaponLevels weaponLevel)
         {
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Crossbow 1", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Crossbow,
-                WeaponLevel = 1,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -144,8 +144,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Crossbow 2", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Crossbow,
-                WeaponLevel = 2,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -156,8 +156,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Crossbow 3", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Crossbow,
-                WeaponLevel = 3,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -168,8 +168,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Crossbow 4", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Crossbow,
-                WeaponLevel = 4,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -180,8 +180,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Crossbow 5", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Crossbow,
-                WeaponLevel = 5,
+               WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -192,8 +192,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Crossbow 6", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Crossbow,
-                WeaponLevel = 6,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -204,8 +204,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Crossbow 7", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Crossbow,
-                WeaponLevel = 7,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Heavy,
@@ -218,13 +218,13 @@ namespace Kesmai.Server.Items
              return weaponProps;
         }
 
-        public Dictionary<string, BaseWeaponProperties> SetupDaggerProperties(WeaponTypes weaponType, int weaponLevel)
+        public Dictionary<string, BaseWeaponProperties> SetupDaggerProperties(WeaponTypes weaponType, WeaponLevels weaponLevel)
         {
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Dagger 1", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Dagger,
-                WeaponLevel = 1,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -235,8 +235,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Dagger 2", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Dagger,
-                WeaponLevel = 2,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -247,8 +247,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Dagger 3", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Dagger,
-                WeaponLevel = 3,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -259,8 +259,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Dagger 4", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Dagger,
-                WeaponLevel = 4,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -271,8 +271,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Dagger 5", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Dagger,
-                WeaponLevel = 5,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -283,8 +283,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Dagger 6", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Dagger,
-                WeaponLevel = 6,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -295,8 +295,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Dagger 7", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Dagger,
-                WeaponLevel = 7,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -309,13 +309,13 @@ namespace Kesmai.Server.Items
              return weaponProps;
         }
         
-        public Dictionary<string, BaseWeaponProperties> SetupFlailProperties(WeaponTypes weaponType, int weaponLevel)
+        public Dictionary<string, BaseWeaponProperties> SetupFlailProperties(WeaponTypes weaponType, WeaponLevels weaponLevel)
         {
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Flail 1", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Flail,
-                WeaponLevel = 1,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -326,8 +326,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Flail 2", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Flail,
-                WeaponLevel = 2,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -338,8 +338,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Flail 3", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Flail,
-                WeaponLevel = 3,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -350,8 +350,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Flail 4", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Flail,
-                WeaponLevel = 4,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -362,8 +362,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Flail 5", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Flail,
-                WeaponLevel = 5,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -374,8 +374,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Flail 6", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Flail,
-                WeaponLevel = 6,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -386,8 +386,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Flail 7", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Flail,
-                WeaponLevel = 7,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -400,13 +400,13 @@ namespace Kesmai.Server.Items
              return weaponProps;
         }
         
-        public Dictionary<string, BaseWeaponProperties> SetupGreatAxeProperties(WeaponTypes weaponType, int weaponLevel)
+        public Dictionary<string, BaseWeaponProperties> SetupGreatAxeProperties(WeaponTypes weaponType, WeaponLevels weaponLevel)
         {
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Greataxe 1", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Greataxe,
-                WeaponLevel = 1,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -417,8 +417,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Greataxe 2", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Greataxe,
-                WeaponLevel = 2,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -429,8 +429,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Greataxe 3", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Greataxe,
-                WeaponLevel = 3,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -441,8 +441,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Greataxe 4", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Greataxe,
-                WeaponLevel = 4,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -453,8 +453,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Greataxe 5", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Greataxe,
-                WeaponLevel = 5,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -465,8 +465,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Greataxe 6", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Greataxe,
-                WeaponLevel = 6,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -477,8 +477,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Greataxe 7", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Greataxe,
-                WeaponLevel = 7,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -491,13 +491,13 @@ namespace Kesmai.Server.Items
              return weaponProps;
         }
         
-        public Dictionary<string, BaseWeaponProperties> SetupGreatSwordProperties(WeaponTypes weaponType, int weaponLevel)
+        public Dictionary<string, BaseWeaponProperties> SetupGreatSwordProperties(WeaponTypes weaponType, WeaponLevels weaponLevel)
         {
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Greatsword 1", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Greatsword,
-                WeaponLevel = 1,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -508,8 +508,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Greatsword 2", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Greatsword,
-                WeaponLevel = 2,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -520,8 +520,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Greatsword 3", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Greatsword,
-                WeaponLevel = 3,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -532,8 +532,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Greatsword 4", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Greatsword,
-                WeaponLevel = 4,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -544,8 +544,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Greatsword 5", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Greatsword,
-                WeaponLevel = 5,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -556,8 +556,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Greatsword 6", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Greatsword,
-                WeaponLevel = 6,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -568,8 +568,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Greatsword 7", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Greatsword,
-                WeaponLevel = 7,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -582,13 +582,13 @@ namespace Kesmai.Server.Items
              return weaponProps;
         }
         
-        public Dictionary<string, BaseWeaponProperties> SetupHalberdProperties(WeaponTypes weaponType, int weaponLevel)
+        public Dictionary<string, BaseWeaponProperties> SetupHalberdProperties(WeaponTypes weaponType, WeaponLevels weaponLevel)
         {
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Halberd 1", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Halberd,
-                WeaponLevel = 1,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -599,8 +599,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Halberd 2", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Halberd,
-                WeaponLevel = 2,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -611,8 +611,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Halberd 3", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Halberd,
-                WeaponLevel = 3,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -623,8 +623,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Halberd 4", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Halberd,
-                WeaponLevel = 4,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -635,8 +635,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Halberd 5", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Halberd,
-                WeaponLevel = 5,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -646,9 +646,9 @@ namespace Kesmai.Server.Items
                 BaseArmorBonus = 2
              } );
 
-             weaponProps.Add("Axe 6", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Halberd,
-                WeaponLevel = 6,
+             weaponProps.Add("Halberd 6", new BaseWeaponProperties(){
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -658,9 +658,9 @@ namespace Kesmai.Server.Items
                 BaseArmorBonus = 2
              } );
 
-             weaponProps.Add("Axe 7", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Halberd,
-                WeaponLevel = 7,
+             weaponProps.Add("Halberd 7", new BaseWeaponProperties(){
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -673,13 +673,13 @@ namespace Kesmai.Server.Items
              return weaponProps;
         }
 
-        public Dictionary<string, BaseWeaponProperties> SetupLongbowProperties(WeaponTypes weaponType, int weaponLevel)
+        public Dictionary<string, BaseWeaponProperties> SetupLongbowProperties(WeaponTypes weaponType, WeaponLevels weaponLevel)
         {
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Longbow 1", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Longbow,
-                WeaponLevel = 1,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -690,8 +690,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Longbow 2", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Longbow,
-                WeaponLevel = 2,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -702,8 +702,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Longbow 3", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Longbow,
-                WeaponLevel = 3,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -714,8 +714,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Longbow 4", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Longbow,
-                WeaponLevel = 4,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -726,8 +726,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Longbow 5", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Longbow,
-                WeaponLevel = 5,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -738,8 +738,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Longbow 6", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Longbow,
-                WeaponLevel = 6,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -750,8 +750,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Longbow 7", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Longbow,
-                WeaponLevel = 7,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -764,13 +764,13 @@ namespace Kesmai.Server.Items
              return weaponProps;
         }
 
-        public Dictionary<string, BaseWeaponProperties> SetupLongswordProperties(WeaponTypes weaponType, int weaponLevel)
+        public Dictionary<string, BaseWeaponProperties> SetupLongswordProperties(WeaponTypes weaponType, WeaponLevels weaponLevel)
         {
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Longsword 1", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Longsword,
-                WeaponLevel = 1,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -781,8 +781,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Longsword 2", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Longsword,
-                WeaponLevel = 2,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -793,8 +793,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Longsword 3", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Longsword,
-                WeaponLevel = 3,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -805,8 +805,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Longsword 4", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Longsword,
-                WeaponLevel = 4,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -817,8 +817,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Longsword 5", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Longsword,
-                WeaponLevel = 5,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -829,8 +829,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Longsword 6", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Longsword,
-                WeaponLevel = 6,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -841,8 +841,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Longsword 7", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Longsword,
-                WeaponLevel = 7,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -855,13 +855,13 @@ namespace Kesmai.Server.Items
              return weaponProps;
         }
 
-        public Dictionary<string, BaseWeaponProperties> SetupPikeProperties(WeaponTypes weaponType, int weaponLevel)
+        public Dictionary<string, BaseWeaponProperties> SetupPikeProperties(WeaponTypes weaponType, WeaponLevels weaponLevel)
         {
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Pike 1", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Pike,
-                WeaponLevel = 1,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -872,8 +872,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Pike 2", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Pike,
-                WeaponLevel = 2,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -884,8 +884,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Pike 3", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Pike,
-                WeaponLevel = 3,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -896,8 +896,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Pike 4", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Pike,
-                WeaponLevel = 4,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -908,8 +908,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Pike 5", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Pike,
-                WeaponLevel = 5,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -920,8 +920,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Pike 6", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Pike,
-                WeaponLevel = 6,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -932,8 +932,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Pike 7", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Pike,
-                WeaponLevel = 7,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Heavy,
@@ -946,13 +946,13 @@ namespace Kesmai.Server.Items
              return weaponProps;
         }
 
-        public Dictionary<string, BaseWeaponProperties> SetupRapierProperties(WeaponTypes weaponType, int weaponLevel)
+        public Dictionary<string, BaseWeaponProperties> SetupRapierProperties(WeaponTypes weaponType, WeaponLevels weaponLevel)
         {
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Rapier 1", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Rapier,
-                WeaponLevel = 1,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -963,8 +963,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Rapier 2", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Rapier,
-                WeaponLevel = 2,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -975,8 +975,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Rapier 3", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Rapier,
-                WeaponLevel = 3,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -987,8 +987,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Rapier 4", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Rapier,
-                WeaponLevel = 4,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -999,8 +999,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Rapier 5", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Rapier,
-                WeaponLevel = 5,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -1011,8 +1011,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Rapier 6", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Rapier,
-                WeaponLevel = 6,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -1023,8 +1023,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Rapier 7", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Rapier,
-                WeaponLevel = 7,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -1037,12 +1037,12 @@ namespace Kesmai.Server.Items
              return weaponProps;
         }
 
-        public Dictionary<string, BaseWeaponProperties> SetupShortswordProperties(WeaponTypes weaponType, int weaponLevel)
+        public Dictionary<string, BaseWeaponProperties> SetupShortswordProperties(WeaponTypes weaponType, WeaponLevels weaponLevel)
         {
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Shortsword 1", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Shortsword,
+                WeaponTypes = WeaponTypes.Shortsword,
                 WeaponLevel = 1,
                 BasePrice = 2400,
                 Weight = 1000,
@@ -1054,8 +1054,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Shortsword 2", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Shortsword,
-                WeaponLevel = 2,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -1066,8 +1066,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Shortsword 3", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Shortsword,
-                WeaponLevel = 3,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -1078,8 +1078,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Shortsword 4", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Shortsword,
-                WeaponLevel = 4,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -1090,8 +1090,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Shortsword 5", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Shortsword,
-                WeaponLevel = 5,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -1102,8 +1102,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Shortsword 6", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Shortsword,
-                WeaponLevel = 6,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -1114,8 +1114,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Shortsword 7", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Shortsword,
-                WeaponLevel = 7,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Heavy,
@@ -1128,13 +1128,13 @@ namespace Kesmai.Server.Items
              return weaponProps;
         }
 
-        public Dictionary<string, BaseWeaponProperties> SetupSpearProperties(WeaponTypes weaponType, int weaponLevel)
+        public Dictionary<string, BaseWeaponProperties> SetupSpearProperties(WeaponTypes weaponType, WeaponLevels weaponLevel)
         {
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Spear 1", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Spear,
-                WeaponLevel = 1,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -1145,8 +1145,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Spear 2", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Spear,
-                WeaponLevel = 2,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -1157,8 +1157,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Spear 3", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Spear,
-                WeaponLevel = 3,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -1169,8 +1169,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Spear 4", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Spear,
-                WeaponLevel = 4,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -1181,8 +1181,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Spear 5", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Spear,
-                WeaponLevel = 5,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -1193,8 +1193,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Spear 6", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Spear,
-                WeaponLevel = 6,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -1205,8 +1205,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Spear 7", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Spear,
-                WeaponLevel = 7,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -1219,13 +1219,13 @@ namespace Kesmai.Server.Items
              return weaponProps;
         }
 
-        public Dictionary<string, BaseWeaponProperties> SetupStaffProperties(WeaponTypes weaponType, int weaponLevel)
+        public Dictionary<string, BaseWeaponProperties> SetupStaffProperties(WeaponTypes weaponType, WeaponLevels weaponLevel)
         {
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Staff 1", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Staff,
-                WeaponLevel = 1,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -1236,8 +1236,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Staff 2", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Staff,
-                WeaponLevel = 2,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -1248,8 +1248,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Staff 3", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Staff,
-                WeaponLevel = 3,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -1260,8 +1260,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Staff 4", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Staff,
-                WeaponLevel = 4,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -1272,8 +1272,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Staff 5", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Staff,
-                WeaponLevel = 5,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -1284,8 +1284,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Staff 6", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Staff,
-                WeaponLevel = 6,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -1296,8 +1296,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Staff 7", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Staff,
-                WeaponLevel = 7,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -1310,13 +1310,13 @@ namespace Kesmai.Server.Items
              return weaponProps;
         }
 
-        public Dictionary<string, BaseWeaponProperties> SetupThrowingHammerProperties(WeaponTypes weaponType, int weaponLevel)
+        public Dictionary<string, BaseWeaponProperties> SetupThrowingHammerProperties(WeaponTypes weaponType, WeaponLevels weaponLevel)
         {
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("ThrowingHammer 1", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.ThrowingHammer,
-                WeaponLevel = 1,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -1327,8 +1327,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("ThrowingHammer 2", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.ThrowingHammer,
-                WeaponLevel = 2,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -1339,8 +1339,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("ThrowingHammer 3", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.ThrowingHammer,
-                WeaponLevel = 3,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -1351,8 +1351,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("ThrowingHammer 4", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.ThrowingHammer,
-                WeaponLevel = 4,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -1363,8 +1363,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("ThrowingHammer 5", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.ThrowingHammer,
-                WeaponLevel = 5,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -1375,8 +1375,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("ThrowingHammer 6", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.ThrowingHammer,
-                WeaponLevel = 6,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -1387,8 +1387,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("ThrowingHammer 7", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.ThrowingHammer,
-                WeaponLevel = 7,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -1401,13 +1401,13 @@ namespace Kesmai.Server.Items
              return weaponProps;
         }
 
-        public Dictionary<string, BaseWeaponProperties> SetupTwoHandFlailProperties(WeaponTypes weaponType, int weaponLevel)
+        public Dictionary<string, BaseWeaponProperties> SetupTwoHandFlailProperties(WeaponTypes weaponType, WeaponLevels weaponLevel)
         {
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("TwoHandFlail 1", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.TwoHandFlail,
-                WeaponLevel = 1,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -1418,8 +1418,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("TwoHandFlail 2", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.TwoHandFlail,
-                WeaponLevel = 2,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -1430,8 +1430,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("TwoHandFlail 3", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.TwoHandFlail,
-                WeaponLevel = 3,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -1442,8 +1442,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("TwoHandFlail 4", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.TwoHandFlail,
-                WeaponLevel = 4,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -1454,8 +1454,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("TwoHandFlail 5", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.TwoHandFlail,
-                WeaponLevel = 5,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -1466,8 +1466,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("TwoHandFlail 6", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.TwoHandFlail,
-                WeaponLevel = 6,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Medium,
@@ -1478,8 +1478,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("TwoHandFlail 7", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.TwoHandFlail,
-                WeaponLevel = 7,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Heavy,
@@ -1492,13 +1492,13 @@ namespace Kesmai.Server.Items
              return weaponProps;
         }
 
-        public Dictionary<string, BaseWeaponProperties> SetupWarhammerProperties(WeaponTypes weaponType, int weaponLevel)
+        public Dictionary<string, BaseWeaponProperties> SetupWarhammerProperties(WeaponTypes weaponType, WeaponLevels weaponLevel)
         {
              Dictionary<string, BaseWeaponProperties> weaponProps = new Dictionary<string, BaseWeaponProperties>();
              
              weaponProps.Add("Warhammer 1", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Warhammer,
-                WeaponLevel = 1,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -1509,8 +1509,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Warhammer 2", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Warhammer,
-                WeaponLevel = 2,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -1521,8 +1521,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Warhammer 3", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Warhammer,
-                WeaponLevel = 3,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -1533,8 +1533,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Warhammer 4", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Warhammer,
-                WeaponLevel = 4,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.VeryLight,
@@ -1545,8 +1545,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Warhammer 5", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Warhammer,
-                WeaponLevel = 5,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -1557,8 +1557,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Warhammer 6", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Warhammer,
-                WeaponLevel = 6,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -1569,8 +1569,8 @@ namespace Kesmai.Server.Items
              } );
 
              weaponProps.Add("Warhammer 7", new BaseWeaponProperties(){
-                weaponTypes = WeaponTypes.Warhammer,
-                WeaponLevel = 7,
+                WeaponType = weaponType,
+                WeaponLevel = (int)weaponLevel,
                 BasePrice = 2400,
                 Weight = 1000,
                 Penetration = ShieldPenetration.Light,
@@ -1602,6 +1602,18 @@ namespace Kesmai.Server.Items
             ThrowingHammer,
             TwoHandFlail,
             Warhammer
+        }
+
+        public enum WeaponLevels
+        {
+            One,
+            Two,
+            Three,
+            Four,
+            Five,
+            Six,
+            Seven
+            
         }
         
     }
