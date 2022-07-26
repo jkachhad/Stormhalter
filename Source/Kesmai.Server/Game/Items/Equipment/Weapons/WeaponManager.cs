@@ -69,6 +69,8 @@ namespace Kesmai.Server.Items
                 case WeaponDTO.WeaponTypes.Warhammer:
                     weaponSetupAgain = _weaponDTO.SetupWarhammerProperties(weaponType, weaponLevel);
                     break;
+                default:
+                    return weaponSetupAgain = _weaponDTO.SetupWarhammerProperties(WeaponDTO.WeaponTypes.Axe, WeaponDTO.WeaponLevels.One);
             }
 
 
