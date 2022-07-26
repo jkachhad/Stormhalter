@@ -9,7 +9,7 @@ namespace Kesmai.Server.Items
         public class BaseWeaponProperties
         {
             public WeaponTypes WeaponType {get;set;} = WeaponTypes.Axe; 
-            public WeaponLevels weaponLevel {get;set;} = 1;
+            public int weaponLevel {get;set;} = 1;
             public override uint BasePrice {get;set;} = 20;
 
             /// <inheritdoc />
