@@ -3,7 +3,7 @@
         <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
         
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net5.0-windows</TargetFramework>
+        <TargetFramework>net6.0-windows</TargetFramework>
         <PreserveCompilationContext>false</PreserveCompilationContext>
         <UseWPF>true</UseWPF>
         
@@ -17,6 +17,8 @@
         <BaseIntermediateOutputPath>.vs</BaseIntermediateOutputPath>
 
         <ApplicationManifest>app.manifest</ApplicationManifest>
+
+        <LangVersion>10</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug'">
@@ -38,9 +40,9 @@
     <ItemGroup>
       <PackageReference Include="CommonServiceLocator" Version="2.0.6" />
       <PackageReference Include="Dirkster.AvalonDock" Version="4.50.2" />
-      <PackageReference Include="DotNetZip" Version="1.15.0" />
+      <PackageReference Include="DotNetZip" Version="1.16.0" />
       <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.0.2" />
-      <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.0.1641" />
+      <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.1.303" />
       <PackageReference Include="RedGate.SmartAssembly.MSBuild" Version="8.0.1.4676-preview">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

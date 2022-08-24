@@ -77,6 +77,16 @@ namespace Kesmai.Server.Game
 		{
 		}
 
+		protected override void OnDelete()
+		{
+			base.OnDelete();
+
+			if (_restockTimer != null)
+				_restockTimer.Stop();
+
+			_restockTimer = null;
+		}
+
 		public override void HandleOrder(OrderEventArgs args)
 		{
 			base.HandleOrder(args);
