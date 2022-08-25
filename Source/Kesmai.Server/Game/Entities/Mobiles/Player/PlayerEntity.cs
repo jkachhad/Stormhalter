@@ -55,6 +55,18 @@ namespace Kesmai.Server.Game
 			{
 				if (item is Weapon weapon)
 				{
+					if (item is HummingbirdSword hummingbirdword)
+					{
+						baseMinimumDamage = (int)((baseMinimumDamage + (hitAdds/2)) * skillMultiplier);
+						baseMaximumDamage = (int)((baseMaximumDamage + (hitAdds/2)) * skillMultiplier);
+				
+						hitAdds += (int)weapon.GetAttackBonus(this, defender);
+
+						skill = weapon.Skill;
+						skillFactor = 10.0;
+					}
+					else
+					{
 					baseMinimumDamage = weapon.MinimumDamage;
 					baseMaximumDamage = weapon.MaximumDamage;
 				
@@ -62,6 +74,7 @@ namespace Kesmai.Server.Game
 
 					skill = weapon.Skill;
 					skillFactor = 10.0;
+					}
 				}
 				else if (item is Gauntlets gauntlets)
 				{
