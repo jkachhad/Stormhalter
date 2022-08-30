@@ -77050,6 +77050,8 @@
         Experience = 5015,
     };
     
+    wolf.AddStatus(new NightVisionStatus(wolf));
+    
     wolf.Attacks = new CreatureAttackCollection
     {
         { 
