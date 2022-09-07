@@ -35639,7 +35639,7 @@
     </subregion>
   </subregions>
   <entities>
-    <entity name="Level12NormEntranceGnollGuard">
+    <entity name="level12NormEntranceGnollGuard">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -36169,7 +36169,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Level12NormEntranceGnollSoothsayer">
+    <entity name="level12NormEntranceGnollSoothsayer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -36229,7 +36229,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Level13NormGnollGuard">
+    <entity name="level13NormGnollGuard">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -36291,7 +36291,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Level13NormGnollSoothsayer">
+    <entity name="level13NormGnollSoothsayer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -36389,7 +36389,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Level13HighGnollOfficer">
+    <entity name="level13HighGnollOfficer">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -36568,7 +36568,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Level14HighSpider">
+    <entity name="level14HighSpider">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -36632,7 +36632,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Level14NormGnollGuard">
+    <entity name="level14NormGnollGuard">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -36844,7 +36844,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Level16NormPitGhostofmemp">
+    <entity name="level16NormPitGhostofmemp">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -36914,7 +36914,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Level16NormPitCroc">
+    <entity name="level16NormPitCroc">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -36980,7 +36980,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Level16NormPitSkeletalArchers">
+    <entity name="level16NormPitSkeletalArchers">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -37095,7 +37095,7 @@ return skeleton;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Level15HighGnollWorgHandle">
+    <entity name="level15HighGnollWorgHandle">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -37177,7 +37177,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Level15ExtremeWorg">
+    <entity name="level15ExtremeWorg">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -37354,7 +37354,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Level15HighStalker">
+    <entity name="level15HighStalker">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -37413,7 +37413,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Level15Normspectres">
+    <entity name="level15Normspectres">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -37474,7 +37474,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Level15NormArchers">
+    <entity name="level15NormArchers">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -37524,7 +37524,7 @@ return skeleton;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Level16Highmoccasins">
+    <entity name="level16Highmoccasins">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -37689,6 +37689,10 @@ return elemental;
 
 dragon.AddStatus(new NightVisionStatus(dragon));
 dragon.AddStatus(new BreatheWaterStatus(dragon));
+
+dragon.AddImmunity(typeof(BlindSpell));
+dragon.AddImmunity(typeof(FearSpell));
+dragon.AddImmunity(typeof(StunSpell));
 
 dragon.CombatantChangeInterval = TimeSpan.FromSeconds(7.0);
 
@@ -38032,7 +38036,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Level13NormWorg">
+    <entity name="level13NormWorg">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -38109,7 +38113,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Level16NormThiefBane">
+    <entity name="level16NormThiefBane">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -38158,7 +38162,7 @@ return skeleton;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Level16HighThiefNinja">
+    <entity name="level16HighThiefNinja">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -38641,7 +38645,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level12NormEntranceGnollGuard" size="1" minimum="1" maximum="1" />
+      <entry entity="level12NormEntranceGnollGuard" size="1" minimum="1" maximum="1" />
       <location x="21" y="-1" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="EntranceGnollGuardS">
@@ -38662,7 +38666,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level12NormEntranceGnollGuard" size="1" minimum="1" maximum="1" />
+      <entry entity="level12NormEntranceGnollGuard" size="1" minimum="1" maximum="1" />
       <location x="21" y="3" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="LevelonePrisoner2">
@@ -38900,7 +38904,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="1" />
+      <entry entity="level16NormThiefBane" size="1" minimum="1" maximum="1" />
       <location x="5" y="11" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Bane 2">
@@ -38921,7 +38925,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="1" />
+      <entry entity="level16NormThiefBane" size="1" minimum="1" maximum="1" />
       <location x="10" y="12" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Bane 3">
@@ -38942,7 +38946,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="1" />
+      <entry entity="level16NormThiefBane" size="1" minimum="1" maximum="1" />
       <location x="5" y="13" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Bane 4">
@@ -38963,7 +38967,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="1" />
+      <entry entity="level16NormThiefBane" size="1" minimum="1" maximum="1" />
       <location x="10" y="14" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Bane 5">
@@ -38984,7 +38988,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="1" />
+      <entry entity="level16NormThiefBane" size="1" minimum="1" maximum="1" />
       <location x="5" y="15" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Bane 6">
@@ -39005,7 +39009,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="1" />
+      <entry entity="level16NormThiefBane" size="1" minimum="1" maximum="1" />
       <location x="10" y="16" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Bane 7">
@@ -39026,7 +39030,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="1" />
+      <entry entity="level16NormThiefBane" size="1" minimum="1" maximum="1" />
       <location x="5" y="17" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Bane 8">
@@ -39047,7 +39051,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="1" />
+      <entry entity="level16NormThiefBane" size="1" minimum="1" maximum="1" />
       <location x="10" y="18" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Bane 9">
@@ -39068,7 +39072,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="1" />
+      <entry entity="level16NormThiefBane" size="1" minimum="1" maximum="1" />
       <location x="5" y="19" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Bane 10">
@@ -39089,7 +39093,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="1" />
+      <entry entity="level16NormThiefBane" size="1" minimum="1" maximum="1" />
       <location x="10" y="20" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Bane 11">
@@ -39110,7 +39114,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="1" />
+      <entry entity="level16NormThiefBane" size="1" minimum="1" maximum="1" />
       <location x="5" y="21" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="Thief Lair">
@@ -39176,8 +39180,8 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level12NormEntranceGnollGuard" size="3" minimum="4" maximum="4" />
-      <entry entity="Level12NormEntranceGnollSoothsayer" size="1" minimum="3" maximum="3" />
+      <entry entity="level12NormEntranceGnollGuard" size="3" minimum="4" maximum="4" />
+      <entry entity="level12NormEntranceGnollSoothsayer" size="1" minimum="3" maximum="3" />
       <bounds region="1">
         <inclusion left="23" top="-11" right="33" bottom="12" />
         <exclusion left="26" top="-9" right="30" bottom="-6" />
@@ -39201,8 +39205,8 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level13NormGnollGuard" size="3" minimum="6" maximum="9" />
-      <entry entity="Level13NormGnollSoothsayer" size="1" minimum="3" maximum="3" />
+      <entry entity="level13NormGnollGuard" size="3" minimum="6" maximum="9" />
+      <entry entity="level13NormGnollSoothsayer" size="1" minimum="3" maximum="3" />
       <bounds region="2">
         <inclusion left="6" top="-7" right="7" bottom="15" />
         <inclusion left="8" top="8" right="17" bottom="11" />
@@ -39229,8 +39233,8 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level12NormEntranceGnollGuard" size="3" minimum="7" maximum="7" />
-      <entry entity="Level13NormWorg" size="1" minimum="3" maximum="3" />
+      <entry entity="level12NormEntranceGnollGuard" size="3" minimum="7" maximum="7" />
+      <entry entity="level13NormWorg" size="1" minimum="3" maximum="3" />
       <bounds region="2">
         <inclusion left="-12" top="14" right="-4" bottom="32" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -39254,7 +39258,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level13HighGnollOfficer" size="1" minimum="3" maximum="3" />
+      <entry entity="level13HighGnollOfficer" size="1" minimum="3" maximum="3" />
       <bounds region="2">
         <inclusion left="6" top="-7" right="17" bottom="11" />
         <inclusion left="6" top="12" right="7" bottom="15" />
@@ -39303,7 +39307,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level14HighSpider" size="1" minimum="4" maximum="4" />
+      <entry entity="level14HighSpider" size="1" minimum="4" maximum="4" />
       <bounds region="3">
         <inclusion left="9" top="7" right="12" bottom="13" />
         <inclusion left="9" top="14" right="9" bottom="14" />
@@ -39333,7 +39337,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level14NormGnollGuard" size="1" minimum="6" maximum="8" />
+      <entry entity="level14NormGnollGuard" size="1" minimum="6" maximum="8" />
       <bounds region="3">
         <inclusion left="4" top="1" right="15" bottom="19" />
         <exclusion left="7" top="4" right="13" bottom="15" />
@@ -39381,7 +39385,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level16NormPitGhostofmemp" size="1" minimum="3" maximum="3" />
+      <entry entity="level16NormPitGhostofmemp" size="1" minimum="3" maximum="3" />
       <bounds region="5">
         <inclusion left="5" top="3" right="5" bottom="14" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -39406,7 +39410,7 @@ return skeleton;
         <block><![CDATA[]]></block>
       </script>
       <entry entity="BossMiniLevel16Lockjaw" size="1" minimum="1" maximum="1" />
-      <entry entity="Level16NormPitCroc" size="1" minimum="8" maximum="8" />
+      <entry entity="level16NormPitCroc" size="1" minimum="8" maximum="8" />
       <bounds region="5">
         <inclusion left="6" top="3" right="9" bottom="14" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -39430,7 +39434,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level16NormPitSkeletalArchers" size="2" minimum="6" maximum="6" />
+      <entry entity="level16NormPitSkeletalArchers" size="2" minimum="6" maximum="6" />
       <bounds region="5">
         <inclusion left="4" top="3" right="5" bottom="14" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -39454,8 +39458,8 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level15ExtremeWorg" size="1" minimum="1" maximum="1" />
-      <entry entity="Level15HighGnollWorgHandle" size="1" minimum="2" maximum="2" />
+      <entry entity="level15ExtremeWorg" size="1" minimum="1" maximum="1" />
+      <entry entity="level15HighGnollWorgHandle" size="1" minimum="2" maximum="2" />
       <bounds region="4">
         <inclusion left="-23" top="4" right="-18" bottom="14" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -39479,8 +39483,8 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level15ExtremeWorg" size="1" minimum="1" maximum="1" />
-      <entry entity="Level15HighGnollWorgHandle" size="1" minimum="21" maximum="2" />
+      <entry entity="level15ExtremeWorg" size="1" minimum="1" maximum="1" />
+      <entry entity="level15HighGnollWorgHandle" size="1" minimum="21" maximum="2" />
       <bounds region="4">
         <inclusion left="-17" top="3" right="-10" bottom="15" />
         <exclusion left="-15" top="9" right="-12" bottom="12" />
@@ -39530,7 +39534,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level15HighStalker" size="1" minimum="3" maximum="3" />
+      <entry entity="level15HighStalker" size="1" minimum="3" maximum="3" />
       <bounds region="4">
         <inclusion left="-11" top="-12" right="-11" bottom="-6" />
         <inclusion left="-10" top="-12" right="-7" bottom="-12" />
@@ -39555,8 +39559,8 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level15HighStalker" size="1" minimum="9" maximum="9" />
-      <entry entity="Level15Normspectres" size="1" minimum="4" maximum="4" />
+      <entry entity="level15HighStalker" size="1" minimum="9" maximum="9" />
+      <entry entity="level15Normspectres" size="1" minimum="4" maximum="4" />
       <bounds region="4">
         <inclusion left="-8" top="3" right="-3" bottom="15" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -39580,8 +39584,8 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level15NormArchers" size="2" minimum="1" maximum="6" />
-      <entry entity="Level16NormThiefBane" size="1" minimum="2" maximum="2" />
+      <entry entity="level15NormArchers" size="2" minimum="1" maximum="6" />
+      <entry entity="level16NormThiefBane" size="1" minimum="2" maximum="2" />
       <bounds region="4">
         <inclusion left="7" top="4" right="14" bottom="5" />
         <inclusion left="7" top="6" right="7" bottom="6" />
@@ -39611,7 +39615,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level16Highmoccasins" size="1" minimum="4" maximum="4" />
+      <entry entity="level16Highmoccasins" size="1" minimum="4" maximum="4" />
       <bounds region="4">
         <inclusion left="7" top="4" right="14" bottom="14" />
         <inclusion left="9" top="2" right="10" bottom="3" />
@@ -39715,7 +39719,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level15NormArchers" size="1" minimum="4" maximum="4" />
+      <entry entity="level15NormArchers" size="1" minimum="4" maximum="4" />
       <bounds region="4">
         <inclusion left="20" top="6" right="21" bottom="12" />
         <inclusion left="22" top="8" right="23" bottom="9" />
@@ -39740,7 +39744,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level13HighGnollOfficer" size="1" minimum="3" maximum="4" />
+      <entry entity="level13HighGnollOfficer" size="1" minimum="3" maximum="4" />
       <bounds region="2">
         <inclusion left="-2" top="23" right="2" bottom="32" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -39764,7 +39768,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level16NormThiefBane" size="1" minimum="1" maximum="2" />
+      <entry entity="level16NormThiefBane" size="1" minimum="1" maximum="2" />
       <bounds region="4">
         <inclusion left="23" top="8" right="26" bottom="9" />
         <inclusion left="27" top="6" right="31" bottom="11" />
@@ -39789,7 +39793,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level16NormThiefBane" size="1" minimum="6" maximum="6" />
+      <entry entity="level16NormThiefBane" size="1" minimum="6" maximum="6" />
       <bounds region="6">
         <inclusion left="18" top="17" right="28" bottom="17" />
         <inclusion left="0" top="0" right="0" bottom="0" />
@@ -39816,7 +39820,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level16HighThiefNinja" size="3" minimum="3" maximum="3" />
+      <entry entity="level16HighThiefNinja" size="3" minimum="3" maximum="3" />
       <bounds region="6">
         <inclusion left="7" top="24" right="21" bottom="26" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -39840,7 +39844,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level16HighThiefNinja" size="3" minimum="3" maximum="3" />
+      <entry entity="level16HighThiefNinja" size="3" minimum="3" maximum="3" />
       <bounds region="6">
         <inclusion left="16" top="19" right="28" bottom="20" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -39864,7 +39868,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level16HighThiefNinja" size="3" minimum="3" maximum="3" />
+      <entry entity="level16HighThiefNinja" size="3" minimum="3" maximum="3" />
       <bounds region="6">
         <inclusion left="26" top="21" right="28" bottom="26" />
         <exclusion left="0" top="0" right="0" bottom="0" />
