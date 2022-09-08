@@ -114228,6 +114228,7 @@
     centaur.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakGenericGems, 14.8, gemsPriceMutatorHigh),
+            new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, groveTreasure, 0.25)
         ));
     
@@ -114284,6 +114285,7 @@
         new LootPack(
             new LootPackEntry(true, (from, container) => new HickoryWand(), 1),
             new LootPackEntry(true, oakGenericGems, 14.8, gemsPriceMutatorAboveAverage),
+            new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, groveTreasure, 0.55)
         ));
     
@@ -114632,6 +114634,10 @@
     };
 
     beetle.AddGold(95);
+    beetle.AddLoot(
+        new LootPack(
+            new LootPackEntry(true, oakHigherBottles, 20.0)
+        ));
     
     return beetle;
 ]]></block>
@@ -114683,6 +114689,7 @@
     boar.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakGenericGems, 14.8, gemsPriceMutatorNormal),
+            new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, groveTreasure, 0.5)
         ));
 
@@ -114753,6 +114760,7 @@
     griffin.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakGenericGems, 14.8, gemsPriceMutatorHigh),
+            new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, groveTreasure, 0.63)
         ));
 
@@ -114812,6 +114820,7 @@
     largeBear.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakGenericGems, 14.8, gemsPriceMutatorHigh),
+            new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, groveTreasure, 0.63)
         ));
 
@@ -114868,6 +114877,7 @@
     wolf.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakGenericGems, 14.8, gemsPriceMutatorNormal),
+            new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, groveTreasure, 0.5)
         ));
 
@@ -115028,6 +115038,7 @@
     centaur.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakHeartGems, 4.5, gemsPriceMutatorHigh),
+            new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, groveTreasure, 0.63)
         ));
     
@@ -115087,6 +115098,7 @@
         new LootPack(
             new LootPackEntry(true, (from, container) => new HickoryWand(), 1),
             new LootPackEntry(true, oakHeartGems, 4.5, gemsPriceMutatorAboveAverage),
+            new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, groveTreasure, 0.55)
         ));
     
@@ -115132,6 +115144,7 @@
     troll.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakHeartGems, 4.5, gemsPriceMutatorAboveAverage),
+            new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, groveTreasure, 0.55)
         ));
     return troll;
