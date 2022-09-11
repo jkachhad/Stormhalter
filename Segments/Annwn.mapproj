@@ -71439,7 +71439,7 @@
         <block><![CDATA[
 	var phoenix = new Dragon()
     {
-        Name = "Test Phoenix",
+        Name = "Test RebirthDragon",
         Body = 208,
         Alignment = Alignment.Chaotic,
         
@@ -71471,7 +71471,7 @@
                                                                                                     },
         
         {
-            new CreatureAttack(21,      60, 70,      "The massive phoenix slashes you with a claw.",
+            new CreatureAttack(21,      80, 100,      "The massive phoenix slashes you with a claw.",
                                                         new AttackProneComponent(5), 
                                                         new AttackStunComponent(5)),                35
         },
@@ -71522,6 +71522,10 @@
         Experience = 1,
         HideDetection = 31,
         IsTethered = true,
+        
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Magic | CreatureImmunity.Poison,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell, 
     };
     
     elemental.Spells = new CreatureSpellCollection(10.0)
@@ -71570,6 +71574,7 @@
         <block><![CDATA[
 	var dragon = new Dragon()
     {
+        Name = "Test.RiftDragon",
         MaxHealth = 20000, Health = 20000,
         BaseDodge = 31,
         HideDetection = 50,
@@ -71579,6 +71584,7 @@
         CanStrikeCritically = false,
         CanFly = true,
         CanCharge = true,
+        CanLoot = false,
         
         BasePenetration = ShieldPenetration.VeryHeavy,
     
@@ -71667,7 +71673,7 @@
         <block><![CDATA[
 	var dragon = new Dragon()
     {
-        Name = "Thisson",
+        Name = "SSssssnake",
         Body = 236,
         Alignment = Alignment.Chaotic,
         
@@ -71682,8 +71688,9 @@
         CanLoot = false,        
         CanCharge = true,
 
-        Immunity = CreatureImmunity.Slashing | CreatureImmunity.Bashing | CreatureImmunity.Magic,
-        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell | CreatureWeakness.Silver,    
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Magic | CreatureImmunity.Poison,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell, 
     };
 
     dragon.AddStatus(new NightVisionStatus(dragon));
@@ -71758,13 +71765,25 @@
         <block><![CDATA[
 	var wolf = new BlackWolf()
     {
+        Name = "Big.Bad.Wolf",
         MaxHealth = 11000, Health = 1000,
         BaseDodge = 31,
         Body = 4,
         Experience = 1,
         HideDetection = 31,
         IsTethered = true,
+        CanLoot = false,
+        
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
+                   CreatureImmunity.Projectile | CreatureImmunity.Magic | CreatureImmunity.Poison,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell, 
     };
+    
+    wolf.AddStatus(new NightVisionStatus(dragon));
+    
+    wolf.AddImmunity(typeof(BlindSpell));
+    wolf.AddImmunity(typeof(FearSpell));
+    wolf.AddImmunity(typeof(StunSpell));
     
     wolf.AddStatus(new NightVisionStatus(elemental));
     
@@ -71804,6 +71823,7 @@
         <block><![CDATA[
 	var makon = new Dragon()
     {
+        Name = "Lizard.Guy",
         MaxHealth = 14000, Health = 14000,
         BaseDodge = 31,
         Body = 233,
@@ -71811,13 +71831,14 @@
         HideDetection = 31,
         IsTethered = true,
         CanJumpkick = true,
+        CanLoot = false
     };
     
 
     makon.Attacks = new CreatureAttackCollection
     {
-        new CreatureAttack(24,     150, 180,   "The makon hits you with its massive claw"),
-        new CreatureAttack(24,     120, 150,   "The makon bites you with his massive teeth")
+        new CreatureAttack(24,     150, 180,   "The Makon hits you with its massive claw"),
+        new CreatureAttack(24,     120, 150,   "The Makon bites you with his massive teeth")
     };
     
     makon.Blocks = new CreatureBlockCollection
