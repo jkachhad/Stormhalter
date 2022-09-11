@@ -68224,9 +68224,6 @@
         </component>
       </tile>
       <tile x="12" y="11">
-        <component type="FloorComponent">
-          <ground>176</ground>
-        </component>
         <component type="HiddenTeleporterComponent">
           <destinationX>13</destinationX>
           <destinationY>22</destinationY>
@@ -68235,6 +68232,9 @@
           <moonphases select="all" />
           <professions select="all" />
           <alignments select="all" />
+        </component>
+        <component type="SkyComponent">
+          <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="13" y="11">
@@ -70995,7 +70995,7 @@
     </subregion>
   </subregions>
   <entities>
-   <entity name="BossMajorPhoenix">
+    <entity name="BossMajorPhoenix">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -72320,7 +72320,7 @@
       <entry entity="BossMajorWizardTower" size="1" minimum="1" maximum="1" />
       <location x="31" y="5" region="6" />
     </spawn>
-     <spawn type="LocationSpawner" name="Phoenix Test">
+    <spawn type="LocationSpawner" name="Phoenix Test">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -72399,11 +72399,13 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="BossMajorBwolf" size="1" minimum="1" maximum="1" />
       <location x="29" y="7" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="Makon Test">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -72418,6 +72420,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="BossMajorMakon" size="1" minimum="1" maximum="1" />
       <location x="-2" y="7" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="annwnBalmVendor">
