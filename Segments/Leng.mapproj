@@ -21579,6 +21579,18 @@
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>38</destinationX>
+          <destinationY>18</destinationY>
+          <destinationRegion>20</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+        </component>
+        <component type="StaticComponent">
+          <static>167</static>
+        </component>
       </tile>
       <tile x="48" y="16">
         <component type="StaticComponent">
@@ -21852,10 +21864,22 @@
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
       </tile>
       <tile x="42" y="17">
         <component type="FloorComponent">
           <ground>176</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="43" y="17">
@@ -21866,6 +21890,12 @@
           <tree>98</tree>
           <canGrow>true</canGrow>
         </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
       </tile>
       <tile x="44" y="17">
         <component type="FloorComponent">
@@ -21873,6 +21903,12 @@
         </component>
         <component type="StaticComponent">
           <static>206</static>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="45" y="17">
@@ -21883,15 +21919,33 @@
           <tree>98</tree>
           <canGrow>true</canGrow>
         </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
       </tile>
       <tile x="46" y="17">
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
       </tile>
       <tile x="47" y="17">
         <component type="FloorComponent">
           <ground>176</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="48" y="17">
@@ -21901,6 +21955,12 @@
         <component type="WallComponent">
           <wall>158</wall>
           <destroyed>161</destroyed>
+          <ruins>170</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>157</wall>
+          <destroyed>160</destroyed>
           <ruins>170</ruins>
           <indestructible>true</indestructible>
         </component>
@@ -22113,7 +22173,7 @@
         </component>
         <component type="HiddenTeleporterComponent">
           <destinationX>44</destinationX>
-          <destinationY>18</destinationY>
+          <destinationY>16</destinationY>
           <destinationRegion>20</destinationRegion>
           <lightphases select="all" />
           <moonphases select="all" />
@@ -22135,75 +22195,14 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
-      <tile x="41" y="18">
-        <component type="FloorComponent">
-          <ground>176</ground>
-        </component>
-      </tile>
-      <tile x="42" y="18">
-        <component type="FloorComponent">
-          <ground>176</ground>
-        </component>
-      </tile>
-      <tile x="43" y="18">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
-        <component type="TreeComponent">
-          <tree>98</tree>
-          <canGrow>true</canGrow>
-        </component>
-      </tile>
-      <tile x="44" y="18">
-        <component type="FloorComponent">
-          <ground>13</ground>
-        </component>
-        <component type="StaticComponent">
-          <static>207</static>
-        </component>
-      </tile>
-      <tile x="45" y="18">
-        <component type="FloorComponent">
-          <ground>12</ground>
-        </component>
-        <component type="TreeComponent">
-          <tree>98</tree>
-          <canGrow>true</canGrow>
-        </component>
-      </tile>
-      <tile x="46" y="18">
-        <component type="FloorComponent">
-          <ground>176</ground>
-        </component>
-      </tile>
-      <tile x="47" y="18">
-        <component type="FloorComponent">
-          <ground>176</ground>
-        </component>
-        <component type="HiddenTeleporterComponent">
-          <destinationX>38</destinationX>
-          <destinationY>18</destinationY>
-          <destinationRegion>20</destinationRegion>
-          <lightphases select="all" />
-          <moonphases select="all" />
-          <professions select="all" />
-          <alignments select="all" />
-        </component>
-        <component type="StaticComponent">
-          <static>167</static>
-        </component>
-      </tile>
-      <tile x="48" y="18">
-        <component type="StaticComponent">
-          <static>176</static>
-        </component>
-        <component type="WallComponent">
-          <wall>158</wall>
-          <destroyed>161</destroyed>
-          <ruins>170</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
+      <tile x="41" y="18" />
+      <tile x="42" y="18" />
+      <tile x="43" y="18" />
+      <tile x="44" y="18" />
+      <tile x="45" y="18" />
+      <tile x="46" y="18" />
+      <tile x="47" y="18" />
+      <tile x="48" y="18" />
       <tile x="6" y="19">
         <component type="StaticComponent">
           <static>13</static>
@@ -22479,100 +22478,14 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
-      <tile x="41" y="19">
-        <component type="StaticComponent">
-          <static>176</static>
-        </component>
-        <component type="WallComponent">
-          <wall>157</wall>
-          <destroyed>160</destroyed>
-          <ruins>170</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="42" y="19">
-        <component type="StaticComponent">
-          <static>176</static>
-        </component>
-        <component type="WallComponent">
-          <wall>157</wall>
-          <destroyed>160</destroyed>
-          <ruins>170</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="43" y="19">
-        <component type="StaticComponent">
-          <static>176</static>
-        </component>
-        <component type="WallComponent">
-          <wall>157</wall>
-          <destroyed>160</destroyed>
-          <ruins>170</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="44" y="19">
-        <component type="StaticComponent">
-          <static>176</static>
-        </component>
-        <component type="WallComponent">
-          <wall>157</wall>
-          <destroyed>160</destroyed>
-          <ruins>170</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="45" y="19">
-        <component type="StaticComponent">
-          <static>176</static>
-        </component>
-        <component type="WallComponent">
-          <wall>157</wall>
-          <destroyed>160</destroyed>
-          <ruins>170</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="46" y="19">
-        <component type="StaticComponent">
-          <static>176</static>
-        </component>
-        <component type="WallComponent">
-          <wall>157</wall>
-          <destroyed>160</destroyed>
-          <ruins>170</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="47" y="19">
-        <component type="StaticComponent">
-          <static>176</static>
-        </component>
-        <component type="WallComponent">
-          <wall>157</wall>
-          <destroyed>160</destroyed>
-          <ruins>170</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="48" y="19">
-        <component type="StaticComponent">
-          <static>176</static>
-        </component>
-        <component type="WallComponent">
-          <wall>158</wall>
-          <destroyed>161</destroyed>
-          <ruins>170</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="WallComponent">
-          <wall>157</wall>
-          <destroyed>160</destroyed>
-          <ruins>170</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
+      <tile x="41" y="19" />
+      <tile x="42" y="19" />
+      <tile x="43" y="19" />
+      <tile x="44" y="19" />
+      <tile x="45" y="19" />
+      <tile x="46" y="19" />
+      <tile x="47" y="19" />
+      <tile x="48" y="19" />
       <tile x="5" y="20">
         <component type="StaticComponent">
           <static>13</static>
