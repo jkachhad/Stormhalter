@@ -71886,6 +71886,11 @@
         new CreatureBasicAttack(17)
     };
     
+    
+    wizard.AddImmunity(typeof(BlindSpell));
+    wizard.AddImmunity(typeof(FearSpell));
+    wizard.AddImmunity(typeof(StunSpell));
+    
     wizard.Wield(new BlackStaff());
     wizard.Equip(new LeatherArmor());
     wizard.AddStatus(new NightVisionStatus(wizard));
@@ -72275,9 +72280,7 @@
         new CreatureBasicAttack(16)
     };
     
-    var randomNumber = new Random();
-    var rand = randomNumber.Next(3);
-    
+    var rand = new Random().Next(1,2);
     
     if (rand.Equals(1))
     {
