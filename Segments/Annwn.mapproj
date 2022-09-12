@@ -60412,6 +60412,9 @@
           <professions select="all" />
           <alignments select="all" />
         </component>
+        <component type="StaticComponent">
+          <static>173</static>
+        </component>
       </tile>
       <tile x="14" y="23">
         <component type="FloorComponent">
@@ -72259,7 +72262,7 @@
         BaseDodge = 31,
         HideDetection = 32,
         BasePenetration = ShieldPenetration.Heavy,
-        Experience = 18814,
+        Experience = 1,
         
         IceProtection = 100,
         FireProtection = 100,
@@ -72272,12 +72275,27 @@
         new CreatureBasicAttack(16)
     };
     
-    plant.Spells = new CreatureSpellCollection(10.0)
+    var randomNumber = new Random();
+    var rand = randomNumber.Next(3);
+    
+    
+    if (rand.Equals(1))
     {
-        { new CreatureSpell<DeathSpell>(
+        plant.Spells = new CreatureSpellCollection(10.0)
+        {
+          { new CreatureSpell<DeathSpell>(
             skillLevel: 15), 100, TimeSpan.FromSeconds(5.0) }
-    };
-
+        };
+    }
+    else
+    {
+        plant.Spells = new CreatureSpellCollection(10.0)
+        {
+          { new CreatureSpell<MagicMissileSpell>(
+            skillLevel: 19), 100, TimeSpan.FromSeconds(5.0) }
+        };
+    
+    }
     
     plant.AddGold(2000);
   
@@ -72339,6 +72357,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="BossMajorPhoenix" size="1" minimum="1" maximum="1" />
+      <entry entity="BossMajorPhoenix" size="1" minimum="1" maximum="1" />
       <location x="13" y="-6" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="Lucy Test">
@@ -72360,6 +72379,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="BossMajorRiftDragon" size="1" minimum="1" maximum="1" />
+      <entry entity="BossMajorRiftDragon" size="1" minimum="1" maximum="1" />
       <location x="13" y="22" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="Thisson Test">
@@ -72379,6 +72399,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="BossMajorThisson" size="1" minimum="1" maximum="1" />
       <entry entity="BossMajorThisson" size="1" minimum="1" maximum="1" />
       <location x="30" y="-8" region="2" />
     </spawn>
@@ -72400,6 +72421,7 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="BossMajorBwolf" size="1" minimum="1" maximum="1" />
+      <entry entity="BossMajorBwolf" size="1" minimum="0" maximum="0" />
       <location x="29" y="7" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="Makon Test">
@@ -72420,6 +72442,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="BossMajorMakon" size="1" minimum="1" maximum="1" />
       <entry entity="BossMajorMakon" size="1" minimum="1" maximum="1" />
       <location x="-2" y="7" region="2" />
     </spawn>
@@ -72854,6 +72877,27 @@
       <entry entity="annwnThaumTrainer" size="1" minimum="1" maximum="1" />
       <location x="11" y="1" region="13" />
     </spawn>
+    <spawn type="LocationSpawner" name="Ydmos Test">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossMajorWizardTower" size="1" minimum="1" maximum="1" />
+      <entry entity="BossMajorWizardTower" size="1" minimum="1" maximum="1" />
+      <location x="-1" y="-6" region="2" />
+    </spawn>
     <spawn type="RegionSpawner" name="wizardTowerLevel1North">
       <minimumDelay>1800</minimumDelay>
       <maximumDelay>900</maximumDelay>
@@ -73019,6 +73063,30 @@
       <entry entity="BossMiniPhoenixMob" size="1" minimum="2" maximum="2" />
       <bounds region="2">
         <inclusion left="9" top="-9" right="18" bottom="-2" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Test Evil Wiz Plants">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level16Plant" size="1" minimum="1" maximum="1" />
+      <bounds region="2">
+        <inclusion left="-5" top="-8" right="-4" bottom="-3" />
+        <inclusion left="-1" top="-3" right="3" bottom="-2" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
