@@ -26,7 +26,7 @@ namespace Kesmai.WorldForge.Windows
 			{
 				Width = 150,
 				
-				Font = "Tahoma14Bold",
+				Font = "Tahoma", FontSize = 10,
 				Foreground = Color.Black,
 			});
 

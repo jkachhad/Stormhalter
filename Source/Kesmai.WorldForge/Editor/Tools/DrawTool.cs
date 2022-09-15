@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CommonServiceLocator;
 using DigitalRune.Game.UI;
 using DigitalRune.Game.Input;
+using DigitalRune.Game.UI.Rendering;
 using DigitalRune.Graphics;
 using DigitalRune.Mathematics.Algebra;
 using Kesmai.WorldForge.Editor;
@@ -136,7 +137,7 @@ namespace Kesmai.WorldForge
 
 			var uiScreen = worldScreen.UI;
 			var renderer = uiScreen.Renderer;
-			var spriteFont = renderer.GetFont("Tahoma14Bold");
+			var spriteFont = renderer.GetFontRenderer("Tahoma", 10);
 			
 			var component = presenter.SelectedComponent;
 
@@ -180,9 +181,9 @@ namespace Kesmai.WorldForge
 
 				var position = (Vector2)_position + new Vector2(10.0f, -10.0f);
 				
-				spriteBatch.DrawString(spriteFont, text, position + new Vector2(1f, 1f), 
+				spriteFont.DrawString(spriteBatch, RenderTransform.Identity, text, position + new Vector2(1f, 1f), 
 					Color.Black);
-				spriteBatch.DrawString(spriteFont, text, position, 
+				spriteFont.DrawString(spriteBatch, RenderTransform.Identity, text, position, 
 					Color.Yellow);
 			}
 		}
