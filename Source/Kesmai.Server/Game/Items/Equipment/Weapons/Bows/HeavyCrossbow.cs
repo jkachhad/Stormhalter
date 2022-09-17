@@ -14,7 +14,7 @@ namespace Kesmai.Server.Items
 		public override int Weight => 1400;
 
 		/// <inheritdoc />
-		public override ShieldPenetration Penetration => ShieldPenetration.Heavy;
+		public override ShieldPenetration Penetration => ShieldPenetration.VeryHeavy;
 
 		/// <inheritdoc />
 		public override int MinimumDamage => 2;
