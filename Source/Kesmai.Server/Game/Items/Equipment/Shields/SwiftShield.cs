@@ -34,17 +34,17 @@ namespace Kesmai.Server.Items
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SwiftShield"/> class.
 		/// </summary>
-		public SwiftShield() : base(76)
+		public SwiftShield() : base(979)
 		{
 		}
 
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6200000, 6200215)); /* [You are looking at] [a steel shield adorned with a black lightning bolt.] */
+			entries.Add(new LocalizationEntry(6200000, 6200382)); /* [You are looking at] [a red and black shield adorned with a griffon. Magical properties are embued within.] */
 
 			if (Identified)
-				entries.Add(new LocalizationEntry(6250109)); /* The shield contains the spell of Lightning Resist. */
+				entries.Add(new LocalizationEntry(6300427)); /* The shield contains the spell of Medium Shield. */
 		}
 
 
