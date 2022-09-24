@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.95.0.0">
+<segment name="Underkingdom" version="0.96.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -101730,7 +101730,7 @@
     lurker.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new PermanentStrengthPotion(),       5),
         new LootPackEntry(true, (from, container) => new YouthPotion(),       5),
-        new LootPackEntry(true, (from, container) => new ManaPotion(),       5), 
+        new LootPackEntry(true, (from, container) => new ManaPotion(),       20), 
         new LootPackEntry(true, UnderkingdomPotions,    0.05),
         new LootPackEntry(true, UnderkingdomGems,       7.2,     gemsPriceMutatorHigh), 
         new LootPackEntry(true, UnderkingdomBottles,    50), 
