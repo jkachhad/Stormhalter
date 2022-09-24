@@ -127,7 +127,7 @@ namespace Kesmai.WorldForge.Windows
 						Foreground = Color.OrangeRed,
 						Shadow = Color.Black,
 
-						Font = "Tahoma14Bold",
+						Font = "Tahoma", FontSize = 10,
 						Text = "Delete",
 
 						Margin = new Vector4F(3, 3, 3, 3)
@@ -153,7 +153,7 @@ namespace Kesmai.WorldForge.Windows
 						Foreground = Color.OrangeRed,
 						Shadow = Color.Black,
 
-						Font = "Tahoma14Bold",
+						Font = "Tahoma", FontSize = 10,
 						Text = "Move up",
 
 						Margin = new Vector4F(3, 3, 3, 3)
@@ -177,7 +177,7 @@ namespace Kesmai.WorldForge.Windows
 						Foreground = Color.OrangeRed,
 						Shadow = Color.Black,
 
-						Font = "Tahoma14Bold",
+						Font = "Tahoma", FontSize = 10,
 						Text = "Move down",
 
 						Margin = new Vector4F(3, 3, 3, 3)
@@ -208,7 +208,7 @@ namespace Kesmai.WorldForge.Windows
 							Foreground = Color.OrangeRed,
 							Shadow = Color.Black,
 
-							Font = "Tahoma14Bold",
+							Font = "Tahoma", FontSize = 10,
 							Text = "Select Destination",
 
 							Margin = new Vector4F(3, 3, 3, 3)

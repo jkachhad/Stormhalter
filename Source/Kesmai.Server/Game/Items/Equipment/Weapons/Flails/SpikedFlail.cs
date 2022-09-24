@@ -17,10 +17,10 @@ namespace Kesmai.Server.Items
 		public override int Weight => 1800;
 		
 		/// <inheritdoc />
-		public override int MinimumDamage => 1;
+		public override int MinimumDamage => 3;
 
 		/// <inheritdoc />
-		public override int MaximumDamage => 6;
+		public override int MaximumDamage => 12;
 
 		/// <inheritdoc />
 		public override int BaseArmorBonus => 1;

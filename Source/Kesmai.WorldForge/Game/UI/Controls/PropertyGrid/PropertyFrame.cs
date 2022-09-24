@@ -58,7 +58,7 @@ namespace Kesmai.WorldForge.Windows
 				Foreground = Color.Yellow,
 				Shadow = Color.Black,
 				
-				Font = "Tahoma14Bold",
+				Font = "Tahoma", FontSize = 10,
 				
 				HorizontalAlignment = HorizontalAlignment.Right,
 				

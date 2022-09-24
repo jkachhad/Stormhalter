@@ -99959,6 +99959,10 @@
     };
     
     drake.AddStatus(new NightVisionStatus(drake));
+    
+    drake.AddImmunity(typeof(BlindSpell));
+    drake.AddImmunity(typeof(FearSpell));
+    drake.AddImmunity(typeof(StunSpell));
 	
 	drake.AddImmunity(typeof(Lightning));
     
@@ -100180,6 +100184,10 @@
     trollKing.AddImmunity(typeof(WhirlwindSpell));
     trollKing.AddImmunity(typeof(ConcussionSpell));
     
+    trollKing.AddImmunity(typeof(BlindSpell));
+    trollKing.AddImmunity(typeof(FearSpell));
+    trollKing.AddImmunity(typeof(StunSpell));
+    
     trollKing.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(19, 25, 88),
@@ -100357,11 +100365,14 @@
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
     
-        CanCharge = true,
-        CanStrikeCritically = false,
+        CanJumpkick = true,
     
         IsTethered = true,
     };
+    
+    overlord.AddImmunity(typeof(BlindSpell));
+    overlord.AddImmunity(typeof(FearSpell));
+    overlord.AddImmunity(typeof(StunSpell));
     
     overlord.AddStatus(new NightVisionStatus(overlord));
     
@@ -100373,7 +100384,7 @@
     
     overlord.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(21, 45, 92, new AttackStunComponent (25))
+        new CreatureBasicAttack(21, 65, 92, new AttackStunComponent (25))
     };
     
     overlord.Spells = new CreatureSpellCollection(35.0)

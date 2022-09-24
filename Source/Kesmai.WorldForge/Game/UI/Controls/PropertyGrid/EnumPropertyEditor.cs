@@ -30,7 +30,7 @@ namespace Kesmai.WorldForge.Windows
 				return new TextBlock()
 				{
 					Text = o.ToString(),
-					Font = "Tahoma14Bold",
+					Font = "Tahoma", FontSize = 10,
 				};
 			};
 

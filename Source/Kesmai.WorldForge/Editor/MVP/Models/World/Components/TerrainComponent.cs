@@ -151,7 +151,7 @@ namespace Kesmai.WorldForge.Models
 				    Foreground = Color.OrangeRed,
 				    Shadow = Color.Black,
 
-				    Font = "Tahoma14Bold",
+				    Font = "Tahoma", FontSize = 10,
 				    Text = "Template",
 
 				    Margin = new Vector4F(3, 3, 3, 3)
