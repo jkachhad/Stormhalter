@@ -106947,6 +106947,10 @@
     /* Adds an immunity to lightning stuns. */
     drake.AddImmunity(typeof(Lightning));
     
+    drake.AddImmunity(typeof(BlindSpell));
+    drake.AddImmunity(typeof(FearSpell));
+    drake.AddImmunity(typeof(StunSpell));
+    
     //This allows a timespan for which the drake will choose a new target of those visible at random. 10 seconds for example, here
     drake.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
     
@@ -107045,6 +107049,10 @@
     dragon.AddWeakness(typeof(SilverGreatAxe));
     dragon.AddWeakness(typeof(IceSpearSpell));
     
+    dragon.AddImmunity(typeof(BlindSpell));
+    dragon.AddImmunity(typeof(FearSpell));
+    dragon.AddImmunity(typeof(StunSpell));
+    
     dragon.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
     
     dragon.Attacks = new CreatureAttackCollection
@@ -107139,12 +107147,16 @@
     
     yeti.AddStatus(new NightVisionStatus(yeti));
     
+    yeti.AddImmunity(typeof(BlindSpell));
+    yeti.AddImmunity(typeof(FearSpell));
+    yeti.AddImmunity(typeof(StunSpell));
+    
     yeti.CombatantChangeInterval = TimeSpan.FromSeconds(5.0);
     
     yeti.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(17,      50, 65,      "The yeti smashes you with 5 fist.",
+            new CreatureAttack(17,      50, 65,      "The yeti smashes you with his fist.",
                                                         new AttackProneComponent(5), 
                                                         new AttackStunComponent(5)),                40
         },
@@ -108555,6 +108567,10 @@
     };
     
     necro.AddImmunity(typeof(PoisonCloudSpell));
+    
+    necro.AddImmunity(typeof(BlindSpell));
+    necro.AddImmunity(typeof(FearSpell));
+    necro.AddImmunity(typeof(StunSpell));
 
     necro.AddStatus(new NightVisionStatus(necro));
     necro.Attacks = new CreatureAttackCollection()
@@ -110434,6 +110450,26 @@
       </script>
       <entry entity="BossMiniLevel8Pwolf" size="1" minimum="5" maximum="5" />
       <location x="13" y="10" region="23" />
+    </spawn>
+    <spawn type="LocationSpawner" name="Statue 4">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="axeStatue" size="1" minimum="1" maximum="1" />
+      <location x="32" y="24" region="1" />
     </spawn>
     <spawn type="RegionSpawner" name="surfaceDungeonSpawner">
       <minimumDelay>600</minimumDelay>

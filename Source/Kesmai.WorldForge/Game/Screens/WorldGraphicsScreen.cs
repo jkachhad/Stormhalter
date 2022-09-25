@@ -56,7 +56,7 @@ namespace Kesmai.WorldForge
 					spriteBatch.FillRectangle(bounds, _subregion.Color);
 					spriteBatch.DrawRectangle(bounds, _subregion.Border);
 
-					spriteBatch.DrawString(_font, _subregion.Name,
+					_font.DrawString(spriteBatch, RenderTransform.Identity, _subregion.Name,
 						new Vector2(bounds.X + 5, bounds.Y + 5), Color.White);
 				}
 			}
@@ -111,7 +111,7 @@ namespace Kesmai.WorldForge
 					spriteBatch.FillRectangle(bounds, _inclusionFill);
 					spriteBatch.DrawRectangle(bounds, _inclusionBorder);
 
-					spriteBatch.DrawString(_font, _spawner.Name,
+					_font.DrawString(spriteBatch, RenderTransform.Identity, _spawner.Name,
 						new Vector2(bounds.X + 5, bounds.Y + 5), Color.White);
 				}
 
@@ -126,7 +126,7 @@ namespace Kesmai.WorldForge
 					spriteBatch.FillRectangle(bounds, _exclusionFill);
 					spriteBatch.DrawRectangle(bounds, _exclusionBorder);
 
-					spriteBatch.DrawString(_font, "Exclusion",
+					_font.DrawString(spriteBatch, RenderTransform.Identity, "Exclusion",
 						new Vector2(bounds.X + 5, bounds.Y + 5), Color.White);
 				}
 			}
@@ -143,7 +143,7 @@ namespace Kesmai.WorldForge
 					spriteBatch.DrawRectangle(bounds, _locationBorder);
 					spriteBatch.FillRectangle(innerRectangle, _locationBorder);
 
-					spriteBatch.DrawString(_font, $"{_mx}, {_my}",
+					_font.DrawString(spriteBatch, RenderTransform.Identity, $"{_mx}, {_my}",
 						new Vector2(bounds.Left + 4, bounds.Top + 3), Color.Black);
 				}
 			}
@@ -185,7 +185,7 @@ namespace Kesmai.WorldForge
 				spriteBatch.DrawRectangle(bounds, _highlightColor);
 				spriteBatch.FillRectangle(innerRectangle, _highlightColor);
 				
-				spriteBatch.DrawString(_font, $"{_mx}, {_my}", 
+				_font.DrawString(spriteBatch, RenderTransform.Identity, $"{_mx}, {_my}", 
 					new Vector2(bounds.Left + 4, bounds.Top + 3), Color.Black);
 			}
 		}
@@ -212,7 +212,7 @@ namespace Kesmai.WorldForge
 		private PresentationTarget _presentationTarget;
 		protected UIScreen _uiScreen;
 		private ContextMenu _contextMenu;
-		protected BitmapFont _font;
+		protected DistanceFontRenderer _font;
 		private List<MenuItem> _pointContextItems = new List<MenuItem>();
 		private List<MenuItem> _selectionContextItems = new List<MenuItem>();
 		private List<MenuItem> _spawnerContextItems = new List<MenuItem>();
@@ -359,8 +359,8 @@ namespace Kesmai.WorldForge
 			_teleporterSourceContextItems.Add(configureThisTeleporterMenuItem);
 
 			uiService.Screens.Add(_uiScreen);
-
-			_font = renderer.GetFont("Tahoma14Bold");
+			
+			_font = renderer.GetFontRenderer("Tahoma", 10);
 
 			var commentStream = System.Windows.Application.GetResourceStream(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/Comment-White.png")).Stream;
 			_commentSprite = Texture2D.FromStream(graphicsDevice, commentStream);
@@ -1000,7 +1000,7 @@ namespace Kesmai.WorldForge
 					//draw all strings on top..
 					foreach (Tuple<String, Vector2, Color> _drawString in _drawStrings)
 					{
-						spritebatch.DrawString(_font, _drawString.Item1, _drawString.Item2, _drawString.Item3);
+						_font.DrawString(spritebatch, RenderTransform.Identity, _drawString.Item1, _drawString.Item2, _drawString.Item3);
 					}
 					if (_presenter.Visibility.ShowComments)
                     {
@@ -1082,7 +1082,7 @@ namespace Kesmai.WorldForge
 					spriteBatch.DrawRectangle(bounds, _selectionBorder);
 					spriteBatch.FillRectangle(innerRectangle, _selectionBorder);
 
-					spriteBatch.DrawString(_font, $"{vx}, {vy}",
+					_font.DrawString(spriteBatch, RenderTransform.Identity, $"{vx}, {vy}",
 						new Vector2(bounds.Left + 4, bounds.Top + 3), Color.Black);
 				}
 			}

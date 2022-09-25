@@ -21,14 +21,14 @@ namespace Kesmai.Server.Items
 		/// </summary>
 		public override int Weight => 100;
 		
-		public IvoryBrooch() : this(4)
+		public IvoryBrooch() : this(3)
 		{
 		}
 		
 		/// <summary>
 		/// Initializes a new instance of the <see cref="IvoryBrooch"/> class.
 		/// </summary>
-		public IvoryBrooch(int charges = 4) : base(301, charges)
+		public IvoryBrooch(int charges = 3) : base(301, charges)
 		{
 		}
 		

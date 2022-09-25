@@ -73,12 +73,16 @@ namespace Kesmai.WorldForge
 			var graphicsDevice = new GraphicsDevice(GraphicsAdapter.DefaultAdapter, GraphicsProfile.HiDef, presentationParameters);
 
 			// An IGraphicsDeviceService is required by the MonoGame/XNA content manager.
-			serviceContainer.Register(typeof(IGraphicsDeviceService), null, new GraphicsDeviceManager(graphicsDevice));
+			var graphicsDeviceManager = new GraphicsDeviceManager(graphicsDevice);
+			
+			serviceContainer.Register(typeof(IGraphicsDeviceService), null, graphicsDeviceManager);
 
 			// Create and register the graphics manager.
 			_graphicsManager = new GraphicsManager(graphicsDevice, contentManager);
 
 			serviceContainer.Register(typeof(IGraphicsService), null, _graphicsManager);
+			serviceContainer.Register(typeof(GraphicsDevice), null, graphicsDevice);
+			
 			serviceContainer.Register(typeof(TerrainManager), null, new TerrainManager());
 			
 			// ----- Timing

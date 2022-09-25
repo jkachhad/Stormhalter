@@ -16,14 +16,14 @@ namespace Kesmai.Server.Items
 		/// </summary>
 		public override int Weight => 100;
 		
-		public HummingbirdAmulet() : this(6)
+		public HummingbirdAmulet() : this(1)
 		{
 		}
 		
 		/// <summary>
 		/// Initializes a new instance of the <see cref="HummingbirdAmulet"/> class.
 		/// </summary>
-		public HummingbirdAmulet(int charges = 6) : base(305, charges)
+		public HummingbirdAmulet(int charges = 1) : base(305, charges)
 		{
 		}
 		

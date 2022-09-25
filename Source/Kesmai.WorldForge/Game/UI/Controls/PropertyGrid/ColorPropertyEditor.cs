@@ -53,7 +53,7 @@ namespace Kesmai.WorldForge.Windows
 				});
 				sliderPanel.Children.Add(_labels[i] = new TextBlock()
 				{
-					Font = "Tahoma14Bold",
+					Font = "Tahoma", FontSize = 10,
 					
 					Foreground = colors[i],
 					Shadow = Color.Black,

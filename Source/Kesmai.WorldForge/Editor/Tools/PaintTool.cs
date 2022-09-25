@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using DigitalRune.Game.UI;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using DigitalRune.Game.UI.Rendering;
 
 namespace Kesmai.WorldForge
 {
@@ -137,7 +138,7 @@ namespace Kesmai.WorldForge
 			var worldScreen = presentationTarget.WorldScreen;
 			var uiScreen = worldScreen.UI;
 			var renderer = uiScreen.Renderer;
-			var spriteFont = renderer.GetFont("Tahoma14Bold");
+			var spriteFont = renderer.GetFontRenderer("Tahoma", 10);
 
 			var text = String.Empty;
 
@@ -148,9 +149,9 @@ namespace Kesmai.WorldForge
 
 			var position = (Vector2)_position + new Vector2(10.0f, -10.0f);
 
-			spriteBatch.DrawString(spriteFont, text, position + new Vector2(1f, 1f),
+			spriteFont.DrawString(spriteBatch, RenderTransform.Identity, text, position + new Vector2(1f, 1f),
 				Color.Black);
-			spriteBatch.DrawString(spriteFont, text, position,
+			spriteFont.DrawString(spriteBatch, RenderTransform.Identity, text, position,
 				Color.Yellow);
 		}
 	}
