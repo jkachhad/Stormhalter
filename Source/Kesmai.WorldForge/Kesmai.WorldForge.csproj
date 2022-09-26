@@ -3,7 +3,7 @@
         <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
         
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net5.0-windows</TargetFramework>
+        <TargetFramework>net6.0-windows</TargetFramework>
         <PreserveCompilationContext>false</PreserveCompilationContext>
         <UseWPF>true</UseWPF>
         
@@ -17,11 +17,16 @@
         <BaseIntermediateOutputPath>.vs</BaseIntermediateOutputPath>
 
         <ApplicationManifest>app.manifest</ApplicationManifest>
+
+        <LangVersion>10</LangVersion>
+
+        <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
+        <AllowedReferenceRelatedFileExtensions>None</AllowedReferenceRelatedFileExtensions>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug'">
       <OutputPath>$(SolutionDir)\..\Build\Debug\WorldForge</OutputPath>
-      <DefineConstants>TRACE;DEBUG;WorldForge;Interop;BITMAPFONT;CanImport;</DefineConstants>
+      <DefineConstants>TRACE;DEBUG;WorldForge;Interop;CanImport;</DefineConstants>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
       <Optimize>false</Optimize>
       <DebugType>full</DebugType>
@@ -29,7 +34,7 @@
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release'">
       <OutputPath>$(SolutionDir)\..\Build\Release\WorldForge</OutputPath>
-      <DefineConstants>TRACE;WorldForge;Interop;BITMAPFONT;</DefineConstants>
+      <DefineConstants>TRACE;WorldForge;Interop;</DefineConstants>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
       <Optimize>true</Optimize>
       <DebugType>none</DebugType>
@@ -38,9 +43,9 @@
     <ItemGroup>
       <PackageReference Include="CommonServiceLocator" Version="2.0.6" />
       <PackageReference Include="Dirkster.AvalonDock" Version="4.50.2" />
-      <PackageReference Include="DotNetZip" Version="1.15.0" />
+      <PackageReference Include="DotNetZip" Version="1.16.0" />
       <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.0.2" />
-      <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.0.1641" />
+      <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.1.303" />
       <PackageReference Include="RedGate.SmartAssembly.MSBuild" Version="8.0.1.4676-preview">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -105,53 +110,12 @@
     </ItemGroup>
 
     <PropertyGroup>
-        <SmartAssemblyIsEnabled>False</SmartAssemblyIsEnabled>
-    </PropertyGroup>
-    
-    <PropertyGroup>
-        <Obfuscate>true</Obfuscate>
-        <ConfuserReplaceOutput>true</ConfuserReplaceOutput>
+        <SmartAssemblyIsEnabled>false</SmartAssemblyIsEnabled>
     </PropertyGroup>
 
     <Target Name="SmartAssemblyTarget" AfterTargets="Publish">
         <ItemGroup>
             <!-- Remove unwanted files, eg. resources of unused files, unused native files -->
-            <GarbageFile Include="cs\Microsoft.CodeAnalysis.Workspaces.Desktop.resources.dll" />
-            <GarbageFile Include="de\Microsoft.CodeAnalysis.Workspaces.Desktop.resources.dll" />
-            <GarbageFile Include="es\Microsoft.CodeAnalysis.Workspaces.Desktop.resources.dll" />
-            <GarbageFile Include="fr\Microsoft.CodeAnalysis.Workspaces.Desktop.resources.dll" />
-            <GarbageFile Include="it\Microsoft.CodeAnalysis.Workspaces.Desktop.resources.dll" />
-            <GarbageFile Include="ja\Microsoft.CodeAnalysis.Workspaces.Desktop.resources.dll" />
-            <GarbageFile Include="ko\Microsoft.CodeAnalysis.Workspaces.Desktop.resources.dll" />
-            <GarbageFile Include="pl\Microsoft.CodeAnalysis.Workspaces.Desktop.resources.dll" />
-            <GarbageFile Include="pt-BR\Microsoft.CodeAnalysis.Workspaces.Desktop.resources.dll" />
-            <GarbageFile Include="ru\Microsoft.CodeAnalysis.Workspaces.Desktop.resources.dll" />
-            <GarbageFile Include="tr\Microsoft.CodeAnalysis.Workspaces.Desktop.resources.dll" />
-            <GarbageFile Include="zh-Hans\Microsoft.CodeAnalysis.Workspaces.Desktop.resources.dll" />
-            <GarbageFile Include="zh-Hant\Microsoft.CodeAnalysis.Workspaces.Desktop.resources.dll" />
-
-            <GarbageDir Include="ca-ES" />
-            <GarbageDir Include="cs" />
-            <GarbageDir Include="cs-CZ" />
-            <GarbageDir Include="de" />
-            <GarbageDir Include="es" />
-            <GarbageDir Include="fr" />
-            <GarbageDir Include="hu" />
-            <GarbageDir Include="it" />
-            <GarbageDir Include="ja" />
-            <GarbageDir Include="ko" />
-            <GarbageDir Include="nl-BE" />
-            <GarbageDir Include="pl" />
-            <GarbageDir Include="pt-BR" />
-            <GarbageDir Include="ro" />
-            <GarbageDir Include="ru" />
-            <GarbageDir Include="sv" />
-            <GarbageDir Include="tr" />
-            <GarbageDir Include="zh-Hans" />
-            <GarbageDir Include="zh-Hant" />
-            <GarbageDir Include="runtimes" />
-            <GarbageDir Include="Confused" />
-
             <GarbageFile Include="AvalonDock.dll" />
             <GarbageFile Include="CommonServiceLocator.dll" />
             <GarbageFile Include="DigitalRune.Animation.dll" />
@@ -221,13 +185,14 @@
         <!-- SmartAssembly -->
         <SmartAssembly ProjectFile="$(ProjectDir)\$(AssemblyName).saproj" Input="$(PublishDir)\$(AssemblyName).dll" OverwriteAssembly="true" />
         
-        <!-- Clean-up -->
-        <Delete Files="$(PublishDir)%(GarbageFile.Identity)" ContinueOnError="WarnAndContinue" />
-        <RemoveDir Directories="$(PublishDir)%(GarbageDir.Identity)" ContinueOnError="WarnAndContinue" />
-
         <!-- Copy -->
         <Copy SourceFiles="$(PublishDir)$(AssemblyName).dll" DestinationFiles="$(SolutionDir)..\..\Kesmai\Build\Publish\$(AssemblyName).dll" />
         <Copy SourceFiles="$(PublishDir)$(AssemblyName).exe" DestinationFiles="$(SolutionDir)..\..\Kesmai\Build\Publish\$(AssemblyName).exe" />
         <Copy SourceFiles="$(PublishDir)$(AssemblyName).runtimeconfig.json" DestinationFiles="$(SolutionDir)..\..\Kesmai\Build\Publish\$(AssemblyName).runtimeconfig.json" />
+
+        <!-- Clean-up -->
+        <Delete Files="$(PublishDir)%(GarbageFile.Identity)" ContinueOnError="WarnAndContinue" />
+        <RemoveDir Directories="$(PublishDir)%(GarbageDir.Identity)" ContinueOnError="WarnAndContinue" />
+
     </Target>
 </Project>

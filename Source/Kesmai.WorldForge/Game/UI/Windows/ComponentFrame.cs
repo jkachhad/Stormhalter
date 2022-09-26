@@ -60,7 +60,7 @@ namespace Kesmai.WorldForge.Windows
 
 			var componentName = new TextBlock()
 			{
-				Font = "Tahoma14Bold",
+				Font = "Tahoma", FontSize = 10,
 				
 				Foreground = Color.Yellow,
 				Shadow = Color.Black,

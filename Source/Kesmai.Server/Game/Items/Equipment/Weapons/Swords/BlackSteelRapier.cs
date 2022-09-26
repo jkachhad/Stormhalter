@@ -12,6 +12,8 @@ namespace Kesmai.Server.Items
 		/// <inheritdoc />
 		public override int BaseAttackBonus => 4;
 
+		public override int BaseArmorBonus => 2;
+
 		/// <inheritdoc />
 		public override WeaponFlags Flags => base.Flags | WeaponFlags.BlueGlowing;
 

@@ -46,7 +46,7 @@ namespace Kesmai.WorldForge.Windows
 			};
 			var xCoordinateTextBlock = new TextBlock()
 			{
-				Font = "Tahoma14Bold",
+				Font = "Tahoma", FontSize = 10,
 				Text = "X Offset:",
 				
 				Foreground = Color.Yellow,
@@ -56,7 +56,7 @@ namespace Kesmai.WorldForge.Windows
 			};
 			_xTextBox = new TextBox()
 			{
-				Font = "Tahoma14Bold",
+				Font = "Tahoma", FontSize = 10,
 				Text = "0",
 				
 				Foreground = Color.Yellow,
@@ -75,7 +75,7 @@ namespace Kesmai.WorldForge.Windows
 			};
 			var yCoordinateTextBlock = new TextBlock()
 			{
-				Font = "Tahoma14Bold",
+				Font = "Tahoma", FontSize = 10,
 				Text = "Y Offset:",
 				
 				Foreground = Color.Yellow,
@@ -85,7 +85,7 @@ namespace Kesmai.WorldForge.Windows
 			};
 			_yTextBox = new TextBox()
 			{
-				Font = "Tahoma14Bold",
+				Font = "Tahoma", FontSize = 10,
 				Text = "0",
 				
 				Foreground = Color.Yellow,
@@ -107,7 +107,7 @@ namespace Kesmai.WorldForge.Windows
 				{
 					Margin = new Vector4F(3),
 					
-					Font = "Tahoma14Bold",
+					Font = "Tahoma", FontSize = 10,
 					Text = "OK",
 					
 					Foreground = Color.LimeGreen,
