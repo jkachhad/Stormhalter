@@ -40140,6 +40140,10 @@ return elemental;
 dragon.AddStatus(new NightVisionStatus(dragon));
 dragon.AddStatus(new BreatheWaterStatus(dragon));
 
+dragon.AddImmunity(typeof(BlindSpell));
+dragon.AddImmunity(typeof(FearSpell));
+dragon.AddImmunity(typeof(StunSpell));
+
 dragon.CombatantChangeInterval = TimeSpan.FromSeconds(7.0);
 
 dragon.Attacks = new CreatureAttackCollection
@@ -41051,7 +41055,7 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="NPCTownPriest" size="1" minimum="0" maximum="0" />
+      <entry entity="NPCTownPriest" size="1" minimum="1" maximum="1" />
       <location x="2" y="-37" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="EntranceFippy">
