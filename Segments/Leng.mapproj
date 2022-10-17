@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.96.0.0">
+<segment name="Leng" version="0.95.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -77541,7 +77541,6 @@
         HideDetection = 23,    
         MaxHealth = 99, Health = 99,
         MaxMana = 12, Mana = 12,
-        VisibilityDistance = 1,
         BaseDodge = 18,
     
         Experience = 3654,
@@ -78120,12 +78119,12 @@
     
     presence.Spells = new CreatureSpellCollection()
     {
-        { new CreatureSpell<FearSpell>(
+        new CreatureSpell<FearSpell>(
             skillLevel: 12, cost: 26, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false),   40 },
-        { new CreatureSpell<DeathSpell>(
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<DeathSpell>(
             skillLevel: 7, cost: 6, 
-            mantra: SpellHelper.GenerateMantra(), instantCast: false),   60 },
+            mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
     presence.AddLoot(new LootPack(
@@ -79369,741 +79368,6 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="level9IceWiz">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    var isFemale = Utility.RandomBool();            
-    var wizard = new Humanoid()
-    {
-        Name = "Thrall",
-        Body = (isFemale ? 37 : 38), IsFemale = isFemale,
-        HideDetection = 23,    
-        MaxHealth = 99, Health = 99,
-        MaxMana = 12, Mana = 12,
-        BaseDodge = 18,
-    
-        Experience = 3654,
-        
-        CanSwim = true,
-            
-        IceProtection = 100,
-    };
-    
-    wizard.Attacks = new CreatureAttackCollection
-    {
-        new CreatureBasicAttack(9)
-    };
-    
-    wizard.Spells = new CreatureSpellCollection
-    {
-        {
-            new CreatureSpell<MagicMissileSpell>(
-                skillLevel: 6, cost: 6, instantCast: false,
-                mantra: SpellHelper.GenerateMantra()),   30
-        },
-        {
-            new CreatureSpell<IceStormSpell>(
-                skillLevel: 9, cost: 6, instantCast: false,
-                mantra: SpellHelper.GenerateMantra()),   70
-        }
-    };
-        
-    wizard.Wield(new BlackStaff());
-    wizard.Equip(new LeatherArmor());
-    
-    wizard.AddGold(91);
-    wizard.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       7.7,     gemsPriceMutatorAboveAverage), 
-        new LootPackEntry(true, LengBottles,    20),
-        new LootPackEntry(true, UtilityTreasures,    1),
-        new LootPackEntry(true, LengPotions,    0.2),
-        new LootPackEntry(true, MausTreasure,  0.55), 
-        new LootPackEntry(true, (from, container) => new GlassWand(),     1)
-    ));
-    
-    return wizard;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="level10WretchFighter">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    var female = Utility.RandomBool();
-                    
-    var fighter = new Humanoid()
-    {
-        Name = "Wretch",
-        Body = (female ? 33 : 32), IsFemale = female,
-            
-        MaxHealth = 110, Health = 110,
-        BaseDodge = 17,
-        HideDetection = 24,
-        BasePenetration = ShieldPenetration.Light,
-        Experience = 4489,
-        CanSwim = true,
-            
-    };
-    
-    fighter.AddStatus(new BreatheWaterStatus(fighter));
-        
-    fighter.Attacks = new CreatureAttackCollection
-    {
-        new CreatureBasicAttack(11)
-    };
-    
-    fighter.Wield(new Longsword());
-    fighter.Equip(new PlatemailArmor());    
-    
-    fighter.AddGold(130);
-    fighter.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       8.5,     gemsPriceMutatorAboveAverage), 
-        new LootPackEntry(true, LengBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.2),
-        new LootPackEntry(true, MausTreasure,    0.55)
-    ));
-    
-    return fighter;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="level10Wraith">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-	var wraith = new Wraith()
-    {
-        MaxHealth = 100, Health = 100,
-        MaxMana = 35, Mana = 35,
-        BaseDodge = 13,
-        HideDetection = 23,   
-        Experience = 4454,
-    };
-        
-    wraith.Attacks = new CreatureAttackCollection
-    {
-        new CreatureBasicAttack(10),
-    };
-    
-    wraith.Spells = new CreatureSpellCollection()
-    {
-        {
-            new CreatureSpell<BlindSpell>(
-                skillLevel: 10, cost: 16, 
-                mantra: SpellHelper.GenerateMantra(), instantCast: false),   75 
-        },
-        {
-            new CreatureSpell<DeathSpell>(
-                skillLevel: 6, cost: 6, 
-                mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 
-        }
-    };
-        
-    wraith.Wield(new BlackStaff());
-        
-    wraith.AddGold(91);
-    wraith.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       7.7,     gemsPriceMutatorNormal), 
-        new LootPackEntry(true, LengBottles,    20),
-        new LootPackEntry(true, UtilityTreasures,    1),
-        new LootPackEntry(true, LengPotions,    0.2),
-        new LootPackEntry(true, MausTreasure,  0.5), 
-        new LootPackEntry(true, (from, container) => new OakWand(),     0.5)
-    ));
-    
-    return wraith;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="level10Hobgoblin">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    var hobgoblin = new Hobgoblin()
-    {
-        MaxHealth = 105, Health = 105,
-        BaseDodge = 18,
-        HideDetection = 23,   
-        Experience = 3200,
-        BasePenetration = ShieldPenetration.Light,
-    };
-    
-    hobgoblin.Attacks = new CreatureAttackCollection
-    {
-        new CreatureBasicAttack(10)
-    };
-    
-    hobgoblin.Wield(new Longsword());
-    hobgoblin.Equip(new LeatherArmor());    
-    
-    hobgoblin.AddGold(91);
-    hobgoblin.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       7.7,     gemsPriceMutatorNormal), 
-        new LootPackEntry(true, LengBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.2),
-        new LootPackEntry(true, MausTreasure,  0.5),
-        new LootPackEntry(true, UtilityTreasures,    1)
-    ));
-    
-    return hobgoblin;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="level11Troll">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    var troll = new Troll()
-    {
-        MaxHealth = 122, Health = 122,
-        BaseDodge = 19,
-        BasePenetration = ShieldPenetration.Light,
-        Experience = 4686,
-        HideDetection = 25,
-    };
-    
-    troll.Attacks = new CreatureAttackCollection()
-    {
-        new CreatureBasicAttack(12)
-    };
-    
-    troll.Wield(new Greatsword());
-    troll.Equip(new ChainmailArmor());
-    
-    troll.AddGold(138);
-    troll.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       13.8,     gemsPriceMutatorAboveAverage), 
-        new LootPackEntry(true, LengBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.2),
-        new LootPackEntry(true, MausTreasure,    0.55)
-    ));
-    
-    return troll;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="level10Skeleton">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-	var skeleton = new Skeleton()
-    {
-        MaxHealth = 100, Health = 100,
-        BaseDodge = 18,
-        HideDetection = 23,   
-        Experience = 3102,
-
-        Movement = 2,
-    };
-    
-    skeleton.Attacks = new CreatureAttackCollection()
-    {
-        new CreatureBasicAttack(10)
-    };
-    
-    skeleton.Wield(new Spear());
-    
-    skeleton.AddGold(78);
-    skeleton.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems, 7.7, gemsPriceMutatorNormal),
-        new LootPackEntry(true, LengPotions,    0.1),
-        new LootPackEntry(true, LengBottles, 20),
-        new LootPackEntry(true, MausTreasure,  0.5),
-        new LootPackEntry(true, UtilityTreasures,    1)
-    ));
-    
-    return skeleton;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="level10WretchArcher">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    var female = Utility.RandomBool();
-                    
-    var fighter = new Humanoid()
-    {
-        Name = "Wretch",
-        Body = (female ? 33 : 32), IsFemale = female,
-            
-        MaxHealth = 111, Health = 111,
-        BaseDodge = 18,
-        HideDetection = 24,    
-        Experience = 3889,
-        CanSwim = true,
-    };
-    
-    fighter.AddStatus(new BreatheWaterStatus(fighter));
-    
-    fighter.Attacks = new CreatureAttackCollection
-    {
-        new CreatureBasicAttack(10)
-    };
-    
-    fighter.Wield(new Shortbow());
-    fighter.Equip(new LeatherArmor());    
-    
-    fighter.AddGold(130);
-    fighter.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       11.5,     gemsPriceMutatorAboveAverage), 
-        new LootPackEntry(true, LengBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.2),
-        new LootPackEntry(true, MausTreasure,    0.55)
-    ));
-    
-    return fighter;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="level7Bee">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    var bee = new Bee()
-    {
-        MaxHealth = 46, Health = 46,
-        BaseDodge = 19,
-        HideDetection = 22,        
-        Experience = 1781,
-    
-        BasePenetration = ShieldPenetration.VeryLight,
-    };
-    
-    bee.Attacks = new CreatureAttackCollection
-    {
-        new CreatureAttack(7,   2, 6,   "You have been stung by a bee.", 
-                                            new AttackPoisonComponent(5)) 
-    };
-        
-    bee.Blocks = new CreatureBlockCollection
-    {
-        new CreatureBlock(10, "the armor")
-    };
-    
-    bee.AddGold(55);
-    
-    return bee;
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="level7Centaur">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    var centaur = new Centaur()
-    {
-        MaxHealth = 102, Health = 102,
-        BaseDodge = 13,
-        HideDetection = 22,                    
-        Experience = 2945,
-    };
-    
-    centaur.Attacks = new CreatureAttackCollection
-    {
-        new CreatureBasicAttack(7)
-    };
-        
-    centaur.Wield(new FineCrossbow());
-    
-    centaur.AddGold(55);
-    centaur.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       6.3,     gemsPriceMutatorHigh), 
-        new LootPackEntry(true, LengBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.05),
-        new LootPackEntry(true, MausTreasure,  0.25)
-    ));
-    
-    return centaur;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="level7Hyena">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    var hyena = new Hyena()
-    {
-        MaxHealth = 70, Health = 70,
-        BaseDodge = 17,
-        HideDetection = 22,        
-        Experience = 2397,
-    };
-    
-    hyena.Attacks = new CreatureAttackCollection
-    {
-        { 
-            new CreatureAttack(7,     5, 10,   "The hyena rakes you with its claws."),  50 
-        }, 
-        {
-            new CreatureAttack(8,     6, 12,  "The hyena sinks its teeth into you."),  30 
-        }, 
-        {
-            new CreatureAttack(8,     7, 15,  "The hyena lunges at you."),             20 
-        }, 
-    };
-        
-    hyena.Blocks = new CreatureBlockCollection
-    {
-        new CreatureBlock(6, "the thick hide"),
-        new CreatureBlock(4, "a paw"),
-    };
-        
-    hyena.AddGold(72);
-    return hyena;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="level7Manticore">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    var manticora = new Manticora()
-    {
-        MaxHealth = 72, Health = 72,
-        BaseDodge = 17,
-        HideDetection = 22,
-        Experience = 2397,
-        
-        Immunity = CreatureImmunity.Poison,
-        
-    };
-    
-    
-    manticora.Attacks = new CreatureAttackCollection
-    {
-        { 
-            new CreatureAttack(8,     8, 11,      "The manticora bites you with its teeth."),      40 
-        },
-        {
-            new CreatureAttack(8,     9, 13,      "The manticora slashes you with its claws."),   30 
-        },
-        {
-            new CreatureAttack(8,     8, 15,     "The manticora stings you with his tail.", 
-                                                    new AttackPoisonComponent(8)),                 30 
-        },
-    };
-    
-    manticora.Blocks = new CreatureBlockCollection
-    {
-        new CreatureBlock(6, "the armor"),
-        new CreatureBlock(4, "a claw"),
-        new CreatureBlock(3, "the stinger"),
-    };
-    
-    manticora.AddGold(84);
-    
-    return manticora;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="level7Sandworm">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    var sandwyrm = new Sandwyrm()
-    {
-        MaxHealth = 70, Health = 70,
-        BaseDodge = 17,
-        HideDetection = 22,
-        Experience = 2218,
-    
-        VisibilityDistance = 1,
-        
-        FireProtection = 100,
-        IceProtection = 100,
-    };
-    
-    sandwyrm.Attacks = new CreatureAttackCollection
-    {
-        {
-            new CreatureAttack(8,     6, 12,     "The sandwyrm rolls over you"),      70 
-        }, 
-        {
-            new CreatureAttack(8,    8, 14,     "You've been bitten by the sandwyrm",
-                                                    new AttackPoisonComponent(4)),             30
-        },
-    };
-        
-    sandwyrm.Blocks = new CreatureBlockCollection
-    {
-        new CreatureBlock(6, "the carapace"), 
-        new CreatureBlock(4, "the toothy maw"), 
-    };
-    
-    sandwyrm.AddGold(72);
-    sandwyrm.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new StarRuby(300u),       20)
-    ));
-    
-    return sandwyrm;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="level11Bee">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    var bee = new Bee()
-    {
-        MaxHealth = 66, Health = 66,
-        BaseDodge = 20,
-        HideDetection = 24,        
-        Experience = 2481,
-    
-        BasePenetration = ShieldPenetration.VeryLight,
-    };
-    
-    bee.Attacks = new CreatureAttackCollection
-    {
-        new CreatureAttack(11,   2, 8,   "You have been stung by a bee.", 
-                                            new AttackPoisonComponent(5)) 
-    };
-        
-    bee.Blocks = new CreatureBlockCollection
-    {
-        new CreatureBlock(10, "the armor")
-    };
-    
-    bee.AddGold(55);
-    
-    return bee;
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="level11Raven">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-	var raven = new Raven()
-	{
-	    Name = "Raven",
-        MaxHealth = 83, Health = 83,
-        BaseDodge = 20,
-        BasePenetration = ShieldPenetration.Medium,
-        VisibilityDistance = 0,
-        Experience = 2257,
-        HideDetection = 28,   
-    };
-    
-    raven.AddStatus(new NightVisionStatus(raven));
-    
-    raven.Attacks = new CreatureAttackCollection
-    {
-        { 
-            new CreatureAttack(7,     2, 10,   "The raven buffets you with his wings."),                   50
-        }, 
-        {
-            new CreatureAttack(8,     3, 12,  "The raven sends a flurry of pecks towards you."),          30 
-        }, 
-        {
-            new CreatureAttack(9,     4, 14,  "The raven pecks at your eyes attempting to blind you."),   20 
-        }, 
-    };
-        
-    raven.Blocks = new CreatureBlockCollection
-    {
-        new CreatureBlock(6, "a swift wing"),
-        new CreatureBlock(3, "its beak"),
-    };
-    raven.AddGold(60);
-    raven.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       7.7,     gemsPriceMutatorHigh), 
-        new LootPackEntry(true, LengBottles,    20),
-        new LootPackEntry(true, LengPotions,    0.2),
-        new LootPackEntry(true, CliffTreasures,  0.63),
-        new LootPackEntry(true, UtilityTreasures,    1)
-    ));
-        
-    return raven;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="Priest">
@@ -81047,7 +80311,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level9IceWiz" size="1" minimum="4" maximum="4" />
+      <entry entity="level9ConcWiz" size="1" minimum="2" maximum="2" />
       <entry entity="level9FireWiz" size="1" minimum="4" maximum="4" />
       <entry entity="level9Wraith" size="1" minimum="3" maximum="3" />
       <entry entity="level9WretchFighter" size="3" minimum="12" maximum="12" />
@@ -81055,7 +80319,7 @@
       <bounds region="10">
         <inclusion left="13" top="8" right="31" bottom="29" />
         <inclusion left="32" top="13" right="33" bottom="29" />
-        <exclusion left="19" top="21" right="25" bottom="27" />
+        <exclusion left="20" top="22" right="24" bottom="26" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="mausoleumSouth">
@@ -81076,14 +80340,12 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level9Raven" size="1" minimum="3" maximum="3" />
+      <entry entity="level9Raven" size="3" minimum="3" maximum="3" />
       <entry entity="level9WretchFighter" size="3" minimum="4" maximum="4" />
       <entry entity="level9Hobgoblin" size="3" minimum="4" maximum="4" />
       <entry entity="level9HobgoblinMage" size="1" minimum="1" maximum="1" />
       <entry entity="level9Skeleton" size="3" minimum="4" maximum="4" />
       <entry entity="level9Wraith" size="1" minimum="2" maximum="2" />
-      <entry entity="level9FireWiz" size="1" minimum="2" maximum="2" />
-      <entry entity="level9IceWiz" size="1" minimum="2" maximum="2" />
       <bounds region="10">
         <inclusion left="10" top="31" right="49" bottom="40" />
         <inclusion left="50" top="31" right="53" bottom="36" />
@@ -81161,14 +80423,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level11Archer" size="3" minimum="3" maximum="3" />
-      <entry entity="level11Fighter" size="3" minimum="6" maximum="6" />
+      <entry entity="level11Archer" size="3" minimum="5" maximum="5" />
+      <entry entity="level11Fighter" size="3" minimum="9" maximum="9" />
       <entry entity="level11Centaur" size="1" minimum="2" maximum="2" />
       <entry entity="level11Scorpion" size="1" minimum="3" maximum="3" />
-      <entry entity="level11Bee" size="3" minimum="3" maximum="3" />
-      <entry entity="level11Raven" size="1" minimum="2" maximum="2" />
-      <entry entity="level12Troll" size="3" minimum="3" maximum="3" />
-      <entry entity="level11Gryphon" size="1" minimum="2" maximum="3" />
       <bounds region="20">
         <inclusion left="25" top="7" right="33" bottom="14" />
         <inclusion left="4" top="10" right="25" bottom="23" />
@@ -81505,11 +80763,11 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level10Wraith" size="1" minimum="1" maximum="1" />
-      <entry entity="level10Skeleton" size="3" minimum="1" maximum="1" />
-      <entry entity="level10WretchArcher" size="3" minimum="1" maximum="1" />
-      <entry entity="level10Hobgoblin" size="3" minimum="1" maximum="1" />
-      <entry entity="level11Troll" size="3" minimum="1" maximum="1" />
+      <entry entity="level13Wraith" size="1" minimum="2" maximum="2" />
+      <entry entity="level13Ghoul" size="1" minimum="1" maximum="1" />
+      <entry entity="level13Archer" size="1" minimum="3" maximum="3" />
+      <entry entity="level13Hobgoblin" size="4" minimum="3" maximum="3" />
+      <entry entity="level13Troll" size="3" minimum="3" maximum="3" />
       <bounds region="100">
         <inclusion left="17" top="1" right="21" bottom="6" />
         <inclusion left="1" top="4" right="9" bottom="6" />
@@ -81618,9 +80876,9 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level7Bee" size="3" minimum="2" maximum="2" />
-      <entry entity="level7Centaur" size="1" minimum="1" maximum="1" />
-      <entry entity="level7Sandworm" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Bee" size="3" minimum="2" maximum="2" />
+      <entry entity="level8Centaur" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Sandworm" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="42" top="21" right="54" bottom="27" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -81644,9 +80902,9 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level7Centaur" size="1" minimum="1" maximum="1" />
-      <entry entity="level7Hyena" size="2" minimum="2" maximum="2" />
-      <entry entity="level7Sandworm" size="1" minimum="1" maximum="2" />
+      <entry entity="level8Centaur" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Hyena" size="2" minimum="2" maximum="2" />
+      <entry entity="level8Sandworm" size="1" minimum="1" maximum="2" />
       <bounds region="1">
         <inclusion left="44" top="9" right="56" bottom="17" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -81670,9 +80928,9 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level7Centaur" size="1" minimum="1" maximum="1" />
-      <entry entity="level7Hyena" size="2" minimum="1" maximum="2" />
-      <entry entity="level7Sandworm" size="1" minimum="1" maximum="2" />
+      <entry entity="level8Centaur" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Hyena" size="2" minimum="1" maximum="2" />
+      <entry entity="level8Sandworm" size="1" minimum="1" maximum="2" />
       <bounds region="1">
         <inclusion left="28" top="4" right="33" bottom="20" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -81696,9 +80954,9 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level7Manticore" size="1" minimum="1" maximum="1" />
-      <entry entity="level7Sandworm" size="1" minimum="2" maximum="4" />
-      <entry entity="level7Sandworm" size="2" minimum="2" maximum="3" />
+      <entry entity="level8Manticore" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Sandworm" size="1" minimum="2" maximum="4" />
+      <entry entity="level8Hyena" size="2" minimum="2" maximum="3" />
       <bounds region="1">
         <inclusion left="1" top="3" right="7" bottom="38" />
         <exclusion left="3" top="23" right="4" bottom="25" />
@@ -82123,82 +81381,6 @@
       <entry entity="level11Centaur" size="1" minimum="1" maximum="1" />
       <bounds region="35">
         <inclusion left="19" top="4" right="23" bottom="11" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
-      </bounds>
-    </spawn>
-    <spawn type="RegionSpawner" name="vladtowerbase">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>1200</maximumDelay>
-      <maximum>4</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="level9ConcWiz" size="1" minimum="2" maximum="2" />
-      <entry entity="level9Wraith" size="1" minimum="2" maximum="2" />
-      <bounds region="10">
-        <inclusion left="19" top="21" right="25" bottom="27" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
-        <exclusion left="21" top="23" right="23" bottom="25" />
-      </bounds>
-    </spawn>
-    <spawn type="RegionSpawner" name="shidStableContd">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>1200</maximumDelay>
-      <maximum>3</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="level11Troll" size="3" minimum="1" maximum="1" />
-      <entry entity="level10Hobgoblin" size="3" minimum="1" maximum="1" />
-      <bounds region="255">
-        <inclusion left="20" top="1" right="21" bottom="7" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
-      </bounds>
-    </spawn>
-    <spawn type="RegionSpawner" name="shidStablesCorridor">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>1200</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="level9FireWiz" size="1" minimum="1" maximum="1" />
-      <entry entity="level10WretchArcher" size="1" minimum="1" maximum="1" />
-      <entry entity="level10Wraith" size="1" minimum="1" maximum="1" />
-      <bounds region="100">
-        <inclusion left="11" top="5" right="11" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
