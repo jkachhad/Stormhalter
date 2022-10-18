@@ -31,7 +31,7 @@ namespace Kesmai.Server.Game
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6200000, 6200376)); /* [You are looking at] [a burnished steel bottle with the icon of a falcon.] [Inside is a clear jade liquid that smells of jasmine.] */
+			entries.Add(new LocalizationEntry(6200000, 6200376)); /* [You are looking at] [a burnished steel bottle with the icon of a falcon.] [Inside is a clear jade-colored liquid that smells of jasmine.] */
 
 			base.GetDescription(entries);
 		}
