@@ -13,9 +13,12 @@ namespace Kesmai.Server.Items
 		public override int BaseAttackBonus => 4;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SteelGreatsword"/> class.
+		/// Initializes a new instance of the <see cref="SteelGreatsword"/> class and serializes it.
 		/// </summary>
 		public SteelGreatsword() : base(161)
+		{
+		}
+		public SteelGreatsword(Serial serial) : base(serial)
 		{
 		}
 
