@@ -77693,6 +77693,11 @@
         BasePenetration = ShieldPenetration.VeryLight,
     };
     
+    hobgoblin.Attacks = new CreatureAttackCollection
+    {
+        new CreatureBasicAttack(9)
+    };
+    
     hobgoblin.Spells = new CreatureSpellCollection()
     {
         {
@@ -78042,7 +78047,7 @@
         Name = "Wretch",
         Body = (female ? 33 : 32), IsFemale = female,
         HideDetection = 23,       
-        MaxHealth = 100, Health = 100,
+        MaxHealth = 111, Health = 111,
         BaseDodge = 16,
         
         Movement = 2,
@@ -79706,7 +79711,7 @@
         Name = "Wretch",
         Body = (female ? 33 : 32), IsFemale = female,
             
-        MaxHealth = 111, Health = 111,
+        MaxHealth = 110, Health = 110,
         BaseDodge = 18,
         HideDetection = 24,    
         Experience = 3889,
