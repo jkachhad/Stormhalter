@@ -230,7 +230,7 @@
     </sprite>
     <average>(169,88,101,255)</average>
   </terrain>
-  <terrain id="637" action="0">
+  <terrain id="637" action="13">
     <!-- Sewer Wall Full (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\Sewers</texture>
@@ -3075,7 +3075,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="991" action="0">
+  <terrain id="991" action="13">
     <!-- Ice Labyrinth Wall (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\ice</texture>
@@ -3091,7 +3091,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="993" action="0">
+  <terrain id="993" action="13">
     <!-- Ice Labyrinth Wall (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\ice</texture>
@@ -3139,7 +3139,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="1008" action="0">
+  <terrain id="1008" action="13">
     <!-- Lava Tube Wall (H) -->
     <sprite order="5">
       <texture>Tenser\Terrain\volcanic</texture>
@@ -3155,7 +3155,7 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="1010" action="0">
+  <terrain id="1010" action="13">
     <!-- Lava Tube Wall (V) -->
     <sprite order="4">
       <texture>Tenser\Terrain\volcanic</texture>
@@ -3369,5 +3369,127 @@
       <offset>(45,45)</offset>
     </sprite>
     <average>(115,121,114,255)</average>
+  </terrain>
+  <terrain id="1029" action="0">
+    <!-- Torch Wall Decal (H) -->
+    <sprite order="5">
+      <texture>Tenser\Terrain\torches</texture>
+      <source>(0,0,600,100)</source>
+      <frames step="200" keys="0-2">
+        <frame>(0,0,100,100)</frame>
+        <frame>(100,0,100,100)</frame>
+        <frame>(200,0,100,100)</frame>
+      </frames>
+    </sprite>
+    <average>(11,82,214,255)</average>
+  </terrain>
+  <terrain id="1030" action="0">
+    <!-- Torch Wall Decal (V) -->
+    <sprite order="4">
+      <texture>Tenser\Terrain\torches</texture>
+      <source>(0,0,600,100)</source>
+      <offset>(1,1)</offset>
+      <frames step="200" keys="0-2">
+        <frame>(300,0,100,100)</frame>
+        <frame>(400,0,100,100)</frame>
+        <frame>(500,0,100,100)</frame>
+      </frames>
+    </sprite>
+    <average>(11,82,214,255)</average>
+  </terrain>
+  <terrain id="1031" action="0">
+    <!-- Wall Brazier - blue fire no shadow (H) -->
+    <sprite order="5">
+      <texture>Tenser\Terrain\wallbrazierblue_ns</texture>
+      <source>(0,0,600,100)</source>
+      <frames step="200" keys="0-2">
+        <frame>(0,0,100,100)</frame>
+        <frame>(100,0,100,100)</frame>
+        <frame>(200,0,100,100)</frame>
+      </frames>
+    </sprite>
+    <average>(11,82,214,255)</average>
+  </terrain>
+  <terrain id="1032" action="0">
+    <!-- Wall Brazier - blue fire no shadow (V) -->
+    <sprite order="4">
+      <offset>(2,1)</offset>
+      <texture>Tenser\Terrain\wallbrazierblue_ns</texture>
+      <source>(0,0,600,100)</source>
+      <frames step="200" keys="0-2">
+        <frame>(300,0,100,100)</frame>
+        <frame>(400,0,100,100)</frame>
+        <frame>(500,0,100,100)</frame>
+      </frames>
+    </sprite>
+    <average>(11,82,214,255)</average>
+  </terrain>
+  <terrain id="1033" action="0">
+    <!-- Wall Brazier - green fire no shadow (H) -->
+    <sprite order="5">
+      <texture>Tenser\Terrain\wallbraziergreen_ns</texture>
+      <source>(0,0,600,100)</source>
+      <frames step="200" keys="0-2">
+        <frame>(0,0,100,100)</frame>
+        <frame>(100,0,100,100)</frame>
+        <frame>(200,0,100,100)</frame>
+      </frames>
+    </sprite>
+    <average>(11,82,214,255)</average>
+  </terrain>
+  <terrain id="1034" action="0">
+    <!-- Wall Brazier - green fire no shadow (V) -->
+    <sprite order="4">
+      <offset>(2,1)</offset>
+      <texture>Tenser\Terrain\wallbraziergreen_ns</texture>
+      <source>(0,0,600,100)</source>
+      <frames step="200" keys="0-2">
+        <frame>(300,0,100,100)</frame>
+        <frame>(400,0,100,100)</frame>
+        <frame>(500,0,100,100)</frame>
+      </frames>
+    </sprite>
+    <average>(11,82,214,255)</average>
+  </terrain>
+  <terrain id="1035" action="0">
+    <!-- Wall Brazier - no shadow (H) -->
+    <sprite order="5">
+      <texture>Tenser\Terrain\wallbrazier_ns</texture>
+      <source>(0,0,600,100)</source>
+      <frames step="200" keys="0-2">
+        <frame>(0,0,100,100)</frame>
+        <frame>(100,0,100,100)</frame>
+        <frame>(200,0,100,100)</frame>
+      </frames>
+    </sprite>
+    <average>(11,82,214,255)</average>
+  </terrain>
+  <terrain id="1036" action="0">
+    <!-- Wall Brazier - no shadow (V) -->
+    <sprite order="4">
+      <offset>(2,1)</offset>
+      <texture>Tenser\Terrain\wallbrazier_ns</texture>
+      <source>(0,0,600,100)</source>
+      <frames step="200" keys="0-2">
+        <frame>(300,0,100,100)</frame>
+        <frame>(400,0,100,100)</frame>
+        <frame>(500,0,100,100)</frame>
+      </frames>
+    </sprite>
+    <average>(11,82,214,255)</average>
+  </terrain>
+  <terrain id="1037" action="0">
+    <!-- Floor Brazier no shadow -->
+    <sprite order="0">
+      <texture>Tenser\Terrain\firebowl-Sheet_ns</texture>
+      <source>(0,0,400,100)</source>
+      <frames step="200" keys="0-3">
+        <frame>(0,0,100,100)</frame>
+        <frame>(100,0,100,100)</frame>
+        <frame>(200,0,100,100)</frame>
+        <frame>(300,0,100,100)</frame>
+      </frames>
+    </sprite>
+    <average>(11,82,214,255)</average>
   </terrain>
 </data>

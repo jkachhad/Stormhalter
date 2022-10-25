@@ -41,7 +41,7 @@ namespace Kesmai.Server.Items
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6200000, 6200382)); /* [You are looking at] [a red and black shield adorned with a griffin. Magical properties are embued within.] */
+			entries.Add(new LocalizationEntry(6200000, 6200385)); /* [You are looking at] [a red and black shield adorned with a griffin. Magical properties are embued within.] */
 
 			if (Identified)
 				entries.Add(new LocalizationEntry(6300427)); /* The shield contains the spell of Medium Shield. */

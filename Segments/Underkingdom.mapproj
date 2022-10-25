@@ -199,6 +199,11 @@
         return balm;
     }
     
+    public static readonly int[] _koboldBodies = new int[]
+    {
+        117, 118
+    };
+    
     public class HummingPortal : CreatureEntity
     {
         public HummingPortal()
@@ -100062,9 +100067,7 @@
         new CreatureBasicAttack(18, 18, 30)
     };
     
-    carfel.Wield(new YasnakiDagger());
-    carfel.Wield(new MainGauche());
-    
+    carfel.Wield(new YasnakiDagger()); 
         
     carfel.AddGold(4800);
     carfel.AddLoot(new LootPack(
@@ -100073,7 +100076,8 @@
         new LootPackEntry(true, UnderkingdomGems,       100,     gemsPriceMutatorVeryHigh), 
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
         new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
-        new LootPackEntry(true, (from, container) => new StrongStrengthRing(),        100)
+        new LootPackEntry(true, (from, container) => new StrongStrengthRing(),        100),
+        new LootPackEntry(true, (from, container) => new MainGauche(),        100)
     ));
     
     return carfel;
@@ -100262,8 +100266,7 @@
     
     lurker.AddGold(1800);
     lurker.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new PermanentStrengthPotion(),       100),
-        new LootPackEntry(true, (from, container) => new YouthPotion(),       50),
+        new LootPackEntry(true, lurkerBottles,       100),
         new LootPackEntry(true, (from, container) => new ManaPotion(),       100), 
         new LootPackEntry(true, UndeadTreasure,    10)
     ));
@@ -101728,9 +101731,7 @@
     
     lurker.AddGold(130);
     lurker.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new PermanentStrengthPotion(),       5),
-        new LootPackEntry(true, (from, container) => new YouthPotion(),       5),
-        new LootPackEntry(true, (from, container) => new ManaPotion(),       20), 
+        new LootPackEntry(true, lurkerBottles,       100),
         new LootPackEntry(true, UnderkingdomPotions,    0.05),
         new LootPackEntry(true, UnderkingdomGems,       7.2,     gemsPriceMutatorHigh), 
         new LootPackEntry(true, UnderkingdomBottles,    50), 
@@ -102972,9 +102973,7 @@ var gargoyle = new Gargoyle()
     
     lurker.AddGold(146);
     lurker.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new PermanentStrengthPotion(),       5),
-        new LootPackEntry(true, (from, container) => new YouthPotion(),       5),
-        new LootPackEntry(true, (from, container) => new ManaPotion(),       5), 
+        new LootPackEntry(true, lurkerBottles,       100),
         new LootPackEntry(true, UnderkingdomPotions,    0.05),
         new LootPackEntry(true, UnderkingdomGems,       7.2,     gemsPriceMutatorHigh), 
         new LootPackEntry(true, UnderkingdomBottles,    50), 
@@ -103112,6 +103111,65 @@ var gargoyle = new Gargoyle()
     ));
     
     return hobgoblin;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="ukTownFolk">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var kobold = new Peacekeeper()
+    {
+       Name = _names.Random(),
+       Body = _koboldBodies.Random(),
+       MaxHealth = 120, Health = 120,
+       BaseDodge = 24,
+       
+       CanSwim = true,
+       
+       
+       Experience = 1,
+       BasePenetration = ShieldPenetration.Heavy,
+       
+       IsTethered = true,
+       Home = new RectangleBounds()
+       {
+            new Rectangle2D(8, 9, 33, 21, 2)
+       }
+       
+    };
+    
+    kobold.AddStatus(new NightVisionStatus(kobold));
+    
+    kobold.Attacks = new CreatureAttackCollection()
+    {
+        { 
+            new CreatureAttack(17,    30, 50,    "kobold townsfolk swats you")                        
+        },
+    };
+    
+    kobold.Blocks = new CreatureBlockCollection()
+    {
+        new CreatureBlock(6, "a fist."),
+        new CreatureBlock(3, "a foot."),
+        new CreatureBlock(1, "a forehead."),
+    };
+    
+
+    return kobold;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -103986,6 +104044,7 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="level13DeathTroll" size="1" minimum="1" maximum="1" />
       <location x="4" y="4" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="jailtroll2">
@@ -104005,6 +104064,7 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="level13DeathTroll" size="1" minimum="1" maximum="1" />
       <location x="4" y="6" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="jailtroll3">
@@ -104025,6 +104085,7 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="level13DeathTroll" size="1" minimum="1" maximum="1" />
       <location x="4" y="10" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="jailtroll4">
@@ -104045,6 +104106,7 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="level13DeathTroll" size="1" minimum="1" maximum="1" />
       <location x="9" y="4" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="jailtroll5">
@@ -104065,6 +104127,7 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="level13DeathTroll" size="1" minimum="1" maximum="1" />
       <location x="9" y="6" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="jailtroll6">
@@ -104085,6 +104148,7 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="level13DeathTroll" size="1" minimum="1" maximum="1" />
       <location x="9" y="8" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="jailtroll7">
@@ -104105,6 +104169,7 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="level13DeathTroll" size="1" minimum="1" maximum="1" />
       <location x="9" y="10" region="10" />
     </spawn>
     <spawn type="LocationSpawner" name="olwraith1">
@@ -104404,6 +104469,153 @@ var gargoyle = new Gargoyle()
       </script>
       <entry entity="level13SpeedyHob" size="4" minimum="1" maximum="1" />
       <location x="3" y="13" region="2" />
+    </spawn>
+    <spawn type="LocationSpawner" name="lowerKoboldTownFolkSouthEast">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="ukTownFolk" size="1" minimum="1" maximum="1" />
+      <location x="26" y="23" region="2" />
+    </spawn>
+    <spawn type="LocationSpawner" name="lowerKoboldTownFolkSouth">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="ukTownFolk" size="1" minimum="1" maximum="1" />
+      <location x="19" y="22" region="2" />
+    </spawn>
+    <spawn type="LocationSpawner" name="lowerKoboldTownFolkMid">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="ukTownFolk" size="1" minimum="1" maximum="1" />
+      <location x="12" y="11" region="2" />
+    </spawn>
+    <spawn type="LocationSpawner" name="lowerKoboldTownFolkWest">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="ukTownFolk" size="1" minimum="1" maximum="1" />
+      <location x="4" y="11" region="2" />
+    </spawn>
+    <spawn type="LocationSpawner" name="lowerKoboldTownFolkMidSouth">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="ukTownFolk" size="1" minimum="1" maximum="1" />
+      <location x="10" y="19" region="2" />
+    </spawn>
+    <spawn type="LocationSpawner" name="lowerKoboldTownFolkSouthWest">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="ukTownFolk" size="1" minimum="1" maximum="1" />
+      <location x="5" y="23" region="2" />
+    </spawn>
+    <spawn type="LocationSpawner" name="lowerKoboldTownFolksMidSouth">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="ukTownFolk" size="1" minimum="1" maximum="1" />
+      <location x="2" y="18" region="2" />
     </spawn>
     <spawn type="RegionSpawner" name="wyverns">
       <minimumDelay>900</minimumDelay>
@@ -104749,6 +104961,7 @@ var gargoyle = new Gargoyle()
         <inclusion left="38" top="4" right="53" bottom="14" />
         <inclusion left="28" top="12" right="37" bottom="14" />
         <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="38" top="2" right="38" bottom="3" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="jailguards">
@@ -105376,6 +105589,7 @@ var gargoyle = new Gargoyle()
       <bounds region="8">
         <inclusion left="14" top="2" right="24" bottom="14" />
         <inclusion left="25" top="6" right="27" bottom="8" />
+        <exclusion left="16" top="13" right="18" bottom="14" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="tk300courtyardWest">
@@ -105404,6 +105618,7 @@ var gargoyle = new Gargoyle()
       <entry entity="level13DeathTroll" size="1" minimum="1" maximum="1" />
       <bounds region="8">
         <inclusion left="2" top="6" right="13" bottom="14" />
+        <exclusion left="8" top="13" right="10" bottom="14" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="tk300dungeonNorthwest">
@@ -105460,6 +105675,7 @@ var gargoyle = new Gargoyle()
       <bounds region="8">
         <inclusion left="38" top="4" right="53" bottom="14" />
         <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="38" top="4" right="38" bottom="5" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="tk300dungeonSouthwest">
@@ -106288,6 +106504,44 @@ var gargoyle = new Gargoyle()
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new FireballOrb();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="lurkerBottles">
+      <entry weight="22">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new YouthPotion();    
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="50">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StaminaPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="23">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new ManaPotion();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PermanentStrengthPotion();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>

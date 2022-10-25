@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.95.0.0">
+<segment name="Oakvael" version="0.96.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -113150,6 +113150,7 @@
     banshee.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, undeadTreasure,    0.63), 
             new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, dungeon5Treasure, 0.5), 
             new LootPackEntry(true, dungeon5Rings, 0.5), 
@@ -113207,6 +113208,7 @@
     banshee.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, undeadTreasure,    0.63), 
             new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, dungeon5Treasure, 0.5), 
             new LootPackEntry(true, dungeon5Rings, 0.5), 
@@ -113268,6 +113270,7 @@
     wraith.AddLoot(
         new LootPack(
             new LootPackEntry(true, (from, container) => new YouthPotion(),        0.4),
+            new LootPackEntry(true, undeadTreasure,    0.63), 
             new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorNormal), 
             new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, dungeon5Treasure, 0.5), 
@@ -113343,6 +113346,7 @@
     wizard.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorAboveAverage), 
+            new LootPackEntry(true, undeadTreasure,    0.63), 
             new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, dungeon5Treasure, 0.55), 
             new LootPackEntry(true, dungeon5Rings, 0.55), 
@@ -113411,7 +113415,8 @@
     thaum.AddGold(154);
     thaum.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorAboveAverage), 
+            new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorAboveAverage),
+            new LootPackEntry(true, undeadTreasure,    0.63), 
             new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, dungeon5Treasure, 0.55), 
             new LootPackEntry(true, dungeon5Rings, 0.55), 
@@ -113473,6 +113478,7 @@
     ghoul.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorHigh), 
+            new LootPackEntry(true, undeadTreasure,    0.63), 
             new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
             new LootPackEntry(true, dungeon5Rings, 0.63), 
@@ -113536,6 +113542,7 @@
     spectre.AddLoot(
         new LootPack(
             new LootPackEntry(true, (from, container) => new YouthPotion(),        0.4),
+            new LootPackEntry(true, undeadTreasure,    0.63), 
             new LootPackEntry(true, (from, container) => new DemonWand(), 1),
             new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorNormal), 
             new LootPackEntry(true, oakHigherBottles, 20.0),
@@ -113598,6 +113605,7 @@
     wight.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, undeadTreasure,    0.63), 
             new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, dungeon5Treasure, 0.5), 
             new LootPackEntry(true, dungeon5Rings, 0.5), 
@@ -113661,6 +113669,7 @@
     lich.AddLoot(
         new LootPack(
             new LootPackEntry(true, (from, container) => new YouthPotion(),        0.4),
+            new LootPackEntry(true, undeadTreasure,    0.63), 
             new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorHigh), 
             new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
@@ -113716,6 +113725,7 @@
     stalker.AddLoot(
         new LootPack(
             new LootPackEntry(true, (from, container) => new YouthPotion(),        0.4),
+            new LootPackEntry(true, undeadTreasure,    0.63), 
             new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorHigh), 
             new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, dungeon5Treasure, 0.63), 
@@ -113789,6 +113799,7 @@
             new LootPackEntry(true, (from, container) => new FeatherFallBoots(), 100.0),
             new LootPackEntry(true, (from, container) => new TornStripsRobe(), 100.0),
             new LootPackEntry(true, (from, container) => new ManaPotion(), 100.0),
+            new LootPackEntry(true, undeadTreasure,    5),
             new LootPackEntry(true, dungeon5Treasure, 100.0)
         ));
     
@@ -114228,6 +114239,7 @@
     centaur.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakGenericGems, 14.8, gemsPriceMutatorHigh),
+            new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, groveTreasure, 0.25)
         ));
     
@@ -114284,6 +114296,7 @@
         new LootPack(
             new LootPackEntry(true, (from, container) => new HickoryWand(), 1),
             new LootPackEntry(true, oakGenericGems, 14.8, gemsPriceMutatorAboveAverage),
+            new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, groveTreasure, 0.55)
         ));
     
@@ -114632,6 +114645,10 @@
     };
 
     beetle.AddGold(95);
+    beetle.AddLoot(
+        new LootPack(
+            new LootPackEntry(true, oakHigherBottles, 20.0)
+        ));
     
     return beetle;
 ]]></block>
@@ -114683,6 +114700,7 @@
     boar.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakGenericGems, 14.8, gemsPriceMutatorNormal),
+            new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, groveTreasure, 0.5)
         ));
 
@@ -114753,6 +114771,7 @@
     griffin.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakGenericGems, 14.8, gemsPriceMutatorHigh),
+            new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, groveTreasure, 0.63)
         ));
 
@@ -114812,6 +114831,7 @@
     largeBear.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakGenericGems, 14.8, gemsPriceMutatorHigh),
+            new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, groveTreasure, 0.63)
         ));
 
@@ -114868,6 +114888,7 @@
     wolf.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakGenericGems, 14.8, gemsPriceMutatorNormal),
+            new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, groveTreasure, 0.5)
         ));
 
@@ -115028,6 +115049,7 @@
     centaur.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakHeartGems, 4.5, gemsPriceMutatorHigh),
+            new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, groveTreasure, 0.63)
         ));
     
@@ -115087,6 +115109,7 @@
         new LootPack(
             new LootPackEntry(true, (from, container) => new HickoryWand(), 1),
             new LootPackEntry(true, oakHeartGems, 4.5, gemsPriceMutatorAboveAverage),
+            new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, groveTreasure, 0.55)
         ));
     
@@ -115132,6 +115155,7 @@
     troll.AddLoot(
         new LootPack(
             new LootPackEntry(true, oakHeartGems, 4.5, gemsPriceMutatorAboveAverage),
+            new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, groveTreasure, 0.55)
         ));
     return troll;
@@ -118807,6 +118831,62 @@
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new LargeEmerald(100000u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="undeadTreasure">
+      <entry weight="15">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new StrongStrengthRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="15">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new ShieldBracelet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="12">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new ShieldRing();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new BlueStaffRaiseDead();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new BlindFearProtectionBracelet();
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="2">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new DexterityRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>

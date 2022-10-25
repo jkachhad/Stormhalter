@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.95.0.0">
+<segment name="Axe Glacier" version="0.96.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -105531,7 +105531,7 @@
         StunProtection = 100,
         
         /* He is protection from magic, all spell damage reduced by 50% */
-        MagicProtection = 50,
+        MagicProtection = 20,
         
         HideDetection = 24,
     };
@@ -110823,6 +110823,7 @@
       <bounds region="12">
         <inclusion left="2" top="3" right="24" bottom="38" />
         <inclusion left="25" top="9" right="29" bottom="38" />
+        <inclusion left="20" top="-4" right="26" bottom="2" />
         <exclusion left="2" top="9" right="3" bottom="17" />
         <exclusion left="4" top="14" right="4" bottom="21" />
         <exclusion left="2" top="29" right="4" bottom="31" />
@@ -110833,6 +110834,10 @@
         <exclusion left="21" top="31" right="23" bottom="32" />
         <exclusion left="27" top="35" right="29" bottom="38" />
         <exclusion left="26" top="30" right="29" bottom="32" />
+        <exclusion left="22" top="-1" right="26" bottom="2" />
+        <exclusion left="23" top="11" right="24" bottom="13" />
+        <exclusion left="27" top="11" right="28" bottom="12" />
+        <exclusion left="26" top="23" right="27" bottom="25" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="ogreCavesIceSpawner">
@@ -110893,21 +110898,18 @@
       <entry entity="level10RockWorm" size="1" minimum="1" maximum="1" />
       <entry entity="level10Orc" size="3" minimum="6" maximum="6" />
       <bounds region="12">
-        <inclusion left="39" top="3" right="42" bottom="3" />
-        <inclusion left="36" top="4" right="39" bottom="5" />
-        <inclusion left="34" top="5" right="35" bottom="7" />
-        <inclusion left="37" top="6" right="43" bottom="7" />
-        <inclusion left="41" top="5" right="43" bottom="5" />
-        <inclusion left="35" top="8" right="43" bottom="9" />
-        <inclusion left="35" top="10" right="38" bottom="11" />
-        <inclusion left="39" top="11" right="44" bottom="14" />
-        <inclusion left="37" top="14" right="38" bottom="17" />
-        <inclusion left="40" top="16" right="44" bottom="27" />
-        <inclusion left="37" top="19" right="39" bottom="21" />
-        <inclusion left="45" top="18" right="46" bottom="36" />
-        <inclusion left="41" top="32" right="44" bottom="36" />
-        <inclusion left="39" top="28" right="44" bottom="31" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
+        <inclusion left="39" top="3" right="43" bottom="36" />
+        <inclusion left="36" top="4" right="38" bottom="20" />
+        <inclusion left="34" top="5" right="35" bottom="10" />
+        <inclusion left="44" top="12" right="47" bottom="36" />
+        <exclusion left="45" top="12" right="47" bottom="17" />
+        <exclusion left="39" top="22" right="40" bottom="27" />
+        <exclusion left="41" top="29" right="42" bottom="30" />
+        <exclusion left="42" top="28" right="44" bottom="29" />
+        <exclusion left="39" top="15" right="40" bottom="16" />
+        <exclusion left="44" top="17" right="45" bottom="18" />
+        <exclusion left="36" top="12" right="37" bottom="13" />
+        <exclusion left="34" top="8" right="34" bottom="9" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="dungeonOfDoomSpawner">
