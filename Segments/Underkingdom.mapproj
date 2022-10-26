@@ -100067,8 +100067,15 @@
         new CreatureBasicAttack(18, 18, 30)
     };
     
+    carfel.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "a high block"),
+        new CreatureBlock(4, "an inside block"),
+        new CreatureBlock(3, "a low block"),
+    };
+    
     carfel.Wield(new YasnakiDagger()); 
-    carfel.Wield(new YasnakiDagger()); 
+    carfel.Wield(new MainGauche()); 
         
     carfel.AddGold(4800);
     carfel.AddLoot(new LootPack(
