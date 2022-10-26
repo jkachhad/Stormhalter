@@ -100039,7 +100039,7 @@
         Body = 206,
         
         MaxHealth = 1800, Health = 1800,
-        BaseDodge = 24,
+        BaseDodge = 26,
         HideDetection = 28,
         Alignment = Alignment.Evil,
         
@@ -100068,6 +100068,7 @@
     };
     
     carfel.Wield(new YasnakiDagger()); 
+    carfel.Wield(new YasnakiDagger()); 
         
     carfel.AddGold(4800);
     carfel.AddLoot(new LootPack(
@@ -100076,8 +100077,7 @@
         new LootPackEntry(true, UnderkingdomGems,       100,     gemsPriceMutatorVeryHigh), 
         new LootPackEntry(true, (from, container) => new BearSkull(),        100),
         new LootPackEntry(true, (from, container) => new YouthPotion(),        100),
-        new LootPackEntry(true, (from, container) => new StrongStrengthRing(),        100),
-        new LootPackEntry(true, (from, container) => new MainGauche(),        100)
+        new LootPackEntry(true, (from, container) => new StrongStrengthRing(),        100)
     ));
     
     return carfel;
