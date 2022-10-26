@@ -77606,6 +77606,11 @@
         BasePenetration = ShieldPenetration.VeryLight,
     };
     
+    hobgoblin.Attacks = new CreatureAttackCollection
+    {
+            new CreatureBasicAttack(9)
+    };
+    
     hobgoblin.Spells = new CreatureSpellCollection()
     {
         {
@@ -81078,7 +81083,7 @@
       <entry entity="level11Fighter" size="3" minimum="6" maximum="6" />
       <entry entity="level11Centaur" size="1" minimum="2" maximum="2" />
       <entry entity="level11Scorpion" size="1" minimum="3" maximum="3" />
-      <entry entity="level11Bee" size="3" minimum="3" maximum="3" />
+      <entry entity="level11Bee" size="3" minimum="2" maximum="3" />
       <entry entity="level11Raven" size="1" minimum="2" maximum="2" />
       <entry entity="level12Troll" size="3" minimum="3" maximum="3" />
       <entry entity="level11Gryphon" size="1" minimum="2" maximum="3" />
@@ -81419,10 +81424,11 @@
         <block><![CDATA[]]></block>
       </script>
       <entry entity="level10Wraith" size="1" minimum="1" maximum="1" />
-      <entry entity="level10Skeleton" size="3" minimum="1" maximum="1" />
+      <entry entity="level10Skeleton" size="3" minimum="1" maximum="2" />
       <entry entity="level10WretchArcher" size="3" minimum="1" maximum="1" />
-      <entry entity="level10Hobgoblin" size="3" minimum="1" maximum="1" />
-      <entry entity="level11Troll" size="3" minimum="1" maximum="1" />
+      <entry entity="level10Hobgoblin" size="3" minimum="1" maximum="2" />
+      <entry entity="level11Troll" size="3" minimum="1" maximum="2" />
+      <entry entity="level10WretchFighter" size="3" minimum="1" maximum="1" />
       <bounds region="100">
         <inclusion left="17" top="1" right="21" bottom="6" />
         <inclusion left="1" top="4" right="9" bottom="6" />
