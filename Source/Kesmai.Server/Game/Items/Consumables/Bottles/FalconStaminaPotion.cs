@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Game
 {
-	public partial class StaminaPotion : Bottle
+	public partial class FalconStaminaPotion : Bottle
 	{
 		/// <inheritdoc />
 		public override uint BasePrice => 40;
@@ -13,9 +13,9 @@ namespace Kesmai.Server.Game
 		public override int Weight => 240;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="StaminaPotion"/> class.
+		/// Initializes a new instance of the <see cref="FalconStaminaPotion"/> class.
 		/// </summary>
-		public StaminaPotion() : base(276, 275)
+		public FalconStaminaPotion() : base(276)
 		{
 		}
 		

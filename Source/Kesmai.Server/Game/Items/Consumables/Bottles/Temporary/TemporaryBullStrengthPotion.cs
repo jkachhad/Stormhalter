@@ -6,7 +6,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Game
 {
-	public partial class TemporaryStrengthPotion : Bottle, ITreasure
+	public partial class TemporaryBullStrengthPotion : Bottle, ITreasure
 	{
 		private static ConsumableStrengthSpell content = new ConsumableStrengthSpell();
 		
@@ -17,16 +17,16 @@ namespace Kesmai.Server.Game
 		public override int Weight => 240;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="TemporaryStrengthPotion"/> class.
+		/// Initializes a new instance of the <see cref="TemporaryBullStrengthPotion"/> class.
 		/// </summary>
-		public TemporaryStrengthPotion() : this(234, 109)
+		public TemporaryBullStrengthPotion() : this(234, 109)
 		{
 		}
 		
 		/// <summary>
-		/// Initializes a new instance of the <see cref="TemporaryStrengthPotion"/> class.
+		/// Initializes a new instance of the <see cref="TemporaryBullStrengthPotion"/> class.
 		/// </summary>
-		public TemporaryStrengthPotion(int closedId, int openId) : base(closedId)
+		public TemporaryBullStrengthPotion(int closedId, int openId) : base(closedId)
 		{
 		}
 
