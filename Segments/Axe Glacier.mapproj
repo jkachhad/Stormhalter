@@ -110474,7 +110474,7 @@
     <spawn type="RegionSpawner" name="surfaceDungeonSpawner">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
-      <maximum>33</maximum>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -110500,11 +110500,9 @@
       <entry entity="level6GoblinMage" size="1" minimum="2" maximum="2" />
       <bounds region="1">
         <inclusion left="2" top="7" right="8" bottom="36" />
-        <inclusion left="10" top="19" right="20" bottom="37" />
-        <inclusion left="11" top="17" right="17" bottom="18" />
-        <inclusion left="9" top="11" right="12" bottom="16" />
+        <inclusion left="10" top="24" right="20" bottom="37" />
         <inclusion left="9" top="25" right="9" bottom="35" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="6" top="7" right="8" bottom="15" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="surfaceIceSpawner">
@@ -110792,7 +110790,7 @@
     <spawn type="RegionSpawner" name="ogreCaveWestSpawner">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>50</maximum>
+      <maximum>40</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -110821,8 +110819,8 @@
       <entry entity="level10Orc" size="3" minimum="4" maximum="7" />
       <entry entity="level10Bear" size="1" minimum="1" maximum="3" />
       <bounds region="12">
-        <inclusion left="2" top="3" right="24" bottom="38" />
-        <inclusion left="25" top="9" right="29" bottom="38" />
+        <inclusion left="2" top="3" right="24" bottom="33" />
+        <inclusion left="25" top="9" right="29" bottom="33" />
         <inclusion left="20" top="-4" right="26" bottom="2" />
         <exclusion left="2" top="9" right="3" bottom="17" />
         <exclusion left="4" top="14" right="4" bottom="21" />
@@ -110830,14 +110828,13 @@
         <exclusion left="5" top="23" right="7" bottom="25" />
         <exclusion left="2" top="3" right="5" bottom="4" />
         <exclusion left="10" top="29" right="18" bottom="31" />
-        <exclusion left="11" top="32" right="12" bottom="37" />
         <exclusion left="21" top="31" right="23" bottom="32" />
-        <exclusion left="27" top="35" right="29" bottom="38" />
         <exclusion left="26" top="30" right="29" bottom="32" />
         <exclusion left="22" top="-1" right="26" bottom="2" />
         <exclusion left="23" top="11" right="24" bottom="13" />
         <exclusion left="27" top="11" right="28" bottom="12" />
         <exclusion left="26" top="23" right="27" bottom="25" />
+        <exclusion left="11" top="32" right="12" bottom="33" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="ogreCavesIceSpawner">
@@ -110871,7 +110868,7 @@
     <spawn type="RegionSpawner" name="ogreCavesEastSpawner">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>33</maximum>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -110898,10 +110895,12 @@
       <entry entity="level10RockWorm" size="1" minimum="1" maximum="1" />
       <entry entity="level10Orc" size="3" minimum="6" maximum="6" />
       <bounds region="12">
-        <inclusion left="39" top="3" right="43" bottom="36" />
-        <inclusion left="36" top="4" right="38" bottom="20" />
+        <inclusion left="39" top="3" right="43" bottom="10" />
+        <inclusion left="36" top="4" right="38" bottom="12" />
         <inclusion left="34" top="5" right="35" bottom="10" />
         <inclusion left="44" top="12" right="47" bottom="36" />
+        <inclusion left="37" top="19" right="39" bottom="20" />
+        <inclusion left="39" top="18" right="43" bottom="36" />
         <exclusion left="45" top="12" right="47" bottom="17" />
         <exclusion left="39" top="22" right="40" bottom="27" />
         <exclusion left="41" top="29" right="42" bottom="30" />
@@ -111590,6 +111589,132 @@
       <bounds region="45">
         <inclusion left="11" top="9" right="15" bottom="14" />
         <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="surfaceDungeonEntrySpawner">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>13</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level6Wraith" size="1" minimum="0" maximum="1" />
+      <entry entity="level6Wolf" size="3" minimum="0" maximum="2" />
+      <entry entity="level6Skeleton" size="3" minimum="0" maximum="2" />
+      <entry entity="level6GoblinSentry" size="2" minimum="0" maximum="2" />
+      <entry entity="level6Orc" size="3" minimum="0" maximum="2" />
+      <entry entity="level6Troll" size="3" minimum="0" maximum="2" />
+      <entry entity="level6Goblin" size="3" minimum="0" maximum="2" />
+      <entry entity="level6Gargoyle" size="1" minimum="0" maximum="2" />
+      <entry entity="level6GoblinMage" size="1" minimum="0" maximum="1" />
+      <bounds region="1">
+        <inclusion left="10" top="17" right="17" bottom="25" />
+        <inclusion left="9" top="11" right="12" bottom="16" />
+        <inclusion left="6" top="9" right="10" bottom="13" />
+        <inclusion left="18" top="22" right="20" bottom="25" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="6" top="11" right="7" bottom="13" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="surfaceDungeonMageSpawner">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level6GoblinMage" size="1" minimum="1" maximum="1" />
+      <bounds region="1">
+        <inclusion left="1" top="4" right="3" bottom="6" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="ogreCavesEntrySpawner">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>10</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level10GoblinSentry" size="3" minimum="0" maximum="3" />
+      <entry entity="level10Ogre" size="1" minimum="0" maximum="2" />
+      <entry entity="level10Wolf" size="3" minimum="0" maximum="3" />
+      <entry entity="level10Shadow" size="1" minimum="0" maximum="2" />
+      <entry entity="level10Hobgoblin" size="4" minimum="0" maximum="4" />
+      <entry entity="level10GoblinMage" size="1" minimum="0" maximum="2" />
+      <entry entity="level10Troll" size="3" minimum="0" maximum="3" />
+      <entry entity="level10Goblin" size="3" minimum="0" maximum="3" />
+      <entry entity="level10Wraith" size="1" minimum="0" maximum="2" />
+      <entry entity="BossMiniLevel10Bear" size="1" minimum="0" maximum="1" />
+      <bounds region="12">
+        <inclusion left="3" top="32" right="32" bottom="38" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="ogreCavesEastEntrySpawner">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>13</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level10Goblin" size="3" minimum="5" maximum="5" />
+      <entry entity="level10Troll" size="3" minimum="5" maximum="5" />
+      <entry entity="level10GoblinSentry" size="3" minimum="4" maximum="4" />
+      <entry entity="level10Ogre" size="1" minimum="2" maximum="2" />
+      <entry entity="level10Wraith" size="1" minimum="2" maximum="2" />
+      <entry entity="level10Hobgoblin" size="3" minimum="5" maximum="5" />
+      <entry entity="level10Wolf" size="3" minimum="5" maximum="5" />
+      <entry entity="level10Shadow" size="1" minimum="1" maximum="1" />
+      <entry entity="level10Bear" size="1" minimum="2" maximum="2" />
+      <entry entity="level10RockWorm" size="1" minimum="1" maximum="1" />
+      <entry entity="level10Orc" size="3" minimum="6" maximum="6" />
+      <bounds region="12">
+        <inclusion left="36" top="11" right="43" bottom="19" />
       </bounds>
     </spawn>
   </spawns>
