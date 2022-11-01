@@ -54,8 +54,8 @@ namespace Kesmai.Server.Items
         /// <inheritdoc />
 		public override bool CanEquip(MobileEntity entity)
         {
-            if (entity is PlayerEntity { Profession: Profession.Thaumaturge } || entity is PlayerEntity { Profession: Profession.Wizard })
-                return true;
+            if (entity is PlayerEntity player)
+                return player.Profession == Profession.Thaumaturge || player.Profession == Profession.Wizard;
 
             return false;
         }

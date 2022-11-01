@@ -42,7 +42,7 @@ namespace Kesmai.Server.Game
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6200000, 6200090)); /* [You are looking at] [a clear bottle made of yellowish glass.] */
+			entries.Add(new LocalizationEntry(6200000, 6200090)); /* [You are looking at] [a clear bottle made of yellowish glass.] [Inside is a clear red liquid.] */
 
 			base.GetDescription(entries);
 		}

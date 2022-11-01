@@ -100039,7 +100039,7 @@
         Body = 206,
         
         MaxHealth = 1800, Health = 1800,
-        BaseDodge = 24,
+        BaseDodge = 26,
         HideDetection = 28,
         Alignment = Alignment.Evil,
         
@@ -100067,9 +100067,15 @@
         new CreatureBasicAttack(18, 18, 30)
     };
     
-    carfel.Wield(new YasnakiDagger());
-    carfel.Wield(new MainGauche());
+    carfel.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "a high block"),
+        new CreatureBlock(4, "an inside block"),
+        new CreatureBlock(3, "a low block"),
+    };
     
+    carfel.Wield(new YasnakiDagger()); 
+    carfel.Wield(new MainGauche()); 
         
     carfel.AddGold(4800);
     carfel.AddLoot(new LootPack(
