@@ -38111,7 +38111,7 @@
     GnollGuard.Wield(new Greatsword());
     GnollGuard.Equip(new ChainmailArmor());
     
-    GnollGuard.AddGold(5000);
+    GnollGuard.AddGold(1500);
     GnollGuard.AddLoot(new LootPack(
         new LootPackEntry(true, SurfaceGems,       5,     gemsPriceMutator), 
         new LootPackEntry(true, GenericBottles,    33), 
@@ -41059,8 +41059,8 @@ return skeleton;
       <location x="2" y="-37" region="1" />
     </spawn>
     <spawn type="LocationSpawner" name="EntranceFippy">
-      <minimumDelay>600</minimumDelay>
-      <maximumDelay>660</maximumDelay>
+      <minimumDelay>1800</minimumDelay>
+      <maximumDelay>3000</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
