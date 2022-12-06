@@ -51,6 +51,10 @@ namespace Kesmai.Server.Items
         {
         }
 
+        public UnholyScepter(Serial serial) : base(serial)
+        {
+        }
+
         /// <inheritdoc />
 		public override bool CanEquip(MobileEntity entity)
         {
