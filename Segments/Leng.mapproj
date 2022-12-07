@@ -79115,8 +79115,6 @@
     
     critter.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
     
-    critter.Wield(new RamStaff());
-    
     critter.Attacks = new CreatureAttackCollection()
     {
         {
@@ -79144,7 +79142,8 @@
     critter.AddGold(10000);
      critter.AddGold(1000);
       critter.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       100,     gemsPriceMutatorVeryHigh)
+        new LootPackEntry(true, LengGems,       100,     gemsPriceMutatorVeryHigh),
+        new LootPackEntry(true, (from, container) => new RamStaff(),        100)
     ));
     
     return critter;
