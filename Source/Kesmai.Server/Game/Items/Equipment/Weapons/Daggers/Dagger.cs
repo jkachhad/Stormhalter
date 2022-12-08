@@ -40,7 +40,16 @@ namespace Kesmai.Server.Items
 				return base.ItemId;
 			}
 		}
-
+		public override TimeSpan GetSwingDelay(MobileEntity entity)
+		{
+			return entity.GetRoundDelay(0.75);
+		}
+		
+		public override double GetSkillMultiplier()
+		{
+			return 0.75;
+		}
+		
 		/// <summary>
 		/// Gets the item id for this weapon when poisoned.
 		/// </summary>
