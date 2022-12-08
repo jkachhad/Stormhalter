@@ -47,6 +47,12 @@ namespace Kesmai.Server.Items
 				entries.Add(new LocalizationEntry(6300427)); /* The shield contains the spell of Medium Shield. */
 		}
 
+			/// <summary>
+		/// Initializes a new instance of the <see cref="RamStaff"/> class.
+		/// </summary>
+		public SwiftShield(Serial serial) : base(serial)
+		{
+		}
 
 		public override void OnWield(MobileEntity entity)
 		{
