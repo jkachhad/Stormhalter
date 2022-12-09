@@ -48,7 +48,7 @@ namespace Kesmai.Server.Items
 		}
 
 			/// <summary>
-		/// Initializes a new instance of the <see cref="RamStaff"/> class.
+		/// Initializes a new instance of the <see cref="SwiftShield"/> class.
 		/// </summary>
 		public SwiftShield(Serial serial) : base(serial)
 		{
