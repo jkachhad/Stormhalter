@@ -40748,6 +40748,178 @@ return skeleton;
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="testTrapEntity1">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var testTrap = new Efreet()
+    {
+        Name = "Test Entity One",
+        MaxHealth = 5, Health = 5,
+        IsInvulnerable = true,
+        IsInvisible = true,
+        Experience = 1,
+        HideDetection = 45,
+        Movement = 0, 
+        VisibilityDistance = 0, 
+        RangePerception = 0
+    };
+    
+    testTrap.Spells = new CreatureSpellCollection(50.0)
+    {
+        {
+            new CreatureSpell<ConcussionSpell>(
+            skillLevel: 3), 20, TimeSpan.FromSeconds(3)
+        }
+        
+    };
+    
+    return testTrap;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="testTrapEntity2">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var testTrap = new Efreet()
+    {
+        Name = "Test Entity Two",
+        MaxHealth = 5, Health = 5,
+        IsInvulnerable = true,
+        IsInvisible = true,
+        Experience = 1,
+        HideDetection = 45,
+        Movement = 0, 
+        VisibilityDistance = 0, 
+        RangePerception = 0
+    };
+    
+    testTrap.Spells = new CreatureSpellCollection(50.0)
+    {
+        {
+            new CreatureSpell<BonfireSpell>(
+            skillLevel: 3), 20, TimeSpan.FromSeconds(3)
+        }
+        
+    };
+    
+    return testTrap;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="testTrapEntity3">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var testTrap = new Efreet()
+    {
+        Name = "Test Entity Three",
+        MaxHealth = 5, Health = 5,
+        IsInvulnerable = true,
+        IsInvisible = true,
+        Experience = 1,
+        HideDetection = 45,
+        Movement = 0, 
+        VisibilityDistance = 0, 
+        RangePerception = 0
+    };
+    
+    testTrap.Spells = new CreatureSpellCollection(50.0)
+    {
+        {
+            new CreatureSpell<WhirlwindSpell>(
+            skillLevel: 3), 20, TimeSpan.FromSeconds(3)
+        }
+        
+    };
+    
+    return testTrap;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="testTrapEntity4">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var testTrap = new Efreet()
+    {
+        Name = "Test Entity Four",
+        MaxHealth = 5, Health = 5,
+        IsInvulnerable = true,
+        IsInvisible = true,
+        Experience = 1,
+        HideDetection = 45,
+        Movement = 0, 
+        VisibilityDistance = 0, 
+        RangePerception = 0
+    };
+    
+    testTrap.Spells = new CreatureSpellCollection(50.0)
+    {
+        {
+            new CreatureSpell<LightningBoltSpell>(
+            skillLevel: 3), 20, TimeSpan.FromSeconds(3)
+        }
+        
+    };
+    
+    return testTrap;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="TownBanker ">
@@ -41589,6 +41761,86 @@ return skeleton;
       </script>
       <entry entity="BossMinorLevel16Dartanian" size="1" minimum="1" maximum="1" />
       <location x="38" y="24" region="6" />
+    </spawn>
+    <spawn type="LocationSpawner" name="testTrapSpawn1">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="testTrapEntity1" size="1" minimum="1" maximum="1" />
+      <location x="23" y="6" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="testTrapSpawn2">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="testTrapEntity2" size="1" minimum="1" maximum="1" />
+      <location x="23" y="8" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="testTrapSpawn3">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="testTrapEntity3" size="1" minimum="1" maximum="1" />
+      <location x="23" y="10" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="testTrapSpawn4">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="testTrapEntity4" size="1" minimum="1" maximum="1" />
+      <location x="23" y="12" region="1" />
     </spawn>
     <spawn type="RegionSpawner" name="EntranceBlacksmith">
       <minimumDelay>900</minimumDelay>
