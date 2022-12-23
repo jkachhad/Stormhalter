@@ -51,7 +51,7 @@ namespace Kesmai.Server.Items
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)
 		{
-			entries.Add(new LocalizationEntry(6200000, 6200385)); /* [You are looking at] [a large steel throwing hammer. The hammer is emitting a soft yellow glow. The weapon is chaotic.] */
+			entries.Add(new LocalizationEntry(6200000, 6200386)); /* [You are looking at] [a large steel throwing hammer. The hammer is emitting a soft yellow glow. The weapon is chaotic.] */
 
 			if (Identified)
 				entries.Add(new LocalizationEntry(6250007)); /* The combat adds for this weapon are +3. */
