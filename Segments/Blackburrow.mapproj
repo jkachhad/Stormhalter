@@ -40756,6 +40756,7 @@ return skeleton;
     {
         Name = "Test Entity One",
         MaxHealth = 5, Health = 5,
+        Alignment = Alignment.Chaotic,
         IsInvulnerable = true,
         IsInvisible = true,
         Experience = 1,
@@ -40769,7 +40770,7 @@ return skeleton;
     {
         {
             new CreatureSpell<ConcussionSpell>(
-            skillLevel: 3), 20, TimeSpan.FromSeconds(3)
+            skillLevel: 7), 20, TimeSpan.FromSeconds(3)
         }
         
     };
@@ -40799,6 +40800,7 @@ return skeleton;
     {
         Name = "Test Entity Two",
         MaxHealth = 5, Health = 5,
+        Alignment = Alignment.Chaotic,
         IsInvulnerable = true,
         IsInvisible = true,
         Experience = 1,
@@ -40812,7 +40814,7 @@ return skeleton;
     {
         {
             new CreatureSpell<BonfireSpell>(
-            skillLevel: 3), 20, TimeSpan.FromSeconds(3)
+            skillLevel: 7), 20, TimeSpan.FromSeconds(3)
         }
         
     };
@@ -40844,6 +40846,7 @@ return skeleton;
         MaxHealth = 5, Health = 5,
         IsInvulnerable = true,
         IsInvisible = true,
+        Alignment = Alignment.Chaotic,
         Experience = 1,
         HideDetection = 45,
         Movement = 0, 
@@ -40855,7 +40858,7 @@ return skeleton;
     {
         {
             new CreatureSpell<WhirlwindSpell>(
-            skillLevel: 3), 20, TimeSpan.FromSeconds(3)
+            skillLevel: 7), 20, TimeSpan.FromSeconds(3)
         }
         
     };
@@ -40887,6 +40890,7 @@ return skeleton;
         MaxHealth = 5, Health = 5,
         IsInvulnerable = true,
         IsInvisible = true,
+        Alignment = Alignment.Chaotic,
         Experience = 1,
         HideDetection = 45,
         Movement = 0, 
@@ -40898,7 +40902,7 @@ return skeleton;
     {
         {
             new CreatureSpell<LightningBoltSpell>(
-            skillLevel: 3), 20, TimeSpan.FromSeconds(3)
+            skillLevel: 7), 20, TimeSpan.FromSeconds(3)
         }
         
     };
