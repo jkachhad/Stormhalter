@@ -74,8 +74,6 @@ namespace Kesmai.Server.Items
 			{
 				status.AddSource(new ItemSource(this));
 			}
-
-			return true;
 		}
 
 		public override void OnUnwield(MobileEntity entity)
