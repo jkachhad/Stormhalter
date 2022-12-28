@@ -101549,9 +101549,12 @@
         MaxMana = 10, Mana = 10,
         HideDetection = 28,
         Experience = 2725,
+        Alignment = Alignment.Evil
         
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
+    
+    wraith.AddImmunity(typeof(ConcussionSpell));
         
     wraith.Attacks = new CreatureAttackCollection()
     {
@@ -103193,6 +103196,51 @@ var gargoyle = new Gargoyle()
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="BossMiniOLHallTraps">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var trap = new Efreet()
+    {
+        Name = "Trap Entity",
+        MaxHealth = 5, Health = 5,
+        Alignment = Alignment.Evil,
+        IsInvulnerable = true,
+        IsInvisible = true,
+        Experience = 1,
+        HideDetection = 45,
+        Movement = 0, 
+        VisibilityDistance = 0, 
+        RangePerception = 0,
+        CanLoot = false
+    };
+    
+    trap.Spells = new CreatureSpellCollection(50.0)
+    {
+        {
+            new CreatureSpell<ConcussionSpell>(
+            skillLevel: 15), 20, TimeSpan.FromSeconds(5)
+        }
+        
+    };
+    
+    return trap;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="UKPawner">
@@ -104623,6 +104671,186 @@ var gargoyle = new Gargoyle()
       </script>
       <entry entity="ukTownFolk" size="1" minimum="1" maximum="1" />
       <location x="2" y="18" region="2" />
+    </spawn>
+    <spawn type="LocationSpawner" name="trapOLHall1">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossMiniOLHallTraps" size="1" minimum="1" maximum="1" />
+      <location x="2" y="4" region="15" />
+    </spawn>
+    <spawn type="LocationSpawner" name="trapOLHall2">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossMiniOLHallTraps" size="1" minimum="1" maximum="1" />
+      <location x="3" y="5" region="15" />
+    </spawn>
+    <spawn type="LocationSpawner" name="trapOLHall3">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossMiniOLHallTraps" size="1" minimum="1" maximum="1" />
+      <location x="2" y="6" region="15" />
+    </spawn>
+    <spawn type="LocationSpawner" name="trapOLHall7">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossMiniOLHallTraps" size="1" minimum="1" maximum="1" />
+      <location x="3" y="7" region="15" />
+    </spawn>
+    <spawn type="LocationSpawner" name="trapOLHall5">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossMiniOLHallTraps" size="1" minimum="1" maximum="1" />
+      <location x="2" y="8" region="15" />
+    </spawn>
+    <spawn type="LocationSpawner" name="trapOLHall8">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossMiniOLHallTraps" size="1" minimum="1" maximum="1" />
+      <location x="3" y="9" region="15" />
+    </spawn>
+    <spawn type="LocationSpawner" name="trapOLHall4">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossMiniOLHallTraps" size="1" minimum="1" maximum="1" />
+      <location x="2" y="10" region="15" />
+    </spawn>
+    <spawn type="LocationSpawner" name="trapOLHall6">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossMiniOLHallTraps" size="1" minimum="1" maximum="1" />
+      <location x="3" y="11" region="15" />
+    </spawn>
+    <spawn type="LocationSpawner" name="trapOLHall9">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossMiniOLHallTraps" size="1" minimum="1" maximum="1" />
+      <location x="2" y="12" region="15" />
     </spawn>
     <spawn type="RegionSpawner" name="wyverns">
       <minimumDelay>900</minimumDelay>
