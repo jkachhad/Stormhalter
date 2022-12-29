@@ -103215,7 +103215,9 @@ var gargoyle = new Gargoyle()
         CanLoot = false
     };
     
-    trap.Spells = new CreatureSpellCollection(50.0)
+    trap.AddStatus(new NightVisionStatus(trap));
+    
+    trap.Spells = new CreatureSpellCollection(100.0)
     {
         {
             new CreatureSpell<ConcussionSpell>(
