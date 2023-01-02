@@ -118190,7 +118190,7 @@
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new StaminaPotion();
+	return new FalconStaminaPotion();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -118213,11 +118213,11 @@
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="4">
+      <entry weight="1">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new FalconStaminaPotion();
+	return randomBalm(true);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
