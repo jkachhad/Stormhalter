@@ -38,7 +38,7 @@ namespace Kesmai.Server.Game
 			
 			Spells = new CreatureSpellCollection()
 			{
-				{ new CreatureSpellEntry(spell, 100, TimeSpan.Zero )}
+				{ new CreatureSpellEntry(spell, 100, TimeSpan.FromSeconds(3) )}
 			};
 
 			FireProtection = 100;
