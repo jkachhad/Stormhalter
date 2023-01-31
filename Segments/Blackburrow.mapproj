@@ -52977,7 +52977,6 @@ return skeleton;
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
         
-        Experience = 50,
         Alignment = Alignment.Lawful,
         
         IsInvulnerable = true,
@@ -53023,8 +53022,6 @@ return skeleton;
         
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
-        
-        Experience = 50,
         
         IsInvulnerable = true,
         IsInvisible = true,
@@ -54345,6 +54342,7 @@ return skeleton;
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+	var female = Utility.RandomBool();
 	var vendor = new Merchant<ClearBalm>(16, 10, byte.MaxValue)
     {
         Name = _names.Random(),
@@ -54354,7 +54352,6 @@ return skeleton;
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
         
-        Experience = 50,
         Alignment = Alignment.Lawful,
         
         IsInvulnerable = true,
