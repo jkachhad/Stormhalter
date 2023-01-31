@@ -163,8 +163,9 @@
             
             
             var skillLevel = entity.GetSkillLevel(Skill.Magic);
+            var skilllevelrnd = Math.Round(skillLevel);
 
-            return skillLevel;
+            return skillLevelrnd;
         }
         
         public override int MagicProtection => 2 * getMagicskill(entity);
