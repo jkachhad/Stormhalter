@@ -54344,7 +54344,7 @@ return skeleton;
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var female = Utility.RandomBool();
-	var vendor = new Merchant<ClearBalm>(16, 10, byte.MaxValue)
+	var vendor = new Humanoid()
     {
         Name = _names.Random(),
         
