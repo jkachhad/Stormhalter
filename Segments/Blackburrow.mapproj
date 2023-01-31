@@ -51274,7 +51274,8 @@ if (spokeRecently(source))
     new LootPackEntry(true, Levelthreegems, 100),
     new LootPackEntry(true, Levelthreegems, 100),
     new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(), 100),
-    new LootPackEntry(true, Miniboss, 25)
+    new LootPackEntry(true, (from, container) => new WizardHat(), 100),
+    new LootPackEntry(true, Miniboss, 12.5)
     ));
    
     
