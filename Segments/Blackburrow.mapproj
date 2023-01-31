@@ -54017,7 +54017,7 @@ return skeleton;
     protector.AddStatus(new NightVisionStatus(protector));
     protector.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(19, "protector hits with arrow", new AttackPoisonComponent(20))
+        new CreatureAttack(19, 25, 30, "protector hits you with arrow.", new AttackPoisonComponent(20))
     };
     
     protector.AddStatus(new NightVisionStatus(protector));
