@@ -52982,7 +52982,6 @@ return skeleton;
         
         IsInvulnerable = true,
         IsInvisible = true,
-        Experience = 1,
         HideDetection = 45,
         Movement = 0, 
         VisibilityDistance = 0, 
@@ -53028,7 +53027,6 @@ return skeleton;
         
         IsInvulnerable = true,
         IsInvisible = true,
-        Experience = 1,
         HideDetection = 45,
         Movement = 0, 
         CanLoot = false
@@ -54345,6 +54343,7 @@ return skeleton;
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    var female = Utility.RandomBool();
 	var vendor = new Merchant<ClearBalm>(16, 10, byte.MaxValue)
     {
         Name = _names.Random(),
@@ -54358,7 +54357,6 @@ return skeleton;
         Alignment = Alignment.Lawful,
         
         IsInvulnerable = true,
-        Experience = 1,
         HideDetection = 45,
         Movement = 0, 
         CanLoot = false
