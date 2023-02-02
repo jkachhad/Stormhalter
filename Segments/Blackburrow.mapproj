@@ -42307,6 +42307,9 @@
           <professions select="all" />
           <alignments select="all" />
         </component>
+        <component type="StaticComponent">
+          <static>317</static>
+        </component>
       </tile>
       <tile x="7" y="4">
         <component type="FloorComponent">
@@ -42712,6 +42715,9 @@
           <moonphases select="all" />
           <professions select="all" />
           <alignments select="all" />
+        </component>
+        <component type="StaticComponent">
+          <static>317</static>
         </component>
       </tile>
       <tile x="5" y="6">
@@ -43181,14 +43187,14 @@
         </component>
       </tile>
       <tile x="5" y="8">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
         <component type="WallComponent">
           <wall>470</wall>
           <destroyed>472</destroyed>
           <ruins>45</ruins>
           <indestructible>true</indestructible>
-        </component>
-        <component type="FloorComponent">
-          <ground>301</ground>
         </component>
       </tile>
       <tile x="6" y="8">
@@ -44464,6 +44470,9 @@
         </component>
       </tile>
       <tile x="23" y="12">
+        <component type="FloorComponent">
+          <ground>301</ground>
+        </component>
         <component type="WallComponent">
           <wall>475</wall>
           <destroyed>477</destroyed>
@@ -44494,6 +44503,9 @@
         </component>
       </tile>
       <tile x="27" y="12">
+        <component type="FloorComponent">
+          <ground>493</ground>
+        </component>
         <component type="WallComponent">
           <wall>363</wall>
           <destroyed>365</destroyed>
@@ -44820,10 +44832,10 @@
           <ground>301</ground>
         </component>
         <component type="DoorComponent">
-          <openId>392</openId>
-          <closedId>379</closedId>
-          <secretId>363</secretId>
-          <destroyedId>405</destroyedId>
+          <openId>77</openId>
+          <closedId>65</closedId>
+          <secretId>28</secretId>
+          <destroyedId>83</destroyedId>
         </component>
       </tile>
       <tile x="24" y="13">
@@ -44846,10 +44858,10 @@
           <ground>493</ground>
         </component>
         <component type="DoorComponent">
-          <openId>392</openId>
-          <closedId>379</closedId>
-          <secretId>363</secretId>
-          <destroyedId>405</destroyedId>
+          <openId>77</openId>
+          <closedId>65</closedId>
+          <secretId>28</secretId>
+          <destroyedId>83</destroyedId>
         </component>
       </tile>
       <tile x="28" y="13">
@@ -44929,14 +44941,13 @@
       </tile>
       <tile x="37" y="13">
         <component type="FloorComponent">
-          <ground>14</ground>
+          <ground>493</ground>
         </component>
         <component type="DoorComponent">
-          <openId>392</openId>
-          <closedId>379</closedId>
-          <secretId>363</secretId>
-          <destroyedId>405</destroyedId>
-          <indestructible>true</indestructible>
+          <openId>77</openId>
+          <closedId>65</closedId>
+          <secretId>28</secretId>
+          <destroyedId>83</destroyedId>
         </component>
       </tile>
       <tile x="38" y="13">
@@ -45284,14 +45295,13 @@
       </tile>
       <tile x="37" y="14">
         <component type="FloorComponent">
-          <ground>14</ground>
+          <ground>493</ground>
         </component>
         <component type="DoorComponent">
-          <openId>392</openId>
-          <closedId>379</closedId>
-          <secretId>363</secretId>
-          <destroyedId>405</destroyedId>
-          <indestructible>true</indestructible>
+          <openId>77</openId>
+          <closedId>65</closedId>
+          <secretId>28</secretId>
+          <destroyedId>83</destroyedId>
         </component>
       </tile>
       <tile x="38" y="14">
@@ -47817,6 +47827,9 @@
         </component>
       </tile>
       <tile x="31" y="21">
+        <component type="FloorComponent">
+          <ground>493</ground>
+        </component>
         <component type="WallComponent">
           <wall>362</wall>
           <destroyed>364</destroyed>
@@ -47829,26 +47842,24 @@
       </tile>
       <tile x="32" y="21">
         <component type="FloorComponent">
-          <ground>14</ground>
+          <ground>493</ground>
         </component>
         <component type="DoorComponent">
-          <openId>391</openId>
-          <closedId>378</closedId>
-          <secretId>362</secretId>
-          <destroyedId>404</destroyedId>
-          <indestructible>true</indestructible>
+          <openId>76</openId>
+          <closedId>64</closedId>
+          <secretId>27</secretId>
+          <destroyedId>82</destroyedId>
         </component>
       </tile>
       <tile x="33" y="21">
         <component type="FloorComponent">
-          <ground>14</ground>
+          <ground>493</ground>
         </component>
         <component type="DoorComponent">
-          <openId>391</openId>
-          <closedId>378</closedId>
-          <secretId>362</secretId>
-          <destroyedId>404</destroyedId>
-          <indestructible>true</indestructible>
+          <openId>76</openId>
+          <closedId>64</closedId>
+          <secretId>27</secretId>
+          <destroyedId>82</destroyedId>
         </component>
       </tile>
       <tile x="34" y="21">
@@ -52984,8 +52995,6 @@ return skeleton;
         Experience = 1,
         HideDetection = 45,
         Movement = 0, 
-        VisibilityDistance = 0, 
-        RangePerception = 0,
         CanLoot = false
     };
     return vendor;
@@ -53004,7 +53013,7 @@ return skeleton;
     if (spokeRecently(source))
         return;
 
-    source.Say($"Psst over here next to the altar, {player.Name}. Just ask me to 'show prices'.");
+    source.Say($"Psst over here south of the altar, {player.Name}. Just ask me to 'show prices'.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -53022,6 +53031,7 @@ return skeleton;
         
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
+        Alignment = Alignment.Lawful,
         
         IsInvulnerable = true,
         IsInvisible = true,
@@ -53075,7 +53085,7 @@ return skeleton;
         
         FireProtection = 100,
         IceProtection = 100,
-        Immunity = CreatureImmunity.Bashing | CreatureImmunity.Piercing | CreatureImmunity.Magic |CreatureImmunity.Poison,
+        Immunity = CreatureImmunity.Piercing | CreatureImmunity.Magic | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
         
         IsTethered = true,
@@ -53105,7 +53115,7 @@ return skeleton;
         
         {
         
-            new CreatureAttack(24, 60, 113, "Yang gores you with it's horn.", new AttackPoisonComponent(25), new AttackStunComponent(80)), 10, TimeSpan.Zero
+            new CreatureAttack(24, 60, 113, "Yang gores you with it's horn.", new AttackPoisonComponent(35), new AttackStunComponent(80)), 10, TimeSpan.Zero
         }
     };
     
@@ -53206,7 +53216,7 @@ return skeleton;
         MaxHealth = 2100, Health = 2100,
         BaseDodge = 38,
 
-        Experience = 2000000,
+        Experience = 400000,
 
         HideDetection = 38,
         
@@ -53225,6 +53235,7 @@ return skeleton;
     
     yama.AddStatus(new NightVisionStatus(yama));
     yama.AddStatus(new BreatheWaterStatus(yama));
+     
     
     yama.Spells = new CreatureSpellCollection(35.0)
     {
@@ -53294,7 +53305,7 @@ return skeleton;
         MaxHealth = 2100, Health = 2100,
         BaseDodge = 38,
 
-        Experience = 2000000,
+        Experience = 400000,
 
         HideDetection = 38,
         
@@ -53313,6 +53324,7 @@ return skeleton;
     
     yima.AddStatus(new NightVisionStatus(yima));
     yima.AddStatus(new BreatheWaterStatus(yima));
+    
     
     yima.CombatantChangeInterval = TimeSpan.FromSeconds(21.0);
     
@@ -53443,7 +53455,7 @@ return skeleton;
         BaseDodge = 38,
         Body = 141,
         HideDetection = 38,
-        Experience = 320000,
+        Experience = 700000,
         Alignment = Alignment.Evil,
         
         VisibilityDistance = 3,
@@ -53453,7 +53465,7 @@ return skeleton;
         CanFly = true,
 
         
-        BasePenetration = ShieldPenetration.Medium,
+        BasePenetration = ShieldPenetration.Heavy,
 
         IsTethered = true,
     };
@@ -53522,7 +53534,7 @@ return skeleton;
         BaseDodge = 38,
         Body = 153,
         HideDetection = 28,
-        Experience = 320000,
+        Experience = 700000,
         Alignment = Alignment.Evil,
         
         VisibilityDistance = 3,
@@ -53533,7 +53545,7 @@ return skeleton;
         CanFly = true,
 
         
-        BasePenetration = ShieldPenetration.Medium,
+        BasePenetration = ShieldPenetration.Heavy,
 
         IsTethered = true,
     };
@@ -53606,12 +53618,11 @@ return skeleton;
         MaxHealth = 5200, Health = 5200,
         BaseDodge = 38,
         HideDetection = 42,
-        Experience = 313980,
+        Experience = 700000,
         
         BasePenetration = ShieldPenetration.VeryHeavy,
         
-        Immunity = CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
+        Immunity = CreatureImmunity.Projectile | CreatureImmunity.Web | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
     
         CanCharge = true,
@@ -53677,12 +53688,11 @@ return skeleton;
         MaxHealth = 5200, Health = 5200,
         BaseDodge = 38,
         HideDetection = 38,
-        Experience = 313980,
+        Experience = 700000,
         
         BasePenetration = ShieldPenetration.VeryHeavy,
         
-        Immunity = CreatureImmunity.Bashing |
-                   CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
+        Immunity = CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
     
         CanCharge = true,
@@ -53751,9 +53761,6 @@ return skeleton;
         Movement = 3,
         CanLoot = true,
         
-        Immunity = CreatureImmunity.Bashing,
-        Weakness = CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell, 
-        
     };
     
     wizard.Wield(new BlackStaff());
@@ -53766,7 +53773,7 @@ return skeleton;
             skillLevel: 13, cost: 16, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   50 },
         { new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 18, cost: 7, 
+            skillLevel: 16, cost: 7, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 }
     };
     
@@ -53800,7 +53807,7 @@ return skeleton;
         <block><![CDATA[
 	var knight = new Humanoid()
     {
-        Name = "attrium protector",
+        Name = "atrium protector",
         Body = 194,
         Alignment = Alignment.Chaotic,
         
@@ -53813,8 +53820,6 @@ return skeleton;
         IceProtection = 100,
         FireProtection = 100,
         CanLoot = true,
-        Immunity = CreatureImmunity.Bashing,
-        
     };
     
     knight.AddStatus(new NightVisionStatus(knight));
@@ -54017,7 +54022,7 @@ return skeleton;
     protector.AddStatus(new NightVisionStatus(protector));
     protector.Attacks = new CreatureAttackCollection()
     {
-        new CreatureAttack(19, 25, 30, "protector hits you with arrow.", new AttackPoisonComponent(20))
+        new CreatureAttack(19, 30, 50, "protector hits you with arrow.", new AttackPoisonComponent(20))
     };
     
     protector.AddStatus(new NightVisionStatus(protector));
@@ -54064,7 +54069,7 @@ return skeleton;
         BasePenetration = ShieldPenetration.Medium,
         VisibilityDistance = 1,
         DeathResistance = 100,
-        Immunity = CreatureImmunity.Bashing | CreatureImmunity.Poison,
+        Immunity = CreatureImmunity.Poison,
         FireProtection = 100,
         IceProtection = 100
     };
@@ -54182,7 +54187,7 @@ return skeleton;
         Health = 5200,
         BaseDodge = 38,
         HideDetection = 42,
-        Experience = 4489,
+        Experience = 700000,
         BasePenetration = ShieldPenetration.Heavy,
         Alignment = Alignment.Evil,
         Movement = 3,
@@ -54244,7 +54249,7 @@ return skeleton;
         Health = 5200,
         BaseDodge = 38,
         HideDetection = 42,
-        Experience = 4489,
+        Experience = 700000,
         BasePenetration = ShieldPenetration.Heavy,
         Alignment = Alignment.Evil,
         Movement = 3,
@@ -54260,7 +54265,7 @@ return skeleton;
         },
         { 
             new CreatureAttack(22,     50, 80,     "The scorpion stings you with his tail.", 
-                                                    new AttackPoisonComponent(30)),                 50
+                                                    new AttackPoisonComponent(40)),                 50
         },
     };
     
@@ -54312,7 +54317,7 @@ return skeleton;
         Alignment = Alignment.Chaotic,
         CanLoot = false,
         
-        Immunity = CreatureImmunity.Magic | CreatureImmunity.Bashing,
+        Immunity = CreatureImmunity.Magic,
     };
     
     
@@ -57161,7 +57166,7 @@ if (spokeRecently(source))
       </script>
       <entry entity="Level17Ninjas" size="2" minimum="2" maximum="2" />
       <entry entity="Level17Ninjas" size="2" minimum="2" maximum="2" />
-      <entry entity="Level15NormArchers" size="2" minimum="2" maximum="2" />
+      <entry entity="Level17Archer" size="2" minimum="2" maximum="2" />
       <bounds region="7">
         <inclusion left="49" top="-7" right="54" bottom="-6" />
         <exclusion left="0" top="0" right="0" bottom="0" />
