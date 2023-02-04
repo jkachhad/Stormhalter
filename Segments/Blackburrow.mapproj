@@ -62064,7 +62064,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
         <block><![CDATA[
    
-    var overlord = new Mummy()
+    var prisoner = new Mummy()
     {
         Name = "Undead Prisoner", Alignment = Alignment.Chaotic,
     
@@ -62083,24 +62083,24 @@ if (spokeRecently(source))
           
     };
     
-    overlord.AddStatus(new NightVisionStatus(overlord));
+    prisoner.AddStatus(new NightVisionStatus(prisoner));
     
-    overlord.CombatantChangeInterval = TimeSpan.FromSeconds(12.0);
+    prisoner.CombatantChangeInterval = TimeSpan.FromSeconds(12.0);
     
-    overlord.Equip(new DragonScaleArmor());
+    prisoner.Equip(new DragonScaleArmor());
     
-    overlord.Attacks = new CreatureAttackCollection()
+    prisoner.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(20, 30, 69, new AttackStunComponent (10), new AttackProneComponent(5))
     };
     
-    overlord.Spells = new CreatureSpellCollection(35.0)
+    prisoner.Spells = new CreatureSpellCollection(35.0)
     {
        { new CreatureSpell<IceSpearSpell>(skillLevel: 8), 100, TimeSpan.FromSeconds(12.0) }
     };
     
-    overlord.AddGold(3000);
-    overlord.AddLoot(new LootPack(
+    prisoner.AddGold(3000);
+    prisoner.AddLoot(new LootPack(
     new LootPackEntry(true, Levelthreegems, 100),
     new LootPackEntry(true, Levelthreegems, 100),
     new LootPackEntry(true, (from, container) => new PermanentConstitutionPotion(), 100),
@@ -62108,7 +62108,7 @@ if (spokeRecently(source))
     ));
    
     
-    return overlord;
+    return prisoner;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -63798,7 +63798,7 @@ return skeleton;
         BaseDodge = 42,
         BasePenetration = ShieldPenetration.Heavy,
         HideDetection = 42,
-        Experience = 616000,
+        Experience = 1200000,
         CanStrikeCritically = false,
         CanFly = true,
         CanCharge = true,
@@ -63863,7 +63863,7 @@ return skeleton;
     
     dragon.AddGold(75000);
     dragon.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new GoldNugget(500000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new GoldNugget(2000000u),    100, gemsPriceMutator),
         new LootPackEntry(true, StatPotion, 100)
     ));
     
@@ -63986,7 +63986,7 @@ return skeleton;
         BaseDodge = 42,
         BasePenetration = ShieldPenetration.Heavy,
         HideDetection = 42,
-        Experience = 616000,
+        Experience = 1200000,
         CanStrikeCritically = false,
         CanFly = true,
         CanCharge = true,
@@ -64046,7 +64046,8 @@ return skeleton;
     
     dragon.AddGold(75000);
     dragon.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new GoldNugget(500000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new GoldNugget(2000000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new SilverDaggerAmulet(), 100),
         new LootPackEntry(true, StatPotion, 100)
     ));
     
@@ -65095,6 +65096,7 @@ return skeleton;
         MaxHealth = 5200, 
         Health = 5200,
         BaseDodge = 38,
+        Body = 317,
         HideDetection = 42,
         Experience = 700000,
         BasePenetration = ShieldPenetration.Heavy,
@@ -65157,6 +65159,7 @@ return skeleton;
         MaxHealth = 5200, 
         Health = 5200,
         BaseDodge = 38,
+        Body = 318,
         HideDetection = 42,
         Experience = 700000,
         BasePenetration = ShieldPenetration.Heavy,
