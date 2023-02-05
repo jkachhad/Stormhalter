@@ -142,7 +142,7 @@
         }
     }
     
-    public class IceFlameScales :  Armor, ITreasure
+    public partial class IceFlameScales :  Armor, ITreasure
     {
             /// <inheritdoc />
         public override int LabelNumber => 6000076; /* scales */
@@ -255,7 +255,7 @@
         }
     }
     
-    public class VenomScales :  Armor, ITreasure
+    public partial class VenomScales :  Armor, ITreasure
     {
             /// <inheritdoc />
         public override int LabelNumber => 6000076; /* scales */
@@ -349,7 +349,7 @@
         }
     }
     
-    public class ScorpionScales : Armor, ITreasure
+    public partial class ScorpionCarapace : Armor, ITreasure
     {
         /// <inheritdoc />
         public override uint BasePrice => 20;
@@ -366,15 +366,16 @@
        /// <summary>
         /// Initializes a new instance of the <see cref="ScorpionScales"/> class.
         /// </summary>
-        public ScorpionScales() : base(249)
+        public ScorpionCarapace() : base(249)
         {
         }
         
         /// <summary>
         /// Initializes a new instance of the <see cref="ScorpionScales"/> class.
         /// </summary>
-        public ScorpionScales(Serial serial) : base(serial)
+        public ScorpionCarapace(Serial serial) : base(serial)
         {
+            Hue = Color.Black;
         }
 
         /// <inheritdoc />
