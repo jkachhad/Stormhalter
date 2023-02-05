@@ -267,7 +267,7 @@
         public override int Weight => 1600;
 
         /// <inheritdoc />
-        public override int Hindrance => 1;
+        public override int Hindrance => 2;
 
         /// <inheritdoc />
         public override int SlashingProtection => 6;
@@ -416,6 +416,15 @@
                poisonStatus.RemoveSourceFor(this);
             
             return true;
+        }
+        
+        /// <inheritdoc />
+        public override bool CanEquip(MobileEntity entity)
+        {
+            if (entity is PlayerEntity { Profession: MartialArtist })
+                return true;
+
+            return false;
         }
         
 
