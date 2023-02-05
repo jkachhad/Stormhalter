@@ -140,14 +140,285 @@
                 return;
             }
         }
-    }      
+    }
+    
+    public class IceFlameScales :  Armor, ITreasure
+    {
+            /// <inheritdoc />
+        public override int LabelNumber => 6000076; /* scales */
+
+        /// <inheritdoc />
+        public override uint BasePrice => 3200;
+
+        /// <inheritdoc />
+        public override int Weight => 1600;
+
+        /// <inheritdoc />
+        public override int Hindrance => 1;
+
+        /// <inheritdoc />
+        public override int SlashingProtection => 6;
+
+        /// <inheritdoc />
+        public override int PiercingProtection => 6;
+
+        /// <inheritdoc />
+        public override int BashingProtection => 6;
+
+        /// <inheritdoc />
+        public override int ProjectileProtection => 6;
 
 
+        /// <inheritdoc />
+        public override int ProtectionFromConcussion => 30;
+        
+        /// <inheritdoc />
+        public override int ProtectionFromFire => 17;
+
+        /// <inheritdoc />
+        public override int ProtectionFromIce => 17;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IceFlameScales"/> class.
+        /// </summary>
+        public IceFlameScales() : base(219)
+        {
+            Hue = Color.Purple;
+        }
+        
+         /// <summary>
+        /// Initializes a new instance of the <see cref="IceFlameScales"/> class.
+        /// </summary>
+        public IceFlameScales(Serial serial) : base(serial)
+        {
+        }
+        
+        /// <inheritdoc />
+        public override void GetDescription(List<LocalizationEntry> entries)
+        {
+            entries.Add(new LocalizationEntry(6200000, 6200181)); /* [You are looking at] [a vest made from the milky white scales of an ice dragon.] */
+
+            if (Identified)
+                entries.Add(new LocalizationEntry(6250096)); /* The armor appears to have some magical properties. */
+        }
+        
+        protected override bool OnEquip(MobileEntity entity)
+        {
+            if (!base.OnEquip(entity))
+                return false;
+
+            if (!entity.GetStatus(typeof(FireProtectionStatus), out var fireStatus))
+            {
+                fireStatus = new FireProtectionStatus(entity)
+                {
+                    Inscription = new SpellInscription() { SpellId = 43 }
+                };
+                fireStatus.AddSource(new ItemSource(this));
+                
+                entity.AddStatus(fireStatus);
+            }
+            else
+            {
+                fireStatus.AddSource(new ItemSource(this));
+            }
+            
+            if (!entity.GetStatus(typeof(IceProtectionStatus), out var iceStatus))
+            {
+                iceStatus = new IceProtectionStatus(entity)
+                {
+                    Inscription = new SpellInscription() { SpellId = 42 }
+                };
+                iceStatus.AddSource(new ItemSource(this));
+                
+                entity.AddStatus(iceStatus);
+            }
+            else
+            {
+                iceStatus.AddSource(new ItemSource(this));
+            }
+
+            return true;
+        }
+
+        protected override bool OnUnequip(MobileEntity entity)
+        {
+            if (!base.OnUnequip(entity))
+                return false;
+
+            if (entity.GetStatus(typeof(FireProtectionStatus), out var fireStatus))
+                fireStatus.RemoveSourceFor(this);
+            
+            if (entity.GetStatus(typeof(IceProtectionStatus), out var iceStatus))
+                iceStatus.RemoveSourceFor(this);
+
+            return true;
+        }
+    }
+    
+    public class VenomScales :  Armor, ITreasure
+    {
+            /// <inheritdoc />
+        public override int LabelNumber => 6000076; /* scales */
+
+        /// <inheritdoc />
+        public override uint BasePrice => 3200;
+
+        /// <inheritdoc />
+        public override int Weight => 1600;
+
+        /// <inheritdoc />
+        public override int Hindrance => 1;
+
+        /// <inheritdoc />
+        public override int SlashingProtection => 6;
+
+        /// <inheritdoc />
+        public override int PiercingProtection => 6;
+
+        /// <inheritdoc />
+        public override int BashingProtection => 6;
+
+        /// <inheritdoc />
+        public override int ProjectileProtection => 6;
+
+        /// <inheritdoc />
+        public override int ProtectionFromConcussion => 30;
+        
+        /// <inheritdoc />
+        public override int ProtectionFromFire => 13;
+
+        /// <inheritdoc />
+        public override int ProtectionFromIce => 13;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IceDragonScaleArmor"/> class.
+        /// </summary>
+        public VenomScales() : base(219)
+        {
+            Hue = Color.Green;
+        }
+        
+         /// <summary>
+        /// Initializes a new instance of the <see cref="ScorpionScales"/> class.
+        /// </summary>
+        public VenomScales(Serial serial) : base(serial)
+        {
+        }
+        
+        /// <inheritdoc />
+        public override void GetDescription(List<LocalizationEntry> entries)
+        {
+            entries.Add(new LocalizationEntry(6200000, 6200181)); /* [You are looking at] [a vest made from the milky white scales of an ice dragon.] */
+
+            if (Identified)
+                entries.Add(new LocalizationEntry(6250096)); /* The armor appears to have some magical properties. */
+        }
+        
+        protected override bool OnEquip(MobileEntity entity)
+        {
+            if (!base.OnEquip(entity))
+                return false;
+
+            if (!entity.GetStatus(typeof(ProtectionFromPoisonSpell), out var poisonStatus))
+            {
+                poisonStatus = new ProtectionFromPoisonSpell(entity)
+                {
+                    Inscription = new SpellInscription() { SpellId = 84 }
+                };
+                poisonStatus.AddSource(new ItemSource(this));
+                
+                entity.AddStatus(poisonStatus);
+            }
+            else
+            {
+                poisonStatus.AddSource(new ItemSource(this));
+            }
+            
+            return true;
+        }
+
+        protected override bool OnUnequip(MobileEntity entity)
+        {
+            if (!base.OnUnequip(entity))
+                return false;
+
+            if (entity.GetStatus(typeof(PoisonProtectionStatus), out var poisonStatus))
+               poisonStatus.RemoveSourceFor(this);
+            
+            return true;
+        }
+    }
+    
+    public class ScorpionScales : Armor, ITreasure
+    {
+        /// <inheritdoc />
+        public override uint BasePrice => 20;
+
+        /// <inheritdoc />
+        public override int Weight => 1400;
+
+        /// <inheritdoc />
+        public override int Hindrance => 0;
+
+        public override int ProjectileProtection => 4;
 
 
+       /// <summary>
+        /// Initializes a new instance of the <see cref="ScorpionScales"/> class.
+        /// </summary>
+        public ScorpionScales() : base(249)
+        {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScorpionScales"/> class.
+        /// </summary>
+        public ScorpionScales(Serial serial) : base(serial)
+        {
+        }
 
+        /// <inheritdoc />
+        public override void GetDescription(List<LocalizationEntry> entries)
+        {
+            entries.Add(new LocalizationEntry(6200000, 6200029)); /* [You are looking at] [a vest made from the scales of a wyvern.] */
+        }
+        
+        protected override bool OnEquip(MobileEntity entity)
+        {
+            if (!base.OnEquip(entity))
+                return false;
 
+            if (!entity.GetStatus(typeof(ProtectionFromPoisonSpell), out var poisonStatus))
+            {
+                poisonStatus = new ProtectionFromPoisonSpell(entity)
+                {
+                    Inscription = new SpellInscription() { SpellId = 84 }
+                };
+                poisonStatus.AddSource(new ItemSource(this));
+                
+                entity.AddStatus(poisonStatus);
+            }
+            else
+            {
+                poisonStatus.AddSource(new ItemSource(this));
+            }
+            
+            return true;
+        }
 
+        protected override bool OnUnequip(MobileEntity entity)
+        {
+            if (!base.OnUnequip(entity))
+                return false;
+
+            if (entity.GetStatus(typeof(PoisonProtectionStatus), out var poisonStatus))
+               poisonStatus.RemoveSourceFor(this);
+            
+            return true;
+        }
+        
+
+    }
 ]]></block>
     <block><![CDATA[]]></block>
   </script>
@@ -52884,12 +53155,12 @@ return skeleton;
     {
         Name = "Yin",
         Alignment = Alignment.Evil,
-        Body = 149,
+        Body = 315,
         MaxHealth = 7000, Health = 7000,
         BaseDodge = 42,
         BasePenetration = ShieldPenetration.Heavy,
         HideDetection = 42,
-        Experience = 616000,
+        Experience = 900000,
         CanStrikeCritically = false,
         CanFly = true,
         CanCharge = true,
@@ -52944,18 +53215,18 @@ return skeleton;
     {
         {
             new CreatureSpell<FireStormSpell>(
-            skillLevel: 18), 80, TimeSpan.Zero
+            skillLevel: 18), 50,TimeSpan.FromSeconds(5.0)
         },
-        {
-            new CreatureSpell<FirewallSpell>(
-            skillLevel: 19), 20, TimeSpan.Zero
+        { new CreatureSpell<DragonBreathIceSpell>(
+            skillLevel: 21), 100, TimeSpan.FromSeconds(5.0) 
         }
     };
     
     dragon.AddGold(75000);
     dragon.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new GoldNugget(500000u),    100, gemsPriceMutator),
-        new LootPackEntry(true, StatPotion, 100)
+        new LootPackEntry(true, StatPotion, 100),
+        new LootPackEntry(true, (from, container) => new IceFlameScales(), 100)
     ));
     
     return dragon;
@@ -53077,7 +53348,7 @@ return skeleton;
         BaseDodge = 42,
         BasePenetration = ShieldPenetration.Heavy,
         HideDetection = 42,
-        Experience = 616000,
+        Experience = 900000,
         CanStrikeCritically = false,
         CanFly = true,
         CanCharge = true,
@@ -53138,7 +53409,9 @@ return skeleton;
     dragon.AddGold(75000);
     dragon.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new GoldNugget(500000u),    100, gemsPriceMutator),
-        new LootPackEntry(true, StatPotion, 100)
+        new LootPackEntry(true, StatPotion, 100),
+        new LootPackEntry(true, (from, container) => new VenomScales(), 100)
+        
     ));
     
     return dragon;
@@ -54278,7 +54551,8 @@ return skeleton;
     
     scorpion.AddGold(90);
     scorpion.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new GoldNugget(200000u),    100, gemsPriceMutator)
+        new LootPackEntry(true, (from, container) => new GoldNugget(200000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new ScorpionScales(), 100)
 ));
     
     return scorpion;
