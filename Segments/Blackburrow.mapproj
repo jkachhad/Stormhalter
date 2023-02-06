@@ -319,9 +319,9 @@
             if (!base.OnEquip(entity))
                 return false;
 
-            if (!entity.GetStatus(typeof(ProtectionFromPoisonSpell), out var poisonStatus))
+            if (!entity.GetStatus(typeof(PoisonProtectionStatus), out var poisonStatus))
             {
-                poisonStatus = new ProtectionFromPoisonSpell(entity)
+                poisonStatus = new PoisonProtectionStatus(entity)
                 {
                     Inscription = new SpellInscription() { SpellId = 84 }
                 };
@@ -68898,7 +68898,6 @@ if (spokeRecently(source))
         ));
     
     return shelob;
-	return new MobileEntity();
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
