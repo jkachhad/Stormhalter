@@ -291,7 +291,7 @@
         public override int ProtectionFromIce => 13;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IceDragonScaleArmor"/> class.
+        /// Initializes a new instance of the <see cref="VenomScales"/> class.
         /// </summary>
         public VenomScales() : base(219)
         {
@@ -68624,7 +68624,7 @@ return skeleton;
     scorpion.AddGold(90);
     scorpion.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new GoldNugget(200000u),    100, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new ScorpionScales(), 100)
+        new LootPackEntry(true, (from, container) => new ScorpionCarapace(), 100)
 ));
     
     return scorpion;
