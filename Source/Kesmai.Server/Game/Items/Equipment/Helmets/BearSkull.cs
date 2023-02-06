@@ -9,8 +9,6 @@ namespace Kesmai.Server.Items
 		/// <inheritdoc />
 		public override int LabelNumber => 6000085;
 
-		 public override int MagicProtection => 2 * getMagicskill(entity);
-
 		/// <inheritdoc />
 		public override uint BasePrice => 2000;
 
