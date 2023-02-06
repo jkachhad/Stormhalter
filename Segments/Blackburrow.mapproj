@@ -477,7 +477,7 @@
         /// <inheritdoc />
         public override bool CanEquip(MobileEntity entity)
         {
-            if (entity is PlayerEntity { Profession: Profession.MartialArtist })
+            if (entity is PlayerEntity player && player.Profession == Profession.MartialArtist)
                 return true;
 
             return false;
