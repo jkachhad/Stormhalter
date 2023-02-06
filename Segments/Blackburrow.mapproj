@@ -167,7 +167,19 @@
 
             return skillLevelrnd;
         }
-        
+
+        public override int getMagicProtection(MobileEntity entity)
+        {
+            if (entity is PlayerEntity player)
+            {
+                MagicProtection = 2 * getMagicskill(entity);
+            
+            }
+            return MagicProtection;
+        }
+            
+
+    
         public override int MagicProtection => 2 * getMagicskill(entity);
 
         public override bool ProvidesNightVision => true;
