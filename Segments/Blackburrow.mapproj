@@ -389,9 +389,9 @@
             if (!base.OnEquip(entity))
                 return false;
 
-            if (!entity.GetStatus(typeof(ProtectionFromPoisonSpell), out var poisonStatus))
+            if (!entity.GetStatus(typeof(PoisonProtectionStatus), out var poisonStatus))
             {
-                poisonStatus = new ProtectionFromPoisonSpell(entity)
+                poisonStatus = new PoisonProtectionStatus(entity)
                 {
                     Inscription = new SpellInscription() { SpellId = 84 }
                 };
@@ -70565,7 +70565,7 @@ if (spokeRecently(source))
       <entry entity="BossMiniLevel13CrazedGnollMiner" size="1" minimum="1" maximum="1" />
       <location x="16" y="16" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="Location Spawn 34, -1 [3]">
+    <spawn type="LocationSpawner" name="Mini Spider Spawn">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
