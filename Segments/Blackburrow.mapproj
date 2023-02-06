@@ -68624,7 +68624,7 @@ return skeleton;
     scorpion.AddGold(90);
     scorpion.AddLoot(new LootPack(
         new LootPackEntry(true, (from, container) => new GoldNugget(200000u),    100, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new ScorpionScales(), 100)
+        new LootPackEntry(true, (from, container) => new VenomScales(), 100)
 ));
     
     return scorpion;
