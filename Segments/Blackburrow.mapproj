@@ -142,6 +142,108 @@
         }
     }
     
+    public partial class WizardHat : Helmet, ITreasure
+    {
+        /// <inheritdoc />
+        public override int LabelNumber => 6000104; /* The hat emenates power, and shimmers as you touch it. It contains the spell of Night Vision. */
+        
+        /// <inheritdoc />
+        public override int Weight => 25;
+        
+        /// <inheritdoc />
+        public override uint BasePrice => 12500;
+
+        /// <inheritdoc />
+        public override bool CanBind => true;
+        
+        public override int ProtectionFromStun => 10;
+        
+        private virtual double getMagicskill(MobileEntity entity)
+        {
+            
+            
+            var skillLevel = entity.GetSkillLevel(Skill.Magic);
+            var skilllevelrnd = Math.Round(skillLevel);
+
+            return skillLevelrnd;
+        }
+
+        public override int getMagicProtection(MobileEntity entity)
+        {
+            if (entity is PlayerEntity player)
+            {
+                MagicProtection = 2 * getMagicskill(entity);
+            
+            }
+            return MagicProtection;
+        }
+           
+
+        public override bool ProvidesNightVision => true;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WizardHat"/> class.
+        /// </summary>
+        public WizardHat(PlayerEntity owner) : base(966)
+        {
+            Bind(owner);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WizardHat"/> class.
+        /// </summary>
+        
+        public override bool CanEquip(MobileEntity entity)
+        {
+            
+            if (entity is PlayerEntity player)
+                 if (player.Profession == Profession.Wizard || player.Profession == Profession.Thaumaturge || player.Profession == Profession.Thief)
+                     return true;
+
+            return false;
+         }
+        
+        public WizardHat(Serial serial) : base(serial)
+        {
+        }
+        
+        /// <inheritdoc />
+        public override void GetDescription(List<LocalizationEntry> entries)
+        {
+            entries.Add(new LocalizationEntry(6200000, 6200387)); /* [You are looking at] [a spectacular azure wizards hat with bright yellow stars.] */
+            
+            if (Identified)
+                entries.Add(new LocalizationEntry(6250135)); /* The hat emenates power, and shimmers as you touch it. It contains the spell of Night Vision. */
+        }
+
+        /// <inheritdoc />
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((short)1); /* version */
+        }
+
+        /// <inheritdoc />
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+
+            var version = reader.ReadInt16();
+
+            switch (version)
+            {
+                case 1:
+                {
+                    break;
+                }
+            }
+        }
+    }
+
+    
+    
+    
     public partial class IceFlameScales :  Armor, ITreasure
     {
             /// <inheritdoc />
@@ -90508,7 +90610,8 @@ return skeleton;
     
     seimei.AddGold(18000);
     seimei.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new GoldNugget(200000u),    100, gemsPriceMutator)
+        new LootPackEntry(true, (from, container) => new GoldNugget(200000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new WizardHat(), 100)
 ));
     
     return seimei;
