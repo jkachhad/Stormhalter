@@ -145,7 +145,7 @@
     public partial class WizardHat : Helmet, ITreasure
     {
         /// <inheritdoc />
-        public override int LabelNumber => 6000104; /* The hat emenates power, and shimmers as you touch it. It contains the spell of Night Vision. */
+        public override int LabelNumber => 6000104; /* The hat emanates power, and shimmers as you touch it. It contains the spell of Night Vision. */
         
         /// <inheritdoc />
         public override int Weight => 25;
@@ -215,7 +215,7 @@
         /// <inheritdoc />
         public override void GetDescription(List<LocalizationEntry> entries)
         {
-            entries.Add(new LocalizationEntry(6200000, 6200387)); /* [You are looking at] [a spectacular azure wizards hat with bright yellow stars.] */
+            entries.Add(new LocalizationEntry(6200000, 6200387)); /* [You are looking at] [a spectacular azure hat with bright yellow stars.] */
             
             if (Identified)
                 entries.Add(new LocalizationEntry(6250135)); /* The hat emenates power, and shimmers as you touch it. It contains the spell of Night Vision. */
