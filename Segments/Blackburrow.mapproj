@@ -157,7 +157,9 @@
         public override bool CanBind => true;
         
         public override int ProtectionFromStun => 10;
-        
+
+        public override int MagicProtection => getMagicskill();
+       
         public virtual int getMagicskill(MobileEntity entity)
         {
             
@@ -168,14 +170,17 @@
             return skillLevelrnd;
         }
 
-        public override int getMagicProtection(MobileEntity entity)
+        public int getMagicProtection(MobileEntity entity)
         {
+        
+            var = MagicProtection = 0;
+            
             if (entity is PlayerEntity player)
             {
-                entity.MagicProtection = 2 * getMagicskill(entity);
+                MagicProtection = 2 * getMagicskill(entity);
             
             }
-            return entity.MagicProtection;
+            return MagicProtection;
         }
            
 
