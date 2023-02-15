@@ -158,12 +158,12 @@
         
         public override int ProtectionFromStun => 10;
         
-        private virtual double getMagicskill(MobileEntity entity)
+        public virtual int getMagicskill(MobileEntity entity)
         {
             
             
             var skillLevel = entity.GetSkillLevel(Skill.Magic);
-            var skilllevelrnd = Math.Round(skillLevel);
+            int skilllevelrnd = Math.Round(skillLevel);
 
             return skillLevelrnd;
         }
@@ -172,10 +172,10 @@
         {
             if (entity is PlayerEntity player)
             {
-                MagicProtection = 2 * getMagicskill(entity);
+                entity.MagicProtection = 2 * getMagicskill(entity);
             
             }
-            return MagicProtection;
+            return entity.MagicProtection;
         }
            
 
