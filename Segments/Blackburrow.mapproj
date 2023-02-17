@@ -194,6 +194,12 @@
         /// Initializes a new instance of the <see cref="WizardHat"/> class.
         /// </summary>
         
+          public WizardHat(Serial serial) : base(serial)
+        {
+        }
+        
+        
+        
         public override bool CanEquip(MobileEntity entity)
         {
             
@@ -203,11 +209,7 @@
 
             return false;
          }
-        
-        public WizardHat(Serial serial) : base(serial)
-        {
-        }
-        
+       
         /// <inheritdoc />
         public override void GetDescription(List<LocalizationEntry> entries)
         {
