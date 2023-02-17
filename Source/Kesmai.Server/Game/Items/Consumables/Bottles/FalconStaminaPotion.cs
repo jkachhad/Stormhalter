@@ -19,6 +19,13 @@ namespace Kesmai.Server.Game
 		{
 		}
 		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FalconStaminaPotion"/> class.
+		/// </summary>
+		public FalconStaminaPotion(Serial serial) : base(serial)
+		{
+		}
+		
 		/// <inheritdoc />
 		protected override void OnCreate()
 		{
