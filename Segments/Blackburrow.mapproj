@@ -158,7 +158,7 @@
         
         public override int ProtectionFromStun => 10;
 
-        public override int MagicProtection => getMagicalProtectionFromPlayer(Parent);
+        public override int MagicProtection => GetMagicalProtectionFromPlayer(Parent);
        
         public int GetMagicalProtectionFromPlayer(MobileEntity entity)
         {
