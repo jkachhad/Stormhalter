@@ -8799,26 +8799,20 @@
         </component>
       </tile>
       <tile x="43" y="-12">
-        <component type="WallComponent">
-          <wall>333</wall>
-          <destroyed>342</destroyed>
-          <ruins>44</ruins>
-          <indestructible>true</indestructible>
-        </component>
         <component type="WaterComponent">
-          <ground>22</ground>
+          <ground>623</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="44" y="-12">
         <component type="WaterComponent">
-          <ground>22</ground>
+          <ground>623</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="45" y="-12">
         <component type="WaterComponent">
-          <ground>22</ground>
+          <ground>622</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -9293,7 +9287,7 @@
       </tile>
       <tile x="46" y="-11">
         <component type="WaterComponent">
-          <ground>22</ground>
+          <ground>623</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -12090,11 +12084,11 @@
         </component>
       </tile>
       <tile x="44" y="-3">
-        <component type="StaticComponent">
-          <static>7</static>
-        </component>
         <component type="FloorComponent">
           <ground>1003</ground>
+        </component>
+        <component type="StaticComponent">
+          <static>7</static>
         </component>
       </tile>
       <tile x="45" y="-3">
@@ -12124,7 +12118,7 @@
           <indestructible>true</indestructible>
         </component>
         <component type="FloorComponent">
-          <ground>185</ground>
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="48" y="-3">
@@ -12523,7 +12517,14 @@
           <ground>1003</ground>
         </component>
       </tile>
-      <tile x="45" y="-2" />
+      <tile x="45" y="-2">
+        <component type="FloorComponent">
+          <ground>12</ground>
+        </component>
+        <component type="StaticComponent">
+          <static>7</static>
+        </component>
+      </tile>
       <tile x="46" y="-2">
         <component type="WallComponent">
           <wall>334</wall>
@@ -12549,6 +12550,9 @@
         </component>
         <component type="FloorComponent">
           <ground>1003</ground>
+        </component>
+        <component type="StaticComponent">
+          <static>7</static>
         </component>
       </tile>
       <tile x="49" y="-2">
@@ -12954,6 +12958,9 @@
           <movementCost>3</movementCost>
         </component>
         <component type="HiddenTeleporterComponent">
+          <destinationX>46</destinationX>
+          <destinationY>-12</destinationY>
+          <destinationRegion>1</destinationRegion>
           <lightphases select="all" />
           <moonphases select="all" />
           <professions select="all" />
@@ -13115,16 +13122,16 @@
           <ruins>44</ruins>
           <indestructible>true</indestructible>
         </component>
+        <component type="FloorComponent">
+          <ground>184</ground>
+        </component>
+        <component type="StaticComponent">
+          <static>7</static>
+        </component>
       </tile>
       <tile x="56" y="-1">
-        <component type="WallComponent">
-          <wall>333</wall>
-          <destroyed>342</destroyed>
-          <ruins>44</ruins>
-          <indestructible>true</indestructible>
-        </component>
         <component type="FloorComponent">
-          <ground>1003</ground>
+          <ground>184</ground>
         </component>
         <component type="StaticComponent">
           <static>7</static>
@@ -13462,6 +13469,9 @@
         <component type="FloorComponent">
           <ground>1003</ground>
         </component>
+        <component type="StaticComponent">
+          <static>7</static>
+        </component>
       </tile>
       <tile x="46" y="0">
         <component type="WallComponent">
@@ -13569,12 +13579,26 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
-      <tile x="56" y="0">
+      <tile x="55" y="0">
         <component type="WallComponent">
           <wall>334</wall>
           <destroyed>343</destroyed>
           <ruins>44</ruins>
           <indestructible>true</indestructible>
+        </component>
+      </tile>
+      <tile x="56" y="0">
+        <component type="FloorComponent">
+          <ground>184</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>333</wall>
+          <destroyed>342</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="StaticComponent">
+          <static>7</static>
         </component>
       </tile>
       <tile x="57" y="0">
@@ -13882,6 +13906,9 @@
         </component>
         <component type="FloorComponent">
           <ground>1003</ground>
+        </component>
+        <component type="StaticComponent">
+          <static>7</static>
         </component>
       </tile>
       <tile x="45" y="1">
@@ -14669,9 +14696,9 @@
       </tile>
       <tile x="58" y="3">
         <component type="RopeComponent">
-          <destinationX>7</destinationX>
-          <destinationY>3</destinationY>
-          <destinationRegion>5</destinationRegion>
+          <destinationX>-7</destinationX>
+          <destinationY>-15</destinationY>
+          <destinationRegion>3</destinationRegion>
           <teleporterId>256</teleporterId>
         </component>
         <component type="SkyComponent">
@@ -15910,7 +15937,7 @@
           <static>167</static>
         </component>
         <component type="HiddenTeleporterComponent">
-          <destinationX>-1</destinationX>
+          <destinationX>-5</destinationX>
           <destinationY>1</destinationY>
           <destinationRegion>1</destinationRegion>
           <lightphases select="all" />
@@ -30656,11 +30683,13 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>146</wall>
           <destroyed>148</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-11" y="6">
@@ -30887,11 +30916,8 @@
           <ruins>398</ruins>
           <indestructible>true</indestructible>
         </component>
-        <component type="WallComponent">
-          <wall>414</wall>
-          <destroyed>416</destroyed>
-          <ruins>398</ruins>
-          <indestructible>true</indestructible>
+        <component type="FloorComponent">
+          <ground>375</ground>
         </component>
       </tile>
       <tile x="21" y="6">
@@ -30903,11 +30929,8 @@
         </component>
       </tile>
       <tile x="22" y="6">
-        <component type="WallComponent">
-          <wall>414</wall>
-          <destroyed>416</destroyed>
-          <ruins>398</ruins>
-          <indestructible>true</indestructible>
+        <component type="FloorComponent">
+          <ground>375</ground>
         </component>
       </tile>
       <tile x="23" y="6">
@@ -30919,20 +30942,17 @@
         </component>
       </tile>
       <tile x="24" y="6">
-        <component type="WallComponent">
-          <wall>414</wall>
-          <destroyed>416</destroyed>
-          <ruins>398</ruins>
-          <indestructible>true</indestructible>
+        <component type="FloorComponent">
+          <ground>375</ground>
         </component>
       </tile>
       <tile x="25" y="6">
-        <component type="FloorComponent">
-          <ground>369</ground>
-        </component>
         <component type="StaticComponent">
           <color r="95" g="95" b="90" a="255" />
           <static>45</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="26" y="6">
@@ -31038,6 +31058,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-22" y="7">
@@ -31048,6 +31069,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-21" y="7">
@@ -31058,6 +31080,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-20" y="7">
@@ -31084,6 +31107,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-17" y="7">
@@ -31094,6 +31118,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-16" y="7">
@@ -31104,6 +31129,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-15" y="7">
@@ -31114,6 +31140,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-14" y="7">
@@ -31124,6 +31151,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-13" y="7">
@@ -31134,11 +31162,13 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>146</wall>
           <destroyed>148</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-12" y="7">
@@ -31510,6 +31540,7 @@
           <wall>146</wall>
           <destroyed>148</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-20" y="8">
@@ -31520,6 +31551,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-19" y="8">
@@ -31530,11 +31562,13 @@
           <wall>146</wall>
           <destroyed>148</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-18" y="8">
@@ -32577,6 +32611,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-14" y="10">
@@ -32587,6 +32622,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-13" y="10">
@@ -32597,6 +32633,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-12" y="10">
@@ -32607,6 +32644,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-11" y="10">
@@ -32617,6 +32655,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-10" y="10">
@@ -33002,6 +33041,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-22" y="11">
@@ -33012,6 +33052,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-21" y="11">
@@ -33022,6 +33063,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-20" y="11">
@@ -33032,6 +33074,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-19" y="11">
@@ -33042,6 +33085,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-18" y="11">
@@ -33052,6 +33096,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-17" y="11">
@@ -33062,6 +33107,7 @@
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-16" y="11">
@@ -33072,11 +33118,13 @@
           <wall>146</wall>
           <destroyed>148</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>145</wall>
           <destroyed>147</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-15" y="11">
@@ -33107,6 +33155,7 @@
           <wall>146</wall>
           <destroyed>148</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-10" y="11">
@@ -33578,6 +33627,7 @@
           <wall>146</wall>
           <destroyed>148</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-10" y="12">
@@ -34075,6 +34125,7 @@
           <wall>146</wall>
           <destroyed>148</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-10" y="13">
@@ -34844,8 +34895,10 @@
           <color r="135" g="140" b="140" a="255" />
           <ground>15</ground>
         </component>
-        <component type="ObstructionComponent">
-          <obstruction>165</obstruction>
+        <component type="WallComponent">
+          <wall>413</wall>
+          <destroyed>415</destroyed>
+          <ruins>398</ruins>
         </component>
       </tile>
       <tile x="7" y="14">
@@ -35505,6 +35558,11 @@
           <color r="146" g="146" b="152" a="255" />
           <ground>15</ground>
         </component>
+        <component type="WallComponent">
+          <wall>414</wall>
+          <destroyed>416</destroyed>
+          <ruins>398</ruins>
+        </component>
       </tile>
       <tile x="12" y="16">
         <component type="FloorComponent">
@@ -35816,41 +35874,22 @@
       </tile>
       <tile x="11" y="17">
         <component type="FloorComponent">
-          <ground>1003</ground>
+          <ground>264</ground>
         </component>
         <component type="WallComponent">
-          <wall>413</wall>
-          <destroyed>415</destroyed>
+          <wall>414</wall>
+          <destroyed>416</destroyed>
           <ruins>398</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="12" y="17">
         <component type="FloorComponent">
-          <ground>1003</ground>
-        </component>
-        <component type="WallComponent">
-          <wall>413</wall>
-          <destroyed>415</destroyed>
-          <ruins>398</ruins>
-          <indestructible>true</indestructible>
+          <ground>264</ground>
         </component>
       </tile>
       <tile x="13" y="17">
-        <component type="WallComponent">
-          <wall>413</wall>
-          <destroyed>415</destroyed>
-          <ruins>398</ruins>
-          <indestructible>true</indestructible>
-        </component>
         <component type="FloorComponent">
-          <ground>184</ground>
-        </component>
-        <component type="WallComponent">
-          <wall>417</wall>
-          <destroyed>418</destroyed>
-          <ruins>0</ruins>
-          <indestructible>true</indestructible>
+          <ground>264</ground>
         </component>
       </tile>
       <tile x="14" y="17">
@@ -36136,6 +36175,11 @@
         <component type="FloorComponent">
           <ground>264</ground>
         </component>
+        <component type="WallComponent">
+          <wall>414</wall>
+          <destroyed>416</destroyed>
+          <ruins>398</ruins>
+        </component>
       </tile>
       <tile x="12" y="18">
         <component type="FloorComponent">
@@ -36144,13 +36188,7 @@
       </tile>
       <tile x="13" y="18">
         <component type="FloorComponent">
-          <ground>1003</ground>
-        </component>
-        <component type="WallComponent">
-          <wall>414</wall>
-          <destroyed>416</destroyed>
-          <ruins>398</ruins>
-          <indestructible>true</indestructible>
+          <ground>264</ground>
         </component>
       </tile>
       <tile x="14" y="18">
@@ -36438,6 +36476,11 @@
         <component type="FloorComponent">
           <ground>264</ground>
         </component>
+        <component type="WallComponent">
+          <wall>414</wall>
+          <destroyed>416</destroyed>
+          <ruins>398</ruins>
+        </component>
       </tile>
       <tile x="12" y="19">
         <component type="FloorComponent">
@@ -36452,13 +36495,7 @@
       </tile>
       <tile x="13" y="19">
         <component type="FloorComponent">
-          <ground>1003</ground>
-        </component>
-        <component type="WallComponent">
-          <wall>414</wall>
-          <destroyed>416</destroyed>
-          <ruins>398</ruins>
-          <indestructible>true</indestructible>
+          <ground>264</ground>
         </component>
       </tile>
       <tile x="14" y="19">
@@ -36773,6 +36810,17 @@
           <ruins>0</ruins>
           <indestructible>true</indestructible>
         </component>
+        <component type="WallComponent">
+          <wall>414</wall>
+          <destroyed>416</destroyed>
+          <ruins>398</ruins>
+        </component>
+        <component type="WallComponent">
+          <wall>417</wall>
+          <destroyed>418</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
       </tile>
       <tile x="12" y="20">
         <component type="FloorComponent">
@@ -36790,12 +36838,6 @@
           <ground>1003</ground>
         </component>
         <component type="WallComponent">
-          <wall>414</wall>
-          <destroyed>416</destroyed>
-          <ruins>398</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="WallComponent">
           <wall>413</wall>
           <destroyed>415</destroyed>
           <ruins>398</ruins>
@@ -36804,13 +36846,7 @@
       </tile>
       <tile x="14" y="20">
         <component type="FloorComponent">
-          <ground>1003</ground>
-        </component>
-        <component type="WallComponent">
-          <wall>413</wall>
-          <destroyed>415</destroyed>
-          <ruins>398</ruins>
-          <indestructible>true</indestructible>
+          <ground>264</ground>
         </component>
       </tile>
       <tile x="15" y="20">
@@ -36818,9 +36854,9 @@
           <ground>1003</ground>
         </component>
         <component type="WallComponent">
-          <wall>413</wall>
-          <destroyed>415</destroyed>
-          <ruins>398</ruins>
+          <wall>417</wall>
+          <destroyed>418</destroyed>
+          <ruins>0</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -37065,11 +37101,30 @@
         </component>
       </tile>
       <tile x="11" y="21">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+      </tile>
+      <tile x="12" y="21">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+      </tile>
+      <tile x="13" y="21">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+      </tile>
+      <tile x="14" y="21">
+        <component type="FloorComponent">
+          <ground>264</ground>
+        </component>
+      </tile>
+      <tile x="15" y="21">
         <component type="WallComponent">
           <wall>414</wall>
           <destroyed>416</destroyed>
           <ruins>398</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="20" y="21">
@@ -37345,12 +37400,24 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
+      <tile x="13" y="22">
+        <component type="WallComponent">
+          <wall>413</wall>
+          <destroyed>415</destroyed>
+          <ruins>398</ruins>
+        </component>
+      </tile>
       <tile x="14" y="22">
         <component type="WallComponent">
           <wall>417</wall>
           <destroyed>418</destroyed>
           <ruins>0</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>413</wall>
+          <destroyed>415</destroyed>
+          <ruins>398</ruins>
         </component>
       </tile>
       <tile x="15" y="22">
@@ -37359,6 +37426,11 @@
           <destroyed>415</destroyed>
           <ruins>398</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>414</wall>
+          <destroyed>416</destroyed>
+          <ruins>398</ruins>
         </component>
       </tile>
       <tile x="16" y="22">
@@ -42415,6 +42487,14 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
+      <tile x="-45" y="-5">
+        <component type="WallComponent">
+          <wall>446</wall>
+          <destroyed>0</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+      </tile>
       <tile x="-44" y="-5">
         <component type="WallComponent">
           <wall>446</wall>
@@ -43177,21 +43257,21 @@
         </component>
       </tile>
       <tile x="9" y="-3">
-        <component type="StaticComponent">
-          <static>449</static>
-        </component>
         <component type="WaterComponent">
           <ground>180</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="StaticComponent">
+          <static>449</static>
         </component>
       </tile>
       <tile x="10" y="-3">
-        <component type="StaticComponent">
-          <static>449</static>
-        </component>
         <component type="WaterComponent">
           <ground>180</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="StaticComponent">
+          <static>449</static>
         </component>
       </tile>
       <tile x="11" y="-3">
@@ -44236,12 +44316,12 @@
         </component>
       </tile>
       <tile x="10" y="1">
-        <component type="ObstructionComponent">
-          <obstruction>165</obstruction>
-        </component>
         <component type="WaterComponent">
           <ground>180</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>165</obstruction>
         </component>
       </tile>
       <tile x="11" y="1">
@@ -45152,19 +45232,19 @@
         </component>
       </tile>
       <tile x="9" y="3">
-        <component type="WaterComponent">
-          <ground>180</ground>
-        </component>
         <component type="FloorComponent">
           <ground>252</ground>
+        </component>
+        <component type="WaterComponent">
+          <ground>180</ground>
         </component>
       </tile>
       <tile x="10" y="3">
-        <component type="WaterComponent">
-          <ground>180</ground>
-        </component>
         <component type="FloorComponent">
           <ground>252</ground>
+        </component>
+        <component type="WaterComponent">
+          <ground>180</ground>
         </component>
       </tile>
       <tile x="11" y="3">
@@ -45708,12 +45788,6 @@
         </component>
       </tile>
       <tile x="5" y="4">
-        <component type="RopeComponent">
-          <destinationX>7</destinationX>
-          <destinationY>3</destinationY>
-          <destinationRegion>5</destinationRegion>
-          <teleporterId>257</teleporterId>
-        </component>
         <component type="SkyComponent">
           <destinationX>7</destinationX>
           <destinationY>9</destinationY>
@@ -45731,7 +45805,7 @@
       </tile>
       <tile x="7" y="4">
         <component type="FloorComponent">
-          <ground>4</ground>
+          <ground>1004</ground>
         </component>
       </tile>
       <tile x="8" y="4">
@@ -45740,19 +45814,19 @@
         </component>
       </tile>
       <tile x="9" y="4">
-        <component type="WaterComponent">
-          <ground>180</ground>
-        </component>
         <component type="FloorComponent">
           <ground>252</ground>
+        </component>
+        <component type="WaterComponent">
+          <ground>180</ground>
         </component>
       </tile>
       <tile x="10" y="4">
-        <component type="WaterComponent">
-          <ground>180</ground>
-        </component>
         <component type="FloorComponent">
           <ground>252</ground>
+        </component>
+        <component type="WaterComponent">
+          <ground>180</ground>
         </component>
       </tile>
       <tile x="11" y="4">
@@ -58686,163 +58760,73 @@
         </component>
       </tile>
       <tile x="-24" y="-13">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="115" g="255" b="207" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-23" y="-13">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="48" g="138" b="51" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-22" y="-13">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="48" g="138" b="51" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-21" y="-13">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="115" g="255" b="207" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-20" y="-13">
-        <component type="StaticComponent">
-          <static>180</static>
-        </component>
-        <component type="StaticComponent">
-          <color r="97" g="255" b="88" a="134" />
-          <static>187</static>
-        </component>
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-19" y="-13">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="48" g="138" b="51" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-18" y="-13">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="48" g="138" b="51" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-17" y="-13">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="115" g="255" b="207" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-16" y="-13">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="48" g="138" b="51" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-15" y="-13">
-        <component type="StaticComponent">
-          <static>180</static>
-        </component>
-        <component type="StaticComponent">
-          <color r="97" g="255" b="88" a="134" />
-          <static>187</static>
-        </component>
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-14" y="-13">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="48" g="138" b="51" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-13" y="-13">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="115" g="255" b="207" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-12" y="-13">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="48" g="138" b="51" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-11" y="-13">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="115" g="255" b="207" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-10" y="-13">
@@ -58909,9 +58893,6 @@
       </tile>
       <tile x="-22" y="-12">
         <component type="StaticComponent">
-          <static>180</static>
-        </component>
-        <component type="StaticComponent">
           <color r="97" g="255" b="88" a="134" />
           <static>187</static>
         </component>
@@ -58919,13 +58900,11 @@
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+          <potency>7</potency>
         </component>
       </tile>
       <tile x="-21" y="-12">
         <component type="StaticComponent">
-          <static>180</static>
-        </component>
-        <component type="StaticComponent">
           <color r="97" g="255" b="88" a="134" />
           <static>187</static>
         </component>
@@ -58933,6 +58912,7 @@
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+          <potency>7</potency>
         </component>
       </tile>
       <tile x="-20" y="-12">
@@ -58947,70 +58927,58 @@
         </component>
       </tile>
       <tile x="-19" y="-12">
-        <component type="StaticComponent">
-          <static>180</static>
-        </component>
-        <component type="StaticComponent">
-          <color r="97" g="255" b="88" a="134" />
-          <static>187</static>
-        </component>
         <component type="PoisonedWaterComponent">
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="StaticComponent">
+          <color r="115" g="255" b="207" a="255" />
+          <static>401</static>
         </component>
       </tile>
       <tile x="-18" y="-12">
-        <component type="StaticComponent">
-          <static>180</static>
-        </component>
-        <component type="StaticComponent">
-          <color r="97" g="255" b="88" a="134" />
-          <static>187</static>
-        </component>
         <component type="PoisonedWaterComponent">
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="StaticComponent">
+          <color r="115" g="255" b="207" a="255" />
+          <static>401</static>
         </component>
       </tile>
       <tile x="-17" y="-12">
-        <component type="StaticComponent">
-          <static>180</static>
-        </component>
-        <component type="StaticComponent">
-          <color r="97" g="255" b="88" a="134" />
-          <static>187</static>
-        </component>
         <component type="PoisonedWaterComponent">
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="StaticComponent">
+          <color r="48" g="138" b="51" a="255" />
+          <static>401</static>
         </component>
       </tile>
       <tile x="-16" y="-12">
-        <component type="StaticComponent">
-          <static>180</static>
-        </component>
-        <component type="StaticComponent">
-          <color r="97" g="255" b="88" a="134" />
-          <static>187</static>
-        </component>
         <component type="PoisonedWaterComponent">
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="StaticComponent">
+          <color r="115" g="255" b="207" a="255" />
+          <static>401</static>
         </component>
       </tile>
       <tile x="-15" y="-12">
-        <component type="StaticComponent">
-          <color r="0" g="110" b="1" a="88" />
-          <static>187</static>
-        </component>
         <component type="PoisonedWaterComponent">
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="StaticComponent">
+          <color r="115" g="255" b="207" a="255" />
+          <static>401</static>
         </component>
       </tile>
       <tile x="-14" y="-12">
@@ -59026,9 +58994,6 @@
       </tile>
       <tile x="-13" y="-12">
         <component type="StaticComponent">
-          <static>180</static>
-        </component>
-        <component type="StaticComponent">
           <color r="97" g="255" b="88" a="134" />
           <static>187</static>
         </component>
@@ -59036,13 +59001,11 @@
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+          <potency>7</potency>
         </component>
       </tile>
       <tile x="-12" y="-12">
         <component type="StaticComponent">
-          <static>180</static>
-        </component>
-        <component type="StaticComponent">
           <color r="97" g="255" b="88" a="134" />
           <static>187</static>
         </component>
@@ -59050,17 +59013,12 @@
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+          <potency>7</potency>
         </component>
       </tile>
       <tile x="-11" y="-12">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="115" g="255" b="207" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-10" y="-12">
@@ -59106,9 +59064,6 @@
       </tile>
       <tile x="-23" y="-11">
         <component type="StaticComponent">
-          <static>180</static>
-        </component>
-        <component type="StaticComponent">
           <color r="97" g="255" b="88" a="134" />
           <static>187</static>
         </component>
@@ -59116,6 +59071,7 @@
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+          <potency>7</potency>
         </component>
       </tile>
       <tile x="-22" y="-11">
@@ -59153,9 +59109,6 @@
       </tile>
       <tile x="-19" y="-11">
         <component type="StaticComponent">
-          <static>180</static>
-        </component>
-        <component type="StaticComponent">
           <color r="97" g="255" b="88" a="134" />
           <static>187</static>
         </component>
@@ -59163,6 +59116,7 @@
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+          <potency>7</potency>
         </component>
       </tile>
       <tile x="-18" y="-11">
@@ -59178,9 +59132,6 @@
       </tile>
       <tile x="-17" y="-11">
         <component type="StaticComponent">
-          <static>180</static>
-        </component>
-        <component type="StaticComponent">
           <color r="97" g="255" b="88" a="134" />
           <static>187</static>
         </component>
@@ -59188,13 +59139,11 @@
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+          <potency>7</potency>
         </component>
       </tile>
       <tile x="-16" y="-11">
         <component type="StaticComponent">
-          <static>180</static>
-        </component>
-        <component type="StaticComponent">
           <color r="97" g="255" b="88" a="134" />
           <static>187</static>
         </component>
@@ -59202,6 +59151,7 @@
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+          <potency>7</potency>
         </component>
       </tile>
       <tile x="-15" y="-11">
@@ -59217,9 +59167,6 @@
       </tile>
       <tile x="-14" y="-11">
         <component type="StaticComponent">
-          <static>180</static>
-        </component>
-        <component type="StaticComponent">
           <color r="97" g="255" b="88" a="134" />
           <static>187</static>
         </component>
@@ -59227,6 +59174,7 @@
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+          <potency>7</potency>
         </component>
       </tile>
       <tile x="-13" y="-11">
@@ -59242,9 +59190,6 @@
       </tile>
       <tile x="-12" y="-11">
         <component type="StaticComponent">
-          <static>180</static>
-        </component>
-        <component type="StaticComponent">
           <color r="97" g="255" b="88" a="134" />
           <static>187</static>
         </component>
@@ -59252,17 +59197,12 @@
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+          <potency>7</potency>
         </component>
       </tile>
       <tile x="-11" y="-11">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="48" g="138" b="51" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-10" y="-11">
@@ -59310,86 +59250,80 @@
         </component>
       </tile>
       <tile x="-23" y="-10">
-        <component type="StaticComponent">
-          <static>180</static>
-        </component>
-        <component type="StaticComponent">
-          <color r="97" g="255" b="88" a="134" />
-          <static>187</static>
-        </component>
         <component type="PoisonedWaterComponent">
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="StaticComponent">
+          <color r="48" g="138" b="51" a="255" />
+          <static>401</static>
         </component>
       </tile>
       <tile x="-22" y="-10">
-        <component type="StaticComponent">
-          <color r="0" g="110" b="1" a="88" />
-          <static>187</static>
-        </component>
         <component type="PoisonedWaterComponent">
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="StaticComponent">
+          <color r="115" g="255" b="207" a="255" />
+          <static>401</static>
         </component>
       </tile>
       <tile x="-21" y="-10">
-        <component type="StaticComponent">
-          <color r="0" g="110" b="1" a="88" />
-          <static>187</static>
-        </component>
         <component type="PoisonedWaterComponent">
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="StaticComponent">
+          <color r="48" g="138" b="51" a="255" />
+          <static>401</static>
         </component>
       </tile>
       <tile x="-20" y="-10">
-        <component type="StaticComponent">
-          <static>180</static>
-        </component>
-        <component type="StaticComponent">
-          <color r="97" g="255" b="88" a="134" />
-          <static>187</static>
-        </component>
         <component type="PoisonedWaterComponent">
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="StaticComponent">
+          <color r="115" g="255" b="207" a="255" />
+          <static>401</static>
         </component>
       </tile>
       <tile x="-19" y="-10">
-        <component type="StaticComponent">
-          <color r="0" g="110" b="1" a="88" />
-          <static>187</static>
-        </component>
         <component type="PoisonedWaterComponent">
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="StaticComponent">
+          <color r="48" g="138" b="51" a="255" />
+          <static>401</static>
         </component>
       </tile>
       <tile x="-18" y="-10">
-        <component type="StaticComponent">
-          <color r="0" g="110" b="1" a="88" />
-          <static>187</static>
-        </component>
         <component type="PoisonedWaterComponent">
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="StaticComponent">
+          <color r="48" g="138" b="51" a="255" />
+          <static>401</static>
         </component>
       </tile>
       <tile x="-17" y="-10">
-        <component type="StaticComponent">
-          <color r="0" g="110" b="1" a="88" />
-          <static>187</static>
-        </component>
         <component type="PoisonedWaterComponent">
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="StaticComponent">
+          <color r="115" g="255" b="207" a="255" />
+          <static>401</static>
         </component>
       </tile>
       <tile x="-16" y="-10">
@@ -59415,42 +59349,17 @@
         </component>
       </tile>
       <tile x="-14" y="-10">
-        <component type="StaticComponent">
-          <color r="0" g="110" b="1" a="88" />
-          <static>187</static>
-        </component>
         <component type="PoisonedWaterComponent">
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="StaticComponent">
+          <color r="48" g="138" b="51" a="255" />
+          <static>401</static>
         </component>
       </tile>
       <tile x="-13" y="-10">
-        <component type="StaticComponent">
-          <color r="0" g="110" b="1" a="88" />
-          <static>187</static>
-        </component>
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-      </tile>
-      <tile x="-12" y="-10">
-        <component type="StaticComponent">
-          <static>180</static>
-        </component>
-        <component type="StaticComponent">
-          <color r="97" g="255" b="88" a="134" />
-          <static>187</static>
-        </component>
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-      </tile>
-      <tile x="-11" y="-10">
         <component type="PoisonedWaterComponent">
           <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
@@ -59459,6 +59368,22 @@
         <component type="StaticComponent">
           <color r="115" g="255" b="207" a="255" />
           <static>401</static>
+        </component>
+      </tile>
+      <tile x="-12" y="-10">
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="StaticComponent">
+          <color r="48" g="138" b="51" a="255" />
+          <static>401</static>
+        </component>
+      </tile>
+      <tile x="-11" y="-10">
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-10" y="-10">
@@ -59502,135 +59427,63 @@
         </component>
       </tile>
       <tile x="-23" y="-9">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="48" g="138" b="51" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-22" y="-9">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="115" g="255" b="207" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-21" y="-9">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="48" g="138" b="51" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-20" y="-9">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="115" g="255" b="207" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-19" y="-9">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="48" g="138" b="51" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-18" y="-9">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="48" g="138" b="51" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-17" y="-9">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="115" g="255" b="207" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-16" y="-9">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="48" g="138" b="51" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-15" y="-9">
-        <component type="StaticComponent">
-          <color r="0" g="110" b="1" a="88" />
-          <static>187</static>
-        </component>
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-14" y="-9">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="48" g="138" b="51" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-13" y="-9">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="115" g="255" b="207" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-12" y="-9">
-        <component type="PoisonedWaterComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <ground>180</ground>
-          <movementCost>3</movementCost>
-        </component>
-        <component type="StaticComponent">
-          <color r="48" g="138" b="51" a="255" />
-          <static>401</static>
+        <component type="FloorComponent">
+          <ground>1003</ground>
         </component>
       </tile>
       <tile x="-11" y="-9">
@@ -60111,13 +59964,21 @@
         </component>
       </tile>
       <tile x="-7" y="-6">
+        <component type="StaticComponent">
+          <color r="115" g="255" b="207" a="255" />
+          <static>401</static>
+        </component>
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>375</ground>
         </component>
       </tile>
       <tile x="-6" y="-6">
+        <component type="StaticComponent">
+          <color r="115" g="255" b="207" a="255" />
+          <static>401</static>
+        </component>
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>375</ground>
         </component>
       </tile>
       <tile x="-5" y="-6">
@@ -60286,13 +60147,21 @@
         </component>
       </tile>
       <tile x="-7" y="-5">
+        <component type="StaticComponent">
+          <color r="115" g="255" b="207" a="255" />
+          <static>401</static>
+        </component>
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>375</ground>
         </component>
       </tile>
       <tile x="-6" y="-5">
+        <component type="StaticComponent">
+          <color r="115" g="255" b="207" a="255" />
+          <static>401</static>
+        </component>
         <component type="FloorComponent">
-          <ground>184</ground>
+          <ground>375</ground>
         </component>
       </tile>
       <tile x="-5" y="-5">
@@ -60458,6 +60327,11 @@
         <component type="FloorComponent">
           <ground>375</ground>
         </component>
+        <component type="WallComponent">
+          <wall>381</wall>
+          <destroyed>394</destroyed>
+          <ruins>44</ruins>
+        </component>
       </tile>
       <tile x="-8" y="-4">
         <component type="FloorComponent">
@@ -60473,6 +60347,11 @@
         <component type="FloorComponent">
           <ground>184</ground>
         </component>
+        <component type="WallComponent">
+          <wall>381</wall>
+          <destroyed>394</destroyed>
+          <ruins>44</ruins>
+        </component>
       </tile>
       <tile x="-5" y="-4">
         <component type="WallComponent">
@@ -60480,6 +60359,11 @@
           <destroyed>395</destroyed>
           <ruins>44</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>381</wall>
+          <destroyed>394</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="-48" y="-3">
@@ -61269,12 +61153,12 @@
         </component>
       </tile>
       <tile x="-47" y="0">
-        <component type="ObstructionComponent">
-          <obstruction>449</obstruction>
-        </component>
         <component type="WaterComponent">
           <ground>180</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>449</obstruction>
         </component>
       </tile>
       <tile x="-46" y="0">
@@ -62310,9 +62194,9 @@
       <tile x="7" y="2">
         <component type="RopeComponent">
           <color r="190" g="144" b="166" a="255" />
-          <destinationX>58</destinationX>
-          <destinationY>2</destinationY>
-          <destinationRegion>1</destinationRegion>
+          <destinationX>12</destinationX>
+          <destinationY>-11</destinationY>
+          <destinationRegion>3</destinationRegion>
           <teleporterId>237</teleporterId>
         </component>
         <component type="WallComponent">
@@ -62643,6 +62527,11 @@
         <component type="FloorComponent">
           <ground>184</ground>
         </component>
+        <component type="WallComponent">
+          <wall>381</wall>
+          <destroyed>394</destroyed>
+          <ruins>44</ruins>
+        </component>
       </tile>
       <tile x="-8" y="3">
         <component type="FloorComponent">
@@ -62661,6 +62550,11 @@
         <component type="FloorComponent">
           <ground>184</ground>
         </component>
+        <component type="WallComponent">
+          <wall>381</wall>
+          <destroyed>394</destroyed>
+          <ruins>44</ruins>
+        </component>
       </tile>
       <tile x="-5" y="3">
         <component type="WallComponent">
@@ -62668,6 +62562,11 @@
           <destroyed>395</destroyed>
           <ruins>44</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
+          <wall>381</wall>
+          <destroyed>394</destroyed>
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="0" y="3">
@@ -62949,12 +62848,12 @@
         </component>
       </tile>
       <tile x="-47" y="4">
-        <component type="ObstructionComponent">
-          <obstruction>449</obstruction>
-        </component>
         <component type="WaterComponent">
           <ground>180</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>449</obstruction>
         </component>
       </tile>
       <tile x="-46" y="4">
@@ -63012,9 +62911,9 @@
           <ground>184</ground>
         </component>
         <component type="WallComponent">
-          <wall>382</wall>
-          <destroyed>395</destroyed>
-          <ruins>44</ruins>
+          <wall>407</wall>
+          <destroyed>408</destroyed>
+          <ruins>0</ruins>
           <indestructible>true</indestructible>
         </component>
       </tile>
@@ -63259,15 +63158,13 @@
         </component>
       </tile>
       <tile x="-8" y="4">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>387</ground>
         </component>
       </tile>
       <tile x="-7" y="4">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>387</ground>
         </component>
       </tile>
       <tile x="-6" y="4">
@@ -63581,8 +63478,9 @@
         </component>
       </tile>
       <tile x="-38" y="5">
-        <component type="FloorComponent">
-          <ground>184</ground>
+        <component type="WaterComponent">
+          <ground>180</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-37" y="5">
@@ -63699,14 +63597,24 @@
         </component>
       </tile>
       <tile x="-20" y="5">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="0" g="110" b="1" a="88" />
+          <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-19" y="5">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="0" g="110" b="1" a="88" />
+          <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -63758,14 +63666,24 @@
         </component>
       </tile>
       <tile x="-12" y="5">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="0" g="110" b="1" a="88" />
+          <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-11" y="5">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="0" g="110" b="1" a="88" />
+          <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -63783,15 +63701,13 @@
         </component>
       </tile>
       <tile x="-8" y="5">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>387</ground>
         </component>
       </tile>
       <tile x="-7" y="5">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>387</ground>
         </component>
       </tile>
       <tile x="-6" y="5">
@@ -64064,12 +63980,12 @@
         </component>
       </tile>
       <tile x="-47" y="6">
-        <component type="ObstructionComponent">
-          <obstruction>449</obstruction>
-        </component>
         <component type="WaterComponent">
           <ground>180</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>449</obstruction>
         </component>
       </tile>
       <tile x="-46" y="6">
@@ -64134,8 +64050,9 @@
         </component>
       </tile>
       <tile x="-38" y="6">
-        <component type="FloorComponent">
-          <ground>184</ground>
+        <component type="WaterComponent">
+          <ground>180</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-37" y="6">
@@ -64238,14 +64155,24 @@
         </component>
       </tile>
       <tile x="-20" y="6">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="0" g="110" b="1" a="88" />
+          <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-19" y="6">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="0" g="110" b="1" a="88" />
+          <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -64297,14 +64224,20 @@
         </component>
       </tile>
       <tile x="-12" y="6">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="0" g="110" b="1" a="88" />
+          <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-11" y="6">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -64322,15 +64255,13 @@
         </component>
       </tile>
       <tile x="-8" y="6">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>387</ground>
         </component>
       </tile>
       <tile x="-7" y="6">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>387</ground>
         </component>
       </tile>
       <tile x="-6" y="6">
@@ -64868,14 +64799,20 @@
         </component>
       </tile>
       <tile x="-20" y="7">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-19" y="7">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="0" g="110" b="1" a="88" />
+          <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -64927,14 +64864,16 @@
         </component>
       </tile>
       <tile x="-12" y="7">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-11" y="7">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -64944,6 +64883,11 @@
           <destroyed>395</destroyed>
           <ruins>44</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-9" y="7">
@@ -64958,15 +64902,13 @@
         </component>
       </tile>
       <tile x="-8" y="7">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>387</ground>
         </component>
       </tile>
       <tile x="-7" y="7">
-        <component type="WaterComponent">
-          <ground>180</ground>
-          <movementCost>3</movementCost>
+        <component type="FloorComponent">
+          <ground>387</ground>
         </component>
       </tile>
       <tile x="-6" y="7">
@@ -64975,39 +64917,39 @@
         </component>
       </tile>
       <tile x="-5" y="7">
-        <component type="FloorComponent">
-          <ground>183</ground>
-        </component>
         <component type="StaticComponent">
-          <color r="76" g="255" b="70" a="255" />
+          <color r="115" g="255" b="207" a="255" />
           <static>401</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>375</ground>
         </component>
       </tile>
       <tile x="-4" y="7">
-        <component type="FloorComponent">
-          <ground>183</ground>
-        </component>
         <component type="StaticComponent">
-          <color r="76" g="255" b="70" a="255" />
+          <color r="115" g="255" b="207" a="255" />
           <static>401</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>375</ground>
         </component>
       </tile>
       <tile x="-3" y="7">
-        <component type="FloorComponent">
-          <ground>183</ground>
-        </component>
         <component type="StaticComponent">
-          <color r="76" g="255" b="70" a="255" />
+          <color r="115" g="255" b="207" a="255" />
           <static>401</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>375</ground>
         </component>
       </tile>
       <tile x="-2" y="7">
-        <component type="FloorComponent">
-          <ground>183</ground>
-        </component>
         <component type="StaticComponent">
-          <color r="76" g="255" b="70" a="255" />
+          <color r="115" g="255" b="207" a="255" />
           <static>401</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>375</ground>
         </component>
       </tile>
       <tile x="-1" y="7">
@@ -65462,14 +65404,20 @@
         </component>
       </tile>
       <tile x="-20" y="8">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-19" y="8">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="0" g="110" b="1" a="88" />
+          <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -65521,41 +65469,69 @@
         </component>
       </tile>
       <tile x="-12" y="8">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-11" y="8">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="0" g="110" b="1" a="88" />
+          <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-10" y="8">
-        <component type="WallComponent">
-          <wall>382</wall>
-          <destroyed>395</destroyed>
-          <ruins>44</ruins>
-          <indestructible>true</indestructible>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <color r="78" g="76" b="78" a="255" />
+          <obstruction>166</obstruction>
+        </component>
+        <component type="ObstructionComponent">
+          <color r="74" g="78" b="80" a="255" />
+          <obstruction>168</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="-9" y="8">
-        <component type="WallComponent">
-          <wall>382</wall>
-          <destroyed>395</destroyed>
-          <ruins>44</ruins>
-          <indestructible>true</indestructible>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <color r="65" g="70" b="67" a="255" />
+          <obstruction>166</obstruction>
+        </component>
+        <component type="ObstructionComponent">
+          <color r="65" g="69" b="65" a="255" />
+          <obstruction>168</obstruction>
+          <blockVision>true</blockVision>
         </component>
       </tile>
       <tile x="-8" y="8">
-        <component type="WaterComponent">
+        <component type="StaticComponent">
+          <color r="0" g="110" b="1" a="88" />
+          <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-7" y="8">
-        <component type="WaterComponent">
+        <component type="PoisonedWaterComponent">
+          <color r="159" g="255" b="165" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
@@ -65874,11 +65850,8 @@
         </component>
       </tile>
       <tile x="-44" y="9">
-        <component type="WallComponent">
-          <wall>382</wall>
-          <destroyed>395</destroyed>
-          <ruins>44</ruins>
-          <indestructible>true</indestructible>
+        <component type="FloorComponent">
+          <ground>264</ground>
         </component>
       </tile>
       <tile x="-43" y="9">
@@ -66020,14 +65993,16 @@
         </component>
       </tile>
       <tile x="-20" y="9">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-19" y="9">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -66092,41 +66067,58 @@
         </component>
       </tile>
       <tile x="-12" y="9">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-11" y="9">
+        <component type="StaticComponent">
+          <color r="0" g="110" b="1" a="88" />
+          <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="-10" y="9">
+        <component type="ObstructionComponent">
+          <color r="69" g="69" b="69" a="255" />
+          <obstruction>166</obstruction>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="-9" y="9">
+        <component type="ObstructionComponent">
+          <color r="69" g="67" b="69" a="255" />
+          <obstruction>166</obstruction>
+        </component>
         <component type="WaterComponent">
           <ground>602</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
-      <tile x="-10" y="9">
-        <component type="WallComponent">
-          <wall>382</wall>
-          <destroyed>395</destroyed>
-          <ruins>44</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
-      <tile x="-9" y="9">
-        <component type="WallComponent">
-          <wall>382</wall>
-          <destroyed>395</destroyed>
-          <ruins>44</ruins>
-          <indestructible>true</indestructible>
-        </component>
-      </tile>
       <tile x="-8" y="9">
-        <component type="WaterComponent">
+        <component type="StaticComponent">
+          <color r="0" g="110" b="1" a="88" />
+          <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-7" y="9">
-        <component type="WaterComponent">
+        <component type="PoisonedWaterComponent">
+          <color r="159" g="255" b="165" a="255" />
           <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
@@ -66446,17 +66438,8 @@
         </component>
       </tile>
       <tile x="-44" y="10">
-        <component type="WallComponent">
-          <wall>381</wall>
-          <destroyed>394</destroyed>
-          <ruins>44</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="WallComponent">
-          <wall>382</wall>
-          <destroyed>395</destroyed>
-          <ruins>44</ruins>
-          <indestructible>true</indestructible>
+        <component type="FloorComponent">
+          <ground>264</ground>
         </component>
       </tile>
       <tile x="-43" y="10">
@@ -66595,14 +66578,16 @@
         </component>
       </tile>
       <tile x="-20" y="10">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-19" y="10">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -66614,7 +66599,7 @@
           <indestructible>true</indestructible>
         </component>
         <component type="FloorComponent">
-          <ground>492</ground>
+          <ground>184</ground>
         </component>
       </tile>
       <tile x="-17" y="10">
@@ -66661,14 +66646,16 @@
         </component>
       </tile>
       <tile x="-12" y="10">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-11" y="10">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -66682,10 +66669,15 @@
       </tile>
       <tile x="-9" y="10">
         <component type="WallComponent">
+          <wall>381</wall>
+          <destroyed>394</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="WallComponent">
           <wall>382</wall>
           <destroyed>395</destroyed>
           <ruins>44</ruins>
-          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="-8" y="10">
@@ -67191,30 +67183,34 @@
         </component>
       </tile>
       <tile x="-21" y="11">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-20" y="11">
-        <component type="WaterComponent">
-          <ground>602</ground>
-          <movementCost>3</movementCost>
-        </component>
         <component type="StaticComponent">
           <color r="0" g="110" b="1" a="88" />
           <static>187</static>
         </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
+        </component>
       </tile>
       <tile x="-19" y="11">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-18" y="11">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -67223,8 +67219,9 @@
           <color r="0" g="110" b="1" a="88" />
           <static>187</static>
         </component>
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -67252,36 +67249,41 @@
           <color r="0" g="110" b="1" a="88" />
           <static>187</static>
         </component>
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-14" y="11">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-13" y="11">
-        <component type="WaterComponent">
-          <ground>602</ground>
-          <movementCost>3</movementCost>
-        </component>
         <component type="StaticComponent">
           <color r="0" g="110" b="1" a="88" />
           <static>187</static>
         </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
+        </component>
       </tile>
       <tile x="-12" y="11">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-11" y="11">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -67587,12 +67589,12 @@
         </component>
       </tile>
       <tile x="-39" y="12">
-        <component type="ObstructionComponent">
-          <obstruction>450</obstruction>
-        </component>
         <component type="WaterComponent">
           <ground>180</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="ObstructionComponent">
+          <obstruction>450</obstruction>
         </component>
       </tile>
       <tile x="-38" y="12">
@@ -67705,35 +67707,44 @@
         </component>
       </tile>
       <tile x="-21" y="12">
-        <component type="WaterComponent">
-          <ground>602</ground>
-          <movementCost>3</movementCost>
-        </component>
         <component type="StaticComponent">
           <color r="0" g="110" b="1" a="88" />
           <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-20" y="12">
-        <component type="WaterComponent">
-          <ground>602</ground>
-          <movementCost>3</movementCost>
-        </component>
         <component type="StaticComponent">
           <color r="0" g="110" b="1" a="88" />
           <static>187</static>
         </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
+        </component>
       </tile>
       <tile x="-19" y="12">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-18" y="12">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="0" g="110" b="1" a="88" />
+          <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
+          <potency>10</potency>
         </component>
       </tile>
       <tile x="-17" y="12">
@@ -67755,30 +67766,39 @@
         </component>
       </tile>
       <tile x="-14" y="12">
-        <component type="WaterComponent">
-          <ground>602</ground>
-          <movementCost>3</movementCost>
-        </component>
-      </tile>
-      <tile x="-13" y="12">
-        <component type="WaterComponent">
-          <ground>602</ground>
-          <movementCost>3</movementCost>
-        </component>
-      </tile>
-      <tile x="-12" y="12">
-        <component type="WaterComponent">
-          <ground>602</ground>
-          <movementCost>3</movementCost>
-        </component>
         <component type="StaticComponent">
           <color r="0" g="110" b="1" a="88" />
           <static>187</static>
         </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
+          <potency>10</potency>
+        </component>
+      </tile>
+      <tile x="-13" y="12">
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="-12" y="12">
+        <component type="StaticComponent">
+          <color r="0" g="110" b="1" a="88" />
+          <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
+        </component>
       </tile>
       <tile x="-11" y="12">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -68142,29 +68162,37 @@
         </component>
       </tile>
       <tile x="-21" y="13">
-        <component type="WaterComponent">
-          <ground>602</ground>
-          <movementCost>3</movementCost>
-        </component>
         <component type="StaticComponent">
           <color r="0" g="110" b="1" a="88" />
           <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-20" y="13">
-        <component type="WaterComponent">
-          <ground>602</ground>
-          <movementCost>3</movementCost>
-        </component>
         <component type="StaticComponent">
           <color r="0" g="110" b="1" a="88" />
           <static>187</static>
         </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
+        </component>
       </tile>
       <tile x="-19" y="13">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="0" g="110" b="1" a="88" />
+          <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
+          <potency>10</potency>
         </component>
       </tile>
       <tile x="-18" y="13">
@@ -68198,24 +68226,31 @@
         </component>
       </tile>
       <tile x="-13" y="13">
-        <component type="WaterComponent">
-          <ground>602</ground>
-          <movementCost>3</movementCost>
-        </component>
-      </tile>
-      <tile x="-12" y="13">
-        <component type="WaterComponent">
-          <ground>602</ground>
-          <movementCost>3</movementCost>
-        </component>
         <component type="StaticComponent">
           <color r="0" g="110" b="1" a="88" />
           <static>187</static>
         </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="-12" y="13">
+        <component type="StaticComponent">
+          <color r="0" g="110" b="1" a="88" />
+          <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
+        </component>
       </tile>
       <tile x="-11" y="13">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -68574,23 +68609,25 @@
         </component>
       </tile>
       <tile x="-21" y="14">
-        <component type="WaterComponent">
-          <ground>602</ground>
-          <movementCost>3</movementCost>
-        </component>
         <component type="StaticComponent">
           <color r="0" g="110" b="1" a="88" />
           <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-20" y="14">
-        <component type="WaterComponent">
-          <ground>602</ground>
-          <movementCost>3</movementCost>
-        </component>
         <component type="StaticComponent">
           <color r="0" g="110" b="1" a="88" />
           <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-19" y="14">
@@ -68650,18 +68687,20 @@
         </component>
       </tile>
       <tile x="-12" y="14">
-        <component type="WaterComponent">
-          <ground>602</ground>
-          <movementCost>3</movementCost>
-        </component>
         <component type="StaticComponent">
           <color r="0" g="110" b="1" a="88" />
           <static>187</static>
         </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
+        </component>
       </tile>
       <tile x="-11" y="14">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -68924,28 +68963,35 @@
         </component>
       </tile>
       <tile x="-21" y="15">
-        <component type="WaterComponent">
-          <ground>602</ground>
-          <movementCost>3</movementCost>
-        </component>
         <component type="StaticComponent">
           <color r="0" g="110" b="1" a="88" />
           <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-20" y="15">
-        <component type="WaterComponent">
-          <ground>602</ground>
-          <movementCost>3</movementCost>
-        </component>
         <component type="StaticComponent">
           <color r="0" g="110" b="1" a="88" />
           <static>187</static>
         </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
+        </component>
       </tile>
       <tile x="-19" y="15">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="StaticComponent">
+          <color r="0" g="110" b="1" a="88" />
+          <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -68994,24 +69040,31 @@
         </component>
       </tile>
       <tile x="-13" y="15">
-        <component type="WaterComponent">
-          <ground>602</ground>
-          <movementCost>3</movementCost>
-        </component>
-      </tile>
-      <tile x="-12" y="15">
-        <component type="WaterComponent">
-          <ground>602</ground>
-          <movementCost>3</movementCost>
-        </component>
         <component type="StaticComponent">
           <color r="0" g="110" b="1" a="88" />
           <static>187</static>
         </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
+        </component>
+      </tile>
+      <tile x="-12" y="15">
+        <component type="StaticComponent">
+          <color r="0" g="110" b="1" a="88" />
+          <static>187</static>
+        </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
+        </component>
       </tile>
       <tile x="-11" y="15">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -69439,36 +69492,41 @@
         </component>
       </tile>
       <tile x="-21" y="16">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-20" y="16">
-        <component type="WaterComponent">
-          <ground>602</ground>
-          <movementCost>3</movementCost>
-        </component>
         <component type="StaticComponent">
           <color r="0" g="110" b="1" a="88" />
           <static>187</static>
         </component>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
+          <movementCost>3</movementCost>
+        </component>
       </tile>
       <tile x="-19" y="16">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-18" y="16">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-17" y="16">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -69486,14 +69544,16 @@
         </component>
       </tile>
       <tile x="-15" y="16">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-14" y="16">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -69502,20 +69562,23 @@
           <color r="0" g="110" b="1" a="88" />
           <static>187</static>
         </component>
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-12" y="16">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="-11" y="16">
-        <component type="WaterComponent">
-          <ground>602</ground>
+        <component type="PoisonedWaterComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <ground>180</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -87590,7 +87653,7 @@ if (spokeRecently(source))
         MaxMana = 15, Mana = 15,
         BaseDodge = 22,
         BasePenetration = ShieldPenetration.Light,
-        Body = 390,
+        Body = 389,
         Experience = 6018,
         VisibilityDistance = 3,
         HideDetection = 31
@@ -87774,11 +87837,11 @@ if (spokeRecently(source))
     var fippy = new ElderTroll()
     {
         Name = "Captain of the Guard",
-        MaxHealth = 1950, Health = 1950,
+        MaxHealth = 2950, Health = 2950,
         BaseDodge = 27,
         Body = 385,
         HideDetection = 24,
-        Experience = 71000,
+        Experience = 91000,
         
         VisibilityDistance = 3,
        
@@ -87852,7 +87915,7 @@ if (spokeRecently(source))
 if (spokeRecently(source))
         return;
 
-    source.Say($"What are you doing down here??? I will silence you before you can tell your kind what is happening here!!"); 
+    source.Say($"What are you doing down here?! I will silence you before you can tell your kind what is happening here!!"); 
 
 ]]></block>
         <block><![CDATA[]]></block>
@@ -87929,7 +87992,7 @@ if (spokeRecently(source))
 	
     var fippy = new ElderTroll()
     {
-        Name = "Gnoll Guard",
+        Name = "Gnoll Raider",
         MaxHealth = 140, Health = 140,
         BaseDodge = 23,
         HideDetection = 24,
@@ -87951,15 +88014,15 @@ if (spokeRecently(source))
     fippy.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(14,      10, 21,      "The Officer Barks and gnashes you with his fangs",
+            new CreatureAttack(14,      10, 21,      "The Raider Barks and gnashes you with his fangs",
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(14,      15, 21,     "The Officer slashes you with his razor sharp claws.",
+            new CreatureAttack(14,      15, 21,     "The Raider slashes you with his razor sharp claws.",
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(15,      20, 21,     "The Officer impales you with his claws.",
+            new CreatureAttack(15,      20, 21,     "The Raider impales you with his claws.",
                                                         new AttackStunComponent(15)),               20
         },
     };
@@ -87992,7 +88055,7 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnIncomingPlayer" enabled="true">
+      <script name="OnIncomingPlayer" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 
@@ -88079,7 +88142,7 @@ if (spokeRecently(source))
     {
         Name = "LockJaw",
         BaseDodge = 31,
-        MaxHealth = 2700, Health = 2700,
+        MaxHealth = 3700, Health = 3700,
         HideDetection = 33,
         BasePenetration = ShieldPenetration.Medium,
         CanSwim = true,
@@ -88100,7 +88163,7 @@ if (spokeRecently(source))
             new CreatureAttack(22,     30, 60,   "LockJaw snaps his massive jaws shut upon you."), 60 
         },
         { 
-            new CreatureAttack(22,     40, 77,  "LockJaw Crushes you with its tail."),               40 
+            new CreatureAttack(22,     40, 77,  "LockJaw CRUSHES you with its tail."),               40 
         },
     };
     
@@ -88393,7 +88456,7 @@ return skeleton;
 	
     var fippy = new ElderTroll()
     {
-        Name = "Gnoll Handler",
+        Name = "Gnoll Worg Handler",
         MaxHealth = 208, Health = 208,
         BaseDodge = 28,
         HideDetection = 31,
@@ -88415,15 +88478,15 @@ return skeleton;
     fippy.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(17,      20, 31,      "The Officer Barks and gnashes you with his fangs",
+            new CreatureAttack(19,      20, 31,      "The Handler Barks and gnashes you with his fangs",
                                                         new AttackStunComponent(5)),                40
         },
         {
-            new CreatureAttack(17,      20, 31,     "The Officer slashes you with his razor sharp claws.",
+            new CreatureAttack(19,      20, 31,     "The Handler slashes you with his razor sharp claws.",
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(18,      30, 31,     "The Officer impales you with his claws.",
+            new CreatureAttack(20,      30, 31,     "The Handler impales you with his claws.",
                                                         new AttackStunComponent(15)),               20
         },
     };
@@ -88482,6 +88545,7 @@ if (spokeRecently(source))
         HideDetection = 35,
         Experience = 25600,
         CanCharge = true,
+        CanSwim = true,
         
         BasePenetration = ShieldPenetration.Medium,
     
@@ -89024,7 +89088,7 @@ dragon.Spells = new CreatureSpellCollection(20.0)
     
     {
         new CreatureSpell<PoisonCloudSpell>(
-        skillLevel: 3), 20, TimeSpan.Zero
+        skillLevel: 6), 20, TimeSpan.Zero
     },
     
     {
@@ -89336,7 +89400,7 @@ if (spokeRecently(source))
         <block><![CDATA[
 	 var worg = new BlackWolf()
     {
-        Name = "Lightning Puppy",
+        Name = "Worg pup",
         MaxHealth = 130, Health = 130,
         BaseDodge = 22,
     
@@ -91287,10 +91351,10 @@ if (spokeRecently(source))
     var fippy = new ElderTroll()
     {
         Name = "Crazed Gnoll Miner",
-        MaxHealth = 1869, Health = 1869,
+        MaxHealth = 3869, Health = 3869,
         BaseDodge = 24,
         HideDetection = 24,
-        Experience = 70578,
+        Experience = 130578,
         Body = 383,
         VisibilityDistance = 3,
        
@@ -91368,11 +91432,11 @@ if (spokeRecently(source))
     var shelob = new Spider()
     {
         Name = "Clutch Mother",
-        MaxHealth = 1682, Health = 1682,
+        MaxHealth = 3682, Health = 3682,
         BaseDodge = 25,
         Movement = 3,
     
-        Experience = 90000,
+        Experience = 130000,
         BasePenetration = ShieldPenetration.Medium,
         CanCharge = true,
         CanLoot = false,
@@ -91438,6 +91502,7 @@ if (spokeRecently(source))
         Experience = 123000,
        
         CanCharge = true,
+        CanSwim = true,
                 
         BasePenetration = ShieldPenetration.Heavy,
 
@@ -91451,7 +91516,7 @@ if (spokeRecently(source))
     swordmaster.Attacks = new CreatureAttackCollection()
     {
         new CreatureAttack(19,    55, 77,     "The Brewmaster smashes you with the surrounding kegs.",
-                                                    new AttackPoisonComponent(10))
+                                                    new AttackPoisonComponent(12))
     };
     
     swordmaster.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
@@ -91494,7 +91559,7 @@ if (spokeRecently(source))
 {
     Name = "Potion Master Nook",
     Alignment = Alignment.Chaotic,
-    Body = 388,
+    Body = 387,
     MaxHealth = 18000, Health = 18000,
     BaseDodge = 37,
     BasePenetration = ShieldPenetration.Heavy,
@@ -94730,6 +94795,7 @@ return dragon;
       </script>
       <entry entity="Level15HighGnollWorgHandle" size="1" minimum="8" maximum="8" />
       <entry entity="Level15ExtremeWorg" size="1" minimum="8" maximum="8" />
+      <entry entity="Level14NormGnollGuard" size="2" minimum="4" maximum="4" />
       <bounds region="4">
         <inclusion left="-46" top="-17" right="-17" bottom="1" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -94754,6 +94820,7 @@ return dragon;
       </script>
       <entry entity="Level15HighGnollWorgHandle" size="1" minimum="8" maximum="8" />
       <entry entity="Level15ExtremeWorg" size="1" minimum="8" maximum="8" />
+      <entry entity="Level14NormGnollGuard" size="2" minimum="4" maximum="4" />
       <bounds region="4">
         <inclusion left="-49" top="2" right="-29" bottom="25" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -94778,6 +94845,7 @@ return dragon;
       </script>
       <entry entity="Level15ExtremeWorg" size="1" minimum="4" maximum="4" />
       <entry entity="Level15HighGnollWorgHandle" size="1" minimum="4" maximum="4" />
+      <entry entity="Level14NormGnollGuard" size="2" minimum="2" maximum="2" />
       <bounds region="4">
         <inclusion left="-28" top="16" right="-13" bottom="31" />
         <exclusion left="0" top="0" right="0" bottom="0" />
