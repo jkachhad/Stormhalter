@@ -158,25 +158,21 @@
         
         public override int ProtectionFromStun => 10;
 
-        public override int MagicProtection => GetMagicalProtectionFromPlayer(Parent);
+        public override int MagicProtection => GetMagicalProtectionFromPlayer();
        
-        public int GetMagicalProtectionFromPlayer(MobileEntity entity)
+        public int GetMagicalProtectionFromPlayer()
         {
+			var entity = Parent;
+			
+			if (entity is null) /* This will likely never occur? */
+				return 33;
+			
             var magicProtection = 0;
 
-            if (entity == null)
-            {
-                magicProtection = 33;
-                return magicProtection;
-            }
-
             if (entity is PlayerEntity player)
-            {
-                var skillLevel = entity.GetSkillLevel(Skill.Magic);
-                magicProtection = Math.Round(skillLevel * 2);
-            }
-         
-            return magicProtection;
+                return Math.Round(entity.GetSkillLevel(Skill.Magic) * 2);
+
+            return 0;
         }
            
 
