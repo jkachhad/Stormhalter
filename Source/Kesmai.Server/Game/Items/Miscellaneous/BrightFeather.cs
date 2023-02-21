@@ -14,6 +14,9 @@ namespace Kesmai.Server.Items
 		public override uint BasePrice => 300;
 
 		/// <inheritdoc />
+		public override int Category => 3;
+
+		/// <inheritdoc />
 		public override bool CanBind => true;
 
 		public BrightFeather() : base(397)
