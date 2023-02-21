@@ -259,13 +259,16 @@
                             if (quest != null && quest.InProgress(source) && !quest.IsComplete(source))
                             {
                                 quest.Complete(source);
-                                
                             }
                             
                             if (quest.IsComplete(source))
                             {
                                 gauntlets.Move(counter, true, Segment);
                                 gauntlets.Bind(source);
+                            }
+                            else
+                            {
+                                SayTo(source, 6300422); /* Bring me silk finery and an idol of worship. */
                             }
                                 
                         }
