@@ -228,7 +228,7 @@
         {
             var quest = Quests.GetQuest<CrystalGauntletsQuest>();
             
-            if (quest == null && !quest.IsComplete(source))
+            if (quest == null)
             {
                 /* need to replace this stuff with: Go talk to Yuri, bro/sis. He can give you the quest*/
             
