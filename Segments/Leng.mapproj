@@ -226,6 +226,20 @@
         
         public override void HandleOrder(OrderEventArgs args)
         {
+            var quest = Quests.GetQuest<CrystalGauntletsQuest>();
+            
+            if (!quest.IsKonranRescued(player))
+            {
+                SayTo(player, 6300414); /* I ask that you rescue Konran and help him return home. He shall give you silk finery. */
+                return;
+            }              
+            else if (!quest.IsShidoshaSlain(player))
+            {
+                 SayTo(player, 6300415); /* To be considered worthy, slay the ninja shidosha in Leng and retrieve our idol of worship. */
+                 return;
+            }
+                      
+        
             base.HandleOrder(args);
 
             if (args.Handled)
@@ -256,8 +270,6 @@
                             gauntlets.Bind(source);
 
                             SayTo(source, 6300349); /* Wield this weapon with courage and honor. */
-                            
-                            var quest = Quests.GetQuest<CrystalGauntletsQuest>();
                             
                             if (quest != null && quest.InProgress(source) && !quest.IsComplete(source))
                                 quest.Complete(source);
