@@ -259,10 +259,14 @@
                             if (quest != null && quest.InProgress(source) && !quest.IsComplete(source))
                             {
                                 quest.Complete(source);
+                                
+                            }
+                            
+                            if (quest.IsComplete(source))
+                            {
                                 gauntlets.Move(counter, true, Segment);
                                 gauntlets.Bind(source);
                             }
-                                
                                 
                         }
                     }
