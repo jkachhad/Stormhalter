@@ -228,6 +228,15 @@
         {
             var quest = Quests.GetQuest<CrystalGauntletsQuest>();
             
+            if (quest == null)
+            {
+                /* need to replace this stuff with: Go talk to Yuri, bro/sis. He can give you the quest*/
+            
+                SayTo(player, 6300414); /* I ask that you rescue Konran and help him return home. He shall give you silk finery. */
+                SayTo(player, 6300415); /* To be considered worthy, slay the ninja shidosha in Leng and retrieve our idol of worship. */
+                return;
+            }
+            
             if (!quest.IsKonranRescued(player))
             {
                 SayTo(player, 6300414); /* I ask that you rescue Konran and help him return home. He shall give you silk finery. */
