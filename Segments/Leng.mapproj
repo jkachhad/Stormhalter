@@ -234,6 +234,8 @@
             var source = args.Source;
             var order = args.Order;
             
+            var quest = Quests.GetQuest<CrystalGauntletsQuest>();
+            
             /* example: craft broadsword */
             if (_craft.TryGetMatch(order, out var craftMatch) && craftMatch.Groups[1].Value.Matches("gauntlets", true))
             {
@@ -250,17 +252,18 @@
                     {
                         if (ConsumeFromLocation<Buddah>(counter, 1) && ConsumeFromLocation(counter, "SilkFinery", 1))
                         {
-                            var gauntlets = new CrystalGauntlets();
-                            
-                            gauntlets.Move(counter, true, Segment);
-                            gauntlets.Bind(source);
+                            var gauntlets = new CrystalGauntlets();        
 
                             SayTo(source, 6300349); /* Wield this weapon with courage and honor. */
                             
-                            var quest = Quests.GetQuest<CrystalGauntletsQuest>();
-                            
                             if (quest != null && quest.InProgress(source) && !quest.IsComplete(source))
+                            {
                                 quest.Complete(source);
+                                gauntlets.Move(counter, true, Segment);
+                                gauntlets.Bind(source);
+                            }
+                                
+                                
                         }
                     }
                     else
