@@ -269,8 +269,6 @@
                 
                 if (AtCounter(source, out var counter))
                 {
-                    
-                        
                     var items = Segment.GetItemsAt(Location).ToList();
 
                     var buddha = items.OfType<Buddah>();
