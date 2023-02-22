@@ -11710,6 +11710,9 @@
         <component type="StaticComponent">
           <static>7</static>
         </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="47" y="-4">
         <component type="FloorComponent">
@@ -12090,6 +12093,9 @@
         <component type="StaticComponent">
           <static>7</static>
         </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="45" y="-3">
         <component type="FloorComponent">
@@ -12097,6 +12103,9 @@
         </component>
         <component type="StaticComponent">
           <static>7</static>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="46" y="-3">
@@ -12524,6 +12533,9 @@
         <component type="StaticComponent">
           <static>7</static>
         </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="46" y="-2">
         <component type="WallComponent">
@@ -12553,6 +12565,9 @@
         </component>
         <component type="StaticComponent">
           <static>7</static>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="49" y="-2">
@@ -12605,6 +12620,9 @@
         <component type="StaticComponent">
           <static>7</static>
         </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="55" y="-2">
         <component type="FloorComponent">
@@ -12612,6 +12630,9 @@
         </component>
         <component type="StaticComponent">
           <static>7</static>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="56" y="-2">
@@ -12626,6 +12647,9 @@
         </component>
         <component type="StaticComponent">
           <static>7</static>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="57" y="-2">
@@ -12999,6 +13023,9 @@
         <component type="StaticComponent">
           <static>7</static>
         </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="44" y="-1">
         <component type="WallComponent">
@@ -13059,6 +13086,9 @@
         </component>
         <component type="StaticComponent">
           <static>7</static>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="49" y="-1">
@@ -13136,6 +13166,9 @@
         <component type="StaticComponent">
           <static>7</static>
         </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="57" y="-1">
         <component type="WallComponent">
@@ -13149,6 +13182,9 @@
         </component>
         <component type="StaticComponent">
           <static>7</static>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="58" y="-1">
@@ -13450,6 +13486,9 @@
         <component type="StaticComponent">
           <static>7</static>
         </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="44" y="0">
         <component type="FloorComponent">
@@ -13457,6 +13496,9 @@
         </component>
         <component type="StaticComponent">
           <static>7</static>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="45" y="0">
@@ -13496,6 +13538,9 @@
         </component>
         <component type="StaticComponent">
           <static>7</static>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="48" y="0">
@@ -13600,6 +13645,9 @@
         <component type="StaticComponent">
           <static>7</static>
         </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="57" y="0">
         <component type="FloorComponent">
@@ -13607,6 +13655,9 @@
         </component>
         <component type="StaticComponent">
           <static>7</static>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="58" y="0">
@@ -13923,6 +13974,9 @@
         <component type="StaticComponent">
           <static>7</static>
         </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
+        </component>
       </tile>
       <tile x="47" y="1">
         <component type="FloorComponent">
@@ -13930,6 +13984,9 @@
         </component>
         <component type="StaticComponent">
           <static>7</static>
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="48" y="1">
@@ -14296,6 +14353,9 @@
           <moonphases select="all" />
           <professions select="all" />
           <alignments select="all" />
+        </component>
+        <component type="Darkness">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="49" y="2">
@@ -51304,10 +51364,12 @@
           <ground>183</ground>
         </component>
         <component type="DoorComponent">
+          <color r="121" g="121" b="121" a="255" />
           <openId>74</openId>
           <closedId>413</closedId>
           <secretId>25</secretId>
           <destroyedId>80</destroyedId>
+          <isSecret>true</isSecret>
         </component>
       </tile>
       <tile x="2" y="13">
@@ -64312,7 +64374,7 @@
           <indestructible>true</indestructible>
         </component>
         <component type="RopeComponent">
-          <color r="94" g="91" b="96" a="255" />
+          <color r="0" g="0" b="0" a="255" />
           <destinationX>1</destinationX>
           <destinationY>7</destinationY>
           <destinationRegion>5</destinationRegion>
@@ -86965,9 +87027,10 @@
     </subregion>
     <subregion name="Bossman" type="Lair" region="4">
       <rectangles>
-        <rectangle left="16" top="3" right="21" bottom="15" />
+        <rectangle left="16" top="3" right="21" bottom="18" />
         <rectangle left="27" top="4" right="34" bottom="13" />
         <rectangle left="22" top="8" right="26" bottom="9" />
+        <rectangle left="3" top="2" right="15" bottom="16" />
       </rectangles>
     </subregion>
     <subregion name="Jym" type="Lair" region="4">
@@ -86983,6 +87046,16 @@
     <subregion name="FroggoLair" type="None" region="7">
       <rectangles>
         <rectangle left="39" top="-28" right="46" bottom="-22" />
+      </rectangles>
+    </subregion>
+    <subregion name="Potion Pit" type="Lair" region="5">
+      <rectangles>
+        <rectangle left="-56" top="-19" right="-1" bottom="17" />
+      </rectangles>
+    </subregion>
+    <subregion name="Undead Corridors" type="Lair" region="4">
+      <rectangles>
+        <rectangle left="-8" top="1" right="2" bottom="24" />
       </rectangles>
     </subregion>
   </subregions>
@@ -87597,6 +87670,7 @@ if (spokeRecently(source))
         Movement = 2,
         BasePenetration = ShieldPenetration.Medium,
     };
+    GnollGuard.AddImmunity(typeof(Lightning));
     
     GnollGuard.Attacks = new CreatureAttackCollection()
       {
@@ -87765,6 +87839,7 @@ if (spokeRecently(source))
         BasePenetration = ShieldPenetration.Medium,
 
     };
+    fippy.AddImmunity(typeof(Lightning));
     
     fippy.AddStatus(new NightVisionStatus(fippy));
     fippy.AddStatus(new BreatheWaterStatus(fippy));
@@ -88005,6 +88080,7 @@ if (spokeRecently(source))
         BasePenetration = ShieldPenetration.Medium,
 
     };
+    fippy.AddImmunity(typeof(Lightning));
     
     fippy.AddStatus(new NightVisionStatus(fippy));
     fippy.AddStatus(new BreatheWaterStatus(fippy));
@@ -88472,6 +88548,7 @@ return skeleton;
     fippy.AddStatus(new NightVisionStatus(fippy));
     fippy.AddStatus(new BreatheWaterStatus(fippy));
     fippy.AddImmunity(typeof(LightningBoltSpell));
+    fippy.AddImmunity(typeof(Lightning));
     
     fippy.CombatantChangeInterval = TimeSpan.FromSeconds(4.0);
     
@@ -93348,7 +93425,7 @@ return dragon;
         <block><![CDATA[]]></block>
       </script>
       <entry entity="BossMajorLevel17PotionMaster" size="1" minimum="1" maximum="1" />
-      <location x="-16" y="13" region="5" />
+      <location x="-16" y="15" region="5" />
     </spawn>
     <spawn type="LocationSpawner" name="AncientMessage">
       <minimumDelay>900</minimumDelay>
