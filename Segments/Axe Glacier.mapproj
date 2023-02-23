@@ -47449,11 +47449,18 @@
         <component type="FloorComponent">
           <ground>179</ground>
         </component>
-        <component type="StaircaseComponent">
+        <component type="HiddenTeleporterComponent">
           <destinationX>1</destinationX>
           <destinationY>1</destinationY>
           <destinationRegion>2</destinationRegion>
-          <teleporterId>126</teleporterId>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+          <level>19</level>
+        </component>
+        <component type="StaticComponent">
+          <static>167</static>
         </component>
       </tile>
       <tile x="21" y="39">
@@ -90156,11 +90163,18 @@
         <component type="FloorComponent">
           <ground>264</ground>
         </component>
-        <component type="StaircaseComponent">
+        <component type="HiddenTeleporterComponent">
           <destinationX>20</destinationX>
           <destinationY>39</destinationY>
           <destinationRegion>10</destinationRegion>
-          <teleporterId>127</teleporterId>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+          <level>19</level>
+        </component>
+        <component type="StaticComponent">
+          <static>167</static>
         </component>
       </tile>
       <tile x="2" y="1">
@@ -108305,6 +108319,7 @@
         BaseDodge = 23,
         HideDetection = 31,
         BasePenetration = ShieldPenetration.Medium,
+        
         Experience = 13095,
         Movement = 2,
         Hue = Color.FromArgb(175, 255, 175, 255),
@@ -108415,7 +108430,7 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	var draugr = new Spectre()
+	var spectre = new Spectre()
     {
         Name = "ancient spectre",
 
@@ -108434,25 +108449,27 @@
         IceProtection = 100,
     };
 
-    draugr.Attacks = new CreatureAttackCollection()
+    spectre.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(16)
     };
     
-    draugr.AddImmunity(typeof(PoisonCloudSpell));
+    spectre.AddImmunity(typeof(PoisonCloudSpell));
     
-    draugr.Spells = new CreatureSpellCollection()
+    spectre.Spells = new CreatureSpellCollection()
     {
-        new CreatureSpell<IceStormSpell>(
-            skillLevel: 30, cost: 7,
-            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+       {
+            new CreatureSpell<IceStormSpell>(
+                skillLevel: 19, cost: 7, 
+                mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 
+       }
     };
 
-    draugr.Wield(new SpikedFlail());
-    draugr.Equip(new LeatherArmor());
+    spectre.Wield(new SpikedFlail());
+    spectre.Equip(new LeatherArmor());
     
-    draugr.AddGold(120);
-    draugr.AddLoot(new LootPack(
+    spectre.AddGold(120);
+    spectre.AddLoot(new LootPack(
         new LootPackEntry(true, UndeadGems,       4.5,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, AxeBottles,    20),
         new LootPackEntry(true, UtilityItems,    1),
@@ -108461,7 +108478,7 @@
         new LootPackEntry(true, (from, container) => new YouthPotion(), 0.4)
     ));
 
-    return draugr;
+    return spectre;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -108634,6 +108651,7 @@
         Experience = 11170,
         
         MaxMana = 21, Mana = 21,
+        IceProtection = 100,
             
     };
     
@@ -108695,6 +108713,7 @@
         BaseDodge = 25,
         Body = 242,
         BasePenetration = ShieldPenetration.Light,
+        IceProtection = 100,
         Experience = 10399,
     };
     
