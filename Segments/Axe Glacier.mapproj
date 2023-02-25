@@ -47450,14 +47450,14 @@
           <ground>179</ground>
         </component>
         <component type="HiddenTeleporterComponent">
-          <destinationX>1</destinationX>
+          <destinationX>2</destinationX>
           <destinationY>1</destinationY>
           <destinationRegion>2</destinationRegion>
           <lightphases select="all" />
           <moonphases select="all" />
           <professions select="all" />
           <alignments select="all" />
-          <level>19</level>
+          <level>17</level>
         </component>
         <component type="StaticComponent">
           <static>167</static>
@@ -90160,34 +90160,28 @@
         </component>
       </tile>
       <tile x="1" y="1">
-        <component type="FloorComponent">
-          <ground>264</ground>
+        <component type="StaticComponent">
+          <static>167</static>
         </component>
-        <component type="HiddenTeleporterComponent">
+        <component type="SkyComponent">
+          <color r="0" g="0" b="0" a="0" />
           <destinationX>20</destinationX>
           <destinationY>39</destinationY>
           <destinationRegion>10</destinationRegion>
-          <lightphases select="all" />
-          <moonphases select="all" />
-          <professions select="all" />
-          <alignments select="all" />
-          <level>19</level>
-        </component>
-        <component type="StaticComponent">
-          <static>167</static>
+          <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="2" y="1">
         <component type="FloorComponent">
           <ground>264</ground>
         </component>
-        <component type="RuinsComponent">
-          <ruins>44</ruins>
-        </component>
       </tile>
       <tile x="3" y="1">
         <component type="FloorComponent">
           <ground>264</ground>
+        </component>
+        <component type="RuinsComponent">
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="4" y="1">
