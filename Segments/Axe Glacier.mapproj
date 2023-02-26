@@ -47449,11 +47449,18 @@
         <component type="FloorComponent">
           <ground>179</ground>
         </component>
-        <component type="StaircaseComponent">
-          <destinationX>1</destinationX>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>2</destinationX>
           <destinationY>1</destinationY>
           <destinationRegion>2</destinationRegion>
-          <teleporterId>126</teleporterId>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+          <level>17</level>
+        </component>
+        <component type="StaticComponent">
+          <static>167</static>
         </component>
       </tile>
       <tile x="21" y="39">
@@ -90153,27 +90160,28 @@
         </component>
       </tile>
       <tile x="1" y="1">
-        <component type="FloorComponent">
-          <ground>264</ground>
+        <component type="StaticComponent">
+          <static>167</static>
         </component>
-        <component type="StaircaseComponent">
+        <component type="SkyComponent">
+          <color r="0" g="0" b="0" a="0" />
           <destinationX>20</destinationX>
           <destinationY>39</destinationY>
           <destinationRegion>10</destinationRegion>
-          <teleporterId>127</teleporterId>
+          <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="2" y="1">
         <component type="FloorComponent">
           <ground>264</ground>
         </component>
-        <component type="RuinsComponent">
-          <ruins>44</ruins>
-        </component>
       </tile>
       <tile x="3" y="1">
         <component type="FloorComponent">
           <ground>264</ground>
+        </component>
+        <component type="RuinsComponent">
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="4" y="1">
@@ -108305,6 +108313,7 @@
         BaseDodge = 23,
         HideDetection = 31,
         BasePenetration = ShieldPenetration.Medium,
+        
         Experience = 13095,
         Movement = 2,
         Hue = Color.FromArgb(175, 255, 175, 255),
@@ -108415,7 +108424,7 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-	var draugr = new Spectre()
+	var spectre = new Spectre()
     {
         Name = "ancient spectre",
 
@@ -108434,25 +108443,27 @@
         IceProtection = 100,
     };
 
-    draugr.Attacks = new CreatureAttackCollection()
+    spectre.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(16)
     };
     
-    draugr.AddImmunity(typeof(PoisonCloudSpell));
+    spectre.AddImmunity(typeof(PoisonCloudSpell));
     
-    draugr.Spells = new CreatureSpellCollection()
+    spectre.Spells = new CreatureSpellCollection()
     {
-        new CreatureSpell<IceStormSpell>(
-            skillLevel: 30, cost: 7,
-            mantra: SpellHelper.GenerateMantra(), instantCast: false)
+       {
+            new CreatureSpell<IceStormSpell>(
+                skillLevel: 19, cost: 7, 
+                mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 
+       }
     };
 
-    draugr.Wield(new SpikedFlail());
-    draugr.Equip(new LeatherArmor());
+    spectre.Wield(new SpikedFlail());
+    spectre.Equip(new LeatherArmor());
     
-    draugr.AddGold(120);
-    draugr.AddLoot(new LootPack(
+    spectre.AddGold(120);
+    spectre.AddLoot(new LootPack(
         new LootPackEntry(true, UndeadGems,       4.5,     gemsPriceMutatorNormal), 
         new LootPackEntry(true, AxeBottles,    20),
         new LootPackEntry(true, UtilityItems,    1),
@@ -108461,7 +108472,7 @@
         new LootPackEntry(true, (from, container) => new YouthPotion(), 0.4)
     ));
 
-    return draugr;
+    return spectre;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -108634,6 +108645,7 @@
         Experience = 11170,
         
         MaxMana = 21, Mana = 21,
+        IceProtection = 100,
             
     };
     
@@ -108695,6 +108707,7 @@
         BaseDodge = 25,
         Body = 242,
         BasePenetration = ShieldPenetration.Light,
+        IceProtection = 100,
         Experience = 10399,
     };
     
