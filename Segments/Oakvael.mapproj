@@ -80239,7 +80239,7 @@
     <region>
       <id>236</id>
       <name>Grove</name>
-      <height>-230</height>
+      <height>-210</height>
       <level>26</level>
       <tile x="42" y="-22">
         <component type="WallComponent">
@@ -113208,7 +113208,7 @@
         new CreatureBasicAttack(14)
     };
     
-    banshee.Spells = new CreatureSpellCollection()
+    banshee.Spells = new CreatureSpellCollection(90.0)
     {
         { new CreatureSpell<CurseSpell>(
             skillLevel: 2, cost: 3), 100, TimeSpan.FromSeconds(1.0) }
@@ -117268,7 +117268,7 @@
     <spawn type="RegionSpawner" name="serpentsSeaSpawner">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>41</maximum>
+      <maximum>31</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -117577,7 +117577,7 @@
     <spawn type="RegionSpawner" name="serpentsSeaNorthwest">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>25</maximum>
+      <maximum>15</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -117609,7 +117609,7 @@
     <spawn type="RegionSpawner" name="serpentsSeaNortheast">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>25</maximum>
+      <maximum>15</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -117642,7 +117642,7 @@
     <spawn type="RegionSpawner" name="serpentsSeaSouthwest">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>25</maximum>
+      <maximum>15</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -117674,7 +117674,7 @@
     <spawn type="RegionSpawner" name="serpentsSeaSoutheast">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>25</maximum>
+      <maximum>15</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
