@@ -89122,6 +89122,7 @@ return elemental;
 
 dragon.AddStatus(new NightVisionStatus(dragon));
 dragon.AddStatus(new BreatheWaterStatus(dragon));
+dragon.AddStatus(new BlindFearProtectionStatus(dragon));
 
 dragon.AddImmunity(typeof(BlindSpell));
 dragon.AddImmunity(typeof(FearSpell));
