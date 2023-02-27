@@ -103098,14 +103098,15 @@ var gargoyle = new Gargoyle()
     {
         MaxHealth = 130, Health = 130,
         BaseDodge = 21,
-        HideDetection = 25,
+        HideDetection = 3,
+        IsInvulnerable = true,
         Experience = 1,
         BasePenetration = ShieldPenetration.Medium,
     };
     
     hobgoblin.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(13)
+        new CreatureBasicAttack(3)
     };
     
     hobgoblin.Wield(new Longsword());
@@ -104518,7 +104519,7 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level13SpeedyHob" size="4" minimum="1" maximum="1" />
+      <entry entity="level13SpeedyHob" size="1" minimum="1" maximum="1" />
       <location x="3" y="13" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="lowerKoboldTownFolkSouthEast">
