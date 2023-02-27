@@ -73358,11 +73358,21 @@
         </component>
       </tile>
       <tile x="14" y="41">
-        <component type="StaircaseComponent">
-          <destinationX>14</destinationX>
+        <component type="FloorComponent">
+          <ground>179</ground>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>15</destinationX>
           <destinationY>4</destinationY>
           <destinationRegion>236</destinationRegion>
-          <teleporterId>123</teleporterId>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+          <level>17</level>
+        </component>
+        <component type="StaticComponent">
+          <static>167</static>
         </component>
       </tile>
       <tile x="15" y="41">
@@ -80229,7 +80239,7 @@
     <region>
       <id>236</id>
       <name>Grove</name>
-      <height>-230</height>
+      <height>-210</height>
       <level>26</level>
       <tile x="42" y="-22">
         <component type="WallComponent">
@@ -87317,13 +87327,38 @@
           <static>226</static>
         </component>
       </tile>
-      <tile x="17" y="3">
+      <tile x="16" y="3">
+        <component type="StaticComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <static>23</static>
+        </component>
         <component type="WallComponent">
           <color r="255" g="210" b="95" a="255" />
-          <wall>159</wall>
+          <wall>157</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
           <indestructible>true</indestructible>
+        </component>
+        <component type="StaticComponent">
+          <color r="0" g="200" b="0" a="255" />
+          <static>226</static>
+        </component>
+      </tile>
+      <tile x="17" y="3">
+        <component type="StaticComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <static>23</static>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="210" b="95" a="255" />
+          <wall>157</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="StaticComponent">
+          <color r="0" g="200" b="0" a="255" />
+          <static>226</static>
         </component>
       </tile>
       <tile x="18" y="3">
@@ -88010,28 +88045,27 @@
         </component>
       </tile>
       <tile x="14" y="4">
-        <component type="StaircaseComponent">
+        <component type="StaticComponent">
+          <static>167</static>
+        </component>
+        <component type="SkyComponent">
+          <color r="0" g="0" b="0" a="0" />
           <destinationX>14</destinationX>
           <destinationY>41</destinationY>
           <destinationRegion>235</destinationRegion>
-          <teleporterId>127</teleporterId>
+          <teleporterId>9</teleporterId>
         </component>
       </tile>
       <tile x="15" y="4">
-        <component type="StaticComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <static>23</static>
+        <component type="FloorComponent">
+          <color r="0" g="212" b="0" a="255" />
+          <ground>23</ground>
         </component>
-        <component type="WallComponent">
-          <color r="255" g="210" b="95" a="255" />
-          <wall>158</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="StaticComponent">
-          <color r="0" g="200" b="0" a="255" />
-          <static>227</static>
+      </tile>
+      <tile x="16" y="4">
+        <component type="FloorComponent">
+          <color r="0" g="212" b="0" a="255" />
+          <ground>23</ground>
         </component>
       </tile>
       <tile x="17" y="4">
@@ -88698,37 +88732,15 @@
         </component>
       </tile>
       <tile x="15" y="5">
-        <component type="StaticComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <static>23</static>
-        </component>
-        <component type="WallComponent">
-          <color r="255" g="210" b="95" a="255" />
-          <wall>158</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="StaticComponent">
-          <color r="0" g="200" b="0" a="255" />
-          <static>227</static>
+        <component type="FloorComponent">
+          <color r="0" g="212" b="0" a="255" />
+          <ground>23</ground>
         </component>
       </tile>
       <tile x="16" y="5">
-        <component type="StaticComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <static>23</static>
-        </component>
-        <component type="WallComponent">
-          <color r="255" g="210" b="95" a="255" />
-          <wall>157</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="StaticComponent">
-          <color r="0" g="200" b="0" a="255" />
-          <static>226</static>
+        <component type="FloorComponent">
+          <color r="0" g="212" b="0" a="255" />
+          <ground>23</ground>
         </component>
       </tile>
       <tile x="17" y="5">
@@ -113196,7 +113208,7 @@
         new CreatureBasicAttack(14)
     };
     
-    banshee.Spells = new CreatureSpellCollection()
+    banshee.Spells = new CreatureSpellCollection(90.0)
     {
         { new CreatureSpell<CurseSpell>(
             skillLevel: 2, cost: 3), 100, TimeSpan.FromSeconds(1.0) }
@@ -117256,7 +117268,7 @@
     <spawn type="RegionSpawner" name="serpentsSeaSpawner">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>41</maximum>
+      <maximum>31</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -117565,7 +117577,7 @@
     <spawn type="RegionSpawner" name="serpentsSeaNorthwest">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>25</maximum>
+      <maximum>15</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -117597,7 +117609,7 @@
     <spawn type="RegionSpawner" name="serpentsSeaNortheast">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>25</maximum>
+      <maximum>15</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -117630,7 +117642,7 @@
     <spawn type="RegionSpawner" name="serpentsSeaSouthwest">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>25</maximum>
+      <maximum>15</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -117662,7 +117674,7 @@
     <spawn type="RegionSpawner" name="serpentsSeaSoutheast">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>25</maximum>
+      <maximum>15</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
