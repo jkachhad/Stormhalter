@@ -244,7 +244,7 @@
         public SpeedyHob()
         {
             Name = "hobgoblin";
-            Body = 78;
+            Body = 319;
 
             Alignment = Alignment.Chaotic;
         }
@@ -103099,7 +103099,7 @@ var gargoyle = new Gargoyle()
         MaxHealth = 130, Health = 130,
         BaseDodge = 21,
         HideDetection = 25,
-        Experience = 7500,
+        Experience = 1,
         BasePenetration = ShieldPenetration.Medium,
     };
     
@@ -103111,14 +103111,8 @@ var gargoyle = new Gargoyle()
     hobgoblin.Wield(new Longsword());
     hobgoblin.Equip(new LeatherArmor());    
     
-    hobgoblin.AddGold(119);
-    hobgoblin.AddLoot(new LootPack(
-        new LootPackEntry(true, UnderkingdomGems,       10.4,     gemsPriceMutatorNormal), 
-        new LootPackEntry(true, UnderkingdomBottles,    20), 
-        new LootPackEntry(true, UnderkingdomPotions,    0.2), 
-        new LootPackEntry(true, UpperTreasure,    0.5), 
-        new LootPackEntry(true, UtilityItems,    1)
-    ));
+    hobgoblin.AddGold(1);
+  
     
     return hobgoblin;
 ]]></block>

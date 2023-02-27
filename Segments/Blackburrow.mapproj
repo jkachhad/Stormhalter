@@ -87606,10 +87606,11 @@ if (spokeRecently(source))
         BasePenetration = ShieldPenetration.Light,
         Experience = 5000,
         VisibilityDistance = 3,
+        LightningResistance = 20,
         HideDetection = 31
     };
     
-    sooth.AddImmunity(typeof(Lightning));
+    
     sooth.AddStatus(new NightVisionStatus(sooth));
         
     sooth.Attacks = new CreatureAttackCollection()
@@ -87666,11 +87667,12 @@ if (spokeRecently(source))
         CanCharge = true,
         Body = 384,        
         Experience = 6000,
+        LightningResistance = 20,
                 
         Movement = 2,
         BasePenetration = ShieldPenetration.Medium,
     };
-    GnollGuard.AddImmunity(typeof(Lightning));
+    
     
     GnollGuard.Attacks = new CreatureAttackCollection()
       {
@@ -87730,11 +87732,13 @@ if (spokeRecently(source))
         Body = 389,
         Experience = 6018,
         VisibilityDistance = 3,
-        HideDetection = 31
+        LightningResistance = 20,
+        HideDetection = 31,
+        
     };
     
     sooth.AddStatus(new NightVisionStatus(sooth));
-    sooth.AddImmunity(typeof(Lightning));
+    
         
     sooth.Attacks = new CreatureAttackCollection()
     {
@@ -87829,6 +87833,7 @@ if (spokeRecently(source))
         Experience = 7578,
         Body = 384,
         VisibilityDistance = 3,
+        LightningResistance = 20,
        
         CanJumpkick = true,
         CanSwim = true,
@@ -87839,7 +87844,7 @@ if (spokeRecently(source))
         BasePenetration = ShieldPenetration.Medium,
 
     };
-    fippy.AddImmunity(typeof(Lightning));
+    
     
     fippy.AddStatus(new NightVisionStatus(fippy));
     fippy.AddStatus(new BreatheWaterStatus(fippy));
@@ -88074,13 +88079,14 @@ if (spokeRecently(source))
         Experience = 8000,
         Movement = 2,
         Body = 383,
+        LightningResistance = 20,
         
         VisibilityDistance = 3,
         
         BasePenetration = ShieldPenetration.Medium,
 
     };
-    fippy.AddImmunity(typeof(Lightning));
+    
     
     fippy.AddStatus(new NightVisionStatus(fippy));
     fippy.AddStatus(new BreatheWaterStatus(fippy));
@@ -88623,6 +88629,7 @@ if (spokeRecently(source))
         Experience = 25600,
         CanCharge = true,
         CanSwim = true,
+        LightningResistance = 20,
         
         BasePenetration = ShieldPenetration.Medium,
     
@@ -88630,7 +88637,7 @@ if (spokeRecently(source))
     
     worg.AddStatus(new NightVisionStatus(worg));
     
-    worg.AddImmunity(typeof(Lightning));
+    
     
     worg.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
     
@@ -89122,6 +89129,7 @@ return elemental;
 
 dragon.AddStatus(new NightVisionStatus(dragon));
 dragon.AddStatus(new BreatheWaterStatus(dragon));
+dragon.AddStatus(new BlindFearProtectionStatus(dragon));
 
 dragon.AddImmunity(typeof(BlindSpell));
 dragon.AddImmunity(typeof(FearSpell));
@@ -89485,6 +89493,7 @@ if (spokeRecently(source))
         HideDetection = 31,
         Experience = 6018,
         CanCharge = true,
+        LightningResistance = 20,
         
         BasePenetration = ShieldPenetration.Medium,
     
