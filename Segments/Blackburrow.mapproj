@@ -73889,9 +73889,18 @@
       </tile>
       <tile x="-43" y="48">
         <component type="WaterComponent">
-          <color r="163" g="164" b="164" a="255" />
+          <color r="202" g="92" b="164" a="255" />
           <ground>602</ground>
           <movementCost>3</movementCost>
+        </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>4</destinationX>
+          <destinationY>48</destinationY>
+          <destinationRegion>4</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
         </component>
       </tile>
       <tile x="-42" y="48">
