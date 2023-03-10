@@ -115269,7 +115269,7 @@ return dragon;
         Hue = Color.FromArgb(200, 150, 150, 255),
     };
     
-    tiger.AddStatus(new NightVisionStatus(Tiger));
+    tiger.AddStatus(new NightVisionStatus(tiger));
     
     tiger.AddImmunity(typeof(WhirlwindSpell));
     tiger.AddImmunity(typeof(BlindSpell));
