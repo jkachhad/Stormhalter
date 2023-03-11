@@ -51,6 +51,26 @@ namespace Kesmai.Server.Items
 		{
 		}
 
+		/// <summary>
+		/// Calculates the fumble chance as a percent.
+		/// </summary>
+		public override double CalculateFumbleChance(MobileEntity entity)
+		{
+			// Skill Level = 3 =>  ((3 + 1)^2) * 10 = 160 => 1 / 160;
+			// Skill Level = 4 =>  ((4 + 1)^2) * 10 = 250 => 1 / 250;
+			var fumblePercentage = 1 / (10 * Math.Pow(entity.GetSkillLevel(Skill) + 1, 2));
+
+			if(entity is PlayerEntity player)
+			{
+				if(player.LeftHand != null)
+				{
+					fumblePercentage = 1.0;
+				}
+			}
+		
+			return fumblePercentage;
+		}
+
 		/// <inheritdoc />
 		public override void GetDescription(List<LocalizationEntry> entries)
 		{
