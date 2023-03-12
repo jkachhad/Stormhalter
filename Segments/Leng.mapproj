@@ -236,17 +236,24 @@
             
             var quest = Quests.GetQuest<CrystalGauntletsQuest>();
             
-            if (quest == null)
+            if(quest == null)
             {
-                /* I can not teach you greater mastery of your hand skill. But-- || need to replace this stuff with: Go talk to Yuri, bro/sis. He can give you the quest*/
-                SayTo(source, 6300411);
+                /* Please see Yuri in Oakvael to begin your quest, {0}*/
+                SayTo(source, 6300428);
+                return;        
+            }
+            
+            if (!quest.InProgress(source) && !quest.IsComplete(source))
+            {
+                /* Please see Yuri in Oakvael to begin your quest, {0}*/
+                SayTo(source, 6300428);
                 return;        
             }
             
             if(quest.IsComplete(source))
             {
-                /* You feel a little bit more like Hercules.  --- Need to replace at some point, just using it as a CheckFlag */
-                SayTo(source, 6100100);
+                /* Don't go losing it again. */
+                SayTo(source, 6300340);
             }
                     
             if (!quest.IsKonranRescued(source) && !quest.IsComplete(source))
