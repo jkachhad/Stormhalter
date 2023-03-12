@@ -236,7 +236,14 @@
             
             var quest = Quests.GetQuest<CrystalGauntletsQuest>();
             
-            if (quest == null || !quest.InProgress(source) && !quest.IsComplete(source))
+            if(quest == null)
+            {
+                /* Please see Yuri in Oakvael to begin your quest: {0}*/
+                SayTo(source, 6300428);
+                return;        
+            }
+            
+            if (!quest.InProgress(source) && !quest.IsComplete(source))
             {
                 /* Please see Yuri in Oakvael to begin your quest: {0}*/
                 SayTo(source, 6300428);
