@@ -107214,11 +107214,8 @@
         <block><![CDATA[
     if (killer is PlayerEntity player)
     {
-    
-        var backpack = source.Backpack;
-    
-        if (backpack != null)
-            backpack.AddItem(new MisericordeDagger());
+        var dagger = new MisericordeDagger();
+        dagger.Move( player.Location, true, player.Segment );
             
         var quest = Quests.GetQuest<KnightsDragonSlayerQuest>();
     
