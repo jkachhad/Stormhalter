@@ -113903,7 +113903,7 @@ return skeleton;
         Name = "Toaddo",
         MaxHealth = 5500, Health = 5500,
         BaseDodge = 38,
-        Body = 141,
+        Body = 449,
         HideDetection = 38,
         Experience = 700000,
         Alignment = Alignment.Evil,
@@ -113982,7 +113982,7 @@ return skeleton;
         Name = "Froggo",
         MaxHealth = 5500, Health = 5500,
         BaseDodge = 38,
-        Body = 153,
+        Body = 456,
         HideDetection = 28,
         Experience = 700000,
         Alignment = Alignment.Evil,
@@ -116472,46 +116472,6 @@ if (spokeRecently(source))
       <entry entity="BossMiniLevel17Scorp2" size="1" minimum="1" maximum="1" />
       <location x="35" y="-8" region="7" />
     </spawn>
-    <spawn type="LocationSpawner" name="Gem Yami Spawn">
-      <minimumDelay>4500</minimumDelay>
-      <maximumDelay>8100</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="BossNotableLevel17Yami" size="1" minimum="1" maximum="1" />
-      <location x="50" y="24" region="7" />
-    </spawn>
-    <spawn type="LocationSpawner" name="Gem Yima Spawn">
-      <minimumDelay>4500</minimumDelay>
-      <maximumDelay>8100</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="BossNotableLevel17Yima" size="1" minimum="1" maximum="1" />
-      <location x="53" y="24" region="7" />
-    </spawn>
     <spawn type="LocationSpawner" name="Gem InvisoBalmTree">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
@@ -116921,46 +116881,6 @@ if (spokeRecently(source))
       </script>
       <entry entity="GemOrator" size="1" minimum="1" maximum="1" />
       <location x="8" y="3" region="7" />
-    </spawn>
-    <spawn type="LocationSpawner" name="Gem Ying Spawn">
-      <minimumDelay>4500</minimumDelay>
-      <maximumDelay>8100</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="BossMajorLevel17Yin" size="1" minimum="1" maximum="1" />
-      <location x="57" y="-19" region="7" />
-    </spawn>
-    <spawn type="LocationSpawner" name="Gem Yang Spawn">
-      <minimumDelay>4500</minimumDelay>
-      <maximumDelay>8100</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="BossMajorLevel17Yang" size="1" minimum="1" maximum="1" />
-      <location x="63" y="-27" region="7" />
     </spawn>
     <spawn type="LocationSpawner" name="Gem InvisoMerchant">
       <minimumDelay>900</minimumDelay>
@@ -118822,6 +118742,80 @@ if (spokeRecently(source))
       <entry entity="Level13NormGnollGuard" size="3" minimum="4" maximum="4" />
       <bounds region="3">
         <inclusion left="40" top="23" right="53" bottom="45" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Gem Yin Spawn">
+      <minimumDelay>4500</minimumDelay>
+      <maximumDelay>8100</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossMajorLevel17Yin" size="1" minimum="1" maximum="1" />
+      <bounds region="7">
+        <inclusion left="57" top="-27" right="63" bottom="-23" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Gem Yang Spawn">
+      <minimumDelay>4500</minimumDelay>
+      <maximumDelay>8100</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossMajorLevel17Yang" size="1" minimum="1" maximum="1" />
+      <bounds region="7">
+        <inclusion left="57" top="-23" right="63" bottom="-19" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Gem YamiYima Spawn">
+      <minimumDelay>4500</minimumDelay>
+      <maximumDelay>8100</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossNotableLevel17Yima" size="1" minimum="1" maximum="1" />
+      <entry entity="BossNotableLevel17Yami" size="1" minimum="1" maximum="1" />
+      <bounds region="7">
+        <inclusion left="49" top="21" right="56" bottom="25" />
+        <inclusion left="55" top="12" right="55" bottom="25" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
