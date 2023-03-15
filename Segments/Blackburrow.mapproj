@@ -61,7 +61,7 @@
         "That's quite a bargain.", 
         "You won't find another with such quality.",
         "I didn't think anyone even wanted that.",
-        "It was left here, pray the owner doesn't come back.",
+        "It was left here. Pray the owner doesn't come back.",
         "Don't go losing it."
     };
     
@@ -110511,7 +110511,7 @@
 
     var GnollGuard = new Troll()
     {
-        Name = "Gnoll Guard",
+        Name = "gnoll guard",
         MaxHealth = 120, Health = 120,
         BaseDodge = 21,
         Body = 383,        
@@ -110913,9 +110913,9 @@
     
     fippy.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "his iron bracers."),
-        new CreatureBlock(4, "his claws."),
-        new CreatureBlock(3, "canine reflexes."),
+        new CreatureBlock(6, "his iron bracers"),
+        new CreatureBlock(4, "his claws"),
+        new CreatureBlock(3, "canine reflexes"),
     };
    
    fippy.Home = new RectangleBounds()
@@ -111002,9 +111002,9 @@ if (spokeRecently(source))
     
     smith.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(4, "his iron-like fist."),
-        new CreatureBlock(6, "his thick leather apron."),
-        new CreatureBlock(1, "canine reflexes."),
+        new CreatureBlock(4, "his iron-like fist"),
+        new CreatureBlock(6, "his thick leather apron"),
+        new CreatureBlock(1, "canine reflexes"),
     };
         
     smith.AddGold(5000);
@@ -111042,7 +111042,7 @@ if (spokeRecently(source))
         <block><![CDATA[
 	var sooth = new Troll()
     {
-        Name = "Gnoll Soothsayer",
+        Name = "gnoll soothsayer",
         MaxHealth = 120, Health = 120,
         MaxMana = 12, Mana = 12,
         BaseDodge = 21,
@@ -111105,7 +111105,7 @@ if (spokeRecently(source))
 
     var GnollGuard = new Troll()
     {
-        Name = "Gnoll Veteran",
+        Name = "gnoll veteran",
         MaxHealth = 130, Health = 130,
         BaseDodge = 22,
         CanCharge = true,
@@ -111120,15 +111120,15 @@ if (spokeRecently(source))
     GnollGuard.Attacks = new CreatureAttackCollection()
       {
         {
-            new CreatureAttack(13,      10, 25,      "The guard slashes you with his Greatsword.",
+            new CreatureAttack(13,      10, 25,      "The gnoll veteran slashes you with his greatsword.",
                                                         new AttackStunComponent(5)),                50
         },
         {
-            new CreatureAttack(13,      25, 40,     "The guard impales you with his razor sharp claws.",
+            new CreatureAttack(13,      25, 40,     "The gnoll veteran impales you with his razor sharp claws.",
                                                         new AttackStunComponent(5)),               40
         },
         {
-            new CreatureAttack(14,      50, 60,     "The guard stabs you with his greatsword",
+            new CreatureAttack(14,      50, 60,     "The gnoll veteran stabs you with his greatsword.",
                                                         new AttackStunComponent(15)),               10
         },
     };
@@ -111167,7 +111167,7 @@ if (spokeRecently(source))
         <block><![CDATA[
 	var sooth = new Troll()
     {
-        Name = "Gnoll Soothsayer",
+        Name = "gnoll soothsayer",
         MaxHealth = 130, Health = 130,
         MaxMana = 15, Mana = 15,
         BaseDodge = 22,
@@ -111231,7 +111231,7 @@ if (spokeRecently(source))
         <block><![CDATA[
 	var prisoner = new Humanoid()
     {
-        Name = "Prisoner",        
+        Name = "prisoner",        
         Body = 10, IsFemale = true,
         Alignment = Alignment.Chaotic,
         BaseDodge = 10,
@@ -111312,9 +111312,9 @@ if (spokeRecently(source))
     
     fippy.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "his iron bracers."),
-        new CreatureBlock(4, "his claws."),
-        new CreatureBlock(3, "canine reflexes."),
+        new CreatureBlock(6, "his iron bracers"),
+        new CreatureBlock(4, "his claws"),
+        new CreatureBlock(3, "canine reflexes"),
     };
    
      
@@ -111402,9 +111402,9 @@ if (spokeRecently(source))
     
     fippy.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "his iron bracers."),
-        new CreatureBlock(4, "his claws."),
-        new CreatureBlock(3, "canine reflexes."),
+        new CreatureBlock(6, "his iron bracers"),
+        new CreatureBlock(4, "his claws"),
+        new CreatureBlock(3, "canine reflexes"),
     };
    
        
@@ -111477,8 +111477,8 @@ if (spokeRecently(source))
     
     shelob.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(5, "a wicked mandible."),
-        new CreatureBlock(5, "your weapon getting caught in a web.")
+        new CreatureBlock(5, "a wicked mandible"),
+        new CreatureBlock(5, "your weapon getting caught in a web")
     };
     
     shelob.AddGold(1000);
@@ -111555,9 +111555,9 @@ if (spokeRecently(source))
     
     fippy.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "his iron bracers."),
-        new CreatureBlock(4, "his claws."),
-        new CreatureBlock(3, "canine reflexes."),
+        new CreatureBlock(6, "his iron bracers"),
+        new CreatureBlock(4, "his claws"),
+        new CreatureBlock(3, "canine reflexes"),
     };
    
      
@@ -111695,8 +111695,8 @@ if (spokeRecently(source))
     
     crocodile.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the tough skin."),
-        new CreatureBlock(4, "a tail."),
+        new CreatureBlock(6, "the tough skin"),
+        new CreatureBlock(4, "a tail"),
     };
     
      crocodile.AddLoot(new LootPack(
@@ -111832,9 +111832,9 @@ if (spokeRecently(source))
     
     babycroc.Blocks = new CreatureBlockCollection()
     {
-        new CreatureBlock(6, "the armor."),
-        new CreatureBlock(3, "a claw."),
-        new CreatureBlock(1, "a tail."),
+        new CreatureBlock(6, "the armor"),
+        new CreatureBlock(3, "a claw"),
+        new CreatureBlock(1, "a tail"),
     };
             
     babycroc.AddGold(110);
@@ -111866,7 +111866,7 @@ if (spokeRecently(source))
         <block><![CDATA[
 	var skeleton = new Skeleton()
 	{
-	   Name = "Skeletal Archer",
+	   Name = "skeletal archer",
 	   Alignment = Alignment.Evil,
 	   MaxHealth = 180, Health = 180,
 	   BaseDodge = 25,
@@ -111950,7 +111950,7 @@ return skeleton;
         <block><![CDATA[
 	    var miner = new Kobold()
     {
-        Name = "Kobold Miner",         
+        Name = "kobold miner",         
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
         Experience = 50,
@@ -112019,9 +112019,9 @@ return skeleton;
     
     fippy.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "his iron bracers."),
-        new CreatureBlock(4, "his claws."),
-        new CreatureBlock(3, "canine reflexes."),
+        new CreatureBlock(6, "his iron bracers"),
+        new CreatureBlock(4, "his claws"),
+        new CreatureBlock(3, "canine reflexes"),
     };
    
      
@@ -112105,9 +112105,9 @@ if (spokeRecently(source))
     
     worg.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "tuft of fur."),
-        new CreatureBlock(4, "a claw."),
-        new CreatureBlock(3, "tail."),
+        new CreatureBlock(6, "tuft of fur"),
+        new CreatureBlock(4, "a claw"),
+        new CreatureBlock(3, "tail"),
     };
         
     worg.Spells = new CreatureSpellCollection(15.0)
@@ -112191,9 +112191,9 @@ giant.Attacks = new CreatureAttackCollection
 giant.Blocks = new CreatureBlockCollection
 {
 
-    new CreatureBlock(4, "his fist."),
-    new CreatureBlock(6, "his helm."),
-    new CreatureBlock(1, "his rock hard abs."),
+    new CreatureBlock(4, "his fist"),
+    new CreatureBlock(6, "his helm"),
+    new CreatureBlock(1, "his rock hard abs"),
 };
 
 giant.AddGold(5000);
@@ -112218,7 +112218,7 @@ return giant;
 if (spokeRecently(source))
         return;
 
-    source.Say($"Don't go down the stairs, its not safe! Me warnnnnn youuuu... arghh.."); 
+    source.Say($"Don't go down the stairs! It's not safe! Me warnnnnn youuuu... arghh..."); 
 
 ]]></block>
         <block><![CDATA[]]></block>
@@ -112230,7 +112230,7 @@ if (spokeRecently(source))
 if (spokeRecently(source))
         return;
 
-    source.Say($"Fee, Phi, Fo, Fum... I smell the blood and bones of an Adventurer!"); 
+    source.Say($"Fee, Phi, Fo, Fum... I smell the blood and bones of an adventurer!"); 
 
 ]]></block>
         <block><![CDATA[]]></block>
@@ -112242,7 +112242,7 @@ if (spokeRecently(source))
         <block><![CDATA[
 	 var stalker = new Stalker()
     {
-        Name = "Undead Warrior",
+        Name = "undead warrior",
         MaxHealth = 208, Health = 208,
         MaxMana = 7, Mana = 7,
         BaseDodge = 26,
@@ -112302,7 +112302,7 @@ if (spokeRecently(source))
         <block><![CDATA[
 	 var spectre = new Spectre()
     {
-        Name = "Undead Thaum",
+        Name = "undead thaum",
         MaxHealth = 160, Health = 160,
         MaxMana = 31, Mana = 31,
         BaseDodge = 24,
@@ -112364,7 +112364,7 @@ if (spokeRecently(source))
         <block><![CDATA[
 	var skeleton = new Skeleton()
 	{
-	   Name = "Skeletal Archer",
+	   Name = "skeletal archer",
 	   MaxHealth = 160, Health = 160,
 	   BaseDodge = 24,
 	   BasePenetration = ShieldPenetration.Medium,
@@ -112450,11 +112450,11 @@ snake.Blocks = new CreatureBlockCollection
 {
 
     {
-        new CreatureBlock(6, "sharp fangs.")
+        new CreatureBlock(6, "sharp fangs")
     },
     
     {
-        new CreatureBlock(4, "its tail.")
+        new CreatureBlock(4, "its tail")
     },
 };    
 
@@ -112506,7 +112506,7 @@ return snake;
 elemental.Attacks = new CreatureAttackCollection
 {
     {
-        new CreatureAttack(22, 10, 40, "You feel poison burn through your veins as the dagger strikes", new AttackPoisonComponent(5))
+        new CreatureAttack(22, 10, 40, "You feel poison burn through your veins as the dagger strikes.", new AttackPoisonComponent(5))
     }
 };
 
@@ -112602,9 +112602,9 @@ dragon.Attacks = new CreatureAttackCollection
 dragon.Blocks = new CreatureBlockCollection
 {
 
-    new CreatureBlock(6, "cold dead scales."),
-    new CreatureBlock(4, "a tail."),
-    new CreatureBlock(3, "a wing."),
+    new CreatureBlock(6, "cold dead scales"),
+    new CreatureBlock(4, "a tail"),
+    new CreatureBlock(3, "a wing"),
 };
 
 dragon.Spells = new CreatureSpellCollection(20.0)
@@ -112728,9 +112728,9 @@ ogre.Spells = new CreatureSpellCollection(100)
 
 ogre.Blocks = new CreatureBlockCollection
 {
-    new CreatureBlock(6, "a steel breastplate."),
-    new CreatureBlock(4, "his halberd."),
-    new CreatureBlock(3, "his arm."),
+    new CreatureBlock(6, "a steel breastplate"),
+    new CreatureBlock(4, "his halberd"),
+    new CreatureBlock(3, "his arm"),
 };
 
 ogre.Equip(new DrakeScaleArmor());
@@ -112813,9 +112813,9 @@ ogre.Spells = new CreatureSpellCollection(100)
 
 ogre.Blocks = new CreatureBlockCollection
 {
-    new CreatureBlock(6, "a steel breastplate."),
-    new CreatureBlock(4, "his bow staff."),
-    new CreatureBlock(3, "his arm."),
+    new CreatureBlock(6, "a steel breastplate"),
+    new CreatureBlock(4, "his bow staff"),
+    new CreatureBlock(3, "his arm"),
 };
 	
 ogre.Equip(new DrakeScaleArmor());
@@ -112916,7 +112916,7 @@ return ogre;
 if (spokeRecently(source))
         return;
 
-    source.Say($"Checkered ground takes you to town, the burned stone takes you back to your friends."); 
+    source.Say($"Checkered ground takes you to town. The burned stone takes you back to your friends."); 
 
 ]]></block>
         <block><![CDATA[]]></block>
@@ -112966,9 +112966,9 @@ if (spokeRecently(source))
     
     worg.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "a tuft of fur."),
-        new CreatureBlock(4, "a claw."),
-        new CreatureBlock(3, "a tail."),
+        new CreatureBlock(6, "a tuft of fur"),
+        new CreatureBlock(4, "a claw"),
+        new CreatureBlock(3, "a tail"),
     };
         
     worg.Spells = new CreatureSpellCollection(15.0)
@@ -113006,7 +113006,7 @@ if (spokeRecently(source))
         <block><![CDATA[
 	var skeleton = new Skeleton()
 	{
-	   Name = "Skeletal Archer",
+	   Name = "skeletal archer",
 	   MaxHealth = 180, Health = 180,
 	   BaseDodge = 25,
 	   BasePenetration = ShieldPenetration.Light,
@@ -113096,9 +113096,9 @@ return skeleton;
     
     skelninja.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "his bony arms."),
-        new CreatureBlock(4, "his unearthly speed."),
-        new CreatureBlock(3, "inhuman reflexes."),
+        new CreatureBlock(6, "his bony arms"),
+        new CreatureBlock(4, "his unearthly speed"),
+        new CreatureBlock(3, "inhuman reflexes"),
     };
         
    skelninja.AddLoot(new LootPack(
@@ -113383,9 +113383,9 @@ return skeleton;
     dragon.Blocks = new CreatureBlockCollection
     {
     
-        new CreatureBlock(6, "burning hot scales."),
-        new CreatureBlock(4, "a tail."),
-        new CreatureBlock(3, "a wing."),
+        new CreatureBlock(6, "burning hot scales"),
+        new CreatureBlock(4, "a tail"),
+        new CreatureBlock(3, "a wing"),
     };
     
     dragon.Spells = new CreatureSpellCollection(40.0)
@@ -113570,9 +113570,9 @@ return skeleton;
     dragon.Blocks = new CreatureBlockCollection
     {
     
-        new CreatureBlock(6, "necrotic scales."),
-        new CreatureBlock(4, "a tail."),
-        new CreatureBlock(3, "a wing."),
+        new CreatureBlock(6, "necrotic scales"),
+        new CreatureBlock(4, "a tail"),
+        new CreatureBlock(3, "a wing"),
     };
     
     dragon.Spells = new CreatureSpellCollection(20.0)
@@ -113716,9 +113716,9 @@ return skeleton;
     
     yama.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the palms of his hands."),
-        new CreatureBlock(4, "an upward forearm thrust."),
-        new CreatureBlock(3, "inhuman reflexes."),
+        new CreatureBlock(6, "the palms of his hands"),
+        new CreatureBlock(4, "an upward forearm thrust"),
+        new CreatureBlock(3, "inhuman reflexes"),
     };
         
    yama.AddGold(1800);
@@ -113805,9 +113805,9 @@ return skeleton;
     
     yima.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the palms of his hands."),
-        new CreatureBlock(4, "an upward forearm thrust."),
-        new CreatureBlock(3, "inhuman reflexes.")
+        new CreatureBlock(6, "the palms of his hands"),
+        new CreatureBlock(4, "an upward forearm thrust"),
+        new CreatureBlock(3, "inhuman reflexes")
     };
         
    yima.AddGold(1800);
@@ -113870,8 +113870,8 @@ return skeleton;
     
     koi.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "a fin."),
-        new CreatureBlock(4, "a tail.")
+        new CreatureBlock(6, "a fin"),
+        new CreatureBlock(4, "a tail")
     };
     
     koi.AddGold(146);
@@ -113944,9 +113944,9 @@ return skeleton;
     
     toaddo.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "her iron bracers."),
-        new CreatureBlock(4, "her claws."),
-        new CreatureBlock(3, "her canine reflexes.")
+        new CreatureBlock(6, "her iron bracers"),
+        new CreatureBlock(4, "her claws"),
+        new CreatureBlock(3, "her canine reflexes")
     };
     
    toaddo.Equip(new ChainmailArmor());     
@@ -114024,9 +114024,9 @@ return skeleton;
     
     toaddo.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "his iron bracers."),
-        new CreatureBlock(4, "his claws."),
-        new CreatureBlock(3, "canine reflexes."),
+        new CreatureBlock(6, "his iron bracers"),
+        new CreatureBlock(4, "his claws"),
+        new CreatureBlock(3, "canine reflexes"),
     };
 
     
@@ -114335,8 +114335,8 @@ return skeleton;
         
     tiger.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the tough hide."),
-        new CreatureBlock(4, "a claw."),
+        new CreatureBlock(6, "the tough hide"),
+        new CreatureBlock(4, "a claw"),
     };
         
     tiger.AddGold(1600);
@@ -114416,9 +114416,9 @@ return skeleton;
     
     ninja.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the palms of his hands."),
-        new CreatureBlock(4, "an upward forearm thrust."),
-        new CreatureBlock(3, "inhuman reflexes."),
+        new CreatureBlock(6, "the palms of his hands"),
+        new CreatureBlock(4, "an upward forearm thrust"),
+        new CreatureBlock(3, "inhuman reflexes"),
     };
         
    ninja.AddGold(1800);
@@ -114598,8 +114598,8 @@ return skeleton;
     
     elemental.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(10, "a wall of water."),
-        new CreatureBlock(5, "a spout of water."),
+        new CreatureBlock(10, "a wall of water"),
+        new CreatureBlock(5, "a spout of water"),
     };
     
     elemental.AddGold(1600);
@@ -114657,9 +114657,9 @@ return skeleton;
     
     scorpion.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the carapace."),
-        new CreatureBlock(4, "a claw."),
-        new CreatureBlock(3, "the stinger."),
+        new CreatureBlock(6, "the carapace"),
+        new CreatureBlock(4, "a claw"),
+        new CreatureBlock(3, "the stinger"),
     };
     
     scorpion.AddGold(90);
@@ -114718,9 +114718,9 @@ return skeleton;
     
     scorpion.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "the carapace."),
-        new CreatureBlock(4, "a claw."),
-        new CreatureBlock(3, "the stinger."),
+        new CreatureBlock(6, "the carapace"),
+        new CreatureBlock(4, "a claw"),
+        new CreatureBlock(3, "the stinger"),
     };
     
     scorpion.AddGold(90);
@@ -114920,9 +114920,9 @@ if (spokeRecently(source))
     
     fippy.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "his iron bracers."),
-        new CreatureBlock(4, "his claws."),
-        new CreatureBlock(3, "canine reflexes."),
+        new CreatureBlock(6, "his iron bracers"),
+        new CreatureBlock(4, "his claws"),
+        new CreatureBlock(3, "canine reflexes"),
     };
    
      
@@ -114986,8 +114986,8 @@ if (spokeRecently(source))
     
     shelob.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(5, "a wicked mandible."),
-        new CreatureBlock(5, "your weapon getting caught in a web.")
+        new CreatureBlock(5, "a wicked mandible"),
+        new CreatureBlock(5, "your weapon getting caught in a web")
     };
     
     shelob.AddGold(18000);
@@ -115140,9 +115140,9 @@ dragon.Attacks = new CreatureAttackCollection
 dragon.Blocks = new CreatureBlockCollection
 {
 
-    new CreatureBlock(6, "a magical barrier."),
-    new CreatureBlock(4, "a staff."),
-    new CreatureBlock(3, "a furry hand."),
+    new CreatureBlock(6, "a magical barrier"),
+    new CreatureBlock(4, "a staff"),
+    new CreatureBlock(3, "a furry hand"),
 };
 
 dragon.Spells = new CreatureSpellCollection(20.0)
@@ -115291,9 +115291,9 @@ return dragon;
     
     tiger.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "a magical force."),
-        new CreatureBlock(4, "a marbled claw."),
-        new CreatureBlock(3, "Praetoseban Prowlness."),
+        new CreatureBlock(6, "a magical force"),
+        new CreatureBlock(4, "a marbled claw"),
+        new CreatureBlock(3, "Praetoseban Prowlness"),
     };
     
     tiger.AddGold(1);
@@ -115381,9 +115381,9 @@ tiger.Attacks = new CreatureAttackCollection
 tiger.Blocks = new CreatureBlockCollection
 {
 
-    new CreatureBlock(6, "a magical barrier."),
-    new CreatureBlock(4, "a Ghodlike finess."),
-    new CreatureBlock(3, "GHODLINESS!"),
+    new CreatureBlock(6, "a magical barrier"),
+    new CreatureBlock(4, "a Ghodlike finesse"),
+    new CreatureBlock(3, "GHODLINESS"),
 };
 
 tiger.Spells = new CreatureSpellCollection(20.0)
@@ -115490,9 +115490,9 @@ return tiger;
     
     cat.Blocks = new CreatureBlockCollection
     {
-        new CreatureBlock(6, "his chubby paws."),
-        new CreatureBlock(4, "his chubby head."),
-        new CreatureBlock(3, "his adorable chubby body."),
+        new CreatureBlock(6, "his chubby paws"),
+        new CreatureBlock(4, "his chubby head"),
+        new CreatureBlock(3, "his adorable chubby body"),
     };
    
      
@@ -115524,7 +115524,7 @@ return tiger;
 if (spokeRecently(source))
         return;
 
-    source.Say($"What are you doing down here??? I will silence you before you can tell your kind what is happening here!!"); 
+    source.Say($"What are you doing down here?! I will silence you before you can tell your kind what is happening here!"); 
 
 ]]></block>
         <block><![CDATA[]]></block>
