@@ -100559,6 +100559,7 @@
         HideDetection = 25,           
         Experience = 7430,
         BasePenetration = ShieldPenetration.Medium,
+        IsTethered = true,
     };
     
     goblin.Attacks = new CreatureAttackCollection()
@@ -102170,6 +102171,7 @@
         Experience = 4179,
         BasePenetration = ShieldPenetration.Light,
         CanFlee = true,
+        IsTethered = true,
     };
     
     orc.Attacks = new CreatureAttackCollection()
