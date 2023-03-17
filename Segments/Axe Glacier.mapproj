@@ -105621,10 +105621,10 @@
     rockworm.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(10,     7, 15,     "The rockworm rolls over you"),        70 
+            new CreatureAttack(10,     7, 15,     "The rockworm rolls over you."),        70 
         }, 
         {
-            new CreatureAttack(10,    10, 17,     "You've been bitten by the rockworm"),     30
+            new CreatureAttack(10,    10, 17,     "You've been bitten by the rockworm."),     30
         },
     };
         
@@ -105785,10 +105785,10 @@
     lizard.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(7,   6, 10,  "The lizard claws at you"),               60 
+            new CreatureAttack(7,   6, 10,  "The lizard claws at you."),               60 
         },
         {
-            new CreatureAttack(7,     7, 12,  "The lizard hits you with its tail"),   40 
+            new CreatureAttack(7,     7, 12,  "The lizard hits you with its tail."),   40 
         },
     };
     
@@ -106138,10 +106138,10 @@
     gargoyle.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(10,     6, 13,   "The gargoyle batters you with it's wings."),    60 
+            new CreatureAttack(10,     6, 13,   "The gargoyle batters you with its wings."),    60 
         },
         {
-            new CreatureAttack(10,     8, 17,     "The gargoyle slashes you with it's claws.",
+            new CreatureAttack(10,     8, 17,     "The gargoyle slashes you with its claws.",
                                                     new AttackPoisonComponent(5)),            40
         },
     };
@@ -106723,10 +106723,10 @@
     lizard.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(9,     5, 10,  "The lizard claws at you"),             60 
+            new CreatureAttack(9,     5, 10,  "The lizard claws at you."),             60 
         },
         {
-            new CreatureAttack(9,     7, 12,  "The lizard hits you with its tail"),   40 
+            new CreatureAttack(9,     7, 12,  "The lizard hits you with its tail."),   40 
         },
     };
     
@@ -107214,11 +107214,8 @@
         <block><![CDATA[
     if (killer is PlayerEntity player)
     {
-    
-        var backpack = source.Backpack;
-    
-        if (backpack != null)
-            backpack.AddItem(new MisericordeDagger());
+        var dagger = new MisericordeDagger();
+        dagger.Move( player.Location, true, player.Segment );
             
         var quest = Quests.GetQuest<KnightsDragonSlayerQuest>();
     
@@ -108360,7 +108357,7 @@
     if (spokeRecently(source))
         return;
 
-    source.Emote($"begins to lurch forward, fixing his gaze on {player.Name}");
+    source.Emote($"begins to lurch forward, fixing his gaze on {player.Name}.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -108419,7 +108416,7 @@
     if (spokeRecently(source))
         return;
 
-    source.Emote($"slowly draws an ancient bow, fixated on {player.Name}");
+    source.Emote($"slowly draws an ancient bow, fixated on {player.Name}.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -108492,7 +108489,7 @@
     if (spokeRecently(source))
         return;
 
-    source.Emote($"begins an ancient chant, its cold gaze focused on {player.Name}");
+    source.Emote($"begins an ancient chant, its cold gaze focused on {player.Name}.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -108720,13 +108717,13 @@
     worg.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(16,     10, 16,   "The worg rakes you with its claws."), 50
+            new CreatureAttack(16,     10, 16,   "The decaying worg rakes you with its claws."), 50
         }, 
         { 
-            new CreatureAttack(16,     12, 19,  "The worg sinks its teeth into you."),  30 
+            new CreatureAttack(16,     12, 19,  "The decaying worg sinks its teeth into you."),  30 
         }, 
         {
-            new CreatureAttack(16,     14, 23,  "The worg lunges at you."),             20 
+            new CreatureAttack(16,     14, 23,  "The decaying worg lunges at you."),             20 
         }, 
     };
         
@@ -108760,7 +108757,7 @@
     if (spokeRecently(source))
         return;
 
-    source.Emote($"stands up, hackles raised, staring at {player.Name} as if offended by their existence");
+    source.Emote($"stands up, hackles raised, staring at {player.Name} as if offended by their existence.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -108792,7 +108789,7 @@
     
     elemental.Attacks = new CreatureAttackCollection
     {
-        new CreatureAttack(15,     15, 32,   "The elemental attempts to drown you"),
+        new CreatureAttack(15,     15, 32,   "The elemental attempts to drown you."),
     };
     
     elemental.Blocks = new CreatureBlockCollection

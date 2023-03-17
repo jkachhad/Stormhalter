@@ -100494,7 +100494,8 @@
         MagicProtection = 17,
         CanCharge = true,
         BasePenetration = ShieldPenetration.Medium,
-        Immunity = CreatureImmunity.Web
+        Immunity = CreatureImmunity.Web,
+        IsTethered = true,
     };
     
     minotaur.AddStatus(new NightVisionStatus(minotaur));
@@ -100558,6 +100559,7 @@
         HideDetection = 25,           
         Experience = 7430,
         BasePenetration = ShieldPenetration.Medium,
+        IsTethered = true,
     };
     
     goblin.Attacks = new CreatureAttackCollection()
@@ -100614,6 +100616,7 @@
         HideDetection = 25,        
         Experience = 5386,
         BasePenetration = ShieldPenetration.Light,
+        IsTethered = true,
     };
     
     troll.Attacks = new CreatureAttackCollection()
@@ -100662,6 +100665,7 @@
         Experience = 5015,
         HideDetection = 25, 
         CanFlee = true,
+        IsTethered = true,
     };
     
     orc.Attacks = new CreatureAttackCollection()
@@ -100866,6 +100870,7 @@
         Experience = 10699,
         
         CanCharge = true,
+        IsTethered = true,
     };
     
     
@@ -101018,6 +101023,7 @@
         Experience = 4489,
         HideDetection = 25,  
         MaxMana = 21, Mana = 21,
+        IsTethered = true,
             
     };
         
@@ -101128,6 +101134,7 @@
         HideDetection = 25,
         Experience = 4179,
         BasePenetration = ShieldPenetration.VeryLight,
+        IsTethered = true,
     };
     
     orc.Attacks = new CreatureAttackCollection()
@@ -101187,6 +101194,7 @@
         Experience = 3900,
         FireProtection = 100,
         HideDetection = 25,
+        IsTethered = true,
     };
     
     goblin.Attacks = new CreatureAttackCollection()
@@ -101969,6 +101977,7 @@
         BasePenetration = ShieldPenetration.Light,
         Experience = 3900,  
         HideDetection = 25,
+        IsTethered = true,
     };
     
     goblin.Attacks = new CreatureAttackCollection()
@@ -102016,6 +102025,7 @@
         BasePenetration = ShieldPenetration.Light,
         Experience = 3250,  
         HideDetection = 25,
+        IsTethered = true,
     };
     
     goblin.Attacks = new CreatureAttackCollection()
@@ -102064,6 +102074,7 @@
         Experience = 4179,
         HideDetection = 25, 
         CanFlee = true,
+        IsTethered = true,
     };
     
     orc.Attacks = new CreatureAttackCollection()
@@ -102111,6 +102122,7 @@
         HideDetection = 25,        
         Experience = 4489,
         BasePenetration = ShieldPenetration.Light,
+        IsTethered = true,
     };
     
     troll.Attacks = new CreatureAttackCollection()
@@ -102159,6 +102171,7 @@
         Experience = 4179,
         BasePenetration = ShieldPenetration.Light,
         CanFlee = true,
+        IsTethered = true,
     };
     
     orc.Attacks = new CreatureAttackCollection()
@@ -102205,6 +102218,7 @@
         BasePenetration = ShieldPenetration.Light,       
         Experience = 3250,
         HideDetection = 25,
+        IsTethered = true,
     };
     
     
@@ -102844,6 +102858,7 @@ var gargoyle = new Gargoyle()
         Weakness = CreatureWeakness.Silver,
 
         FireProtection = 100,
+        IsTethered = true,
     };
     
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));

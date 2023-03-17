@@ -72450,15 +72450,6 @@
     };
     
     dragon.AddGold(1500);
-    dragon.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       100,     gemsPriceMutatorVeryHigh), 
-        new LootPackEntry(true, (from, container) => new GriffinSkull(),        100),
-        new LootPackEntry(true, (from, container) => new BlindFearProtectionBracelet(),        100),
-        new LootPackEntry(true, (from, container) => new FeatherFallBoots(),        100),
-        new LootPackEntry(true, (from, container) => new RedRobe(),        100),
-        new LootPackEntry(true, (from, container) => new KoshGauntlets(),        100),
-        new LootPackEntry(true, KoshOptions,    100)
-        ));
     
     return dragon;
 ]]></block>
@@ -72544,13 +72535,6 @@
     };
     
     dragon.AddGold(5000);
-    dragon.AddLoot(new LootPack(
-        new LootPackEntry(true, KeepGems,       100,     gemsPriceMutatorVeryHigh), 
-        new LootPackEntry(true, KeepGems,       100,     gemsPriceMutatorVeryHigh), 
-        new LootPackEntry(true, KeepGems,       100,     gemsPriceMutatorVeryHigh), 
-        new LootPackEntry(true, KeepGems,       100,     gemsPriceMutatorVeryHigh), 
-        new LootPackEntry(true, GenericBottles,    40)
-    ));
     
     return dragon;
 ]]></block>
