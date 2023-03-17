@@ -71,5 +71,11 @@ namespace Kesmai.Server.Items
 		public virtual void OnUnwield(MobileEntity entity)
 		{
 		}
+
+		/// <inheritdoc />
+		public override bool BreaksHide(MobileEntity entity)
+		{
+			return Flags.HasFlag(WeaponFlags.TwoHanded);
+		}
 	}
 }
