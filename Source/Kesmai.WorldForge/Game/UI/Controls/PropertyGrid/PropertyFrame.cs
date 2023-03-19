@@ -117,9 +117,14 @@ namespace Kesmai.WorldForge.Windows
 			var itemsSourceAttribute = propertyInfo.GetCustomAttribute<ItemsSourceAttribute>();
 
 			if (itemsSourceAttribute != null)
-				return new CheckComboBoxPropertyEditor(itemsSourceAttribute);
+			{
+				if (propertyType == typeof(IList))
+					return new CheckComboBoxPropertyEditor(itemsSourceAttribute);
+				else
+					return new DropDownPropertyEditor(itemsSourceAttribute);
+			}
 
-			
+
 			var converter = TypeDescriptor.GetConverter(propertyType);
 
 			if (converter.CanConvertFrom(typeof(string)))

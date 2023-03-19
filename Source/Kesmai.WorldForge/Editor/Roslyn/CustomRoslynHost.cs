@@ -53,13 +53,16 @@ namespace Kesmai.WorldForge.Roslyn
 					.WithNullableContextOptions(NullableContextOptions.Disable);
 			}
 			
-			var references = new MetadataReference[]
+			var references = new List<MetadataReference>()
 			{
 				MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
 				MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location),
-				
-				MetadataReference.CreateFromImage(Core.ScriptingData),
 			};
+
+			var scriptingData = Core.ScriptingData;
+			
+			if (scriptingData != null)
+				MetadataReference.CreateFromImage(scriptingData);
 			
 			solution = solution.AddProject(ProjectInfo.Create(
 				id, VersionStamp.Create(),

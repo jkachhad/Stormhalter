@@ -1347,6 +1347,11 @@
                 {
                     if (!combatant.IsAlive)
                         return;
+                        
+                    if(combatant.Location.Region != 236)
+                    {
+                        return;
+                    }
     
                     combatant.EmitSound(206, 3, 9);
     
