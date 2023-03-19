@@ -353,8 +353,16 @@
       <ground>1224</ground>
       <movementCost>2</movementCost>
     </FloorComponent>
-    <FloorComponent name="new dungeon floor">
-      <ground>1226</ground>
+    <FloorComponent name="light stone floor">
+      <ground>671</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="rock floor">
+      <ground>680</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="cave floor">
+      <ground>689</ground>
       <movementCost>1</movementCost>
     </FloorComponent>
   </category>
@@ -1370,6 +1378,66 @@
       <ruins>1232</ruins>
       <indestructible>false</indestructible>
     </WallComponent>
+    <WallComponent name="stacked box obstruction">
+      <wall>666</wall>
+      <destroyed>667</destroyed>
+      <ruins>667</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="light stone wall (H)">
+      <wall>670</wall>
+      <destroyed>676</destroyed>
+      <ruins>674</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="light stone wall (V)">
+      <wall>672</wall>
+      <destroyed>675</destroyed>
+      <ruins>674</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="light stone column">
+      <wall>673</wall>
+      <destroyed>677</destroyed>
+      <ruins>674</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="rock wall (H)">
+      <wall>679</wall>
+      <destroyed>685</destroyed>
+      <ruins>683</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="rock wall (V)">
+      <wall>681</wall>
+      <destroyed>684</destroyed>
+      <ruins>683</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="rock wall column">
+      <wall>682</wall>
+      <destroyed>686</destroyed>
+      <ruins>683</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="cave wall (H)">
+      <wall>688</wall>
+      <destroyed>694</destroyed>
+      <ruins>692</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="cave wall (V)">
+      <wall>690</wall>
+      <destroyed>693</destroyed>
+      <ruins>692</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="cave wall column">
+      <wall>691</wall>
+      <destroyed>695</destroyed>
+      <ruins>692</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
   </category>
   <category name="Ruins">
     <RuinsComponent name="Dungeon">
@@ -1695,6 +1763,42 @@
     </RuinsComponent>
     <RuinsComponent name="irr post ruin">
       <ruins>1232</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="light stone wall ruin (H)">
+      <ruins>676</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="light stone wall ruin (V)">
+      <ruins>675</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="light stone column ruin">
+      <ruins>677</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="light stone rubble">
+      <ruins>674</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="rock wall ruin (H)">
+      <ruins>685</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="rock wall ruin (V)">
+      <ruins>684</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="rock wall column ruin">
+      <ruins>686</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="rock rubble">
+      <ruins>683</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="cave wall ruin (H)">
+      <ruins>694</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="cave wall ruin (V)">
+      <ruins>693</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="cave wall column ruin">
+      <ruins>695</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="cave rubble">
+      <ruins>692</ruins>
     </RuinsComponent>
   </category>
   <category name="Doors">
@@ -3255,8 +3359,44 @@
     <StaticComponent name="snowdrift (H)">
       <static>762</static>
     </StaticComponent>
+    <StaticComponent name="snowdrift edge (H)">
+      <static>660</static>
+    </StaticComponent>
     <StaticComponent name="snowdrift2 (V)">
       <static>763</static>
+    </StaticComponent>
+    <StaticComponent name="snowdrift edge (V)">
+      <static>659</static>
+    </StaticComponent>
+    <StaticComponent name="webbed soul (H)">
+      <static>661</static>
+    </StaticComponent>
+    <StaticComponent name="webbed soul (V)">
+      <static>662</static>
+    </StaticComponent>
+    <StaticComponent name="web(H)">
+      <static>663</static>
+    </StaticComponent>
+    <StaticComponent name="web(V)">
+      <static>664</static>
+    </StaticComponent>
+    <StaticComponent name="crushed skeleton">
+      <static>665</static>
+    </StaticComponent>
+    <StaticComponent name="skeleton 1">
+      <static>668</static>
+    </StaticComponent>
+    <StaticComponent name="skeleton 2">
+      <static>669</static>
+    </StaticComponent>
+    <StaticComponent name="skeleton 3">
+      <static>678</static>
+    </StaticComponent>
+    <StaticComponent name="skeleton 4">
+      <static>687</static>
+    </StaticComponent>
+    <StaticComponent name="armored skeleton">
+      <static>696</static>
     </StaticComponent>
     <StaticComponent name="Closed Sarcophagus (H)">
       <static>424</static>
