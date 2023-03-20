@@ -119,6 +119,9 @@ namespace Kesmai.Server.Items
 				entries.Add(new LocalizationEntry(6301000, quality.Color.ToHex(), quality.Localization));
 		}
 
+		/// <inheritdoc />
+		public override bool BreaksHide(MobileEntity entity) => true;
+
 		/// <summary>
 		/// Serializes this instance into binary data for persistence.
 		/// </summary>

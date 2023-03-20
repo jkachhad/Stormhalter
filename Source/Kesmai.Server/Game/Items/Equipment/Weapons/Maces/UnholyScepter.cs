@@ -56,12 +56,27 @@ namespace Kesmai.Server.Items
         }
 
         /// <inheritdoc />
-		public override bool CanEquip(MobileEntity entity)
+        public override bool CanUse(MobileEntity entity)
         {
+            var isUsable = true;
+            
             if (entity is PlayerEntity player)
-                return player.Profession == Profession.Thaumaturge || player.Profession == Profession.Wizard;
-
-            return false;
+            {
+                if (player.Profession == Profession.Wizard || player.Profession == Profession.Thaumaturge)
+                {
+                    isUsable = true;
+                }
+                else
+                {
+                    isUsable = false;
+                }
+            }
+            else
+            {
+                isUsable = false;   
+            }
+            
+            return isUsable;        
         }
 
         /// <inheritdoc />

@@ -18783,24 +18783,27 @@
         <component type="StaticComponent">
           <static>178</static>
         </component>
-        <component type="AltarComponent">
-          <altar>113</altar>
+        <component type="CounterComponent">
+          <counter>113</counter>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="27" y="5">
         <component type="StaticComponent">
           <static>178</static>
         </component>
-        <component type="AltarComponent">
-          <altar>113</altar>
+        <component type="CounterComponent">
+          <counter>113</counter>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="28" y="5">
         <component type="StaticComponent">
           <static>178</static>
         </component>
-        <component type="AltarComponent">
-          <altar>113</altar>
+        <component type="CounterComponent">
+          <counter>113</counter>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="29" y="5">
@@ -100491,7 +100494,8 @@
         MagicProtection = 17,
         CanCharge = true,
         BasePenetration = ShieldPenetration.Medium,
-        Immunity = CreatureImmunity.Web
+        Immunity = CreatureImmunity.Web,
+        IsTethered = true,
     };
     
     minotaur.AddStatus(new NightVisionStatus(minotaur));
@@ -100555,6 +100559,7 @@
         HideDetection = 25,           
         Experience = 7430,
         BasePenetration = ShieldPenetration.Medium,
+        IsTethered = true,
     };
     
     goblin.Attacks = new CreatureAttackCollection()
@@ -100611,6 +100616,7 @@
         HideDetection = 25,        
         Experience = 5386,
         BasePenetration = ShieldPenetration.Light,
+        IsTethered = true,
     };
     
     troll.Attacks = new CreatureAttackCollection()
@@ -100659,6 +100665,7 @@
         Experience = 5015,
         HideDetection = 25, 
         CanFlee = true,
+        IsTethered = true,
     };
     
     orc.Attacks = new CreatureAttackCollection()
@@ -100863,6 +100870,7 @@
         Experience = 10699,
         
         CanCharge = true,
+        IsTethered = true,
     };
     
     
@@ -101015,6 +101023,7 @@
         Experience = 4489,
         HideDetection = 25,  
         MaxMana = 21, Mana = 21,
+        IsTethered = true,
             
     };
         
@@ -101125,6 +101134,7 @@
         HideDetection = 25,
         Experience = 4179,
         BasePenetration = ShieldPenetration.VeryLight,
+        IsTethered = true,
     };
     
     orc.Attacks = new CreatureAttackCollection()
@@ -101184,6 +101194,7 @@
         Experience = 3900,
         FireProtection = 100,
         HideDetection = 25,
+        IsTethered = true,
     };
     
     goblin.Attacks = new CreatureAttackCollection()
@@ -101966,6 +101977,7 @@
         BasePenetration = ShieldPenetration.Light,
         Experience = 3900,  
         HideDetection = 25,
+        IsTethered = true,
     };
     
     goblin.Attacks = new CreatureAttackCollection()
@@ -102013,6 +102025,7 @@
         BasePenetration = ShieldPenetration.Light,
         Experience = 3250,  
         HideDetection = 25,
+        IsTethered = true,
     };
     
     goblin.Attacks = new CreatureAttackCollection()
@@ -102061,6 +102074,7 @@
         Experience = 4179,
         HideDetection = 25, 
         CanFlee = true,
+        IsTethered = true,
     };
     
     orc.Attacks = new CreatureAttackCollection()
@@ -102108,6 +102122,7 @@
         HideDetection = 25,        
         Experience = 4489,
         BasePenetration = ShieldPenetration.Light,
+        IsTethered = true,
     };
     
     troll.Attacks = new CreatureAttackCollection()
@@ -102156,6 +102171,7 @@
         Experience = 4179,
         BasePenetration = ShieldPenetration.Light,
         CanFlee = true,
+        IsTethered = true,
     };
     
     orc.Attacks = new CreatureAttackCollection()
@@ -102202,6 +102218,7 @@
         BasePenetration = ShieldPenetration.Light,       
         Experience = 3250,
         HideDetection = 25,
+        IsTethered = true,
     };
     
     
@@ -102841,6 +102858,7 @@ var gargoyle = new Gargoyle()
         Weakness = CreatureWeakness.Silver,
 
         FireProtection = 100,
+        IsTethered = true,
     };
     
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
@@ -103098,14 +103116,15 @@ var gargoyle = new Gargoyle()
     {
         MaxHealth = 130, Health = 130,
         BaseDodge = 21,
-        HideDetection = 25,
+        HideDetection = 3,
+        IsInvulnerable = true,
         Experience = 1,
         BasePenetration = ShieldPenetration.Medium,
     };
     
     hobgoblin.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(13)
+        new CreatureBasicAttack(3)
     };
     
     hobgoblin.Wield(new Longsword());
@@ -104518,7 +104537,7 @@ var gargoyle = new Gargoyle()
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level13SpeedyHob" size="4" minimum="1" maximum="1" />
+      <entry entity="level13SpeedyHob" size="1" minimum="1" maximum="1" />
       <location x="3" y="13" region="2" />
     </spawn>
     <spawn type="LocationSpawner" name="lowerKoboldTownFolkSouthEast">

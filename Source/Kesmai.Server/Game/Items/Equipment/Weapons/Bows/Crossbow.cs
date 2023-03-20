@@ -62,5 +62,12 @@ namespace Kesmai.Server.Items
 			if (Identified)
 				entries.Add(new LocalizationEntry(6250028)); /* The crossbow appears quite ordinary. */
 		}
+		
+		/// <inheritdoc />
+		/// <remarks>
+		/// All two-handed weapons will break hide, but crossbows are an exception.
+		/// We override the behavior from <see cref="Weapon"/>
+		/// </remarks>
+		public override bool BreaksHide(MobileEntity entity) => false;
 	}
 }

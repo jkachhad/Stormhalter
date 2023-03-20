@@ -47,6 +47,9 @@ namespace Kesmai.Server.Items
 		{
 			Owner = owner;
 		}
+		
+		/// <inheritdoc />
+		public override bool BreaksHide(MobileEntity entity) => true;
 
 		protected override void OnDelete()
 		{
