@@ -99588,15 +99588,15 @@
             new CreatureAttack(10,    10, 20,    "Squeakers sinks her teeth into your flesh."),                        60 
         },
         {
-            new CreatureAttack(10,    15, 20,    "Squeakers sends a flurry of claws towards your femural artery."),    40 
+            new CreatureAttack(10,    15, 20,    "Squeakers sends a flurry of claws towards your femoral artery."),    40 
         },
     };
     
     rat.Blocks = new CreatureBlockCollection()
     {
-        new CreatureBlock(6, "a claw."),
-        new CreatureBlock(3, "her fangs."),
-        new CreatureBlock(1, "her tail."),
+        new CreatureBlock(6, "a claw"),
+        new CreatureBlock(3, "her fangs"),
+        new CreatureBlock(1, "her tail"),
     };
 	
 	return rat;
@@ -99644,15 +99644,15 @@
             new CreatureAttack(10,    10, 20,    "Mr.Pibbs sinks his teeth into your flesh."),                        60 
         },
         {
-            new CreatureAttack(10,    15, 20,    "Mr.Pibbs sends a flurry of claws towards your femural artery."),    40
+            new CreatureAttack(10,    15, 20,    "Mr.Pibbs sends a flurry of claws towards your femoral artery."),    40
         },
     };
     
     rat.Blocks = new CreatureBlockCollection()
     {
-        new CreatureBlock(6, "a claw."),
-        new CreatureBlock(3, "his fangs."),
-        new CreatureBlock(1, "his tail."),
+        new CreatureBlock(6, "a claw"),
+        new CreatureBlock(3, "his fangs"),
+        new CreatureBlock(1, "his tail"),
     };
     
 
@@ -99945,7 +99945,7 @@
         <block><![CDATA[
     var drake = new Drake()
     {
-        Name = "Drake",
+        Name = "drake",
         MaxHealth = 3000, Health = 3000,
         BaseDodge = 28,
     
@@ -100038,7 +100038,7 @@
     //todo get Carfel body type
     var carfel = new Humanoid()
     {
-        Name = "carfel",
+        Name = "Carfel",
         Body = 206,
         
         MaxHealth = 1800, Health = 1800,
@@ -100133,7 +100133,7 @@
     shelob.Attacks = new CreatureAttackCollection()
     {
         { 
-            new CreatureAttack(18,     12, 21,      "The spider bites you", 
+            new CreatureAttack(18,     12, 21,      "The spider bites you.", 
                                                 new AttackPoisonComponent(20))
         }, 
     };
@@ -100260,10 +100260,10 @@
     lurker.Attacks = new CreatureAttackCollection()
     {
         { 
-            new CreatureAttack(21,     20, 30,      "Orugugra whips you with a tentacle"),  50 
+            new CreatureAttack(21,     20, 30,      "Orugugra whips you with a tentacle."),  50 
         }, 
         {
-            new CreatureAttack(21,     1, 46,     "Orugugra",
+            new CreatureAttack(21,     1, 46,     "Orugugra sinks its fangs deep into your flesh.",
                                                     new AttackPoisonComponent(14)),         50
         },
     };
@@ -100325,7 +100325,7 @@
     
     swordmaster.Attacks = new CreatureAttackCollection()
     {
-        new CreatureAttack(20,    40, 69,     "The swordmaster pierces you with his rapier.",
+        new CreatureAttack(20,    40, 69,     "Swordmaster pierces you with his rapier.",
                                                     new AttackAgeComponent(250, 50))
     };
     
@@ -100503,14 +100503,14 @@
     minotaur.Attacks = new CreatureAttackCollection()
     {
         { 
-            new CreatureAttack(15,     10, 20,      "The minotaur hits with a wicked axe"),     60 
+            new CreatureAttack(15,     10, 20,      "The minotaur hits you with a wicked axe."),     60 
         }, 
         {
-            new CreatureAttack(15,     13, 23,     "You've been gored by the minotaur",
+            new CreatureAttack(15,     13, 23,     "You've been gored by the minotaur.",
                                                     new AttackStunComponent(20.0)),             30
         }, 
         {
-            new CreatureAttack(15,     13, 26,     "You've been trampled by the minotaur"),     10
+            new CreatureAttack(15,     13, 26,     "You've been trampled by the minotaur."),     10
         }, 
     };
     
@@ -100573,7 +100573,7 @@
                                                         new AttackStunComponent(10)),               40
         },
         {
-            new CreatureAttack(18,      30, 41,     "The goblin kicks you so forcefully you see stars.",
+            new CreatureAttack(18,      30, 41,     "The goblin kicks you so forcefully that you see stars.",
                                                         new AttackStunComponent(25)),               20
         },
     };
@@ -100863,7 +100863,7 @@
         <block><![CDATA[
     var trollguard = new TrollGuard()
     {
-        Name = "Elite Guard",
+        Name = "elite guard",
         MaxHealth = 209, Health = 209,
         BaseDodge = 27,
         HideDetection = 29,    
@@ -101322,10 +101322,10 @@
     ghoul.Attacks = new CreatureAttackCollection()
     {
         { 
-            new CreatureAttack(15,     15, 23,     "The ghoul scratches you with its claws"),      70 
+            new CreatureAttack(15,     15, 23,     "The ghoul scratches you with its claws."),      70 
         }, 
         { 
-            new CreatureAttack(15,    15, 23,     "You've been bitten by the ghoul",
+            new CreatureAttack(15,    15, 23,     "You've been bitten by the ghoul.",
                                                     new AttackPoisonComponent(14)),                30
         },
     };
@@ -101507,7 +101507,7 @@
     mummy.Attacks = new CreatureAttackCollection()
     {
         { 
-            new CreatureAttack(17,     30, 50,     "The mummy strangles you with his bandages"),      70, TimeSpan.Zero 
+            new CreatureAttack(17,     30, 50,     "The mummy strangles you with his bandages."),      70, TimeSpan.Zero 
         }, 
         { 
             new CreatureAttack(17,    40, 23,     "A mummified claw scratches you.",
@@ -101519,7 +101519,7 @@
     mummy.Blocks = new CreatureBlockCollection()
     {
         new CreatureBlock(6, "a swirl of bandages"), 
-        new CreatureBlock(4, "mummified claw"), 
+        new CreatureBlock(4, "a mummified claw"), 
     };
     
     mummy.AddGold(216);
@@ -101736,7 +101736,7 @@
     lurker.Attacks = new CreatureAttackCollection()
     {
         { 
-            new CreatureAttack(12,     10, 15,      "The lurker whips you with a tentacle"),  50 
+            new CreatureAttack(12,     10, 15,      "The lurker whips you with a tentacle."),  50 
         }, 
         {
             new CreatureAttack(12,     5, 20,     "The lurker bites you.",
@@ -102371,7 +102371,7 @@
     
     if (spokeRecently(source)) return;
             
-    source.Say($"Are.... you... worthy?.");
+    source.Say($"Are... you... worthy?");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102679,7 +102679,7 @@
     if (spokeRecently(source))
         return;
 
-    source.Say($"Hey, I have a great deal for you! 50,000 coins for a key to the troll kings treasure room.");
+    source.Say($"Hey, I have a great deal for you! 50,000 coins for a key to the troll king's treasure room.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102985,7 +102985,7 @@ var gargoyle = new Gargoyle()
     lurker.Attacks = new CreatureAttackCollection()
     {
         { 
-            new CreatureAttack(14,     10, 20,      "The lurker whips you with a tentacle"),  50 
+            new CreatureAttack(14,     10, 20,      "The lurker whips you with a tentacle."),  50 
         }, 
         {
             new CreatureAttack(14,     5, 22,     "The lurker bites you.",
@@ -103076,7 +103076,7 @@ var gargoyle = new Gargoyle()
     if( hummingGuardian == null )
     {
         //guardian is currently dead
-        if (!spokeRecently(source)) source.Say("The guardian is not ready for you yet");
+        if (!spokeRecently(source)) source.Say("The guardian is not ready for you yet.");
         return;
     }
 
@@ -103093,7 +103093,7 @@ var gargoyle = new Gargoyle()
         if( subregion != null && subregion.Name == "guardianLair" )
         {
             //someone in there already. Don't allow the player to portal in
-            if (!spokeRecently(source)) source.Say($"This is a challenge that {character.Name} must complete alone");
+            if (!spokeRecently(source)) source.Say($"This is a challenge that {character.Name} must complete alone.");
             return;
         }
     }
@@ -103180,7 +103180,7 @@ var gargoyle = new Gargoyle()
     kobold.Attacks = new CreatureAttackCollection()
     {
         { 
-            new CreatureAttack(17,    30, 50,    "kobold townsfolk swats you")                        
+            new CreatureAttack(17,    30, 50,    "The kobold swats you.")                        
         },
     };
     
