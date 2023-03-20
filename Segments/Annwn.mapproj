@@ -72266,10 +72266,9 @@
         
     };
     
-    phoenix.AddStatus(new NightVisionStatus(dragon));
+    phoenix.AddStatus(new NightVisionStatus(phoenix));
+    phoenix.AddStatus(new BlindFearProtectionStatus(phoenix));
     
-    phoenix.AddImmunity(typeof(BlindSpell));
-    phoenix.AddImmunity(typeof(FearSpell));
     phoenix.AddImmunity(typeof(StunSpell));
     
     
@@ -72573,13 +72572,12 @@
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell, 
     };
     
-    wolf.AddStatus(new NightVisionStatus(dragon));
+    wolf.AddStatus(new NightVisionStatus(wolf));
+    wolf.AddStatus(new BlindFearProtectionStatus(wolf));
     
-    wolf.AddImmunity(typeof(BlindSpell));
-    wolf.AddImmunity(typeof(FearSpell));
     wolf.AddImmunity(typeof(StunSpell));
     
-    wolf.AddStatus(new NightVisionStatus(elemental));
+    wolf.AddStatus(new NightVisionStatus(wolf));
     
     wolf.Attacks = new CreatureAttackCollection
     {
