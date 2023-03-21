@@ -1400,16 +1400,18 @@
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
-        <component type="AltarComponent">
-          <altar>113</altar>
+        <component type="CounterComponent">
+          <counter>113</counter>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="7" y="-37">
         <component type="FloorComponent">
           <ground>176</ground>
         </component>
-        <component type="AltarComponent">
-          <altar>113</altar>
+        <component type="CounterComponent">
+          <counter>113</counter>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="8" y="-37">
@@ -4951,7 +4953,7 @@
         </component>
         <component type="CounterComponent">
           <counter>267</counter>
-          <direction>2</direction>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="4" y="-24">
@@ -10460,7 +10462,7 @@
         </component>
         <component type="CounterComponent">
           <counter>268</counter>
-          <direction>2</direction>
+          <direction>4</direction>
         </component>
       </tile>
       <tile x="31" y="-8">
@@ -10823,7 +10825,7 @@
         </component>
         <component type="CounterComponent">
           <counter>268</counter>
-          <direction>2</direction>
+          <direction>4</direction>
         </component>
       </tile>
       <tile x="31" y="-7">
@@ -15842,7 +15844,7 @@
         </component>
         <component type="CounterComponent">
           <counter>268</counter>
-          <direction>2</direction>
+          <direction>4</direction>
         </component>
       </tile>
       <tile x="28" y="7">
@@ -15856,7 +15858,7 @@
         </component>
         <component type="CounterComponent">
           <counter>268</counter>
-          <direction>2</direction>
+          <direction>6</direction>
         </component>
       </tile>
       <tile x="30" y="7">
@@ -16143,7 +16145,7 @@
         </component>
         <component type="CounterComponent">
           <counter>268</counter>
-          <direction>2</direction>
+          <direction>4</direction>
         </component>
       </tile>
       <tile x="28" y="8">
@@ -16157,7 +16159,7 @@
         </component>
         <component type="CounterComponent">
           <counter>268</counter>
-          <direction>2</direction>
+          <direction>6</direction>
         </component>
       </tile>
       <tile x="30" y="8">
@@ -16447,7 +16449,7 @@
         </component>
         <component type="CounterComponent">
           <counter>268</counter>
-          <direction>2</direction>
+          <direction>4</direction>
         </component>
       </tile>
       <tile x="28" y="9">
@@ -16460,8 +16462,9 @@
           <ground>3</ground>
         </component>
         <component type="CounterComponent">
+          <color r="245" g="255" b="255" a="255" />
           <counter>268</counter>
-          <direction>2</direction>
+          <direction>6</direction>
         </component>
       </tile>
       <tile x="30" y="9">
@@ -16750,7 +16753,7 @@
         </component>
         <component type="CounterComponent">
           <counter>268</counter>
-          <direction>2</direction>
+          <direction>4</direction>
         </component>
       </tile>
       <tile x="28" y="10">
@@ -16764,7 +16767,7 @@
         </component>
         <component type="CounterComponent">
           <counter>268</counter>
-          <direction>2</direction>
+          <direction>6</direction>
         </component>
       </tile>
       <tile x="30" y="10">
@@ -112602,7 +112605,7 @@ dragon.Attacks = new CreatureAttackCollection
 dragon.Blocks = new CreatureBlockCollection
 {
 
-    new CreatureBlock(6, "cold dead scales"),
+    new CreatureBlock(6, "cold, dead scales"),
     new CreatureBlock(4, "a tail"),
     new CreatureBlock(3, "a wing"),
 };
