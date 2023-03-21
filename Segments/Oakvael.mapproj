@@ -281,7 +281,7 @@
                         SayTo(player, 6300411); /* I can not teach you greater mastery of your hand skill. But-- */
                         
                         Timer.DelayCall(Facet.TimeSpan.FromSeconds(3.0), () 
-                            => Emote("pauses briefly"));
+                            => Emote("pauses briefly."));
                         Timer.DelayCall(Facet.TimeSpan.FromSeconds(6.0), () 
                             => SayTo(player, 6300412)); /* You may be worthy of another power. */
                         Timer.DelayCall(Facet.TimeSpan.FromSeconds(8.0), () 
@@ -569,7 +569,7 @@
     {
         public GroveDryads()
         {
-            Name = "Dryad";
+            Name = "dryad";
             Body = 15;
             Alignment = Alignment.Chaotic;
             CanLoot = false;
@@ -1059,7 +1059,7 @@
     
         public OakGrovePalliator()
         {
-            Name = "Palliative Elemental";
+            Name = "palliative elemental";
             Body = 233;
     
             Health = MaxHealth = 250;
@@ -1088,7 +1088,7 @@
     
             if (heart != null && heart.Alignment == Alignment.Neutral)
             {
-                Emote($"Dissipates into a puff of healing energy, flowing towards the heart of the grove");
+                Emote($"dissipates into a puff of healing energy, flowing towards the heart of the grove.");
                 heart.OakHeartSaved();
     
                 /* We won't delete the entity on the same frame. Server will crash. This call is part of a an optimized loop. */
@@ -1213,7 +1213,7 @@
             if (heartlife > 2)
             {
                 Name = "Healed Grove Heart";
-//                Emote($"A series of healthy vegetation flows out of the ground at rapid speed");
+//                Emote($"senses a series of healthy vegetation flowing out of the ground at rapid speed.");
 //                var tile = Segment.FindTile(30, 51, 236);
 //                tile.Add(new Obstruction(266, false));
 //                var tile2 = Segment.FindTile(30, 50, 236);
@@ -1230,7 +1230,7 @@
 //                tile7.Add(new Obstruction(266, false));
                 new OakGroveBow().Move(Location, true, Segment);
                 
-                Emote($"the heart begins absorbing fresh nutrients from the ground, but it shivers as a furious meow is heard in the distance.");
+                Emote($"begins absorbing fresh nutrients from the ground, but it shivers as a furious meow is heard in the distance.");
                 
                 EmitSound(228, 3, 9);
                 
@@ -1326,7 +1326,7 @@
     {
         public HeartDryad()
         {
-            Name = "Corrupted Dryad";
+            Name = "corrupted dryad";
             Body = 15;
             Alignment = Alignment.Evil;
             CanLoot = false;
@@ -1424,7 +1424,7 @@
     {
         public HeartNecrotroph()
         {
-            Name = "Necrotroph";
+            Name = "necrotroph";
             Body = 234;
             Alignment = Alignment.Evil;
             CanSwim = true;
@@ -110925,13 +110925,13 @@
     rat.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(6, 3, 12, "The rat rakes you with its claws"), 50 
+            new CreatureAttack(6, 3, 12, "The rat rakes you with its claws."), 50 
         }, 
         {
-            new CreatureAttack(6, 4, 10, "The rat bites you"), 30
+            new CreatureAttack(6, 4, 10, "The rat bites you."), 30
         },
         {
-            new CreatureAttack(6, 2, 8, "The rat whips you with its tail"), 20 
+            new CreatureAttack(6, 2, 8, "The rat whips you with its tail."), 20 
         },
     };
     
@@ -112372,15 +112372,15 @@
     serpent.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(16, 20, 32, "The serpent bites you with it's fangs."),   60 
+            new CreatureAttack(16, 20, 32, "The serpent bites you with its fangs."),   60 
         }, 
         {
-            new CreatureAttack(16, 20, 32, "The serpent bites you with it's fangs.",
+            new CreatureAttack(16, 20, 32, "The serpent bites you with its fangs.",
                                         new AttackStunComponent(80),
                                         new AttackPoisonComponent(9)),             20 
         }, 
         {
-            new CreatureAttack(16, 25, 37, "The serpent strikes you with it's tail.",
+            new CreatureAttack(16, 25, 37, "The serpent strikes you with its tail.",
                                         new AttackStunComponent(10)),                   20 
         }, 
     };
@@ -114236,7 +114236,7 @@
         <block><![CDATA[
     var centaur = new GroveDefender()
     {
-        Name = "Grove Defender",
+        Name = "grove defender",
         MaxHealth = 208, Health = 208,
         BaseDodge = 21,
         BasePenetration = ShieldPenetration.Medium,     
@@ -114286,7 +114286,7 @@
         <block><![CDATA[
     var dryad = new GroveDryads()
     {
-        Name = "Dryad",
+        Name = "dryad",
         MaxHealth = 140, Health = 140,
         MaxMana = 14, Mana = 14,
         BaseDodge = 25,
@@ -114368,10 +114368,10 @@
             new CreatureAttack(21,     50, 65,  "The bear spirit slashes you with spectral claws."),        50 
         },
         {
-            new CreatureAttack(21,     45, 65,  "The bear spirits attack passes through your defenses."),   40 
+            new CreatureAttack(21,     45, 65,  "The bear spirit's attack passes through your defenses."),   40 
         },
         {
-            new CreatureAttack(21,     60, 73, "The spirit batters you with impossible force."),            10 
+            new CreatureAttack(21,     60, 73, "The bear spirit batters you with impossible force."),            10 
         }
     };
         
@@ -114426,13 +114426,13 @@
     wolf.Attacks = new CreatureAttackCollection
     {
             { 
-                new CreatureAttack(21, 20, 35, "The spirit rakes you with its claws."),         50 
+                new CreatureAttack(21, 20, 35, "The wolf spirit rakes you with its claws."),         50 
             }, 
             {
-                new CreatureAttack(21, 30, 42, "The spirit sinks its teeth into you."),         30
+                new CreatureAttack(21, 30, 42, "The wolf spirit sinks its teeth into you."),         30
             }, 
             { 
-                new CreatureAttack(21, 37, 49, "The wolf lunges at you, passing through you."), 20 
+                new CreatureAttack(21, 37, 49, "The wolf spirit lunges at you, passing through you."), 20 
             }, 
     };
     
@@ -114494,7 +114494,7 @@
             new CreatureAttack(21, 25, 40, "A spectral tusk impales you."), 60 
         }, 
         {
-            new CreatureAttack(21, 35, 49, "The boar charges through you."), 40 
+            new CreatureAttack(21, 35, 49, "The boar spirit charges through you."), 40 
         }, 
     };
     
@@ -114547,7 +114547,7 @@
     
     viper.Attacks = new CreatureAttackCollection()
     {
-        new CreatureAttack(18,     10, 30,      "The viper sinks its spectral fangs into your flesh.", 
+        new CreatureAttack(18,     10, 30,      "The viper spirit sinks its spectral fangs into your flesh.", 
                                             new AttackPoisonComponent(33, 50))
     };  
     
@@ -114611,8 +114611,8 @@
 
     piranha.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(17,     10, 15,   "The piranha swarm upon you"),      70 }, 
-        { new CreatureAttack(17,     12, 17,  "The piranha bite you"),            30 }, 
+        { new CreatureAttack(17,     10, 15,   "The frenzied fish swarms upon you."),      70 }, 
+        { new CreatureAttack(17,     12, 17,  "The frenzied fish bites you."),            30 }, 
     };
         
     piranha.Blocks = new CreatureBlockCollection
@@ -115043,7 +115043,7 @@
         <block><![CDATA[
     var centaur = new Centaur()
     {
-        Name = "Grove Defender",
+        Name = "grove defender",
         MaxHealth = 234, Health = 234,
         BaseDodge = 32,
         Alignment = Alignment.Evil,
@@ -115096,7 +115096,7 @@
         <block><![CDATA[
     var dryad = new HeartDryad()
     {
-        Name = "Tainted Dryad",
+        Name = "tainted dryad",
         MaxHealth = 158, Health = 158,
         MaxMana = 14, Mana = 14,
         BaseDodge = 26,
@@ -115484,15 +115484,15 @@
     serpent.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(15, 20, 35, "The serpent bites you with it's fangs."),   60 
+            new CreatureAttack(15, 20, 35, "The serpent bites you with its fangs."),   60 
         }, 
         {
-            new CreatureAttack(15, 20, 35, "The serpent bites you with it's fangs.",
+            new CreatureAttack(15, 20, 35, "The serpent bites you with its fangs.",
                                         new AttackStunComponent(80),
                                         new AttackPoisonComponent(12, 20)),             20 
         }, 
         {
-            new CreatureAttack(15, 25, 40, "The serpent strikes you with it's tail.",
+            new CreatureAttack(15, 25, 40, "The serpent strikes you with its tail.",
                                         new AttackStunComponent(10)),                   20 
         }, 
     };
