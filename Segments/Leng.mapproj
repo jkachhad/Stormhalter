@@ -362,7 +362,7 @@
         }
         public void Elated()
         {
-            Say($"My daughter! You've rescued her from the top of the Water Falls!");
+            Say($"My daughter! You've rescued her from the top of the waterfalls!");
             EmitSound(92, 3, 9);
         }
     }
@@ -75680,7 +75680,7 @@
     var shidosha = new Ninja()
     {
         Body = 245,
-        Name = "shidosha",
+        Name = "Shidosha",
         
         MaxHealth = 2100, Health = 2100,
         BaseDodge = 28,
@@ -75963,11 +75963,11 @@
     vlad.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(20,     50, 75,      "The vampire rends your flesh with his claws",
+            new CreatureAttack(20,     50, 75,      "The vampire rends your flesh with his claws.",
                                                     new AttackAgeComponent(1000)),                                      70 
         }, 
         {
-            new CreatureAttack(20,     60, 95,     "The vampire appears behind you, sinking his teeth into your neck",
+            new CreatureAttack(20,     60, 95,     "The vampire appears behind you, sinking his teeth into your neck.",
                                                     new AttackStunComponent(50)),                                       30 
         },
     };
@@ -76183,7 +76183,7 @@
                     
     var fighter = new Humanoid()
     {
-        Name = "Nomad",
+        Name = "nomad",
         Body = (female ? 33 : 32), IsFemale = female,
             
         MaxHealth = 121, Health = 121,
@@ -76358,7 +76358,7 @@
                     
     var fighter = new Humanoid()
     {
-        Name = "Nomad",
+        Name = "nomad",
         Body = (female ? 33 : 32), IsFemale = female,
             
         MaxHealth = 121, Health = 121,
@@ -76425,14 +76425,14 @@
     minotaur.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(15,     20, 25,      "The minotaur hits with a wicked axe"),  60 
+            new CreatureAttack(15,     20, 25,      "The minotaur hits with a wicked axe."),  60 
         }, 
         {
-            new CreatureAttack(16,     21, 27,     "You've been gored by the minotaur",
+            new CreatureAttack(16,     21, 27,     "You've been gored by the minotaur.",
                                                     new AttackStunComponent(10.0)),          30
         }, 
         {
-            new CreatureAttack(17,     22, 30,     "You've been trampled by the minotaur"),  10
+            new CreatureAttack(17,     22, 30,     "You've been trampled by the minotaur."),  10
         }, 
     };
     
@@ -76491,10 +76491,10 @@
     salamander.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(14,     11, 18,  "The salamander claws at you"),             60 
+            new CreatureAttack(14,     11, 18,  "The salamander claws at you."),             60 
         },
         {
-            new CreatureAttack(14,     14, 21,  "The salamander hits you with its tail"),   40 
+            new CreatureAttack(14,     14, 21,  "The salamander hits you with its tail."),   40 
         },
     };
     
@@ -76606,7 +76606,7 @@
                     
     var fighter = new Humanoid()
     {
-        Name = "Familiar",
+        Name = "familiar",
         Body = (female ? 33 : 32), IsFemale = female,
         HideDetection = 28,    
         MaxHealth = 154, Health = 154,
@@ -76662,7 +76662,7 @@
                     
     var fighter = new Humanoid()
     {
-        Name = "Familiar",
+        Name = "familiar",
         Body = (female ? 33 : 32), IsFemale = female,
         HideDetection = 28,    
         MaxHealth = 154, Health = 154,
@@ -76715,7 +76715,7 @@
                 
     var thaum = new Humanoid()
     {
-        Name = "Familiar",
+        Name = "familiar",
         Body = (female ? 16 : 48), IsFemale = female,
         HideDetection = 28,    
         MaxHealth = 154, Health = 154,
@@ -76906,7 +76906,7 @@
                                                 new AttackStunComponent(25)),                               30 
         }, 
         {
-            new CreatureAttack(17,     30, 41,  "The duck pecks at your eyes attempting to blind you."),    20 
+            new CreatureAttack(17,     30, 41,  "The duck pecks at your eyes, attempting to blind you."),    20 
         }, 
     };
         
@@ -77283,15 +77283,15 @@
     wyrm.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(17, 20, 35, "The serpent bites you with it's fangs."),   60 
+            new CreatureAttack(17, 20, 35, "The wyrm bites you with its fangs."),   60 
         }, 
         {
-            new CreatureAttack(18, 20, 35, "The serpent bites you with it's fangs.",
+            new CreatureAttack(18, 20, 35, "The wyrm bites you with its fangs.",
                                         new AttackStunComponent(35),
                                         new AttackPoisonComponent(12)),             20 
         }, 
         {
-            new CreatureAttack(19, 25, 44, "The serpent strikes you with it's tail.",
+            new CreatureAttack(19, 25, 44, "The wyrm strikes you with its tail.",
                                         new AttackStunComponent(10)),                   20 
         }, 
     };
@@ -77482,7 +77482,7 @@
     var isFemale = Utility.RandomBool();            
     var wizard = new Humanoid()
     {
-        Name = "Thrall",
+        Name = "thrall",
         Body = (isFemale ? 37 : 38), IsFemale = isFemale,
         HideDetection = 23,    
         MaxHealth = 99, Health = 99,
@@ -77557,7 +77557,7 @@
         <block><![CDATA[
     var wizard = new Humanoid()
     {
-        Name = "Thrall",
+        Name = "thrall",
         Body = 38,
         HideDetection = 23,       
         MaxHealth = 99, Health = 99,
@@ -77753,8 +77753,8 @@
     
     mummy.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(11,     13, 22,      "The mummy scratches you with its claws"),  70 }, 
-        { new CreatureAttack(11,     15, 25,     "You've been bitten by the mummy"), 30 },
+        { new CreatureAttack(11,     13, 22,      "The mummy scratches you with its claws."),  70 }, 
+        { new CreatureAttack(11,     15, 25,     "You've been bitten by the mummy."), 30 },
     };   
     
     mummy.Spells = new CreatureSpellCollection()
@@ -77803,7 +77803,7 @@
         <block><![CDATA[
 	var raven = new Raven()
 	{
-	    Name = "Raven",
+	    Name = "raven",
         MaxHealth = 63, Health = 63,
         BaseDodge = 20,
         BasePenetration = ShieldPenetration.Medium,
@@ -77815,13 +77815,13 @@
     raven.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(7,     2, 7,   "The raven buffets you with his wings."),                   50
+            new CreatureAttack(7,     2, 7,   "The raven buffets you with its wings."),                   50
         }, 
         {
             new CreatureAttack(8,     3, 10,  "The raven sends a flurry of pecks towards you."),          30 
         }, 
         {
-            new CreatureAttack(9,     4, 12,  "The raven pecks at your eyes attempting to blind you."),   20 
+            new CreatureAttack(9,     4, 12,  "The raven pecks at your eyes, attempting to blind you."),   20 
         }, 
     };
         
@@ -77990,7 +77990,7 @@
                     
     var fighter = new Humanoid()
     {
-        Name = "Wretch",
+        Name = "wretch",
         Body = (female ? 33 : 32), IsFemale = female,
         HideDetection = 23,       
         MaxHealth = 100, Health = 100,
@@ -78129,10 +78129,10 @@
     sandwyrm.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(14,     14, 15,     "The sandwyrm rolls over you"),        70 
+            new CreatureAttack(14,     14, 15,     "The sandwyrm rolls over you."),        70 
         }, 
         {
-            new CreatureAttack(14,    16, 30,     "You've been bitten by the sandwyrm",
+            new CreatureAttack(14,    16, 30,     "You've been bitten by the sandwyrm.",
                                                     new AttackPoisonComponent(8, 50)),  30 
         },
     };
@@ -78196,15 +78196,15 @@
     seaserpent.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(15, 10, 20, "The serpent bites you with it's fangs."),   60 
+            new CreatureAttack(15, 10, 20, "The serpent bites you with its fangs."),   60 
         }, 
         {
-            new CreatureAttack(15, 10, 25, "The serpent bites you with it's fangs. It tingles!",
+            new CreatureAttack(15, 10, 25, "The serpent bites you with its fangs. It tingles!",
                                         new AttackStunComponent(35),
                                         new AttackPoisonComponent(12)),             20 
         }, 
         {
-            new CreatureAttack(15, 13, 28, "The serpent strikes you with it's tail.",
+            new CreatureAttack(15, 13, 28, "The serpent strikes you with its tail.",
                                         new AttackStunComponent(10)),                   20 
         }, 
     };
@@ -78408,7 +78408,7 @@
             new CreatureAttack(8,     9, 15,      "The manticora slashes you with its claws."),   30 
         },
         {
-            new CreatureAttack(8,     8, 16,     "The manticora stings you with his tail.", 
+            new CreatureAttack(8,     8, 16,     "The manticora stings you with its tail.", 
                                                     new AttackPoisonComponent(8)),                 30 
         },
     };
@@ -78459,10 +78459,10 @@
     sandwyrm.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(8,     6, 14,     "The sandwyrm rolls over you"),      70 
+            new CreatureAttack(8,     6, 14,     "The sandwyrm rolls over you."),      70 
         }, 
         {
-            new CreatureAttack(8,    8, 15,     "You've been bitten by the sandwyrm",
+            new CreatureAttack(8,    8, 15,     "You've been bitten by the sandwyrm.",
                                                     new AttackPoisonComponent(4)),             30
         },
     };
@@ -78718,7 +78718,7 @@
                     
     var fighter = new Humanoid()
     {
-        Name = "Wretch",
+        Name = "wretch",
         Body = (female ? 33 : 32), IsFemale = female,
         HideDetection = 28,    
         MaxHealth = 143, Health = 143,
@@ -78887,10 +78887,10 @@
     ghoul.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(14,     12, 18,      "The ghoul scratches you with its claws"),  70 
+            new CreatureAttack(14,     12, 18,      "The ghoul scratches you with its claws."),  70 
         }, 
         { 
-            new CreatureAttack(14,     14, 22,     "You've been bitten by the ghoul",
+            new CreatureAttack(14,     14, 22,     "You've been bitten by the ghoul.",
                                                     new AttackPoisonComponent(13)),            30
         },
     };
@@ -79104,7 +79104,7 @@
       <script name="OnDeath" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    source.SayTo(killer, $"Only a flesh wound! {killer.Name}.");
+    source.SayTo(killer, $"Just a flesh wound, {killer.Name}!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -79114,7 +79114,7 @@
     if (spokeRecently(source))
         return;
 
-    source.Say($"I move for no man or woman!");
+    source.Say($"I move for no man, or woman!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -79151,7 +79151,7 @@
     critter.Attacks = new CreatureAttackCollection()
     {
         {
-            new CreatureAttack(15,      30, 40,      "The creature thumps you with its back two feet.",
+            new CreatureAttack(15,      30, 40,      "The creature thumps you with its rear two feet.",
                                                         new AttackStunComponent(5)),                40
         },
         {
@@ -79199,7 +79199,7 @@
     if (spokeRecently(source))
         return;
 
-    source.Say($"Sqqqqquuuuuuueeeaaaaaaaakkk");
+    source.Say($"Sqqqqquuuuuuueeeaaaaaaaakkk!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -79258,7 +79258,7 @@
       <script name="OnDeath" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    source.SayTo(killer, $"Death awaits you with nasty, big, pointy teeth {killer.Name}.");
+    source.SayTo(killer, $"Death awaits you with nasty, big, pointy teeth, {killer.Name}.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -79331,7 +79331,7 @@
     var isFemale = Utility.RandomBool();            
     var wizard = new Humanoid()
     {
-        Name = "Thrall",
+        Name = "thrall",
         Body = (isFemale ? 37 : 38), IsFemale = isFemale,
         HideDetection = 23,    
         MaxHealth = 99, Health = 99,
@@ -79402,7 +79402,7 @@
                     
     var fighter = new Humanoid()
     {
-        Name = "Wretch",
+        Name = "wretch",
         Body = (female ? 33 : 32), IsFemale = female,
             
         MaxHealth = 110, Health = 110,
@@ -79658,7 +79658,7 @@
                     
     var fighter = new Humanoid()
     {
-        Name = "Wretch",
+        Name = "wretch",
         Body = (female ? 33 : 32), IsFemale = female,
             
         MaxHealth = 111, Health = 111,
@@ -79866,7 +79866,7 @@
             new CreatureAttack(8,     9, 13,      "The manticora slashes you with its claws."),   30 
         },
         {
-            new CreatureAttack(8,     8, 15,     "The manticora stings you with his tail.", 
+            new CreatureAttack(8,     8, 15,     "The manticora stings you with its tail.", 
                                                     new AttackPoisonComponent(8)),                 30 
         },
     };
@@ -79917,10 +79917,10 @@
     sandwyrm.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(8,     6, 12,     "The sandwyrm rolls over you"),      70 
+            new CreatureAttack(8,     6, 12,     "The sandwyrm rolls over you."),      70 
         }, 
         {
-            new CreatureAttack(8,    8, 14,     "You've been bitten by the sandwyrm",
+            new CreatureAttack(8,    8, 14,     "You've been bitten by the sandwyrm.",
                                                     new AttackPoisonComponent(4)),             30
         },
     };
@@ -80004,7 +80004,7 @@
         <block><![CDATA[
 	var raven = new Raven()
 	{
-	    Name = "Raven",
+	    Name = "raven",
         MaxHealth = 83, Health = 83,
         BaseDodge = 20,
         BasePenetration = ShieldPenetration.Medium,
@@ -80018,13 +80018,13 @@
     raven.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(7,     2, 10,   "The raven buffets you with his wings."),                   50
+            new CreatureAttack(7,     2, 10,   "The raven buffets you with its wings."),                   50
         }, 
         {
             new CreatureAttack(8,     3, 12,  "The raven sends a flurry of pecks towards you."),          30 
         }, 
         {
-            new CreatureAttack(9,     4, 14,  "The raven pecks at your eyes attempting to blind you."),   20 
+            new CreatureAttack(9,     4, 14,  "The raven pecks at your eyes, attempting to blind you."),   20 
         }, 
     };
         
@@ -80414,7 +80414,7 @@
         
         void onRarePurchase(PlayerEntity player, ItemEntity item)
         {
-            vendor.SayTo(player, "You got a real treasure there.");
+            vendor.SayTo(player, "You've got a real treasure there.");
         }
        
         var bottle = (new List<StockEntry>()
