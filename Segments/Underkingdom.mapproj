@@ -35,6 +35,28 @@
         }
     }
     
+    public static void announceGeneric(Segment segment, Point2D location, string newMessage = null)
+    {
+        var message = newMessage ?? $"You feel the earth shudder beneath your feet.";
+        
+        var packet = new AsciiMessagePacket(AsciiMessageType.System, Color.Blue, 
+                message);
+                
+        foreach (var client in segment.Clients)
+        {
+            var character = client.Character;
+            
+            if (character is null || !character.IsAlive)
+                return;
+                
+            character.PlaySound(30030);
+            character.SendPacket(packet);
+        }
+    
+    }
+    
+    
+    
     public static TimeSpan _speechDelay = TimeSpan.FromMinutes(1.0);
     public static Dictionary<MobileEntity, DateTime> _speechDelays = new Dictionary<MobileEntity, DateTime>();
     
@@ -423,6 +445,8 @@
             Movement = 2;
     
             Alignment = Alignment.Lawful;
+            
+            CanPanic = true;
 			
 			Attacks = new CreatureAttackCollection()
 			{
@@ -518,61 +542,6 @@
     
     }
     
-    public class PrincessScroll : ItemEntity
-    {
-        /// <inheritdoc />
-        public override int LabelNumber => 6000078;
-
-        /// <inheritdoc />
-        public override uint BasePrice => 100;
-
-        /// <inheritdoc />
-        public override int Weight => 5;
-        
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PrincessScroll"/> class.
-        /// </summary>
-        public PrincessScroll() : base(128)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PrincessScroll"/> class.
-        /// </summary>
-        public PrincessScroll(Serial serial) : base(serial)
-        {
-        }
-
-        /// <inheritdoc />
-        public override void GetDescription(List<LocalizationEntry> entries)
-        {
-            entries.Add(new LocalizationEntry(6200000, 6200244)); /* [You are looking at] [a scroll entitled 'Everything is Not As It May Appear'.] */
-        }
-
-        /// <inheritdoc />
-        public override void Serialize(BinaryWriter writer)
-        {
-            base.Serialize(writer);
-
-            writer.Write((short)1); /* version */
-        }
-
-        /// <inheritdoc />
-        public override void Deserialize(BinaryReader reader)
-        {
-            base.Deserialize(reader);
-
-            var version = reader.ReadInt16();
-
-            switch (version)
-            {
-                case 1:
-                {
-                    break;
-                }
-            }
-        }
-    }
 ]]></block>
     <block><![CDATA[]]></block>
   </script>
@@ -100391,13 +100360,13 @@
     
     overlord.CombatantChangeInterval = TimeSpan.FromSeconds(6.0);
     
-    //TODO figure out how to make this bastard not fumble
-    
     overlord.Equip(new DragonScaleArmor());
     
     overlord.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(21, 65, 92, new AttackStunComponent (25))
+        {
+            new CreatureAttack(21, 65, 92, new AttackStunComponent (25))
+        }
     };
     
     overlord.Spells = new CreatureSpellCollection(35.0)
@@ -103105,51 +103074,6 @@ var gargoyle = new Gargoyle()
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="level13SpeedyHob">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    /* New speedy Hob
-        Trying to make it more realistic here and upping exp in case difficulty goes to hummer speed. 
-    */
-	var hobgoblin = new SpeedyHob()
-    {
-        MaxHealth = 130, Health = 130,
-        BaseDodge = 21,
-        HideDetection = 3,
-        IsInvulnerable = true,
-        Experience = 1,
-        BasePenetration = ShieldPenetration.Medium,
-    };
-    
-    hobgoblin.Attacks = new CreatureAttackCollection
-    {
-        new CreatureBasicAttack(3)
-    };
-    
-    hobgoblin.Wield(new Longsword());
-    hobgoblin.Equip(new LeatherArmor());    
-    
-    hobgoblin.AddGold(1);
-  
-    
-    return hobgoblin;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
     <entity name="ukTownFolk">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
@@ -104058,10 +103982,10 @@ var gargoyle = new Gargoyle()
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>3600</maximumDelay>
       <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    announceGeneric(spawn.Segment, spawn.Location, $"You hear a loud scream as if someone has been captured.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -104519,27 +104443,6 @@ var gargoyle = new Gargoyle()
       <entry entity="ukHummerPortal" size="1" minimum="1" maximum="1" />
       <location x="13" y="22" region="9" />
     </spawn>
-    <spawn type="LocationSpawner" name="speedyHobTest">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>900</maximumDelay>
-      <maximum>3</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="level13SpeedyHob" size="1" minimum="1" maximum="1" />
-      <location x="3" y="13" region="2" />
-    </spawn>
     <spawn type="LocationSpawner" name="lowerKoboldTownFolkSouthEast">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
@@ -104902,6 +104805,7 @@ var gargoyle = new Gargoyle()
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Teleport(new Point2D(39, 19, 1));
     announceEarthquake(spawn.Segment, spawn.Location, false);
 ]]></block>
         <block><![CDATA[]]></block>
@@ -105136,6 +105040,7 @@ var gargoyle = new Gargoyle()
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Teleport(new Point2D(9, 23, 9));
     announceEarthquake(spawn.Segment, spawn.Location);
 ]]></block>
         <block><![CDATA[]]></block>
@@ -105487,6 +105392,7 @@ var gargoyle = new Gargoyle()
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Teleport(new Point2D(18, 10, 17));
     announceEarthquake(spawn.Segment, spawn.Location);
 ]]></block>
         <block><![CDATA[]]></block>
@@ -106514,7 +106420,7 @@ var gargoyle = new Gargoyle()
       </entry>
     </treasure>
     <treasure name="overlordTreasure">
-      <entry weight="10">
+      <entry weight="60">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -106523,7 +106429,7 @@ var gargoyle = new Gargoyle()
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="10">
+      <entry weight="39">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
