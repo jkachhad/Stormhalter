@@ -100364,9 +100364,7 @@
     
     overlord.Attacks = new CreatureAttackCollection()
     {
-        {
-            new CreatureAttack(21, 65, 92, new AttackStunComponent (25))
-        }
+        new CreatureAttack(21, 65, 92, "Overlord hits you with his undead claw.", new AttackStunComponent (25))
     };
     
     overlord.Spells = new CreatureSpellCollection(35.0)
