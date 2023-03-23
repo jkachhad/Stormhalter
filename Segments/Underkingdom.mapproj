@@ -100382,6 +100382,7 @@
         new LootPackEntry(true, (from, container) => new ClearBalm(),           50),
         new LootPackEntry(true, (from, container) => new PurpleSilkRobe(),           100),
         new LootPackEntry(true, (from, container) => new EbonyStaff(),           100),
+        new LootPackEntry(true, (from, container) => new StrongShieldRing(), 5),
         new LootPackEntry(true, overlordTreasure, 100)
     ));
     
@@ -106429,20 +106430,11 @@ var gargoyle = new Gargoyle()
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="35">
+      <entry weight="40">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new StunDeathProtectionBracelet();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="5">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new StrongShieldRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
