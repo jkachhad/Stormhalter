@@ -12,6 +12,20 @@ namespace Kesmai.Server.Game
 		[WorldForge]
 		public void Stun(int ticks)
 		{
+			/* Remove any fear effect. */
+			if (GetStatus<FearStatus>() is FearStatus fearStatus)
+				RemoveStatus(fearStatus);
+			
+			/* Remove any existing stun effect. */
+			if (GetStatus<StunStatus>() is StunStatus stunStatus)
+			{
+				if (ticks > stunStatus.Ticks || Utility.RandomBool())
+					ticks++;
+				
+				RemoveStatus(stunStatus);
+			}
+			
+			/* Take any existing time in their round, and add it to the stun. */
 			var roundTimer = _roundTimer;
 			var delay = TimeSpan.Zero;
 
@@ -22,21 +36,9 @@ namespace Kesmai.Server.Game
 				_roundTimer.Stop();
 				_roundTimer = null;
 			}
-			else if (GetStatus<StunStatus>() is StunStatus stunStatus)
-			{
-				if (stunStatus.Ticks <= ticks)
-					return;
 
-				RemoveStatus(stunStatus);
-			}
-			else if (GetStatus<FearStatus>() is FearStatus fearStatus)
-			{
-				RemoveStatus(fearStatus);
-			}
-
-			QueueRoundTimer(Facet.TimeSpan.FromRounds(ticks / 3.0) + delay);
-
-			AddStatus(new StunStatus(this, ticks));
+			/* Start the stun. */
+			AddStatus(new StunStatus(this, ticks, delay));
 		}
 		
 		/// <summary>
