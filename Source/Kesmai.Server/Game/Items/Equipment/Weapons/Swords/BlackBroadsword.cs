@@ -39,9 +39,21 @@ namespace Kesmai.Server.Items
 		public override Skill Skill => Skill.Greatsword;
 
 		/// <inheritdoc />
-		public override WeaponFlags Flags => WeaponFlags.TwoHanded | WeaponFlags.BlueGlowing | WeaponFlags.Slashing | WeaponFlags.Lawful;
+		public override WeaponFlags Flags
+		{
+			get
+			{
+				var parent = Parent;
+				var flags = WeaponFlags.BlueGlowing | WeaponFlags.Slashing | WeaponFlags.Lawful;
 
-        /// <inheritdoc />
+				if (parent is not PlayerEntity player || player.Stats.StrengthAdds <= 5 || player.RightHand != this)
+					flags |= WeaponFlags.TwoHanded;
+
+				return flags;
+			}
+		}
+
+		/// <inheritdoc />
 		public override bool CanBind => true;
 
 		/// <summary>
