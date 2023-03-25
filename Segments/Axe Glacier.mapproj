@@ -105886,7 +105886,6 @@
     giant.AddLoot(new LootPack(
         new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
         new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
-        new LootPackEntry(true, (from, container) => new ReturningHammer(),        100),
         new LootPackEntry(true, (from, container) => new MoonstoneRing(),        100),
         new LootPackEntry(true, AxePotions,        50)
     ));
@@ -105895,9 +105894,14 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (killer is PlayerEntity player)
+    {
+        var rhammer = new ReturningHammer();
+        rhammer.Move( player.Location, true, player.Segment );
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
