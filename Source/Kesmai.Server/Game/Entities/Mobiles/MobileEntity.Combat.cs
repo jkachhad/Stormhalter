@@ -19,9 +19,10 @@ namespace Kesmai.Server.Game
 			/* Remove any existing stun effect. */
 			if (GetStatus<StunStatus>() is StunStatus stunStatus)
 			{
-				if (ticks > stunStatus.Ticks || Utility.RandomBool())
-					ticks++;
+				if (ticks < stunStatus.Ticks)
+					return;
 				
+				ticks++;
 				RemoveStatus(stunStatus);
 			}
 			
