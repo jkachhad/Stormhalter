@@ -54,7 +54,18 @@ namespace Kesmai.WorldForge.Editor
 		public void Save(XElement element)
 		{
 			foreach (var entity in this)
+            {
+				var scriptsToString = entity.Scripts[0].ToString();
+
+				if (scriptsToString.Contains("return new MobileEntity()"))
+                {
+					MessageBox.Show($"Make sure to add code for: {entity.Name}, otherwise compiliation errors will occur.");
+                }
+
+				//var TestAgain = Test.Contains("return new MobileEnitity();")
 				element.Add(entity.GetXElement());
+			}
+				
 		}
 #endif
 	}
