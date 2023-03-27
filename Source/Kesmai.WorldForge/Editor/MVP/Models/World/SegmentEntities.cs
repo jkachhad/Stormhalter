@@ -60,10 +60,12 @@ namespace Kesmai.WorldForge.Editor
 
 				if (scriptsToString.Contains("return new MobileEntity()"))
                 {
-					MessageBox.Show($"Make sure to add code for: {entity.Name}, otherwise compiliation errors will occur.");
+                    MessageBox.Show($"Make sure to add code for: {entity.Name}, otherwise compiliation errors will occur if you leave" +
+                        $"{Environment.NewLine} return new MobileEntity(); in the code");
+
                 }
 
-				element.Add(entity.GetXElement());
+                element.Add(entity.GetXElement());
 			}
 				
 		}
