@@ -97185,20 +97185,7 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
-      <tile x="20" y="10">
-        <component type="HiddenTeleporterComponent">
-          <destinationX>37</destinationX>
-          <destinationY>-21</destinationY>
-          <destinationRegion>1</destinationRegion>
-          <lightphases select="all" />
-          <moonphases select="all" />
-          <professions select="all" />
-          <alignments select="all" />
-        </component>
-        <component type="FloorComponent">
-          <ground>2</ground>
-        </component>
-      </tile>
+      <tile x="20" y="10" />
       <tile x="33" y="10">
         <component type="WallComponent">
           <wall>334</wall>
@@ -97763,11 +97750,7 @@
           <indestructible>true</indestructible>
         </component>
       </tile>
-      <tile x="21" y="12">
-        <component type="FloorComponent">
-          <ground>6</ground>
-        </component>
-      </tile>
+      <tile x="21" y="12" />
       <tile x="35" y="12">
         <component type="WallComponent">
           <wall>334</wall>
@@ -103504,6 +103487,9 @@
           <ruins>669</ruins>
           <indestructible>true</indestructible>
         </component>
+        <component type="RopeComponent">
+          <teleporterId>255</teleporterId>
+        </component>
       </tile>
       <tile x="59" y="25" />
       <tile x="4" y="26">
@@ -103865,9 +103851,6 @@
           <destroyed>343</destroyed>
           <ruins>669</ruins>
           <indestructible>true</indestructible>
-        </component>
-        <component type="RopeComponent">
-          <teleporterId>255</teleporterId>
         </component>
       </tile>
       <tile x="4" y="27">
