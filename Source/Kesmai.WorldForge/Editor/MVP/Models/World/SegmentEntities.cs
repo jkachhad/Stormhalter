@@ -63,7 +63,6 @@ namespace Kesmai.WorldForge.Editor
 					MessageBox.Show($"Make sure to add code for: {entity.Name}, otherwise compiliation errors will occur.");
                 }
 
-				//var TestAgain = Test.Contains("return new MobileEnitity();")
 				element.Add(entity.GetXElement());
 			}
 				
