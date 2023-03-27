@@ -80371,8 +80371,7 @@
         var rareWares = new List<StockEntry>()
         {
             new StockEntry("death resistance ring",              () => new DeathResistanceRing(),         (int)(300 * merchantUpsell),  1, onRarePurchase),
-            new StockEntry("weak dexterity ring",                () => new WeakDexterityRing(),           (int)(1000 * merchantUpsell), 1, onRarePurchase),
-            new StockEntry("stun and death protection bracelet", () => new StunDeathProtectionBracelet(), (int)(3000 * merchantUpsell), 1, onRarePurchase)
+            new StockEntry("weak dexterity ring",                () => new WeakDexterityRing(),           (int)(1000 * merchantUpsell), 1, onRarePurchase)
         };
         
         if (Utility.RandomDouble() <= 0.10) 
