@@ -164,7 +164,7 @@ namespace Kesmai.WorldForge.Editor
 			{
 				if (locationSpawner.Entries.Count < 1)
 				{
-					MessageBox.Show($"Location Spawner: {locationSpawner.Name} {messageForBlankEntities}", 
+					MessageBox.Show($"Location Spawner:{locationSpawner.Name} {messageForBlankEntities}", 
 						"Location Spawner Save Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
 				}
 
@@ -175,7 +175,7 @@ namespace Kesmai.WorldForge.Editor
 			{
 				if (regionSpawner.Entries.Count < 1)
 				{
-					MessageBox.Show($"Region Spawner: {regionSpawner.Name} {messageForBlankEntities}",
+					MessageBox.Show($"Region Spawner:{regionSpawner.Name} {messageForBlankEntities}",
 						"Region Spawner Save Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
 				}
 				element.Add(regionSpawner.GetXElement());
