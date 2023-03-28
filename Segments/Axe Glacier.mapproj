@@ -360,6 +360,8 @@
                 
             _brain = new ScavengerAI(this);
         }
+        
+        public override Corpse GetCorpse() => default(Corpse);
     }
 
     public class Vulcan : VendorEntity
