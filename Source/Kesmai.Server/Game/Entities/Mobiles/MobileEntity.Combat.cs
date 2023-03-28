@@ -16,28 +16,30 @@ namespace Kesmai.Server.Game
 			if (GetStatus<FearStatus>() is FearStatus fearStatus)
 				RemoveStatus(fearStatus);
 			
+			var delay = TimeSpan.Zero;
+			
 			/* Remove any existing stun effect. */
-			if (GetStatus<StunStatus>() is StunStatus stunStatus)
+			if (GetStatus<StunStatus>() is StunStatus currentStun)
 			{
-				if (ticks < stunStatus.Ticks)
+				if (ticks <= currentStun.Ticks)
 					return;
-				
-				ticks++;
-				RemoveStatus(stunStatus);
+
+				ticks = currentStun.Ticks + 1;
+
+				RemoveStatus(currentStun);
+			}
+			else
+			{
+				/* Take any existing time in their round, and add it to the stun. */
+				if (_roundTimer != null && _roundTimer.Running)
+				{
+					delay = _roundTimer.Next - Server.Now;
+
+					_roundTimer.Stop();
+					_roundTimer = null;
+				}
 			}
 			
-			/* Take any existing time in their round, and add it to the stun. */
-			var roundTimer = _roundTimer;
-			var delay = TimeSpan.Zero;
-
-			if (roundTimer != null && roundTimer.Running)
-			{
-				delay = roundTimer.Next - Server.Now;
-
-				_roundTimer.Stop();
-				_roundTimer = null;
-			}
-
 			/* Start the stun. */
 			AddStatus(new StunStatus(this, ticks, delay));
 		}
