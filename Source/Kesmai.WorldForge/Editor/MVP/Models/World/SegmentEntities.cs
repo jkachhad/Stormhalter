@@ -169,11 +169,29 @@ namespace Kesmai.WorldForge.Editor
 #else
 		public void Save(XElement element)
 		{
+			string messageForBlankEntities = $" has an entry that is blank. {Environment.NewLine} {Environment.NewLine}" +
+                $"Update prior to Checkin, otherwise compilation errors.";
+
 			foreach (var locationSpawner in Location)
+			{
+				if (locationSpawner.Entries.Count < 1)
+				{
+					MessageBox.Show($"Location Spawner:{locationSpawner.Name} {messageForBlankEntities}", 
+						"Location Spawner Save Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+				}
+
 				element.Add(locationSpawner.GetXElement());
-			
+			}
+
 			foreach (var regionSpawner in Region)
+			{
+				if (regionSpawner.Entries.Count < 1)
+				{
+					MessageBox.Show($"Region Spawner:{regionSpawner.Name} {messageForBlankEntities}",
+						"Region Spawner Save Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+				}
 				element.Add(regionSpawner.GetXElement());
+			}
 		}
 #endif
 	}
