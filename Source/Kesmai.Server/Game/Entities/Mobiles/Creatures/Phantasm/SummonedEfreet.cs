@@ -55,5 +55,30 @@ namespace Kesmai.Server.Game
 
 			return true;
 		}
+
+		public override void OnSpellTarget(Target target, MobileEntity combatant)
+		{
+			if (Spell is DragonBreathSpell dragonBreath)
+			{
+				var direction = GetDirectionTo(combatant.Location);
+				var distance = GetDistanceToMax(combatant.Location);
+
+				if (direction == Direction.None)
+					direction = Direction.Cardinal.Random();
+
+				if (distance >= 3)
+					dragonBreath.CastAt(direction);
+				else
+					dragonBreath.CastAt(direction, direction.Opposite);
+
+				if (target != null)
+					target.Cancel(this, TargetCancel.Canceled);
+			}
+			else
+			{
+				base.OnSpellTarget(target, combatant);
+			}
+
+		}
 	}
 }
