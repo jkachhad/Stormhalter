@@ -117778,7 +117778,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Level13NormGnollGuard">
+    <entity name="Level13NormGnollVeteran">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -118188,7 +118188,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="Level14NormGnollGuard">
+    <entity name="Level14NormGnollRaider">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -119162,7 +119162,7 @@ return snake;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="BossNoteableLevel16PoisonElemental">
+    <entity name="BossNoteableLevel16CryptKeeper">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -121827,24 +121827,20 @@ dragon.Blocks = new CreatureBlockCollection
 
 dragon.Spells = new CreatureSpellCollection(20.0)
 {
-    {
-        new CreatureSpell<DragonBreathLightningSpell>(
-        skillLevel: 3), 20, TimeSpan.Zero
-    },
-    
+       
     {
         new CreatureSpell<PoisonCloudSpell>(
-        skillLevel: 6), 20, TimeSpan.Zero
+        skillLevel: 10), 20, TimeSpan.FromSeconds(14.0)
     },
     
     {
         new CreatureSpell<LightningBoltSpell>(
-        skillLevel: 10), 60, TimeSpan.Zero
+        skillLevel: 10), 30, TimeSpan.FromSeconds(8.0)
     },
     
     {
         new CreatureSpell<DeathSpell>(
-        skillLevel: 15), 30, TimeSpan.Zero
+        skillLevel: 15), 50, TimeSpan.FromSeconds(4.0)
     }
 };
 
@@ -121877,7 +121873,7 @@ return dragon;
         <block><![CDATA[if (spokeRecently(source))
         return;
 
-    source.Say($"The Blackpaw will CRUSH you, {player.Name}"); 
+    source.Say($"The Blackpaw NEEDS your bones for a new potion, {player.Name}"); 
 ]]></block>
         <block><![CDATA[
 ]]></block>
@@ -122206,6 +122202,208 @@ if (spokeRecently(source))
 
     source.Say($"What are you doing down here?! I will silence you before you can tell your kind what is happening here!"); 
 
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="Level12GnollExcavator">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var sooth = new Troll()
+    {
+        Name = "Gnoll Excavator",
+        MaxHealth = 120, Health = 120,
+        MaxMana = 12, Mana = 12,
+        BaseDodge = 21,
+        Body = 390,
+        BasePenetration = ShieldPenetration.Light,
+        Experience = 7000,
+        VisibilityDistance = 3,
+        LightningResistance = 20,
+        HideDetection = 32
+    };
+    
+    
+    sooth.AddStatus(new NightVisionStatus(sooth));
+        
+    sooth.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(12, 15, 20)
+    };
+    
+    sooth.Spells = new CreatureSpellCollection()
+    {
+        new CreatureSpell<DeathSpell>(
+            skillLevel: 6, cost: 6, 
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+        new CreatureSpell<ConcussionSpell>(
+            skillLevel: 12, cost: 10,
+            mantra: SpellHelper.GenerateMantra(), instantCast: false),
+    };
+        
+    sooth.Wield(new BlackStaff());
+        
+    sooth.AddGold(700);
+    sooth.AddLoot(new LootPack(
+        new LootPackEntry(true, SurfaceGems,       5,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33), 
+        new LootPackEntry(true, Treasure,    0.63)
+        ));
+    
+    return sooth;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="Level15ShadeShifter">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	 var stalker = new Stalker()
+    {
+        Name = "Gnoll Shade Shifter",
+        MaxHealth = 208, Health = 208,
+        MaxMana = 7, Mana = 7,
+        BaseDodge = 26,
+        Body = 389,
+    
+        Experience = 10913,
+        BasePenetration = ShieldPenetration.Medium,
+        VisibilityDistance = 1,
+        DeathResistance = 100,
+        CanCharge = true,
+        
+    };
+    
+    stalker.AddStatus(new NightVisionStatus(stalker));
+    
+    stalker.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureBasicAttack(17, 20, 31)
+    };
+    
+    stalker.Spells = new CreatureSpellCollection(100)
+    {
+        new CreatureSpell<DarknessSpell>(
+            skillLevel: 10, cost: 4)
+    };
+    
+    stalker.Wield(new Spear());
+    
+    stalker.AddGold(650);
+    stalker.AddLoot(new LootPack(
+        new LootPackEntry(true, Levelthreegems, 12, gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    33), 
+        new LootPackEntry(true, StatPotion,    0.3), 
+        new LootPackEntry(true, Treasure,    0.63)
+    ));
+    
+    return stalker;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+    <entity name="Level16HighGnollRogue">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+    
+    var skelninja = new Troll()
+    {
+        Name = "Gnoll Rogue",
+        MaxHealth = 234, Health = 234,
+        BaseDodge = 27,
+        HideDetection = 32,
+        Body = 457,
+        Experience = 15000,  
+        CanJumpkick = true,
+        CanSwim = true,
+        VisibilityDistance = 1,
+        BasePenetration = ShieldPenetration.Medium,
+        CanLoot = false,
+        Hue = Color.FromArgb(200, 200, 200, 200),
+        
+
+        IsTethered = true,
+    };
+    
+    skelninja.AddStatus(new NightVisionStatus(skelninja));
+    skelninja.AddStatus(new BreatheWaterStatus(skelninja));
+    
+    skelninja.CombatantChangeInterval = TimeSpan.FromSeconds(5.0);
+    
+    skelninja.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(18,      5, 15,      "Gnoll Rogue hits you with a flurry of swipes.",
+                                                        new AttackProneComponent(5),
+                                                        new AttackPoisonComponent(5),
+                                                        new AttackStunComponent(5)),                50
+        },
+        {
+            new CreatureAttack(18,      10, 15,     "Gnoll Rogue slices at your chest.",
+                                                        new AttackProneComponent(10),
+                                                        new AttackPoisonComponent(7),
+                                                        new AttackStunComponent(5)),               30
+        },
+        {
+            new CreatureAttack(19,      15, 30,     "Gnoll Rogue knocks you back with a forceful kick.",
+                                                        new AttackProneComponent(25), 
+                                                        new AttackStunComponent(5)),               20
+        },
+    };
+    
+    skelninja.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "her furry arms"),
+        new CreatureBlock(4, "her blinding speed"),
+        new CreatureBlock(3, "Gnolly reflexes"),
+    };
+        
+   skelninja.AddLoot(new LootPack(
+        new LootPackEntry(true, Levelthreegems,       12.5,     gemsPriceMutator), 
+        new LootPackEntry(true, GenericBottles,    20),
+        new LootPackEntry(true, StatPotion,    1)
+   ));
+       
+   return skelninja;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -123860,6 +124058,7 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="HallTrapFirestorm" size="1" minimum="1" maximum="1" />
       <location x="41" y="16" region="6" />
     </spawn>
     <spawn type="LocationSpawner" name="ThiefLairConcTrap2">
@@ -123949,7 +124148,7 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level13NormGnollGuard" size="3" minimum="3" maximum="6" />
+      <entry entity="Level13NormGnollVeteran" size="3" minimum="3" maximum="6" />
       <entry entity="Level13NormGnollSoothsayer" size="1" minimum="1" maximum="3" />
       <bounds region="2">
         <inclusion left="6" top="-7" right="7" bottom="15" />
@@ -124081,7 +124280,7 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level14NormGnollGuard" size="1" minimum="6" maximum="8" />
+      <entry entity="Level14NormGnollRaider" size="1" minimum="6" maximum="8" />
       <bounds region="3">
         <inclusion left="4" top="1" right="15" bottom="19" />
         <inclusion left="-10" top="6" right="3" bottom="13" />
@@ -124361,7 +124560,7 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="BossNoteableLevel16PoisonElemental" size="1" minimum="1" maximum="1" />
+      <entry entity="BossNoteableLevel16CryptKeeper" size="1" minimum="1" maximum="1" />
       <bounds region="4">
         <inclusion left="7" top="4" right="21" bottom="14" />
         <inclusion left="22" top="8" right="26" bottom="9" />
@@ -125067,10 +125266,11 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level14NormGnollGuard" size="3" minimum="10" maximum="15" />
+      <entry entity="Level14NormGnollRaider" size="3" minimum="10" maximum="15" />
       <entry entity="Level13NormGnollSoothsayer" size="1" minimum="4" maximum="6" />
       <entry entity="Level14HighSpider" size="1" minimum="3" maximum="3" />
       <entry entity="Level13NormWorg" size="1" minimum="6" maximum="8" />
+      <entry entity="Level12GnollExcavator" size="1" minimum="2" maximum="2" />
       <bounds region="3">
         <inclusion left="21" top="9" right="45" bottom="21" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -125116,10 +125316,12 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level13NormGnollSoothsayer" size="1" minimum="4" maximum="6" />
-      <entry entity="Level14NormGnollGuard" size="3" minimum="9" maximum="14" />
+      <entry entity="Level13NormGnollSoothsayer" size="1" minimum="2" maximum="3" />
+      <entry entity="Level14NormGnollRaider" size="3" minimum="9" maximum="9" />
+      <entry entity="Level12GnollExcavator" size="1" minimum="1" maximum="2" />
+      <entry entity="Level15ShadeShifter" size="1" minimum="1" maximum="1" />
       <bounds region="3">
-        <inclusion left="-1" top="22" right="20" bottom="36" />
+        <inclusion left="-1" top="15" right="19" bottom="33" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -125141,7 +125343,7 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
       <entry entity="Level12NormEntranceGnollSoothsayer" size="1" minimum="2" maximum="3" />
-      <entry entity="Level13NormGnollGuard" size="3" minimum="6" maximum="8" />
+      <entry entity="Level13NormGnollVeteran" size="3" minimum="6" maximum="8" />
       <bounds region="2">
         <inclusion left="-3" top="-16" right="23" bottom="-4" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -125164,7 +125366,7 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level13NormGnollGuard" size="3" minimum="4" maximum="6" />
+      <entry entity="Level13NormGnollVeteran" size="3" minimum="4" maximum="6" />
       <entry entity="Level13NormGnollSoothsayer" size="1" minimum="2" maximum="2" />
       <bounds region="2">
         <inclusion left="17" top="-6" right="27" bottom="7" />
@@ -125236,6 +125438,9 @@ if (spokeRecently(source))
       </script>
       <entry entity="Level15ExtremeWorg" size="1" minimum="6" maximum="6" />
       <entry entity="Level15HighGnollWorgHandle" size="1" minimum="6" maximum="6" />
+      <entry entity="Level16HighGnollRogue" size="1" minimum="2" maximum="3" />
+      <entry entity="Level12GnollExcavator" size="1" minimum="3" maximum="3" />
+      <entry entity="Level15ShadeShifter" size="1" minimum="1" maximum="1" />
       <bounds region="5">
         <inclusion left="-54" top="1" right="-32" bottom="15" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -125258,8 +125463,11 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level13NormGnollSoothsayer" size="1" minimum="3" maximum="3" />
-      <entry entity="Level13NormGnollGuard" size="3" minimum="3" maximum="3" />
+      <entry entity="Level13NormGnollSoothsayer" size="1" minimum="1" maximum="2" />
+      <entry entity="Level13NormGnollVeteran" size="2" minimum="3" maximum="3" />
+      <entry entity="Level12GnollExcavator" size="1" minimum="1" maximum="1" />
+      <entry entity="Level16HighGnollRogue" size="1" minimum="2" maximum="2" />
+      <entry entity="Level15ShadeShifter" size="1" minimum="1" maximum="1" />
       <bounds region="5">
         <inclusion left="-30" top="-7" right="-23" bottom="15" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -125283,6 +125491,8 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
       <entry entity="BossMiniLevel17BrewMaster" size="1" minimum="1" maximum="1" />
+      <entry entity="Level16HighGnollRogue" size="1" minimum="1" maximum="1" />
+      <entry entity="Level12GnollExcavator" size="1" minimum="1" maximum="1" />
       <bounds region="5">
         <inclusion left="-25" top="-14" right="-10" bottom="-8" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -125307,7 +125517,9 @@ if (spokeRecently(source))
       </script>
       <entry entity="Level15HighGnollWorgHandle" size="1" minimum="8" maximum="8" />
       <entry entity="Level15ExtremeWorg" size="1" minimum="8" maximum="8" />
-      <entry entity="Level14NormGnollGuard" size="2" minimum="4" maximum="4" />
+      <entry entity="Level14NormGnollRaider" size="2" minimum="4" maximum="4" />
+      <entry entity="Level12GnollExcavator" size="1" minimum="1" maximum="2" />
+      <entry entity="Level16HighGnollRogue" size="1" minimum="1" maximum="1" />
       <bounds region="4">
         <inclusion left="-46" top="-17" right="-17" bottom="1" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -125332,7 +125544,9 @@ if (spokeRecently(source))
       </script>
       <entry entity="Level15HighGnollWorgHandle" size="1" minimum="8" maximum="8" />
       <entry entity="Level15ExtremeWorg" size="1" minimum="8" maximum="8" />
-      <entry entity="Level14NormGnollGuard" size="2" minimum="4" maximum="4" />
+      <entry entity="Level14NormGnollRaider" size="2" minimum="4" maximum="4" />
+      <entry entity="Level12GnollExcavator" size="1" minimum="1" maximum="2" />
+      <entry entity="Level16HighGnollRogue" size="1" minimum="1" maximum="1" />
       <bounds region="4">
         <inclusion left="-49" top="2" right="-29" bottom="25" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -125357,7 +125571,9 @@ if (spokeRecently(source))
       </script>
       <entry entity="Level15ExtremeWorg" size="1" minimum="4" maximum="4" />
       <entry entity="Level15HighGnollWorgHandle" size="1" minimum="4" maximum="4" />
-      <entry entity="Level14NormGnollGuard" size="2" minimum="2" maximum="2" />
+      <entry entity="Level14NormGnollRaider" size="2" minimum="2" maximum="2" />
+      <entry entity="Level12GnollExcavator" size="1" minimum="1" maximum="2" />
+      <entry entity="Level16HighGnollRogue" size="1" minimum="1" maximum="1" />
       <bounds region="4">
         <inclusion left="-28" top="16" right="-13" bottom="31" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -125404,7 +125620,9 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="Level14NormGnollGuard" size="2" minimum="8" maximum="8" />
+      <entry entity="Level14NormGnollRaider" size="1" minimum="8" maximum="8" />
+      <entry entity="Level16HighGnollRogue" size="1" minimum="1" maximum="1" />
+      <entry entity="Level12GnollExcavator" size="1" minimum="1" maximum="1" />
       <bounds region="5">
         <inclusion left="-21" top="-6" right="-11" bottom="3" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -125452,8 +125670,9 @@ if (spokeRecently(source))
       </script>
       <entry entity="Level13NormGnollSoothsayer" size="1" minimum="3" maximum="3" />
       <entry entity="Level14HighSpider" size="1" minimum="4" maximum="4" />
-      <entry entity="Level14NormGnollGuard" size="4" minimum="10" maximum="10" />
+      <entry entity="Level14NormGnollRaider" size="4" minimum="10" maximum="10" />
       <entry entity="Level13NormWorg" size="1" minimum="2" maximum="2" />
+      <entry entity="Level12GnollExcavator" size="1" minimum="2" maximum="2" />
       <bounds region="3">
         <inclusion left="0" top="34" right="38" bottom="44" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -125478,7 +125697,8 @@ if (spokeRecently(source))
       </script>
       <entry entity="Level13NormGnollSoothsayer" size="1" minimum="2" maximum="2" />
       <entry entity="Level13NormWorg" size="1" minimum="8" maximum="8" />
-      <entry entity="Level13NormGnollGuard" size="3" minimum="4" maximum="4" />
+      <entry entity="Level13NormGnollVeteran" size="3" minimum="4" maximum="4" />
+      <entry entity="Level15ShadeShifter" size="1" minimum="3" maximum="3" />
       <bounds region="3">
         <inclusion left="40" top="23" right="53" bottom="45" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -125582,7 +125802,7 @@ if (spokeRecently(source))
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="New Thief Lair Spawner">
+    <spawn type="RegionSpawner" name="Thief Lair bossway">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
