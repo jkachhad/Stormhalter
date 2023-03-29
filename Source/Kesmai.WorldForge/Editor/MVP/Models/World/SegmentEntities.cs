@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Xml.Linq;
 using Ionic.Zip;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
@@ -54,7 +55,19 @@ namespace Kesmai.WorldForge.Editor
 		public void Save(XElement element)
 		{
 			foreach (var entity in this)
-				element.Add(entity.GetXElement());
+            {
+				var scriptsToString = entity.Scripts[0].ToString();
+
+				if (scriptsToString.Contains("return new MobileEntity()"))
+                {
+                    MessageBox.Show($"Make sure to add code for: {entity.Name}, otherwise compiliation errors will occur if you leave" +
+                        $"{Environment.NewLine} return new MobileEntity(); in the code");
+
+                }
+
+                element.Add(entity.GetXElement());
+			}
+				
 		}
 #endif
 	}
