@@ -13,6 +13,7 @@ using CommonServiceLocator;
 using DigitalRune.Collections;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Scripting;
+using Lidgren.Network;
 using Syncfusion.Licensing;
 
 namespace Kesmai.WorldForge
@@ -24,24 +25,6 @@ namespace Kesmai.WorldForge
 		public static ServiceContainer ServiceContainer = new ServiceContainer();
 		public static Version Version { get; set; }
 
-		public static bool AllowGenerator
-		{
-#if DEBUG
-			get => true;
-#else
-			get => false;
-#endif
-		}
-		
-		public static bool AllowCompile
-		{
-#if DEBUG
-			get => true;
-#else
-			get => false;
-#endif
-		}
-		
 		public static Visibility DebugOnly
 		{
 #if DEBUG
@@ -66,6 +49,8 @@ namespace Kesmai.WorldForge
 
 		public static string CustomArtPath { get; set; }
 
+		public static bool Offline { get; set; } = false;
+
 		#endregion
 
 		#region Fields
@@ -84,11 +69,6 @@ namespace Kesmai.WorldForge
 		public Core()
 		{
 			ServiceLocator.SetLocatorProvider(() => ServiceContainer);
-
-			/*DispatcherUnhandledException += (sender, args) =>
-			{
-				args.Handled = true;
-			};*/
 		}
 
 		#endregion
@@ -108,6 +88,15 @@ namespace Kesmai.WorldForge
 			ServiceContainer.Register(typeof(ScriptTemplateProvider), null, new ScriptTemplateProvider());
 			
 			SyncfusionLicenseProvider.RegisterLicense("Mzk1NTI2QDMxMzgyZTM0MmUzMG85YlBIdldReGhYeUl3OFQxWUpUVDhyZ3gyRFpESm1NRUF1aUtpM01pcUk9");
+			
+			Network.Initialize();
+		}
+
+		protected override void OnExit(ExitEventArgs e)
+		{
+			Network.Disconnect();
+			
+			base.OnExit(e);
 		}
 
 		public static void Authenticated()

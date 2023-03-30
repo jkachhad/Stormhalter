@@ -122,6 +122,7 @@ namespace Kesmai.WorldForge.Editor
 
 		public RelayCommand CreateSegmentCommand { get; set; }
 		public RelayCommand CloseSegmentCommand { get; set; }
+		public RelayCommand CompileSegmentCommand { get; set; }
 		public RelayCommand OpenSegmentCommand { get; set; }
 		public RelayCommand<bool> SaveSegmentCommand { get; set; }
 
@@ -171,6 +172,9 @@ namespace Kesmai.WorldForge.Editor
 			
 			CloseSegmentCommand = new RelayCommand(CloseSegment, () => (Segment != null));
 			CloseSegmentCommand.DependsOn(() => Segment);
+			
+			CompileSegmentCommand = new RelayCommand(CompileSegment, () => (Segment != null && !Core.Offline));
+			CompileSegmentCommand.DependsOn(() => Segment);
 			
 			OpenSegmentCommand = new RelayCommand(OpenSegment, () => (Segment == null));
 			OpenSegmentCommand.DependsOn(() => Segment);
@@ -520,7 +524,11 @@ namespace Kesmai.WorldForge.Editor
 			
 			_segmentFilePath = String.Empty;
 		}
-		
+
+		private void CompileSegment()
+		{
+		}
+
 		private void OpenSegment()
 		{
 			var overwrite = true;
