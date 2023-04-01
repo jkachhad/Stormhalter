@@ -12,12 +12,16 @@ public static class Network
 	private static NetPeerConfiguration _configuration;
 	private static NetConnection _connection;
 
-	public static Action<NetIncomingMessage> Incoming;
-	public static Action Connected;
-	public static Action Disconnected;
+	public static Action<NetIncomingMessage> OnIncoming;
+	public static Action OnConnect;
+	public static Action OnDisconnect;
 
 	private static Thread _networkThread;
 	private static bool _closing = false;
+
+	public static NetClient Client => _client;
+
+	public static bool Disconnected => _connection.Status != NetConnectionStatus.Connected;
 	
 	public static void Initialize()
 	{
@@ -54,8 +58,8 @@ public static class Network
 						case NetIncomingMessageType.UnconnectedData:
 						case NetIncomingMessageType.Data:
 						{
-							if (Incoming != null)
-								Incoming(message);
+							if (OnIncoming != null)
+								OnIncoming(message);
 							
 							break;
 						}
@@ -67,16 +71,16 @@ public static class Network
 							{
 								case NetConnectionStatus.Connected:
 								{
-									if (Connected != null)
-										Connected();
+									if (OnConnect != null)
+										OnConnect();
 
 									break;
 								}
 								case NetConnectionStatus.Disconnected:
 								case NetConnectionStatus.Disconnecting:
 								{
-									if (Disconnected != null)
-										Disconnected();
+									if (OnDisconnect != null)
+										OnDisconnect();
 
 									break;
 								}
@@ -112,6 +116,21 @@ public static class Network
 		lock (_client)
 		{
 			_client.Disconnect(String.Empty);
+		}
+	}
+
+	public static void Send(byte command, byte[] buffer)
+	{
+		lock (_client)
+		{
+			var message = _client.CreateMessage();
+
+			message.Write((byte)command);
+			message.Write((int)buffer.Length);
+			message.Write((byte[])buffer);
+
+			_client.SendMessage(message, NetDeliveryMethod.ReliableOrdered);
+			_client.FlushSendQueue();
 		}
 	}
 }

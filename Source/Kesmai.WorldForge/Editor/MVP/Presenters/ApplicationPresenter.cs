@@ -1,25 +1,30 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Text;
 using System.Windows;
+using System.Xml;
 using System.Xml.Linq;
 using CommonServiceLocator;
 using DigitalRune.Collections;
 using DigitalRune.Graphics;
 using DigitalRune.ServiceLocation;
-using Ionic.Zip;
 using Kesmai.WorldForge.Models;
 using Kesmai.WorldForge.MVP;
 using Kesmai.WorldForge.Roslyn;
 using Kesmai.WorldForge.UI;
 using Kesmai.WorldForge.UI.Documents;
+using Kesmai.WorldForge.UI.Windows;
+using Lidgren.Network;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using Microsoft.Toolkit.Mvvm.Messaging.Messages;
 using RoslynPad.Roslyn;
+using ZipFile = Ionic.Zip.ZipFile;
 
 namespace Kesmai.WorldForge.Editor
 {
@@ -173,7 +178,7 @@ namespace Kesmai.WorldForge.Editor
 			CloseSegmentCommand = new RelayCommand(CloseSegment, () => (Segment != null));
 			CloseSegmentCommand.DependsOn(() => Segment);
 			
-			CompileSegmentCommand = new RelayCommand(CompileSegment, () => (Segment != null && !Core.Offline));
+			CompileSegmentCommand = new RelayCommand(CompileSegment, () => (Segment != null && !Network.Disconnected));
 			CompileSegmentCommand.DependsOn(() => Segment);
 			
 			OpenSegmentCommand = new RelayCommand(OpenSegment, () => (Segment == null));
@@ -527,6 +532,10 @@ namespace Kesmai.WorldForge.Editor
 
 		private void CompileSegment()
 		{
+			if (_segment is null || Network.Disconnected)
+				return;
+
+			new CompileWindow().ShowDialog();
 		}
 
 		private void OpenSegment()

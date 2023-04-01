@@ -45,9 +45,9 @@ namespace Kesmai.WorldForge.UI
 			{
 				Loaded += (sender, args) =>
 				{
-					Network.Connected += Connected;
-					Network.Disconnected += Disconnected;
-					Network.Incoming += Incoming;
+					Network.OnConnect += Connected;
+					Network.OnDisconnect += Disconnected;
+					Network.OnIncoming += Incoming;
 					
 #if (!DEBUG) 
 					Task.Run(() => Authenticate("play.stormhalter.com", 2594));
@@ -58,9 +58,9 @@ namespace Kesmai.WorldForge.UI
 
 				Unloaded += (sender, args) =>
 				{
-					Network.Connected -= Connected;
-					Network.Disconnected -= Disconnected;
-					Network.Incoming -= Incoming;
+					Network.OnConnect -= Connected;
+					Network.OnDisconnect -= Disconnected;
+					Network.OnIncoming -= Incoming;
 				};
 			}
 			else
