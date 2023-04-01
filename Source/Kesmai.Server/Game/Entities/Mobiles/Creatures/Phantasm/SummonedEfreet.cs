@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Kesmai.Server.Spells;
+using Kesmai.Server.Targeting;
 
 namespace Kesmai.Server.Game
 {
