@@ -8971,10 +8971,22 @@
         <component type="FloorComponent">
           <ground>13</ground>
         </component>
+        <component type="WallComponent">
+          <wall>145</wall>
+          <destroyed>147</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
       </tile>
       <tile x="4" y="-11">
         <component type="FloorComponent">
           <ground>13</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>145</wall>
+          <destroyed>147</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="5" y="-11">
@@ -8995,10 +9007,22 @@
           <tree>199</tree>
           <canGrow>true</canGrow>
         </component>
+        <component type="WallComponent">
+          <wall>145</wall>
+          <destroyed>147</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
+        </component>
       </tile>
       <tile x="8" y="-11">
         <component type="FloorComponent">
           <ground>13</ground>
+        </component>
+        <component type="WallComponent">
+          <wall>145</wall>
+          <destroyed>147</destroyed>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="9" y="-11">
@@ -123168,6 +123192,50 @@ if (spokeRecently(source))
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="NPCTownGuardArcher">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var sheriff = new Peacekeeper()
+    {
+        Name = "guard",
+        Body = 68,
+       
+        BaseDodge = 30,
+        MaxHealth = 400, Health = 400,
+        
+        Experience = 1,
+        
+        IsTethered = true,
+        Movement = 0,
+    };
+    
+    sheriff.Attacks = new CreatureAttackCollection()
+    {
+        new CreatureAttack(24, 250, 400, "guard shoots you with a crossbow.", new AttackStunComponent(100))
+    };
+  
+    
+    sheriff.Wield(new Crossbow());
+    sheriff.Equip(new LeatherArmor());
+
+    return sheriff;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="TownBanker ">
@@ -124840,6 +124908,47 @@ if (spokeRecently(source))
       </script>
       <entry entity="HallTrapsConc" size="1" minimum="1" maximum="1" />
       <location x="37" y="15" region="6" />
+    </spawn>
+    <spawn type="LocationSpawner" name="TownGuard">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="NPCTownGuardArcher" size="1" minimum="1" maximum="1" />
+      <location x="4" y="-12" region="1" />
+    </spawn>
+    <spawn type="LocationSpawner" name="TownGuard2">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="NPCTownGuardArcher" size="1" minimum="1" maximum="1" />
+      <location x="7" y="-12" region="1" />
     </spawn>
     <spawn type="RegionSpawner" name="EntranceBlacksmith">
       <minimumDelay>900</minimumDelay>
