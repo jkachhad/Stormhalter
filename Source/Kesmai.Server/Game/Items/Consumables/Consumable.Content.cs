@@ -766,8 +766,8 @@ namespace Kesmai.Server.Game
 			{
 				var strength = player.Stats.BaseStrength;
 
-				if (strength.Value < strength.Max)
-					strength.Value++;
+				if (strength.Base < strength.Maximum)
+					strength.Base++;
 
 				player.SendLocalizedMessage(6100100); /* You feel a little bit more like Hercules. */
 				
@@ -812,8 +812,8 @@ namespace Kesmai.Server.Game
 			{
 				var dexterity = player.Stats.BaseDexterity;
 
-				if (dexterity.Value < dexterity.Max)
-					dexterity.Value++;
+				if (dexterity.Base < dexterity.Maximum)
+					dexterity.Base++;
 
 				player.SendLocalizedMessage(6100102); /* You feel more agile. */
 
@@ -858,8 +858,8 @@ namespace Kesmai.Server.Game
 			{
 				var intelligence = player.Stats.BaseIntelligence;
 
-				if (intelligence.Value < intelligence.Max)
-					intelligence.Value++;
+				if (intelligence.Base < intelligence.Maximum)
+					intelligence.Base++;
 
 				player.SendLocalizedMessage(6100103); /* You feel more ingenious. */
 			}
@@ -899,8 +899,8 @@ namespace Kesmai.Server.Game
 			{
 				var willpower = player.Stats.BaseWillpower;
 
-				if (willpower.Value < willpower.Max)
-					willpower.Value++;
+				if (willpower.Base < willpower.Maximum)
+					willpower.Base++;
 
 				player.SendLocalizedMessage(6100105); /* You feel more resolute. */
 			}
@@ -940,8 +940,8 @@ namespace Kesmai.Server.Game
 			{
 				var wisdom = player.Stats.BaseWisdom;
 
-				if (wisdom.Value < wisdom.Max)
-					wisdom.Value++;
+				if (wisdom.Base < wisdom.Maximum)
+					wisdom.Base++;
 
 				player.SendLocalizedMessage(6100104); /* You feel more enlightened. */
 			}
@@ -979,10 +979,11 @@ namespace Kesmai.Server.Game
 		{
 			if (entity is PlayerEntity player)
 			{
-				var constitution = player.Stats.BaseConstitution;
+				var baseConstitution = player.Stats.BaseConstitution;
 
-				if (constitution.Value < constitution.Max)
-					constitution.Value += 2;
+				/* Compare base value with the maximum value.*/
+				if (baseConstitution.Base < baseConstitution.Maximum)
+					baseConstitution.Base += 2;
 
 				player.SendLocalizedMessage(6100106); /* You feel more hale. */
 
