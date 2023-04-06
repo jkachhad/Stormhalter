@@ -119350,7 +119350,7 @@ if (spokeRecently(source))
     worg.Spells = new CreatureSpellCollection(15.0)
     {
         new CreatureSpell<LightningBoltSpell>(
-            skillLevel: 10), TimeSpan.FromSeconds(10)
+            skillLevel: 10), 100, TimeSpan.FromSeconds(10)
     };
     
     worg.AddGold(2000);
@@ -120213,7 +120213,7 @@ if (spokeRecently(source))
     worg.Spells = new CreatureSpellCollection(15.0)
     {
         new CreatureSpell<LightningBoltSpell>(
-            skillLevel: 7), TimeSpan.FromSeconds(10)
+            skillLevel: 7),100, TimeSpan.FromSeconds(10)
     };
     
     worg.AddGold(2000);
