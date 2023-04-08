@@ -100093,11 +100093,13 @@
         
         VisibilityDistance = 0,
         RangePerception = 0,
+        Immunity = CreatureImmunity.Poison,
         
         IsTethered = true,
     };
     
     shelob.AddStatus(new NightVisionStatus(shelob));
+    
     
     shelob.Attacks = new CreatureAttackCollection()
     {
