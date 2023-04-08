@@ -119,10 +119,12 @@ namespace Kesmai.WorldForge.Windows
 	public class ItemsSourceAttribute : Attribute
 	{
 		public Type Type { get; set; }
+		public bool AllowMultiple { get; set; }
 		
-		public ItemsSourceAttribute(Type type)
+		public ItemsSourceAttribute(Type type, bool allowMultiple = false)
 		{
 			Type = type;
+			AllowMultiple = allowMultiple;
 		}
 	}
 
