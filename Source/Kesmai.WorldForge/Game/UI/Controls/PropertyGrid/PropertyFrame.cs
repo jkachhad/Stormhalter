@@ -118,12 +118,11 @@ namespace Kesmai.WorldForge.Windows
 
 			if (itemsSourceAttribute != null)
 			{
-				if (propertyType == typeof(IList))
+				if (itemsSourceAttribute.AllowMultiple)
 					return new CheckComboBoxPropertyEditor(itemsSourceAttribute);
 				else
 					return new DropDownPropertyEditor(itemsSourceAttribute);
 			}
-
 
 			var converter = TypeDescriptor.GetConverter(propertyType);
 

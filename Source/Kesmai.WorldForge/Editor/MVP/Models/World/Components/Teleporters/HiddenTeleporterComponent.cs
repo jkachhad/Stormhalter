@@ -37,7 +37,7 @@ namespace Kesmai.WorldForge.Models
 		private bool _allowNPC;
 		
 		[Browsable(true)]
-		[ItemsSource(typeof(LightphaseItemsSource))]
+		[ItemsSource(typeof(LightphaseItemsSource), true)]
 		public List<Lightphase> Lightphases
 		{
 			get => _lightphases;
@@ -45,7 +45,7 @@ namespace Kesmai.WorldForge.Models
 		}
 		
 		[Browsable(true)]
-		[ItemsSource(typeof(MoonphaseItemsSource))]
+		[ItemsSource(typeof(MoonphaseItemsSource), true)]
 		public List<Moonphase> Moonphases
 		{
 			get => _moonphases;
@@ -53,7 +53,7 @@ namespace Kesmai.WorldForge.Models
 		}
 		
 		[Browsable(true)]
-		[ItemsSource(typeof(ProfessionsItemsSource))]
+		[ItemsSource(typeof(ProfessionsItemsSource), true)]
 		public List<ProfessionInfo> Professions
 		{
 			get => _professions;
@@ -61,7 +61,7 @@ namespace Kesmai.WorldForge.Models
 		}
 		
 		[Browsable(true)]
-		[ItemsSource(typeof(AlignmentItemsSource))]
+		[ItemsSource(typeof(AlignmentItemsSource), true)]
 		public List<Alignment> Alignments
 		{
 			get => _alignments;
