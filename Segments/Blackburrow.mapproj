@@ -548,6 +548,13 @@
         {
         }
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HuntingCrossbow"/> class.
+        /// </summary>
+        public HuntingCrossbow(Serial serial) : base(serial)
+        {
+        }
+        
         /// <inheritdoc />
         public override void GetDescription(List<LocalizationEntry> entries)
         {
@@ -622,16 +629,16 @@
         public override bool CanBind => true;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BloodPike"/> class.
+        /// Initializes a new instance of the <see cref="MahoganyPike"/> class.
         /// </summary>
         public MahoganyPike() : base(173)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BloodPike"/> class.
+        /// Initializes a new instance of the <see cref="MahoganyPike"/> class.
         /// </summary>
-        public BloodPike(Serial serial) : base(serial)
+        public MahoganyPike(Serial serial) : base(serial)
         {
         }
 
