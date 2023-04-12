@@ -511,6 +511,175 @@
             }
         }
     }
+    
+    public partial class HuntingCrossbow : Crossbow, ITreasure
+    {
+        /// <inheritdoc />
+        public override uint BasePrice => 60;
+
+        /// <inheritdoc />
+        public override int Weight => 1400;
+
+        /// <inheritdoc />
+        public override ShieldPenetration Penetration => ShieldPenetration.VeryHeavy;
+
+        /// <inheritdoc />
+        public override int MinimumDamage => 10;
+
+        /// <inheritdoc />
+        public override int MaximumDamage => 25;
+
+        /// <inheritdoc />
+        public override int BaseAttackBonus => 5;
+        
+        /// <inheritdoc />
+        public override WeaponFlags Flags => base.Flags | WeaponFlags.BlueGlowing;
+
+        /// <inheritdoc />
+        public override bool CanBind => true;
+        
+        /// <inheritdoc />
+        public override int NockedID => 390;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HeavyCrossbow"/> class.
+        /// </summary>
+        public HuntingCrossbow() : base(232)
+        {
+        }
+        
+        /// <inheritdoc />
+        public override void GetDescription(List<LocalizationEntry> entries)
+        {
+            entries.Add(new LocalizationEntry(6200000, 6200038)); /* [You are looking at] [a heavy crossbow with an ornately carved tiller and a peculiar black steel bow. The crossbow is emitting a soft blue glow.] */
+
+            if (Identified)
+                entries.Add(new LocalizationEntry(6250003)); /* The combat adds for this weapon are +4. */
+        }
+        
+          /// <summary>
+        /// Serializes this instance into binary data for persistence.
+        /// </summary>
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((short)1);    /* version */
+        }
+
+        /// <summary>
+        /// Deserializes this instance from persisted binary data.
+        /// </summary>
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+
+            var version = reader.ReadInt16();
+
+            switch (version)
+            {
+                case 1:
+                {
+                    break;
+                }
+            }
+        }
+    }
+    
+    public partial class MahoganyPike : BloodWeapon
+    {
+        /// <inheritdoc />
+        public override int LabelNumber => 6000046;
+
+        /// <inheritdoc />
+        public override uint BasePrice => 10000;
+
+        /// <inherit />
+        public override Skill Skill => Skill.Halberd;
+
+        /// <inheritdoc />
+        public override int Weight => 5000;
+
+        /// <inheritdoc />
+        public override int MinimumDamage => 18;
+
+        /// <inheritdoc />
+        public override int MaximumDamage => 36;
+
+        /// <inheritdoc />
+        public override int BaseArmorBonus => 5;
+
+        /// <inheritdoc />
+        public override int BaseAttackBonus => 6;
+
+        /// <inheritdoc />
+        public override int Category => 15;
+
+        /// <inheritdoc />
+        public override WeaponFlags Flags => base.Flags | WeaponFlags.BlueGlowing | WeaponFlags.Silver | WeaponFlags.Slashing | WeaponFlags.Piercing | WeaponFlags.TwoHanded;
+
+        /// <inheritdoc />
+        public override bool CanBind => true;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BloodPike"/> class.
+        /// </summary>
+        public MahoganyPike() : base(173)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BloodPike"/> class.
+        /// </summary>
+        public BloodPike(Serial serial) : base(serial)
+        {
+        }
+
+        /// <inheritdoc />
+        public override void GetDescription(List<LocalizationEntry> entries)
+        {
+            entries.Add(new LocalizationEntry(6200000, 6200358)); /* [You are looking at] [a pike with a wicked piercing tip and a blood groove flowing all the way down to the handle.] */
+
+            if (Identified)
+                entries.Add(new LocalizationEntry(6250002)); /* The combat adds for this weapon are +5. */
+        }
+        
+        /// <inheritdoc />
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((short)1); /* version */
+        }
+        
+        public override TimeSpan GetSwingDelay(MobileEntity entity)
+        {
+            return entity.GetRoundDelay(1.50);
+        }
+        
+        public override double GetSkillMultiplier()
+        {
+            return 1.50;
+        }
+
+        /// <inheritdoc />
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+
+            var version = reader.ReadInt16();
+
+            switch (version)
+            {
+                case 1:
+                    {
+                        break;
+                    }
+            }
+        }
+    }
+    
+    
 ]]></block>
     <block><![CDATA[]]></block>
   </script>
@@ -120417,9 +120586,14 @@ return skeleton;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (killer is PlayerEntity player)
+    {      
+        var huntingXbow = new HuntingCrossbow();
+        huntingXbow .Move( player.Location, true, player.Segment );
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -122319,9 +122493,14 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (killer is PlayerEntity player)
+    {      
+        var mahoganyPike = new MahoganyPike();
+        mahoganyPike.Move( player.Location, true, player.Segment );
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
