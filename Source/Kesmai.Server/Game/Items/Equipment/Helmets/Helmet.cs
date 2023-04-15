@@ -66,7 +66,7 @@ namespace Kesmai.Server.Items
 			if (ProvidesNightVision)
 			{
 				if (entity.GetStatus(typeof(NightVisionStatus), out var status))
-					status.RemoveSourceFor(this);
+					status.RemoveSource(this);
 			}
 
 			return true;

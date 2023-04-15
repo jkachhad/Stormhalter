@@ -62,7 +62,7 @@ namespace Kesmai.Server.Items
 		        return false;
 			
 	        if (entity.GetStatus(typeof(BlindResistanceStatus), out var resistance))
-		        resistance.RemoveSourceFor(this);
+		        resistance.RemoveSource(this);
 
 	        return true;
         }
