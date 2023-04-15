@@ -47,7 +47,7 @@ namespace Kesmai.Server.Items
 				var flags = WeaponFlags.TwoHanded | WeaponFlags.BlueGlowing | WeaponFlags.Slashing | WeaponFlags.Lawful;
 
 				/* Remove 2H requirement */
-				if (parent is PlayerEntity player && player.Stats.StrengthAdds > 5 && player.RightHand == this)
+				if (parent is PlayerEntity player && player.Stats[EntityStat.StrengthAdds].Value > 5 && player.RightHand == this)
 					flags &= ~WeaponFlags.TwoHanded;
 
 				return flags;
