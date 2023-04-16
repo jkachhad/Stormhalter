@@ -118,7 +118,7 @@ namespace Kesmai.Server.Game
 				var baseMinimumDamage = weapon.MinimumDamage;
 				var baseMaximumDamage = weapon.MaximumDamage;
 
-				var hitAdds = Stats.DexterityAdds + weapon.GetAttackBonus(this, defender);
+				var hitAdds = Stats[EntityStat.DexterityAdds].Value + weapon.GetAttackBonus(this, defender);
 
 				var skillLevel = GetSkillLevel(Skill.Bow);
 				var skillMultiplier = (skillLevel * 0.1 + 1.0);
