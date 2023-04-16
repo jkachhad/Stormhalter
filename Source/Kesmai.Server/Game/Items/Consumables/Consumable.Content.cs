@@ -764,7 +764,7 @@ namespace Kesmai.Server.Game
 		{
 			if (entity is PlayerEntity player)
 			{
-				var strength = player.Stats.BaseStrength;
+				var strength = player.Stats[EntityStat.BaseStrength];
 
 				if (strength.Base < strength.Maximum)
 					strength.Base++;
@@ -810,7 +810,7 @@ namespace Kesmai.Server.Game
 		{
 			if (entity is PlayerEntity player)
 			{
-				var dexterity = player.Stats.BaseDexterity;
+				var dexterity = player.Stats[EntityStat.BaseDexterity];
 
 				if (dexterity.Base < dexterity.Maximum)
 					dexterity.Base++;
@@ -856,7 +856,7 @@ namespace Kesmai.Server.Game
 		{
 			if (entity is PlayerEntity player)
 			{
-				var intelligence = player.Stats.BaseIntelligence;
+				var intelligence = player.Stats[EntityStat.BaseIntelligence];
 
 				if (intelligence.Base < intelligence.Maximum)
 					intelligence.Base++;
@@ -897,7 +897,7 @@ namespace Kesmai.Server.Game
 		{
 			if (entity is PlayerEntity player)
 			{
-				var willpower = player.Stats.BaseWillpower;
+				var willpower = player.Stats[EntityStat.BaseWillpower];
 
 				if (willpower.Base < willpower.Maximum)
 					willpower.Base++;
@@ -938,7 +938,7 @@ namespace Kesmai.Server.Game
 		{
 			if (entity is PlayerEntity player)
 			{
-				var wisdom = player.Stats.BaseWisdom;
+				var wisdom = player.Stats[EntityStat.BaseWisdom];
 
 				if (wisdom.Base < wisdom.Maximum)
 					wisdom.Base++;
@@ -979,7 +979,7 @@ namespace Kesmai.Server.Game
 		{
 			if (entity is PlayerEntity player)
 			{
-				var baseConstitution = player.Stats.BaseConstitution;
+				var baseConstitution = player.Stats[EntityStat.BaseConstitution];
 
 				/* Compare base value with the maximum value.*/
 				if (baseConstitution.Base < baseConstitution.Maximum)

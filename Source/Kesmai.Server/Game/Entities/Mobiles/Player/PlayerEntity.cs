@@ -144,7 +144,7 @@ namespace Kesmai.Server.Game
 				if ((weapon.Flags & WeaponFlags.Throwable) != 0)
 					hitAdds += Stats[EntityStat.StrengthAdds].Value + (int)weapon.GetAttackBonus(this, defender);
 
-				if (Stats.BaseStrength >= 18)
+				if (Stats[EntityStat.BaseStrength].Value >= 18)
 					hitAdds++;
 
 				var skillLevel = GetSkillLevel(weapon.Skill);
