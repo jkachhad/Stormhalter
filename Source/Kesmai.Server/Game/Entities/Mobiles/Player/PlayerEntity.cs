@@ -30,7 +30,7 @@ namespace Kesmai.Server.Game
 
 			/* Dexterity */
 			var dexterityBonus = 0.0d;
-			var dexterity = Stats.Dexterity;
+			var dexterity = Stats[EntityStat.Dexterity].Value;
 
 			if (dexterity > 17)
 				dexterityBonus = (dexterity - 17);
