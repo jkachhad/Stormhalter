@@ -16,7 +16,7 @@ namespace Kesmai.Server.Items
 
 		[WorldForge]
 		[CommandProperty(AccessLevel.GameMaster)]
-		public virtual int ProtectionFromStun => 0;
+		public virtual int ProtectionFromDaze => 0;
 		
 		[WorldForge]
 		[CommandProperty(AccessLevel.GameMaster)]

@@ -6,12 +6,12 @@ namespace Kesmai.Server.Game
 	public partial class PlayerEntity : MobileEntity
 	{
 		/// <summary>
-		/// Checks if this instance is stunned from the damage source.
+		/// Checks if this instance is dazed from the damage source.
 		/// </summary>
 		/// <returns>
-		/// Returns a value representing the total number of seconds this entity is stunned.
+		/// Returns a value representing the total number of seconds this entity is dazed.
 		/// </returns>
-		public override int CheckStun(DamageType damageType, int damage, double baseChance)
+		public override int CheckDaze(DamageType damageType, int damage, double baseChance)
 		{
 			var percentChange = (damage * 100.0) / Health;
 
@@ -20,7 +20,7 @@ namespace Kesmai.Server.Game
 				var paperdoll = Paperdoll;
 
 				if (paperdoll != null)
-					percentChange -= Stats[EntityStat.StunProtection].Value;
+					percentChange -= Stats[EntityStat.DazeProtection].Value;
 			}
 
 			var chance = baseChance + percentChange;
@@ -51,7 +51,7 @@ namespace Kesmai.Server.Game
 			}
 
 			/* The base method returns 0 seconds. */
-			return base.CheckStun(damageType, damage, chance);
+			return base.CheckDaze(damageType, damage, chance);
 		}
 	}
 }

@@ -774,7 +774,7 @@ namespace Kesmai.Server.Game
 				if (Utility.RandomBetween(1, 2) >= 2)
 					player.Blind(4);
 				
-				player.Stun(12);
+				player.Daze(12);
 			}
 		}
 		
@@ -820,7 +820,7 @@ namespace Kesmai.Server.Game
 				if (Utility.RandomBetween(1, 2) >= 2)
 					player.Blind(4);
 
-				player.Stun(12);
+				player.Daze(12);
 			}
 		}
 		

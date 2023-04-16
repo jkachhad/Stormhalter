@@ -19,7 +19,7 @@ namespace Kesmai.Server.Items
 		public override int Weight => 80;
 
 		/// <inheritdoc />
-		public override int ProtectionFromStun => 7;
+		public override int ProtectionFromDaze => 7;
 		
 		/// <inheritdoc />
 		public override int ProtectionFromFire => 0;

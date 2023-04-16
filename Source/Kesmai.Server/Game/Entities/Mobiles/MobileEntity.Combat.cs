@@ -7,6 +7,44 @@ namespace Kesmai.Server.Game
 	public abstract partial class MobileEntity
 	{
 		/// <summary>
+		/// Dazes the entity for a specified number of rounds.
+		/// </summary>
+		[WorldForge]
+		public void Daze(int ticks)
+		{
+			/* Remove any fear effect. */
+			if (GetStatus<FearStatus>() is FearStatus fearStatus)
+				RemoveStatus(fearStatus);
+			
+			var delay = TimeSpan.Zero;
+			
+			/* Remove any existing daze effect. */
+			if (GetStatus<DazeStatus>() is DazeStatus currentDaze)
+			{
+				if (ticks <= currentDaze.Ticks)
+					return;
+
+				ticks = currentDaze.Ticks + 1;
+
+				RemoveStatus(currentDaze);
+			}
+			else
+			{
+				/* Take any existing time in their round, and add it to the daze. */
+				if (_roundTimer != null && _roundTimer.Running)
+				{
+					delay = _roundTimer.Next - Server.Now;
+
+					_roundTimer.Stop();
+					_roundTimer = null;
+				}
+			}
+			
+			/* Start the daze. */
+			AddStatus(new DazeStatus(this, ticks, delay));
+		}
+		
+		/// <summary>
 		/// Stuns the entity for a specified number of rounds.
 		/// </summary>
 		[WorldForge]
