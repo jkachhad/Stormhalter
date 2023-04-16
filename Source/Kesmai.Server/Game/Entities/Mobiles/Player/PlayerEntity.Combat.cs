@@ -20,7 +20,7 @@ namespace Kesmai.Server.Game
 				var paperdoll = Paperdoll;
 
 				if (paperdoll != null)
-					percentChange -= StunProtection.Clamp(0, 100);
+					percentChange -= Stats[EntityStat.StunProtection].Value;
 			}
 
 			var chance = baseChance + percentChange;

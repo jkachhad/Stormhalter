@@ -40,8 +40,13 @@ namespace Kesmai.Server.Game
 			{
 				{ new CreatureSpellEntry(spell, 100, TimeSpan.FromSeconds(3) )}
 			};
+		}
 
-			FireProtection = 100;
+		protected override void OnCreate()
+		{
+			base.OnCreate();
+			
+			_stats[EntityStat.FireProtection].Base = 100;
 		}
 
 		/// <inheritdoc/>
