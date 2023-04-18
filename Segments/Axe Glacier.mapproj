@@ -107205,7 +107205,8 @@
    yeti.AddLoot(new LootPack(
         new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
         new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
-       new LootPackEntry(true, YetiTreasure,     100.0),       
+       new LootPackEntry(true, YetiTreasure,     100.0),
+       new LootPackEntry(true, (from, container) => new MisericordeDagger(),        100),
        new LootPackEntry(true, (from, container) => new ManaPotion(),        100)
    ));
     
@@ -107218,9 +107219,6 @@
         <block><![CDATA[
     if (killer is PlayerEntity player)
     {
-        var dagger = new MisericordeDagger();
-        dagger.Move( player.Location, true, player.Segment );
-            
         var quest = Quests.GetQuest<KnightsDragonSlayerQuest>();
     
         if (quest != null && quest.InProgress(player))
