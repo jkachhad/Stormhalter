@@ -42922,7 +42922,7 @@
     <region>
       <id>10</id>
       <name>Dungeon of DOOM</name>
-      <height>90</height>
+      <height>100</height>
       <level>16</level>
       <tile x="5" y="2">
         <component type="StaticComponent">
@@ -47453,18 +47453,11 @@
         <component type="FloorComponent">
           <ground>179</ground>
         </component>
-        <component type="HiddenTeleporterComponent">
-          <destinationX>2</destinationX>
+        <component type="StaircaseComponent">
+          <destinationX>1</destinationX>
           <destinationY>1</destinationY>
           <destinationRegion>2</destinationRegion>
-          <lightphases select="all" />
-          <moonphases select="all" />
-          <professions select="all" />
-          <alignments select="all" />
-          <level>17</level>
-        </component>
-        <component type="StaticComponent">
-          <static>167</static>
+          <teleporterId>126</teleporterId>
         </component>
       </tile>
       <tile x="21" y="39">
@@ -90169,20 +90162,22 @@
         </component>
       </tile>
       <tile x="1" y="1">
-        <component type="StaticComponent">
-          <static>167</static>
+        <component type="FloorComponent">
+          <ground>264</ground>
         </component>
-        <component type="SkyComponent">
-          <color r="0" g="0" b="0" a="0" />
+        <component type="StaircaseComponent">
           <destinationX>20</destinationX>
           <destinationY>39</destinationY>
           <destinationRegion>10</destinationRegion>
-          <teleporterId>9</teleporterId>
+          <teleporterId>127</teleporterId>
         </component>
       </tile>
       <tile x="2" y="1">
         <component type="FloorComponent">
           <ground>264</ground>
+        </component>
+        <component type="RuinsComponent">
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="3" y="1">
