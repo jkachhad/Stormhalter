@@ -360,8 +360,6 @@
                 
             _brain = new ScavengerAI(this);
         }
-        
-        public override Corpse GetCorpse() => default(Corpse);
     }
 
     public class Vulcan : VendorEntity
@@ -105892,6 +105890,7 @@
         new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
         new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
         new LootPackEntry(true, (from, container) => new MoonstoneRing(),        100),
+        new LootPackEntry(true, (from, container) => new ReturningHammer(),        100),
         new LootPackEntry(true, AxePotions,        50)
     ));
        
@@ -105899,14 +105898,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="true">
+      <script name="OnDeath" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    if (killer is PlayerEntity player)
-    {
-        var rhammer = new ReturningHammer();
-        rhammer.Move( player.Location, true, player.Segment );
-    }
+    
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
