@@ -75852,6 +75852,7 @@
         BaseDodge = 25,
         HideDetection = 26,
         Experience = 49532,
+        Body = 94,
         
         CanStrikeCritically = false,
         CanFly = true,
@@ -75912,6 +75913,7 @@
         new LootPackEntry(true, (from, container) => new BlindFearProtectionBracelet(),        100),
         new LootPackEntry(true, (from, container) => new FeatherFallBoots(),        100),
         new LootPackEntry(true, (from, container) => new RedRobe(),        100),
+        new LootPackEntry(true, (from, container) => new KoshGauntlets(),        100), 
         new LootPackEntry(true, KoshOptions,    100)
         ));
     
@@ -75919,7 +75921,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="true">
+      <script name="OnDeath" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     if (killer is PlayerEntity player)
