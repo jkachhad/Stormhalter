@@ -79179,21 +79179,18 @@
     critter.AddGold(10000);
      critter.AddGold(1000);
       critter.AddLoot(new LootPack(
-        new LootPackEntry(true, LengGems,       100,     gemsPriceMutatorVeryHigh)
+        new LootPackEntry(true, LengGems,       100,     gemsPriceMutatorVeryHigh),
+        new LootPackEntry(true, (from, container) => new RamStaff(),    100)
     ));
     
     return critter;
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="true">
+      <script name="OnDeath" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    if (killer is PlayerEntity player)
-    {
-        var staff = new RamStaff();
-        staff.Move( player.Location, true, player.Segment );
-    }
+    
 ]]></block>
         <block><![CDATA[]]></block>
       </script>

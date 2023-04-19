@@ -360,8 +360,6 @@
                 
             _brain = new ScavengerAI(this);
         }
-        
-        public override Corpse GetCorpse() => default(Corpse);
     }
 
     public class Vulcan : VendorEntity
@@ -42922,7 +42920,7 @@
     <region>
       <id>10</id>
       <name>Dungeon of DOOM</name>
-      <height>90</height>
+      <height>100</height>
       <level>16</level>
       <tile x="5" y="2">
         <component type="StaticComponent">
@@ -47453,18 +47451,11 @@
         <component type="FloorComponent">
           <ground>179</ground>
         </component>
-        <component type="HiddenTeleporterComponent">
-          <destinationX>2</destinationX>
+        <component type="StaircaseComponent">
+          <destinationX>1</destinationX>
           <destinationY>1</destinationY>
           <destinationRegion>2</destinationRegion>
-          <lightphases select="all" />
-          <moonphases select="all" />
-          <professions select="all" />
-          <alignments select="all" />
-          <level>17</level>
-        </component>
-        <component type="StaticComponent">
-          <static>167</static>
+          <teleporterId>126</teleporterId>
         </component>
       </tile>
       <tile x="21" y="39">
@@ -90169,20 +90160,22 @@
         </component>
       </tile>
       <tile x="1" y="1">
-        <component type="StaticComponent">
-          <static>167</static>
+        <component type="FloorComponent">
+          <ground>264</ground>
         </component>
-        <component type="SkyComponent">
-          <color r="0" g="0" b="0" a="0" />
+        <component type="StaircaseComponent">
           <destinationX>20</destinationX>
           <destinationY>39</destinationY>
           <destinationRegion>10</destinationRegion>
-          <teleporterId>9</teleporterId>
+          <teleporterId>127</teleporterId>
         </component>
       </tile>
       <tile x="2" y="1">
         <component type="FloorComponent">
           <ground>264</ground>
+        </component>
+        <component type="RuinsComponent">
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="3" y="1">
@@ -105892,6 +105885,7 @@
         new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
         new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
         new LootPackEntry(true, (from, container) => new MoonstoneRing(),        100),
+        new LootPackEntry(true, (from, container) => new ReturningHammer(),        100),
         new LootPackEntry(true, AxePotions,        50)
     ));
        
@@ -105899,14 +105893,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="true">
+      <script name="OnDeath" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    if (killer is PlayerEntity player)
-    {
-        var rhammer = new ReturningHammer();
-        rhammer.Move( player.Location, true, player.Segment );
-    }
+    
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -107210,7 +107200,8 @@
    yeti.AddLoot(new LootPack(
         new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
         new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
-       new LootPackEntry(true, YetiTreasure,     100.0),       
+       new LootPackEntry(true, YetiTreasure,     100.0),
+       new LootPackEntry(true, (from, container) => new MisericordeDagger(),        100),
        new LootPackEntry(true, (from, container) => new ManaPotion(),        100)
    ));
     
@@ -107223,9 +107214,6 @@
         <block><![CDATA[
     if (killer is PlayerEntity player)
     {
-        var dagger = new MisericordeDagger();
-        dagger.Move( player.Location, true, player.Segment );
-            
         var quest = Quests.GetQuest<KnightsDragonSlayerQuest>();
     
         if (quest != null && quest.InProgress(player))
