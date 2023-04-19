@@ -99727,9 +99727,9 @@
     
         Movement = 2,
         BasePenetration = ShieldPenetration.Light,
-        FireProtection = 100,
-        
     };
+	
+	wyvern.Stats[EntityStat.FireProtection].Base = 100;
     
     wyvern.Attacks = new CreatureAttackCollection()
     {
@@ -99793,9 +99793,9 @@
     
         Movement = 2,
         BasePenetration = ShieldPenetration.Light,
-        IceProtection = 100,
-        
     };
+	
+	wyvern.Stats[EntityStat.IceProtection].Base = 100;
     
     wyvern.Attacks = new CreatureAttackCollection()
     {
@@ -99950,17 +99950,17 @@
         {
             new CreatureAttack(15,      40, 55,      "The drake slashes you with its claws.",
                                                         new AttackProneComponent(5), 
-                                                        new AttackStunComponent(5)),                40
+                                                        new AttackDazeComponent(5)),                40
         },
         {
             new CreatureAttack(15,      45, 60,     "The drake smashes you with its tail.",
                                                         new AttackProneComponent(10), 
-                                                        new AttackStunComponent(10)),               40
+                                                        new AttackDazeComponent(10)),               40
         },
         {
             new CreatureAttack(15,      53, 73,     "The drake buffets you with its wings.",
                                                         new AttackProneComponent(15), 
-                                                        new AttackStunComponent(15)),               20
+                                                        new AttackDazeComponent(15)),               20
         },
     };
     
@@ -100151,15 +100151,16 @@
         Experience = 178320,
         
         LightningResistance = 100,
-        FireProtection = 100,
-        IceProtection = 100,
         CanCharge = true,
         
         BasePenetration = ShieldPenetration.VeryHeavy,
     
         IsTethered = true,
     };
-    
+	
+	trollKing.Stats[EntityStat.FireProtection].Base = 100;
+    trollKing.Stats[EntityStat.IceProtection].Base = 100;
+	
     trollKing.AddStatus(new NightVisionStatus(trollKing));
     
     trollKing.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
@@ -100366,7 +100367,7 @@
     
     overlord.Attacks = new CreatureAttackCollection()
     {
-        new CreatureAttack(21, 65, 92, "Overlord hits you with his undead claw.", new AttackStunComponent (25))
+        new CreatureAttack(21, 65, 92, "Overlord hits you with his undead claw.", new AttackDazeComponent (25))
     };
     
     overlord.Spells = new CreatureSpellCollection(35.0)
@@ -100476,7 +100477,7 @@
         }, 
         {
             new CreatureAttack(15,     13, 23,     "You've been gored by the minotaur.",
-                                                    new AttackStunComponent(20.0)),             30
+                                                    new AttackDazeComponent(20.0)),             30
         }, 
         {
             new CreatureAttack(15,     13, 26,     "You've been trampled by the minotaur."),     10
@@ -100535,15 +100536,15 @@
     {
         {
             new CreatureAttack(18,      20, 30,      "The goblin hits you with a flurry of fists.",
-                                                        new AttackStunComponent(5)),                40
+                                                        new AttackDazeComponent(5)),                40
         },
         {
             new CreatureAttack(18,      25, 35,     "The goblin slams his fist into your chest.",
-                                                        new AttackStunComponent(10)),               40
+                                                        new AttackDazeComponent(10)),               40
         },
         {
             new CreatureAttack(18,      30, 41,     "The goblin kicks you so forcefully that you see stars.",
-                                                        new AttackStunComponent(25)),               20
+                                                        new AttackDazeComponent(25)),               20
         },
     };
                 
@@ -101161,10 +101162,11 @@
         BaseDodge = 20,
         BasePenetration = ShieldPenetration.VeryLight,        
         Experience = 3900,
-        FireProtection = 100,
         HideDetection = 25,
         IsTethered = true,
     };
+	
+	goblin.Stats[EntityStat.FireProtection].Base = 100;
     
     goblin.Attacks = new CreatureAttackCollection()
     {
@@ -101279,13 +101281,14 @@
         BasePenetration = ShieldPenetration.Medium,
         VisibilityDistance = 0,
         HideDetection = 28,    
-        FireProtection = 50,
-        IceProtection = 50,
         DeathResistance = 100,
         
         Immunity = CreatureImmunity.Poison,
     };
-    
+	
+	ghoul.Stats[EntityStat.FireProtection].Base = 50;
+    ghoul.Stats[EntityStat.IceProtection].Base = 50;
+	
     ghoul.AddStatus(new NightVisionStatus(ghoul));
     
     ghoul.Attacks = new CreatureAttackCollection()
@@ -101768,16 +101771,16 @@
     {
         {
             new CreatureAttack(18,      10, 18,      "The ninja hits you with a flurry of fists.",
-                                                        new AttackStunComponent(5)),                40
+                                                        new AttackDazeComponent(5)),                40
         },
         {
             new CreatureAttack(18,      11, 20,     "The ninja slams his fist into your chest.",
-                                                        new AttackStunComponent(10)),               40
+                                                        new AttackDazeComponent(10)),               40
         },
         {
             new CreatureAttack(18,      13, 22,     "The ninja knocks you back with a forceful kick.",
                                                         new AttackProneComponent(5), 
-                                                        new AttackStunComponent(5)),               20
+                                                        new AttackDazeComponent(5)),               20
         },
     };
     
@@ -101821,9 +101824,9 @@
         BaseDodge = 23,
         BasePenetration = ShieldPenetration.Light,
         Experience = 10918,
-                    
-        IceProtection = 100,
     };
+	
+	wizard.Stats[EntityStat.IceProtection].Base = 100;
     
     wizard.Wield(new BlackStaff());
     wizard.Equip(new LeatherArmor());
@@ -102826,9 +102829,10 @@ var gargoyle = new Gargoyle()
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.Silver,
 
-        FireProtection = 100,
         IsTethered = true,
     };
+	
+	gargoyle.Stats[EntityStat.FireProtection].Base = 100;
     
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
     
@@ -103203,15 +103207,15 @@ var gargoyle = new Gargoyle()
     {
         {
             new CreatureAttack(25,      1, 2,      "The ninja hits you with a flurry of fists.",
-                                                        new AttackStunComponent(5)),                40
+                                                        new AttackDazeComponent(5)),                40
         },
         {
             new CreatureAttack(25,      1, 2,     "The ninja slams his fist into your chest.",
-                                                        new AttackStunComponent(10)),               40
+                                                        new AttackDazeComponent(10)),               40
         },
         {
             new CreatureAttack(25,      1, 2,     "The ninja knocks you back with a forceful kick.", 
-                                                        new AttackStunComponent(100)),              20
+                                                        new AttackDazeComponent(100)),              20
         },
     };
     

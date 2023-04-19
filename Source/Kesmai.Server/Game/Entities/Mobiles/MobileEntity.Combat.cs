@@ -16,6 +16,10 @@ namespace Kesmai.Server.Game
 			if (GetStatus<FearStatus>() is FearStatus fearStatus)
 				RemoveStatus(fearStatus);
 			
+			/* Remove any stun effect. */
+			if (GetStatus<StunStatus>() is StunStatus stunStatus)
+				RemoveStatus(stunStatus);
+			
 			var delay = TimeSpan.Zero;
 			
 			/* Remove any existing daze effect. */
@@ -53,6 +57,10 @@ namespace Kesmai.Server.Game
 			/* Remove any fear effect. */
 			if (GetStatus<FearStatus>() is FearStatus fearStatus)
 				RemoveStatus(fearStatus);
+			
+			/* Remove any stun effect. */
+			if (GetStatus<DazeStatus>() is DazeStatus dazeStatus)
+				RemoveStatus(dazeStatus);
 			
 			var delay = TimeSpan.Zero;
 			

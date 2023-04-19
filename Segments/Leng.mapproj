@@ -25200,7 +25200,7 @@
           <professions>Thief</professions>
           <alignments select="all" />
           <type>StarRuby</type>
-          <fail>Stun</fail>
+          <fail>Daze</fail>
         </component>
         <component type="StaticComponent">
           <static>195</static>
@@ -28863,7 +28863,7 @@
           <professions>Martial Artist,Fighter,Thief</professions>
           <alignments select="all" />
           <type>StarRuby</type>
-          <fail>Stun</fail>
+          <fail>Daze</fail>
         </component>
         <component type="FloorComponent">
           <ground>18</ground>
@@ -52438,7 +52438,7 @@
           <professions>Fighter,Martial Artist,Thief</professions>
           <alignments select="all" />
           <type>StarRuby</type>
-          <fail>Stun</fail>
+          <fail>Daze</fail>
         </component>
         <component type="FloorComponent">
           <ground>12</ground>
@@ -75711,17 +75711,17 @@
         {
             new CreatureAttack(20,      20, 40,      "Shidosha hits you with a flurry of fists.",
                                                         new AttackProneComponent(5), 
-                                                        new AttackStunComponent(10)),                40
+                                                        new AttackDazeComponent(10)),                40
         },
         {
             new CreatureAttack(20,      30, 50,     "Shidosha slams his fist into your chest.",
                                                         new AttackProneComponent(5), 
-                                                        new AttackStunComponent(25)),               40
+                                                        new AttackDazeComponent(25)),               40
         },
         {
             new CreatureAttack(20,      40, 61,     "Shidosha knocks you back with a forceful kick.",
                                                         new AttackProneComponent(10), 
-                                                        new AttackStunComponent(15)),               20
+                                                        new AttackDazeComponent(15)),               20
         },
     };
     
@@ -75797,17 +75797,17 @@
         {
             new CreatureAttack(17,      10, 18,      "The ninja hits you with a flurry of fists.",
                                                         new AttackProneComponent(5), 
-                                                        new AttackStunComponent(5)),                40
+                                                        new AttackDazeComponent(5)),                40
         },
         {
             new CreatureAttack(17,      13, 20,     "The ninja slams his fist into your chest.",
                                                         new AttackProneComponent(5), 
-                                                        new AttackStunComponent(5)),               40
+                                                        new AttackDazeComponent(5)),               40
         },
         {
             new CreatureAttack(17,      15, 21,     "The ninja knocks you back with a forceful kick.",
                                                         new AttackProneComponent(5), 
-                                                        new AttackStunComponent(5)),               20
+                                                        new AttackDazeComponent(5)),               20
         },
     };
     
@@ -75859,12 +75859,12 @@
         
         BasePenetration = ShieldPenetration.VeryHeavy,
     
-        FireProtection = 100,
-        StunProtection = 100,
-        
         IsTethered = true,
     };
-    
+	
+	dragon.Stats[EntityStat.FireProtection].Base = 100;
+	dragon.Stats[EntityStat.StunProtection].Base = 100;
+	
     dragon.AddStatus(new NightVisionStatus(dragon));
     
     dragon.AddImmunity(typeof(BlindSpell));
@@ -75878,17 +75878,17 @@
         {
             new CreatureAttack(16,      25, 45,      "The dragon slashes you with its claws.",
                                                         new AttackProneComponent(5), 
-                                                        new AttackStunComponent(5)),                45
+                                                        new AttackDazeComponent(5)),                45
         },
         {
             new CreatureAttack(16,      40, 50,     "The dragon smashes you with its tail.",
                                                         new AttackProneComponent(10), 
-                                                        new AttackStunComponent(10)),               45
+                                                        new AttackDazeComponent(10)),               45
         },
         {
             new CreatureAttack(16,      45, 59,     "The dragon buffets you with its wings.",
                                                         new AttackProneComponent(15), 
-                                                        new AttackStunComponent(15)),               10
+                                                        new AttackDazeComponent(15)),               10
         },
     };
     
@@ -75968,7 +75968,7 @@
         }, 
         {
             new CreatureAttack(20,     60, 95,     "The vampire appears behind you, sinking his teeth into your neck.",
-                                                    new AttackStunComponent(50)),                                       30 
+                                                    new AttackDazeComponent(50)),                                       30 
         },
     };
     
@@ -76060,7 +76060,7 @@
         {
             new CreatureAttack(18,      55, 70,      "The drake slashes you with its claws.",
                                                         new AttackProneComponent(15), 
-                                                        new AttackStunComponent(5)),                40
+                                                        new AttackDazeComponent(5)),                40
         },
         {
             new CreatureAttack(19,      60, 75,     "The drake slashes you with its tail.",
@@ -76069,7 +76069,7 @@
         {
             new CreatureAttack(20,      75, 95,     "The drake buffets you with its wings.",
                                                         new AttackProneComponent(35), 
-                                                        new AttackStunComponent(15)),               40
+                                                        new AttackDazeComponent(15)),               40
         },
     };
     
@@ -76138,7 +76138,7 @@
         },
         {
             new CreatureAttack(14,     20, 25,     "The griffin pummels you with its wings.", 
-                                                    new AttackStunComponent(15.0)),                     40
+                                                    new AttackDazeComponent(15.0)),                     40
         },
     };
     
@@ -76429,7 +76429,7 @@
         }, 
         {
             new CreatureAttack(16,     21, 27,     "You've been gored by the minotaur.",
-                                                    new AttackStunComponent(10.0)),          30
+                                                    new AttackDazeComponent(10.0)),          30
         }, 
         {
             new CreatureAttack(17,     22, 30,     "You've been trampled by the minotaur."),  10
@@ -76483,10 +76483,11 @@
         
         Movement = 2,
         MagicProtection = 33,
-        FireProtection = 100,
         VisibilityDistance = 0,
         
     };
+	
+	salamander.Stats[EntityStat.FireProtection].Base = 100;
     
     salamander.Attacks = new CreatureAttackCollection
     {
@@ -76545,10 +76546,12 @@
         BasePenetration = ShieldPenetration.Medium,
         Experience = 9094,
         VisibilityDistance = 0,
-        FireProtection = 100,
         MagicProtection = 33,
         HideDetection = 28,
     };
+	
+	griffin.Stats[EntityStat.FireProtection].Base = 100;
+	
     griffin.AddStatus(new NightVisionStatus(griffin));
         
     griffin.Attacks = new CreatureAttackCollection
@@ -76561,7 +76564,7 @@
         },
         {
             new CreatureAttack(17,     25, 30,     "The griffin pummels you with its wings.", 
-                                                    new AttackStunComponent(15.0)),                     40
+                                                    new AttackDazeComponent(15.0)),                     40
         }
     };
     
@@ -76903,7 +76906,7 @@
         },
         {
             new CreatureAttack(16,     25, 35,  "The duck viciously attacks your shins.",
-                                                new AttackStunComponent(25)),                               30 
+                                                new AttackDazeComponent(25)),                               30 
         }, 
         {
             new CreatureAttack(17,     30, 41,  "The duck pecks at your eyes, attempting to blind you."),    20 
@@ -77287,12 +77290,12 @@
         }, 
         {
             new CreatureAttack(18, 20, 35, "The wyrm bites you with its fangs.",
-                                        new AttackStunComponent(35),
+                                        new AttackDazeComponent(35),
                                         new AttackPoisonComponent(12)),             20 
         }, 
         {
             new CreatureAttack(19, 25, 44, "The wyrm strikes you with its tail.",
-                                        new AttackStunComponent(10)),                   20 
+                                        new AttackDazeComponent(10)),                   20 
         }, 
     };
     
@@ -77493,9 +77496,9 @@
         Experience = 3654,
         
         CanSwim = true,
-            
-        IceProtection = 100,
     };
+	
+	wizard.Stats[EntityStat.IceProtection].Base = 100;
     
     wizard.Attacks = new CreatureAttackCollection
     {
@@ -77567,9 +77570,9 @@
         Experience = 3654,
         
         CanSwim = true,
-            
-        IceProtection = 100,
     };
+	
+	wizard.Stats[EntityStat.IceProtection].Base = 100;
     
     wizard.Attacks = new CreatureAttackCollection
     {
@@ -78053,8 +78056,10 @@
             CreatureImmunity.Projectile,
         Weakness = CreatureWeakness.BlueGlowing,
         DeathResistance = 100,
-        FireProtection = 100,
     };
+	
+	presence.Stats[EntityStat.FireProtection].Base = 100;
+	
     presence.AddStatus(new NightVisionStatus(presence));
     
     presence.Attacks = new CreatureAttackCollection
@@ -78118,10 +78123,11 @@
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
         Weakness = CreatureWeakness.BlueGlowing,
         CanCharge = true,
-        FireProtection = 100,
-        IceProtection = 100,
     };
     
+	sandwyrm.Stats[EntityStat.FireProtection].Base = 100;
+	sandwyrm.Stats[EntityStat.IceProtection].Base = 100;
+	
     sandwyrm.AddStatus(new NightVisionStatus(sandwyrm));
     
     sandwyrm.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
@@ -78200,12 +78206,12 @@
         }, 
         {
             new CreatureAttack(15, 10, 25, "The serpent bites you with its fangs. It tingles!",
-                                        new AttackStunComponent(35),
+                                        new AttackDazeComponent(35),
                                         new AttackPoisonComponent(12)),             20 
         }, 
         {
             new CreatureAttack(15, 13, 28, "The serpent strikes you with its tail.",
-                                        new AttackStunComponent(10)),                   20 
+                                        new AttackDazeComponent(10)),                   20 
         }, 
     };
     
@@ -78451,11 +78457,11 @@
         Experience = 2418,
     
         VisibilityDistance = 1,
-        
-        FireProtection = 100,
-        IceProtection = 100,
     };
-    
+	
+	sandwyrm.Stats[EntityStat.FireProtection].Base = 100;
+	sandwyrm.Stats[EntityStat.IceProtection].Base = 100;
+
     sandwyrm.Attacks = new CreatureAttackCollection
     {
         {
@@ -78508,10 +78514,11 @@
 
         Experience = 14332,
         
-        FireProtection = 100,
-        IceProtection = 80,
         Movement = 2,
     };
+	
+	bridgeTroll.Stats[EntityStat.FireProtection].Base = 100;
+	bridgeTroll.Stats[EntityStat.IceProtection].Base = 80;
     
     bridgeTroll.Attacks = new CreatureAttackCollection
     {
@@ -78520,7 +78527,7 @@
         }, 
         { 
             new CreatureAttack(12, 17, 30, "The troll headbutts you.",
-                        new AttackStunComponent(20)),                                   35
+                        new AttackDazeComponent(20)),                                   35
         }, 
         { 
             new CreatureAttack(13, 20, 39, "The troll bashes you aside with a sweep of his spiked club.",
@@ -78623,8 +78630,9 @@
         Experience = 29700,
         BasePenetration = ShieldPenetration.Medium,
         CanSwim = true,
-        FireProtection = 50,
     };
+	
+	powerTroll.Stats[EntityStat.FireProtection].Base = 50;
     
     powerTroll.AddStatus(new NightVisionStatus(powerTroll));
     powerTroll.AddStatus(new BreatheWaterStatus(powerTroll));
@@ -78633,7 +78641,7 @@
     {
         new CreatureBasicAttack(17, 31, 41,
                 new AttackProneComponent(25.0),
-                new AttackStunComponent(15.0)),
+                new AttackDazeComponent(15.0)),
     };
                 
     powerTroll.Wield(new SpikedClub());
@@ -79070,14 +79078,15 @@
         Experience = 32000,
         BasePenetration = ShieldPenetration.Medium,
         Movement = 2,
-        IceProtection = 100,
-        FireProtection = 100,
         CanLoot = false,
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Magic | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell, 
         
     };
+	
+	knight.Stats[EntityStat.FireProtection].Base = 100;
+	knight.Stats[EntityStat.IceProtection].Base = 100;
     
     knight.AddStatus(new NightVisionStatus(knight));
     knight.AddImmunity(typeof(ConcussionSpell));
@@ -79152,16 +79161,16 @@
     {
         {
             new CreatureAttack(15,      30, 40,      "The creature thumps you with its rear two feet.",
-                                                        new AttackStunComponent(5)),                40
+                                                        new AttackDazeComponent(5)),                40
         },
         {
             new CreatureAttack(15,      30, 40,     "The creature lets out a ferocious squeak and charges you.",
-                                                        new AttackStunComponent(10)),               40
+                                                        new AttackDazeComponent(10)),               40
         },
         {
             new CreatureAttack(18,      60, 80,     "The creature flies at you and gnaws at your head.",
                                                         new AttackProneComponent(20), 
-                                                        new AttackStunComponent(15)),               20
+                                                        new AttackDazeComponent(15)),               20
         },
     };
     
@@ -79341,9 +79350,9 @@
         Experience = 3654,
         
         CanSwim = true,
-            
-        IceProtection = 100,
     };
+	
+	wizard.Stats[EntityStat.IceProtection].Base = 100;
     
     wizard.Attacks = new CreatureAttackCollection
     {
@@ -79909,10 +79918,10 @@
         Experience = 2218,
     
         VisibilityDistance = 1,
-        
-        FireProtection = 100,
-        IceProtection = 100,
     };
+	
+	sandwyrm.Stats[EntityStat.FireProtection].Base = 100;
+	sandwyrm.Stats[EntityStat.IceProtection].Base = 100;
     
     sandwyrm.Attacks = new CreatureAttackCollection
     {
