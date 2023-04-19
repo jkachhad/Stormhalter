@@ -75913,7 +75913,7 @@
         new LootPackEntry(true, (from, container) => new BlindFearProtectionBracelet(),        100),
         new LootPackEntry(true, (from, container) => new FeatherFallBoots(),        100),
         new LootPackEntry(true, (from, container) => new RedRobe(),        100),
-        new LootPackEntry(true, (from, container) => new KoshGauntlets(),        100), 
+        new LootPackEntry(true, (from, container) => new KoshGauntlets(),        100),
         new LootPackEntry(true, KoshOptions,    100)
         ));
     
@@ -75924,11 +75924,7 @@
       <script name="OnDeath" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    if (killer is PlayerEntity player)
-    {
-        var kGaunts = new KoshGauntlets();
-        kGaunts.Move( player.Location, true, player.Segment );
-    }
+    
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
