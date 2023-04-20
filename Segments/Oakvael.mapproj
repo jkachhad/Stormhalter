@@ -110676,6 +110676,7 @@
     {
         MaxHealth = 28, Health = 28,
         BaseDodge = 12,
+        BasePenetration = ShieldPenetration.None,
 
         Experience = 250,
 
@@ -111157,6 +111158,7 @@
         HideDetection = 18,         
         Experience = 1709,
         CanFlee = true,
+        BasePenetration = ShieldPenetration.VeryLight,
     };
     
     orc.Attacks = new CreatureAttackCollection
@@ -111396,9 +111398,9 @@
     {
         MaxHealth = 52, Health = 52,
         BaseDodge = 14,
+        BasePenetration = ShieldPenetration.VeryLight,
         HideDetection = 21,
         Experience = 1507,
-        BasePenetration = ShieldPenetration.VeryLight,
     };
     
     goblin.Attacks = new CreatureAttackCollection
@@ -111550,9 +111552,9 @@
     {
         MaxHealth = 57, Health = 57,
         BaseDodge = 14,
+        BasePenetration = ShieldPenetration.VeryLight,
         HideDetection = 21,
         Experience = 1755,
-        BasePenetration = ShieldPenetration.VeryLight,
         CanFlee = true,
     };
     
@@ -111825,9 +111827,9 @@
     {
         MaxHealth = 81, Health = 81,
         BaseDodge = 15,
+        BasePenetration = ShieldPenetration.VeryLight,
         HideDetection = 25,
         Experience = 2902,
-        BasePenetration = ShieldPenetration.VeryLight,
         
         CanFlee = true,
     };
@@ -112770,7 +112772,7 @@
     {
         MaxHealth = 99, Health = 99,
         BaseDodge = 18,
-        BasePenetration = ShieldPenetration.Light,
+        BasePenetration = ShieldPenetration.VeryLight,
 
         Experience = 4179,
 
@@ -113922,7 +113924,7 @@
     
     doomOrc.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(14)
+        new CreatureAttack(14, 10, 20, "Doom.Orc hits you with arrow.")
     };
                 
     doomOrc.Wield(new HeavyCrossbow());
@@ -113959,13 +113961,13 @@
     {
         MaxHealth = 80, Health = 80,
         BaseDodge = 16,
+        BasePenetration = ShieldPenetration.VeryLight,
 
         Experience = 2902,
 
         CanFlee = true,
         
         HideDetection = 14,
-        BasePenetration = ShieldPenetration.Light,
     };
     
     orc.Attacks = new CreatureAttackCollection
