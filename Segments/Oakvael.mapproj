@@ -113924,7 +113924,7 @@
     
     doomOrc.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(14)
+        new CreatureAttack(14, 10, 20, "Doom.Orc hits you with arrow.")
     };
                 
     doomOrc.Wield(new HeavyCrossbow());
