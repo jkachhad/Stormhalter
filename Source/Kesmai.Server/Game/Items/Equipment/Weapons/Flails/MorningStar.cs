@@ -7,6 +7,9 @@ public class MorningStar : Flail
         public override uint BasePrice => 10000;
 
         /// <inheritdoc />
+        public override uint Category => 2;
+
+        /// <inheritdoc />
         public override int Weight => 1800;
 
         /// <inherit />
