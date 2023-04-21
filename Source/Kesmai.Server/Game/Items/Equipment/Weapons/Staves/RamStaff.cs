@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items
 {
-	public partial class RamStaff : Staff
+	public partial class RamStaff : Staff, ITreasure
 	{
 		/// <inheritdoc />
 		public override uint BasePrice => 800;
@@ -33,6 +33,9 @@ namespace Kesmai.Server.Items
 
         /// <inheritdoc />
         public override int ProjectileProtection  => 1;
+
+        /// <inheritdoc />
+        public override int CanDisintegrate  => false;
 
 		/// <inheritdoc />
 		public override WeaponFlags Flags => WeaponFlags.TwoHanded | WeaponFlags.Bashing | WeaponFlags.Lawful;
