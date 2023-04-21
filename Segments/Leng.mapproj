@@ -75852,6 +75852,7 @@
         BaseDodge = 25,
         HideDetection = 26,
         Experience = 49532,
+        Body = 94,
         
         CanStrikeCritically = false,
         CanFly = true,
@@ -76363,6 +76364,7 @@
             
         MaxHealth = 121, Health = 121,
         BaseDodge = 20,
+        BasePenetration = ShieldPenetration.VeryLight,
         HideDetection = 26,    
         Experience = 4489,
         CanSwim = true,
@@ -76614,7 +76616,7 @@
         MagicProtection = 33,
         Experience = 9094,
     
-        BasePenetration = ShieldPenetration.Medium,
+        BasePenetration = ShieldPenetration.Light,
             
         VisibilityDistance = 0,
     };
@@ -77098,6 +77100,7 @@
         BaseDodge = 19,
         Experience = 5015,
         HideDetection = 26,
+        BasePenetration = ShieldPenetration.VeryLight,
         CanFlee = true,
     };
     
@@ -78725,7 +78728,7 @@
         BaseDodge = 21,
         Experience = 7578,
     
-        BasePenetration = ShieldPenetration.Medium,
+        BasePenetration = ShieldPenetration.Light,
     };
     
     fighter.AddStatus(new NightVisionStatus(fighter));
@@ -79660,6 +79663,7 @@
             
         MaxHealth = 111, Health = 111,
         BaseDodge = 18,
+        BasePenetration = ShieldPenetration.VeryLight,
         HideDetection = 24,    
         Experience = 3889,
         CanSwim = true,
@@ -81094,10 +81098,10 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="griffLevelOutdoors">
+    <spawn type="RegionSpawner" name="griffLevelOutdoorsE">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>19</maximum>
+      <maximum>12</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -81112,18 +81116,15 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level11Archer" size="3" minimum="3" maximum="3" />
-      <entry entity="level11Fighter" size="3" minimum="6" maximum="6" />
-      <entry entity="level11Centaur" size="1" minimum="2" maximum="2" />
-      <entry entity="level11Scorpion" size="1" minimum="3" maximum="3" />
-      <entry entity="level11Bee" size="3" minimum="2" maximum="3" />
-      <entry entity="level11Raven" size="1" minimum="2" maximum="2" />
-      <entry entity="level12Troll" size="3" minimum="3" maximum="3" />
-      <entry entity="level11Gryphon" size="1" minimum="2" maximum="3" />
+      <entry entity="level11Archer" size="3" minimum="1" maximum="1" />
+      <entry entity="level11Fighter" size="3" minimum="1" maximum="2" />
+      <entry entity="level11Centaur" size="1" minimum="1" maximum="2" />
+      <entry entity="level11Bee" size="3" minimum="1" maximum="2" />
+      <entry entity="level11Raven" size="1" minimum="1" maximum="2" />
+      <entry entity="level12Troll" size="3" minimum="1" maximum="2" />
+      <entry entity="level11Gryphon" size="1" minimum="1" maximum="2" />
       <bounds region="20">
-        <inclusion left="25" top="7" right="33" bottom="14" />
-        <inclusion left="4" top="10" right="25" bottom="23" />
-        <inclusion left="10" top="6" right="14" bottom="9" />
+        <inclusion left="14" top="10" right="25" bottom="23" />
         <exclusion left="15" top="13" right="18" bottom="16" />
       </bounds>
     </spawn>
@@ -82129,6 +82130,73 @@
       <bounds region="100">
         <inclusion left="11" top="5" right="11" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="griffLevelOutdoorsW">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>12</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level11Archer" size="3" minimum="1" maximum="1" />
+      <entry entity="level11Fighter" size="3" minimum="1" maximum="2" />
+      <entry entity="level11Centaur" size="1" minimum="1" maximum="2" />
+      <entry entity="level11Scorpion" size="1" minimum="1" maximum="2" />
+      <entry entity="level11Bee" size="3" minimum="1" maximum="2" />
+      <entry entity="level11Raven" size="1" minimum="1" maximum="2" />
+      <entry entity="level12Troll" size="3" minimum="1" maximum="2" />
+      <entry entity="level11Gryphon" size="1" minimum="1" maximum="2" />
+      <bounds region="20">
+        <inclusion left="4" top="10" right="16" bottom="24" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="14" top="23" right="16" bottom="24" />
+        <exclusion left="4" top="17" right="5" bottom="24" />
+        <exclusion left="6" top="17" right="6" bottom="20" />
+        <exclusion left="15" top="13" right="16" bottom="15" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="griffLevelOutdoorsN">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>12</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level11Archer" size="3" minimum="1" maximum="2" />
+      <entry entity="level11Fighter" size="3" minimum="1" maximum="2" />
+      <entry entity="level11Centaur" size="1" minimum="1" maximum="2" />
+      <entry entity="level11Scorpion" size="1" minimum="1" maximum="2" />
+      <entry entity="level11Bee" size="3" minimum="1" maximum="2" />
+      <entry entity="level11Raven" size="1" minimum="1" maximum="2" />
+      <entry entity="level12Troll" size="3" minimum="1" maximum="2" />
+      <entry entity="level11Gryphon" size="1" minimum="1" maximum="2" />
+      <bounds region="20">
+        <inclusion left="25" top="7" right="33" bottom="14" />
+        <inclusion left="10" top="6" right="14" bottom="9" />
+        <exclusion left="15" top="13" right="18" bottom="16" />
       </bounds>
     </spawn>
   </spawns>
