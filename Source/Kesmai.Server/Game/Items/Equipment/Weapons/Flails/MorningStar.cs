@@ -34,7 +34,7 @@ public class MorningStar : Flail, ITreasure
         public override bool CanBind => true;
 
         /// <inheritdoc />
-		public override WeaponFlags Flags => WeaponFlags.Bashing;
+		public override WeaponFlags Flags => WeaponFlags.Bashing | WeaponFlags.BlueGlowing;
 
         private int _weaponLevel;
         private FlailWeapon _weaponStats;
@@ -145,5 +145,4 @@ public class MorningStar : Flail, ITreasure
             public int BaseArmorBonus { get; set; }
             public double WeaponSpeed { get; set; }
         }
-       
     }
