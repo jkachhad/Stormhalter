@@ -31,7 +31,7 @@ public class Polearm : Halberd, ITreasure
         public override bool CanBind => true;
 
         /// <inheritdoc />
-		public override WeaponFlags Flags => WeaponFlags.Bashing;
+		public override WeaponFlags Flags => WeaponFlags.Slashing | WeaponFlags.Slashing | weaponFlags.Pierce | WeaponFlags.BlueGlowing;
 
         private int _weaponLevel;
         private poleArmWeapon _weaponStats;
