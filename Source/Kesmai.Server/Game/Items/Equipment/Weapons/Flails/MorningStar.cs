@@ -1,4 +1,4 @@
-public class MorningStar : Flail
+public class MorningStar : Flail, ITreasure
     {
         /// <inheritdoc />
         public override int LabelNumber => 6000037;
