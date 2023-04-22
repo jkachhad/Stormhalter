@@ -34,20 +34,20 @@ public class Polearm : Halberd, ITreasure
 		public override WeaponFlags Flags => WeaponFlags.Bashing;
 
         private int _weaponLevel;
-        private FlailWeapon _weaponStats;
+        private poleArmWeapon _weaponStats;
         /// <summary>
-        /// Initializes a new instance of the <see cref="MorningStar"/> class.
+        /// Initializes a new instance of the <see cref="Polearm"/> class.
         /// </summary>
-        public MorningStar(int weaponLevel) : base(944)
+        public Polearm(int weaponLevel) : base(944)
         {
            _weaponLevel = weaponLevel;
            _weaponStats = GetWeaponStats(weaponLevel);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MorningStar"/> class.
+        /// Initializes a new instance of the <see cref="Polearm"/> class.
         /// </summary>
-        public MorningStar(Serial serial) : base(serial)
+        public Polearm(Serial serial) : base(serial)
         {
             
         }
@@ -55,7 +55,7 @@ public class Polearm : Halberd, ITreasure
         /// <inheritdoc />
         public override void GetDescription(List<LocalizationEntry> entries)
         {
-            entries.Add(new LocalizationEntry(6200000, 6200357)); /* [You are looking at] [a light flail with dozens of serrated spikes, seemingly ready to draw blood.] */
+            entries.Add(new LocalizationEntry(6200000, 6200357)); /* [You are looking at] [a light poleArm with dozens of serrated spikes, seemingly ready to draw blood.] */
         }
 
         /// <inheritdoc />
@@ -87,44 +87,44 @@ public class Polearm : Halberd, ITreasure
             return entity.GetRoundDelay(_weaponStats.WeaponSpeed);
         }
 
-        public FlailWeapon GetWeaponStats()
+        public PoleArmWeapon GetWeaponStats()
         {
-            FlailWeapon flail = new FlailWeapon();
+            PoleArmWeapon poleArm = new PoleArmWeapon();
 
             switch (_weaponLevel)
             {
                 case 1:
-                    flail = SetWeaponStats(2, 8, 1, 0, 1.05);
+                    poleArm = SetWeaponStats(2, 8, 1, 0, 1.00);
                     break;
                 case 2:
-                    flail = SetWeaponStats(2, 9, 2, 0, 1.1);
+                    poleArm = SetWeaponStats(2, 9, 2, 0, 1.00);
                     break;
                 case 3:
-                    flail = SetWeaponStats(3, 10, 3, 1, 1.15);
+                    poleArm = SetWeaponStats(3, 10, 3, 1, 1.00);
                     break;
                 case 4:
-                    flail = SetWeaponStats(3, 11, 4, 1, 1.2);
+                    poleArm = SetWeaponStats(3, 11, 4, 1, 1.00);
                     break;
                 case 5:
-                    flail = SetWeaponStats(4, 12, 5, 2, 1.25);
+                    poleArm = SetWeaponStats(4, 12, 5, 2, 1.00);
                     break;
                 case 6:
-                    flail = SetWeaponStats(4, 13, 6, 2, 1.30);
+                    poleArm = SetWeaponStats(4, 13, 6, 2, 1.00);
                     break;
                 case 7:
-                    flail = SetWeaponStats(5, 14, 7, 3, 1.35);
+                    poleArm = SetWeaponStats(5, 14, 7, 3, 1.00);
                     break;
                 default:
-                    flail = SetWeaponStats(2, 8, 1, 0, 1.05);
+                    poleArm = SetWeaponStats(2, 8, 1, 0, 1.00);
                     break;
             }
 
-            return flail;
+            return poleArm;
         }
 
-        public FlailWeapon SetWeaponStats(int minimumDamage, int maximumDamage, int baseAttackBonus, int baseDefenseBonus, double weaponSpeed)
+        public PoleArmWeapon SetWeaponStats(int minimumDamage, int maximumDamage, int baseAttackBonus, int baseDefenseBonus, double weaponSpeed)
         {
-            return new FlailWeapon()
+            return new PoleArmWeapon()
             {
                 MinimumDamage = minimumDamage,
                 MaximumDamage = maximumDamage,
@@ -134,7 +134,7 @@ public class Polearm : Halberd, ITreasure
             };
         }
 
-        public class FlailWeapon
+        public class PoleArmWeapon
         {
             public int MinimumDamage { get; set; }
             public int MaximumDamage { get; set; }
