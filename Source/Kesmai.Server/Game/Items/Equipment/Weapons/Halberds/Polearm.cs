@@ -142,5 +142,4 @@ public class Polearm : Halberd, ITreasure
             public int BaseArmorBonus { get; set; }
             public double WeaponSpeed { get; set; }
         }
-       
     }
