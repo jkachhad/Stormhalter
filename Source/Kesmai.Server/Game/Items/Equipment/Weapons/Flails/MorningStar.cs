@@ -67,6 +67,8 @@ public class MorningStar : Flail, ITreasure
             base.Serialize(writer);
 
             writer.Write((short)1); /* version */
+
+            writer.Write((int)_weaponLevel); /* weapon level */
         }
 
         /// <inheritdoc />
@@ -80,6 +82,7 @@ public class MorningStar : Flail, ITreasure
             {
                 case 1:
                     {
+                        _weaponLevel = reader.ReadInt32();
                         break;
                     }
             }
