@@ -35,10 +35,11 @@ public class Polearm : Halberd, ITreasure
 
         private int _weaponLevel;
         private poleArmWeapon _weaponStats;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Polearm"/> class.
         /// </summary>
-        public Polearm(int weaponLevel) : base(944)
+        public Polearm(int weaponLevel) : base(958)
         {
            _weaponLevel = weaponLevel;
            _weaponStats = GetWeaponStats(weaponLevel);
@@ -53,17 +54,13 @@ public class Polearm : Halberd, ITreasure
         }
 
         /// <inheritdoc />
-        public override void GetDescription(List<LocalizationEntry> entries)
-        {
-            entries.Add(new LocalizationEntry(6200000, 6200357)); /* [You are looking at] [a light poleArm with dozens of serrated spikes, seemingly ready to draw blood.] */
-        }
-
-        /// <inheritdoc />
         public override void Serialize(BinaryWriter writer)
         {
             base.Serialize(writer);
 
             writer.Write((short)1); /* version */
+
+            writer.Write((int)_weaponLevel); /* weapon level */
         }
 
         /// <inheritdoc />
@@ -77,9 +74,16 @@ public class Polearm : Halberd, ITreasure
             {
                 case 1:
                     {
+                        _weaponLevel = reader.ReadInt32();
                         break;
                     }
             }
+        }
+
+          /// <inheritdoc />
+        public override void GetDescription(List<LocalizationEntry> entries)
+        {
+            entries.Add(new LocalizationEntry(6200000, 6200357)); /* [You are looking at] [a light poleArm with dozens of serrated spikes, seemingly ready to draw blood.] */
         }
 
         public override TimeSpan GetSwingDelay(MobileEntity entity)
