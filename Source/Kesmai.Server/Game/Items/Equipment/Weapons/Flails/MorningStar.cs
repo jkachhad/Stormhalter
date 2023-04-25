@@ -83,6 +83,7 @@ public class MorningStar : Flail, ITreasure
                 case 1:
                     {
                         _weaponLevel = reader.ReadInt32();
+                        _weaponStats = GetWeaponStats(_weaponLevel);
                         break;
                     }
             }
