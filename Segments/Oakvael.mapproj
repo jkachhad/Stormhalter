@@ -110861,9 +110861,9 @@
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | 
                    CreatureImmunity.Bashing | CreatureImmunity.Poison | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
-
-        DeathResistance = 40,
     };
+	
+	wyrm.Stats[EntityStat.DeathResistance].Base = 20;
     
     wyrm.Attacks = new CreatureAttackCollection
     {
@@ -112362,12 +112362,11 @@
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing 
                    | CreatureImmunity.Bashing | CreatureImmunity.Poison | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
-        
-        DeathResistance = 40,
     };
 	
 	serpent.Stats[EntityStat.IceProtection].Base = 100;
-    
+    serpent.Stats[EntityStat.DeathResistance].Base = 20;
+		
     serpent.AddStatus(new NightVisionStatus(serpent)); 
     serpent.AddStatus(new BreatheWaterStatus(serpent));
     
@@ -115478,12 +115477,11 @@
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing 
                    | CreatureImmunity.Bashing | CreatureImmunity.Poison | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
-        
-        DeathResistance = 40,
     };
 	
 	serpent.Stats[EntityStat.IceProtection].Base = 100;
-    
+    serpent.Stats[EntityStat.DeathResistance].Base = 20;
+	
     serpent.AddStatus(new NightVisionStatus(serpent)); 
     serpent.AddStatus(new BreatheWaterStatus(serpent));
     

@@ -73381,10 +73381,11 @@
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
             CreatureImmunity.Projectile,
         Weakness = CreatureWeakness.BlueGlowing,
-        DeathResistance = 100,
+
     };
 	
 	presence.Stats[EntityStat.FireProtection].Base = 100;
+	presence.Stats[EntityStat.DeathResistance].Base = 20;
 	
     presence.AddStatus(new NightVisionStatus(presence));
     

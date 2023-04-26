@@ -99658,10 +99658,9 @@
     
         Movement = 2,
         BasePenetration = ShieldPenetration.Light,
-        LightningResistance = 100,
-        
     };
-    
+	
+    wyvern.Stats[EntityStat.LightningResistance].Base = 20;
     
     wyvern.AddImmunity(typeof(Lightning));
     
@@ -100149,8 +100148,7 @@
         Alignment = Alignment.Chaotic,
         HideDetection = 30,
         Experience = 178320,
-        
-        LightningResistance = 100,
+
         CanCharge = true,
         
         BasePenetration = ShieldPenetration.VeryHeavy,
@@ -100160,6 +100158,7 @@
 	
 	trollKing.Stats[EntityStat.FireProtection].Base = 100;
     trollKing.Stats[EntityStat.IceProtection].Base = 100;
+	trollKing.Stats[EntityStat.LightningResistance].Base = 20;
 	
     trollKing.AddStatus(new NightVisionStatus(trollKing));
     
@@ -100684,10 +100683,11 @@
         BaseDodge = 22,
         BasePenetration = ShieldPenetration.Light,
         Experience = 6018,
-        LightningResistance = 100,
         HideDetection = 25, 
     };
     
+	hobgoblin.Stats[EntityStat.LightningResistance].Base = 20;
+	
     hobgoblin.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(11)
@@ -101224,8 +101224,9 @@
         Experience = 7222,
         BasePenetration = ShieldPenetration.Light,
         MaxMana = 21, Mana = 21,
-        DeathResistance = 100,
     };
+	
+	banshee.Stats[EntityStat.DeathResistance].Base = 20;
         
     banshee.Attacks = new CreatureAttackCollection()
     {
@@ -101281,13 +101282,13 @@
         BasePenetration = ShieldPenetration.Medium,
         VisibilityDistance = 0,
         HideDetection = 28,    
-        DeathResistance = 100,
         
         Immunity = CreatureImmunity.Poison,
     };
 	
 	ghoul.Stats[EntityStat.FireProtection].Base = 50;
     ghoul.Stats[EntityStat.IceProtection].Base = 50;
+	ghoul.Stats[EntityStat.DeathResistance].Base = 20;
 	
     ghoul.AddStatus(new NightVisionStatus(ghoul));
     
@@ -101347,13 +101348,13 @@
         Experience = 7222,
         BasePenetration = ShieldPenetration.Light,
         Movement = 3,
-        DeathResistance = 100,
-        
+
         Immunity = CreatureImmunity.Piercing,
         
         Weakness = CreatureWeakness.Silver,
-        
     };
+	
+	skeleton.Stats[EntityStat.DeathResistance].Base = 20;
     
     skeleton.Attacks = new CreatureAttackCollection()
     {
@@ -101405,8 +101406,9 @@
         Experience = 10699,
         BasePenetration = ShieldPenetration.Light,
         VisibilityDistance = 1,
-        DeathResistance = 100,
     };
+	
+	spectre.Stats[EntityStat.DeathResistance].Base = 20;
     
     spectre.AddStatus(new NightVisionStatus(spectre));
     
@@ -102520,8 +102522,9 @@
         Experience = 10699,
         BasePenetration = ShieldPenetration.Medium,
         VisibilityDistance = 1,
-        DeathResistance = 100,
     };
+	
+	stalker.Stats[EntityStat.DeathResistance].Base = 20;
     
     stalker.AddStatus(new NightVisionStatus(stalker));
     
