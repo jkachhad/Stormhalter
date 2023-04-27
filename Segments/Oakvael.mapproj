@@ -110305,11 +110305,11 @@
         BaseDodge = 15,
 
         Experience = 2350,
-        
-        MagicProtection = 20,
-        
+
         HideDetection = 18,
     };
+	
+	griffin.Stats[EntityStat.MagicDamageTakenReduction].Base = 20;
     
     griffin.AddStatus(new NightVisionStatus(griffin)); 
     
@@ -112215,13 +112215,14 @@
         Experience = 3654,
         BasePenetration = ShieldPenetration.Light,
         Movement = 2,
-        MagicProtection = 13,
         
         CanFly = true,
         
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.Silver,
     };
+	
+	gargoyle.Stats[EntityStat.MagicDamageTakenReduction].Base = 13;
 	
 	gargoyle.Stats[EntityStat.FireProtection].Base = 100;
     
@@ -112490,7 +112491,6 @@
         BaseDodge = 22,
         HideDetection = 26,
         Experience = 5262,
-        MagicProtection = 15,
         Movement = 2,
         CanFly = true,
         BasePenetration = ShieldPenetration.Medium,
@@ -112498,8 +112498,9 @@
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.Silver,
     };
-	
+
 	gargoyle.Stats[EntityStat.FireProtection].Base = 100;
+	gargoyle.Stats[EntityStat.MagicDamageTakenReduction].Base = 15;
     
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
     
@@ -114245,8 +114246,9 @@
         Experience = 10913,
         HideDetection = 30,
         CanCharge = true,
-        MagicProtection = 21,
     };
+	
+	centaur.Stats[EntityStat.MagicDamageTakenReduction].Base = 21;
     
     centaur.AddStatus(new NightVisionStatus(centaur));
     
@@ -114755,11 +114757,11 @@
 
         Experience = 10913,
         BasePenetration = ShieldPenetration.Medium,
-        
-        MagicProtection = 20,
-        
+
         HideDetection = 18,
     };
+	
+	griffin.Stats[EntityStat.MagicDamageTakenReduction].Base = 20;
     
     griffin.AddStatus(new NightVisionStatus(griffin)); 
     
@@ -115055,9 +115057,10 @@
         Experience = 13095,
         HideDetection = 30,
         CanCharge = true,
-        MagicProtection = 20,
         CanSwim = true,
     };
+	
+	centaur.Stats[EntityStat.MagicDamageTakenReduction].Base = 20;
     
     centaur.AddStatus(new NightVisionStatus(centaur));
     centaur.AddStatus(new BreatheWaterStatus(centaur));
@@ -115207,12 +115210,13 @@
     {
         MaxHealth = 200, Health = 200,
         BaseDodge = 28,
-        MagicProtection = 30,
         Experience = 50,
         Movement = 0,
         HideDetection = 45,
         Alignment = Alignment.Neutral,
     };
+	
+	dryad.Stats[EntityStat.MagicDamageTakenReduction].Base = 30;
     
     dryad.AddStatus(new NightVisionStatus(dryad));
     

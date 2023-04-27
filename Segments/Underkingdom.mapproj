@@ -100460,12 +100460,13 @@
         BaseDodge = 21,
         HideDetection = 25, 
         Experience = 6315,
-        MagicProtection = 17,
         CanCharge = true,
         BasePenetration = ShieldPenetration.Medium,
         Immunity = CreatureImmunity.Web,
         IsTethered = true,
     };
+	
+	minotaur.Stats[EntityStat.MagicDamageTakenReduction].Base = 17;
     
     minotaur.AddStatus(new NightVisionStatus(minotaur));
     
@@ -102818,13 +102819,12 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-var gargoyle = new Gargoyle()
+    var gargoyle = new Gargoyle()
     {
         MaxHealth = 145, Health = 145,
         BaseDodge = 24,
         HideDetection = 28,
         Experience = 6825,
-        MagicProtection = 17,
         Movement = 3,
         CanFly = true,
         BasePenetration = ShieldPenetration.Heavy,
@@ -102834,6 +102834,8 @@ var gargoyle = new Gargoyle()
 
         IsTethered = true,
     };
+	
+	gargoyle.Stats[EntityStat.MagicDamageTakenReduction].Base = 17;
 	
 	gargoyle.Stats[EntityStat.FireProtection].Base = 100;
     

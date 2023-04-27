@@ -73161,12 +73161,13 @@
         BaseDodge = 27,
         HideDetection = 32, 
         Experience = 11000,
-        MagicProtection = 17,
         CanCharge = true,
         BasePenetration = ShieldPenetration.Medium,
         Immunity = CreatureImmunity.Web
     };
     
+	minotaur.Stats[EntityStat.MagicDamageTakenReduction].Base = 17;
+	
     minotaur.AddStatus(new NightVisionStatus(minotaur));
     
     minotaur.Attacks = new CreatureAttackCollection()

@@ -76301,12 +76301,14 @@
         MaxMana = 13, Mana = 13,
         BaseDodge = 22,
         HideDetection = 26,
-        MagicProtection = 33,
+
         Experience = 9094,
         VisibilityDistance = 0,
         CanLoot = false,
     };
     
+	lich.Stats[EntityStat.MagicDamageTakenReduction].Base = 33;
+	
     lich.AddStatus(new NightVisionStatus(lich));
         
     lich.Attacks = new CreatureAttackCollection
@@ -76482,10 +76484,11 @@
         Experience = 7757,
         
         Movement = 2,
-        MagicProtection = 33,
         VisibilityDistance = 0,
         
     };
+	
+	salamander.Stats[EntityStat.MagicDamageTakenReduction].Base = 33;
 	
 	salamander.Stats[EntityStat.FireProtection].Base = 100;
     
@@ -76546,11 +76549,11 @@
         BasePenetration = ShieldPenetration.Medium,
         Experience = 9094,
         VisibilityDistance = 0,
-        MagicProtection = 33,
         HideDetection = 28,
     };
 	
 	griffin.Stats[EntityStat.FireProtection].Base = 100;
+	griffin.Stats[EntityStat.MagicDamageTakenReduction].Base = 33;
 	
     griffin.AddStatus(new NightVisionStatus(griffin));
         
@@ -76614,13 +76617,14 @@
         HideDetection = 28,    
         MaxHealth = 154, Health = 154,
         BaseDodge = 22,
-        MagicProtection = 33,
         Experience = 9094,
     
         BasePenetration = ShieldPenetration.Medium,
             
         VisibilityDistance = 0,
     };
+	
+	fighter.Stats[EntityStat.MagicDamageTakenReduction].Base = 33;
     
     fighter.AddStatus(new NightVisionStatus(fighter));
     
@@ -76670,12 +76674,12 @@
         HideDetection = 28,    
         MaxHealth = 154, Health = 154,
         BaseDodge = 22,
-        MagicProtection = 33,
         BasePenetration = ShieldPenetration.Medium,
     
         Experience = 9094,
-            
     };
+	
+	fighter.Stats[EntityStat.MagicDamageTakenReduction].Base = 33;
     
     fighter.Attacks = new CreatureAttackCollection
     {
@@ -76724,11 +76728,12 @@
         MaxHealth = 154, Health = 154,
         MaxMana = 23, Mana = 23,
         BaseDodge = 22,
-        MagicProtection = 33,
         Experience = 9094,
     
         VisibilityDistance = 0,
     };
+	
+	thaum.Stats[EntityStat.MagicDamageTakenReduction].Base = 33;
     
     thaum.AddStatus(new NightVisionStatus(thaum));
     
@@ -77343,12 +77348,13 @@
         MaxHealth = 150, Health = 150,
         MaxMana = 19, Mana = 19,
         BaseDodge = 14,
-        MagicProtection = 33,
         Experience = 9094,
         VisibilityDistance = 0,
         CanLoot = false,
         HideDetection = 28,
     };
+	
+	lich.Stats[EntityStat.MagicDamageTakenReduction].Base = 33;
     
     lich.AddStatus(new NightVisionStatus(lich));
         
@@ -80389,8 +80395,6 @@
                 vendor.Stock(rareWares[0]);
             else if (Utility.RandomDouble() <= 0.60) 
                 vendor.Stock(rareWares[1]);
-            else 
-                vendor.Stock(rareWares[2]);
         }
     }
 ]]></block>

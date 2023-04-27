@@ -105543,12 +105543,12 @@
                    
         /* He is immune to magic and can only be hurt by IS and Death. */
         Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
-        
-        /* He is protection from magic, all spell damage reduced by 50% */
-        MagicProtection = 20,
-        
+
         HideDetection = 24,
     };
+	
+	/* He is protection from magic, all spell damage reduced by 20% */
+	wolf.Stats[EntityStat.MagicDamageTakenReduction].Base = 20;
 	
 	wolf.Stats[EntityStat.FireProtection].Base = 100;
 	wolf.Stats[EntityStat.IceProtection].Base = 100;
@@ -105619,8 +105619,9 @@
         Immunity = CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
         Weakness = CreatureWeakness.Silver,
-        MagicProtection = 20,
     };
+	
+	rockworm.Stats[EntityStat.MagicDamageTakenReduction].Base = 20;
     
 	rockworm.Stats[EntityStat.FireProtection].Base = 50;
 	rockworm.Stats[EntityStat.IceProtection].Base = 100;
@@ -106407,8 +106408,9 @@
         Experience = 4385,
         BasePenetration = ShieldPenetration.Light,
         Immunity = CreatureImmunity.Web,
-        MagicProtection = 15,
     };
+	
+	ogre.Stats[EntityStat.MagicDamageTakenReduction].Base = 15;
         
     ogre.AddStatus(new NightVisionStatus(ogre));
     
@@ -109096,8 +109098,9 @@
         Experience = 7018,
         BasePenetration = ShieldPenetration.Medium,
         Immunity = CreatureImmunity.Web,
-        MagicProtection = 18,
     };
+	
+	ogre.Stats[EntityStat.MagicDamageTakenReduction].Base = 18;
         
     ogre.AddStatus(new NightVisionStatus(ogre));
     
