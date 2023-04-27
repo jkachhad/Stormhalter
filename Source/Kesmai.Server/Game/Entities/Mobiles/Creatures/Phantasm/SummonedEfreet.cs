@@ -19,8 +19,7 @@ namespace Kesmai.Server.Game
 			BaseDodge = 30;
 			Mana = MaxMana = 40;
 			Movement = 3;
-			MagicProtection = 30;
-			
+
 			Attacks = new CreatureAttackCollection
 			{
 				{ new CreatureBasicAttack(14) },
@@ -46,6 +45,7 @@ namespace Kesmai.Server.Game
 			base.OnCreate();
 			
 			_stats[EntityStat.FireProtection].Base = 100;
+			_stats[EntityStat.MagicDamageTakenReduction].Base = 30;
 		}
 		
 		protected override void OnLoad()
