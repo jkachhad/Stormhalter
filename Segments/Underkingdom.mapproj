@@ -100036,7 +100036,7 @@
     
     carfel.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(18, 18, 30)
+        new CreatureAttack(18, 18, 30, "Carfel hits you with his dagger.", new AttackStunComponent (25))
     };
     
     carfel.Blocks = new CreatureBlockCollection
