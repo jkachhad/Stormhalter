@@ -100092,8 +100092,8 @@
         BasePenetration = ShieldPenetration.Medium,
         
         VisibilityDistance = 0,
-        RangePerception = 0,
-        Immunity = CreatureImmunity.Poison,
+        RangePerception = 2,
+        Immunity = CreatureImmunity.Poison | CreatureImmunity.Web,
         
         IsTethered = true,
     };
