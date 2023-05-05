@@ -100035,7 +100035,7 @@
     
     carfel.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(18, 18, 30)
+        new CreatureAttack(18, 18, 30, "Carfel hits you with his dagger.", new AttackStunComponent (25))
     };
     
     carfel.Blocks = new CreatureBlockCollection
@@ -100091,8 +100091,8 @@
         BasePenetration = ShieldPenetration.Medium,
         
         VisibilityDistance = 0,
-        RangePerception = 0,
-        Immunity = CreatureImmunity.Poison,
+        RangePerception = 2,
+        Immunity = CreatureImmunity.Poison | CreatureImmunity.Web,
         
         IsTethered = true,
     };
@@ -100631,7 +100631,7 @@
     {
         MaxHealth = 108, Health = 108,
         BaseDodge = 20,
-        BasePenetration = ShieldPenetration.Light,
+        BasePenetration = ShieldPenetration.VeryLight,
         Experience = 5015,
         HideDetection = 25, 
         CanFlee = true,
@@ -100742,7 +100742,7 @@
         BaseDodge = 22,
         HideDetection = 25,        
         Experience = 6464,
-        BasePenetration = ShieldPenetration.Medium,
+        BasePenetration = ShieldPenetration.Light,
     };
     
     troll.AddStatus(new NightVisionStatus(troll));
@@ -102045,7 +102045,7 @@
     {
         MaxHealth = 99, Health = 99,
         BaseDodge = 18,
-        BasePenetration = ShieldPenetration.Light,
+        BasePenetration = ShieldPenetration.VeryLight,
         Experience = 4179,
         HideDetection = 25, 
         CanFlee = true,
@@ -102190,7 +102190,7 @@
     {
         MaxHealth = 70, Health = 70,
         BaseDodge = 18,
-        BasePenetration = ShieldPenetration.Light,       
+        BasePenetration = ShieldPenetration.VeryLight,       
         Experience = 3250,
         HideDetection = 25,
         IsTethered = true,
@@ -102470,7 +102470,7 @@
         BaseDodge = 21,
         HideDetection = 25,        
         Experience = 5386,
-        BasePenetration = ShieldPenetration.Medium,
+        BasePenetration = ShieldPenetration.Light,
         Movement = 3,
     };
     
@@ -102896,7 +102896,7 @@
     {
         MaxHealth = 99, Health = 99,
         BaseDodge = 18,
-        BasePenetration = ShieldPenetration.Light,
+        BasePenetration = ShieldPenetration.VeryLight,
         Experience = 4179,
         HideDetection = 25, 
         CanFlee = true,
