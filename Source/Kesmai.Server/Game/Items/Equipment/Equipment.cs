@@ -43,5 +43,51 @@ namespace Kesmai.Server.Items
 		protected Equipment(int equipmentId) : base(equipmentId)
 		{
 		}
+
+		protected override bool OnEquip(MobileEntity entity)
+		{
+			if (!base.OnEquip(entity))
+				return false;
+			
+			if (CanUse(entity))
+			{
+				if (ProtectionFromFire > 0)
+					entity.Stats[EntityStat.FireProtection].Add(+ProtectionFromFire, ModifierType.Constant);
+				
+				if (ProtectionFromIce > 0)
+					entity.Stats[EntityStat.IceProtection].Add(+ProtectionFromIce, ModifierType.Constant);
+				
+				if (ProtectionFromDaze > 0)
+					entity.Stats[EntityStat.DazeProtection].Add(+ProtectionFromDaze, ModifierType.Constant);
+
+				if (ManaRegeneration > 0)
+					entity.Stats[EntityStat.ManaRegenerationRate].Add(+ManaRegeneration, ModifierType.Constant);
+			}
+
+			return true;
+		}
+		
+		protected override bool OnUnequip(MobileEntity entity)
+		{
+			if (!base.OnUnequip(entity))
+				return false;
+			
+			if (CanUse(entity))
+			{
+				if (ProtectionFromFire > 0)
+					entity.Stats[EntityStat.FireProtection].Remove(+ProtectionFromFire, ModifierType.Constant);
+				
+				if (ProtectionFromIce > 0)
+					entity.Stats[EntityStat.IceProtection].Remove(+ProtectionFromIce, ModifierType.Constant);
+				
+				if (ProtectionFromDaze > 0)
+					entity.Stats[EntityStat.DazeProtection].Remove(+ProtectionFromDaze, ModifierType.Constant);
+
+				if (ManaRegeneration > 0)
+					entity.Stats[EntityStat.ManaRegenerationRate].Remove(+ManaRegeneration, ModifierType.Constant);
+			}
+
+			return true;
+		}
 	}
 }
