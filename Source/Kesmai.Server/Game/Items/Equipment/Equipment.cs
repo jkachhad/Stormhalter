@@ -31,6 +31,20 @@ namespace Kesmai.Server.Items
 		public virtual int ProtectionFromConcussion => 0;
 		
 		/// <summary>
+		/// Gets the health regeneration provided by this <see cref="Equipment"/>
+		/// </summary>
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
+		public virtual int HealthRegeneration => 0;
+		
+		/// <summary>
+		/// Gets the stamina regeneration provided by this <see cref="Equipment"/>
+		/// </summary>
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
+		public virtual int StaminaRegeneration => 0;
+		
+		/// <summary>
 		/// Gets the mana regeneration provided by this <see cref="Equipment"/>
 		/// </summary>
 		[WorldForge]
@@ -67,6 +81,12 @@ namespace Kesmai.Server.Items
 				if (ProtectionFromDaze > 0)
 					entity.Stats[EntityStat.DazeProtection].Add(+ProtectionFromDaze, ModifierType.Constant);
 
+				if (HealthRegeneration > 0)
+					entity.Stats[EntityStat.HealthRegenerationRate].Add(+HealthRegeneration, ModifierType.Constant);
+
+				if (StaminaRegeneration > 0)
+					entity.Stats[EntityStat.StaminaRegenerationRate].Add(+StaminaRegeneration, ModifierType.Constant);
+
 				if (ManaRegeneration > 0)
 					entity.Stats[EntityStat.ManaRegenerationRate].Add(+ManaRegeneration, ModifierType.Constant);
 			}
@@ -90,6 +110,12 @@ namespace Kesmai.Server.Items
 				if (ProtectionFromDaze > 0)
 					entity.Stats[EntityStat.DazeProtection].Remove(+ProtectionFromDaze, ModifierType.Constant);
 
+				if (HealthRegeneration > 0)
+					entity.Stats[EntityStat.HealthRegenerationRate].Remove(+HealthRegeneration, ModifierType.Constant);
+
+				if (StaminaRegeneration > 0)
+					entity.Stats[EntityStat.StaminaRegenerationRate].Remove(+StaminaRegeneration, ModifierType.Constant);
+				
 				if (ManaRegeneration > 0)
 					entity.Stats[EntityStat.ManaRegenerationRate].Remove(+ManaRegeneration, ModifierType.Constant);
 			}
