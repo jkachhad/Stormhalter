@@ -66,10 +66,20 @@ namespace Kesmai.Server.Items
 
 		public virtual void OnWield(MobileEntity entity)
 		{
+			if (CanUse(entity))
+			{
+				if (ManaRegeneration > 0)
+					entity.Stats[EntityStat.ManaRegenerationRate].Add(+ManaRegeneration, ModifierType.Constant);
+			}
 		}
 		
 		public virtual void OnUnwield(MobileEntity entity)
 		{
+			if (CanUse(entity))
+			{
+				if (ManaRegeneration > 0)
+					entity.Stats[EntityStat.ManaRegenerationRate].Add(+ManaRegeneration, ModifierType.Constant);
+			}
 		}
 
 		/// <inheritdoc />

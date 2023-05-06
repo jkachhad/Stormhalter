@@ -29,6 +29,13 @@ namespace Kesmai.Server.Items
 		[WorldForge]
 		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int ProtectionFromConcussion => 0;
+		
+		/// <summary>
+		/// Gets the mana regeneration provided by this <see cref="Equipment"/>
+		/// </summary>
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
+		public virtual int ManaRegeneration => 0;
 
 		/// <summary>
 		/// Gets a value indicating if this instance restricts spell casting for certain professions.
