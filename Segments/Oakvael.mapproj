@@ -113652,7 +113652,7 @@
 	var lich = new Lich()
     {
         MaxHealth = 99, Health = 99,
-        MaxMana = 14, Mana = 14,
+        MaxMana = 21, Mana = 21,
         BaseDodge = 22,
         HideDetection = 26,
         Experience = 9094,
@@ -115703,11 +115703,12 @@
         <block><![CDATA[
 	var scorpion = new Scorpion()
     {
-        MaxHealth = 250, Health = 250,
+        MaxHealth = 100, Health = 100,
 
-        Experience = 7000,
+        Experience = 4500,
         BaseDodge = 26,
         HideDetection = 25,  
+        VisibilityDistance = 1,
 
         Movement = 2,
         

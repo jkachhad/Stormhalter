@@ -105944,7 +105944,7 @@
         //todo: add gold goose egg
     goose.AddGold(130);
     goose.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new GoldNugget(5000u),    100, gemsPriceMutator)
+        new LootPackEntry(true, (from, container) => new GoldenEgg(5000u),    100, gemsPriceMutator)
     ));
         
     return goose;
