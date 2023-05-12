@@ -110662,8 +110662,74 @@
     <location name="Thief" x="0" y="0" region="0" />
   </locations>
   <subregions />
-  <entities />
-  <spawns />
+  <entities>
+    <entity name="spawn">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var ani = new Restel(){
+            
+        Name = "ani",
+        MaxHealth = 10299, Health = 10299,
+        BaseDodge = 21,
+        Alignment = Alignment.Lawful,
+        BasePenetration = ShieldPenetration.Medium,
+        Body = 211,};
+        return ani;
+        
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+if (spokeRecently(source))
+        return;
+        switch (Utility.Random(1, 5))
+    {
+        case 1:
+        {
+            source.Say($"Ah, welcome to the afterlife, {player.Name}?");
+            break;
+        }
+        case 2: source.Say($"I hope your visit goes smoothly, {player.Name}."); break;
+        case 3: source.Say($"Continue onwards, you know the path ahead."); break;
+        case 4: source.Say($"Welcome, {player.Name}. I've been waiting for others to join my journey, venture forth."); break;
+        case 5: source.Emote($"Go visit the temple, they are waiting for you you"); break;
+   }
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
+  </entities>
+  <spawns>
+    <spawn type="LocationSpawner" name="EntranceSpawn">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <location x="11" y="11" region="3" />
+    </spawn>
+  </spawns>
   <treasures>
     <treasure name="Testing" />
   </treasures>
