@@ -14,7 +14,7 @@ namespace Kesmai.Server.Items
 		public override uint BasePrice => 20;
 
 		/// <inheritdoc />
-		public override int Weight => 1150;33
+		public override int Weight => 1150;
 
 		/// <inheritdoc />
 		public override int MinimumDamage => 1;
