@@ -73366,21 +73366,11 @@
         </component>
       </tile>
       <tile x="14" y="41">
-        <component type="FloorComponent">
-          <ground>179</ground>
-        </component>
-        <component type="HiddenTeleporterComponent">
-          <destinationX>15</destinationX>
+        <component type="StaircaseComponent">
+          <destinationX>14</destinationX>
           <destinationY>4</destinationY>
           <destinationRegion>236</destinationRegion>
-          <lightphases select="all" />
-          <moonphases select="all" />
-          <professions select="all" />
-          <alignments select="all" />
-          <level>17</level>
-        </component>
-        <component type="StaticComponent">
-          <static>167</static>
+          <teleporterId>123</teleporterId>
         </component>
       </tile>
       <tile x="15" y="41">
@@ -80247,7 +80237,7 @@
     <region>
       <id>236</id>
       <name>Grove</name>
-      <height>-210</height>
+      <height>-230</height>
       <level>26</level>
       <tile x="42" y="-22">
         <component type="WallComponent">
@@ -87335,38 +87325,14 @@
           <static>226</static>
         </component>
       </tile>
-      <tile x="16" y="3">
-        <component type="StaticComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <static>23</static>
-        </component>
-        <component type="WallComponent">
-          <color r="255" g="210" b="95" a="255" />
-          <wall>157</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="StaticComponent">
-          <color r="0" g="200" b="0" a="255" />
-          <static>226</static>
-        </component>
-      </tile>
+      <tile x="16" y="3" />
       <tile x="17" y="3">
-        <component type="StaticComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <static>23</static>
-        </component>
         <component type="WallComponent">
           <color r="255" g="210" b="95" a="255" />
-          <wall>157</wall>
+          <wall>159</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
           <indestructible>true</indestructible>
-        </component>
-        <component type="StaticComponent">
-          <color r="0" g="200" b="0" a="255" />
-          <static>226</static>
         </component>
       </tile>
       <tile x="18" y="3">
@@ -88053,29 +88019,31 @@
         </component>
       </tile>
       <tile x="14" y="4">
-        <component type="StaticComponent">
-          <static>167</static>
-        </component>
-        <component type="SkyComponent">
-          <color r="0" g="0" b="0" a="0" />
+        <component type="StaircaseComponent">
           <destinationX>14</destinationX>
           <destinationY>41</destinationY>
           <destinationRegion>235</destinationRegion>
-          <teleporterId>9</teleporterId>
+          <teleporterId>127</teleporterId>
         </component>
       </tile>
       <tile x="15" y="4">
-        <component type="FloorComponent">
-          <color r="0" g="212" b="0" a="255" />
-          <ground>23</ground>
+        <component type="StaticComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <static>23</static>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="210" b="95" a="255" />
+          <wall>158</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="StaticComponent">
+          <color r="0" g="200" b="0" a="255" />
+          <static>227</static>
         </component>
       </tile>
-      <tile x="16" y="4">
-        <component type="FloorComponent">
-          <color r="0" g="212" b="0" a="255" />
-          <ground>23</ground>
-        </component>
-      </tile>
+      <tile x="16" y="4" />
       <tile x="17" y="4">
         <component type="StaticComponent">
           <color r="0" g="255" b="0" a="255" />
@@ -88740,15 +88708,37 @@
         </component>
       </tile>
       <tile x="15" y="5">
-        <component type="FloorComponent">
-          <color r="0" g="212" b="0" a="255" />
-          <ground>23</ground>
+        <component type="StaticComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <static>23</static>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="210" b="95" a="255" />
+          <wall>158</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="StaticComponent">
+          <color r="0" g="200" b="0" a="255" />
+          <static>227</static>
         </component>
       </tile>
       <tile x="16" y="5">
-        <component type="FloorComponent">
-          <color r="0" g="212" b="0" a="255" />
-          <ground>23</ground>
+        <component type="StaticComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <static>23</static>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="210" b="95" a="255" />
+          <wall>157</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="StaticComponent">
+          <color r="0" g="200" b="0" a="255" />
+          <static>226</static>
         </component>
       </tile>
       <tile x="17" y="5">
@@ -110686,6 +110676,7 @@
     {
         MaxHealth = 28, Health = 28,
         BaseDodge = 12,
+        BasePenetration = ShieldPenetration.None,
 
         Experience = 250,
 
@@ -111167,6 +111158,7 @@
         HideDetection = 18,         
         Experience = 1709,
         CanFlee = true,
+        BasePenetration = ShieldPenetration.VeryLight,
     };
     
     orc.Attacks = new CreatureAttackCollection
@@ -111406,9 +111398,9 @@
     {
         MaxHealth = 52, Health = 52,
         BaseDodge = 14,
+        BasePenetration = ShieldPenetration.VeryLight,
         HideDetection = 21,
         Experience = 1507,
-        BasePenetration = ShieldPenetration.VeryLight,
     };
     
     goblin.Attacks = new CreatureAttackCollection
@@ -111560,9 +111552,9 @@
     {
         MaxHealth = 57, Health = 57,
         BaseDodge = 14,
+        BasePenetration = ShieldPenetration.VeryLight,
         HideDetection = 21,
         Experience = 1755,
-        BasePenetration = ShieldPenetration.VeryLight,
         CanFlee = true,
     };
     
@@ -111835,9 +111827,9 @@
     {
         MaxHealth = 81, Health = 81,
         BaseDodge = 15,
+        BasePenetration = ShieldPenetration.VeryLight,
         HideDetection = 25,
         Experience = 2902,
-        BasePenetration = ShieldPenetration.VeryLight,
         
         CanFlee = true,
     };
@@ -112780,7 +112772,7 @@
     {
         MaxHealth = 99, Health = 99,
         BaseDodge = 18,
-        BasePenetration = ShieldPenetration.Light,
+        BasePenetration = ShieldPenetration.VeryLight,
 
         Experience = 4179,
 
@@ -113169,7 +113161,7 @@
     banshee.AddGold(108);
     banshee.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorAboveAverage), 
             new LootPackEntry(true, undeadTreasure,    0.63), 
             new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, dungeon5Treasure, 0.5), 
@@ -113227,7 +113219,7 @@
     banshee.AddGold(108);
     banshee.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorAboveAverage), 
             new LootPackEntry(true, undeadTreasure,    0.63), 
             new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, dungeon5Treasure, 0.5), 
@@ -113291,7 +113283,7 @@
         new LootPack(
             new LootPackEntry(true, (from, container) => new YouthPotion(),        0.4),
             new LootPackEntry(true, undeadTreasure,    0.63), 
-            new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorAboveAverage), 
             new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, dungeon5Treasure, 0.5), 
             new LootPackEntry(true, dungeon5Rings, 0.5), 
@@ -113564,7 +113556,7 @@
             new LootPackEntry(true, (from, container) => new YouthPotion(),        0.4),
             new LootPackEntry(true, undeadTreasure,    0.63), 
             new LootPackEntry(true, (from, container) => new DemonWand(), 1),
-            new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorAboveAverage), 
             new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, dungeon5Treasure, 0.5), 
             new LootPackEntry(true, dungeon5Rings, 0.5), 
@@ -113624,7 +113616,7 @@
     wight.AddGold(108);
     wight.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorAboveAverage), 
             new LootPackEntry(true, undeadTreasure,    0.63), 
             new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, dungeon5Treasure, 0.5), 
@@ -113932,7 +113924,7 @@
     
     doomOrc.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(14)
+        new CreatureAttack(14, 10, 20, "Doom.Orc hits you with arrow.")
     };
                 
     doomOrc.Wield(new HeavyCrossbow());
@@ -113969,13 +113961,13 @@
     {
         MaxHealth = 80, Health = 80,
         BaseDodge = 16,
+        BasePenetration = ShieldPenetration.VeryLight,
 
         Experience = 2902,
 
         CanFlee = true,
         
         HideDetection = 14,
-        BasePenetration = ShieldPenetration.Light,
     };
     
     orc.Attacks = new CreatureAttackCollection
@@ -114072,6 +114064,7 @@
 	var dragon = new Dragon()
     {
         Name = "dragon",
+        Body = 164,
         
         MaxHealth = 2100, Health = 2100,
         MaxMana = 6, Mana = 6,
@@ -115696,6 +115689,64 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="BossNotableLevel11Scorpions">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var scorpion = new Scorpion()
+    {
+        MaxHealth = 100, Health = 100,
+
+        Experience = 4500,
+        BaseDodge = 26,
+        HideDetection = 25,  
+        VisibilityDistance = 1,
+
+        Movement = 2,
+        
+        Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing 
+                   | CreatureImmunity.Bashing | CreatureImmunity.Poison | CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+    };
+    
+    scorpion.AddWeakness(typeof(MagicMissileSpell));
+    
+    scorpion.Attacks = new CreatureAttackCollection
+    {
+        { 
+            new CreatureAttack(16, 18, 26, "The scorpion crushes you with its claws."), 60 
+        }, 
+        {
+            new CreatureAttack(16, 20, 30, "The scorpion stings you with its tail.",
+                    new AttackPoisonComponent(11),
+                    new AttackStunComponent(10)),                                    40 
+        }, 
+    };
+    
+    scorpion.Blocks = new CreatureBlockCollection
+    {
+            new CreatureBlock(6, "the carapace"),
+            new CreatureBlock(3, "a claw"),
+            new CreatureBlock(1, "a tail") 
+    };
+
+    return scorpion;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="oakSheriff">
@@ -117119,47 +117170,6 @@
         <exclusion left="2" top="3" right="7" bottom="9" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="undeadSpawner">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>1200</maximumDelay>
-      <maximum>49</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="level14Lich" size="1" minimum="6" maximum="7" />
-      <entry entity="level14Wraith" size="1" minimum="6" maximum="7" />
-      <entry entity="level14Spectre" size="1" minimum="6" maximum="7" />
-      <entry entity="level14Wight" size="1" minimum="5" maximum="6" />
-      <entry entity="level14Stalker" size="1" minimum="5" maximum="6" />
-      <entry entity="level14ShroudedBanshee" size="3" minimum="10" maximum="12" />
-      <entry entity="level14CursedBanshee" size="4" minimum="3" maximum="5" />
-      <entry entity="level14Ghoul" size="1" minimum="2" maximum="3" />
-      <entry entity="level14Thaum" size="1" minimum="2" maximum="3" />
-      <entry entity="level14Wizard" size="1" minimum="4" maximum="5" />
-      <bounds region="227">
-        <inclusion left="1" top="5" right="25" bottom="39" />
-        <exclusion left="1" top="5" right="12" bottom="8" />
-        <exclusion left="16" top="5" right="25" bottom="8" />
-        <exclusion left="23" top="9" right="25" bottom="15" />
-        <exclusion left="1" top="14" right="1" bottom="39" />
-        <exclusion left="2" top="38" right="5" bottom="39" />
-        <exclusion left="2" top="23" right="3" bottom="29" />
-        <exclusion left="4" top="25" right="5" bottom="29" />
-        <exclusion left="22" top="33" right="25" bottom="35" />
-        <exclusion left="13" top="36" right="20" bottom="39" />
-      </bounds>
-    </spawn>
     <spawn type="RegionSpawner" name="surfaceWyrm">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
@@ -118013,6 +118023,216 @@
       <bounds region="239">
         <inclusion left="12" top="14" right="16" bottom="17" />
         <exclusion left="15" top="14" right="16" bottom="15" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="undeadSpawnNW">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>13</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level14Lich" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Wraith" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Spectre" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Wight" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Stalker" size="1" minimum="1" maximum="2" />
+      <entry entity="level14ShroudedBanshee" size="3" minimum="2" maximum="3" />
+      <entry entity="level14CursedBanshee" size="4" minimum="1" maximum="2" />
+      <entry entity="level14Ghoul" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Wizard" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Thaum" size="1" minimum="0" maximum="1" />
+      <bounds region="227">
+        <inclusion left="1" top="5" right="16" bottom="23" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="11" top="21" right="15" bottom="23" />
+        <exclusion left="1" top="5" right="11" bottom="7" />
+        <exclusion left="1" top="22" right="2" bottom="24" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="undeadSpawnNE">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>13</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level14Lich" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Wraith" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Spectre" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Wight" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Stalker" size="1" minimum="1" maximum="2" />
+      <entry entity="level14ShroudedBanshee" size="3" minimum="2" maximum="3" />
+      <entry entity="level14CursedBanshee" size="4" minimum="1" maximum="2" />
+      <entry entity="level14Ghoul" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Wizard" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Thaum" size="1" minimum="0" maximum="1" />
+      <bounds region="227">
+        <inclusion left="13" top="5" right="25" bottom="23" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="13" top="21" right="15" bottom="23" />
+        <exclusion left="17" top="5" right="25" bottom="7" />
+        <exclusion left="23" top="8" right="25" bottom="14" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="undeadSpawnSW">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>13</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level14Lich" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Wraith" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Spectre" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Wight" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Stalker" size="1" minimum="1" maximum="2" />
+      <entry entity="level14ShroudedBanshee" size="3" minimum="2" maximum="3" />
+      <entry entity="level14CursedBanshee" size="4" minimum="1" maximum="2" />
+      <entry entity="level14Ghoul" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Wizard" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Thaum" size="1" minimum="0" maximum="1" />
+      <bounds region="227">
+        <inclusion left="1" top="21" right="14" bottom="39" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="11" top="21" right="14" bottom="24" />
+        <exclusion left="1" top="38" right="4" bottom="39" />
+        <exclusion left="1" top="22" right="2" bottom="28" />
+        <exclusion left="2" top="24" right="4" bottom="28" />
+        <exclusion left="11" top="38" right="14" bottom="39" />
+        <exclusion left="13" top="36" right="14" bottom="37" />
+        <exclusion left="14" top="35" right="14" bottom="35" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="undeadSpawnSE">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>13</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level14Lich" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Wraith" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Spectre" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Wight" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Stalker" size="1" minimum="1" maximum="2" />
+      <entry entity="level14ShroudedBanshee" size="3" minimum="2" maximum="3" />
+      <entry entity="level14CursedBanshee" size="4" minimum="1" maximum="2" />
+      <entry entity="level14Ghoul" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Wizard" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Thaum" size="1" minimum="0" maximum="1" />
+      <bounds region="227">
+        <inclusion left="13" top="21" right="25" bottom="39" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="13" top="21" right="16" bottom="24" />
+        <exclusion left="23" top="32" right="25" bottom="34" />
+        <exclusion left="22" top="33" right="22" bottom="34" />
+        <exclusion left="14" top="20" right="15" bottom="21" />
+        <exclusion left="16" top="36" right="19" bottom="39" />
+        <exclusion left="15" top="34" right="16" bottom="36" />
+        <exclusion left="13" top="36" right="15" bottom="39" />
+        <exclusion left="14" top="35" right="14" bottom="35" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="undeadCourtyard">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>8</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level14ShroudedBanshee" size="3" minimum="2" maximum="3" />
+      <entry entity="level14CursedBanshee" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Wizard" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Thaum" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Wight" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Spectre" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Stalker" size="1" minimum="0" maximum="1" />
+      <bounds region="227">
+        <inclusion left="15" top="25" right="21" bottom="33" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="undeadBossScorps">
+      <minimumDelay>1800</minimumDelay>
+      <maximumDelay>2700</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossNotableLevel11Scorpions" size="1" minimum="2" maximum="2" />
+      <bounds region="227">
+        <inclusion left="14" top="35" right="16" bottom="38" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="14" top="35" right="15" bottom="35" />
+        <exclusion left="16" top="36" right="16" bottom="38" />
+        <exclusion left="14" top="36" right="14" bottom="36" />
       </bounds>
     </spawn>
   </spawns>

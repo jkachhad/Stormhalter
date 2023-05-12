@@ -22,6 +22,14 @@ namespace Kesmai.Server.Items
 		}
 		
 		/// <summary>
+		/// Initializes a new instance of the <see cref="GoldenEgg"/> class.
+		/// </summary>
+		[WorldForge]
+		public GoldenEgg(Serial serial) : base(serial)
+		{
+		}
+		
+		/// <summary>
 		/// Gets the description for this instance.
 		/// </summary>
 		public override void GetDescription(List<LocalizationEntry> entries)
