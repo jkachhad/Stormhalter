@@ -5,22 +5,16 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items
 {
-    public partial class MorningStar : Flail, ITreasure
+    public partial class Nanchaku : Threestaff, ITreasure
     {
         /// <inheritdoc />
         public override int LabelNumber => 6000037;
 
         /// <inheritdoc />
-        public override uint BasePrice => 10000;
-
-        /// <inheritdoc />
-        public override uint Category => 2;
+        public override uint BasePrice => 1;
 
         /// <inheritdoc />
         public override int Weight => 1800;
-
-        /// <inherit />
-        public override Skill Skill => Skill.Flail;
 
         /// <inheritdoc />
         public override int MinimumDamage => _weaponStats.MinimumDamage;
@@ -44,20 +38,20 @@ namespace Kesmai.Server.Items
 		public override WeaponFlags Flags => WeaponFlags.Bashing | WeaponFlags.BlueGlowing;
 
         private int _weaponLevel;
-        private FlailWeapon _weaponStats;
+        private NanchakuWeapon _weaponStats;
         /// <summary>
-        /// Initializes a new instance of the <see cref="MorningStar"/> class.
+        /// Initializes a new instance of the <see cref="Nanchaku"/> class.
         /// </summary>
-        public MorningStar(int weaponLevel) : base(944)
+        public Nanchaku(int weaponLevel) : base(944)
         {
            _weaponLevel = weaponLevel;
            _weaponStats = GetWeaponStats(weaponLevel);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MorningStar"/> class.
+        /// Initializes a new instance of the <see cref="Nanchaku"/> class.
         /// </summary>
-        public MorningStar(Serial serial) : base(serial)
+        public Nanchaku(Serial serial) : base(serial)
         {
             
         }
@@ -65,7 +59,7 @@ namespace Kesmai.Server.Items
         /// <inheritdoc />
         public override void GetDescription(List<LocalizationEntry> entries)
         {
-            entries.Add(new LocalizationEntry(6200000, 6200357)); /* [You are looking at] [a light flail with dozens of serrated spikes, seemingly ready to draw blood.] */
+            entries.Add(new LocalizationEntry(6200000, 6200143)); /* [You are looking at] [a three-sectioned staff made from a strange black wood.  There is a curious monogram at one end.] */
         }
 
         /// <inheritdoc />
@@ -101,44 +95,44 @@ namespace Kesmai.Server.Items
             return entity.GetRoundDelay(_weaponStats.WeaponSpeed);
         }
 
-        public FlailWeapon GetWeaponStats()
+        public NanchakuWeapon GetWeaponStats()
         {
-            FlailWeapon flail = new FlailWeapon();
+            NanchakuWeapon nanchaku = new NanchakuWeapon();
 
             switch (_weaponLevel)
             {
                 case 1:
-                    flail = SetWeaponStats(2, 8, 1, 0, 1.05);
+                    nanchaku = SetWeaponStats(1, 6, 1, 1, 1.00);
                     break;
                 case 2:
-                    flail = SetWeaponStats(2, 9, 2, 0, 1.1);
+                    nanchaku = SetWeaponStats(2, 7, 1, 1, 1.00);
                     break;
                 case 3:
-                    flail = SetWeaponStats(3, 10, 3, 1, 1.15);
+                    nanchaku = SetWeaponStats(3, 7, 1, 2, 1.00);
                     break;
                 case 4:
-                    flail = SetWeaponStats(3, 11, 4, 1, 1.2);
+                    nanchaku = SetWeaponStats(4, 8, 2, 2, 1.00);
                     break;
                 case 5:
-                    flail = SetWeaponStats(4, 12, 5, 2, 1.25);
+                    nanchaku = SetWeaponStats(4, 8, 2, 3, 1.00);
                     break;
                 case 6:
-                    flail = SetWeaponStats(4, 13, 6, 2, 1.30);
+                    nanchaku = SetWeaponStats(5, 9, 3, 3, 1.00);
                     break;
                 case 7:
-                    flail = SetWeaponStats(5, 14, 7, 3, 1.35);
+                    nanchaku = SetWeaponStats(5, 9, 3, 4, 1.00);
                     break;
                 default:
-                    flail = SetWeaponStats(2, 8, 1, 0, 1.05);
+                    nanchaku = SetWeaponStats(6, 9, 1, 0, 1.00);
                     break;
             }
 
-            return flail;
+            return nanchaku;
         }
 
-        public FlailWeapon SetWeaponStats(int minimumDamage, int maximumDamage, int baseAttackBonus, int baseDefenseBonus, double weaponSpeed)
+        public NanchakuWeapon SetWeaponStats(int minimumDamage, int maximumDamage, int baseAttackBonus, int baseDefenseBonus, double weaponSpeed)
         {
-            return new FlailWeapon()
+            return new NanchakuWeapon()
             {
                 MinimumDamage = minimumDamage,
                 MaximumDamage = maximumDamage,
@@ -148,7 +142,7 @@ namespace Kesmai.Server.Items
             };
         }
 
-        public class FlailWeapon
+        public class NanchakuWeapon
         {
             public int MinimumDamage { get; set; }
             public int MaximumDamage { get; set; }

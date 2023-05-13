@@ -1,4 +1,11 @@
-public class Polearm : Halberd, ITreasure
+using System.Collections.Generic;
+using System.IO;
+using Kesmai.Server.Game;
+using Kesmai.Server.Network;
+
+namespace Kesmai.Server.Items
+{
+    public partial class Polearm : Halberd, ITreasure
     {
         /// <inheritdoc />
         public override int LabelNumber => 6000037;
@@ -34,7 +41,7 @@ public class Polearm : Halberd, ITreasure
 		public override WeaponFlags Flags => WeaponFlags.Slashing | WeaponFlags.Piercing | WeaponFlags.BlueGlowing;
 
         private int _weaponLevel;
-        private poleArmWeapon _weaponStats;
+        private PoleArmWeapon _weaponStats;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Polearm"/> class.
@@ -84,7 +91,7 @@ public class Polearm : Halberd, ITreasure
           /// <inheritdoc />
         public override void GetDescription(List<LocalizationEntry> entries)
         {
-            entries.Add(new LocalizationEntry(6200000, 6200357)); /* [You are looking at] [a light poleArm with dozens of serrated spikes, seemingly ready to draw blood.] */
+            entries.Add(new LocalizationEntry(6200000, 6200017)); /* [You are looking at] [a light polearm with dozens of serrated spikes, seemingly ready to draw blood.] */
         }
 
         public override TimeSpan GetSwingDelay(MobileEntity entity)
@@ -148,3 +155,4 @@ public class Polearm : Halberd, ITreasure
             public double WeaponSpeed { get; set; }
         }
     }
+}
