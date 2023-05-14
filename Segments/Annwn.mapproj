@@ -7732,8 +7732,11 @@
         </component>
       </tile>
       <tile x="72" y="12">
-        <component type="StaticComponent">
-          <static>123</static>
+        <component type="StaircaseComponent">
+          <destinationX>15</destinationX>
+          <destinationY>15</destinationY>
+          <destinationRegion>5</destinationRegion>
+          <teleporterId>123</teleporterId>
         </component>
       </tile>
       <tile x="73" y="12">
@@ -42492,8 +42495,11 @@
         </component>
       </tile>
       <tile x="15" y="15">
-        <component type="StaticComponent">
-          <static>127</static>
+        <component type="StaircaseComponent">
+          <destinationX>72</destinationX>
+          <destinationY>12</destinationY>
+          <destinationRegion>1</destinationRegion>
+          <teleporterId>127</teleporterId>
         </component>
       </tile>
       <tile x="16" y="15">
@@ -61556,15 +61562,6 @@
       <tile x="13" y="23">
         <component type="FloorComponent">
           <ground>24</ground>
-        </component>
-        <component type="HiddenTeleporterComponent">
-          <destinationX>12</destinationX>
-          <destinationY>10</destinationY>
-          <destinationRegion>2</destinationRegion>
-          <lightphases select="all" />
-          <moonphases select="all" />
-          <professions select="all" />
-          <alignments select="all" />
         </component>
         <component type="StaticComponent">
           <static>173</static>
