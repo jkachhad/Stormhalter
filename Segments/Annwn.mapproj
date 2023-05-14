@@ -73149,7 +73149,7 @@
     ydmos.AddImmunity(typeof(StunSpell));
     
     ydmos.Wield(new BlackStaff());
-    ydmos.Equip(new LeatherArmor());
+    ydmos.Equip(new DragonScaleArmor());
     
     ydmos.AddStatus(new NightVisionStatus(ydmos));
     
@@ -73159,7 +73159,7 @@
             skillLevel: 33,
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   50 },
         { new CreatureSpell<DeathSpell>(
-            skillLevel: 15,
+            skillLevel: 18,
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   50 }
     };
     
@@ -73520,19 +73520,22 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="level16Plant">
+    <entity name="level16Audrey">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
 	var plant = new Plant()
     {
-        Name = "Dying Plant",
-        MaxHealth = 600,
-        Health = 600,
+        Name = "audrey",
+        
         BaseDodge = 31,
+        MaxHealth = 600, Health = 600,
+        
         HideDetection = 32,
+        
         BasePenetration = ShieldPenetration.Heavy,
-        Experience = 1,
+        
+        Experience = 12000,
     };
     
 	plant.Stats[EntityStat.FireProtection].Base = 100;
@@ -73585,7 +73588,7 @@
     </entity>
   </entities>
   <spawns>
-    <spawn type="LocationSpawner" name="evilWizard">
+    <spawn type="LocationSpawner" name="bossYdmos">
       <minimumDelay>11700</minimumDelay>
       <maximumDelay>15300</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -74165,6 +74168,89 @@
       <entry entity="BossMajorYdmos" size="1" minimum="1" maximum="1" />
       <location x="-1" y="-6" region="2" />
     </spawn>
+    <spawn type="LocationSpawner" name="ydmosAudreyOne">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1800</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level16Audrey" size="1" minimum="1" maximum="1" />
+      <location x="30" y="4" region="6" />
+    </spawn>
+    <spawn type="LocationSpawner" name="ydmosAudreyTwo">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1800</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level16Audrey" size="1" minimum="1" maximum="1" />
+      <location x="32" y="4" region="6" />
+    </spawn>
+    <spawn type="LocationSpawner" name="ydmosAudreyThree">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1800</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <location x="27" y="5" region="6" />
+    </spawn>
+    <spawn type="LocationSpawner" name="ydmosAudreyFour">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1800</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level16Audrey" size="1" minimum="1" maximum="1" />
+      <location x="28" y="8" region="6" />
+    </spawn>
     <spawn type="RegionSpawner" name="wizardTowerLevel1North">
       <minimumDelay>1800</minimumDelay>
       <maximumDelay>900</maximumDelay>
@@ -74182,8 +74268,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level15MartialArtist" size="1" minimum="2" maximum="2" />
-      <entry entity="level15Minotaur" size="1" minimum="1" maximum="1" />
+      <entry entity="level15Minotaur" size="1" minimum="2" maximum="2" />
       <bounds region="1">
         <inclusion left="69" top="7" right="75" bottom="10" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -74206,8 +74291,7 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level15MartialArtist" size="1" minimum="3" maximum="3" />
-      <entry entity="level15Minotaur" size="1" minimum="2" maximum="2" />
+      <entry entity="level15MartialArtist" size="1" minimum="2" maximum="2" />
       <bounds region="1">
         <inclusion left="69" top="11" right="74" bottom="13" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -74254,8 +74338,8 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level15Minotaur" size="1" minimum="6" maximum="6" />
-      <entry entity="level15Archer" size="2" minimum="8" maximum="8" />
+      <entry entity="level15Minotaur" size="1" minimum="3" maximum="3" />
+      <entry entity="level15Archer" size="2" minimum="2" maximum="2" />
       <bounds region="6">
         <inclusion left="1" top="1" right="10" bottom="10" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -74278,8 +74362,8 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level16ConcWizard" size="1" minimum="8" maximum="8" />
-      <entry entity="level16Presence" size="1" minimum="4" maximum="4" />
+      <entry entity="level16ConcWizard" size="1" minimum="3" maximum="3" />
+      <entry entity="level16Presence" size="1" minimum="2" maximum="2" />
       <bounds region="6">
         <inclusion left="13" top="0" right="23" bottom="10" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -74302,10 +74386,10 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level16Plant" size="1" minimum="4" maximum="4" />
-      <entry entity="level16Thaum" size="1" minimum="6" maximum="6" />
+      <entry entity="level16Thaum" size="1" minimum="3" maximum="3" />
+      <entry entity="level16Presence" size="1" minimum="2" maximum="2" />
       <bounds region="6">
-        <inclusion left="27" top="1" right="36" bottom="10" />
+        <inclusion left="29" top="3" right="32" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
@@ -74330,30 +74414,6 @@
       <entry entity="BossMiniPhoenixMob" size="1" minimum="2" maximum="2" />
       <bounds region="2">
         <inclusion left="9" top="-9" right="18" bottom="-2" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
-      </bounds>
-    </spawn>
-    <spawn type="RegionSpawner" name="Test Evil Wiz Plants">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>900</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="level16Plant" size="1" minimum="1" maximum="1" />
-      <bounds region="2">
-        <inclusion left="-5" top="-8" right="-4" bottom="-3" />
-        <inclusion left="-1" top="-3" right="3" bottom="-2" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
