@@ -73110,6 +73110,7 @@
     };
     
     ydmos.CombatantChangeInterval = TimeSpan.FromSeconds(20.0);
+    ydmos.CombatantSearchStrategy = new RandomSearchStrategy();
     
     ydmos.AddImmunity(typeof(BlindSpell));
     ydmos.AddImmunity(typeof(FearSpell));
