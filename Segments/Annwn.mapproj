@@ -73153,10 +73153,10 @@
     
     ydmos.AddStatus(new NightVisionStatus(ydmos));
     
-    ydmos.Spells = new CreatureSpellCollection()
+    ydmos.Spells = new CreatureSpellCollection(60.0, 90.0)
     {
         { new CreatureSpell<LightningBoltSpell>(
-            skillLevel: 33,
+            skillLevel: 27,
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   50 },
         { new CreatureSpell<DeathSpell>(
             skillLevel: 18,
@@ -73530,12 +73530,14 @@
         
         BaseDodge = 31,
         MaxHealth = 600, Health = 600,
-        
+        Experience = 12000,
+         
         HideDetection = 32,
         
         BasePenetration = ShieldPenetration.Heavy,
-        
-        Experience = 12000,
+
+        Movement = 0,
+        VisibilityDistance = 0,
     };
     
 	plant.Stats[EntityStat.FireProtection].Base = 100;
@@ -73547,9 +73549,9 @@
         new CreatureBasicAttack(16)
     };
     
-    var rand = new Random().Next(1,3);
+    var rand = Utility.RandomBetween(1,3);
     
-    if (rand.Equals(1))
+    if (rand is 1)
     {
         plant.Spells = new CreatureSpellCollection(10.0)
         {
