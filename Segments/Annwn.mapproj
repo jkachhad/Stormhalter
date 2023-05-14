@@ -73135,14 +73135,14 @@
                    CreatureImmunity.Projectile | CreatureImmunity.Magic | CreatureImmunity.Poison,
 
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell, 
-        
     };
     
     ydmos.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(17)
+        new CreatureBasicAttack(18)
     };
     
+    ydmos.CombatantChangeInterval = TimeSpan.FromSeconds(20.0);
     
     ydmos.AddImmunity(typeof(BlindSpell));
     ydmos.AddImmunity(typeof(FearSpell));
@@ -73538,12 +73538,15 @@
 
         Movement = 0,
         VisibilityDistance = 0,
+        
+        CanWalk = false,
     };
     
 	plant.Stats[EntityStat.FireProtection].Base = 100;
 	plant.Stats[EntityStat.IceProtection].Base = 100;
 
     plant.AddStatus(new NightVisionStatus(plant));
+    
     plant.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(16)
@@ -73590,26 +73593,6 @@
     </entity>
   </entities>
   <spawns>
-    <spawn type="LocationSpawner" name="bossYdmos">
-      <minimumDelay>11700</minimumDelay>
-      <maximumDelay>15300</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="BossMajorYdmos" size="1" minimum="1" maximum="1" />
-      <location x="31" y="5" region="6" />
-    </spawn>
     <spawn type="LocationSpawner" name="Phoenix Test">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
@@ -74255,7 +74238,7 @@
       <location x="28" y="8" region="6" />
     </spawn>
     <spawn type="RegionSpawner" name="wizardTowerLevel1North">
-      <minimumDelay>1800</minimumDelay>
+      <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
@@ -74325,8 +74308,8 @@
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="wizardTowerLevel2">
-      <minimumDelay>2700</minimumDelay>
-      <maximumDelay>3000</maximumDelay>
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -74349,8 +74332,8 @@
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="wizardTowerLevel3">
-      <minimumDelay>2700</minimumDelay>
-      <maximumDelay>3000</maximumDelay>
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -74373,8 +74356,8 @@
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="wizardTowerLevel4">
-      <minimumDelay>2700</minimumDelay>
-      <maximumDelay>3000</maximumDelay>
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -74417,6 +74400,30 @@
       <entry entity="BossMiniPhoenixMob" size="1" minimum="2" maximum="2" />
       <bounds region="2">
         <inclusion left="9" top="-9" right="18" bottom="-2" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="bossYdmos">
+      <minimumDelay>10800</minimumDelay>
+      <maximumDelay>14400</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossMajorYdmos" size="1" minimum="1" maximum="1" />
+      <bounds region="6">
+        <inclusion left="29" top="3" right="32" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
