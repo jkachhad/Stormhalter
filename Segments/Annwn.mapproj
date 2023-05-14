@@ -2867,9 +2867,6 @@
       <tile x="24" y="5" />
       <tile x="25" y="5" />
       <tile x="26" y="5">
-        <component type="FloorComponent">
-          <ground>1</ground>
-        </component>
         <component type="WallComponent">
           <wall>31</wall>
           <destroyed>0</destroyed>
@@ -3465,9 +3462,6 @@
       <tile x="24" y="6" />
       <tile x="25" y="6" />
       <tile x="26" y="6">
-        <component type="FloorComponent">
-          <ground>1</ground>
-        </component>
         <component type="WallComponent">
           <wall>31</wall>
           <destroyed>0</destroyed>
@@ -3475,9 +3469,6 @@
         </component>
       </tile>
       <tile x="27" y="6">
-        <component type="FloorComponent">
-          <ground>1</ground>
-        </component>
         <component type="WallComponent">
           <wall>31</wall>
           <destroyed>0</destroyed>
@@ -4075,9 +4066,6 @@
       <tile x="25" y="7" />
       <tile x="26" y="7" />
       <tile x="27" y="7">
-        <component type="FloorComponent">
-          <ground>1</ground>
-        </component>
         <component type="WallComponent">
           <wall>31</wall>
           <destroyed>0</destroyed>
@@ -4728,9 +4716,6 @@
       <tile x="25" y="8" />
       <tile x="26" y="8" />
       <tile x="27" y="8">
-        <component type="FloorComponent">
-          <ground>1</ground>
-        </component>
         <component type="WallComponent">
           <wall>31</wall>
           <destroyed>0</destroyed>
@@ -5380,9 +5365,6 @@
         </component>
       </tile>
       <tile x="24" y="9">
-        <component type="FloorComponent">
-          <ground>1</ground>
-        </component>
         <component type="WallComponent">
           <wall>31</wall>
           <destroyed>0</destroyed>
@@ -5390,9 +5372,6 @@
         </component>
       </tile>
       <tile x="25" y="9">
-        <component type="FloorComponent">
-          <ground>1</ground>
-        </component>
         <component type="WallComponent">
           <wall>31</wall>
           <destroyed>0</destroyed>
@@ -5400,9 +5379,6 @@
         </component>
       </tile>
       <tile x="26" y="9">
-        <component type="FloorComponent">
-          <ground>1</ground>
-        </component>
         <component type="WallComponent">
           <wall>31</wall>
           <destroyed>0</destroyed>
@@ -5410,9 +5386,6 @@
         </component>
       </tile>
       <tile x="27" y="9">
-        <component type="FloorComponent">
-          <ground>1</ground>
-        </component>
         <component type="WallComponent">
           <wall>31</wall>
           <destroyed>0</destroyed>
@@ -5849,12 +5822,13 @@
       </tile>
       <tile x="86" y="9">
         <component type="FloorComponent">
-          <ground>1</ground>
+          <ground>23</ground>
         </component>
         <component type="WallComponent">
           <wall>31</wall>
           <destroyed>0</destroyed>
-          <ruins>0</ruins>
+          <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
       </tile>
       <tile x="87" y="9">
@@ -6031,9 +6005,6 @@
         </component>
       </tile>
       <tile x="25" y="10">
-        <component type="FloorComponent">
-          <ground>1</ground>
-        </component>
         <component type="WallComponent">
           <wall>31</wall>
           <destroyed>0</destroyed>
@@ -6041,9 +6012,6 @@
         </component>
       </tile>
       <tile x="26" y="10">
-        <component type="FloorComponent">
-          <ground>1</ground>
-        </component>
         <component type="WallComponent">
           <wall>31</wall>
           <destroyed>0</destroyed>
@@ -7733,9 +7701,9 @@
       </tile>
       <tile x="72" y="12">
         <component type="StaircaseComponent">
-          <destinationX>15</destinationX>
-          <destinationY>15</destinationY>
-          <destinationRegion>5</destinationRegion>
+          <destinationX>38</destinationX>
+          <destinationY>19</destinationY>
+          <destinationRegion>4</destinationRegion>
           <teleporterId>123</teleporterId>
         </component>
       </tile>
@@ -22586,7 +22554,7 @@
       </tile>
       <tile x="88" y="34">
         <component type="FloorComponent">
-          <ground>1</ground>
+          <ground>175</ground>
         </component>
         <component type="DoorComponent">
           <openId>75</openId>
@@ -23186,7 +23154,7 @@
       </tile>
       <tile x="92" y="35">
         <component type="FloorComponent">
-          <ground>23</ground>
+          <ground>175</ground>
         </component>
         <component type="WallComponent">
           <wall>158</wall>
@@ -23700,7 +23668,7 @@
       </tile>
       <tile x="92" y="36">
         <component type="FloorComponent">
-          <ground>1</ground>
+          <ground>175</ground>
         </component>
         <component type="WallComponent">
           <wall>158</wall>
@@ -24063,7 +24031,7 @@
       </tile>
       <tile x="90" y="37">
         <component type="FloorComponent">
-          <ground>1</ground>
+          <ground>175</ground>
         </component>
         <component type="WallComponent">
           <wall>157</wall>
@@ -24073,7 +24041,7 @@
       </tile>
       <tile x="91" y="37">
         <component type="FloorComponent">
-          <ground>1</ground>
+          <ground>175</ground>
         </component>
         <component type="WallComponent">
           <wall>157</wall>
@@ -24083,7 +24051,7 @@
       </tile>
       <tile x="92" y="37">
         <component type="FloorComponent">
-          <ground>1</ground>
+          <ground>175</ground>
         </component>
         <component type="WallComponent">
           <wall>158</wall>
@@ -31502,8 +31470,11 @@
         </component>
       </tile>
       <tile x="38" y="19">
-        <component type="StaticComponent">
-          <static>127</static>
+        <component type="StaircaseComponent">
+          <destinationX>72</destinationX>
+          <destinationY>12</destinationY>
+          <destinationRegion>1</destinationRegion>
+          <teleporterId>127</teleporterId>
         </component>
       </tile>
       <tile x="39" y="19">
