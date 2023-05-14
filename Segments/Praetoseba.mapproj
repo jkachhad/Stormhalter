@@ -1,8 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Praetoseba" version="0.96.0.0">
+<segment name="Praetoseba" version="0.100.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
+    public static TimeSpan _speechDelay = TimeSpan.FromMinutes(1.0);
+    public static Dictionary<MobileEntity, DateTime> _speechDelays = new Dictionary<MobileEntity, DateTime>();
+    
+    public static bool spokeRecently(MobileEntity entity)
+    {
+        /* If the entity spoke recently, we're not going to speak again. */
+        if (_speechDelays.TryGetValue(entity, out var nextSpeechTime) && Server.Now < nextSpeechTime)
+            return true;
+        
+        /* The entity did not speak recently, add them to the delay, and allow them to talk. */
+        _speechDelays[entity] = Server.Now + _speechDelay;
+        return false;
+    }
 ]]></block>
     <block><![CDATA[]]></block>
   </script>
@@ -110656,10 +110669,10 @@
     </region>
   </regions>
   <locations>
-    <location name="Entrance" x="0" y="0" region="0" />
-    <location name="Resurrect" x="0" y="0" region="0" />
-    <location name="Facet" x="0" y="0" region="0" />
-    <location name="Thief" x="0" y="0" region="0" />
+    <location name="Entrance" x="11" y="11" region="3" />
+    <location name="Resurrect" x="8" y="15" region="1" />
+    <location name="Facet" x="11" y="11" region="3" />
+    <location name="Thief" x="11" y="11" region="3" />
   </locations>
   <subregions />
   <entities>
@@ -110674,7 +110687,7 @@
         BaseDodge = 21,
         Alignment = Alignment.Lawful,
         BasePenetration = ShieldPenetration.Medium,
-        Body = 211,};
+        Body = 211};
         return ani;
         
 ]]></block>
@@ -110727,6 +110740,7 @@ if (spokeRecently(source))
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
+      <entry entity="spawn" size="1" minimum="1" maximum="1" />
       <location x="11" y="11" region="3" />
     </spawn>
   </spawns>
