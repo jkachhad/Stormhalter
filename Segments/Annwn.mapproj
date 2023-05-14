@@ -27728,8 +27728,11 @@
         </component>
       </tile>
       <tile x="27" y="9">
-        <component type="StaticComponent">
-          <static>123</static>
+        <component type="StaircaseComponent">
+          <destinationX>15</destinationX>
+          <destinationY>15</destinationY>
+          <destinationRegion>5</destinationRegion>
+          <teleporterId>123</teleporterId>
         </component>
       </tile>
       <tile x="28" y="9">
@@ -41959,8 +41962,8 @@
         <component type="FloorComponent">
           <ground>6</ground>
         </component>
-        <component type="StaticComponent">
-          <static>135</static>
+        <component type="Fire">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="14" y="13">
@@ -41982,8 +41985,8 @@
         <component type="FloorComponent">
           <ground>6</ground>
         </component>
-        <component type="StaticComponent">
-          <static>135</static>
+        <component type="Fire">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="18" y="13">
@@ -42453,9 +42456,9 @@
       </tile>
       <tile x="15" y="15">
         <component type="StaircaseComponent">
-          <destinationX>72</destinationX>
-          <destinationY>12</destinationY>
-          <destinationRegion>1</destinationRegion>
+          <destinationX>27</destinationX>
+          <destinationY>9</destinationY>
+          <destinationRegion>4</destinationRegion>
           <teleporterId>127</teleporterId>
         </component>
       </tile>
@@ -42909,8 +42912,8 @@
         <component type="FloorComponent">
           <ground>6</ground>
         </component>
-        <component type="StaticComponent">
-          <static>135</static>
+        <component type="Fire">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="14" y="17">
@@ -42932,8 +42935,8 @@
         <component type="FloorComponent">
           <ground>6</ground>
         </component>
-        <component type="StaticComponent">
-          <static>135</static>
+        <component type="Fire">
+          <allowDispel>true</allowDispel>
         </component>
       </tile>
       <tile x="18" y="17">
