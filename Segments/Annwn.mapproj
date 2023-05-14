@@ -74360,11 +74360,38 @@
   </spawns>
   <treasures>
     <treasure name="ydmosLoot">
-      <entry weight="1">
+      <entry weight="100">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new PowerBracelet(ItemQuality.Epic);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1000">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PowerBracelet(ItemQuality.Rare);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="10">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PowerBracelet(ItemQuality.Legendary);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new PowerBracelet(ItemQuality.Artifact);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
