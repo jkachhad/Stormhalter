@@ -69,7 +69,7 @@ namespace Kesmai.Server.Items
 				return false;
 
 			if (entity.GetStatus(typeof(StunDeathProtectionStatus), out var status))
-				status.RemoveSourceFor(this);
+				status.RemoveSource(this);
 
 			return true;
 		}

@@ -60,7 +60,7 @@ namespace Kesmai.Server.Items
 				return false;
 			
 			if (entity.GetStatus(typeof(LightningResistanceStatus), out var iceStatus))
-				iceStatus.RemoveSourceFor(this);
+				iceStatus.RemoveSource(this);
 
 			return true;
 		}

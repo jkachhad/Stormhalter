@@ -17,13 +17,10 @@ namespace Kesmai.Server.Items
 		public override int Weight => 1150;
 
 		/// <inheritdoc />
-		public override ShieldPenetration Penetration => ShieldPenetration.Medium;
-
-		/// <inheritdoc />
 		public override int MinimumDamage => 1;
 
 		/// <inheritdoc />
-		public override int MaximumDamage => 10;
+		public override int MaximumDamage => 6;
 
 		/// <inheritdoc />
 		public override int BaseArmorBonus => 1;

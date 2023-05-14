@@ -8,11 +8,20 @@ namespace Kesmai.Server.Items
 	{
 		/// <inheritdoc />
 		public override uint BasePrice => 1;
+
+		/// <inheritdoc />
+		public override ShieldPenetration Penetration => ShieldPenetration.Medium;
+
+		/// <inheritdoc />
+		public override int MinimumDamage => 1;
+
+		/// <inheritdoc />
+		public override int MaximumDamage => 10;
 		
 		/// <inheritdoc />
 		public override int BaseAttackBonus => 4;
 
-		public override int BaseArmorBonus => 2;
+		public override int BaseArmorBonus => 3;
 
 		/// <inheritdoc />
 		public override WeaponFlags Flags => base.Flags | WeaponFlags.BlueGlowing;

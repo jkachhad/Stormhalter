@@ -16,8 +16,7 @@ namespace Kesmai.Server.Game
 			Health = MaxHealth = 250;
 			BaseDodge = 24;
 			Movement = 3;
-			MagicProtection = 10;
-			
+
 			Attacks = new CreatureAttackCollection
 			{
 				{ new CreatureBasicAttack(14) },
@@ -31,6 +30,13 @@ namespace Kesmai.Server.Game
 			AddStatus(new NightVisionStatus(this));
 			
 			CanFly = true;
+		}
+		
+		protected override void OnCreate()
+		{
+			base.OnCreate();
+
+			_stats[EntityStat.MagicDamageTakenReduction].Base = 10;
 		}
 		
 		protected override void OnLoad()

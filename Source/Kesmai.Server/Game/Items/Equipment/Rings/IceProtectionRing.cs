@@ -65,7 +65,7 @@ namespace Kesmai.Server.Items
 				return false;
 			
 			if (entity.GetStatus(typeof(IceProtectionStatus), out var iceStatus))
-				iceStatus.RemoveSourceFor(this);
+				iceStatus.RemoveSource(this);
 
 			return true;
 		}

@@ -64,6 +64,8 @@ namespace Kesmai.Server.Items
 			{
 				status.AddSource(new ItemSource(this));
 			}
+			
+			entity.Stats[EntityStat.Strength].Add(+StrengthBonus, ModifierType.Constant);
 
 			return true;
 		}
@@ -73,8 +75,10 @@ namespace Kesmai.Server.Items
 			if (!base.OnUnequip(entity))
 				return false;
 			
+			entity.Stats[EntityStat.Strength].Remove(+StrengthBonus, ModifierType.Constant);
+			
 			if (entity.GetStatus(typeof(StrengthSpellStatus), out var status))
-				status.RemoveSourceFor(this);
+				status.RemoveSource(this);
 
 			return true;
 		}

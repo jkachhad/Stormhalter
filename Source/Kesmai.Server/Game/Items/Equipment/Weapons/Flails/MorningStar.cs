@@ -1,4 +1,11 @@
-public class MorningStar : Flail, ITreasure
+using System.Collections.Generic;
+using System.IO;
+using Kesmai.Server.Game;
+using Kesmai.Server.Network;
+
+namespace Kesmai.Server.Items
+{
+    public partial class MorningStar : Flail, ITreasure
     {
         /// <inheritdoc />
         public override int LabelNumber => 6000037;
@@ -150,3 +157,4 @@ public class MorningStar : Flail, ITreasure
             public double WeaponSpeed { get; set; }
         }
     }
+}
