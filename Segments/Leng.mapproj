@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.96.0.0">
+<segment name="Leng" version="0.100.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -75898,7 +75898,7 @@
     dragon.Spells = new CreatureSpellCollection(20.0)
     {
         new CreatureSpell<DragonBreathFireSpell>(
-            skillLevel: 14)
+            skillLevel: 7)
     };
     
     dragon.AddGold(1500);
@@ -77523,7 +77523,7 @@
         },
         {
             new CreatureSpell<IceStormSpell>(
-                skillLevel: 9, cost: 6, instantCast: false,
+                skillLevel: 5, cost: 6, instantCast: false,
                 mantra: SpellHelper.GenerateMantra()),   25
         }
     };
@@ -77592,7 +77592,7 @@
         },
         {
             new CreatureSpell<FireballSpell>(
-                skillLevel: 9, cost: 5, 
+                skillLevel: 5, cost: 5, 
                 mantra: SpellHelper.GenerateMantra(), instantCast: false),   50
         },
         {
@@ -79369,7 +79369,7 @@
         },
         {
             new CreatureSpell<IceStormSpell>(
-                skillLevel: 9, cost: 6, instantCast: false,
+                skillLevel: 5, cost: 6, instantCast: false,
                 mantra: SpellHelper.GenerateMantra()),   70
         }
     };
