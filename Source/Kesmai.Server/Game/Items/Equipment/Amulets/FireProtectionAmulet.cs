@@ -66,7 +66,7 @@ namespace Kesmai.Server.Items
 				return false;
 
 			if (entity.GetStatus(typeof(FireProtectionStatus), out var status))
-				status.RemoveSourceFor(this);
+				status.RemoveSource(this);
 
 			return true;
 		}

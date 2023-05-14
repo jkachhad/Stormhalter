@@ -66,10 +66,32 @@ namespace Kesmai.Server.Items
 
 		public virtual void OnWield(MobileEntity entity)
 		{
+			if (CanUse(entity))
+			{
+				if (HealthRegeneration > 0)
+					entity.Stats[EntityStat.HealthRegenerationRate].Add(+HealthRegeneration, ModifierType.Constant);
+
+				if (StaminaRegeneration > 0)
+					entity.Stats[EntityStat.StaminaRegenerationRate].Add(+StaminaRegeneration, ModifierType.Constant);
+				
+				if (ManaRegeneration > 0)
+					entity.Stats[EntityStat.ManaRegenerationRate].Add(+ManaRegeneration, ModifierType.Constant);
+			}
 		}
 		
 		public virtual void OnUnwield(MobileEntity entity)
 		{
+			if (CanUse(entity))
+			{
+				if (HealthRegeneration > 0)
+					entity.Stats[EntityStat.HealthRegenerationRate].Remove(+HealthRegeneration, ModifierType.Constant);
+
+				if (StaminaRegeneration > 0)
+					entity.Stats[EntityStat.StaminaRegenerationRate].Remove(+StaminaRegeneration, ModifierType.Constant);
+				
+				if (ManaRegeneration > 0)
+					entity.Stats[EntityStat.ManaRegenerationRate].Remove(+ManaRegeneration, ModifierType.Constant);
+			}
 		}
 
 		/// <inheritdoc />

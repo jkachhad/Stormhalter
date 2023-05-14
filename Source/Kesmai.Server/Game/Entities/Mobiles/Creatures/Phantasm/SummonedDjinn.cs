@@ -17,8 +17,6 @@ namespace Kesmai.Server.Game
 			Health = MaxHealth = 300;
 			BaseDodge = 25;
 			Mana = MaxMana = 24;
-			IceProtection = 90;
-			MagicProtection = 15;
 
 			Movement = 3;
 			
@@ -40,6 +38,14 @@ namespace Kesmai.Server.Game
 			AddStatus(new NightVisionStatus(this));
 
 			CanFly = true;
+		}
+		
+		protected override void OnCreate()
+		{
+			base.OnCreate();
+			
+			_stats[EntityStat.IceProtection].Base = 90;
+			_stats[EntityStat.MagicDamageTakenReduction].Base = 15;
 		}
 		
 		protected override void OnLoad()

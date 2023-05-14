@@ -23,13 +23,6 @@ namespace Kesmai.Server.Items
 		/// Gets the item category.
 		/// </summary>
 		public override int Category => 10;
-		
-		/// <summary>
-		/// Gets the mana regeneration provided by this <see cref="Robe"/>
-		/// </summary>
-		[WorldForge]
-		[CommandProperty(AccessLevel.GameMaster)]
-		public virtual int ManaRegeneration => 0;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Robe"/> class.

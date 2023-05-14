@@ -111,14 +111,6 @@ namespace Kesmai.Server.Items
 			}
 		}
 
-		public override void GetDescriptionSuffix(List<LocalizationEntry> entries)
-		{
-			var quality = Quality;
-			
-			if (Identified && quality > ItemQuality.Common)
-				entries.Add(new LocalizationEntry(6301000, quality.Color.ToHex(), quality.Localization));
-		}
-
 		/// <inheritdoc />
 		public override bool BreaksHide(MobileEntity entity) => true;
 
@@ -132,13 +124,8 @@ namespace Kesmai.Server.Items
 			writer.Write((short)2); /* version */
 			
 			var flags = ArmorSaveFlag.None;
-			
-			SetSaveFlag(ref flags, ArmorSaveFlag.Quality, (Quality != ItemQuality.Common));
-			
-			writer.Write((int)flags);
 
-			if (GetSaveFlag(flags, ArmorSaveFlag.Quality))
-				writer.Write((byte)_armorQuality.Value);
+			writer.Write((int)flags);
 		}
 
 		/// <summary>
@@ -156,8 +143,8 @@ namespace Kesmai.Server.Items
 				{
 					var flags = (ArmorSaveFlag)reader.ReadInt32();
 					
-					if (GetSaveFlag(flags, ArmorSaveFlag.Quality))
-						_armorQuality = ItemQuality.GetQuality(reader.ReadByte());
+					if (GetSaveFlag(flags, ArmorSaveFlag.Deprecated))
+						reader.ReadByte();
 					
 					goto case 1;
 				}
@@ -173,7 +160,7 @@ namespace Kesmai.Server.Items
 		{
 			None 		= 0x00000000,
 			
-			Quality		= 0x00000001,
+			Deprecated		= 0x00000001,
 		}
 		
 		private static void SetSaveFlag(ref ArmorSaveFlag flags, ArmorSaveFlag toSet, bool setIf)

@@ -30,7 +30,7 @@ namespace Kesmai.Server.Game
 
 			/* Dexterity */
 			var dexterityBonus = 0.0d;
-			var dexterity = Stats.Dexterity;
+			var dexterity = Stats[EntityStat.Dexterity].Value;
 
 			if (dexterity > 17)
 				dexterityBonus = (dexterity - 17);
@@ -46,7 +46,7 @@ namespace Kesmai.Server.Game
 			var baseMinimumDamage = 1;
 			var baseMaximumDamage = 4;
 			
-			var hitAdds = Stats.StrengthAdds;
+			var hitAdds = Stats[EntityStat.StrengthAdds].Value;
 			
 			var skill = Skill.Hand;
 			var skillFactor = 5.0;
@@ -90,6 +90,8 @@ namespace Kesmai.Server.Game
 
 		public override int CalculateJumpkickDamage(ItemEntity item, MobileEntity defender)
 		{
+			var strengthAdds = Stats[EntityStat.StrengthAdds].Value;
+			
 			var minimumDamage = 0;
 			var maximumDamage = 0;
 			
@@ -103,8 +105,8 @@ namespace Kesmai.Server.Game
 
 			var skillMultiplier = (Math.Max(0, effectiveSkill) * 0.5) + 2.0;
 			
-			minimumDamage = (int)((Stats.StrengthAdds + 1) * skillMultiplier);
-			maximumDamage = (int)((Stats.StrengthAdds + 5) * skillMultiplier);
+			minimumDamage = (int)((strengthAdds + 1) * skillMultiplier);
+			maximumDamage = (int)((strengthAdds + 5) * skillMultiplier);
 			
 			return Utility.RandomBetween(Math.Max(1, minimumDamage), Math.Max(1, maximumDamage));
 		}
@@ -116,7 +118,7 @@ namespace Kesmai.Server.Game
 				var baseMinimumDamage = weapon.MinimumDamage;
 				var baseMaximumDamage = weapon.MaximumDamage;
 
-				var hitAdds = Stats.DexterityAdds + weapon.GetAttackBonus(this, defender);
+				var hitAdds = Stats[EntityStat.DexterityAdds].Value + weapon.GetAttackBonus(this, defender);
 
 				var skillLevel = GetSkillLevel(Skill.Bow);
 				var skillMultiplier = (skillLevel * 0.1 + 1.0);
@@ -140,9 +142,9 @@ namespace Kesmai.Server.Game
 				var hitAdds = 0;
 
 				if ((weapon.Flags & WeaponFlags.Throwable) != 0)
-					hitAdds += Stats.StrengthAdds + (int)weapon.GetAttackBonus(this, defender);
+					hitAdds += Stats[EntityStat.StrengthAdds].Value + (int)weapon.GetAttackBonus(this, defender);
 
-				if (Stats.BaseStrength >= 18)
+				if (Stats[EntityStat.BaseStrength].Value >= 18)
 					hitAdds++;
 
 				var skillLevel = GetSkillLevel(weapon.Skill);

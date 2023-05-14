@@ -7,6 +7,6 @@ namespace Kesmai.WorldForge
 		Allowed = 0,
 		Rejected,
 		Interrupted,
-		Stun,
+		Daze,
 	}
 }

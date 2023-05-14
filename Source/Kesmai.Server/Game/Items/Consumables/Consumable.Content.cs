@@ -764,17 +764,17 @@ namespace Kesmai.Server.Game
 		{
 			if (entity is PlayerEntity player)
 			{
-				var strength = player.Stats.BaseStrength;
+				var strength = player.Stats[EntityStat.BaseStrength];
 
-				if (strength.Value < strength.Max)
-					strength.Value++;
+				if (strength.Base < strength.Maximum)
+					strength.Base++;
 
 				player.SendLocalizedMessage(6100100); /* You feel a little bit more like Hercules. */
 				
 				if (Utility.RandomBetween(1, 2) >= 2)
 					player.Blind(4);
 				
-				player.Stun(12);
+				player.Daze(12);
 			}
 		}
 		
@@ -810,17 +810,17 @@ namespace Kesmai.Server.Game
 		{
 			if (entity is PlayerEntity player)
 			{
-				var dexterity = player.Stats.BaseDexterity;
+				var dexterity = player.Stats[EntityStat.BaseDexterity];
 
-				if (dexterity.Value < dexterity.Max)
-					dexterity.Value++;
+				if (dexterity.Base < dexterity.Maximum)
+					dexterity.Base++;
 
 				player.SendLocalizedMessage(6100102); /* You feel more agile. */
 
 				if (Utility.RandomBetween(1, 2) >= 2)
 					player.Blind(4);
 
-				player.Stun(12);
+				player.Daze(12);
 			}
 		}
 		
@@ -856,10 +856,10 @@ namespace Kesmai.Server.Game
 		{
 			if (entity is PlayerEntity player)
 			{
-				var intelligence = player.Stats.BaseIntelligence;
+				var intelligence = player.Stats[EntityStat.BaseIntelligence];
 
-				if (intelligence.Value < intelligence.Max)
-					intelligence.Value++;
+				if (intelligence.Base < intelligence.Maximum)
+					intelligence.Base++;
 
 				player.SendLocalizedMessage(6100103); /* You feel more ingenious. */
 			}
@@ -897,10 +897,10 @@ namespace Kesmai.Server.Game
 		{
 			if (entity is PlayerEntity player)
 			{
-				var willpower = player.Stats.BaseWillpower;
+				var willpower = player.Stats[EntityStat.BaseWillpower];
 
-				if (willpower.Value < willpower.Max)
-					willpower.Value++;
+				if (willpower.Base < willpower.Maximum)
+					willpower.Base++;
 
 				player.SendLocalizedMessage(6100105); /* You feel more resolute. */
 			}
@@ -938,10 +938,10 @@ namespace Kesmai.Server.Game
 		{
 			if (entity is PlayerEntity player)
 			{
-				var wisdom = player.Stats.BaseWisdom;
+				var wisdom = player.Stats[EntityStat.BaseWisdom];
 
-				if (wisdom.Value < wisdom.Max)
-					wisdom.Value++;
+				if (wisdom.Base < wisdom.Maximum)
+					wisdom.Base++;
 
 				player.SendLocalizedMessage(6100104); /* You feel more enlightened. */
 			}
@@ -979,10 +979,11 @@ namespace Kesmai.Server.Game
 		{
 			if (entity is PlayerEntity player)
 			{
-				var constitution = player.Stats.BaseConstitution;
+				var baseConstitution = player.Stats[EntityStat.BaseConstitution];
 
-				if (constitution.Value < constitution.Max)
-					constitution.Value += 2;
+				/* Compare base value with the maximum value.*/
+				if (baseConstitution.Base < baseConstitution.Maximum)
+					baseConstitution.Base += 2;
 
 				player.SendLocalizedMessage(6100106); /* You feel more hale. */
 

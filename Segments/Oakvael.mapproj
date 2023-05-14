@@ -110295,11 +110295,11 @@
         BaseDodge = 15,
 
         Experience = 2350,
-        
-        MagicProtection = 20,
-        
+
         HideDetection = 18,
     };
+	
+	griffin.Stats[EntityStat.MagicDamageTakenReduction].Base = 20;
     
     griffin.AddStatus(new NightVisionStatus(griffin)); 
     
@@ -110310,7 +110310,7 @@
         }, 
         {
             new CreatureAttack(11, 10, 25, "The griffin buries its talons into you.",
-                                                    new AttackStunComponent(20.0)),         30
+                                                    new AttackDazeComponent(20.0)),         30
         }, 
         {
             new CreatureAttack(11, 20, 35, "The griffin pummels you with its wings."),      30
@@ -110594,7 +110594,7 @@
     {
         new CreatureAttack(6, 1, 8, "You have been stung by a beetle.",
                         new AttackPoisonComponent(3), 
-                        new AttackStunComponent(10))
+                        new AttackDazeComponent(10))
     };
     
     beetle.Blocks = new CreatureBlockCollection
@@ -110852,9 +110852,9 @@
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | 
                    CreatureImmunity.Bashing | CreatureImmunity.Poison | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
-
-        DeathResistance = 40,
     };
+	
+	wyrm.Stats[EntityStat.DeathResistance].Base = 20;
     
     wyrm.Attacks = new CreatureAttackCollection
     {
@@ -110976,7 +110976,7 @@
     {
         new CreatureAttack(6, 3, 10, "The viper strikes you.",
                             new AttackPoisonComponent(6, 30),
-                            new AttackStunComponent(10))
+                            new AttackDazeComponent(10))
     };
     
     viper.Blocks = new CreatureBlockCollection
@@ -111024,7 +111024,7 @@
         {
             new CreatureAttack(6, 4, 8, "The scorpion stings you with its tail.",
                     new AttackPoisonComponent(5),
-                    new AttackStunComponent(10)),                                    40 
+                    new AttackDazeComponent(10)),                                    40 
         }, 
     };
     
@@ -112074,9 +112074,9 @@
 
         CanFlee = true,
         CanSwim = true,
-
-        FireProtection = 100,
     };
+	
+	wizard.Stats[EntityStat.FireProtection].Base = 100;
     
     wizard.Attacks = new CreatureAttackCollection
     {
@@ -112151,7 +112151,7 @@
         }, 
         { 
             new CreatureAttack(11, 13, 20, "You've been gored by the minotaur.",
-                        new AttackStunComponent(10)),                                   30
+                        new AttackDazeComponent(10)),                                   30
         }, 
         { 
             new CreatureAttack(11, 16, 22, "You've been trampled by the minotaur."),    10
@@ -112207,15 +112207,16 @@
         Experience = 3654,
         BasePenetration = ShieldPenetration.Light,
         Movement = 2,
-        MagicProtection = 13,
         
         CanFly = true,
         
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.Silver,
-        
-        FireProtection = 100,
     };
+	
+	gargoyle.Stats[EntityStat.MagicDamageTakenReduction].Base = 13;
+	
+	gargoyle.Stats[EntityStat.FireProtection].Base = 100;
     
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
     
@@ -112280,11 +112281,12 @@
         BaseDodge = 18,
         HideDetection = 25,
         Experience = 3117,
-        FireProtection = 100,
         BasePenetration = ShieldPenetration.VeryLight,
 
         Movement = 2,
     };    
+	
+	salamander.Stats[EntityStat.FireProtection].Base = 100;
 
     salamander.Attacks = new CreatureAttackCollection
     {
@@ -112353,11 +112355,11 @@
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing 
                    | CreatureImmunity.Bashing | CreatureImmunity.Poison | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
-        
-        IceProtection =  100,
-        DeathResistance = 40,
     };
-    
+	
+	serpent.Stats[EntityStat.IceProtection].Base = 100;
+    serpent.Stats[EntityStat.DeathResistance].Base = 20;
+		
     serpent.AddStatus(new NightVisionStatus(serpent)); 
     serpent.AddStatus(new BreatheWaterStatus(serpent));
     
@@ -112368,12 +112370,12 @@
         }, 
         {
             new CreatureAttack(16, 20, 32, "The serpent bites you with its fangs.",
-                                        new AttackStunComponent(80),
+                                        new AttackDazeComponent(80),
                                         new AttackPoisonComponent(9)),             20 
         }, 
         {
             new CreatureAttack(16, 25, 37, "The serpent strikes you with its tail.",
-                                        new AttackStunComponent(10)),                   20 
+                                        new AttackDazeComponent(10)),                   20 
         }, 
     };
     
@@ -112481,16 +112483,16 @@
         BaseDodge = 22,
         HideDetection = 26,
         Experience = 5262,
-        MagicProtection = 15,
         Movement = 2,
         CanFly = true,
         BasePenetration = ShieldPenetration.Medium,
         
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.Silver,
-
-        FireProtection = 100,
     };
+
+	gargoyle.Stats[EntityStat.FireProtection].Base = 100;
+	gargoyle.Stats[EntityStat.MagicDamageTakenReduction].Base = 15;
     
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
     
@@ -112969,12 +112971,13 @@
         BaseDodge = 20,
         HideDetection = 26,
         Experience = 4489,
-        FireProtection = 100,
         BasePenetration = ShieldPenetration.Light,
 
         Movement = 2,
     };
     
+	salamander.Stats[EntityStat.FireProtection].Base = 100;
+	
     salamander.Attacks = new CreatureAttackCollection
     {
         { 
@@ -113329,9 +113332,9 @@
 
         CanFlee = true,
         CanSwim = true,
-        
-        IceProtection = 100,
     };
+	
+	wizard.Stats[EntityStat.IceProtection].Base = 100;
     
     wizard.AddStatus(new NightVisionStatus(wizard));
     
@@ -113656,9 +113659,9 @@
 
         VisibilityDistance = 1,
         BasePenetration = ShieldPenetration.Light,
-        
-        IceProtection = 100,
     };
+	
+	lich.Stats[EntityStat.IceProtection].Base = 100;
     
     lich.AddStatus(new NightVisionStatus(lich));
     
@@ -113780,12 +113783,12 @@
         BasePenetration = ShieldPenetration.Heavy,
         
         CanJumpkick = true,
-        
-        FireProtection = 100,
-        IceProtection = 100,
-        
+
         IsTethered = true,
     };
+	
+	twin.Stats[EntityStat.FireProtection].Base = 100;
+	twin.Stats[EntityStat.IceProtection].Base = 100;
     
     twin.AddStatus(new NightVisionStatus(twin));
     
@@ -113849,13 +113852,13 @@
         BasePenetration = ShieldPenetration.Heavy,
         
         CanJumpkick = true,
-        
-        FireProtection = 100,
-        IceProtection = 100,
-        
+
         IsTethered = true,
     };
-    
+	
+	twin.Stats[EntityStat.FireProtection].Base = 100;
+    twin.Stats[EntityStat.IceProtection].Base = 100;
+	
     twin.AddStatus(new NightVisionStatus(twin));
     
     twin.Attacks = new CreatureAttackCollection
@@ -114080,13 +114083,13 @@
 
         Immunity = CreatureImmunity.Web,
 
-        FireProtection = 100,
-        IceProtection = 100,
-        StunProtection = 100,
-        
         IsTethered = true,
     };
-    
+	
+	dragon.Stats[EntityStat.FireProtection].Base = 100;
+    dragon.Stats[EntityStat.IceProtection].Base = 100;
+	dragon.Stats[EntityStat.StunProtection].Base = 100;
+	
     dragon.AddStatus(new NightVisionStatus(dragon));
 
     dragon.AddImmunity(typeof(WhirlwindSpell));
@@ -114096,17 +114099,17 @@
             {
                 new CreatureAttack(20, 30, 50, "The dragon slashes you with its claws.",
                                     new AttackProneComponent(5),
-                                    new AttackStunComponent(5)),                            30
+                                    new AttackDazeComponent(5)),                            30
             },
             {
                 new CreatureAttack(20, 37, 60, "The dragon smashes you with its tail.",
                                     new AttackProneComponent(5),
-                                    new AttackStunComponent(10)),                           30
+                                    new AttackDazeComponent(10)),                           30
             },
             {
                 new CreatureAttack(20, 45, 69, "The dragon buffets you with its wings.",
                                     new AttackProneComponent(5),
-                                    new AttackStunComponent(15)),                           40
+                                    new AttackDazeComponent(15)),                           40
             },
     };
     
@@ -114236,8 +114239,9 @@
         Experience = 10913,
         HideDetection = 30,
         CanCharge = true,
-        MagicProtection = 21,
     };
+	
+	centaur.Stats[EntityStat.MagicDamageTakenReduction].Base = 21;
     
     centaur.AddStatus(new NightVisionStatus(centaur));
     
@@ -114348,10 +114352,11 @@
         
         CanSwim = true,
         CanJumpkick = true,
-        FireProtection = 42,
         IsTethered = true,
         
     };
+	
+	bear.Stats[EntityStat.FireProtection].Base = 42;
     
     bear.AddStatus(new NightVisionStatus(bear));
         
@@ -114745,11 +114750,11 @@
 
         Experience = 10913,
         BasePenetration = ShieldPenetration.Medium,
-        
-        MagicProtection = 20,
-        
+
         HideDetection = 18,
     };
+	
+	griffin.Stats[EntityStat.MagicDamageTakenReduction].Base = 20;
     
     griffin.AddStatus(new NightVisionStatus(griffin)); 
     
@@ -114760,7 +114765,7 @@
         }, 
         {
             new CreatureAttack(17, 15, 25, "The griffin buries its talons into you.",
-                                                    new AttackStunComponent(20.0)),         30
+                                                    new AttackDazeComponent(20.0)),         30
         }, 
         {
             new CreatureAttack(17, 20, 31, "The griffin pummels you with its wings."),      30
@@ -114815,9 +114820,10 @@
         BaseDodge = 26,
         CanCharge = true,
         Experience = 10913,
-        FireProtection = 21,
         BasePenetration = ShieldPenetration.Medium,
     };
+	
+	largeBear.Stats[EntityStat.FireProtection].Base = 21;
     
     largeBear.AddStatus(new NightVisionStatus(largeBear));    
     
@@ -115044,9 +115050,10 @@
         Experience = 13095,
         HideDetection = 30,
         CanCharge = true,
-        MagicProtection = 20,
         CanSwim = true,
     };
+	
+	centaur.Stats[EntityStat.MagicDamageTakenReduction].Base = 20;
     
     centaur.AddStatus(new NightVisionStatus(centaur));
     centaur.AddStatus(new BreatheWaterStatus(centaur));
@@ -115196,12 +115203,13 @@
     {
         MaxHealth = 200, Health = 200,
         BaseDodge = 28,
-        MagicProtection = 30,
         Experience = 50,
         Movement = 0,
         HideDetection = 45,
         Alignment = Alignment.Neutral,
     };
+	
+	dryad.Stats[EntityStat.MagicDamageTakenReduction].Base = 30;
     
     dryad.AddStatus(new NightVisionStatus(dryad));
     
@@ -115466,11 +115474,11 @@
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing 
                    | CreatureImmunity.Bashing | CreatureImmunity.Poison | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
-        
-        IceProtection =  100,
-        DeathResistance = 40,
     };
-    
+	
+	serpent.Stats[EntityStat.IceProtection].Base = 100;
+    serpent.Stats[EntityStat.DeathResistance].Base = 20;
+	
     serpent.AddStatus(new NightVisionStatus(serpent)); 
     serpent.AddStatus(new BreatheWaterStatus(serpent));
     
@@ -115481,12 +115489,12 @@
         }, 
         {
             new CreatureAttack(15, 20, 35, "The serpent bites you with its fangs.",
-                                        new AttackStunComponent(80),
+                                        new AttackDazeComponent(80),
                                         new AttackPoisonComponent(12, 20)),             20 
         }, 
         {
             new CreatureAttack(15, 25, 40, "The serpent strikes you with its tail.",
-                                        new AttackStunComponent(10)),                   20 
+                                        new AttackDazeComponent(10)),                   20 
         }, 
     };
     
@@ -115719,7 +115727,7 @@
         {
             new CreatureAttack(16, 20, 30, "The scorpion stings you with its tail.",
                     new AttackPoisonComponent(11),
-                    new AttackStunComponent(10)),                                    40 
+                    new AttackDazeComponent(10)),                                    40 
         }, 
     };
     

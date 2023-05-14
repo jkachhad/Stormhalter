@@ -65,7 +65,7 @@ namespace Kesmai.Server.Items
 			base.OnUnequip(entity);
 
 			if (entity.GetStatus(typeof(LightningResistanceStatus), out var lightningStatus))
-				lightningStatus.RemoveSourceFor(this);
+				lightningStatus.RemoveSource(this);
 		}
 	}
 }

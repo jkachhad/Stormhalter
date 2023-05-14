@@ -34,37 +34,37 @@ namespace Kesmai.Shared
 #if Server
 	    [WorldForge]
 #endif
-		public static ItemQuality Common		= new (	0,	6301050,	"Common",		FromArgb(0xFF, 0xFF, 0xFF, 0x00));
+		public static ItemQuality Common		= new (0,	6301050,	"Common",		FromArgb(0xFF, 0xFF, 0xFF, 0x00));
 
 #if Server
 	    [WorldForge]
 #endif
-		public static ItemQuality Uncommon		= new (	1,	6301051,	"Uncommon",		FromArgb(0xFF, 0x1E, 0xFF, 0x00));
+		public static ItemQuality Uncommon		= new (1,	6301051,	"Uncommon",		FromArgb(0xFF, 0x1E, 0xFF, 0x00));
 
 #if Server
 	    [WorldForge]
 #endif
-		public static ItemQuality Rare			= new (	2,	6301052,	"Rare",			FromArgb(0xFF, 0x00, 0x70, 0xDD));
+		public static ItemQuality Rare			= new (2,	6301052,	"Rare",			FromArgb(0xFF, 0x00, 0x70, 0xDD));
 
 #if Server
 	    [WorldForge]
 #endif
-		public static ItemQuality Epic			= new (	3,	6301053,	"Epic",			FromArgb(0xFF, 0xA3, 0x35, 0xEE));
+		public static ItemQuality Epic			= new (3,	6301053,	"Epic",			FromArgb(0xFF, 0xA3, 0x35, 0xEE));
 
 #if Server
 	    [WorldForge]
 #endif
-		public static ItemQuality Legendary		= new (	4,	6301054,	"Legendary",	FromArgb(0xFF, 0xFF, 0x80, 0x00));
+		public static ItemQuality Legendary		= new (4,	6301054,	"Legendary",	FromArgb(0xFF, 0xFF, 0x80, 0x00));
 
 #if Server
 	    [WorldForge]
 #endif
-		public static ItemQuality Artifact		= new (	5,	6301055,	"Artifact",		FromArgb(0xFF, 0xE6, 0xCC, 0x80));
+		public static ItemQuality Artifact		= new (5,	6301055,	"Artifact",		FromArgb(0xFF, 0xE6, 0xCC, 0x80));
 
 #if Server
 	    [WorldForge]
 #endif
-		public static ItemQuality Mythical 		= new (	6,	6301056,	"Mythical",		FromArgb(0xFF, 0xF9, 0x29, 0x07));
+		public static ItemQuality Mythical 		= new (6,	6301056,	"Mythical",		FromArgb(0xFF, 0xF9, 0x29, 0x07));
 
 		public static Dictionary<int, ItemQuality> Qualities = new Dictionary<int, ItemQuality>()
 		{
