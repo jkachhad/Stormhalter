@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.96.0.0">
+<segment name="Underkingdom" version="0.100.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -101177,7 +101177,7 @@
     goblin.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<FireballSpell>(
-            skillLevel: 12, cost: 6, 
+            skillLevel: 6, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
             skillLevel: 3, cost: 5, 
@@ -101848,7 +101848,7 @@
             skillLevel: 10, cost: 3, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 },
         { new CreatureSpell<IceStormSpell>(
-            skillLevel: 15, cost: 6, 
+            skillLevel: 10, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 }
     };
     

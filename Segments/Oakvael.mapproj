@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.96.0.0">
+<segment name="Oakvael" version="0.100.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -112086,7 +112086,7 @@
     wizard.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<FireballSpell>(
-            skillLevel: 9, cost: 6,
+            skillLevel: 5, cost: 6,
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
             skillLevel: 9, cost: 5, 
@@ -112308,7 +112308,7 @@
     salamander.Spells = new CreatureSpellCollection(50.0)
     {
         { new CreatureSpell<FirewallSpell>(
-            skillLevel: 9), 100, TimeSpan.FromSeconds(15.0) }
+            skillLevel: 5), 100, TimeSpan.FromSeconds(15.0) }
     };
     
     salamander.AddGold(105);
@@ -112921,7 +112921,7 @@
     wizard.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<FireballSpell>(
-            skillLevel: 11, cost: 6,
+            skillLevel: 7, cost: 6,
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
             skillLevel: 9, cost: 5,
@@ -112998,7 +112998,7 @@
     salamander.Spells = new CreatureSpellCollection(50.0)
     {
        { new CreatureSpell<FirewallSpell>(
-            skillLevel: 11), 100, TimeSpan.FromSeconds(15.0) }
+            skillLevel: 6), 100, TimeSpan.FromSeconds(15.0) }
     };
 
     salamander.AddGold(90);
@@ -113349,7 +113349,7 @@
             skillLevel: 12, cost: 10,
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<IceStormSpell>(
-                skillLevel: 14, cost: 6,
+                skillLevel: 10, cost: 6,
                 mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
 
@@ -113674,7 +113674,7 @@
     lich.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<IceStormSpell>(
-            skillLevel: 32, cost: 6,
+            skillLevel: 18, cost: 6,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
 
@@ -113801,7 +113801,7 @@
     twin.Spells = new CreatureSpellCollection(100)
     {
        { new CreatureSpell<IceStormSpell>(
-            skillLevel: 32), 100, TimeSpan.FromSeconds(12.0) }
+            skillLevel: 17), 100, TimeSpan.FromSeconds(12.0) }
     };
 
     twin.AddGold(1800);
@@ -113871,7 +113871,7 @@
     twin.Spells = new CreatureSpellCollection(100)
     {
         { new CreatureSpell<FireballSpell>(
-            skillLevel: 32), 100, TimeSpan.FromSeconds(12.0) }
+            skillLevel: 17), 100, TimeSpan.FromSeconds(12.0) }
     };
     
     twin.AddGold(1800);
@@ -115304,7 +115304,7 @@
     necro.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<FireballSpell>(
-            skillLevel: 15, cost: 7)
+            skillLevel: 8, cost: 7)
     };
     
     necro.Wield(new BlackStaff());
@@ -115564,7 +115564,7 @@
     necro.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<FireballSpell>(
-            skillLevel: 15, cost: 7)
+            skillLevel: 8, cost: 7)
     };
     
     necro.Wield(new BlackStaff());
