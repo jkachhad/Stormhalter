@@ -20,7 +20,7 @@ namespace Kesmai.Server.Items
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WeakShieldRing"/> class.
 		/// </summary>
-		public WeakShieldRing()
+		public WeakShieldRing() : base(987)
 		{
 		}
 
