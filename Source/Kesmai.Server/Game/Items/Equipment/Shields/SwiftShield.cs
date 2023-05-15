@@ -78,7 +78,7 @@ namespace Kesmai.Server.Items
 
 		public override void OnUnwield(MobileEntity entity)
 		{
-			base.OnUnequip(entity);
+			base.OnUnwield(entity);
 
 			if (entity.GetStatus(typeof(ShieldStatus), out var status))
 				status.RemoveSource(this);
