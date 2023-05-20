@@ -8,6 +8,7 @@ namespace Kesmai.Server.Items
 	public partial class MainGauche : Dagger, ITreasure
 	{
 		
+		public override int LabelNumber => 6000106; /*gauche*/
 		/// <inheritdoc />
 		public override int Weight => 20;
 
