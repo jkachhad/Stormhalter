@@ -10,7 +10,7 @@ namespace Kesmai.WorldForge.UI.Documents
 	{
 		public override IEnumerable<string> GetSegments()
 		{
-			yield return "public class Segment\n{";
+			yield return "public class Internal\n{";
 			yield return "}";
 		}
 	}
