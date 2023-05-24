@@ -13,6 +13,7 @@ namespace Kesmai.Server.Game
 		[WorldForge]
 		protected static Regex _craft = new Regex(@"^craft\s(\w*?)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		
+		[WorldForge]
 		protected List<Point2D> _counters;
 
 		[WorldForge]

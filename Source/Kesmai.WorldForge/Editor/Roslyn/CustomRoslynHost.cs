@@ -62,7 +62,7 @@ namespace Kesmai.WorldForge.Roslyn
 			var scriptingData = Core.ScriptingData;
 			
 			if (scriptingData != null)
-				MetadataReference.CreateFromImage(scriptingData);
+				references.Add(MetadataReference.CreateFromImage(scriptingData));
 			
 			solution = solution.AddProject(ProjectInfo.Create(
 				id, VersionStamp.Create(),

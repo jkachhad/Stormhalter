@@ -14,6 +14,7 @@ namespace Kesmai.Server
 namespace Kesmai.Shared
 #endif
 {
+	[WorldForge]
 	public class ItemQuality
     {
 	    private static Color FromArgb(byte a, byte r, byte g, byte b)
@@ -66,6 +67,7 @@ namespace Kesmai.Shared
 #endif
 		public static ItemQuality Mythical 		= new (6,	6301056,	"Mythical",		FromArgb(0xFF, 0xF9, 0x29, 0x07));
 
+		[WorldForge]
 		public static Dictionary<int, ItemQuality> Qualities = new Dictionary<int, ItemQuality>()
 		{
 			[-1]	=	Poor,
@@ -78,6 +80,7 @@ namespace Kesmai.Shared
 			[6]		=	Mythical,
 		};
 
+		[WorldForge]
 		public static ItemQuality GetQuality(int value)
 		{
 			if (Qualities.TryGetValue(value, out var quality))
@@ -121,9 +124,16 @@ namespace Kesmai.Shared
 		private string _name;
 		private Color _color;
 
+		[WorldForge]
 		public int Localization => _localization;
+		
+		[WorldForge]
 		public string Name => _name;
+		
+		[WorldForge]
 		public Color Color => _color;
+		
+		[WorldForge]
 		public int Value => _value;
 
 		public ItemQuality(int value, int localization, string name, Color color)
