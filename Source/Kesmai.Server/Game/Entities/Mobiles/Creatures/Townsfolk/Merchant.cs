@@ -15,8 +15,7 @@ namespace Kesmai.Server.Game
 		public int MaximumSupply { get; private set; }
 
 		public Type ItemType { get; } = typeof(T);
-
-		[WorldForge]
+		
 		public Merchant(uint cost, int minimum = 1, int maximum = int.MaxValue)
 		{
 			Cost = cost;
