@@ -37,7 +37,8 @@ namespace Kesmai.WorldForge
 	public abstract class Spawner : ObservableObject
 	{
 		private string _name;
-		
+		private bool _enabled;
+
 		private TimeSpan _minimumDelay;
 		private TimeSpan _maximumDelay;
 
@@ -55,6 +56,13 @@ namespace Kesmai.WorldForge
         {
 			return Name;
         }
+        
+        public bool Enabled
+        {
+	        get => _enabled;
+	        set => SetProperty(ref _enabled, value);
+        }
+        
         public TimeSpan MinimumDelay
 		{
 			get => _minimumDelay;
@@ -89,6 +97,11 @@ namespace Kesmai.WorldForge
 		protected Spawner(XElement element)
 		{
 			Name = (string)element.Attribute("name");
+			
+			if (Boolean.TryParse((string)element.Attribute("enabled"), out var enabled))
+				Enabled = enabled;
+			else
+				Enabled = true;
 
 			if (Int32.TryParse((string)element.Element("minimumDelay"), out var minSeconds))
 				MinimumDelay = TimeSpan.FromSeconds(minSeconds);
@@ -153,6 +166,7 @@ namespace Kesmai.WorldForge
 			var element = new XElement("spawn",
 				new XAttribute("type", GetTypeAlias()),
 				new XAttribute("name", _name),
+				new XAttribute("enabled", _enabled),
 				new XElement("minimumDelay", _minimumDelay.TotalSeconds),
 				new XElement("maximumDelay", _maximumDelay.TotalSeconds));
 
