@@ -30,7 +30,6 @@ namespace Kesmai.Server.Game
 		
 		public bool AllowRestock { get; set; }
 		
-		[WorldForge]
 		public StockEntry(string name, Func<ItemEntity> create, int cost, int maximumQuantity, Action<PlayerEntity, ItemEntity> purchased, bool allowRestock = true)
 		{
 			Name = name;
