@@ -23,34 +23,11 @@ namespace Kesmai.Server.Items
 		/// <inheritdoc />
 		public override int BashingProtection => 1;
 		
-		public override int BaseArmorBonus
-		{
-			get
-			{
-				/* Do not apply the armor bonus if on a hostile. */
-				if (Parent is PlayerEntity)
-					return Quality.Value; /* BaseArmorBonus matches rarity. */
-
-				return 0;
-			}
-		}
-		
 		/// <summary>
 		/// Initializes a new instance of the <see cref="LeatherArmor"/> class.
 		/// </summary>
-		public LeatherArmor() : this(ItemQuality.Common)
+		public LeatherArmor() : base(242)
 		{
-		}
-		
-		/// <summary>
-		/// Initializes a new instance of the <see cref="LeatherArmor"/> class.
-		/// </summary>
-		public LeatherArmor(ItemQuality quality) : base(242)
-		{
-			if (quality is null)
-				quality = ItemQuality.Common;
-
-			_armorQuality = quality;
 		}
 		
 		/// <inheritdoc />

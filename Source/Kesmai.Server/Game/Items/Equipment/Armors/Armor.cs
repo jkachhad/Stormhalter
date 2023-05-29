@@ -97,20 +97,6 @@ namespace Kesmai.Server.Items
 			return armorBonus + BaseArmorBonus;
 		}
 
-		protected ItemQuality _armorQuality = ItemQuality.Common;
-
-		[CommandProperty(AccessLevel.GameMaster)]
-		public override ItemQuality Quality
-		{
-			get => _armorQuality;
-			set
-			{
-				_armorQuality = value;
-
-				Delta(ItemDelta.UpdateQuality);
-			}
-		}
-
 		/// <inheritdoc />
 		public override bool BreaksHide(MobileEntity entity) => true;
 
