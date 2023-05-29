@@ -148,7 +148,7 @@ namespace Kesmai.WorldForge
 							if (sprite.Offset != Vector2F.Zero)
 								spriteBounds.Offset(sprite.Offset.X, sprite.Offset.Y);
 
-							spriteBatch.Draw(sprite.Texture, spriteBounds.Location.ToVector2(), null, SelectionColor, 0, Vector2.Zero, zoomFactor, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0f);
+							spriteBatch.Draw(sprite.Texture, spriteBounds.Location.ToVector2(), null, SelectionColor, 0, Vector2.Zero, zoomFactor / sprite.Resolution, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0f);
 						}
 					}
 				}

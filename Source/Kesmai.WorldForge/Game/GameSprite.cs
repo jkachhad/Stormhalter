@@ -26,6 +26,8 @@ namespace Kesmai.WorldForge
 		public WriteableBitmap Bitmap { get; protected set; }
 		
 		public Vector2F Offset { get; protected set; }
+		
+		public int Resolution { get; set; }
 
 		public GameSprite(Texture2D texture)
 		{
@@ -59,9 +61,15 @@ namespace Kesmai.WorldForge
 			var sourceElement = element.Element("source");
 			var framesElement = element.Element("frames");
 			var offsetElement = element.Element("offset");
+			var resolutionAttribute = element.Attribute("resolution");
 			
 			if (offsetElement != null)
 				Offset = Vector2F.Parse(offsetElement.Value);
+
+			if (resolutionAttribute != null)
+				Resolution = Int32.Parse(resolutionAttribute.Value);
+			else
+				Resolution = 1;
 
 			var services = (ServiceContainer)ServiceLocator.Current;
 			var contentManager = services.GetInstance<ContentManager>();
