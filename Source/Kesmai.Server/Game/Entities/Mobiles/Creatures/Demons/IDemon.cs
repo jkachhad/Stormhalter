@@ -1,7 +1,6 @@
-namespace Kesmai.Server.Game.Demons
+namespace Kesmai.Server.Game.Demons;
+
+public interface IDemon
 {
-	public interface IDemon
-	{
 		
-	}
 }

@@ -6,17 +6,16 @@ using Kesmai.Server.Items;
 using Kesmai.Server.Network;
 using Kesmai.Server.Targeting;
 
-namespace Kesmai.Server.Spells
-{
-	public partial class Venom : Poison
-	{
-		public Venom(int potency) : base(TimeSpan.Zero, potency, true)
-		{
-		}
+namespace Kesmai.Server.Spells;
 
-		public override Poison Clone()
-		{
-			return new Venom(Potency);
-		}
+public partial class Venom : Poison
+{
+	public Venom(int potency) : base(TimeSpan.Zero, potency, true)
+	{
+	}
+
+	public override Poison Clone()
+	{
+		return new Venom(Potency);
 	}
 }

@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 
-namespace Kesmai.WorldForge.Editor
+namespace Kesmai.WorldForge.Editor;
+
+public interface ISegmentImporter
 {
-	public interface ISegmentImporter
-	{
-	}
 }

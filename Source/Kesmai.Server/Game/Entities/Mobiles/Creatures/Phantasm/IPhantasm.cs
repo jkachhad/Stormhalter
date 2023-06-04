@@ -1,7 +1,6 @@
-namespace Kesmai.Server.Game
+namespace Kesmai.Server.Game;
+
+public interface IPhantasm
 {
-	public interface IPhantasm
-	{
 		
-	}
 }

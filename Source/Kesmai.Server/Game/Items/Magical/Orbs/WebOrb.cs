@@ -4,43 +4,42 @@ using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 using Kesmai.Server.Spells;
 
-namespace Kesmai.Server.Items
+namespace Kesmai.Server.Items;
+
+public partial class WebOrb : SpellOrb, ITreasure
 {
-	public partial class WebOrb : SpellOrb, ITreasure
-	{
-		/// <inheritdoc />
-		public override uint BasePrice => 800;
+	/// <inheritdoc />
+	public override uint BasePrice => 800;
 		
-		/// <summary>
-		/// Initializes a new instance of the <see cref="WebOrb"/> class.
-		/// </summary>
-		public WebOrb() : base(181)
-		{
-		}
+	/// <summary>
+	/// Initializes a new instance of the <see cref="WebOrb"/> class.
+	/// </summary>
+	public WebOrb() : base(181)
+	{
+	}
 
-		/// <inheritdoc />
-		public override void GetDescription(List<LocalizationEntry> entries)
-		{
-			entries.Add(new LocalizationEntry(6200000, 6200279)); /* [You are looking at] [a glass ball filled with a milky fluid.] */
+	/// <inheritdoc />
+	public override void GetDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200000, 6200279)); /* [You are looking at] [a glass ball filled with a milky fluid.] */
 
-			if (Identified)
-				entries.Add(new LocalizationEntry(6250126)); /* The ball contains the spell of create web. */
-		}
+		if (Identified)
+			entries.Add(new LocalizationEntry(6250126)); /* The ball contains the spell of create web. */
+	}
 
-		/// <inheritdoc />
-		protected override void PlaceEffect(MobileEntity source, Point2D location)
+	/// <inheritdoc />
+	protected override void PlaceEffect(MobileEntity source, Point2D location)
+	{
+		var spell = new CreateWebSpell()
 		{
-			var spell = new CreateWebSpell()
-			{
-				Item = this,
+			Item = this,
 				
-				SkillLevel = 12,
+			SkillLevel = 12,
 				
-				Cost = 0,
-			};
+			Cost = 0,
+		};
 
-			spell.Warm(source);
-			spell.CastAt(location);
-		}
+		spell.Warm(source);
+		spell.CastAt(location);
 	}
 }

@@ -3,10 +3,10 @@ using Kesmai.Server.Engines.Commands;
 using System.IO;
 using Kesmai.Server.Items;
 
-namespace Kesmai.Server.Game
+namespace Kesmai.Server.Game;
+
+public partial class Djinn : CreatureEntity, IPhantasm
 {
-	public partial class Djinn : CreatureEntity, IPhantasm
-	{
 #if (Alpha)
 		[GameCommand("Summon", AccessLevel.Player, "Summons a target du- I mean djinn.", "")]
 		private static bool Summon(GameCommandEventArgs args)
@@ -33,30 +33,29 @@ namespace Kesmai.Server.Game
 		}
 #endif
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Djinn"/> class.
-		/// </summary>
-		public Djinn()
-		{
-			Name = "djinn";
-			Body = 5;
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Djinn"/> class.
+	/// </summary>
+	public Djinn()
+	{
+		Name = "djinn";
+		Body = 5;
 
-			Alignment = Alignment.Lawful;
+		Alignment = Alignment.Lawful;
 
-			Health = MaxHealth = 5;
-		}
-
-		protected override void OnLoad()
-		{
-			base.OnLoad();
-			
-			_brain = new CombatAI(this);
-		}
-		
-		public override int GetNearbySound() => 129;
-		public override int GetAttackSound() => 148;
-		public override int GetDeathSound() => 167;
-		
-		public override Corpse GetCorpse() => default(Corpse);
+		Health = MaxHealth = 5;
 	}
+
+	protected override void OnLoad()
+	{
+		base.OnLoad();
+			
+		_brain = new CombatAI(this);
+	}
+		
+	public override int GetNearbySound() => 129;
+	public override int GetAttackSound() => 148;
+	public override int GetDeathSound() => 167;
+		
+	public override Corpse GetCorpse() => default(Corpse);
 }

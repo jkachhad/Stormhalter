@@ -5,61 +5,60 @@ using Kesmai.Server.Items;
 using Kesmai.Server.Spells;
 using Kesmai.Server.Targeting;
 
-namespace Kesmai.Server.Game
+namespace Kesmai.Server.Game;
+
+public partial class SummonedSalamander : Salamander
 {
-	public partial class SummonedSalamander : Salamander
+	/// <summary>
+	/// Initializes a new instance of the <see cref="SummonedSalamander"/> class.
+	/// </summary>
+	public SummonedSalamander(ICreatureSpell spell)
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="SummonedSalamander"/> class.
-		/// </summary>
-		public SummonedSalamander(ICreatureSpell spell)
+		Summoned = true;
+			
+		Health = MaxHealth = 71;
+		BaseDodge = 15;
+			
+		Movement = 2;
+
+		Alignment = Alignment.Lawful;
+
+		Attacks = new CreatureAttackCollection
 		{
-			Summoned = true;
-			
-			Health = MaxHealth = 71;
-			BaseDodge = 15;
-			
-			Movement = 2;
+			{ new CreatureAttack(10, 7, 14, "The salamander claws at you"), 60 },
+			{ new CreatureAttack(10, 9, 17, "The salamander hits you with its tail"), 40 },
+		};
 
-			Alignment = Alignment.Lawful;
-
-			Attacks = new CreatureAttackCollection
-			{
-				{ new CreatureAttack(10, 7, 14, "The salamander claws at you"), 60 },
-				{ new CreatureAttack(10, 9, 17, "The salamander hits you with its tail"), 40 },
-			};
-
-			Blocks = new CreatureBlockCollection
-			{
-				{ new CreatureBlock(6, "the armor") },
-				{ new CreatureBlock(3, "a claw") },
-				{ new CreatureBlock(1, "a tail") },
-			};
-			
-			Spells = new CreatureSpellCollection()
-			{
-				{ new CreatureSpellEntry(spell, 100, TimeSpan.FromSeconds(3) )}
-			};
-		}
-
-		protected override void OnCreate()
+		Blocks = new CreatureBlockCollection
 		{
-			base.OnCreate();
+			{ new CreatureBlock(6, "the armor") },
+			{ new CreatureBlock(3, "a claw") },
+			{ new CreatureBlock(1, "a tail") },
+		};
 			
-			_stats[EntityStat.FireProtection].Base = 100;
-		}
-
-		/// <inheritdoc/>
-		protected override void OnLoad()
+		Spells = new CreatureSpellCollection()
 		{
-			base.OnLoad();
-
-			if (_brain != null)
-				return;
-			
-			_brain = new CombatAI(this);
-		}
-
-		public override Corpse GetCorpse() => default(Corpse);
+			{ new CreatureSpellEntry(spell, 100, TimeSpan.FromSeconds(3) )}
+		};
 	}
+
+	protected override void OnCreate()
+	{
+		base.OnCreate();
+			
+		_stats[EntityStat.FireProtection].Base = 100;
+	}
+
+	/// <inheritdoc/>
+	protected override void OnLoad()
+	{
+		base.OnLoad();
+
+		if (_brain != null)
+			return;
+			
+		_brain = new CombatAI(this);
+	}
+
+	public override Corpse GetCorpse() => default(Corpse);
 }

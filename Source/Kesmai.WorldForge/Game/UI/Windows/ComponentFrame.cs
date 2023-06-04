@@ -8,93 +8,92 @@ using DigitalRune.Mathematics.Algebra;
 using Kesmai.WorldForge.Models;
 using Color = Microsoft.Xna.Framework.Color;
 
-namespace Kesmai.WorldForge.Windows
+namespace Kesmai.WorldForge.Windows;
+
+public class ComponentFrame : Canvas
 {
-	public class ComponentFrame : Canvas
+	private ComponentImage _image;
+
+	public static readonly int ComponentPropertyId = CreateProperty(
+		typeof(ComponentFrame), "Component", GamePropertyCategories.Default, null, default(TerrainComponent),
+		UIPropertyOptions.AffectsRender);
+
+	public TerrainComponent Component
 	{
-		private ComponentImage _image;
+		get => GetValue<TerrainComponent>(ComponentPropertyId);
+		set => SetValue(ComponentPropertyId, value);
+	}
 
-		public static readonly int ComponentPropertyId = CreateProperty(
-			typeof(ComponentFrame), "Component", GamePropertyCategories.Default, null, default(TerrainComponent),
-			UIPropertyOptions.AffectsRender);
-
-		public TerrainComponent Component
-		{
-			get => GetValue<TerrainComponent>(ComponentPropertyId);
-			set => SetValue(ComponentPropertyId, value);
-		}
-
-		public static readonly int ClickEventId = CreateEvent(
-			typeof(ButtonBase), "Click", GamePropertyCategories.Default, null, EventArgs.Empty);
+	public static readonly int ClickEventId = CreateEvent(
+		typeof(ButtonBase), "Click", GamePropertyCategories.Default, null, EventArgs.Empty);
 		
-		public event EventHandler<EventArgs> Click
+	public event EventHandler<EventArgs> Click
+	{
+		add => Events.Get<EventArgs>(ClickEventId).Event += value;
+		remove => Events.Get<EventArgs>(ClickEventId).Event -= value;
+	}
+
+	public ComponentFrame()
+	{
+		Style = "DarkCanvas";
+
+		HorizontalAlignment = HorizontalAlignment.Stretch;
+	}
+
+	protected override void OnLoad()
+	{
+		base.OnLoad();
+			
+		var stackFrame = new StackPanel()
 		{
-			add => Events.Get<EventArgs>(ClickEventId).Event += value;
-			remove => Events.Get<EventArgs>(ClickEventId).Event -= value;
-		}
-
-		public ComponentFrame()
+			Margin = new Vector4F(5),
+			HorizontalAlignment = HorizontalAlignment.Center,
+		};
+			
+		_image = new ComponentImage()
 		{
-			Style = "DarkCanvas";
+			Background = Color.FromNonPremultiplied(0, 0, 0, 50),
+				
+			HorizontalAlignment = HorizontalAlignment.Center,
+		};
+		_image.Component = Component;
 
-			HorizontalAlignment = HorizontalAlignment.Stretch;
-		}
-
-		protected override void OnLoad()
+		var componentName = new TextBlock()
 		{
-			base.OnLoad();
-			
-			var stackFrame = new StackPanel()
-			{
-				Margin = new Vector4F(5),
-				HorizontalAlignment = HorizontalAlignment.Center,
-			};
-			
-			_image = new ComponentImage()
-			{
-				Background = Color.FromNonPremultiplied(0, 0, 0, 50),
+			Font = "Tahoma", FontSize = 10,
 				
-				HorizontalAlignment = HorizontalAlignment.Center,
-			};
-			_image.Component = Component;
-
-			var componentName = new TextBlock()
-			{
-				Font = "Tahoma", FontSize = 10,
+			Foreground = Color.Yellow,
+			Shadow = Color.Black,
 				
-				Foreground = Color.Yellow,
-				Shadow = Color.Black,
+			HorizontalAlignment = HorizontalAlignment.Center,
 				
-				HorizontalAlignment = HorizontalAlignment.Center,
-				
-				Text = Component.GetType().Name,
-			};
+			Text = Component.GetType().Name,
+		};
 			
-			stackFrame.Children.Add(_image);
-			stackFrame.Children.Add(componentName);
+		stackFrame.Children.Add(_image);
+		stackFrame.Children.Add(componentName);
 			
-			Children.Add(stackFrame);
+		Children.Add(stackFrame);
 			
-			Properties.Get<TerrainComponent>(ComponentPropertyId).Changed += (o, args) =>
-			{
-				_image.Component = args.NewValue;
-			};
-		}
-
-		protected override void OnHandleInput(InputContext context)
+		Properties.Get<TerrainComponent>(ComponentPropertyId).Changed += (o, args) =>
 		{
-			if (!IsLoaded || !IsVisible)
-				return;
+			_image.Component = args.NewValue;
+		};
+	}
+
+	protected override void OnHandleInput(InputContext context)
+	{
+		if (!IsLoaded || !IsVisible)
+			return;
 			
-			base.OnHandleInput(context);
+		base.OnHandleInput(context);
 
-			var inputService = InputService;
+		var inputService = InputService;
 
-			if (inputService.IsMouseOrTouchHandled)
-				return;
+		if (inputService.IsMouseOrTouchHandled)
+			return;
 
-			if ((IsMouseDirectlyOver || _image.IsMouseOver) && inputService.IsReleased(MouseButtons.Left))
-				Events.Get<EventArgs>(ClickEventId).Raise();
-		}
+		if ((IsMouseDirectlyOver || _image.IsMouseOver) && inputService.IsReleased(MouseButtons.Left))
+			Events.Get<EventArgs>(ClickEventId).Raise();
 	}
 }

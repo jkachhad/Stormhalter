@@ -1,7 +1,6 @@
-namespace Kesmai.Server.Items
+namespace Kesmai.Server.Items;
+
+[WorldForge]
+public interface ITreasure
 {
-	[WorldForge]
-	public interface ITreasure
-	{
-	}
 }

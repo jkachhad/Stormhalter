@@ -7,76 +7,75 @@ using System.IO;
 using System.Windows;
 using System.Xml.Linq;
 
-namespace Kesmai.WorldForge.Models
+namespace Kesmai.WorldForge.Models;
+
+public class StaticComponent : TerrainComponent
 {
-	public class StaticComponent : TerrainComponent
-    {
-		#region Static
+	#region Static
 
-		#endregion
+	#endregion
 
-		#region Fields
+	#region Fields
 
-	    private int _static;
+	private int _static;
 
-		#endregion
+	#endregion
 
-		#region Properties and Events
+	#region Properties and Events
 
-	    /// <summary>
-	    /// Gets the static terrain.
-	    /// </summary>
-	    [Browsable(true)]
-	    public int Static
-	    {
-		    get => _static;
-		    set => SetProperty(ref _static, value);
-	    }
-
-		#endregion
-
-		#region Constructors and Cleanup
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="StaticComponent"/> class.
-		/// </summary>
-		public StaticComponent(int staticId)
-	    {
-		    _static = staticId;
-	    }
-		
-		public StaticComponent(XElement element) : base(element)
-		{
-			_static = (int)element.Element("static");
-		}
-
-		#endregion
-
-		#region Methods
-
-	    /// <inheritdoc />
-	    public override IEnumerable<ComponentRender> GetTerrain()
-		{
-			var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
-
-			if (terrainManager.TryGetValue(_static, out Terrain terrain))
-				yield return new ComponentRender(terrain, Color);
-		}
-	    
-	    public override XElement GetXElement()
-	    {
-		    var element = base.GetXElement();
-
-		    element.Add(new XElement("static", _static));
-
-		    return element;
-	    }
-	    
-	    public override TerrainComponent Clone()
-	    {
-		    return new StaticComponent(GetXElement());
-	    }
-
-		#endregion
+	/// <summary>
+	/// Gets the static terrain.
+	/// </summary>
+	[Browsable(true)]
+	public int Static
+	{
+		get => _static;
+		set => SetProperty(ref _static, value);
 	}
+
+	#endregion
+
+	#region Constructors and Cleanup
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="StaticComponent"/> class.
+	/// </summary>
+	public StaticComponent(int staticId)
+	{
+		_static = staticId;
+	}
+		
+	public StaticComponent(XElement element) : base(element)
+	{
+		_static = (int)element.Element("static");
+	}
+
+	#endregion
+
+	#region Methods
+
+	/// <inheritdoc />
+	public override IEnumerable<ComponentRender> GetTerrain()
+	{
+		var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
+
+		if (terrainManager.TryGetValue(_static, out Terrain terrain))
+			yield return new ComponentRender(terrain, Color);
+	}
+	    
+	public override XElement GetXElement()
+	{
+		var element = base.GetXElement();
+
+		element.Add(new XElement("static", _static));
+
+		return element;
+	}
+	    
+	public override TerrainComponent Clone()
+	{
+		return new StaticComponent(GetXElement());
+	}
+
+	#endregion
 }

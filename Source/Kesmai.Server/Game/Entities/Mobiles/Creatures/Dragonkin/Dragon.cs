@@ -4,78 +4,77 @@ using Kesmai.Server.Items;
 using Kesmai.Server.Spells;
 using Kesmai.Server.Targeting;
 
-namespace Kesmai.Server.Game
+namespace Kesmai.Server.Game;
+
+public partial class Dragon : CreatureEntity
 {
-	public partial class Dragon : CreatureEntity
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Dragon"/> class.
+	/// </summary>
+	public Dragon()
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Dragon"/> class.
-		/// </summary>
-		public Dragon()
-		{
-			Name = "dragon";
-			Body = 92;
+		Name = "dragon";
+		Body = 92;
 
-			Alignment = Alignment.Evil;
-			CombatantChangeInterval = TimeSpan.FromSeconds(33.0); // TODO: Scale to facet time?
+		Alignment = Alignment.Evil;
+		CombatantChangeInterval = TimeSpan.FromSeconds(33.0); // TODO: Scale to facet time?
 			
-			CanFly = true;
-			CanLoot = false;
-		}
+		CanFly = true;
+		CanLoot = false;
+	}
 
-		/// <inheritdoc/>
-		public override void OnSpawn()
-		{
-			base.OnSpawn();
+	/// <inheritdoc/>
+	public override void OnSpawn()
+	{
+		base.OnSpawn();
 			
-			if (_brain != null)
-				return;
+		if (_brain != null)
+			return;
 
-			_brain = new CombatAI(this);
-		}
+		_brain = new CombatAI(this);
+	}
 		
-		public override int GetNearbySound() => 19;
-		public override int GetAttackSound() => 31;
-		public override int GetDeathSound() => 43;
+	public override int GetNearbySound() => 19;
+	public override int GetAttackSound() => 31;
+	public override int GetDeathSound() => 43;
 
-		public override Corpse GetCorpse()
-		{
-			var corpse = base.GetCorpse();
+	public override Corpse GetCorpse()
+	{
+		var corpse = base.GetCorpse();
 			
-			if (corpse != null)
-				corpse.CanBurn = false;
+		if (corpse != null)
+			corpse.CanBurn = false;
 
-			return corpse;
-		}
+		return corpse;
+	}
 
-		public override ItemEntity OnCorpseTanned()
+	public override ItemEntity OnCorpseTanned()
+	{
+		return new DragonScaleArmor();
+	}
+
+	public override void OnSpellTarget(Target target, MobileEntity combatant)
+	{
+		if (Spell is DragonBreathSpell dragonBreath)
 		{
-			return new DragonScaleArmor();
-		}
-
-		public override void OnSpellTarget(Target target, MobileEntity combatant)
-		{
-			if (Spell is DragonBreathSpell dragonBreath)
-			{
-				var direction = GetDirectionTo(combatant.Location);
-				var distance = GetDistanceToMax(combatant.Location);
+			var direction = GetDirectionTo(combatant.Location);
+			var distance = GetDistanceToMax(combatant.Location);
 				
-				if (direction == Direction.None)
-					direction = Direction.Cardinal.Random();
+			if (direction == Direction.None)
+				direction = Direction.Cardinal.Random();
 
-				if (distance >= 3)
-					dragonBreath.CastAt(direction);
-				else
-					dragonBreath.CastAt(direction, direction.Opposite);
-
-				if (target != null)
-					target.Cancel(this, TargetCancel.Canceled);
-			}
+			if (distance >= 3)
+				dragonBreath.CastAt(direction);
 			else
-			{
-				base.OnSpellTarget(target, combatant);
-			}
-			
+				dragonBreath.CastAt(direction, direction.Opposite);
+
+			if (target != null)
+				target.Cancel(this, TargetCancel.Canceled);
 		}
+		else
+		{
+			base.OnSpellTarget(target, combatant);
+		}
+			
 	}
 }

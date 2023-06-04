@@ -7,82 +7,81 @@ using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 using Kesmai.Server.Spells;
 
-namespace Kesmai.Server.Items
+namespace Kesmai.Server.Items;
+
+public partial class StrengthRing : Ring, ITreasure
 {
-	public partial class StrengthRing : Ring, ITreasure
+	/// <summary>
+	/// Gets the price.
+	/// </summary>
+	public override uint BasePrice => 1000;
+
+	/// <summary>
+	/// Gets the weight.
+	/// </summary>
+	public override int Weight => 20;
+
+	[WorldForge]
+	[CommandProperty(AccessLevel.GameMaster)]
+	public virtual int StrengthBonus => 3;
+
+	public StrengthRing() : this(43)
 	{
-		/// <summary>
-		/// Gets the price.
-		/// </summary>
-		public override uint BasePrice => 1000;
-
-		/// <summary>
-		/// Gets the weight.
-		/// </summary>
-		public override int Weight => 20;
-
-		[WorldForge]
-		[CommandProperty(AccessLevel.GameMaster)]
-		public virtual int StrengthBonus => 3;
-
-		public StrengthRing() : this(43)
-		{
-		}
+	}
 		
-		/// <summary>
-		/// Initializes a new instance of the <see cref="StrengthRing"/> class.
-		/// </summary>
-		public StrengthRing(int itemId) : base(itemId)
-		{
-		}
+	/// <summary>
+	/// Initializes a new instance of the <see cref="StrengthRing"/> class.
+	/// </summary>
+	public StrengthRing(int itemId) : base(itemId)
+	{
+	}
 
-		/// <summary>
-		/// Gets the description for this instance.
-		/// </summary>
-		public override void GetDescription(List<LocalizationEntry> entries)
-		{
-			entries.Add(new LocalizationEntry(6200000, 6200044)); /* [You are looking at] [a gold ring with a large red gem set into it.] */
+	/// <summary>
+	/// Gets the description for this instance.
+	/// </summary>
+	public override void GetDescription(List<LocalizationEntry> entries)
+	{
+		entries.Add(new LocalizationEntry(6200000, 6200044)); /* [You are looking at] [a gold ring with a large red gem set into it.] */
 
-			if (Identified)
-				entries.Add(new LocalizationEntry(6250034)); /* The ring contains a medium spell of Strength. */
-		}
+		if (Identified)
+			entries.Add(new LocalizationEntry(6250034)); /* The ring contains a medium spell of Strength. */
+	}
 		
-		protected override bool OnEquip(MobileEntity entity)
-		{
-			if (!base.OnEquip(entity))
-				return false;
+	protected override bool OnEquip(MobileEntity entity)
+	{
+		if (!base.OnEquip(entity))
+			return false;
 
-			if (!entity.GetStatus(typeof(StrengthSpellStatus), out var status))
+		if (!entity.GetStatus(typeof(StrengthSpellStatus), out var status))
+		{
+			status = new StrengthSpellStatus(entity)
 			{
-				status = new StrengthSpellStatus(entity)
-				{
-					Inscription = new SpellInscription() { SpellId = 53 }
-				};
-				status.AddSource(new ItemSource(this));
+				Inscription = new SpellInscription() { SpellId = 53 }
+			};
+			status.AddSource(new ItemSource(this));
 				
-				entity.AddStatus(status);
-			}
-			else
-			{
-				status.AddSource(new ItemSource(this));
-			}
-			
-			entity.Stats[EntityStat.Strength].Add(+StrengthBonus, ModifierType.Constant);
-
-			return true;
+			entity.AddStatus(status);
 		}
-
-		protected override bool OnUnequip(MobileEntity entity)
+		else
 		{
-			if (!base.OnUnequip(entity))
-				return false;
-			
-			entity.Stats[EntityStat.Strength].Remove(+StrengthBonus, ModifierType.Constant);
-
-			if (entity.GetStatus(typeof(StrengthSpellStatus), out var status))
-				status.RemoveSource(this);
-
-			return true;
+			status.AddSource(new ItemSource(this));
 		}
+			
+		entity.Stats[EntityStat.Strength].Add(+StrengthBonus, ModifierType.Constant);
+
+		return true;
+	}
+
+	protected override bool OnUnequip(MobileEntity entity)
+	{
+		if (!base.OnUnequip(entity))
+			return false;
+			
+		entity.Stats[EntityStat.Strength].Remove(+StrengthBonus, ModifierType.Constant);
+
+		if (entity.GetStatus(typeof(StrengthSpellStatus), out var status))
+			status.RemoveSource(this);
+
+		return true;
 	}
 }

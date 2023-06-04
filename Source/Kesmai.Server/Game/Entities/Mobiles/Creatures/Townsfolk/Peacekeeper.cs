@@ -2,28 +2,27 @@ using System.IO;
 using System.Linq;
 using Kesmai.Server.Items;
 
-namespace Kesmai.Server.Game
+namespace Kesmai.Server.Game;
+
+public partial class Peacekeeper : Humanoid
 {
-	public partial class Peacekeeper : Humanoid
+	public Peacekeeper()
 	{
-		public Peacekeeper()
-		{
-			Alignment = Alignment.Lawful;
+		Alignment = Alignment.Lawful;
 			
-			CanLoot = false;
-		}
+		CanLoot = false;
+	}
 
-		public override void OnSpawn()
-		{
-			base.OnSpawn();
+	public override void OnSpawn()
+	{
+		base.OnSpawn();
 
-			if (_brain != null)
-				return;
+		if (_brain != null)
+			return;
 			
-			if (RightHand is ProjectileWeapon)
-				_brain = new RangedAI(this);
-			else
-				_brain = new CombatAI(this);
-		}
+		if (RightHand is ProjectileWeapon)
+			_brain = new RangedAI(this);
+		else
+			_brain = new CombatAI(this);
 	}
 }

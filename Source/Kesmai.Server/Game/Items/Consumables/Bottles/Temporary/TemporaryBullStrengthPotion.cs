@@ -4,46 +4,45 @@ using Kesmai.Server.Items;
 using Kesmai.Server.Network;
 using Kesmai.Server.Spells;
 
-namespace Kesmai.Server.Game
+namespace Kesmai.Server.Game;
+
+public partial class TemporaryBullStrengthPotion : Bottle, ITreasure
 {
-	public partial class TemporaryBullStrengthPotion : Bottle, ITreasure
+	private static ConsumableStrengthSpell content = new ConsumableStrengthSpell();
+		
+	/// <inheritdoc />
+	public override uint BasePrice => 200;
+
+	/// <inheritdoc />
+	public override int Weight => 240;
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="TemporaryBullStrengthPotion"/> class.
+	/// </summary>
+	public TemporaryBullStrengthPotion() : this(234, 109)
 	{
-		private static ConsumableStrengthSpell content = new ConsumableStrengthSpell();
+	}
 		
-		/// <inheritdoc />
-		public override uint BasePrice => 200;
+	/// <summary>
+	/// Initializes a new instance of the <see cref="TemporaryBullStrengthPotion"/> class.
+	/// </summary>
+	public TemporaryBullStrengthPotion(int closedId, int openId) : base(closedId)
+	{
+	}
 
-		/// <inheritdoc />
-		public override int Weight => 240;
+	/// <inheritdoc />
+	protected override void OnCreate()
+	{
+		base.OnCreate();
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="TemporaryBullStrengthPotion"/> class.
-		/// </summary>
-		public TemporaryBullStrengthPotion() : this(234, 109)
-		{
-		}
-		
-		/// <summary>
-		/// Initializes a new instance of the <see cref="TemporaryBullStrengthPotion"/> class.
-		/// </summary>
-		public TemporaryBullStrengthPotion(int closedId, int openId) : base(closedId)
-		{
-		}
+		if (_content is null)
+			_content = content;
+	}
 
-		/// <inheritdoc />
-		protected override void OnCreate()
-		{
-			base.OnCreate();
+	/// <inheritdoc />
+	public override void GetDescription(List<LocalizationEntry> entries)
+	{			entries.Add(new LocalizationEntry(6200000, 6200384)); /* [You are looking at] [a steel bottle stamped with the icon of a bull.] [Inside is a dark crimson liquid that smells of earth and mushrooms.] */
 
-			if (_content is null)
-				_content = content;
-		}
-
-		/// <inheritdoc />
-		public override void GetDescription(List<LocalizationEntry> entries)
-		{			entries.Add(new LocalizationEntry(6200000, 6200384)); /* [You are looking at] [a steel bottle stamped with the icon of a bull.] [Inside is a dark crimson liquid that smells of earth and mushrooms.] */
-
-			base.GetDescription(entries);
-		}
+		base.GetDescription(entries);
 	}
 }

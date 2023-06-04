@@ -3,31 +3,30 @@ using System.Windows.Controls;
 using Kesmai.WorldForge.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 
-namespace Kesmai.WorldForge.UI
+namespace Kesmai.WorldForge.UI;
+
+public partial class ComponentGrid : ListBox
 {
-	public partial class ComponentGrid : ListBox
+	public ComponentGrid()
 	{
-		public ComponentGrid()
-		{
-			InitializeComponent();
-		}
+		InitializeComponent();
 	}
+}
 	
-	public class ComponentsCategory : ObservableObject
+public class ComponentsCategory : ObservableObject
+{
+	public string Name { get; set; }
+
+	private ObservableCollection<TerrainComponent> _components;
+
+	public ObservableCollection<TerrainComponent> Components
 	{
-		public string Name { get; set; }
+		get => _components;
+		set => SetProperty(ref _components, value);
+	}
 
-		private ObservableCollection<TerrainComponent> _components;
-
-		public ObservableCollection<TerrainComponent> Components
-		{
-			get => _components;
-			set => SetProperty(ref _components, value);
-		}
-
-		public ComponentsCategory()
-		{
-			_components = new ObservableCollection<TerrainComponent>();
-		}
+	public ComponentsCategory()
+	{
+		_components = new ObservableCollection<TerrainComponent>();
 	}
 }

@@ -1,13 +1,12 @@
 using System.IO;
 
-namespace Kesmai.Server.Game
+namespace Kesmai.Server.Game;
+
+public partial class WizardTrainer : SpellTrainer
 {
-	public partial class WizardTrainer : SpellTrainer
-	{
-		public override Profession Profession => Profession.Wizard;
+	public override Profession Profession => Profession.Wizard;
 		
-		public WizardTrainer() : base()
-		{
-		}
+	public WizardTrainer() : base()
+	{
 	}
 }

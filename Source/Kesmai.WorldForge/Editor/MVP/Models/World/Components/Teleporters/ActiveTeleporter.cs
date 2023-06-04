@@ -4,45 +4,44 @@ using System.IO;
 using System.Xml.Linq;
 using CommonServiceLocator;
 
-namespace Kesmai.WorldForge.Models
+namespace Kesmai.WorldForge.Models;
+
+public abstract class ActiveTeleporter : TeleportComponent
 {
-	public abstract class ActiveTeleporter : TeleportComponent
+	private int _teleporterId;
+
+	[Browsable(true)]
+	public int TeleporterId
 	{
-		private int _teleporterId;
+		get => _teleporterId;
+		set => _teleporterId = value;
+	}
 
-		[Browsable(true)]
-		public int TeleporterId
-		{
-			get => _teleporterId;
-			set => _teleporterId = value;
-		}
-
-		protected ActiveTeleporter(int teleporterId, int x, int y, int region) : base(x, y, region)
-		{
-			_teleporterId = teleporterId;
-		}
+	protected ActiveTeleporter(int teleporterId, int x, int y, int region) : base(x, y, region)
+	{
+		_teleporterId = teleporterId;
+	}
 		
-		public ActiveTeleporter(XElement element) : base(element)
-		{
-			_teleporterId = (int)element.Element("teleporterId");
-		}
+	public ActiveTeleporter(XElement element) : base(element)
+	{
+		_teleporterId = (int)element.Element("teleporterId");
+	}
 		
-		/// <inheritdoc />
-		public override IEnumerable<ComponentRender> GetTerrain()
-		{
-			var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
+	/// <inheritdoc />
+	public override IEnumerable<ComponentRender> GetTerrain()
+	{
+		var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
 
-			if (terrainManager.TryGetValue(_teleporterId, out Terrain terrain))
-				yield return new ComponentRender(terrain, (IsValid() ? Color : Microsoft.Xna.Framework.Color.Red));
-		}
+		if (terrainManager.TryGetValue(_teleporterId, out Terrain terrain))
+			yield return new ComponentRender(terrain, (IsValid() ? Color : Microsoft.Xna.Framework.Color.Red));
+	}
 		
-		public override XElement GetXElement()
-		{
-			var element = base.GetXElement();
+	public override XElement GetXElement()
+	{
+		var element = base.GetXElement();
 
-			element.Add(new XElement("teleporterId", _teleporterId));
+		element.Add(new XElement("teleporterId", _teleporterId));
 	
-			return element;
-		}
+		return element;
 	}
 }

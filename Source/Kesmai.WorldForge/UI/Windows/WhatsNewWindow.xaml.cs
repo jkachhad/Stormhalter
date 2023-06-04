@@ -12,18 +12,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Kesmai.WorldForge.UI.Windows
+namespace Kesmai.WorldForge.UI.Windows;
+
+/// <summary>
+/// Interaction logic for WhatsNew.xaml
+/// </summary>
+public partial class WhatsNew : Window
 {
-    /// <summary>
-    /// Interaction logic for WhatsNew.xaml
-    /// </summary>
-    public partial class WhatsNew : Window
+    public WhatsNew()
     {
-        public WhatsNew()
-        {
-            InitializeComponent();
-            String Changelog = 
-$@" 
+        InitializeComponent();
+        String Changelog = 
+            $@" 
 <html>
 <body>
 <h3>=== {Core.Version} ===</h3>
@@ -96,7 +96,6 @@ $@"
 </ul>
 </body>
 ";
-            Content.NavigateToString(Changelog);
-        }
+        Content.NavigateToString(Changelog);
     }
 }

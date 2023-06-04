@@ -11,29 +11,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kesmai.WorldForge
+namespace Kesmai.WorldForge;
+
+public class WpfInputManager : InputManager
 {
-	public class WpfInputManager : InputManager
+	private WpfKeyboard _keyboard;
+	private WpfMouse _mouse;
+
+	public override bool IsTouchEnabled => false;
+
+	public WpfInputManager(WpfKeyboard keyboard, WpfMouse mouse)
 	{
-		private WpfKeyboard _keyboard;
-		private WpfMouse _mouse;
+		_keyboard = keyboard;
+		_mouse = mouse;
+	}
 
-		public override bool IsTouchEnabled => false;
+	public override KeyboardState GetKeyboardState()
+	{
+		return _keyboard.GetState();
+	}
 
-		public WpfInputManager(WpfKeyboard keyboard, WpfMouse mouse)
-		{
-			_keyboard = keyboard;
-			_mouse = mouse;
-		}
-
-		public override KeyboardState GetKeyboardState()
-		{
-			return _keyboard.GetState();
-		}
-
-		public override MouseState GetMouseState()
-		{
-			return _mouse.GetState();
-		}
+	public override MouseState GetMouseState()
+	{
+		return _mouse.GetState();
 	}
 }

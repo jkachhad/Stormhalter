@@ -1,34 +1,33 @@
 using System.IO;
 using Kesmai.Server.Items;
 
-namespace Kesmai.Server.Game
+namespace Kesmai.Server.Game;
+
+public partial class Griffin : AnimalEntity
 {
-	public partial class Griffin : AnimalEntity
+	public Griffin()
 	{
-		public Griffin()
-		{
-			Name = "griffin";
-			Body = 25;
+		Name = "griffin";
+		Body = 25;
 
-			Alignment = Alignment.Chaotic;
+		Alignment = Alignment.Chaotic;
 
-			CanFly = true;
-		}
+		CanFly = true;
+	}
 
-		protected override void OnCreate()
-		{
-			base.OnCreate();
+	protected override void OnCreate()
+	{
+		base.OnCreate();
 
-			_brain = new CombatAI(this);
-		}
+		_brain = new CombatAI(this);
+	}
 
-		public override int GetNearbySound() => 9;
-		public override int GetAttackSound() => 21;
-		public override int GetDeathSound() => 33;
+	public override int GetNearbySound() => 9;
+	public override int GetAttackSound() => 21;
+	public override int GetDeathSound() => 33;
 		
-		public override ItemEntity OnCorpseTanned()
-		{
-			return new GriffinJacket();
-		}
+	public override ItemEntity OnCorpseTanned()
+	{
+		return new GriffinJacket();
 	}
 }
