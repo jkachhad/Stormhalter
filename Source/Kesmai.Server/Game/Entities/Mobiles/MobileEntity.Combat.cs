@@ -12,6 +12,9 @@ namespace Kesmai.Server.Game
 		[WorldForge]
 		public void Daze(int ticks)
 		{
+			if (IsInvulnerable)
+				return;
+			
 			/* Remove any fear effect. */
 			if (GetStatus<FearStatus>() is FearStatus fearStatus)
 				RemoveStatus(fearStatus);
