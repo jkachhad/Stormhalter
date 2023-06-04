@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Annwn" version="0.100.0.0">
+<segment name="Annwn" version="0.101.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -61705,6 +61705,15 @@
         <component type="FloorComponent">
           <ground>24</ground>
         </component>
+        <component type="HiddenTeleporterComponent">
+          <destinationX>15</destinationX>
+          <destinationY>7</destinationY>
+          <destinationRegion>2</destinationRegion>
+          <lightphases select="all" />
+          <moonphases select="all" />
+          <professions select="all" />
+          <alignments select="all" />
+        </component>
       </tile>
       <tile x="15" y="24">
         <component type="FloorComponent">
@@ -73114,7 +73123,7 @@
         
         Alignment = Alignment.Chaotic,
         
-        HideDetection = 35,      
+        HideDetection = 48,      
         
         BaseDodge = 31,
         MaxHealth = 14000, Health = 14000,
@@ -73139,8 +73148,6 @@
     ydmos.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
     ydmos.CombatantSearchStrategy = (attacker) => new RandomSearchStrategy();
     
-    ydmos.AddImmunity(typeof(BlindSpell));
-    ydmos.AddImmunity(typeof(FearSpell));
     ydmos.AddImmunity(typeof(StunSpell));
     ydmos.AddImmunity(typeof(PoisonCloudSpell));
     
@@ -73148,6 +73155,7 @@
     ydmos.Equip(new DragonScaleArmor());
     
     ydmos.AddStatus(new NightVisionStatus(ydmos));
+    ydmos.AddStatus(new BlindFearProtectionStatus(ydmos));
     
     ydmos.Spells = new CreatureSpellCollection(60.0, 90.0)
     {
@@ -73589,7 +73597,7 @@
     </entity>
   </entities>
   <spawns>
-    <spawn type="LocationSpawner" name="Phoenix Test">
+    <spawn type="LocationSpawner" name="Phoenix Test" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -73611,7 +73619,7 @@
       <entry entity="BossMajorPhoenix" size="1" minimum="1" maximum="1" />
       <location x="13" y="-6" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="Lucy Test">
+    <spawn type="LocationSpawner" name="Lucy Test" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -73633,7 +73641,7 @@
       <entry entity="BossMajorRiftDragon" size="1" minimum="1" maximum="1" />
       <location x="13" y="22" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="Thisson Test">
+    <spawn type="LocationSpawner" name="Thisson Test" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -73654,7 +73662,7 @@
       <entry entity="BossMajorThisson" size="1" minimum="1" maximum="1" />
       <location x="30" y="-8" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="Bwolf Test">
+    <spawn type="LocationSpawner" name="Bwolf Test" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -73675,7 +73683,7 @@
       <entry entity="BossMajorBwolf" size="1" minimum="0" maximum="0" />
       <location x="29" y="7" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="Makon Test">
+    <spawn type="LocationSpawner" name="Makon Test" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -73697,7 +73705,7 @@
       <entry entity="BossMajorMakon" size="1" minimum="1" maximum="1" />
       <location x="-2" y="7" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="annwnBalmVendor">
+    <spawn type="LocationSpawner" name="annwnBalmVendor" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -73717,7 +73725,7 @@
       <entry entity="annwnBalmVendor" size="1" minimum="1" maximum="1" />
       <location x="10" y="20" region="13" />
     </spawn>
-    <spawn type="LocationSpawner" name="annwnRecallVendor">
+    <spawn type="LocationSpawner" name="annwnRecallVendor" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -73737,7 +73745,7 @@
       <entry entity="annwnRecallVendor" size="1" minimum="1" maximum="1" />
       <location x="13" y="20" region="13" />
     </spawn>
-    <spawn type="LocationSpawner" name="annwnApothecaryVendor">
+    <spawn type="LocationSpawner" name="annwnApothecaryVendor" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -73816,7 +73824,7 @@
       <entry entity="annwnShopKeeper" size="1" minimum="1" maximum="1" />
       <location x="8" y="13" region="13" />
     </spawn>
-    <spawn type="LocationSpawner" name="annwnTailor">
+    <spawn type="LocationSpawner" name="annwnTailor" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -73836,7 +73844,7 @@
       <entry entity="annwnTailor" size="1" minimum="1" maximum="1" />
       <location x="17" y="22" region="13" />
     </spawn>
-    <spawn type="LocationSpawner" name="annwnMartialArtistTrainer">
+    <spawn type="LocationSpawner" name="annwnMartialArtistTrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -73856,7 +73864,7 @@
       <entry entity="annwnMATrainer" size="1" minimum="1" maximum="1" />
       <location x="19" y="13" region="13" />
     </spawn>
-    <spawn type="LocationSpawner" name="annwnBanker">
+    <spawn type="LocationSpawner" name="annwnBanker" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -73877,7 +73885,7 @@
       <entry entity="annwnBanker" size="1" minimum="1" maximum="1" />
       <location x="12" y="14" region="13" />
     </spawn>
-    <spawn type="LocationSpawner" name="annwnWeaponTrainer">
+    <spawn type="LocationSpawner" name="annwnWeaponTrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -73897,7 +73905,7 @@
       <entry entity="annwnWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="19" y="11" region="13" />
     </spawn>
-    <spawn type="LocationSpawner" name="annwnWizardTrainer">
+    <spawn type="LocationSpawner" name="annwnWizardTrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -73917,7 +73925,7 @@
       <entry entity="annwnWizardTrainer" size="1" minimum="1" maximum="1" />
       <location x="8" y="11" region="13" />
     </spawn>
-    <spawn type="LocationSpawner" name="annwnArmorVendor">
+    <spawn type="LocationSpawner" name="annwnArmorVendor" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -73984,7 +73992,7 @@
       <entry entity="annwnShopKeeper" size="1" minimum="1" maximum="1" />
       <location x="7" y="2" region="13" />
     </spawn>
-    <spawn type="LocationSpawner" name="annwnWeaponVendor">
+    <spawn type="LocationSpawner" name="annwnWeaponVendor" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -74046,7 +74054,7 @@
       <entry entity="annwnShopKeeper" size="1" minimum="1" maximum="1" />
       <location x="5" y="2" region="13" />
     </spawn>
-    <spawn type="LocationSpawner" name="annwnMugwortVendor">
+    <spawn type="LocationSpawner" name="annwnMugwortVendor" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -74066,7 +74074,7 @@
       <entry entity="annwnMugwortVendor" size="1" minimum="1" maximum="1" />
       <location x="6" y="13" region="13" />
     </spawn>
-    <spawn type="LocationSpawner" name="annwnPriest">
+    <spawn type="LocationSpawner" name="annwnPriest" enabled="true">
       <minimumDelay>0</minimumDelay>
       <maximumDelay>0</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -74108,7 +74116,7 @@
       <entry entity="annwnPriest" size="1" minimum="1" maximum="1" />
       <location x="13" y="3" region="13" />
     </spawn>
-    <spawn type="LocationSpawner" name="annwnThaumTrainer">
+    <spawn type="LocationSpawner" name="annwnThaumTrainer" enabled="true">
       <minimumDelay>0</minimumDelay>
       <maximumDelay>3600</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -74128,28 +74136,7 @@
       <entry entity="annwnThaumTrainer" size="1" minimum="1" maximum="1" />
       <location x="11" y="1" region="13" />
     </spawn>
-    <spawn type="LocationSpawner" name="Ydmos Test">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>900</maximumDelay>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="BossMajorYdmos" size="1" minimum="1" maximum="1" />
-      <entry entity="BossMajorYdmos" size="1" minimum="1" maximum="1" />
-      <location x="-1" y="-6" region="2" />
-    </spawn>
-    <spawn type="LocationSpawner" name="ydmosAudreyOne">
+    <spawn type="LocationSpawner" name="ydmosAudreyOne" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>1</maximum>
@@ -74170,7 +74157,7 @@
       <entry entity="level16Audrey" size="1" minimum="1" maximum="1" />
       <location x="30" y="4" region="6" />
     </spawn>
-    <spawn type="LocationSpawner" name="ydmosAudreyTwo">
+    <spawn type="LocationSpawner" name="ydmosAudreyTwo" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>1</maximum>
@@ -74191,7 +74178,7 @@
       <entry entity="level16Audrey" size="1" minimum="1" maximum="1" />
       <location x="32" y="4" region="6" />
     </spawn>
-    <spawn type="LocationSpawner" name="ydmosAudreyThree">
+    <spawn type="LocationSpawner" name="ydmosAudreyThree" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>1</maximum>
@@ -74212,7 +74199,7 @@
       <entry entity="level16Audrey" size="1" minimum="1" maximum="1" />
       <location x="27" y="5" region="6" />
     </spawn>
-    <spawn type="LocationSpawner" name="ydmosAudreyFour">
+    <spawn type="LocationSpawner" name="ydmosAudreyFour" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>1</maximum>
@@ -74233,7 +74220,7 @@
       <entry entity="level16Audrey" size="1" minimum="1" maximum="1" />
       <location x="28" y="8" region="6" />
     </spawn>
-    <spawn type="RegionSpawner" name="wizardTowerLevel1North">
+    <spawn type="RegionSpawner" name="wizardTowerLevel1North" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -74256,7 +74243,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="wizardTowerLevel1Mid">
+    <spawn type="RegionSpawner" name="wizardTowerLevel1Mid" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -74279,7 +74266,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="wizardTowerLevel1South">
+    <spawn type="RegionSpawner" name="wizardTowerLevel1South" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -74303,7 +74290,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="wizardTowerLevel2">
+    <spawn type="RegionSpawner" name="wizardTowerLevel2" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -74327,7 +74314,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="wizardTowerLevel3">
+    <spawn type="RegionSpawner" name="wizardTowerLevel3" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -74351,7 +74338,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="wizardTowerLevel4">
+    <spawn type="RegionSpawner" name="wizardTowerLevel4" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -74375,7 +74362,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="phoenixBossMiniBosses">
+    <spawn type="RegionSpawner" name="phoenixBossMiniBosses" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>2</maximum>
@@ -74399,7 +74386,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="bossYdmos">
+    <spawn type="RegionSpawner" name="bossYdmos" enabled="true">
       <minimumDelay>10800</minimumDelay>
       <maximumDelay>14400</maximumDelay>
       <maximum>1</maximum>
