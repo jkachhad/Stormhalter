@@ -72368,8 +72368,8 @@
     elemental.Spells = new CreatureSpellCollection(10.0)
     {
         {
-            new CreatureSpell<FirewallSpell>(
-                skillLevel: 18),  30,   TimeSpan.FromSeconds(10.0)
+            new CreatureSpell<BonfireSpell>(
+                skillLevel: 33),  30,   TimeSpan.FromSeconds(5.0)
         },
     };
     
@@ -72436,9 +72436,8 @@
 	dragon.Stats[EntityStat.StunProtection].Base = 100;
     
     dragon.AddStatus(new NightVisionStatus(dragon));
+    dragon.AddStatus(new BlindFearProtectionStatus(dragon));
     
-    dragon.AddImmunity(typeof(BlindSpell));
-    dragon.AddImmunity(typeof(FearSpell));
     dragon.AddImmunity(typeof(StunSpell));
     dragon.AddImmunity(typeof(WhirlwindSpell));
     
@@ -72522,9 +72521,8 @@
     };
 
     dragon.AddStatus(new NightVisionStatus(dragon));
+    dragon.AddStatus(new BlindFearProtectionStatus(dragon));
     
-    dragon.AddImmunity(typeof(BlindSpell));
-    dragon.AddImmunity(typeof(FearSpell));
     dragon.AddImmunity(typeof(StunSpell));
     
     dragon.CombatantChangeInterval = TimeSpan.FromSeconds(8.0);
@@ -72587,7 +72585,7 @@
 	var wolf = new BlackWolf()
     {
         Name = "Big.Bad.Wolf",
-        MaxHealth = 11000, Health = 1000,
+        MaxHealth = 11000, Health = 11000,
         BaseDodge = 31,
         Body = 4,
         Experience = 1,
@@ -73123,7 +73121,7 @@
         
         Alignment = Alignment.Chaotic,
         
-        HideDetection = 48,      
+        HideDetection = 39,      
         
         BaseDodge = 31,
         MaxHealth = 14000, Health = 14000,
@@ -73142,7 +73140,7 @@
     
     ydmos.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(18)
+        new CreatureBasicAttack(22)
     };
     
     ydmos.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
