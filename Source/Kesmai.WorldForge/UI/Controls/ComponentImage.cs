@@ -40,34 +40,48 @@ public class ComponentImage : Image
 
 	internal void UpdateComponent(TerrainComponent component)
 	{
-		var writeableBitmap = BitmapFactory.New(100, 100);
+		var maxWidth = 100;
+		var maxHeight = 100;
 
-		writeableBitmap.Lock();
-			
-		using (var context = writeableBitmap.GetBitmapContext())
+		foreach (var terrain in component.GetTerrain())
 		{
-			foreach (var terrain in component.GetTerrain())
+			foreach (var layer in terrain.Terrain)
 			{
-				foreach (var layer in terrain.Terrain)
+				var sprite = layer.Sprite;
+
+				if (sprite != null)
 				{
-					var sprite = layer.Sprite;
-
-					if (sprite != null && sprite.Bitmap != null)
-					{
-						var spriteBounds = new Vector2F(0, 0);
-
-						if (sprite.Offset != Vector2F.Zero)
-							spriteBounds += new Vector2F(sprite.Offset.X, sprite.Offset.Y);
-
-						writeableBitmap.Blit(new Point(spriteBounds.X, spriteBounds.Y), sprite.Bitmap,
-							new Rect(0, 0, sprite.Texture.Width, sprite.Texture.Height),
-							Color.FromArgb(terrain.Color.A, terrain.Color.R, terrain.Color.G, terrain.Color.B),
-							WriteableBitmapExtensions.BlendMode.Additive);
-					}
+					maxWidth = Math.Max(sprite.Texture.Width, maxWidth);
+					maxHeight = Math.Max(sprite.Texture.Height, maxHeight);
 				}
 			}
 		}
-			
+
+		var writeableBitmap = BitmapFactory.New(maxWidth, maxHeight);
+
+		writeableBitmap.Lock();
+		
+		foreach (var terrain in component.GetTerrain())
+		{
+			foreach (var layer in terrain.Terrain)
+			{
+				var sprite = layer.Sprite;
+
+				if (sprite != null && sprite.Bitmap != null)
+				{
+					var spriteBounds = new Vector2F(0, 0);
+
+					if (sprite.Offset != Vector2F.Zero)
+						spriteBounds += new Vector2F(sprite.Offset.X, sprite.Offset.Y);
+
+					writeableBitmap.Blit(
+						new Rect(spriteBounds.X, spriteBounds.Y, maxWidth, maxHeight), sprite.Bitmap,
+						new Rect(0, 0, sprite.Texture.Width, sprite.Texture.Height),
+						WriteableBitmapExtensions.BlendMode.Additive);
+				}
+			}
+		}
+
 		writeableBitmap.Unlock();
 		writeableBitmap.Freeze();
 			
