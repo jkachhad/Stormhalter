@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.100.0.0">
+<segment name="Oakvael" version="0.102.2.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -495,7 +495,7 @@
             
             Brain = new IdleAI(this);
 
-            Timer.DelayCall(Facet.TimeSpan.FromMinutes(10.0), Delete);
+            Timer.DelayCall(TimeSpan.FromSeconds(0.2), () => Delete());
             
             StopTimer();
         }
@@ -115758,7 +115758,7 @@
     </entity>
   </entities>
   <spawns>
-    <spawn type="LocationSpawner" name="oakSheriff">
+    <spawn type="LocationSpawner" name="oakSheriff" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -115778,7 +115778,7 @@
       <entry entity="oakSheriff" size="1" minimum="1" maximum="1" />
       <location x="14" y="13" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakLowMaTrainer">
+    <spawn type="LocationSpawner" name="oakLowMaTrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -115798,7 +115798,7 @@
       <entry entity="oakLowMaTrainer" size="1" minimum="1" maximum="1" />
       <location x="19" y="21" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakWeaponTrainer">
+    <spawn type="LocationSpawner" name="oakWeaponTrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -115818,7 +115818,7 @@
       <entry entity="oakWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="4" y="3" region="8" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakTavern">
+    <spawn type="LocationSpawner" name="oakTavern" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -115866,7 +115866,7 @@
       <entry entity="oakShopkeepers" size="1" minimum="1" maximum="1" />
       <location x="31" y="27" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakApothecary">
+    <spawn type="LocationSpawner" name="oakApothecary" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -115947,7 +115947,7 @@
       <entry entity="oakShopkeepers" size="1" minimum="1" maximum="1" />
       <location x="8" y="7" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakArmourer">
+    <spawn type="LocationSpawner" name="oakArmourer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -116015,7 +116015,7 @@
       <entry entity="oakShopkeepers" size="1" minimum="1" maximum="1" />
       <location x="4" y="11" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakPawner">
+    <spawn type="LocationSpawner" name="oakPawner" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -116113,7 +116113,7 @@
       <entry entity="oakShopkeepers" size="1" minimum="1" maximum="1" />
       <location x="17" y="27" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakWeaponsmith">
+    <spawn type="LocationSpawner" name="oakWeaponsmith" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -116181,7 +116181,7 @@
       <entry entity="oakShopkeepers" size="1" minimum="1" maximum="1" />
       <location x="11" y="24" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakJeweler">
+    <spawn type="LocationSpawner" name="oakJeweler" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -116248,7 +116248,7 @@
       <entry entity="oakShopkeepers" size="1" minimum="1" maximum="1" />
       <location x="4" y="16" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakTailor">
+    <spawn type="LocationSpawner" name="oakTailor" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116268,7 +116268,7 @@
       <entry entity="oakTailor" size="1" minimum="1" maximum="1" />
       <location x="41" y="15" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakRecallVendor">
+    <spawn type="LocationSpawner" name="oakRecallVendor" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116288,7 +116288,7 @@
       <entry entity="oakRecallVendor" size="1" minimum="1" maximum="1" />
       <location x="8" y="18" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakThaumTrainer">
+    <spawn type="LocationSpawner" name="oakThaumTrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -116319,7 +116319,7 @@
       <entry entity="oakThaumTrainer" size="1" minimum="1" maximum="1" />
       <location x="26" y="6" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakBalmVendor">
+    <spawn type="LocationSpawner" name="oakBalmVendor" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116339,7 +116339,7 @@
       <entry entity="oakBalmVendor" size="1" minimum="1" maximum="1" />
       <location x="28" y="10" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakBanker">
+    <spawn type="LocationSpawner" name="oakBanker" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -116362,7 +116362,7 @@
       <entry entity="oaBanker" size="1" minimum="1" maximum="1" />
       <location x="6" y="24" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="surfaceThiefTrainer">
+    <spawn type="LocationSpawner" name="surfaceThiefTrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116382,7 +116382,7 @@
       <entry entity="surfaceThiefTrainer" size="1" minimum="1" maximum="1" />
       <location x="4" y="4" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakWizTrainer">
+    <spawn type="LocationSpawner" name="oakWizTrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116402,7 +116402,7 @@
       <entry entity="oakWizTrainer" size="1" minimum="1" maximum="1" />
       <location x="4" y="12" region="14" />
     </spawn>
-    <spawn type="LocationSpawner" name="aniet">
+    <spawn type="LocationSpawner" name="aniet" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116422,7 +116422,7 @@
       <entry entity="oakAniet" size="1" minimum="1" maximum="1" />
       <location x="4" y="1" region="255" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakPriest">
+    <spawn type="LocationSpawner" name="oakPriest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116442,7 +116442,7 @@
       <entry entity="oakPriest" size="1" minimum="1" maximum="1" />
       <location x="28" y="9" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="tagget">
+    <spawn type="LocationSpawner" name="tagget" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116462,7 +116462,7 @@
       <entry entity="oakTagget" size="1" minimum="1" maximum="1" />
       <location x="13" y="37" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="cudyl">
+    <spawn type="LocationSpawner" name="cudyl" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116482,7 +116482,7 @@
       <entry entity="oakCudyl" size="1" minimum="1" maximum="1" />
       <location x="77" y="18" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="surfaceShark">
+    <spawn type="LocationSpawner" name="surfaceShark" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116502,7 +116502,7 @@
       <entry entity="surfaceShark" size="1" minimum="1" maximum="1" />
       <location x="48" y="28" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="dungeon1Spider0">
+    <spawn type="LocationSpawner" name="dungeon1Spider0" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116522,7 +116522,7 @@
       <entry entity="level6Spider" size="1" minimum="1" maximum="1" />
       <location x="17" y="1" region="251" />
     </spawn>
-    <spawn type="LocationSpawner" name="dungeon1Spider1">
+    <spawn type="LocationSpawner" name="dungeon1Spider1" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116542,7 +116542,7 @@
       <entry entity="level6Spider" size="1" minimum="1" maximum="1" />
       <location x="25" y="9" region="251" />
     </spawn>
-    <spawn type="LocationSpawner" name="hobgoblinCavesSpider">
+    <spawn type="LocationSpawner" name="hobgoblinCavesSpider" enabled="true">
       <minimumDelay>-2700</minimumDelay>
       <maximumDelay>4800</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116562,7 +116562,7 @@
       <entry entity="level7Spider" size="1" minimum="1" maximum="1" />
       <location x="10" y="8" region="239" />
     </spawn>
-    <spawn type="LocationSpawner" name="dungeon3Serpent">
+    <spawn type="LocationSpawner" name="dungeon3Serpent" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>3600</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116582,7 +116582,7 @@
       <entry entity="BossNotableLevel9Serpent" size="1" minimum="1" maximum="1" />
       <location x="23" y="19" region="235" />
     </spawn>
-    <spawn type="LocationSpawner" name="dungeon3Pescalanor">
+    <spawn type="LocationSpawner" name="dungeon3Pescalanor" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>3600</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116602,7 +116602,7 @@
       <entry entity="BossMiniLevel9Pescalanor" size="1" minimum="1" maximum="1" />
       <location x="20" y="6" region="235" />
     </spawn>
-    <spawn type="LocationSpawner" name="templeLichTwins">
+    <spawn type="LocationSpawner" name="templeLichTwins" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>3600</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -116623,7 +116623,7 @@
       <entry entity="BossNotableLevel14LichVlobra" size="1" minimum="1" maximum="1" />
       <location x="18" y="38" region="227" />
     </spawn>
-    <spawn type="LocationSpawner" name="doomOrcAndPresence">
+    <spawn type="LocationSpawner" name="doomOrcAndPresence" enabled="true">
       <minimumDelay>1800</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116644,7 +116644,7 @@
       <entry entity="BossMiniLevel10Presence" size="1" minimum="1" maximum="1" />
       <location x="43" y="38" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="doomOrcSentry">
+    <spawn type="LocationSpawner" name="doomOrcSentry" enabled="true">
       <minimumDelay>1800</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116664,7 +116664,7 @@
       <entry entity="Level8OrcSentry" size="3" minimum="4" maximum="4" />
       <location x="50" y="38" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakvaelDragon">
+    <spawn type="LocationSpawner" name="oakvaelDragon" enabled="true">
       <minimumDelay>12600</minimumDelay>
       <maximumDelay>15300</maximumDelay>
       <maximum>1</maximum>
@@ -116685,7 +116685,7 @@
       <entry entity="BossMinorLevel14Dragon" size="1" minimum="1" maximum="1" />
       <location x="10" y="9" region="225" />
     </spawn>
-    <spawn type="LocationSpawner" name="groveBear">
+    <spawn type="LocationSpawner" name="groveBear" enabled="true">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1500</maximumDelay>
       <maximum>1</maximum>
@@ -116706,7 +116706,7 @@
       <entry entity="BossMinorLevel15Bear" size="1" minimum="1" maximum="1" />
       <location x="37" y="0" region="236" />
     </spawn>
-    <spawn type="LocationSpawner" name="groveWolf">
+    <spawn type="LocationSpawner" name="groveWolf" enabled="true">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>1</maximum>
@@ -116727,7 +116727,7 @@
       <entry entity="BossNotableLevel15Wolf" size="1" minimum="1" maximum="1" />
       <location x="12" y="-3" region="236" />
     </spawn>
-    <spawn type="LocationSpawner" name="groveBoar">
+    <spawn type="LocationSpawner" name="groveBoar" enabled="true">
       <minimumDelay>1500</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>1</maximum>
@@ -116748,7 +116748,7 @@
       <entry entity="BossNotableLevel15Boar" size="1" minimum="1" maximum="1" />
       <location x="1" y="7" region="236" />
     </spawn>
-    <spawn type="LocationSpawner" name="groveKeeper">
+    <spawn type="LocationSpawner" name="groveKeeper" enabled="true">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>7200</maximumDelay>
       <maximum>1</maximum>
@@ -116769,7 +116769,7 @@
       <entry entity="BossNotableLevel15Naiad" size="1" minimum="1" maximum="1" />
       <location x="23" y="7" region="236" />
     </spawn>
-    <spawn type="LocationSpawner" name="byrch">
+    <spawn type="LocationSpawner" name="byrch" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116789,7 +116789,7 @@
       <entry entity="oakByrch" size="1" minimum="1" maximum="1" />
       <location x="2" y="3" region="255" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakGorffwylltra">
+    <spawn type="LocationSpawner" name="oakGorffwylltra" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116809,7 +116809,7 @@
       <entry entity="oakGorffwylltra" size="1" minimum="1" maximum="1" />
       <location x="3" y="2" region="225" />
     </spawn>
-    <spawn type="LocationSpawner" name="heartNecro3">
+    <spawn type="LocationSpawner" name="heartNecro3" enabled="true">
       <minimumDelay>2700</minimumDelay>
       <maximumDelay>3600</maximumDelay>
       <maximum>1</maximum>
@@ -116846,7 +116846,7 @@
       <entry entity="BossNotableLevel16Necro3" size="1" minimum="1" maximum="1" />
       <location x="116" y="42" region="236" />
     </spawn>
-    <spawn type="LocationSpawner" name="heartKeeper">
+    <spawn type="LocationSpawner" name="heartKeeper" enabled="true">
       <minimumDelay>10800</minimumDelay>
       <maximumDelay>18000</maximumDelay>
       <maximum>1</maximum>
@@ -116867,7 +116867,7 @@
       <entry entity="heartKeeper" size="1" minimum="1" maximum="1" />
       <location x="26" y="43" region="235" />
     </spawn>
-    <spawn type="LocationSpawner" name="heartHeart">
+    <spawn type="LocationSpawner" name="heartHeart" enabled="true">
       <minimumDelay>10800</minimumDelay>
       <maximumDelay>18000</maximumDelay>
       <maximum>1</maximum>
@@ -116899,7 +116899,7 @@
       <entry entity="heartHeart" size="1" minimum="1" maximum="1" />
       <location x="26" y="42" region="235" />
     </spawn>
-    <spawn type="LocationSpawner" name="heartHealer1">
+    <spawn type="LocationSpawner" name="heartHealer1" enabled="true">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>600</maximumDelay>
       <maximum>1</maximum>
@@ -116920,7 +116920,7 @@
       <entry entity="heartHealer" size="1" minimum="1" maximum="1" />
       <location x="44" y="-20" region="236" />
     </spawn>
-    <spawn type="LocationSpawner" name="heartHealer2">
+    <spawn type="LocationSpawner" name="heartHealer2" enabled="true">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>600</maximumDelay>
       <maximum>1</maximum>
@@ -116941,7 +116941,7 @@
       <entry entity="heartHealer" size="1" minimum="1" maximum="1" />
       <location x="54" y="-21" region="236" />
     </spawn>
-    <spawn type="LocationSpawner" name="heartHealer3">
+    <spawn type="LocationSpawner" name="heartHealer3" enabled="true">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>600</maximumDelay>
       <maximum>1</maximum>
@@ -116962,7 +116962,7 @@
       <entry entity="heartHealer" size="1" minimum="1" maximum="1" />
       <location x="60" y="-19" region="236" />
     </spawn>
-    <spawn type="LocationSpawner" name="questYuri">
+    <spawn type="LocationSpawner" name="questYuri" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116982,7 +116982,7 @@
       <entry entity="surfaceYuri" size="1" minimum="1" maximum="1" />
       <location x="14" y="38" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="questKonran">
+    <spawn type="LocationSpawner" name="questKonran" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -117002,7 +117002,7 @@
       <entry entity="dungeon4Konran" size="1" minimum="1" maximum="1" />
       <location x="2" y="7" region="232" />
     </spawn>
-    <spawn type="LocationSpawner" name="questKinasho">
+    <spawn type="LocationSpawner" name="questKinasho" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -117022,7 +117022,7 @@
       <entry entity="oakKinasho" size="1" minimum="1" maximum="1" />
       <location x="17" y="17" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakGhost">
+    <spawn type="LocationSpawner" name="oakGhost" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -117042,7 +117042,7 @@
       <entry entity="oakConfessorGhost" size="1" minimum="1" maximum="1" />
       <location x="6" y="7" region="12" />
     </spawn>
-    <spawn type="LocationSpawner" name="GroveHeartBoss">
+    <spawn type="LocationSpawner" name="GroveHeartBoss" enabled="true">
       <minimumDelay>10800</minimumDelay>
       <maximumDelay>21600</maximumDelay>
       <maximum>1</maximum>
@@ -117079,7 +117079,7 @@
       <entry entity="BossMajorLevel16Necrotroph" size="1" minimum="1" maximum="1" />
       <location x="80" y="9" region="236" />
     </spawn>
-    <spawn type="RegionSpawner" name="portalPeacemakers">
+    <spawn type="RegionSpawner" name="portalPeacemakers" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -117103,7 +117103,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="surfaceGriffins">
+    <spawn type="RegionSpawner" name="surfaceGriffins" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -117126,7 +117126,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="surfaceLargeBear">
+    <spawn type="RegionSpawner" name="surfaceLargeBear" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -117149,7 +117149,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="surfaceSpawns">
+    <spawn type="RegionSpawner" name="surfaceSpawns" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -117179,7 +117179,7 @@
         <exclusion left="2" top="3" right="7" bottom="9" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="surfaceWyrm">
+    <spawn type="RegionSpawner" name="surfaceWyrm" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -117203,7 +117203,7 @@
         <exclusion left="5" top="18" right="6" bottom="28" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="easternLedgeSpawns">
+    <spawn type="RegionSpawner" name="easternLedgeSpawns" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>6</maximum>
@@ -117230,7 +117230,7 @@
         <exclusion left="2" top="2" right="7" bottom="6" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="spiderCavesSpawner">
+    <spawn type="RegionSpawner" name="spiderCavesSpawner" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>12</maximum>
@@ -117260,7 +117260,7 @@
         <exclusion left="39" top="3" right="43" bottom="7" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="hobgoblinCavesSpawn">
+    <spawn type="RegionSpawner" name="hobgoblinCavesSpawn" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>7</maximum>
@@ -117292,7 +117292,7 @@
         <exclusion left="7" top="1" right="7" bottom="1" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="serpentsSeaSpawner">
+    <spawn type="RegionSpawner" name="serpentsSeaSpawner" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>31</maximum>
@@ -117333,7 +117333,7 @@
         <exclusion left="3" top="6" right="5" bottom="13" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="trollTempleSpawner">
+    <spawn type="RegionSpawner" name="trollTempleSpawner" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>31</maximum>
@@ -117367,7 +117367,7 @@
         <exclusion left="12" top="4" right="17" bottom="5" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="groveEntranceFish">
+    <spawn type="RegionSpawner" name="groveEntranceFish" enabled="true">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>3</maximum>
@@ -117391,7 +117391,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="groveEntrance">
+    <spawn type="RegionSpawner" name="groveEntrance" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1500</maximumDelay>
       <maximum>12</maximum>
@@ -117421,7 +117421,7 @@
         <inclusion left="1" top="1" right="8" bottom="1" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="groveEntranceVipers">
+    <spawn type="RegionSpawner" name="groveEntranceVipers" enabled="true">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>1</maximum>
@@ -117445,7 +117445,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="groveEntranceWildlife">
+    <spawn type="RegionSpawner" name="groveEntranceWildlife" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>16</maximum>
@@ -117479,7 +117479,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="groveHeartPond">
+    <spawn type="RegionSpawner" name="groveHeartPond" enabled="true">
       <minimumDelay>1500</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>7</maximum>
@@ -117507,7 +117507,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="hobgoblinCavesNorthEast">
+    <spawn type="RegionSpawner" name="hobgoblinCavesNorthEast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>9</maximum>
@@ -117538,7 +117538,7 @@
         <inclusion left="14" top="10" right="19" bottom="14" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="hobgoblinCavesSouthWest">
+    <spawn type="RegionSpawner" name="hobgoblinCavesSouthWest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>3</maximum>
@@ -117570,7 +117570,7 @@
         <exclusion left="3" top="11" right="7" bottom="15" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="hobgoblinCavesNorthWest">
+    <spawn type="RegionSpawner" name="hobgoblinCavesNorthWest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>4</maximum>
@@ -117601,7 +117601,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="serpentsSeaNorthwest">
+    <spawn type="RegionSpawner" name="serpentsSeaNorthwest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>15</maximum>
@@ -117633,7 +117633,7 @@
         <inclusion left="-4" top="-9" right="9" bottom="7" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="serpentsSeaNortheast">
+    <spawn type="RegionSpawner" name="serpentsSeaNortheast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>15</maximum>
@@ -117666,7 +117666,7 @@
         <inclusion left="29" top="8" right="46" bottom="14" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="serpentsSeaSouthwest">
+    <spawn type="RegionSpawner" name="serpentsSeaSouthwest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>15</maximum>
@@ -117698,7 +117698,7 @@
         <inclusion left="2" top="13" right="23" bottom="37" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="serpentsSeaSoutheast">
+    <spawn type="RegionSpawner" name="serpentsSeaSoutheast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>15</maximum>
@@ -117730,7 +117730,7 @@
         <inclusion left="24" top="18" right="50" bottom="32" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="spiderCavesWest">
+    <spawn type="RegionSpawner" name="spiderCavesWest" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>10</maximum>
@@ -117760,7 +117760,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="spiderCavesEast">
+    <spawn type="RegionSpawner" name="spiderCavesEast" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>15</maximum>
@@ -117792,7 +117792,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="wendyWyrms">
+    <spawn type="RegionSpawner" name="wendyWyrms" enabled="true">
       <minimumDelay>1800</minimumDelay>
       <maximumDelay>2400</maximumDelay>
       <maximum>3</maximum>
@@ -117816,7 +117816,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="wendyMinos">
+    <spawn type="RegionSpawner" name="wendyMinos" enabled="true">
       <minimumDelay>1800</minimumDelay>
       <maximumDelay>2400</maximumDelay>
       <maximum>4</maximum>
@@ -117840,7 +117840,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="groveHeartEntire">
+    <spawn type="RegionSpawner" name="groveHeartEntire" enabled="true">
       <minimumDelay>1500</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>52</maximum>
@@ -117882,7 +117882,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="groveHeartSW">
+    <spawn type="RegionSpawner" name="groveHeartSW" enabled="true">
       <minimumDelay>1500</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>18</maximum>
@@ -117912,7 +117912,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="groveHeartSE">
+    <spawn type="RegionSpawner" name="groveHeartSE" enabled="true">
       <minimumDelay>1500</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>17</maximum>
@@ -117945,7 +117945,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="groveHeartNorth">
+    <spawn type="RegionSpawner" name="groveHeartNorth" enabled="true">
       <minimumDelay>1500</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>18</maximum>
@@ -117979,7 +117979,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="groveHeartVeins">
+    <spawn type="RegionSpawner" name="groveHeartVeins" enabled="true">
       <minimumDelay>2700</minimumDelay>
       <maximumDelay>3000</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -118003,7 +118003,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="hobgoblinCavesSouthEast">
+    <spawn type="RegionSpawner" name="hobgoblinCavesSouthEast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>3</maximum>
@@ -118034,7 +118034,7 @@
         <exclusion left="15" top="14" right="16" bottom="15" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="undeadSpawnNW">
+    <spawn type="RegionSpawner" name="undeadSpawnNW" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>13</maximum>
@@ -118070,7 +118070,7 @@
         <exclusion left="1" top="22" right="2" bottom="24" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="undeadSpawnNE">
+    <spawn type="RegionSpawner" name="undeadSpawnNE" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>13</maximum>
@@ -118106,7 +118106,7 @@
         <exclusion left="23" top="8" right="25" bottom="14" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="undeadSpawnSW">
+    <spawn type="RegionSpawner" name="undeadSpawnSW" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>13</maximum>
@@ -118146,7 +118146,7 @@
         <exclusion left="14" top="35" right="14" bottom="35" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="undeadSpawnSE">
+    <spawn type="RegionSpawner" name="undeadSpawnSE" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>13</maximum>
@@ -118187,7 +118187,7 @@
         <exclusion left="14" top="35" right="14" bottom="35" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="undeadCourtyard">
+    <spawn type="RegionSpawner" name="undeadCourtyard" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>8</maximum>
@@ -118217,7 +118217,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="undeadBossScorps">
+    <spawn type="RegionSpawner" name="undeadBossScorps" enabled="true">
       <minimumDelay>1800</minimumDelay>
       <maximumDelay>2700</maximumDelay>
       <maximum>2</maximum>
