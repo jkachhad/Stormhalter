@@ -495,7 +495,7 @@
             
             Brain = new IdleAI(this);
 
-            Timer.DelayCall(TimeSpan.FromSeconds(0.2), () => Delete());
+            Timer.DelayCall(TimeSpan.FromSeconds(10.0), () => Delete());
             
             StopTimer();
         }
