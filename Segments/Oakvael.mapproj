@@ -480,6 +480,8 @@
                 SayTo(Director, "I have already given you a Silk Finery.");
                 return;
             }
+            
+            hasReceivedFinery = true;
 
             Timer.DelayCall(Facet.TimeSpan.FromSeconds(1.0),
                 () => SayTo(Director, 6300419, Director.Name)); /* I could have done that myself. But, thanks for your assistance {0}. */
@@ -489,8 +491,6 @@
                     
                     finery.Move(Location, true, Segment);
                     finery.Bind(Director);
-                    
-                    hasReceivedFinery = true;
                     
                     if (kinasho.IsAlive)
                         kinasho.Emote("is annoyed by Konran's return.");
