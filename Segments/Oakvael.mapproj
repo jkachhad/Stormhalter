@@ -464,6 +464,8 @@
             if (_whineTimer != null)
                 _whineTimer.Stop();
         }
+        
+        bool hasReceivedFinery = false;
 
         protected override void OnFinishMovement(PathingEventArgs args)
         {
@@ -472,6 +474,11 @@
 
             if (kinasho is null) 
                 return;
+                
+            if (hasReceivedFinery && kinasho != null)
+            {   SayTo(Director, "I have already given you a Silk Finery");
+                return;
+            }
 
             Timer.DelayCall(Facet.TimeSpan.FromSeconds(1.0),
                 () => SayTo(Director, 6300419, Director.Name)); /* I could have done that myself. But, thanks for your assistance {0}. */
@@ -481,6 +488,8 @@
                     
                     finery.Move(Location, true, Segment);
                     finery.Bind(Director);
+                    
+                    hasReceivedFinery = true;
                     
                     if (kinasho.IsAlive)
                         kinasho.Emote("is annoyed by Konran's return.");
