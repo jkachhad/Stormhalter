@@ -476,7 +476,8 @@
                 return;
                 
             if (hasReceivedFinery && kinasho != null)
-            {   SayTo(Director, "I have already given you a Silk Finery");
+            {   
+                SayTo(Director, "I have already given you a Silk Finery");
                 return;
             }
 
