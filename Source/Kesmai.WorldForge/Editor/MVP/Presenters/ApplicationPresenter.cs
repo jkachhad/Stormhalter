@@ -673,7 +673,8 @@ public class ApplicationPresenter : ObservableRecipient
 #endif
 
 			projectFile.Save(targetFile);
-		} catch (Exception ex)
+		}
+		catch (Exception ex)
 		{
 			MessageBox.Show($"Error when saving project: {ex.Message}", "Unable to save", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
@@ -841,7 +842,17 @@ public class ApplicationPresenter : ObservableRecipient
 			}
 		}
 
+		/* Prevent any region with id = 0 */
+		foreach (var region in Segment.Regions)
+		{
+			if (region.ID is not 0)
+				continue;
+			
+			MessageBox.Show($"Unable to save: Region '{region.Name}' has ID = 0.", "Invalid Region ID", MessageBoxButton.OK);
 
+			ActiveDocument = region;
+			return false;
+		}
 
 		return true;
 	}
@@ -854,16 +865,18 @@ public class ApplicationPresenter : ObservableRecipient
 		var index = 0;
 		var freeIndex = 0;
 
-		do
+		while (index is 0)
 		{
 			freeIndex++;
-				
-			if (_segment.Regions.FirstOrDefault<SegmentRegion>((r) => r.ID == freeIndex) == default(SegmentRegion))
+			
+			if (_segment.Regions.All(r => r.ID != freeIndex))
 				index = freeIndex;
+		}
 
-		} while (index == 0);
+		if (index <= 0)
+			throw new ArgumentOutOfRangeException(nameof(index));
 
-		var region = new SegmentRegion(freeIndex);
+		var region = new SegmentRegion(index);
 
 		_segment.Regions.Add(region);
 
