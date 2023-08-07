@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.101.0.0">
+<segment name="Underkingdom" version="0.102.2.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -427,7 +427,7 @@
         }
     }
     
-    
+    private bool isRescued = false;
     
     public class KoboldPrincess : CreatureEntity
     {
@@ -460,14 +460,23 @@
 			
 			CanLoot = false;
         }
+        
+        bool hasReceivedPMP = false;
     
         protected override void OnFinishMovement(PathingEventArgs args)
         {
 			var king = GetBeheldInVisibility(0).SelectMany(m => m.Members).OfType<KoboldKing>().FirstOrDefault();
 			
+			if (hasReceivedPMP)
+            {   
+                SayTo(Director, "I have already given you a PMP.");
+                return;
+            }
+			
             if (king != null)
             {
                 new PermanentManaPotion().Move(Location, true, Segment);
+                hasReceivedPMP = true;
                 Say($"Hi dad! What's for dinner?!");
                 king.Elated();
 				

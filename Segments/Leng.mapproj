@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.100.0.0">
+<segment name="Leng" version="0.102.2.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -399,14 +399,23 @@
             
             CanLoot = false;
         }
+        
+        bool hasReceivedWillPower = false;
     
         protected override void OnFinishMovement(PathingEventArgs args)
         {
             var queen = GetBeheldInVisibility(0).SelectMany(m => m.Members).OfType<LengQueen>().FirstOrDefault();
             
+            if (hasReceivedWillPower)
+            {   
+                SayTo(Director, "I have already given Will Power Pot.");
+                return;
+            }
+            
             if (queen != null)
             {
                 new PermanentWillpowerPotion().Move(Location, true, Segment);
+                hasReceivedWillPower = true;
                 Say($"Hi Mom! What's for dinner?!");
                 queen.Elated();
                 
@@ -80072,7 +80081,7 @@
     </entity>
   </entities>
   <spawns>
-    <spawn type="LocationSpawner" name="Priest">
+    <spawn type="LocationSpawner" name="Priest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80115,7 +80124,7 @@
       <entry entity="lengMagicPeacekeeper" size="1" minimum="1" maximum="1" />
       <location x="2" y="1" region="254" />
     </spawn>
-    <spawn type="LocationSpawner" name="thaumTrainer">
+    <spawn type="LocationSpawner" name="thaumTrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80142,7 +80151,7 @@
       <entry entity="lengThaumTrainer" size="1" minimum="1" maximum="1" />
       <location x="4" y="4" region="254" />
     </spawn>
-    <spawn type="LocationSpawner" name="tanner">
+    <spawn type="LocationSpawner" name="tanner" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80163,7 +80172,7 @@
       <entry entity="lengTannerTemplate" size="1" minimum="1" maximum="1" />
       <location x="3" y="25" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="lengApothecary">
+    <spawn type="LocationSpawner" name="lengApothecary" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80246,7 +80255,7 @@
       <entry entity="lengShopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="11" y="8" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="banker">
+    <spawn type="LocationSpawner" name="banker" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80269,7 +80278,7 @@
       <entry entity="lengBankerTemplate" size="1" minimum="1" maximum="1" />
       <location x="15" y="4" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="lengArmorer">
+    <spawn type="LocationSpawner" name="lengArmorer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80339,7 +80348,7 @@
       <entry entity="lengShopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="20" y="9" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="lengJeweler">
+    <spawn type="LocationSpawner" name="lengJeweler" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80406,7 +80415,7 @@
       <entry entity="lengShopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="26" y="14" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="lengGambler">
+    <spawn type="LocationSpawner" name="lengGambler" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -80528,7 +80537,7 @@
       <entry entity="lengGambler" size="1" minimum="1" maximum="1" />
       <location x="27" y="21" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="lengWeaponsmith">
+    <spawn type="LocationSpawner" name="lengWeaponsmith" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80600,7 +80609,7 @@
       <entry entity="lengShopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="20" y="22" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="wiztrainer">
+    <spawn type="LocationSpawner" name="wiztrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80622,7 +80631,7 @@
       <entry entity="lengWizTrainer" size="1" minimum="1" maximum="1" />
       <location x="20" y="17" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="weapontrainer">
+    <spawn type="LocationSpawner" name="weapontrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80651,7 +80660,7 @@
       <entry entity="lengWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="12" y="15" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="Puck">
+    <spawn type="LocationSpawner" name="Puck" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80672,7 +80681,7 @@
       <entry entity="lengPuck" size="1" minimum="1" maximum="1" />
       <location x="5" y="4" region="4" />
     </spawn>
-    <spawn type="LocationSpawner" name="balmvendor">
+    <spawn type="LocationSpawner" name="balmvendor" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80693,7 +80702,7 @@
       <entry entity="lengBalmVendor" size="1" minimum="1" maximum="1" />
       <location x="18" y="19" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="recallvendor">
+    <spawn type="LocationSpawner" name="recallvendor" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80714,7 +80723,7 @@
       <entry entity="lengRecallVendor" size="1" minimum="1" maximum="1" />
       <location x="20" y="19" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="kingplaceholder">
+    <spawn type="LocationSpawner" name="kingplaceholder" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80735,7 +80744,7 @@
       <entry entity="lengConfessorGhost" size="1" minimum="1" maximum="1" />
       <location x="10" y="20" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="queenplaceholder">
+    <spawn type="LocationSpawner" name="queenplaceholder" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80756,7 +80765,7 @@
       <entry entity="lengQueen" size="1" minimum="1" maximum="1" />
       <location x="12" y="20" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="confessorghost">
+    <spawn type="LocationSpawner" name="confessorghost" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80777,7 +80786,7 @@
       <entry entity="lengConfessorGhost" size="1" minimum="1" maximum="1" />
       <location x="1" y="6" region="254" />
     </spawn>
-    <spawn type="LocationSpawner" name="Iantaplaceholder">
+    <spawn type="LocationSpawner" name="Iantaplaceholder" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>4500</maximumDelay>
       <maximum>1</maximum>
@@ -80798,7 +80807,7 @@
       <entry entity="lengIanta" size="1" minimum="1" maximum="1" />
       <location x="23" y="4" region="35" />
     </spawn>
-    <spawn type="LocationSpawner" name="thiefTrainer">
+    <spawn type="LocationSpawner" name="thiefTrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80823,7 +80832,7 @@
       <entry entity="lengThiefTrainer" size="1" minimum="1" maximum="1" />
       <location x="5" y="28" region="20" />
     </spawn>
-    <spawn type="LocationSpawner" name="lengMATrainer">
+    <spawn type="LocationSpawner" name="lengMATrainer" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80853,7 +80862,7 @@
       <entry entity="lengWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="4" y="4" region="4" />
     </spawn>
-    <spawn type="LocationSpawner" name="SeaSerpent">
+    <spawn type="LocationSpawner" name="SeaSerpent" enabled="true">
       <minimumDelay>2700</minimumDelay>
       <maximumDelay>0</maximumDelay>
       <maximum>1</maximum>
@@ -80874,7 +80883,7 @@
       <entry entity="BossMiniLevel9SeaSerpent" size="1" minimum="1" maximum="1" />
       <location x="43" y="32" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="bunnyRabbit">
+    <spawn type="LocationSpawner" name="bunnyRabbit" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>4500</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -80894,7 +80903,7 @@
       <entry entity="BossMinorLevel13BunnyRabbit" size="1" minimum="1" maximum="1" />
       <location x="44" y="9" region="20" />
     </spawn>
-    <spawn type="LocationSpawner" name="blackKnight">
+    <spawn type="LocationSpawner" name="blackKnight" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>4500</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -80914,7 +80923,7 @@
       <entry entity="BossMinorLevel13BlackKnight" size="1" minimum="1" maximum="1" />
       <location x="42" y="15" region="20" />
     </spawn>
-    <spawn type="LocationSpawner" name="enchanter">
+    <spawn type="LocationSpawner" name="enchanter" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>4500</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -80934,7 +80943,7 @@
       <entry entity="BossMinorLevel13Enchanter" size="1" minimum="1" maximum="1" />
       <location x="44" y="14" region="20" />
     </spawn>
-    <spawn type="RegionSpawner" name="mausoleumSandyPath">
+    <spawn type="RegionSpawner" name="mausoleumSandyPath" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>5</maximum>
@@ -80961,7 +80970,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="mausoleumWest">
+    <spawn type="RegionSpawner" name="mausoleumWest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>14</maximum>
@@ -80992,7 +81001,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="mausoleumInner">
+    <spawn type="RegionSpawner" name="mausoleumInner" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>24</maximum>
@@ -81021,7 +81030,7 @@
         <exclusion left="19" top="21" right="25" bottom="27" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="mausoleumSouth">
+    <spawn type="RegionSpawner" name="mausoleumSouth" enabled="true">
       <minimumDelay>720</minimumDelay>
       <maximumDelay>1020</maximumDelay>
       <maximum>19</maximum>
@@ -81053,7 +81062,7 @@
         <exclusion left="14" top="35" right="17" bottom="40" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="mausoleumPresence">
+    <spawn type="RegionSpawner" name="mausoleumPresence" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>7200</maximumDelay>
       <maximum>1</maximum>
@@ -81077,7 +81086,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="mausoleumEast">
+    <spawn type="RegionSpawner" name="mausoleumEast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>12</maximum>
@@ -81106,7 +81115,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="griffLevelOutdoorsE">
+    <spawn type="RegionSpawner" name="griffLevelOutdoorsE" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>12</maximum>
@@ -81136,7 +81145,7 @@
         <exclusion left="15" top="13" right="18" bottom="16" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="griffLevelLeftGriff">
+    <spawn type="RegionSpawner" name="griffLevelLeftGriff" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>1</maximum>
@@ -81160,7 +81169,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="griffLevelEastCave">
+    <spawn type="RegionSpawner" name="griffLevelEastCave" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>8</maximum>
@@ -81187,7 +81196,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="griffLevelDungeon">
+    <spawn type="RegionSpawner" name="griffLevelDungeon" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>7</maximum>
@@ -81214,7 +81223,7 @@
         <exclusion left="16" top="24" right="19" bottom="26" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="drakeBoss">
+    <spawn type="RegionSpawner" name="drakeBoss" enabled="true">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>14400</maximumDelay>
       <maximum>6</maximum>
@@ -81240,7 +81249,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="gryphBossKosh">
+    <spawn type="RegionSpawner" name="gryphBossKosh" enabled="true">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>14400</maximumDelay>
       <maximum>1</maximum>
@@ -81265,7 +81274,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Vlad">
+    <spawn type="RegionSpawner" name="Vlad" enabled="true">
       <minimumDelay>10800</minimumDelay>
       <maximumDelay>18000</maximumDelay>
       <maximum>5</maximum>
@@ -81293,7 +81302,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="vladtower1">
+    <spawn type="RegionSpawner" name="vladtower1" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>5</maximum>
@@ -81321,7 +81330,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="vladTower2">
+    <spawn type="RegionSpawner" name="vladTower2" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>6</maximum>
@@ -81346,7 +81355,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="vladTower3">
+    <spawn type="RegionSpawner" name="vladTower3" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>10</maximum>
@@ -81374,7 +81383,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="shidBoss">
+    <spawn type="RegionSpawner" name="shidBoss" enabled="true">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <maximum>4</maximum>
@@ -81399,7 +81408,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="mausoleumSandy">
+    <spawn type="RegionSpawner" name="mausoleumSandy" enabled="true">
       <minimumDelay>1800</minimumDelay>
       <maximumDelay>7200</maximumDelay>
       <maximum>1</maximum>
@@ -81423,7 +81432,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="surfaceBridgetroll">
+    <spawn type="RegionSpawner" name="surfaceBridgetroll" enabled="true">
       <minimumDelay>2700</minimumDelay>
       <maximumDelay>7200</maximumDelay>
       <maximum>1</maximum>
@@ -81447,7 +81456,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="shidStables">
+    <spawn type="RegionSpawner" name="shidStables" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>12</maximum>
@@ -81478,7 +81487,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="minotaurLedge">
+    <spawn type="RegionSpawner" name="minotaurLedge" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>13</maximum>
@@ -81504,7 +81513,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="portalwight">
+    <spawn type="RegionSpawner" name="portalwight" enabled="true">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>600</maximumDelay>
       <maximum>1</maximum>
@@ -81528,7 +81537,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="undeadDungeon">
+    <spawn type="RegionSpawner" name="undeadDungeon" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1500</maximumDelay>
       <maximum>38</maximum>
@@ -81561,7 +81570,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="surfaceLengSoutheast">
+    <spawn type="RegionSpawner" name="surfaceLengSoutheast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>4</maximum>
@@ -81587,7 +81596,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="surfaceNortheast">
+    <spawn type="RegionSpawner" name="surfaceNortheast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>4</maximum>
@@ -81613,7 +81622,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="lengTownEast">
+    <spawn type="RegionSpawner" name="lengTownEast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>5</maximum>
@@ -81639,7 +81648,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="lengtownwest">
+    <spawn type="RegionSpawner" name="lengtownwest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>5</maximum>
@@ -81665,7 +81674,7 @@
         <exclusion left="3" top="23" right="4" bottom="25" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="drakeOuter">
+    <spawn type="RegionSpawner" name="drakeOuter" enabled="true">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1500</maximumDelay>
       <maximum>11</maximum>
@@ -81692,7 +81701,7 @@
         <exclusion left="6" top="6" right="12" bottom="9" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="BossLevel12PowerTroll">
+    <spawn type="RegionSpawner" name="BossLevel12PowerTroll" enabled="true">
       <minimumDelay>1800</minimumDelay>
       <maximumDelay>3600</maximumDelay>
       <maximum>1</maximum>
@@ -81718,7 +81727,7 @@
         <exclusion left="0" top="9" right="0" bottom="9" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="cliffWaterfall">
+    <spawn type="RegionSpawner" name="cliffWaterfall" enabled="true">
       <minimumDelay>5400</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <maximum>2</maximum>
@@ -81743,7 +81752,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="cliffsMain">
+    <spawn type="RegionSpawner" name="cliffsMain" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>36</maximum>
@@ -81771,7 +81780,7 @@
         <inclusion left="18" top="13" right="25" bottom="27" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="mausoleumSouthCrypt">
+    <spawn type="RegionSpawner" name="mausoleumSouthCrypt" enabled="true">
       <minimumDelay>0</minimumDelay>
       <maximumDelay>0</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -81797,7 +81806,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="shidGuardians1">
+    <spawn type="RegionSpawner" name="shidGuardians1" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>1</maximum>
@@ -81821,7 +81830,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="shidGuardians2">
+    <spawn type="RegionSpawner" name="shidGuardians2" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>1</maximum>
@@ -81845,7 +81854,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="shidGuardians3">
+    <spawn type="RegionSpawner" name="shidGuardians3" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>1</maximum>
@@ -81871,7 +81880,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="mausoleumNorthEast">
+    <spawn type="RegionSpawner" name="mausoleumNorthEast" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>10</maximum>
@@ -81899,7 +81908,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="undeadWyrm">
+    <spawn type="RegionSpawner" name="undeadWyrm" enabled="true">
       <minimumDelay>8100</minimumDelay>
       <maximumDelay>15900</maximumDelay>
       <maximum>1</maximum>
@@ -81923,7 +81932,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="undeadDungeonNorthwest">
+    <spawn type="RegionSpawner" name="undeadDungeonNorthwest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1500</maximumDelay>
       <maximum>10</maximum>
@@ -81953,7 +81962,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="undeadDungeonNortheast">
+    <spawn type="RegionSpawner" name="undeadDungeonNortheast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1500</maximumDelay>
       <maximum>10</maximum>
@@ -81983,7 +81992,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="undeadDungeonSouth">
+    <spawn type="RegionSpawner" name="undeadDungeonSouth" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1500</maximumDelay>
       <maximum>10</maximum>
@@ -82013,7 +82022,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="drakeMinions">
+    <spawn type="RegionSpawner" name="drakeMinions" enabled="true">
       <minimumDelay>1800</minimumDelay>
       <maximumDelay>2100</maximumDelay>
       <maximum>6</maximum>
@@ -82040,7 +82049,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="cliffsNoSafeZone">
+    <spawn type="RegionSpawner" name="cliffsNoSafeZone" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -82064,7 +82073,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="vladtowerbase">
+    <spawn type="RegionSpawner" name="vladtowerbase" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>4</maximum>
@@ -82090,7 +82099,7 @@
         <exclusion left="21" top="23" right="23" bottom="25" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="shidStableContd">
+    <spawn type="RegionSpawner" name="shidStableContd" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>3</maximum>
@@ -82115,7 +82124,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="shidStablesCorridor">
+    <spawn type="RegionSpawner" name="shidStablesCorridor" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -82140,7 +82149,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="griffLevelOutdoorsW">
+    <spawn type="RegionSpawner" name="griffLevelOutdoorsW" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>12</maximum>
@@ -82175,7 +82184,7 @@
         <exclusion left="15" top="13" right="16" bottom="15" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="griffLevelOutdoorsN">
+    <spawn type="RegionSpawner" name="griffLevelOutdoorsN" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>12</maximum>
