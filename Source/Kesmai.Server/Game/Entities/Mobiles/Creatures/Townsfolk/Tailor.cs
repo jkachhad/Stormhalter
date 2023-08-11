@@ -3,81 +3,80 @@ using System.IO;
 using System.Linq;
 using Kesmai.Server.Items;
 
-namespace Kesmai.Server.Game
+namespace Kesmai.Server.Game;
+
+public partial class Tailor : VendorEntity
 {
-	public partial class Tailor : VendorEntity
+	private InternalTimer _timer;
+		
+	public Tailor()
 	{
-		private InternalTimer _timer;
+	}
+
+	protected override void OnLoad()
+	{
+		base.OnLoad();
+			
+		StartTimer();
+	}
+
+	protected override void OnUnload()
+	{
+		StopTimer();
+			
+		base.OnUnload();
+	}
 		
-		public Tailor()
-		{
-		}
+	private void StartTimer()
+	{
+		if (_timer != null)
+			_timer.Stop();
 
-		protected override void OnLoad()
+		_timer = new InternalTimer(this);
+		_timer.Start();
+	}
+
+	private void StopTimer()
+	{
+		if (_timer != null)
 		{
-			base.OnLoad();
+			_timer.Stop();
+			_timer = null;
+		}
+	}
+
+	private class InternalTimer : Timer
+	{
+		private Tailor _entity;
 			
-			StartTimer();
+		public InternalTimer(Tailor entity) : base(TimeSpan.Zero, entity.GetRoundDelay())
+		{
+			_entity = entity;
 		}
 
-		protected override void OnUnload()
+		protected override void OnExecute()
 		{
-			StopTimer();
-			
-			base.OnUnload();
-		}
-		
-		private void StartTimer()
-		{
-			if (_timer != null)
-				_timer.Stop();
-
-			_timer = new InternalTimer(this);
-			_timer.Start();
-		}
-
-		private void StopTimer()
-		{
-			if (_timer != null)
+			if (!_entity.IsAlive)
 			{
-				_timer.Stop();
-				_timer = null;
+				_entity.StopTimer();
+				return;
 			}
-		}
-
-		private class InternalTimer : Timer
-		{
-			private Tailor _entity;
-			
-			public InternalTimer(Tailor entity) : base(TimeSpan.Zero, entity.GetRoundDelay())
-			{
-				_entity = entity;
-			}
-
-			protected override void OnExecute()
-			{
-				if (!_entity.IsAlive)
-				{
-					_entity.StopTimer();
-					return;
-				}
 				
-				var segment = _entity.Segment;
-				var corpses = segment.GetItemsAt(_entity.Location)
-										.OfType<Corpse>().Where(corpse => corpse.Owner is CreatureEntity)
-										.ToList();
+			var segment = _entity.Segment;
+			var corpses = segment.GetItemsAt(_entity.Location)
+				.OfType<Corpse>().Where(corpse => corpse.Owner is CreatureEntity)
+				.ToList();
 
-				foreach (var corpse in corpses)
-				{
-					corpse.Strip();
+			foreach (var corpse in corpses)
+			{
+				corpse.Strip();
 					
-					var item = corpse.Tan();
+				var item = corpse.Tan();
 
-					if (item != null)
-						item.Move(_entity.Location, true, segment);
+				if (item != null)
+					item.Move(_entity.Location, true, segment);
 					
-					corpse.Delete();
-				}
+				corpse.Delete();
 			}
 		}
 	}

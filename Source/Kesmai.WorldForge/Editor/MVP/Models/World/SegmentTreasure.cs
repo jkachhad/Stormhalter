@@ -11,227 +11,226 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using Microsoft.Toolkit.Mvvm.Messaging.Messages;
 
-namespace Kesmai.WorldForge.Editor
+namespace Kesmai.WorldForge.Editor;
+
+public class SegmentTreasure : ObservableObject
 {
-	public class SegmentTreasure : ObservableObject
+	private string _name;
+	private string _notes;
+		
+	private ObservableCollection<TreasureEntry> _entries = new ObservableCollection<TreasureEntry>();
+		
+	public ObservableCollection<TreasureEntry> Entries
 	{
-		private string _name;
-		private string _notes;
+		get => _entries;
+		set => SetProperty(ref _entries, value);
+	}
 		
-		private ObservableCollection<TreasureEntry> _entries = new ObservableCollection<TreasureEntry>();
+	public string Name
+	{
+		get => _name;
+		set => SetProperty(ref _name, value);
+	}
 		
-		public ObservableCollection<TreasureEntry> Entries
-		{
-			get => _entries;
-			set => SetProperty(ref _entries, value);
-		}
-		
-		public string Name
-		{
-			get => _name;
-			set => SetProperty(ref _name, value);
-		}
-		
-		public string Notes
-		{
-			get => _notes;
-			set => SetProperty(ref _notes, value);
-		}
+	public string Notes
+	{
+		get => _notes;
+		set => SetProperty(ref _notes, value);
+	}
 
-		public int TotalWeight => _entries.Sum(e => e.Weight);
+	public int TotalWeight => _entries.Sum(e => e.Weight);
 		
-		public SegmentTreasure()
-		{
-			_entries.Add(new TreasureEntry(this));
-			_entries.CollectionChanged += EntriesOnCollectionChanged;
+	public SegmentTreasure()
+	{
+		_entries.Add(new TreasureEntry(this));
+		_entries.CollectionChanged += EntriesOnCollectionChanged;
 
-			InvalidateChance();
-		}
+		InvalidateChance();
+	}
 
-		private void EntriesOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs args)
-		{
-			InvalidateChance();
-		}
+	private void EntriesOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs args)
+	{
+		InvalidateChance();
+	}
 
-		public SegmentTreasure(XElement element)
-		{
-			_name = (string)element.Attribute("name");
+	public SegmentTreasure(XElement element)
+	{
+		_name = (string)element.Attribute("name");
 			
-			if (element.TryGetElement("notes", out var notesElement))
-				_notes = (string)notesElement;
+		if (element.TryGetElement("notes", out var notesElement))
+			_notes = (string)notesElement;
 			
-			foreach(var entryElement in element.Elements("entry"))
-				_entries.Add(new TreasureEntry(this, entryElement));
+		foreach(var entryElement in element.Elements("entry"))
+			_entries.Add(new TreasureEntry(this, entryElement));
 
-			InvalidateChance();
-		}
+		InvalidateChance();
+	}
 
-		public SegmentTreasure(SegmentTreasure treasure)
+	public SegmentTreasure(SegmentTreasure treasure)
+	{
+		_name = treasure.Name;
+		_notes = treasure.Notes;
+		_entries.AddRange(treasure.Entries.Select(e => new TreasureEntry(e)
 		{
-			_name = treasure.Name;
-			_notes = treasure.Notes;
-			_entries.AddRange(treasure.Entries.Select(e => new TreasureEntry(e)
-			{
-				Treasure = treasure
-			}));
+			Treasure = treasure
+		}));
 
-			InvalidateChance();
-		}
+		InvalidateChance();
+	}
 
-		public XElement GetXElement()
-		{
-			var element = new XElement("treasure",
-				new XAttribute("name", _name));
+	public XElement GetXElement()
+	{
+		var element = new XElement("treasure",
+			new XAttribute("name", _name));
 			
-			if (!String.IsNullOrEmpty(_notes))
-				element.Add(new XElement("notes", _notes));
+		if (!String.IsNullOrEmpty(_notes))
+			element.Add(new XElement("notes", _notes));
 
-			foreach (var treasureEntry in _entries)
-				element.Add(treasureEntry.GetXElement());
+		foreach (var treasureEntry in _entries)
+			element.Add(treasureEntry.GetXElement());
 
-			return element;
-		}
+		return element;
+	}
 		
-		public override string ToString() => _name;
+	public override string ToString() => _name;
 
-		public void InvalidateChance()
+	public void InvalidateChance()
+	{
+		foreach (var entry in _entries)
+			entry.InvalidateChance();
+	}
+}
+	
+[ScriptTemplate("OnCreate", typeof(TreasureItemScriptTemplate))]
+public class TreasureEntry : ObservableObject
+{
+	public class TreasureEntryWeightChanged : ValueChangedMessage<double>
+	{
+		public TreasureEntryWeightChanged(double value) : base(value)
 		{
-			foreach (var entry in _entries)
-				entry.InvalidateChance();
 		}
 	}
-	
-	[ScriptTemplate("OnCreate", typeof(TreasureItemScriptTemplate))]
-	public class TreasureEntry : ObservableObject
+		
+	private ObservableCollection<Script> _scripts = new ObservableCollection<Script>();
+	private int _weight;
+	private string _notes;
+	private double _chance;
+
+	private SegmentTreasure _treasure;
+
+	public SegmentTreasure Treasure
 	{
-		public class TreasureEntryWeightChanged : ValueChangedMessage<double>
-		{
-			public TreasureEntryWeightChanged(double value) : base(value)
-			{
-			}
-		}
+		get => _treasure;
+		set => SetProperty(ref _treasure, value);
+	}
 		
-		private ObservableCollection<Script> _scripts = new ObservableCollection<Script>();
-		private int _weight;
-		private string _notes;
-		private double _chance;
-
-		private SegmentTreasure _treasure;
-
-		public SegmentTreasure Treasure
-		{
-			get => _treasure;
-			set => SetProperty(ref _treasure, value);
-		}
+	public ObservableCollection<Script> Scripts
+	{
+		get => _scripts;
+		set => SetProperty(ref _scripts, value);
+	}
 		
-		public ObservableCollection<Script> Scripts
+	public int Weight
+	{
+		get => _weight;
+		set
 		{
-			get => _scripts;
-			set => SetProperty(ref _scripts, value);
-		}
-		
-		public int Weight
-		{
-			get => _weight;
-			set
-			{
-				SetProperty(ref _weight, value);
+			SetProperty(ref _weight, value);
 
-				if (value > 0)
-					WeakReferenceMessenger.Default.Send(new TreasureEntryWeightChanged(value));
-			}
+			if (value > 0)
+				WeakReferenceMessenger.Default.Send(new TreasureEntryWeightChanged(value));
 		}
+	}
 
-		public string Notes
-		{
-			get => _notes;
-			set => SetProperty(ref _notes, value);
-		}
+	public string Notes
+	{
+		get => _notes;
+		set => SetProperty(ref _notes, value);
+	}
 
-		public double Chance
-		{
-			get => _chance;
-			set => SetProperty(ref _chance, value);
-		}
+	public double Chance
+	{
+		get => _chance;
+		set => SetProperty(ref _chance, value);
+	}
 
-		public TreasureEntry(SegmentTreasure treasure)
-		{
-			_treasure = treasure;
-			_weight = 1;
+	public TreasureEntry(SegmentTreasure treasure)
+	{
+		_treasure = treasure;
+		_weight = 1;
 			
-			ValidateScripts();
-		}
+		ValidateScripts();
+	}
 		
-		public TreasureEntry(SegmentTreasure treasure, XElement element)
-		{
-			_treasure = treasure;
-			_weight = (int)element.Attribute("weight");
+	public TreasureEntry(SegmentTreasure treasure, XElement element)
+	{
+		_treasure = treasure;
+		_weight = (int)element.Attribute("weight");
 			
-			if (element.TryGetElement("notes", out var notesElement))
-				_notes = (string)notesElement;
+		if (element.TryGetElement("notes", out var notesElement))
+			_notes = (string)notesElement;
 
-			foreach (var scriptElement in element.Elements("script"))
-				_scripts.Add(new Script(scriptElement));
+		foreach (var scriptElement in element.Elements("script"))
+			_scripts.Add(new Script(scriptElement));
 			
-			ValidateScripts();
-		}
+		ValidateScripts();
+	}
 
-		public TreasureEntry(TreasureEntry entry)
-		{
-			_treasure = entry.Treasure;
-			_weight = entry.Weight;
+	public TreasureEntry(TreasureEntry entry)
+	{
+		_treasure = entry.Treasure;
+		_weight = entry.Weight;
 
-			_notes = entry.Notes;
+		_notes = entry.Notes;
 
-			_scripts.Clear();
-			_scripts.AddRange(entry.Scripts.Select(s => s.Clone()));
-		}
+		_scripts.Clear();
+		_scripts.AddRange(entry.Scripts.Select(s => s.Clone()));
+	}
 		
-		private void ValidateScripts()
+	private void ValidateScripts()
+	{
+		if (_scripts.All(s => s.Name != "OnCreate"))
 		{
-			if (_scripts.All(s => s.Name != "OnCreate"))
-			{
-				_scripts.Add(new Script("OnCreate", true,
-					String.Empty, 
-					"\n\treturn new ItemEntity();\n", 
-					String.Empty
-				));
-			}
-
-			var provider = ServiceLocator.Current.GetInstance<ScriptTemplateProvider>();
-			var attributes = GetType().GetCustomAttributes(typeof(ScriptTemplateAttribute), false)
-				.OfType<ScriptTemplateAttribute>().ToList();
-
-			if (attributes.Any())
-			{
-				foreach (var script in _scripts)
-				{
-					var attr = attributes.FirstOrDefault(
-						a => String.Equals(a.Name, script.Name, StringComparison.Ordinal));
-
-					if (attr != null && provider.TryGetTemplate(attr.TemplateType, out var template))
-						script.Template = template;
-				}
-			}
+			_scripts.Add(new Script("OnCreate", true,
+				String.Empty, 
+				"\n\treturn new ItemEntity();\n", 
+				String.Empty
+			));
 		}
 
-		public XElement GetXElement()
-		{
-			var element = new XElement("entry",
-				new XAttribute("weight", _weight));
-			
-			if (!String.IsNullOrEmpty(_notes))
-				element.Add(new XElement("notes", _notes));
+		var provider = ServiceLocator.Current.GetInstance<ScriptTemplateProvider>();
+		var attributes = GetType().GetCustomAttributes(typeof(ScriptTemplateAttribute), false)
+			.OfType<ScriptTemplateAttribute>().ToList();
 
+		if (attributes.Any())
+		{
 			foreach (var script in _scripts)
-				element.Add(script.GetXElement());
+			{
+				var attr = attributes.FirstOrDefault(
+					a => String.Equals(a.Name, script.Name, StringComparison.Ordinal));
 
-			return element;
+				if (attr != null && provider.TryGetTemplate(attr.TemplateType, out var template))
+					script.Template = template;
+			}
 		}
+	}
 
-		public void InvalidateChance()
-		{
-			Chance = ((double)_weight / _treasure.TotalWeight);
-		}
+	public XElement GetXElement()
+	{
+		var element = new XElement("entry",
+			new XAttribute("weight", _weight));
+			
+		if (!String.IsNullOrEmpty(_notes))
+			element.Add(new XElement("notes", _notes));
+
+		foreach (var script in _scripts)
+			element.Add(script.GetXElement());
+
+		return element;
+	}
+
+	public void InvalidateChance()
+	{
+		Chance = ((double)_weight / _treasure.TotalWeight);
 	}
 }

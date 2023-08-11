@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Oakvael" version="0.96.0.0">
+<segment name="Oakvael" version="0.102.2.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -281,7 +281,7 @@
                         SayTo(player, 6300411); /* I can not teach you greater mastery of your hand skill. But-- */
                         
                         Timer.DelayCall(Facet.TimeSpan.FromSeconds(3.0), () 
-                            => Emote("pauses briefly"));
+                            => Emote("pauses briefly."));
                         Timer.DelayCall(Facet.TimeSpan.FromSeconds(6.0), () 
                             => SayTo(player, 6300412)); /* You may be worthy of another power. */
                         Timer.DelayCall(Facet.TimeSpan.FromSeconds(8.0), () 
@@ -464,6 +464,8 @@
             if (_whineTimer != null)
                 _whineTimer.Stop();
         }
+        
+        bool hasReceivedFinery = false;
 
         protected override void OnFinishMovement(PathingEventArgs args)
         {
@@ -472,6 +474,14 @@
 
             if (kinasho is null) 
                 return;
+                
+            if (hasReceivedFinery)
+            {   
+                SayTo(Director, "I have already given you a Silk Finery.");
+                return;
+            }
+            
+            hasReceivedFinery = true;
 
             Timer.DelayCall(Facet.TimeSpan.FromSeconds(1.0),
                 () => SayTo(Director, 6300419, Director.Name)); /* I could have done that myself. But, thanks for your assistance {0}. */
@@ -495,7 +505,7 @@
             
             Brain = new IdleAI(this);
 
-            Timer.DelayCall(Facet.TimeSpan.FromMinutes(10.0), Delete);
+            Timer.DelayCall(TimeSpan.FromSeconds(10.0), () => Delete());
             
             StopTimer();
         }
@@ -569,7 +579,7 @@
     {
         public GroveDryads()
         {
-            Name = "Dryad";
+            Name = "dryad";
             Body = 15;
             Alignment = Alignment.Chaotic;
             CanLoot = false;
@@ -1059,7 +1069,7 @@
     
         public OakGrovePalliator()
         {
-            Name = "Palliative Elemental";
+            Name = "palliative elemental";
             Body = 233;
     
             Health = MaxHealth = 250;
@@ -1088,7 +1098,7 @@
     
             if (heart != null && heart.Alignment == Alignment.Neutral)
             {
-                Emote($"Dissipates into a puff of healing energy, flowing towards the heart of the grove");
+                Emote($"dissipates into a puff of healing energy, flowing towards the heart of the grove.");
                 heart.OakHeartSaved();
     
                 /* We won't delete the entity on the same frame. Server will crash. This call is part of a an optimized loop. */
@@ -1213,7 +1223,7 @@
             if (heartlife > 2)
             {
                 Name = "Healed Grove Heart";
-//                Emote($"A series of healthy vegetation flows out of the ground at rapid speed");
+//                Emote($"senses a series of healthy vegetation flowing out of the ground at rapid speed.");
 //                var tile = Segment.FindTile(30, 51, 236);
 //                tile.Add(new Obstruction(266, false));
 //                var tile2 = Segment.FindTile(30, 50, 236);
@@ -1230,7 +1240,7 @@
 //                tile7.Add(new Obstruction(266, false));
                 new OakGroveBow().Move(Location, true, Segment);
                 
-                Emote($"the heart begins absorbing fresh nutrients from the ground, but it shivers as a furious meow is heard in the distance.");
+                Emote($"begins absorbing fresh nutrients from the ground, but it shivers as a furious meow is heard in the distance.");
                 
                 EmitSound(228, 3, 9);
                 
@@ -1326,7 +1336,7 @@
     {
         public HeartDryad()
         {
-            Name = "Corrupted Dryad";
+            Name = "corrupted dryad";
             Body = 15;
             Alignment = Alignment.Evil;
             CanLoot = false;
@@ -1347,6 +1357,11 @@
                 {
                     if (!combatant.IsAlive)
                         return;
+                        
+                    if(combatant.Location.Region != 236)
+                    {
+                        return;
+                    }
     
                     combatant.EmitSound(206, 3, 9);
     
@@ -1367,7 +1382,7 @@
                     necro.Spells = new CreatureSpellCollection()
                     {
                         new CreatureSpell<FireballSpell>(
-                            skillLevel: 18, cost: 7,
+                            skillLevel: 9, cost: 7,
                             mantra: SpellHelper.GenerateMantra(), instantCast: false)
                     };
     
@@ -1419,7 +1434,7 @@
     {
         public HeartNecrotroph()
         {
-            Name = "Necrotroph";
+            Name = "necrotroph";
             Body = 234;
             Alignment = Alignment.Evil;
             CanSwim = true;
@@ -28993,24 +29008,27 @@
         <component type="StaticComponent">
           <static>3</static>
         </component>
-        <component type="AltarComponent">
-          <altar>174</altar>
+        <component type="CounterComponent">
+          <counter>174</counter>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="26" y="7">
         <component type="StaticComponent">
           <static>3</static>
         </component>
-        <component type="AltarComponent">
-          <altar>174</altar>
+        <component type="CounterComponent">
+          <counter>174</counter>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="27" y="7">
         <component type="StaticComponent">
           <static>3</static>
         </component>
-        <component type="AltarComponent">
-          <altar>174</altar>
+        <component type="CounterComponent">
+          <counter>174</counter>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="28" y="7">
@@ -44291,8 +44309,9 @@
         <component type="StaticComponent">
           <static>3</static>
         </component>
-        <component type="AltarComponent">
-          <altar>174</altar>
+        <component type="CounterComponent">
+          <counter>174</counter>
+          <direction>4</direction>
         </component>
       </tile>
       <tile x="6" y="12">
@@ -73358,21 +73377,11 @@
         </component>
       </tile>
       <tile x="14" y="41">
-        <component type="FloorComponent">
-          <ground>179</ground>
-        </component>
-        <component type="HiddenTeleporterComponent">
-          <destinationX>15</destinationX>
+        <component type="StaircaseComponent">
+          <destinationX>14</destinationX>
           <destinationY>4</destinationY>
           <destinationRegion>236</destinationRegion>
-          <lightphases select="all" />
-          <moonphases select="all" />
-          <professions select="all" />
-          <alignments select="all" />
-          <level>17</level>
-        </component>
-        <component type="StaticComponent">
-          <static>167</static>
+          <teleporterId>123</teleporterId>
         </component>
       </tile>
       <tile x="15" y="41">
@@ -80239,7 +80248,7 @@
     <region>
       <id>236</id>
       <name>Grove</name>
-      <height>-210</height>
+      <height>-230</height>
       <level>26</level>
       <tile x="42" y="-22">
         <component type="WallComponent">
@@ -87327,38 +87336,14 @@
           <static>226</static>
         </component>
       </tile>
-      <tile x="16" y="3">
-        <component type="StaticComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <static>23</static>
-        </component>
-        <component type="WallComponent">
-          <color r="255" g="210" b="95" a="255" />
-          <wall>157</wall>
-          <destroyed>0</destroyed>
-          <ruins>0</ruins>
-          <indestructible>true</indestructible>
-        </component>
-        <component type="StaticComponent">
-          <color r="0" g="200" b="0" a="255" />
-          <static>226</static>
-        </component>
-      </tile>
+      <tile x="16" y="3" />
       <tile x="17" y="3">
-        <component type="StaticComponent">
-          <color r="0" g="255" b="0" a="255" />
-          <static>23</static>
-        </component>
         <component type="WallComponent">
           <color r="255" g="210" b="95" a="255" />
-          <wall>157</wall>
+          <wall>159</wall>
           <destroyed>0</destroyed>
           <ruins>0</ruins>
           <indestructible>true</indestructible>
-        </component>
-        <component type="StaticComponent">
-          <color r="0" g="200" b="0" a="255" />
-          <static>226</static>
         </component>
       </tile>
       <tile x="18" y="3">
@@ -88045,29 +88030,31 @@
         </component>
       </tile>
       <tile x="14" y="4">
-        <component type="StaticComponent">
-          <static>167</static>
-        </component>
-        <component type="SkyComponent">
-          <color r="0" g="0" b="0" a="0" />
+        <component type="StaircaseComponent">
           <destinationX>14</destinationX>
           <destinationY>41</destinationY>
           <destinationRegion>235</destinationRegion>
-          <teleporterId>9</teleporterId>
+          <teleporterId>127</teleporterId>
         </component>
       </tile>
       <tile x="15" y="4">
-        <component type="FloorComponent">
-          <color r="0" g="212" b="0" a="255" />
-          <ground>23</ground>
+        <component type="StaticComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <static>23</static>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="210" b="95" a="255" />
+          <wall>158</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="StaticComponent">
+          <color r="0" g="200" b="0" a="255" />
+          <static>227</static>
         </component>
       </tile>
-      <tile x="16" y="4">
-        <component type="FloorComponent">
-          <color r="0" g="212" b="0" a="255" />
-          <ground>23</ground>
-        </component>
-      </tile>
+      <tile x="16" y="4" />
       <tile x="17" y="4">
         <component type="StaticComponent">
           <color r="0" g="255" b="0" a="255" />
@@ -88732,15 +88719,37 @@
         </component>
       </tile>
       <tile x="15" y="5">
-        <component type="FloorComponent">
-          <color r="0" g="212" b="0" a="255" />
-          <ground>23</ground>
+        <component type="StaticComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <static>23</static>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="210" b="95" a="255" />
+          <wall>158</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="StaticComponent">
+          <color r="0" g="200" b="0" a="255" />
+          <static>227</static>
         </component>
       </tile>
       <tile x="16" y="5">
-        <component type="FloorComponent">
-          <color r="0" g="212" b="0" a="255" />
-          <ground>23</ground>
+        <component type="StaticComponent">
+          <color r="0" g="255" b="0" a="255" />
+          <static>23</static>
+        </component>
+        <component type="WallComponent">
+          <color r="255" g="210" b="95" a="255" />
+          <wall>157</wall>
+          <destroyed>0</destroyed>
+          <ruins>0</ruins>
+          <indestructible>true</indestructible>
+        </component>
+        <component type="StaticComponent">
+          <color r="0" g="200" b="0" a="255" />
+          <static>226</static>
         </component>
       </tile>
       <tile x="17" y="5">
@@ -110297,11 +110306,11 @@
         BaseDodge = 15,
 
         Experience = 2350,
-        
-        MagicProtection = 20,
-        
+
         HideDetection = 18,
     };
+	
+	griffin.Stats[EntityStat.MagicDamageTakenReduction].Base = 20;
     
     griffin.AddStatus(new NightVisionStatus(griffin)); 
     
@@ -110312,7 +110321,7 @@
         }, 
         {
             new CreatureAttack(11, 10, 25, "The griffin buries its talons into you.",
-                                                    new AttackStunComponent(20.0)),         30
+                                                    new AttackDazeComponent(20.0)),         30
         }, 
         {
             new CreatureAttack(11, 20, 35, "The griffin pummels you with its wings."),      30
@@ -110596,7 +110605,7 @@
     {
         new CreatureAttack(6, 1, 8, "You have been stung by a beetle.",
                         new AttackPoisonComponent(3), 
-                        new AttackStunComponent(10))
+                        new AttackDazeComponent(10))
     };
     
     beetle.Blocks = new CreatureBlockCollection
@@ -110678,6 +110687,7 @@
     {
         MaxHealth = 28, Health = 28,
         BaseDodge = 12,
+        BasePenetration = ShieldPenetration.None,
 
         Experience = 250,
 
@@ -110853,9 +110863,9 @@
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | 
                    CreatureImmunity.Bashing | CreatureImmunity.Poison | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
-
-        DeathResistance = 40,
     };
+	
+	wyrm.Stats[EntityStat.DeathResistance].Base = 20;
     
     wyrm.Attacks = new CreatureAttackCollection
     {
@@ -110917,13 +110927,13 @@
     rat.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(6, 3, 12, "The rat rakes you with its claws"), 50 
+            new CreatureAttack(6, 3, 12, "The rat rakes you with its claws."), 50 
         }, 
         {
-            new CreatureAttack(6, 4, 10, "The rat bites you"), 30
+            new CreatureAttack(6, 4, 10, "The rat bites you."), 30
         },
         {
-            new CreatureAttack(6, 2, 8, "The rat whips you with its tail"), 20 
+            new CreatureAttack(6, 2, 8, "The rat whips you with its tail."), 20 
         },
     };
     
@@ -110977,7 +110987,7 @@
     {
         new CreatureAttack(6, 3, 10, "The viper strikes you.",
                             new AttackPoisonComponent(6, 30),
-                            new AttackStunComponent(10))
+                            new AttackDazeComponent(10))
     };
     
     viper.Blocks = new CreatureBlockCollection
@@ -111025,7 +111035,7 @@
         {
             new CreatureAttack(6, 4, 8, "The scorpion stings you with its tail.",
                     new AttackPoisonComponent(5),
-                    new AttackStunComponent(10)),                                    40 
+                    new AttackDazeComponent(10)),                                    40 
         }, 
     };
     
@@ -111159,6 +111169,7 @@
         HideDetection = 18,         
         Experience = 1709,
         CanFlee = true,
+        BasePenetration = ShieldPenetration.VeryLight,
     };
     
     orc.Attacks = new CreatureAttackCollection
@@ -111398,9 +111409,9 @@
     {
         MaxHealth = 52, Health = 52,
         BaseDodge = 14,
+        BasePenetration = ShieldPenetration.VeryLight,
         HideDetection = 21,
         Experience = 1507,
-        BasePenetration = ShieldPenetration.VeryLight,
     };
     
     goblin.Attacks = new CreatureAttackCollection
@@ -111552,9 +111563,9 @@
     {
         MaxHealth = 57, Health = 57,
         BaseDodge = 14,
+        BasePenetration = ShieldPenetration.VeryLight,
         HideDetection = 21,
         Experience = 1755,
-        BasePenetration = ShieldPenetration.VeryLight,
         CanFlee = true,
     };
     
@@ -111827,9 +111838,9 @@
     {
         MaxHealth = 81, Health = 81,
         BaseDodge = 15,
+        BasePenetration = ShieldPenetration.VeryLight,
         HideDetection = 25,
         Experience = 2902,
-        BasePenetration = ShieldPenetration.VeryLight,
         
         CanFlee = true,
     };
@@ -112074,9 +112085,9 @@
 
         CanFlee = true,
         CanSwim = true,
-
-        FireProtection = 100,
     };
+	
+	wizard.Stats[EntityStat.FireProtection].Base = 100;
     
     wizard.Attacks = new CreatureAttackCollection
     {
@@ -112086,7 +112097,7 @@
     wizard.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<FireballSpell>(
-            skillLevel: 9, cost: 6,
+            skillLevel: 5, cost: 6,
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
             skillLevel: 9, cost: 5, 
@@ -112151,7 +112162,7 @@
         }, 
         { 
             new CreatureAttack(11, 13, 20, "You've been gored by the minotaur.",
-                        new AttackStunComponent(10)),                                   30
+                        new AttackDazeComponent(10)),                                   30
         }, 
         { 
             new CreatureAttack(11, 16, 22, "You've been trampled by the minotaur."),    10
@@ -112207,15 +112218,16 @@
         Experience = 3654,
         BasePenetration = ShieldPenetration.Light,
         Movement = 2,
-        MagicProtection = 13,
         
         CanFly = true,
         
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.Silver,
-        
-        FireProtection = 100,
     };
+	
+	gargoyle.Stats[EntityStat.MagicDamageTakenReduction].Base = 13;
+	
+	gargoyle.Stats[EntityStat.FireProtection].Base = 100;
     
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
     
@@ -112280,11 +112292,12 @@
         BaseDodge = 18,
         HideDetection = 25,
         Experience = 3117,
-        FireProtection = 100,
         BasePenetration = ShieldPenetration.VeryLight,
 
         Movement = 2,
     };    
+	
+	salamander.Stats[EntityStat.FireProtection].Base = 100;
 
     salamander.Attacks = new CreatureAttackCollection
     {
@@ -112353,27 +112366,27 @@
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing 
                    | CreatureImmunity.Bashing | CreatureImmunity.Poison | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
-        
-        IceProtection =  100,
-        DeathResistance = 40,
     };
-    
+	
+	serpent.Stats[EntityStat.IceProtection].Base = 100;
+    serpent.Stats[EntityStat.DeathResistance].Base = 20;
+		
     serpent.AddStatus(new NightVisionStatus(serpent)); 
     serpent.AddStatus(new BreatheWaterStatus(serpent));
     
     serpent.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(16, 20, 32, "The serpent bites you with it's fangs."),   60 
+            new CreatureAttack(16, 20, 32, "The serpent bites you with its fangs."),   60 
         }, 
         {
-            new CreatureAttack(16, 20, 32, "The serpent bites you with it's fangs.",
-                                        new AttackStunComponent(80),
+            new CreatureAttack(16, 20, 32, "The serpent bites you with its fangs.",
+                                        new AttackDazeComponent(80),
                                         new AttackPoisonComponent(9)),             20 
         }, 
         {
-            new CreatureAttack(16, 25, 37, "The serpent strikes you with it's tail.",
-                                        new AttackStunComponent(10)),                   20 
+            new CreatureAttack(16, 25, 37, "The serpent strikes you with its tail.",
+                                        new AttackDazeComponent(10)),                   20 
         }, 
     };
     
@@ -112481,16 +112494,16 @@
         BaseDodge = 22,
         HideDetection = 26,
         Experience = 5262,
-        MagicProtection = 15,
         Movement = 2,
         CanFly = true,
         BasePenetration = ShieldPenetration.Medium,
         
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.Silver,
-
-        FireProtection = 100,
     };
+
+	gargoyle.Stats[EntityStat.FireProtection].Base = 100;
+	gargoyle.Stats[EntityStat.MagicDamageTakenReduction].Base = 15;
     
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
     
@@ -112772,7 +112785,7 @@
     {
         MaxHealth = 99, Health = 99,
         BaseDodge = 18,
-        BasePenetration = ShieldPenetration.Light,
+        BasePenetration = ShieldPenetration.VeryLight,
 
         Experience = 4179,
 
@@ -112919,7 +112932,7 @@
     wizard.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<FireballSpell>(
-            skillLevel: 11, cost: 6,
+            skillLevel: 7, cost: 6,
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
             skillLevel: 9, cost: 5,
@@ -112969,12 +112982,13 @@
         BaseDodge = 20,
         HideDetection = 26,
         Experience = 4489,
-        FireProtection = 100,
         BasePenetration = ShieldPenetration.Light,
 
         Movement = 2,
     };
     
+	salamander.Stats[EntityStat.FireProtection].Base = 100;
+	
     salamander.Attacks = new CreatureAttackCollection
     {
         { 
@@ -113161,7 +113175,7 @@
     banshee.AddGold(108);
     banshee.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorAboveAverage), 
             new LootPackEntry(true, undeadTreasure,    0.63), 
             new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, dungeon5Treasure, 0.5), 
@@ -113219,7 +113233,7 @@
     banshee.AddGold(108);
     banshee.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorAboveAverage), 
             new LootPackEntry(true, undeadTreasure,    0.63), 
             new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, dungeon5Treasure, 0.5), 
@@ -113283,7 +113297,7 @@
         new LootPack(
             new LootPackEntry(true, (from, container) => new YouthPotion(),        0.4),
             new LootPackEntry(true, undeadTreasure,    0.63), 
-            new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorAboveAverage), 
             new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, dungeon5Treasure, 0.5), 
             new LootPackEntry(true, dungeon5Rings, 0.5), 
@@ -113329,9 +113343,9 @@
 
         CanFlee = true,
         CanSwim = true,
-        
-        IceProtection = 100,
     };
+	
+	wizard.Stats[EntityStat.IceProtection].Base = 100;
     
     wizard.AddStatus(new NightVisionStatus(wizard));
     
@@ -113346,7 +113360,7 @@
             skillLevel: 12, cost: 10,
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<IceStormSpell>(
-                skillLevel: 14, cost: 6,
+                skillLevel: 10, cost: 6,
                 mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
 
@@ -113556,7 +113570,7 @@
             new LootPackEntry(true, (from, container) => new YouthPotion(),        0.4),
             new LootPackEntry(true, undeadTreasure,    0.63), 
             new LootPackEntry(true, (from, container) => new DemonWand(), 1),
-            new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorAboveAverage), 
             new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, dungeon5Treasure, 0.5), 
             new LootPackEntry(true, dungeon5Rings, 0.5), 
@@ -113616,7 +113630,7 @@
     wight.AddGold(108);
     wight.AddLoot(
         new LootPack(
-            new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorNormal), 
+            new LootPackEntry(true, oakGenericGems, 12.5, gemsPriceMutatorAboveAverage), 
             new LootPackEntry(true, undeadTreasure,    0.63), 
             new LootPackEntry(true, oakHigherBottles, 20.0),
             new LootPackEntry(true, dungeon5Treasure, 0.5), 
@@ -113656,9 +113670,9 @@
 
         VisibilityDistance = 1,
         BasePenetration = ShieldPenetration.Light,
-        
-        IceProtection = 100,
     };
+	
+	lich.Stats[EntityStat.IceProtection].Base = 100;
     
     lich.AddStatus(new NightVisionStatus(lich));
     
@@ -113671,7 +113685,7 @@
     lich.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<IceStormSpell>(
-            skillLevel: 32, cost: 6,
+            skillLevel: 18, cost: 6,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
 
@@ -113780,12 +113794,12 @@
         BasePenetration = ShieldPenetration.Heavy,
         
         CanJumpkick = true,
-        
-        FireProtection = 100,
-        IceProtection = 100,
-        
+
         IsTethered = true,
     };
+	
+	twin.Stats[EntityStat.FireProtection].Base = 100;
+	twin.Stats[EntityStat.IceProtection].Base = 100;
     
     twin.AddStatus(new NightVisionStatus(twin));
     
@@ -113798,7 +113812,7 @@
     twin.Spells = new CreatureSpellCollection(100)
     {
        { new CreatureSpell<IceStormSpell>(
-            skillLevel: 32), 100, TimeSpan.FromSeconds(12.0) }
+            skillLevel: 17), 100, TimeSpan.FromSeconds(12.0) }
     };
 
     twin.AddGold(1800);
@@ -113849,13 +113863,13 @@
         BasePenetration = ShieldPenetration.Heavy,
         
         CanJumpkick = true,
-        
-        FireProtection = 100,
-        IceProtection = 100,
-        
+
         IsTethered = true,
     };
-    
+	
+	twin.Stats[EntityStat.FireProtection].Base = 100;
+    twin.Stats[EntityStat.IceProtection].Base = 100;
+	
     twin.AddStatus(new NightVisionStatus(twin));
     
     twin.Attacks = new CreatureAttackCollection
@@ -113868,7 +113882,7 @@
     twin.Spells = new CreatureSpellCollection(100)
     {
         { new CreatureSpell<FireballSpell>(
-            skillLevel: 32), 100, TimeSpan.FromSeconds(12.0) }
+            skillLevel: 17), 100, TimeSpan.FromSeconds(12.0) }
     };
     
     twin.AddGold(1800);
@@ -113924,7 +113938,7 @@
     
     doomOrc.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(14)
+        new CreatureAttack(14, 10, 20, "Doom.Orc hits you with arrow.")
     };
                 
     doomOrc.Wield(new HeavyCrossbow());
@@ -113961,13 +113975,13 @@
     {
         MaxHealth = 80, Health = 80,
         BaseDodge = 16,
+        BasePenetration = ShieldPenetration.VeryLight,
 
         Experience = 2902,
 
         CanFlee = true,
         
         HideDetection = 14,
-        BasePenetration = ShieldPenetration.Light,
     };
     
     orc.Attacks = new CreatureAttackCollection
@@ -114064,6 +114078,7 @@
 	var dragon = new Dragon()
     {
         Name = "dragon",
+        Body = 164,
         
         MaxHealth = 2100, Health = 2100,
         MaxMana = 6, Mana = 6,
@@ -114079,13 +114094,13 @@
 
         Immunity = CreatureImmunity.Web,
 
-        FireProtection = 100,
-        IceProtection = 100,
-        StunProtection = 100,
-        
         IsTethered = true,
     };
-    
+	
+	dragon.Stats[EntityStat.FireProtection].Base = 100;
+    dragon.Stats[EntityStat.IceProtection].Base = 100;
+	dragon.Stats[EntityStat.StunProtection].Base = 100;
+	
     dragon.AddStatus(new NightVisionStatus(dragon));
 
     dragon.AddImmunity(typeof(WhirlwindSpell));
@@ -114095,17 +114110,17 @@
             {
                 new CreatureAttack(20, 30, 50, "The dragon slashes you with its claws.",
                                     new AttackProneComponent(5),
-                                    new AttackStunComponent(5)),                            30
+                                    new AttackDazeComponent(5)),                            30
             },
             {
                 new CreatureAttack(20, 37, 60, "The dragon smashes you with its tail.",
                                     new AttackProneComponent(5),
-                                    new AttackStunComponent(10)),                           30
+                                    new AttackDazeComponent(10)),                           30
             },
             {
                 new CreatureAttack(20, 45, 69, "The dragon buffets you with its wings.",
                                     new AttackProneComponent(5),
-                                    new AttackStunComponent(15)),                           40
+                                    new AttackDazeComponent(15)),                           40
             },
     };
     
@@ -114228,15 +114243,16 @@
         <block><![CDATA[
     var centaur = new GroveDefender()
     {
-        Name = "Grove Defender",
+        Name = "grove defender",
         MaxHealth = 208, Health = 208,
         BaseDodge = 21,
         BasePenetration = ShieldPenetration.Medium,     
         Experience = 10913,
         HideDetection = 30,
         CanCharge = true,
-        MagicProtection = 21,
     };
+	
+	centaur.Stats[EntityStat.MagicDamageTakenReduction].Base = 21;
     
     centaur.AddStatus(new NightVisionStatus(centaur));
     
@@ -114278,7 +114294,7 @@
         <block><![CDATA[
     var dryad = new GroveDryads()
     {
-        Name = "Dryad",
+        Name = "dryad",
         MaxHealth = 140, Health = 140,
         MaxMana = 14, Mana = 14,
         BaseDodge = 25,
@@ -114347,10 +114363,11 @@
         
         CanSwim = true,
         CanJumpkick = true,
-        FireProtection = 42,
         IsTethered = true,
         
     };
+	
+	bear.Stats[EntityStat.FireProtection].Base = 42;
     
     bear.AddStatus(new NightVisionStatus(bear));
         
@@ -114360,10 +114377,10 @@
             new CreatureAttack(21,     50, 65,  "The bear spirit slashes you with spectral claws."),        50 
         },
         {
-            new CreatureAttack(21,     45, 65,  "The bear spirits attack passes through your defenses."),   40 
+            new CreatureAttack(21,     45, 65,  "The bear spirit's attack passes through your defenses."),   40 
         },
         {
-            new CreatureAttack(21,     60, 73, "The spirit batters you with impossible force."),            10 
+            new CreatureAttack(21,     60, 73, "The bear spirit batters you with impossible force."),            10 
         }
     };
         
@@ -114418,13 +114435,13 @@
     wolf.Attacks = new CreatureAttackCollection
     {
             { 
-                new CreatureAttack(21, 20, 35, "The spirit rakes you with its claws."),         50 
+                new CreatureAttack(21, 20, 35, "The wolf spirit rakes you with its claws."),         50 
             }, 
             {
-                new CreatureAttack(21, 30, 42, "The spirit sinks its teeth into you."),         30
+                new CreatureAttack(21, 30, 42, "The wolf spirit sinks its teeth into you."),         30
             }, 
             { 
-                new CreatureAttack(21, 37, 49, "The wolf lunges at you, passing through you."), 20 
+                new CreatureAttack(21, 37, 49, "The wolf spirit lunges at you, passing through you."), 20 
             }, 
     };
     
@@ -114486,7 +114503,7 @@
             new CreatureAttack(21, 25, 40, "A spectral tusk impales you."), 60 
         }, 
         {
-            new CreatureAttack(21, 35, 49, "The boar charges through you."), 40 
+            new CreatureAttack(21, 35, 49, "The boar spirit charges through you."), 40 
         }, 
     };
     
@@ -114539,7 +114556,7 @@
     
     viper.Attacks = new CreatureAttackCollection()
     {
-        new CreatureAttack(18,     10, 30,      "The viper sinks its spectral fangs into your flesh.", 
+        new CreatureAttack(18,     10, 30,      "The viper spirit sinks its spectral fangs into your flesh.", 
                                             new AttackPoisonComponent(33, 50))
     };  
     
@@ -114603,8 +114620,8 @@
 
     piranha.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(17,     10, 15,   "The piranha swarm upon you"),      70 }, 
-        { new CreatureAttack(17,     12, 17,  "The piranha bite you"),            30 }, 
+        { new CreatureAttack(17,     10, 15,   "The frenzied fish swarms upon you."),      70 }, 
+        { new CreatureAttack(17,     12, 17,  "The frenzied fish bites you."),            30 }, 
     };
         
     piranha.Blocks = new CreatureBlockCollection
@@ -114744,11 +114761,11 @@
 
         Experience = 10913,
         BasePenetration = ShieldPenetration.Medium,
-        
-        MagicProtection = 20,
-        
+
         HideDetection = 18,
     };
+	
+	griffin.Stats[EntityStat.MagicDamageTakenReduction].Base = 20;
     
     griffin.AddStatus(new NightVisionStatus(griffin)); 
     
@@ -114759,7 +114776,7 @@
         }, 
         {
             new CreatureAttack(17, 15, 25, "The griffin buries its talons into you.",
-                                                    new AttackStunComponent(20.0)),         30
+                                                    new AttackDazeComponent(20.0)),         30
         }, 
         {
             new CreatureAttack(17, 20, 31, "The griffin pummels you with its wings."),      30
@@ -114814,9 +114831,10 @@
         BaseDodge = 26,
         CanCharge = true,
         Experience = 10913,
-        FireProtection = 21,
         BasePenetration = ShieldPenetration.Medium,
     };
+	
+	largeBear.Stats[EntityStat.FireProtection].Base = 21;
     
     largeBear.AddStatus(new NightVisionStatus(largeBear));    
     
@@ -115035,7 +115053,7 @@
         <block><![CDATA[
     var centaur = new Centaur()
     {
-        Name = "Grove Defender",
+        Name = "grove defender",
         MaxHealth = 234, Health = 234,
         BaseDodge = 32,
         Alignment = Alignment.Evil,
@@ -115043,9 +115061,10 @@
         Experience = 13095,
         HideDetection = 30,
         CanCharge = true,
-        MagicProtection = 20,
         CanSwim = true,
     };
+	
+	centaur.Stats[EntityStat.MagicDamageTakenReduction].Base = 20;
     
     centaur.AddStatus(new NightVisionStatus(centaur));
     centaur.AddStatus(new BreatheWaterStatus(centaur));
@@ -115088,7 +115107,7 @@
         <block><![CDATA[
     var dryad = new HeartDryad()
     {
-        Name = "Tainted Dryad",
+        Name = "tainted dryad",
         MaxHealth = 158, Health = 158,
         MaxMana = 14, Mana = 14,
         BaseDodge = 26,
@@ -115195,12 +115214,13 @@
     {
         MaxHealth = 200, Health = 200,
         BaseDodge = 28,
-        MagicProtection = 30,
         Experience = 50,
         Movement = 0,
         HideDetection = 45,
         Alignment = Alignment.Neutral,
     };
+	
+	dryad.Stats[EntityStat.MagicDamageTakenReduction].Base = 30;
     
     dryad.AddStatus(new NightVisionStatus(dryad));
     
@@ -115295,7 +115315,7 @@
     necro.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<FireballSpell>(
-            skillLevel: 15, cost: 7)
+            skillLevel: 8, cost: 7)
     };
     
     necro.Wield(new BlackStaff());
@@ -115465,27 +115485,27 @@
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing 
                    | CreatureImmunity.Bashing | CreatureImmunity.Poison | CreatureImmunity.Magic,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
-        
-        IceProtection =  100,
-        DeathResistance = 40,
     };
-    
+	
+	serpent.Stats[EntityStat.IceProtection].Base = 100;
+    serpent.Stats[EntityStat.DeathResistance].Base = 20;
+	
     serpent.AddStatus(new NightVisionStatus(serpent)); 
     serpent.AddStatus(new BreatheWaterStatus(serpent));
     
     serpent.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(15, 20, 35, "The serpent bites you with it's fangs."),   60 
+            new CreatureAttack(15, 20, 35, "The serpent bites you with its fangs."),   60 
         }, 
         {
-            new CreatureAttack(15, 20, 35, "The serpent bites you with it's fangs.",
-                                        new AttackStunComponent(80),
+            new CreatureAttack(15, 20, 35, "The serpent bites you with its fangs.",
+                                        new AttackDazeComponent(80),
                                         new AttackPoisonComponent(12, 20)),             20 
         }, 
         {
-            new CreatureAttack(15, 25, 40, "The serpent strikes you with it's tail.",
-                                        new AttackStunComponent(10)),                   20 
+            new CreatureAttack(15, 25, 40, "The serpent strikes you with its tail.",
+                                        new AttackDazeComponent(10)),                   20 
         }, 
     };
     
@@ -115555,7 +115575,7 @@
     necro.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<FireballSpell>(
-            skillLevel: 15, cost: 7)
+            skillLevel: 8, cost: 7)
     };
     
     necro.Wield(new BlackStaff());
@@ -115688,9 +115708,67 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="BossNotableLevel11Scorpions">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var scorpion = new Scorpion()
+    {
+        MaxHealth = 100, Health = 100,
+
+        Experience = 4500,
+        BaseDodge = 26,
+        HideDetection = 25,  
+        VisibilityDistance = 1,
+
+        Movement = 2,
+        
+        Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing 
+                   | CreatureImmunity.Bashing | CreatureImmunity.Poison | CreatureImmunity.Magic,
+        Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
+    };
+    
+    scorpion.AddWeakness(typeof(MagicMissileSpell));
+    
+    scorpion.Attacks = new CreatureAttackCollection
+    {
+        { 
+            new CreatureAttack(16, 18, 26, "The scorpion crushes you with its claws."), 60 
+        }, 
+        {
+            new CreatureAttack(16, 20, 30, "The scorpion stings you with its tail.",
+                    new AttackPoisonComponent(11),
+                    new AttackDazeComponent(10)),                                    40 
+        }, 
+    };
+    
+    scorpion.Blocks = new CreatureBlockCollection
+    {
+            new CreatureBlock(6, "the carapace"),
+            new CreatureBlock(3, "a claw"),
+            new CreatureBlock(1, "a tail") 
+    };
+
+    return scorpion;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
-    <spawn type="LocationSpawner" name="oakSheriff">
+    <spawn type="LocationSpawner" name="oakSheriff" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -115710,7 +115788,7 @@
       <entry entity="oakSheriff" size="1" minimum="1" maximum="1" />
       <location x="14" y="13" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakLowMaTrainer">
+    <spawn type="LocationSpawner" name="oakLowMaTrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -115730,7 +115808,7 @@
       <entry entity="oakLowMaTrainer" size="1" minimum="1" maximum="1" />
       <location x="19" y="21" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakWeaponTrainer">
+    <spawn type="LocationSpawner" name="oakWeaponTrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -115750,7 +115828,7 @@
       <entry entity="oakWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="4" y="3" region="8" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakTavern">
+    <spawn type="LocationSpawner" name="oakTavern" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -115798,7 +115876,7 @@
       <entry entity="oakShopkeepers" size="1" minimum="1" maximum="1" />
       <location x="31" y="27" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakApothecary">
+    <spawn type="LocationSpawner" name="oakApothecary" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -115879,7 +115957,7 @@
       <entry entity="oakShopkeepers" size="1" minimum="1" maximum="1" />
       <location x="8" y="7" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakArmourer">
+    <spawn type="LocationSpawner" name="oakArmourer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -115947,7 +116025,7 @@
       <entry entity="oakShopkeepers" size="1" minimum="1" maximum="1" />
       <location x="4" y="11" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakPawner">
+    <spawn type="LocationSpawner" name="oakPawner" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -116045,7 +116123,7 @@
       <entry entity="oakShopkeepers" size="1" minimum="1" maximum="1" />
       <location x="17" y="27" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakWeaponsmith">
+    <spawn type="LocationSpawner" name="oakWeaponsmith" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -116113,7 +116191,7 @@
       <entry entity="oakShopkeepers" size="1" minimum="1" maximum="1" />
       <location x="11" y="24" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakJeweler">
+    <spawn type="LocationSpawner" name="oakJeweler" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -116180,7 +116258,7 @@
       <entry entity="oakShopkeepers" size="1" minimum="1" maximum="1" />
       <location x="4" y="16" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakTailor">
+    <spawn type="LocationSpawner" name="oakTailor" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116200,7 +116278,7 @@
       <entry entity="oakTailor" size="1" minimum="1" maximum="1" />
       <location x="41" y="15" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakRecallVendor">
+    <spawn type="LocationSpawner" name="oakRecallVendor" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116220,7 +116298,7 @@
       <entry entity="oakRecallVendor" size="1" minimum="1" maximum="1" />
       <location x="8" y="18" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakThaumTrainer">
+    <spawn type="LocationSpawner" name="oakThaumTrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -116251,7 +116329,7 @@
       <entry entity="oakThaumTrainer" size="1" minimum="1" maximum="1" />
       <location x="26" y="6" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakBalmVendor">
+    <spawn type="LocationSpawner" name="oakBalmVendor" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116271,7 +116349,7 @@
       <entry entity="oakBalmVendor" size="1" minimum="1" maximum="1" />
       <location x="28" y="10" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakBanker">
+    <spawn type="LocationSpawner" name="oakBanker" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -116294,7 +116372,7 @@
       <entry entity="oaBanker" size="1" minimum="1" maximum="1" />
       <location x="6" y="24" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="surfaceThiefTrainer">
+    <spawn type="LocationSpawner" name="surfaceThiefTrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116314,7 +116392,7 @@
       <entry entity="surfaceThiefTrainer" size="1" minimum="1" maximum="1" />
       <location x="4" y="4" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakWizTrainer">
+    <spawn type="LocationSpawner" name="oakWizTrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116334,7 +116412,7 @@
       <entry entity="oakWizTrainer" size="1" minimum="1" maximum="1" />
       <location x="4" y="12" region="14" />
     </spawn>
-    <spawn type="LocationSpawner" name="aniet">
+    <spawn type="LocationSpawner" name="aniet" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116354,7 +116432,7 @@
       <entry entity="oakAniet" size="1" minimum="1" maximum="1" />
       <location x="4" y="1" region="255" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakPriest">
+    <spawn type="LocationSpawner" name="oakPriest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116374,7 +116452,7 @@
       <entry entity="oakPriest" size="1" minimum="1" maximum="1" />
       <location x="28" y="9" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="tagget">
+    <spawn type="LocationSpawner" name="tagget" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116394,7 +116472,7 @@
       <entry entity="oakTagget" size="1" minimum="1" maximum="1" />
       <location x="13" y="37" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="cudyl">
+    <spawn type="LocationSpawner" name="cudyl" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116414,7 +116492,7 @@
       <entry entity="oakCudyl" size="1" minimum="1" maximum="1" />
       <location x="77" y="18" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="surfaceShark">
+    <spawn type="LocationSpawner" name="surfaceShark" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116434,7 +116512,7 @@
       <entry entity="surfaceShark" size="1" minimum="1" maximum="1" />
       <location x="48" y="28" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="dungeon1Spider0">
+    <spawn type="LocationSpawner" name="dungeon1Spider0" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116454,7 +116532,7 @@
       <entry entity="level6Spider" size="1" minimum="1" maximum="1" />
       <location x="17" y="1" region="251" />
     </spawn>
-    <spawn type="LocationSpawner" name="dungeon1Spider1">
+    <spawn type="LocationSpawner" name="dungeon1Spider1" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116474,7 +116552,7 @@
       <entry entity="level6Spider" size="1" minimum="1" maximum="1" />
       <location x="25" y="9" region="251" />
     </spawn>
-    <spawn type="LocationSpawner" name="hobgoblinCavesSpider">
+    <spawn type="LocationSpawner" name="hobgoblinCavesSpider" enabled="true">
       <minimumDelay>-2700</minimumDelay>
       <maximumDelay>4800</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116494,7 +116572,7 @@
       <entry entity="level7Spider" size="1" minimum="1" maximum="1" />
       <location x="10" y="8" region="239" />
     </spawn>
-    <spawn type="LocationSpawner" name="dungeon3Serpent">
+    <spawn type="LocationSpawner" name="dungeon3Serpent" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>3600</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116514,7 +116592,7 @@
       <entry entity="BossNotableLevel9Serpent" size="1" minimum="1" maximum="1" />
       <location x="23" y="19" region="235" />
     </spawn>
-    <spawn type="LocationSpawner" name="dungeon3Pescalanor">
+    <spawn type="LocationSpawner" name="dungeon3Pescalanor" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>3600</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116534,7 +116612,7 @@
       <entry entity="BossMiniLevel9Pescalanor" size="1" minimum="1" maximum="1" />
       <location x="20" y="6" region="235" />
     </spawn>
-    <spawn type="LocationSpawner" name="templeLichTwins">
+    <spawn type="LocationSpawner" name="templeLichTwins" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>3600</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -116555,7 +116633,7 @@
       <entry entity="BossNotableLevel14LichVlobra" size="1" minimum="1" maximum="1" />
       <location x="18" y="38" region="227" />
     </spawn>
-    <spawn type="LocationSpawner" name="doomOrcAndPresence">
+    <spawn type="LocationSpawner" name="doomOrcAndPresence" enabled="true">
       <minimumDelay>1800</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116576,7 +116654,7 @@
       <entry entity="BossMiniLevel10Presence" size="1" minimum="1" maximum="1" />
       <location x="43" y="38" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="doomOrcSentry">
+    <spawn type="LocationSpawner" name="doomOrcSentry" enabled="true">
       <minimumDelay>1800</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116596,7 +116674,7 @@
       <entry entity="Level8OrcSentry" size="3" minimum="4" maximum="4" />
       <location x="50" y="38" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakvaelDragon">
+    <spawn type="LocationSpawner" name="oakvaelDragon" enabled="true">
       <minimumDelay>12600</minimumDelay>
       <maximumDelay>15300</maximumDelay>
       <maximum>1</maximum>
@@ -116617,7 +116695,7 @@
       <entry entity="BossMinorLevel14Dragon" size="1" minimum="1" maximum="1" />
       <location x="10" y="9" region="225" />
     </spawn>
-    <spawn type="LocationSpawner" name="groveBear">
+    <spawn type="LocationSpawner" name="groveBear" enabled="true">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1500</maximumDelay>
       <maximum>1</maximum>
@@ -116638,7 +116716,7 @@
       <entry entity="BossMinorLevel15Bear" size="1" minimum="1" maximum="1" />
       <location x="37" y="0" region="236" />
     </spawn>
-    <spawn type="LocationSpawner" name="groveWolf">
+    <spawn type="LocationSpawner" name="groveWolf" enabled="true">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>1</maximum>
@@ -116659,7 +116737,7 @@
       <entry entity="BossNotableLevel15Wolf" size="1" minimum="1" maximum="1" />
       <location x="12" y="-3" region="236" />
     </spawn>
-    <spawn type="LocationSpawner" name="groveBoar">
+    <spawn type="LocationSpawner" name="groveBoar" enabled="true">
       <minimumDelay>1500</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>1</maximum>
@@ -116680,7 +116758,7 @@
       <entry entity="BossNotableLevel15Boar" size="1" minimum="1" maximum="1" />
       <location x="1" y="7" region="236" />
     </spawn>
-    <spawn type="LocationSpawner" name="groveKeeper">
+    <spawn type="LocationSpawner" name="groveKeeper" enabled="true">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>7200</maximumDelay>
       <maximum>1</maximum>
@@ -116701,7 +116779,7 @@
       <entry entity="BossNotableLevel15Naiad" size="1" minimum="1" maximum="1" />
       <location x="23" y="7" region="236" />
     </spawn>
-    <spawn type="LocationSpawner" name="byrch">
+    <spawn type="LocationSpawner" name="byrch" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116721,7 +116799,7 @@
       <entry entity="oakByrch" size="1" minimum="1" maximum="1" />
       <location x="2" y="3" region="255" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakGorffwylltra">
+    <spawn type="LocationSpawner" name="oakGorffwylltra" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116741,7 +116819,7 @@
       <entry entity="oakGorffwylltra" size="1" minimum="1" maximum="1" />
       <location x="3" y="2" region="225" />
     </spawn>
-    <spawn type="LocationSpawner" name="heartNecro3">
+    <spawn type="LocationSpawner" name="heartNecro3" enabled="true">
       <minimumDelay>2700</minimumDelay>
       <maximumDelay>3600</maximumDelay>
       <maximum>1</maximum>
@@ -116778,7 +116856,7 @@
       <entry entity="BossNotableLevel16Necro3" size="1" minimum="1" maximum="1" />
       <location x="116" y="42" region="236" />
     </spawn>
-    <spawn type="LocationSpawner" name="heartKeeper">
+    <spawn type="LocationSpawner" name="heartKeeper" enabled="true">
       <minimumDelay>10800</minimumDelay>
       <maximumDelay>18000</maximumDelay>
       <maximum>1</maximum>
@@ -116799,7 +116877,7 @@
       <entry entity="heartKeeper" size="1" minimum="1" maximum="1" />
       <location x="26" y="43" region="235" />
     </spawn>
-    <spawn type="LocationSpawner" name="heartHeart">
+    <spawn type="LocationSpawner" name="heartHeart" enabled="true">
       <minimumDelay>10800</minimumDelay>
       <maximumDelay>18000</maximumDelay>
       <maximum>1</maximum>
@@ -116831,7 +116909,7 @@
       <entry entity="heartHeart" size="1" minimum="1" maximum="1" />
       <location x="26" y="42" region="235" />
     </spawn>
-    <spawn type="LocationSpawner" name="heartHealer1">
+    <spawn type="LocationSpawner" name="heartHealer1" enabled="true">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>600</maximumDelay>
       <maximum>1</maximum>
@@ -116852,7 +116930,7 @@
       <entry entity="heartHealer" size="1" minimum="1" maximum="1" />
       <location x="44" y="-20" region="236" />
     </spawn>
-    <spawn type="LocationSpawner" name="heartHealer2">
+    <spawn type="LocationSpawner" name="heartHealer2" enabled="true">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>600</maximumDelay>
       <maximum>1</maximum>
@@ -116873,7 +116951,7 @@
       <entry entity="heartHealer" size="1" minimum="1" maximum="1" />
       <location x="54" y="-21" region="236" />
     </spawn>
-    <spawn type="LocationSpawner" name="heartHealer3">
+    <spawn type="LocationSpawner" name="heartHealer3" enabled="true">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>600</maximumDelay>
       <maximum>1</maximum>
@@ -116894,7 +116972,7 @@
       <entry entity="heartHealer" size="1" minimum="1" maximum="1" />
       <location x="60" y="-19" region="236" />
     </spawn>
-    <spawn type="LocationSpawner" name="questYuri">
+    <spawn type="LocationSpawner" name="questYuri" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116914,7 +116992,7 @@
       <entry entity="surfaceYuri" size="1" minimum="1" maximum="1" />
       <location x="14" y="38" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="questKonran">
+    <spawn type="LocationSpawner" name="questKonran" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116934,7 +117012,7 @@
       <entry entity="dungeon4Konran" size="1" minimum="1" maximum="1" />
       <location x="2" y="7" region="232" />
     </spawn>
-    <spawn type="LocationSpawner" name="questKinasho">
+    <spawn type="LocationSpawner" name="questKinasho" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116954,7 +117032,7 @@
       <entry entity="oakKinasho" size="1" minimum="1" maximum="1" />
       <location x="17" y="17" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="oakGhost">
+    <spawn type="LocationSpawner" name="oakGhost" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -116974,7 +117052,7 @@
       <entry entity="oakConfessorGhost" size="1" minimum="1" maximum="1" />
       <location x="6" y="7" region="12" />
     </spawn>
-    <spawn type="LocationSpawner" name="GroveHeartBoss">
+    <spawn type="LocationSpawner" name="GroveHeartBoss" enabled="true">
       <minimumDelay>10800</minimumDelay>
       <maximumDelay>21600</maximumDelay>
       <maximum>1</maximum>
@@ -117011,7 +117089,7 @@
       <entry entity="BossMajorLevel16Necrotroph" size="1" minimum="1" maximum="1" />
       <location x="80" y="9" region="236" />
     </spawn>
-    <spawn type="RegionSpawner" name="portalPeacemakers">
+    <spawn type="RegionSpawner" name="portalPeacemakers" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -117035,7 +117113,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="surfaceGriffins">
+    <spawn type="RegionSpawner" name="surfaceGriffins" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -117058,7 +117136,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="surfaceLargeBear">
+    <spawn type="RegionSpawner" name="surfaceLargeBear" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -117081,7 +117159,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="surfaceSpawns">
+    <spawn type="RegionSpawner" name="surfaceSpawns" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -117111,48 +117189,7 @@
         <exclusion left="2" top="3" right="7" bottom="9" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="undeadSpawner">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>1200</maximumDelay>
-      <maximum>49</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="level14Lich" size="1" minimum="6" maximum="7" />
-      <entry entity="level14Wraith" size="1" minimum="6" maximum="7" />
-      <entry entity="level14Spectre" size="1" minimum="6" maximum="7" />
-      <entry entity="level14Wight" size="1" minimum="5" maximum="6" />
-      <entry entity="level14Stalker" size="1" minimum="5" maximum="6" />
-      <entry entity="level14ShroudedBanshee" size="3" minimum="10" maximum="12" />
-      <entry entity="level14CursedBanshee" size="4" minimum="3" maximum="5" />
-      <entry entity="level14Ghoul" size="1" minimum="2" maximum="3" />
-      <entry entity="level14Thaum" size="1" minimum="2" maximum="3" />
-      <entry entity="level14Wizard" size="1" minimum="4" maximum="5" />
-      <bounds region="227">
-        <inclusion left="1" top="5" right="25" bottom="39" />
-        <exclusion left="1" top="5" right="12" bottom="8" />
-        <exclusion left="16" top="5" right="25" bottom="8" />
-        <exclusion left="23" top="9" right="25" bottom="15" />
-        <exclusion left="1" top="14" right="1" bottom="39" />
-        <exclusion left="2" top="38" right="5" bottom="39" />
-        <exclusion left="2" top="23" right="3" bottom="29" />
-        <exclusion left="4" top="25" right="5" bottom="29" />
-        <exclusion left="22" top="33" right="25" bottom="35" />
-        <exclusion left="13" top="36" right="20" bottom="39" />
-      </bounds>
-    </spawn>
-    <spawn type="RegionSpawner" name="surfaceWyrm">
+    <spawn type="RegionSpawner" name="surfaceWyrm" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -117176,7 +117213,7 @@
         <exclusion left="5" top="18" right="6" bottom="28" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="easternLedgeSpawns">
+    <spawn type="RegionSpawner" name="easternLedgeSpawns" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>6</maximum>
@@ -117203,7 +117240,7 @@
         <exclusion left="2" top="2" right="7" bottom="6" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="spiderCavesSpawner">
+    <spawn type="RegionSpawner" name="spiderCavesSpawner" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>12</maximum>
@@ -117233,7 +117270,7 @@
         <exclusion left="39" top="3" right="43" bottom="7" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="hobgoblinCavesSpawn">
+    <spawn type="RegionSpawner" name="hobgoblinCavesSpawn" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>7</maximum>
@@ -117265,7 +117302,7 @@
         <exclusion left="7" top="1" right="7" bottom="1" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="serpentsSeaSpawner">
+    <spawn type="RegionSpawner" name="serpentsSeaSpawner" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>31</maximum>
@@ -117306,7 +117343,7 @@
         <exclusion left="3" top="6" right="5" bottom="13" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="trollTempleSpawner">
+    <spawn type="RegionSpawner" name="trollTempleSpawner" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>31</maximum>
@@ -117340,7 +117377,7 @@
         <exclusion left="12" top="4" right="17" bottom="5" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="groveEntranceFish">
+    <spawn type="RegionSpawner" name="groveEntranceFish" enabled="true">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>3</maximum>
@@ -117364,7 +117401,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="groveEntrance">
+    <spawn type="RegionSpawner" name="groveEntrance" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1500</maximumDelay>
       <maximum>12</maximum>
@@ -117394,7 +117431,7 @@
         <inclusion left="1" top="1" right="8" bottom="1" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="groveEntranceVipers">
+    <spawn type="RegionSpawner" name="groveEntranceVipers" enabled="true">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>1</maximum>
@@ -117418,7 +117455,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="groveEntranceWildlife">
+    <spawn type="RegionSpawner" name="groveEntranceWildlife" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>16</maximum>
@@ -117452,7 +117489,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="groveHeartPond">
+    <spawn type="RegionSpawner" name="groveHeartPond" enabled="true">
       <minimumDelay>1500</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>7</maximum>
@@ -117480,7 +117517,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="hobgoblinCavesNorthEast">
+    <spawn type="RegionSpawner" name="hobgoblinCavesNorthEast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>9</maximum>
@@ -117511,7 +117548,7 @@
         <inclusion left="14" top="10" right="19" bottom="14" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="hobgoblinCavesSouthWest">
+    <spawn type="RegionSpawner" name="hobgoblinCavesSouthWest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>3</maximum>
@@ -117543,7 +117580,7 @@
         <exclusion left="3" top="11" right="7" bottom="15" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="hobgoblinCavesNorthWest">
+    <spawn type="RegionSpawner" name="hobgoblinCavesNorthWest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>4</maximum>
@@ -117574,7 +117611,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="serpentsSeaNorthwest">
+    <spawn type="RegionSpawner" name="serpentsSeaNorthwest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>15</maximum>
@@ -117606,7 +117643,7 @@
         <inclusion left="-4" top="-9" right="9" bottom="7" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="serpentsSeaNortheast">
+    <spawn type="RegionSpawner" name="serpentsSeaNortheast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>15</maximum>
@@ -117639,7 +117676,7 @@
         <inclusion left="29" top="8" right="46" bottom="14" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="serpentsSeaSouthwest">
+    <spawn type="RegionSpawner" name="serpentsSeaSouthwest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>15</maximum>
@@ -117671,7 +117708,7 @@
         <inclusion left="2" top="13" right="23" bottom="37" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="serpentsSeaSoutheast">
+    <spawn type="RegionSpawner" name="serpentsSeaSoutheast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>15</maximum>
@@ -117703,7 +117740,7 @@
         <inclusion left="24" top="18" right="50" bottom="32" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="spiderCavesWest">
+    <spawn type="RegionSpawner" name="spiderCavesWest" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>10</maximum>
@@ -117733,7 +117770,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="spiderCavesEast">
+    <spawn type="RegionSpawner" name="spiderCavesEast" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>15</maximum>
@@ -117765,7 +117802,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="wendyWyrms">
+    <spawn type="RegionSpawner" name="wendyWyrms" enabled="true">
       <minimumDelay>1800</minimumDelay>
       <maximumDelay>2400</maximumDelay>
       <maximum>3</maximum>
@@ -117789,7 +117826,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="wendyMinos">
+    <spawn type="RegionSpawner" name="wendyMinos" enabled="true">
       <minimumDelay>1800</minimumDelay>
       <maximumDelay>2400</maximumDelay>
       <maximum>4</maximum>
@@ -117813,7 +117850,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="groveHeartEntire">
+    <spawn type="RegionSpawner" name="groveHeartEntire" enabled="true">
       <minimumDelay>1500</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>52</maximum>
@@ -117855,7 +117892,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="groveHeartSW">
+    <spawn type="RegionSpawner" name="groveHeartSW" enabled="true">
       <minimumDelay>1500</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>18</maximum>
@@ -117885,7 +117922,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="groveHeartSE">
+    <spawn type="RegionSpawner" name="groveHeartSE" enabled="true">
       <minimumDelay>1500</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>17</maximum>
@@ -117918,7 +117955,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="groveHeartNorth">
+    <spawn type="RegionSpawner" name="groveHeartNorth" enabled="true">
       <minimumDelay>1500</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>18</maximum>
@@ -117952,7 +117989,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="groveHeartVeins">
+    <spawn type="RegionSpawner" name="groveHeartVeins" enabled="true">
       <minimumDelay>2700</minimumDelay>
       <maximumDelay>3000</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -117976,7 +118013,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="hobgoblinCavesSouthEast">
+    <spawn type="RegionSpawner" name="hobgoblinCavesSouthEast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>3</maximum>
@@ -118005,6 +118042,216 @@
       <bounds region="239">
         <inclusion left="12" top="14" right="16" bottom="17" />
         <exclusion left="15" top="14" right="16" bottom="15" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="undeadSpawnNW" enabled="true">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>13</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level14Lich" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Wraith" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Spectre" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Wight" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Stalker" size="1" minimum="1" maximum="2" />
+      <entry entity="level14ShroudedBanshee" size="3" minimum="2" maximum="3" />
+      <entry entity="level14CursedBanshee" size="4" minimum="1" maximum="2" />
+      <entry entity="level14Ghoul" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Wizard" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Thaum" size="1" minimum="0" maximum="1" />
+      <bounds region="227">
+        <inclusion left="1" top="5" right="16" bottom="23" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="11" top="21" right="15" bottom="23" />
+        <exclusion left="1" top="5" right="11" bottom="7" />
+        <exclusion left="1" top="22" right="2" bottom="24" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="undeadSpawnNE" enabled="true">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>13</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level14Lich" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Wraith" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Spectre" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Wight" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Stalker" size="1" minimum="1" maximum="2" />
+      <entry entity="level14ShroudedBanshee" size="3" minimum="2" maximum="3" />
+      <entry entity="level14CursedBanshee" size="4" minimum="1" maximum="2" />
+      <entry entity="level14Ghoul" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Wizard" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Thaum" size="1" minimum="0" maximum="1" />
+      <bounds region="227">
+        <inclusion left="13" top="5" right="25" bottom="23" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="13" top="21" right="15" bottom="23" />
+        <exclusion left="17" top="5" right="25" bottom="7" />
+        <exclusion left="23" top="8" right="25" bottom="14" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="undeadSpawnSW" enabled="true">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>13</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level14Lich" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Wraith" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Spectre" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Wight" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Stalker" size="1" minimum="1" maximum="2" />
+      <entry entity="level14ShroudedBanshee" size="3" minimum="2" maximum="3" />
+      <entry entity="level14CursedBanshee" size="4" minimum="1" maximum="2" />
+      <entry entity="level14Ghoul" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Wizard" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Thaum" size="1" minimum="0" maximum="1" />
+      <bounds region="227">
+        <inclusion left="1" top="21" right="14" bottom="39" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="11" top="21" right="14" bottom="24" />
+        <exclusion left="1" top="38" right="4" bottom="39" />
+        <exclusion left="1" top="22" right="2" bottom="28" />
+        <exclusion left="2" top="24" right="4" bottom="28" />
+        <exclusion left="11" top="38" right="14" bottom="39" />
+        <exclusion left="13" top="36" right="14" bottom="37" />
+        <exclusion left="14" top="35" right="14" bottom="35" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="undeadSpawnSE" enabled="true">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>13</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level14Lich" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Wraith" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Spectre" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Wight" size="1" minimum="1" maximum="2" />
+      <entry entity="level14Stalker" size="1" minimum="1" maximum="2" />
+      <entry entity="level14ShroudedBanshee" size="3" minimum="2" maximum="3" />
+      <entry entity="level14CursedBanshee" size="4" minimum="1" maximum="2" />
+      <entry entity="level14Ghoul" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Wizard" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Thaum" size="1" minimum="0" maximum="1" />
+      <bounds region="227">
+        <inclusion left="13" top="21" right="25" bottom="39" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="13" top="21" right="16" bottom="24" />
+        <exclusion left="23" top="32" right="25" bottom="34" />
+        <exclusion left="22" top="33" right="22" bottom="34" />
+        <exclusion left="14" top="20" right="15" bottom="21" />
+        <exclusion left="16" top="36" right="19" bottom="39" />
+        <exclusion left="15" top="34" right="16" bottom="36" />
+        <exclusion left="13" top="36" right="15" bottom="39" />
+        <exclusion left="14" top="35" right="14" bottom="35" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="undeadCourtyard" enabled="true">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>8</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level14ShroudedBanshee" size="3" minimum="2" maximum="3" />
+      <entry entity="level14CursedBanshee" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Wizard" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Thaum" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Wight" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Spectre" size="1" minimum="0" maximum="1" />
+      <entry entity="level14Stalker" size="1" minimum="0" maximum="1" />
+      <bounds region="227">
+        <inclusion left="15" top="25" right="21" bottom="33" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="undeadBossScorps" enabled="true">
+      <minimumDelay>1800</minimumDelay>
+      <maximumDelay>2700</maximumDelay>
+      <maximum>2</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossNotableLevel11Scorpions" size="1" minimum="2" maximum="2" />
+      <bounds region="227">
+        <inclusion left="14" top="35" right="16" bottom="38" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="14" top="35" right="15" bottom="35" />
+        <exclusion left="16" top="36" right="16" bottom="38" />
+        <exclusion left="14" top="36" right="14" bottom="36" />
       </bounds>
     </spawn>
   </spawns>

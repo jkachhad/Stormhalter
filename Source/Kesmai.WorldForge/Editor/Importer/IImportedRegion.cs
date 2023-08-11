@@ -1,7 +1,6 @@
-namespace Kesmai.WorldForge.Editor
+namespace Kesmai.WorldForge.Editor;
+
+public interface IImportedRegion
 {
-	public interface IImportedRegion
-	{
 		
-	}
 }

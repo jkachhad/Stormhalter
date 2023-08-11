@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Axe Glacier" version="0.96.0.0">
+<segment name="Axe Glacier" version="0.100.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -3890,16 +3890,18 @@
         <component type="StaticComponent">
           <static>3</static>
         </component>
-        <component type="AltarComponent">
-          <altar>174</altar>
+        <component type="CounterComponent">
+          <counter>174</counter>
+          <direction>2</direction>
         </component>
       </tile>
       <tile x="33" y="10">
         <component type="StaticComponent">
           <static>3</static>
         </component>
-        <component type="AltarComponent">
-          <altar>174</altar>
+        <component type="CounterComponent">
+          <counter>174</counter>
+          <direction>2</direction>
         </component>
       </tile>
       <tile x="34" y="10">
@@ -5318,8 +5320,9 @@
         <component type="StaticComponent">
           <static>175</static>
         </component>
-        <component type="AltarComponent">
-          <altar>163</altar>
+        <component type="CounterComponent">
+          <counter>163</counter>
+          <direction>4</direction>
         </component>
       </tile>
       <tile x="29" y="15">
@@ -28900,13 +28903,13 @@
         </component>
       </tile>
       <tile x="20" y="2">
-        <component type="StaticComponent">
-          <static>12</static>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="21" y="2">
-        <component type="StaticComponent">
-          <static>12</static>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="22" y="2">
@@ -42918,7 +42921,7 @@
     <region>
       <id>10</id>
       <name>Dungeon of DOOM</name>
-      <height>90</height>
+      <height>100</height>
       <level>16</level>
       <tile x="5" y="2">
         <component type="StaticComponent">
@@ -47449,18 +47452,11 @@
         <component type="FloorComponent">
           <ground>179</ground>
         </component>
-        <component type="HiddenTeleporterComponent">
-          <destinationX>2</destinationX>
+        <component type="StaircaseComponent">
+          <destinationX>1</destinationX>
           <destinationY>1</destinationY>
           <destinationRegion>2</destinationRegion>
-          <lightphases select="all" />
-          <moonphases select="all" />
-          <professions select="all" />
-          <alignments select="all" />
-          <level>17</level>
-        </component>
-        <component type="StaticComponent">
-          <static>167</static>
+          <teleporterId>126</teleporterId>
         </component>
       </tile>
       <tile x="21" y="39">
@@ -48286,8 +48282,9 @@
         <component type="StaticComponent">
           <static>5</static>
         </component>
-        <component type="AltarComponent">
-          <altar>113</altar>
+        <component type="CounterComponent">
+          <counter>113</counter>
+          <direction>4</direction>
         </component>
       </tile>
       <tile x="6" y="2">
@@ -48521,16 +48518,18 @@
         <component type="StaticComponent">
           <static>5</static>
         </component>
-        <component type="AltarComponent">
-          <altar>113</altar>
+        <component type="CounterComponent">
+          <counter>113</counter>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="8" y="4">
         <component type="StaticComponent">
           <static>5</static>
         </component>
-        <component type="AltarComponent">
-          <altar>113</altar>
+        <component type="CounterComponent">
+          <counter>113</counter>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="9" y="4">
@@ -58029,13 +58028,16 @@
         </component>
       </tile>
       <tile x="5" y="9">
-        <component type="StaticComponent">
-          <static>12</static>
-        </component>
         <component type="WallComponent">
           <wall>31</wall>
           <destroyed>44</destroyed>
           <ruins>44</ruins>
+        </component>
+        <component type="StaticComponent">
+          <static>12</static>
+        </component>
+        <component type="FloorComponent">
+          <ground>12</ground>
         </component>
       </tile>
       <tile x="6" y="9">
@@ -90160,20 +90162,22 @@
         </component>
       </tile>
       <tile x="1" y="1">
-        <component type="StaticComponent">
-          <static>167</static>
+        <component type="FloorComponent">
+          <ground>264</ground>
         </component>
-        <component type="SkyComponent">
-          <color r="0" g="0" b="0" a="0" />
+        <component type="StaircaseComponent">
           <destinationX>20</destinationX>
           <destinationY>39</destinationY>
           <destinationRegion>10</destinationRegion>
-          <teleporterId>9</teleporterId>
+          <teleporterId>127</teleporterId>
         </component>
       </tile>
       <tile x="2" y="1">
         <component type="FloorComponent">
           <ground>264</ground>
+        </component>
+        <component type="RuinsComponent">
+          <ruins>44</ruins>
         </component>
       </tile>
       <tile x="3" y="1">
@@ -104502,7 +104506,8 @@
     {
         MaxHealth = 43, Health = 43,
         BaseDodge = 13,
-        HideDetection = 22,        
+        HideDetection = 22,
+        BasePenetration = ShieldPenetration.VeryLight,
         Experience = 1306,
     };
     
@@ -104769,7 +104774,7 @@
     goblin.Spells = new CreatureSpellCollection
     {
         new CreatureSpell<FireballSpell>(
-            skillLevel: 6, cost: 6, 
+            skillLevel: 3, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
             skillLevel: 3, cost: 5, 
@@ -105263,7 +105268,7 @@
     goblin.Spells = new CreatureSpellCollection
     {
         new CreatureSpell<FireballSpell>(
-            skillLevel: 7, cost: 6, 
+            skillLevel: 4, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
             skillLevel: 4, cost: 5, 
@@ -105464,9 +105469,10 @@
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
         Weakness = CreatureWeakness.Silver,
-        FireProtection = 50,
-        IceProtection = 75,
     };
+	
+	wolf.Stats[EntityStat.FireProtection].Base = 50;
+	wolf.Stats[EntityStat.IceProtection].Base = 75;
     
     wolf.AddStatus(new NightVisionStatus(wolf));
     
@@ -105533,16 +105539,16 @@
                    
         /* He is immune to magic and can only be hurt by IS and Death. */
         Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell | CreatureWeakness.DeathSpell,
-        
-        FireProtection = 100,
-        IceProtection = 100,
-        StunProtection = 100,
-        
-        /* He is protection from magic, all spell damage reduced by 50% */
-        MagicProtection = 20,
-        
+
         HideDetection = 24,
     };
+	
+	/* He is protection from magic, all spell damage reduced by 20% */
+	wolf.Stats[EntityStat.MagicDamageTakenReduction].Base = 20;
+	
+	wolf.Stats[EntityStat.FireProtection].Base = 100;
+	wolf.Stats[EntityStat.IceProtection].Base = 100;
+	wolf.Stats[EntityStat.StunProtection].Base = 100;
     
     wolf.AddStatus(new NightVisionStatus(wolf));
     
@@ -105556,7 +105562,7 @@
         }, 
         {
             new CreatureAttack(16,     20, 39,  "The wolf lunges at you.",
-                                                new AttackStunComponent(10)),           20
+                                                new AttackDazeComponent(10)),           20
         }, 
     };
 
@@ -105609,18 +105615,20 @@
         Immunity = CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
         Weakness = CreatureWeakness.Silver,
-        MagicProtection = 20,
-        IceProtection = 100,
-        FireProtection = 50,
     };
+	
+	rockworm.Stats[EntityStat.MagicDamageTakenReduction].Base = 20;
     
+	rockworm.Stats[EntityStat.FireProtection].Base = 50;
+	rockworm.Stats[EntityStat.IceProtection].Base = 100;
+	
     rockworm.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(10,     7, 15,     "The rockworm rolls over you"),        70 
+            new CreatureAttack(10,     7, 15,     "The rockworm rolls over you."),        70 
         }, 
         {
-            new CreatureAttack(10,    10, 17,     "You've been bitten by the rockworm"),     30
+            new CreatureAttack(10,    10, 17,     "You've been bitten by the rockworm."),     30
         },
     };
         
@@ -105672,7 +105680,7 @@
     
         Experience = 3045,
     
-        BasePenetration = ShieldPenetration.Light,
+        BasePenetration = ShieldPenetration.VeryLight,
             
         CanSwim = true,
     };
@@ -105774,17 +105782,17 @@
         Experience = 2418,
         BasePenetration = ShieldPenetration.VeryLight,
         Movement = 2,
-        
-        IceProtection = 100,
     };
+	
+	lizard.Stats[EntityStat.IceProtection].Base = 100;
     
     lizard.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(7,   6, 10,  "The lizard claws at you"),               60 
+            new CreatureAttack(7,   6, 10,  "The lizard claws at you."),               60 
         },
         {
-            new CreatureAttack(7,     7, 12,  "The lizard hits you with its tail"),   40 
+            new CreatureAttack(7,     7, 12,  "The lizard hits you with its tail."),   40 
         },
     };
     
@@ -105798,7 +105806,7 @@
     lizard.Spells = new CreatureSpellCollection(80.0)
     {
         new CreatureSpell<IceStormSpell>(
-            skillLevel: 8, intensity: 2),
+            skillLevel: 5, intensity: 2),
     };
     
     lizard.AddGold(72);
@@ -105857,17 +105865,17 @@
         {
             new CreatureAttack(13,      25, 38,      "The giant smashes you with his fist.",
                                                         new AttackProneComponent(10), 
-                                                        new AttackStunComponent(5)),                45
+                                                        new AttackDazeComponent(5)),                45
         },
         {
             new CreatureAttack(14,      29, 45,     "The giant stomps on you.",
                                                         new AttackProneComponent(15), 
-                                                        new AttackStunComponent(5)),               45
+                                                        new AttackDazeComponent(5)),               45
         },
         {
             new CreatureAttack(15,      34, 54,     "The giant slams you across the room.",
                                                         new AttackProneComponent(100), 
-                                                        new AttackStunComponent(20)),               10
+                                                        new AttackDazeComponent(20)),               10
         },
     };
     
@@ -105882,8 +105890,8 @@
     giant.AddLoot(new LootPack(
         new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
         new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
-        new LootPackEntry(true, (from, container) => new ReturningHammer(),        100),
         new LootPackEntry(true, (from, container) => new MoonstoneRing(),        100),
+        new LootPackEntry(true, (from, container) => new ReturningHammer(),        100),
         new LootPackEntry(true, AxePotions,        50)
     ));
        
@@ -105894,6 +105902,7 @@
       <script name="OnDeath" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -105937,7 +105946,7 @@
         //todo: add gold goose egg
     goose.AddGold(130);
     goose.AddLoot(new LootPack(
-        new LootPackEntry(true, (from, container) => new GoldNugget(5000u),    100, gemsPriceMutator)
+        new LootPackEntry(true, (from, container) => new GoldenEgg(5000u),    100, gemsPriceMutator)
     ));
         
     return goose;
@@ -106020,7 +106029,7 @@
     
         Experience = 5262,
     
-        BasePenetration = ShieldPenetration.Medium,
+        BasePenetration = ShieldPenetration.Light,
             
         CanSwim = true,
     };
@@ -106134,10 +106143,10 @@
     gargoyle.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(10,     6, 13,   "The gargoyle batters you with it's wings."),    60 
+            new CreatureAttack(10,     6, 13,   "The gargoyle batters you with its wings."),    60 
         },
         {
-            new CreatureAttack(10,     8, 17,     "The gargoyle slashes you with it's claws.",
+            new CreatureAttack(10,     8, 17,     "The gargoyle slashes you with its claws.",
                                                     new AttackPoisonComponent(5)),            40
         },
     };
@@ -106244,7 +106253,7 @@
     goblin.Spells = new CreatureSpellCollection
     {
         new CreatureSpell<FireballSpell>(
-            skillLevel: 9, cost: 6, 
+            skillLevel: 5, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
             skillLevel: 5, cost: 3, 
@@ -106392,8 +106401,9 @@
         Experience = 4385,
         BasePenetration = ShieldPenetration.Light,
         Immunity = CreatureImmunity.Web,
-        MagicProtection = 15,
     };
+	
+	ogre.Stats[EntityStat.MagicDamageTakenReduction].Base = 15;
         
     ogre.AddStatus(new NightVisionStatus(ogre));
     
@@ -106712,17 +106722,17 @@
         Experience = 3482,
         BasePenetration = ShieldPenetration.VeryLight,
         Movement = 2,
-        
-        IceProtection = 100,
     };
     
+	lizard.Stats[EntityStat.IceProtection].Base = 100;
+	
     lizard.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(9,     5, 10,  "The lizard claws at you"),             60 
+            new CreatureAttack(9,     5, 10,  "The lizard claws at you."),             60 
         },
         {
-            new CreatureAttack(9,     7, 12,  "The lizard hits you with its tail"),   40 
+            new CreatureAttack(9,     7, 12,  "The lizard hits you with its tail."),   40 
         },
     };
     
@@ -106735,7 +106745,7 @@
     lizard.Spells = new CreatureSpellCollection(100)
     {
        { new CreatureSpell<IceStormSpell>(
-            skillLevel: 10, intensity: 2), 100, TimeSpan.FromSeconds(5.0) }
+            skillLevel: 8, intensity: 2), 100, TimeSpan.FromSeconds(5.0) }
     };
     
     lizard.AddGold(84);
@@ -106776,9 +106786,10 @@
         Experience = 4385,
         BasePenetration = ShieldPenetration.Light,
         CanSwim = true,
-        FireProtection = 20,
     };
     
+	bear.Stats[EntityStat.FireProtection].Base = 20;
+	
     bear.AddStatus(new NightVisionStatus(bear));
             
     bear.Attacks = new CreatureAttackCollection
@@ -106835,12 +106846,13 @@
         BaseDodge = 23,
         HideDetection = 23,        
         Experience = 10319,
-        FireProtection = 30,
-        IceProtection = 30,
         BasePenetration = ShieldPenetration.Light,
             
         CanSwim = true,
     };
+	
+	bear.Stats[EntityStat.FireProtection].Base = 30;
+	bear.Stats[EntityStat.IceProtection].Base = 30;
     
     bear.AddStatus(new NightVisionStatus(bear));
         
@@ -106963,7 +106975,7 @@
     drake.CombatantChangeInterval = TimeSpan.FromSeconds(10.0);
     
     /*Seen below is a series of creature attacks. The first value is the attack bonus, which is multiplied by 50 to find its attack value. The next value is the minimum damage the attack will deal,
-    followed by the maximum value. The quote is the message displayed if the attack hits. On the line below is a Component which is added: List of components is AttackAgeComponent, AttackPoisonComponent, AttackStunComponent and AttackProneComponent as of the time of writing this. Prone is when an attack knocks you into the next hex. The number in the parentheses after are the % chance of it landing. The last number on the line is the % for the attack to happen.
+    followed by the maximum value. The quote is the message displayed if the attack hits. On the line below is a Component which is added: List of components is AttackAgeComponent, AttackPoisonComponent, AttackDazeComponent and AttackProneComponent as of the time of writing this. Prone is when an attack knocks you into the next hex. The number in the parentheses after are the % chance of it landing. The last number on the line is the % for the attack to happen.
     
     So below we have a drake who has a 40% chance to do a 13*50 = 650 attack value swing. If it lands it will deal 45-60 damage. It has a 15% chance to knock you down and a 5% chance to stun. The next option is a 40% chance on an attack to do a 700 attack value swing for 50-65 damage, with a 25% chance to knock back and 10% chance to stun. The last attack is a 20% chance to swing for a 750 attack value, 60-80 damage attack. 35% chance to knock down and 15% chance to stun.*/
     drake.Attacks = new CreatureAttackCollection
@@ -106971,17 +106983,17 @@
         {
             new CreatureAttack(16,      35, 55,      "The drake slashes you with its claws.",
                                                         new AttackProneComponent(5), 
-                                                        new AttackStunComponent(5)),                40
+                                                        new AttackDazeComponent(5)),                40
         },
         {
             new CreatureAttack(16,      47, 64,     "The drake smashes you with its tail.",
                                                         new AttackProneComponent(10), 
-                                                        new AttackStunComponent(10)),               40
+                                                        new AttackDazeComponent(10)),               40
         },
         {
             new CreatureAttack(16,      58, 78,     "The drake buffets you with its wings.",
                                                         new AttackProneComponent(15), 
-                                                        new AttackStunComponent(15)),               20
+                                                        new AttackDazeComponent(15)),               20
         },
     };
     
@@ -107073,19 +107085,19 @@
         {
             new CreatureAttack(20,      50, 70,      "The Ice Dragon slashes you with a claw.",
                                                         new AttackProneComponent(5), 
-                                                        new AttackStunComponent(5)),                35
+                                                        new AttackDazeComponent(5)),                35
         },
         
         {
             new CreatureAttack(20,      55, 75,     "The Ice Dragon smashes you against the ice with its tail.",
                                                         new AttackProneComponent(10), 
-                                                        new AttackStunComponent(10)),               40
+                                                        new AttackDazeComponent(10)),               40
         },
         
         {
             new CreatureAttack(20,      75, 92,     "The Ice Dragon buffets you with its wings.",
                                                         new AttackProneComponent(15), 
-                                                        new AttackStunComponent(15)),               20
+                                                        new AttackDazeComponent(15)),               20
         },
     };
     
@@ -107166,17 +107178,17 @@
         {
             new CreatureAttack(17,      50, 65,      "The yeti smashes you with his fist.",
                                                         new AttackProneComponent(5), 
-                                                        new AttackStunComponent(5)),                40
+                                                        new AttackDazeComponent(5)),                40
         },
         {
             new CreatureAttack(17,      55, 70,     "The yeti stomps on you.",
                                                         new AttackProneComponent(5), 
-                                                        new AttackStunComponent(10)),               40
+                                                        new AttackDazeComponent(10)),               40
         },
         {
             new CreatureAttack(17,      68, 82,     "The giant slams you across the room.",
                                                         new AttackProneComponent(30), 
-                                                        new AttackStunComponent(15)),               20
+                                                        new AttackDazeComponent(15)),               20
         },
     };
     
@@ -107190,14 +107202,15 @@
     yeti.Spells = new CreatureSpellCollection(20.0)
     {
         new CreatureSpell<IceStormSpell>(
-            skillLevel: 30)
+            skillLevel: 16)
     };
         
    yeti.AddGold(16000);
    yeti.AddLoot(new LootPack(
         new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
         new LootPackEntry(true, AxeGems,       100,     gemsPriceMutatorVeryHigh), 
-       new LootPackEntry(true, YetiTreasure,     100.0),       
+       new LootPackEntry(true, YetiTreasure,     100.0),
+       new LootPackEntry(true, (from, container) => new MisericordeDagger(),        100),
        new LootPackEntry(true, (from, container) => new ManaPotion(),        100)
    ));
     
@@ -107210,12 +107223,6 @@
         <block><![CDATA[
     if (killer is PlayerEntity player)
     {
-    
-        var backpack = source.Backpack;
-    
-        if (backpack != null)
-            backpack.AddItem(new MisericordeDagger());
-            
         var quest = Quests.GetQuest<KnightsDragonSlayerQuest>();
     
         if (quest != null && quest.InProgress(player))
@@ -107664,9 +107671,9 @@
         Experience = 5262,
         BasePenetration = ShieldPenetration.Medium,
         CanSwim = true,
-            
-        FireProtection = 100,
     };
+	
+	wizard.Stats[EntityStat.FireProtection].Base = 100;
     
     //for monsters with weapons equipped and non-multiple attacks we use this basic creature attack collection: 10 is hit chance (* 50). Damage is by "10 skill". It will just display "NPC Name hits you with <Blackstaff>!"
     wizard.Attacks = new CreatureAttackCollection()
@@ -107684,7 +107691,7 @@
     wizard.Spells = new CreatureSpellCollection
     {
         { new CreatureSpell<FireballSpell>(
-            skillLevel: 11, cost: 6, 
+            skillLevel: 6, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false), 100, TimeSpan.FromSeconds(15.0) },
         { new CreatureSpell<MagicMissileSpell>(
             skillLevel: 6, cost: 5, 
@@ -107806,9 +107813,9 @@
         Experience = 5262,
         BasePenetration = ShieldPenetration.Medium,
         CanSwim = true,
-            
-        IceProtection = 100,
     };
+	
+	wizard.Stats[EntityStat.IceProtection].Base = 100;
     
     wizard.Attacks = new CreatureAttackCollection
     {
@@ -107818,7 +107825,7 @@
     wizard.Spells = new CreatureSpellCollection
     {
         new CreatureSpell<IceStormSpell>(
-            skillLevel: 11, cost: 6, 
+            skillLevel: 6, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
             skillLevel: 6, cost: 5, 
@@ -108005,7 +108012,7 @@
         },
         {
             new CreatureAttack(9,     25, 40,     "The griffin pummels you with its wings.", 
-                                                    new AttackStunComponent(15.0)),                    40
+                                                    new AttackDazeComponent(15.0)),                    40
         }
     };
     
@@ -108076,7 +108083,7 @@
     presence.Spells = new CreatureSpellCollection(100.0)
     {
         new CreatureSpell<IceStormSpell>(
-            skillLevel: 11, cost: 4,
+            skillLevel: 6, cost: 4,
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
@@ -108317,9 +108324,9 @@
         Experience = 13095,
         Movement = 2,
         Hue = Color.FromArgb(175, 255, 175, 255),
-        
-        IceProtection = 100,
     };
+	
+	draugr.Stats[EntityStat.IceProtection].Base = 100;
 
     draugr.Attacks = new CreatureAttackCollection()
     {
@@ -108356,7 +108363,7 @@
     if (spokeRecently(source))
         return;
 
-    source.Emote($"begins to lurch forward, fixing his gaze on {player.Name}");
+    source.Emote($"begins to lurch forward, fixing his gaze on {player.Name}.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -108373,12 +108380,12 @@
         Health = 180,
         BaseDodge = 25,
         HideDetection = 31,
-        BasePenetration = ShieldPenetration.Medium,
+        BasePenetration = ShieldPenetration.Light,
         Experience = 10399,        
         Movement = 2,
-        
-        IceProtection = 100,
     };
+	
+	draugr.Stats[EntityStat.IceProtection].Base = 100;
 
     draugr.AddImmunity(typeof(PoisonCloudSpell));
     
@@ -108415,7 +108422,7 @@
     if (spokeRecently(source))
         return;
 
-    source.Emote($"slowly draws an ancient bow, fixated on {player.Name}");
+    source.Emote($"slowly draws an ancient bow, fixated on {player.Name}.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -108439,9 +108446,9 @@
         Immunity = CreatureImmunity.Poison | CreatureImmunity.Piercing,
         
         Weakness = CreatureWeakness.Silver,
-        
-        IceProtection = 100,
     };
+	
+	spectre.Stats[EntityStat.IceProtection].Base = 100;
 
     spectre.Attacks = new CreatureAttackCollection()
     {
@@ -108454,7 +108461,7 @@
     {
        {
             new CreatureSpell<IceStormSpell>(
-                skillLevel: 19, cost: 7, 
+                skillLevel: 12, cost: 7, 
                 mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 
        }
     };
@@ -108488,7 +108495,7 @@
     if (spokeRecently(source))
         return;
 
-    source.Emote($"begins an ancient chant, its cold gaze focused on {player.Name}");
+    source.Emote($"begins an ancient chant, its cold gaze focused on {player.Name}.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -108506,9 +108513,9 @@
         HideDetection = 32,
         BasePenetration = ShieldPenetration.Heavy,
         Experience = 30814,
-        
-        IceProtection = 100,
     };
+	
+	giant.Stats[EntityStat.IceProtection].Base = 100;
     
     giant.AddImmunity(typeof(ConcussionSpell));
 
@@ -108645,11 +108652,10 @@
         Experience = 11170,
         
         MaxMana = 21, Mana = 21,
-        IceProtection = 100,
-            
     };
     
-    
+    troll.Stats[EntityStat.IceProtection].Base = 100;
+	
     troll.AddStatus(new NightVisionStatus(troll));
         
     troll.Attacks = new CreatureAttackCollection()
@@ -108707,22 +108713,23 @@
         BaseDodge = 25,
         Body = 242,
         BasePenetration = ShieldPenetration.Light,
-        IceProtection = 100,
         Experience = 10399,
     };
+	
+	worg.Stats[EntityStat.IceProtection].Base = 100;
     
     worg.AddStatus(new NightVisionStatus(worg));
     
     worg.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(16,     10, 16,   "The worg rakes you with its claws."), 50
+            new CreatureAttack(16,     10, 16,   "The decaying worg rakes you with its claws."), 50
         }, 
         { 
-            new CreatureAttack(16,     12, 19,  "The worg sinks its teeth into you."),  30 
+            new CreatureAttack(16,     12, 19,  "The decaying worg sinks its teeth into you."),  30 
         }, 
         {
-            new CreatureAttack(16,     14, 23,  "The worg lunges at you."),             20 
+            new CreatureAttack(16,     14, 23,  "The decaying worg lunges at you."),             20 
         }, 
     };
         
@@ -108756,7 +108763,7 @@
     if (spokeRecently(source))
         return;
 
-    source.Emote($"stands up, hackles raised, staring at {player.Name} as if offended by their existence");
+    source.Emote($"stands up, hackles raised, staring at {player.Name} as if offended by their existence.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -108788,7 +108795,7 @@
     
     elemental.Attacks = new CreatureAttackCollection
     {
-        new CreatureAttack(15,     15, 32,   "The elemental attempts to drown you"),
+        new CreatureAttack(15,     15, 32,   "The elemental attempts to drown you."),
     };
     
     elemental.Blocks = new CreatureBlockCollection
@@ -108926,7 +108933,7 @@
     goblin.Spells = new CreatureSpellCollection
     {
         new CreatureSpell<FireballSpell>(
-            skillLevel: 12, cost: 6, 
+            skillLevel: 6, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
             skillLevel: 8, cost: 5, 
@@ -109082,8 +109089,9 @@
         Experience = 7018,
         BasePenetration = ShieldPenetration.Medium,
         Immunity = CreatureImmunity.Web,
-        MagicProtection = 18,
     };
+	
+	ogre.Stats[EntityStat.MagicDamageTakenReduction].Base = 18;
         
     ogre.AddStatus(new NightVisionStatus(ogre));
     
@@ -110900,12 +110908,11 @@
       <entry entity="level10Troll" size="3" minimum="5" maximum="5" />
       <entry entity="level10GoblinSentry" size="3" minimum="4" maximum="4" />
       <entry entity="level10Ogre" size="1" minimum="2" maximum="2" />
-      <entry entity="level10Wraith" size="1" minimum="2" maximum="2" />
+      <entry entity="level10Wraith" size="1" minimum="1" maximum="1" />
       <entry entity="level10Hobgoblin" size="3" minimum="5" maximum="5" />
       <entry entity="level10Wolf" size="3" minimum="5" maximum="5" />
       <entry entity="level10Shadow" size="1" minimum="1" maximum="1" />
       <entry entity="level10Bear" size="1" minimum="2" maximum="2" />
-      <entry entity="level10RockWorm" size="1" minimum="1" maximum="1" />
       <entry entity="level10Orc" size="3" minimum="6" maximum="6" />
       <bounds region="12">
         <inclusion left="39" top="3" right="43" bottom="10" />
@@ -111690,7 +111697,7 @@
       <entry entity="level10GoblinMage" size="1" minimum="0" maximum="2" />
       <entry entity="level10Troll" size="3" minimum="0" maximum="3" />
       <entry entity="level10Goblin" size="3" minimum="0" maximum="3" />
-      <entry entity="level10Wraith" size="1" minimum="0" maximum="2" />
+      <entry entity="level10Wraith" size="1" minimum="0" maximum="1" />
       <entry entity="BossMiniLevel10Bear" size="1" minimum="0" maximum="1" />
       <bounds region="12">
         <inclusion left="3" top="32" right="32" bottom="38" />
@@ -111719,7 +111726,7 @@
       <entry entity="level10Troll" size="3" minimum="5" maximum="5" />
       <entry entity="level10GoblinSentry" size="3" minimum="4" maximum="4" />
       <entry entity="level10Ogre" size="1" minimum="2" maximum="2" />
-      <entry entity="level10Wraith" size="1" minimum="2" maximum="2" />
+      <entry entity="level10Wraith" size="1" minimum="1" maximum="1" />
       <entry entity="level10Hobgoblin" size="3" minimum="5" maximum="5" />
       <entry entity="level10Wolf" size="3" minimum="5" maximum="5" />
       <entry entity="level10Shadow" size="1" minimum="1" maximum="1" />

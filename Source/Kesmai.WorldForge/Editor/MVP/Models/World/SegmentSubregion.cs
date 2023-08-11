@@ -8,147 +8,146 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Color = Microsoft.Xna.Framework.Color;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
-namespace Kesmai.WorldForge.Editor
+namespace Kesmai.WorldForge.Editor;
+
+public class SegmentSubregion : ObservableObject
 {
-	public class SegmentSubregion : ObservableObject
+	private static Color _pink = Color.FromNonPremultiplied(255, 192, 203, 75);
+	private static Color _pinkBorder = Color.Pink;
+		
+	private static Color _green = Color.FromNonPremultiplied(152, 251, 152, 75);
+	private static Color _greenBorder = Color.PaleGreen;
+		
+	private static Color _gray = Color.FromNonPremultiplied(176, 196, 222, 75);
+	private static Color _grayBorder = Color.LightSteelBlue;
+		
+	private static Color _orange = Color.FromNonPremultiplied(255, 165, 0, 75);
+	private static Color _orangeBorder = Color.Orange;
+		
+	private string _name;
+		
+	private int _region;
+
+	private SubregionType _type;
+		
+	public string Name
 	{
-		private static Color _pink = Color.FromNonPremultiplied(255, 192, 203, 75);
-		private static Color _pinkBorder = Color.Pink;
+		get => _name;
+		set => SetProperty(ref _name, value);
+	}
+	public Color Color { get; set; }
+	public Color Border { get; set; }
 		
-		private static Color _green = Color.FromNonPremultiplied(152, 251, 152, 75);
-		private static Color _greenBorder = Color.PaleGreen;
-		
-		private static Color _gray = Color.FromNonPremultiplied(176, 196, 222, 75);
-		private static Color _grayBorder = Color.LightSteelBlue;
-		
-		private static Color _orange = Color.FromNonPremultiplied(255, 165, 0, 75);
-		private static Color _orangeBorder = Color.Orange;
-		
-		private string _name;
-		
-		private int _region;
-
-		private SubregionType _type;
-		
-		public string Name
+	public SubregionType Type
+	{
+		get => _type;
+		set
 		{
-			get => _name;
-			set => SetProperty(ref _name, value);
-		}
-		public Color Color { get; set; }
-		public Color Border { get; set; }
-		
-		public SubregionType Type
-		{
-			get => _type;
-			set
-			{
-				SetProperty(ref _type, value);
-				UpdateColor();
-			}
-		}
-		
-		public int Region
-		{
-			get => _region;
-			set => SetProperty(ref _region, value);
-		}
-
-		public IEnumerable<SubregionType> Types => Enum.GetValues(typeof(SubregionType)).Cast<SubregionType>();
-
-		private ObservableCollection<SegmentBounds> _rectangles = new ObservableCollection<SegmentBounds>();
-
-		public ObservableCollection<SegmentBounds> Rectangles
-		{
-			get => _rectangles;
-			set => SetProperty(ref _rectangles, value);
-		}
-
-		public SegmentSubregion()
-		{
+			SetProperty(ref _type, value);
 			UpdateColor();
 		}
+	}
 		
-		public SegmentSubregion(XElement element)
-		{
-			Name = (string)element.Attribute("name");
+	public int Region
+	{
+		get => _region;
+		set => SetProperty(ref _region, value);
+	}
 
-			if (Enum.TryParse((string)element.Attribute("type"), true, out SubregionType result))
-				Type = result;
+	public IEnumerable<SubregionType> Types => Enum.GetValues(typeof(SubregionType)).Cast<SubregionType>();
 
-			Region = (int)element.Attribute("region");
+	private ObservableCollection<SegmentBounds> _rectangles = new ObservableCollection<SegmentBounds>();
 
-			var rectanglesElement = element.Element("rectangles");
+	public ObservableCollection<SegmentBounds> Rectangles
+	{
+		get => _rectangles;
+		set => SetProperty(ref _rectangles, value);
+	}
 
-			if (rectanglesElement != null)
-			{
-				foreach (var rectangleElement in rectanglesElement.Elements("rectangle"))
-				{
-					Rectangles.Add(new SegmentBounds(
-						(int)rectangleElement.Attribute("left"), 
-						(int)rectangleElement.Attribute("top"), 
-						(int)rectangleElement.Attribute("right"), 
-						(int)rectangleElement.Attribute("bottom")));
-				}
-			}
-
-			UpdateColor();
-		}
+	public SegmentSubregion()
+	{
+		UpdateColor();
+	}
 		
-		public XElement GetXElement()
+	public SegmentSubregion(XElement element)
+	{
+		Name = (string)element.Attribute("name");
+
+		if (Enum.TryParse((string)element.Attribute("type"), true, out SubregionType result))
+			Type = result;
+
+		Region = (int)element.Attribute("region");
+
+		var rectanglesElement = element.Element("rectangles");
+
+		if (rectanglesElement != null)
 		{
-			var element = new XElement("subregion", 
-				new XAttribute("name", _name), 
-				new XAttribute("type", _type.ToString()),
-				new XAttribute("region", _region));
-
-			var rectanglesElement = new XElement("rectangles");
-			
-			foreach (var rectangle in Rectangles)
+			foreach (var rectangleElement in rectanglesElement.Elements("rectangle"))
 			{
-				rectanglesElement.Add(new XElement("rectangle",
-					new XAttribute("left", rectangle.Left),
-					new XAttribute("top", rectangle.Top),
-					new XAttribute("right", rectangle.Right),
-					new XAttribute("bottom", rectangle.Bottom)));
+				Rectangles.Add(new SegmentBounds(
+					(int)rectangleElement.Attribute("left"), 
+					(int)rectangleElement.Attribute("top"), 
+					(int)rectangleElement.Attribute("right"), 
+					(int)rectangleElement.Attribute("bottom")));
 			}
-
-			element.Add(rectanglesElement);
-			
-			return element;
 		}
 
-		private void UpdateColor()
+		UpdateColor();
+	}
+		
+	public XElement GetXElement()
+	{
+		var element = new XElement("subregion", 
+			new XAttribute("name", _name), 
+			new XAttribute("type", _type.ToString()),
+			new XAttribute("region", _region));
+
+		var rectanglesElement = new XElement("rectangles");
+			
+		foreach (var rectangle in Rectangles)
 		{
-			switch (Type)
+			rectanglesElement.Add(new XElement("rectangle",
+				new XAttribute("left", rectangle.Left),
+				new XAttribute("top", rectangle.Top),
+				new XAttribute("right", rectangle.Right),
+				new XAttribute("bottom", rectangle.Bottom)));
+		}
+
+		element.Add(rectanglesElement);
+			
+		return element;
+	}
+
+	private void UpdateColor()
+	{
+		switch (Type)
+		{
+			case SubregionType.None:
 			{
-				case SubregionType.None:
-				{
-					Color = _gray;
-					Border = _grayBorder;
-					break;
-				}
-				case SubregionType.Town:
-				{
-					Color = _green;
-					Border = _greenBorder;
-					break;
-				}
-				case SubregionType.Lair:
-				{
-					Color = _orange;
-					Border = _orangeBorder;
-					break;
-				}
+				Color = _gray;
+				Border = _grayBorder;
+				break;
+			}
+			case SubregionType.Town:
+			{
+				Color = _green;
+				Border = _greenBorder;
+				break;
+			}
+			case SubregionType.Lair:
+			{
+				Color = _orange;
+				Border = _orangeBorder;
+				break;
 			}
 		}
 	}
+}
 
-	public enum SubregionType
-	{
-		None = 0,
+public enum SubregionType
+{
+	None = 0,
 		
-		Town = 1,
-		Lair = 2,
-	}
+	Town = 1,
+	Lair = 2,
 }

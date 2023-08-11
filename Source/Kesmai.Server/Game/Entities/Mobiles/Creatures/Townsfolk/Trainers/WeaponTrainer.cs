@@ -2,15 +2,14 @@
 using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
 
-namespace Kesmai.Server.Game
+namespace Kesmai.Server.Game;
+
+public partial class WeaponTrainer : TrainerEntity
 {
-	public partial class WeaponTrainer : TrainerEntity
+	/// <summary>
+	/// Initializes a new instance of the <see cref="WeaponTrainer"/> class.
+	/// </summary>
+	public WeaponTrainer()
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="WeaponTrainer"/> class.
-		/// </summary>
-		public WeaponTrainer()
-		{
-		}
 	}
 }

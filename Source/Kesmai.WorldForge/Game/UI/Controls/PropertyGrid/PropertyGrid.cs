@@ -10,152 +10,153 @@ using DigitalRune.Game.UI.Controls;
 using DigitalRune.Mathematics.Algebra;
 using Microsoft.Xna.Framework;
 
-namespace Kesmai.WorldForge.Windows
+namespace Kesmai.WorldForge.Windows;
+
+public class PropertyGrid : Canvas
 {
-	public class PropertyGrid : Canvas
+	private ScrollViewer _scrollViewer;
+	private StackPanel _internalPanel;
+		
+	public static readonly int ItemPropertyId = CreateProperty(
+		typeof(PropertyGrid), "Item", GamePropertyCategories.Default, null, default(object),
+		UIPropertyOptions.AffectsRender);
+
+	public object Item
 	{
-		private ScrollViewer _scrollViewer;
-		private StackPanel _internalPanel;
+		get => GetValue<object>(ItemPropertyId);
+		set => SetValue(ItemPropertyId, value);
+	}
 		
-		public static readonly int ItemPropertyId = CreateProperty(
-			typeof(PropertyGrid), "Item", GamePropertyCategories.Default, null, default(object),
-			UIPropertyOptions.AffectsRender);
-
-		public object Item
-		{
-			get => GetValue<object>(ItemPropertyId);
-			set => SetValue(ItemPropertyId, value);
-		}
+	public NotifyingCollection<PropertyInfo> Items { get; set; }
 		
-		public NotifyingCollection<PropertyInfo> Items { get; set; }
-		
-		public PropertyGrid()
+	public PropertyGrid()
+	{
+		Items = new NotifyingCollection<PropertyInfo>();
+		Items.CollectionChanged += OnCollectionChanged;
+
+		HorizontalAlignment = HorizontalAlignment.Stretch;
+	}
+
+	protected override void OnLoad()
+	{
+		base.OnLoad();
+
+		_internalPanel = new StackPanel()
 		{
-			Items = new NotifyingCollection<PropertyInfo>();
-			Items.CollectionChanged += OnCollectionChanged;
-
-			HorizontalAlignment = HorizontalAlignment.Stretch;
-		}
-
-		protected override void OnLoad()
+			Background = Color.DarkRed,
+		};
+		_scrollViewer = new ScrollViewer()
 		{
-			base.OnLoad();
+			Content = _internalPanel,
 
-			_internalPanel = new StackPanel()
-			{
-				Background = Color.DarkRed,
-			};
-			_scrollViewer = new ScrollViewer()
-			{
-				Content = _internalPanel,
+			HorizontalAlignment = HorizontalAlignment.Stretch,
+			VerticalAlignment = VerticalAlignment.Stretch,
 
-				HorizontalAlignment = HorizontalAlignment.Stretch,
-				VerticalAlignment = VerticalAlignment.Stretch,
-
-				VerticalScrollBarVisibility = ScrollBarVisibility.Disabled,
-				HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
+			VerticalScrollBarVisibility = ScrollBarVisibility.Disabled,
+			HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
 				
-				Padding = Vector4F.Zero,
-				Margin = Vector4F.Zero,
-			};
-			Children.Add(_scrollViewer);
+			Padding = Vector4F.Zero,
+			Margin = Vector4F.Zero,
+		};
+		Children.Add(_scrollViewer);
 
-			Properties.Get<object>(ItemPropertyId).Changed += (o, args) =>
-			{
-				Update(args.NewValue);
-			};
-		}
-
-		private void Update(object item)
+		Properties.Get<object>(ItemPropertyId).Changed += (o, args) =>
 		{
-			Items.Clear();
+			Update(args.NewValue);
+		};
+	}
 
-			var properties = item.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+	private void Update(object item)
+	{
+		Items.Clear();
 
-			foreach (var property in properties)
-			{
-				var browsable = property.GetCustomAttribute<BrowsableAttribute>();
+		var properties = item.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-				if (browsable != null && browsable.Browsable)
-					Items.Add(property);
-			}
-		}
-
-		private void OnCollectionChanged(object sender, CollectionChangedEventArgs<PropertyInfo> args)
+		foreach (var property in properties)
 		{
-			var updateNew = (args.Action == CollectionChangedAction.Add);
-			var updateOld = (args.Action == CollectionChangedAction.Remove || args.Action == CollectionChangedAction.Clear);
+			var browsable = property.GetCustomAttribute<BrowsableAttribute>();
 
-			if (args.Action == CollectionChangedAction.Replace)
-				updateNew = updateOld = true;
-
-			if (updateNew)
-			{
-				args.NewItems.ForEach(propertyInfo =>
-				{
-					_internalPanel.Children.Add(new PropertyFrame()
-					{
-						PropertyInfo = propertyInfo,
-						Source = Item,
-					});
-				});
-			}
-
-			if (updateOld)
-			{
-				args.OldItems.ForEach(propertyInfo =>
-				{
-					var frame = _internalPanel.Children.OfType<PropertyFrame>()
-						.FirstOrDefault(f => f.PropertyInfo == propertyInfo);
-
-					if (frame != null)
-						_internalPanel.Children.Remove(frame);
-				});
-			}
+			if (browsable != null && browsable.Browsable)
+				Items.Add(property);
 		}
 	}
 
-	[AttributeUsage(AttributeTargets.Property)]
-	public class ItemsSourceAttribute : Attribute
+	private void OnCollectionChanged(object sender, CollectionChangedEventArgs<PropertyInfo> args)
 	{
-		public Type Type { get; set; }
+		var updateNew = (args.Action == CollectionChangedAction.Add);
+		var updateOld = (args.Action == CollectionChangedAction.Remove || args.Action == CollectionChangedAction.Clear);
+
+		if (args.Action == CollectionChangedAction.Replace)
+			updateNew = updateOld = true;
+
+		if (updateNew)
+		{
+			args.NewItems.ForEach(propertyInfo =>
+			{
+				_internalPanel.Children.Add(new PropertyFrame()
+				{
+					PropertyInfo = propertyInfo,
+					Source = Item,
+				});
+			});
+		}
+
+		if (updateOld)
+		{
+			args.OldItems.ForEach(propertyInfo =>
+			{
+				var frame = _internalPanel.Children.OfType<PropertyFrame>()
+					.FirstOrDefault(f => f.PropertyInfo == propertyInfo);
+
+				if (frame != null)
+					_internalPanel.Children.Remove(frame);
+			});
+		}
+	}
+}
+
+[AttributeUsage(AttributeTargets.Property)]
+public class ItemsSourceAttribute : Attribute
+{
+	public Type Type { get; set; }
+	public bool AllowMultiple { get; set; }
 		
-		public ItemsSourceAttribute(Type type)
-		{
-			Type = type;
-		}
-	}
-
-	public interface IItemsSource
+	public ItemsSourceAttribute(Type type, bool allowMultiple = false)
 	{
-		ItemCollection GetValues();
+		Type = type;
+		AllowMultiple = allowMultiple;
 	}
+}
 
-	public class ItemCollection : List<Item>
+public interface IItemsSource
+{
+	ItemCollection GetValues();
+}
+
+public class ItemCollection : List<Item>
+{
+	public void Add(object value)
 	{
-		public void Add(object value)
+		base.Add(new Item()
 		{
-			base.Add(new Item()
-			{
-				DisplayName = value.ToString(), 
-				Value = value
-			});
-		}
-
-		public void Add( object value, string displayName )
-		{
-			base.Add(new Item()
-			{
-				DisplayName = displayName, 
-				Value = value
-			});
-		}
+			DisplayName = value.ToString(), 
+			Value = value
+		});
 	}
+
+	public void Add( object value, string displayName )
+	{
+		base.Add(new Item()
+		{
+			DisplayName = displayName, 
+			Value = value
+		});
+	}
+}
 	
-	public class Item
-	{
-		public string DisplayName { get; set; }
+public class Item
+{
+	public string DisplayName { get; set; }
 		
-		public object Value { get; set; }
-	}
+	public object Value { get; set; }
 }

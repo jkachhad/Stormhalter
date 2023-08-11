@@ -3,14 +3,13 @@ using System.IO;
 using System.Linq;
 using Kesmai.Server.Items;
 
-namespace Kesmai.Server.Game
+namespace Kesmai.Server.Game;
+
+public partial class ThiefTrainer : SpellTrainer
 {
-	public partial class ThiefTrainer : SpellTrainer
-	{
-		public override Profession Profession => Profession.Thief;
+	public override Profession Profession => Profession.Thief;
 		
-		public ThiefTrainer() : base()
-		{
-		}
+	public ThiefTrainer() : base()
+	{
 	}
 }

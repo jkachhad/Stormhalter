@@ -1,42 +1,41 @@
 using System.IO;
 using Kesmai.Server.Items;
 
-namespace Kesmai.Server.Game
+namespace Kesmai.Server.Game;
+
+public partial class Mummy : CreatureEntity, IUndead
 {
-	public partial class Mummy : CreatureEntity, IUndead
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Mummy"/> class.
+	/// </summary>
+	public Mummy()
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Mummy"/> class.
-		/// </summary>
-		public Mummy()
-		{
-			Name = "mummy";
-			Body = 146;
+		Name = "mummy";
+		Body = 146;
 
-			Alignment = Alignment.Chaotic;
-		}
-		
-		/// <inheritdoc/>
-		public override void OnSpawn()
-		{
-			base.OnSpawn();
-			
-			if (_brain != null)
-				return;
-			
-			if (RightHand is ProjectileWeapon)
-				_brain = new RangedAI(this);
-			else
-				_brain = new CombatAI(this);
-		}
-
-		/// <summary>
-		/// Gets the death sound.
-		/// </summary>
-		public override int GetNearbySound() => 250;
-		public override int GetAttackSound() => 251;
-		public override int GetDeathSound() => 252;
-
-		public override Corpse GetCorpse() => default(Corpse);
+		Alignment = Alignment.Chaotic;
 	}
+		
+	/// <inheritdoc/>
+	public override void OnSpawn()
+	{
+		base.OnSpawn();
+			
+		if (_brain != null)
+			return;
+			
+		if (RightHand is ProjectileWeapon)
+			_brain = new RangedAI(this);
+		else
+			_brain = new CombatAI(this);
+	}
+
+	/// <summary>
+	/// Gets the death sound.
+	/// </summary>
+	public override int GetNearbySound() => 250;
+	public override int GetAttackSound() => 251;
+	public override int GetDeathSound() => 252;
+
+	public override Corpse GetCorpse() => default(Corpse);
 }

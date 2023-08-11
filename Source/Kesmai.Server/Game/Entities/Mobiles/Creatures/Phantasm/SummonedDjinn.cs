@@ -2,59 +2,64 @@ using System;
 using System.IO;
 using Kesmai.Server.Spells;
 
-namespace Kesmai.Server.Game
+namespace Kesmai.Server.Game;
+
+public partial class SummonedDjinn : Djinn
 {
-	public partial class SummonedDjinn : Djinn
+	public override bool CanOrderFollow => true;
+	public override bool CanOrderAttack => true;
+	public override bool CanOrderCarry => true;
+
+	public SummonedDjinn(ICreatureSpell spell)
 	{
-		public override bool CanOrderFollow => true;
-		public override bool CanOrderAttack => true;
-		public override bool CanOrderCarry => true;
+		Summoned = true;
+			
+		Health = MaxHealth = 300;
+		BaseDodge = 25;
+		Mana = MaxMana = 24;
 
-		public SummonedDjinn(ICreatureSpell spell)
+		Movement = 3;
+			
+		Attacks = new CreatureAttackCollection
 		{
-			Summoned = true;
-			
-			Health = MaxHealth = 300;
-			BaseDodge = 25;
-			Mana = MaxMana = 24;
-			IceProtection = 90;
-			MagicProtection = 15;
+			{ new CreatureBasicAttack(14) },
+		};
 
-			Movement = 3;
+		Blocks = new CreatureBlockCollection
+		{
+			new CreatureBlock(12, "a hand"),
+		};
 			
-			Attacks = new CreatureAttackCollection
-			{
-				{ new CreatureBasicAttack(14) },
-			};
+		Spells = new CreatureSpellCollection()
+		{
+			{ new CreatureSpellEntry(spell, 100, TimeSpan.FromSeconds(3) ) }	
+		};
+			
+		AddStatus(new NightVisionStatus(this));
 
-			Blocks = new CreatureBlockCollection
-			{
-				new CreatureBlock(12, "a hand"),
-			};
-			
-			Spells = new CreatureSpellCollection()
-			{
-				{ new CreatureSpellEntry(spell, 100, TimeSpan.FromSeconds(3) ) }	
-			};
-			
-			AddStatus(new NightVisionStatus(this));
-
-			CanFly = true;
-		}
+		CanFly = true;
+	}
 		
-		protected override void OnLoad()
-		{
-			base.OnLoad();
+	protected override void OnCreate()
+	{
+		base.OnCreate();
 			
-			_brain = new CombatAI(this);
-		}
+		_stats[EntityStat.IceProtection].Base = 90;
+		_stats[EntityStat.MagicDamageTakenReduction].Base = 15;
+	}
+		
+	protected override void OnLoad()
+	{
+		base.OnLoad();
+			
+		_brain = new CombatAI(this);
+	}
 
-		public override bool AllowDamageFrom(Spell spell)
-		{
-			if (Spells.Any((e => e.Spell.SpellType == spell.GetType()), out CreatureSpellEntry entry))
-				return false;
+	public override bool AllowDamageFrom(Spell spell)
+	{
+		if (Spells.Any((e => e.Spell.SpellType == spell.GetType()), out CreatureSpellEntry entry))
+			return false;
 
-			return true;
-		}
+		return true;
 	}
 }

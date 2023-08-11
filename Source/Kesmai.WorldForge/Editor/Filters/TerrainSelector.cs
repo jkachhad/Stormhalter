@@ -6,114 +6,114 @@ using Kesmai.WorldForge.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Xna.Framework;
 
-namespace Kesmai.WorldForge.Editor
+namespace Kesmai.WorldForge.Editor;
+
+public abstract class TerrainSelector : ObservableObject
 {
-	public abstract class TerrainSelector : ObservableObject
+	#region Static
+		
+	public static TerrainSelector Default = new AllTerrainSelector();
+
+	#endregion
+
+	#region Fields
+
+	private bool _isActive;
+		
+	#endregion
+
+	#region Properties and Events
+
+	/// <summary>
+	/// Gets the filter name.
+	/// </summary>
+	public virtual string Name { get; set; }
+		
+	public bool IsActive
 	{
-		#region Static
+		get { return _isActive; }
+		set { SetProperty(ref _isActive, value); }
+	}
 		
-		public static TerrainSelector Default = new AllTerrainSelector();
-
-		#endregion
-
-		#region Fields
-
-		private bool _isActive;
+	public abstract BitmapImage Icon { get; }
 		
-		#endregion
+	#endregion
 
-		#region Properties and Events
+	#region Constructors and Cleanup
 
-		/// <summary>
-		/// Gets the filter name.
-		/// </summary>
-		public virtual string Name { get; set; }
-		
-		public bool IsActive
-		{
-			get { return _isActive; }
-			set { SetProperty(ref _isActive, value); }
-		}
-		
-		public abstract BitmapImage Icon { get; }
-		
-		#endregion
+	#endregion
 
-		#region Constructors and Cleanup
+	#region Methods
 
-		#endregion
+	/// <summary>
+	/// Gets the query.
+	/// </summary>
+	public abstract Delegate GetQuery();
 
-		#region Methods
-
-		/// <summary>
-		/// Gets the query.
-		/// </summary>
-		public abstract Delegate GetQuery();
-
-		/// <summary>
-		/// Returns true if component is valid for this selector.
-		/// </summary>
-		public virtual bool IsValid(TerrainComponent component)
-		{
-			return (bool)GetQuery().DynamicInvoke(component);
-		}
-
-		public virtual ComponentRender TransformRender(SegmentTile tile, TerrainComponent component, ComponentRender render)
-		{
-			return render;
-		}
-		
-		/// <summary>
-		/// Returns a <see cref="System.String" /> that represents this instance.
-		/// </summary>
-		public override string ToString()
-		{
-			return Name;
-		}
-
-		#endregion
+	/// <summary>
+	/// Returns true if component is valid for this selector.
+	/// </summary>
+	public virtual bool IsValid(TerrainComponent component)
+	{
+		return (bool)GetQuery().DynamicInvoke(component);
 	}
 
-	public class AllTerrainSelector : TerrainSelector
+	public virtual ComponentRender TransformRender(SegmentTile tile, TerrainComponent component, ComponentRender render)
 	{
-		#region Static
-
-		#endregion
-
-		#region Fields
-
-		#endregion
-
-		#region Properties and Events
-
-		public override string Name => "Clears any filters.";
-
-		public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterNone.png"));
-
-		#endregion
-
-		#region Constructors and Cleanup
-
-		#endregion
-
-		#region Methods
-
-		/// <summary>
-		/// Gets the query.
-		/// </summary>
-		public override Delegate GetQuery()
-		{
-			return default(Delegate);
-		}
-
-		/// <inheritdoc />
-		public override bool IsValid(TerrainComponent component)
-		{
-			return true;
-		}
-
-		#endregion
+		return render;
 	}
+		
+	/// <summary>
+	/// Returns a <see cref="System.String" /> that represents this instance.
+	/// </summary>
+	public override string ToString()
+	{
+		return Name;
+	}
+
+	#endregion
+}
+
+public class AllTerrainSelector : TerrainSelector
+{
+	#region Static
+
+	#endregion
+
+	#region Fields
+
+	#endregion
+
+	#region Properties and Events
+
+	public override string Name => "Clears any filters.";
+
+	public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterNone.png"));
+
+	#endregion
+
+	#region Constructors and Cleanup
+
+	#endregion
+
+	#region Methods
+
+	/// <summary>
+	/// Gets the query.
+	/// </summary>
+	public override Delegate GetQuery()
+	{
+		return default(Delegate);
+	}
+
+	/// <inheritdoc />
+	public override bool IsValid(TerrainComponent component)
+	{
+		return true;
+	}
+
+	#endregion
+}
 
 /*	public class DynamicTerrainSelector : TerrainSelector
 	{
@@ -180,160 +180,159 @@ namespace Kesmai.WorldForge.Editor
 		#endregion
 	}*/
 
-	public class ComponentSelector<T> : TerrainSelector where T : TerrainComponent
-	{
-		#region Static
+public class ComponentSelector<T> : TerrainSelector where T : TerrainComponent
+{
+	#region Static
 
-		#endregion
+	#endregion
 
-		#region Fields
+	#region Fields
 
-		#endregion
+	#endregion
 
-		#region Properties and Events
+	#region Properties and Events
 
-		/// <summary>
-		/// Gets the filter name.
-		/// </summary>
-		public override string Name => typeof(T).Name;
+	/// <summary>
+	/// Gets the filter name.
+	/// </summary>
+	public override string Name => typeof(T).Name;
 
-		public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterAll.png"));
+	public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterAll.png"));
 		
-		#endregion
+	#endregion
 
-		#region Constructors and Cleanup
+	#region Constructors and Cleanup
 
-		#endregion
+	#endregion
 
-		#region Methods
+	#region Methods
 
-		/// <summary>
-		/// Gets the query.
-		/// </summary>
-		public override Delegate GetQuery()
-		{
-			return (Func<TerrainComponent, bool>)(component => component is T);
-		}
-
-		#endregion
+	/// <summary>
+	/// Gets the query.
+	/// </summary>
+	public override Delegate GetQuery()
+	{
+		return (Func<TerrainComponent, bool>)(component => component is T);
 	}
 
-	public class FloorSelector : ComponentSelector<FloorComponent>
-	{
-		public override string Name => "Filter for only floor components.";
-		public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterFloor.png"));
+	#endregion
+}
+
+public class FloorSelector : ComponentSelector<FloorComponent>
+{
+	public override string Name => "Filter for only floor components.";
+	public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterFloor.png"));
 		
-		public override ComponentRender TransformRender(SegmentTile tile, TerrainComponent component, ComponentRender render)
-		{
-			var wallComponent = tile.GetComponents<WallComponent>();
-
-			if (wallComponent.Any(wall => wall.IsIndestructible))
-				render.Color = Color.Red;
-
-			if (render.Color.Equals(Color.Black))
-				render.Color = Color.DimGray;
-
-			return render;
-		}
-	}
-
-	public class StaticSelector : ComponentSelector<StaticComponent>
+	public override ComponentRender TransformRender(SegmentTile tile, TerrainComponent component, ComponentRender render)
 	{
-		public override string Name => "Filter for only static components.";
-		public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterStatic.png"));
+		var wallComponent = tile.GetComponents<WallComponent>();
 
-		public override ComponentRender TransformRender(SegmentTile tile, TerrainComponent component, ComponentRender render)
-		{
-			//is there a better way to do this?
-			var wallComponent = tile.GetComponents<WallComponent>();
-			var floorComponent = tile.GetComponents<FloorComponent>();
-			var obstructionComponent = tile.GetComponents<ObstructionComponent>();
-			var counterComponent = tile.GetComponents<CounterComponent>();
-			var altarComponent = tile.GetComponents<AltarComponent>();
-			
-			if (!floorComponent.Any() && !wallComponent.Any(wall => wall.IsIndestructible) && !obstructionComponent.Any() && !counterComponent.Any() && !altarComponent.Any())
-				render.Color = Color.Red; // statics that are walkable without floors to go along with them.
+		if (wallComponent.Any(wall => wall.IsIndestructible))
+			render.Color = Color.Red;
 
-			if (render.Color.Equals(Color.Black))
-				render.Color = Color.DimGray;
+		if (render.Color.Equals(Color.Black))
+			render.Color = Color.DimGray;
 
-			return render;
-		}
+		return render;
 	}
+}
 
-	public class WallSelector : ComponentSelector<WallComponent>
+public class StaticSelector : ComponentSelector<StaticComponent>
+{
+	public override string Name => "Filter for only static components.";
+	public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterStatic.png"));
+
+	public override ComponentRender TransformRender(SegmentTile tile, TerrainComponent component, ComponentRender render)
 	{
-		public override string Name => "Filter for destructible/indestructible walls.";
-		public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterWall.png"));
-
-		public override ComponentRender TransformRender(SegmentTile tile, TerrainComponent component, ComponentRender render)
-		{
-			var floorComponents = tile.GetComponents<FloorComponent>();
+		//is there a better way to do this?
+		var wallComponent = tile.GetComponents<WallComponent>();
+		var floorComponent = tile.GetComponents<FloorComponent>();
+		var obstructionComponent = tile.GetComponents<ObstructionComponent>();
+		var counterComponent = tile.GetComponents<CounterComponent>();
+		var altarComponent = tile.GetComponents<AltarComponent>();
 			
-			if (component is WallComponent wall && wall.IsIndestructible)
-			{
-				if (floorComponents.Any())
-					render.Color = Color.Yellow;
-				else
-					render.Color = Color.Red;
-			}
+		if (!floorComponent.Any() && !wallComponent.Any(wall => wall.IsIndestructible) && !obstructionComponent.Any() && !counterComponent.Any() && !altarComponent.Any())
+			render.Color = Color.Red; // statics that are walkable without floors to go along with them.
+
+		if (render.Color.Equals(Color.Black))
+			render.Color = Color.DimGray;
+
+		return render;
+	}
+}
+
+public class WallSelector : ComponentSelector<WallComponent>
+{
+	public override string Name => "Filter for destructible/indestructible walls.";
+	public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterWall.png"));
+
+	public override ComponentRender TransformRender(SegmentTile tile, TerrainComponent component, ComponentRender render)
+	{
+		var floorComponents = tile.GetComponents<FloorComponent>();
+			
+		if (component is WallComponent wall && wall.IsIndestructible)
+		{
+			if (floorComponents.Any())
+				render.Color = Color.Yellow;
 			else
-            {
-	            if (!floorComponents.Any())
-		            render.Color = Color.Green;
-            }
+				render.Color = Color.Red;
+		}
+		else
+		{
+			if (!floorComponents.Any())
+				render.Color = Color.Green;
+		}
 			
-			return render;
-		}
+		return render;
 	}
+}
 	
-	public class WaterSelector : ComponentSelector<WaterComponent>
+public class WaterSelector : ComponentSelector<WaterComponent>
+{
+	public override string Name => "Filter for water components.";
+	public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterWater.png"));
+}
+
+
+public class StructureSelector : TerrainSelector
+{
+	#region Static
+
+	private static List<Type> _structures = new List<Type>()
 	{
-		public override string Name => "Filter for water components.";
-		public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterWater.png"));
+		typeof(WallComponent),
+		typeof(DoorComponent),
+		typeof(ObstructionComponent),
+		typeof(CounterComponent),
+		typeof(AltarComponent),
+	};
+
+	#endregion
+
+	#region Fields
+
+	#endregion
+
+	#region Properties and Events
+
+	public override string Name => "Filter visibility of only structural components.";
+	public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterStructure.png"));
+
+	#endregion
+
+	#region Constructors and Cleanup
+
+	#endregion
+
+	#region Methods
+
+	/// <summary>
+	/// Gets the query.
+	/// </summary>
+	public override Delegate GetQuery()
+	{
+		return (Func<TerrainComponent, bool>)(component => _structures.Contains(component.GetType()));
 	}
 
-
-	public class StructureSelector : TerrainSelector
-	{
-		#region Static
-
-		private static List<Type> _structures = new List<Type>()
-		{
-			typeof(WallComponent),
-			typeof(DoorComponent),
-			typeof(ObstructionComponent),
-			typeof(CounterComponent),
-			typeof(AltarComponent),
-		};
-
-		#endregion
-
-		#region Fields
-
-		#endregion
-
-		#region Properties and Events
-
-		public override string Name => "Filter visibility of only structural components.";
-		public override BitmapImage Icon => new BitmapImage(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/FilterStructure.png"));
-
-		#endregion
-
-		#region Constructors and Cleanup
-
-		#endregion
-
-		#region Methods
-
-		/// <summary>
-		/// Gets the query.
-		/// </summary>
-		public override Delegate GetQuery()
-		{
-			return (Func<TerrainComponent, bool>)(component => _structures.Contains(component.GetType()));
-		}
-
-		#endregion
-	}
+	#endregion
 }

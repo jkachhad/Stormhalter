@@ -1,7 +1,6 @@
-namespace Kesmai.Server.Game
+namespace Kesmai.Server.Game;
+
+public interface IUndead
 {
-	public interface IUndead
-	{
 		
-	}
 }

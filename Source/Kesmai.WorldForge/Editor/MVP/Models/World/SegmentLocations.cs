@@ -4,30 +4,30 @@ using System.IO;
 using System.Xml.Linq;
 using Ionic.Zip;
 
-namespace Kesmai.WorldForge.Editor
+namespace Kesmai.WorldForge.Editor;
+
+public class SegmentLocations : ObservableCollection<SegmentLocation>
 {
-	public class SegmentLocations : ObservableCollection<SegmentLocation>
-	{
-		public string Name => "(Locations)";
+	public string Name => "(Locations)";
 		
-		public void Load(ZipFile archive, Version version)
+	public void Load(ZipFile archive, Version version)
+	{
+		var archiveEntry = archive["locations"];
+
+		if (archiveEntry != null)
 		{
-			var archiveEntry = archive["locations"];
+			var locationsElement = XDocument.Load(archiveEntry.OpenReader()).Root;
 
-			if (archiveEntry != null)
-			{
-				var locationsElement = XDocument.Load(archiveEntry.OpenReader()).Root;
-
-				if (locationsElement != null)
-					Load(locationsElement, version);
-			}
+			if (locationsElement != null)
+				Load(locationsElement, version);
 		}
+	}
 
-		public void Load(XElement element, Version version)
-		{
-			foreach (var locationElement in element.Elements("location"))
-				Add(new SegmentLocation(locationElement));
-		}
+	public void Load(XElement element, Version version)
+	{
+		foreach (var locationElement in element.Elements("location"))
+			Add(new SegmentLocation(locationElement));
+	}
 
 #if (ArchiveStorage)
 		public void Save(ZipFile archive)
@@ -50,11 +50,10 @@ namespace Kesmai.WorldForge.Editor
 			archive.AddEntry(@"locations", memoryStream);
 		}
 #else
-		public void Save(XElement element)
-		{
-			foreach (var location in this)
-				element.Add(location.GetXElement());
-		}
-#endif	
+	public void Save(XElement element)
+	{
+		foreach (var location in this)
+			element.Add(location.GetXElement());
 	}
+#endif	
 }

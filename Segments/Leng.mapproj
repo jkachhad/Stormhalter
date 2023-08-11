@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.96.0.0">
+<segment name="Leng" version="0.102.2.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -236,17 +236,24 @@
             
             var quest = Quests.GetQuest<CrystalGauntletsQuest>();
             
-            if (quest == null)
+            if(quest == null)
             {
-                /* I can not teach you greater mastery of your hand skill. But-- || need to replace this stuff with: Go talk to Yuri, bro/sis. He can give you the quest*/
-                SayTo(source, 6300411);
+                /* Please see Yuri in Oakvael to begin your quest, {0}*/
+                SayTo(source, 6300428);
+                return;        
+            }
+            
+            if (!quest.InProgress(source) && !quest.IsComplete(source))
+            {
+                /* Please see Yuri in Oakvael to begin your quest, {0}*/
+                SayTo(source, 6300428);
                 return;        
             }
             
             if(quest.IsComplete(source))
             {
-                /* You feel a little bit more like Hercules.  --- Need to replace at some point, just using it as a CheckFlag */
-                SayTo(source, 6100100);
+                /* Don't go losing it again. */
+                SayTo(source, 6300340);
             }
                     
             if (!quest.IsKonranRescued(source) && !quest.IsComplete(source))
@@ -355,7 +362,7 @@
         }
         public void Elated()
         {
-            Say($"My daughter! You've rescued her from the top of the Water Falls!");
+            Say($"My daughter! You've rescued her from the top of the waterfalls!");
             EmitSound(92, 3, 9);
         }
     }
@@ -392,14 +399,23 @@
             
             CanLoot = false;
         }
+        
+        bool hasReceivedWillPower = false;
     
         protected override void OnFinishMovement(PathingEventArgs args)
         {
             var queen = GetBeheldInVisibility(0).SelectMany(m => m.Members).OfType<LengQueen>().FirstOrDefault();
             
+            if (hasReceivedWillPower)
+            {   
+                SayTo(Director, "I have already given Will Power Pot.");
+                return;
+            }
+            
             if (queen != null)
             {
                 new PermanentWillpowerPotion().Move(Location, true, Segment);
+                hasReceivedWillPower = true;
                 Say($"Hi Mom! What's for dinner?!");
                 queen.Elated();
                 
@@ -25193,7 +25209,7 @@
           <professions>Thief</professions>
           <alignments select="all" />
           <type>StarRuby</type>
-          <fail>Stun</fail>
+          <fail>Daze</fail>
         </component>
         <component type="StaticComponent">
           <static>195</static>
@@ -28856,7 +28872,7 @@
           <professions>Martial Artist,Fighter,Thief</professions>
           <alignments select="all" />
           <type>StarRuby</type>
-          <fail>Stun</fail>
+          <fail>Daze</fail>
         </component>
         <component type="FloorComponent">
           <ground>18</ground>
@@ -52431,7 +52447,7 @@
           <professions>Fighter,Martial Artist,Thief</professions>
           <alignments select="all" />
           <type>StarRuby</type>
-          <fail>Stun</fail>
+          <fail>Daze</fail>
         </component>
         <component type="FloorComponent">
           <ground>12</ground>
@@ -57661,8 +57677,9 @@
         <component type="StaticComponent">
           <static>5</static>
         </component>
-        <component type="AltarComponent">
-          <altar>113</altar>
+        <component type="CounterComponent">
+          <counter>113</counter>
+          <direction>2</direction>
         </component>
       </tile>
       <tile x="5" y="3">
@@ -69765,14 +69782,9 @@
         </component>
       </tile>
       <tile x="14" y="18">
-        <component type="StaticComponent">
-          <static>23</static>
-        </component>
-        <component type="AltarComponent">
-          <altar>163</altar>
-        </component>
-        <component type="StaticComponent">
-          <static>236</static>
+        <component type="EgressComponent">
+          <egress>318</egress>
+          <destinationSegment>11</destinationSegment>
         </component>
       </tile>
       <tile x="15" y="18">
@@ -75672,7 +75684,7 @@
     var shidosha = new Ninja()
     {
         Body = 245,
-        Name = "shidosha",
+        Name = "Shidosha",
         
         MaxHealth = 2100, Health = 2100,
         BaseDodge = 28,
@@ -75703,17 +75715,17 @@
         {
             new CreatureAttack(20,      20, 40,      "Shidosha hits you with a flurry of fists.",
                                                         new AttackProneComponent(5), 
-                                                        new AttackStunComponent(10)),                40
+                                                        new AttackDazeComponent(10)),                40
         },
         {
             new CreatureAttack(20,      30, 50,     "Shidosha slams his fist into your chest.",
                                                         new AttackProneComponent(5), 
-                                                        new AttackStunComponent(25)),               40
+                                                        new AttackDazeComponent(25)),               40
         },
         {
             new CreatureAttack(20,      40, 61,     "Shidosha knocks you back with a forceful kick.",
                                                         new AttackProneComponent(10), 
-                                                        new AttackStunComponent(15)),               20
+                                                        new AttackDazeComponent(15)),               20
         },
     };
     
@@ -75789,17 +75801,17 @@
         {
             new CreatureAttack(17,      10, 18,      "The ninja hits you with a flurry of fists.",
                                                         new AttackProneComponent(5), 
-                                                        new AttackStunComponent(5)),                40
+                                                        new AttackDazeComponent(5)),                40
         },
         {
             new CreatureAttack(17,      13, 20,     "The ninja slams his fist into your chest.",
                                                         new AttackProneComponent(5), 
-                                                        new AttackStunComponent(5)),               40
+                                                        new AttackDazeComponent(5)),               40
         },
         {
             new CreatureAttack(17,      15, 21,     "The ninja knocks you back with a forceful kick.",
                                                         new AttackProneComponent(5), 
-                                                        new AttackStunComponent(5)),               20
+                                                        new AttackDazeComponent(5)),               20
         },
     };
     
@@ -75844,6 +75856,7 @@
         BaseDodge = 25,
         HideDetection = 26,
         Experience = 49532,
+        Body = 94,
         
         CanStrikeCritically = false,
         CanFly = true,
@@ -75851,12 +75864,12 @@
         
         BasePenetration = ShieldPenetration.VeryHeavy,
     
-        FireProtection = 100,
-        StunProtection = 100,
-        
         IsTethered = true,
     };
-    
+	
+	dragon.Stats[EntityStat.FireProtection].Base = 100;
+	dragon.Stats[EntityStat.StunProtection].Base = 100;
+	
     dragon.AddStatus(new NightVisionStatus(dragon));
     
     dragon.AddImmunity(typeof(BlindSpell));
@@ -75870,17 +75883,17 @@
         {
             new CreatureAttack(16,      25, 45,      "The dragon slashes you with its claws.",
                                                         new AttackProneComponent(5), 
-                                                        new AttackStunComponent(5)),                45
+                                                        new AttackDazeComponent(5)),                45
         },
         {
             new CreatureAttack(16,      40, 50,     "The dragon smashes you with its tail.",
                                                         new AttackProneComponent(10), 
-                                                        new AttackStunComponent(10)),               45
+                                                        new AttackDazeComponent(10)),               45
         },
         {
             new CreatureAttack(16,      45, 59,     "The dragon buffets you with its wings.",
                                                         new AttackProneComponent(15), 
-                                                        new AttackStunComponent(15)),               10
+                                                        new AttackDazeComponent(15)),               10
         },
     };
     
@@ -75894,7 +75907,7 @@
     dragon.Spells = new CreatureSpellCollection(20.0)
     {
         new CreatureSpell<DragonBreathFireSpell>(
-            skillLevel: 14)
+            skillLevel: 7)
     };
     
     dragon.AddGold(1500);
@@ -75955,12 +75968,12 @@
     vlad.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(20,     50, 75,      "The vampire rends your flesh with his claws",
+            new CreatureAttack(20,     50, 75,      "The vampire rends your flesh with his claws.",
                                                     new AttackAgeComponent(1000)),                                      70 
         }, 
         {
-            new CreatureAttack(20,     60, 95,     "The vampire appears behind you, sinking his teeth into your neck",
-                                                    new AttackStunComponent(50)),                                       30 
+            new CreatureAttack(20,     60, 95,     "The vampire appears behind you, sinking his teeth into your neck.",
+                                                    new AttackDazeComponent(50)),                                       30 
         },
     };
     
@@ -76052,7 +76065,7 @@
         {
             new CreatureAttack(18,      55, 70,      "The drake slashes you with its claws.",
                                                         new AttackProneComponent(15), 
-                                                        new AttackStunComponent(5)),                40
+                                                        new AttackDazeComponent(5)),                40
         },
         {
             new CreatureAttack(19,      60, 75,     "The drake slashes you with its tail.",
@@ -76061,7 +76074,7 @@
         {
             new CreatureAttack(20,      75, 95,     "The drake buffets you with its wings.",
                                                         new AttackProneComponent(35), 
-                                                        new AttackStunComponent(15)),               40
+                                                        new AttackDazeComponent(15)),               40
         },
     };
     
@@ -76130,7 +76143,7 @@
         },
         {
             new CreatureAttack(14,     20, 25,     "The griffin pummels you with its wings.", 
-                                                    new AttackStunComponent(15.0)),                     40
+                                                    new AttackDazeComponent(15.0)),                     40
         },
     };
     
@@ -76175,7 +76188,7 @@
                     
     var fighter = new Humanoid()
     {
-        Name = "Nomad",
+        Name = "nomad",
         Body = (female ? 33 : 32), IsFemale = female,
             
         MaxHealth = 121, Health = 121,
@@ -76293,12 +76306,14 @@
         MaxMana = 13, Mana = 13,
         BaseDodge = 22,
         HideDetection = 26,
-        MagicProtection = 33,
+
         Experience = 9094,
         VisibilityDistance = 0,
         CanLoot = false,
     };
     
+	lich.Stats[EntityStat.MagicDamageTakenReduction].Base = 33;
+	
     lich.AddStatus(new NightVisionStatus(lich));
         
     lich.Attacks = new CreatureAttackCollection
@@ -76350,11 +76365,12 @@
                     
     var fighter = new Humanoid()
     {
-        Name = "Nomad",
+        Name = "nomad",
         Body = (female ? 33 : 32), IsFemale = female,
             
         MaxHealth = 121, Health = 121,
         BaseDodge = 20,
+        BasePenetration = ShieldPenetration.VeryLight,
         HideDetection = 26,    
         Experience = 4489,
         CanSwim = true,
@@ -76417,14 +76433,14 @@
     minotaur.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(15,     20, 25,      "The minotaur hits with a wicked axe"),  60 
+            new CreatureAttack(15,     20, 25,      "The minotaur hits with a wicked axe."),  60 
         }, 
         {
-            new CreatureAttack(16,     21, 27,     "You've been gored by the minotaur",
-                                                    new AttackStunComponent(10.0)),          30
+            new CreatureAttack(16,     21, 27,     "You've been gored by the minotaur.",
+                                                    new AttackDazeComponent(10.0)),          30
         }, 
         {
-            new CreatureAttack(17,     22, 30,     "You've been trampled by the minotaur"),  10
+            new CreatureAttack(17,     22, 30,     "You've been trampled by the minotaur."),  10
         }, 
     };
     
@@ -76474,19 +76490,21 @@
         Experience = 7757,
         
         Movement = 2,
-        MagicProtection = 33,
-        FireProtection = 100,
         VisibilityDistance = 0,
         
     };
+	
+	salamander.Stats[EntityStat.MagicDamageTakenReduction].Base = 33;
+	
+	salamander.Stats[EntityStat.FireProtection].Base = 100;
     
     salamander.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(14,     11, 18,  "The salamander claws at you"),             60 
+            new CreatureAttack(14,     11, 18,  "The salamander claws at you."),             60 
         },
         {
-            new CreatureAttack(14,     14, 21,  "The salamander hits you with its tail"),   40 
+            new CreatureAttack(14,     14, 21,  "The salamander hits you with its tail."),   40 
         },
     };
     
@@ -76537,10 +76555,12 @@
         BasePenetration = ShieldPenetration.Medium,
         Experience = 9094,
         VisibilityDistance = 0,
-        FireProtection = 100,
-        MagicProtection = 33,
         HideDetection = 28,
     };
+	
+	griffin.Stats[EntityStat.FireProtection].Base = 100;
+	griffin.Stats[EntityStat.MagicDamageTakenReduction].Base = 33;
+	
     griffin.AddStatus(new NightVisionStatus(griffin));
         
     griffin.Attacks = new CreatureAttackCollection
@@ -76553,7 +76573,7 @@
         },
         {
             new CreatureAttack(17,     25, 30,     "The griffin pummels you with its wings.", 
-                                                    new AttackStunComponent(15.0)),                     40
+                                                    new AttackDazeComponent(15.0)),                     40
         }
     };
     
@@ -76598,18 +76618,19 @@
                     
     var fighter = new Humanoid()
     {
-        Name = "Familiar",
+        Name = "familiar",
         Body = (female ? 33 : 32), IsFemale = female,
         HideDetection = 28,    
         MaxHealth = 154, Health = 154,
         BaseDodge = 22,
-        MagicProtection = 33,
         Experience = 9094,
     
-        BasePenetration = ShieldPenetration.Medium,
+        BasePenetration = ShieldPenetration.Light,
             
         VisibilityDistance = 0,
     };
+	
+	fighter.Stats[EntityStat.MagicDamageTakenReduction].Base = 33;
     
     fighter.AddStatus(new NightVisionStatus(fighter));
     
@@ -76654,17 +76675,17 @@
                     
     var fighter = new Humanoid()
     {
-        Name = "Familiar",
+        Name = "familiar",
         Body = (female ? 33 : 32), IsFemale = female,
         HideDetection = 28,    
         MaxHealth = 154, Health = 154,
         BaseDodge = 22,
-        MagicProtection = 33,
         BasePenetration = ShieldPenetration.Medium,
     
         Experience = 9094,
-            
     };
+	
+	fighter.Stats[EntityStat.MagicDamageTakenReduction].Base = 33;
     
     fighter.Attacks = new CreatureAttackCollection
     {
@@ -76707,17 +76728,18 @@
                 
     var thaum = new Humanoid()
     {
-        Name = "Familiar",
+        Name = "familiar",
         Body = (female ? 16 : 48), IsFemale = female,
         HideDetection = 28,    
         MaxHealth = 154, Health = 154,
         MaxMana = 23, Mana = 23,
         BaseDodge = 22,
-        MagicProtection = 33,
         Experience = 9094,
     
         VisibilityDistance = 0,
     };
+	
+	thaum.Stats[EntityStat.MagicDamageTakenReduction].Base = 33;
     
     thaum.AddStatus(new NightVisionStatus(thaum));
     
@@ -76895,10 +76917,10 @@
         },
         {
             new CreatureAttack(16,     25, 35,  "The duck viciously attacks your shins.",
-                                                new AttackStunComponent(25)),                               30 
+                                                new AttackDazeComponent(25)),                               30 
         }, 
         {
-            new CreatureAttack(17,     30, 41,  "The duck pecks at your eyes attempting to blind you."),    20 
+            new CreatureAttack(17,     30, 41,  "The duck pecks at your eyes, attempting to blind you."),    20 
         }, 
     };
         
@@ -77090,6 +77112,7 @@
         BaseDodge = 19,
         Experience = 5015,
         HideDetection = 26,
+        BasePenetration = ShieldPenetration.VeryLight,
         CanFlee = true,
     };
     
@@ -77275,16 +77298,16 @@
     wyrm.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(17, 20, 35, "The serpent bites you with it's fangs."),   60 
+            new CreatureAttack(17, 20, 35, "The wyrm bites you with its fangs."),   60 
         }, 
         {
-            new CreatureAttack(18, 20, 35, "The serpent bites you with it's fangs.",
-                                        new AttackStunComponent(35),
+            new CreatureAttack(18, 20, 35, "The wyrm bites you with its fangs.",
+                                        new AttackDazeComponent(35),
                                         new AttackPoisonComponent(12)),             20 
         }, 
         {
-            new CreatureAttack(19, 25, 44, "The serpent strikes you with it's tail.",
-                                        new AttackStunComponent(10)),                   20 
+            new CreatureAttack(19, 25, 44, "The wyrm strikes you with its tail.",
+                                        new AttackDazeComponent(10)),                   20 
         }, 
     };
     
@@ -77332,12 +77355,13 @@
         MaxHealth = 150, Health = 150,
         MaxMana = 19, Mana = 19,
         BaseDodge = 14,
-        MagicProtection = 33,
         Experience = 9094,
         VisibilityDistance = 0,
         CanLoot = false,
         HideDetection = 28,
     };
+	
+	lich.Stats[EntityStat.MagicDamageTakenReduction].Base = 33;
     
     lich.AddStatus(new NightVisionStatus(lich));
         
@@ -77474,7 +77498,7 @@
     var isFemale = Utility.RandomBool();            
     var wizard = new Humanoid()
     {
-        Name = "Thrall",
+        Name = "thrall",
         Body = (isFemale ? 37 : 38), IsFemale = isFemale,
         HideDetection = 23,    
         MaxHealth = 99, Health = 99,
@@ -77485,9 +77509,9 @@
         Experience = 3654,
         
         CanSwim = true,
-            
-        IceProtection = 100,
     };
+	
+	wizard.Stats[EntityStat.IceProtection].Base = 100;
     
     wizard.Attacks = new CreatureAttackCollection
     {
@@ -77508,7 +77532,7 @@
         },
         {
             new CreatureSpell<IceStormSpell>(
-                skillLevel: 9, cost: 6, instantCast: false,
+                skillLevel: 5, cost: 6, instantCast: false,
                 mantra: SpellHelper.GenerateMantra()),   25
         }
     };
@@ -77549,7 +77573,7 @@
         <block><![CDATA[
     var wizard = new Humanoid()
     {
-        Name = "Thrall",
+        Name = "thrall",
         Body = 38,
         HideDetection = 23,       
         MaxHealth = 99, Health = 99,
@@ -77559,9 +77583,9 @@
         Experience = 3654,
         
         CanSwim = true,
-            
-        IceProtection = 100,
     };
+	
+	wizard.Stats[EntityStat.IceProtection].Base = 100;
     
     wizard.Attacks = new CreatureAttackCollection
     {
@@ -77577,7 +77601,7 @@
         },
         {
             new CreatureSpell<FireballSpell>(
-                skillLevel: 9, cost: 5, 
+                skillLevel: 5, cost: 5, 
                 mantra: SpellHelper.GenerateMantra(), instantCast: false),   50
         },
         {
@@ -77745,8 +77769,8 @@
     
     mummy.Attacks = new CreatureAttackCollection
     {
-        { new CreatureAttack(11,     13, 22,      "The mummy scratches you with its claws"),  70 }, 
-        { new CreatureAttack(11,     15, 25,     "You've been bitten by the mummy"), 30 },
+        { new CreatureAttack(11,     13, 22,      "The mummy scratches you with its claws."),  70 }, 
+        { new CreatureAttack(11,     15, 25,     "You've been bitten by the mummy."), 30 },
     };   
     
     mummy.Spells = new CreatureSpellCollection()
@@ -77795,7 +77819,7 @@
         <block><![CDATA[
 	var raven = new Raven()
 	{
-	    Name = "Raven",
+	    Name = "raven",
         MaxHealth = 63, Health = 63,
         BaseDodge = 20,
         BasePenetration = ShieldPenetration.Medium,
@@ -77807,13 +77831,13 @@
     raven.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(7,     2, 7,   "The raven buffets you with his wings."),                   50
+            new CreatureAttack(7,     2, 7,   "The raven buffets you with its wings."),                   50
         }, 
         {
             new CreatureAttack(8,     3, 10,  "The raven sends a flurry of pecks towards you."),          30 
         }, 
         {
-            new CreatureAttack(9,     4, 12,  "The raven pecks at your eyes attempting to blind you."),   20 
+            new CreatureAttack(9,     4, 12,  "The raven pecks at your eyes, attempting to blind you."),   20 
         }, 
     };
         
@@ -77982,7 +78006,7 @@
                     
     var fighter = new Humanoid()
     {
-        Name = "Wretch",
+        Name = "wretch",
         Body = (female ? 33 : 32), IsFemale = female,
         HideDetection = 23,       
         MaxHealth = 100, Health = 100,
@@ -78044,9 +78068,11 @@
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
             CreatureImmunity.Projectile,
         Weakness = CreatureWeakness.BlueGlowing,
-        DeathResistance = 100,
-        FireProtection = 100,
     };
+	
+	presence.Stats[EntityStat.FireProtection].Base = 100;
+	presence.Stats[EntityStat.DeathResistance].Base = 20;
+	
     presence.AddStatus(new NightVisionStatus(presence));
     
     presence.Attacks = new CreatureAttackCollection
@@ -78110,10 +78136,11 @@
                    CreatureImmunity.Projectile | CreatureImmunity.Poison | CreatureImmunity.Web,
         Weakness = CreatureWeakness.BlueGlowing,
         CanCharge = true,
-        FireProtection = 100,
-        IceProtection = 100,
     };
     
+	sandwyrm.Stats[EntityStat.FireProtection].Base = 100;
+	sandwyrm.Stats[EntityStat.IceProtection].Base = 100;
+	
     sandwyrm.AddStatus(new NightVisionStatus(sandwyrm));
     
     sandwyrm.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
@@ -78121,10 +78148,10 @@
     sandwyrm.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(14,     14, 15,     "The sandwyrm rolls over you"),        70 
+            new CreatureAttack(14,     14, 15,     "The sandwyrm rolls over you."),        70 
         }, 
         {
-            new CreatureAttack(14,    16, 30,     "You've been bitten by the sandwyrm",
+            new CreatureAttack(14,    16, 30,     "You've been bitten by the sandwyrm.",
                                                     new AttackPoisonComponent(8, 50)),  30 
         },
     };
@@ -78188,16 +78215,16 @@
     seaserpent.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(15, 10, 20, "The serpent bites you with it's fangs."),   60 
+            new CreatureAttack(15, 10, 20, "The serpent bites you with its fangs."),   60 
         }, 
         {
-            new CreatureAttack(15, 10, 25, "The serpent bites you with it's fangs. It tingles!",
-                                        new AttackStunComponent(35),
+            new CreatureAttack(15, 10, 25, "The serpent bites you with its fangs. It tingles!",
+                                        new AttackDazeComponent(35),
                                         new AttackPoisonComponent(12)),             20 
         }, 
         {
-            new CreatureAttack(15, 13, 28, "The serpent strikes you with it's tail.",
-                                        new AttackStunComponent(10)),                   20 
+            new CreatureAttack(15, 13, 28, "The serpent strikes you with its tail.",
+                                        new AttackDazeComponent(10)),                   20 
         }, 
     };
     
@@ -78400,7 +78427,7 @@
             new CreatureAttack(8,     9, 15,      "The manticora slashes you with its claws."),   30 
         },
         {
-            new CreatureAttack(8,     8, 16,     "The manticora stings you with his tail.", 
+            new CreatureAttack(8,     8, 16,     "The manticora stings you with its tail.", 
                                                     new AttackPoisonComponent(8)),                 30 
         },
     };
@@ -78443,18 +78470,18 @@
         Experience = 2418,
     
         VisibilityDistance = 1,
-        
-        FireProtection = 100,
-        IceProtection = 100,
     };
-    
+	
+	sandwyrm.Stats[EntityStat.FireProtection].Base = 100;
+	sandwyrm.Stats[EntityStat.IceProtection].Base = 100;
+
     sandwyrm.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(8,     6, 14,     "The sandwyrm rolls over you"),      70 
+            new CreatureAttack(8,     6, 14,     "The sandwyrm rolls over you."),      70 
         }, 
         {
-            new CreatureAttack(8,    8, 15,     "You've been bitten by the sandwyrm",
+            new CreatureAttack(8,    8, 15,     "You've been bitten by the sandwyrm.",
                                                     new AttackPoisonComponent(4)),             30
         },
     };
@@ -78500,10 +78527,11 @@
 
         Experience = 14332,
         
-        FireProtection = 100,
-        IceProtection = 80,
         Movement = 2,
     };
+	
+	bridgeTroll.Stats[EntityStat.FireProtection].Base = 100;
+	bridgeTroll.Stats[EntityStat.IceProtection].Base = 80;
     
     bridgeTroll.Attacks = new CreatureAttackCollection
     {
@@ -78512,7 +78540,7 @@
         }, 
         { 
             new CreatureAttack(12, 17, 30, "The troll headbutts you.",
-                        new AttackStunComponent(20)),                                   35
+                        new AttackDazeComponent(20)),                                   35
         }, 
         { 
             new CreatureAttack(13, 20, 39, "The troll bashes you aside with a sweep of his spiked club.",
@@ -78615,8 +78643,9 @@
         Experience = 29700,
         BasePenetration = ShieldPenetration.Medium,
         CanSwim = true,
-        FireProtection = 50,
     };
+	
+	powerTroll.Stats[EntityStat.FireProtection].Base = 50;
     
     powerTroll.AddStatus(new NightVisionStatus(powerTroll));
     powerTroll.AddStatus(new BreatheWaterStatus(powerTroll));
@@ -78625,7 +78654,7 @@
     {
         new CreatureBasicAttack(17, 31, 41,
                 new AttackProneComponent(25.0),
-                new AttackStunComponent(15.0)),
+                new AttackDazeComponent(15.0)),
     };
                 
     powerTroll.Wield(new SpikedClub());
@@ -78710,14 +78739,14 @@
                     
     var fighter = new Humanoid()
     {
-        Name = "Wretch",
+        Name = "wretch",
         Body = (female ? 33 : 32), IsFemale = female,
         HideDetection = 28,    
         MaxHealth = 143, Health = 143,
         BaseDodge = 21,
         Experience = 7578,
     
-        BasePenetration = ShieldPenetration.Medium,
+        BasePenetration = ShieldPenetration.Light,
     };
     
     fighter.AddStatus(new NightVisionStatus(fighter));
@@ -78879,10 +78908,10 @@
     ghoul.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(14,     12, 18,      "The ghoul scratches you with its claws"),  70 
+            new CreatureAttack(14,     12, 18,      "The ghoul scratches you with its claws."),  70 
         }, 
         { 
-            new CreatureAttack(14,     14, 22,     "You've been bitten by the ghoul",
+            new CreatureAttack(14,     14, 22,     "You've been bitten by the ghoul.",
                                                     new AttackPoisonComponent(13)),            30
         },
     };
@@ -79062,14 +79091,15 @@
         Experience = 32000,
         BasePenetration = ShieldPenetration.Medium,
         Movement = 2,
-        IceProtection = 100,
-        FireProtection = 100,
         CanLoot = false,
         Immunity = CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Bashing |
                    CreatureImmunity.Projectile | CreatureImmunity.Magic | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell, 
         
     };
+	
+	knight.Stats[EntityStat.FireProtection].Base = 100;
+	knight.Stats[EntityStat.IceProtection].Base = 100;
     
     knight.AddStatus(new NightVisionStatus(knight));
     knight.AddImmunity(typeof(ConcussionSpell));
@@ -79096,7 +79126,7 @@
       <script name="OnDeath" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    source.SayTo(killer, $"Only a flesh wound! {killer.Name}.");
+    source.SayTo(killer, $"Just a flesh wound, {killer.Name}!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -79106,7 +79136,7 @@
     if (spokeRecently(source))
         return;
 
-    source.Say($"I move for no man or woman!");
+    source.Say($"I move for no man, or woman!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -79143,17 +79173,17 @@
     critter.Attacks = new CreatureAttackCollection()
     {
         {
-            new CreatureAttack(15,      30, 40,      "The creature thumps you with its back two feet.",
-                                                        new AttackStunComponent(5)),                40
+            new CreatureAttack(15,      30, 40,      "The creature thumps you with its rear two feet.",
+                                                        new AttackDazeComponent(5)),                40
         },
         {
             new CreatureAttack(15,      30, 40,     "The creature lets out a ferocious squeak and charges you.",
-                                                        new AttackStunComponent(10)),               40
+                                                        new AttackDazeComponent(10)),               40
         },
         {
             new CreatureAttack(18,      60, 80,     "The creature flies at you and gnaws at your head.",
                                                         new AttackProneComponent(20), 
-                                                        new AttackStunComponent(15)),               20
+                                                        new AttackDazeComponent(15)),               20
         },
     };
     
@@ -79168,7 +79198,7 @@
      critter.AddGold(1000);
       critter.AddLoot(new LootPack(
         new LootPackEntry(true, LengGems,       100,     gemsPriceMutatorVeryHigh),
-        new LootPackEntry(true, (from, container) => new RamStaff(),        100)
+        new LootPackEntry(true, (from, container) => new RamStaff(),    100)
     ));
     
     return critter;
@@ -79178,6 +79208,7 @@
       <script name="OnDeath" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -79187,7 +79218,7 @@
     if (spokeRecently(source))
         return;
 
-    source.Say($"Sqqqqquuuuuuueeeaaaaaaaakkk");
+    source.Say($"Sqqqqquuuuuuueeeaaaaaaaakkk!");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -79246,7 +79277,7 @@
       <script name="OnDeath" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    source.SayTo(killer, $"Death awaits you with nasty, big, pointy teeth {killer.Name}.");
+    source.SayTo(killer, $"Death awaits you with nasty, big, pointy teeth, {killer.Name}.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -79319,7 +79350,7 @@
     var isFemale = Utility.RandomBool();            
     var wizard = new Humanoid()
     {
-        Name = "Thrall",
+        Name = "thrall",
         Body = (isFemale ? 37 : 38), IsFemale = isFemale,
         HideDetection = 23,    
         MaxHealth = 99, Health = 99,
@@ -79329,9 +79360,9 @@
         Experience = 3654,
         
         CanSwim = true,
-            
-        IceProtection = 100,
     };
+	
+	wizard.Stats[EntityStat.IceProtection].Base = 100;
     
     wizard.Attacks = new CreatureAttackCollection
     {
@@ -79347,7 +79378,7 @@
         },
         {
             new CreatureSpell<IceStormSpell>(
-                skillLevel: 9, cost: 6, instantCast: false,
+                skillLevel: 5, cost: 6, instantCast: false,
                 mantra: SpellHelper.GenerateMantra()),   70
         }
     };
@@ -79390,7 +79421,7 @@
                     
     var fighter = new Humanoid()
     {
-        Name = "Wretch",
+        Name = "wretch",
         Body = (female ? 33 : 32), IsFemale = female,
             
         MaxHealth = 110, Health = 110,
@@ -79646,11 +79677,12 @@
                     
     var fighter = new Humanoid()
     {
-        Name = "Wretch",
+        Name = "wretch",
         Body = (female ? 33 : 32), IsFemale = female,
             
         MaxHealth = 111, Health = 111,
         BaseDodge = 18,
+        BasePenetration = ShieldPenetration.VeryLight,
         HideDetection = 24,    
         Experience = 3889,
         CanSwim = true,
@@ -79854,7 +79886,7 @@
             new CreatureAttack(8,     9, 13,      "The manticora slashes you with its claws."),   30 
         },
         {
-            new CreatureAttack(8,     8, 15,     "The manticora stings you with his tail.", 
+            new CreatureAttack(8,     8, 15,     "The manticora stings you with its tail.", 
                                                     new AttackPoisonComponent(8)),                 30 
         },
     };
@@ -79897,18 +79929,18 @@
         Experience = 2218,
     
         VisibilityDistance = 1,
-        
-        FireProtection = 100,
-        IceProtection = 100,
     };
+	
+	sandwyrm.Stats[EntityStat.FireProtection].Base = 100;
+	sandwyrm.Stats[EntityStat.IceProtection].Base = 100;
     
     sandwyrm.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(8,     6, 12,     "The sandwyrm rolls over you"),      70 
+            new CreatureAttack(8,     6, 12,     "The sandwyrm rolls over you."),      70 
         }, 
         {
-            new CreatureAttack(8,    8, 14,     "You've been bitten by the sandwyrm",
+            new CreatureAttack(8,    8, 14,     "You've been bitten by the sandwyrm.",
                                                     new AttackPoisonComponent(4)),             30
         },
     };
@@ -79992,7 +80024,7 @@
         <block><![CDATA[
 	var raven = new Raven()
 	{
-	    Name = "Raven",
+	    Name = "raven",
         MaxHealth = 83, Health = 83,
         BaseDodge = 20,
         BasePenetration = ShieldPenetration.Medium,
@@ -80006,13 +80038,13 @@
     raven.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(7,     2, 10,   "The raven buffets you with his wings."),                   50
+            new CreatureAttack(7,     2, 10,   "The raven buffets you with its wings."),                   50
         }, 
         {
             new CreatureAttack(8,     3, 12,  "The raven sends a flurry of pecks towards you."),          30 
         }, 
         {
-            new CreatureAttack(9,     4, 14,  "The raven pecks at your eyes attempting to blind you."),   20 
+            new CreatureAttack(9,     4, 14,  "The raven pecks at your eyes, attempting to blind you."),   20 
         }, 
     };
         
@@ -80049,7 +80081,7 @@
     </entity>
   </entities>
   <spawns>
-    <spawn type="LocationSpawner" name="Priest">
+    <spawn type="LocationSpawner" name="Priest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80092,7 +80124,7 @@
       <entry entity="lengMagicPeacekeeper" size="1" minimum="1" maximum="1" />
       <location x="2" y="1" region="254" />
     </spawn>
-    <spawn type="LocationSpawner" name="thaumTrainer">
+    <spawn type="LocationSpawner" name="thaumTrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80119,7 +80151,7 @@
       <entry entity="lengThaumTrainer" size="1" minimum="1" maximum="1" />
       <location x="4" y="4" region="254" />
     </spawn>
-    <spawn type="LocationSpawner" name="tanner">
+    <spawn type="LocationSpawner" name="tanner" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80140,7 +80172,7 @@
       <entry entity="lengTannerTemplate" size="1" minimum="1" maximum="1" />
       <location x="3" y="25" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="lengApothecary">
+    <spawn type="LocationSpawner" name="lengApothecary" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80223,7 +80255,7 @@
       <entry entity="lengShopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="11" y="8" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="banker">
+    <spawn type="LocationSpawner" name="banker" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80246,7 +80278,7 @@
       <entry entity="lengBankerTemplate" size="1" minimum="1" maximum="1" />
       <location x="15" y="4" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="lengArmorer">
+    <spawn type="LocationSpawner" name="lengArmorer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80316,7 +80348,7 @@
       <entry entity="lengShopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="20" y="9" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="lengJeweler">
+    <spawn type="LocationSpawner" name="lengJeweler" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80359,8 +80391,7 @@
         var rareWares = new List<StockEntry>()
         {
             new StockEntry("death resistance ring",              () => new DeathResistanceRing(),         (int)(300 * merchantUpsell),  1, onRarePurchase),
-            new StockEntry("weak dexterity ring",                () => new WeakDexterityRing(),           (int)(1000 * merchantUpsell), 1, onRarePurchase),
-            new StockEntry("stun and death protection bracelet", () => new StunDeathProtectionBracelet(), (int)(3000 * merchantUpsell), 1, onRarePurchase)
+            new StockEntry("weak dexterity ring",                () => new WeakDexterityRing(),           (int)(1000 * merchantUpsell), 1, onRarePurchase)
         };
         
         if (Utility.RandomDouble() <= 0.10) 
@@ -80369,8 +80400,6 @@
                 vendor.Stock(rareWares[0]);
             else if (Utility.RandomDouble() <= 0.60) 
                 vendor.Stock(rareWares[1]);
-            else 
-                vendor.Stock(rareWares[2]);
         }
     }
 ]]></block>
@@ -80386,7 +80415,7 @@
       <entry entity="lengShopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="26" y="14" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="lengGambler">
+    <spawn type="LocationSpawner" name="lengGambler" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -80402,7 +80431,7 @@
         
         void onRarePurchase(PlayerEntity player, ItemEntity item)
         {
-            vendor.SayTo(player, "You got a real treasure there.");
+            vendor.SayTo(player, "You've got a real treasure there.");
         }
        
         var bottle = (new List<StockEntry>()
@@ -80508,7 +80537,7 @@
       <entry entity="lengGambler" size="1" minimum="1" maximum="1" />
       <location x="27" y="21" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="lengWeaponsmith">
+    <spawn type="LocationSpawner" name="lengWeaponsmith" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80580,7 +80609,7 @@
       <entry entity="lengShopkeeperTemplate" size="1" minimum="1" maximum="1" />
       <location x="20" y="22" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="wiztrainer">
+    <spawn type="LocationSpawner" name="wiztrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80602,7 +80631,7 @@
       <entry entity="lengWizTrainer" size="1" minimum="1" maximum="1" />
       <location x="20" y="17" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="weapontrainer">
+    <spawn type="LocationSpawner" name="weapontrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80631,7 +80660,7 @@
       <entry entity="lengWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="12" y="15" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="Puck">
+    <spawn type="LocationSpawner" name="Puck" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80652,7 +80681,7 @@
       <entry entity="lengPuck" size="1" minimum="1" maximum="1" />
       <location x="5" y="4" region="4" />
     </spawn>
-    <spawn type="LocationSpawner" name="balmvendor">
+    <spawn type="LocationSpawner" name="balmvendor" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80673,7 +80702,7 @@
       <entry entity="lengBalmVendor" size="1" minimum="1" maximum="1" />
       <location x="18" y="19" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="recallvendor">
+    <spawn type="LocationSpawner" name="recallvendor" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80694,7 +80723,7 @@
       <entry entity="lengRecallVendor" size="1" minimum="1" maximum="1" />
       <location x="20" y="19" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="kingplaceholder">
+    <spawn type="LocationSpawner" name="kingplaceholder" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80715,7 +80744,7 @@
       <entry entity="lengConfessorGhost" size="1" minimum="1" maximum="1" />
       <location x="10" y="20" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="queenplaceholder">
+    <spawn type="LocationSpawner" name="queenplaceholder" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80736,7 +80765,7 @@
       <entry entity="lengQueen" size="1" minimum="1" maximum="1" />
       <location x="12" y="20" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="confessorghost">
+    <spawn type="LocationSpawner" name="confessorghost" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80757,7 +80786,7 @@
       <entry entity="lengConfessorGhost" size="1" minimum="1" maximum="1" />
       <location x="1" y="6" region="254" />
     </spawn>
-    <spawn type="LocationSpawner" name="Iantaplaceholder">
+    <spawn type="LocationSpawner" name="Iantaplaceholder" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>4500</maximumDelay>
       <maximum>1</maximum>
@@ -80778,7 +80807,7 @@
       <entry entity="lengIanta" size="1" minimum="1" maximum="1" />
       <location x="23" y="4" region="35" />
     </spawn>
-    <spawn type="LocationSpawner" name="thiefTrainer">
+    <spawn type="LocationSpawner" name="thiefTrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80803,7 +80832,7 @@
       <entry entity="lengThiefTrainer" size="1" minimum="1" maximum="1" />
       <location x="5" y="28" region="20" />
     </spawn>
-    <spawn type="LocationSpawner" name="lengMATrainer">
+    <spawn type="LocationSpawner" name="lengMATrainer" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -80833,7 +80862,7 @@
       <entry entity="lengWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="4" y="4" region="4" />
     </spawn>
-    <spawn type="LocationSpawner" name="SeaSerpent">
+    <spawn type="LocationSpawner" name="SeaSerpent" enabled="true">
       <minimumDelay>2700</minimumDelay>
       <maximumDelay>0</maximumDelay>
       <maximum>1</maximum>
@@ -80854,7 +80883,7 @@
       <entry entity="BossMiniLevel9SeaSerpent" size="1" minimum="1" maximum="1" />
       <location x="43" y="32" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="bunnyRabbit">
+    <spawn type="LocationSpawner" name="bunnyRabbit" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>4500</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -80874,7 +80903,7 @@
       <entry entity="BossMinorLevel13BunnyRabbit" size="1" minimum="1" maximum="1" />
       <location x="44" y="9" region="20" />
     </spawn>
-    <spawn type="LocationSpawner" name="blackKnight">
+    <spawn type="LocationSpawner" name="blackKnight" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>4500</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -80894,7 +80923,7 @@
       <entry entity="BossMinorLevel13BlackKnight" size="1" minimum="1" maximum="1" />
       <location x="42" y="15" region="20" />
     </spawn>
-    <spawn type="LocationSpawner" name="enchanter">
+    <spawn type="LocationSpawner" name="enchanter" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>4500</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -80914,7 +80943,7 @@
       <entry entity="BossMinorLevel13Enchanter" size="1" minimum="1" maximum="1" />
       <location x="44" y="14" region="20" />
     </spawn>
-    <spawn type="RegionSpawner" name="mausoleumSandyPath">
+    <spawn type="RegionSpawner" name="mausoleumSandyPath" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>5</maximum>
@@ -80941,7 +80970,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="mausoleumWest">
+    <spawn type="RegionSpawner" name="mausoleumWest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>14</maximum>
@@ -80972,7 +81001,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="mausoleumInner">
+    <spawn type="RegionSpawner" name="mausoleumInner" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>24</maximum>
@@ -81001,7 +81030,7 @@
         <exclusion left="19" top="21" right="25" bottom="27" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="mausoleumSouth">
+    <spawn type="RegionSpawner" name="mausoleumSouth" enabled="true">
       <minimumDelay>720</minimumDelay>
       <maximumDelay>1020</maximumDelay>
       <maximum>19</maximum>
@@ -81033,7 +81062,7 @@
         <exclusion left="14" top="35" right="17" bottom="40" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="mausoleumPresence">
+    <spawn type="RegionSpawner" name="mausoleumPresence" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>7200</maximumDelay>
       <maximum>1</maximum>
@@ -81057,7 +81086,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="mausoleumEast">
+    <spawn type="RegionSpawner" name="mausoleumEast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>12</maximum>
@@ -81086,10 +81115,10 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="griffLevelOutdoors">
+    <spawn type="RegionSpawner" name="griffLevelOutdoorsE" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
-      <maximum>19</maximum>
+      <maximum>12</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -81104,22 +81133,19 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="level11Archer" size="3" minimum="3" maximum="3" />
-      <entry entity="level11Fighter" size="3" minimum="6" maximum="6" />
-      <entry entity="level11Centaur" size="1" minimum="2" maximum="2" />
-      <entry entity="level11Scorpion" size="1" minimum="3" maximum="3" />
-      <entry entity="level11Bee" size="3" minimum="2" maximum="3" />
-      <entry entity="level11Raven" size="1" minimum="2" maximum="2" />
-      <entry entity="level12Troll" size="3" minimum="3" maximum="3" />
-      <entry entity="level11Gryphon" size="1" minimum="2" maximum="3" />
+      <entry entity="level11Archer" size="3" minimum="1" maximum="1" />
+      <entry entity="level11Fighter" size="3" minimum="1" maximum="2" />
+      <entry entity="level11Centaur" size="1" minimum="1" maximum="2" />
+      <entry entity="level11Bee" size="3" minimum="1" maximum="2" />
+      <entry entity="level11Raven" size="1" minimum="1" maximum="2" />
+      <entry entity="level12Troll" size="3" minimum="1" maximum="2" />
+      <entry entity="level11Gryphon" size="1" minimum="1" maximum="2" />
       <bounds region="20">
-        <inclusion left="25" top="7" right="33" bottom="14" />
-        <inclusion left="4" top="10" right="25" bottom="23" />
-        <inclusion left="10" top="6" right="14" bottom="9" />
+        <inclusion left="14" top="10" right="25" bottom="23" />
         <exclusion left="15" top="13" right="18" bottom="16" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="griffLevelLeftGriff">
+    <spawn type="RegionSpawner" name="griffLevelLeftGriff" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>1</maximum>
@@ -81143,7 +81169,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="griffLevelEastCave">
+    <spawn type="RegionSpawner" name="griffLevelEastCave" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>8</maximum>
@@ -81170,7 +81196,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="griffLevelDungeon">
+    <spawn type="RegionSpawner" name="griffLevelDungeon" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>7</maximum>
@@ -81197,7 +81223,7 @@
         <exclusion left="16" top="24" right="19" bottom="26" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="drakeBoss">
+    <spawn type="RegionSpawner" name="drakeBoss" enabled="true">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>14400</maximumDelay>
       <maximum>6</maximum>
@@ -81223,7 +81249,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="gryphBossKosh">
+    <spawn type="RegionSpawner" name="gryphBossKosh" enabled="true">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>14400</maximumDelay>
       <maximum>1</maximum>
@@ -81248,7 +81274,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Vlad">
+    <spawn type="RegionSpawner" name="Vlad" enabled="true">
       <minimumDelay>10800</minimumDelay>
       <maximumDelay>18000</maximumDelay>
       <maximum>5</maximum>
@@ -81276,7 +81302,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="vladtower1">
+    <spawn type="RegionSpawner" name="vladtower1" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>5</maximum>
@@ -81304,7 +81330,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="vladTower2">
+    <spawn type="RegionSpawner" name="vladTower2" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>6</maximum>
@@ -81329,7 +81355,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="vladTower3">
+    <spawn type="RegionSpawner" name="vladTower3" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>10</maximum>
@@ -81357,7 +81383,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="shidBoss">
+    <spawn type="RegionSpawner" name="shidBoss" enabled="true">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <maximum>4</maximum>
@@ -81382,7 +81408,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="mausoleumSandy">
+    <spawn type="RegionSpawner" name="mausoleumSandy" enabled="true">
       <minimumDelay>1800</minimumDelay>
       <maximumDelay>7200</maximumDelay>
       <maximum>1</maximum>
@@ -81406,7 +81432,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="surfaceBridgetroll">
+    <spawn type="RegionSpawner" name="surfaceBridgetroll" enabled="true">
       <minimumDelay>2700</minimumDelay>
       <maximumDelay>7200</maximumDelay>
       <maximum>1</maximum>
@@ -81430,7 +81456,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="shidStables">
+    <spawn type="RegionSpawner" name="shidStables" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>12</maximum>
@@ -81461,7 +81487,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="minotaurLedge">
+    <spawn type="RegionSpawner" name="minotaurLedge" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>13</maximum>
@@ -81487,7 +81513,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="portalwight">
+    <spawn type="RegionSpawner" name="portalwight" enabled="true">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>600</maximumDelay>
       <maximum>1</maximum>
@@ -81511,7 +81537,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="undeadDungeon">
+    <spawn type="RegionSpawner" name="undeadDungeon" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1500</maximumDelay>
       <maximum>38</maximum>
@@ -81544,7 +81570,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="surfaceLengSoutheast">
+    <spawn type="RegionSpawner" name="surfaceLengSoutheast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>4</maximum>
@@ -81570,7 +81596,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="surfaceNortheast">
+    <spawn type="RegionSpawner" name="surfaceNortheast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>4</maximum>
@@ -81596,7 +81622,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="lengTownEast">
+    <spawn type="RegionSpawner" name="lengTownEast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>5</maximum>
@@ -81622,7 +81648,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="lengtownwest">
+    <spawn type="RegionSpawner" name="lengtownwest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>5</maximum>
@@ -81648,7 +81674,7 @@
         <exclusion left="3" top="23" right="4" bottom="25" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="drakeOuter">
+    <spawn type="RegionSpawner" name="drakeOuter" enabled="true">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1500</maximumDelay>
       <maximum>11</maximum>
@@ -81675,7 +81701,7 @@
         <exclusion left="6" top="6" right="12" bottom="9" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="BossLevel12PowerTroll">
+    <spawn type="RegionSpawner" name="BossLevel12PowerTroll" enabled="true">
       <minimumDelay>1800</minimumDelay>
       <maximumDelay>3600</maximumDelay>
       <maximum>1</maximum>
@@ -81701,7 +81727,7 @@
         <exclusion left="0" top="9" right="0" bottom="9" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="cliffWaterfall">
+    <spawn type="RegionSpawner" name="cliffWaterfall" enabled="true">
       <minimumDelay>5400</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <maximum>2</maximum>
@@ -81726,7 +81752,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="cliffsMain">
+    <spawn type="RegionSpawner" name="cliffsMain" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>36</maximum>
@@ -81754,30 +81780,7 @@
         <inclusion left="18" top="13" right="25" bottom="27" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="priest">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>900</maximumDelay>
-      <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <bounds region="254">
-        <inclusion left="2" top="1" right="4" bottom="2" />
-        <exclusion left="0" top="0" right="0" bottom="0" />
-      </bounds>
-    </spawn>
-    <spawn type="RegionSpawner" name="mausoleumSouthCrypt">
+    <spawn type="RegionSpawner" name="mausoleumSouthCrypt" enabled="true">
       <minimumDelay>0</minimumDelay>
       <maximumDelay>0</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -81803,7 +81806,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="shidGuardians1">
+    <spawn type="RegionSpawner" name="shidGuardians1" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>1</maximum>
@@ -81827,7 +81830,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="shidGuardians2">
+    <spawn type="RegionSpawner" name="shidGuardians2" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>1</maximum>
@@ -81851,7 +81854,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="shidGuardians3">
+    <spawn type="RegionSpawner" name="shidGuardians3" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>1</maximum>
@@ -81877,7 +81880,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="mausoleumNorthEast">
+    <spawn type="RegionSpawner" name="mausoleumNorthEast" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>10</maximum>
@@ -81905,7 +81908,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="undeadWyrm">
+    <spawn type="RegionSpawner" name="undeadWyrm" enabled="true">
       <minimumDelay>8100</minimumDelay>
       <maximumDelay>15900</maximumDelay>
       <maximum>1</maximum>
@@ -81929,7 +81932,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="undeadDungeonNorthwest">
+    <spawn type="RegionSpawner" name="undeadDungeonNorthwest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1500</maximumDelay>
       <maximum>10</maximum>
@@ -81959,7 +81962,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="undeadDungeonNortheast">
+    <spawn type="RegionSpawner" name="undeadDungeonNortheast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1500</maximumDelay>
       <maximum>10</maximum>
@@ -81989,7 +81992,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="undeadDungeonSouth">
+    <spawn type="RegionSpawner" name="undeadDungeonSouth" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1500</maximumDelay>
       <maximum>10</maximum>
@@ -82019,7 +82022,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="drakeMinions">
+    <spawn type="RegionSpawner" name="drakeMinions" enabled="true">
       <minimumDelay>1800</minimumDelay>
       <maximumDelay>2100</maximumDelay>
       <maximum>6</maximum>
@@ -82046,7 +82049,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="cliffsNoSafeZone">
+    <spawn type="RegionSpawner" name="cliffsNoSafeZone" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -82070,7 +82073,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="vladtowerbase">
+    <spawn type="RegionSpawner" name="vladtowerbase" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>4</maximum>
@@ -82096,7 +82099,7 @@
         <exclusion left="21" top="23" right="23" bottom="25" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="shidStableContd">
+    <spawn type="RegionSpawner" name="shidStableContd" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>3</maximum>
@@ -82121,7 +82124,7 @@
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="shidStablesCorridor">
+    <spawn type="RegionSpawner" name="shidStablesCorridor" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -82144,6 +82147,73 @@
       <bounds region="100">
         <inclusion left="11" top="5" right="11" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="griffLevelOutdoorsW" enabled="true">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>12</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level11Archer" size="3" minimum="1" maximum="1" />
+      <entry entity="level11Fighter" size="3" minimum="1" maximum="2" />
+      <entry entity="level11Centaur" size="1" minimum="1" maximum="2" />
+      <entry entity="level11Scorpion" size="1" minimum="1" maximum="2" />
+      <entry entity="level11Bee" size="3" minimum="1" maximum="2" />
+      <entry entity="level11Raven" size="1" minimum="1" maximum="2" />
+      <entry entity="level12Troll" size="3" minimum="1" maximum="2" />
+      <entry entity="level11Gryphon" size="1" minimum="1" maximum="2" />
+      <bounds region="20">
+        <inclusion left="4" top="10" right="16" bottom="24" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+        <exclusion left="14" top="23" right="16" bottom="24" />
+        <exclusion left="4" top="17" right="5" bottom="24" />
+        <exclusion left="6" top="17" right="6" bottom="20" />
+        <exclusion left="15" top="13" right="16" bottom="15" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="griffLevelOutdoorsN" enabled="true">
+      <minimumDelay>900</minimumDelay>
+      <maximumDelay>1200</maximumDelay>
+      <maximum>12</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level11Archer" size="3" minimum="1" maximum="2" />
+      <entry entity="level11Fighter" size="3" minimum="1" maximum="2" />
+      <entry entity="level11Centaur" size="1" minimum="1" maximum="2" />
+      <entry entity="level11Scorpion" size="1" minimum="1" maximum="2" />
+      <entry entity="level11Bee" size="3" minimum="1" maximum="2" />
+      <entry entity="level11Raven" size="1" minimum="1" maximum="2" />
+      <entry entity="level12Troll" size="3" minimum="1" maximum="2" />
+      <entry entity="level11Gryphon" size="1" minimum="1" maximum="2" />
+      <bounds region="20">
+        <inclusion left="25" top="7" right="33" bottom="14" />
+        <inclusion left="10" top="6" right="14" bottom="9" />
+        <exclusion left="15" top="13" right="18" bottom="16" />
       </bounds>
     </spawn>
   </spawns>

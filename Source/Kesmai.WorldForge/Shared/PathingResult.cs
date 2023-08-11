@@ -1,12 +1,11 @@
 using System;
 
-namespace Kesmai.WorldForge
+namespace Kesmai.WorldForge;
+
+public enum PathingResult
 {
-	public enum PathingResult
-	{
-		Allowed = 0,
-		Rejected,
-		Interrupted,
-		Stun,
-	}
+	Allowed = 0,
+	Rejected,
+	Interrupted,
+	Daze,
 }

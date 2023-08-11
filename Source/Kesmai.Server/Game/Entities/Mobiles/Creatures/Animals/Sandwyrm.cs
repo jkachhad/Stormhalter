@@ -1,35 +1,34 @@
 using System.IO;
 using Kesmai.Server.Items;
 
-namespace Kesmai.Server.Game
+namespace Kesmai.Server.Game;
+
+public partial class Sandwyrm : AnimalEntity
 {
-	public partial class Sandwyrm : AnimalEntity
+	public Sandwyrm()
 	{
-		public Sandwyrm()
-		{
-			Name = "sandwyrm";
-			Body = 86;
+		Name = "sandwyrm";
+		Body = 86;
 
-			Alignment = Alignment.Chaotic;
-		}
+		Alignment = Alignment.Chaotic;
+	}
 
-		protected override void OnCreate()
-		{
-			base.OnCreate();
+	protected override void OnCreate()
+	{
+		base.OnCreate();
 
-			if (_brain != null)
-				return;
+		if (_brain != null)
+			return;
 
-			_brain = new CombatAI(this);
-		}
+		_brain = new CombatAI(this);
+	}
 
-		public override int GetNearbySound() => 134;
-		public override int GetAttackSound() => 153;
-		public override int GetDeathSound() => 172;
+	public override int GetNearbySound() => 134;
+	public override int GetAttackSound() => 153;
+	public override int GetDeathSound() => 172;
 		
-		public override ItemEntity OnCorpseTanned()
-		{
-			return new LeatherArmor();
-		}
+	public override ItemEntity OnCorpseTanned()
+	{
+		return new LeatherArmor();
 	}
 }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Underkingdom" version="0.96.0.0">
+<segment name="Underkingdom" version="0.102.2.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -34,6 +34,28 @@
             segmentTile.Add(new Fire(bonfireSpell, 12, segment.Facet.TimeSpan.FromRounds(1)));
         }
     }
+    
+    public static void announceGeneric(Segment segment, Point2D location, string newMessage = null)
+    {
+        var message = newMessage ?? $"You feel the earth shudder beneath your feet.";
+        
+        var packet = new AsciiMessagePacket(AsciiMessageType.System, Color.Blue, 
+                message);
+                
+        foreach (var client in segment.Clients)
+        {
+            var character = client.Character;
+            
+            if (character is null || !character.IsAlive)
+                return;
+                
+            character.PlaySound(30030);
+            character.SendPacket(packet);
+        }
+    
+    }
+    
+    
     
     public static TimeSpan _speechDelay = TimeSpan.FromMinutes(1.0);
     public static Dictionary<MobileEntity, DateTime> _speechDelays = new Dictionary<MobileEntity, DateTime>();
@@ -405,7 +427,7 @@
         }
     }
     
-    
+    private bool isRescued = false;
     
     public class KoboldPrincess : CreatureEntity
     {
@@ -423,6 +445,8 @@
             Movement = 2;
     
             Alignment = Alignment.Lawful;
+            
+            CanPanic = true;
 			
 			Attacks = new CreatureAttackCollection()
 			{
@@ -436,14 +460,23 @@
 			
 			CanLoot = false;
         }
+        
+        bool hasReceivedPMP = false;
     
         protected override void OnFinishMovement(PathingEventArgs args)
         {
 			var king = GetBeheldInVisibility(0).SelectMany(m => m.Members).OfType<KoboldKing>().FirstOrDefault();
 			
+			if (hasReceivedPMP)
+            {   
+                SayTo(Director, "I have already given you a PMP.");
+                return;
+            }
+			
             if (king != null)
             {
                 new PermanentManaPotion().Move(Location, true, Segment);
+                hasReceivedPMP = true;
                 Say($"Hi dad! What's for dinner?!");
                 king.Elated();
 				
@@ -518,61 +551,6 @@
     
     }
     
-    public class PrincessScroll : ItemEntity
-    {
-        /// <inheritdoc />
-        public override int LabelNumber => 6000078;
-
-        /// <inheritdoc />
-        public override uint BasePrice => 100;
-
-        /// <inheritdoc />
-        public override int Weight => 5;
-        
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PrincessScroll"/> class.
-        /// </summary>
-        public PrincessScroll() : base(128)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PrincessScroll"/> class.
-        /// </summary>
-        public PrincessScroll(Serial serial) : base(serial)
-        {
-        }
-
-        /// <inheritdoc />
-        public override void GetDescription(List<LocalizationEntry> entries)
-        {
-            entries.Add(new LocalizationEntry(6200000, 6200244)); /* [You are looking at] [a scroll entitled 'Everything is Not As It May Appear'.] */
-        }
-
-        /// <inheritdoc />
-        public override void Serialize(BinaryWriter writer)
-        {
-            base.Serialize(writer);
-
-            writer.Write((short)1); /* version */
-        }
-
-        /// <inheritdoc />
-        public override void Deserialize(BinaryReader reader)
-        {
-            base.Deserialize(reader);
-
-            var version = reader.ReadInt16();
-
-            switch (version)
-            {
-                case 1:
-                {
-                    break;
-                }
-            }
-        }
-    }
 ]]></block>
     <block><![CDATA[]]></block>
   </script>
@@ -2524,8 +2502,9 @@
         <component type="FloorComponent">
           <ground>3</ground>
         </component>
-        <component type="AltarComponent">
-          <altar>163</altar>
+        <component type="CounterComponent">
+          <counter>163</counter>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="14" y="2">
@@ -4086,8 +4065,9 @@
         <component type="FloorComponent">
           <ground>3</ground>
         </component>
-        <component type="AltarComponent">
-          <altar>163</altar>
+        <component type="CounterComponent">
+          <counter>163</counter>
+          <direction>2</direction>
         </component>
       </tile>
       <tile x="14" y="6">
@@ -18783,24 +18763,27 @@
         <component type="StaticComponent">
           <static>178</static>
         </component>
-        <component type="AltarComponent">
-          <altar>113</altar>
+        <component type="CounterComponent">
+          <counter>113</counter>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="27" y="5">
         <component type="StaticComponent">
           <static>178</static>
         </component>
-        <component type="AltarComponent">
-          <altar>113</altar>
+        <component type="CounterComponent">
+          <counter>113</counter>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="28" y="5">
         <component type="StaticComponent">
           <static>178</static>
         </component>
-        <component type="AltarComponent">
-          <altar>113</altar>
+        <component type="CounterComponent">
+          <counter>113</counter>
+          <direction>8</direction>
         </component>
       </tile>
       <tile x="29" y="5">
@@ -99537,6 +99520,7 @@
         Experience = 50,
     };
     
+    trainer.AddCounter(new Point2D(13, 6, 1));
     
     trainer.SetTraining(Skill.Magic, 11, 19);
     
@@ -99585,15 +99569,15 @@
             new CreatureAttack(10,    10, 20,    "Squeakers sinks her teeth into your flesh."),                        60 
         },
         {
-            new CreatureAttack(10,    15, 20,    "Squeakers sends a flurry of claws towards your femural artery."),    40 
+            new CreatureAttack(10,    15, 20,    "Squeakers sends a flurry of claws towards your femoral artery."),    40 
         },
     };
     
     rat.Blocks = new CreatureBlockCollection()
     {
-        new CreatureBlock(6, "a claw."),
-        new CreatureBlock(3, "her fangs."),
-        new CreatureBlock(1, "her tail."),
+        new CreatureBlock(6, "a claw"),
+        new CreatureBlock(3, "her fangs"),
+        new CreatureBlock(1, "her tail"),
     };
 	
 	return rat;
@@ -99641,15 +99625,15 @@
             new CreatureAttack(10,    10, 20,    "Mr.Pibbs sinks his teeth into your flesh."),                        60 
         },
         {
-            new CreatureAttack(10,    15, 20,    "Mr.Pibbs sends a flurry of claws towards your femural artery."),    40
+            new CreatureAttack(10,    15, 20,    "Mr.Pibbs sends a flurry of claws towards your femoral artery."),    40
         },
     };
     
     rat.Blocks = new CreatureBlockCollection()
     {
-        new CreatureBlock(6, "a claw."),
-        new CreatureBlock(3, "his fangs."),
-        new CreatureBlock(1, "his tail."),
+        new CreatureBlock(6, "a claw"),
+        new CreatureBlock(3, "his fangs"),
+        new CreatureBlock(1, "his tail"),
     };
     
 
@@ -99686,10 +99670,9 @@
     
         Movement = 2,
         BasePenetration = ShieldPenetration.Light,
-        LightningResistance = 100,
-        
     };
-    
+	
+    wyvern.Stats[EntityStat.LightningResistance].Base = 20;
     
     wyvern.AddImmunity(typeof(Lightning));
     
@@ -99755,9 +99738,9 @@
     
         Movement = 2,
         BasePenetration = ShieldPenetration.Light,
-        FireProtection = 100,
-        
     };
+	
+	wyvern.Stats[EntityStat.FireProtection].Base = 100;
     
     wyvern.Attacks = new CreatureAttackCollection()
     {
@@ -99821,9 +99804,9 @@
     
         Movement = 2,
         BasePenetration = ShieldPenetration.Light,
-        IceProtection = 100,
-        
     };
+	
+	wyvern.Stats[EntityStat.IceProtection].Base = 100;
     
     wyvern.Attacks = new CreatureAttackCollection()
     {
@@ -99942,7 +99925,7 @@
         <block><![CDATA[
     var drake = new Drake()
     {
-        Name = "Drake",
+        Name = "drake",
         MaxHealth = 3000, Health = 3000,
         BaseDodge = 28,
     
@@ -99978,17 +99961,17 @@
         {
             new CreatureAttack(15,      40, 55,      "The drake slashes you with its claws.",
                                                         new AttackProneComponent(5), 
-                                                        new AttackStunComponent(5)),                40
+                                                        new AttackDazeComponent(5)),                40
         },
         {
             new CreatureAttack(15,      45, 60,     "The drake smashes you with its tail.",
                                                         new AttackProneComponent(10), 
-                                                        new AttackStunComponent(10)),               40
+                                                        new AttackDazeComponent(10)),               40
         },
         {
             new CreatureAttack(15,      53, 73,     "The drake buffets you with its wings.",
                                                         new AttackProneComponent(15), 
-                                                        new AttackStunComponent(15)),               20
+                                                        new AttackDazeComponent(15)),               20
         },
     };
     
@@ -100035,7 +100018,7 @@
     //todo get Carfel body type
     var carfel = new Humanoid()
     {
-        Name = "carfel",
+        Name = "Carfel",
         Body = 206,
         
         MaxHealth = 1800, Health = 1800,
@@ -100064,7 +100047,7 @@
     
     carfel.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(18, 18, 30)
+        new CreatureAttack(18, 18, 30, "Carfel hits you with his dagger.", new AttackDazeComponent (25))
     };
     
     carfel.Blocks = new CreatureBlockCollection
@@ -100120,17 +100103,19 @@
         BasePenetration = ShieldPenetration.Medium,
         
         VisibilityDistance = 0,
-        RangePerception = 0,
+        RangePerception = 2,
+        Immunity = CreatureImmunity.Poison | CreatureImmunity.Web,
         
         IsTethered = true,
     };
     
     shelob.AddStatus(new NightVisionStatus(shelob));
     
+    
     shelob.Attacks = new CreatureAttackCollection()
     {
         { 
-            new CreatureAttack(18,     12, 21,      "The spider bites you", 
+            new CreatureAttack(18,     12, 21,      "The spider bites you.", 
                                                 new AttackPoisonComponent(20))
         }, 
     };
@@ -100175,17 +100160,18 @@
         Alignment = Alignment.Chaotic,
         HideDetection = 30,
         Experience = 178320,
-        
-        LightningResistance = 100,
-        FireProtection = 100,
-        IceProtection = 100,
+
         CanCharge = true,
         
         BasePenetration = ShieldPenetration.VeryHeavy,
     
         IsTethered = true,
     };
-    
+	
+	trollKing.Stats[EntityStat.FireProtection].Base = 100;
+    trollKing.Stats[EntityStat.IceProtection].Base = 100;
+	trollKing.Stats[EntityStat.LightningResistance].Base = 20;
+	
     trollKing.AddStatus(new NightVisionStatus(trollKing));
     
     trollKing.CombatantChangeInterval = TimeSpan.FromSeconds(15.0);
@@ -100257,10 +100243,10 @@
     lurker.Attacks = new CreatureAttackCollection()
     {
         { 
-            new CreatureAttack(21,     20, 30,      "Orugugra whips you with a tentacle"),  50 
+            new CreatureAttack(21,     20, 30,      "Orugugra whips you with a tentacle."),  50 
         }, 
         {
-            new CreatureAttack(21,     1, 46,     "Orugugra",
+            new CreatureAttack(21,     1, 46,     "Orugugra sinks its fangs deep into your flesh.",
                                                     new AttackPoisonComponent(14)),         50
         },
     };
@@ -100322,7 +100308,7 @@
     
     swordmaster.Attacks = new CreatureAttackCollection()
     {
-        new CreatureAttack(20,    40, 69,     "The swordmaster pierces you with his rapier.",
+        new CreatureAttack(20,    40, 69,     "Swordmaster pierces you with his rapier.",
                                                     new AttackAgeComponent(250, 50))
     };
     
@@ -100388,13 +100374,11 @@
     
     overlord.CombatantChangeInterval = TimeSpan.FromSeconds(6.0);
     
-    //TODO figure out how to make this bastard not fumble
-    
     overlord.Equip(new DragonScaleArmor());
     
     overlord.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(21, 65, 92, new AttackStunComponent (25))
+        new CreatureAttack(21, 65, 92, "Overlord hits you with his undead claw.", new AttackDazeComponent (25))
     };
     
     overlord.Spells = new CreatureSpellCollection(35.0)
@@ -100488,25 +100472,27 @@
         BaseDodge = 21,
         HideDetection = 25, 
         Experience = 6315,
-        MagicProtection = 17,
         CanCharge = true,
         BasePenetration = ShieldPenetration.Medium,
-        Immunity = CreatureImmunity.Web
+        Immunity = CreatureImmunity.Web,
+        IsTethered = true,
     };
+	
+	minotaur.Stats[EntityStat.MagicDamageTakenReduction].Base = 17;
     
     minotaur.AddStatus(new NightVisionStatus(minotaur));
     
     minotaur.Attacks = new CreatureAttackCollection()
     {
         { 
-            new CreatureAttack(15,     10, 20,      "The minotaur hits with a wicked axe"),     60 
+            new CreatureAttack(15,     10, 20,      "The minotaur hits you with a wicked axe."),     60 
         }, 
         {
-            new CreatureAttack(15,     13, 23,     "You've been gored by the minotaur",
-                                                    new AttackStunComponent(20.0)),             30
+            new CreatureAttack(15,     13, 23,     "You've been gored by the minotaur.",
+                                                    new AttackDazeComponent(20.0)),             30
         }, 
         {
-            new CreatureAttack(15,     13, 26,     "You've been trampled by the minotaur"),     10
+            new CreatureAttack(15,     13, 26,     "You've been trampled by the minotaur."),     10
         }, 
     };
     
@@ -100555,21 +100541,22 @@
         HideDetection = 25,           
         Experience = 7430,
         BasePenetration = ShieldPenetration.Medium,
+        IsTethered = true,
     };
     
     goblin.Attacks = new CreatureAttackCollection()
     {
         {
             new CreatureAttack(18,      20, 30,      "The goblin hits you with a flurry of fists.",
-                                                        new AttackStunComponent(5)),                40
+                                                        new AttackDazeComponent(5)),                40
         },
         {
             new CreatureAttack(18,      25, 35,     "The goblin slams his fist into your chest.",
-                                                        new AttackStunComponent(10)),               40
+                                                        new AttackDazeComponent(10)),               40
         },
         {
-            new CreatureAttack(18,      30, 41,     "The goblin kicks you so forcefully you see stars.",
-                                                        new AttackStunComponent(25)),               20
+            new CreatureAttack(18,      30, 41,     "The goblin kicks you so forcefully that you see stars.",
+                                                        new AttackDazeComponent(25)),               20
         },
     };
                 
@@ -100611,6 +100598,7 @@
         HideDetection = 25,        
         Experience = 5386,
         BasePenetration = ShieldPenetration.Light,
+        IsTethered = true,
     };
     
     troll.Attacks = new CreatureAttackCollection()
@@ -100655,10 +100643,11 @@
     {
         MaxHealth = 108, Health = 108,
         BaseDodge = 20,
-        BasePenetration = ShieldPenetration.Light,
+        BasePenetration = ShieldPenetration.VeryLight,
         Experience = 5015,
         HideDetection = 25, 
         CanFlee = true,
+        IsTethered = true,
     };
     
     orc.Attacks = new CreatureAttackCollection()
@@ -100707,10 +100696,11 @@
         BaseDodge = 22,
         BasePenetration = ShieldPenetration.Light,
         Experience = 6018,
-        LightningResistance = 100,
         HideDetection = 25, 
     };
     
+	hobgoblin.Stats[EntityStat.LightningResistance].Base = 20;
+	
     hobgoblin.Attacks = new CreatureAttackCollection()
     {
         new CreatureBasicAttack(11)
@@ -100764,7 +100754,7 @@
         BaseDodge = 22,
         HideDetection = 25,        
         Experience = 6464,
-        BasePenetration = ShieldPenetration.Medium,
+        BasePenetration = ShieldPenetration.Light,
     };
     
     troll.AddStatus(new NightVisionStatus(troll));
@@ -100856,13 +100846,14 @@
         <block><![CDATA[
     var trollguard = new TrollGuard()
     {
-        Name = "Elite Guard",
+        Name = "elite guard",
         MaxHealth = 209, Health = 209,
         BaseDodge = 27,
         HideDetection = 29,    
         Experience = 10699,
         
         CanCharge = true,
+        IsTethered = true,
     };
     
     
@@ -101015,6 +101006,7 @@
         Experience = 4489,
         HideDetection = 25,  
         MaxMana = 21, Mana = 21,
+        IsTethered = true,
             
     };
         
@@ -101125,6 +101117,7 @@
         HideDetection = 25,
         Experience = 4179,
         BasePenetration = ShieldPenetration.VeryLight,
+        IsTethered = true,
     };
     
     orc.Attacks = new CreatureAttackCollection()
@@ -101182,9 +101175,11 @@
         BaseDodge = 20,
         BasePenetration = ShieldPenetration.VeryLight,        
         Experience = 3900,
-        FireProtection = 100,
         HideDetection = 25,
+        IsTethered = true,
     };
+	
+	goblin.Stats[EntityStat.FireProtection].Base = 100;
     
     goblin.Attacks = new CreatureAttackCollection()
     {
@@ -101194,7 +101189,7 @@
     goblin.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<FireballSpell>(
-            skillLevel: 12, cost: 6, 
+            skillLevel: 6, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
             skillLevel: 3, cost: 5, 
@@ -101242,8 +101237,9 @@
         Experience = 7222,
         BasePenetration = ShieldPenetration.Light,
         MaxMana = 21, Mana = 21,
-        DeathResistance = 100,
     };
+	
+	banshee.Stats[EntityStat.DeathResistance].Base = 20;
         
     banshee.Attacks = new CreatureAttackCollection()
     {
@@ -101299,22 +101295,23 @@
         BasePenetration = ShieldPenetration.Medium,
         VisibilityDistance = 0,
         HideDetection = 28,    
-        FireProtection = 50,
-        IceProtection = 50,
-        DeathResistance = 100,
         
         Immunity = CreatureImmunity.Poison,
     };
-    
+	
+	ghoul.Stats[EntityStat.FireProtection].Base = 50;
+    ghoul.Stats[EntityStat.IceProtection].Base = 50;
+	ghoul.Stats[EntityStat.DeathResistance].Base = 20;
+	
     ghoul.AddStatus(new NightVisionStatus(ghoul));
     
     ghoul.Attacks = new CreatureAttackCollection()
     {
         { 
-            new CreatureAttack(15,     15, 23,     "The ghoul scratches you with its claws"),      70 
+            new CreatureAttack(15,     15, 23,     "The ghoul scratches you with its claws."),      70 
         }, 
         { 
-            new CreatureAttack(15,    15, 23,     "You've been bitten by the ghoul",
+            new CreatureAttack(15,    15, 23,     "You've been bitten by the ghoul.",
                                                     new AttackPoisonComponent(14)),                30
         },
     };
@@ -101364,13 +101361,13 @@
         Experience = 7222,
         BasePenetration = ShieldPenetration.Light,
         Movement = 3,
-        DeathResistance = 100,
-        
+
         Immunity = CreatureImmunity.Piercing,
         
         Weakness = CreatureWeakness.Silver,
-        
     };
+	
+	skeleton.Stats[EntityStat.DeathResistance].Base = 20;
     
     skeleton.Attacks = new CreatureAttackCollection()
     {
@@ -101422,8 +101419,9 @@
         Experience = 10699,
         BasePenetration = ShieldPenetration.Light,
         VisibilityDistance = 1,
-        DeathResistance = 100,
     };
+	
+	spectre.Stats[EntityStat.DeathResistance].Base = 20;
     
     spectre.AddStatus(new NightVisionStatus(spectre));
     
@@ -101496,7 +101494,7 @@
     mummy.Attacks = new CreatureAttackCollection()
     {
         { 
-            new CreatureAttack(17,     30, 50,     "The mummy strangles you with his bandages"),      70, TimeSpan.Zero 
+            new CreatureAttack(17,     30, 50,     "The mummy strangles you with his bandages."),      70, TimeSpan.Zero 
         }, 
         { 
             new CreatureAttack(17,    40, 23,     "A mummified claw scratches you.",
@@ -101508,7 +101506,7 @@
     mummy.Blocks = new CreatureBlockCollection()
     {
         new CreatureBlock(6, "a swirl of bandages"), 
-        new CreatureBlock(4, "mummified claw"), 
+        new CreatureBlock(4, "a mummified claw"), 
     };
     
     mummy.AddGold(216);
@@ -101725,7 +101723,7 @@
     lurker.Attacks = new CreatureAttackCollection()
     {
         { 
-            new CreatureAttack(12,     10, 15,      "The lurker whips you with a tentacle"),  50 
+            new CreatureAttack(12,     10, 15,      "The lurker whips you with a tentacle."),  50 
         }, 
         {
             new CreatureAttack(12,     5, 20,     "The lurker bites you.",
@@ -101788,16 +101786,16 @@
     {
         {
             new CreatureAttack(18,      10, 18,      "The ninja hits you with a flurry of fists.",
-                                                        new AttackStunComponent(5)),                40
+                                                        new AttackDazeComponent(5)),                40
         },
         {
             new CreatureAttack(18,      11, 20,     "The ninja slams his fist into your chest.",
-                                                        new AttackStunComponent(10)),               40
+                                                        new AttackDazeComponent(10)),               40
         },
         {
             new CreatureAttack(18,      13, 22,     "The ninja knocks you back with a forceful kick.",
                                                         new AttackProneComponent(5), 
-                                                        new AttackStunComponent(5)),               20
+                                                        new AttackDazeComponent(5)),               20
         },
     };
     
@@ -101841,9 +101839,9 @@
         BaseDodge = 23,
         BasePenetration = ShieldPenetration.Light,
         Experience = 10918,
-                    
-        IceProtection = 100,
     };
+	
+	wizard.Stats[EntityStat.IceProtection].Base = 100;
     
     wizard.Wield(new BlackStaff());
     wizard.Equip(new LeatherArmor());
@@ -101862,7 +101860,7 @@
             skillLevel: 10, cost: 3, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 },
         { new CreatureSpell<IceStormSpell>(
-            skillLevel: 15, cost: 6, 
+            skillLevel: 10, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),   25 }
     };
     
@@ -101966,6 +101964,7 @@
         BasePenetration = ShieldPenetration.Light,
         Experience = 3900,  
         HideDetection = 25,
+        IsTethered = true,
     };
     
     goblin.Attacks = new CreatureAttackCollection()
@@ -102013,6 +102012,7 @@
         BasePenetration = ShieldPenetration.Light,
         Experience = 3250,  
         HideDetection = 25,
+        IsTethered = true,
     };
     
     goblin.Attacks = new CreatureAttackCollection()
@@ -102057,10 +102057,11 @@
     {
         MaxHealth = 99, Health = 99,
         BaseDodge = 18,
-        BasePenetration = ShieldPenetration.Light,
+        BasePenetration = ShieldPenetration.VeryLight,
         Experience = 4179,
         HideDetection = 25, 
         CanFlee = true,
+        IsTethered = true,
     };
     
     orc.Attacks = new CreatureAttackCollection()
@@ -102108,6 +102109,7 @@
         HideDetection = 25,        
         Experience = 4489,
         BasePenetration = ShieldPenetration.Light,
+        IsTethered = true,
     };
     
     troll.Attacks = new CreatureAttackCollection()
@@ -102156,6 +102158,7 @@
         Experience = 4179,
         BasePenetration = ShieldPenetration.Light,
         CanFlee = true,
+        IsTethered = true,
     };
     
     orc.Attacks = new CreatureAttackCollection()
@@ -102199,9 +102202,10 @@
     {
         MaxHealth = 70, Health = 70,
         BaseDodge = 18,
-        BasePenetration = ShieldPenetration.Light,       
+        BasePenetration = ShieldPenetration.VeryLight,       
         Experience = 3250,
         HideDetection = 25,
+        IsTethered = true,
     };
     
     
@@ -102354,7 +102358,7 @@
     
     if (spokeRecently(source)) return;
             
-    source.Say($"Are.... you... worthy?.");
+    source.Say($"Are... you... worthy?");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102478,7 +102482,7 @@
         BaseDodge = 21,
         HideDetection = 25,        
         Experience = 5386,
-        BasePenetration = ShieldPenetration.Medium,
+        BasePenetration = ShieldPenetration.Light,
         Movement = 3,
     };
     
@@ -102531,8 +102535,9 @@
         Experience = 10699,
         BasePenetration = ShieldPenetration.Medium,
         VisibilityDistance = 1,
-        DeathResistance = 100,
     };
+	
+	stalker.Stats[EntityStat.DeathResistance].Base = 20;
     
     stalker.AddStatus(new NightVisionStatus(stalker));
     
@@ -102662,7 +102667,7 @@
     if (spokeRecently(source))
         return;
 
-    source.Say($"Hey, I have a great deal for you! 50,000 coins for a key to the troll kings treasure room.");
+    source.Say($"Hey, I have a great deal for you! 50,000 coins for a key to the troll king's treasure room.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -102826,13 +102831,12 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-var gargoyle = new Gargoyle()
+    var gargoyle = new Gargoyle()
     {
         MaxHealth = 145, Health = 145,
         BaseDodge = 24,
         HideDetection = 28,
         Experience = 6825,
-        MagicProtection = 17,
         Movement = 3,
         CanFly = true,
         BasePenetration = ShieldPenetration.Heavy,
@@ -102840,8 +102844,12 @@ var gargoyle = new Gargoyle()
         Immunity = CreatureImmunity.Bow | CreatureImmunity.Piercing | CreatureImmunity.Slashing | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.Silver,
 
-        FireProtection = 100,
+        IsTethered = true,
     };
+	
+	gargoyle.Stats[EntityStat.MagicDamageTakenReduction].Base = 17;
+	
+	gargoyle.Stats[EntityStat.FireProtection].Base = 100;
     
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
     
@@ -102900,7 +102908,7 @@ var gargoyle = new Gargoyle()
     {
         MaxHealth = 99, Health = 99,
         BaseDodge = 18,
-        BasePenetration = ShieldPenetration.Light,
+        BasePenetration = ShieldPenetration.VeryLight,
         Experience = 4179,
         HideDetection = 25, 
         CanFlee = true,
@@ -102967,7 +102975,7 @@ var gargoyle = new Gargoyle()
     lurker.Attacks = new CreatureAttackCollection()
     {
         { 
-            new CreatureAttack(14,     10, 20,      "The lurker whips you with a tentacle"),  50 
+            new CreatureAttack(14,     10, 20,      "The lurker whips you with a tentacle."),  50 
         }, 
         {
             new CreatureAttack(14,     5, 22,     "The lurker bites you.",
@@ -103058,7 +103066,7 @@ var gargoyle = new Gargoyle()
     if( hummingGuardian == null )
     {
         //guardian is currently dead
-        if (!spokeRecently(source)) source.Say("The guardian is not ready for you yet");
+        if (!spokeRecently(source)) source.Say("The guardian is not ready for you yet.");
         return;
     }
 
@@ -103075,7 +103083,7 @@ var gargoyle = new Gargoyle()
         if( subregion != null && subregion.Name == "guardianLair" )
         {
             //someone in there already. Don't allow the player to portal in
-            if (!spokeRecently(source)) source.Say($"This is a challenge that {character.Name} must complete alone");
+            if (!spokeRecently(source)) source.Say($"This is a challenge that {character.Name} must complete alone.");
             return;
         }
     }
@@ -103083,50 +103091,6 @@ var gargoyle = new Gargoyle()
     //no one in there so destroy ammulet and teleport them in..
     hummerAmulet.Delete();
     player.Teleport(new Point2D(2, 19, 10));
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-    </entity>
-    <entity name="level13SpeedyHob">
-      <script name="OnSpawn" enabled="true">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-    /* New speedy Hob
-        Trying to make it more realistic here and upping exp in case difficulty goes to hummer speed. 
-    */
-	var hobgoblin = new SpeedyHob()
-    {
-        MaxHealth = 130, Health = 130,
-        BaseDodge = 21,
-        HideDetection = 25,
-        Experience = 1,
-        BasePenetration = ShieldPenetration.Medium,
-    };
-    
-    hobgoblin.Attacks = new CreatureAttackCollection
-    {
-        new CreatureBasicAttack(13)
-    };
-    
-    hobgoblin.Wield(new Longsword());
-    hobgoblin.Equip(new LeatherArmor());    
-    
-    hobgoblin.AddGold(1);
-  
-    
-    return hobgoblin;
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnDeath" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnIncomingPlayer" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -103161,7 +103125,7 @@ var gargoyle = new Gargoyle()
     kobold.Attacks = new CreatureAttackCollection()
     {
         { 
-            new CreatureAttack(17,    30, 50,    "kobold townsfolk swats you")                        
+            new CreatureAttack(17,    30, 50,    "The kobold swats you.")                        
         },
     };
     
@@ -103237,9 +103201,62 @@ var gargoyle = new Gargoyle()
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="level15NinjaTest">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+                    
+    var martialartist = new Ninja()
+    {
+        Name = "Yasnaki Ninja",
+        Body = 105,
+            
+        MaxHealth = 150, Health = 150,
+        BaseDodge = 28,
+        HideDetection = 28,
+        IsInvulnerable = true,
+        Experience = 1,
+        BasePenetration = ShieldPenetration.Heavy,
+        CanJumpkick = true,
+    };
+    
+    martialartist.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(25,      1, 2,      "The ninja hits you with a flurry of fists.",
+                                                        new AttackDazeComponent(5)),                40
+        },
+        {
+            new CreatureAttack(25,      1, 2,     "The ninja slams his fist into your chest.",
+                                                        new AttackDazeComponent(10)),               40
+        },
+        {
+            new CreatureAttack(25,      1, 2,     "The ninja knocks you back with a forceful kick.", 
+                                                        new AttackDazeComponent(100)),              20
+        },
+    };
+    
+    
+    return martialartist;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
-    <spawn type="LocationSpawner" name="UKPawner">
+    <spawn type="LocationSpawner" name="UKPawner" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -103330,7 +103347,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownShopkeeper" size="1" minimum="1" maximum="1" />
       <location x="2" y="6" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="UKGeneralStore">
+    <spawn type="LocationSpawner" name="UKGeneralStore" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -103435,7 +103452,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownShopkeeper" size="1" minimum="1" maximum="1" />
       <location x="15" y="14" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="UKArmorer">
+    <spawn type="LocationSpawner" name="UKArmorer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -103505,7 +103522,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownShopkeeper" size="1" minimum="1" maximum="1" />
       <location x="26" y="16" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="UKWeaponsmith">
+    <spawn type="LocationSpawner" name="UKWeaponsmith" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -103576,7 +103593,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownShopkeeper" size="1" minimum="1" maximum="1" />
       <location x="28" y="16" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="UKJeweler">
+    <spawn type="LocationSpawner" name="UKJeweler" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -103644,7 +103661,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownShopkeeper" size="1" minimum="1" maximum="1" />
       <location x="30" y="16" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="UKApothecary">
+    <spawn type="LocationSpawner" name="UKApothecary" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -103727,7 +103744,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownShopkeeper" size="1" minimum="1" maximum="1" />
       <location x="32" y="16" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="thaumTrainer">
+    <spawn type="LocationSpawner" name="thaumTrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -103755,7 +103772,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownTrainerThaum" size="1" minimum="1" maximum="1" />
       <location x="27" y="4" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="weaponTrainer">
+    <spawn type="LocationSpawner" name="weaponTrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -103785,7 +103802,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="32" y="11" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="wizardTrainer">
+    <spawn type="LocationSpawner" name="wizardTrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -103806,7 +103823,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownWizTrainer" size="1" minimum="1" maximum="1" />
       <location x="13" y="5" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="maTrainer">
+    <spawn type="LocationSpawner" name="maTrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -103836,7 +103853,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownWeaponTrainer" size="1" minimum="1" maximum="1" />
       <location x="13" y="3" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="priest">
+    <spawn type="LocationSpawner" name="priest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -103879,7 +103896,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownPeaceKeeper" size="1" minimum="1" maximum="1" />
       <location x="27" y="7" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="banker">
+    <spawn type="LocationSpawner" name="banker" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -103903,7 +103920,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownBanker" size="1" minimum="1" maximum="1" />
       <location x="5" y="5" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="tanner">
+    <spawn type="LocationSpawner" name="tanner" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -103924,7 +103941,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownTanner" size="1" minimum="1" maximum="1" />
       <location x="15" y="4" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="townrat1">
+    <spawn type="LocationSpawner" name="townrat1" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -103945,7 +103962,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownRat1" size="1" minimum="1" maximum="1" />
       <location x="10" y="9" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="townrat2">
+    <spawn type="LocationSpawner" name="townrat2" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -103966,7 +103983,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownRat2" size="1" minimum="1" maximum="1" />
       <location x="10" y="9" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="thiefTrainer">
+    <spawn type="LocationSpawner" name="thiefTrainer" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -103992,7 +104009,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownTrainerThief" size="1" minimum="1" maximum="1" />
       <location x="18" y="11" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="secretThiefTrainer">
+    <spawn type="LocationSpawner" name="secretThiefTrainer" enabled="true">
       <minimumDelay>0</minimumDelay>
       <maximumDelay>0</maximumDelay>
       <maximum>1</maximum>
@@ -104014,7 +104031,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownTrainerThief" size="1" minimum="1" maximum="1" />
       <location x="49" y="35" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="googog">
+    <spawn type="LocationSpawner" name="googog" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -104035,14 +104052,14 @@ var gargoyle = new Gargoyle()
       <entry entity="uk200Googog" size="1" minimum="1" maximum="1" />
       <location x="17" y="24" region="5" />
     </spawn>
-    <spawn type="LocationSpawner" name="tkPrincess">
+    <spawn type="LocationSpawner" name="tkPrincess" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>3600</maximumDelay>
       <maximum>1</maximum>
-      <script name="OnAfterSpawn" enabled="false">
+      <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-
+    announceGeneric(spawn.Segment, spawn.Location, $"You hear a loud scream as if someone has been captured.");
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -104056,7 +104073,7 @@ var gargoyle = new Gargoyle()
       <entry entity="ukKoboldPrincess" size="1" minimum="1" maximum="1" />
       <location x="4" y="8" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="koboldKing">
+    <spawn type="LocationSpawner" name="koboldKing" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -104077,7 +104094,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownKoboldKing" size="1" minimum="1" maximum="1" />
       <location x="20" y="5" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="jailtroll1">
+    <spawn type="LocationSpawner" name="jailtroll1" enabled="true">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>1</maximum>
@@ -104098,7 +104115,7 @@ var gargoyle = new Gargoyle()
       <entry entity="level13DeathTroll" size="1" minimum="1" maximum="1" />
       <location x="4" y="4" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="jailtroll2">
+    <spawn type="LocationSpawner" name="jailtroll2" enabled="true">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -104118,7 +104135,7 @@ var gargoyle = new Gargoyle()
       <entry entity="level13DeathTroll" size="1" minimum="1" maximum="1" />
       <location x="4" y="6" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="jailtroll3">
+    <spawn type="LocationSpawner" name="jailtroll3" enabled="true">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>1</maximum>
@@ -104139,7 +104156,7 @@ var gargoyle = new Gargoyle()
       <entry entity="level13DeathTroll" size="1" minimum="1" maximum="1" />
       <location x="4" y="10" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="jailtroll4">
+    <spawn type="LocationSpawner" name="jailtroll4" enabled="true">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>1</maximum>
@@ -104160,7 +104177,7 @@ var gargoyle = new Gargoyle()
       <entry entity="level13DeathTroll" size="1" minimum="1" maximum="1" />
       <location x="9" y="4" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="jailtroll5">
+    <spawn type="LocationSpawner" name="jailtroll5" enabled="true">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>1</maximum>
@@ -104181,7 +104198,7 @@ var gargoyle = new Gargoyle()
       <entry entity="level13DeathTroll" size="1" minimum="1" maximum="1" />
       <location x="9" y="6" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="jailtroll6">
+    <spawn type="LocationSpawner" name="jailtroll6" enabled="true">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>1</maximum>
@@ -104202,7 +104219,7 @@ var gargoyle = new Gargoyle()
       <entry entity="level13DeathTroll" size="1" minimum="1" maximum="1" />
       <location x="9" y="8" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="jailtroll7">
+    <spawn type="LocationSpawner" name="jailtroll7" enabled="true">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>1</maximum>
@@ -104223,7 +104240,7 @@ var gargoyle = new Gargoyle()
       <entry entity="level13DeathTroll" size="1" minimum="1" maximum="1" />
       <location x="9" y="10" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="olwraith1">
+    <spawn type="LocationSpawner" name="olwraith1" enabled="true">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>600</maximumDelay>
       <maximum>1</maximum>
@@ -104244,7 +104261,7 @@ var gargoyle = new Gargoyle()
       <entry entity="BossMinionLevel14Wraiths" size="1" minimum="1" maximum="1" />
       <location x="0" y="5" region="15" />
     </spawn>
-    <spawn type="LocationSpawner" name="olwraith2">
+    <spawn type="LocationSpawner" name="olwraith2" enabled="true">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>600</maximumDelay>
       <maximum>1</maximum>
@@ -104265,7 +104282,7 @@ var gargoyle = new Gargoyle()
       <entry entity="BossMinionLevel14Wraiths" size="1" minimum="1" maximum="1" />
       <location x="0" y="7" region="15" />
     </spawn>
-    <spawn type="LocationSpawner" name="olwraith3">
+    <spawn type="LocationSpawner" name="olwraith3" enabled="true">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>600</maximumDelay>
       <maximum>1</maximum>
@@ -104286,7 +104303,7 @@ var gargoyle = new Gargoyle()
       <entry entity="BossMinionLevel14Wraiths" size="1" minimum="1" maximum="1" />
       <location x="0" y="9" region="15" />
     </spawn>
-    <spawn type="LocationSpawner" name="olwraith4">
+    <spawn type="LocationSpawner" name="olwraith4" enabled="true">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>600</maximumDelay>
       <maximum>1</maximum>
@@ -104307,7 +104324,7 @@ var gargoyle = new Gargoyle()
       <entry entity="BossMinionLevel14Wraiths" size="1" minimum="1" maximum="1" />
       <location x="0" y="11" region="15" />
     </spawn>
-    <spawn type="LocationSpawner" name="olwraith5">
+    <spawn type="LocationSpawner" name="olwraith5" enabled="true">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>600</maximumDelay>
       <maximum>1</maximum>
@@ -104328,7 +104345,7 @@ var gargoyle = new Gargoyle()
       <entry entity="BossMinionLevel14Wraiths" size="1" minimum="1" maximum="1" />
       <location x="5" y="6" region="15" />
     </spawn>
-    <spawn type="LocationSpawner" name="olwraith7">
+    <spawn type="LocationSpawner" name="olwraith7" enabled="true">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>600</maximumDelay>
       <maximum>1</maximum>
@@ -104349,7 +104366,7 @@ var gargoyle = new Gargoyle()
       <entry entity="BossMinionLevel14Wraiths" size="1" minimum="1" maximum="1" />
       <location x="5" y="8" region="15" />
     </spawn>
-    <spawn type="LocationSpawner" name="olwraith8">
+    <spawn type="LocationSpawner" name="olwraith8" enabled="true">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>600</maximumDelay>
       <maximum>1</maximum>
@@ -104370,7 +104387,7 @@ var gargoyle = new Gargoyle()
       <entry entity="BossMinionLevel14Wraiths" size="1" minimum="1" maximum="1" />
       <location x="5" y="10" region="15" />
     </spawn>
-    <spawn type="LocationSpawner" name="hummingbirdghost">
+    <spawn type="LocationSpawner" name="hummingbirdghost" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>3600</maximumDelay>
       <maximum>1</maximum>
@@ -104391,7 +104408,7 @@ var gargoyle = new Gargoyle()
       <entry entity="ukHummerGuardian" size="1" minimum="1" maximum="1" />
       <location x="7" y="19" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="balmVendor">
+    <spawn type="LocationSpawner" name="balmVendor" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -104412,7 +104429,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownBalmVendor" size="1" minimum="1" maximum="1" />
       <location x="11" y="8" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="recallVendor">
+    <spawn type="LocationSpawner" name="recallVendor" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -104432,7 +104449,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownRecallVendor" size="1" minimum="1" maximum="1" />
       <location x="13" y="14" region="1" />
     </spawn>
-    <spawn type="LocationSpawner" name="tkInvisibleDoor">
+    <spawn type="LocationSpawner" name="tkInvisibleDoor" enabled="true">
       <minimumDelay>1800</minimumDelay>
       <maximumDelay>2700</maximumDelay>
       <script name="OnAfterSpawn" enabled="true">
@@ -104458,7 +104475,7 @@ var gargoyle = new Gargoyle()
       <entry entity="ukTrollDoor" size="1" minimum="1" maximum="1" />
       <location x="6" y="8" region="10" />
     </spawn>
-    <spawn type="LocationSpawner" name="UKConfessorGhost">
+    <spawn type="LocationSpawner" name="UKConfessorGhost" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -104479,7 +104496,7 @@ var gargoyle = new Gargoyle()
       <entry entity="uktownConfessorGhost" size="1" minimum="1" maximum="1" />
       <location x="15" y="3" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="hummingbirdPortal">
+    <spawn type="LocationSpawner" name="hummingbirdPortal" enabled="true">
       <minimumDelay>60</minimumDelay>
       <maximumDelay>300</maximumDelay>
       <maximum>1</maximum>
@@ -104500,28 +104517,7 @@ var gargoyle = new Gargoyle()
       <entry entity="ukHummerPortal" size="1" minimum="1" maximum="1" />
       <location x="13" y="22" region="9" />
     </spawn>
-    <spawn type="LocationSpawner" name="speedyHobTest">
-      <minimumDelay>900</minimumDelay>
-      <maximumDelay>900</maximumDelay>
-      <maximum>3</maximum>
-      <script name="OnAfterSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <script name="OnBeforeSpawn" enabled="false">
-        <block><![CDATA[]]></block>
-        <block><![CDATA[
-
-]]></block>
-        <block><![CDATA[]]></block>
-      </script>
-      <entry entity="level13SpeedyHob" size="4" minimum="1" maximum="1" />
-      <location x="3" y="13" region="2" />
-    </spawn>
-    <spawn type="LocationSpawner" name="lowerKoboldTownFolkSouthEast">
+    <spawn type="LocationSpawner" name="lowerKoboldTownFolkSouthEast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -104542,7 +104538,7 @@ var gargoyle = new Gargoyle()
       <entry entity="ukTownFolk" size="1" minimum="1" maximum="1" />
       <location x="26" y="23" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="lowerKoboldTownFolkSouth">
+    <spawn type="LocationSpawner" name="lowerKoboldTownFolkSouth" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -104563,7 +104559,7 @@ var gargoyle = new Gargoyle()
       <entry entity="ukTownFolk" size="1" minimum="1" maximum="1" />
       <location x="19" y="22" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="lowerKoboldTownFolkMid">
+    <spawn type="LocationSpawner" name="lowerKoboldTownFolkMid" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -104584,7 +104580,7 @@ var gargoyle = new Gargoyle()
       <entry entity="ukTownFolk" size="1" minimum="1" maximum="1" />
       <location x="12" y="11" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="lowerKoboldTownFolkWest">
+    <spawn type="LocationSpawner" name="lowerKoboldTownFolkWest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -104605,7 +104601,7 @@ var gargoyle = new Gargoyle()
       <entry entity="ukTownFolk" size="1" minimum="1" maximum="1" />
       <location x="4" y="11" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="lowerKoboldTownFolkMidSouth">
+    <spawn type="LocationSpawner" name="lowerKoboldTownFolkMidSouth" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -104626,7 +104622,7 @@ var gargoyle = new Gargoyle()
       <entry entity="ukTownFolk" size="1" minimum="1" maximum="1" />
       <location x="10" y="19" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="lowerKoboldTownFolkSouthWest">
+    <spawn type="LocationSpawner" name="lowerKoboldTownFolkSouthWest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -104647,7 +104643,7 @@ var gargoyle = new Gargoyle()
       <entry entity="ukTownFolk" size="1" minimum="1" maximum="1" />
       <location x="5" y="23" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="lowerKoboldTownFolksMidSouth">
+    <spawn type="LocationSpawner" name="lowerKoboldTownFolksMidSouth" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -104668,7 +104664,7 @@ var gargoyle = new Gargoyle()
       <entry entity="ukTownFolk" size="1" minimum="1" maximum="1" />
       <location x="2" y="18" region="2" />
     </spawn>
-    <spawn type="LocationSpawner" name="trapOLHall1">
+    <spawn type="LocationSpawner" name="trapOLHall1" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -104688,7 +104684,7 @@ var gargoyle = new Gargoyle()
       <entry entity="BossMiniOLHallTraps" size="1" minimum="1" maximum="1" />
       <location x="2" y="4" region="15" />
     </spawn>
-    <spawn type="LocationSpawner" name="trapOLHall2">
+    <spawn type="LocationSpawner" name="trapOLHall2" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -104708,7 +104704,7 @@ var gargoyle = new Gargoyle()
       <entry entity="BossMiniOLHallTraps" size="1" minimum="1" maximum="1" />
       <location x="3" y="5" region="15" />
     </spawn>
-    <spawn type="LocationSpawner" name="trapOLHall3">
+    <spawn type="LocationSpawner" name="trapOLHall3" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -104728,7 +104724,7 @@ var gargoyle = new Gargoyle()
       <entry entity="BossMiniOLHallTraps" size="1" minimum="1" maximum="1" />
       <location x="2" y="6" region="15" />
     </spawn>
-    <spawn type="LocationSpawner" name="trapOLHall7">
+    <spawn type="LocationSpawner" name="trapOLHall7" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -104748,7 +104744,7 @@ var gargoyle = new Gargoyle()
       <entry entity="BossMiniOLHallTraps" size="1" minimum="1" maximum="1" />
       <location x="3" y="7" region="15" />
     </spawn>
-    <spawn type="LocationSpawner" name="trapOLHall5">
+    <spawn type="LocationSpawner" name="trapOLHall5" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -104768,7 +104764,7 @@ var gargoyle = new Gargoyle()
       <entry entity="BossMiniOLHallTraps" size="1" minimum="1" maximum="1" />
       <location x="2" y="8" region="15" />
     </spawn>
-    <spawn type="LocationSpawner" name="trapOLHall8">
+    <spawn type="LocationSpawner" name="trapOLHall8" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -104788,7 +104784,7 @@ var gargoyle = new Gargoyle()
       <entry entity="BossMiniOLHallTraps" size="1" minimum="1" maximum="1" />
       <location x="3" y="9" region="15" />
     </spawn>
-    <spawn type="LocationSpawner" name="trapOLHall4">
+    <spawn type="LocationSpawner" name="trapOLHall4" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -104808,7 +104804,7 @@ var gargoyle = new Gargoyle()
       <entry entity="BossMiniOLHallTraps" size="1" minimum="1" maximum="1" />
       <location x="2" y="10" region="15" />
     </spawn>
-    <spawn type="LocationSpawner" name="trapOLHall6">
+    <spawn type="LocationSpawner" name="trapOLHall6" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -104828,7 +104824,7 @@ var gargoyle = new Gargoyle()
       <entry entity="BossMiniOLHallTraps" size="1" minimum="1" maximum="1" />
       <location x="3" y="11" region="15" />
     </spawn>
-    <spawn type="LocationSpawner" name="trapOLHall9">
+    <spawn type="LocationSpawner" name="trapOLHall9" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -104848,7 +104844,28 @@ var gargoyle = new Gargoyle()
       <entry entity="BossMiniOLHallTraps" size="1" minimum="1" maximum="1" />
       <location x="2" y="12" region="15" />
     </spawn>
-    <spawn type="RegionSpawner" name="wyverns">
+    <spawn type="LocationSpawner" name="testNinjaStun" enabled="true">
+      <minimumDelay>0</minimumDelay>
+      <maximumDelay>0</maximumDelay>
+      <maximum>1</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level15NinjaTest" size="1" minimum="1" maximum="1" />
+      <location x="3" y="13" region="2" />
+    </spawn>
+    <spawn type="RegionSpawner" name="wyverns" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>25</maximum>
@@ -104876,13 +104893,14 @@ var gargoyle = new Gargoyle()
         <exclusion left="47" top="35" right="49" bottom="36" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="drake">
+    <spawn type="RegionSpawner" name="drake" enabled="true">
       <minimumDelay>5400</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Teleport(new Point2D(39, 19, 1));
     announceEarthquake(spawn.Segment, spawn.Location, false);
 ]]></block>
         <block><![CDATA[]]></block>
@@ -104900,7 +104918,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="surfaceLurk1">
+    <spawn type="RegionSpawner" name="surfaceLurk1" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>1</maximum>
@@ -104925,7 +104943,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="surfaceLurk2">
+    <spawn type="RegionSpawner" name="surfaceLurk2" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>1</maximum>
@@ -104957,7 +104975,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="orcCaves">
+    <spawn type="RegionSpawner" name="orcCaves" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>15</maximum>
@@ -104987,7 +105005,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="uk100">
+    <spawn type="RegionSpawner" name="uk100" enabled="true">
       <minimumDelay>720</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>23</maximum>
@@ -105021,7 +105039,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="10" top="27" right="14" bottom="28" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="uk200">
+    <spawn type="RegionSpawner" name="uk200" enabled="true">
       <minimumDelay>720</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>28</maximum>
@@ -105055,7 +105073,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="7" top="16" right="13" bottom="19" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="lightningcaves">
+    <spawn type="RegionSpawner" name="lightningcaves" enabled="true">
       <minimumDelay>1020</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>75</maximum>
@@ -105084,7 +105102,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="trollguards">
+    <spawn type="RegionSpawner" name="trollguards" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>11</maximum>
@@ -105110,13 +105128,14 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="trollking">
+    <spawn type="RegionSpawner" name="trollking" enabled="true">
       <minimumDelay>10800</minimumDelay>
       <maximumDelay>14400</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Teleport(new Point2D(9, 23, 9));
     announceEarthquake(spawn.Segment, spawn.Location);
 ]]></block>
         <block><![CDATA[]]></block>
@@ -105134,7 +105153,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="tk300courtyard">
+    <spawn type="RegionSpawner" name="tk300courtyard" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>13</maximum>
@@ -105164,7 +105183,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="2" top="2" right="5" bottom="5" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="tk300dungeon">
+    <spawn type="RegionSpawner" name="tk300dungeon" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>18</maximum>
@@ -105195,7 +105214,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="38" top="2" right="38" bottom="3" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="jailguards">
+    <spawn type="RegionSpawner" name="jailguards" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>3</maximum>
@@ -105220,7 +105239,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="speedyHob">
+    <spawn type="RegionSpawner" name="speedyHob" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>38</maximum>
@@ -105248,7 +105267,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="30" top="11" right="34" bottom="15" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="ukConnector">
+    <spawn type="RegionSpawner" name="ukConnector" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>18</maximum>
@@ -105277,7 +105296,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="mummies">
+    <spawn type="RegionSpawner" name="mummies" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>15</maximum>
@@ -105302,7 +105321,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="overlord">
+    <spawn type="RegionSpawner" name="overlord" enabled="true">
       <minimumDelay>14400</minimumDelay>
       <maximumDelay>21600</maximumDelay>
       <maximum>1</maximum>
@@ -105327,7 +105346,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="carfel">
+    <spawn type="RegionSpawner" name="carfel" enabled="true">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <maximum>1</maximum>
@@ -105352,7 +105371,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="shelob">
+    <spawn type="RegionSpawner" name="shelob" enabled="true">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>14400</maximumDelay>
       <maximum>1</maximum>
@@ -105376,7 +105395,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="yasnakilevel">
+    <spawn type="RegionSpawner" name="yasnakilevel" enabled="true">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1500</maximumDelay>
       <maximum>15</maximum>
@@ -105405,7 +105424,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="1" top="10" right="5" bottom="10" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="undeadlevel">
+    <spawn type="RegionSpawner" name="undeadlevel" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>22</maximum>
@@ -105434,7 +105453,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="2" top="21" right="29" bottom="22" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="orugugra">
+    <spawn type="RegionSpawner" name="orugugra" enabled="true">
       <minimumDelay>3600</minimumDelay>
       <maximumDelay>7200</maximumDelay>
       <maximum>1</maximum>
@@ -105461,13 +105480,14 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="swordmaster">
+    <spawn type="RegionSpawner" name="swordmaster" enabled="true">
       <minimumDelay>7200</minimumDelay>
       <maximumDelay>10800</maximumDelay>
       <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.Teleport(new Point2D(18, 10, 17));
     announceEarthquake(spawn.Segment, spawn.Location);
 ]]></block>
         <block><![CDATA[]]></block>
@@ -105485,7 +105505,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="yasnakiLair">
+    <spawn type="RegionSpawner" name="yasnakiLair" enabled="true">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1500</maximumDelay>
       <maximum>3</maximum>
@@ -105513,7 +105533,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="SpeedyHobUnsafeRoom">
+    <spawn type="RegionSpawner" name="SpeedyHobUnsafeRoom" enabled="true">
       <minimumDelay>1500</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
@@ -105537,7 +105557,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="lightningcavesNorthwest">
+    <spawn type="RegionSpawner" name="lightningcavesNorthwest" enabled="true">
       <minimumDelay>1020</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>9</maximum>
@@ -105566,7 +105586,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="lightningcavesNortheast">
+    <spawn type="RegionSpawner" name="lightningcavesNortheast" enabled="true">
       <minimumDelay>1020</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>9</maximum>
@@ -105594,7 +105614,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="lightningcavesSouthwest">
+    <spawn type="RegionSpawner" name="lightningcavesSouthwest" enabled="true">
       <minimumDelay>1020</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>9</maximum>
@@ -105623,7 +105643,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="lightningcavesSoutheast">
+    <spawn type="RegionSpawner" name="lightningcavesSoutheast" enabled="true">
       <minimumDelay>1020</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>9</maximum>
@@ -105651,7 +105671,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="orcCavesWest">
+    <spawn type="RegionSpawner" name="orcCavesWest" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>7</maximum>
@@ -105681,7 +105701,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="orcCavesEast">
+    <spawn type="RegionSpawner" name="orcCavesEast" enabled="true">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>8</maximum>
@@ -105711,7 +105731,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="speedyHobWest">
+    <spawn type="RegionSpawner" name="speedyHobWest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>13</maximum>
@@ -105738,7 +105758,7 @@ var gargoyle = new Gargoyle()
         <inclusion left="2" top="3" right="17" bottom="16" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="speedyHobMiddle">
+    <spawn type="RegionSpawner" name="speedyHobMiddle" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>12</maximum>
@@ -105766,7 +105786,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="30" top="11" right="34" bottom="15" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="speedyHobRight">
+    <spawn type="RegionSpawner" name="speedyHobRight" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>12</maximum>
@@ -105793,7 +105813,7 @@ var gargoyle = new Gargoyle()
         <inclusion left="35" top="3" right="49" bottom="16" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="tk300courtyardEast">
+    <spawn type="RegionSpawner" name="tk300courtyardEast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>8</maximum>
@@ -105823,7 +105843,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="16" top="13" right="18" bottom="14" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="tk300courtyardWest">
+    <spawn type="RegionSpawner" name="tk300courtyardWest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>7</maximum>
@@ -105852,7 +105872,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="8" top="13" right="10" bottom="14" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="tk300dungeonNorthwest">
+    <spawn type="RegionSpawner" name="tk300dungeonNorthwest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>7</maximum>
@@ -105880,7 +105900,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="tk300dungeonMiddle">
+    <spawn type="RegionSpawner" name="tk300dungeonMiddle" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>6</maximum>
@@ -105909,7 +105929,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="38" top="4" right="38" bottom="5" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="tk300dungeonSouthwest">
+    <spawn type="RegionSpawner" name="tk300dungeonSouthwest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>6</maximum>
@@ -105937,7 +105957,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="ukConnectorWest">
+    <spawn type="RegionSpawner" name="ukConnectorWest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>9</maximum>
@@ -105966,7 +105986,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="ukConnectorEast">
+    <spawn type="RegionSpawner" name="ukConnectorEast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>10</maximum>
@@ -105995,7 +106015,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="undeadlevelWest">
+    <spawn type="RegionSpawner" name="undeadlevelWest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>7</maximum>
@@ -106023,7 +106043,7 @@ var gargoyle = new Gargoyle()
         <inclusion left="2" top="3" right="13" bottom="20" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="undeadlevelMiddle">
+    <spawn type="RegionSpawner" name="undeadlevelMiddle" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>8</maximum>
@@ -106051,7 +106071,7 @@ var gargoyle = new Gargoyle()
         <inclusion left="15" top="3" right="24" bottom="16" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="undeadlevelEast">
+    <spawn type="RegionSpawner" name="undeadlevelEast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>7</maximum>
@@ -106079,7 +106099,7 @@ var gargoyle = new Gargoyle()
         <inclusion left="26" top="3" right="37" bottom="20" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="yasnakilevelSouthwest">
+    <spawn type="RegionSpawner" name="yasnakilevelSouthwest" enabled="true">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1500</maximumDelay>
       <maximum>6</maximum>
@@ -106107,7 +106127,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="1" top="10" right="5" bottom="10" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="yasnakilevelSoutheast">
+    <spawn type="RegionSpawner" name="yasnakilevelSoutheast" enabled="true">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1500</maximumDelay>
       <maximum>6</maximum>
@@ -106135,7 +106155,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="1" top="10" right="5" bottom="10" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="yasnakilevelNortheast">
+    <spawn type="RegionSpawner" name="yasnakilevelNortheast" enabled="true">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1500</maximumDelay>
       <maximum>6</maximum>
@@ -106162,7 +106182,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="wyvernsComplex">
+    <spawn type="RegionSpawner" name="wyvernsComplex" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>4</maximum>
@@ -106191,7 +106211,7 @@ var gargoyle = new Gargoyle()
         <inclusion left="7" top="25" right="8" bottom="28" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="wyvernsSouth">
+    <spawn type="RegionSpawner" name="wyvernsSouth" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>8</maximum>
@@ -106221,7 +106241,7 @@ var gargoyle = new Gargoyle()
         <inclusion left="18" top="25" right="49" bottom="26" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="wyvernsNorth">
+    <spawn type="RegionSpawner" name="wyvernsNorth" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>12</maximum>
@@ -106247,7 +106267,7 @@ var gargoyle = new Gargoyle()
         <inclusion left="17" top="2" right="49" bottom="21" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="tk300poolLurker">
+    <spawn type="RegionSpawner" name="tk300poolLurker" enabled="true">
       <minimumDelay>1200</minimumDelay>
       <maximumDelay>1800</maximumDelay>
       <maximum>1</maximum>
@@ -106270,7 +106290,7 @@ var gargoyle = new Gargoyle()
         <inclusion left="2" top="2" right="5" bottom="5" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="tk300DungeonNotSafe">
+    <spawn type="RegionSpawner" name="tk300DungeonNotSafe" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>1200</maximumDelay>
       <maximum>2</maximum>
@@ -106296,7 +106316,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="mummiesEast">
+    <spawn type="RegionSpawner" name="mummiesEast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>2</maximum>
@@ -106320,7 +106340,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="mummiesWest">
+    <spawn type="RegionSpawner" name="mummiesWest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -106343,7 +106363,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="guardReserveEast">
+    <spawn type="RegionSpawner" name="guardReserveEast" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -106366,7 +106386,7 @@ var gargoyle = new Gargoyle()
         <exclusion left="0" top="0" right="0" bottom="0" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="guardReserveWest">
+    <spawn type="RegionSpawner" name="guardReserveWest" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <script name="OnAfterSpawn" enabled="false">
@@ -106495,7 +106515,7 @@ var gargoyle = new Gargoyle()
       </entry>
     </treasure>
     <treasure name="overlordTreasure">
-      <entry weight="10">
+      <entry weight="50">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -106504,7 +106524,7 @@ var gargoyle = new Gargoyle()
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="10">
+      <entry weight="46">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -106513,7 +106533,7 @@ var gargoyle = new Gargoyle()
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="1">
+      <entry weight="4">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[

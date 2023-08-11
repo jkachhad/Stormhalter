@@ -2,47 +2,46 @@ using System.IO;
 using Kesmai.Server.Items;
 using Kesmai.Server.Spells;
 
-namespace Kesmai.Server.Game
+namespace Kesmai.Server.Game;
+
+public partial class Snake : AnimalEntity
 {
-	public partial class Snake : AnimalEntity
+	public Snake()
 	{
-		public Snake()
+		Name = "snake";
+		Body = 53;
+
+		Movement = 2;
+			
+		CanSwim = true;
+		AddStatus(new BreatheWaterStatus(this));
+
+		Alignment = Alignment.Chaotic;
+	}
+
+	protected override void OnLoad()
+	{
+		Attacks = new CreatureAttackCollection
 		{
-			Name = "snake";
-			Body = 53;
-
-			Movement = 2;
+			{ new CreatureAttack(8, 5, 15, "The snake strikes you.") },
+		};
 			
-			CanSwim = true;
-			AddStatus(new BreatheWaterStatus(this));
-
-			Alignment = Alignment.Chaotic;
-		}
-
-		protected override void OnLoad()
+		Blocks = new CreatureBlockCollection
 		{
-			Attacks = new CreatureAttackCollection
-			{
-				{ new CreatureAttack(8, 5, 15, "The snake strikes you.") },
-			};
+			new CreatureBlock(10, "the armor"),
+		};
 			
-			Blocks = new CreatureBlockCollection
-			{
-				new CreatureBlock(10, "the armor"),
-			};
-			
-			_brain = new CombatAI(this);
+		_brain = new CombatAI(this);
 
-			base.OnLoad();
-		}
+		base.OnLoad();
+	}
 		
-		public override int GetNearbySound() => 17;
-		public override int GetAttackSound() => 29;
-		public override int GetDeathSound() => 41;
+	public override int GetNearbySound() => 17;
+	public override int GetAttackSound() => 29;
+	public override int GetDeathSound() => 41;
 		
-		public override ItemEntity OnCorpseTanned()
-		{
-			return new LeatherArmor();
-		}
+	public override ItemEntity OnCorpseTanned()
+	{
+		return new LeatherArmor();
 	}
 }

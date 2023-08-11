@@ -4,33 +4,32 @@ using System.Xml.Linq;
 
 using DigitalRune.Storages;
 
-namespace Kesmai.WorldForge
+namespace Kesmai.WorldForge;
+
+public class XDocumentReader : StorageReader
 {
-	public class XDocumentReader : StorageReader
+	#region Static
+
+	#endregion
+
+	#region Fields
+
+	#endregion
+
+	#region Properties and Events
+
+	#endregion
+
+	#region Constructors and Cleanup
+
+	#endregion
+
+	#region Methods
+
+	public override T Read<T>(Stream stream)
 	{
-		#region Static
-
-		#endregion
-
-		#region Fields
-
-		#endregion
-
-		#region Properties and Events
-
-		#endregion
-
-		#region Constructors and Cleanup
-
-		#endregion
-
-		#region Methods
-
-		public override T Read<T>(Stream stream)
-		{
-			return (T)(object)XDocument.Load(stream);
-		}
-
-		#endregion
+		return (T)(object)XDocument.Load(stream);
 	}
+
+	#endregion
 }
