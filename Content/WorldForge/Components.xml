@@ -69,6 +69,14 @@
       <ground>992</ground>
       <movementCost>1</movementCost>
     </IceComponent>
+    <IceComponent name="Icy cave Floor">
+      <ground>1349</ground>
+      <movementCost>1</movementCost>
+    </IceComponent>
+    <IceComponent name="glacier Floor">
+      <ground>1357</ground>
+      <movementCost>1</movementCost>
+    </IceComponent>
     <FloorComponent name="Bog">
       <ground>21</ground>
       <movementCost>1</movementCost>
@@ -338,12 +346,8 @@
       <movementCost>1</movementCost>
     </FloorComponent>
     <FloorComponent name="mine floor">
-      <ground>1219</ground>
+      <ground>1214</ground>
       <movementCost>1</movementCost>
-    </FloorComponent>
-    <FloorComponent name="gray sand">
-      <ground>1224</ground>
-      <movementCost>2</movementCost>
     </FloorComponent>
     <FloorComponent name="new dungeon floor">
       <ground>1226</ground>
@@ -383,6 +387,30 @@
     </FloorComponent>
     <FloorComponent name="dbl desat-green floor texture">
       <ground>1307</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="red brick floor">
+      <ground>1341</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="nidavellir dark floor">
+      <ground>1365</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="nidavellir light floor">
+      <ground>1372</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="icy rock floor">
+      <ground>1409</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="icy snow floor">
+      <ground>1410</ground>
+      <movementCost>1</movementCost>
+    </FloorComponent>
+    <FloorComponent name="snow floor">
+      <ground>1411</ground>
       <movementCost>1</movementCost>
     </FloorComponent>
   </category>
@@ -1165,57 +1193,33 @@
       <indestructible>false</indestructible>
     </WallComponent>
     <WallComponent name="mine solid">
-      <wall>1220</wall>
-      <destroyed>1222</destroyed>
-      <ruins>1222</ruins>
-      <indestructible>true</indestructible>
-    </WallComponent>
-    <WallComponent name="mine wall right post (h)">
-      <wall>1213</wall>
-      <destroyed>1222</destroyed>
-      <ruins>1222</ruins>
-      <indestructible>true</indestructible>
-    </WallComponent>
-    <WallComponent name="mine wall left post (h)">
-      <wall>1214</wall>
-      <destroyed>1222</destroyed>
-      <ruins>1222</ruins>
+      <wall>1221</wall>
+      <destroyed>1221</destroyed>
+      <ruins>1221</ruins>
       <indestructible>true</indestructible>
     </WallComponent>
     <WallComponent name="mine wall (h)">
-      <wall>1215</wall>
-      <destroyed>1222</destroyed>
-      <ruins>1222</ruins>
-      <indestructible>true</indestructible>
-    </WallComponent>
-    <WallComponent name="mine wall left post (v)">
-      <wall>1216</wall>
-      <destroyed>1222</destroyed>
-      <ruins>1222</ruins>
-      <indestructible>true</indestructible>
-    </WallComponent>
-    <WallComponent name="mine wall right post (v)">
-      <wall>1217</wall>
-      <destroyed>1222</destroyed>
-      <ruins>1222</ruins>
+      <wall>1213</wall>
+      <destroyed>1217</destroyed>
+      <ruins>1216</ruins>
       <indestructible>true</indestructible>
     </WallComponent>
     <WallComponent name="mine wall (v)">
-      <wall>1218</wall>
-      <destroyed>1222</destroyed>
-      <ruins>1222</ruins>
+      <wall>1215</wall>
+      <destroyed>1217</destroyed>
+      <ruins>1218</ruins>
       <indestructible>true</indestructible>
     </WallComponent>
     <WallComponent name="mine pillar">
-      <wall>1221</wall>
-      <destroyed>1222</destroyed>
-      <ruins>1222</ruins>
+      <wall>1219</wall>
+      <destroyed>1217</destroyed>
+      <ruins>1220</ruins>
       <indestructible>true</indestructible>
     </WallComponent>
     <WallComponent name="mine wood post">
-      <wall>1223</wall>
-      <destroyed>1222</destroyed>
-      <ruins>1222</ruins>
+      <wall>1222</wall>
+      <destroyed>1217</destroyed>
+      <ruins>1220</ruins>
       <indestructible>true</indestructible>
     </WallComponent>
     <WallComponent name="irr wall (h)">
@@ -1471,7 +1475,7 @@
       <indestructible>false</indestructible>
     </WallComponent>
     <WallComponent name="dungeon dreary purple wall H">
-      <wall>1254</wall>
+      <wall>1258</wall>
       <destroyed>1262</destroyed>
       <ruins>1264</ruins>
       <indestructible>false</indestructible>
@@ -1613,6 +1617,90 @@
       <destroyed>1310</destroyed>
       <ruins>1312</ruins>
       <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="red brick wall (h)">
+      <wall>1340</wall>
+      <destroyed>1344</destroyed>
+      <ruins>1346</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="red brick wall (v)">
+      <wall>1342</wall>
+      <destroyed>1344</destroyed>
+      <ruins>1345</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="red brick post">
+      <wall>1343</wall>
+      <destroyed>1344</destroyed>
+      <ruins>1347</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="icy cave wall (h)">
+      <wall>1348</wall>
+      <destroyed>1352</destroyed>
+      <ruins>1354</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="icy cave wall (v)">
+      <wall>1350</wall>
+      <destroyed>1352</destroyed>
+      <ruins>1353</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="icy cave post">
+      <wall>1351</wall>
+      <destroyed>1352</destroyed>
+      <ruins>1355</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="glacier wall (H)">
+      <wall>1356</wall>
+      <destroyed>1360</destroyed>
+      <ruins>1359</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="glacier wall (v)">
+      <wall>1358</wall>
+      <destroyed>1360</destroyed>
+      <ruins>1361</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="glacier post">
+      <wall>1362</wall>
+      <destroyed>1360</destroyed>
+      <ruins>1363</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="nidavellir wall (h)">
+      <wall>1364</wall>
+      <destroyed>1368</destroyed>
+      <ruins>1370</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="nidavellir wall (v)">
+      <wall>1366</wall>
+      <destroyed>1368</destroyed>
+      <ruins>1369</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="nidavellir post">
+      <wall>1367</wall>
+      <destroyed>1368</destroyed>
+      <ruins>1371</ruins>
+      <indestructible>false</indestructible>
+    </WallComponent>
+    <WallComponent name="nidavellir mythril wall (h)">
+      <wall>1380</wall>
+      <destroyed>1368</destroyed>
+      <ruins>1371</ruins>
+      <indestructible>true</indestructible>
+    </WallComponent>
+    <WallComponent name="nidavellir mythril wall (v)">
+      <wall>1381</wall>
+      <destroyed>1368</destroyed>
+      <ruins>1371</ruins>
+      <indestructible>true</indestructible>
     </WallComponent>
   </category>
   <category name="Customizable">
@@ -2098,7 +2186,7 @@
       <ruins>1186</ruins>
     </RuinsComponent>
     <RuinsComponent name="mine rubble">
-      <ruins>1222</ruins>
+      <ruins>1217</ruins>
     </RuinsComponent>
     <RuinsComponent name="irr wall ruin (h)">
       <ruins>1228</ruins>
@@ -2213,6 +2301,54 @@
     </RuinsComponent>
     <RuinsComponent name="dungeon dreary 2x desaturated green column">
       <ruins>1313</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="red brick rubble">
+      <ruins>1344</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="red brick wall ruin (h)">
+      <ruins>1346</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="red brick wall ruin (v)">
+      <ruins>1345</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="red brick post ruin">
+      <ruins>1343</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="icy cave rubble">
+      <ruins>1352</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="icy cave wall ruin (h)">
+      <ruins>1354</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="icy cave wall ruin (v)">
+      <ruins>1353</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="icy cave post ruin">
+      <ruins>1355</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="glacier rubble">
+      <ruins>1360</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="glacier wall ruin (h)">
+      <ruins>1359</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="glacier wall ruin (v)">
+      <ruins>1361</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="glacier post ruin">
+      <ruins>1363</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="nidavellir rubble">
+      <ruins>1368</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="nidavellir wall ruin (h)">
+      <ruins>1370</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="nidavellir wall ruin (v)">
+      <ruins>1369</ruins>
+    </RuinsComponent>
+    <RuinsComponent name="nidavellir post ruin">
+      <ruins>1371</ruins>
     </RuinsComponent>
   </category>
   <category name="Doors">
@@ -2589,6 +2725,22 @@
       <closedId>964</closedId>
       <secretId>152</secretId>
       <destroyedId>1236</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="thin chamber door (h)">
+      <openId>1383</openId>
+      <closedId>1382</closedId>
+      <secretId>152</secretId>
+      <destroyedId>1384</destroyedId>
+      <isSecret>false</isSecret>
+      <isOpen>false</isOpen>
+    </DoorComponent>
+    <DoorComponent name="thin chamber door (v)">
+      <openId>1386</openId>
+      <closedId>1385</closedId>
+      <secretId>152</secretId>
+      <destroyedId>1387</destroyedId>
       <isSecret>false</isSecret>
       <isOpen>false</isOpen>
     </DoorComponent>
@@ -3265,6 +3417,153 @@
       <teleporterId>514</teleporterId>
       <isSecret>false</isSecret>
     </RopeComponent>
+    <RopeComponent name="Rope North and Up">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1388</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Rope West and Up">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1389</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Rope East and Up">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1390</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Rope West and Down">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1391</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Rope North and Down">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1392</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Rope South and Up">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1393</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Rope East/South and Down">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1394</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Root North and Up">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1395</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Root West and Up">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1396</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Root East and Up">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1397</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Root West and Down">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1398</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Root South and Up">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1399</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Root North and Down">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1400</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Root East/South and Down">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1401</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Vine North and Up">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1402</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Vine West and Up">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1403</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Vine East and Up">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1404</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Vine West and Down">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1405</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Vine North and Down">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1406</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Vine South and Up">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1407</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
+    <RopeComponent name="Vine East/South and Down">
+      <destinationX>0</destinationX>
+      <destinationY>0</destinationY>
+      <destinationRegion>0</destinationRegion>
+      <teleporterId>1408</teleporterId>
+      <isSecret>false</isSecret>
+    </RopeComponent>
   </category>
   <category name="Vegetation">
     <StaticComponent name="Jungle Foliage">
@@ -3515,6 +3814,27 @@
     <StaticComponent name="fir topiari">
       <static>1245</static>
     </StaticComponent>
+    <StaticComponent name="med blooming mushroom">
+      <static>1373</static>
+    </StaticComponent>
+    <StaticComponent name="large and med mushroom">
+      <static>1374</static>
+    </StaticComponent>
+    <StaticComponent name="2 med mushrooms">
+      <static>1375</static>
+    </StaticComponent>
+    <StaticComponent name="large mushroom">
+      <static>1376</static>
+    </StaticComponent>
+    <StaticComponent name="med mushroom">
+      <static>1377</static>
+    </StaticComponent>
+    <StaticComponent name="small mushroom cluster (right)">
+      <static>1378</static>
+    </StaticComponent>
+    <StaticComponent name="small mushroom cluster (left)">
+      <static>1379</static>
+    </StaticComponent>
   </category>
   <category name="Obstructions">
     <ObstructionComponent name="Reef">
@@ -3627,6 +3947,18 @@
     </ObstructionComponent>
     <ObstructionComponent name="dungeon dreary green dragon statue">
       <obstruction>1329</obstruction>
+      <blockVision>true</blockVision>
+    </ObstructionComponent>
+    <ObstructionComponent name="dungeon dreary purple column">
+      <obstruction>1271</obstruction>
+      <blockVision>true</blockVision>
+    </ObstructionComponent>
+    <ObstructionComponent name="dungeon dreary blue column">
+      <obstruction>1295</obstruction>
+      <blockVision>true</blockVision>
+    </ObstructionComponent>
+    <ObstructionComponent name="dungeon dreary green column">
+      <obstruction>1319</obstruction>
       <blockVision>true</blockVision>
     </ObstructionComponent>
   </category>

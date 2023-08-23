@@ -4982,7 +4982,7 @@
     <average>(149,149,149,255)</average>
   </terrain>
   <terrain id="1213" action="13">
-    <!--Mine wall right post (h)-->
+    <!--Mine wall (h)-->
     <sprite order="5">
       <texture>Tenser\Terrain\mines</texture>
       <offset>(0,0)</offset>
@@ -4991,7 +4991,7 @@
     <average>(149,149,149,255)</average>
   </terrain>
   <terrain id="1214" action="13">
-    <!--Mine wall left post (h)-->
+    <!--Mine floor texture-->
     <sprite order="5">
       <texture>Tenser\Terrain\mines</texture>
       <offset>(0,0)</offset>
@@ -5000,7 +5000,7 @@
     <average>(149,149,149,255)</average>
   </terrain>
   <terrain id="1215" action="13">
-    <!--Mine wall (h)-->
+    <!--Mine wall (v)-->
     <sprite order="5">
       <texture>Tenser\Terrain\mines</texture>
       <offset>(0,0)</offset>
@@ -5009,8 +5009,8 @@
     <average>(149,149,149,255)</average>
   </terrain>
   <terrain id="1216" action="13">
-    <!--Mine wall left post (v)-->
-    <sprite order="4">
+    <!--Mine wall ruin (h)-->
+    <sprite order="5">
       <texture>Tenser\Terrain\mines</texture>
       <offset>(0,0)</offset>
       <source>(300,0,100,100)</source>
@@ -5018,8 +5018,8 @@
     <average>(149,149,149,255)</average>
   </terrain>
   <terrain id="1217" action="13">
-    <!--Mine wall right post (v)-->
-    <sprite order="4">
+    <!--Mine rubble-->
+    <sprite order="3">
       <texture>Tenser\Terrain\mines</texture>
       <offset>(0,0)</offset>
       <source>(400,0,100,100)</source>
@@ -5027,7 +5027,7 @@
     <average>(149,149,149,255)</average>
   </terrain>
   <terrain id="1218" action="13">
-    <!--Mine wall (v)-->
+    <!--Mine wall ruin (v)-->
     <sprite order="4">
       <texture>Tenser\Terrain\mines</texture>
       <offset>(0,0)</offset>
@@ -5035,9 +5035,9 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="1219" action="0">
-    <!--Mine floor-->
-    <sprite order="0">
+  <terrain id="1219" action="13">
+    <!--Mine post-->
+    <sprite order="4">
       <texture>Tenser\Terrain\mines</texture>
       <offset>(0,0)</offset>
       <source>(0,100,100,100)</source>
@@ -5045,7 +5045,7 @@
     <average>(149,149,149,255)</average>
   </terrain>
   <terrain id="1220" action="0">
-    <!--Mine solid-->
+    <!--Mine post ruin-->
     <sprite order="4">
       <texture>Tenser\Terrain\mines</texture>
       <offset>(0,0)</offset>
@@ -5053,8 +5053,8 @@
     </sprite>
     <average>(149,149,149,255)</average>
   </terrain>
-  <terrain id="1221" action="0">
-    <!--Mine post-->
+  <terrain id="1221" action="13">
+    <!--Mine obstruction-->
     <sprite order="4">
       <texture>Tenser\Terrain\mines</texture>
       <offset>(0,0)</offset>
@@ -5063,7 +5063,7 @@
     <average>(149,149,149,255)</average>
   </terrain>
   <terrain id="1222" action="0">
-    <!--Mine rubble-->
+    <!--Mine support post-->
     <sprite order="4">
       <texture>Tenser\Terrain\mines</texture>
       <offset>(0,0)</offset>
@@ -5072,7 +5072,7 @@
     <average>(149,149,149,255)</average>
   </terrain>
   <terrain id="1223" action="0">
-    <!--Mine Wood post-->
+    <!--Mine rocks h-->
     <sprite order="4">
       <texture>Tenser\Terrain\mines</texture>
       <offset>(0,0)</offset>
@@ -5081,7 +5081,7 @@
     <average>(149,149,149,255)</average>
   </terrain>
   <terrain id="1224" action="0">
-    <!--gray sand-->
+    <!--mine rocks v-->
     <sprite order="0">
       <texture>Tenser\Terrain\mines</texture>
       <offset>(0,0)</offset>
@@ -6177,5 +6177,581 @@
       </frames>
     </sprite>
     <average>(11,82,214,255)</average>
+  </terrain>
+  <terrain id="1340" action="13">
+    <!-- Red Brick Wall (H) -->
+    <sprite order="5">
+      <texture>Tenser\Terrain\redbrickwalls</texture>
+      <source>(0,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1341" action="13">
+    <!-- Red Brick floor -->
+    <sprite order="5">
+      <texture>Tenser\Terrain\redbrickwalls</texture>
+      <source>(100,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1342" action="13">
+    <!-- Red Brick Wall (V) -->
+    <sprite order="4">
+      <texture>Tenser\Terrain\redbrickwalls</texture>
+      <source>(200,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1343" action="13">
+    <!-- Red Brick Post -->
+    <sprite order="4">
+      <texture>Tenser\Terrain\redbrickwalls</texture>
+      <source>(300,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1344" action="13">
+    <!-- Red Brick rubble -->
+    <sprite order="3">
+      <texture>Tenser\Terrain\redbrickwalls</texture>
+      <source>(400,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1345" action="13">
+    <!-- Red Brick Wall ruin (V) -->
+    <sprite order="4">
+      <texture>Tenser\Terrain\redbrickwalls</texture>
+      <source>(500,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1346" action="13">
+    <!-- Red Brick Wall ruin (H) -->
+    <sprite order="5">
+      <texture>Tenser\Terrain\redbrickwalls</texture>
+      <source>(600,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1347" action="13">
+    <!-- Red Brick post ruin -->
+    <sprite order="4">
+      <texture>Tenser\Terrain\redbrickwalls</texture>
+      <source>(700,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1348" action="13">
+    <!-- icy caves wall (h) -->
+    <sprite order="5">
+      <texture>Tenser\Terrain\icycavetiles</texture>
+      <source>(0,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1349" action="13">
+    <!-- icy caves floor -->
+    <sprite order="0">
+      <texture>Tenser\Terrain\icycavetiles</texture>
+      <source>(100,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1350" action="13">
+    <!-- icy caves wall (v) -->
+    <sprite order="4">
+      <texture>Tenser\Terrain\icycavetiles</texture>
+      <source>(200,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1351" action="13">
+    <!-- icy caves post -->
+    <sprite order="4">
+      <texture>Tenser\Terrain\icycavetiles</texture>
+      <source>(300,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1352" action="13">
+    <!-- icy caves rubble -->
+    <sprite order="3">
+      <texture>Tenser\Terrain\icycavetiles</texture>
+      <source>(400,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1353" action="13">
+    <!-- icy caves wall ruin (v) -->
+    <sprite order="4">
+      <texture>Tenser\Terrain\icycavetiles</texture>
+      <source>(500,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1354" action="13">
+    <!-- icy caves wall ruin (h) -->
+    <sprite order="5">
+      <texture>Tenser\Terrain\icycavetiles</texture>
+      <source>(600,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1355" action="13">
+    <!-- icy caves post ruin -->
+    <sprite order="4">
+      <texture>Tenser\Terrain\icycavetiles</texture>
+      <source>(700,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1356" action="13">
+    <!-- glacial wall (h) -->
+    <sprite order="5">
+      <texture>Tenser\Terrain\glacial</texture>
+      <source>(0,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1357" action="13">
+    <!-- glacial floor -->
+    <sprite order="0">
+      <texture>Tenser\Terrain\glacial</texture>
+      <source>(100,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1358" action="13">
+    <!-- glacial wall (v) -->
+    <sprite order="4">
+      <texture>Tenser\Terrain\glacial</texture>
+      <source>(200,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1359" action="13">
+    <!-- glacial wall ruin (h) -->
+    <sprite order="5">
+      <texture>Tenser\Terrain\glacial</texture>
+      <source>(300,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1360" action="13">
+    <!-- glacial rubble -->
+    <sprite order="3">
+      <texture>Tenser\Terrain\glacial</texture>
+      <source>(400,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1361" action="13">
+    <!-- glacial wall ruin (v) -->
+    <sprite order="4">
+      <texture>Tenser\Terrain\glacial</texture>
+      <source>(500,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1362" action="13">
+    <!-- glacial post -->
+    <sprite order="4">
+      <texture>Tenser\Terrain\glacial</texture>
+      <source>(600,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1363" action="13">
+    <!-- glacial post ruin -->
+    <sprite order="4">
+      <texture>Tenser\Terrain\glacial</texture>
+      <source>(700,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1364" action="13">
+    <!-- nidavellir wall (h) -->
+    <sprite order="5">
+      <texture>Tenser\Terrain\nidavellir</texture>
+      <source>(0,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1365" action="13">
+    <!-- nidavellir floor dark -->
+    <sprite order="0">
+      <texture>Tenser\Terrain\nidavellir</texture>
+      <source>(100,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1366" action="13">
+    <!-- nidavellir wall (v) -->
+    <sprite order="4">
+      <texture>Tenser\Terrain\nidavellir</texture>
+      <source>(200,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1367" action="13">
+    <!-- nidavellir post -->
+    <sprite order="4">
+      <texture>Tenser\Terrain\nidavellir</texture>
+      <source>(300,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1368" action="13">
+    <!-- nidavellir rubble -->
+    <sprite order="3">
+      <texture>Tenser\Terrain\nidavellir</texture>
+      <source>(400,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1369" action="13">
+    <!-- nidavellir wall ruin (v) -->
+    <sprite order="4">
+      <texture>Tenser\Terrain\nidavellir</texture>
+      <source>(500,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1370" action="13">
+    <!-- nidavellir wall ruin (h) -->
+    <sprite order="5">
+      <texture>Tenser\Terrain\nidavellir</texture>
+      <source>(600,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1371" action="13">
+    <!-- nidavellir post ruin -->
+    <sprite order="4">
+      <texture>Tenser\Terrain\nidavellir</texture>
+      <source>(700,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1372" action="13">
+    <!-- nidavellir light floor -->
+    <sprite order="0">
+      <texture>Tenser\Terrain\nidavellir</texture>
+      <source>(800,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1373" action="13">
+    <!-- nidavellir med mushroom -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\nidavellir</texture>
+      <source>(0,100,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1374" action="13">
+    <!-- nidavellir giant mushroom 1 -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\nidavellir</texture>
+      <source>(100,100,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1375" action="13">
+    <!-- nidavellir med mushroom 2 -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\nidavellir</texture>
+      <source>(200,100,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1376" action="13">
+    <!-- nidavellir giant mushroom 2 -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\nidavellir</texture>
+      <source>(300,100,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1377" action="13">
+    <!-- nidavellir med mushroom 3 -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\nidavellir</texture>
+      <source>(400,100,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1378" action="13">
+    <!-- nidavellir small mushroom cluster -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\nidavellir</texture>
+      <source>(500,100,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1379" action="13">
+    <!-- nidavellir small mush cluster 2 -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\nidavellir</texture>
+      <source>(600,100,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1380" action="13">
+    <!-- nidavellir mythril wall (h) -->
+    <sprite order="5">
+      <texture>Tenser\Terrain\nidavellir</texture>
+      <source>(700,100,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1381" action="13">
+    <!-- nidavellir mythril wall (v) -->
+    <sprite order="4">
+      <texture>Tenser\Terrain\nidavellir</texture>
+      <source>(800,100,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1382" action="4">
+    <!-- thin chamber door closed (h) -->
+    <sprite order="7">
+      <texture>Tenser\Terrain\Doors\thinchamberdoor</texture>
+      <source>(0,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1383" action="3">
+    <!-- thin chamber door open (h) -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\Doors\thinchamberdoor</texture>
+      <source>(100,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1384" action="3">
+    <!-- thin chamber door ruin (h) -->
+    <sprite order="3">
+      <texture>Tenser\Terrain\Doors\thinchamberdoor</texture>
+      <source>(200,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1385" action="4">
+    <!-- thin chamber door closed (v) -->
+    <sprite order="6">
+      <texture>Tenser\Terrain\Doors\thinchamberdoor</texture>
+      <source>(300,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1386" action="3">
+    <!-- thin chamber door open (v) -->
+    <sprite order="2">
+      <texture>Tenser\Terrain\Doors\thinchamberdoor</texture>
+      <source>(400,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1387" action="4">
+    <!-- thin chamber door ruin (v) -->
+    <sprite order="3">
+      <texture>Tenser\Terrain\Doors\thinchamberdoor</texture>
+      <source>(500,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1388" action="2">
+    <!-- Rope North and up -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\ropeandvine</texture>
+      <source>(0,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1389" action="2">
+    <!-- Rope West and up -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\ropeandvine</texture>
+      <source>(100,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1390" action="2">
+    <!-- Rope East and up -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\ropeandvine</texture>
+      <source>(200,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1391" action="1">
+    <!-- Rope west and down -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\ropeandvine</texture>
+      <source>(300,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1392" action="1">
+    <!-- Rope North and down -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\ropeandvine</texture>
+      <source>(400,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1393" action="2">
+    <!-- Rope South and up -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\ropeandvine</texture>
+      <source>(400,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1394" action="1">
+    <!-- Rope East/South and down -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\ropeandvine</texture>
+      <source>(500,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1395" action="2">
+    <!-- Root North and up -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\ropeandvine</texture>
+      <source>(0,100,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1396" action="2">
+    <!-- Root West and up -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\ropeandvine</texture>
+      <source>(100,100,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1397" action="2">
+    <!-- Root East and up -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\ropeandvine</texture>
+      <source>(200,100,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1398" action="1">
+    <!-- Root West and down -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\ropeandvine</texture>
+      <source>(300,100,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1399" action="2">
+    <!-- Root South and up -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\ropeandvine</texture>
+      <source>(400,100,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1400" action="1">
+    <!-- Root North and down -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\ropeandvine</texture>
+      <source>(400,100,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1401" action="1">
+    <!-- Root East/south and down -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\ropeandvine</texture>
+      <source>(500,100,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1402" action="2">
+    <!-- vine North and up -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\ropeandvine</texture>
+      <source>(0,200,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1403" action="2">
+    <!-- vine west and up -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\ropeandvine</texture>
+      <source>(100,200,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1404" action="2">
+    <!-- vine East and up -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\ropeandvine</texture>
+      <source>(200,200,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1405" action="1">
+    <!-- vine West and down -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\ropeandvine</texture>
+      <source>(300,200,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1406" action="1">
+    <!-- vine North and down -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\ropeandvine</texture>
+      <source>(400,200,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1407" action="2">
+    <!-- vine South and up -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\ropeandvine</texture>
+      <source>(400,200,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1408" action="1">
+    <!-- vine East/South and down -->
+    <sprite order="1">
+      <texture>Tenser\Terrain\ropeandvine</texture>
+      <source>(500,200,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1409" action="0">
+    <!-- icy rock floor -->
+    <sprite order="0">
+      <texture>Tenser\Terrain\icyrockfloor</texture>
+      <source>(0,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1410" action="0">
+    <!-- icy snow floor -->
+    <sprite order="0">
+      <texture>Tenser\Terrain\icysnowfloor</texture>
+      <source>(0,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
+  </terrain>
+  <terrain id="1411" action="0">
+    <!-- snow floor -->
+    <sprite order="0">
+      <texture>Tenser\Terrain\snowfloor</texture>
+      <source>(0,0,100,100)</source>
+    </sprite>
+    <average>(169,88,101,255)</average>
   </terrain>
 </data>
