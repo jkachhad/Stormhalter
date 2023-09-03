@@ -4,7 +4,7 @@ using Kesmai.WorldForge.Windows;
 
 namespace Kesmai.WorldForge.Models;
 
-public abstract class SpellTrapComponent : TrapComponent
+public abstract class SpellTrap : TrapComponent
 {
 	private int _skill;
 	
@@ -15,7 +15,7 @@ public abstract class SpellTrapComponent : TrapComponent
 		set => _skill = value;
 	}
 
-	protected SpellTrapComponent(XElement element) : base(element)
+	protected SpellTrap(XElement element) : base(element)
 	{
 		var skillElement = element.Element("skill");
 
@@ -34,7 +34,7 @@ public abstract class SpellTrapComponent : TrapComponent
 	}
 }
 
-public class WhirlwindTrap : SpellTrapComponent
+public class WhirlwindTrap : SpellTrap
 {
 	[Browsable(true)]
 	[ItemsSource(typeof(DirectionsItemsSource))]
@@ -62,7 +62,7 @@ public class WhirlwindTrap : SpellTrapComponent
 	}
 }
 
-public class PoisonCloudTrap : SpellTrapComponent
+public class PoisonCloudTrap : SpellTrap
 {
 	[Browsable(true)]
 	[ItemsSource(typeof(DirectionsItemsSource))]
@@ -90,7 +90,7 @@ public class PoisonCloudTrap : SpellTrapComponent
 	}
 }
 
-public class BonfireTrap : SpellTrapComponent
+public class BonfireTrap : SpellTrap
 {
 	public BonfireTrap(XElement element) : base(element)
 	{
@@ -102,7 +102,7 @@ public class BonfireTrap : SpellTrapComponent
 	}
 }
 
-public class FirestormTrap : SpellTrapComponent
+public class FirestormTrap : SpellTrap
 {
 	public FirestormTrap(XElement element) : base(element)
 	{
@@ -114,7 +114,7 @@ public class FirestormTrap : SpellTrapComponent
 	}
 }
 
-public class ConcussionTrap : SpellTrapComponent
+public class ConcussionTrap : SpellTrap
 {
 	public ConcussionTrap(XElement element) : base(element)
 	{
@@ -126,7 +126,7 @@ public class ConcussionTrap : SpellTrapComponent
 	}
 }
 
-public class LightningBoltTrap : SpellTrapComponent
+public class LightningBoltTrap : SpellTrap
 {
 	public LightningBoltTrap(XElement element) : base(element)
 	{
@@ -138,7 +138,7 @@ public class LightningBoltTrap : SpellTrapComponent
 	}
 }
 
-public class BlindTrap : SpellTrapComponent
+public class BlindTrap : SpellTrap
 {
 	public BlindTrap(XElement element) : base(element)
 	{
@@ -150,7 +150,7 @@ public class BlindTrap : SpellTrapComponent
 	}
 }
 
-public class FearTrap : SpellTrapComponent
+public class FearTrap : SpellTrap
 {
 	public FearTrap(XElement element) : base(element)
 	{
@@ -162,7 +162,7 @@ public class FearTrap : SpellTrapComponent
 	}
 }
 
-public class StunTrap : SpellTrapComponent
+public class StunTrap : SpellTrap
 {
 	public StunTrap(XElement element) : base(element)
 	{

@@ -5,11 +5,11 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Game;
 
-public abstract class SpellTrapComponent<T> : TrapComponent where T : Spell, new()
+public abstract class SpellTrap<T> : TrapComponent where T : Spell, new()
 {
 	public int Skill { get; set; }
 
-	protected SpellTrapComponent(XElement element) : base(element)
+	protected SpellTrap(XElement element) : base(element)
 	{
 		var skillElement = element.Element("skill");
 
@@ -34,7 +34,7 @@ public abstract class SpellTrapComponent<T> : TrapComponent where T : Spell, new
 }
 
 [WorldForgeComponent("WhirlwindTrap")]
-public class WhirlwindTrap : SpellTrapComponent<WhirlwindSpell>
+public class WhirlwindTrap : SpellTrap<WhirlwindSpell>
 {
 	public Direction Direction { get; set; }
 	
@@ -57,7 +57,7 @@ public class WhirlwindTrap : SpellTrapComponent<WhirlwindSpell>
 }
 
 [WorldForgeComponent("PoisonCloudTrap")]
-public class PoisonCloudTrap : SpellTrapComponent<PoisonCloudSpell>
+public class PoisonCloudTrap : SpellTrap<PoisonCloudSpell>
 {
 	public Direction Direction { get; set; }
 	
@@ -77,7 +77,7 @@ public class PoisonCloudTrap : SpellTrapComponent<PoisonCloudSpell>
 }
 
 [WorldForgeComponent("BonfireTrap")]
-public class BonfireTrap : SpellTrapComponent<BonfireSpell>
+public class BonfireTrap : SpellTrap<BonfireSpell>
 {
 	public BonfireTrap(XElement element) : base(element)
 	{
@@ -91,7 +91,7 @@ public class BonfireTrap : SpellTrapComponent<BonfireSpell>
 }
 
 [WorldForgeComponent("FirestormTrap")]
-public class FirestormTrap : SpellTrapComponent<FireStormSpell>
+public class FirestormTrap : SpellTrap<FireStormSpell>
 {
 	public FirestormTrap(XElement element) : base(element)
 	{
@@ -104,7 +104,7 @@ public class FirestormTrap : SpellTrapComponent<FireStormSpell>
 }
 
 [WorldForgeComponent("ConcussionTrap")]
-public class ConcussionTrap : SpellTrapComponent<ConcussionSpell>
+public class ConcussionTrap : SpellTrap<ConcussionSpell>
 {
 	public ConcussionTrap(XElement element) : base(element)
 	{
@@ -117,7 +117,7 @@ public class ConcussionTrap : SpellTrapComponent<ConcussionSpell>
 }
 
 [WorldForgeComponent("LightningBoltTrap")]
-public class LightningBoltTrap : SpellTrapComponent<LightningBoltSpell>
+public class LightningBoltTrap : SpellTrap<LightningBoltSpell>
 {
 	public LightningBoltTrap(XElement element) : base(element)
 	{
@@ -130,7 +130,7 @@ public class LightningBoltTrap : SpellTrapComponent<LightningBoltSpell>
 }
 
 [WorldForgeComponent("BlindTrap")]
-public class BlindTrap : SpellTrapComponent<BlindSpell>
+public class BlindTrap : SpellTrap<BlindSpell>
 {
 	public BlindTrap(XElement element) : base(element)
 	{
@@ -147,7 +147,7 @@ public class BlindTrap : SpellTrapComponent<BlindSpell>
 }
 
 [WorldForgeComponent("FearTrap")]
-public class FearTrap : SpellTrapComponent<FearSpell>
+public class FearTrap : SpellTrap<FearSpell>
 {
 	public FearTrap(XElement element) : base(element)
 	{
@@ -164,7 +164,7 @@ public class FearTrap : SpellTrapComponent<FearSpell>
 }
 
 [WorldForgeComponent("StunTrap")]
-public class StunTrap : SpellTrapComponent<StunSpell>
+public class StunTrap : SpellTrap<StunSpell>
 {
 	public StunTrap(XElement element) : base(element)
 	{
