@@ -133,3 +133,16 @@ public class CardinalDirectionsItemsSource : IItemsSource
 		return sizes;
 	}
 }
+
+public class DirectionsItemsSource : IItemsSource
+{
+	public ItemCollection GetValues()
+	{
+		var sizes = new ItemCollection();
+
+		foreach (var direction in Direction.All)
+			sizes.Add(direction, direction.GetAlias(0));
+
+		return sizes;
+	}
+}
