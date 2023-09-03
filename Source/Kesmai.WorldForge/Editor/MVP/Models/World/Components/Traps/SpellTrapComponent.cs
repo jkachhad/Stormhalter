@@ -34,7 +34,6 @@ public abstract class SpellTrapComponent : TrapComponent
 	}
 }
 
-
 public class WhirlwindTrap : SpellTrapComponent
 {
 	[Browsable(true)]
