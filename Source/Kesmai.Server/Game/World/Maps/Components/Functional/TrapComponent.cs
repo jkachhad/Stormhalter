@@ -43,7 +43,9 @@ public abstract class TrapComponent : TerrainComponent, IHandleMovement, IHandle
 	
 	public void OnEnter(MobileEntity entity)
 	{
-		/* Execute trap. */
+		if (!entity.IsAlive)
+			return;
+
 		if ((entity is CreatureEntity && !TrapCreatures) || (entity is PlayerEntity && TrapPlayers))
 			return;
 

@@ -22,10 +22,7 @@ public abstract class SpellTrapComponent<T> : TrapComponent where T : Spell, new
 	protected override void OnSpring(MobileEntity entity)
 	{
 		base.OnSpring(entity);
-
-		if (!entity.IsAlive)
-			return;
-
+		
 		var spell = new T()
 		{
 			Cost = 0,
