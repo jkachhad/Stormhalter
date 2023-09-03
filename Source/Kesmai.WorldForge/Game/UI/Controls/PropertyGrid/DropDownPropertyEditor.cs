@@ -62,10 +62,15 @@ public class DropDownPropertyEditor : PropertyEditor
 			var source = parent.Source;
 			var value = propertyInfo.GetValue(source);
 
-			var indexOf = sources.IndexOf(sources.First(i => i.Value == value), 0);
+			var primary = sources.FirstOrDefault(i => i.Value == value);
 
-			if (indexOf >= 0)
-				_internal.SelectedIndex = indexOf;
+			if (primary != null)
+			{
+				var indexOf = sources.IndexOf(primary, 0);
+
+				if (indexOf >= 0)
+					_internal.SelectedIndex = indexOf;
+			}
 		}
 
 		Children.Add(_internal);
