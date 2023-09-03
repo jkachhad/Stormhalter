@@ -3,7 +3,7 @@ using System.Xml.Linq;
 
 namespace Kesmai.WorldForge.Models;
 
-public abstract class DamageTrap : TrapComponent
+public class DamageTrap : TrapComponent
 {
 	private int _damage;
 	
@@ -14,7 +14,7 @@ public abstract class DamageTrap : TrapComponent
 		set => _damage = value;
 	}
 
-	protected DamageTrap(XElement element) : base(element)
+	public DamageTrap(XElement element) : base(element)
 	{
 		var damageElement = element.Element("damage");
 
@@ -30,5 +30,10 @@ public abstract class DamageTrap : TrapComponent
 			element.Add(new XElement("damage", _damage));
 		
 		return element;
+	}
+
+	public override TerrainComponent Clone()
+	{
+		return new DamageTrap(GetXElement());
 	}
 }
