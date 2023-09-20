@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Praetoseba" version="0.100.0.0">
+<segment name="Praetoseba" version="0.102.2.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -110722,7 +110722,7 @@ if (spokeRecently(source))
     </entity>
   </entities>
   <spawns>
-    <spawn type="LocationSpawner" name="EntranceSpawn">
+    <spawn type="LocationSpawner" name="EntranceSpawn" enabled="true">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>900</maximumDelay>
       <maximum>1</maximum>
