@@ -82,25 +82,26 @@ public partial class Kesmai : Segment
 	{
 		if (!Enabled)
 			return;
-			
-#if (DEBUG)
-		_spawns.Add(new LocationSpawner(Facet, this, new Point2D(3, 2, _lockers))
-		{
-			new SpawnEntry(() =>
-			{
-				var conjurer = new TreasureConjurer()
-				{
-					Name = "Treasure.Conjurer",
-					MaxHealth = 5000, Health = 5000,
-					BaseDodge = 10,
-					Experience = 50,
-				};
 
-				return conjurer;
-			})
-		});
-#endif
-		
+		if (Sandbox.Enabled)
+		{
+			_spawns.Add(new LocationSpawner(Facet, this, new Point2D(3, 2, _lockers))
+			{
+				new SpawnEntry(() =>
+				{
+					var conjurer = new TreasureConjurer()
+					{
+						Name = "Treasure.Conjurer",
+						MaxHealth = 5000, Health = 5000,
+						BaseDodge = 10,
+						Experience = 50,
+					};
+
+					return conjurer;
+				})
+			});
+		}
+
 		Respawn();
 	}
 }
