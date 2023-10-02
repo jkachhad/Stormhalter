@@ -23,7 +23,7 @@ public partial class Halloween2023 : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Halloween2023"/> class.
 	/// </summary>
-	public Halloween2023() : base(320)
+	public Halloween2023() : base(343)
 	{
 	}
 
