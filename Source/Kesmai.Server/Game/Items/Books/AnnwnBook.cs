@@ -23,6 +23,35 @@ public partial class AnnwnBook : ItemEntity, ITreasure
 	public AnnwnBook() : base(298)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="AnnwnBook"/> class.
+	/// </summary>
+	public AnnwnBook(Serial serial) : base(serial)
+	{
+	}
+
+	public override void Serialize(BinaryWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1);
+	}
+
+	public override void Deserialize(BinaryReader reader)
+	{
+		base.Deserialize(reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
