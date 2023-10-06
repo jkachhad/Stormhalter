@@ -62,8 +62,9 @@ public class Tree : TerrainComponent
 		new TreeStages() { new TreeStagePair(902, 103), },
 		new TreeStages() { new TreeStagePair(905, 103), },
 		new TreeStages() { new TreeStagePair(906, 103), },
-			
-		new TreeStages() { new TreeStagePair(624, 624), },
+        new TreeStages() { new TreeStagePair(1004, 103), },
+
+        new TreeStages() { new TreeStagePair(624, 624), },
 		new TreeStages() { new TreeStagePair(625, 625), },
 		new TreeStages() { new TreeStagePair(626, 626), },
 		new TreeStages() { new TreeStagePair(627, 627), },
