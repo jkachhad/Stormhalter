@@ -99,6 +99,11 @@ public abstract partial class Armor : Equipment, IArmored
 
 	/// <inheritdoc />
 	public override bool BreaksHide(MobileEntity entity) => true;
+	
+	/// <inheritdoc />
+	public virtual void OnBlock(MobileEntity attacker)
+	{
+	}
 
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.

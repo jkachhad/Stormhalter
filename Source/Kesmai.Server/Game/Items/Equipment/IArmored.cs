@@ -1,3 +1,5 @@
+using Kesmai.Server.Game;
+
 namespace Kesmai.Server.Items;
 
 public partial interface IArmored
@@ -26,4 +28,10 @@ public partial interface IArmored
 	/// Gets the protection provided against projectile attacks.
 	/// </summary>
 	int ProjectileProtection { get; }
+	
+	/// <summary>
+	/// Triggered when this weapon blocks an attack from the specified attacker.
+	/// </summary>
+	/// <param name="attacker">The hostile entity.</param>
+	void OnBlock(MobileEntity attacker);
 }
