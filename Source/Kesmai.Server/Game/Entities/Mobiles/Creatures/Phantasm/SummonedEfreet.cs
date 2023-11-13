@@ -36,6 +36,7 @@ public partial class SummonedEfreet : Efreet
 		};
 			
 		AddStatus(new NightVisionStatus(this));
+		AddStatus(new PoisonProtectionStatus(this));
 			
 		CanFly = true;
 	}
@@ -53,7 +54,7 @@ public partial class SummonedEfreet : Efreet
 	protected override void OnCreate()
 	{
 		base.OnCreate();
-			
+		
 		_stats[EntityStat.FireProtection].Base = 100;
 		_stats[EntityStat.MagicDamageTakenReduction].Base = 30;
 	}
