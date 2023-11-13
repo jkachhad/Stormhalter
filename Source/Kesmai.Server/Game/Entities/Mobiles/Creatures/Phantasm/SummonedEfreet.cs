@@ -22,7 +22,7 @@ public partial class SummonedEfreet : Efreet
 
 		Attacks = new CreatureAttackCollection
 		{
-			{ new CreatureBasicAttack(14) },
+			{ new CreatureBasicAttack(PowerCurve().attack) },
 		};
 
 		Blocks = new CreatureBlockCollection
@@ -40,7 +40,7 @@ public partial class SummonedEfreet : Efreet
 			
 		CanFly = true;
 	}
-	private (int health, int defense) PowerCurve()
+	private (int health, int defense, int attack, int magicResist) PowerCurve()
     {
         var player = Director;
         var level = player.Level;
@@ -48,15 +48,17 @@ public partial class SummonedEfreet : Efreet
 
         var health = (level + (int)magicSkill)*11;
         var defense = (30 + ((level - 21)* 0.5));
+		var attack = level - 3;
+		var magicResist = (level + 9).Clamp(30,40);
         
-        return (health,(int)defense);
+        return (health,(int)defense, attack, magicResist);
     }		
 	protected override void OnCreate()
 	{
 		base.OnCreate();
 		
 		_stats[EntityStat.FireProtection].Base = 100;
-		_stats[EntityStat.MagicDamageTakenReduction].Base = 30;
+		_stats[EntityStat.MagicDamageTakenReduction].Base = PowerCurve().magicResist;
 	}
 		
 	protected override void OnLoad()
