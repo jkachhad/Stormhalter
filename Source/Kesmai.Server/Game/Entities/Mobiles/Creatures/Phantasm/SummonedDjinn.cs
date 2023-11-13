@@ -14,8 +14,8 @@ public partial class SummonedDjinn : Djinn
 	{
 		Summoned = true;
 			
-		Health = MaxHealth = 300;
-		BaseDodge = 25;
+		Health = MaxHealth = PowerCurve().health;
+		BaseDodge = PowerCurve().defense;
 		Mana = MaxMana = 24;
 
 		Movement = 3;
@@ -39,6 +39,17 @@ public partial class SummonedDjinn : Djinn
 
 		CanFly = true;
 	}
+	private (int health, int defense) PowerCurve()
+    {
+        var player = Director;
+        var level = player.Level;
+        var magicSkill = player.GetSkillLevel(Skill.Magic);
+
+        var health = (level + (int)magicSkill)*11;
+        var defense = (level + 9).Clamp(25,30);
+        
+        return (health,(int)defense);
+    }
 		
 	protected override void OnCreate()
 	{
