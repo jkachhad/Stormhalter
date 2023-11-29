@@ -73,6 +73,7 @@ public partial class ScorpionAmulet : Amulet, ITreasure, ICharged
 			
 		if (_chargesCurrent > 0)
 			entity.Target = new InternalTarget(this);
+			_chargesCurrent--;
 
 		return true;
 	}
