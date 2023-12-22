@@ -47,7 +47,6 @@ public partial class VendorEntity : Humanoid
 	public override void HandleOrder(OrderEventArgs args)
 	{
 		base.HandleOrder(args);
-		
 		if (args.Handled)
 			return;
 			
