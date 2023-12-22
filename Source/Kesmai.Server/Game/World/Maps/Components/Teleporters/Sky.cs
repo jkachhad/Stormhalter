@@ -76,6 +76,11 @@ public class Sky : PassiveTeleporter, IHandleInteraction
 	protected override void OnAfterTeleport(WorldEntity entity)
 	{
 		if (entity is MobileEntity mobile)
+		{
 			mobile.Fall(Math.Abs(_elevationDelta), _parent, _destinationTile);
+
+			if (Math.Abs(_elevationDelta) > 4500)
+		   		mobile.Kill();
+		}	
 	}
 }
