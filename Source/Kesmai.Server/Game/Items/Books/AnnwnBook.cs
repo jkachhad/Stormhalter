@@ -27,17 +27,20 @@ public partial class AnnwnBook : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="AnnwnBook"/> class.
 	/// </summary>
+	[WorldForge]
 	public AnnwnBook(Serial serial) : base(serial)
 	{
 	}
-
+	
+	/// <inheritdoc />
 	public override void Serialize(BinaryWriter writer)
 	{
 		base.Serialize(writer);
 
 		writer.Write((short)1);
 	}
-
+	
+	/// <inheritdoc />
 	public override void Deserialize(BinaryReader reader)
 	{
 		base.Deserialize(reader);
@@ -46,10 +49,10 @@ public partial class AnnwnBook : ItemEntity, ITreasure
 
 		switch (version)
 		{
-			case 1:
-			{
-				break;
-			}
+		    case 1:
+		    {
+		        break;
+		    }
 		}
 	}
 
