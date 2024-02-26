@@ -119,13 +119,13 @@ public static class Network
 		}
 	}
 
-	public static void Send(byte command, byte[] buffer)
+	public static void Send(short command, byte[] buffer)
 	{
 		lock (_client)
 		{
 			var message = _client.CreateMessage();
 
-			message.Write((byte)command);
+			message.Write((short)command);
 			message.Write((int)buffer.Length);
 			message.Write((byte[])buffer);
 
