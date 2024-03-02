@@ -64,7 +64,7 @@ public partial class CompileWindow : Window
 	
 	private void OnIncoming(NetIncomingMessage message)
 	{
-		var command = message.ReadByte();
+		var command = message.ReadInt16();
 
 		switch (command)
 		{
