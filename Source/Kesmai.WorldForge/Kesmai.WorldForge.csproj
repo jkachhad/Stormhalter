@@ -3,7 +3,7 @@
         <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
         
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net6.0-windows</TargetFramework>
+        <TargetFramework>net8.0-windows</TargetFramework>
         <PreserveCompilationContext>false</PreserveCompilationContext>
         <UseWPF>true</UseWPF>
         
@@ -50,7 +50,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="RoslynPad.Editor.Windows" Version="1.2.0" />
+      <PackageReference Include="RoslynPad.Editor.Windows" Version="4.8.0" />
       <PackageReference Include="Syncfusion.PropertyGrid.WPF" Version="18.4.0.44" />
       <PackageReference Include="WriteableBitmapEx" Version="1.6.7" />
     </ItemGroup>
