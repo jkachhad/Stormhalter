@@ -7,9 +7,9 @@ using CommonServiceLocator;
 using DigitalRune.Collections;
 using Kesmai.WorldForge.Scripting;
 using Kesmai.WorldForge.UI.Documents;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Messaging;
-using Microsoft.Toolkit.Mvvm.Messaging.Messages;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace Kesmai.WorldForge.Editor;
 

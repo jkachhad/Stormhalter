@@ -98,7 +98,7 @@
                 </Merging>
                 <Embedding Compress="1" Embed="1" Encrypt="1" />
             </Assembly>
-            <Assembly AssemblyName="Microsoft.Toolkit.Mvvm, Culture=neutral, PublicKeyToken=e7570ab207bcb616">
+            <Assembly AssemblyName="CommunityToolkit.Mvvm, Culture=neutral, PublicKeyToken=e7570ab207bcb616">
                 <Merging Merge="0">
                     <Pruning Prune="1">
                         <Exclusion />
@@ -1156,6 +1156,20 @@
                 </Merging>
                 <Embedding Compress="1" Embed="1" Encrypt="1" />
             </Assembly>
+			<Assembly AssemblyName="Microsoft.CodeAnalysis.LanguageServer.Protocol, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+                <Merging Merge="0">
+                    <Pruning Prune="1">
+                        <Exclusion />
+                    </Pruning>
+                    <Obfuscation Obfuscate="0">
+                        <Exclusion />
+                    </Obfuscation>
+                    <ControlFlow />
+                    <MemberRefsProxy />
+                    <ResourcesCompression />
+                </Merging>
+                <Embedding Compress="1" Embed="1" Encrypt="1" />
+            </Assembly>
             <Assembly AssemblyName="System.Composition.AttributedModel, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
                 <Merging />
                 <Embedding Compress="1" Embed="1" Encrypt="1" />
@@ -1409,6 +1423,12 @@
                     <Obfuscation />
                 </Merging>
             </Assembly>
+			<Assembly AssemblyName="Microsoft.CodeAnalysis.LanguageServer.Protocol.resources, Culture=cs, PublicKeyToken=31bf3856ad364e35">
+                <Merging>
+                    <Pruning />
+                    <Obfuscation />
+                </Merging>
+            </Assembly>
             <Assembly AssemblyName="Microsoft.CodeAnalysis.Scripting.resources, Culture=cs, PublicKeyToken=31bf3856ad364e35">
                 <Merging>
                     <Pruning />
@@ -1451,6 +1471,12 @@
                     <Obfuscation />
                 </Merging>
             </Assembly>
+            <Assembly AssemblyName="Microsoft.CodeAnalysis.LanguageServer.Protocol.resources, Culture=de, PublicKeyToken=31bf3856ad364e35">
+                <Merging>
+                    <Pruning />
+                    <Obfuscation />
+                </Merging>
+            </Assembly>
             <Assembly AssemblyName="Microsoft.CodeAnalysis.Scripting.resources, Culture=de, PublicKeyToken=31bf3856ad364e35">
                 <Merging>
                     <Pruning />
@@ -1487,6 +1513,12 @@
                     <Obfuscation />
                 </Merging>
             </Assembly>
+			<Assembly AssemblyName="Microsoft.CodeAnalysis.LanguageServer.Protocol.resources, Culture=es, PublicKeyToken=31bf3856ad364e35">
+                <Merging>
+                    <Pruning />
+                    <Obfuscation />
+                </Merging>
+            </Assembly>
             <Assembly AssemblyName="Microsoft.CodeAnalysis.Scripting.resources, Culture=es, PublicKeyToken=31bf3856ad364e35">
                 <Merging>
                     <Pruning />
@@ -1518,6 +1550,12 @@
                 </Merging>
             </Assembly>
             <Assembly AssemblyName="Microsoft.CodeAnalysis.Features.resources, Culture=fr, PublicKeyToken=31bf3856ad364e35">
+                <Merging>
+                    <Pruning />
+                    <Obfuscation />
+                </Merging>
+            </Assembly>
+			<Assembly AssemblyName="Microsoft.CodeAnalysis.LanguageServer.Protocol, Culture=fr, PublicKeyToken=31bf3856ad364e35">
                 <Merging>
                     <Pruning />
                     <Obfuscation />
@@ -1565,6 +1603,12 @@
                     <Obfuscation />
                 </Merging>
             </Assembly>
+			<Assembly AssemblyName="Microsoft.CodeAnalysis.LanguageServer.Protocol.resources, Culture=it, PublicKeyToken=31bf3856ad364e35">
+                <Merging>
+                    <Pruning />
+                    <Obfuscation />
+                </Merging>
+            </Assembly>
             <Assembly AssemblyName="Microsoft.CodeAnalysis.Scripting.resources, Culture=it, PublicKeyToken=31bf3856ad364e35">
                 <Merging>
                     <Pruning />
@@ -1601,6 +1645,12 @@
                     <Obfuscation />
                 </Merging>
             </Assembly>
+			<Assembly AssemblyName="Microsoft.CodeAnalysis.LanguageServer.Protocol.resources, Culture=ja, PublicKeyToken=31bf3856ad364e35">
+                <Merging>
+                    <Pruning />
+                    <Obfuscation />
+                </Merging>
+            </Assembly>
             <Assembly AssemblyName="Microsoft.CodeAnalysis.Scripting.resources, Culture=ja, PublicKeyToken=31bf3856ad364e35">
                 <Merging>
                     <Pruning />
@@ -1632,6 +1682,12 @@
                 </Merging>
             </Assembly>
             <Assembly AssemblyName="Microsoft.CodeAnalysis.Features.resources, Culture=ko, PublicKeyToken=31bf3856ad364e35">
+                <Merging>
+                    <Pruning />
+                    <Obfuscation />
+                </Merging>
+            </Assembly>
+			<Assembly AssemblyName="Microsoft.CodeAnalysis.LanguageServer.Protocol.resources, Culture=ko, PublicKeyToken=31bf3856ad364e35">
                 <Merging>
                     <Pruning />
                     <Obfuscation />
@@ -1679,6 +1735,12 @@
                     <Obfuscation />
                 </Merging>
             </Assembly>
+			<Assembly AssemblyName="Microsoft.CodeAnalysis.LanguageServer.Protocol.resources, Culture=pl, PublicKeyToken=31bf3856ad364e35">
+                <Merging>
+                    <Pruning />
+                    <Obfuscation />
+                </Merging>
+            </Assembly>
             <Assembly AssemblyName="Microsoft.CodeAnalysis.Scripting.resources, Culture=pl, PublicKeyToken=31bf3856ad364e35">
                 <Merging>
                     <Pruning />
@@ -1710,6 +1772,12 @@
                 </Merging>
             </Assembly>
             <Assembly AssemblyName="Microsoft.CodeAnalysis.Features.resources, Culture=pt-BR, PublicKeyToken=31bf3856ad364e35">
+                <Merging>
+                    <Pruning />
+                    <Obfuscation />
+                </Merging>
+            </Assembly>
+			<Assembly AssemblyName="Microsoft.CodeAnalysis.LanguageServer.Protocol.resources, Culture=pt-BR, PublicKeyToken=31bf3856ad364e35">
                 <Merging>
                     <Pruning />
                     <Obfuscation />
@@ -1757,6 +1825,12 @@
                     <Obfuscation />
                 </Merging>
             </Assembly>
+			<Assembly AssemblyName="Microsoft.CodeAnalysis.LanguageServer.Protocol.resources, Culture=ru, PublicKeyToken=31bf3856ad364e35">
+                <Merging>
+                    <Pruning />
+                    <Obfuscation />
+                </Merging>
+            </Assembly>
             <Assembly AssemblyName="Microsoft.CodeAnalysis.Scripting.resources, Culture=ru, PublicKeyToken=31bf3856ad364e35">
                 <Merging>
                     <Pruning />
@@ -1799,6 +1873,12 @@
                     <Obfuscation />
                 </Merging>
             </Assembly>
+			<Assembly AssemblyName="Microsoft.CodeAnalysis.LanguageServer.Protocol.resources, Culture=tr, PublicKeyToken=31bf3856ad364e35">
+                <Merging>
+                    <Pruning />
+                    <Obfuscation />
+                </Merging>
+            </Assembly>
             <Assembly AssemblyName="Microsoft.CodeAnalysis.Scripting.resources, Culture=tr, PublicKeyToken=31bf3856ad364e35">
                 <Merging>
                     <Pruning />
@@ -1830,6 +1910,12 @@
                 </Merging>
             </Assembly>
             <Assembly AssemblyName="Microsoft.CodeAnalysis.Features.resources, Culture=zh-Hans, PublicKeyToken=31bf3856ad364e35">
+                <Merging>
+                    <Pruning />
+                    <Obfuscation />
+                </Merging>
+            </Assembly>
+			<Assembly AssemblyName="Microsoft.CodeAnalysis.LanguageServer.Protocol.resources, Culture=zh-Hans, PublicKeyToken=31bf3856ad364e35">
                 <Merging>
                     <Pruning />
                     <Obfuscation />
@@ -1871,6 +1957,12 @@
                     <Obfuscation />
                 </Merging>
             </Assembly>
+			<Assembly AssemblyName="Microsoft.CodeAnalysis.LanguageServer.Protocol.resources, Culture=zh-Hant, PublicKeyToken=31bf3856ad364e35">
+                <Merging>
+                    <Pruning />
+                    <Obfuscation />
+                </Merging>
+            </Assembly>
             <Assembly AssemblyName="Microsoft.CodeAnalysis.Scripting.resources, Culture=zh-Hant, PublicKeyToken=31bf3856ad364e35">
                 <Merging>
                     <Pruning />
@@ -1881,7 +1973,7 @@
                 <Merging />
                 <Embedding Compress="1" Embed="0" Encrypt="1" />
             </Assembly>
-            <Assembly AssemblyName="Microsoft.Toolkit.Mvvm, Culture=neutral, PublicKeyToken=4aff67a105548ee2">
+            <Assembly AssemblyName="CommunityToolkit.Mvvm, Culture=neutral, PublicKeyToken=4aff67a105548ee2">
                 <Merging />
                 <Embedding Compress="1" Embed="1" Encrypt="1" />
             </Assembly>

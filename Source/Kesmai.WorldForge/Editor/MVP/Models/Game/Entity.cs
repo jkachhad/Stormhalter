@@ -6,12 +6,12 @@ using CommonServiceLocator;
 using DigitalRune.Collections;
 using Kesmai.WorldForge.Scripting;
 using Kesmai.WorldForge.UI.Documents;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.ComponentModel;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Generic;
-using Microsoft.Toolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.CodeAnalysis;
 
 namespace Kesmai.WorldForge;

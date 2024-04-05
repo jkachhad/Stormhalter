@@ -2,8 +2,8 @@ using System.Linq;
 using CommonServiceLocator;
 using DigitalRune.Graphics;
 using Kesmai.WorldForge.Editor;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Kesmai.WorldForge.MVP;
 

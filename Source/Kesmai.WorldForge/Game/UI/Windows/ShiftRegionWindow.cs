@@ -7,7 +7,7 @@ using DigitalRune.Game.UI.Controls;
 using DigitalRune.Mathematics.Algebra;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Models;
-using Microsoft.Toolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge.Windows;

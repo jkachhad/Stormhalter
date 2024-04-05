@@ -7,7 +7,7 @@ using CommonServiceLocator;
 using DigitalRune.Game.UI.Controls;
 using DigitalRune.Mathematics.Algebra;
 using Kesmai.WorldForge.Editor;
-using Microsoft.Toolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Kesmai.WorldForge.Models;
 

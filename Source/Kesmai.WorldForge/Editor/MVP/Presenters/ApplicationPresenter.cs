@@ -19,10 +19,10 @@ using Kesmai.WorldForge.UI.Documents;
 using Kesmai.WorldForge.UI.Windows;
 using Lidgren.Network;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
-using Microsoft.Toolkit.Mvvm.Messaging;
-using Microsoft.Toolkit.Mvvm.Messaging.Messages;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using RoslynPad.Roslyn;
 using ZipFile = Ionic.Zip.ZipFile;
 

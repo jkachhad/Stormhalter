@@ -7,7 +7,7 @@ using System.Windows;
 using System.Xml.Linq;
 using Kesmai.WorldForge.Editor;
 using Lidgren.Network;
-using Microsoft.Toolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Kesmai.WorldForge.UI.Windows;
 

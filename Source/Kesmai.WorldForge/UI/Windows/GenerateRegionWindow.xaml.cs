@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows;
 using CommonServiceLocator;
 using DigitalRune.ServiceLocation;
-using Microsoft.Toolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Kesmai.WorldForge;
 

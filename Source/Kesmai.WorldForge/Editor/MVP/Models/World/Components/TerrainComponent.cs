@@ -6,7 +6,7 @@ using System.Windows;
 using System.Xml.Linq;
 using DigitalRune.Game.UI.Controls;
 using DigitalRune.Mathematics.Algebra;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge.Models;

@@ -1,5 +1,5 @@
 using System.Windows.Controls;
-using Microsoft.Toolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using Kesmai.WorldForge.Editor;
 
 namespace Kesmai.WorldForge.UI.Documents;
