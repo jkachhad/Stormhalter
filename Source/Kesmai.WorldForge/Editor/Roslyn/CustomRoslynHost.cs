@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime;
 using System.Text;
 using CommonServiceLocator;
 using ICSharpCode.AvalonEdit.Document;
@@ -52,12 +53,12 @@ public class CustomRoslynHost : RoslynHost
 			compilationOptions = csharpCompilationOptions
 				.WithNullableContextOptions(NullableContextOptions.Disable);
 		}
-			
-		var references = new List<MetadataReference>()
-		{
-			MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
-			MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location),
-		};
+		
+		var references = AppDomain.CurrentDomain.GetAssemblies()
+			.Where(a => !a.IsDynamic && !string.IsNullOrEmpty(a.Location))
+			.Select(a => a.Location)
+			.Select(path => MetadataReference.CreateFromFile(path))
+			.ToList();
 
 		var scriptingData = Core.ScriptingData;
 			
