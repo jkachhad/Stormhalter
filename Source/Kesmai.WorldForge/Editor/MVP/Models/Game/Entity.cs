@@ -201,7 +201,9 @@ public class Entity : ObservableObject, ICloneable
 				{
 					var skillargument = namedSkillArgument.Parent.Parent as ArgumentSyntax;
 					var skilltoken = skillargument.Expression.GetFirstToken();
-					skill = double.Parse(skilltoken.ValueText);
+
+                    if (double.TryParse(skilltoken.ValueText, out double d) && !Double.IsNaN(d) && !Double.IsInfinity(d))
+                        skill = double.Parse(skilltoken.ValueText);
 				} else
 				{
 					skill = node.ArgumentList.Arguments.First().Expression.GetFirstToken().Value as double?;
@@ -230,6 +232,7 @@ public class Entity : ObservableObject, ICloneable
 			String flags = Flags;
 			if (flags.Contains("Pois"))
 			{
+				if (meleeSkill is not null)
 				meleeSkill += Math.Max(1, (int)(meleeSkill * 0.3)); //scale up the threat of melee if they cause poison At least 1 level
 			}
 			if (flags.Contains("Prone"))
