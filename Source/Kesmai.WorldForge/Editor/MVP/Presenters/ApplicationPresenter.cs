@@ -25,6 +25,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using RoslynPad.Roslyn;
 using ZipFile = Ionic.Zip.ZipFile;
+using Microsoft.CodeAnalysis;
 
 namespace Kesmai.WorldForge.Editor;
 
@@ -682,8 +683,10 @@ public class ApplicationPresenter : ObservableRecipient
 
 	private bool CheckScriptSyntax() //Enumerate all script segments and verify that they pass syntax checks
 	{
-		//Segment code:
-		var syntaxErrors = CSharpSyntaxTree.ParseText(Segment.Internal.Blocks[1]).GetDiagnostics();
+        //Segment code:
+        var customParseOptions = CSharpParseOptions.Default;
+        customParseOptions = customParseOptions.WithKind(SourceCodeKind.Script);
+        var syntaxErrors = CSharpSyntaxTree.ParseText(Segment.Internal.Blocks[1],customParseOptions).GetDiagnostics();
 		if (syntaxErrors.Count()>0)
 		{
 			var errorList = String.Join('\n', syntaxErrors.Take(3).Select(err => (err.Location.GetLineSpan().StartLinePosition.Line+2) + ":" + err.GetMessage()));
