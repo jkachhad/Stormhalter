@@ -10,16 +10,16 @@
              d:DesignHeight="300" d:DesignWidth="300"
              
              FontFamily="Tahoma" FontSize="14">
+    
     <UserControl.Resources>
-        <CollectionViewSource 
-            x:Key="collectionViewSource"
-            Source="{Binding Source}">
-            
+        <CollectionViewSource x:Key="sortedGroups" Source="{Binding Groups}">
             <CollectionViewSource.SortDescriptions>
-                <componentModel:SortDescription PropertyName="Name" 
-                                                Direction="Ascending" />
+                <componentModel:SortDescription PropertyName="Name" Direction="Ascending"/>
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
+        <DataTemplate x:Key="GroupTemplate">
+            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+        </DataTemplate>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -38,7 +38,8 @@
             <ToolBar Padding="2" Grid.Row="0">
                 <ToolBar.Items>
                     <Button Width="24" Height="24"
-                            Command="{Binding AddEntityCommand}">
+                            Command="{Binding AddEntityCommand}"
+                            ToolTip="Add Entity">
                         <Image Source="../../Resources/Add.png"/>
                     </Button>
                     <Button Width="24" Height="24"
@@ -66,27 +67,33 @@
                 </ToolBar.Items>
             </ToolBar>
             
-            <ListBox Width="300" Grid.Row="1"
-                        x:Name="_entityList"
-                        ItemsSource="{Binding Source={StaticResource collectionViewSource}}"
-                        SelectedItem="{Binding SelectedEntity, Mode=TwoWay}"
-                        SelectionMode="Single">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                            <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="3" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+           
+            <TreeView Grid.Row="1" ItemsSource="{Binding Source={StaticResource sortedGroups}}"
+                      SelectedItemChanged ="TreeView_SelectedItemChanged"
+                      PreviewMouseLeftButtonDown="TreeView_PreviewMouseLeftButtonDown"
+                      DragOver="TreeView_DragOver"
+                      Drop="TreeView_Drop">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Entities}">
+                        <TextBlock AllowDrop="True" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                        <HierarchicalDataTemplate.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </HierarchicalDataTemplate.ItemTemplate>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+            
 
-            <syncfusion:PropertyGrid Grid.Row="2" Margin="0,3,0,0"
-                                     SelectedObject="{Binding SelectedEntity}"
-                                     AutoGenerateItems="False"
-                                     SortDirection="{x:Null}"
-                                     DisableAnimationOnObjectSelection="True">
+                <syncfusion:PropertyGrid Grid.Row="2" Margin="0,3,0,0"
+                                         SelectedObject="{Binding SelectedEntity}"
+                                         AutoGenerateItems="True"
+                                         SortDirection="{x:Null}"
+                                         DisableAnimationOnObjectSelection="True">
                 <syncfusion:PropertyGrid.Items>
                     <syncfusion:PropertyGridItem PropertyName="Name" />
+                    <syncfusion:PropertyGridItem PropertyName="Group" />
                     <syncfusion:PropertyGridItem PropertyName="XP" />
                     <syncfusion:PropertyGridItem PropertyName="HP" />
                     <syncfusion:PropertyGridItem PropertyName="Threat"/>

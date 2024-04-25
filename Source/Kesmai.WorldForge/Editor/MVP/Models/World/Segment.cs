@@ -114,10 +114,10 @@ public class Segment : ObservableObject
 
 		foreach (var regionElement in element.Elements("region"))
 			regions.Add(new SegmentRegion(regionElement));
-
+		
 		if (regions.Count > 0)
 			Regions.AddRange(regions);
-
+		
 		var locationsElement = element.Element("locations");
 
 		if (locationsElement != null)
@@ -150,7 +150,7 @@ public class Segment : ObservableObject
 			foreach (var regionElement in regionsElement.Elements("region"))
 				Regions.Add(new SegmentRegion(regionElement));
 		}
-
+	
 		if (locationsElement != null)
 		{
 			Locations.Load(locationsElement, version);
