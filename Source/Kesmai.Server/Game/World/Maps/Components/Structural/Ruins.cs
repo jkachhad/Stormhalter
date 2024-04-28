@@ -10,6 +10,9 @@ namespace Kesmai.Server.Game;
 public class Ruins : TerrainComponent, IHandleMovement, IHandlePathing
 {
 	private Terrain _ruins;
+	
+	/// <inheritdoc />
+	public int PathingPriority { get; } = 0;
 
 	public Ruins(Terrain ruins)
 	{

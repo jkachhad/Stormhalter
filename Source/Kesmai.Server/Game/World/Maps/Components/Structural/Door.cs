@@ -27,6 +27,9 @@ public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMove
 
 	private Timer _closeTimer;
 	private Timer _hideTimer;
+	
+	/// <inheritdoc />
+	public int PathingPriority { get; } = 0;
 
 	/// <summary>
 	/// Gets a value indicating whether this instance blocks line-of-sight.

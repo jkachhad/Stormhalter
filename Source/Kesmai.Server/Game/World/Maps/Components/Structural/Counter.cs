@@ -12,6 +12,9 @@ public class Counter : TerrainComponent, IHandlePathing, IHandleInteraction
 {
 	private Terrain _counter;
 	private Direction _accessDirection;
+	
+	/// <inheritdoc />
+	public int PathingPriority { get; } = 0;
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Counter"/> class.

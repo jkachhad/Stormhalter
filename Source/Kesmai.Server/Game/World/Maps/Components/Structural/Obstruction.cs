@@ -11,6 +11,9 @@ public class Obstruction : TerrainComponent, IHandleVision, IHandlePathing
 {
 	private Terrain _obstruction;
 	private bool _blocksVision;
+	
+	/// <inheritdoc />
+	public int PathingPriority { get; } = 1;
 
 	/// <summary>
 	/// Gets a value indicating whether this instance blocks line-of-sight.

@@ -8,6 +8,9 @@ namespace Kesmai.Server.Game;
 [WorldForgeComponent("IceComponent")]
 public class Ice : Floor, IHandlePathing
 {
+	/// <inheritdoc />
+	public int PathingPriority { get; } = 0;
+	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Ice"/> class.
 	/// </summary>
