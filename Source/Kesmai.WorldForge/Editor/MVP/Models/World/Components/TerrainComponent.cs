@@ -7,6 +7,7 @@ using System.Xml.Linq;
 using DigitalRune.Game.UI.Controls;
 using DigitalRune.Mathematics.Algebra;
 using CommunityToolkit.Mvvm.ComponentModel;
+using DigitalRune.Game.UI;
 using Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge.Models;
@@ -148,8 +149,8 @@ public abstract class TerrainComponent : ObservableObject
 		{
 			Content = new TextBlock()
 			{
-				Foreground = Color.OrangeRed,
-				Shadow = Color.Black,
+				Foreground = Color.OrangeRed, Stroke = Color.Black,
+				FontStyle = MSDFStyle.Outline,
 
 				Font = "Tahoma", FontSize = 10,
 				Text = "Template",

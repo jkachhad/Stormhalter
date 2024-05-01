@@ -55,8 +55,8 @@ public class PropertyFrame : StackPanel
 		};
 		_nameBlock = new TextBlock()
 		{
-			Foreground = Color.Yellow,
-			Shadow = Color.Black,
+			Foreground = Color.Yellow, Stroke = Color.Black,
+			FontStyle = MSDFStyle.Outline,
 				
 			Font = "Tahoma", FontSize = 10,
 				

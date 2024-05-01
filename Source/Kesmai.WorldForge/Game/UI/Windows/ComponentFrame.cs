@@ -62,8 +62,8 @@ public class ComponentFrame : Canvas
 		{
 			Font = "Tahoma", FontSize = 10,
 				
-			Foreground = Color.Yellow,
-			Shadow = Color.Black,
+			Foreground = Color.Yellow, Stroke = Color.Black,
+			FontStyle = MSDFStyle.Outline,
 				
 			HorizontalAlignment = HorizontalAlignment.Center,
 				

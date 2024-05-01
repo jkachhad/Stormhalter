@@ -124,8 +124,8 @@ public class ComponentsWindow : Window
 			{
 				Content = new TextBlock()
 				{
-					Foreground = Color.OrangeRed,
-					Shadow = Color.Black,
+					Foreground = Color.OrangeRed, Stroke = Color.Black,
+					FontStyle = MSDFStyle.Outline,
 
 					Font = "Tahoma", FontSize = 10,
 					Text = "Delete",
@@ -150,8 +150,8 @@ public class ComponentsWindow : Window
 			{
 				Content = new TextBlock()
 				{
-					Foreground = Color.OrangeRed,
-					Shadow = Color.Black,
+					Foreground = Color.OrangeRed, Stroke = Color.Black,
+					FontStyle = MSDFStyle.Outline,
 
 					Font = "Tahoma", FontSize = 10,
 					Text = "Move up",
@@ -174,8 +174,8 @@ public class ComponentsWindow : Window
 			{
 				Content = new TextBlock()
 				{
-					Foreground = Color.OrangeRed,
-					Shadow = Color.Black,
+					Foreground = Color.OrangeRed, Stroke = Color.Black,
+					FontStyle = MSDFStyle.Outline,
 
 					Font = "Tahoma", FontSize = 10,
 					Text = "Move down",
@@ -205,8 +205,8 @@ public class ComponentsWindow : Window
 				{
 					Content = new TextBlock()
 					{
-						Foreground = Color.OrangeRed,
-						Shadow = Color.Black,
+						Foreground = Color.OrangeRed, Stroke = Color.Black,
+						FontStyle = MSDFStyle.Outline,
 
 						Font = "Tahoma", FontSize = 10,
 						Text = "Select Destination",
