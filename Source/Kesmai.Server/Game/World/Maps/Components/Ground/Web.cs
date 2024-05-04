@@ -13,6 +13,9 @@ public class Web : Static, IHandlePathing
 		
 	private Spell _spell;
 	private Timer _dispelTimer;
+	
+	/// <inheritdoc />
+	public int PathingPriority { get; } = 0;
 		
 	public Web() : this(null, TimeSpan.Zero)
 	{

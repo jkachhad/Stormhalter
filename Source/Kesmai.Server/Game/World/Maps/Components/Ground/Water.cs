@@ -13,6 +13,9 @@ public class Water : Floor, IHandlePathing
 {
 	private int _depth;
 		
+	/// <inheritdoc />
+	public int PathingPriority { get; } = 0;
+	
 	/// <summary>
 	/// Gets the depth.
 	/// </summary>

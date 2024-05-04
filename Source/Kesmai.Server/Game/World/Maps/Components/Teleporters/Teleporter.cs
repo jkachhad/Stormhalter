@@ -16,6 +16,9 @@ public abstract class Teleporter : TerrainComponent, IHandleMovement, IHandlePat
 
 	public Point2D Destination => _destination;
 	public SegmentRegion DestinationRegion => _destinationRegion;
+	
+	/// <inheritdoc />
+	public int PathingPriority { get; } = 0;
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Teleporter"/> class.
