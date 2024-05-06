@@ -55,7 +55,8 @@ public class Sky : PassiveTeleporter, IHandleInteraction
 		}
 		else
 		{
-			Timer.DelayCall(() => Teleport(entity));
+			if (!isTeleport)
+				Teleport(entity);
 		}
 	}
 

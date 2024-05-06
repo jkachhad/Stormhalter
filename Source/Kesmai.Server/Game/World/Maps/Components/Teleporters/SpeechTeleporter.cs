@@ -53,7 +53,7 @@ public class SpeechTeleporter : HiddenTeleporter, IHandleSpeech
 			if (!base.CanTeleport(entity))
 				return false;
 
-			Timer.DelayCall(() => Teleport(entity));
+			Teleport(entity);
 
 			entity.QueueMovementTimer();
 			return true;
