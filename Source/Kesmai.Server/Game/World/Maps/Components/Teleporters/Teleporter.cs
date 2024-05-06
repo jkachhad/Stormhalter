@@ -104,16 +104,16 @@ public abstract class Teleporter : TerrainComponent, IHandleMovement, IHandlePat
 	/// <summary>
 	/// Called when a mobile entity steps on this component.
 	/// </summary>
-	public virtual void OnEnter(MobileEntity entity)
+	public virtual void OnEnter(MobileEntity entity, bool isTeleport)
 	{
-		if (CanTeleport(entity))
+		if (!isTeleport && CanTeleport(entity))
 			Teleport(entity);
 	}
 		
 	/// <summary>
 	/// Called when a mobile entity steps off this component.
 	/// </summary>
-	public virtual void OnLeave(MobileEntity entity)
+	public virtual void OnLeave(MobileEntity entity, bool isTeleport)
 	{
 	}
 		

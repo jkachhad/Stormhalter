@@ -46,7 +46,7 @@ public class Sky : PassiveTeleporter, IHandleInteraction
 		return true;
 	}
 
-	public override void OnEnter(MobileEntity entity)
+	public override void OnEnter(MobileEntity entity, bool isTeleport)
 	{
 		if (!CanTeleport(entity))
 		{

@@ -44,7 +44,7 @@ public abstract class TrapComponent : TerrainComponent, IHandleMovement, IHandle
 			InterruptMovement = (bool)interruptMovementElement;
 	}
 	
-	public void OnEnter(MobileEntity entity)
+	public void OnEnter(MobileEntity entity, bool isTeleport)
 	{
 		if (!entity.IsAlive)
 			return;
@@ -67,7 +67,7 @@ public abstract class TrapComponent : TerrainComponent, IHandleMovement, IHandle
 	{
 	}
 	
-	public void OnLeave(MobileEntity entity)
+	public void OnLeave(MobileEntity entity, bool isTeleport)
 	{
 	}
 

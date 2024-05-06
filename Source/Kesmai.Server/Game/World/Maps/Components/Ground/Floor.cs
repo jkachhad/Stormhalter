@@ -67,7 +67,7 @@ public class Floor : TerrainComponent, IHandleInteraction, IHandleMovement, IHan
 	/// <summary>
 	/// Called when a mobile entity steps on this component.
 	/// </summary>
-	public virtual void OnEnter(MobileEntity entity)
+	public virtual void OnEnter(MobileEntity entity, bool isTeleport)
 	{
 		/* Play a sound effect when walking over corpses. */
 		if (_corpses > 0 && entity is PlayerEntity)
@@ -87,7 +87,7 @@ public class Floor : TerrainComponent, IHandleInteraction, IHandleMovement, IHan
 	/// <summary>
 	/// Called when a mobile entity steps off this component.
 	/// </summary>
-	public virtual void OnLeave(MobileEntity entity)
+	public virtual void OnLeave(MobileEntity entity, bool isTeleport)
 	{
 	}
 

@@ -115,7 +115,7 @@ public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMove
 	/// <summary>
 	/// Called when a mobile entity steps on this component.
 	/// </summary>
-	public void OnEnter(MobileEntity entity)
+	public void OnEnter(MobileEntity entity, bool isTeleport)
 	{
 		if (!_isOpen)
 			Open();
@@ -124,7 +124,7 @@ public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMove
 	/// <summary>
 	/// Called when a mobile entity steps off this component.
 	/// </summary>
-	public void OnLeave(MobileEntity entity)
+	public void OnLeave(MobileEntity entity, bool isTeleport)
 	{
 	}
 

@@ -67,14 +67,14 @@ public class Ruins : TerrainComponent, IHandleMovement, IHandlePathing
 	/// <summary>
 	/// Called when a mobile entity steps on this component.
 	/// </summary>
-	public virtual void OnEnter(MobileEntity entity)
+	public virtual void OnEnter(MobileEntity entity, bool isTeleport)
 	{
 	}
 
 	/// <summary>
 	/// Called when a mobile entity steps off this component.
 	/// </summary>
-	public virtual void OnLeave(MobileEntity entity)
+	public virtual void OnLeave(MobileEntity entity, bool isTeleport)
 	{
 	}
 }

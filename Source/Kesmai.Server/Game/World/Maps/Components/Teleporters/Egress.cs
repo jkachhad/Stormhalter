@@ -130,11 +130,11 @@ public class Egress : TerrainComponent, IHandleInteraction, IHandleMovement
 	/// </summary>
 	public virtual int GetMovementCost(MobileEntity entity) => 1;
 		
-	public void OnEnter(MobileEntity entity)
+	public void OnEnter(MobileEntity entity, bool isTeleport)
 	{
 	}
 
-	public void OnLeave(MobileEntity entity)
+	public void OnLeave(MobileEntity entity, bool isTeleport)
 	{
 	}
 }
