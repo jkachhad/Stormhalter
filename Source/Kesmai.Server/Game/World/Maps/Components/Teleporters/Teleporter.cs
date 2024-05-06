@@ -142,7 +142,7 @@ public abstract class Teleporter : TerrainComponent, IHandleMovement, IHandlePat
 		
 	public void OnItemAdded(ItemEntity item, bool isTeleport)
 	{
-		if (CanTeleport(item))
+		if (!isTeleport && CanTeleport(item))
 			Teleport(item);
 	}
 		
