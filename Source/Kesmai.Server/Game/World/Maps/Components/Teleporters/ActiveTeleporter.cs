@@ -37,7 +37,7 @@ public abstract class ActiveTeleporter : Teleporter, IHandleInteraction
 			if (!CheckTeleport(entity, action))
 				return false;
 
-			Teleport(entity);
+			Timer.DelayCall(() => Teleport(entity));
 
 			entity.QueueMovementTimer();
 			return true;

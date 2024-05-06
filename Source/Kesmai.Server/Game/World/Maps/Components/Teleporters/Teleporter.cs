@@ -106,8 +106,8 @@ public abstract class Teleporter : TerrainComponent, IHandleMovement, IHandlePat
 	/// </summary>
 	public virtual void OnEnter(MobileEntity entity, bool isTeleport)
 	{
-		if (!isTeleport && CanTeleport(entity))
-			Teleport(entity);
+		if (CanTeleport(entity))
+			Timer.DelayCall(() => Teleport(entity));
 	}
 		
 	/// <summary>
@@ -140,13 +140,13 @@ public abstract class Teleporter : TerrainComponent, IHandleMovement, IHandlePat
 			args.Result = PathingResult.Allowed;
 	}
 		
-	public void OnItemAdded(ItemEntity item)
+	public void OnItemAdded(ItemEntity item, bool isTeleport)
 	{
 		if (CanTeleport(item))
-			Teleport(item);
+			Timer.DelayCall(() => Teleport(item));
 	}
 		
-	public void OnItemRemoved(ItemEntity item)
+	public void OnItemRemoved(ItemEntity item, bool isTeleport)
 	{
 	}
 }

@@ -92,14 +92,14 @@ public class Floor : TerrainComponent, IHandleInteraction, IHandleMovement, IHan
 	}
 
 	/// <inheritdoc />
-	public void OnItemAdded(ItemEntity item)
+	public void OnItemAdded(ItemEntity item, bool isTeleport)
 	{
 		if (item is Corpse)
 			_corpses++;
 	}
 
 	/// <inheritdoc />
-	public void OnItemRemoved(ItemEntity item)
+	public void OnItemRemoved(ItemEntity item, bool isTeleport)
 	{
 		if (item is Corpse)
 			_corpses--;

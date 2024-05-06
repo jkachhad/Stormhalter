@@ -17,9 +17,16 @@ public class Trash : Static, IHandleInteraction, IHandleItems
 	}
 
 	/// <summary>
+	/// Initializes a new instance of the <see cref="Trash"/> class.
+	/// </summary>
+	public Trash() : base(88)
+	{
+	}
+
+	/// <summary>
 	/// Called when an item is added.
 	/// </summary>
-	public void OnItemAdded(ItemEntity item)
+	public void OnItemAdded(ItemEntity item, bool isTeleport)
 	{
 		if (item is Corpse)
 			return;
@@ -30,7 +37,7 @@ public class Trash : Static, IHandleInteraction, IHandleItems
 	/// <summary>
 	/// Called when an item is removed.
 	/// </summary>
-	public void OnItemRemoved(ItemEntity item)
+	public void OnItemRemoved(ItemEntity item, bool isTeleport)
 	{
 	}
 
