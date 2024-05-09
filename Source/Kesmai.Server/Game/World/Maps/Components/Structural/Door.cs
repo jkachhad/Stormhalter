@@ -249,7 +249,7 @@ public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMove
 		if (_parent is null || IsDestroyed)
 			return false;
 			
-		if (_parent.Groups.Count > 0)
+		if (_parent.Groups.Any())
 			return false;
 
 		if (_parent.OfType<Web>().Any())
