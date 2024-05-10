@@ -22,6 +22,7 @@ public class Segment : ObservableObject
 		
 	private string _name;
 	private Script _internal;
+	private Script _definition;
 
 	public string Name
 	{
@@ -35,6 +36,12 @@ public class Segment : ObservableObject
 		set => SetProperty(ref _internal, value);
 	}
 
+	public Script Definition
+	{
+		get => _definition;
+		set => SetProperty(ref _definition, value);
+	}
+	
 	public NotifyingCollection<SegmentRegion> Regions { get; set; } = new NotifyingCollection<SegmentRegion>();
 	public SegmentLocations Locations { get; set; } = new SegmentLocations();
 	public SegmentSubregions Subregions { get; set; } = new SegmentSubregions();
@@ -70,11 +77,17 @@ public class Segment : ObservableObject
 				String.Empty
 			);
 		}
-			
+
+		if (_definition is null)
+			_definition = new Script("definition", true, String.Empty, String.Empty);
+
 		var provider = ServiceLocator.Current.GetInstance<ScriptTemplateProvider>();
 			
-		if (provider.TryGetTemplate(typeof(SegmentScriptTemplate), out var template))
-			_internal.Template = template;
+		if (provider.TryGetTemplate(typeof(SegmentInternalScriptTemplate), out var internalTemplate))
+			_internal.Template = internalTemplate;
+		
+		if (provider.TryGetTemplate(typeof(SegmentDefinitionScriptTemplate), out var definitionTemplate))
+			_definition.Template = definitionTemplate;
 	}
 
 	private void OnRegionsChanged(object sender, CollectionChangedEventArgs<SegmentRegion> args)

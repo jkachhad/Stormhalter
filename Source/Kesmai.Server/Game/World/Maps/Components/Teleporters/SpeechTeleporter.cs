@@ -38,7 +38,7 @@ public class SpeechTeleporter : HiddenTeleporter, IHandleSpeech
 		args.Result = PathingResult.Allowed;
 	}
 
-	public override void OnEnter(MobileEntity entity)
+	public override void OnEnter(MobileEntity entity, bool isTeleport)
 	{
 		/* We do nothing when a player enters this teleporter. We wait until a phrase is said. */
 	}

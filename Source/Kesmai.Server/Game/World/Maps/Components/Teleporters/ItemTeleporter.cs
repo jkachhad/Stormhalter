@@ -30,7 +30,7 @@ public class ItemTeleporter : HiddenTeleporter
 
 	protected override bool CanTeleport(MobileEntity entity)
 	{
-		if( !base.CanTeleport(entity))
+		if (!base.CanTeleport(entity))
 			return false;
 
 		if (Type != null)

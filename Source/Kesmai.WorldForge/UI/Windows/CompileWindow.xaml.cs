@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Xml.Linq;
@@ -46,20 +47,29 @@ public partial class CompileWindow : Window
 
 		projectFile.Add(segmentElement);
 
+		var compressedDocument = new MemoryStream();
+		var compressedInternal = new MemoryStream();
+		
 		using (var uncompressed = new MemoryStream())
 		{
 			projectFile.Save(uncompressed);
-				
-			var compressed = new MemoryStream();
-
-			using (var gzipStream = new GZipStream(compressed, CompressionMode.Compress, false))
+			
+			using (var gzipStream = new GZipStream(compressedDocument, CompressionMode.Compress, false))
 			{
 				gzipStream.Write(uncompressed.ToArray(), 0, (int)uncompressed.Length);
 				gzipStream.Flush();
 			}
-				
-			Network.Send(0x03, compressed.ToArray());
 		}
+		
+		using (var gzipStream = new GZipStream(compressedInternal, CompressionMode.Compress, false))
+		{
+			var data = Encoding.UTF8.GetBytes(segment.Definition.Blocks[0]);
+			
+			gzipStream.Write(data, 0, (int)data.Length);
+			gzipStream.Flush();
+		}
+		
+		Network.RequestCompile(compressedDocument.ToArray(), compressedInternal.ToArray());
 	}
 	
 	private void OnIncoming(NetIncomingMessage message)

@@ -82,7 +82,7 @@ public class Water : Floor, IHandlePathing
 	/// <summary>
 	/// Called when a mobile entity steps on this component.
 	/// </summary>
-	public override void OnEnter(MobileEntity entity)
+	public override void OnEnter(MobileEntity entity, bool isTeleport)
 	{
 		if (!entity.IsAlive)
 			return;
@@ -123,7 +123,7 @@ public class Water : Floor, IHandlePathing
 	/// <summary>
 	/// Called when a mobile entity steps off this component.
 	/// </summary>
-	public override void OnLeave(MobileEntity entity)
+	public override void OnLeave(MobileEntity entity, bool isTeleport)
 	{
 		entity.StopWaterTimer();
 	}
