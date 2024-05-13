@@ -153,6 +153,8 @@ public partial class RecallRing : Ring
 
 		if (_isActive)
 		{
+			Delete();
+			
 			if (!entity.Deleted && entity.IsAlive) /* Only teleport the entity if they are alive. */
 			{
 				var sourceSegment = entity.Segment;
@@ -173,8 +175,6 @@ public partial class RecallRing : Ring
 			}
 
 			_isActive = false;
-
-			Delete();
 		}
 
 		return true;

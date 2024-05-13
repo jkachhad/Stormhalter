@@ -76,18 +76,18 @@ public abstract class TerrainComponent : IDisposable
 
 	public void Dispose()
 	{
+		if (_disposed)
+			return;
+		
 		OnDispose(true);
+		
+		_disposed = true;
 	}
 		
 	protected virtual void OnDispose(bool disposing)
 	{
-		if (_disposed)
-			return;
-
 		if (disposing)
 			_parent = null;
-
-		_disposed = true;
 	}
 		
 	#endregion
