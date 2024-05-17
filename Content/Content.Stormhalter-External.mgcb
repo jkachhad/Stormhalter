@@ -97,12 +97,6 @@
 /processorParam:Quality=Best
 /build:Audio/Actions/Door_-_Unlock.wav
 
-#begin Audio/Actions/Knife_-_Throw.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Actions/Knife_-_Throw.wav
-
 #begin Audio/Actions/Knife_-_Throw_-_02.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -114,6 +108,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/Actions/Knife_-_Throw_-_03.wav
+
+#begin Audio/Actions/Knife_-_Throw.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Actions/Knife_-_Throw.wav
 
 #begin Audio/Actions/Lock_-_01.wav
 /importer:WavImporter
@@ -403,17 +403,17 @@
 /processorParam:Quality=Best
 /build:Audio/Mobs/Princess-Death.wav
 
-#begin Audio/Mobs/Princess-Following.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Mobs/Princess-Following.wav
-
 #begin Audio/Mobs/Princess-Following-Tired.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/Mobs/Princess-Following-Tired.wav
+
+#begin Audio/Mobs/Princess-Following.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Mobs/Princess-Following.wav
 
 #begin Audio/Mobs/Rabbit_-_Appear-Notice.wav
 /importer:WavImporter
@@ -697,18 +697,6 @@
 /processorParam:TextureFormat=Color
 /build:Azimuth/entities/efreet_128.png
 
-#begin Azimuth/entities/efreet_128.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Azimuth/entities/efreet_128.png
-
 #begin Azimuth/entities/genie_128.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -781,18 +769,6 @@
 /processorParam:TextureFormat=Color
 /build:Azimuth/entities/thaum_male_128.png
 
-#begin Azimuth\monsters\bloatrex\bloatrex.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Azimuth\monsters\bloatrex\bloatrex.png
-
 #begin Azimuth\monsters\bloatrex\bloatrex_corpse.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -805,7 +781,7 @@
 /processorParam:TextureFormat=Color
 /build:Azimuth\monsters\bloatrex\bloatrex_corpse.png
 
-#begin Azimuth\monsters\dragons\undead_dragon.png
+#begin Azimuth\monsters\bloatrex\bloatrex.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -815,7 +791,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Azimuth\monsters\dragons\undead_dragon.png
+/build:Azimuth\monsters\bloatrex\bloatrex.png
 
 #begin Azimuth\monsters\dragons\undead_dragon_corpse.png
 /importer:TextureImporter
@@ -829,7 +805,7 @@
 /processorParam:TextureFormat=Color
 /build:Azimuth\monsters\dragons\undead_dragon_corpse.png
 
-#begin Azimuth\monsters\drakes\drake_blue.png
+#begin Azimuth\monsters\dragons\undead_dragon.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -839,7 +815,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Azimuth\monsters\drakes\drake_blue.png
+/build:Azimuth\monsters\dragons\undead_dragon.png
 
 #begin Azimuth\monsters\drakes\drake_blue_corpse.png
 /importer:TextureImporter
@@ -853,7 +829,7 @@
 /processorParam:TextureFormat=Color
 /build:Azimuth\monsters\drakes\drake_blue_corpse.png
 
-#begin Azimuth\monsters\drakes\drake_red.png
+#begin Azimuth\monsters\drakes\drake_blue.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -863,7 +839,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Azimuth\monsters\drakes\drake_red.png
+/build:Azimuth\monsters\drakes\drake_blue.png
 
 #begin Azimuth\monsters\drakes\drake_red_corpse.png
 /importer:TextureImporter
@@ -877,7 +853,7 @@
 /processorParam:TextureFormat=Color
 /build:Azimuth\monsters\drakes\drake_red_corpse.png
 
-#begin Azimuth\monsters\giant_scorpions\lava_scorpian.png
+#begin Azimuth\monsters\drakes\drake_red.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -887,7 +863,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Azimuth\monsters\giant_scorpions\lava_scorpian.png
+/build:Azimuth\monsters\drakes\drake_red.png
 
 #begin Azimuth\monsters\giant_scorpions\lava_scorpian_corpse.png
 /importer:TextureImporter
@@ -901,7 +877,7 @@
 /processorParam:TextureFormat=Color
 /build:Azimuth\monsters\giant_scorpions\lava_scorpian_corpse.png
 
-#begin Azimuth\monsters\giant_scorpions\moon_scorpian.png
+#begin Azimuth\monsters\giant_scorpions\lava_scorpian.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -911,7 +887,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Azimuth\monsters\giant_scorpions\moon_scorpian.png
+/build:Azimuth\monsters\giant_scorpions\lava_scorpian.png
 
 #begin Azimuth\monsters\giant_scorpions\moon_scorpian_corpse.png
 /importer:TextureImporter
@@ -924,6 +900,66 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Azimuth\monsters\giant_scorpions\moon_scorpian_corpse.png
+
+#begin Azimuth\monsters\giant_scorpions\moon_scorpian.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Azimuth\monsters\giant_scorpions\moon_scorpian.png
+
+#begin Link/fashionable_crossbow3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Link/fashionable_crossbow3.png
+
+#begin Link/fashionable_crossbow4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Link/fashionable_crossbow4.png
+
+#begin Link/newcrossbow2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Link/newcrossbow2.png
+
+#begin Link/newcrossbow3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Link/newcrossbow3.png
 
 #begin Midgit/monsters/runereaper.png
 /importer:TextureImporter
@@ -1093,18 +1129,6 @@
 /processorParam:TextureFormat=Color
 /build:Tenser/Items/grimoire.png
 
-#begin Tenser/Items/heron_main-gauche.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tenser/Items/heron_main-gauche.png
-
 #begin Tenser/Items/heron_main-gauche_P.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1140,6 +1164,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tenser/Items/heron_main-gauche_small.png
+
+#begin Tenser/Items/heron_main-gauche.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tenser/Items/heron_main-gauche.png
 
 #begin Tenser/items/itempack2.png
 /importer:TextureImporter
@@ -2173,18 +2209,6 @@
 /processorParam:TextureFormat=Color
 /build:Tenser/monsters/Chimera/deadchimera.png
 
-#begin Tenser/monsters/cultists/cultist.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tenser/monsters/cultists/cultist.png
-
 #begin Tenser/monsters/cultists/cultist_xbow.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -2196,6 +2220,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tenser/monsters/cultists/cultist_xbow.png
+
+#begin Tenser/monsters/cultists/cultist.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tenser/monsters/cultists/cultist.png
 
 #begin Tenser/monsters/cultists/dead_cultist.png
 /importer:TextureImporter
@@ -2593,18 +2629,6 @@
 /processorParam:TextureFormat=Color
 /build:Tenser/monsters/gnolls/deadpdogman.png
 
-#begin Tenser/monsters/gnolls/dogman.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tenser/monsters/gnolls/dogman.png
-
 #begin Tenser/monsters/gnolls/dogman_shaman.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -2628,6 +2652,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tenser/monsters/gnolls/dogman_warlock.png
+
+#begin Tenser/monsters/gnolls/dogman.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tenser/monsters/gnolls/dogman.png
 
 #begin Tenser/monsters/gnolls/FippyDarkpaw.png
 /importer:TextureImporter
@@ -3217,18 +3253,6 @@
 /processorParam:TextureFormat=Color
 /build:Tenser/monsters/ninjas/deadshidosha.png
 
-#begin Tenser/monsters/ninjas/ninja.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tenser/monsters/ninjas/ninja.png
-
 #begin Tenser/monsters/ninjas/ninja_coolie.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -3240,6 +3264,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tenser/monsters/ninjas/ninja_coolie.png
+
+#begin Tenser/monsters/ninjas/ninja.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tenser/monsters/ninjas/ninja.png
 
 #begin Tenser/monsters/ninjas/red_ninja_master.png
 /importer:TextureImporter
@@ -3265,18 +3301,6 @@
 /processorParam:TextureFormat=Color
 /build:Tenser/monsters/ninjas/shidosha_icon.png
 
-#begin Tenser/monsters/orcs/armored_orc.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tenser/monsters/orcs/armored_orc.png
-
 #begin Tenser/monsters/orcs/armored_orc_dead.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -3288,6 +3312,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tenser/monsters/orcs/armored_orc_dead.png
+
+#begin Tenser/monsters/orcs/armored_orc.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tenser/monsters/orcs/armored_orc.png
 
 #begin Tenser/monsters/orcs/basic_armored_orc_dead2.png
 /importer:TextureImporter
@@ -3649,18 +3685,6 @@
 /processorParam:TextureFormat=Color
 /build:Tenser/monsters/undead/juju.png
 
-#begin Tenser/monsters/undead/lessershade.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tenser/monsters/undead/lessershade.png
-
 #begin Tenser/monsters/undead/lessershade_inc.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -3672,6 +3696,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tenser/monsters/undead/lessershade_inc.png
+
+#begin Tenser/monsters/undead/lessershade.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tenser/monsters/undead/lessershade.png
 
 #begin Tenser/monsters/undead/librarian.png
 /importer:TextureImporter
@@ -3769,18 +3805,6 @@
 /processorParam:TextureFormat=Color
 /build:Tenser/monsters/undead/revenant.png
 
-#begin Tenser/monsters/undead/shade.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tenser/monsters/undead/shade.png
-
 #begin Tenser/monsters/undead/shade_inc_glow.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -3792,6 +3816,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tenser/monsters/undead/shade_inc_glow.png
+
+#begin Tenser/monsters/undead/shade.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tenser/monsters/undead/shade.png
 
 #begin Tenser/monsters/undead/skeletonpikeman.png
 /importer:TextureImporter
@@ -3937,18 +3973,6 @@
 /processorParam:TextureFormat=Color
 /build:Tenser/Terrain/bookshelf2.png
 
-#begin Tenser/Terrain/BrokenPortalPillar.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tenser/Terrain/BrokenPortalPillar.png
-
 #begin Tenser/Terrain/BrokenPortalPillar-2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -3961,7 +3985,7 @@
 /processorParam:TextureFormat=Color
 /build:Tenser/Terrain/BrokenPortalPillar-2.png
 
-#begin Tenser/Terrain/BrokenStalagmite.png
+#begin Tenser/Terrain/BrokenPortalPillar.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -3971,7 +3995,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tenser/Terrain/BrokenStalagmite.png
+/build:Tenser/Terrain/BrokenPortalPillar.png
 
 #begin Tenser/Terrain/BrokenStalagmite-2.png
 /importer:TextureImporter
@@ -3984,6 +4008,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tenser/Terrain/BrokenStalagmite-2.png
+
+#begin Tenser/Terrain/BrokenStalagmite.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tenser/Terrain/BrokenStalagmite.png
 
 #begin Tenser/Terrain/bwmarblestairs.png
 /importer:TextureImporter
@@ -4237,7 +4273,7 @@
 /processorParam:TextureFormat=Color
 /build:Tenser/Terrain/finewoodstairs.png
 
-#begin Tenser/Terrain/firebowl-Sheet.png
+#begin Tenser/Terrain/fire-Sheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -4247,7 +4283,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tenser/Terrain/firebowl-Sheet.png
+/build:Tenser/Terrain/fire-Sheet.png
 
 #begin Tenser/Terrain/firebowl-Sheet_ns.png
 /importer:TextureImporter
@@ -4260,6 +4296,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tenser/Terrain/firebowl-Sheet_ns.png
+
+#begin Tenser/Terrain/firebowl-Sheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tenser/Terrain/firebowl-Sheet.png
 
 #begin Tenser/Terrain/fireplace_animH.png
 /importer:TextureImporter
@@ -4284,18 +4332,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tenser/Terrain/fireplace_animV.png
-
-#begin Tenser/Terrain/fire-Sheet.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tenser/Terrain/fire-Sheet.png
 
 #begin Tenser/Terrain/flatstonebridge.png
 /importer:TextureImporter
@@ -5053,18 +5089,6 @@
 /processorParam:TextureFormat=Color
 /build:Tenser/Terrain/volcanic.png
 
-#begin Tenser/Terrain/wall brazier.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tenser/Terrain/wall brazier.png
-
 #begin Tenser/Terrain/wall brazier-bluefire.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -5088,6 +5112,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tenser/Terrain/wall brazier-greenfire.png
+
+#begin Tenser/Terrain/wall brazier.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tenser/Terrain/wall brazier.png
 
 #begin Tenser/Terrain/wallbrazier_ns.png
 /importer:TextureImporter
