@@ -138,6 +138,10 @@ public partial class Corpse : ItemEntity
 			return;
 			
 		var owner = Owner;
+		
+		if (owner is null)
+			return;
+		
 		var segment = Segment;
 			
 		Strip();
@@ -157,6 +161,10 @@ public partial class Corpse : ItemEntity
 	public void Strip()
 	{
 		var owner = Owner;
+
+		if (owner is null)
+			return;
+		
 		var items = owner.GetItems().ToList();
 
 		foreach (var item in items)
