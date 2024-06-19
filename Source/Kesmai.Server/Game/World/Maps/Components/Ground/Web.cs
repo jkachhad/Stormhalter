@@ -13,6 +13,9 @@ public class Web : Static, IHandlePathing
 		
 	private Spell _spell;
 	private Timer _dispelTimer;
+	
+	/// <inheritdoc />
+	public int PathingPriority { get; } = 0;
 		
 	public Web() : this(null, TimeSpan.Zero)
 	{
@@ -62,7 +65,7 @@ public class Web : Static, IHandlePathing
 		if (args.Entity is PlayerEntity player)
 		{
 			var willpower = player.Stats[EntityStat.Willpower].Value;
-			var escapeChance = (player.Level / 2);
+			var escapeChance = (player.Level / 3);
 
 			if (willpower > 13)
 				escapeChance += (willpower - 13);

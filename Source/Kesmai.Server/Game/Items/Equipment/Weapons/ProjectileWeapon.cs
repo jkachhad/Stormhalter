@@ -5,6 +5,7 @@ using Kesmai.Server.Entity;
 using Kesmai.Server.Targeting;
 
 using Kesmai.Server.Game;
+using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
@@ -149,7 +150,10 @@ public class ShootItemTarget : MobileTarget
 			if (source != target && source.CheckShoot(_weapon))
 			{
 				if (target != null && source.Shoot(target))
-					source.QueueRoundTimer();
+				{
+					if (!source.HasStatus(typeof(RapidfireStatus)))
+						source.QueueRoundTimer();
+				}
 			}
 			else
 			{

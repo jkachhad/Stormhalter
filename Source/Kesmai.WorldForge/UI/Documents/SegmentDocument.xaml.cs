@@ -1,17 +1,26 @@
+using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Scripting;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Kesmai.WorldForge.UI.Documents;
 
-public class SegmentScriptTemplate : ScriptTemplate
+public class SegmentInternalScriptTemplate : ScriptTemplate
 {
 	public override IEnumerable<string> GetSegments()
 	{
 		yield return "public class Internal\n{";
 		yield return "}";
+	}
+}
+
+public class SegmentDefinitionScriptTemplate : ScriptTemplate
+{
+	public override IEnumerable<string> GetSegments()
+	{
+		yield return "#load \"WorldForge\"\n";
 	}
 }
 	

@@ -3,7 +3,7 @@
         <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
         
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net6.0-windows</TargetFramework>
+        <TargetFramework>net8.0-windows</TargetFramework>
         <PreserveCompilationContext>false</PreserveCompilationContext>
         <UseWPF>true</UseWPF>
         
@@ -42,15 +42,15 @@
     
     <ItemGroup>
       <PackageReference Include="CommonServiceLocator" Version="2.0.6" />
+      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
       <PackageReference Include="Dirkster.AvalonDock" Version="4.50.2" />
       <PackageReference Include="DotNetZip" Version="1.16.0" />
-      <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.0.2" />
       <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.1.303" />
       <PackageReference Include="RedGate.SmartAssembly.MSBuild" Version="8.0.1.4676-preview">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="RoslynPad.Editor.Windows" Version="1.2.0" />
+      <PackageReference Include="RoslynPad.Editor.Windows" Version="4.8.0" />
       <PackageReference Include="Syncfusion.PropertyGrid.WPF" Version="18.4.0.44" />
       <PackageReference Include="WriteableBitmapEx" Version="1.6.7" />
     </ItemGroup>
@@ -145,11 +145,12 @@
             <GarbageFile Include="Microsoft.CodeAnalysis.CSharp.Workspaces.dll" />
             <GarbageFile Include="Microsoft.CodeAnalysis.dll" />
             <GarbageFile Include="Microsoft.CodeAnalysis.Features.dll" />
+            <GarbageFile Include="Microsoft.CodeAnalysis.LanguageServer.Protocol.dll" />
             <GarbageFile Include="Microsoft.CodeAnalysis.Scripting.dll" />
             <GarbageFile Include="Microsoft.CodeAnalysis.VisualBasic.dll" />
             <GarbageFile Include="Microsoft.CodeAnalysis.Workspaces.dll" />
             <GarbageFile Include="Microsoft.DiaSymReader.dll" />
-            <GarbageFile Include="Microsoft.Toolkit.Mvvm.dll" />
+            <GarbageFile Include="CommunityToolkit.Mvvm.dll" />
             <GarbageFile Include="MonoGame.Framework.dll" />
             <GarbageFile Include="RoslynPad.Editor.Windows.dll" />
             <GarbageFile Include="RoslynPad.Roslyn.dll" />

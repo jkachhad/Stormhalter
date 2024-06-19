@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Xml.Linq;
 using Kesmai.Server.Items;
 using Kesmai.Server.Miscellaneous.WorldForge;
@@ -14,8 +15,6 @@ public class Floor : TerrainComponent, IHandleInteraction, IHandleMovement, IHan
 	private Terrain _ground;
 	private int _movementCost;
 
-	private int _corpses;
-		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Floor"/> class.
 	/// </summary>
@@ -67,16 +66,23 @@ public class Floor : TerrainComponent, IHandleInteraction, IHandleMovement, IHan
 	/// <summary>
 	/// Called when a mobile entity steps on this component.
 	/// </summary>
-	public virtual void OnEnter(MobileEntity entity)
+	public virtual void OnEnter(MobileEntity entity, bool isTeleport)
 	{
 		/* Play a sound effect when walking over corpses. */
-		if (_corpses > 0 && entity is PlayerEntity)
+		// check if the parent has any items to iterate over.
+		if (!_parent.HasItems)
+			return;
+
+		// get the count of corpses on the parent.
+		var corpses = _parent.Items.OfType<Corpse>().Count();
+		
+		if (corpses > 0 && entity is PlayerEntity)
 		{
-			if (Utility.Random(1, 20) <= _corpses)
+			if (Utility.Random(1, 20) <= corpses)
 			{
 				var sound = 3001;
 
-				if (_corpses > 3)
+				if (corpses > 3)
 					sound = Utility.RandomBool() ? 3002 : 3003;
 
 				entity.PlaySound(sound);
@@ -87,24 +93,17 @@ public class Floor : TerrainComponent, IHandleInteraction, IHandleMovement, IHan
 	/// <summary>
 	/// Called when a mobile entity steps off this component.
 	/// </summary>
-	public virtual void OnLeave(MobileEntity entity)
+	public virtual void OnLeave(MobileEntity entity, bool isTeleport)
 	{
 	}
 
 	/// <inheritdoc />
-	public void OnItemAdded(ItemEntity item)
+	public void OnItemAdded(ItemEntity item, bool isTeleport)
 	{
-		if (item is Corpse)
-			_corpses++;
 	}
 
 	/// <inheritdoc />
-	public void OnItemRemoved(ItemEntity item)
+	public void OnItemRemoved(ItemEntity item, bool isTeleport)
 	{
-		if (item is Corpse)
-			_corpses--;
-
-		if (_corpses < 0)
-			_corpses = 0;
 	}
 }

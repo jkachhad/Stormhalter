@@ -109,6 +109,8 @@ public partial class ScorpionAmulet : Amulet, ITreasure, ICharged
 
 				spell.Warm(source);
 				spell.CastAt(target);
+
+				_amulet.ChargesCurrent--;
 			}
 		}
 	}

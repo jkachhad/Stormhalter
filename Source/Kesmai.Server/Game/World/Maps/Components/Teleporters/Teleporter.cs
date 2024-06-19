@@ -16,6 +16,9 @@ public abstract class Teleporter : TerrainComponent, IHandleMovement, IHandlePat
 
 	public Point2D Destination => _destination;
 	public SegmentRegion DestinationRegion => _destinationRegion;
+	
+	/// <inheritdoc />
+	public int PathingPriority { get; } = 0;
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Teleporter"/> class.
@@ -101,16 +104,16 @@ public abstract class Teleporter : TerrainComponent, IHandleMovement, IHandlePat
 	/// <summary>
 	/// Called when a mobile entity steps on this component.
 	/// </summary>
-	public virtual void OnEnter(MobileEntity entity)
+	public virtual void OnEnter(MobileEntity entity, bool isTeleport)
 	{
-		if (CanTeleport(entity))
+		if (!isTeleport && CanTeleport(entity))
 			Teleport(entity);
 	}
 		
 	/// <summary>
 	/// Called when a mobile entity steps off this component.
 	/// </summary>
-	public virtual void OnLeave(MobileEntity entity)
+	public virtual void OnLeave(MobileEntity entity, bool isTeleport)
 	{
 	}
 		
@@ -137,13 +140,13 @@ public abstract class Teleporter : TerrainComponent, IHandleMovement, IHandlePat
 			args.Result = PathingResult.Allowed;
 	}
 		
-	public void OnItemAdded(ItemEntity item)
+	public void OnItemAdded(ItemEntity item, bool isTeleport)
 	{
-		if (CanTeleport(item))
+		if (!isTeleport && CanTeleport(item))
 			Teleport(item);
 	}
 		
-	public void OnItemRemoved(ItemEntity item)
+	public void OnItemRemoved(ItemEntity item, bool isTeleport)
 	{
 	}
 }

@@ -1,8 +1,9 @@
 using System.IO;
+using Kesmai.Server.Items;
 
 namespace Kesmai.Server.Game;
 
-public partial class RedBerries : Consumable
+public partial class RedBerries : Food
 {
 	private static ConsumableHeal content = new ConsumableHeal(5);
 		

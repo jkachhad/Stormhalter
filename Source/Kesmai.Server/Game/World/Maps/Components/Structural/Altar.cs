@@ -12,6 +12,9 @@ public class Altar : TerrainComponent, IHandlePathing, IHandleInteraction
 {
 	private Terrain _altar;
 		
+	/// <inheritdoc />
+	public int PathingPriority { get; } = 0;
+	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Altar"/> class.
 	/// </summary>

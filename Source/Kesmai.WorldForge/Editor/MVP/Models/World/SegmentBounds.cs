@@ -1,4 +1,4 @@
-using Microsoft.Toolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge.Editor;

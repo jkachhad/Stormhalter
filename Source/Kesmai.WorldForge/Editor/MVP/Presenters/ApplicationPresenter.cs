@@ -19,10 +19,11 @@ using Kesmai.WorldForge.UI.Documents;
 using Kesmai.WorldForge.UI.Windows;
 using Lidgren.Network;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
-using Microsoft.Toolkit.Mvvm.Messaging;
-using Microsoft.Toolkit.Mvvm.Messaging.Messages;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
+using Kesmai.WorldForge.Scripting;
 using RoslynPad.Roslyn;
 using ZipFile = Ionic.Zip.ZipFile;
 
@@ -40,6 +41,7 @@ public class ApplicationPresenter : ObservableRecipient
 	private int _unitSize = 55;
 		
 	private string _segmentFilePath;
+	private DirectoryInfo _segmentFileFolder;
 		
 	private Segment _segment;
 	private CustomRoslynHost _roslynHost;
@@ -120,7 +122,7 @@ public class ApplicationPresenter : ObservableRecipient
 			}
 		}
 	}
-		
+
 	public NotifyingCollection<TerrainSelector> Filters { get; set; }
 	public NotifyingCollection<Tool> Tools { get; set; }
 	public VisibilityOptions Visibility { get; set; }
@@ -567,9 +569,12 @@ public class ApplicationPresenter : ObservableRecipient
 
 		var targetFile = dialog.FileName;
 		var targetFileInfo = new FileInfo(targetFile);
+		
+		_segmentFilePath = targetFile;
+		_segmentFileFolder = targetFileInfo.Directory;
 			
 		var segment = new Segment();
-
+		
 		if (!targetFileInfo.IsZipFile())
 		{
 			XElement rootElement = null;
@@ -598,21 +603,25 @@ public class ApplicationPresenter : ObservableRecipient
 			using (var archive = new ZipFile(targetFile))
 				segment.Load(archive);
 		}
-			
+		var definitionFilePath = $@"{_segmentFileFolder.FullName}\{segment.Name}.cs";
+
+		if (File.Exists(definitionFilePath))
+		{
+			using (var stream = new FileStream(definitionFilePath, FileMode.Open, FileAccess.Read, FileShare.None))
+			using (var reader = new StreamReader(stream))
+				segment.Definition.Blocks[1] = reader.ReadToEnd();
+		}
+
 		Documents.Add(new SegmentViewModel(segment));
 		Documents.Add(new LocationsViewModel(segment));
 		Documents.Add(new SubregionViewModel(segment));
 		Documents.Add(new EntitiesViewModel(segment));
 		Documents.Add(new SpawnsViewModel(segment));
 		Documents.Add(new TreasuresViewModel(segment));
-
-			
-
+		
 		Segment = segment;
 		Segment.UpdateTiles();
-			
-		_segmentFilePath = targetFile;
-			
+		
 		SelectFilter(Filters.FirstOrDefault());
 		SelectTool(Tools.FirstOrDefault());
 	}
@@ -673,6 +682,15 @@ public class ApplicationPresenter : ObservableRecipient
 #endif
 
 			projectFile.Save(targetFile);
+
+			var definitionFilePath = $@"{_segmentFileFolder.FullName}\{_segment.Name}.cs";
+
+			if (File.Exists(definitionFilePath))
+				File.Delete(definitionFilePath);
+			
+			using (var stream = new FileStream(definitionFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
+			using (var writer = new StreamWriter(stream))
+				writer.Write(_segment.Definition.Blocks[1]);
 		}
 		catch (Exception ex)
 		{

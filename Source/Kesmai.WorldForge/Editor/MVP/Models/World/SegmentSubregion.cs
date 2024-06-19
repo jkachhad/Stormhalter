@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 using System.Xml.Linq;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Color = Microsoft.Xna.Framework.Color;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 

@@ -11,6 +11,7 @@ using DigitalRune.ServiceLocation;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
 using Kesmai.WorldForge.Editor;
+using Microsoft.CodeAnalysis;
 using RoslynPad.Editor;
 
 namespace Kesmai.WorldForge.Scripting;
@@ -63,13 +64,13 @@ public class ScriptEditor : RoslynCodeEditor
 			UpdateText();
 	}
 
-	private void OnLoaded(object sender, RoutedEventArgs e)
+	private async void OnLoaded(object sender, RoutedEventArgs e)
 	{
 		var services = (ServiceContainer)ServiceLocator.Current;
 		var applicationPresenter = services.GetInstance<ApplicationPresenter>();
 
-		Initialize(applicationPresenter.RoslynHost, new ClassificationHighlightColors(),
-			Directory.GetCurrentDirectory(), String.Empty);
+		await InitializeAsync(applicationPresenter.RoslynHost, new ClassificationHighlightColors(),
+			Directory.GetCurrentDirectory(), String.Empty, SourceCodeKind.Script);
 		
 		_initialized = true;
 	}

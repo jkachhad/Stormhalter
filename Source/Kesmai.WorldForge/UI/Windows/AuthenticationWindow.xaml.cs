@@ -71,7 +71,7 @@ public partial class AuthenticationWindow : Window
 
 	private void Incoming(NetIncomingMessage message)
 	{
-		var command = message.ReadByte();
+		var command = message.ReadInt16();
 					
 		switch (command)
 		{

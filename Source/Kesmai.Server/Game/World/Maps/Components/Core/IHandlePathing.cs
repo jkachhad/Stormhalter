@@ -5,6 +5,11 @@ namespace Kesmai.Server.Game;
 public interface IHandlePathing
 {
 	/// <summary>
+	/// Assigns a priority to this pathing handler. Larger values are higher priority.
+	/// </summary>
+	int PathingPriority { get; }
+	
+	/// <summary>
 	/// Handles pathing requests over this terrain.
 	/// </summary>
 	void HandleMovementPath(PathingRequestEventArgs args);

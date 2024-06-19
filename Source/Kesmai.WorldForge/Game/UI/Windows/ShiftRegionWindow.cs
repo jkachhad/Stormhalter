@@ -7,7 +7,7 @@ using DigitalRune.Game.UI.Controls;
 using DigitalRune.Mathematics.Algebra;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Models;
-using Microsoft.Toolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge.Windows;
@@ -49,9 +49,9 @@ public class ShiftRegionWindow : Window
 			Font = "Tahoma", FontSize = 10,
 			Text = "X Offset:",
 				
-			Foreground = Color.Yellow,
-			Shadow = Color.Black,
-				
+			Foreground = Color.Yellow, Stroke = Color.Black,
+			FontStyle = MSDFStyle.Outline,
+			
 			VerticalAlignment = VerticalAlignment.Center,
 		};
 		_xTextBox = new TextBox()
@@ -78,9 +78,9 @@ public class ShiftRegionWindow : Window
 			Font = "Tahoma", FontSize = 10,
 			Text = "Y Offset:",
 				
-			Foreground = Color.Yellow,
-			Shadow = Color.Black,
-				
+			Foreground = Color.Yellow, Stroke = Color.Black,
+			FontStyle = MSDFStyle.Outline,
+			
 			VerticalAlignment = VerticalAlignment.Center,
 		};
 		_yTextBox = new TextBox()
@@ -110,8 +110,8 @@ public class ShiftRegionWindow : Window
 				Font = "Tahoma", FontSize = 10,
 				Text = "OK",
 					
-				Foreground = Color.LimeGreen,
-				Shadow = Color.Black,
+				Foreground = Color.LimeGreen, Stroke = Color.Black,
+				FontStyle = MSDFStyle.Outline,
 			}
 		};
 		okButton.Click += Shift;

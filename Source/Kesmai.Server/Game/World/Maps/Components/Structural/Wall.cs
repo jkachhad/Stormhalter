@@ -14,6 +14,9 @@ public class Wall : TerrainComponent, IHandleInteraction, IHandleVision, IHandle
 	private Terrain _ruins;
 
 	private bool _isDestroyed;
+	
+	/// <inheritdoc />
+	public int PathingPriority { get; } = 0;
 
 	/// <summary>
 	/// Gets a value indicating whether this instance is indestructible.

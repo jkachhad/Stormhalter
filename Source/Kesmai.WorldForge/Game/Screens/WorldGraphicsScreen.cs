@@ -11,7 +11,7 @@ using DigitalRune.Mathematics.Algebra;
 using DigitalRune.ServiceLocation;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Models;
-using Microsoft.Toolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -211,8 +211,8 @@ public class WorldGraphicsScreen : GraphicsScreen
 
 	private PresentationTarget _presentationTarget;
 	protected UIScreen _uiScreen;
-	private ContextMenu _contextMenu;
-	protected DistanceFontRenderer _font;
+	private Menu _contextMenu;
+	protected MSDFontRenderer _font;
 	private List<MenuItem> _pointContextItems = new List<MenuItem>();
 	private List<MenuItem> _selectionContextItems = new List<MenuItem>();
 	private List<MenuItem> _spawnerContextItems = new List<MenuItem>();
@@ -315,25 +315,25 @@ public class WorldGraphicsScreen : GraphicsScreen
 		};
 		_uiScreen.InputProcessed += HandleInput;
 
-		_contextMenu = new ContextMenu();
+		_contextMenu = new Menu();
 
-		var createSpawnMenuItem = new MenuItem() { Title = "Create Location Spawner.." };
-		var createRegionSpawnerMenuItem = new MenuItem() { Title = "Create Region Spawner.." };
-		var createSubregionMenuItem = new MenuItem() { Title = "Create Subregion.." };
-		var createLocationMenuItem = new MenuItem() { Title = "Create Named Location.." };
-		var RegionSpawnerIncludeMenuItem = new MenuItem() { Title = "Add selection to Inclusions.." };
-		var RegionSpawnerExcludeMenuItem = new MenuItem() { Title = "Add selection to Exclusions.." };
-		var configureTeleporterMenuItem = new MenuItem() { Title = "Set as Teleporter Destination..", IsVisible = false };
-		var cancelConfigureTeleporterMenuItem = new MenuItem() { Title = "Cancel", IsVisible = false };
-		var configureThisTeleporterMenuItem = new MenuItem() { Title = "Choose a Destination..", IsVisible = false };
+		var createSpawnMenuItem = new MenuButton() { Content = new TextBlock() { Text = "Create Location Spawner.." } };
+		var createRegionSpawnerMenuItem = new MenuButton() { Content = new TextBlock() { Text = "Create Region Spawner.." } };
+		var createSubregionMenuItem = new MenuButton() { Content = new TextBlock() { Text = "Create Subregion.." } };
+		var createLocationMenuItem = new MenuButton() { Content = new TextBlock() { Text = "Create Named Location.." } };
+		var regionSpawnerIncludeMenuItem = new MenuButton() { Content = new TextBlock() { Text = "Add selection to Inclusions.." } };
+		var regionSpawnerExcludeMenuItem = new MenuButton() { Content = new TextBlock() { Text = "Add selection to Exclusions.." } };
+		var configureTeleporterMenuItem = new MenuButton() { Content = new TextBlock() { Text = "Set as Teleporter Destination..", IsVisible = false } };
+		var cancelConfigureTeleporterMenuItem = new MenuButton() { Content = new TextBlock() { Text = "Cancel", IsVisible = false } };
+		var configureThisTeleporterMenuItem = new MenuButton() { Content = new TextBlock() { Text = "Choose a Destination..", IsVisible = false } };
 
 
 		createSpawnMenuItem.Click += CreateLocationSpawner;
 		createLocationMenuItem.Click += CreateLocation;
 		createRegionSpawnerMenuItem.Click += CreateRegionSpawner;
 		createSubregionMenuItem.Click += CreateSubregion;
-		RegionSpawnerIncludeMenuItem.Click += RegionSpawnerInclude;
-		RegionSpawnerExcludeMenuItem.Click += RegionSpawnerExclude;
+		regionSpawnerIncludeMenuItem.Click += RegionSpawnerInclude;
+		regionSpawnerExcludeMenuItem.Click += RegionSpawnerExclude;
 		configureTeleporterMenuItem.Click += ConfigureTeleporter;
 		cancelConfigureTeleporterMenuItem.Click += (o, e) => { _presenter.ConfiguringTeleporter = null; };
 		configureThisTeleporterMenuItem.Click += SetTeleporterAsConfiguring;
@@ -342,8 +342,8 @@ public class WorldGraphicsScreen : GraphicsScreen
 		_contextMenu.Items.Add(createLocationMenuItem);
 		_contextMenu.Items.Add(createSubregionMenuItem);
 		_contextMenu.Items.Add(createRegionSpawnerMenuItem);
-		_contextMenu.Items.Add(RegionSpawnerIncludeMenuItem);
-		_contextMenu.Items.Add(RegionSpawnerExcludeMenuItem);
+		_contextMenu.Items.Add(regionSpawnerIncludeMenuItem);
+		_contextMenu.Items.Add(regionSpawnerExcludeMenuItem);
 		_contextMenu.Items.Add(configureTeleporterMenuItem);
 		_contextMenu.Items.Add(cancelConfigureTeleporterMenuItem);
 		_contextMenu.Items.Add(configureThisTeleporterMenuItem);
@@ -352,8 +352,8 @@ public class WorldGraphicsScreen : GraphicsScreen
 		_pointContextItems.Add(createLocationMenuItem);
 		_selectionContextItems.Add(createRegionSpawnerMenuItem);
 		_selectionContextItems.Add(createSubregionMenuItem);
-		_spawnerContextItems.Add(RegionSpawnerIncludeMenuItem);
-		_spawnerContextItems.Add(RegionSpawnerExcludeMenuItem);
+		_spawnerContextItems.Add(regionSpawnerIncludeMenuItem);
+		_spawnerContextItems.Add(regionSpawnerExcludeMenuItem);
 		_teleporterDestinationContextItems.Add(configureTeleporterMenuItem);
 		_teleporterDestinationContextItems.Add(cancelConfigureTeleporterMenuItem);
 		_teleporterSourceContextItems.Add(configureThisTeleporterMenuItem);
@@ -543,9 +543,9 @@ public class WorldGraphicsScreen : GraphicsScreen
 		if (!_isMouseOver)
 			return;
 
-		if (_uiScreen != null && _uiScreen.ControlUnderMouse != null)
+		if (_uiScreen != null && _uiScreen.ControlDirectlyUnderMouse != null)
 		{
-			var controlType = _uiScreen.ControlUnderMouse.GetType();
+			var controlType = _uiScreen.ControlDirectlyUnderMouse.GetType();
 
 			if (controlType != typeof(UIScreen))
 				_isMouseDirectlyOver = false;

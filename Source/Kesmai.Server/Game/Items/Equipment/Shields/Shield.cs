@@ -65,6 +65,11 @@ public abstract partial class Shield : ItemEntity, IArmored, IWieldable
 
 		return BaseArmorBonus;
 	}
+	
+	/// <inheritdoc />
+	public virtual void OnBlock(MobileEntity attacker)
+	{
+	}
 		
 	public virtual void OnWield(MobileEntity entity)
 	{

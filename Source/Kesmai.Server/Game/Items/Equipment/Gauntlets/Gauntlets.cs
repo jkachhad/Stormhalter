@@ -140,6 +140,11 @@ public abstract partial class Gauntlets : Equipment, IWeapon, IArmored
 	public virtual void OnHit(MobileEntity attacker, MobileEntity defender)
 	{
 	}
+	
+	/// <inheritdoc />
+	public virtual void OnBlock(MobileEntity attacker)
+	{
+	}
 
 	/// <summary>
 	/// Overridable. Determines whether the specified instance can use this item.

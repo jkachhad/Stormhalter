@@ -19,9 +19,9 @@ public class PoisonedWater : Water
 			_potency = 3;
 	}
 
-	public override void OnEnter(MobileEntity entity)
+	public override void OnEnter(MobileEntity entity, bool isTeleport)
 	{
-		base.OnEnter(entity);
+		base.OnEnter(entity, isTeleport);
 			
 		/* Poison the entity. */
 		entity.Poison(null, new Poison(TimeSpan.Zero, _potency));

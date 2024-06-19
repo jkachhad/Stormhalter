@@ -119,15 +119,19 @@ public static class Network
 		}
 	}
 
-	public static void Send(byte command, byte[] buffer)
+	public static void RequestCompile(byte[] document, byte[] segment)
 	{
 		lock (_client)
 		{
 			var message = _client.CreateMessage();
 
-			message.Write((byte)command);
-			message.Write((int)buffer.Length);
-			message.Write((byte[])buffer);
+			message.Write((short)0x03);
+			
+			message.Write((int)document.Length);
+			message.Write((byte[])document);
+			
+			message.Write((int)segment.Length);
+			message.Write((byte[])segment);
 
 			_client.SendMessage(message, NetDeliveryMethod.ReliableOrdered);
 			_client.FlushSendQueue();

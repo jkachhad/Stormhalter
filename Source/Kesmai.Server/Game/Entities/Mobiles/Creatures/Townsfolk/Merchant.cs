@@ -101,6 +101,11 @@ public partial class Merchant<T> : VendorEntity, IMerchant where T : ItemEntity,
 				var totalItems = items.OfType<T>().Count();
 				var spawn = _entity.MinimumSupply - totalItems;
 
+				if (totalItems > _entity.MaximumSupply)
+				{
+					return;
+				}
+
 				if (spawn < 1)
 					spawn = 1;
 

@@ -55,8 +55,8 @@ public class ColorPropertyEditor : PropertyEditor
 			{
 				Font = "Tahoma", FontSize = 10,
 					
-				Foreground = colors[i],
-				Shadow = Color.Black,
+				Foreground = colors[i], Stroke = Color.Black,
+				FontStyle = MSDFStyle.Outline,
 					
 				Margin = new Vector4F(3, 0, 0, 0)
 			});

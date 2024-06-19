@@ -27,6 +27,9 @@ public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMove
 
 	private Timer _closeTimer;
 	private Timer _hideTimer;
+	
+	/// <inheritdoc />
+	public int PathingPriority { get; } = 0;
 
 	/// <summary>
 	/// Gets a value indicating whether this instance blocks line-of-sight.
@@ -112,7 +115,7 @@ public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMove
 	/// <summary>
 	/// Called when a mobile entity steps on this component.
 	/// </summary>
-	public void OnEnter(MobileEntity entity)
+	public void OnEnter(MobileEntity entity, bool isTeleport)
 	{
 		if (!_isOpen)
 			Open();
@@ -121,7 +124,7 @@ public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMove
 	/// <summary>
 	/// Called when a mobile entity steps off this component.
 	/// </summary>
-	public void OnLeave(MobileEntity entity)
+	public void OnLeave(MobileEntity entity, bool isTeleport)
 	{
 	}
 
@@ -246,7 +249,7 @@ public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMove
 		if (_parent is null || IsDestroyed)
 			return false;
 			
-		if (_parent.Groups.Count > 0)
+		if (_parent.Groups.Any())
 			return false;
 
 		if (_parent.OfType<Web>().Any())

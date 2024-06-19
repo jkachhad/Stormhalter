@@ -4,8 +4,8 @@ using System.Windows.Media.Imaging;
 using DigitalRune.Game.Input;
 using DigitalRune.Graphics;
 using DigitalRune.Mathematics.Algebra;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Kesmai.WorldForge;
 

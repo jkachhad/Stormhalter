@@ -99,4 +99,44 @@ public abstract partial class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	{
 		return Flags.HasFlag(WeaponFlags.TwoHanded);
 	}
+	
+	/// <inheritdoc />
+	protected override void OnBreak(MobileEntity source)
+	{
+		base.OnBreak(source);
+
+		if (this is not ITreasure)
+			return;
+
+		// Only players get experience when breaking items.
+		if (source is not PlayerEntity player)
+			return;
+
+		var value = 0;
+
+		// Conjured (recall rings) and purchased items do not provide a bonus.
+		if (IsConjured || IsPurchased)
+			return;
+
+		var multiplier = 10;
+
+		if (IsBound)
+			multiplier += 5;
+
+		value = Utility.RandomRange((int)(ActualPrice * multiplier), 0.5, 0.9);
+
+		if (Owner != null && Owner != player)
+		{
+			if (player.Alignment.IsAny(Alignment.Lawful))
+				player.Alignment = Alignment.Neutral;
+		}
+				
+		if (value > 0)
+			player.AwardExperience(value);
+	}
+	
+	/// <inheritdoc />
+	public virtual void OnBlock(MobileEntity attacker)
+	{
+	}
 }
