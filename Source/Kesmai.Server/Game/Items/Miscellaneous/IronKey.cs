@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class IronKey : ItemEntity, ITreasure
+public partial class IronKey : MeleeWeapon, ITreasure
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000055;
@@ -18,7 +18,17 @@ public partial class IronKey : ItemEntity, ITreasure
 	public override int Weight => 15;
 
 	/// <inheritdoc />
-	public override int Category => 3;
+	public override int Category => 14;
+	
+	public override int MinimumDamage => 1;
+	
+	public override int MaximumDamage => 1;
+	
+	public override ShieldPenetration Penetration => ShieldPenetration.Full;
+	
+	public override Skill Skill => Skill.Thieving;
+	
+	public override WeaponFlags Flags => WeaponFlags.Bashing | WeaponFlags.Neutral;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IronKey"/> class.
