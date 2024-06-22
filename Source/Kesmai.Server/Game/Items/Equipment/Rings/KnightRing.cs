@@ -23,7 +23,7 @@ public partial class KnightRing : Ring, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="KnightRing"/> class.
 	/// </summary>
-	public KnightRing() : base(107)
+	public KnightRing(int ringID = 107) : base(ringID)
 	{
 	}
 
