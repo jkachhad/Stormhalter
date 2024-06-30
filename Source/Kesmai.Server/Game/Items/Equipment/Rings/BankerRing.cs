@@ -76,7 +76,7 @@ public partial class BankerRing : Ring, ITreasure
 
 	public bool Consume(ItemEntity dropped)
 	{
-		if (dropped is not Gold || Container is not Rings)
+		if (dropped is not Gold || Container is not Rings || dropped is null)
 			return false; /* The item will bounce back to the original location. */
 
 		Consumed += dropped.Amount;
