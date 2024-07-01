@@ -14,7 +14,7 @@ namespace Kesmai.WorldForge
 {
     public class PdfExportService
     {
-        private const int TileSize = 90; // Confirm this matches your application's tile size
+        private const int TileSize = 45; // Confirm this matches your application's tile size
 
         private readonly TerrainManager _terrainManager;
 
@@ -133,7 +133,7 @@ namespace Kesmai.WorldForge
                         ms.Seek(0, SeekOrigin.Begin);
                         using (var spriteImage = System.Drawing.Image.FromStream(ms))
                         {
-                            var destRect = new System.Drawing.Rectangle(x-45, y, TileSize, TileSize);
+                            var destRect = new System.Drawing.Rectangle(x-22, y, TileSize, TileSize);
                             
                             // Apply color tint
                             var colorMatrix = new ColorMatrix();
