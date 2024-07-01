@@ -1,14 +1,15 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Kesmai.WorldForge.Editor;
-using Kesmai.WorldForge.Models;
 using System;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
-using Microsoft.Xna.Framework.Graphics;
+using System.Windows;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using Kesmai.WorldForge.UI.Windows;
 
 namespace Kesmai.WorldForge
 {
@@ -23,7 +24,7 @@ namespace Kesmai.WorldForge
             _terrainManager = terrainManager;
         }
 
-        public void ExportCurrentView(SegmentRegion region, string filePath)
+        public async Task ExportCurrentView(SegmentRegion region, string filePath)
         {
             using (FileStream fs = new FileStream(filePath, FileMode.Create))
             {
@@ -33,10 +34,86 @@ namespace Kesmai.WorldForge
                 document.Open();
 
                 AddRegionInfo(document, region);
-                RenderFullRegion(document, region);
+
+                // Create a new ProgressBarWindow and show it
+                var progressBarWindow = new ProgressBarWindow();
+                progressBarWindow.Show();
+
+                // Create a Progress<int> object and provide a callback to update the progress bar
+                var progress = new Progress<int>(value =>
+                {
+                    // Update the progress bar
+                    progressBarWindow.UpdateProgress(value);
+                });
+
+                await RenderFullRegion(document, region, progress);
+
+                // Close the ProgressBarWindow when the operation is complete
+                progressBarWindow.Close();
+                MessageBox.Show("PDF exported successfully!", "Export Complete", MessageBoxButton.OK, MessageBoxImage.Information);
+
                 AddLegend(document);
 
                 document.Close();
+            }
+            
+            Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
+        }
+
+        private async Task RenderFullRegion(Document document, SegmentRegion region, IProgress<int> progress)
+        {
+            var bounds = GetRegionBounds(region);
+            int width = (bounds.right - bounds.left + 1) * TileSize;
+            int height = (bounds.bottom - bounds.top + 1) * TileSize;
+
+            Debug.WriteLine($"Bitmap Size: Width={width}, Height={height}");
+
+            using (Bitmap bitmap = new Bitmap(width, height))
+            {
+                using (Graphics g = Graphics.FromImage(bitmap))
+                {
+                    g.Clear(Color.White);
+                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                    g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+
+                    var tiles = region.GetTiles().ToList();
+                    for (int i = 0; i < tiles.Count; i++)
+                    {
+                        var tile = tiles[i];
+                        if (tile != null)
+                        {
+                            var x = (tile.X - bounds.left) * (TileSize * .5);
+                            var y = (tile.Y - bounds.top) * (TileSize * .5);
+                            Debug.WriteLine($"Drawing Tile: X={tile.X}, Y={tile.Y}, DrawX={x}, DrawY={y}");
+                            RenderTile(g, tile, (int)x, (int)y);
+                        }
+
+                        // Report progress
+                        int percentComplete = (i + 1) * 100 / tiles.Count;
+                        progress.Report(percentComplete);
+
+                        // Use Task.Delay to simulate asynchronous work
+                        await Task.Delay(1);
+                    }
+                }
+
+                // For debugging: Save the bitmap to a file to inspect it
+                bitmap.Save("debug_output.png", ImageFormat.Png);
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    bitmap.Save(ms, ImageFormat.Png);
+                    byte[] imageBytes = ms.ToArray();
+
+                    iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(imageBytes);
+
+                    // Scale the image to fit the page
+                    float pageWidth = document.PageSize.Width - document.LeftMargin - document.RightMargin;
+                    float pageHeight = document.PageSize.Height - document.TopMargin - document.BottomMargin;
+                    image.ScaleToFit(pageWidth, pageHeight);
+
+                    document.Add(image);
+                }
             }
         }
 
@@ -68,58 +145,6 @@ namespace Kesmai.WorldForge
             return (minX, minY, maxX, maxY);
         }
 
-        private void RenderFullRegion(Document document, SegmentRegion region)
-        {
-            var bounds = GetRegionBounds(region);
-            int width = (bounds.right - bounds.left + 1) * TileSize;
-            int height = (bounds.bottom - bounds.top + 1) * TileSize;
-
-            Debug.WriteLine($"Bitmap Size: Width={width}, Height={height}");
-
-            using (Bitmap bitmap = new Bitmap(width, height))
-            {
-                using (Graphics g = Graphics.FromImage(bitmap))
-                {
-                    g.Clear(Color.White);
-                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                    g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
-
-                    for (int y = bounds.top; y <= bounds.bottom; y++)
-                    {
-                        for (int x = bounds.left; x <= bounds.right; x++)
-                        {
-                            SegmentTile tile = region.GetTile(x, y);
-                            if (tile != null)
-                            {
-                                var drawX = (x - bounds.left) * (TileSize * .5);
-                                var drawY = (y - bounds.top) * (TileSize * .5);
-                                Debug.WriteLine($"Drawing Tile: X={x}, Y={y}, DrawX={drawX}, DrawY={drawY}");
-                                RenderTile(g, tile, (int)drawX, (int)drawY);
-                            }
-                        }
-                    }
-                }
-
-                // For debugging: Save the bitmap to a file to inspect it
-                bitmap.Save("debug_output.png", ImageFormat.Png);
-
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    bitmap.Save(ms, ImageFormat.Png);
-                    byte[] imageBytes = ms.ToArray();
-
-                    iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(imageBytes);
-
-                    // Scale the image to fit the page
-                    float pageWidth = document.PageSize.Width - document.LeftMargin - document.RightMargin;
-                    float pageHeight = document.PageSize.Height - document.TopMargin - document.BottomMargin;
-                    image.ScaleToFit(pageWidth, pageHeight);
-
-                    document.Add(image);
-                }
-            }
-        }
-
         private void RenderTile(Graphics g, SegmentTile tile, int x, int y)
         {
             foreach (var render in tile.Renders)
@@ -134,7 +159,7 @@ namespace Kesmai.WorldForge
                         using (var spriteImage = System.Drawing.Image.FromStream(ms))
                         {
                             var destRect = new System.Drawing.Rectangle(x-22, y, TileSize, TileSize);
-                            
+
                             // Apply color tint
                             var colorMatrix = new ColorMatrix();
                             colorMatrix.Matrix33 = render.Color.A / 255f; // Alpha

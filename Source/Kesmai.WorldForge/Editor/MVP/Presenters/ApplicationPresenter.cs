@@ -950,7 +950,7 @@ public class ApplicationPresenter : ObservableRecipient
 				var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
 				var pdfExportService = new PdfExportService(terrainManager);
 				pdfExportService.ExportCurrentView(region, dialog.FileName);
-				MessageBox.Show("PDF exported successfully!", "Export Complete", MessageBoxButton.OK, MessageBoxImage.Information);
+				
 			}
 		}
 	}
