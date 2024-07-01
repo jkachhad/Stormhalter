@@ -26,7 +26,6 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using Kesmai.WorldForge.Scripting;
 using RoslynPad.Roslyn;
 using ZipFile = Ionic.Zip.ZipFile;
-using Microsoft.CodeAnalysis;
 
 namespace Kesmai.WorldForge.Editor;
 
@@ -165,12 +164,14 @@ public class ApplicationPresenter : ObservableRecipient
 
 		}
 	}
-		
-	public ApplicationPresenter()
+    public RelayCommand ExportToPdfCommand { get; set; }
+    public ApplicationPresenter()
 	{
 		var messenger = WeakReferenceMessenger.Default;
 
-		messenger.Register<ApplicationPresenter, GetActiveSegmentRequestMessage>(this,
+        ExportToPdfCommand = new RelayCommand(ExportToPdf, () => (ActiveDocument is SegmentRegion));
+        ExportToPdfCommand.DependsOn(() => ActiveDocument);
+        messenger.Register<ApplicationPresenter, GetActiveSegmentRequestMessage>(this,
 			(r, m) => m.Reply(r.Segment));
 
 		Documents = new ObservableCollection<object>();
@@ -701,10 +702,8 @@ public class ApplicationPresenter : ObservableRecipient
 
 	private bool CheckScriptSyntax() //Enumerate all script segments and verify that they pass syntax checks
 	{
-        //Segment code:
-        var customParseOptions = CSharpParseOptions.Default;
-        customParseOptions = customParseOptions.WithKind(SourceCodeKind.Script);
-        var syntaxErrors = CSharpSyntaxTree.ParseText(Segment.Internal.Blocks[1],customParseOptions).GetDiagnostics();
+		//Segment code:
+		var syntaxErrors = CSharpSyntaxTree.ParseText(Segment.Internal.Blocks[1]).GetDiagnostics();
 		if (syntaxErrors.Count()>0)
 		{
 			var errorList = String.Join('\n', syntaxErrors.Take(3).Select(err => (err.Location.GetLineSpan().StartLinePosition.Line+2) + ":" + err.GetMessage()));
@@ -935,5 +934,24 @@ public class ApplicationPresenter : ObservableRecipient
 
 		if (graphicsScreen != null)
 			graphicsScreen.InvalidateRender();
+	}
+	private void ExportToPdf()
+	{
+		if (ActiveDocument is SegmentRegion region)
+		{
+			var dialog = new Microsoft.Win32.SaveFileDialog()
+			{
+				DefaultExt = ".pdf",
+				Filter = "PDF Files (*.pdf)|*.pdf"
+			};
+
+			if (dialog.ShowDialog() == true)
+			{
+				var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
+				var pdfExportService = new PdfExportService(terrainManager);
+				pdfExportService.ExportCurrentView(region, dialog.FileName);
+				MessageBox.Show("PDF exported successfully!", "Export Complete", MessageBoxButton.OK, MessageBoxImage.Information);
+			}
+		}
 	}
 }

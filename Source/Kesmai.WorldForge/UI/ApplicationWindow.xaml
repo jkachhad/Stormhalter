@@ -51,6 +51,13 @@
                     </MenuItem.CommandParameter>
                 </MenuItem>
                 <Separator />
+                <!-- Add the new Export to PDF menu item here -->
+                <MenuItem Header="Export to _PDF" Command="{Binding ExportToPdfCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="../Resources/PDF.png" Width="16" Height="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
                 <MenuItem Header="_Exit" Command="{Binding ExitApplicationCommand}" />
             </MenuItem>
 
@@ -217,7 +224,7 @@
                 <LayoutPanel Orientation="Horizontal">
                     
                     <!-- Documents -->
-                    <LayoutDocumentPaneGroup CanRepositionItems="True" >
+                    <LayoutDocumentPaneGroup CanRepositionItems="False">
                         <LayoutDocumentPane>
    
                         </LayoutDocumentPane>
