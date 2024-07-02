@@ -221,8 +221,9 @@ public class WpfMouse
 
     public static bool IsControlOnActiveWindow(IInputElement element)
     {
-        var activeWindow = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
         var ctrlWindow = GetWindowFrom(element);
+        var activeWindow = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+
         return ctrlWindow == activeWindow;
     }
 

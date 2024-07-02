@@ -158,8 +158,14 @@ public class SpawnsViewModel : ObservableRecipient
 	}
 
 	public SegmentSpawns Source => _segment.Spawns;
-	public ObservableCollection<Entity> Entities => _segment.Entities;
-		
+	public ObservableCollection<Entity> Entities 
+	{
+		get 
+		{
+			var sortedEntities = _segment.Entities.OrderBy(e => e.Name).ToList();
+			return new ObservableCollection<Entity>(sortedEntities);
+		}
+	}
 	public RelayCommand AddLocationSpawnerCommand { get; set; }
 	public RelayCommand<LocationSpawner> RemoveLocationSpawnerCommand { get; set; }
 	public RelayCommand<LocationSpawner> CopyLocationSpawnerCommand { get; set; }

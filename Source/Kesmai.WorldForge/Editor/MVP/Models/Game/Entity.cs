@@ -11,6 +11,7 @@ using System.ComponentModel;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Generic;
+using System.Configuration;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.CodeAnalysis;
 
@@ -23,13 +24,21 @@ public class Entity : ObservableObject, ICloneable
 {
 	private string _name;
 	private string _notes;
+	private string _group;
 		
 	private ObservableCollection<Script> _scripts = new ObservableCollection<Script>();
-		
+	
 	public string Name
 	{
 		get => _name;
-		set => SetProperty(ref _name, value);
+		set
+		{
+			if (SetProperty(ref _name, value))
+			{
+				OnPropertyChanged("Name");
+			}
+		}
+		
 	}
 		
 	public string Notes
@@ -37,7 +46,24 @@ public class Entity : ObservableObject, ICloneable
 		get => _notes;
 		set => SetProperty(ref _notes, value);
 	}
-		
+	
+	public string Group
+	{
+		get => _group;
+		set
+		{
+			if (SetProperty(ref _group, value))
+			{
+				OnPropertyChanged("Group");
+			}
+		}
+	}
+	public event PropertyChangedEventHandler PropertyChanged;
+
+	protected virtual void OnPropertyChanged(string propertyName)
+	{
+		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+	}	
 	public ObservableCollection<Script> Scripts
 	{
 		get => _scripts;
@@ -201,7 +227,11 @@ public class Entity : ObservableObject, ICloneable
 				{
 					var skillargument = namedSkillArgument.Parent.Parent as ArgumentSyntax;
 					var skilltoken = skillargument.Expression.GetFirstToken();
-					skill = double.Parse(skilltoken.ValueText);
+
+					if (double.TryParse(skilltoken.ValueText, out double d) && !Double.IsNaN(d) && !Double.IsInfinity(d))
+						skill = double.Parse(skilltoken.ValueText);
+					else
+						skill = 1;
 				} else
 				{
 					skill = node.ArgumentList.Arguments.First().Expression.GetFirstToken().Value as double?;
@@ -230,6 +260,9 @@ public class Entity : ObservableObject, ICloneable
 			String flags = Flags;
 			if (flags.Contains("Pois"))
 			{
+				
+				// when using variables in the onspawn script it is possible to have a null exception since meleeSkill gets passed null if it doesnt parse a number.
+				if (meleeSkill is not null)
 				meleeSkill += Math.Max(1, (int)(meleeSkill * 0.3)); //scale up the threat of melee if they cause poison At least 1 level
 			}
 			if (flags.Contains("Prone"))
@@ -305,6 +338,9 @@ public class Entity : ObservableObject, ICloneable
 
 		if (element.TryGetElement("notes", out var notesElement))
 			_notes = (string)notesElement;
+		
+		if (element.TryGetElement("group", out var groupElement))
+			_group = (string)groupElement;
 			
 		foreach (var scriptElement in element.Elements("script"))
 			_scripts.Add(new Script(scriptElement));
@@ -368,6 +404,9 @@ public class Entity : ObservableObject, ICloneable
 
 		if (!String.IsNullOrEmpty(_notes))
 			element.Add(new XElement("notes", _notes));
+		
+		if (!String.IsNullOrEmpty(_group))
+			element.Add(new XElement("group", _group));
 			
 		return element;
 	}
@@ -380,6 +419,7 @@ public class Entity : ObservableObject, ICloneable
 		{
 			Name = $"Copy of {_name}",
 			Notes = _notes,
+			Group = _group
 		};
 			
 		clone.Scripts.Clear();
