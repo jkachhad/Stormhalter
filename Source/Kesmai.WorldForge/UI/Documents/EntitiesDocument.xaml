@@ -100,12 +100,12 @@
 
                 <syncfusion:PropertyGrid Grid.Row="2" Margin="0,3,0,0"
                                          SelectedObject="{Binding SelectedEntity}"
-                                         AutoGenerateItems="True"
+                                         AutoGenerateItems="False"
                                          SortDirection="{x:Null}"
                                          DisableAnimationOnObjectSelection="True">
                 <syncfusion:PropertyGrid.Items>
                     <syncfusion:PropertyGridItem PropertyName="Name" />
-                    <syncfusion:PropertyGridItem PropertyName="Group" />
+                    <syncfusion:PropertyGridItem IsReadOnly="True" PropertyName="Group" />
                     <syncfusion:PropertyGridItem PropertyName="XP" />
                     <syncfusion:PropertyGridItem PropertyName="HP" />
                     <syncfusion:PropertyGridItem PropertyName="Threat"/>
