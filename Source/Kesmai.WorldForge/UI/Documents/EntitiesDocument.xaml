@@ -43,9 +43,19 @@
                         <Image Source="../../Resources/Add.png"/>
                     </Button>
                     <Button Width="24" Height="24"
+                            Command="{Binding AddGroupCommand}"
+                            ToolTip="Add Group">
+                        <Image Source="../../Resources/plus.png"/>
+                    </Button>
+                    <Button Width="24" Height="24"
                             Command="{Binding RemoveEntityCommand}"
                             CommandParameter="{Binding SelectedEntity}">
                         <Image Source="../../Resources/Delete.png" />
+                    </Button>
+                    <Button Width="24" Height="24"
+                            Command="{Binding RemoveGroupCommand}"
+                            CommandParameter="{Binding SelectedGroup}">
+                        <Image Source="../../Resources/GreenX.png" />
                     </Button>
                     <Separator />
                     <Button Width="24" Height="24"
@@ -68,14 +78,16 @@
             </ToolBar>
             
            
-            <TreeView Grid.Row="1" ItemsSource="{Binding Source={StaticResource sortedGroups}}"
+            <TreeView x:Name="entitiesTreeView" Grid.Row="1" ItemsSource="{Binding Source={StaticResource sortedGroups}}"
                       SelectedItemChanged ="TreeView_SelectedItemChanged"
                       PreviewMouseLeftButtonDown="TreeView_PreviewMouseLeftButtonDown"
                       DragOver="TreeView_DragOver"
                       Drop="TreeView_Drop">
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate ItemsSource="{Binding Entities}">
-                        <TextBlock AllowDrop="True" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock AllowDrop="True" 
+                                   Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" 
+                                   MouseRightButtonDown="TextBlock_MouseRightButtonDown"/>
                         <HierarchicalDataTemplate.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}" />

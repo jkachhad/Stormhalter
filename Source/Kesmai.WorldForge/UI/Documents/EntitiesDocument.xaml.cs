@@ -1,19 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Xml.Linq;
 using CommonServiceLocator;
-using DigitalRune.ServiceLocation;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Scripting;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -73,13 +67,26 @@ public static class DependencyObjectExtensions
 public partial class EntitiesDocument : UserControl
 {
 	private Entity _draggedEntity;
-	
+	private void TextBlock_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+	{
+		if (sender is TextBlock textBlock && textBlock.DataContext is EntitiesViewModel.WfGroup group)
+		{
+			var dialog = new InputDialog("Enter new name", group.Name);
+			if (dialog.ShowDialog() == true)
+			{
+				group.Name = dialog.Input;
+			}
+		}
+	}
 	private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
 	{
 		var viewModel = DataContext as EntitiesViewModel;
 		if (viewModel != null)
 		{
-			viewModel.SelectedEntity = e.NewValue as Entity;
+			if (e.NewValue is Entity entity)
+				viewModel.SelectedEntity = e.NewValue as Entity;
+			else if (e.NewValue is EntitiesViewModel.WfGroup group)
+				viewModel.SelectedGroup = group;
 		}
 	}
 	
@@ -128,22 +135,7 @@ public partial class EntitiesDocument : UserControl
 		}
 	}
 
-	private void TextBox_Loaded(object sender, RoutedEventArgs e)
-	{
-		var textBox = sender as TextBox;
-		var dataContext = textBox.DataContext;
 
-		if (dataContext is Entity)
-		{
-			// DataContext is correctly set to an instance of the Entity class
-			Debug.WriteLine("DataContext is correctly set to an instance of the Entity class");
-		}
-		else
-		{
-			// DataContext is not set to an instance of the Entity class
-			Debug.WriteLine("DataContext is not set to an instance of the Entity class");
-		}
-	}
 
 	public class GetSelectedSpawner : RequestMessage<Spawner>
 	{
@@ -209,8 +201,6 @@ public class EntitiesViewModel : ObservableRecipient
 		{
 		}
 	}
-	
-	
 
 	public class WfGroup : ObservableObject
 	{
@@ -229,7 +219,7 @@ public class EntitiesViewModel : ObservableRecipient
 				}
 			}
 		}
-		public ObservableCollection<Entity> Entities 
+		public ObservableCollection<Entity> Entities
 		{
 			get { return _entities; }
 			set
@@ -256,43 +246,11 @@ public class EntitiesViewModel : ObservableRecipient
 		}
 	}
 	
-	public class WfGroups : ObservableObject
-	{
-
-		public void ImportSegmentEntities(ObservableCollection<Entity> entities)
-		{
-			
-			
-			foreach (Entity entity in entities.OrderBy(e => e.Name))
-			{
-				if (entity.Group == null)
-					entity.Group = "Unassigned";
-				var group = Groups.Where(g => g.Name == entity.Group).FirstOrDefault();
-				if (group is null)
-				{
-					group = new WfGroup()
-					{
-						Name = entity.Group,
-						Entities = new ObservableCollection<Entity>()
-					};
-					Groups.Add(group);
-				}
-				group.Entities.Add(entity);
-			}
-			
-			
-		}
-		public ObservableCollection<WfGroup> Groups { get; set; } = new();
-	}
 	public ObservableCollection<WfGroup> Groups
 	{
 		get { return _groups.Groups; }
 	}
 	
-	public ObservableCollection<Entity> Entities
-	{
-		get { return _segment.Entities; }
-	}
 	public string Name => "(Entities)";
 
 	private int _newEntityCount = 1;
@@ -301,7 +259,17 @@ public class EntitiesViewModel : ObservableRecipient
 	private Entity _selectedEntity;
 	private Segment _segment;
 	private WfGroups _groups = new WfGroups();
-
+	private WfGroup _selectedGroup;
+	
+	public WfGroup SelectedGroup
+	{
+		get => _selectedGroup;
+		set
+		{
+			SetProperty(ref _selectedGroup, value, true);
+			OnPropertyChanged("SelectedGroup");
+		}
+	}
 	
 	public Entity SelectedEntity
 	{
@@ -343,6 +311,32 @@ public class EntitiesViewModel : ObservableRecipient
 	public RelayCommand AddGroupCommand { get; set; }
 	
 	public RelayCommand<WfGroup> RemoveGroupCommand { get; set; }
+	
+	public class WfGroups : ObservableObject
+	{
+
+		public void ImportSegmentEntities(ObservableCollection<Entity> entities)
+		{
+			foreach (Entity entity in entities.OrderBy(e => e.Name))
+			{
+				if (entity.Group == null)
+					entity.Group = "Unassigned";
+				var group = Groups.Where(g => g.Name == entity.Group).FirstOrDefault();
+				if (group is null)
+				{
+					group = new WfGroup()
+					{
+						Name = entity.Group,
+						Entities = new ObservableCollection<Entity>()
+					};
+					Groups.Add(group);
+				}
+				group.Entities.Add(entity);
+			}
+		}
+		public ObservableCollection<WfGroup> Groups { get; set; } = new();
+	}
+
 
 	public EntitiesViewModel(Segment segment)
 	{
@@ -363,8 +357,7 @@ public class EntitiesViewModel : ObservableRecipient
 		ExportEntityCommand.DependsOn(() => SelectedEntity);
 
 		ImportEntityComamnd = new RelayCommand(ImportEntity);
-
-
+		
 		JumpSpawnerCommand = new RelayCommand(JumpSpawner);
 		
 		AddGroupCommand = new RelayCommand(AddGroup);
@@ -408,11 +401,16 @@ public class EntitiesViewModel : ObservableRecipient
 	
 	public void RemoveGroup(WfGroup group)
 	{
+		if (group == null)
+		{
+			return;
+		}
+
 		var result = MessageBox.Show($"Are you sure you wish to delete '{group.Name}'?", 
 			"WorldForge", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
 		if (result != MessageBoxResult.No && _groups.Groups.Count > 0)
-			 _groups.Groups.Remove(group);
+			_groups.Groups.Remove(group);
 	}
 
 	public void AddEntity()
@@ -421,9 +419,14 @@ public class EntitiesViewModel : ObservableRecipient
 		{
 			Name = $"Entity {_newEntityCount++}",
 			Group = "Unassigned"
+			
+			
 		};
+		if (SelectedEntity.Group != null)
+			newEntity.Group = SelectedEntity.Group;
+		var entityGroup = _groups.Groups.Where(g => g.Name == newEntity.Group).FirstOrDefault();
 		
-		var unassigned = _groups.Groups.Where((x => x.Name == "Unassigned")).FirstOrDefault();
+		var unassigned = _groups.Groups.Where((x => x == entityGroup)).FirstOrDefault();
 		Source.Add(newEntity);
 		if (unassigned is not null)
 			unassigned.Entities.Add(newEntity);
@@ -471,6 +474,10 @@ public class EntitiesViewModel : ObservableRecipient
 		if (entity.Clone() is Entity clonedEntity)
 		{
 			Source.Add(clonedEntity);
+			var group = clonedEntity.Group;
+			var wfGroup = _groups.Groups.Where(g => g.Name == group).FirstOrDefault();
+			wfGroup.Entities.Add(clonedEntity);
+	
 			SelectedEntity = clonedEntity;
 		}
 	}

@@ -58,7 +58,12 @@ public class Entity : ObservableObject, ICloneable
 			}
 		}
 	}
-		
+	public event PropertyChangedEventHandler PropertyChanged;
+
+	protected virtual void OnPropertyChanged(string propertyName)
+	{
+		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+	}	
 	public ObservableCollection<Script> Scripts
 	{
 		get => _scripts;
