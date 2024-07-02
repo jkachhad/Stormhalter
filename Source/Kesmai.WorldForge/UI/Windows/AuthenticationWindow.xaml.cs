@@ -49,7 +49,7 @@ public partial class AuthenticationWindow : Window
 				Network.OnDisconnect += Disconnected;
 				Network.OnIncoming += Incoming;
 					
-#if (DEBUG) 
+#if (!DEBUG) 
 					Task.Run(() => Authenticate("play.stormhalter.com", 2594));
 #else
 				Task.Run(() => Authenticate("127.0.0.1", 2594));
