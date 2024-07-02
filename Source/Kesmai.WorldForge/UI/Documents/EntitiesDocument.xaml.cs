@@ -172,6 +172,10 @@ public partial class EntitiesDocument : UserControl
 		presenter.ActiveDocument = viewmodel;
 		if (entity is not null)
 		{
+			// Set the previous SelectedEntity to null
+			viewmodel.SelectedEntity = null;
+
+			// Assign the new value
 			viewmodel.SelectedEntity = entity;
 		}
 	}
@@ -204,10 +208,11 @@ public class EntitiesViewModel : ObservableRecipient
 
 	public class WfGroup : ObservableObject
 	{
-		private ObservableCollection<Entity> _entities;
 		private string _name;
-		public string Name 
-		{ 
+		private Lazy<ObservableCollection<Entity>> _entities;
+
+		public string Name
+		{
 			get { return _name; }
 			set
 			{
@@ -219,19 +224,12 @@ public class EntitiesViewModel : ObservableRecipient
 				}
 			}
 		}
+
 		public ObservableCollection<Entity> Entities
 		{
-			get { return _entities; }
-			set
-			{
-				if (_entities != value)
-				{
-					_entities = value;
-					OnPropertyChanged("Entities");
-				}
-			}
+			get { return _entities.Value; }
 		}
-		
+
 		private void UpdateEntityGroupNames(string newGroupName)
 		{
 			foreach (var entity in Entities)
@@ -239,10 +237,10 @@ public class EntitiesViewModel : ObservableRecipient
 				entity.Group = newGroupName;
 			}
 		}
-		
+
 		public WfGroup()
 		{
-			_entities = new ObservableCollection<Entity>();
+			_entities = new Lazy<ObservableCollection<Entity>>(() => new ObservableCollection<Entity>());
 		}
 	}
 	
@@ -276,9 +274,13 @@ public class EntitiesViewModel : ObservableRecipient
 		get => _selectedEntity;
 		set
 		{
+			// My attempt to add some garbagre collection
+			_selectedEntity = null;
+
+			
 			SetProperty(ref _selectedEntity, value, true);
 			OnPropertyChanged("SelectedEntity");
-			
+
 			_relatedSpawners.Clear();
 			foreach (Spawner spawner in _segment.Spawns.Location.Where(s => s.Entries.Any(e => e.Entity == SelectedEntity)))
 			{
@@ -288,7 +290,6 @@ public class EntitiesViewModel : ObservableRecipient
 			{
 				_relatedSpawners.Add(spawner);
 			}
-
 
 			if (value != null)
 				WeakReferenceMessenger.Default.Send(new SelectedEntityChangedMessage(value));
@@ -326,8 +327,7 @@ public class EntitiesViewModel : ObservableRecipient
 				{
 					group = new WfGroup()
 					{
-						Name = entity.Group,
-						Entities = new ObservableCollection<Entity>()
+						Name = entity.Group
 					};
 					Groups.Add(group);
 				}
@@ -392,8 +392,7 @@ public class EntitiesViewModel : ObservableRecipient
 	{
 		var newGroup = new WfGroup()
 		{
-			Name = "Unassigned",
-			Entities = new ObservableCollection<Entity>()
+			Name = "Unassigned"
 		};
 		_groups.Groups.Add(newGroup);
 		
@@ -419,13 +418,11 @@ public class EntitiesViewModel : ObservableRecipient
 		{
 			Name = $"Entity {_newEntityCount++}",
 			Group = "Unassigned"
-			
-			
 		};
 		if (SelectedEntity.Group != null)
 			newEntity.Group = SelectedEntity.Group;
 		var entityGroup = _groups.Groups.Where(g => g.Name == newEntity.Group).FirstOrDefault();
-		
+
 		var unassigned = _groups.Groups.Where((x => x == entityGroup)).FirstOrDefault();
 		Source.Add(newEntity);
 		if (unassigned is not null)
@@ -435,7 +432,6 @@ public class EntitiesViewModel : ObservableRecipient
 			var group = new WfGroup()
 			{
 				Name = "Unassigned",
-				Entities = new ObservableCollection<Entity>()
 			};
 			group.Entities.Add(newEntity);
 			_groups.Groups.Add(group);

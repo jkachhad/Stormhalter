@@ -78,7 +78,7 @@
             </ToolBar>
             
            
-            <TreeView x:Name="entitiesTreeView" Grid.Row="1" ItemsSource="{Binding Source={StaticResource sortedGroups}}"
+            <TreeView VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" x:Name="entitiesTreeView" Grid.Row="1" ItemsSource="{Binding Source={StaticResource sortedGroups}}"
                       SelectedItemChanged ="TreeView_SelectedItemChanged"
                       PreviewMouseLeftButtonDown="TreeView_PreviewMouseLeftButtonDown"
                       DragOver="TreeView_DragOver"

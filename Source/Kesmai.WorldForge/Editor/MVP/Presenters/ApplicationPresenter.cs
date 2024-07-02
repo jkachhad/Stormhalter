@@ -154,10 +154,9 @@ public class ApplicationPresenter : ObservableRecipient
 		{
 			if (value != _activeDocument)
 			{
-				_previousDocument = _activeDocument;					
+				_previousDocument = null;
 			}
 			SetProperty(ref _activeDocument, value, true);
-
 		}
 	}
     public RelayCommand ExportToPdfCommand { get; set; }
@@ -495,7 +494,7 @@ public class ApplicationPresenter : ObservableRecipient
 
 	public void JumpPrevious ()
 	{
-		if (_previousDocument != _activeDocument)
+		if (_previousDocument != _activeDocument && _previousDocument != null)
 		{
 			ActiveDocument = _previousDocument;
 		}
