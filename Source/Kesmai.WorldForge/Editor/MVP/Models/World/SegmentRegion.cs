@@ -122,6 +122,12 @@ public class SegmentRegion : ObservableObject
 
 		if (bounds.Top.HasValue && bounds.Left.HasValue && bounds.Width.HasValue && bounds.Height.HasValue)
 		{
+			element.Add(new XElement("bounds",
+				new XAttribute("left", bounds.Left),
+				new XAttribute("top", bounds.Top),
+				new XAttribute("right", bounds.Left + bounds.Width),
+				new XAttribute("bottom", bounds.Top + bounds.Height)));
+			
 			for (var y = bounds.Top.Value; y < (bounds.Top + bounds.Height.Value); y++)
 			for (var x = bounds.Left.Value; x < (bounds.Left + bounds.Width.Value); x++)
 			{
