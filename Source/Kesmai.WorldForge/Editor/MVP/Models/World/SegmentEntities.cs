@@ -28,7 +28,9 @@ public class SegmentEntities : ObservableCollection<Entity>
 	public void Load(XElement element, Version version)
 	{
 		foreach (var entityElement in element.Elements("entity"))
+		{
 			Add(new Entity(entityElement));
+		}
 	}
 		
 #if (ArchiveStorage)
