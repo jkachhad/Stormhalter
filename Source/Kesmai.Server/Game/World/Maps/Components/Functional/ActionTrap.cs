@@ -16,12 +16,10 @@ public class ActionTrap : TrapComponent
 			_action = (string)actionElement;
 	}
 
-	public override void Initialize()
+	public override void Initialize(SegmentTile parent)
 	{
-		base.Initialize();
-
-		var parent = Parent;
-
+		base.Initialize(parent);
+		
 		if (parent is null || String.IsNullOrEmpty(_action))
 			return;
 		
@@ -32,7 +30,7 @@ public class ActionTrap : TrapComponent
 			Action = actionMethod.CreateDelegate<Action<MobileEntity>>(null);
 	}
 
-	protected override void OnSpring(MobileEntity entity)
+	protected override void OnSpring(SegmentTile parent, MobileEntity entity)
 	{
 		if (Action != null)
 			Action(entity);

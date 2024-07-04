@@ -1,5 +1,7 @@
 ﻿using System;
-using System.IO;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using System.Xml.Linq;
 using Kesmai.Server.Miscellaneous.WorldForge;
 using Kesmai.Server.Spells;
@@ -9,48 +11,103 @@ namespace Kesmai.Server.Game;
 [WorldForgeComponent("Web")]
 public class Web : Static, IHandlePathing
 {
-	private bool _allowDispel;
+	internal new class Cache : IComponentCache
+	{
+		private static readonly Dictionary<int, Web> _cache = new Dictionary<int, Web>();
+	
+		public TerrainComponent Get(XElement element)
+		{
+			var color = element.GetColor("color", Color.White);
+			var allowDispel = element.GetBool("allowDispel", false);
+
+			return Get(color, TimeSpan.Zero, allowDispel);
+		}
+
+		public Web Get(Color color, TimeSpan duration, bool allowDispel)
+		{
+			var hash = CalculateHash(color, duration, allowDispel);
+
+			if (!_cache.TryGetValue(hash, out var component))
+				_cache.Add(hash, (component = new Web(color, duration, allowDispel)));
+
+			return component;
+		}
+
+		private static int CalculateHash(Color color, TimeSpan duration, bool allowDispel)
+		{
+			return HashCode.Combine(color, duration, allowDispel);
+		}
+	}
+	
+	/// <summary>
+	/// Gets an instance of <see cref="Web"/> that has been cached.
+	/// </summary>
+	public new static Web Construct(Color color, TimeSpan duration, bool allowDispel = false)
+	{
+		if (TryGetCache(typeof(Web), out var cache) && cache is Cache componentCache)
+			return componentCache.Get(color, duration, allowDispel);
+
+		return new Web(color, duration, allowDispel);
+	}
+	
+	private static readonly Dictionary<SegmentTile, Timer> _dispelTimers = new Dictionary<SegmentTile, Timer>();
+
+	private static void StartDispelTimer(SegmentTile parent, Web component, TimeSpan duration)
+	{
+		if (_dispelTimers.TryGetValue(parent, out var timer))
+			timer.Stop();
 		
-	private Spell _spell;
-	private Timer _dispelTimer;
+		_dispelTimers[parent] = Timer.DelayCall(duration, () => component.Dispel(parent));
+	}
+
+	private static void StopDispelTimer(SegmentTile parent)
+	{
+		if (_dispelTimers.TryGetValue(parent, out var timer))
+			timer.Stop();
+		
+		_dispelTimers.Remove(parent);
+	}
+	
+	private readonly TimeSpan _duration;
+	private readonly bool _allowDispel;
 	
 	/// <inheritdoc />
 	public int PathingPriority { get; } = 0;
-		
-	public Web() : this(null, TimeSpan.Zero)
-	{
-	}
-		
-	// TODO: Scale for facet time?
-	public Web(Spell spell, TimeSpan duration) : base(131)
-	{
-		_spell = spell;
 
-		if (duration > TimeSpan.Zero)
-			_dispelTimer = Timer.DelayCall(duration, Dispel);
-			
-		_allowDispel = true;
-	}
-		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Web"/> class.
 	/// </summary>
-	public Web(XElement element) : base(element)
+	private Web(Color color, TimeSpan duration, bool allowDispel) : base(color, 131)
 	{
-		if (element.TryGetElement("allowDispel", out var allowDispelElement))
-			_allowDispel = (bool)allowDispelElement;
+		_duration = duration;
+		_allowDispel = allowDispel;
+	}
+	
+	/// <inheritdoc />
+	public override void Initialize(SegmentTile parent)
+	{
+		base.Initialize(parent);
+			
+		if (parent is null)
+			return;
+		
+		parent.GetComponents<Web>().Where(t => t != this).ToList()
+			.ForEach(t => t.Dispel(parent));
+
+		if (_allowDispel && _duration > TimeSpan.Zero)
+			StartDispelTimer(parent, this, _duration);
 	}
 
 	/// <summary>
 	/// Determines whether the specified entity can path over this component.
 	/// </summary>
-	public virtual bool AllowMovementPath(MobileEntity entity = default(MobileEntity))
+	public virtual bool AllowMovementPath(SegmentTile parent, MobileEntity entity = default(MobileEntity))
 	{
 		return true;
 	}
 		
 	/// <inheritdoc />
-	public virtual bool AllowSpellPath(MobileEntity entity = default(MobileEntity), Spell spell = default(Spell))
+	public virtual bool AllowSpellPath(SegmentTile parent, MobileEntity entity = default(MobileEntity), Spell spell = default(Spell))
 	{
 		return true;
 	}
@@ -58,7 +115,7 @@ public class Web : Static, IHandlePathing
 	/// <summary>
 	/// Handles pathing requests over this terrain.
 	/// </summary>
-	public void HandleMovementPath(PathingRequestEventArgs args)
+	public void HandleMovementPath(SegmentTile parent, PathingRequestEventArgs args)
 	{
 		args.Result = PathingResult.Allowed;
 
@@ -82,23 +139,20 @@ public class Web : Static, IHandlePathing
 		}
 	}
 
-	public void Burn()
+	public void Burn(SegmentTile parent)
 	{
 		if (_allowDispel)
-			Dispel();
+			Dispel(parent);
 	}
 		
-	public void Dispel()
+	public void Dispel(SegmentTile parent)
 	{
 		if (!_allowDispel)
 			return;
-			
-		if (_dispelTimer != null && _dispelTimer.Running)
-			_dispelTimer.Stop();
 
-		_dispelTimer = null;
+		StopDispelTimer(parent);
 
-		if (_parent != null)
-			_parent.Remove(this);
+		if (parent != null)
+			parent.Remove(this);
 	}
 }

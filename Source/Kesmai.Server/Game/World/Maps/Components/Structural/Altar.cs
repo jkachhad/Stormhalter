@@ -1,6 +1,6 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Collections.Generic;
-using System.IO;
 using System.Xml.Linq;
 using Kesmai.Server.Miscellaneous.WorldForge;
 using Kesmai.Server.Spells;
@@ -10,24 +10,62 @@ namespace Kesmai.Server.Game;
 [WorldForgeComponent("AltarComponent")]
 public class Altar : TerrainComponent, IHandlePathing, IHandleInteraction
 {
-	private Terrain _altar;
-		
+	internal class Cache : IComponentCache
+	{
+		private static readonly Dictionary<int, Altar> _cache = new Dictionary<int, Altar>();
+	
+		public TerrainComponent Get(XElement element)
+		{
+			var color = element.GetColor("color", Color.White);
+			var alterId = element.GetInt("altar", 0);
+
+			return Get(color, alterId);
+		}
+
+		public Altar Get(Color color, int alterId)
+		{
+			var hash = CalculateHash(color, alterId);
+
+			if (!_cache.TryGetValue(hash, out var component))
+				_cache.Add(hash, (component = new Altar(color, alterId)));
+
+			return component;
+		}
+
+		private static int CalculateHash(Color color, int alterId)
+		{
+			return HashCode.Combine(color, alterId);
+		}
+	}
+	
+	/// <summary>
+	/// Gets an instance of <see cref="Altar"/> that has been cached.
+	/// </summary>
+	public static Altar Construct(Color color, int alterId)
+	{
+		if (TryGetCache(typeof(Altar), out var cache) && cache is Cache componentCache)
+			return componentCache.Get(color, alterId);
+
+		return new Altar(color, alterId);
+	}
+	
+	private readonly Terrain _altar;
+
 	/// <inheritdoc />
 	public int PathingPriority { get; } = 0;
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Altar"/> class.
 	/// </summary>
-	public Altar(XElement element) : base(element)
+	private Altar(Color color, int alterId) : base(color)
 	{
-		if (element.TryGetElement("altar", out var altarElement))
-			_altar = Terrain.Get((int)altarElement, Color);
+		_altar = Terrain.Get(alterId, color);
 	}
 
 	/// <summary>
 	/// Gets the terrain visible to the specified entity.
 	/// </summary>
-	public override IEnumerable<Terrain> GetTerrain(MobileEntity beholder)
+	public override IEnumerable<Terrain> GetTerrain(SegmentTile parent, MobileEntity beholder)
 	{
 		if (_altar != null)
 			yield return _altar;
@@ -36,31 +74,31 @@ public class Altar : TerrainComponent, IHandlePathing, IHandleInteraction
 	/// <summary>
 	/// Handles interaction from the specified entity.
 	/// </summary>
-	public bool HandleInteraction(MobileEntity entity, ActionType action)
+	public bool HandleInteraction(SegmentTile parent, MobileEntity entity, ActionType action)
 	{
 		if (action != ActionType.Look)
 			return false;
 
-		var location = _parent.Location;
+		var location = parent.Location;
 
 		var distance = entity.GetDistanceToMax(location);
 
 		if (distance > 1)
 			entity.SendLocalizedMessage(Color.Red, 6300103); /* You are unable to look from here. */
 		else
-			entity.LookAt(_parent);
+			entity.LookAt(parent);
 
 		return true;
 	}
 
 	/// <inheritdoc />
-	public virtual bool AllowMovementPath(MobileEntity entity = default(MobileEntity))
+	public virtual bool AllowMovementPath(SegmentTile parent, MobileEntity entity = default(MobileEntity))
 	{
 		return false;
 	}
 		
 	/// <inheritdoc />
-	public virtual bool AllowSpellPath(MobileEntity entity = default(MobileEntity), Spell spell = default(Spell))
+	public virtual bool AllowSpellPath(SegmentTile parent, MobileEntity entity = default(MobileEntity), Spell spell = default(Spell))
 	{
 		return false;
 	}
@@ -68,9 +106,9 @@ public class Altar : TerrainComponent, IHandlePathing, IHandleInteraction
 	/// <summary>
 	/// Handles pathing requests over this terrain.
 	/// </summary>
-	public virtual void HandleMovementPath(PathingRequestEventArgs args)
+	public virtual void HandleMovementPath(SegmentTile parent, PathingRequestEventArgs args)
 	{
-		if (!AllowMovementPath(args.Entity))
+		if (!AllowMovementPath(parent, args.Entity))
 			args.Result = PathingResult.Daze;
 		else
 			args.Result = PathingResult.Allowed;

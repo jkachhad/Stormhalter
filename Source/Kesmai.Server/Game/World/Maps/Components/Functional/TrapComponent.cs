@@ -44,7 +44,7 @@ public abstract class TrapComponent : TerrainComponent, IHandleMovement, IHandle
 			InterruptMovement = (bool)interruptMovementElement;
 	}
 	
-	public void OnEnter(MobileEntity entity, bool isTeleport)
+	public void OnEnter(SegmentTile parent, MobileEntity entity, bool isTeleport)
 	{
 		if (!entity.IsAlive)
 			return;
@@ -57,34 +57,35 @@ public abstract class TrapComponent : TerrainComponent, IHandleMovement, IHandle
 
 		_next = Server.Now + Cooldown;
 		
-		OnSpring(entity);
+		OnSpring(parent, entity);
 	}
 
 	/// <summary>
 	/// Called when the trap has been triggered by an entity.
 	/// </summary>
-	protected virtual void OnSpring(MobileEntity entity)
+	protected virtual void OnSpring(SegmentTile parent, MobileEntity entity)
 	{
 	}
 	
-	public void OnLeave(MobileEntity entity, bool isTeleport)
+	public void OnLeave(SegmentTile parent, MobileEntity entity, bool isTeleport)
 	{
 	}
 
 	public int GetMovementCost(MobileEntity entity) => 1;
 
-	public void HandleMovementPath(PathingRequestEventArgs args)
+	public void HandleMovementPath(SegmentTile parent, PathingRequestEventArgs args)
 	{
 		if (InterruptMovement)
 			args.Result = PathingResult.Interrupted;
 	}
 
-	public bool AllowMovementPath(MobileEntity entity = default(MobileEntity))
+	public bool AllowMovementPath(SegmentTile parent, MobileEntity entity = default(MobileEntity))
 	{
 		return true;
 	}
 
-	public bool AllowSpellPath(MobileEntity entity = default(MobileEntity), Spell spell = default(Spell))
+	public bool AllowSpellPath(SegmentTile parent, MobileEntity entity = default(MobileEntity),
+		Spell spell = default(Spell))
 	{
 		return true;
 	}
