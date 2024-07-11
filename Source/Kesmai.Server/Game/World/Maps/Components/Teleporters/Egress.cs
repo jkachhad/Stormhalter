@@ -34,9 +34,10 @@ public class Egress : TerrainComponent, IHandleInteraction, IHandleMovement
 	/// <summary>
 	/// Initializes this instance.
 	/// </summary>
-	public override void Initialize()
+	/// <param name="parent"></param>
+	public override void Initialize(SegmentTile parent)
 	{
-		var facet = _parent.Facet;
+		var facet = parent.Facet;
 
 		_destinationSegment = facet.GetSegmentByIndex(_segmentIndex);
 
@@ -53,7 +54,7 @@ public class Egress : TerrainComponent, IHandleInteraction, IHandleMovement
 	/// <summary>
 	/// Gets the terrain visible to the specified entity.
 	/// </summary>
-	public override IEnumerable<Terrain> GetTerrain(MobileEntity beholder)
+	public override IEnumerable<Terrain> GetTerrain(SegmentTile parent, MobileEntity beholder)
 	{
 		if (_portal != null)
 			yield return _portal;
@@ -62,22 +63,22 @@ public class Egress : TerrainComponent, IHandleInteraction, IHandleMovement
 	/// <summary>
 	/// Called before the specified entity is teleported.
 	/// </summary>
-	public void OnBeforeTeleport(MobileEntity entity)
+	public void OnBeforeTeleport(SegmentTile parent, MobileEntity entity)
 	{
-		_parent.PlaySound(67, 3, 6);
+		parent.PlaySound(67, 3, 6);
 	}
 
 	/// <summary>
 	/// Called after the specified entity is teleported.
 	/// </summary>
-	public void OnAfterTeleport(MobileEntity entity)
+	public void OnAfterTeleport(SegmentTile parent, MobileEntity entity)
 	{
 	}
 
 	/// <summary>
 	/// Handles interaction from the specified entity.
 	/// </summary>
-	public bool HandleInteraction(MobileEntity entity, ActionType action)
+	public bool HandleInteraction(SegmentTile parent, MobileEntity entity, ActionType action)
 	{
 		if (action != ActionType.Use && action != ActionType.Look)
 			return false;
@@ -94,18 +95,18 @@ public class Egress : TerrainComponent, IHandleInteraction, IHandleMovement
 				return false;
 			}
 
-			Teleport(entity);
+			Teleport(parent, entity);
 		}
 		else if (action == ActionType.Look)
 		{
-			var location = _parent.Location;
+			var location = parent.Location;
 
 			var distance = entity.GetDistanceToMax(location);
 
 			if (distance > 1)
 				entity.SendLocalizedMessage(Color.Red, 6300103); /* You are unable to look from here. */
 			else
-				entity.LookAt(_parent);
+				entity.LookAt(parent);
 		}
 
 		entity.QueueMovementTimer();
@@ -115,13 +116,13 @@ public class Egress : TerrainComponent, IHandleInteraction, IHandleMovement
 	/// <summary>
 	/// Teleports the specified entity.
 	/// </summary>
-	protected virtual void Teleport(MobileEntity entity)
+	protected virtual void Teleport(SegmentTile parent, MobileEntity entity)
 	{
 		if (_destinationSegment != null && _destinationTile != null)
 		{
-			OnBeforeTeleport(entity);
+			OnBeforeTeleport(parent, entity);
 			entity.Teleport(_destinationTile.Location, _destinationSegment);
-			OnAfterTeleport(entity);
+			OnAfterTeleport(parent, entity);
 		}
 	}
 		
@@ -130,11 +131,11 @@ public class Egress : TerrainComponent, IHandleInteraction, IHandleMovement
 	/// </summary>
 	public virtual int GetMovementCost(MobileEntity entity) => 1;
 		
-	public void OnEnter(MobileEntity entity, bool isTeleport)
+	public void OnEnter(SegmentTile parent, MobileEntity entity, bool isTeleport)
 	{
 	}
 
-	public void OnLeave(MobileEntity entity, bool isTeleport)
+	public void OnLeave(SegmentTile parent, MobileEntity entity, bool isTeleport)
 	{
 	}
 }

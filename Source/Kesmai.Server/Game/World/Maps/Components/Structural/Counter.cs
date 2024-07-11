@@ -1,6 +1,6 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Collections.Generic;
-using System.IO;
 using System.Xml.Linq;
 using Kesmai.Server.Miscellaneous.WorldForge;
 using Kesmai.Server.Spells;
@@ -10,8 +10,48 @@ namespace Kesmai.Server.Game;
 [WorldForgeComponent("CounterComponent")]
 public class Counter : TerrainComponent, IHandlePathing, IHandleInteraction
 {
-	private Terrain _counter;
-	private Direction _accessDirection;
+	internal class Cache : IComponentCache
+	{
+		private static readonly Dictionary<int, Counter> _cache = new Dictionary<int, Counter>();
+	
+		public TerrainComponent Get(XElement element)
+		{
+			var color = element.GetColor("color", Color.White);
+			var counterId = element.GetInt("counter", 0);
+			var direction = element.GetDirection("direction", Direction.None);
+
+			return Get(color, counterId, direction);
+		}
+
+		public Counter Get(Color color, int counterId, Direction direction)
+		{
+			var hash = CalculateHash(color, counterId, direction);
+
+			if (!_cache.TryGetValue(hash, out var component))
+				_cache.Add(hash, (component = new Counter(color, counterId, direction)));
+
+			return component;
+		}
+
+		private static int CalculateHash(Color color, int counterId, Direction direction)
+		{
+			return HashCode.Combine(color, counterId, direction);
+		}
+	}
+	
+	/// <summary>
+	/// Gets an instance of <see cref="Counter"/> that has been cached.
+	/// </summary>
+	public static Counter Construct(Color color, int counterId, Direction direction)
+	{
+		if (TryGetCache(typeof(Counter), out var cache) && cache is Cache componentCache)
+			return componentCache.Get(color, counterId, direction);
+
+		return new Counter(color, counterId, direction);
+	}
+	
+	private readonly Terrain _counter;
+	private readonly Direction _accessDirection;
 	
 	/// <inheritdoc />
 	public int PathingPriority { get; } = 0;
@@ -19,19 +59,16 @@ public class Counter : TerrainComponent, IHandlePathing, IHandleInteraction
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Counter"/> class.
 	/// </summary>
-	public Counter(XElement element) : base(element)
+	private Counter(Color color, int counterId, Direction direction) : base(color)
 	{
-		if (element.TryGetElement("counter", out var counterElement))
-			_counter = Terrain.Get((int)counterElement, Color);
-			
-		if (element.TryGetElement("direction", out var directionElement))
-			_accessDirection = Direction.GetDirection((int)directionElement);
+		_counter = Terrain.Get(counterId, color);
+		_accessDirection = direction;
 	}
 
 	/// <summary>
 	/// Gets the terrain visible to the specified entity.
 	/// </summary>
-	public override IEnumerable<Terrain> GetTerrain(MobileEntity beholder)
+	public override IEnumerable<Terrain> GetTerrain(SegmentTile parent, MobileEntity beholder)
 	{
 		if (_counter != null)
 			yield return _counter;
@@ -40,27 +77,27 @@ public class Counter : TerrainComponent, IHandlePathing, IHandleInteraction
 	/// <summary>
 	/// Handles interaction from the specified entity.
 	/// </summary>
-	public bool HandleInteraction(MobileEntity entity, ActionType action)
+	public bool HandleInteraction(SegmentTile parent, MobileEntity entity, ActionType action)
 	{
 		if (action != ActionType.Look)
 			return false;
 
-		if (!IsAccessibleFrom(entity.Location))
+		if (!IsAccessibleFrom(parent, entity.Location))
 			entity.SendLocalizedMessage(Color.Red, 6300103); /* You are unable to look from here. */
 		else
-			entity.LookAt(_parent);
+			entity.LookAt(parent);
 
 		return true;
 	}
 
 	/// <inheritdoc />
-	public virtual bool AllowMovementPath(MobileEntity entity = default(MobileEntity))
+	public virtual bool AllowMovementPath(SegmentTile parent, MobileEntity entity = default(MobileEntity))
 	{
 		return false;
 	}
 		
 	/// <inheritdoc />
-	public virtual bool AllowSpellPath(MobileEntity entity = default(MobileEntity), Spell spell = default(Spell))
+	public virtual bool AllowSpellPath(SegmentTile parent, MobileEntity entity = default(MobileEntity), Spell spell = default(Spell))
 	{
 		return false;
 	}
@@ -68,9 +105,9 @@ public class Counter : TerrainComponent, IHandlePathing, IHandleInteraction
 	/// <summary>
 	/// Handles pathing requests over this terrain.
 	/// </summary>
-	public virtual void HandleMovementPath(PathingRequestEventArgs args)
+	public virtual void HandleMovementPath(SegmentTile parent, PathingRequestEventArgs args)
 	{
-		if (!AllowMovementPath(args.Entity))
+		if (!AllowMovementPath(parent, args.Entity))
 			args.Result = PathingResult.Daze;
 		else
 			args.Result = PathingResult.Allowed;
@@ -79,9 +116,9 @@ public class Counter : TerrainComponent, IHandlePathing, IHandleInteraction
 	/// <summary>
 	/// Checks if the counter is accessible from the specified location.
 	/// </summary>
-	public bool IsAccessibleFrom(Point2D sourceLocation)
+	public bool IsAccessibleFrom(SegmentTile parent, Point2D sourceLocation)
 	{
-		var location = _parent.Location;
+		var location = parent.Location;
 			
 		var distance = sourceLocation.GetDistanceToMax(location);
 		var direction = Direction.GetDirection(location, sourceLocation);

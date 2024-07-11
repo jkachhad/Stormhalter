@@ -1,31 +1,70 @@
-﻿using System.Drawing;
-using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Xml.Linq;
 using Kesmai.Server.Miscellaneous.WorldForge;
-using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Game;
 
 [WorldForgeComponent("LockersComponent")]
 public class Lockers : Static, IHandleInteraction
 {
+	internal new class Cache : IComponentCache
+	{
+		private static readonly Dictionary<int, Lockers> _cache = new Dictionary<int, Lockers>();
+	
+		public TerrainComponent Get(XElement element)
+		{
+			var color = element.GetColor("color", Color.White);
+			var staticId = element.GetInt("static", 0);
+
+			return Get(color, staticId);
+		}
+
+		public Lockers Get(Color color, int lockerId)
+		{
+			var hash = CalculateHash(color, lockerId);
+
+			if (!_cache.TryGetValue(hash, out var component))
+				_cache.Add(hash, (component = new Lockers(color, lockerId)));
+
+			return component;
+		}
+
+		private static int CalculateHash(Color color, int lockerId)
+		{
+			return HashCode.Combine(color, lockerId);
+		}
+	}
+	
+	/// <summary>
+	/// Gets an instance of <see cref="Lockers"/> that has been cached.
+	/// </summary>
+	public new static Lockers Construct(Color color, int lockerId)
+	{
+		if (TryGetCache(typeof(Lockers), out var cache) && cache is Cache componentCache)
+			return componentCache.Get(color, lockerId);
+
+		return new Lockers(color, lockerId);
+	}
+	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Lockers"/> class.
 	/// </summary>
-	public Lockers(XElement element) : base(element)
+	private Lockers(Color color, int lockerId) : base(color, lockerId)
 	{
 	}
-
+	
 	/// <summary>
 	/// Handles interaction from the specified entity.
 	/// </summary>
-	public bool HandleInteraction(MobileEntity entity, ActionType action)
+	public bool HandleInteraction(SegmentTile parent, MobileEntity entity, ActionType action)
 	{
 		if (action != ActionType.Open)
 			return false;
 
 		var player = entity as PlayerEntity;
-		var location = _parent.Location;
+		var location = parent.Location;
 
 		if (player != null)
 		{
@@ -37,7 +76,7 @@ public class Lockers : Static, IHandleInteraction
 			}
 			else
 			{
-				entity.LookAt(_parent);
+				entity.LookAt(parent);
 				entity.QueueRoundTimer();
 			}
 		}

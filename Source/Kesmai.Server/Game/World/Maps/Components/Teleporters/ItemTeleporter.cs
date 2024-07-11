@@ -28,9 +28,9 @@ public class ItemTeleporter : HiddenTeleporter
 			OnFail = PathingResult.Interrupted;
 	}
 
-	protected override bool CanTeleport(MobileEntity entity)
+	protected override bool CanTeleport(SegmentTile parent, MobileEntity entity)
 	{
-		if (!base.CanTeleport(entity))
+		if (!base.CanTeleport(parent, entity))
 			return false;
 
 		if (Type != null)
@@ -48,9 +48,9 @@ public class ItemTeleporter : HiddenTeleporter
 		return false;
 	}
 		
-	public override void HandleMovementPath(PathingRequestEventArgs args)
+	public override void HandleMovementPath(SegmentTile parent, PathingRequestEventArgs args)
 	{
-		if (CanTeleport(args.Entity))
+		if (CanTeleport(parent, args.Entity))
 			args.Result = PathingResult.Teleport;
 		else
 			args.Result = OnFail;

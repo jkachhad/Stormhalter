@@ -36,10 +36,11 @@ public abstract class Teleporter : TerrainComponent, IHandleMovement, IHandlePat
 	/// <summary>
 	/// Initializes this instance.
 	/// </summary>
-	public override void Initialize()
+	/// <param name="parent"></param>
+	public override void Initialize(SegmentTile parent)
 	{
-		var region = _parent.Region;
-		var segment = _parent.Segment;
+		var region = parent.Region;
+		var segment = parent.Segment;
 
 		_destinationRegion = segment.FindRegion(_destination.Region);
 
@@ -64,7 +65,7 @@ public abstract class Teleporter : TerrainComponent, IHandleMovement, IHandlePat
 	/// <summary>
 	/// Teleports the specified entity.
 	/// </summary>
-	protected virtual void Teleport(WorldEntity entity)
+	protected virtual void Teleport(SegmentTile parent, WorldEntity entity)
 	{
 		if (_destinationTile != null)
 		{
@@ -75,23 +76,23 @@ public abstract class Teleporter : TerrainComponent, IHandleMovement, IHandlePat
 			else if (entity is ItemEntity item)
 				item.Move(_destinationTile.Location, true);
 				
-			OnAfterTeleport(entity);
+			OnAfterTeleport(parent, entity);
 		}
 	}
 
 	/// <summary>
 	/// Called after the specified entity is teleported.
 	/// </summary>
-	protected virtual void OnAfterTeleport(WorldEntity entity)
+	protected virtual void OnAfterTeleport(SegmentTile parent, WorldEntity entity)
 	{
 	}
 		
-	protected virtual bool CanTeleport(MobileEntity entity)
+	protected virtual bool CanTeleport(SegmentTile parent, MobileEntity entity)
 	{
 		return false;
 	}
 		
-	protected virtual bool CanTeleport(ItemEntity entity)
+	protected virtual bool CanTeleport(SegmentTile parent, ItemEntity entity)
 	{
 		return false;
 	}
@@ -104,27 +105,28 @@ public abstract class Teleporter : TerrainComponent, IHandleMovement, IHandlePat
 	/// <summary>
 	/// Called when a mobile entity steps on this component.
 	/// </summary>
-	public virtual void OnEnter(MobileEntity entity, bool isTeleport)
+	public virtual void OnEnter(SegmentTile parent, MobileEntity entity, bool isTeleport)
 	{
-		if (!isTeleport && CanTeleport(entity))
-			Teleport(entity);
+		if (!isTeleport && CanTeleport(parent, entity))
+			Teleport(parent, entity);
 	}
 		
 	/// <summary>
 	/// Called when a mobile entity steps off this component.
 	/// </summary>
-	public virtual void OnLeave(MobileEntity entity, bool isTeleport)
+	public virtual void OnLeave(SegmentTile parent, MobileEntity entity, bool isTeleport)
 	{
 	}
 		
 	/// <inheritdoc />
-	public virtual bool AllowMovementPath(MobileEntity entity = default(MobileEntity))
+	public virtual bool AllowMovementPath(SegmentTile parent, MobileEntity entity = default(MobileEntity))
 	{
 		return true;
 	}
 		
 	/// <inheritdoc />
-	public virtual bool AllowSpellPath(MobileEntity entity = default(MobileEntity), Spell spell = default(Spell))
+	public virtual bool AllowSpellPath(SegmentTile parent, MobileEntity entity = default(MobileEntity),
+		Spell spell = default(Spell))
 	{
 		return true;
 	}
@@ -132,21 +134,21 @@ public abstract class Teleporter : TerrainComponent, IHandleMovement, IHandlePat
 	/// <summary>
 	/// Handles pathing requests over this terrain.
 	/// </summary>
-	public virtual void HandleMovementPath(PathingRequestEventArgs args)
+	public virtual void HandleMovementPath(SegmentTile parent, PathingRequestEventArgs args)
 	{
-		if (CanTeleport(args.Entity))
+		if (CanTeleport(parent, args.Entity))
 			args.Result = PathingResult.Teleport;
 		else
 			args.Result = PathingResult.Allowed;
 	}
 		
-	public void OnItemAdded(ItemEntity item, bool isTeleport)
+	public void OnItemAdded(SegmentTile parent, ItemEntity item, bool isTeleport)
 	{
-		if (!isTeleport && CanTeleport(item))
-			Teleport(item);
+		if (!isTeleport && CanTeleport(parent, item))
+			Teleport(parent, item);
 	}
 		
-	public void OnItemRemoved(ItemEntity item, bool isTeleport)
+	public void OnItemRemoved(SegmentTile parent, ItemEntity item, bool isTeleport)
 	{
 	}
 }

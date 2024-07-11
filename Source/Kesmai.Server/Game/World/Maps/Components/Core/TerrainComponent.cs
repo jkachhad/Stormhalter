@@ -1,64 +1,69 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Xml.Linq;
 
 namespace Kesmai.Server.Game;
 
-public abstract class TerrainComponent : IDisposable
+public abstract class TerrainComponent
 {
-	protected SegmentTile _parent;
-		
-	/// <summary>
-	/// Gets or sets the map tile that contains this component.
-	/// </summary>
-	public SegmentTile Parent
+	private static readonly Dictionary<Type, IComponentCache> _componentCaches = new()
 	{
-		get => _parent;
-		set => _parent = value;
-	}
+		[typeof(Floor)] = new Floor.Cache(),
+		[typeof(Wall)] = new Wall.Cache(),
+		[typeof(Static)] = new Static.Cache(),
+		[typeof(Ice)] = new Ice.Cache(),
+		[typeof(Water)] = new Water.Cache(),
+		[typeof(PoisonedWater)] = new PoisonedWater.Cache(),
+		[typeof(Ruins)] = new Ruins.Cache(),
+		[typeof(Trash)] = new Trash.Cache(),
+		[typeof(Lockers)] = new Lockers.Cache(),
+		[typeof(Tree)] = new Tree.Cache(),
+		[typeof(Altar)] = new Altar.Cache(),
+		[typeof(Counter)] = new Counter.Cache(),
+		[typeof(Obstruction)] = new Obstruction.Cache(),
 		
-	private Color _color;
+		[typeof(Web)] = new Web.Cache(),
+		[typeof(Darkness)] = new Darkness.Cache(),
+	};
+
+	public static bool TryGetCache(Type type, out IComponentCache cache)
+		=> _componentCaches.TryGetValue(type, out cache);
+	
+	protected readonly Color _color;
 
 	/// <summary>
-	/// Gets or sets the component color.
+	/// Gets the component color.
 	/// </summary>
-	public virtual Color Color
-	{
-		get { return _color; }
-	}
-
-	public TerrainComponent()
-	{
-		_color = Color.White;
-	}
-		
+	public Color Color => _color;
+	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TerrainComponent"/> class.
 	/// </summary>
-	public TerrainComponent(XElement element)
+	protected TerrainComponent(XElement element)
 	{
-		if (element.TryGetElement("color", out var colorElement))
-		{
-			var colorR = (int)colorElement.Attribute("r");
-			var colorG = (int)colorElement.Attribute("g");
-			var colorB = (int)colorElement.Attribute("b");
-			var colorA = (int)colorElement.Attribute("a");
+		_color = element.GetColor("color", Color.White);
+	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="TerrainComponent"/> class.
+	/// </summary>
+	public TerrainComponent() : this(Color.White)
+	{
+	}
 
-			_color = Color.FromArgb(colorA, colorR, colorG, colorB);
-		}
-		else
-		{
-			_color = Color.White;
-		}
+	/// <summary>
+	/// Initializes a new instance of the <see cref="TerrainComponent"/> class.
+	/// </summary>
+	public TerrainComponent(Color color)
+	{
+		_color = color;
 	}
 
 	/// <summary>
 	/// Gets the terrain visible to the specified entity.
 	/// </summary>
-	public virtual IEnumerable<Terrain> GetTerrain(MobileEntity beholder)
+	public virtual IEnumerable<Terrain> GetTerrain(SegmentTile parent, MobileEntity beholder)
 	{
 		yield break;
 	}
@@ -66,28 +71,27 @@ public abstract class TerrainComponent : IDisposable
 	/// <summary>
 	/// Initializes this terrain.
 	/// </summary>
-	public virtual void Initialize()
+	/// <param name="parent"></param>
+	public virtual void Initialize(SegmentTile parent)
 	{
 	}
 		
 	#region IDisposable
 		
-	protected bool _disposed = false;
+	private bool _disposed = false;
 
-	public void Dispose()
+	public void Dispose(SegmentTile parent)
 	{
 		if (_disposed)
 			return;
 		
-		OnDispose(true);
+		OnDispose(parent, true);
 		
 		_disposed = true;
 	}
 		
-	protected virtual void OnDispose(bool disposing)
+	protected virtual void OnDispose(SegmentTile parent, bool disposing)
 	{
-		if (disposing)
-			_parent = null;
 	}
 		
 	#endregion
