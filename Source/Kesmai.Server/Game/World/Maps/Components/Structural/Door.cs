@@ -14,7 +14,7 @@ public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMove
 	private static Dictionary<SegmentTile, Timer> _closeTimers = new Dictionary<SegmentTile, Timer>();
 	private static Dictionary<SegmentTile, Timer> _hideTimers = new Dictionary<SegmentTile, Timer>();
 
-	public static void StartCloseTimer(SegmentTile parent, Door component, TimeSpan duration)
+	private static void StartCloseTimer(SegmentTile parent, Door component, TimeSpan duration)
 	{
 		if (_closeTimers.TryGetValue(parent, out var timer))
 			timer.Stop();
