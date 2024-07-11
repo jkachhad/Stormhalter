@@ -25,12 +25,12 @@ public class Sky : PassiveTeleporter, IHandleInteraction
 	/// <summary>
 	/// Handles interaction from the specified entity.
 	/// </summary>
-	public bool HandleInteraction(MobileEntity entity, ActionType action)
+	public bool HandleInteraction(SegmentTile parent, MobileEntity entity, ActionType action)
 	{
 		if (action != ActionType.Look)
 			return false;
 
-		var location = _parent.Location;
+		var location = parent.Location;
 		var distance = entity.GetDistanceToMax(location);
 
 		if (distance > 1)
@@ -39,16 +39,16 @@ public class Sky : PassiveTeleporter, IHandleInteraction
 		}
 		else
 		{
-			entity.LookAt(_parent);
+			entity.LookAt(parent);
 			entity.SendLocalizedMessage(Color.Yellow, 6300273, Math.Abs(_elevationDelta).ToString()); /* It looks like a {0} foot drop. */
 		}
 
 		return true;
 	}
 
-	public override void OnEnter(MobileEntity entity, bool isTeleport)
+	public override void OnEnter(SegmentTile parent, MobileEntity entity, bool isTeleport)
 	{
-		if (!CanTeleport(entity))
+		if (!CanTeleport(parent, entity))
 		{
 			if (entity is PlayerEntity player && (player.LeftHand is BrightFeather feather))
 				feather.Delete();
@@ -56,11 +56,11 @@ public class Sky : PassiveTeleporter, IHandleInteraction
 		else
 		{
 			if (!isTeleport)
-				Teleport(entity);
+				Teleport(parent, entity);
 		}
 	}
 
-	protected override bool CanTeleport(MobileEntity entity)
+	protected override bool CanTeleport(SegmentTile parent, MobileEntity entity)
 	{
 		if (entity is CreatureEntity creature)
 			return !creature.CanFly;
@@ -68,17 +68,17 @@ public class Sky : PassiveTeleporter, IHandleInteraction
 		if (entity is PlayerEntity player && (player.LeftHand is BrightFeather feather))
 			return false;
 
-		return base.CanTeleport(entity);
+		return base.CanTeleport(parent, entity);
 	}
 
 	/// <summary>
 	/// Called after the specified entity is teleported.
 	/// </summary>
-	protected override void OnAfterTeleport(WorldEntity entity)
+	protected override void OnAfterTeleport(SegmentTile parent, WorldEntity entity)
 	{
 		if (entity is MobileEntity mobile)
 		{
-			mobile.Fall(Math.Abs(_elevationDelta), _parent, _destinationTile);
+			mobile.Fall(Math.Abs(_elevationDelta), parent, _destinationTile);
 
 			if (Math.Abs(_elevationDelta) > 4500)
 		   		mobile.Kill();

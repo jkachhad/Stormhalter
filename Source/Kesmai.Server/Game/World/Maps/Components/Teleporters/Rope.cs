@@ -48,11 +48,11 @@ public class Rope : ActiveTeleporter
 	/// <summary>
 	/// Gets the terrain visible to the specified entity.
 	/// </summary>
-	public override IEnumerable<Terrain> GetTerrain(MobileEntity beholder)
+	public override IEnumerable<Terrain> GetTerrain(SegmentTile parent, MobileEntity beholder)
 	{
 		if (!_isSecret)
 		{
-			foreach (var terrain in base.GetTerrain(beholder))
+			foreach (var terrain in base.GetTerrain(parent, beholder))
 				yield return terrain;
 		}
 	}
@@ -60,7 +60,7 @@ public class Rope : ActiveTeleporter
 	/// <summary>
 	/// Checks the action to perform a teleport.
 	/// </summary>
-	protected override bool CheckTeleport(MobileEntity entity, ActionType action)
+	protected override bool CheckTeleport(SegmentTile parent, MobileEntity entity, ActionType action)
 	{
 		var descends = (_elevationDelta < 0);
 		var climbingDown = (action != ActionType.ClimbUp);
@@ -90,7 +90,7 @@ public class Rope : ActiveTeleporter
 			if (Utility.RandomDouble() < slipChance)
 			{
 				player.Fall(Math.Abs(Utility.RandomBetween(_elevationDelta / 2, _elevationDelta)), 
-					_parent, _destinationTile);
+					parent, _destinationTile);
 					
 				return descends;
 			}

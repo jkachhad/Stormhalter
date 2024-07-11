@@ -143,9 +143,9 @@ public class HiddenTeleporter : Teleporter
 			_allowNPC = (bool)allowNPCElement;
 	}
 
-	protected override bool CanTeleport(MobileEntity entity)
+	protected override bool CanTeleport(SegmentTile parent, MobileEntity entity)
 	{
-		var facet = _parent.Facet;
+		var facet = parent.Facet;
 
 		if (_lightphases == null || !_lightphases.Contains(facet.Lightphase))
 			return false;
@@ -161,7 +161,7 @@ public class HiddenTeleporter : Teleporter
 			var teleport = _professions.Contains(player.Profession);
 
 			if (!teleport && player.IsCarryingCorpse(out var corpse))
-				teleport = CanTeleport(corpse.Owner);
+				teleport = CanTeleport(parent, corpse.Owner);
 
 			if (!teleport)
 				return false;
@@ -176,17 +176,17 @@ public class HiddenTeleporter : Teleporter
 		return true;
 	}
 
-	protected override bool CanTeleport(ItemEntity entity)
+	protected override bool CanTeleport(SegmentTile parent, ItemEntity entity)
 	{
 		if (entity is Corpse corpse)
-			return CanTeleport(corpse.Owner);
+			return CanTeleport(parent, corpse.Owner);
 
-		return base.CanTeleport(entity);
+		return base.CanTeleport(parent, entity);
 	}
 
-	protected override void OnAfterTeleport(WorldEntity entity)
+	protected override void OnAfterTeleport(SegmentTile parent, WorldEntity entity)
 	{
-		base.OnAfterTeleport(entity);
+		base.OnAfterTeleport(parent, entity);
 
 		if (entity is PlayerEntity player && _message > 0)
 			player.SendLocalizedMessage(_message);

@@ -17,11 +17,11 @@ public abstract class SpellTrap<T> : TrapComponent where T : Spell, new()
 			Skill = (int)skillElement;
 	}
 	
-	public abstract void CastSpell(T spell, MobileEntity entity);
+	public abstract void CastSpell(SegmentTile parent, T spell, MobileEntity entity);
 
-	protected override void OnSpring(MobileEntity entity)
+	protected override void OnSpring(SegmentTile parent, MobileEntity entity)
 	{
-		base.OnSpring(entity);
+		base.OnSpring(parent, entity);
 		
 		var spell = new T()
 		{
@@ -29,7 +29,7 @@ public abstract class SpellTrap<T> : TrapComponent where T : Spell, new()
 			SkillLevel = Skill,
 		};
 		
-		CastSpell(spell, entity);
+		CastSpell(parent, spell, entity);
 	}
 }
 
@@ -44,15 +44,15 @@ public class WhirlwindTrap : SpellTrap<WhirlwindSpell>
 			Direction = Direction.GetDirection((int)directionElement);
 	}
 	
-	public override void CastSpell(WhirlwindSpell spell, MobileEntity entity)
+	public override void CastSpell(SegmentTile parent, WhirlwindSpell spell, MobileEntity entity)
 	{
 		var damage = 12 * Skill;
 		var strength = (4 * Skill) - 40;
 		
-		var whirlwind = new Whirlwind(spell, (int)damage, (int)strength, Direction,
+		var whirlwind = Whirlwind.Construct(_color, spell, (int)damage, (int)strength, Direction,
 			(Direction != Direction.East && Direction != Direction.West));
 		
-		Parent.Add(whirlwind);
+		parent.Add(whirlwind);
 	}
 }
 
@@ -67,12 +67,12 @@ public class PoisonCloudTrap : SpellTrap<PoisonCloudSpell>
 			Direction = Direction.GetDirection((int)directionElement);
 	}
 	
-	public override void CastSpell(PoisonCloudSpell spell, MobileEntity entity)
+	public override void CastSpell(SegmentTile parent, PoisonCloudSpell spell, MobileEntity entity)
 	{
-		var poisonCloud = new PoisonCloud(spell, Skill, 0, Direction,
+		var poisonCloud = PoisonCloud.Construct(_color, spell, Skill, 0, Direction,
 			(Direction != Direction.East && Direction != Direction.West));
 		
-		Parent.Add(poisonCloud);
+		parent.Add(poisonCloud);
 	}
 }
 
@@ -83,10 +83,9 @@ public class BonfireTrap : SpellTrap<BonfireSpell>
 	{
 	}
 	
-	public override void CastSpell(BonfireSpell spell, MobileEntity entity)
+	public override void CastSpell(SegmentTile parent, BonfireSpell spell, MobileEntity entity)
 	{
-		Parent.Add(new Fire(spell, 5 * Skill, 
-			entity.Facet.TimeSpan.FromRounds(Skill + 4)));
+		parent.Add(Fire.Construct(_color, spell, 5 * Skill, entity.Facet.TimeSpan.FromRounds(Skill + 4), false));
 	}
 }
 
@@ -97,9 +96,9 @@ public class FirestormTrap : SpellTrap<FireStormSpell>
 	{
 	}
 	
-	public override void CastSpell(FireStormSpell spell, MobileEntity entity)
+	public override void CastSpell(SegmentTile parent, FireStormSpell spell, MobileEntity entity)
 	{
-		Parent.Add(new FireStorm(spell, 10 * Skill, Skill));
+		parent.Add(FireStorm.Construct(_color, spell, 10 * Skill, Skill));
 	}
 }
 
@@ -110,9 +109,9 @@ public class ConcussionTrap : SpellTrap<ConcussionSpell>
 	{
 	}
 	
-	public override void CastSpell(ConcussionSpell spell, MobileEntity entity)
+	public override void CastSpell(SegmentTile parent, ConcussionSpell spell, MobileEntity entity)
 	{
-		Parent.Add(new Explosion(spell, 8 * Skill, 0));
+		parent.Add(Explosion.Construct(spell, 8 * Skill, 0, entity.Facet.TimeSpan.FromSeconds(1.0)));
 	}
 }
 
@@ -123,9 +122,9 @@ public class LightningBoltTrap : SpellTrap<LightningBoltSpell>
 	{
 	}
 	
-	public override void CastSpell(LightningBoltSpell spell, MobileEntity entity)
+	public override void CastSpell(SegmentTile parent, LightningBoltSpell spell, MobileEntity entity)
 	{
-		Parent.Add(new Lightning(spell, Skill, 6 * Skill));
+		parent.Add(Lightning.Construct(_color, spell, Skill, 6 * Skill));
 	}
 }
 
@@ -136,7 +135,7 @@ public class BlindTrap : SpellTrap<BlindSpell>
 	{
 	}
 	
-	public override void CastSpell(BlindSpell spell, MobileEntity entity)
+	public override void CastSpell(SegmentTile parent, BlindSpell spell, MobileEntity entity)
 	{
 		if (BlindSpell.IsBlinded(entity, Skill, out var rounds))
 		{
@@ -153,7 +152,7 @@ public class FearTrap : SpellTrap<FearSpell>
 	{
 	}
 	
-	public override void CastSpell(FearSpell spell, MobileEntity entity)
+	public override void CastSpell(SegmentTile parent, FearSpell spell, MobileEntity entity)
 	{
 		if (FearSpell.IsFeared(entity, Skill, out var rounds))
 		{
@@ -170,7 +169,7 @@ public class StunTrap : SpellTrap<StunSpell>
 	{
 	}
 	
-	public override void CastSpell(StunSpell spell, MobileEntity entity)
+	public override void CastSpell(SegmentTile parent, StunSpell spell, MobileEntity entity)
 	{
 		if (StunSpell.IsStunned(entity, Skill, out var rounds))
 		{

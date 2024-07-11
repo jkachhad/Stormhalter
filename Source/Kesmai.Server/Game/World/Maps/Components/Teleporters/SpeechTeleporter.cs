@@ -24,7 +24,7 @@ public class SpeechTeleporter : HiddenTeleporter, IHandleSpeech
 	/// <summary>
 	/// Gets the terrain visible to the specified entity.
 	/// </summary>
-	public override IEnumerable<Terrain> GetTerrain(MobileEntity beholder)
+	public override IEnumerable<Terrain> GetTerrain(SegmentTile parent, MobileEntity beholder)
 	{
 		if (_teleporter != null)
 			yield return _teleporter;
@@ -33,12 +33,12 @@ public class SpeechTeleporter : HiddenTeleporter, IHandleSpeech
 	/// <summary>
 	/// Handles pathing requests over this terrain.
 	/// </summary>
-	public override void HandleMovementPath(PathingRequestEventArgs args)
+	public override void HandleMovementPath(SegmentTile parent, PathingRequestEventArgs args)
 	{
 		args.Result = PathingResult.Allowed;
 	}
 
-	public override void OnEnter(MobileEntity entity, bool isTeleport)
+	public override void OnEnter(SegmentTile parent, MobileEntity entity, bool isTeleport)
 	{
 		/* We do nothing when a player enters this teleporter. We wait until a phrase is said. */
 	}
@@ -46,14 +46,14 @@ public class SpeechTeleporter : HiddenTeleporter, IHandleSpeech
 	/// <summary>
 	/// Handles speech provided by an entity.
 	/// </summary>
-	public bool HandleSpeech(MobileEntity entity, string phrase)
+	public bool HandleSpeech(SegmentTile parent, MobileEntity entity, string phrase)
 	{
 		if (phrase.Matches(Phrase, true))
 		{
-			if (!base.CanTeleport(entity))
+			if (!base.CanTeleport(parent, entity))
 				return false;
 
-			Teleport(entity);
+			Teleport(parent, entity);
 
 			entity.QueueMovementTimer();
 			return true;

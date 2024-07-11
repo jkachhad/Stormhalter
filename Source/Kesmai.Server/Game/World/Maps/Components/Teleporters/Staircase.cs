@@ -23,7 +23,7 @@ public class Staircase : ActiveTeleporter
 	/// <summary>
 	/// Checks the action to perform a teleport.
 	/// </summary>
-	protected override bool CheckTeleport(MobileEntity entity, ActionType action)
+	protected override bool CheckTeleport(SegmentTile parent, MobileEntity entity, ActionType action)
 	{
 		var descends = Descends;
 
@@ -49,7 +49,7 @@ public class Staircase : ActiveTeleporter
 		}
 	}
 		
-	protected override bool CanTeleport(ItemEntity entity)
+	protected override bool CanTeleport(SegmentTile parent, ItemEntity entity)
 	{
 		if (Descends)
 			return (Utility.Random(1, 10) <= 1);

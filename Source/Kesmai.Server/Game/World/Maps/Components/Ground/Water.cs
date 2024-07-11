@@ -1,5 +1,6 @@
 ﻿using System;
-using System.IO;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Xml.Linq;
 using Kesmai.Server.Items;
@@ -11,7 +12,48 @@ namespace Kesmai.Server.Game;
 [WorldForgeComponent("WaterComponent")]
 public class Water : Floor, IHandlePathing
 {
-	private int _depth;
+	internal new class Cache : IComponentCache
+	{
+		private static readonly Dictionary<int, Water> _cache = new Dictionary<int, Water>();
+	
+		public TerrainComponent Get(XElement element)
+		{
+			var color = element.GetColor("color", Color.White);
+			var groundId = element.GetInt("ground", 0);
+			var movementCost = element.GetInt("movementCost", 1);
+			var depth = element.GetInt("depth", 3);
+
+			return Get(color, groundId, movementCost, depth);
+		}
+
+		public Water Get(Color color, int waterId, int movementCost, int depth)
+		{
+			var hash = CalculateHash(color, waterId, movementCost, depth);
+
+			if (!_cache.TryGetValue(hash, out var component))
+				_cache.Add(hash, (component = new Water(color, waterId, movementCost, depth)));
+
+			return component;
+		}
+
+		private static int CalculateHash(Color color, int waterId, int movementCost, int depth)
+		{
+			return HashCode.Combine(color, waterId, movementCost, depth);
+		}
+	}
+	
+	/// <summary>
+	/// Gets an instance of <see cref="Water"/> that has been cached.
+	/// </summary>
+	public new static Water Construct(Color color, int groundId, int movementCost, int depth)
+	{
+		if (TryGetCache(typeof(Water), out var cache) && cache is Cache componentCache)
+			return componentCache.Get(color, groundId, movementCost, depth);
+
+		return new Water(color, groundId, movementCost, depth);
+	}
+	
+	private readonly int _depth;
 		
 	/// <inheritdoc />
 	public int PathingPriority { get; } = 0;
@@ -25,28 +67,23 @@ public class Water : Floor, IHandlePathing
 	/// Gets a value indicating if an entity can be drowned.
 	/// </summary>
 	public bool CanDrown => (_depth >= 3);
-		
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Water"/> class.
 	/// </summary>
-	public Water(XElement element) : base(element)
+	protected Water(Color color, int waterId, int movementCost, int depth) : base(color, waterId, movementCost)
 	{
-		if (element.TryGetElement("depth", out var depthElement))
-			_depth = (int)depthElement;
-		else
-			_depth = 3;
+		_depth = depth;
 	}
 		
-	/// <summary>
-	/// Determines whether the specified entity can path over this component.
-	/// </summary>
-	public virtual bool AllowMovementPath(MobileEntity entity = default(MobileEntity))
+	/// <inheritdoc />
+	public virtual bool AllowMovementPath(SegmentTile parent, MobileEntity entity = default(MobileEntity))
 	{
 		return true;
 	}
 		
 	/// <inheritdoc />
-	public virtual bool AllowSpellPath(MobileEntity entity = default(MobileEntity), Spell spell = default(Spell))
+	public virtual bool AllowSpellPath(SegmentTile parent, MobileEntity entity = default(MobileEntity), Spell spell = default(Spell))
 	{
 		return true;
 	}
@@ -54,7 +91,7 @@ public class Water : Floor, IHandlePathing
 	/// <summary>
 	/// Handles pathing requests over this terrain.
 	/// </summary>
-	public void HandleMovementPath(PathingRequestEventArgs args)
+	public void HandleMovementPath(SegmentTile parent, PathingRequestEventArgs args)
 	{
 		var entity = args.Entity;
 
@@ -82,7 +119,7 @@ public class Water : Floor, IHandlePathing
 	/// <summary>
 	/// Called when a mobile entity steps on this component.
 	/// </summary>
-	public override void OnEnter(MobileEntity entity, bool isTeleport)
+	public override void OnEnter(SegmentTile parent, MobileEntity entity, bool isTeleport)
 	{
 		if (!entity.IsAlive)
 			return;
@@ -104,7 +141,7 @@ public class Water : Floor, IHandlePathing
 		var silent = (entity is CreatureEntity creature && (creature.CanSwim || creature.CanFly));	
 
 		if (!silent)
-			_parent.PlaySound(59, 3, 6);
+			parent.PlaySound(59, 3, 6);
 			
 		var drowning = true;
 
@@ -114,7 +151,7 @@ public class Water : Floor, IHandlePathing
 		if (entity.HasStatus(typeof(BreatheWaterStatus)))
 			return;
 
-		var region = _parent.Region;
+		var region = parent.Region;
 
 		if (CanDrown && drowning && !region.IsInactive)
 			entity.QueueWaterTimer(_depth);
@@ -123,7 +160,7 @@ public class Water : Floor, IHandlePathing
 	/// <summary>
 	/// Called when a mobile entity steps off this component.
 	/// </summary>
-	public override void OnLeave(MobileEntity entity, bool isTeleport)
+	public override void OnLeave(SegmentTile parent, MobileEntity entity, bool isTeleport)
 	{
 		entity.StopWaterTimer();
 	}

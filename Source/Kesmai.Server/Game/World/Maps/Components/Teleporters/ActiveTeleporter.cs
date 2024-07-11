@@ -21,7 +21,7 @@ public abstract class ActiveTeleporter : Teleporter, IHandleInteraction
 	/// <summary>
 	/// Gets the terrain visible to the specified entity.
 	/// </summary>
-	public override IEnumerable<Terrain> GetTerrain(MobileEntity beholder)
+	public override IEnumerable<Terrain> GetTerrain(SegmentTile parent, MobileEntity beholder)
 	{
 		if (_teleporter != null)
 			yield return _teleporter;
@@ -30,26 +30,26 @@ public abstract class ActiveTeleporter : Teleporter, IHandleInteraction
 	/// <summary>
 	/// Handles interaction from the specified entity.
 	/// </summary>
-	public bool HandleInteraction(MobileEntity entity, ActionType action)
+	public bool HandleInteraction(SegmentTile parent, MobileEntity entity, ActionType action)
 	{
 		if (action != ActionType.Look)
 		{
-			if (!CheckTeleport(entity, action))
+			if (!CheckTeleport(parent, entity, action))
 				return false;
 
-			Teleport(entity);
+			Teleport(parent, entity);
 
 			entity.QueueMovementTimer();
 			return true;
 		}
 
-		var location = _parent.Location;
+		var location = parent.Location;
 		var distance = entity.GetDistanceToMax(location);
 
 		if (distance > 1)
 			entity.SendLocalizedMessage(Color.Red, 6300103); /* You are unable to look from here. */
 		else
-			entity.LookAt(_parent);
+			entity.LookAt(parent);
 			
 		return true;
 	}
@@ -57,7 +57,7 @@ public abstract class ActiveTeleporter : Teleporter, IHandleInteraction
 	/// <summary>
 	/// Handles pathing requests over this terrain.
 	/// </summary>
-	public override void HandleMovementPath(PathingRequestEventArgs args)
+	public override void HandleMovementPath(SegmentTile parent, PathingRequestEventArgs args)
 	{
 		args.Result = PathingResult.Allowed;
 	}
@@ -65,7 +65,7 @@ public abstract class ActiveTeleporter : Teleporter, IHandleInteraction
 	/// <summary>
 	/// Checks the action to perform a teleport.
 	/// </summary>
-	protected virtual bool CheckTeleport(MobileEntity entity, ActionType action)
+	protected virtual bool CheckTeleport(SegmentTile parent, MobileEntity entity, ActionType action)
 	{
 		return false;
 	}

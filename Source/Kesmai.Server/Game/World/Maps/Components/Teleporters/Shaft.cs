@@ -33,7 +33,7 @@ public class Shaft : ActiveTeleporter
 	/// <summary>
 	/// Checks the action to perform a teleport.
 	/// </summary>
-	protected override bool CheckTeleport(MobileEntity entity, ActionType action)
+	protected override bool CheckTeleport(SegmentTile parent, MobileEntity entity, ActionType action)
 	{
 		var descending = (action == ActionType.Down) || (action == ActionType.ClimbDown);
 			
@@ -55,7 +55,7 @@ public class Shaft : ActiveTeleporter
 			}
 
 			if (height > 0)
-				player.Fall(height, _parent, _destinationTile);
+				player.Fall(height, parent, _destinationTile);
 		}
 
 		return true;
