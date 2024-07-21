@@ -155,6 +155,8 @@ public class Magma : Floor, IHandlePathing
 		_entitiesToRemove.Clear();
 		_entitiesToAdd.Clear();
 
+		var spell = new FireBallSpell();
+
 		foreach (var entity in _entities)
 		{
 			if (entity.Key is null || entity.Value is null)
@@ -183,7 +185,8 @@ public class Magma : Floor, IHandlePathing
 
 			if (entity != null && entity.IsAlive)
 			{
-				entity.ApplyDamage(null, _baseDamage);
+				// assuming applyspell damage accounts fore resistances and immunities
+				entity.ApplySpellDamage(null,spell,damage,true);
 				if (entity is PlayerEntity)
 					entity.SendMessage(Color.Yellow, damageString); /* You are standing in the Magma and take damage. */
 			}
