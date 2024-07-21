@@ -16,8 +16,8 @@ public class Magma : Floor, IHandlePathing
 {
 	private int _baseDamage;
 	private Timer _internalTimer;
-	public static Dictionary<MobileEntity, DateTime> _entities = new Dictionary<MobileEntity, DateTime>();	
-	public static List<KeyValuePair<MobileEntity, DateTime>> _entitiesToAdd { get; } = new List<KeyValuePair<MobileEntity, DateTime>>();
+	private static Dictionary<MobileEntity, DateTime> _entities = new Dictionary<MobileEntity, DateTime>();	
+	private static List<KeyValuePair<MobileEntity, DateTime>> _entitiesToAdd { get; } = new List<KeyValuePair<MobileEntity, DateTime>>();
 	private static List<MobileEntity> _entitiesToRemove { get; } = new List<MobileEntity>();
 
 	internal new class Cache : IComponentCache
