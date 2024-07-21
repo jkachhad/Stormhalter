@@ -14,196 +14,162 @@ namespace Kesmai.Server.Game;
 [WorldForgeComponent("MagmaComponent")]
 public class Magma : Floor, IHandlePathing
 {
-	private int _baseDamage;
-	private Timer _internalTimer;
-	private static Dictionary<MobileEntity, DateTime> _entities = new Dictionary<MobileEntity, DateTime>();	
-	private static List<KeyValuePair<MobileEntity, DateTime>> _entitiesToAdd { get; } = new List<KeyValuePair<MobileEntity, DateTime>>();
-	private static List<MobileEntity> _entitiesToRemove { get; } = new List<MobileEntity>();
+    private int _baseDamage;
+    private Timer _internalTimer;
+    private static Dictionary<MobileEntity, DateTime> _entities = new Dictionary<MobileEntity, DateTime>();    
+    private static List<KeyValuePair<MobileEntity, DateTime>> _entitiesToAdd { get; } = new List<KeyValuePair<MobileEntity, DateTime>>();
+    private static List<MobileEntity> _entitiesToRemove { get; } = new List<MobileEntity>();
 
-	internal new class Cache : IComponentCache
-	{
-		private static readonly Dictionary<int, Magma> _cache = new Dictionary<int, Magma>();
+    /// <inheritdoc />
+    public int PathingPriority { get; } = 0;
 
-		public TerrainComponent Get(XElement element)
-		{
-			var color = element.GetColor("color", Color.White);
-			var groundId = element.GetInt("ground", 0);
-			var movementCost = element.GetInt("movementCost", 3);
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Magma"/> class.
+    /// </summary>
+    private Magma(Color color, int MagmaId, int movementCost, int baseDamage) : base(color, MagmaId, movementCost)
+    {
+        _baseDamage = baseDamage;
+    }
 
-			return Get(color, groundId, movementCost);
-		}
+    /// <inheritdoc />
+    public virtual bool AllowMovementPath(SegmentTile parent, MobileEntity entity = default(MobileEntity))
+    {
+        return true;
+    }
 
-		public Magma Get(Color color, int MagmaId, int movementCost, int baseDamage)
-		{
-			var hash = CalculateHash(color, MagmaId, movementCost, baseDamage);
-
-			if (!_cache.TryGetValue(hash, out var component))
-				_cache.Add(hash, (component = new Magma(color, MagmaId, movementCost, baseDamage)));
-
-			return component;
-		}
-
-		private static int CalculateHash(Color color, int MagmaId, int movementCost, int baseDamage)
-		{
-			return HashCode.Combine(color, MagmaId, movementCost, baseDamage);
-		}
-	}
-	
-	/// <summary>
-	/// Gets an instance of <see cref="Magma"/> that has been cached.
-	/// </summary>
-	public new static Magma Construct(Color color, int groundId, int movementCost, int baseDamage)
-	{
-		if (TryGetCache(typeof(Magma), out var cache) && cache is Cache componentCache)
-			return componentCache.Get(color, groundId, movementCost, baseDamage);
-
-		return new Magma(color, groundId, movementCost, baseDamage);
-	}
-	
-	/// <inheritdoc />
-	public int PathingPriority { get; } = 0;
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="Magma"/> class.
-	/// </summary>
-	private Magma(Color color, int MagmaId, int movementCost, int baseDamage) : base(color, MagmaId, movementCost)
-	{
-		_baseDamage = baseDamage;
-	}
-
-	/// <inheritdoc />
-	public virtual bool AllowMovementPath(SegmentTile parent, MobileEntity entity = default(MobileEntity))
-	{
-		return true;
-	}
-
-	/// <inheritdoc />
-	public virtual bool AllowSpellPath(SegmentTile parent, MobileEntity entity = default(MobileEntity), Spell spell = default(Spell))
-	{
-		return true;
-	}
+    /// <inheritdoc />
+    public virtual bool AllowSpellPath(SegmentTile parent, MobileEntity entity = default(MobileEntity), Spell spell = default(Spell))
+    {
+        return true;
+    }
 
     public override void OnEnter(SegmentTile parent, MobileEntity entity, bool isTeleport)
-	{	
-		if (!entity.IsAlive)
-			return;
+    {    
+        if (!entity.IsAlive)
+            return;
 
-		if (!_entities.ContainsKey(entity))
-			_entitiesToAdd.Add(entity, DateTime.Now);
+        if (!_entities.ContainsKey(entity))
+            _entitiesToAdd.Add(new KeyValuePair<MobileEntity,DateTime>(entity, DateTime.Now));
+        
+        var region = parent.Region;
         
         if (!region.IsInactive && !_internalTimer.Running)
-        	StartTimer();	
+            StartTimer(entity.Facet);    
 
-	}
+    }
 
-	/// <summary>
-	/// Called when a mobile entity steps off this component.
-	/// </summary>
-	public override void OnLeave(SegmentTile parent, MobileEntity entity, bool isTeleport)
-	{
-		if (_entities.ContainsKey(entity))
-			_entitiesToRemove.Add(entity);
-		
-		if (_entities.Count == 0)
-			StopTimer();
-	}
+    /// <summary>
+    /// Called when a mobile entity steps off this component.
+    /// </summary>
+    public override void OnLeave(SegmentTile parent, MobileEntity entity, bool isTeleport)
+    {
+        if (_entities.ContainsKey(entity))
+            _entitiesToRemove.Add(entity);
+        
+        if (_entities.Count == 0)
+            StopTimer();
+    }
 
-    private void StartTimer()
-	{
-		if (_timer != null)
-			_timer.Stop();
+    private void StartTimer(Facet facet)
+    {
+        if (_internalTimer != null)
+            _internalTimer.Stop();
 
-		_internalTimer = Timer.DelayCall(poison.Delay, entity.Facet.TimeSpan.FromRounds(1), OnTick);
-	}
-	private void StopTimer()
-	{
-		if (_timer != null)
-		{
-			_internalTimer.Stop();
-			_internalTimer = null;
-		}
-	}
+        _internalTimer = Timer.DelayCall(TimeSpan.Zero, facet.TimeSpan.FromRounds(1), OnTick);
+    }
+    private void StopTimer()
+    {
+        if (_internalTimer != null)
+        {
+            _internalTimer.Stop();
+            _internalTimer = null;
+        }
+    }
 
-	/// <summary>
-	/// Handles pathing requests over this terrain.
-	/// </summary>
-	public void HandleMovementPath(SegmentTile parent, PathingRequestEventArgs args)
-	{
-		args.Result = PathingResult.Allowed;
+    /// <summary>
+    /// Handles pathing requests over this terrain.
+    /// </summary>
+    public void HandleMovementPath(SegmentTile parent, PathingRequestEventArgs args)
+    {
+        args.Result = PathingResult.Allowed;
 
-		if (args.Entity is PlayerEntity player)
-		{
-			var balance = player.Stats[EntityStat.DexterityAdds].Value + 5;
+        if (args.Entity is PlayerEntity player)
+        {
+            var balance = player.Stats[EntityStat.DexterityAdds].Value + 5;
 
-			if (Utility.Random(1, 20) > balance)
-			{
-				args.Entity.SendMessage(Color.Yellow,"You lose your balance and fall in the Magma"); /* You lose your balance when you step onto the lava */
-				args.Entity.Health -= (args.Entity.MaxHealth / 10);
+            if (Utility.Random(1, 20) > balance)
+            {
+                args.Entity.SendMessage(Color.Yellow,"You lose your balance and fall in the Magma"); /* You lose your balance when you step onto the lava */
+                args.Entity.Health -= (args.Entity.MaxHealth / 10);
                 args.Result = PathingResult.Interrupted;
-			}
-		}
-	}
+            }
+        }
+    }
 
-	private void OnTick()
-	{
-		var tempKeysToRemove = new List<MobileEntity>(_entitiesToRemove);
-		var tempKeysToAdd = new List<MobileEntity>(_entitiesToAdd);
+    private void OnTick()
+    {
+        var tempKeysToRemove = new List<MobileEntity>(_entitiesToRemove);
+        var tempKeysToAdd = new List<KeyValuePair<MobileEntity,DateTime>>(_entitiesToAdd);
 
-		var damage = _baseDamage;
-		var damageString = "Your boots and feet begin to burn as you sink slowly into the lava.";
+        var damage = _baseDamage;
+        var damageString = "Your boots and feet begin to burn as you sink slowly into the lava.";
 
-		_entitiesToRemove.Clear();
-		_entitiesToAdd.Clear();
+        _entitiesToRemove.Clear();
+        _entitiesToAdd.Clear();
 
-		var spell = new FireBallSpell();
+        var spell = new FireballSpell();
 
-		foreach (var entity in _entities)
-		{
-			if (entity.Key is null || entity.Value is null)
-				continue;
-			
-			if (!entity.IsAlive)
-			{
-				// Not sure how to implement corpse burning here... other then strip and teleport?
-				tempKeysToRemove.Add(entity);
-				continue;
-			}	
+        foreach (var entity in _entities)
+        {
+            if (entity.Key is null)
+                continue;
+            
+            if (!entity.Key.IsAlive)
+            {
+                // Not sure how to implement corpse burning here... other then strip and teleport?
+                tempKeysToRemove.Add(entity.Key);
+                continue;
+            }    
 
-			TimeSpan elapsedTime = DateTime.Now - entity.Value; 
+            TimeSpan elapsedTime = DateTime.Now - entity.Value; 
 
-			if (elapsedTime.TotalSeconds > 5 && elapsedTime.TotalSeconds <= 10) 
-			{
-				damage *= 2;
-				damageString = "As you sink deeper into the lava, the heat becomes unbearable.";
-			}
+            if (elapsedTime.TotalSeconds > 5 && elapsedTime.TotalSeconds <= 10) 
+            {
+                damage *= 2;
+                damageString = "As you sink deeper into the lava, the heat becomes unbearable.";
+            }
 
-			if (elapsedTime.TotalSeconds > 10 && elapsedTime.TotalSeconds <= 20) 
-			{
-				damage *= 5;
-				damgageString = "The lava is now up to your waist and you can feel your skin melting.";
-			}
+            if (elapsedTime.TotalSeconds > 10 && elapsedTime.TotalSeconds <= 20) 
+            {
+                damage *= 5;
+                damageString = "The lava is now up to your waist and you can feel your skin melting.";
+            }
 
-			if (entity != null && entity.IsAlive)
-			{
-				// assuming applyspell damage accounts fore resistances and immunities
-				entity.ApplySpellDamage(null,spell,damage,true);
-				if (entity is PlayerEntity)
-					entity.SendMessage(Color.Yellow, damageString); /* You are standing in the Magma and take damage. */
-			}
+            if (entity.Key != null && entity.Key.IsAlive)
+            {
+                // assuming applyspell damage accounts fore resistances and immunities
+                entity.Key.ApplySpellDamage(null,spell,damage,true);
+                if (entity.Key is PlayerEntity)
+                    entity.Key.SendMessage(Color.Yellow, damageString); /* You are standing in the Magma and take damage. */
+            }
 
-			if (elapsedTime.TotalSeconds > 20)
-			{
-				entity.Kill();
-				tempKeysToRemove.Add(entity);
-			}
+            if (elapsedTime.TotalSeconds > 20)
+            {
+                entity.Key.Kill();
+                tempKeysToRemove.Add(entity.Key);
+            }
 
 
-		}
+        }
 
-		foreach (var entity in tempKeysToRemove)
-			_entities.Remove(entity);
+        foreach (var entity in tempKeysToRemove)
+        {
+            _entities.Remove(entity);
+        }
 
-		foreach (var entity in tempKeysToAdd)
-			_entities.Add(entity, DateTime.Now);
-	}
+        foreach (var entity in tempKeysToAdd)
+        {
+            _entities.Add(entity.Key, entity.Value);
+        }
+    }
 }
