@@ -55,7 +55,7 @@ public class Tree : TerrainComponent
 	
 	private static Dictionary<SegmentTile, Timer> _growthTimer = new Dictionary<SegmentTile, Timer>();
 
-	public static void StartGrowthTimer(SegmentTile parent, Tree component)
+	private static void StartGrowthTimer(SegmentTile parent, Tree component)
 	{
 		if (_growthTimer.TryGetValue(parent, out var timer))
 			timer.Stop();
