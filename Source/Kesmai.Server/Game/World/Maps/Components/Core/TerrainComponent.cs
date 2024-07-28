@@ -13,6 +13,7 @@ public abstract class TerrainComponent
 		[typeof(Wall)] = new Wall.Cache(),
 		[typeof(Static)] = new Static.Cache(),
 		[typeof(Ice)] = new Ice.Cache(),
+		[typeof(Fire)] = new Fire.Cache(),
 		[typeof(Water)] = new Water.Cache(),
 		[typeof(PoisonedWater)] = new PoisonedWater.Cache(),
 		[typeof(Ruins)] = new Ruins.Cache(),
