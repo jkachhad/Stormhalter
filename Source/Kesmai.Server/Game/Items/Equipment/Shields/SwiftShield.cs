@@ -66,13 +66,13 @@ public partial class SwiftShield : Shield, ITreasure
 			{
 				Inscription = new SpellInscription() { SpellId = 52 }
 			};
-			status.AddSource(new ItemSource(this));
+			status.AddSource(new ShieldStatus.ShieldItemSource(Shield, this));
 				
 			entity.AddStatus(status);
 		}
 		else
 		{
-			status.AddSource(new ItemSource(this));
+			status.AddSource(new ShieldStatus.ShieldItemSource(Shield, this));
 		}
 	}
 
