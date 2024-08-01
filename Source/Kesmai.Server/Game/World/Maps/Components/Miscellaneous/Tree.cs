@@ -141,6 +141,12 @@ public class Tree : TerrainComponent
 		new TreeStages() { new TreeStagePair(625, 625), },
 		new TreeStages() { new TreeStagePair(626, 626), },
 		new TreeStages() { new TreeStagePair(627, 627), },
+		new TreeStages() { new TreeStagePair(1112, 1113), },
+		new TreeStages() { new TreeStagePair(1373, 1378), },
+		new TreeStages() { new TreeStagePair(1374, 1378), },
+		new TreeStages() { new TreeStagePair(1375, 1378), },
+		new TreeStages() { new TreeStagePair(1376, 1378), },
+		new TreeStages() { new TreeStagePair(1377, 1378), },
 	};
 		
 	private static TreeStages FindStages(int treeId)
