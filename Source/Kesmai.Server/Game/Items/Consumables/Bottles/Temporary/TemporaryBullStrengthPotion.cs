@@ -29,6 +29,13 @@ public partial class TemporaryBullStrengthPotion : Bottle, ITreasure
 	public TemporaryBullStrengthPotion(int closedId, int openId) : base(closedId)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="TemporaryBullStrengthPotion"/> class.
+	/// </summary>
+	public TemporaryBullStrengthPotion(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	protected override void OnCreate()
