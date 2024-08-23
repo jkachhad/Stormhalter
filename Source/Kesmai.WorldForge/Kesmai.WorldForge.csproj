@@ -26,7 +26,7 @@
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug'">
       <OutputPath>$(SolutionDir)\..\Build\Debug\WorldForge</OutputPath>
-        <PlatformTarget>ARM64</PlatformTarget>
+        <PlatformTarget>ARM64</PlatformTarget>  
       <DefineConstants>TRACE;DEBUG;WorldForge;Interop;CanImport;</DefineConstants>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
       <Optimize>false</Optimize>
@@ -43,6 +43,7 @@
     </PropertyGroup>
     
     <ItemGroup>
+      <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
       <PackageReference Include="CommonServiceLocator" Version="2.0.7" />
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
       <PackageReference Include="Dirkster.AvalonDock" Version="4.72.1" />
