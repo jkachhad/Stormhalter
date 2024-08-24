@@ -32,14 +32,14 @@ public class ConsumableHeal : IConsumableContent
 		entity.Health += _amount;
 	}
 
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 			
 		writer.Write((int)_amount);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -85,14 +85,14 @@ public class ConsumableDamage : IConsumableContent
 		entity.Health = health;
 	}
 		
-	public virtual void Serialize(BinaryWriter writer)
+	public virtual void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 			
 		writer.Write((int)_amount);
 	}
 
-	public virtual void Deserialize(BinaryReader reader)
+	public virtual void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -129,14 +129,14 @@ public class ConsumablePoison : IConsumableContent
 		entity.Poison(item.Owner, new Poison(TimeSpan.Zero, _potency));
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 			
 		writer.Write((int)_potency);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -197,7 +197,7 @@ public class ConsumablePoisonAntidote : IConsumableContent
 		}
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)2);
 			
@@ -205,7 +205,7 @@ public class ConsumablePoisonAntidote : IConsumableContent
 		writer.Write((int)_potency);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -240,12 +240,12 @@ public class ConsumableBlindnessAntidote : IConsumableContent
 			entity.RemoveStatus(status);
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -302,7 +302,7 @@ public class ConsumableRestoreMana : IConsumableContent
 			entity.Mana = entity.MaxMana;
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 			
@@ -312,7 +312,7 @@ public class ConsumableRestoreMana : IConsumableContent
 			writer.Write((int)_amount.Value);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -373,14 +373,14 @@ public class ConsumableIncreaseMana : IConsumableContent
 		}
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 
 		writer.Write((int)_amount);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -438,7 +438,7 @@ public class ConsumableRestoreStamina : IConsumableContent
 			entity.Stamina = entity.MaxStamina;
 	}
 		
-	public virtual void Serialize(BinaryWriter writer)
+	public virtual void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 			
@@ -448,7 +448,7 @@ public class ConsumableRestoreStamina : IConsumableContent
 			writer.Write((int)_amount.Value);
 	}
 
-	public virtual void Deserialize(BinaryReader reader)
+	public virtual void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -481,16 +481,16 @@ public class ConsumableWater : ConsumableRestoreStamina
 			entries.Add(new LocalizationEntry(6250062)); /* The bottle contains water. */
 	}
 		
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 			
 		writer.Write((byte)1);
 	}
 
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 			
 		var version = reader.ReadByte();
 
@@ -523,7 +523,7 @@ public class ConsumableUrine : ConsumableDamage
 			entries.Add(new LocalizationEntry(6250064, _owner)); /* The bottle contains {_owner} urine. */
 	}
 		
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 			
@@ -531,9 +531,9 @@ public class ConsumableUrine : ConsumableDamage
 		writer.Write((string)_owner);
 	}
 
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 			
 		var version = reader.ReadByte();
 
@@ -574,12 +574,12 @@ public class ConsumableAmbrosia : IConsumableContent
 		}
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -629,12 +629,12 @@ public class ConsumableNaphtha : IConsumableContent
 		spell.CastAt(location);
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -687,12 +687,12 @@ public class ConsumableNitro : IConsumableContent
 		spell.CastAt(location);
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -732,12 +732,12 @@ public class ConsumableStrengthSpell : IConsumableContent
 		}
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -778,12 +778,12 @@ public class ConsumableStrengthStat : IConsumableContent
 		}
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -824,12 +824,12 @@ public class ConsumableDexterityStat : IConsumableContent
 		}
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -865,12 +865,12 @@ public class ConsumableIntelligenceStat : IConsumableContent
 		}
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -906,12 +906,12 @@ public class ConsumableWillpowerStat : IConsumableContent
 		}
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -947,12 +947,12 @@ public class ConsumableWisdomStat : IConsumableContent
 		}
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -1023,12 +1023,12 @@ public class ConsumableConstitutionStat : IConsumableContent
 		}
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -1058,12 +1058,12 @@ public class ConsumableBalm : IConsumableContent
 		entity.BalmTimer = new BalmTimer(entity);
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 

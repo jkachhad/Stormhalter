@@ -53,8 +53,20 @@ public class Tree : TerrainComponent
 		return new Tree(color, treeId, canGrow, decayed);
 	}
 	
-	private static Dictionary<SegmentTile, Timer> _growthTimer = new Dictionary<SegmentTile, Timer>();
+	private static readonly Dictionary<SegmentTile, Timer> _growthTimer = new Dictionary<SegmentTile, Timer>();
 
+	[ServerConfigure]
+	public static void Configure()
+	{
+		EventSink.ServerStopped += () =>
+		{
+			foreach (var (_, timer) in _growthTimer) 
+				timer.Stop();
+			
+			_growthTimer.Clear();
+		};
+	}
+	
 	private static void StartGrowthTimer(SegmentTile parent, Tree component)
 	{
 		if (_growthTimer.TryGetValue(parent, out var timer))
@@ -129,6 +141,12 @@ public class Tree : TerrainComponent
 		new TreeStages() { new TreeStagePair(625, 625), },
 		new TreeStages() { new TreeStagePair(626, 626), },
 		new TreeStages() { new TreeStagePair(627, 627), },
+		new TreeStages() { new TreeStagePair(1112, 1113), },
+		new TreeStages() { new TreeStagePair(1373, 1378), },
+		new TreeStages() { new TreeStagePair(1374, 1378), },
+		new TreeStages() { new TreeStagePair(1375, 1378), },
+		new TreeStages() { new TreeStagePair(1376, 1378), },
+		new TreeStages() { new TreeStagePair(1377, 1378), },
 	};
 		
 	private static TreeStages FindStages(int treeId)
@@ -214,10 +232,10 @@ public class Tree : TerrainComponent
 	/// <param name="parent"></param>
 	public void Grow(SegmentTile parent)
 	{
+		StopGrowthTimer(parent);
+		
 		if ((_currentStage >= _stages.Count))
 			return;
-		
-		StopGrowthTimer(parent);
 		
 		var stage = _currentStage + 1;
 		var max = _stages.Count - 1;
@@ -269,9 +287,9 @@ public class Tree : TerrainComponent
 
 	protected override void OnDispose(SegmentTile parent, bool disposing)
 	{
-		StopGrowthTimer(parent);
-			
 		base.OnDispose(parent, disposing);
+		
+		StopGrowthTimer(parent);
 	}
 
 	private class GrowthTimer : Timer

@@ -80,7 +80,7 @@ public partial class SixtySixRing : Ring, ITreasure
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 
@@ -90,9 +90,9 @@ public partial class SixtySixRing : Ring, ITreasure
 	/// <summary>
 	/// Deserializes this instance from persisted binary data.
 	/// </summary>
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 
 		var version = reader.ReadInt16();
 

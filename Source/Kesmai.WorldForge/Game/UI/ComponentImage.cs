@@ -83,7 +83,7 @@ public class ComponentImage : UIControl
 						if (sprite.Offset != Vector2F.Zero)
 							spriteBounds.Offset(sprite.Offset.X, sprite.Offset.Y);
 							
-						spriteBatch.Draw(sprite.Texture, spriteBounds.Location.ToVector2(), render.Color);
+						spriteBatch.Draw(sprite.Texture, originalBounds,  render.Color);
 					}
 				}
 			}
