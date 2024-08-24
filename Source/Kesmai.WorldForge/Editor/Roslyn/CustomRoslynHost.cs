@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using DotNext;
 using System.Runtime;
 using System.Text;
 using CommonServiceLocator;
@@ -79,13 +80,17 @@ public class CustomRoslynHost : RoslynHost, IDisposable
 
     var references = AppDomain.CurrentDomain.GetAssemblies()
         .Where(a => !a.IsDynamic && !string.IsNullOrEmpty(a.Location))
-        .Select(a => 
+        .Select(a =>
         {
             var location = a.Location;
             return !string.IsNullOrEmpty(location) ? MetadataReference.CreateFromFile(location) : null;
         })
         .Where(reference => reference != null)
         .ToList();
+
+    // Add DotNext.dll to the references
+    var dotNextDllPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DotNext.dll"); // Path to DotNext.dll in the assemblies folder
+    references.Add(MetadataReference.CreateFromFile(dotNextDllPath));
 
     var scriptingData = Core.ScriptingData;
 
