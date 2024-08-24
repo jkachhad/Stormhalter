@@ -154,9 +154,13 @@ public class ApplicationPresenter : ObservableRecipient
 		{
 			if (value != _activeDocument)
 			{
-				_previousDocument = null;
+				if (_activeDocument is IDisposable disposable)
+				{
+					disposable.Dispose();
+				}
+				_previousDocument = _activeDocument;
+				SetProperty(ref _activeDocument, value, true);
 			}
-			SetProperty(ref _activeDocument, value, true);
 		}
 	}
     public RelayCommand ExportToPdfCommand { get; set; }
