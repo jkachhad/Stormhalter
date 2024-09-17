@@ -33,8 +33,10 @@ public abstract partial class MobileEntity : WorldEntity
 	[WorldForge]
 	public virtual bool CheckShieldPenetration(ShieldPenetration penetration)
 	{
-		if (GetStatus<ShieldStatus>() is ShieldStatus status && status.Protection > 0)
+		if (GetStatus<ShieldStatus>() is ShieldStatus status)
 		{
+			var currentProtection = Stats[EntityStat.Barrier].Value;
+
 			if (penetration > ShieldPenetration.None)
 			{
 				var penetrationDice = 0;
@@ -48,7 +50,7 @@ public abstract partial class MobileEntity : WorldEntity
 					case ShieldPenetration.VeryLight: penetrationDice = 13; break; // Very Light
 				}
 	
-				return Utility.RandomBetween(1, penetrationDice) > status.Protection;
+				return Utility.RandomBetween(1, penetrationDice) > currentProtection;
 			}
 
 			return false;
