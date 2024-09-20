@@ -52,7 +52,46 @@ public class TreeComponent : TerrainComponent
 		new TreeStages() { new TreeStagePair(247, 101), },
 		new TreeStages() { new TreeStagePair(370, 372), },
 		new TreeStages() { new TreeStagePair(403, 402), },
-	};
+
+        new TreeStages() { new TreeStagePair(625, 103), },
+        new TreeStages() { new TreeStagePair(901, 103), },
+        new TreeStages() { new TreeStagePair(893, 897), },
+        new TreeStages() { new TreeStagePair(894, 897), },
+        new TreeStages() { new TreeStagePair(895, 897), },
+        new TreeStages() { new TreeStagePair(896, 897), },
+        new TreeStages() { new TreeStagePair(898, 103), },
+        new TreeStages() { new TreeStagePair(899, 103), },
+        new TreeStages() { new TreeStagePair(900, 103), },
+        new TreeStages() { new TreeStagePair(901, 103), },
+        new TreeStages() { new TreeStagePair(902, 103), },
+        new TreeStages() { new TreeStagePair(905, 103), },
+        new TreeStages() { new TreeStagePair(906, 103), },
+        new TreeStages() { new TreeStagePair(1004, 103), },
+
+        new TreeStages() { new TreeStagePair(624, 624), },
+        new TreeStages() { new TreeStagePair(625, 625), },
+        new TreeStages() { new TreeStagePair(626, 626), },
+        new TreeStages() { new TreeStagePair(627, 627), },
+        new TreeStages() { new TreeStagePair(1112, 1113), },
+        new TreeStages() { new TreeStagePair(1373, 1378), },
+        new TreeStages() { new TreeStagePair(1374, 1378), },
+        new TreeStages() { new TreeStagePair(1375, 1378), },
+        new TreeStages() { new TreeStagePair(1376, 1378), },
+        new TreeStages() { new TreeStagePair(1377, 1378), },
+
+        new TreeStages() { new TreeStagePair(1580, 102), },
+        new TreeStages() { new TreeStagePair(1581, 102), },
+        new TreeStages() { new TreeStagePair(1582, 102), },
+        new TreeStages() { new TreeStagePair(1583, 102), },
+        new TreeStages() { new TreeStagePair(1584, 102), },
+        new TreeStages() { new TreeStagePair(1585, 102), },
+        new TreeStages() { new TreeStagePair(1586, 102), },
+        new TreeStages() { new TreeStagePair(1590, 102), },
+        new TreeStages() { new TreeStagePair(1591, 102), },
+        new TreeStages() { new TreeStagePair(1592, 101), },
+        new TreeStages() { new TreeStagePair(1593, 102), },
+        new TreeStages() { new TreeStagePair(1594, 102), },
+    };
 		
 	private static TreeStages FindStages(int treeId)
 	{
