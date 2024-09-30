@@ -14,45 +14,36 @@ public abstract partial class MobileEntity
 {
 	private static readonly Regex _filterTarget = new Regex(@"^@(\w*)(\[(.*?)\])?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-	private static readonly Dictionary<string, Func<MobileEntity, List<MobileEntity>, IEnumerable<MobileEntity>>> _basicFilters = new()
+	private static readonly Dictionary<string, Action<MobileEntity, List<MobileEntity>>> _basicFilters = new()
 	{
-		["hostile"] = (source, entities) => entities.Where(entity => source.IsHostile(entity)),
-		["friendly"] = (source, entities) => entities.Where(entity => !source.IsHostile(entity)),
+		["hostile"] = (source, entities) => entities.RemoveAll(entity => !source.IsHostile(entity)),
+		["friendly"] = (source, entities) => entities.RemoveAll(entity => source.IsHostile(entity)),
 		
-		["player"] = (source, entities) => entities.Where(entity => (entity is PlayerEntity)),
-		["creature"] = (source, entities) => entities.Where(entity => (entity is CreatureEntity)),
+		["player"] = (source, entities) => entities.RemoveAll(entity => (entity is not PlayerEntity)),
+		["creature"] = (source, entities) => entities.RemoveAll(entity => (entity is not CreatureEntity)),
 		
-		["injured"] = (source, entities) => entities.Where(entity => (entity.Health < entity.MaxHealth)),
-		["healthy"] = (source, entities) => entities.Where(entity => (entity.Health >= entity.MaxHealth)),
-		["deathly"] = (source, entities) => entities.Where(entity => (Combat.GetHealthState(entity) is 1)),
+		["injured"] = (source, entities) => entities.RemoveAll(entity => (entity.Health != entity.MaxHealth)),
+		["healthy"] = (source, entities) => entities.RemoveAll(entity => (entity.Health < entity.MaxHealth)),
+		["deathly"] = (source, entities) => entities.RemoveAll(entity => (Combat.GetHealthState(entity) != 1)),
 		
-		["casting"] = (source, entities) => entities.Where(entity => (entity.Spell != null)), 
+		["casting"] = (source, entities) => entities.RemoveAll(entity => (entity.Spell is null)), 
 
-		["melee"] = (source, entities) => entities.Where(entity => (entity.GetWeapon() is MeleeWeapon)),
-		["ranged"] = (source, entities) => entities.Where(entity => (entity.GetWeapon() is ProjectileWeapon)),
+		["melee"] = (source, entities) => entities.RemoveAll(entity => (entity.GetWeapon() is not MeleeWeapon)),
+		["ranged"] = (source, entities) => entities.RemoveAll(entity => (entity.GetWeapon() is not ProjectileWeapon)),
 		
-		["poisoned"] = (source, entities) => entities.Where(entity => entity.IsPoisoned),
-		["feared"] = (source, entities) => entities.Where(entity => entity.IsFeared),
-		["stunned"] = (source, entities) => entities.Where(entity => entity.IsStunned || entity.IsDazed),
-		["blind"] = (source, entities) => entities.Where(entity => entity.IsBlind),
+		["poisoned"] = (source, entities) => entities.RemoveAll(entity => !entity.IsPoisoned),
+		["feared"] = (source, entities) => entities.RemoveAll(entity => !entity.IsFeared),
+		["stunned"] = (source, entities) => entities.RemoveAll(entity => !entity.IsStunned && !entity.IsDazed),
+		["blind"] = (source, entities) => entities.RemoveAll(entity => !entity.IsBlind),
 	};
 	
-	private static readonly Dictionary<Regex, Func<Match, MobileEntity, List<MobileEntity>, IEnumerable<MobileEntity>>> _advancedFilters = new()
+	private static readonly Dictionary<Regex, Action<Match, MobileEntity, List<MobileEntity>>> _advancedFilters = new()
 	{
 		// serial(value) - finds the entity by serial.
 		[new Regex(@"^serial\((\w*)\)$", RegexOptions.Compiled | RegexOptions.IgnoreCase)] = (match, source, entities) =>
 		{
-			var filtered = new List<MobileEntity>();
-			
-			if (int.TryParse(match.Groups[1].Value, out int value))
-			{
-				var entity = entities.FirstOrDefault(e => e.Serial.Value == value);
-
-				if (entity != null)
-					filtered.Add(entity);
-			}
-
-			return filtered;
+			if (Int32.TryParse(match.Groups[1].Value, out int value))
+				entities.RemoveAll(e => e.Serial.Value != value);
 		},
 		
 		// index(value) - finds the entity by index or specifier.
@@ -60,7 +51,6 @@ public abstract partial class MobileEntity
 		{
 			var indexValue = match.Groups[1].Value;
 
-			var filtered = new List<MobileEntity>();
 			var index = 1; // index is 1-based for the user to prevent confusion.
 			
 			if (!Int32.TryParse(indexValue, out index) && entities.Any())
@@ -74,13 +64,11 @@ public abstract partial class MobileEntity
 				var entity = entities[index - 1];
 
 				if (entity != null)
-					filtered.Add(entity);
+					entities = [entity];
 			}
-
-			return filtered;
 		}, 
 	};
-	
+
 	/// <summary>
 	/// Finds an entity with the specified name reference.
 	/// </summary>
@@ -89,7 +77,15 @@ public abstract partial class MobileEntity
 		// get all the visible entities.
 		var entities = GetBeheldInVisibility().SelectMany(g => g.Members)
 			.OrderBy(m => m, new MobileDistanceComparer(this)).ToList();
-			
+
+		return FindMobileByName(name, entities);
+	}
+
+	/// <summary>
+	/// Finds an entity with the specified name reference.
+	/// </summary>
+	public MobileEntity FindMobileByName(string name, List<MobileEntity> entities)
+	{
 		// the client sends reference in the form of "@name[filter]"
 		if (_filterTarget.TryGetMatch(name, out var filterTargetMatch))
 		{
@@ -98,14 +94,14 @@ public abstract partial class MobileEntity
 			
 			// if a name is specified, filter the entities by name.
 			if (!String.IsNullOrEmpty(targetName))
-				entities = entities.Where(m => m.RespondsTo(targetName)).ToList();
+				entities.RemoveAll(m => !m.RespondsTo(targetName));
 
 			// apply filters.
 			foreach (var filterName in targetFilters)
 			{
 				if (_basicFilters.TryGetValue(filterName.ToLower(), out var basicFilter))
 				{
-					entities = basicFilter(this, entities).ToList();
+					basicFilter(this, entities);
 					continue;
 				}
 
@@ -114,7 +110,7 @@ public abstract partial class MobileEntity
 					if (!filterRegex.TryGetMatch(filterName.ToLower(), out var advancedFilters)) 
 						continue;
 					
-					entities = function(advancedFilters, this, entities).ToList();
+					function(advancedFilters, this, entities);
 					break;
 				}
 			}
@@ -131,7 +127,7 @@ public abstract partial class MobileEntity
 		else
 		{
 			// if no filters are specified, return the first entity that matches the name.
-			entities = entities.Where(entity => entity.RespondsTo(name)).ToList();
+			entities.RemoveAll(entity => !entity.RespondsTo(name));
 		}
 		
 		if (entities.Any())
