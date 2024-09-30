@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Items;
 using Kesmai.Server.Miscellaneous;
-using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Game;
 
@@ -19,8 +17,8 @@ public abstract partial class MobileEntity
 		["hostile"] = (source, entities) => entities.RemoveAll(entity => !source.IsHostile(entity)),
 		["friendly"] = (source, entities) => entities.RemoveAll(entity => source.IsHostile(entity)),
 		
-		["player"] = (source, entities) => entities.RemoveAll(entity => (entity is not PlayerEntity)),
-		["creature"] = (source, entities) => entities.RemoveAll(entity => (entity is not CreatureEntity)),
+		["pc"] = (source, entities) => entities.RemoveAll(entity => (entity is not PlayerEntity)),
+		["npc"] = (source, entities) => entities.RemoveAll(entity => (entity is not CreatureEntity)),
 		
 		["injured"] = (source, entities) => entities.RemoveAll(entity => (entity.Health != entity.MaxHealth)),
 		["healthy"] = (source, entities) => entities.RemoveAll(entity => (entity.Health < entity.MaxHealth)),
