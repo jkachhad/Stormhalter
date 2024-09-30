@@ -89,12 +89,7 @@ public abstract partial class MobileEntity
 		// the client sends reference in the form of "@name[filter]"
 		if (_filterTarget.TryGetMatch(name, out var filterTargetMatch))
 		{
-			var targetName = filterTargetMatch.Groups[1].Value;
 			var targetFilters = filterTargetMatch.Groups[3].Value.Split(":");
-			
-			// if a name is specified, filter the entities by name.
-			if (!String.IsNullOrEmpty(targetName))
-				entities.RemoveAll(m => !m.RespondsTo(targetName));
 
 			// apply filters.
 			foreach (var filterName in targetFilters)
@@ -114,22 +109,21 @@ public abstract partial class MobileEntity
 					break;
 				}
 			}
-
-			// apply the "last" filter at the end. If last is not found, we default to the filtered.
-			if (targetFilters.Contains("last"))
-			{
-				var lastTarget = FindMostRecentTarget();
-				
-				if (lastTarget != null && entities.Contains(lastTarget))
-					entities = [lastTarget];
-			}
-		}
-		else
-		{
-			// if no filters are specified, return the first entity that matches the name.
-			entities.RemoveAll(entity => !entity.RespondsTo(name));
+			
+			name = filterTargetMatch.Groups[1].Value;
 		}
 		
+		// if a name is specified, filter the entities by name.
+		if (!String.IsNullOrEmpty(name))
+			entities.RemoveAll(entity => !entity.RespondsTo(name));
+		
+		// check if the last target matches the filters.
+		var lastTarget = FindMostRecentTarget();
+
+		if (entities.Contains(lastTarget))
+			return lastTarget;
+		
+		// return the first entity that matches the filters.
 		if (entities.Any())
 			return entities.FirstOrDefault();
 
