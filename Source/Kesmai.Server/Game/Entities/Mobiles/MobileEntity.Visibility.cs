@@ -31,8 +31,8 @@ public abstract partial class MobileEntity
 		["melee"] = (source, entities) => entities.RemoveAll(entity => (entity.GetWeapon() is not MeleeWeapon)),
 		["ranged"] = (source, entities) => entities.RemoveAll(entity => (entity.GetWeapon() is not ProjectileWeapon)),
 		
-		["near"] = (source, entities) => entities.RemoveAll(entity => source.GetDistanceToMax(entity.Location) is 0),
-		["far"] = (source, entities) => entities.RemoveAll(entity => source.GetDistanceToMax(entity.Location) is 3),
+		["near"] = (source, entities) => entities.RemoveAll(entity => source.GetDistanceToMax(entity.Location) > 0),
+		["far"] = (source, entities) => entities.RemoveAll(entity => source.GetDistanceToMax(entity.Location) < 3),
 		
 		["poisoned"] = (source, entities) => entities.RemoveAll(entity => !entity.IsPoisoned),
 		["feared"] = (source, entities) => entities.RemoveAll(entity => !entity.IsFeared),
