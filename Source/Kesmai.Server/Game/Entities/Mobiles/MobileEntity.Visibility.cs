@@ -42,6 +42,13 @@ public abstract partial class MobileEntity
 	
 	private static readonly Dictionary<Regex, Action<Match, MobileEntity, List<MobileEntity>>> _advancedFilters = new()
 	{
+		// distance(value) - includes entities at the specified distance.
+		[new Regex(@"^distance\((\w*)\)$", RegexOptions.Compiled | RegexOptions.IgnoreCase)] = (match, source, entities) =>
+		{
+			if (Int32.TryParse(match.Groups[1].Value, out int value))
+				entities.RemoveAll(e => source.GetDistanceToMax(e.Location) != value);
+		},
+		
 		// serial(value) - finds the entity by serial.
 		[new Regex(@"^serial\((\w*)\)$", RegexOptions.Compiled | RegexOptions.IgnoreCase)] = (match, source, entities) =>
 		{
