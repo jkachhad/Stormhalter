@@ -19,6 +19,7 @@ public abstract partial class MobileEntity
 		
 		["pc"] = (source, entities) => entities.RemoveAll(entity => (entity is not PlayerEntity)),
 		["npc"] = (source, entities) => entities.RemoveAll(entity => (entity is not CreatureEntity)),
+		["conjured"] = (source, entities) => entities.RemoveAll(entity => entity is CreatureEntity { IsSubordinate: false }),
 		
 		["injured"] = (source, entities) => entities.RemoveAll(entity => (entity.Health != entity.MaxHealth)),
 		["healthy"] = (source, entities) => entities.RemoveAll(entity => (entity.Health < entity.MaxHealth)),
