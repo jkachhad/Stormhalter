@@ -24,6 +24,8 @@ public class SegmentRegion : ObservableObject
 	private double _healthMultiplier = 1.0f;
 
 	private double _level = 0;
+
+	private bool _showTreasureInWater;
 		
 	private int _chunkSize;
 	private Dictionary<ChunkCoordinate, SegmentTile[,]> _chunks;
@@ -66,6 +68,12 @@ public class SegmentRegion : ObservableObject
 		get => _level;
 		set => SetProperty(ref _level, value);
 	}
+	
+	public bool ShowTreasureInWater
+	{
+		get => _showTreasureInWater;
+		set => SetProperty(ref _showTreasureInWater, value);
+	}
 		
 	public SegmentRegion(int id) : this()
 	{
@@ -82,6 +90,8 @@ public class SegmentRegion : ObservableObject
 		_experienceMultiplier = element.Element("experienceMultiplier", 1.0D);
 		_healthMultiplier = element.Element("healthMultiplier", 1.0D);
 		_level = element.Element("level", 0);
+		
+		_showTreasureInWater = element.Element("showTreasureInWater", false);
 
 		foreach (var tileElement in element.Elements("tile"))
 		{
@@ -117,6 +127,9 @@ public class SegmentRegion : ObservableObject
 			
 		if (_level != 0)
 			element.Add(new XElement("level", _level));
+
+		if (_showTreasureInWater)
+			element.Add(new XElement("showTreasureInWater", _showTreasureInWater));
 
 		var bounds = GetMinimalBounds();
 

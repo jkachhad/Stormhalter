@@ -12,4 +12,12 @@ public static class XElementExtensions
 
 		return defaultValue;
 	}
+	
+	public static bool Element(this XElement source, XName name, bool defaultValue)
+	{
+		if (source.TryGetElement(name, out var element))
+			return (bool)element;
+
+		return defaultValue;
+	}
 }
