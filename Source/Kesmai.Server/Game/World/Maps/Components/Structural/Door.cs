@@ -326,7 +326,7 @@ public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMove
 		if (IsIndestructible || IsDestroyed)
 			return;
 			
-		Open(parent);
+		Open(parent, true);
 			
 		_isDestroyed = true;
 	}
