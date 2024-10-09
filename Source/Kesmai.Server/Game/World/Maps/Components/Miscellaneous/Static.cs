@@ -55,16 +55,7 @@ public class Static : TerrainComponent
 	/// </summary>
 	protected Static(Color color, int staticId) : base(color)
 	{
-		_static = new Terrain(staticId);
-	}
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="Static"/> class.
-	/// </summary>
-	protected Static(XElement element) : base(element)
-	{
-		if (element.TryGetElement("static", out var staticElement))
-			_static = Terrain.Get((int)staticElement, Color);
+		_static = Terrain.Get(staticId, color);
 	}
 
 	/// <summary>

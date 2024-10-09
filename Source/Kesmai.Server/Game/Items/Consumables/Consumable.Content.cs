@@ -359,15 +359,14 @@ public class ConsumableIncreaseMana : IConsumableContent
 
 			if (professionMaxMana > 0)
 			{
-				var currentMana = player.Mana;
-				var currentMaxMana = player.MaxMana;
+				var currentMaxMana = player.Stats[EntityStat.MaxMana].Base;
 
 				if (currentMaxMana < professionMaxMana)
 					currentMaxMana += _amount;
 
-				currentMaxMana = player.MaxMana = Math.Min(currentMaxMana, professionMaxMana);
+				currentMaxMana = player.Stats[EntityStat.MaxMana].Base = Math.Min(currentMaxMana, professionMaxMana);
 
-				if (currentMana < currentMaxMana)
+				if (player.Mana < currentMaxMana)
 					player.Mana = currentMaxMana;
 			}
 		}
@@ -990,35 +989,32 @@ public class ConsumableConstitutionStat : IConsumableContent
 			var profession = player.Profession;
 
 			/* Increase health. */
-			var currentHealth = player.Health;
-			var currentMaxHealth = player.MaxHealth;
+			var currentMaxHealth = player.Stats[EntityStat.MaxHealth].Base;
 			var professionMaxHealth = profession.GetMaximumHealth(player);
 
 			if (currentMaxHealth < professionMaxHealth)
 				currentMaxHealth += 4;
 
-			currentMaxHealth = player.MaxHealth = Math.Min(currentMaxHealth, professionMaxHealth);
+			currentMaxHealth = player.Stats[EntityStat.MaxHealth].Base = Math.Min(currentMaxHealth, professionMaxHealth);
 
-			if (currentHealth < currentMaxHealth)
+			if (player.Health < currentMaxHealth)
 				player.Health = currentMaxHealth;
 
 			/* Increase stamina. */
-			var currentStamina = player.Stamina;
-			var currentMaxStamina = player.MaxStamina;
+			var currentMaxStamina = player.Stats[EntityStat.MaxStamina].Base;
 
 			if (currentMaxStamina < 120)
 				currentMaxStamina += 4;
 
-			currentMaxStamina = player.MaxStamina = Math.Min(currentMaxStamina, 120);
+			currentMaxStamina = player.Stats[EntityStat.MaxStamina].Base = Math.Min(currentMaxStamina, 120);
 
-			if (currentStamina < currentMaxStamina)
+			if (player.Stamina < currentMaxStamina)
 				player.Stamina = currentMaxStamina;
 
 			/* Restore mana */
-			var currentMana = player.Mana;
-			var currentMaxMana = player.MaxMana;
+			var currentMaxMana = player.Stats[EntityStat.MaxMana].Base;
 
-			if (currentMana < currentMaxMana)
+			if (player.Mana < currentMaxMana)
 				player.Mana = currentMaxMana;
 		}
 	}

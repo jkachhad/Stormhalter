@@ -9,6 +9,7 @@ namespace Kesmai.WorldForge.Models;
 public class Fire : TerrainComponent
 {
 	private bool _allowDispel;
+	private int _damage = 3;
 		
 	[Browsable(true)]
 	public bool AllowDispel
@@ -16,14 +17,27 @@ public class Fire : TerrainComponent
 		get => _allowDispel;
 		set => _allowDispel = value;
 	}
-		
-	public Fire(bool allowDispel)
+	
+	[Browsable(true)]
+	public int Damage
 	{
+		get => _damage;
+		set => _damage = value;
+	}
+		
+	public Fire(int damage, bool allowDispel)
+	{
+		_damage = damage;
 		_allowDispel = allowDispel;
 	}
 		
 	public Fire(XElement element) : base(element)
 	{
+		var damageElement = element.Element("damage");
+
+		if (damageElement != null)
+			_damage = (int)damageElement;
+		
 		var allowDispel = element.Element("allowDispel");
 
 		if (allowDispel != null)
@@ -42,6 +56,9 @@ public class Fire : TerrainComponent
 	{
 		var element = base.GetXElement();
 
+		if (_damage > 0 && _damage != 3)
+			element.Add(new XElement("damage", _damage));
+		
 		if (_allowDispel)
 			element.Add(new XElement("allowDispel", _allowDispel));
 
