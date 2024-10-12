@@ -976,47 +976,42 @@ public class ConsumableConstitutionStat : IConsumableContent
 
 	public void OnConsume(MobileEntity entity, Consumable item)
 	{
-		if (entity is PlayerEntity player)
-		{
-			var baseConstitution = player.Stats[EntityStat.BaseConstitution];
+		if (entity is not PlayerEntity player) 
+			return;
+		
+		var baseConstitution = player.Stats[EntityStat.BaseConstitution];
 
-			/* Compare base value with the maximum value.*/
-			if (baseConstitution.Base < baseConstitution.Maximum)
-				baseConstitution.Base += 2;
+		/* Compare base value with the maximum value.*/
+		if (baseConstitution.Base < baseConstitution.Maximum)
+			baseConstitution.Base += 2;
 
-			player.SendLocalizedMessage(6100106); /* You feel more hale. */
+		player.SendLocalizedMessage(6100106); /* You feel more hale. */
+		
+		/* Reduce the penalty applied to maximum health. */
+		var currentMaxHealthPenalty = player.Stats[EntityStat.MaxHealth].Penalty;
 
-			var profession = player.Profession;
+		if (currentMaxHealthPenalty > 0)
+			player.Stats[EntityStat.MaxHealth].Penalty = Math.Max(currentMaxHealthPenalty - 4, 0);
 
-			/* Increase health. */
-			var currentMaxHealth = player.Stats[EntityStat.MaxHealth].Base;
-			var professionMaxHealth = profession.GetMaximumHealth(player);
+		/* Increase the player to full health. */
+		player.Health = player.MaxHealth;
+		
+		/* Increase stamina. */
+		var currentMaxStamina = player.Stats[EntityStat.MaxStamina].Base;
 
-			if (currentMaxHealth < professionMaxHealth)
-				currentMaxHealth += 4;
+		if (currentMaxStamina < 120)
+			currentMaxStamina += 4;
 
-			currentMaxHealth = player.Stats[EntityStat.MaxHealth].Base = Math.Min(currentMaxHealth, professionMaxHealth);
+		currentMaxStamina = player.Stats[EntityStat.MaxStamina].Base = Math.Min(currentMaxStamina, 120);
 
-			if (player.Health < currentMaxHealth)
-				player.Health = currentMaxHealth;
+		if (player.Stamina < currentMaxStamina)
+			player.Stamina = currentMaxStamina;
 
-			/* Increase stamina. */
-			var currentMaxStamina = player.Stats[EntityStat.MaxStamina].Base;
+		/* Restore mana */
+		var currentMaxMana = player.Stats[EntityStat.MaxMana].Base;
 
-			if (currentMaxStamina < 120)
-				currentMaxStamina += 4;
-
-			currentMaxStamina = player.Stats[EntityStat.MaxStamina].Base = Math.Min(currentMaxStamina, 120);
-
-			if (player.Stamina < currentMaxStamina)
-				player.Stamina = currentMaxStamina;
-
-			/* Restore mana */
-			var currentMaxMana = player.Stats[EntityStat.MaxMana].Base;
-
-			if (player.Mana < currentMaxMana)
-				player.Mana = currentMaxMana;
-		}
+		if (player.Mana < currentMaxMana)
+			player.Mana = currentMaxMana;
 	}
 		
 	public void Serialize(SpanWriter writer)
