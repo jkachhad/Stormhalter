@@ -992,26 +992,22 @@ public class ConsumableConstitutionStat : IConsumableContent
 
 		if (currentMaxHealthPenalty > 0)
 			player.Stats[EntityStat.MaxHealth].Penalty = Math.Max(currentMaxHealthPenalty - 4, 0);
-
-		/* Increase the player to full health. */
-		player.Health = player.MaxHealth;
 		
-		/* Increase stamina. */
-		var currentMaxStamina = player.Stats[EntityStat.MaxStamina].Base;
+		/* Reduce the penalty applied to maximum stamina. */
+		var currentMaxStaminaPenalty = player.Stats[EntityStat.MaxStamina].Penalty;
 
-		if (currentMaxStamina < 120)
-			currentMaxStamina += 4;
-
-		currentMaxStamina = player.Stats[EntityStat.MaxStamina].Base = Math.Min(currentMaxStamina, 120);
-
-		if (player.Stamina < currentMaxStamina)
-			player.Stamina = currentMaxStamina;
-
+		if (currentMaxStaminaPenalty > 0)
+			player.Stats[EntityStat.MaxStamina].Penalty = Math.Max(currentMaxStaminaPenalty - 4, 0);
+		
 		/* Restore mana */
 		var currentMaxMana = player.Stats[EntityStat.MaxMana].Base;
 
 		if (player.Mana < currentMaxMana)
 			player.Mana = currentMaxMana;
+		
+		/* Increase the player to full health, stamina, and mana. */
+		player.Health = player.MaxHealth;
+		player.Stamina = player.MaxStamina;
 	}
 		
 	public void Serialize(SpanWriter writer)
