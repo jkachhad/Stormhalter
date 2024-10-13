@@ -15,7 +15,7 @@ public class DamageTrap : TrapComponent
 			Damage = (int)damageElement;
 	}
 
-	protected override void OnSpring(MobileEntity entity)
+	protected override void OnSpring(SegmentTile parent, MobileEntity entity)
 	{
 		if (Damage > 0)
 			entity.ApplyDamage(null, Damage);

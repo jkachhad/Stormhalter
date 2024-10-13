@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -11,6 +12,78 @@ namespace Kesmai.Server.Game;
 [WorldForgeComponent("TreeComponent")]
 public class Tree : TerrainComponent
 {
+	internal class Cache : IComponentCache
+	{
+		private static readonly Dictionary<int, Tree> _cache = new Dictionary<int, Tree>();
+	
+		public TerrainComponent Get(XElement element)
+		{
+			var color = element.GetColor("color", Color.White);
+			var treeId = element.GetInt("tree", 0);
+			var canGrow = element.GetBool("canGrow", false);
+			var isDecayed = element.GetBool("decayed", false);
+
+			return Get(color, treeId, canGrow, isDecayed);
+		}
+
+		public Tree Get(Color color, int treeId, bool canGrow, bool isDecayed)
+		{
+			var hash = CalculateHash(color, treeId, canGrow, isDecayed);
+
+			if (!_cache.TryGetValue(hash, out var component))
+				_cache.Add(hash, (component = new Tree(color, treeId, canGrow, isDecayed)));
+
+			return component;
+		}
+
+		private static int CalculateHash(Color color, int treeId, bool canGrow, bool isDecayed)
+		{
+			return HashCode.Combine(color, treeId, canGrow, isDecayed);
+		}
+	}
+	
+	/// <summary>
+	/// Gets an instance of <see cref="Tree"/> that has been cached.
+	/// </summary>
+	public static Tree Construct(Color color, int treeId, bool canGrow, bool decayed)
+	{
+		if (TryGetCache(typeof(Tree), out var cache) && cache is Cache componentCache)
+			return componentCache.Get(color, treeId, canGrow, decayed);
+		
+		return new Tree(color, treeId, canGrow, decayed);
+	}
+	
+	private static readonly Dictionary<SegmentTile, Timer> _growthTimer = new Dictionary<SegmentTile, Timer>();
+
+	[ServerConfigure]
+	public static void Configure()
+	{
+		EventSink.ServerStopped += () =>
+		{
+			foreach (var (_, timer) in _growthTimer) 
+				timer.Stop();
+			
+			_growthTimer.Clear();
+		};
+	}
+	
+	private static void StartGrowthTimer(SegmentTile parent, Tree component)
+	{
+		if (_growthTimer.TryGetValue(parent, out var timer))
+			timer.Stop();
+		
+		timer = _growthTimer[parent] = new GrowthTimer(parent, component);
+		timer.Start();
+	}
+
+	private static void StopGrowthTimer(SegmentTile parent)
+	{
+		if (_growthTimer.TryGetValue(parent, out var timer))
+			timer.Stop();
+
+		_growthTimer.Remove(parent);
+	}
+	
 	private class TreeStagePair
 	{
 		public int Alive { get; set; }
@@ -49,6 +122,7 @@ public class Tree : TerrainComponent
 		new TreeStages() { new TreeStagePair(247, 101), },
 		new TreeStages() { new TreeStagePair(370, 372), },
 		new TreeStages() { new TreeStagePair(403, 402), },
+
 		new TreeStages() { new TreeStagePair(625, 103), },
 		new TreeStages() { new TreeStagePair(901, 103), },
 		new TreeStages() { new TreeStagePair(893, 897), },
@@ -68,7 +142,26 @@ public class Tree : TerrainComponent
 		new TreeStages() { new TreeStagePair(625, 625), },
 		new TreeStages() { new TreeStagePair(626, 626), },
 		new TreeStages() { new TreeStagePair(627, 627), },
-	};
+		new TreeStages() { new TreeStagePair(1112, 1113), },
+		new TreeStages() { new TreeStagePair(1373, 1378), },
+		new TreeStages() { new TreeStagePair(1374, 1378), },
+		new TreeStages() { new TreeStagePair(1375, 1378), },
+		new TreeStages() { new TreeStagePair(1376, 1378), },
+		new TreeStages() { new TreeStagePair(1377, 1378), },
+
+        new TreeStages() { new TreeStagePair(1580, 102), },
+        new TreeStages() { new TreeStagePair(1581, 102), },
+        new TreeStages() { new TreeStagePair(1582, 102), },
+        new TreeStages() { new TreeStagePair(1583, 102), },
+        new TreeStages() { new TreeStagePair(1584, 102), },
+        new TreeStages() { new TreeStagePair(1585, 102), },
+        new TreeStages() { new TreeStagePair(1586, 102), },
+        new TreeStages() { new TreeStagePair(1590, 102), },
+        new TreeStages() { new TreeStagePair(1591, 102), },
+        new TreeStages() { new TreeStagePair(1592, 101), },
+        new TreeStages() { new TreeStagePair(1593, 102), },
+        new TreeStages() { new TreeStagePair(1594, 102), },
+    };
 		
 	private static TreeStages FindStages(int treeId)
 	{
@@ -81,55 +174,41 @@ public class Tree : TerrainComponent
 		return default(TreeStages);
 	}
 
-	private Terrain _terrain;
-	private GrowthTimer _growthTimer;
+	private readonly Terrain _terrain;
 
-	private TreeStages _stages;
+	private readonly TreeStages _stages;
 		
-	private int _currentStage;
+	private readonly int _currentStage;
 
-	private bool _canGrow;
-	private bool _isDecayed;
+	private readonly bool _canGrow;
+	private readonly bool _isDecayed;
 		
+	/// <summary>
+	/// Gets a value indicating if this instance is dense.
+	/// </summary>
 	public bool IsDense => (!_isDecayed && _currentStage >= (_stages.Count - 1));
 		
+	/// <summary>
+	/// Gets a value indicating if a thief can hide near this instance.
+	/// </summary>
 	public bool AllowHide => IsDense;
-		
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Tree"/> class.
 	/// </summary>
-	public Tree(XElement element) : base(element)
+	private Tree(Color color, int treeId, bool canGrow, bool decayed) : base(color)
 	{
 		_stages = new TreeStages();
-			
-		if (element.TryGetElement("tree", out var treeElement))
+		
+		if (treeId > 0)
 		{
-			var tree = (int)treeElement;
-				
-			_stages = FindStages(tree);
-			_currentStage = _stages.GetStage(tree);
+			_stages = FindStages(treeId);
+			_currentStage = _stages.GetStage(treeId);
 		}
 
-		if (element.TryGetElement("canGrow", out var canGrowElement))
-			_canGrow = (bool)canGrowElement;
-			
-		if (element.TryGetElement("decayed", out var decayedElement))
-			_isDecayed = (bool)decayedElement;
-
-		UpdateGrowthTimer();
-		UpdateTerrain();
-	}
-
-	/// <summary>
-	/// Gets the terrain visible to the specified entity.
-	/// </summary>
-	public override IEnumerable<Terrain> GetTerrain(MobileEntity beholder)
-	{
-		yield return _terrain;
-	}
-
-	public void UpdateTerrain()
-	{
+		_canGrow = canGrow;
+		_isDecayed = decayed;
+		
 		var stage = _currentStage;
 		var max = _stages.Count - 1;
 
@@ -140,72 +219,104 @@ public class Tree : TerrainComponent
 			
 		_terrain = (_isDecayed ? Terrain.Get(pair.Dead, Color) : Terrain.Get(pair.Alive, Color));
 	}
+
+	/// <inheritdoc />
+	public override void Initialize(SegmentTile parent)
+	{
+		base.Initialize(parent);
+
+		if (parent is null)
+			return;
 		
+		if (_canGrow && (_isDecayed || _currentStage < _stages.Count - 1))
+			StartGrowthTimer(parent, this);
+	}
+
+	/// <summary>
+	/// Gets the terrain visible to the specified entity.
+	/// </summary>
+	public override IEnumerable<Terrain> GetTerrain(SegmentTile parent, MobileEntity beholder)
+	{
+		yield return _terrain;
+	}
+
 	/// <summary>
 	/// Grows this instance to the next stage.
 	/// </summary>
-	public void Grow()
+	/// <param name="parent"></param>
+	public void Grow(SegmentTile parent)
 	{
-		if (_currentStage >= _stages.Count)
+		StopGrowthTimer(parent);
+		
+		if ((_currentStage >= _stages.Count))
 			return;
+		
+		var stage = _currentStage + 1;
+		var max = _stages.Count - 1;
 
-		_currentStage++;
+		if (stage < 0) stage = 0;
+		if (stage > max) stage = max;
 
-		if (_isDecayed)
+		var pair = _stages[stage];
+
+		var nextTerrain = Terrain.Get(pair.Alive, Color);
+			
+		var currentState = this;
+		var updatedState = Construct(_color, nextTerrain.ID, _canGrow, false);
+		
+		if (currentState != updatedState)
 		{
-			_currentStage = 0;
-			_isDecayed = false;
+			parent.Remove(currentState);
+			parent.Add(updatedState);
 		}
-			
-		UpdateGrowthTimer();
-		UpdateTerrain();
-
-		_parent.Delta(TileDelta.Terrain);
+		
+		parent.Delta(TileDelta.Terrain);
 	}
-
-	public void UpdateGrowthTimer()
+	
+	public void Decay(SegmentTile parent)
 	{
-		if (_growthTimer != null && _growthTimer.Running)
-			_growthTimer.Stop();
-			
-		_growthTimer = null;
-			
-		if (_canGrow && _currentStage < (_stages.Count - 1))
+		StopGrowthTimer(parent);
+		
+		var stage = _currentStage;
+		var max = _stages.Count - 1;
+
+		if (stage < 0) stage = 0;
+		if (stage > max) stage = max;
+
+		var pair = _stages[stage];
+
+		var nextTerrain = Terrain.Get(pair.Dead, _color);
+		
+		var currentState = this;
+		var updatedState = Construct(_color, nextTerrain.ID, _canGrow, true);
+
+		if (currentState != updatedState)
 		{
-			_growthTimer = new GrowthTimer(this);
-			_growthTimer.Start();
+			parent.Remove(currentState);
+			parent.Add(updatedState);
 		}
+		
+		parent.Delta(TileDelta.Terrain);
 	}
 
-	public void Decay()
+	protected override void OnDispose(SegmentTile parent, bool disposing)
 	{
-		_isDecayed = true;
-
-		UpdateGrowthTimer();
-		UpdateTerrain();
-			
-		_parent.Delta(TileDelta.Terrain);
-	}
-
-	protected override void OnDispose(bool disposing)
-	{
-		if (_growthTimer != null && _growthTimer.Running)
-			_growthTimer.Stop();
-			
-		_growthTimer = null;
-			
-		base.OnDispose(disposing);
+		base.OnDispose(parent, disposing);
+		
+		StopGrowthTimer(parent);
 	}
 
 	private class GrowthTimer : Timer
 	{
+		private SegmentTile _segmentTile;
 		private Tree _tree;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WaterTimer"/> class.
 		/// </summary>
-		public GrowthTimer(Tree tree) : base(TimeSpan.FromHours(1.0))  // TODO: Scale for facet time?
+		public GrowthTimer(SegmentTile segmentTile, Tree tree) : base(segmentTile.Facet.TimeSpan.FromMinutes(1.0))
 		{
+			_segmentTile = segmentTile;
 			_tree = tree;
 		}
 
@@ -215,7 +326,7 @@ public class Tree : TerrainComponent
 		protected override void OnExecute()
 		{
 			if (_tree != null)
-				_tree.Grow();
+				_tree.Grow(_segmentTile);
 		}
 	}
 }

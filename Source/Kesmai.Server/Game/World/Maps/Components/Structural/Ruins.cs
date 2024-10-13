@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Xml.Linq;
 using Kesmai.Server.Miscellaneous.WorldForge;
 using Kesmai.Server.Spells;
@@ -9,29 +10,59 @@ namespace Kesmai.Server.Game;
 [WorldForgeComponent("RuinsComponent")]
 public class Ruins : TerrainComponent, IHandleMovement, IHandlePathing
 {
-	private Terrain _ruins;
+	internal class Cache : IComponentCache
+	{
+		private static readonly Dictionary<int, Ruins> _cache = new Dictionary<int, Ruins>();
+	
+		public TerrainComponent Get(XElement element)
+		{
+			var color = element.GetColor("color", Color.White);
+			var ruinsId = element.GetInt("ruins", 0);
+
+			return Get(color, ruinsId);
+		}
+
+		public Ruins Get(Color color, int ruinsId)
+		{
+			var hash = CalculateHash(color, ruinsId);
+
+			if (!_cache.TryGetValue(hash, out var component))
+				_cache.Add(hash, (component = new Ruins(color, ruinsId)));
+
+			return component;
+		}
+
+		private static int CalculateHash(Color color, int ruinsId)
+		{
+			return HashCode.Combine(color, ruinsId);
+		}
+	}
+	
+	/// <summary>
+	/// Gets an instance of <see cref="Ruins"/> that has been cached.
+	/// </summary>
+	public static Ruins Construct(Color color, int ruinsId)
+	{
+		if (TryGetCache(typeof(Ruins), out var cache) && cache is Cache componentCache)
+			return componentCache.Get(color, ruinsId);
+
+		return new Ruins(color, ruinsId);
+	}
+	
+	private readonly Terrain _ruins;
 	
 	/// <inheritdoc />
 	public int PathingPriority { get; } = 0;
 
-	public Ruins(Terrain ruins)
+	private Ruins(Color color, int ruinsId) : base(color)
 	{
-		_ruins = ruins;
+		_ruins = Terrain.Get(ruinsId, color);
 	}
-		
-	/// <summary>
-	/// Initializes a new instance of the <see cref="Ruins"/> class.
-	/// </summary>
-	public Ruins(XElement element) : base(element)
-	{
-		if (element.TryGetElement("ruins", out var ruinsElement))
-			_ruins = Terrain.Get((int)ruinsElement, Color);
-	}
-
+	
 	/// <summary>
 	/// Gets the terrain visible to the specified entity.
 	/// </summary>
-	public override IEnumerable<Terrain> GetTerrain(MobileEntity beholder)
+	public override IEnumerable<Terrain> GetTerrain(SegmentTile parent, MobileEntity beholder)
 	{
 		if (_ruins != null)
 			yield return _ruins;
@@ -40,13 +71,13 @@ public class Ruins : TerrainComponent, IHandleMovement, IHandlePathing
 	/// <summary>
 	/// Determines whether the specified entity can path over this component.
 	/// </summary>
-	public virtual bool AllowMovementPath(MobileEntity entity = default(MobileEntity))
+	public virtual bool AllowMovementPath(SegmentTile parent, MobileEntity entity = default(MobileEntity))
 	{
 		return true;
 	}
 		
 	/// <inheritdoc />
-	public virtual bool AllowSpellPath(MobileEntity entity = default(MobileEntity), Spell spell = default(Spell))
+	public virtual bool AllowSpellPath(SegmentTile parent, MobileEntity entity = default(MobileEntity), Spell spell = default(Spell))
 	{
 		return true;
 	}
@@ -54,7 +85,7 @@ public class Ruins : TerrainComponent, IHandleMovement, IHandlePathing
 	/// <summary>
 	/// Handles movement over this component.
 	/// </summary>
-	public void HandleMovementPath(PathingRequestEventArgs args)
+	public void HandleMovementPath(SegmentTile parent, PathingRequestEventArgs args)
 	{
 		args.Result = PathingResult.Interrupted;
 	}
@@ -67,14 +98,14 @@ public class Ruins : TerrainComponent, IHandleMovement, IHandlePathing
 	/// <summary>
 	/// Called when a mobile entity steps on this component.
 	/// </summary>
-	public virtual void OnEnter(MobileEntity entity, bool isTeleport)
+	public virtual void OnEnter(SegmentTile parent, MobileEntity entity, bool isTeleport)
 	{
 	}
 
 	/// <summary>
 	/// Called when a mobile entity steps off this component.
 	/// </summary>
-	public virtual void OnLeave(MobileEntity entity, bool isTeleport)
+	public virtual void OnLeave(SegmentTile parent, MobileEntity entity, bool isTeleport)
 	{
 	}
 }

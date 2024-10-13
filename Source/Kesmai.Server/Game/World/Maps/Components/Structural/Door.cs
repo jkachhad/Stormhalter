@@ -11,6 +11,41 @@ namespace Kesmai.Server.Game;
 [WorldForgeComponent("DoorComponent")]
 public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMovement, IHandleInteraction
 {
+	private static Dictionary<SegmentTile, Timer> _closeTimers = new Dictionary<SegmentTile, Timer>();
+	private static Dictionary<SegmentTile, Timer> _hideTimers = new Dictionary<SegmentTile, Timer>();
+
+	private static void StartCloseTimer(SegmentTile parent, Door component, TimeSpan duration)
+	{
+		if (_closeTimers.TryGetValue(parent, out var timer))
+			timer.Stop();
+		
+		_closeTimers[parent] = Timer.DelayCall(duration, () => component.Close(parent));
+	}
+
+	private static void StopCloseTimer(SegmentTile parent)
+	{
+		if (_closeTimers.TryGetValue(parent, out var timer))
+			timer.Stop();
+		
+		_closeTimers.Remove(parent);
+	}
+	
+	private static void StartHideTimer(SegmentTile parent, Door component, TimeSpan duration)
+	{
+		if (_hideTimers.TryGetValue(parent, out var timer))
+			timer.Stop();
+		
+		_hideTimers[parent] = Timer.DelayCall(duration, () => component.Unhide(parent));
+	}
+
+	private static void StopHideTimer(SegmentTile parent)
+	{
+		if (_hideTimers.TryGetValue(parent, out var timer))
+			timer.Stop();
+		
+		_hideTimers.Remove(parent);
+	}
+	
 	/// <summary>
 	/// Gets the delay after which secret doors are automatically closed.
 	/// </summary>
@@ -24,9 +59,6 @@ public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMove
 	private bool _isSecret;
 	private bool _isOpen;
 	private bool _isDestroyed;
-
-	private Timer _closeTimer;
-	private Timer _hideTimer;
 	
 	/// <inheritdoc />
 	public int PathingPriority { get; } = 0;
@@ -41,15 +73,15 @@ public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMove
 	/// </summary>
 	public bool IsSecret => _isSecret;
 
-	public bool IsHidden => _hideTimer != null && _hideTimer.Running;
-
+	/// <summary>
+	/// Gets or sets a value indicating whether this door is open.
+	/// </summary>
 	public bool IsOpen => _isOpen || IsDestroyed;
 
-	public bool IsDestroyed
-	{
-		get => _isDestroyed;
-		set => _isDestroyed = value;
-	}
+	/// <summary>
+	/// Gets or sets a value indicating whether this door is destroyed.
+	/// </summary>
+	public bool IsDestroyed => _isDestroyed;
 		
 	/// <summary>
 	/// Gets a value indicating whether this instance is indestructible.
@@ -89,14 +121,14 @@ public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMove
 	/// <summary>
 	/// Gets the terrain values from this component.
 	/// </summary>
-	public override IEnumerable<Terrain> GetTerrain(MobileEntity beholder)
+	public override IEnumerable<Terrain> GetTerrain(SegmentTile parent, MobileEntity beholder)
 	{
 		if (!IsDestroyed)
 		{
 			var openId = _openDoor;
 			var closedId = _closedDoor;
 
-			if (_isSecret || IsHidden)
+			if (_isSecret || IsHidden(parent))
 				closedId = _secretDoor;
 
 			yield return (_isOpen ? openId : closedId);
@@ -115,27 +147,28 @@ public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMove
 	/// <summary>
 	/// Called when a mobile entity steps on this component.
 	/// </summary>
-	public void OnEnter(MobileEntity entity, bool isTeleport)
+	public void OnEnter(SegmentTile parent, MobileEntity entity, bool isTeleport)
 	{
 		if (!_isOpen)
-			Open();
+			Open(parent);
 	}
 
 	/// <summary>
 	/// Called when a mobile entity steps off this component.
 	/// </summary>
-	public void OnLeave(MobileEntity entity, bool isTeleport)
+	public void OnLeave(SegmentTile parent, MobileEntity entity, bool isTeleport)
 	{
 	}
 
 	/// <inheritdoc />
-	public virtual bool AllowMovementPath(MobileEntity entity = default(MobileEntity))
+	public virtual bool AllowMovementPath(SegmentTile parent, MobileEntity entity = default(MobileEntity))
 	{
 		return (IsOpen || !IsSecret);
 	}
 
 	/// <inheritdoc />
-	public virtual bool AllowSpellPath(MobileEntity entity = default(MobileEntity), Spell spell = default(Spell))
+	public virtual bool AllowSpellPath(SegmentTile parent, MobileEntity entity = default(MobileEntity),
+		Spell spell = default(Spell))
 	{
 		if (IsOpen || spell is FindSecretDoorsSpell)
 			return true;
@@ -146,7 +179,7 @@ public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMove
 	/// <summary>
 	/// Handles movement over this component.
 	/// </summary>
-	public void HandleMovementPath(PathingRequestEventArgs args)
+	public void HandleMovementPath(SegmentTile parent, PathingRequestEventArgs args)
 	{
 		if (!IsOpen)
 			args.Result = (_isSecret ? PathingResult.Daze : PathingResult.Interrupted);
@@ -155,7 +188,7 @@ public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMove
 	/// <summary>
 	/// Handles interaction from the specified entity.
 	/// </summary>
-	public bool HandleInteraction(MobileEntity entity, ActionType action)
+	public bool HandleInteraction(SegmentTile parent, MobileEntity entity, ActionType action)
 	{
 		if (IsDestroyed)
 			return false;
@@ -165,147 +198,135 @@ public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMove
 			
 		if (_isOpen)
 		{
-			if (action == ActionType.CloseDoor && CanClose())
-				Close();
+			if (action == ActionType.CloseDoor && CanClose(parent))
+				Close(parent);
 		}
 		else
 		{
-			var secret = _isSecret || IsHidden;
+			var secret = _isSecret || IsHidden(parent);
 				
 			if ((secret && action == ActionType.Search) || (action == ActionType.OpenDoor))
-				Open();
+				Open(parent);
 		}
 			
 		entity.QueueRoundTimer();
 		return true;
 	}
 
-	private void Delta()
+	private void Delta(SegmentTile parent)
 	{
-		_parent.Delta(TileDelta.Terrain);
-		_parent.UpdateFlags();
+		parent.Delta(TileDelta.Terrain);
+		parent.UpdateFlags();
 	}
 
 	/// <summary>
 	/// Closes this instance.
 	/// </summary>
-	public void Close()
+	public void Close(SegmentTile parent)
 	{
-		if (_isOpen && CanClose())
+		if (_isOpen && CanClose(parent))
 		{
 			_isOpen = false;
 
-			_parent.PlaySound(74, 3, 6);
+			parent.PlaySound(74, 3, 6);
 
-			Delta();
+			Delta(parent);
 				
-			if (_closeTimer != null && _closeTimer.Running)
-				_closeTimer.Stop();
-
-			_closeTimer = null;
+			StopCloseTimer(parent);
 		}
 		else
 		{
-			if (_closeTimer != null && _closeTimer.Running)
-				_closeTimer.Stop();
-
-			_closeTimer = Timer.DelayCall(SecretDoorCloseDelay, Close);
+			StartCloseTimer(parent, this, SecretDoorCloseDelay);
 		}
 	}
 
-	public void Open(bool silent = false)
+	public void Open(SegmentTile parent, bool silent = false)
 	{
 		if (IsOpen)
 			return;
 			
 		_isOpen = true;
 
-		Unhide();
+		Unhide(parent);
 
 		if (!silent)
-			_parent.PlaySound(73, 3, 6);
+			parent.PlaySound(73, 3, 6);
 			
-		Delta();
+		Delta(parent);
 
-		if (IsHidden)
-		{
-			if (_hideTimer != null && _hideTimer.Running)
-				_hideTimer.Stop();
-
-			_hideTimer = null;
-		}
+		if (IsHidden(parent))
+			StopHideTimer(parent);
 			
 		if (_isSecret)
-		{
-			if (_closeTimer != null && _closeTimer.Running)
-				_closeTimer.Stop();
-
-			_closeTimer = Timer.DelayCall(SecretDoorCloseDelay, Close);
-		}
+			StartCloseTimer(parent, this, SecretDoorCloseDelay);
 	}
 
-	private bool CanClose()
+	private bool CanClose(SegmentTile parent)
 	{
-		if (_parent is null || IsDestroyed)
+		if (parent is null || IsDestroyed)
 			return false;
 			
-		if (_parent.Groups.Any())
+		if (parent.Groups.Any())
 			return false;
 
-		if (_parent.OfType<Web>().Any())
+		if (parent.OfType<Web>().Any())
 			return false;
 
 		return true;
 	}
 		
-	public void Toggle()
+	public void Toggle(SegmentTile parent)
 	{
 		if (_isOpen)
-			Close();
+			Close(parent);
 		else
-			Open();
+			Open(parent);
 	}
 
-	public bool Hide(int skillLevel = 0)
+	public bool Hide(SegmentTile parent, int skillLevel = 0)
 	{
 		// TODO: This door can't be destroyed.
 		// TODO: This door needs 2 cardinal walls near it (horizontal/vertical).
 
 		if (_isOpen)
 		{
-			if (!CanClose())
+			if (!CanClose(parent))
 				return false;
 
-			Close();
+			Close(parent);
 		}
 
-		if (_hideTimer != null && _hideTimer.Running)
-			_hideTimer.Stop();
-
-		_hideTimer = Timer.DelayCall(_parent.Facet.TimeSpan.FromRounds(30 + 2 * skillLevel), Unhide);
+		StartHideTimer(parent, this, parent.Facet.TimeSpan.FromRounds(30 + 2 * skillLevel));
 			
-		Delta();
+		Delta(parent);
 			
 		return true;
 	}
 
-	public void Unhide()
+	public void Unhide(SegmentTile parent)
 	{
-		if (!IsHidden)
+		if (!IsHidden(parent))
 			return;
 			
-		if (_hideTimer != null && _hideTimer.Running)
-			_hideTimer.Stop();
+		StopHideTimer(parent);
 			
-		Delta();
+		Delta(parent);
+	}
+	
+	public bool IsHidden(SegmentTile parent)
+	{
+		if (_hideTimers.TryGetValue(parent, out var timer) && timer.Running)
+			return true;
+
+		return false;
 	}
 
-	public void Destroy()
+	public void Destroy(SegmentTile parent)
 	{
 		if (IsIndestructible || IsDestroyed)
 			return;
 			
-		Open();
+		Open(parent, true);
 			
 		_isDestroyed = true;
 	}

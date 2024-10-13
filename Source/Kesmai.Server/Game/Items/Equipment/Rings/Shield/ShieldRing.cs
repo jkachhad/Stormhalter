@@ -69,6 +69,8 @@ public partial class ShieldRing : Ring, ITreasure
 			status.AddSource(new ItemSource(this));
 		}
 
+		entity.Stats[EntityStat.Barrier].Add(+Shield, ModifierType.Constant);
+
 		return true;
 	}
 
@@ -79,6 +81,8 @@ public partial class ShieldRing : Ring, ITreasure
 
 		if (entity.GetStatus(typeof(ShieldStatus), out var status))
 			status.RemoveSource(this);
+		
+		entity.Stats[EntityStat.Barrier].Remove(+Shield, ModifierType.Constant);
 
 		return true;
 	}

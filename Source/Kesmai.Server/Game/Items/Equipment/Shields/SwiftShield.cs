@@ -74,6 +74,8 @@ public partial class SwiftShield : Shield, ITreasure
 		{
 			status.AddSource(new ItemSource(this));
 		}
+		
+		entity.Stats[EntityStat.Barrier].Add(+Shield, ModifierType.Constant);
 	}
 
 	public override void OnUnwield(MobileEntity entity)
@@ -82,5 +84,7 @@ public partial class SwiftShield : Shield, ITreasure
 
 		if (entity.GetStatus(typeof(ShieldStatus), out var status))
 			status.RemoveSource(this);
+		
+		entity.Stats[EntityStat.Barrier].Remove(+Shield, ModifierType.Constant);
 	}
 }

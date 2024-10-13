@@ -76,7 +76,7 @@ public partial class BankerRing : Ring, ITreasure
 
 	public bool Consume(ItemEntity dropped)
 	{
-		if (dropped is not Gold || Container is not Rings)
+		if (dropped is not Gold || Container is not Rings || dropped is null)
 			return false; /* The item will bounce back to the original location. */
 
 		Consumed += dropped.Amount;
@@ -127,17 +127,14 @@ public partial class BankerRing : Ring, ITreasure
 		if (Consumed > 0)
 		{
 			var segmentTile = entity.SegmentTile;
-
-			var counter = entity.GetComponentInNeighbor<Counter>();
-			var alter = entity.GetComponentInNeighbor<Altar>();
-
-			var destinationTile = default(SegmentTile);
-
-			if (counter != null)
-				destinationTile = counter.Parent;
-
-			if (destinationTile is null && alter != null)
-				destinationTile = alter.Parent;
+			var destinationTile = segmentTile;
+			
+			var component = default(TerrainComponent);
+			
+			(destinationTile, component) = entity.GetComponentInNeighbor<Counter>();
+			
+			if (component is null)
+				(destinationTile, component) = entity.GetComponentInNeighbor<Altar>();
 
 			if (destinationTile is null)
 				destinationTile = segmentTile;
@@ -197,7 +194,7 @@ public partial class BankerRing : Ring, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 
@@ -207,9 +204,9 @@ public partial class BankerRing : Ring, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 
 		var version = reader.ReadInt16();
 

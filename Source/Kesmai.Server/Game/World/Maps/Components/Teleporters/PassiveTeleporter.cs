@@ -22,18 +22,18 @@ public class PassiveTeleporter : Teleporter
 	/// <summary>
 	/// Gets the terrain visible to the specified entity.
 	/// </summary>
-	public override IEnumerable<Terrain> GetTerrain(MobileEntity beholder)
+	public override IEnumerable<Terrain> GetTerrain(SegmentTile parent, MobileEntity beholder)
 	{
 		if (_teleporter != null)
 			yield return _teleporter;
 	}
 		
-	protected override bool CanTeleport(MobileEntity entity)
+	protected override bool CanTeleport(SegmentTile parent, MobileEntity entity)
 	{
 		return true;
 	}
 		
-	protected override bool CanTeleport(ItemEntity entity)
+	protected override bool CanTeleport(SegmentTile parent, ItemEntity entity)
 	{
 		return true;
 	}

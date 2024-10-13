@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Xml;
 using System.Xml.Linq;
 using CommonServiceLocator;
 using DigitalRune.Collections;
@@ -17,13 +14,12 @@ using Kesmai.WorldForge.Roslyn;
 using Kesmai.WorldForge.UI;
 using Kesmai.WorldForge.UI.Documents;
 using Kesmai.WorldForge.UI.Windows;
-using Lidgren.Network;
 using Microsoft.CodeAnalysis.CSharp;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using Kesmai.WorldForge.Scripting;
+using Microsoft.CodeAnalysis;
 using RoslynPad.Roslyn;
 using ZipFile = Ionic.Zip.ZipFile;
 
@@ -158,18 +154,19 @@ public class ApplicationPresenter : ObservableRecipient
 		{
 			if (value != _activeDocument)
 			{
-				_previousDocument = _activeDocument;					
+				_previousDocument = null;
 			}
 			SetProperty(ref _activeDocument, value, true);
-
 		}
 	}
-		
-	public ApplicationPresenter()
+    public RelayCommand ExportToPdfCommand { get; set; }
+    public ApplicationPresenter()
 	{
 		var messenger = WeakReferenceMessenger.Default;
 
-		messenger.Register<ApplicationPresenter, GetActiveSegmentRequestMessage>(this,
+        ExportToPdfCommand = new RelayCommand(ExportToPdf, () => (ActiveDocument is SegmentRegion));
+        ExportToPdfCommand.DependsOn(() => ActiveDocument);
+        messenger.Register<ApplicationPresenter, GetActiveSegmentRequestMessage>(this,
 			(r, m) => m.Reply(r.Segment));
 
 		Documents = new ObservableCollection<object>();
@@ -497,7 +494,7 @@ public class ApplicationPresenter : ObservableRecipient
 
 	public void JumpPrevious ()
 	{
-		if (_previousDocument != _activeDocument)
+		if (_previousDocument != _activeDocument && _previousDocument != null)
 		{
 			ActiveDocument = _previousDocument;
 		}
@@ -701,11 +698,12 @@ public class ApplicationPresenter : ObservableRecipient
 	private bool CheckScriptSyntax() //Enumerate all script segments and verify that they pass syntax checks
 	{
 		//Segment code:
-		var syntaxErrors = CSharpSyntaxTree.ParseText(Segment.Internal.Blocks[1]).GetDiagnostics();
-		if (syntaxErrors.Count()>0)
+		var syntaxErrors = CSharpSyntaxTree.ParseText(Segment.Internal.Blocks[1], new CSharpParseOptions(kind: SourceCodeKind.Script)).GetDiagnostics();
+		var syntaxErrorRefined = syntaxErrors.Where(e => e.Severity == DiagnosticSeverity.Error).ToList();
+		if (syntaxErrorRefined.Count()>0)
 		{
-			var errorList = String.Join('\n', syntaxErrors.Take(3).Select(err => (err.Location.GetLineSpan().StartLinePosition.Line+2) + ":" + err.GetMessage()));
-			if (syntaxErrors.Count() > 3)
+			var errorList = String.Join('\n', syntaxErrorRefined.Take(6).Select(err => (err.Location.GetLineSpan().StartLinePosition.Line+2) + ":" + err.GetMessage()));
+			if (syntaxErrorRefined.Count() > 3)
 				errorList += "\n...";
 			var messageResult = MessageBox.Show($"Segment code has syntax errors.\nDo you wish to continue?\n\n{errorList}", "Syntax Errors in scripts", MessageBoxButton.YesNo);
 			if (messageResult == MessageBoxResult.No)
@@ -932,5 +930,24 @@ public class ApplicationPresenter : ObservableRecipient
 
 		if (graphicsScreen != null)
 			graphicsScreen.InvalidateRender();
+	}
+	private void ExportToPdf()
+	{
+		if (ActiveDocument is SegmentRegion region)
+		{
+			var dialog = new Microsoft.Win32.SaveFileDialog()
+			{
+				DefaultExt = ".pdf",
+				Filter = "PDF Files (*.pdf)|*.pdf"
+			};
+
+			if (dialog.ShowDialog() == true)
+			{
+				var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
+				var pdfExportService = new PdfExportService(terrainManager);
+				pdfExportService.ExportCurrentView(region, dialog.FileName);
+				
+			}
+		}
 	}
 }

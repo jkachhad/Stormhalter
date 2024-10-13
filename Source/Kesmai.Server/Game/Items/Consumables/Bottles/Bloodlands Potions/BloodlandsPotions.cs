@@ -48,7 +48,7 @@ public partial class ForestBlood : Bottle
 	}
 		
 	/// <inheritdoc />
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 
@@ -56,9 +56,9 @@ public partial class ForestBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 
 		var version = reader.ReadInt16();
 
@@ -114,7 +114,7 @@ public partial class KeepBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 
@@ -122,9 +122,9 @@ public partial class KeepBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 
 		var version = reader.ReadInt16();
 
@@ -180,7 +180,7 @@ public partial class LandBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 
@@ -188,9 +188,9 @@ public partial class LandBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 
 		var version = reader.ReadInt16();
 
@@ -246,7 +246,7 @@ public partial class ShadowBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 
@@ -254,9 +254,9 @@ public partial class ShadowBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 
 		var version = reader.ReadInt16();
 
@@ -312,7 +312,7 @@ public partial class CorruptedBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 
@@ -320,9 +320,9 @@ public partial class CorruptedBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 
 		var version = reader.ReadInt16();
 
@@ -378,7 +378,7 @@ public partial class MakersBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 
@@ -386,9 +386,9 @@ public partial class MakersBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 
 		var version = reader.ReadInt16();
 
@@ -444,7 +444,7 @@ public partial class UshersBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 
@@ -452,9 +452,9 @@ public partial class UshersBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 
 		var version = reader.ReadInt16();
 
@@ -510,7 +510,7 @@ public partial class FeralBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 
@@ -518,9 +518,9 @@ public partial class FeralBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 
 		var version = reader.ReadInt16();
 
@@ -576,7 +576,7 @@ public partial class FlameBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 
@@ -584,9 +584,9 @@ public partial class FlameBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 
 		var version = reader.ReadInt16();
 
@@ -642,7 +642,7 @@ public partial class AirBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 
@@ -650,9 +650,9 @@ public partial class AirBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 
 		var version = reader.ReadInt16();
 
@@ -708,7 +708,7 @@ public partial class IceBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 
@@ -716,9 +716,9 @@ public partial class IceBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 
 		var version = reader.ReadInt16();
 
@@ -774,7 +774,7 @@ public partial class WaterBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 
@@ -782,9 +782,9 @@ public partial class WaterBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 
 		var version = reader.ReadInt16();
 
@@ -840,7 +840,7 @@ public partial class RegenerationBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 
@@ -848,9 +848,9 @@ public partial class RegenerationBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 
 		var version = reader.ReadInt16();
 
@@ -906,7 +906,7 @@ public partial class DeadBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 
@@ -914,9 +914,9 @@ public partial class DeadBlood : Bottle
 	}
 
 	/// <inheritdoc />
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 
 		var version = reader.ReadInt16();
 
