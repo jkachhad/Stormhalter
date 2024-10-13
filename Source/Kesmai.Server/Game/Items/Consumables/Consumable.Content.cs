@@ -352,24 +352,17 @@ public class ConsumableIncreaseMana : IConsumableContent
 
 	public void OnConsume(MobileEntity entity, Consumable item)
 	{
-		if (entity is PlayerEntity player)
-		{
-			var profession = player.Profession;
-			var professionMaxMana = profession.GetMaximumMana(player);
+		if (entity is not PlayerEntity player) 
+			return;
 
-			if (professionMaxMana > 0)
-			{
-				var currentMaxMana = player.Stats[EntityStat.MaxMana].Base;
+		var currentMaxManaPenalty = player.Stats[EntityStat.MaxMana].Penalty;
 
-				if (currentMaxMana < professionMaxMana)
-					currentMaxMana += _amount;
-
-				currentMaxMana = player.Stats[EntityStat.MaxMana].Base = Math.Min(currentMaxMana, professionMaxMana);
-
-				if (player.Mana < currentMaxMana)
-					player.Mana = currentMaxMana;
-			}
-		}
+		if (currentMaxManaPenalty is 0) 
+			return;
+		
+		player.Stats[EntityStat.MaxMana].Penalty = Math.Max(currentMaxManaPenalty - _amount, 0);
+		
+		player.Mana = player.MaxMana;
 	}
 		
 	public void Serialize(SpanWriter writer)
@@ -999,15 +992,10 @@ public class ConsumableConstitutionStat : IConsumableContent
 		if (currentMaxStaminaPenalty > 0)
 			player.Stats[EntityStat.MaxStamina].Penalty = Math.Max(currentMaxStaminaPenalty - 4, 0);
 		
-		/* Restore mana */
-		var currentMaxMana = player.Stats[EntityStat.MaxMana].Base;
-
-		if (player.Mana < currentMaxMana)
-			player.Mana = currentMaxMana;
-		
 		/* Increase the player to full health, stamina, and mana. */
 		player.Health = player.MaxHealth;
 		player.Stamina = player.MaxStamina;
+		player.Mana = player.MaxMana;
 	}
 		
 	public void Serialize(SpanWriter writer)
