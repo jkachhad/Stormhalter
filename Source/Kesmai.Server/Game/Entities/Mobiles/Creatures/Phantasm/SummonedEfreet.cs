@@ -15,8 +15,8 @@ public partial class SummonedEfreet : Efreet
 	{
 		Summoned = true;
 			
-		Health = MaxHealth = 400;
-		BaseDodge = 30;
+		Health = MaxHealth = PowerCurve().health;
+		BaseDodge = PowerCurve().defense;
 		Mana = MaxMana = 40;
 		Movement = 3;
 
@@ -36,14 +36,25 @@ public partial class SummonedEfreet : Efreet
 		};
 			
 		AddStatus(new NightVisionStatus(this));
+		AddStatus(new PoisonProtectionStatus(this));
 			
 		CanFly = true;
 	}
-		
+	private (int health, int defense) PowerCurve()
+    {
+        var player = Director;
+        var level = player.Level;
+        var magicSkill = player.GetSkillLevel(Skill.Magic);
+
+        var health = (level + (int)magicSkill)*11;
+        var defense = (30 + ((level - 21)* 0.5));
+        
+        return (health,(int)defense);
+    }		
 	protected override void OnCreate()
 	{
 		base.OnCreate();
-			
+		
 		_stats[EntityStat.FireProtection].Base = 100;
 		_stats[EntityStat.MagicDamageTakenReduction].Base = 30;
 	}
@@ -62,7 +73,6 @@ public partial class SummonedEfreet : Efreet
 
 		return true;
 	}
-
 	public override void OnSpellTarget(Target target, MobileEntity combatant)
 	{
 		if (Spell is DragonBreathSpell dragonBreath)
