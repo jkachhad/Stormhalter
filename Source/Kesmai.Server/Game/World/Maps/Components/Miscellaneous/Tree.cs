@@ -134,6 +134,7 @@ public class Tree : TerrainComponent
 		new TreeStages() { new TreeStagePair(900, 103), },
 		new TreeStages() { new TreeStagePair(901, 103), },
 		new TreeStages() { new TreeStagePair(902, 103), },
+		new TreeStages() { new TreeStagePair(903, 103), },
 		new TreeStages() { new TreeStagePair(905, 103), },
 		new TreeStages() { new TreeStagePair(906, 103), },
         new TreeStages() { new TreeStagePair(1004, 103), },
@@ -156,11 +157,20 @@ public class Tree : TerrainComponent
         new TreeStages() { new TreeStagePair(1584, 102), },
         new TreeStages() { new TreeStagePair(1585, 102), },
         new TreeStages() { new TreeStagePair(1586, 102), },
+        new TreeStages() { new TreeStagePair(1587, 102), },
+        new TreeStages() { new TreeStagePair(1588, 102), },
+        new TreeStages() { new TreeStagePair(1589, 102), },
         new TreeStages() { new TreeStagePair(1590, 102), },
         new TreeStages() { new TreeStagePair(1591, 102), },
         new TreeStages() { new TreeStagePair(1592, 101), },
         new TreeStages() { new TreeStagePair(1593, 102), },
         new TreeStages() { new TreeStagePair(1594, 102), },
+        new TreeStages() { new TreeStagePair(1595, 102), },
+        new TreeStages() { new TreeStagePair(1596, 102), },
+        new TreeStages() { new TreeStagePair(1597, 102), },
+        new TreeStages() { new TreeStagePair(1598, 102), },
+        new TreeStages() { new TreeStagePair(1599, 102), },
+
     };
 		
 	private static TreeStages FindStages(int treeId)
