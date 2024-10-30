@@ -96,14 +96,26 @@ public class Book : ItemEntity
 		if (Publication is null)
 			return false;
 		
-#if (DEBUG)
-		if (Publication is PublishedBook book)
-			book.Refresh();
-#endif
-		
+
+
 		if (entity is PlayerEntity player)
-			entity.SendGump(new BookGump(player, Publication));
-		
+		{
+			if (Publication is PublishedBook book)
+			{
+#if (DEBUG)
+				book.Refresh();
+#endif
+				entity.SendGump(new BookGump(player, book));
+			}
+			else if (Publication is PublishedScroll scroll)
+			{
+#if (DEBUG)
+				scroll.Refresh();
+#endif
+				entity.SendGump(new ScrollGump(player, scroll));
+			}
+		}
+
 		return false;
 	}
 
@@ -170,30 +182,115 @@ public class BookGump : Gump
 			VerticalAlignment = VerticalAlignment.Stretch,
 		};
 		
-		var rightPanel = new StackPanel()
-		{
-			Name = "rightPage",
-			Style = "Client-Page-Right-Default",
-		};
 		var leftPanel = new StackPanel()
 		{
 			Name = "leftPage",
 			Style = "Client-Page-Left-Default",
 		};
+		var rightPanel = new StackPanel()
+		{
+			Name = "rightPage",
+			Style = "Client-Page-Right-Default",
+		};
 		
-		stackPanel.Children.Add(rightPanel);
 		stackPanel.Children.Add(leftPanel);
+		stackPanel.Children.Add(rightPanel);
 		
 		Children.Add(stackPanel);
 		
 		/* get the right page. */
-		var rightPage = _publication.GetPage(_currentPage);
-		var leftPage = _publication.GetPage(_currentPage + 1);
-
-		if (rightPage is not null)
-			rightPanel.Children.Add(rightPage);
+		var leftPage = _publication.GetPage(_currentPage);
+		var rightPage = _publication.GetPage(_currentPage + 1);
 		
 		if (leftPage is not null)
 			leftPanel.Children.Add(leftPage);
+		
+		if (rightPage is not null)
+			rightPanel.Children.Add(rightPage);
+
+	}
+}
+
+public class ScrollGump : Gump
+{
+	private readonly PlayerEntity _player;
+	private readonly Publication _publication;
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="ScrollGump"/> class.
+	/// </summary>
+	public ScrollGump(PlayerEntity player, Publication publication)
+	{
+		_player = player;
+		_publication = publication;
+
+		Style = "Client-Scroll-Frame-Default";
+		
+		Overlay = true;
+		CanDrag = true;
+		
+		RenderScale = 1.0f;
+
+		var stackPanel = new StackPanel()
+		{
+			Height = 1122 - 60,
+		};
+		
+		Children.Add(stackPanel);
+		
+		// header panel
+		var headerPanel = new StackPanel()
+		{
+			Orientation = Orientation.Horizontal,
+			HorizontalAlignment = HorizontalAlignment.Stretch
+		};
+
+		var titlePanel = new StackPanel()
+		{
+			Style = "Client-Scroll-Frame-Header",
+			
+			HorizontalAlignment = HorizontalAlignment.Stretch
+		};
+
+		var titleText = new TextBlock()
+		{
+			Text = _publication.Title,
+
+			FontSize = 24, 
+			Foreground = Color.Black,
+
+			HorizontalAlignment = HorizontalAlignment.Center,
+			VerticalAlignment = VerticalAlignment.Bottom,
+		};
+
+		var closeButton = new TextureButton()
+		{
+			Style = "Client-Scroll-Close",
+
+			HorizontalAlignment = HorizontalAlignment.Right,
+			VerticalAlignment = VerticalAlignment.Top,
+		};
+		
+		titlePanel.Children.Add(titleText);
+		
+		headerPanel.Children.Add(titlePanel);
+		headerPanel.Children.Add(closeButton);
+		
+		stackPanel.Children.Add(headerPanel);
+		
+		// get the page content. it's returned as a stack panel.
+		var page = _publication.GetPage(0);
+
+		if (page is not null)
+		{
+			foreach (var text in page.Children)
+			{
+				text.Stroke = default(Color);
+				text.Foreground = Color.Black;
+				text.FontStyle = MSDFStyle.Regular;
+			}
+			
+			stackPanel.Children.Add(page);
+		}
 	}
 }
