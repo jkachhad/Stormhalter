@@ -105,6 +105,7 @@ public class Book : ItemEntity
 #if (DEBUG)
 				book.Refresh();
 #endif
+				entity.CloseGumps<BookGump>();
 				entity.SendGump(new BookGump(player, book));
 			}
 			else if (Publication is PublishedScroll scroll)
@@ -112,6 +113,7 @@ public class Book : ItemEntity
 #if (DEBUG)
 				scroll.Refresh();
 #endif
+				entity.CloseGumps<ScrollGump>();
 				entity.SendGump(new ScrollGump(player, scroll));
 			}
 		}
