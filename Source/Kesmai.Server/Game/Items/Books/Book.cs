@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Engines.Gumps;
@@ -93,14 +94,23 @@ public class Book : ItemEntity
 		if (action != ActionType.Look)
 			return base.HandleInteraction(entity, action);
 
-		if (Publication is null)
+		var publication = Publication;
+		
+		if (publication is null)
 			return false;
 		
-
-
 		if (entity is PlayerEntity player)
 		{
-			if (Publication is PublishedBook book)
+			var account = player.Account;
+
+			if (!publication.IsOwned(account, out var record))
+			{
+				publication.Own(account, record = new PublicationRecord(account, publication));
+				
+				player.SendServerMessage($"A book titled '{publication.Title}' has been added to your library.");
+			}
+			
+			if (publication is PublishedBook book)
 			{
 #if (DEBUG)
 				book.Refresh();
@@ -108,14 +118,19 @@ public class Book : ItemEntity
 				entity.CloseGumps<BookGump>();
 				entity.SendGump(new BookGump(player, book));
 			}
-			else if (Publication is PublishedScroll scroll)
+			else if (publication is PublishedScroll scroll)
 			{
 #if (DEBUG)
 				scroll.Refresh();
 #endif
 				entity.CloseGumps<ScrollGump>();
 				entity.SendGump(new ScrollGump(player, scroll));
+				
+				// scrolls are marked as complete when read.
+				record.Complete();
 			}
+
+			Delete();
 		}
 
 		return false;
@@ -156,16 +171,28 @@ public class BookGump : Gump
 {
 	private readonly PlayerEntity _player;
 	private readonly Publication _publication;
+	private readonly PublicationRecord _record;
 
 	private int _currentPage;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BookGump"/> class.
 	/// </summary>
-	public BookGump(PlayerEntity player, Publication publication)
+	public BookGump(PlayerEntity player, Publication publication, PublicationRecord record = default)
 	{
 		_player = player;
 		_publication = publication;
+
+		_record = record ?? publication.GetRecord(player.Account);
+
+		if (_record is not null)
+		{
+			_currentPage = _record.CurrentPage;
+
+			// Mark as complete if the player has read the entire book.
+			if (_currentPage >= (_publication.GetPages().Count() - 1))
+				_record.Complete();
+		}
 
 		Style = "Client-Book-Frame-Default";
 		
