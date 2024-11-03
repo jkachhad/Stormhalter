@@ -242,13 +242,96 @@ public class ScrollGump : Gump
 		var headerPanel = new StackPanel()
 		{
 			Orientation = Orientation.Horizontal,
+			HorizontalAlignment = HorizontalAlignment.Stretch,
+		};
+
+		var titlePanel = new StackPanel()
+		{
+			Style = "Client-Scroll-Frame-Header",
+			HorizontalAlignment = HorizontalAlignment.Stretch,
+		};
+
+		var titleText = new TextBlock()
+		{
+			Text = _publication.Title,
+
+			FontSize = 24,
+			Foreground = Color.Black,
+
+			HorizontalAlignment = HorizontalAlignment.Center,
+			VerticalAlignment = VerticalAlignment.Bottom,
+		};
+
+		var closeButton = new TextureButton()
+		{
+			Style = "Client-Scroll-Frame-Close",
+			
+			HorizontalAlignment = HorizontalAlignment.Right,
+			VerticalAlignment = VerticalAlignment.Top,
+		};
+
+		titlePanel.Children.Add(titleText);
+
+		headerPanel.Children.Add(titlePanel);
+		headerPanel.Children.Add(closeButton);
+		
+		// content
+		var scrollViewer = new ScrollViewer()
+		{
+			Style = "Client-Scroll-ScrollViewer",
+			
+			HorizontalAlignment = HorizontalAlignment.Stretch,
+			VerticalAlignment = VerticalAlignment.Stretch,
+			
+			HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden,
+			VerticalScrollBarVisibility = ScrollBarVisibility.Visible,
+			
+			Margin = new Rectangle(0, 30, 0, 40)
+		};
+
+		var contentPanel = new StackPanel()
+		{
+			Width = 776 - 60 - 20,
+		};
+		
+		// page
+		var page = _publication.GetPage(0);
+
+		if (page is not null)
+		{
+			foreach (var text in page.Children)
+			{
+				text.Stroke = default(Color);
+				text.Foreground = Color.Black;
+				text.FontStyle = MSDFStyle.Regular;
+			}
+
+			contentPanel.Children.Add(page);
+		}
+		
+		scrollViewer.Content = contentPanel;
+		
+		stackPanel.Children.Add(headerPanel);
+		stackPanel.Children.Add(scrollViewer);
+
+		/*var stackPanel = new StackPanel()
+		{
+			Height = 1122 - 60,
+		};
+
+		Children.Add(stackPanel);
+
+		// header panel
+		var headerPanel = new StackPanel()
+		{
+			Orientation = Orientation.Horizontal,
 			HorizontalAlignment = HorizontalAlignment.Stretch
 		};
 
 		var titlePanel = new StackPanel()
 		{
 			Style = "Client-Scroll-Frame-Header",
-			
+
 			HorizontalAlignment = HorizontalAlignment.Stretch
 		};
 
@@ -256,7 +339,7 @@ public class ScrollGump : Gump
 		{
 			Text = _publication.Title,
 
-			FontSize = 24, 
+			FontSize = 24,
 			Foreground = Color.Black,
 
 			HorizontalAlignment = HorizontalAlignment.Center,
@@ -270,14 +353,14 @@ public class ScrollGump : Gump
 			HorizontalAlignment = HorizontalAlignment.Right,
 			VerticalAlignment = VerticalAlignment.Top,
 		};
-		
+
 		titlePanel.Children.Add(titleText);
-		
+
 		headerPanel.Children.Add(titlePanel);
 		headerPanel.Children.Add(closeButton);
-		
+
 		stackPanel.Children.Add(headerPanel);
-		
+
 		// get the page content. it's returned as a stack panel.
 		var page = _publication.GetPage(0);
 
@@ -289,8 +372,8 @@ public class ScrollGump : Gump
 				text.Foreground = Color.Black;
 				text.FontStyle = MSDFStyle.Regular;
 			}
-			
+
 			stackPanel.Children.Add(page);
-		}
+		}*/
 	}
 }
