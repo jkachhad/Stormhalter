@@ -32,7 +32,7 @@ namespace Kesmai.Shared
 #if Server
 	    [WorldForge]
 #endif
-	    public static ItemQuality Poor			= new ( -1,	6301049,	"Poor",			FromArgb(0xFF, 0x9D, 0x9D, 0x9D));
+	    public static ItemQuality Poor			= new (-1,	6301049,	"Poor",			FromArgb(0xFF, 0x9D, 0x9D, 0x9D));
 		
 #if Server
 	    [WorldForge]
