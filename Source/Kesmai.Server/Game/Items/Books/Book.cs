@@ -53,6 +53,30 @@ public class Book : ItemEntity
 	[CommandProperty(AccessLevel.GameMaster)]
 	public Publication Publication { get; set; }
 
+	public override int ItemId
+	{
+		get
+		{
+			if (Publication is not null)
+				return Publication.ItemId;
+
+			return base.ItemId;
+		}
+		set => base.ItemId = value;
+	}
+
+	public override ItemQuality Quality
+	{
+		get
+		{
+			if (Publication is not null)
+				return Publication.Quality;
+
+			return base.Quality;
+		}
+		set => base.Quality = value;
+	}
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Book"/> class.
 	/// </summary>
