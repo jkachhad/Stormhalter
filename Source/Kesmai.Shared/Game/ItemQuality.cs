@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 #if (Server)
 using Color = System.Drawing.Color;
@@ -94,6 +96,9 @@ namespace Kesmai.Shared
 
 			return ItemQuality.Poor;
 		}
+		
+		public static ItemQuality GetQuality(string value) 
+			=> Qualities.Values.FirstOrDefault(q => q.Name.Matches(value)) ?? ItemQuality.Poor;
 
 		public static bool operator <(ItemQuality a, ItemQuality b)
 		{

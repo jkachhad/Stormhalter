@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using Kesmai.Server.Accounting;
 using Kesmai.Server.Engines.Commands;
@@ -14,7 +13,7 @@ namespace Kesmai.Server.Items;
 
 public class Book : ItemEntity
 {
-	private string _publicationId;
+	private uint _publicationId;
 	
 	/// <inheritdoc />
 	public override int Weight => 5;
@@ -29,7 +28,7 @@ public class Book : ItemEntity
 	/// Gets or sets the publication id.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
-	public string PublicationId
+	public uint PublicationId
 	{
 		get => _publicationId;
 		set
@@ -81,7 +80,7 @@ public class Book : ItemEntity
 	/// Initializes a new instance of the <see cref="Book"/> class.
 	/// </summary>
 	[WorldForge]
-	public Book(string publicationId, int bookId = 152) : base(bookId)
+	public Book(uint publicationId) : base(152)
 	{
 		PublicationId = publicationId;
 	}
@@ -168,7 +167,7 @@ public class Book : ItemEntity
 		base.Serialize(writer);
 
 		writer.Write((short)1);	/* version */
-		writer.Write(PublicationId);
+		writer.Write((uint)PublicationId);
 	}
 
 	/// <summary>
@@ -184,7 +183,7 @@ public class Book : ItemEntity
 		{
 			case 1:
 			{
-				PublicationId = reader.ReadString();
+				PublicationId = reader.ReadUInt32();
 				break;
 			}
 		}
