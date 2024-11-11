@@ -125,12 +125,16 @@ public class Book : ItemEntity
 		if (entity is PlayerEntity player)
 		{
 			var account = player.Account;
+			var client = player.Client;
 
 			if (!publication.IsOwned(account, out var record))
 			{
 				publication.Own(account, record = new PublicationRecord(account, publication));
 				
 				player.SendServerMessage($"A book titled '{publication.Title}' has been added to your library.");
+
+				if (client.UpdateLibrary)
+					client.SendPacket(new LibraryUpdatePacket(record));
 			}
 			
 			if (publication is PublishedBook book)
