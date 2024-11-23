@@ -226,8 +226,6 @@ public class BookGump : Gump
 		Overlay = true;
 		CanDrag = true;
 		
-		RenderScale = 1.0f;
-		
 		var stackPanel = new StackPanel()
 		{
 			Style = "Client-Pages-Frame-Default",
@@ -285,11 +283,9 @@ public class ScrollGump : Gump
 		Overlay = true;
 		CanDrag = true;
 		
-		RenderScale = 1.0f;
-
 		var stackPanel = new StackPanel()
 		{
-			Height = 1122 - 60,
+			Height = 561 - 30,
 		};
 		
 		Children.Add(stackPanel);
@@ -311,7 +307,7 @@ public class ScrollGump : Gump
 		{
 			Text = _publication.Title,
 
-			FontSize = 24,
+			FontSize = 14,
 			Foreground = Color.Black,
 
 			HorizontalAlignment = HorizontalAlignment.Center,
@@ -342,12 +338,12 @@ public class ScrollGump : Gump
 			HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden,
 			VerticalScrollBarVisibility = ScrollBarVisibility.Visible,
 			
-			Margin = new Rectangle(0, 30, 0, 40)
+			Margin = new Rectangle(0, 10, 0, 10),
 		};
 
 		var contentPanel = new StackPanel()
 		{
-			Width = 776 - 60 - 20,
+			Width = 388 - 45,
 		};
 		
 		// page
