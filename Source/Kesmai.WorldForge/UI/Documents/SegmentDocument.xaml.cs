@@ -32,7 +32,7 @@ public partial class SegmentDocument : UserControl
 	}
 }
 
-public class SegmentViewModel : ObservableObject
+public class SegmentViewModel : ObservableObject, IDisposable
 {
 	public string Name => "(Segment)";
 		
@@ -47,5 +47,10 @@ public class SegmentViewModel : ObservableObject
 	public SegmentViewModel(Segment segment)
 	{
 		_segment = segment;
+	}
+	
+	public void Dispose()
+	{
+		_segment = null;
 	}
 }
