@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 #if (Server)
 using Color = System.Drawing.Color;
@@ -32,7 +34,7 @@ namespace Kesmai.Shared
 #if Server
 	    [WorldForge]
 #endif
-	    public static ItemQuality Poor			= new ( -1,	6301049,	"Poor",			FromArgb(0xFF, 0x9D, 0x9D, 0x9D));
+	    public static ItemQuality Poor			= new (-1,	6301049,	"Poor",			FromArgb(0xFF, 0x9D, 0x9D, 0x9D));
 		
 #if Server
 	    [WorldForge]
@@ -94,6 +96,9 @@ namespace Kesmai.Shared
 
 			return ItemQuality.Poor;
 		}
+		
+		public static ItemQuality GetQuality(string value) 
+			=> Qualities.Values.FirstOrDefault(q => q.Name.Matches(value)) ?? ItemQuality.Poor;
 
 		public static bool operator <(ItemQuality a, ItemQuality b)
 		{

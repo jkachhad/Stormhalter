@@ -134,6 +134,7 @@ public class Tree : TerrainComponent
 		new TreeStages() { new TreeStagePair(900, 103), },
 		new TreeStages() { new TreeStagePair(901, 103), },
 		new TreeStages() { new TreeStagePair(902, 103), },
+		new TreeStages() { new TreeStagePair(903, 103), },
 		new TreeStages() { new TreeStagePair(905, 103), },
 		new TreeStages() { new TreeStagePair(906, 103), },
         new TreeStages() { new TreeStagePair(1004, 103), },
