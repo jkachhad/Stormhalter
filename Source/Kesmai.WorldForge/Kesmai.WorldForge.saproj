@@ -46,6 +46,16 @@
                 </Merging>
                 <Embedding Compress="1" Embed="1" Encrypt="1" />
             </Assembly>
+            <Assembly AssemblyName="DigitalRune.Game.UI.Layouts, Culture=neutral, PublicKeyToken=null">
+                <Merging Merge="0">
+                    <Pruning />
+                    <Obfuscation />
+                    <ControlFlow />
+                    <MemberRefsProxy />
+                    <ResourcesCompression />
+                </Merging>
+                <Embedding Compress="1" Embed="1" Encrypt="1" />
+            </Assembly>
             <Assembly AssemblyName="PresentationCore, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
                 <Merging />
                 <Embedding Compress="1" Encrypt="1" />
