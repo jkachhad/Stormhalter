@@ -16,7 +16,7 @@ public partial class ManaPotion : Bottle, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ManaPotion"/> class.
 	/// </summary>
-	public ManaPotion() : this(6, 6)
+	public ManaPotion() : this(6, 24)
 	{
 	}
 		
