@@ -14,15 +14,15 @@ public partial class SummonedDjinn : Djinn
 	{
 		Summoned = true;
 			
-		Health = MaxHealth = 300;
-		BaseDodge = 25;
+		Health = MaxHealth = PowerCurve().health;
+		BaseDodge = PowerCurve().defense;
 		Mana = MaxMana = 24;
 
 		Movement = 3;
 			
 		Attacks = new CreatureAttackCollection
 		{
-			{ new CreatureBasicAttack(14) },
+			{ new CreatureBasicAttack(PowerCurve().attack) },
 		};
 
 		Blocks = new CreatureBlockCollection
@@ -39,13 +39,26 @@ public partial class SummonedDjinn : Djinn
 
 		CanFly = true;
 	}
+	private (int health, int defense, int attack, int magicResist) PowerCurve()
+    {
+        var player = Director;
+        var level = player.Level;
+        var magicSkill = player.GetSkillLevel(Skill.Magic);
+
+        var health = (level + (int)magicSkill)*11;
+        var defense = level + 3;
+		var attack = level - 3;
+		var magicResist = level.Clamp(0,40);
+        
+        return (health, defense, attack, magicResist);
+    }
 		
 	protected override void OnCreate()
 	{
 		base.OnCreate();
 			
 		_stats[EntityStat.IceProtection].Base = 90;
-		_stats[EntityStat.MagicDamageTakenReduction].Base = 15;
+		_stats[EntityStat.MagicDamageTakenReduction].Base = PowerCurve().magicResist;
 	}
 		
 	protected override void OnLoad()
