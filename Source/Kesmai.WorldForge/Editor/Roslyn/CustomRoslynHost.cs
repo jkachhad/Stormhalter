@@ -41,7 +41,7 @@ public class CustomRoslynHost : RoslynHost
 		var id = ProjectId.CreateNewId(name);
 		var parseOptions = new CSharpParseOptions(
 			kind: SourceCodeKind.Script,
-			languageVersion: LanguageVersion.CSharp8
+			languageVersion: LanguageVersion.Latest
 		);
 			
 		compilationOptions = compilationOptions
