@@ -5,7 +5,6 @@ using System.Linq;
 using System.Xml.Linq;
 using CommonServiceLocator;
 using DigitalRune.Collections;
-using Ionic.Zip;
 using Kesmai.WorldForge.Models;
 using Kesmai.WorldForge.Scripting;
 using Kesmai.WorldForge.UI.Documents;
@@ -213,34 +212,7 @@ public class Segment : ObservableObject
 	{
 		return Regions.FirstOrDefault(region => region.ID == id);
 	}
-		
-#if (ArchiveStorage)
-		public void Save(ZipFile archive)
-		{
-			#region Segment
-			
-			var segmentDocument = new XDocument();
-			var segmentElement = GetXElement();
-
-			segmentDocument.Add(segmentElement);
-			
-			var memoryStream = new MemoryStream();
-			var streamWriter = new StreamWriter(memoryStream);
-
-			segmentDocument.Save(streamWriter);
-
-			memoryStream.Position = 0;
-
-			archive.AddEntry(@"regions", memoryStream);
-			
-			#endregion
-
-			Locations.Save(archive);
-			Subregions.Save(archive);
-			Entities.Save(archive);
-			Spawns.Save(archive);
-		}
-#else
+	
 	public void Save(XElement element)
 	{
 		var regionsElement = new XElement("regions");
@@ -297,55 +269,6 @@ public class Segment : ObservableObject
 		element.Add(spawnsElement);
 		element.Add(treasuresElement);
 		element.Add(hoardsElement);
-	}
-#endif
-	
-	/*[Deprecated]*/
-	public void Load(ZipFile archive)
-	{
-		var version = new Version(archive.Comment);
-		var components = archive["regions"];
-			
-		var stream = XDocument.Load(components.OpenReader());
-		var element = stream.Root;
-			
-		Name = (string)element.Element("name");
-			
-		Locations = new SegmentLocations();
-
-		foreach (var regionElement in element.Elements("region"))
-			Regions.Add(new SegmentRegion(regionElement));
-
-		/* Locations */
-		if (version.Minor < 56)
-		{
-			var locationsElement = element.Element("locations");
-
-			if (locationsElement != null)
-			{
-				foreach (var locationElement in locationsElement.Elements("location"))
-					Locations.Add(new SegmentLocation(locationElement));
-			}
-		}
-		else
-		{
-			Locations.Load(archive, version);
-
-			foreach (var location in Locations)
-			{
-				if (_reservedLocations.Contains(location.Name))
-					location.IsReserved = true;
-			}
-		}
-
-		/* Subregions */
-		Subregions.Load(archive, version);
-			
-		/* Entities */
-		Entities.Load(archive, version);
-			
-		/* Spawns */
-		Spawns.Load(Entities, archive, version);
 	}
 		
 	public void UpdateTiles()

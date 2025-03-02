@@ -21,7 +21,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.CodeAnalysis;
 using RoslynPad.Roslyn;
-using ZipFile = Ionic.Zip.ZipFile;
 
 namespace Kesmai.WorldForge.Editor;
 
@@ -572,34 +571,26 @@ public class ApplicationPresenter : ObservableRecipient
 			
 		var segment = new Segment();
 		
-		if (!targetFileInfo.IsZipFile())
+		XElement rootElement = null;
+		try
 		{
-			XElement rootElement = null;
-			try
+			var document = XDocument.Load(targetFile);
+			rootElement = document.Root;
+		} catch (System.Xml.XmlException e)
+		{
+			MessageBox.Show($"Segment File is incorrectly formatted:\n{e.Message}", "Open Segment Error", MessageBoxButton.OK);
+			return;
+		}
+		if (rootElement != null)
+		{
+			if (rootElement.Name != "segment")
 			{
-				var document = XDocument.Load(targetFile);
-				rootElement = document.Root;
-			} catch (System.Xml.XmlException e)
-			{
-				MessageBox.Show($"Segment File is incorrectly formatted:\n{e.Message}", "Open Segment Error", MessageBoxButton.OK);
+				MessageBox.Show($"Provided file is not a WorldForge Segment file.", "Open Segment Error", MessageBoxButton.OK);
 				return;
 			}
-			if (rootElement != null)
-			{
-				if (rootElement.Name != "segment")
-				{
-					MessageBox.Show($"Provided file is not a WorldForge Segment file.", "Open Segment Error", MessageBoxButton.OK);
-					return;
-				}
-				segment.Load(rootElement);
-			}
-					
+			segment.Load(rootElement);
 		}
-		else
-		{
-			using (var archive = new ZipFile(targetFile))
-				segment.Load(archive);
-		}
+			
 		var definitionFilePath = $@"{_segmentFileFolder.FullName}\{segment.Name}.cs";
 
 		if (File.Exists(definitionFilePath))
@@ -660,14 +651,6 @@ public class ApplicationPresenter : ObservableRecipient
 
 			_segmentFilePath = targetFile;
 
-#if (ArchiveStorage)
-			var projectFile = new ZipFile(targetFile)
-			{
-				Comment = Core.Version.ToString()
-			};
-			
-			_segment.Save(projectFile);
-#else
 			var projectFile = new XDocument();
 			var segmentElement = new XElement("segment",
 				new XAttribute("name", _segment.Name ?? "(Unknown)"),
@@ -676,7 +659,6 @@ public class ApplicationPresenter : ObservableRecipient
 			_segment.Save(segmentElement);
 
 			projectFile.Add(segmentElement);
-#endif
 
 			projectFile.Save(targetFile);
 
