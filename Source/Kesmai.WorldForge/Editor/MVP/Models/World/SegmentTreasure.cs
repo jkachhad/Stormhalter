@@ -39,6 +39,8 @@ public class SegmentTreasure : ObservableObject
 	}
 
 	public int TotalWeight => _entries.Sum(e => e.Weight);
+
+	public virtual bool IsHoard => false;
 		
 	public SegmentTreasure()
 	{
@@ -78,7 +80,7 @@ public class SegmentTreasure : ObservableObject
 		InvalidateChance();
 	}
 
-	public XElement GetXElement()
+	public virtual XElement GetXElement()
 	{
 		var element = new XElement("treasure",
 			new XAttribute("name", _name));
@@ -98,6 +100,86 @@ public class SegmentTreasure : ObservableObject
 	{
 		foreach (var entry in _entries)
 			entry.InvalidateChance();
+	}
+}
+
+[ScriptTemplate("GetChance", typeof(HoardGetChanceScriptTemplate))]
+public class SegmentHoard : SegmentTreasure
+{
+	private ObservableCollection<Script> _scripts = new ObservableCollection<Script>();
+	private double _chance;
+	
+	public double Chance
+	{
+		get => _chance;
+		set => SetProperty(ref _chance, value);
+	}
+	
+	public ObservableCollection<Script> Scripts
+	{
+		get => _scripts;
+		set => SetProperty(ref _scripts, value);
+	}
+	
+	public override bool IsHoard => true;
+	
+	public SegmentHoard() : base()
+	{
+		ValidateScripts();
+	}
+	
+	public SegmentHoard(XElement element) : base(element)
+	{
+		foreach (var scriptElement in element.Elements("script"))
+			_scripts.Add(new Script(scriptElement));
+
+		ValidateScripts();
+	}
+	
+	public SegmentHoard(SegmentHoard hoard) : base(hoard)
+	{
+		_scripts.Clear();
+		_scripts.AddRange(hoard.Scripts.Select(s => s.Clone()));
+
+		ValidateScripts();
+	}
+	
+	private void ValidateScripts()
+	{
+		if (_scripts.All(s => s.Name != "GetChance"))
+		{
+			_scripts.Add(new Script("GetChance", true,
+				String.Empty, 
+				"\n\treturn 100;\n", 
+				String.Empty
+			));
+		}
+
+		var provider = ServiceLocator.Current.GetInstance<ScriptTemplateProvider>();
+		var attributes = GetType().GetCustomAttributes(typeof(ScriptTemplateAttribute), false)
+			.OfType<ScriptTemplateAttribute>().ToList();
+
+		if (attributes.Any())
+		{
+			foreach (var script in _scripts)
+			{
+				var attr = attributes.FirstOrDefault(
+					a => String.Equals(a.Name, script.Name, StringComparison.Ordinal));
+
+				if (attr != null && provider.TryGetTemplate(attr.TemplateType, out var template))
+					script.Template = template;
+			}
+		}
+	}
+	
+	public override XElement GetXElement()
+	{
+		var element = base.GetXElement();
+
+		foreach (var script in _scripts)
+			element.Add(script.GetXElement());
+
+		return element;
 	}
 }
 	

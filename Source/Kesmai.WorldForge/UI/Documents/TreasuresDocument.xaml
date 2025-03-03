@@ -8,18 +8,21 @@
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
              xmlns:worldForge="clr-namespace:Kesmai.WorldForge"
              xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             xmlns:ui="clr-namespace:Kesmai.WorldForge.UI"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              
              FontFamily="Tahoma" FontSize="14">
     <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
+        
         <CollectionViewSource 
             x:Key="collectionViewSourceTreasures"
             Source="{Binding Treasures}">
             
             <CollectionViewSource.SortDescriptions>
-                <componentModel:SortDescription PropertyName="Name" 
-                                                Direction="Ascending" />
+                <componentModel:SortDescription PropertyName="IsHoard" Direction="Ascending" />
+                <componentModel:SortDescription PropertyName="Name" Direction="Ascending" />
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
     </UserControl.Resources>
@@ -41,10 +44,25 @@
             
             <ToolBar Padding="2">
                 <ToolBar.Items>
-                    <Button Width="24" Height="24"
-                            Command="{Binding AddTreasureCommand}">
-                        <Image Source="../../Resources/Add.png"/>
-                    </Button>
+                    <ui:DropDownButton Width="24" Height="24">
+                        <ui:DropDownButton.Resources>
+                            <DataTemplate x:Key="PlusIcon">
+                                <Image Source="../../Resources/Add.png"/>
+                            </DataTemplate>
+                        </ui:DropDownButton.Resources>
+                        <ui:DropDownButton.Menu>
+                            <ContextMenu>
+                                <MenuItem Command="{Binding AddTreasureCommand}"
+                                          CommandParameter="{Binding}"
+                                          Header="Treasure" />
+                                <MenuItem Command="{Binding AddHoardCommand}"
+                                          CommandParameter="{Binding}"
+                                          Header="Hoard" />
+                            </ContextMenu>
+                        </ui:DropDownButton.Menu>
+                        
+                        <ContentControl ContentTemplate="{StaticResource PlusIcon}" />
+                    </ui:DropDownButton>
                     <Button Width="24" Height="24"
                             Command="{Binding RemoveTreasureCommand}"
                             CommandParameter="{Binding SelectedTreasure}">
@@ -77,9 +95,16 @@
                         SelectionMode="Single">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <StackPanel x:Name="treasureEntryPanel" Orientation="Horizontal" 
+                                    VerticalAlignment="Center">
                             <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="3" />
                         </StackPanel>
+                        
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding Path=DataContext.IsHoard, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
+                                <Setter Property="Background" TargetName="treasureEntryPanel" Value="LightSteelBlue" />
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
@@ -121,9 +146,55 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <ToolBar Padding="2" Grid.Row="0">
+                
+                <Border Grid.Row="0" Visibility="{Binding SelectedTreasureIsHoard, Converter={StaticResource booleanToVisibilityConverter}}">
+                    <TabControl ItemsSource="{Binding SelectedHoard.Scripts}" SelectedIndex="0">
+                        <TabControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="2">
+                                    <Image Source="..\..\Resources/CSharp-Script.png" Width="16" Height="16" />
+                                    <TextBlock Text="{Binding Name}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=TabItem}}" Value="True">
+                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                    </DataTrigger>
+                            
+                                                    <DataTrigger Binding="{Binding IsEnabled}" Value="False">
+                                                        <Setter Property="Foreground" Value="Gray"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </TabControl.ItemTemplate>
+                        
+                        <TabControl.ContentTemplate>
+                            <DataTemplate>
+                                <scripting:ScriptEditor Script="{Binding}" IsEnabled="{Binding IsEnabled}"
+                                                        Height="100" MaxHeight="300" />
+                            </DataTemplate>
+                        </TabControl.ContentTemplate>
+                    </TabControl>
+                    
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=DataGridRow}}" Value="True">
+                                    <Setter Property="Background" Value="LightYellow" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                </Border>
+                
+                <ToolBar Padding="2" Grid.Row="1">
                     <ToolBar.Items>
                         <Button Width="24" Height="24"
                                 Command="{Binding AddTreasureEntryCommand}">
@@ -143,7 +214,7 @@
                     </ToolBar.Items>
                 </ToolBar>
                 
-                <DataGrid Grid.Row="1" ItemsSource="{Binding SelectedTreasure.Entries}"
+                <DataGrid Grid.Row="2" ItemsSource="{Binding SelectedTreasure.Entries}"
                           SelectedItem="{Binding SelectedTreasureEntry}"
                           AutoGenerateColumns="False" SelectionMode="Single"
                           CanUserAddRows="false" CanUserDeleteRows="false"

@@ -22,6 +22,15 @@ public class TreasureItemScriptTemplate : ScriptTemplate
 		yield return "}";
 	}
 }
+
+public class HoardGetChanceScriptTemplate : ScriptTemplate
+{
+	public override IEnumerable<string> GetSegments()
+	{
+		yield return "#load \"WorldForge\"\nint GetChance()\n{";
+		yield return "}";
+	}
+}
 	
 public partial class TreasuresDocument : UserControl
 {
@@ -66,6 +75,8 @@ public class TreasuresViewModel : ObservableRecipient
 	private Segment _segment;
 		
 	private SegmentTreasure _selectedTreasure;
+	private SegmentHoard _selectedHoard;
+	private bool _selectedTreasureIsHoard;
 	private TreasureEntry _selectedTreasureEntry;
 
 	public SegmentTreasures Treasures => _segment.Treasures;
@@ -78,7 +89,10 @@ public class TreasuresViewModel : ObservableRecipient
 		set
 		{
 			SetProperty(ref _selectedTreasure, value, true);
-
+			
+			SelectedTreasureIsHoard = (value is SegmentHoard);
+			SelectedHoard = SelectedTreasureIsHoard ? value as SegmentHoard : null;
+			
 			if (value != null)
 				WeakReferenceMessenger.Default.Send(new SelectedTreasureChangedMessage(value));
 
@@ -94,6 +108,18 @@ public class TreasuresViewModel : ObservableRecipient
 			}
 		}
 	}
+
+	public SegmentHoard SelectedHoard
+	{
+		get => _selectedHoard;
+		set => SetProperty(ref _selectedHoard, value, true);
+	}
+
+	public bool SelectedTreasureIsHoard
+	{
+		get => _selectedTreasureIsHoard;
+		set => SetProperty(ref _selectedTreasureIsHoard, value, true);
+	}
 		
 	public TreasureEntry SelectedTreasureEntry
 	{
@@ -106,6 +132,7 @@ public class TreasuresViewModel : ObservableRecipient
 	public ObservableCollection<Entity> RelatedEntities { get => _relatedEntities; }
 
 	public RelayCommand AddTreasureCommand { get; set; }
+	public RelayCommand AddHoardCommand { get; set; }
 	public RelayCommand<SegmentTreasure> RemoveTreasureCommand { get; set; }
 	public RelayCommand<SegmentTreasure> CopyTreasureCommand { get; set; }
 	public RelayCommand ImportTreasureCommand { get; set; }
@@ -120,6 +147,7 @@ public class TreasuresViewModel : ObservableRecipient
 		_segment = segment;
 			
 		AddTreasureCommand = new RelayCommand(AddTreasure);
+		AddHoardCommand = new RelayCommand(AddHoard);
 			
 		RemoveTreasureCommand = new RelayCommand<SegmentTreasure>(RemoveTreasure,
 			(treasure) => (SelectedTreasure != null));
@@ -168,6 +196,17 @@ public class TreasuresViewModel : ObservableRecipient
 		var newTreasure = new SegmentTreasure()
 		{
 			Name = $"Treasure {_newTreasureCount++}"
+		};
+			
+		Treasures.Add(newTreasure);
+		SelectedTreasure = newTreasure;
+	}
+	
+	public void AddHoard()
+	{
+		var newTreasure = new SegmentHoard()
+		{
+			Name = $"Hoard {_newTreasureCount++}"
 		};
 			
 		Treasures.Add(newTreasure);
