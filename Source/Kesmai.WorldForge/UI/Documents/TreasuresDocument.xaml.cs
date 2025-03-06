@@ -27,7 +27,7 @@ public class HoardGetChanceScriptTemplate : ScriptTemplate
 {
 	public override IEnumerable<string> GetSegments()
 	{
-		yield return "#load \"WorldForge\"\nint GetChance()\n{";
+		yield return "#load \"WorldForge\"\ndouble GetChance()\n{";
 		yield return "}";
 	}
 }
