@@ -14,17 +14,12 @@ public partial class SummonedDjinn : Djinn
 	{
 		Summoned = true;
 			
-		Health = MaxHealth = PowerCurve().health;
-		BaseDodge = PowerCurve().defense;
+		Health = MaxHealth = 1;
+		BaseDodge = 1;
 		Mana = MaxMana = 24;
 
 		Movement = 3;
-			
-		Attacks = new CreatureAttackCollection
-		{
-			{ new CreatureBasicAttack(PowerCurve().attack) },
-		};
-
+		
 		Blocks = new CreatureBlockCollection
 		{
 			new CreatureBlock(12, "a hand"),
@@ -52,20 +47,30 @@ public partial class SummonedDjinn : Djinn
         
         return (health, defense, attack, magicResist);
     }
-		
-	protected override void OnCreate()
-	{
-		base.OnCreate();
-			
-		_stats[EntityStat.IceProtection].Base = 90;
-		_stats[EntityStat.MagicDamageTakenReduction].Base = PowerCurve().magicResist;
-	}
-		
+
 	protected override void OnLoad()
 	{
 		base.OnLoad();
 			
 		_brain = new CombatAI(this);
+	}
+	
+	public override void OnEnterWorld()
+	{
+		base.OnEnterWorld();
+		
+		var (health, defense, attack, magicResist) = PowerCurve();
+		
+		Health = MaxHealth = health;
+		BaseDodge = defense;
+		
+		_stats[EntityStat.IceProtection].Base = 90;
+		_stats[EntityStat.MagicDamageTakenReduction].Base = magicResist;
+		
+		Attacks = new CreatureAttackCollection
+		{
+			{ new CreatureBasicAttack(attack) },
+		};
 	}
 
 	public override bool AllowDamageFrom(Spell spell)

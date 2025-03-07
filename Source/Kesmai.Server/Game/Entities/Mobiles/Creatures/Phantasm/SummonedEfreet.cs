@@ -15,16 +15,11 @@ public partial class SummonedEfreet : Efreet
 	{
 		Summoned = true;
 			
-		Health = MaxHealth = PowerCurve().health;
-		BaseDodge = PowerCurve().defense;
+		Health = MaxHealth = 1;
+		BaseDodge = 1;
 		Mana = MaxMana = 40;
 		Movement = 3;
-
-		Attacks = new CreatureAttackCollection
-		{
-			{ new CreatureBasicAttack(PowerCurve().attack) },
-		};
-
+		
 		Blocks = new CreatureBlockCollection
 		{
 			new CreatureBlock(17, "a hand"),
@@ -53,21 +48,32 @@ public partial class SummonedEfreet : Efreet
         
         return (health,(int)defense, attack, magicResist);
     }		
-	protected override void OnCreate()
-	{
-		base.OnCreate();
-		
-		_stats[EntityStat.FireProtection].Base = 100;
-		_stats[EntityStat.MagicDamageTakenReduction].Base = PowerCurve().magicResist;
-	}
-		
+
 	protected override void OnLoad()
 	{
 		base.OnLoad();
 			
 		_brain = new CombatAI(this);
 	}
-
+	
+	public override void OnEnterWorld()
+	{
+		base.OnEnterWorld();
+		
+		var (health, defense, attack, magicResist) = PowerCurve();
+		
+		Health = MaxHealth = health;
+		BaseDodge = defense;
+		
+		_stats[EntityStat.FireProtection].Base = 100;
+		_stats[EntityStat.MagicDamageTakenReduction].Base = magicResist;
+		
+		Attacks = new CreatureAttackCollection
+		{
+			{ new CreatureBasicAttack(attack) },
+		};
+	}
+	
 	public override bool AllowDamageFrom(Spell spell)
 	{
 		if (Spells.Any((e => e.Spell.SpellType == spell.GetType()), out CreatureSpellEntry entry))
@@ -97,6 +103,5 @@ public partial class SummonedEfreet : Efreet
 		{
 			base.OnSpellTarget(target, combatant);
 		}
-
 	}
 }
