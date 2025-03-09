@@ -27,7 +27,7 @@ public class HoardGetChanceScriptTemplate : ScriptTemplate
 {
 	public override IEnumerable<string> GetSegments()
 	{
-		yield return "#load \"WorldForge\"\ndouble GetChance()\n{";
+		yield return "#load \"WorldForge\"\ndouble GetChance(Facet facet, int regionIndex)\n{";
 		yield return "}";
 	}
 }
@@ -98,12 +98,15 @@ public class TreasuresViewModel : ObservableRecipient
 
 			_relatedEntities.Clear();
 
-			foreach (Entity entity in _segment.Entities)
+			if (_selectedTreasure != null)
 			{
-				foreach (Script script in entity.Scripts)
+				foreach (Entity entity in _segment.Entities)
 				{
-					if (script.Blocks[1].Contains(_selectedTreasure.Name))
-						_relatedEntities.Add(entity);
+					foreach (Script script in entity.Scripts)
+					{
+						if (script.Blocks[1].Contains(_selectedTreasure.Name))
+							_relatedEntities.Add(entity);
+					}
 				}
 			}
 		}
