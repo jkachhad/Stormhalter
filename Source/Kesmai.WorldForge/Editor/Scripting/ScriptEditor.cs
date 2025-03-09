@@ -66,6 +66,9 @@ public class ScriptEditor : RoslynCodeEditor
 
 	private async void OnLoaded(object sender, RoutedEventArgs e)
 	{
+		if (_initialized)
+			return;
+		
 		var services = (ServiceContainer)ServiceLocator.Current;
 		var applicationPresenter = services.GetInstance<ApplicationPresenter>();
 

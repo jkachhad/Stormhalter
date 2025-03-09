@@ -5,26 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Xml.Linq;
-using Ionic.Zip;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Kesmai.WorldForge.Editor;
 
 public class SegmentEntities : ObservableCollection<Entity>
 {
-	public void Load(ZipFile archive, Version version)
-	{
-		var archiveEntry = archive["entities"];
-
-		if (archiveEntry != null)
-		{
-			var entitiesElement = XDocument.Load(archiveEntry.OpenReader()).Root;
-
-			if (entitiesElement != null)
-				Load(entitiesElement, version);
-		}
-	}
-		
 	public void Load(XElement element, Version version)
 	{
 		foreach (var entityElement in element.Elements("entity"))
@@ -33,27 +19,6 @@ public class SegmentEntities : ObservableCollection<Entity>
 		}
 	}
 		
-#if (ArchiveStorage)
-		public void Save(ZipFile archive)
-		{
-			var entitiesDocument = new XDocument();
-			var entitiesElement = new XElement("entities");
-
-			foreach (var entity in this)
-				entitiesElement.Add(entity.GetXElement());
-			
-			entitiesDocument.Add(entitiesElement);
-			
-			var memoryStream = new MemoryStream();
-			var streamWriter = new StreamWriter(memoryStream);
-
-			entitiesDocument.Save(streamWriter);
-
-			memoryStream.Position = 0;
-
-			archive.AddEntry(@"entities", memoryStream);
-		}
-#else
 	public void Save(XElement element)
 	{
 		foreach (var entity in this)
@@ -71,7 +36,6 @@ public class SegmentEntities : ObservableCollection<Entity>
 		}
 				
 	}
-#endif
 }
 
 public class SegmentSpawns : ObservableObject
@@ -83,19 +47,6 @@ public class SegmentSpawns : ObservableObject
 
 	public ObservableCollection<RegionSpawner> Region { get; set; }
 		= new ObservableCollection<RegionSpawner>();
-		
-	public void Load(SegmentEntities entities, ZipFile archive, Version version)
-	{
-		var archiveEntry = archive["spawns"];
-
-		if (archiveEntry != null)
-		{
-			var spawnersElement = XDocument.Load(archiveEntry.OpenReader()).Root;
-
-			if (spawnersElement != null)
-				Load(entities, spawnersElement, version);
-		}
-	}
 		
 	public void Load(SegmentEntities entities, XElement element, Version version)
 	{
@@ -145,30 +96,6 @@ public class SegmentSpawns : ObservableObject
 		}
 	}
 
-#if (ArchiveStorage)
-		public void Save(ZipFile archive)
-		{
-			var spawnerDocument = new XDocument();
-			var spawnersElement = new XElement("spawners");
-
-			foreach (var locationSpawner in Location)
-				spawnersElement.Add(locationSpawner.GetXElement());
-			
-			foreach (var regionSpawner in Region)
-				spawnersElement.Add(regionSpawner.GetXElement());
-			
-			spawnerDocument.Add(spawnersElement);
-			
-			var memoryStream = new MemoryStream();
-			var streamWriter = new StreamWriter(memoryStream);
-
-			spawnerDocument.Save(streamWriter);
-
-			memoryStream.Position = 0;
-
-			archive.AddEntry(@"spawns", memoryStream);
-		}
-#else
 	public void Save(XElement element)
 	{
 		string messageForBlankEntities = $" has an entry that is blank. {Environment.NewLine} {Environment.NewLine}" +
@@ -195,5 +122,4 @@ public class SegmentSpawns : ObservableObject
 			element.Add(regionSpawner.GetXElement());
 		}
 	}
-#endif
 }

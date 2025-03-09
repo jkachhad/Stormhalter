@@ -14,17 +14,12 @@ public partial class SummonedDjinn : Djinn
 	{
 		Summoned = true;
 			
-		Health = MaxHealth = 300;
-		BaseDodge = 25;
+		Health = MaxHealth = 1;
+		BaseDodge = 1;
 		Mana = MaxMana = 24;
 
 		Movement = 3;
-			
-		Attacks = new CreatureAttackCollection
-		{
-			{ new CreatureBasicAttack(14) },
-		};
-
+		
 		Blocks = new CreatureBlockCollection
 		{
 			new CreatureBlock(12, "a hand"),
@@ -39,20 +34,43 @@ public partial class SummonedDjinn : Djinn
 
 		CanFly = true;
 	}
-		
-	protected override void OnCreate()
-	{
-		base.OnCreate();
-			
-		_stats[EntityStat.IceProtection].Base = 90;
-		_stats[EntityStat.MagicDamageTakenReduction].Base = 15;
-	}
-		
+	private (int health, int defense, int attack, int magicResist) PowerCurve()
+    {
+        var player = Director;
+        var level = player.Level;
+        var magicSkill = player.GetSkillLevel(Skill.Magic);
+
+        var health = (level + (int)magicSkill)*11;
+        var defense = level + 3;
+		var attack = level - 3;
+		var magicResist = level.Clamp(0,40);
+        
+        return (health, defense, attack, magicResist);
+    }
+
 	protected override void OnLoad()
 	{
 		base.OnLoad();
 			
 		_brain = new CombatAI(this);
+	}
+	
+	public override void OnEnterWorld()
+	{
+		base.OnEnterWorld();
+		
+		var (health, defense, attack, magicResist) = PowerCurve();
+		
+		Health = MaxHealth = health;
+		BaseDodge = defense;
+		
+		_stats[EntityStat.IceProtection].Base = 90;
+		_stats[EntityStat.MagicDamageTakenReduction].Base = magicResist;
+		
+		Attacks = new CreatureAttackCollection
+		{
+			{ new CreatureBasicAttack(attack) },
+		};
 	}
 
 	public override bool AllowDamageFrom(Spell spell)

@@ -4,7 +4,6 @@ using System.Windows;
 using System.Xml;
 using System.Xml.Linq;
 using CommonServiceLocator;
-using Ionic.Zlib;
 using XNA = Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge.Editor;

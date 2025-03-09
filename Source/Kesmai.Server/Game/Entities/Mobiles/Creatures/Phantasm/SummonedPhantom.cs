@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Kesmai.Server.Spells;
 
@@ -10,39 +11,58 @@ public partial class SummonedPhantom : Phantom
 	public override bool CanOrderCarry => true;
 
 	public SummonedPhantom()
-	{
-		Summoned = true;
-			
-		Health = MaxHealth = 250;
-		BaseDodge = 24;
-		Movement = 3;
+    {
+        Summoned = true;
+            
+        Health = MaxHealth = 1;
+        BaseDodge = 1;
+        Movement = 3;
+        
+        Blocks = new CreatureBlockCollection
+        {
+            new CreatureBlock(12, "a hand"),
+        };
+            
+        AddStatus(new NightVisionStatus(this));
+            
+        CanFly = true;
+    }
 
-		Attacks = new CreatureAttackCollection
-		{
-			{ new CreatureBasicAttack(14) },
-		};
+    private (int health, int defense, int attack, int magicResist) PowerCurve()
+    {
+        var player = Director;
+        var level = player.Level;
+        var magicSkill = player.GetSkillLevel(Skill.Magic);
 
-		Blocks = new CreatureBlockCollection
-		{
-			new CreatureBlock(12, "a hand"),
-		};
-			
-		AddStatus(new NightVisionStatus(this));
-			
-		CanFly = true;
-	}
-		
-	protected override void OnCreate()
-	{
-		base.OnCreate();
-
-		_stats[EntityStat.MagicDamageTakenReduction].Base = 10;
-	}
+        var health = (level + (int)magicSkill)*11;
+        var defense = level + 9;
+		var attack = level;
+		var magicResist = level.Clamp(0,40);
+        
+        return (health, defense, attack, magicResist);
+    }	
 		
 	protected override void OnLoad()
 	{
 		base.OnLoad();
 			
 		_brain = new CombatAI(this);
+	}
+
+	public override void OnEnterWorld()
+	{
+		base.OnEnterWorld();
+		
+		var (health, defense, attack, magicResist) = PowerCurve();
+		
+		Health = MaxHealth = health;
+		BaseDodge = defense;
+		
+		_stats[EntityStat.MagicDamageTakenReduction].Base = magicResist;
+		
+		Attacks = new CreatureAttackCollection
+		{
+			{ new CreatureBasicAttack(attack) },
+		};
 	}
 }
