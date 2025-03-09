@@ -15,6 +15,9 @@ public partial class PermanentManaPotion : Bottle, ITreasure
 
 	/// <inheritdoc />
 	public override int Weight => 240;
+	
+	/// <inheritdoc />
+	public override ItemQuality Quality => ItemQuality.Uncommon;
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PermanentManaPotion"/> class.
