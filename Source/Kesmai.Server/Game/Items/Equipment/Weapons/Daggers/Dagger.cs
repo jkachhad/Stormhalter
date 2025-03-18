@@ -28,6 +28,8 @@ public abstract partial class Dagger : MeleeWeapon
 	/// <inheritdoc />
 	public override Skill Skill => Skill.Dagger;
 
+	public double PoisonMultiplier { get; set; } = 1.0;
+
 	/// <inheritdoc />
 	public override WeaponFlags Flags => WeaponFlags.Piercing | WeaponFlags.Throwable | WeaponFlags.QuickThrow;
 		
@@ -44,6 +46,15 @@ public abstract partial class Dagger : MeleeWeapon
 	public override TimeSpan GetSwingDelay(MobileEntity entity)
 	{
 		return entity.GetRoundDelay(0.75);
+	}
+	
+	public override void OnHit(MobileEntity attacker, MobileEntity defender)
+	{
+		if (IsPoisoned && PoisonMultiplier > 1)
+		{
+			var newPotency = Poison.Potency * PoisonMultiplier;
+			Poison.Potency = (int)newPotency;
+		}
 	}
 		
 	public override double GetSkillMultiplier()
