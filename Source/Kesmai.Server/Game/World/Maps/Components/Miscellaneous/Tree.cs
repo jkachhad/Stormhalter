@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -14,7 +15,7 @@ public class Tree : TerrainComponent
 {
 	internal class Cache : IComponentCache
 	{
-		private static readonly Dictionary<int, Tree> _cache = new Dictionary<int, Tree>();
+		private static readonly ConcurrentDictionary<int, Tree> _cache = new ConcurrentDictionary<int, Tree>();
 	
 		public TerrainComponent Get(XElement element)
 		{
@@ -31,7 +32,7 @@ public class Tree : TerrainComponent
 			var hash = CalculateHash(color, treeId, canGrow, isDecayed);
 
 			if (!_cache.TryGetValue(hash, out var component))
-				_cache.Add(hash, (component = new Tree(color, treeId, canGrow, isDecayed)));
+				_cache.TryAdd(hash, (component = new Tree(color, treeId, canGrow, isDecayed)));
 
 			return component;
 		}
@@ -53,7 +54,7 @@ public class Tree : TerrainComponent
 		return new Tree(color, treeId, canGrow, decayed);
 	}
 	
-	private static readonly Dictionary<SegmentTile, Timer> _growthTimer = new Dictionary<SegmentTile, Timer>();
+	private static readonly ConcurrentDictionary<SegmentTile, FacetTimer> _growthTimer = new ConcurrentDictionary<SegmentTile, FacetTimer>();
 
 	[ServerConfigure]
 	public static void Configure()
@@ -81,7 +82,7 @@ public class Tree : TerrainComponent
 		if (_growthTimer.TryGetValue(parent, out var timer))
 			timer.Stop();
 
-		_growthTimer.Remove(parent);
+		_growthTimer.TryRemove(parent, out var _);
 	}
 	
 	private class TreeStagePair
@@ -316,7 +317,7 @@ public class Tree : TerrainComponent
 		StopGrowthTimer(parent);
 	}
 
-	private class GrowthTimer : Timer
+	private class GrowthTimer : FacetTimer
 	{
 		private SegmentTile _segmentTile;
 		private Tree _tree;
@@ -324,7 +325,7 @@ public class Tree : TerrainComponent
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WaterTimer"/> class.
 		/// </summary>
-		public GrowthTimer(SegmentTile segmentTile, Tree tree) : base(segmentTile.Facet.TimeSpan.FromMinutes(1.0))
+		public GrowthTimer(SegmentTile segmentTile, Tree tree) : base(segmentTile.Facet, TimeSpan.FromMinutes(1.0))
 		{
 			_segmentTile = segmentTile;
 			_tree = tree;

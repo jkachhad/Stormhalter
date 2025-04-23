@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -50,7 +51,7 @@ public class Web : Static, IHandlePathing
 		return new Web(color, duration, allowDispel);
 	}
 	
-	private static readonly Dictionary<SegmentTile, Timer> _dispelTimers = new Dictionary<SegmentTile, Timer>();
+	private static readonly ConcurrentDictionary<SegmentTile, Timer> _dispelTimers = new ConcurrentDictionary<SegmentTile, Timer>();
 
 	[ServerConfigure]
 	public static void Configure()
@@ -69,15 +70,13 @@ public class Web : Static, IHandlePathing
 		if (_dispelTimers.TryGetValue(parent, out var timer))
 			timer.Stop();
 		
-		_dispelTimers[parent] = Timer.DelayCall(duration, () => component.Dispel(parent));
+		_dispelTimers[parent] = parent.Facet.Schedule(duration, () => component.Dispel(parent));
 	}
 
 	private static void StopDispelTimer(SegmentTile parent)
 	{
-		if (_dispelTimers.TryGetValue(parent, out var timer))
+		if (_dispelTimers.TryRemove(parent, out var timer))
 			timer.Stop();
-		
-		_dispelTimers.Remove(parent);
 	}
 	
 	private readonly TimeSpan _duration;
