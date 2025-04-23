@@ -90,8 +90,8 @@ public partial class AncientLich : Lich
 			
 		foreach (var lich in liches.Where(l => l.IsAlive))
 		{
-			if (lich.Spells.Any(sp => sp.Next > Server.Now && 
-			                          sp.Next - Server.Now > Facet.TimeSpan.FromRounds(2)))
+			if (lich.Spells.Any(sp => sp.Next > Server.Now &&
+			                          sp.Next - Server.Now > Facet.Time.FromRounds(2)))
 				return default(CreatureSpellEntry);
 		}
 
