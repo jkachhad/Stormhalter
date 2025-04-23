@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,23 +12,21 @@ namespace Kesmai.Server.Game;
 [WorldForgeComponent("DoorComponent")]
 public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMovement, IHandleInteraction
 {
-	private static Dictionary<SegmentTile, Timer> _closeTimers = new Dictionary<SegmentTile, Timer>();
-	private static Dictionary<SegmentTile, Timer> _hideTimers = new Dictionary<SegmentTile, Timer>();
+	private static ConcurrentDictionary<SegmentTile, Timer> _closeTimers = new ConcurrentDictionary<SegmentTile, Timer>();
+	private static ConcurrentDictionary<SegmentTile, Timer> _hideTimers = new ConcurrentDictionary<SegmentTile, Timer>();
 
 	private static void StartCloseTimer(SegmentTile parent, Door component, TimeSpan duration)
 	{
 		if (_closeTimers.TryGetValue(parent, out var timer))
 			timer.Stop();
 		
-		_closeTimers[parent] = Timer.DelayCall(duration, () => component.Close(parent));
+		_closeTimers[parent] = parent.Facet.Schedule(duration, () => component.Close(parent));
 	}
 
 	private static void StopCloseTimer(SegmentTile parent)
 	{
-		if (_closeTimers.TryGetValue(parent, out var timer))
+		if (_closeTimers.TryRemove(parent, out var timer))
 			timer.Stop();
-		
-		_closeTimers.Remove(parent);
 	}
 	
 	private static void StartHideTimer(SegmentTile parent, Door component, TimeSpan duration)
@@ -35,15 +34,13 @@ public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMove
 		if (_hideTimers.TryGetValue(parent, out var timer))
 			timer.Stop();
 		
-		_hideTimers[parent] = Timer.DelayCall(duration, () => component.Unhide(parent));
+		_hideTimers[parent] = parent.Facet.Schedule(duration, () => component.Unhide(parent));
 	}
 
 	private static void StopHideTimer(SegmentTile parent)
 	{
-		if (_hideTimers.TryGetValue(parent, out var timer))
+		if (_hideTimers.TryRemove(parent, out var timer))
 			timer.Stop();
-		
-		_hideTimers.Remove(parent);
 	}
 	
 	/// <summary>
@@ -296,7 +293,7 @@ public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMove
 			Close(parent);
 		}
 
-		StartHideTimer(parent, this, parent.Facet.TimeSpan.FromRounds(30 + 2 * skillLevel));
+		StartHideTimer(parent, this, TimeSpan.FromSeconds(3.0 * (30 + 2 * skillLevel)));
 			
 		Delta(parent);
 			
