@@ -50,7 +50,7 @@ public class JewelerRing : Ring, ITreasure
 
 	protected override bool OnEquip(MobileEntity entity)
 	{
-		var delay = entity.Facet.TimeSpan.FromRounds(TransmuteDelayRounds);
+		var delay = TimeSpan.FromSeconds(3.0 * TransmuteDelayRounds);
 			
 		if (delay > TimeSpan.Zero)
 			StartCooldown(delay);
@@ -62,7 +62,7 @@ public class JewelerRing : Ring, ITreasure
 
 	private void StartCooldown(TimeSpan delay)
 	{
-		_cooldownTimer = Timer.DelayCall(delay, ClearCooldown); /* Delay use by TransmuteDelayRounds. */
+		_cooldownTimer = Facet.Schedule(delay, ClearCooldown); /* Delay use by TransmuteDelayRounds. */
 
 		Hue = Color.Gray;
 			
@@ -152,7 +152,7 @@ public class JewelerRing : Ring, ITreasure
 
 			_ring.Transmuted += gem.ActualPrice;
 				
-			var delay = source.Facet.TimeSpan.FromRounds(TransmuteDelayRounds);
+			var delay = TimeSpan.FromSeconds(3.0 * TransmuteDelayRounds);
 			
 			if (delay > TimeSpan.Zero)
 				_ring.StartCooldown(delay);
