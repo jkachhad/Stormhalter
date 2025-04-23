@@ -29,7 +29,7 @@ public partial class Phantom : CreatureEntity, IPhantasm
 		_brain = new CombatAI(this);
 
 		if (_dispelTimer is null)
-			_dispelTimer = Timer.DelayCall(TimeSpan.FromMinutes(10.0), Kill); // TODO: Scale to facet time?
+			_dispelTimer = Facet.Schedule(TimeSpan.FromMinutes(10.0), Kill); // TODO: Scale to facet time?
 
 		base.OnLoad();
 	}

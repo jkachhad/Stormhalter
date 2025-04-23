@@ -287,7 +287,7 @@ public partial class Shopkeeper : VendorEntity
 			_restockTimer.Stop();
 
 		if (_stock.Any(s => !s.IsFull))
-			_restockTimer = Timer.DelayCall(RestockDelay, Restock);
+			_restockTimer = Facet.Schedule(RestockDelay, Restock);
 	}
 
 	public ItemEntity Sell(StockEntry stock, PlayerEntity player)

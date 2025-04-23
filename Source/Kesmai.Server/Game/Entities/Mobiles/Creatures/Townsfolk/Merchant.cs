@@ -34,18 +34,18 @@ public partial class Merchant<T> : VendorEntity, IMerchant where T : ItemEntity,
 		return ItemType.IsAssignableFrom(type);
 	}
 
-	protected override void OnLoad()
+	public override void OnEnterWorld()
 	{
-		base.OnLoad();
+		base.OnEnterWorld();
 			
 		StartTimer();
 	}
 
-	protected override void OnUnload()
+	public override void OnDepartWorld()
 	{
 		StopTimer();
 			
-		base.OnUnload();
+		base.OnDepartWorld();
 	}
 
 	public T CreateItem()
@@ -74,11 +74,11 @@ public partial class Merchant<T> : VendorEntity, IMerchant where T : ItemEntity,
 		}
 	}
 		
-	private class InternalTimer : Timer
+	private class InternalTimer : FacetTimer
 	{
 		private Merchant<T> _entity;
 			
-		public InternalTimer(Merchant<T> entity) : base(TimeSpan.Zero, entity.GetRoundDelay())
+		public InternalTimer(Merchant<T> entity) : base(entity.Facet, TimeSpan.Zero, TimeSpan.FromSeconds(3.0))
 		{
 			_entity = entity;
 		}
