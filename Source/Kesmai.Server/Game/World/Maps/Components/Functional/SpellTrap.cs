@@ -85,7 +85,7 @@ public class BonfireTrap : SpellTrap<BonfireSpell>
 	
 	public override void CastSpell(SegmentTile parent, BonfireSpell spell, MobileEntity entity)
 	{
-		parent.Add(Fire.Construct(_color, spell, 5 * Skill, entity.Facet.TimeSpan.FromRounds(Skill + 4), false));
+		parent.Add(Fire.Construct(_color, spell, 5 * Skill, TimeSpan.FromSeconds(3.0 * (Skill + 4)), false));
 	}
 }
 
@@ -111,7 +111,7 @@ public class ConcussionTrap : SpellTrap<ConcussionSpell>
 	
 	public override void CastSpell(SegmentTile parent, ConcussionSpell spell, MobileEntity entity)
 	{
-		parent.Add(Explosion.Construct(spell, 8 * Skill, 0, entity.Facet.TimeSpan.FromSeconds(1.0)));
+		parent.Add(Explosion.Construct(spell, 8 * Skill, 0, TimeSpan.FromSeconds(1.0)));
 	}
 }
 
