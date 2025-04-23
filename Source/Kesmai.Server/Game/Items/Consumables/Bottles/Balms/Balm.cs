@@ -58,7 +58,7 @@ public abstract class Balm : Bottle
 	}
 }
 
-public class BalmTimer : Timer
+public class BalmTimer : FacetTimer
 {
 	private int _restored;
 	private int _healthPerTick;
@@ -68,7 +68,7 @@ public class BalmTimer : Timer
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BalmTimer"/> class.
 	/// </summary>
-	public BalmTimer(MobileEntity entity, int healthPerTick = 14) : base(TimeSpan.Zero, entity.GetRoundDelay(1d / 3d))
+	public BalmTimer(MobileEntity entity, int healthPerTick = 14) : base(entity.Facet, TimeSpan.Zero, TimeSpan.FromSeconds(1.0))
 	{
 		_entity = entity;
 		_healthPerTick = healthPerTick;
