@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Drawing;
 using System.Xml.Linq;
 using Kesmai.Server.Miscellaneous.WorldForge;
@@ -11,7 +12,7 @@ public class Static : TerrainComponent
 {
 	internal class Cache : IComponentCache
 	{
-		private static readonly Dictionary<int, Static> _cache = new Dictionary<int, Static>();
+		private static readonly ConcurrentDictionary<int, Static> _cache = new ConcurrentDictionary<int, Static>();
 	
 		public TerrainComponent Get(XElement element)
 		{
@@ -23,12 +24,8 @@ public class Static : TerrainComponent
 
 		public Static Get(Color color, int staticId)
 		{
-			var hash = CalculateHash(color, staticId);
-
-			if (!_cache.TryGetValue(hash, out var component))
-				_cache.Add(hash, (component = new Static(color, staticId)));
-
-			return component;
+			return _cache.GetOrAdd(CalculateHash(color, staticId), 
+				_ => new Static(color, staticId));
 		}
 
 		private static int CalculateHash(Color color, int staticId)
