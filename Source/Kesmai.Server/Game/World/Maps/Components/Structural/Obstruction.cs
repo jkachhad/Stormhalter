@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Xml.Linq;
@@ -12,7 +13,7 @@ public class Obstruction : TerrainComponent, IHandleVision, IHandlePathing
 {
 	internal class Cache : IComponentCache
 	{
-		private static readonly Dictionary<int, Obstruction> _cache = new Dictionary<int, Obstruction>();
+		private static readonly ConcurrentDictionary<int, Obstruction> _cache = new ConcurrentDictionary<int, Obstruction>();
 	
 		public TerrainComponent Get(XElement element)
 		{
@@ -25,12 +26,8 @@ public class Obstruction : TerrainComponent, IHandleVision, IHandlePathing
 
 		public Obstruction Get(Color color, int obstructionId, bool blockVision)
 		{
-			var hash = CalculateHash(color, obstructionId, blockVision);
-
-			if (!_cache.TryGetValue(hash, out var component))
-				_cache.Add(hash, (component = new Obstruction(color, obstructionId, blockVision)));
-
-			return component;
+			return _cache.GetOrAdd(CalculateHash(color, obstructionId, blockVision), 
+				_ => new Obstruction(color, obstructionId, blockVision));
 		}
 
 		private static int CalculateHash(Color color, int obstructionId, bool blockVision)

@@ -14,7 +14,7 @@ public class Web : Static, IHandlePathing
 {
 	internal new class Cache : IComponentCache
 	{
-		private static readonly Dictionary<int, Web> _cache = new Dictionary<int, Web>();
+		private static readonly ConcurrentDictionary<int, Web> _cache = new ConcurrentDictionary<int, Web>();
 	
 		public TerrainComponent Get(XElement element)
 		{
@@ -26,12 +26,8 @@ public class Web : Static, IHandlePathing
 
 		public Web Get(Color color, TimeSpan duration, bool allowDispel)
 		{
-			var hash = CalculateHash(color, duration, allowDispel);
-
-			if (!_cache.TryGetValue(hash, out var component))
-				_cache.Add(hash, (component = new Web(color, duration, allowDispel)));
-
-			return component;
+			return _cache.GetOrAdd(CalculateHash(color, duration, allowDispel), 
+				_ => new Web(color, duration, allowDispel));
 		}
 
 		private static int CalculateHash(Color color, TimeSpan duration, bool allowDispel)
