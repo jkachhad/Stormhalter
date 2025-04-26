@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Drawing;
 using System.Xml.Linq;
 using Kesmai.Server.Items;
@@ -12,7 +13,7 @@ public class Trash : Static, IHandleInteraction, IHandleItems
 {
 	internal new class Cache : IComponentCache
 	{
-		private static readonly Dictionary<int, Trash> _cache = new Dictionary<int, Trash>();
+		private static readonly ConcurrentDictionary<int, Trash> _cache = new ConcurrentDictionary<int, Trash>();
 	
 		public TerrainComponent Get(XElement element)
 		{
@@ -24,12 +25,8 @@ public class Trash : Static, IHandleInteraction, IHandleItems
 
 		public Trash Get(Color color, int trashId)
 		{
-			var hash = CalculateHash(color, trashId);
-
-			if (!_cache.TryGetValue(hash, out var component))
-				_cache.Add(hash, (component = new Trash(color, trashId)));
-
-			return component;
+			return _cache.GetOrAdd(CalculateHash(color, trashId), 
+				_ => new Trash(color, trashId));
 		}
 
 		private static int CalculateHash(Color color, int trashId)

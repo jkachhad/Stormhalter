@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Drawing;
 using System.Linq;
 using System.Xml.Linq;
@@ -14,7 +15,7 @@ public class Water : Floor, IHandlePathing
 {
 	internal new class Cache : IComponentCache
 	{
-		private static readonly Dictionary<int, Water> _cache = new Dictionary<int, Water>();
+		private static readonly ConcurrentDictionary<int, Water> _cache = new ConcurrentDictionary<int, Water>();
 	
 		public TerrainComponent Get(XElement element)
 		{
@@ -28,12 +29,8 @@ public class Water : Floor, IHandlePathing
 
 		public Water Get(Color color, int waterId, int movementCost, int depth)
 		{
-			var hash = CalculateHash(color, waterId, movementCost, depth);
-
-			if (!_cache.TryGetValue(hash, out var component))
-				_cache.Add(hash, (component = new Water(color, waterId, movementCost, depth)));
-
-			return component;
+			return _cache.GetOrAdd(CalculateHash(color, waterId, movementCost, depth), 
+				_ => new Water(color, waterId, movementCost, depth));
 		}
 
 		private static int CalculateHash(Color color, int waterId, int movementCost, int depth)

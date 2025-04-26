@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Drawing;
 using System.Xml.Linq;
 using Kesmai.Server.Miscellaneous.WorldForge;
@@ -12,7 +13,7 @@ public class Wall : TerrainComponent, IHandleInteraction, IHandleVision, IHandle
 {
 	internal class Cache : IComponentCache
 	{
-		private static readonly Dictionary<int, Wall> _cache = new Dictionary<int, Wall>();
+		private static readonly ConcurrentDictionary<int, Wall> _cache = new ConcurrentDictionary<int, Wall>();
 	
 		public TerrainComponent Get(XElement element)
 		{
@@ -27,12 +28,8 @@ public class Wall : TerrainComponent, IHandleInteraction, IHandleVision, IHandle
 
 		public Wall Get(Color color, int wallId, int destroyedId, int ruinsId, bool indestructible, bool destroyed)
 		{
-			var hash = CalculateHash(color, wallId, destroyedId, ruinsId, indestructible, destroyed);
-
-			if (!_cache.TryGetValue(hash, out var component))
-				_cache.Add(hash, (component = new Wall(color, wallId, destroyedId, ruinsId, indestructible, destroyed)));
-
-			return component;
+			return _cache.GetOrAdd(CalculateHash(color, wallId, destroyedId, ruinsId, indestructible, destroyed), 
+				_ => new Wall(color, wallId, destroyedId, ruinsId, indestructible, destroyed));
 		}
 
 		private static int CalculateHash(Color color, int wallId, int destroyedId, int ruinsId, bool indestructible, bool destroyed)
