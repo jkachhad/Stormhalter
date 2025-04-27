@@ -78,7 +78,7 @@ public partial class Merchant<T> : VendorEntity, IMerchant where T : ItemEntity,
 	{
 		private Merchant<T> _entity;
 			
-		public InternalTimer(Merchant<T> entity) : base(entity.Facet, TimeSpan.Zero, TimeSpan.FromSeconds(3.0))
+		public InternalTimer(Merchant<T> entity) : base(entity.Facet, TimeSpan.FromSeconds(1.0), TimeSpan.FromSeconds(3.0))
 		{
 			_entity = entity;
 		}
