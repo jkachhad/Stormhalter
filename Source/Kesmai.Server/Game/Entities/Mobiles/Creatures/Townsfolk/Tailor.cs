@@ -49,7 +49,7 @@ public partial class Tailor : VendorEntity
 	{
 		private Tailor _entity;
 			
-		public InternalTimer(Tailor entity) : base(entity.Facet, TimeSpan.Zero, TimeSpan.FromSeconds(3.0))
+		public InternalTimer(Tailor entity) : base(entity.Facet, TimeSpan.FromSeconds(1.0), TimeSpan.FromSeconds(3.0))
 		{
 			_entity = entity;
 		}
