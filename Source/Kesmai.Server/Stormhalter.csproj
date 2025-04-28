@@ -6,6 +6,12 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <StartupObject>Kesmai.Server.Core</StartupObject>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <Using Include="DotNext.Buffers.SpanReader&lt;System.Byte&gt;" Alias="SpanReader" />
+    <Using Include="DotNext.Buffers.PoolingArrayBufferWriter&lt;System.Byte&gt;" Alias="SpanWriter" />
+    <Using Include="DotNext.Buffers" />
+  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="Kesmai.Server">
