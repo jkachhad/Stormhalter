@@ -35,7 +35,7 @@ public partial class RamStaff : Staff, ITreasure
 	public override int ProjectileProtection  => 1;
 
 	/// <inheritdoc />
-	public override int CanDisintegrate  => false;
+	public override bool CanDisintegrate  => false;
 
 	/// <inheritdoc />
 	public override WeaponFlags Flags => WeaponFlags.TwoHanded | WeaponFlags.Bashing | WeaponFlags.Lawful;
