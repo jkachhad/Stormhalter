@@ -1,7 +1,10 @@
 {
   "name": "Kesmai.Server Codespace",
   "image": "ghcr.io/jkachhad/kesmai-server:latest",
+  
   "workspaceFolder": "/workspaces/Kesmai.Server",
+  "workspaceMount": "source=${localWorkspaceFolder}/Source/Kesmai.Server,target=/workspaces/Kesmai.Server,type=bind,consistency=cached",
+
 
   "extensions": [
     "ms-dotnettools.csharp"
