@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>Stormhalter</AssemblyName>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <StartupObject>Kesmai.Server.Core</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Kesmai.Server">
+      <HintPath>../Kesmai/build/Kesmai.Server.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>
