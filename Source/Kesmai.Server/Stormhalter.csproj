@@ -7,6 +7,11 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <Compile Remove="Game\**\*.cs" />
+    <Compile Remove="Spells\**\*.cs" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <Using Include="DotNext.Buffers.SpanReader&lt;System.Byte&gt;" Alias="SpanReader" />
     <Using Include="DotNext.Buffers.PoolingArrayBufferWriter&lt;System.Byte&gt;" Alias="SpanWriter" />
     <Using Include="DotNext.Buffers" />
