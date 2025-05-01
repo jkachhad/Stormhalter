@@ -84,7 +84,7 @@ public class IceStormSpell : DelayedSpell, IWorldSpell
 				var facet = _caster.Facet;
 				var spellPower = _skillLevel;
 				var damage = 7.5 * spellPower;
-				var duration = facet.TimeSpan.FromRounds(1);
+				var duration = TimeSpan.FromSeconds(1 * 3.0);
 
 				var intensity = 2;
 

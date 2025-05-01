@@ -26,12 +26,12 @@ public class AdventurerStatus : SpellStatus
 	{
 	}
 
-	protected override void OnAcquire()
+	public override void OnAcquire()
 	{
 		Refresh();
 	}
 		
-	protected override void OnRemoved()
+	public override void OnRemoved()
 	{
 		if (_internalTimer != null && _internalTimer.Running)
 			_internalTimer.Stop();
@@ -45,8 +45,8 @@ public class AdventurerStatus : SpellStatus
 	{
 		if (_internalTimer != null && _internalTimer.Running)
 			_internalTimer.Stop();
-	
-		_internalTimer = Timer.DelayCall(_entity.Facet.TimeSpan.FromMinutes(3.0), OnTick);
+			
+		_internalTimer = _entity.Facet.Schedule(TimeSpan.FromMinutes(3.0), OnTick);
 	}
 		
 	private void OnTick()

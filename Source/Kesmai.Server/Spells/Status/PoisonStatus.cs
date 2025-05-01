@@ -48,7 +48,7 @@ public partial class PoisonStatus : SpellStatus
 			
 		Add(poison);
 
-		_internalTimer = Timer.DelayCall(poison.Delay, entity.Facet.TimeSpan.FromRounds(1), OnTick);
+		_internalTimer = entity.Facet.Schedule(poison.Delay, TimeSpan.FromSeconds(1 * 3.0), OnTick);
 	}
 	
 	public void Add(Poison poison)

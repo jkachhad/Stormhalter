@@ -20,7 +20,7 @@ public class SpeedSpell : DelayedSpell
 
 			var facet = _caster.Facet;
 			var rounds = (8 * _skillLevel - 44);
-			var duration = facet.TimeSpan.FromRounds(rounds);
+			var duration = TimeSpan.FromSeconds(rounds * 3.0);
 
 			if (!_caster.GetStatus(typeof(SpeedStatus), out var status))
 			{

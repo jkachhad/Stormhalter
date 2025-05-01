@@ -32,7 +32,7 @@ public class VigorStatus : SpellStatus
 		if (_decayTimer != null)
 			_decayTimer.Stop();
 
-		_decayTimer = Timer.DelayCall(TimeSpan.Zero, _entity.Facet.TimeSpan.FromRounds(1), () =>
+		_decayTimer = _entity.Facet.Schedule(TimeSpan.Zero, TimeSpan.FromSeconds(1 * 3.0), () =>
 		{
 			if (Count > 0)
 				Count--;

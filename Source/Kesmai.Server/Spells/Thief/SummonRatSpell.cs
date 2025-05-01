@@ -47,7 +47,7 @@ public class SummonRatSpell : DelayedSpell
 				 * the control instantly, there creature list becomes corrupted. The server will send an
 				 * incoming entity after control transfer, resulting in extra player or creature entries.
 				 */
-				Timer.DelayCall(TimeSpan.FromMilliseconds(5), () => player.Peek(rat));
+				facet.Schedule(TimeSpan.FromMilliseconds(5), () => player.Peek(rat));
 
 				if (_item == null)
 					player.AwardMagicSkill(this);
@@ -84,7 +84,7 @@ public class SummonedRat : BlackRat
 		if (_deathTimer != null)
 			_deathTimer.Stop();
 			
-		_deathTimer = Timer.DelayCall(Facet.TimeSpan.FromTimeSpan(SummonRatSpell.Duration), Kill);
+		_deathTimer = Facet.Schedule(SummonRatSpell.Duration, Kill);
 	}
 
 	public override void OnDeath()

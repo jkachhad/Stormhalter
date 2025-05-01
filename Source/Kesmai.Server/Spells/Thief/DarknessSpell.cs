@@ -107,7 +107,7 @@ public class DarknessSpell : DelayedSpell, IWorldSpell
 				if (intensity is 1)
 					duration *= 1.25;
 				
-				var dispelDelay = facet.TimeSpan.FromSeconds(duration);
+				var dispelDelay = TimeSpan.FromSeconds(duration);
 
 				var directions = (intensity > 1) ? Direction.All : new[] { Direction.None };
 

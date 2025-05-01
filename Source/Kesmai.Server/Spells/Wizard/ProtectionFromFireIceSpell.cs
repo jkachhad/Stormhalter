@@ -35,7 +35,7 @@ public class ProtectionFromFireIceSpell : DelayedSpell
 
 			var facet = _caster.Facet;
 			var rounds = (3 * _skillLevel + 35) * ProtectionSpellDurationMultiplier;
-			var duration = facet.TimeSpan.FromRounds(rounds);
+			var duration = TimeSpan.FromSeconds(rounds * 3.0);
 
 			if (!target.GetStatus(typeof(FireProtectionStatus), out var fireStatus))
 			{

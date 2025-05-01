@@ -20,7 +20,7 @@ public class FeatherFallSpell : DelayedSpell
 
 			var facet = _caster.Facet;
 			var rounds = (3 * _skillLevel + 35);
-			var duration = facet.TimeSpan.FromSeconds(rounds);
+			var duration = TimeSpan.FromSeconds(rounds * 3.0);
 
 			if (!_caster.GetStatus(typeof(FeatherFallStatus), out var status))
 			{

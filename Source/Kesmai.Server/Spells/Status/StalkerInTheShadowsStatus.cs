@@ -27,7 +27,7 @@ public class StalkerInTheShadowsStatus : SpellStatus
 		if (_internalTimer != null && _internalTimer.Running)
 			return;
 			
-		_internalTimer = Timer.DelayCall(_entity.Facet.TimeSpan.FromRounds(2), OnTick);
+		_internalTimer = _entity.Facet.Schedule(2, OnTick);
 	}
 
 	public void OnFinishMovement()

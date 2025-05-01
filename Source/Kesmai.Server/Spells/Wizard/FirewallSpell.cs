@@ -63,7 +63,7 @@ public class FirewallSpell : DelayedSpell, IWorldSpell
 				var facet = _caster.Facet;
 				var spellPower = _skillLevel;
 				var damage = 5 * spellPower;
-				var duration = facet.TimeSpan.FromSeconds(10 * spellPower);
+				var duration = TimeSpan.FromSeconds(10 * spellPower);
 					
 				var directions = new List<Direction>()
 				{
