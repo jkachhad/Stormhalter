@@ -41,6 +41,20 @@ public partial class Greatsword : Sword
 	{
 	}
 
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Greatsword"/> class.
+	/// </summary>
+	public Greatsword(int itemId) : base(itemId)
+	{
+	}
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Greatsword"/> class.
+	/// </summary>
+	public Greatsword(Serial serial) : base(serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
@@ -48,5 +62,29 @@ public partial class Greatsword : Sword
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250018)); /* The iron greatsword appears quite ordinary. */
+	}
+
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

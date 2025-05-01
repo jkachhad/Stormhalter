@@ -44,6 +44,13 @@ public partial class Longsword : Sword
 	public Longsword(int itemId) : base(itemId)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Longsword"/> class.
+	/// </summary>
+	public Longsword(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -52,5 +59,29 @@ public partial class Longsword : Sword
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250013)); /* The longsword appears quite ordinary. */
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

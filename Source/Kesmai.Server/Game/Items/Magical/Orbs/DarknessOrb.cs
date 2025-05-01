@@ -17,6 +17,13 @@ public partial class DarknessOrb : SpellOrb, ITreasure
 	public DarknessOrb() : base(202)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="DarknessOrb"/> class.
+	/// </summary>
+	public DarknessOrb(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -42,5 +49,29 @@ public partial class DarknessOrb : SpellOrb, ITreasure
 
 		spell.Warm(source);
 		spell.CastAt(location);
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

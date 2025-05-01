@@ -23,10 +23,41 @@ public partial class ClamShell : ItemEntity, ITreasure
 	public ClamShell() : base(65)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="ClamShell"/> class.
+	/// </summary>
+	public ClamShell(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200286)); /* [You are looking at] [a clam shell.] */
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

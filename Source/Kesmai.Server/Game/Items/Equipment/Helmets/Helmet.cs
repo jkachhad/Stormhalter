@@ -31,6 +31,13 @@ public abstract partial class Helmet : Equipment
 	protected Helmet(int helmetID) : base(helmetID)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Helmet"/> class.
+	/// </summary>
+	protected Helmet(Serial serial) : base(serial)
+	{
+	}
 
 	protected override bool OnEquip(MobileEntity entity)
 	{
@@ -70,5 +77,33 @@ public abstract partial class Helmet : Equipment
 		}
 
 		return true;
+	}
+	
+	/// <summary>
+	/// Serializes this instance into binary data for persistence.
+	/// </summary>
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <summary>
+	/// Deserializes this instance from persisted binary data.
+	/// </summary>
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

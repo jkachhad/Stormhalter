@@ -56,6 +56,13 @@ public abstract partial class Wand : MeleeWeapon, IEmpowered, ICharged
 	{
 		_chargesCurrent = _chargesMax = charges;
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Wand"/> class.
+	/// </summary>
+	protected Wand(Serial serial) : base(serial)
+	{
+	}
 
 	#region ICharged
 
@@ -191,6 +198,41 @@ public abstract partial class Wand : MeleeWeapon, IEmpowered, ICharged
 			{
 				_wand.OnTarget(source, target);
 				_wand.ChargesCurrent--;
+			}
+		}
+	}
+
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)2); /* version */
+			
+		writer.Write((short)_chargesCurrent);
+		writer.Write((short)_chargesMax);
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 2:
+			{
+				_chargesCurrent = reader.ReadInt16();
+				_chargesMax = reader.ReadInt16();
+					
+				break;
+			}
+
+			case 1:
+			{
+				break;
 			}
 		}
 	}

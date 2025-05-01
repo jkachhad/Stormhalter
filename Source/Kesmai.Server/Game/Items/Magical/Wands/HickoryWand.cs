@@ -25,6 +25,13 @@ public partial class HickoryWand : Wand, ITreasure
 	{
 	}
 
+	/// <summary>
+	/// Initializes a new instance of the <see cref="HickoryWand"/> class.
+	/// </summary>
+	public HickoryWand(Serial serial) : base(serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
@@ -33,7 +40,7 @@ public partial class HickoryWand : Wand, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250116)); /* The wand contains the spell of Create Portal. */
 	}
-		
+
 	public override Spell GetSpell()
 	{
 		return new CreatePortalSpell()
@@ -46,7 +53,7 @@ public partial class HickoryWand : Wand, ITreasure
 			Cost = 0,
 		};
 	}
-		
+
 	protected override void OnTarget(MobileEntity source, Point2D location)
 	{
 		var spell = GetSpell();
@@ -55,6 +62,30 @@ public partial class HickoryWand : Wand, ITreasure
 		{
 			portal.Warm(source);
 			portal.CastAt(location);
+		}
+	}
+
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
 		}
 	}
 }

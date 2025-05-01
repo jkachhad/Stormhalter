@@ -24,6 +24,13 @@ public partial class IvoryBrooch : StunDeathProtectionAmulet
 	public IvoryBrooch() : this(3)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="IvoryBrooch"/> class.
+	/// </summary>
+	public IvoryBrooch(Serial serial) : base(serial)
+	{
+	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IvoryBrooch"/> class.
@@ -41,5 +48,33 @@ public partial class IvoryBrooch : StunDeathProtectionAmulet
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250052)); /* The amulet contains the spell of Protection from Stun and Death. */
+	}
+	
+	/// <summary>
+	/// Serializes this instance into binary data for persistence.
+	/// </summary>
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <summary>
+	/// Deserializes this instance from persisted binary data.
+	/// </summary>
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

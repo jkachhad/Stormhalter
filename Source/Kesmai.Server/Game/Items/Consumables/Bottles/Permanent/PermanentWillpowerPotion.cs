@@ -24,6 +24,13 @@ public partial class PermanentWillpowerPotion : Bottle, ITreasure
 	public PermanentWillpowerPotion() : base(289)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="PermanentWillpowerPotion"/> class.
+	/// </summary>
+	public PermanentWillpowerPotion(Serial serial) : base(serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	protected override void OnCreate()
@@ -40,5 +47,29 @@ public partial class PermanentWillpowerPotion : Bottle, ITreasure
 		entries.Add(new LocalizationEntry(6200000, 6200110)); /* [You are looking at] [a porcelain bottle with small irises in raised relief around its base.] */
 
 		base.GetDescription(entries);
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

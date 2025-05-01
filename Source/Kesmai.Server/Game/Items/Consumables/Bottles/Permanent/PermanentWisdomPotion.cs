@@ -24,6 +24,13 @@ public partial class PermanentWisdomPotion : Bottle, ITreasure
 	public PermanentWisdomPotion() : base(274)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="PermanentWisdomPotion"/> class.
+	/// </summary>
+	public PermanentWisdomPotion(Serial serial) : base(serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	protected override void OnCreate()
@@ -40,5 +47,29 @@ public partial class PermanentWisdomPotion : Bottle, ITreasure
 		entries.Add(new LocalizationEntry(6200000, 6200107)); /* [You are looking at] [a heavy glass bottle mounted on a gold base and set with emeralds.] */
 
 		base.GetDescription(entries);
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

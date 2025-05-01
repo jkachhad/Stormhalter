@@ -46,6 +46,13 @@ public partial class EbonyStaff : Staff, ITreasure
 	public EbonyStaff() : base(307)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="EbonyStaff"/> class.
+	/// </summary>
+	public EbonyStaff(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -54,5 +61,29 @@ public partial class EbonyStaff : Staff, ITreasure
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250092)); /* The staff seems to have some magical properties. */
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

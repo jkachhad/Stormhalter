@@ -1,6 +1,6 @@
 namespace Kesmai.Server.Items;
 
-public partial interface ICharged
+public interface ICharged
 {
 	int ChargesCurrent { get; set; }
 		

@@ -26,6 +26,13 @@ public partial class SpectreCloak : Robe, ITreasure
 	public SpectreCloak() : base(252)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="SpectreCloak"/> class.
+	/// </summary>
+	public SpectreCloak(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -34,5 +41,29 @@ public partial class SpectreCloak : Robe, ITreasure
 
 		if (Identified)
 			entries.Add(new LocalizationEntry("The robe is visible when inspected closely."));
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

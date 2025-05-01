@@ -47,6 +47,10 @@ public partial class Corpse : ItemEntity
 	{
 		Owner = owner;
 	}
+	
+	public Corpse(Serial serial) : base(serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	public override bool BreaksHide(MobileEntity entity) => true;
@@ -184,5 +188,39 @@ public partial class Corpse : ItemEntity
 			return creature.OnCorpseTanned();
 
 		return default(ItemEntity);
+	}
+	
+	/// <summary>
+	/// Serializes this instance into binary data for persistence.
+	/// </summary>
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1);	/* version */
+			
+		writer.WriteEntity<MobileEntity>(Owner);
+	}
+
+	/// <summary>
+	/// Deserializes this instance from persisted binary data.
+	/// </summary>
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				Owner = reader.ReadEntity<MobileEntity>();
+				break;
+			}
+		}
+
+		if (!IsSerialized)	/* This instance should not been deserialized to begin with. */
+			Delete();
 	}
 }

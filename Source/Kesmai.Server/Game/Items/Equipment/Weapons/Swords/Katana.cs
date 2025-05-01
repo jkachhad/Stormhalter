@@ -30,11 +30,18 @@ public partial class Katana : Sword
 
 	/// <inheritdoc />
 	public override WeaponFlags Flags => WeaponFlags.Slashing;
-		
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Katana"/> class.
 	/// </summary>
 	public Katana() : base(148)
+	{
+	}
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Katana"/> class.
+	/// </summary>
+	public Katana(Serial serial) : base(serial)
 	{
 	}
 
@@ -45,5 +52,29 @@ public partial class Katana : Sword
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250088)); /* The katana appears quite ordinary. */
+	}
+
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

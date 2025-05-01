@@ -26,10 +26,41 @@ public partial class OchreEgg : ItemEntity, ITreasure
 	public OchreEgg() : base(169)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="OchreEgg"/> class.
+	/// </summary>
+	public OchreEgg(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
 		entries.Add(new LocalizationEntry(6200000, 6200219)); /* [You are looking at] [a large ochre egg mottled with dark brown spots.] */
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

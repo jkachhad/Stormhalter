@@ -33,6 +33,13 @@ public partial class SteelGauntlets : Gauntlets, ITreasure
 	public SteelGauntlets() : base(69)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="SteelGauntlets"/> class.
+	/// </summary>
+	public SteelGauntlets(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -41,5 +48,29 @@ public partial class SteelGauntlets : Gauntlets, ITreasure
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250094)); /* The combat adds for the gauntlets are +2. */
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

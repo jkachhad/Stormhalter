@@ -26,6 +26,13 @@ public partial class BlueStaffRaiseDead : BlueStaff, IEmpowered, ICharged
 	{
 		_chargesCurrent = _chargesMax = charges;
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="BlueStaffRaiseDead"/> class.
+	/// </summary>
+	public BlueStaffRaiseDead(Serial serial) : base(serial)
+	{
+	}
 
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
@@ -133,6 +140,36 @@ public partial class BlueStaffRaiseDead : BlueStaff, IEmpowered, ICharged
 					_staff.OnTarget(source, corpse);
 					_staff.ChargesCurrent--;
 				}
+			}
+		}
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+			
+		writer.Write((short)_chargesCurrent);
+		writer.Write((short)_chargesMax);
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				_chargesCurrent = reader.ReadInt16();
+				_chargesMax = reader.ReadInt16();
+					
+				break;
 			}
 		}
 	}

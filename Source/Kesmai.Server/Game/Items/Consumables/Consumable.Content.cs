@@ -9,6 +9,39 @@ using Kesmai.Server.Spells;
 namespace Kesmai.Server.Game;
 
 [WorldForge]
+public interface IConsumableContent
+{
+	/// <summary>
+	/// Gets the description for the content.
+	/// </summary>
+	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries);
+
+	/// <summary>
+	/// Called when consumed by an entity.
+	/// </summary>
+	public void OnConsume(MobileEntity entity, Consumable item);
+
+	/// <summary>
+	/// Called when this instance is thrown at the specified entity.
+	/// </summary>
+	/// <remarks>The default behavior is to execute <see cref="ThrowAt(Kesmai.Server.Game.MobileEntity,Kesmai.Server.Game.Point2D)"/></remarks>
+	public void ThrowAt(MobileEntity source, Consumable item, MobileEntity target)
+	{
+		ThrowAt(source, item, target.Location);
+	}
+
+	/// <summary>
+	/// Called when this instance is thrown to the specified location.
+	/// </summary>
+	public void ThrowAt(MobileEntity source, Consumable item, Point2D location)
+	{
+	}
+
+	public void Serialize(SpanWriter writer);
+	public void Deserialize(ref SpanReader reader);
+}
+
+[WorldForge]
 public class ConsumableHeal : IConsumableContent
 {
 	private int _amount; 

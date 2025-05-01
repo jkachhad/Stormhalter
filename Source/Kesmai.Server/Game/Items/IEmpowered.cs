@@ -3,7 +3,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial interface IEmpowered
+public interface IEmpowered
 {
 	Type ContainedSpell { get; }
 		

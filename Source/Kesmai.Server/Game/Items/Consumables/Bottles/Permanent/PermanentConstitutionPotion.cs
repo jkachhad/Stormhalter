@@ -25,6 +25,13 @@ public partial class PermanentConstitutionPotion : Bottle, ITreasure
 	public PermanentConstitutionPotion() : base(303)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="PermanentConstitutionPotion"/> class.
+	/// </summary>
+	public PermanentConstitutionPotion(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	protected override void OnCreate()
@@ -41,5 +48,29 @@ public partial class PermanentConstitutionPotion : Bottle, ITreasure
 		entries.Add(new LocalizationEntry(6200000, 6200113)); /* [You are looking at] [a small porcelain vial.] */
 
 		base.GetDescription(entries);
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

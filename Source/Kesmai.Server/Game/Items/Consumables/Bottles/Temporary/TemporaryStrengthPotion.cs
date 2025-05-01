@@ -29,6 +29,13 @@ public partial class TemporaryStrengthPotion : Bottle, ITreasure
 	public TemporaryStrengthPotion(int closedId, int openId) : base(closedId)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="TemporaryStrengthPotion"/> class.
+	/// </summary>
+	public TemporaryStrengthPotion(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	protected override void OnCreate()
@@ -45,5 +52,29 @@ public partial class TemporaryStrengthPotion : Bottle, ITreasure
 		entries.Add(new LocalizationEntry(6200000, 6200090)); /* [You are looking at] [a clear bottle made of yellowish glass.] [Inside is a clear red liquid.] */
 
 		base.GetDescription(entries);
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

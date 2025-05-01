@@ -60,6 +60,13 @@ public abstract partial class Armor : Equipment, IArmored
 	protected Armor(int armorID) : base(armorID)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Armor"/> class.
+	/// </summary>
+	protected Armor(Serial serial) : base(serial)
+	{
+	}
 		
 	/// <summary>
 	/// Gets the armor bonus against the specified <see cref="ItemEntity"/>.

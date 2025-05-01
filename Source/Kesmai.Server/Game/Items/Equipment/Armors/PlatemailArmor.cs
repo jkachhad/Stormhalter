@@ -36,6 +36,13 @@ public partial class PlatemailArmor : Armor
 	public PlatemailArmor() : base(241)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="PlatemailArmor"/> class.
+	/// </summary>
+	public PlatemailArmor(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -44,5 +51,29 @@ public partial class PlatemailArmor : Armor
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250022)); /* The armor appears quite ordinary. */
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

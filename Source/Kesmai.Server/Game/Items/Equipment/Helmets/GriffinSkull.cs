@@ -33,6 +33,13 @@ public partial class GriffinSkull : Helmet, ITreasure
 	public GriffinSkull() : base(35)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="GriffinSkull"/> class.
+	/// </summary>
+	public GriffinSkull(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -41,5 +48,29 @@ public partial class GriffinSkull : Helmet, ITreasure
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250105)); /* The skull is very thick and contains the spell of Night Vision. */
+	}
+
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

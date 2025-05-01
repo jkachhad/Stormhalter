@@ -29,6 +29,13 @@ public partial class DemonWand : Wand, ITreasure
 	{
 	}
 
+	/// <summary>
+	/// Initializes a new instance of the <see cref="DemonWand"/> class.
+	/// </summary>
+	public DemonWand(Serial serial) : base(serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
@@ -37,7 +44,7 @@ public partial class DemonWand : Wand, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250115)); /* The wand contains the spell of Fear. */
 	}
-		
+
 	public override Spell GetSpell()
 	{
 		return new FearSpell()
@@ -50,7 +57,7 @@ public partial class DemonWand : Wand, ITreasure
 			Cost = 0,
 		};
 	}
-		
+
 	protected override void OnTarget(MobileEntity source, MobileEntity target)
 	{
 		var spell = GetSpell();
@@ -59,6 +66,30 @@ public partial class DemonWand : Wand, ITreasure
 		{
 			fear.Warm(source);
 			fear.CastAt(target);
+		}
+	}
+
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
 		}
 	}
 }

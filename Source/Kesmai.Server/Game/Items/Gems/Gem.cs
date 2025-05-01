@@ -28,4 +28,42 @@ public abstract partial class Gem : ItemEntity, ITreasure
 	{
 		_basePrice = basePrice;
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Gem"/> class.
+	/// </summary>
+	protected Gem(Serial serial) : base(serial)
+	{
+	}
+
+	/// <summary>
+	/// Serializes this instance into binary data for persistence.
+	/// </summary>
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1);	/* version */
+
+		writer.Write((uint)_basePrice);
+	}
+
+	/// <summary>
+	/// Deserializes this instance from persisted binary data.
+	/// </summary>
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				_basePrice = reader.ReadUInt32();
+				break;
+			}
+		}
+	}
 }

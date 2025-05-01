@@ -20,6 +20,13 @@ public partial class BreatheWaterBracelet : Bracelet, ITreasure
 	public BreatheWaterBracelet() : base(11)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="BreatheWaterBracelet"/> class.
+	/// </summary>
+	public BreatheWaterBracelet(Serial serial) : base(serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -62,5 +69,29 @@ public partial class BreatheWaterBracelet : Bracelet, ITreasure
 			status.RemoveSource(this);
 
 		return true;
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

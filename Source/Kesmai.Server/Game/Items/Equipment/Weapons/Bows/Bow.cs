@@ -27,6 +27,13 @@ public abstract partial class Bow : ProjectileWeapon
 	protected Bow(int bowID) : base(bowID)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Bow"/> class.
+	/// </summary>
+	protected Bow(Serial serial) : base(serial)
+	{
+	}
 
 	public override void OnDropped()
 	{
@@ -35,5 +42,29 @@ public abstract partial class Bow : ProjectileWeapon
 			Unnock();
 			
 		base.OnDropped();
+	}
+
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

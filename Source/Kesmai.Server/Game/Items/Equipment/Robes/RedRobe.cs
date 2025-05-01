@@ -27,6 +27,13 @@ public partial class RedRobe : Robe, ITreasure
 	public RedRobe() : base(261)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="RedRobe"/> class.
+	/// </summary>
+	public RedRobe(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -35,5 +42,29 @@ public partial class RedRobe : Robe, ITreasure
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250030)); /* The robe looks thick and heavy. */
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

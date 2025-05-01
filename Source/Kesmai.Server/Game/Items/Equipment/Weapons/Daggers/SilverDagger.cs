@@ -25,7 +25,14 @@ public partial class SilverDagger : Dagger, ITreasure
 	public SilverDagger() : base(172)
 	{
 	}
-
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="SilverDagger"/> class.
+	/// </summary>
+	public SilverDagger(Serial serial) : base(serial)
+	{
+	}
+	
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
@@ -33,5 +40,29 @@ public partial class SilverDagger : Dagger, ITreasure
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250080)); /* The combat adds for this weapon are +2. */
+	}
+
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

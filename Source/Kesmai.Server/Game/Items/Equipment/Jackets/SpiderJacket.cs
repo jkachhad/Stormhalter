@@ -18,6 +18,13 @@ public partial class SpiderJacket : Jacket
 	public SpiderJacket() : base(267)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="SpiderJacket"/> class.
+	/// </summary>
+	public SpiderJacket(Serial serial) : base(serial)
+	{
+	}
         
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -26,5 +33,29 @@ public partial class SpiderJacket : Jacket
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250099)); /* The jacket appears quite ordinary. */
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

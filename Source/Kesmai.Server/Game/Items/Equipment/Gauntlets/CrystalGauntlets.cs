@@ -43,6 +43,13 @@ public partial class CrystalGauntlets : Gauntlets, ITreasure
 	public CrystalGauntlets() : base(71)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="CrystalGauntlets"/> class.
+	/// </summary>
+	public CrystalGauntlets(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override bool CanEquip(MobileEntity entity)
@@ -60,5 +67,29 @@ public partial class CrystalGauntlets : Gauntlets, ITreasure
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250095)); /* The combat adds for the gauntlets are +4. */
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

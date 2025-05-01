@@ -31,6 +31,13 @@ public partial class Kimono : Robe, ITreasure
 	public Kimono() : base(269)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Kimono"/> class.
+	/// </summary>
+	public Kimono(Serial serial) : base(serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -39,5 +46,29 @@ public partial class Kimono : Robe, ITreasure
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250101)); /* The kimono is extremely light. */
+	}
+
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }
