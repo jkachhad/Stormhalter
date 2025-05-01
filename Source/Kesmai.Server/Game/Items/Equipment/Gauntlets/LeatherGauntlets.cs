@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class LeatherGauntlets : Gauntlets, ITreasure
+public class LeatherGauntlets : Gauntlets, ITreasure
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000041;

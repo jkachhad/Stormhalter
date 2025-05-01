@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class SmallRuby : Gem
+public class SmallRuby : Gem
 {
 	/// <summary>
 	/// Gets the weight.

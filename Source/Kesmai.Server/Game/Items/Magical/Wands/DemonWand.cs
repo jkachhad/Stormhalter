@@ -8,7 +8,7 @@ using Kesmai.Server.Targeting;
 
 namespace Kesmai.Server.Items;
 
-public partial class DemonWand : Wand, ITreasure
+public class DemonWand : Wand, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 500;
@@ -47,7 +47,7 @@ public partial class DemonWand : Wand, ITreasure
 
 	public override Spell GetSpell()
 	{
-		return new FearSpell()
+		return new FearSpell
 		{
 			Item = this,
 				

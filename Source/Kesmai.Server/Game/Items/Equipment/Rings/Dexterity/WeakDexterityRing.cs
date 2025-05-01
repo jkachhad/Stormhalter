@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class WeakDexterityRing : DexterityRing, ITreasure
+public class WeakDexterityRing : DexterityRing, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 1000;

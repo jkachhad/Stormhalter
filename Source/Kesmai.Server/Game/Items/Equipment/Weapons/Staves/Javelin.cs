@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class Javelin : Staff
+public class Javelin : Staff
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000053;

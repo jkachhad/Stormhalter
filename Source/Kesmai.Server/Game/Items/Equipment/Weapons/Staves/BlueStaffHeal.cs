@@ -11,7 +11,7 @@ using Kesmai.Server.Targeting;
 
 namespace Kesmai.Server.Items;
 
-public partial class BlueStaffHeal : BlueStaff, IEmpowered, ICharged
+public class BlueStaffHeal : BlueStaff, IEmpowered, ICharged
 {
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlueStaffHeal"/> class.
@@ -76,7 +76,7 @@ public partial class BlueStaffHeal : BlueStaff, IEmpowered, ICharged
 
 		if (ChargesCurrent > 0)
 		{
-			spell = new HealSpell()
+			spell = new HealSpell
 			{
 				Item = this,
 				SkillLevel = 10,

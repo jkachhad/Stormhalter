@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class Fan : Weapon, ITreasure
+public class Fan : Weapon, ITreasure
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000034;

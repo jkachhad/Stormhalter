@@ -5,7 +5,7 @@ using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class Dagger : MeleeWeapon
+public abstract class Dagger : MeleeWeapon
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000032;

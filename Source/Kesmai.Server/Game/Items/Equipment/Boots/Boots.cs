@@ -2,7 +2,7 @@ using System.IO;
 
 namespace Kesmai.Server.Items;
 
-public partial class Boots : Equipment
+public class Boots : Equipment
 {
 	/// <summary>
 	/// Gets the label number.

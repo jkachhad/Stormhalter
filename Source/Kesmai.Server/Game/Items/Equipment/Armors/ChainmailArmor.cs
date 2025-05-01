@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class ChainmailArmor : Armor
+public class ChainmailArmor : Armor
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 50;

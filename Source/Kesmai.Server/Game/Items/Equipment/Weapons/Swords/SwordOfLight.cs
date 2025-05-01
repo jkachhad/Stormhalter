@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class SwordOfLight : Sword, ITreasure
+public class SwordOfLight : Sword, ITreasure
 {
 		
 	/// <inheritdoc />

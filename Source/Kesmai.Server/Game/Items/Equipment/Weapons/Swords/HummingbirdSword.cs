@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class HummingbirdSword : ShortSword, ITreasure
+public class HummingbirdSword : ShortSword, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 2000;

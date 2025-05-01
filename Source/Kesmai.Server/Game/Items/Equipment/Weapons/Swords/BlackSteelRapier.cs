@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class BlackSteelRapier : Rapier, ITreasure
+public class BlackSteelRapier : Rapier, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 1;

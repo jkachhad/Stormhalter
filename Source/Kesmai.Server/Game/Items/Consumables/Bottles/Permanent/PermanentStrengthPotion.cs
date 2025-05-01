@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Game;
 
-public partial class PermanentStrengthPotion : Bottle, ITreasure
+public class PermanentStrengthPotion : Bottle, ITreasure
 {
 	private static ConsumableStrengthStat content = new ConsumableStrengthStat();
 		

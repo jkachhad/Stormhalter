@@ -7,7 +7,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class StunDeathProtectionAmulet : Amulet, ITreasure, ICharged
+public abstract class StunDeathProtectionAmulet : Amulet, ITreasure, ICharged
 {
 	private int _chargesCurrent;
 	private int _chargesMax;
@@ -55,7 +55,7 @@ public abstract partial class StunDeathProtectionAmulet : Amulet, ITreasure, ICh
 			{
 				status = new StunDeathProtectionStatus(entity)
 				{
-					Inscription = new SpellInscription() { SpellId = 45 }
+					Inscription = new SpellInscription { SpellId = 45 }
 				};
 				status.AddSource(new ItemSource(this));
 
@@ -100,8 +100,8 @@ public abstract partial class StunDeathProtectionAmulet : Amulet, ITreasure, ICh
 
 		writer.Write((short)2); /* version */
 			
-		writer.Write((int)_chargesMax);
-		writer.Write((int)_chargesCurrent);
+		writer.Write(_chargesMax);
+		writer.Write(_chargesCurrent);
 	}
 
 	/// <summary>

@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class OchreEgg : ItemEntity, ITreasure
+public class OchreEgg : ItemEntity, ITreasure
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000033;

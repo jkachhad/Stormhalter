@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class LeatherArmor : Armor
+public class LeatherArmor : Armor
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 25;

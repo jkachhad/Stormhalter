@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class LionRobe : Robe, ITreasure
+public class LionRobe : Robe, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 2400;

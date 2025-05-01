@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class SpikedFlail : Flail
+public class SpikedFlail : Flail
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000063;

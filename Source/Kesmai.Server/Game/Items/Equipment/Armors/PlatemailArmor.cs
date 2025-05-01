@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class PlatemailArmor : Armor
+public class PlatemailArmor : Armor
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 100;

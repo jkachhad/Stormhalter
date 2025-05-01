@@ -9,7 +9,7 @@ using Kesmai.Server.Targeting;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class Wand : MeleeWeapon, IEmpowered, ICharged
+public abstract class Wand : MeleeWeapon, IEmpowered, ICharged
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000097;

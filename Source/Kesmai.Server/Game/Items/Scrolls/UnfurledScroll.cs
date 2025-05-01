@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class UnfurledScroll : ItemEntity, ITreasure
+public class UnfurledScroll : ItemEntity, ITreasure
 {
 	/// <inheritdoc />
 	public override int Weight => 5;

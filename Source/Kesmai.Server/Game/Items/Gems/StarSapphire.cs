@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class StarSapphire : Gem
+public class StarSapphire : Gem
 {
 	/// <inheritdoc />
 	public override int Weight => 5;

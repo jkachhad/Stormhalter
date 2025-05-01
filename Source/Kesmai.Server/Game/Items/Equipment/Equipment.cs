@@ -5,7 +5,7 @@ using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class Equipment : ItemEntity
+public abstract class Equipment : ItemEntity
 {
 	/// <summary>
 	/// Gets the hindrance penalty for this <see cref="Equipment"/>.

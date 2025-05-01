@@ -7,7 +7,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class ScorpionBracelet : Bracelet, ITreasure
+public class ScorpionBracelet : Bracelet, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 1;

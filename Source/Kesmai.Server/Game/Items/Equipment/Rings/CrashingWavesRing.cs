@@ -8,7 +8,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class CrashingWavesRing : Ring, ITreasure
+public class CrashingWavesRing : Ring, ITreasure
 {
 	/// <summary>
 	/// Gets the price.

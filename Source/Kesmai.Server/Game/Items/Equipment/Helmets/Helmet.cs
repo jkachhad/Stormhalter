@@ -6,7 +6,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class Helmet : Equipment
+public abstract class Helmet : Equipment
 {
 	/// <summary>
 	/// Gets the label number.
@@ -50,7 +50,7 @@ public abstract partial class Helmet : Equipment
 			{
 				status = new NightVisionStatus(entity)
 				{
-					Inscription = new SpellInscription() { SpellId = 36 }
+					Inscription = new SpellInscription { SpellId = 36 }
 				};
 				status.AddSource(new ItemSource(this));
 

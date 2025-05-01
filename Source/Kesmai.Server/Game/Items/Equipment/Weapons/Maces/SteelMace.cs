@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class SteelMace : Mace
+public class SteelMace : Mace
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 25;

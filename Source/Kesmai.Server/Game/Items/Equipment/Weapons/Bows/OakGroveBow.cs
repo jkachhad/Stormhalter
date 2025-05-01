@@ -8,7 +8,7 @@ using Kesmai.Server.Network;
 namespace Kesmai.Server.Items;
 
 [WorldForge]
-public partial class OakGroveBow : Bow, ITreasure
+public class OakGroveBow : Bow, ITreasure
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000058;

@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class SteelLongsword : Longsword
+public class SteelLongsword : Longsword
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 1500;

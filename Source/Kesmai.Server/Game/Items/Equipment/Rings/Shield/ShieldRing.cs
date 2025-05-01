@@ -8,7 +8,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class ShieldRing : Ring, ITreasure
+public class ShieldRing : Ring, ITreasure
 {
 	/// <summary>
 	/// Gets the price.
@@ -65,7 +65,7 @@ public partial class ShieldRing : Ring, ITreasure
 		{
 			status = new ShieldStatus(entity)
 			{
-				Inscription = new SpellInscription() { SpellId = 52 }
+				Inscription = new SpellInscription { SpellId = 52 }
 			};
 			status.AddSource(new ItemSource(this));
 				

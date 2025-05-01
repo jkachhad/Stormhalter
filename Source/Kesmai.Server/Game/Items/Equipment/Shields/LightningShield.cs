@@ -7,7 +7,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class LightningShield : Shield, ITreasure
+public class LightningShield : Shield, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 2000;
@@ -55,7 +55,7 @@ public partial class LightningShield : Shield, ITreasure
 		{
 			resistStatus = new LightningResistanceStatus(entity)
 			{
-				Inscription = new SpellInscription() { SpellId = 50 }
+				Inscription = new SpellInscription { SpellId = 50 }
 			};
 			resistStatus.AddSource(new ItemSource(this));
 				

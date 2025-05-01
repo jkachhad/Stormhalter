@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class ChristmasOrnament : ItemEntity, ITreasure
+public class ChristmasOrnament : ItemEntity, ITreasure
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000066;

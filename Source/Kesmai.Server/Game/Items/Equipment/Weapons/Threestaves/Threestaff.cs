@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class Threestaff : MeleeWeapon
+public abstract class Threestaff : MeleeWeapon
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000060;

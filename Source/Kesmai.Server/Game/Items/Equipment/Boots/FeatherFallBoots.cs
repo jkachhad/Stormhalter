@@ -6,7 +6,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class FeatherFallBoots : Boots, ITreasure
+public class FeatherFallBoots : Boots, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 1500;
@@ -49,7 +49,7 @@ public partial class FeatherFallBoots : Boots, ITreasure
 		{
 			status = new FeatherFallStatus(entity)
 			{
-				Inscription = new SpellInscription() { SpellId = 14 }
+				Inscription = new SpellInscription { SpellId = 14 }
 			};
 			status.AddSource(new ItemSource(this));
 				

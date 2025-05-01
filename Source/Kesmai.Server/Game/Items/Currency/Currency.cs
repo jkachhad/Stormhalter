@@ -4,7 +4,7 @@ using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class Currency : ItemEntity, ITreasure
+public abstract class Currency : ItemEntity, ITreasure
 {
 	/// <summary>
 	/// Gets or sets a value indicating whether this instance is stackable.

@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class GoldenTorc : StunDeathProtectionAmulet
+public class GoldenTorc : StunDeathProtectionAmulet
 {
 	/// <summary>
 	/// Gets the label number.

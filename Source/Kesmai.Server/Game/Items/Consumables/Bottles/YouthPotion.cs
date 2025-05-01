@@ -7,7 +7,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Game;
 
-public partial class YouthPotion : Bottle, ITreasure
+public class YouthPotion : Bottle, ITreasure
 {
 	private static ConsumableAmbrosia content = new ConsumableAmbrosia();
 		

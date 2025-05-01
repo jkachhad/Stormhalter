@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class LargeEmerald : Gem
+public class LargeEmerald : Gem
 {
 	/// <summary>
 	/// Gets the weight.

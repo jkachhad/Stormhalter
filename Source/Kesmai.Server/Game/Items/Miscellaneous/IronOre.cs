@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class IronOre : ItemEntity, ITreasure
+public class IronOre : ItemEntity, ITreasure
 {
 	/// <summary>
 	/// Gets the label number.

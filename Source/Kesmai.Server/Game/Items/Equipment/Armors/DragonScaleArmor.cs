@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class DragonScaleArmor : Armor, ITreasure
+public class DragonScaleArmor : Armor, ITreasure
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000076; /* scales */

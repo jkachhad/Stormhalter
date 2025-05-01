@@ -4,7 +4,7 @@ using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class Gem : ItemEntity, ITreasure
+public abstract class Gem : ItemEntity, ITreasure
 {
 	protected uint _basePrice;
 		
@@ -45,7 +45,7 @@ public abstract partial class Gem : ItemEntity, ITreasure
 
 		writer.Write((short)1);	/* version */
 
-		writer.Write((uint)_basePrice);
+		writer.Write(_basePrice);
 	}
 
 	/// <summary>

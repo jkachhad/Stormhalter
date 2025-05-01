@@ -2,7 +2,7 @@
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class Amulet : Equipment
+public abstract class Amulet : Equipment
 {
 	/// <summary>
 	/// Gets the label number.

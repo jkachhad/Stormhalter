@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Game;
 
-public partial class GreenBalm : Balm
+public class GreenBalm : Balm
 {
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GreenBalm"/> class.

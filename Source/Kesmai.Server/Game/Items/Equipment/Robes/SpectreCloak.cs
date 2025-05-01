@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class SpectreCloak : Robe, ITreasure
+public class SpectreCloak : Robe, ITreasure
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000026;

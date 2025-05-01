@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class ReturningHammer : Mace, IReturningWeapon, ITreasure
+public class ReturningHammer : Mace, IReturningWeapon, ITreasure
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000047;

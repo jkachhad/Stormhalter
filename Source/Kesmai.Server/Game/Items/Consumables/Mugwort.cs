@@ -8,7 +8,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class Mugwort : Food
+public class Mugwort : Food
 {
 	/* Mugwort cures to a absolute potency of 5. */
 	private static ConsumablePoisonAntidote content = new ConsumablePoisonAntidote(5, false);

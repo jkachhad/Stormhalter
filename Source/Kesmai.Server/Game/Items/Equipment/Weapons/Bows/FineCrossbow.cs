@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class FineCrossbow : Crossbow
+public class FineCrossbow : Crossbow
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 600;

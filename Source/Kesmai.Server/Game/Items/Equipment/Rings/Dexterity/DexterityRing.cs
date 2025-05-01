@@ -7,7 +7,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class DexterityRing : Ring, ITreasure
+public class DexterityRing : Ring, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 1500;

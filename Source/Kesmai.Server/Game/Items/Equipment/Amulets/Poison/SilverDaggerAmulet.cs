@@ -9,7 +9,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class SilverDaggerAmulet : Amulet, ITreasure, ICharged
+public class SilverDaggerAmulet : Amulet, ITreasure, ICharged
 {
 	private int _chargesCurrent;
 	private int _chargesMax;
@@ -83,7 +83,7 @@ public partial class SilverDaggerAmulet : Amulet, ITreasure, ICharged
 			{
 				status = new PoisonProtectionStatus(entity)
 				{
-					Inscription = new SpellInscription() { SpellId = 84 }
+					Inscription = new SpellInscription { SpellId = 84 }
 				};
 				status.AddSource(new ItemSource(this));
 
@@ -128,8 +128,8 @@ public partial class SilverDaggerAmulet : Amulet, ITreasure, ICharged
 
 		writer.Write((short)2); /* version */
 			
-		writer.Write((int)_chargesMax);
-		writer.Write((int)_chargesCurrent);
+		writer.Write(_chargesMax);
+		writer.Write(_chargesCurrent);
 	}
 
 	/// <summary>

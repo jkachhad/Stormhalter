@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class ThrowingHammer : Mace
+public class ThrowingHammer : Mace
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000047;

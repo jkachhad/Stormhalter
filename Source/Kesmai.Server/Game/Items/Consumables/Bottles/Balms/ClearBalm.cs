@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Game;
 
-public partial class ClearBalm : Balm
+public class ClearBalm : Balm
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 16;

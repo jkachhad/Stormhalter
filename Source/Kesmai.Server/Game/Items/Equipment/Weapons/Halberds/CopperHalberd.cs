@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class CopperHalberd : Halberd, ITreasure
+public class CopperHalberd : Halberd, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 50;

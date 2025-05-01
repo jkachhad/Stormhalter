@@ -9,7 +9,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
+public class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
 {
 	private int _chargesCurrent;
 	private int _chargesMax;
@@ -74,7 +74,7 @@ public partial class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
 			{
 				fireStatus = new FireProtectionStatus(entity)
 				{
-					Inscription = new SpellInscription() { SpellId = 43 }
+					Inscription = new SpellInscription { SpellId = 43 }
 				};
 				fireStatus.AddSource(new ItemSource(this));
 
@@ -89,7 +89,7 @@ public partial class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
 			{
 				iceStatus = new IceProtectionStatus(entity)
 				{
-					Inscription = new SpellInscription() { SpellId = 42 }
+					Inscription = new SpellInscription { SpellId = 42 }
 				};
 				iceStatus.AddSource(new ItemSource(this));
 
@@ -148,8 +148,8 @@ public partial class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
 
 		writer.Write((short)2); /* version */
 			
-		writer.Write((int)_chargesMax);
-		writer.Write((int)_chargesCurrent);
+		writer.Write(_chargesMax);
+		writer.Write(_chargesCurrent);
 	}
 
 	/// <summary>

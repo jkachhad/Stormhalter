@@ -6,7 +6,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class CrocodileBoots : Boots, ITreasure
+public class CrocodileBoots : Boots, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 500;
@@ -49,7 +49,7 @@ public partial class CrocodileBoots : Boots, ITreasure
 		{
 			status = new BreatheWaterStatus(entity)
 			{
-				Inscription = new SpellInscription() { SpellId = 4 }
+				Inscription = new SpellInscription { SpellId = 4 }
 			};
 			status.AddSource(new ItemSource(this));
 				

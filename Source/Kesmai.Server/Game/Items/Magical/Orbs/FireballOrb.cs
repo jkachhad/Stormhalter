@@ -6,7 +6,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class FireballOrb : SpellOrb, ITreasure
+public class FireballOrb : SpellOrb, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 1000;
@@ -37,7 +37,7 @@ public partial class FireballOrb : SpellOrb, ITreasure
 	/// <inheritdoc />
 	protected override void PlaceEffect(MobileEntity source, Point2D location)
 	{
-		var spell = new FireballSpell()
+		var spell = new FireballSpell
 		{
 			Item = this,
 				

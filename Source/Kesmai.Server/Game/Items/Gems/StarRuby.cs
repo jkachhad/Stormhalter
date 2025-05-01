@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class StarRuby : Gem
+public class StarRuby : Gem
 {
 	/// <inheritdoc />
 	public override int Weight => 5;

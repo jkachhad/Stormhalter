@@ -6,7 +6,7 @@ namespace Kesmai.Server.Items;
 
 /* Nunchakus, morning stars and flails are included in the flail weapon type. */
 /* These weapons are popular with Martial Artists and Thieves because of their compactness. */
-public abstract partial class Flail : MeleeWeapon
+public abstract class Flail : MeleeWeapon
 {
 	/// <inheritdoc />
 	public override int Category => 2;

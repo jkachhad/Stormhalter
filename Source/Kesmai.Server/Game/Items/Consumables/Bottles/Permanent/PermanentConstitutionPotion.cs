@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Game;
 
-public partial class PermanentConstitutionPotion : Bottle, ITreasure
+public class PermanentConstitutionPotion : Bottle, ITreasure
 {
 	private static ConsumableConstitutionStat content = new ConsumableConstitutionStat();
 		

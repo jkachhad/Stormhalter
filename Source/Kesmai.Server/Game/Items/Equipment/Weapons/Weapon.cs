@@ -6,10 +6,10 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
+public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 {
 	protected Poison _poison;
-	
+
 	/// <summary>
 	/// Gets the skill utilized by this <see cref="IWeapon"/> during combat.
 	/// </summary>
@@ -20,67 +20,67 @@ public abstract partial class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	/// Gets the base attack bonus value for this <see cref="Weapon"/>.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
-	public virtual int BaseAttackBonus { get { return 0; } }
+	public virtual int BaseAttackBonus => 0;
 
 	/// <summary>
 	/// Gets the penetration value for this <see cref="Weapon"/>.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
-	public virtual ShieldPenetration Penetration { get { return ShieldPenetration.None; } }
+	public virtual ShieldPenetration Penetration => ShieldPenetration.None;
 
 	/// <summary>
 	/// Gets the weapon flags.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
-	public virtual WeaponFlags Flags { get { return WeaponFlags.None; } }
+	public virtual WeaponFlags Flags => WeaponFlags.None;
 
 	/// <summary>
 	/// Gets the minimum damage for this <see cref="IWeapon"/>.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
-	public virtual int MinimumDamage { get { return 0; } }
+	public virtual int MinimumDamage => 0;
 
 	/// <summary>
 	/// Gets the maximum damage for this <see cref="IWeapon"/>.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
-	public virtual int MaximumDamage { get { return 0; } }
+	public virtual int MaximumDamage => 0;
 
 	/// <summary>
 	/// Gets the base armor bonus provided by this <see cref="IArmored"/>.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
-	public virtual int BaseArmorBonus { get { return 0; } }
+	public virtual int BaseArmorBonus => 0;
 
 	/// <summary>
 	/// Gets the protection provided against slashing attacks.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
-	public virtual int SlashingProtection { get { return 0; } }
+	public virtual int SlashingProtection => 0;
 
 	/// <summary>
 	/// Gets the protection provided against peircing attacks.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
-	public virtual int PiercingProtection { get { return 0; } }
+	public virtual int PiercingProtection => 0;
 
 	/// <summary>
 	/// Gets the protection provided against bashing attacks.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
-	public virtual int BashingProtection { get { return 0; } }
+	public virtual int BashingProtection => 0;
 
 	/// <summary>
 	/// Gets the protection provided against projectile attacks.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
-	public virtual int ProjectileProtection { get { return 0; } }
+	public virtual int ProjectileProtection => 0;
 
 	/// <summary>
 	/// Gets the maximum range at which this weapon can be used.
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
-	public virtual int MaxRange { get { return 0; } }
+	public virtual int MaxRange => 0;
 
 	[CommandProperty(AccessLevel.GameMaster)]
 	public Poison Poison
@@ -90,13 +90,13 @@ public abstract partial class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 		{
 			if (_poison != value)
 				Delta(ItemDelta.UpdateIcon);
-				
+
 			_poison = value;
 		}
 	}
 
 	[CommandProperty(AccessLevel.GameMaster)]
-	public bool IsPoisoned => (_poison != null);
+	public bool IsPoisoned => _poison != null;
 
 	/// <summary>
 	/// Gets the health regeneration provided by this <see cref="Weapon"/>
@@ -104,20 +104,20 @@ public abstract partial class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int HealthRegeneration => 0;
-		
+
 	/// <summary>
 	/// Gets the stamina regeneration provided by this <see cref="Weapon"/>
 	/// </summary>
 	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int StaminaRegeneration => 0;
-		
+
 	/// <summary>
 	/// Gets the mana regeneration provided by this <see cref="Weapon"/>
 	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int ManaRegeneration => 0;
-	
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Weapon"/> class.
 	/// </summary>
@@ -131,7 +131,7 @@ public abstract partial class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	protected Weapon(Serial serial) : base(serial)
 	{
 	}
-	
+
 	/// <summary>
 	/// Gets the attack bonus provided by this <see cref="IWeapon" /> for <see cref="MobileEntity" />.
 	/// </summary>
@@ -157,17 +157,15 @@ public abstract partial class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 		 * 	Though the Silver Greataxe can hit harder at times, the BBS has a harder hitting average than the
 		 * 	Greataxe. The BBS has two advantages. First, it blocks well, and the BBS is "lawful" so it gains
 		 * 	one extra damage add against evil crits like dragons and drakes."
-		 * 
+		 *
 		 */
 		if (defender != null)
-		{
 			if (Flags.HasFlag(WeaponFlags.Lawful) && defender.Alignment == Alignment.Evil)
 				attackBonus += 1;
-		}
 
 		return attackBonus;
 	}
-		
+
 	/// <inheritdoc/>
 	/// <remarks>
 	/// Weapons only provide a blocking bonus against other weapons. Two-handed weapons
@@ -180,7 +178,7 @@ public abstract partial class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 
 		return BaseArmorBonus;
 	}
-		
+
 	/// <summary>
 	/// Calculates the fumble chance as a percent.
 	/// </summary>
@@ -200,12 +198,12 @@ public abstract partial class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 
 			if (StaminaRegeneration > 0)
 				entity.Stats[EntityStat.StaminaRegenerationRate].Add(+StaminaRegeneration, ModifierType.Constant);
-				
+
 			if (ManaRegeneration > 0)
 				entity.Stats[EntityStat.ManaRegenerationRate].Add(+ManaRegeneration, ModifierType.Constant);
 		}
 	}
-		
+
 	public virtual void OnUnwield(MobileEntity entity)
 	{
 		if (CanUse(entity))
@@ -215,7 +213,7 @@ public abstract partial class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 
 			if (StaminaRegeneration > 0)
 				entity.Stats[EntityStat.StaminaRegenerationRate].Remove(+StaminaRegeneration, ModifierType.Constant);
-				
+
 			if (ManaRegeneration > 0)
 				entity.Stats[EntityStat.ManaRegenerationRate].Remove(+ManaRegeneration, ModifierType.Constant);
 		}
@@ -226,7 +224,7 @@ public abstract partial class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	{
 		return Flags.HasFlag(WeaponFlags.TwoHanded);
 	}
-	
+
 	/// <inheritdoc />
 	protected override void OnBreak(MobileEntity source)
 	{
@@ -253,20 +251,18 @@ public abstract partial class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 		value = Utility.RandomRange((int)(ActualPrice * multiplier), 0.5, 0.9);
 
 		if (Owner != null && Owner != player)
-		{
 			if (player.Alignment.IsAny(Alignment.Lawful))
 				player.Alignment = Alignment.Neutral;
-		}
-				
+
 		if (value > 0)
 			player.AwardExperience(value);
 	}
-	
+
 	/// <inheritdoc />
 	public virtual void OnBlock(MobileEntity attacker)
 	{
 	}
-	
+
 	/// <inheritdoc />
 	public override int GetFumbleLocalization()
 	{
@@ -279,10 +275,8 @@ public abstract partial class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 		var container = Container;
 
 		if ((Flags & WeaponFlags.Throwable) != 0)
-		{
 			if (container is Hands || container is Belt || (container is Backpack && container.GetSlot(this) < 5))
 				return ActionType.Throw;
-		}
 
 		return base.GetAction();
 	}
@@ -294,16 +288,14 @@ public abstract partial class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 			return base.HandleInteraction(entity, action);
 
 		var container = Container;
-			
+
 		if ((Flags & WeaponFlags.Throwable) != 0)
-		{
 			if (container is Hands || container is Belt || (container is Backpack && container.GetSlot(this) < 5))
 			{
 				entity.Target = new ThrowItemTarget(this);
 				return true;
 			}
-		}
-		
+
 		return false;
 	}
 
@@ -314,7 +306,7 @@ public abstract partial class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	{
 		if (!base.CanUse(entity))
 			return false;
-			
+
 		/* I thought I recalled information about being unable to swing two handed weapons with left hand. */
 /*			if (entity.LeftHand != null && flags.HasFlag(WeaponFlags.TwoHanded))
 				return false;*/
@@ -327,7 +319,7 @@ public abstract partial class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 		    (flags.HasFlag(WeaponFlags.Neutral) && alignment != Alignment.Neutral) ||
 		    (flags.HasFlag(WeaponFlags.Chaotic) && alignment != Alignment.Chaotic && alignment != Alignment.Evil))
 			return false;
-			
+
 		return true;
 	}
 
@@ -366,7 +358,7 @@ public abstract partial class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 		/* Remove enchantment if dropped to the world (death, moved, etc.) */
 		if (IsEnchanted)
 			IsEnchanted = false;
-			
+
 		return base.DropToLocation(location);
 	}
 
@@ -378,9 +370,9 @@ public abstract partial class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 
 	private static bool GetSaveFlag(SaveFlag flags, SaveFlag toGet)
 	{
-		return ((flags & toGet) != 0);
+		return (flags & toGet) != 0;
 	}
-	
+
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>
@@ -389,18 +381,18 @@ public abstract partial class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 		base.Serialize(writer);
 
 		writer.Write((short)2); /* version */
-			
+
 		var flags = SaveFlag.None;
 
 		SetSaveFlag(ref flags, SaveFlag.IsEnchanted, IsEnchanted);
-		SetSaveFlag(ref flags, SaveFlag.Envenomed, (_poison != null));
-					
+		SetSaveFlag(ref flags, SaveFlag.Envenomed, _poison != null);
+
 		writer.Write((int)flags);
 
 		if (GetSaveFlag(flags, SaveFlag.Envenomed))
 		{
-			writer.Write((TimeSpan)_poison.Delay);
-			writer.Write((int)_poison.Potency);
+			writer.Write(_poison.Delay);
+			writer.Write(_poison.Potency);
 		}
 	}
 
@@ -439,13 +431,13 @@ public abstract partial class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 			}
 		}
 	}
-	
+
 	[Flags]
-	private enum SaveFlag : int
+	private enum SaveFlag
 	{
-		None 		= 0x00000000,
-			
-		Envenomed 	= 0x00000010,
-		IsEnchanted = 0x00000020,
+		None = 0x00000000,
+
+		Envenomed = 0x00000010,
+		IsEnchanted = 0x00000020
 	}
 }

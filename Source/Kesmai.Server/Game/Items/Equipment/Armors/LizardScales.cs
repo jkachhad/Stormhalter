@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class LizardScales : Armor
+public class LizardScales : Armor
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000096; /* vest */

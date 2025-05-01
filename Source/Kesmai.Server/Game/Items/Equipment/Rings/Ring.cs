@@ -4,7 +4,7 @@ using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class Ring : ItemEntity
+public abstract class Ring : ItemEntity
 {
 	/// <summary>
 	/// Gets the label number.

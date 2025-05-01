@@ -5,7 +5,7 @@ using Kesmai.Server.Targeting;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class SpellOrb : ItemEntity
+public abstract class SpellOrb : ItemEntity
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000006;

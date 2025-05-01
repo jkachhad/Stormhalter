@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class TigerStatuette : ItemEntity, ITreasure
+public class TigerStatuette : ItemEntity, ITreasure
 {
 	/// <inheritdoc />
 	public override int Weight => 5;

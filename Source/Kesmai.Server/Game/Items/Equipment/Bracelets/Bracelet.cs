@@ -2,7 +2,7 @@
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class Bracelet : Equipment
+public abstract class Bracelet : Equipment
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000018;

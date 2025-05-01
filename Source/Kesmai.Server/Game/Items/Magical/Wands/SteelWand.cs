@@ -7,7 +7,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class SteelWand : Wand, ITreasure
+public class SteelWand : Wand, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 500;
@@ -43,7 +43,7 @@ public partial class SteelWand : Wand, ITreasure
 
 	public override Spell GetSpell()
 	{
-		return new LightningBoltSpell()
+		return new LightningBoltSpell
 		{
 			Item = this,
 				

@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class CutOnyx : Gem
+public class CutOnyx : Gem
 {
 	/// <inheritdoc />
 	public override int Weight => 5;

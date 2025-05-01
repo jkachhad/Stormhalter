@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Game;
 
-public partial class StaminaPotion : Bottle
+public class StaminaPotion : Bottle
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 40;

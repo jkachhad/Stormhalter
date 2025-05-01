@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class UncutDiamond : Gem
+public class UncutDiamond : Gem
 {
 	/// <inheritdoc />
 	public override int Weight => 5;

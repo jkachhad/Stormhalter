@@ -2,7 +2,7 @@ using System.IO;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class Jacket : Robe
+public abstract class Jacket : Robe
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000052; /* jacket */

@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class UnholyScepter : Mace
+public class UnholyScepter : Mace
 {
 
     /// <inheritdoc />

@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class KnightRing : Ring, ITreasure
+public class KnightRing : Ring, ITreasure
 {
 	/// <summary>
 	/// Gets the price.

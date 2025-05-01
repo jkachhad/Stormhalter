@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class SpikedClub : Mace
+public class SpikedClub : Mace
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 20;

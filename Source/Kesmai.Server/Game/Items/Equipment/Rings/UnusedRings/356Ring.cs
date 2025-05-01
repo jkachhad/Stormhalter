@@ -6,7 +6,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class ThreeFiftySixRing : Ring, ITreasure
+public class ThreeFiftySixRing : Ring, ITreasure
 {
 	/// <summary>
 	/// Gets the price.
@@ -52,7 +52,7 @@ public partial class ThreeFiftySixRing : Ring, ITreasure
 		{
 			resistance = new BlindResistanceStatus(entity)
 			{
-				Inscription = new SpellInscription() { SpellId = 47 }
+				Inscription = new SpellInscription { SpellId = 47 }
 			};
 			resistance.AddSource(new ItemSource(this));
 

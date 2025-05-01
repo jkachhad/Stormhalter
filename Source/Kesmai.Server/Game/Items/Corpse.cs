@@ -8,7 +8,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class Corpse : ItemEntity
+public class Corpse : ItemEntity
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6005000; /* corpse */
@@ -199,7 +199,7 @@ public partial class Corpse : ItemEntity
 
 		writer.Write((short)1);	/* version */
 			
-		writer.WriteEntity<MobileEntity>(Owner);
+		writer.WriteEntity(Owner);
 	}
 
 	/// <summary>

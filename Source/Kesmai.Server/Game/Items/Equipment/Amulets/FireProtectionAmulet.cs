@@ -7,7 +7,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class FireProtectionAmulet : Amulet, ITreasure
+public class FireProtectionAmulet : Amulet, ITreasure
 {
 	/// <summary>
 	/// Gets the price.
@@ -53,7 +53,7 @@ public partial class FireProtectionAmulet : Amulet, ITreasure
 		{
 			status = new FireProtectionStatus(entity)
 			{
-				Inscription = new SpellInscription() { SpellId = 43 }
+				Inscription = new SpellInscription { SpellId = 43 }
 			};
 			status.AddSource(new ItemSource(this));
 				

@@ -7,7 +7,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class LocateAmulet : Amulet, ITreasure, ICharged
+public abstract class LocateAmulet : Amulet, ITreasure, ICharged
 {
 	private int _chargesCurrent;
 	private int _chargesMax;
@@ -66,7 +66,7 @@ public abstract partial class LocateAmulet : Amulet, ITreasure, ICharged
 			
 		if (_chargesCurrent > 0)
 		{
-			var spell = new InstantLocateSpell()
+			var spell = new InstantLocateSpell
 			{
 				Item = this,
 				Cost = 0,
@@ -88,8 +88,8 @@ public abstract partial class LocateAmulet : Amulet, ITreasure, ICharged
 
 		writer.Write((short)2); /* version */
 			
-		writer.Write((int)_chargesMax);
-		writer.Write((int)_chargesCurrent);
+		writer.Write(_chargesMax);
+		writer.Write(_chargesCurrent);
 	}
 
 	/// <summary>

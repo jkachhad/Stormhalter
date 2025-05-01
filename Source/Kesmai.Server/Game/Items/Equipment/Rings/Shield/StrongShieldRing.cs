@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class StrongShieldRing : ShieldRing
+public class StrongShieldRing : ShieldRing
 {
 	/// <summary>
 	/// Gets the price.

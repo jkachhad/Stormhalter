@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Game;
 
-public partial class ManaPotion : Bottle, ITreasure
+public class ManaPotion : Bottle, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 500;

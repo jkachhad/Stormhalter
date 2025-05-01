@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class Longbow : Bow
+public class Longbow : Bow
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000058;

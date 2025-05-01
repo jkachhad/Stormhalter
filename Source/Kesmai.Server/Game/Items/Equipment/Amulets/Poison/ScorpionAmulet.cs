@@ -10,7 +10,7 @@ using Kesmai.Server.Targeting;
 
 namespace Kesmai.Server.Items;
 
-public partial class ScorpionAmulet : Amulet, ITreasure, ICharged
+public class ScorpionAmulet : Amulet, ITreasure, ICharged
 {
 	private int _chargesCurrent;
 	private int _chargesMax;
@@ -108,7 +108,7 @@ public partial class ScorpionAmulet : Amulet, ITreasure, ICharged
 		{
 			if (target != null)
 			{
-				var spell = new NeutralizePoisonSpell()
+				var spell = new NeutralizePoisonSpell
 				{
 					Item = _amulet,
 					Cost = 0,
@@ -131,8 +131,8 @@ public partial class ScorpionAmulet : Amulet, ITreasure, ICharged
 
 		writer.Write((short)2); /* version */
 			
-		writer.Write((int)_chargesMax);
-		writer.Write((int)_chargesCurrent);
+		writer.Write(_chargesMax);
+		writer.Write(_chargesCurrent);
 	}
 
 	/// <summary>

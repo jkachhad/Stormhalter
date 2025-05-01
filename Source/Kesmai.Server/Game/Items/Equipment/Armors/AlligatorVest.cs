@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class AlligatorVest : Armor
+public class AlligatorVest : Armor
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000096; /* vest */

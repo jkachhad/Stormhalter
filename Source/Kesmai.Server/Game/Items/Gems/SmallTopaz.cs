@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class SmallTopaz : Gem
+public class SmallTopaz : Gem
 {
 	/// <summary>
 	/// Gets the weight.

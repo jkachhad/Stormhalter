@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class Gold : Currency
+public class Gold : Currency
 {
 	/// <summary>
 	/// Gets the label number.

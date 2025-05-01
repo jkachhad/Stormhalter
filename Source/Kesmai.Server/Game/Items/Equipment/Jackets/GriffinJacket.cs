@@ -6,7 +6,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class GriffinJacket : Jacket, ITreasure
+public class GriffinJacket : Jacket, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 30;
@@ -48,7 +48,7 @@ public partial class GriffinJacket : Jacket, ITreasure
 		{
 			resistance = new BlindResistanceStatus(entity)
 			{
-				Inscription = new SpellInscription() { SpellId = 47 }
+				Inscription = new SpellInscription { SpellId = 47 }
 			};
 			resistance.AddSource(new ItemSource(this));
 				

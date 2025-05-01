@@ -6,7 +6,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Game;
 
-public partial class TemporaryStrengthPotion : Bottle, ITreasure
+public class TemporaryStrengthPotion : Bottle, ITreasure
 {
 	private static ConsumableStrengthSpell content = new ConsumableStrengthSpell();
 		

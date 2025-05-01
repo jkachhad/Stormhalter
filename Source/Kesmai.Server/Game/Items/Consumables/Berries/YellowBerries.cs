@@ -3,7 +3,7 @@ using Kesmai.Server.Items;
 
 namespace Kesmai.Server.Game;
 
-public partial class YellowBerries : Food
+public class YellowBerries : Food
 {
 	private static ConsumableDamage content = new ConsumableDamage(5);
 		

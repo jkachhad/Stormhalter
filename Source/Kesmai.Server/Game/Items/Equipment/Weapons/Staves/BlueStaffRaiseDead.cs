@@ -10,7 +10,7 @@ using Kesmai.Server.Targeting;
 
 namespace Kesmai.Server.Items;
 
-public partial class BlueStaffRaiseDead : BlueStaff, IEmpowered, ICharged
+public class BlueStaffRaiseDead : BlueStaff, IEmpowered, ICharged
 {
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlueStaffRaiseDead"/> class.
@@ -74,7 +74,7 @@ public partial class BlueStaffRaiseDead : BlueStaff, IEmpowered, ICharged
 
 		if (ChargesCurrent > 0)
 		{
-			spell = new RaiseDeadSpell()
+			spell = new RaiseDeadSpell
 			{
 				Item = this,
 				Cost = 0,

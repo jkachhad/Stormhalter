@@ -171,7 +171,7 @@ public class Book : ItemEntity
 		base.Serialize(writer);
 
 		writer.Write((short)1);	/* version */
-		writer.Write((uint)PublicationId);
+		writer.Write(PublicationId);
 	}
 
 	/// <summary>
@@ -226,7 +226,7 @@ public class BookGump : Gump
 		Overlay = true;
 		CanDrag = true;
 		
-		var stackPanel = new StackPanel()
+		var stackPanel = new StackPanel
 		{
 			Style = "Client-Pages-Frame-Default",
 			
@@ -236,12 +236,12 @@ public class BookGump : Gump
 			VerticalAlignment = VerticalAlignment.Stretch,
 		};
 		
-		var leftPanel = new StackPanel()
+		var leftPanel = new StackPanel
 		{
 			Name = "leftPage",
 			Style = "Client-Page-Left-Default",
 		};
-		var rightPanel = new StackPanel()
+		var rightPanel = new StackPanel
 		{
 			Name = "rightPage",
 			Style = "Client-Page-Right-Default",
@@ -283,7 +283,7 @@ public class ScrollGump : Gump
 		Overlay = true;
 		CanDrag = true;
 		
-		var stackPanel = new StackPanel()
+		var stackPanel = new StackPanel
 		{
 			Height = 561 - 30,
 		};
@@ -291,19 +291,19 @@ public class ScrollGump : Gump
 		Children.Add(stackPanel);
 		
 		// header panel
-		var headerPanel = new StackPanel()
+		var headerPanel = new StackPanel
 		{
 			Orientation = Orientation.Horizontal,
 			HorizontalAlignment = HorizontalAlignment.Stretch,
 		};
 
-		var titlePanel = new StackPanel()
+		var titlePanel = new StackPanel
 		{
 			Style = "Client-Scroll-Frame-Header",
 			HorizontalAlignment = HorizontalAlignment.Stretch,
 		};
 
-		var titleText = new TextBlock()
+		var titleText = new TextBlock
 		{
 			Text = _publication.Title,
 
@@ -314,7 +314,7 @@ public class ScrollGump : Gump
 			VerticalAlignment = VerticalAlignment.Bottom,
 		};
 
-		var closeButton = new TextureButton()
+		var closeButton = new TextureButton
 		{
 			Style = "Client-Scroll-Frame-Close",
 			
@@ -328,7 +328,7 @@ public class ScrollGump : Gump
 		headerPanel.Children.Add(closeButton);
 		
 		// content
-		var scrollViewer = new ScrollViewer()
+		var scrollViewer = new ScrollViewer
 		{
 			Style = "Client-Scroll-ScrollViewer",
 			
@@ -341,7 +341,7 @@ public class ScrollGump : Gump
 			Margin = new Rectangle(0, 10, 0, 10),
 		};
 
-		var contentPanel = new StackPanel()
+		var contentPanel = new StackPanel
 		{
 			Width = 388 - 45,
 		};

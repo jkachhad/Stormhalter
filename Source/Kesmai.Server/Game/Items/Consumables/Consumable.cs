@@ -46,7 +46,7 @@ public abstract class Consumable : ItemEntity
 		writer.Write((short)2); /* version */
 
 		// write a flag indicating if we have contents.
-		writer.Write((bool)(_content != null));
+		writer.Write(_content != null);
 
 		if (_content != null)
 		{
@@ -55,19 +55,19 @@ public abstract class Consumable : ItemEntity
 
 			if (!String.IsNullOrEmpty(contentTypeName))
 			{
-				writer.Write((string)contentTypeName);
+				writer.Write(contentTypeName);
 					
 				/* Store starting and ending location of the stream. */
-				var start = (int)writer.WrittenCount;
+				var start = writer.WrittenCount;
 				_content.Serialize(writer);
-				var end = (int)writer.WrittenCount;
+				var end = writer.WrittenCount;
 
 				/* Write the number of bytes serialized and shift the data. */
 				writer.Insert(start, BitConverter.GetBytes(end - start));
 			}
 			else
 			{
-				writer.Write((string)String.Empty);
+				writer.Write(String.Empty);
 			}
 		}
 	}

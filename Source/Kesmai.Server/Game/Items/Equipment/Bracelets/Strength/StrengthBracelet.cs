@@ -9,7 +9,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class StrengthBracelet : Bracelet, ITreasure
+public class StrengthBracelet : Bracelet, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 1000;
@@ -61,7 +61,7 @@ public partial class StrengthBracelet : Bracelet, ITreasure
 		{
 			status = new StrengthSpellStatus(entity)
 			{
-				Inscription = new SpellInscription() { SpellId = 53 }
+				Inscription = new SpellInscription { SpellId = 53 }
 			};
 			status.AddSource(new ItemSource(this));
 				

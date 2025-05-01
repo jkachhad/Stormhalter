@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Game;
 
-public partial class PermanentWisdomPotion : Bottle, ITreasure
+public class PermanentWisdomPotion : Bottle, ITreasure
 {
 	private static ConsumableWisdomStat content = new ConsumableWisdomStat();
 		

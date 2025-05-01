@@ -4,7 +4,7 @@ using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class Mace : MeleeWeapon
+public abstract class Mace : MeleeWeapon
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000060;

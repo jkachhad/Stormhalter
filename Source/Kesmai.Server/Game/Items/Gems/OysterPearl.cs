@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class OysterPearl : Gem
+public class OysterPearl : Gem
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000067;

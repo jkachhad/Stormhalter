@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class SteelShield : Shield
+public class SteelShield : Shield
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 300;

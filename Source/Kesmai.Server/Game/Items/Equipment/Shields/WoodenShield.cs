@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class WoodenShield : Shield
+public class WoodenShield : Shield
 {
 	/// <summary>
 	/// Gets the price.

@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class BlueStaff : Staff, ITreasure
+public class BlueStaff : Staff, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 1500;

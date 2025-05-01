@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class SmallSapphire : Gem
+public class SmallSapphire : Gem
 {
 	/// <summary>
 	/// Gets the weight.

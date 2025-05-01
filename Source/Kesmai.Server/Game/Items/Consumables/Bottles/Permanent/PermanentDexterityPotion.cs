@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Game;
 
-public partial class PermanentDexterityPotion : Bottle, ITreasure
+public class PermanentDexterityPotion : Bottle, ITreasure
 {
 	private static ConsumableDexterityStat content = new ConsumableDexterityStat();
 		

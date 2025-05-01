@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class JadeAmulet : LocateAmulet
+public class JadeAmulet : LocateAmulet
 {
 	/// <summary>
 	/// Gets the price.

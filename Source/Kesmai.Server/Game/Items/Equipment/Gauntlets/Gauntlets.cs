@@ -7,7 +7,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class Gauntlets : Equipment, IWeapon, IArmored
+public abstract class Gauntlets : Equipment, IWeapon, IArmored
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000043; 

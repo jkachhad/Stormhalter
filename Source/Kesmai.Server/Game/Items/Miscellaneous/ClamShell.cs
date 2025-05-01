@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class ClamShell : ItemEntity, ITreasure
+public class ClamShell : ItemEntity, ITreasure
 {
 	/// <inheritdoc />
 	public override int Weight => 5;

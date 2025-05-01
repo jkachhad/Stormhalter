@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class GoldenEgg : Gem
+public class GoldenEgg : Gem
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000033;

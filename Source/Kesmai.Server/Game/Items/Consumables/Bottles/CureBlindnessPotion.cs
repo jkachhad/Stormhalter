@@ -5,7 +5,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Game;
 
-public partial class CureBlindnessPotion : Bottle
+public class CureBlindnessPotion : Bottle
 {
 	private static ConsumableBlindnessAntidote content = new ConsumableBlindnessAntidote();
 		

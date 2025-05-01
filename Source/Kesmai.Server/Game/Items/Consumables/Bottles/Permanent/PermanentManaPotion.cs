@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Game;
 
-public partial class PermanentManaPotion : Bottle, ITreasure
+public class PermanentManaPotion : Bottle, ITreasure
 {
 	private static ConsumableIncreaseMana content = new ConsumableIncreaseMana(6);
 		

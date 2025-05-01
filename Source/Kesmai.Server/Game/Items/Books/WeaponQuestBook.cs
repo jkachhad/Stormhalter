@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class WeaponBook : ItemEntity, ITreasure
+public class WeaponBook : ItemEntity, ITreasure
 {
 	/// <inheritdoc />
 	public override int Weight => 5;

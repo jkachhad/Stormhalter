@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class FieryRuby : Gem
+public class FieryRuby : Gem
 {
 	/// <summary>
 	/// Gets the weight.

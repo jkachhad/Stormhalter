@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class WingedHelm : Helmet, ITreasure
+public class WingedHelm : Helmet, ITreasure
 {
 	private bool _provideNightVision;
 		
@@ -72,7 +72,7 @@ public partial class WingedHelm : Helmet, ITreasure
 
 		writer.Write((short)2); /* version */
 			
-		writer.Write((bool)_provideNightVision);
+		writer.Write(_provideNightVision);
 	}
 
 	/// <inheritdoc />

@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class IvoryBrooch : StunDeathProtectionAmulet
+public class IvoryBrooch : StunDeathProtectionAmulet
 {
 	/// <summary>
 	/// Gets the label number.

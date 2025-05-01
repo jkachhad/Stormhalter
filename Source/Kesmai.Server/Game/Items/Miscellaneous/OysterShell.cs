@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class OysterShell : ItemEntity, ITreasure
+public class OysterShell : ItemEntity, ITreasure
 {
 	/// <inheritdoc />
 	public override int Weight => 5;

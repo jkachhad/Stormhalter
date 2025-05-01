@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class SteelDagger : Dagger
+public class SteelDagger : Dagger
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 10;

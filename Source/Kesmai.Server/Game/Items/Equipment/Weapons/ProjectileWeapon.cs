@@ -9,7 +9,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class ProjectileWeapon : Weapon
+public abstract class ProjectileWeapon : Weapon
 {
 	private bool _isNocked;
 		
@@ -144,7 +144,7 @@ public abstract partial class ProjectileWeapon : Weapon
 
 		writer.Write((short)1); /* version */
 
-		writer.Write((bool)IsNocked);
+		writer.Write(IsNocked);
 	}
 
 	/// <summary>

@@ -10,7 +10,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class RecallRing : Ring
+public class RecallRing : Ring
 {
 	[ServerConfigure]
 	public new static void Configure()
@@ -240,8 +240,8 @@ public partial class RecallRing : Ring
 
 		writer.Write((byte)_power);
 			
-		writer.Write((Segment)BoundSegment);
-		writer.Write((Point2D)BoundLocation);
+		writer.Write(BoundSegment);
+		writer.Write(BoundLocation);
 	}
 
 	/// <summary>

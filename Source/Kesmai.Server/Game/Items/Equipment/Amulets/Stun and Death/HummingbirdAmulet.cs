@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class HummingbirdAmulet : StunDeathProtectionAmulet
+public class HummingbirdAmulet : StunDeathProtectionAmulet
 {
 	/// <summary>
 	/// Gets the price.

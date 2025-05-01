@@ -10,7 +10,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class Armor : Equipment, IArmored
+public abstract class Armor : Equipment, IArmored
 {
 	/// <summary>
 	/// Gets the label number.
@@ -154,7 +154,7 @@ public abstract partial class Armor : Equipment, IArmored
 	}
 		
 	[Flags]
-	private enum ArmorSaveFlag : int
+	private enum ArmorSaveFlag
 	{
 		None 		= 0x00000000,
 			

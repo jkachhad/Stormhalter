@@ -6,7 +6,7 @@ using Kesmai.Server.Targeting;
 
 namespace Kesmai.Server.Game;
 
-public partial class NitroPotion : Bottle
+public class NitroPotion : Bottle
 {
 	private static ConsumableNitro content = new ConsumableNitro();
 		

@@ -4,7 +4,7 @@ using Kesmai.Server.Engines.Commands;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class Robe : Equipment
+public abstract class Robe : Equipment
 {
 	/// <summary>
 	/// Gets the label number.

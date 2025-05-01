@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class SmallBrassRing : Ring
+public class SmallBrassRing : Ring
 {
 	/// <summary>
 	/// Gets the price.

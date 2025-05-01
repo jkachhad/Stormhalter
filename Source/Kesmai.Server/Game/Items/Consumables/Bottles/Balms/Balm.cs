@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Kesmai.Server.Game;
 
-public abstract partial class Balm : Bottle
+public abstract class Balm : Bottle
 {
 	private static ConsumableBalm content = new ConsumableBalm();
 		
