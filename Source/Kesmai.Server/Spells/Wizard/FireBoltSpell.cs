@@ -96,7 +96,7 @@ public class FireBoltSpell : DelayedSpell, IWorldSpell
 				var facet = _caster.Facet;
 				var spellPower = _skillLevel;
 				var damage = 8 * spellPower;
-				var duration = facet.TimeSpan.FromRounds(1);
+				var duration = TimeSpan.FromSeconds(1 * 3.0);
 
 				var maxLength = (int)Math.Ceiling(spellPower / 2);
 				var adjustedPath = path.Take(maxLength).ToList();

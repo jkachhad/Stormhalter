@@ -129,7 +129,7 @@ public class HideStatus : SpellStatus
 		incoming.ForEach(group => group.OnEntityIncoming(_entity));
 		departing.ForEach(group => group.OnEntityDeparting(_entity));
 
-		_internalTimer = Timer.DelayCall(_entity.GetRoundDelay(), OnInternalTick);
+		_internalTimer = _entity.Facet.Schedule(_entity.GetRoundDelay(), OnInternalTick);
 	}
 
 	public bool IsDetector(MobileEntity entity)

@@ -21,7 +21,7 @@ public class ForcefieldSpell : DelayedSpell
 			var facet = _caster.Facet;
 			var rounds = (3 * _skillLevel + 35);
 			var power = (int)(20 * _skillLevel);
-			var duration = facet.TimeSpan.FromRounds(rounds);
+			var duration = TimeSpan.FromSeconds(rounds * 3.0);
 
 			if (!_caster.GetStatus(typeof(ForcefieldStatus), out var status) && power > 0)
 			{

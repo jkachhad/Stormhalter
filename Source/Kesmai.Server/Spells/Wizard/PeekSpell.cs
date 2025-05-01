@@ -46,7 +46,7 @@ public class PeekSpell : DelayedSpell
 				{
 					player.Peek(target);
 
-					Timer.DelayCall(_caster.Facet.TimeSpan.FromRounds(5), () => Dispel(this));
+					_caster.Facet.Schedule(5, () => Dispel(this));
 
 					if (_item == null)
 						player.AwardMagicSkill(this);

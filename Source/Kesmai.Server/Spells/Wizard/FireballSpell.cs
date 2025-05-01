@@ -90,7 +90,7 @@ public class FireballSpell : DelayedSpell, IWorldSpell
 
 				var facet = _caster.Facet;
 				var damage = 5 * _skillLevel;
-				var duration = facet.TimeSpan.FromRounds(1);
+				var duration = TimeSpan.FromSeconds(1 * 3.0);
 					
 				var intensity = 2;
 

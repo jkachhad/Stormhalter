@@ -194,7 +194,7 @@ public class DragonBreathFireSpell : DragonBreathSpell
 
 	protected override void PlaceBreath(SegmentTile tile, int spellPower)
 	{
-		tile.Add(Fire.Construct(Color.White, this, 10 * spellPower, tile.Facet.TimeSpan.FromSeconds(3.0), true));
+		tile.Add(Fire.Construct(Color.White, this, 10 * spellPower, TimeSpan.FromSeconds(3.0), true));
 	}
 		
 	protected override void OnPlace(Point2D location)
@@ -211,7 +211,7 @@ public class DragonBreathIceSpell : DragonBreathSpell
 	
 	protected override void PlaceBreath(SegmentTile tile, int spellPower)
 	{
-		tile.Add(IceStorm.Construct(Color.White, this, 15 * spellPower, tile.Facet.TimeSpan.FromSeconds(3.0)));
+		tile.Add(IceStorm.Construct(Color.White, this, 15 * spellPower, TimeSpan.FromSeconds(3.0)));
 	}
 		
 	protected override void OnPlace(Point2D location)
