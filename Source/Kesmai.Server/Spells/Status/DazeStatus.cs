@@ -28,15 +28,14 @@ public class DazeStatus : SpellStatus
 
 		var facet = _entity.Facet;
 		var rounds = _ticks * 2.0 / 3.0;
-		var duration = facet.TimeSpan.FromRounds(rounds) + _delay;
+		var duration = TimeSpan.FromSeconds(rounds * 3.0) + _delay;
 			
 		_entity.QueueRoundTimer(duration);
 
 		if (_entity.Spell != null && _entity.Spell.AllowInterrupt)
 			_entity.Fizzle();
 			
-		_internalTimer = Timer.DelayCall(TimeSpan.Zero, 
-			_entity.Facet.TimeSpan.FromRounds(2.0 / 3.0), _ticks, OnTick);
+		_internalTimer = _entity.Facet.Schedule(TimeSpan.Zero, TimeSpan.FromSeconds(2.0), _ticks, OnTick);
 
 		Announce();
 	}

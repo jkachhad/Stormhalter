@@ -207,7 +207,7 @@ public class LocateSpellGump : LocalizedGump
 		client.CloseGump<LocateSpellGump>();
 	}
 
-	protected override void OnClose(Client source)
+	protected override void OnClose(PacketClient source)
 	{
 		base.OnClose(source);
 			

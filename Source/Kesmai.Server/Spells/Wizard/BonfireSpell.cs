@@ -71,7 +71,7 @@ public class BonfireSpell : DelayedSpell, IWorldSpell
 				var facet = _caster.Facet;
 				var damage = 5 * _skillLevel;
 				var rounds = (_skillLevel + 4);
-				var duration = facet.TimeSpan.FromRounds(rounds);
+				var duration = TimeSpan.FromSeconds(rounds * 3.0);
 					
 				mapTile.Add(Fire.Construct(Color.White, this, (int)damage, duration, true));
 

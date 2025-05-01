@@ -60,7 +60,7 @@ public class ConcussionSpell : DelayedSpell, IWorldSpell
 			return;
 
 		var facet = _caster.Facet;
-		var duration = facet.TimeSpan.FromSeconds(1.0);
+		var duration = TimeSpan.FromSeconds(1.0);
 		
 		var segment = _caster.Segment;
 		var casterLocation = _caster.Location;

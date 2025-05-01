@@ -52,7 +52,7 @@ public class InstantStrengthSpell : InstantSpell
 
 			var facet = _caster.Facet;
 			var rounds = (3 * 10 + 35);
-			var duration = facet.TimeSpan.FromRounds(rounds);
+			var duration = TimeSpan.FromSeconds(rounds * 3.0);
 
 			if (!target.GetStatus(typeof(StrengthSpellStatus), out var status))
 			{

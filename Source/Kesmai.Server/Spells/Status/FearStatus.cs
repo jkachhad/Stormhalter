@@ -24,7 +24,7 @@ public class FearStatus : SpellStatus
 		if (_entity.Looking != default(SegmentTile))
 			_entity.LookAt(default(SegmentTile));
 
-		_internalTimer = Timer.DelayCall(TimeSpan.Zero, OnTick);
+		_internalTimer = _entity.Facet.Schedule(TimeSpan.Zero, OnTick);
 	}
 		
 	public override void OnRemoved()
@@ -41,6 +41,7 @@ public class FearStatus : SpellStatus
 	{
 		if (_entity.Movement > 0 && !_entity.Deleted && _entity.IsAlive && _rounds > 0)
 		{
+			var facet = _entity.Facet;
 			var segment = _entity.Segment;
 			var location = _entity.Location;
 				
@@ -65,7 +66,7 @@ public class FearStatus : SpellStatus
 			_rounds--;
 
 			if (_rounds > 0)
-				_internalTimer = Timer.DelayCall(_entity.GetRoundDelay(), OnTick);
+				_internalTimer = facet.Schedule(_entity.GetRoundDelay(), OnTick);
 			else
 				_entity.RemoveStatus(this);
 		}

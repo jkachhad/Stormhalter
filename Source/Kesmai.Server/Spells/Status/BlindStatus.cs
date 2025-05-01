@@ -46,7 +46,7 @@ public class BlindStatus : SpellStatus
 			_rounds--;
 
 			if (_rounds > 0)
-				_internalTimer = Timer.DelayCall(_entity.GetRoundDelay(), OnTick);
+				_internalTimer = _entity.Facet.Schedule(_entity.GetRoundDelay(), OnTick);
 			else
 				_entity.RemoveStatus(this);
 		}
@@ -72,6 +72,6 @@ public class BlindStatus : SpellStatus
 		if (_internalTimer != null && _internalTimer.Running)
 			_internalTimer.Stop();
 			
-		_internalTimer = Timer.DelayCall(TimeSpan.Zero, OnTick);
+		_internalTimer = _entity.Facet.Schedule(TimeSpan.Zero, OnTick);
 	}
 }

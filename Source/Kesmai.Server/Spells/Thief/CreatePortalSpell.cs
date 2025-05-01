@@ -75,7 +75,7 @@ public class CreatePortalSpell : DelayedSpell
 							mapTile.Remove(replace);
 
 						var facet = _caster.Facet;
-						var duration = facet.TimeSpan.FromRounds(_skillLevel);
+						var duration = TimeSpan.FromSeconds(_skillLevel * 3.0);
 
 						mapTile.Add(Portal.Construct(Color.White, duration, replaced));
 

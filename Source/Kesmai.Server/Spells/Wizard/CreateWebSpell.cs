@@ -71,7 +71,7 @@ public class CreateWebSpell : DelayedSpell, IWorldSpell
 
 				var facet = _caster.Facet;
 				var rounds = (_skillLevel + 6);
-				var duration = facet.TimeSpan.FromRounds(rounds);
+				var duration = TimeSpan.FromSeconds(rounds * 3.0);
 						
 				if (!segmentTile.ContainsComponent<Fire>())
 					segmentTile.Add(Web.Construct(Color.White, duration));
