@@ -9,6 +9,39 @@ using Kesmai.Server.Spells;
 namespace Kesmai.Server.Game;
 
 [WorldForge]
+public interface IConsumableContent
+{
+	/// <summary>
+	/// Gets the description for the content.
+	/// </summary>
+	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries);
+
+	/// <summary>
+	/// Called when consumed by an entity.
+	/// </summary>
+	public void OnConsume(MobileEntity entity, Consumable item);
+
+	/// <summary>
+	/// Called when this instance is thrown at the specified entity.
+	/// </summary>
+	/// <remarks>The default behavior is to execute <see cref="ThrowAt(Kesmai.Server.Game.MobileEntity,Kesmai.Server.Game.Point2D)"/></remarks>
+	public void ThrowAt(MobileEntity source, Consumable item, MobileEntity target)
+	{
+		ThrowAt(source, item, target.Location);
+	}
+
+	/// <summary>
+	/// Called when this instance is thrown to the specified location.
+	/// </summary>
+	public void ThrowAt(MobileEntity source, Consumable item, Point2D location)
+	{
+	}
+
+	public void Serialize(SpanWriter writer);
+	public void Deserialize(ref SpanReader reader);
+}
+
+[WorldForge]
 public class ConsumableHeal : IConsumableContent
 {
 	private int _amount; 
@@ -36,7 +69,7 @@ public class ConsumableHeal : IConsumableContent
 	{
 		writer.Write((byte)1);
 			
-		writer.Write((int)_amount);
+		writer.Write(_amount);
 	}
 
 	public void Deserialize(ref SpanReader reader)
@@ -89,7 +122,7 @@ public class ConsumableDamage : IConsumableContent
 	{
 		writer.Write((byte)1);
 			
-		writer.Write((int)_amount);
+		writer.Write(_amount);
 	}
 
 	public virtual void Deserialize(ref SpanReader reader)
@@ -133,7 +166,7 @@ public class ConsumablePoison : IConsumableContent
 	{
 		writer.Write((byte)1);
 			
-		writer.Write((int)_potency);
+		writer.Write(_potency);
 	}
 
 	public void Deserialize(ref SpanReader reader)
@@ -201,8 +234,8 @@ public class ConsumablePoisonAntidote : IConsumableContent
 	{
 		writer.Write((byte)2);
 			
-		writer.Write((bool)_relative);
-		writer.Write((int)_potency);
+		writer.Write(_relative);
+		writer.Write(_potency);
 	}
 
 	public void Deserialize(ref SpanReader reader)
@@ -306,10 +339,10 @@ public class ConsumableRestoreMana : IConsumableContent
 	{
 		writer.Write((byte)1);
 			
-		writer.Write((bool)_amount.HasValue);
+		writer.Write(_amount.HasValue);
 
 		if (_amount.HasValue)
-			writer.Write((int)_amount.Value);
+			writer.Write(_amount.Value);
 	}
 
 	public void Deserialize(ref SpanReader reader)
@@ -369,7 +402,7 @@ public class ConsumableIncreaseMana : IConsumableContent
 	{
 		writer.Write((byte)1);
 
-		writer.Write((int)_amount);
+		writer.Write(_amount);
 	}
 
 	public void Deserialize(ref SpanReader reader)
@@ -434,10 +467,10 @@ public class ConsumableRestoreStamina : IConsumableContent
 	{
 		writer.Write((byte)1);
 			
-		writer.Write((bool)_amount.HasValue);
+		writer.Write(_amount.HasValue);
 
 		if (_amount.HasValue)
-			writer.Write((int)_amount.Value);
+			writer.Write(_amount.Value);
 	}
 
 	public virtual void Deserialize(ref SpanReader reader)
@@ -520,7 +553,7 @@ public class ConsumableUrine : ConsumableDamage
 		base.Serialize(writer);
 			
 		writer.Write((byte)1);
-		writer.Write((string)_owner);
+		writer.Write(_owner);
 	}
 
 	public override void Deserialize(ref SpanReader reader)
@@ -609,7 +642,7 @@ public class ConsumableNaphtha : IConsumableContent
 			return;
 			
 		// TODO: Check for hole/sky?
-		var spell = new BonfireSpell()
+		var spell = new BonfireSpell
 		{
 			Item = item,
 					
@@ -666,7 +699,7 @@ public class ConsumableNitro : IConsumableContent
 			return;
 			
 		// TODO: Check for hole/sky?
-		var spell = new ConcussionSpell()
+		var spell = new ConcussionSpell
 		{
 			Item = item,
 			Localized = true,
@@ -713,7 +746,7 @@ public class ConsumableStrengthSpell : IConsumableContent
 	{
 		if (entity is PlayerEntity player)
 		{
-			var spell = new InstantStrengthSpell()
+			var spell = new InstantStrengthSpell
 			{
 				Item = item, 
 				Cost = 0,

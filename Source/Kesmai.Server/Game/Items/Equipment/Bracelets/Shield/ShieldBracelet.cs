@@ -9,7 +9,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class ShieldBracelet : Bracelet, ITreasure
+public class ShieldBracelet : Bracelet, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 1000;
@@ -35,6 +35,13 @@ public partial class ShieldBracelet : Bracelet, ITreasure
 	public ShieldBracelet(int braceletId) : base(braceletId)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="ShieldBracelet"/> class.
+	/// </summary>
+	public ShieldBracelet(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -54,7 +61,7 @@ public partial class ShieldBracelet : Bracelet, ITreasure
 		{
 			status = new ShieldStatus(entity)
 			{
-				Inscription = new SpellInscription() { SpellId = 52 }
+				Inscription = new SpellInscription { SpellId = 52 }
 			};
 			status.AddSource(new ItemSource(this));
 				
@@ -81,5 +88,29 @@ public partial class ShieldBracelet : Bracelet, ITreasure
 		entity.Stats[EntityStat.Barrier].Remove(+Shield, ModifierType.Constant);
 
 		return true;
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

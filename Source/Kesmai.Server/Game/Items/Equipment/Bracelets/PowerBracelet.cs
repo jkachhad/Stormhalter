@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class PowerBracelet : Bracelet, ITreasure
+public class PowerBracelet : Bracelet, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 5000;
@@ -26,6 +26,13 @@ public partial class PowerBracelet : Bracelet, ITreasure
 	public PowerBracelet(ItemQuality quality) : base(135)
 	{
 		Quality = quality;
+	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="PowerBracelet"/> class.
+	/// </summary>
+	public PowerBracelet(Serial serial) : base(serial)
+	{
 	}
 
 	/// <inheritdoc />
@@ -92,5 +99,29 @@ public partial class PowerBracelet : Bracelet, ITreasure
 		}
 
 		return true;
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

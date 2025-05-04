@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class WoodenStaff : Staff
+public class WoodenStaff : Staff
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 15;
@@ -24,11 +24,18 @@ public partial class WoodenStaff : Staff
 
 	/// <inheritdoc />
 	public override WeaponFlags Flags => WeaponFlags.TwoHanded | WeaponFlags.Bashing;
-		
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WoodenStaff"/> class.
 	/// </summary>
 	public WoodenStaff() : base(102)
+	{
+	}
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="WoodenStaff"/> class.
+	/// </summary>
+	public WoodenStaff(Serial serial) : base(serial)
 	{
 	}
 
@@ -39,5 +46,29 @@ public partial class WoodenStaff : Staff
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250084)); /* The staff appears quite ordinary. */
+	}
+
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

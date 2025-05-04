@@ -7,7 +7,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class DexterityRing : Ring, ITreasure
+public class DexterityRing : Ring, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 1500;
@@ -33,6 +33,13 @@ public partial class DexterityRing : Ring, ITreasure
 	/// Initializes a new instance of the <see cref="DexterityRing"/> class.
 	/// </summary>
 	public DexterityRing(int ringId) : base(ringId)
+	{
+	}
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="DexterityRing"/> class.
+	/// </summary>
+	public DexterityRing(Serial serial) : base(serial)
 	{
 	}
 
@@ -65,5 +72,29 @@ public partial class DexterityRing : Ring, ITreasure
 		entity.Stats[EntityStat.Dexterity].Update();
 			
 		return true;
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

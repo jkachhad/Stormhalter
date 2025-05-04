@@ -30,7 +30,48 @@ balms together in anticipation of the coming damage.
  */
 public partial class PoisonStatus : SpellStatus
 {
+	public override bool Hidden => true;
+
+	private MobileEntity _source;
+	private List<Poison> _poisons;
+
+	private Timer _internalTimer;
+	
+	public List<Poison> Poisons => _poisons;
+	
 	public int Potency => _poisons.Sum(p => p.Potency);
+	
+	public PoisonStatus(MobileEntity entity, MobileEntity source, Poison poison) : base(entity)
+	{
+		_source = source;
+		_poisons = new List<Poison>();
+			
+		Add(poison);
+
+		_internalTimer = Timer.DelayCall(poison.Delay, entity.Facet.TimeSpan.FromRounds(1), OnTick);
+	}
+	
+	public void Add(Poison poison)
+	{
+		if (poison != null)
+			_poisons.Add(poison.Clone());
+	}
+
+	public void Remove(Poison poison)
+	{
+		_poisons.Remove(poison);
+
+		if (!_poisons.Any())
+			_entity.RemoveStatus(this);
+	}
+		
+	public override void OnRemoved()
+	{
+		if (_internalTimer != null && _internalTimer.Running)
+			_internalTimer.Stop();
+			
+		base.OnRemoved();
+	}
 		
 	private void OnTick()
 	{
@@ -81,7 +122,7 @@ public partial class PoisonStatus : SpellStatus
 	}
 }
 	
-public partial class Poison
+public class Poison
 {
 	public TimeSpan Delay { get; set; }
 

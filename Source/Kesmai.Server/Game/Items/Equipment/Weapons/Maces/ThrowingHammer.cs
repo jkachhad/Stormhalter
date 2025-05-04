@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class ThrowingHammer : Mace
+public class ThrowingHammer : Mace
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000047;
@@ -40,7 +40,14 @@ public partial class ThrowingHammer : Mace
 	public ThrowingHammer() : base(75)
 	{
 	}
-
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="ThrowingHammer"/> class.
+	/// </summary>
+	public ThrowingHammer(Serial serial) : base(serial)
+	{
+	}
+	
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
@@ -48,5 +55,29 @@ public partial class ThrowingHammer : Mace
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250079)); /* The hammer appears quite ordinary. */
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

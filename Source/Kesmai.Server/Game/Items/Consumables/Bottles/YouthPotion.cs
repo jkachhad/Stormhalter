@@ -7,7 +7,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Game;
 
-public partial class YouthPotion : Bottle, ITreasure
+public class YouthPotion : Bottle, ITreasure
 {
 	private static ConsumableAmbrosia content = new ConsumableAmbrosia();
 		
@@ -21,6 +21,13 @@ public partial class YouthPotion : Bottle, ITreasure
 	/// Initializes a new instance of the <see cref="YouthPotion"/> class.
 	/// </summary>
 	public YouthPotion() : base(227)
+	{
+	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="YouthPotion"/> class.
+	/// </summary>
+	public YouthPotion(Serial serial) : base(serial)
 	{
 	}
 		
@@ -39,5 +46,29 @@ public partial class YouthPotion : Bottle, ITreasure
 		entries.Add(new LocalizationEntry(6200000, 6200101)); /* [You are looking at] [a large silver bottle encrusted with sapphires.] */
 
 		base.GetDescription(entries);
+	}
+		
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

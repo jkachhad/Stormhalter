@@ -6,7 +6,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class IceProtectionRing : Ring, ITreasure
+public class IceProtectionRing : Ring, ITreasure
 {
 	/// <summary>
 	/// Gets the price.
@@ -22,6 +22,13 @@ public partial class IceProtectionRing : Ring, ITreasure
 	/// Initializes a new instance of the <see cref="IceProtectionRing"/> class.
 	/// </summary>
 	public IceProtectionRing() : base(30)
+	{
+	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="IceProtectionRing"/> class.
+	/// </summary>
+	public IceProtectionRing(Serial serial) : base(serial)
 	{
 	}
 
@@ -45,7 +52,7 @@ public partial class IceProtectionRing : Ring, ITreasure
 		{
 			iceStatus = new IceProtectionStatus(entity)
 			{
-				Inscription = new SpellInscription() { SpellId = 42 }
+				Inscription = new SpellInscription { SpellId = 42 }
 			};
 			iceStatus.AddSource(new ItemSource(this));
 				
@@ -68,5 +75,33 @@ public partial class IceProtectionRing : Ring, ITreasure
 			iceStatus.RemoveSource(this);
 
 		return true;
+	}
+	
+	/// <summary>
+	/// Serializes this instance into binary data for persistence.
+	/// </summary>
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <summary>
+	/// Deserializes this instance from persisted binary data.
+	/// </summary>
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

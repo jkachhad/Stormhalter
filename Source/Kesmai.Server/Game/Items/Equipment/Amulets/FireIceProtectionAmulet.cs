@@ -9,7 +9,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
+public class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
 {
 	private int _chargesCurrent;
 	private int _chargesMax;
@@ -55,6 +55,13 @@ public partial class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
 		_chargesCurrent = charges;
 		_chargesMax = charges;
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="FireIceProtectionAmulet"/> class.
+	/// </summary>
+	public FireIceProtectionAmulet(Serial serial) : base(serial)
+	{
+	}
 
 	protected override bool OnEquip(MobileEntity entity)
 	{
@@ -67,7 +74,7 @@ public partial class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
 			{
 				fireStatus = new FireProtectionStatus(entity)
 				{
-					Inscription = new SpellInscription() { SpellId = 43 }
+					Inscription = new SpellInscription { SpellId = 43 }
 				};
 				fireStatus.AddSource(new ItemSource(this));
 
@@ -82,7 +89,7 @@ public partial class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
 			{
 				iceStatus = new IceProtectionStatus(entity)
 				{
-					Inscription = new SpellInscription() { SpellId = 42 }
+					Inscription = new SpellInscription { SpellId = 42 }
 				};
 				iceStatus.AddSource(new ItemSource(this));
 
@@ -130,5 +137,42 @@ public partial class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250050)); /* The amulet contains the spell of Protection from Fire and Ice. */
+	}
+	
+	/// <summary>
+	/// Serializes this instance into binary data for persistence.
+	/// </summary>
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)2); /* version */
+			
+		writer.Write(_chargesMax);
+		writer.Write(_chargesCurrent);
+	}
+
+	/// <summary>
+	/// Deserializes this instance from persisted binary data.
+	/// </summary>
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 2:
+			{
+				_chargesMax = reader.ReadInt32();
+				goto case 1;
+			}
+			case 1:
+			{
+				_chargesCurrent = reader.ReadInt32();
+				break;
+			}
+		}
 	}
 }

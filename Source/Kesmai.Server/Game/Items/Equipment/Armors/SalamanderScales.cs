@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class SalamanderScales : Armor, ITreasure
+public class SalamanderScales : Armor, ITreasure
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000096; /* vest */
@@ -39,6 +39,13 @@ public partial class SalamanderScales : Armor, ITreasure
 	public SalamanderScales() : base(250)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="SalamanderScales"/> class.
+	/// </summary>
+	public SalamanderScales(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -47,5 +54,29 @@ public partial class SalamanderScales : Armor, ITreasure
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250098)); /* The vest appears to have some magical properties. */
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

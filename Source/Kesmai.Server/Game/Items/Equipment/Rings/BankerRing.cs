@@ -11,7 +11,7 @@ using Kesmai.Server.Targeting;
 
 namespace Kesmai.Server.Items;
 
-public partial class BankerRing : Ring, ITreasure
+public class BankerRing : Ring, ITreasure
 {
 	private static uint _carryLimit = 4000000000;
 			
@@ -96,7 +96,7 @@ public partial class BankerRing : Ring, ITreasure
 			return;
 
 		/* Move the created gold to the specified location. */
-		var gold = new Gold()
+		var gold = new Gold
 		{
 			Amount = Consumed
 		};
@@ -200,7 +200,7 @@ public partial class BankerRing : Ring, ITreasure
 
 		writer.Write((short)1); /* version */
 			
-		writer.Write((uint)_consumed);
+		writer.Write(_consumed);
 	}
 
 	/// <inheritdoc />

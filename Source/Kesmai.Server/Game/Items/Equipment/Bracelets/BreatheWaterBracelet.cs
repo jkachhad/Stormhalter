@@ -6,7 +6,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class BreatheWaterBracelet : Bracelet, ITreasure
+public class BreatheWaterBracelet : Bracelet, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 2000;
@@ -18,6 +18,13 @@ public partial class BreatheWaterBracelet : Bracelet, ITreasure
 	/// Initializes a new instance of the <see cref="BreatheWaterBracelet"/> class.
 	/// </summary>
 	public BreatheWaterBracelet() : base(11)
+	{
+	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="BreatheWaterBracelet"/> class.
+	/// </summary>
+	public BreatheWaterBracelet(Serial serial) : base(serial)
 	{
 	}
 		
@@ -39,7 +46,7 @@ public partial class BreatheWaterBracelet : Bracelet, ITreasure
 		{
 			status = new BreatheWaterStatus(entity)
 			{
-				Inscription = new SpellInscription() { SpellId = 4 }
+				Inscription = new SpellInscription { SpellId = 4 }
 			};
 			status.AddSource(new ItemSource(this));
 				
@@ -62,5 +69,29 @@ public partial class BreatheWaterBracelet : Bracelet, ITreasure
 			status.RemoveSource(this);
 
 		return true;
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

@@ -11,7 +11,7 @@ using Kesmai.Server.Targeting;
 
 namespace Kesmai.Server.Items;
 
-public partial class BlueStaffHeal : BlueStaff, IEmpowered, ICharged
+public class BlueStaffHeal : BlueStaff, IEmpowered, ICharged
 {
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlueStaffHeal"/> class.
@@ -27,6 +27,13 @@ public partial class BlueStaffHeal : BlueStaff, IEmpowered, ICharged
 	public BlueStaffHeal(int charges)
 	{
 		_chargesCurrent = _chargesMax = charges;
+	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="BlueStaffHeal"/> class.
+	/// </summary>
+	public BlueStaffHeal(Serial serial) : base(serial)
+	{
 	}
 
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -69,7 +76,7 @@ public partial class BlueStaffHeal : BlueStaff, IEmpowered, ICharged
 
 		if (ChargesCurrent > 0)
 		{
-			spell = new HealSpell()
+			spell = new HealSpell
 			{
 				Item = this,
 				SkillLevel = 10,
@@ -137,6 +144,36 @@ public partial class BlueStaffHeal : BlueStaff, IEmpowered, ICharged
 					_staff.OnTarget(source, target);
 					_staff.ChargesCurrent--;
 				}
+			}
+		}
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+			
+		writer.Write((short)_chargesCurrent);
+		writer.Write((short)_chargesMax);
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				_chargesCurrent = reader.ReadInt16();
+				_chargesMax = reader.ReadInt16();
+					
+				break;
 			}
 		}
 	}

@@ -11,7 +11,7 @@ using Kesmai.Server.Targeting;
 
 namespace Kesmai.Server.Items;
 
-public partial class JewelerRing : Ring, ITreasure
+public class JewelerRing : Ring, ITreasure
 {
 	public static int TransmuteDelayRounds = 60;
 		
@@ -124,14 +124,14 @@ public partial class JewelerRing : Ring, ITreasure
 			if (backpack is null)
 				return;
 
-			var gold = new Gold()
+			var gold = new Gold
 			{
 				Amount = gem.ActualPrice,
 			};
 				
 			var slot = default(int?);
 				
-			var goldInBackpack = backpack.FirstOrDefault((i) => i is Gold);
+			var goldInBackpack = backpack.FirstOrDefault(i => i is Gold);
 
 			if (goldInBackpack != null)
 				slot = goldInBackpack.Slot;
@@ -177,7 +177,7 @@ public partial class JewelerRing : Ring, ITreasure
 
 		writer.Write((short)1); /* version */
 			
-		writer.Write((ulong)_transmuted);
+		writer.Write(_transmuted);
 	}
 
 	/// <inheritdoc />

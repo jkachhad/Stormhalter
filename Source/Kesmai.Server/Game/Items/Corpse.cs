@@ -8,7 +8,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class Corpse : ItemEntity
+public class Corpse : ItemEntity
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6005000; /* corpse */
@@ -46,6 +46,10 @@ public partial class Corpse : ItemEntity
 	public Corpse(MobileEntity owner, int body) : base(body)
 	{
 		Owner = owner;
+	}
+	
+	public Corpse(Serial serial) : base(serial)
+	{
 	}
 		
 	/// <inheritdoc />
@@ -184,5 +188,39 @@ public partial class Corpse : ItemEntity
 			return creature.OnCorpseTanned();
 
 		return default(ItemEntity);
+	}
+	
+	/// <summary>
+	/// Serializes this instance into binary data for persistence.
+	/// </summary>
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1);	/* version */
+			
+		writer.WriteEntity(Owner);
+	}
+
+	/// <summary>
+	/// Deserializes this instance from persisted binary data.
+	/// </summary>
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				Owner = reader.ReadEntity<MobileEntity>();
+				break;
+			}
+		}
+
+		if (!IsSerialized)	/* This instance should not been deserialized to begin with. */
+			Delete();
 	}
 }

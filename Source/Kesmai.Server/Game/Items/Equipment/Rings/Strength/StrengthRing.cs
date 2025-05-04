@@ -9,7 +9,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class StrengthRing : Ring, ITreasure
+public class StrengthRing : Ring, ITreasure
 {
 	/// <summary>
 	/// Gets the price.
@@ -35,6 +35,13 @@ public partial class StrengthRing : Ring, ITreasure
 	public StrengthRing(int itemId) : base(itemId)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="StrengthRing"/> class.
+	/// </summary>
+	public StrengthRing(Serial serial) : base(serial)
+	{
+	}
 
 	/// <summary>
 	/// Gets the description for this instance.
@@ -56,7 +63,7 @@ public partial class StrengthRing : Ring, ITreasure
 		{
 			status = new StrengthSpellStatus(entity)
 			{
-				Inscription = new SpellInscription() { SpellId = 53 }
+				Inscription = new SpellInscription { SpellId = 53 }
 			};
 			status.AddSource(new ItemSource(this));
 				
@@ -83,5 +90,33 @@ public partial class StrengthRing : Ring, ITreasure
 			status.RemoveSource(this);
 
 		return true;
+	}
+	
+	/// <summary>
+	/// Serializes this instance into binary data for persistence.
+	/// </summary>
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <summary>
+	/// Deserializes this instance from persisted binary data.
+	/// </summary>
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

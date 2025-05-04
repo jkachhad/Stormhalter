@@ -8,7 +8,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class BlindFearProtectionBracelet : Bracelet, ITreasure
+public class BlindFearProtectionBracelet : Bracelet, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 3500;
@@ -20,6 +20,13 @@ public partial class BlindFearProtectionBracelet : Bracelet, ITreasure
 	/// Initializes a new instance of the <see cref="BlindFearProtectionBracelet"/> class.
 	/// </summary>
 	public BlindFearProtectionBracelet() : base(22)
+	{
+	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="BlindFearProtectionBracelet"/> class.
+	/// </summary>
+	public BlindFearProtectionBracelet(Serial serial) : base(serial)
 	{
 	}
 
@@ -41,7 +48,7 @@ public partial class BlindFearProtectionBracelet : Bracelet, ITreasure
 		{
 			resistance = new BlindFearProtectionStatus(entity)
 			{
-				Inscription = new SpellInscription() { SpellId = 41 }
+				Inscription = new SpellInscription { SpellId = 41 }
 			};
 			resistance.AddSource(new ItemSource(this));
 				
@@ -64,5 +71,29 @@ public partial class BlindFearProtectionBracelet : Bracelet, ITreasure
 			resistance.RemoveSource(this);
 
 		return true;
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

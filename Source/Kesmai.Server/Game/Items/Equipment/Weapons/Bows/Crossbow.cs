@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class Crossbow : ProjectileWeapon
+public class Crossbow : ProjectileWeapon
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000031;
@@ -53,6 +53,13 @@ public partial class Crossbow : ProjectileWeapon
 	public Crossbow(int crossbowId) : base(crossbowId)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Crossbow"/> class.
+	/// </summary>
+	public Crossbow(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -69,4 +76,28 @@ public partial class Crossbow : ProjectileWeapon
 	/// We override the behavior from <see cref="Weapon"/>
 	/// </remarks>
 	public override bool BreaksHide(MobileEntity entity) => false;
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
+	}
 }

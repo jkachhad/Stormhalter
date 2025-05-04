@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class AlligatorVest : Armor
+public class AlligatorVest : Armor
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000096; /* vest */
@@ -34,6 +34,13 @@ public partial class AlligatorVest : Armor
 	public AlligatorVest() : base(249)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="AlligatorVest"/> class.
+	/// </summary>
+	public AlligatorVest(Serial serial) : base(serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -42,5 +49,29 @@ public partial class AlligatorVest : Armor
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250097)); /* The vest appears quite ordinary. */
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class WingedHelm : Helmet, ITreasure
+public class WingedHelm : Helmet, ITreasure
 {
 	private bool _provideNightVision;
 		
@@ -35,6 +35,13 @@ public partial class WingedHelm : Helmet, ITreasure
 	public WingedHelm() : this(true)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="WingedHelm"/> class.
+	/// </summary>
+	public WingedHelm(Serial serial) : base(serial)
+	{
+	}
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WingedHelm"/> class.
@@ -55,6 +62,37 @@ public partial class WingedHelm : Helmet, ITreasure
 				new LocalizationEntry(ProvidesNightVision 
 					? 6250104 /* The helm contains the spell of Night Vision. */
 					: 6250033)); /* The helm appears quite ordinary. */
+		}
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)2); /* version */
+			
+		writer.Write(_provideNightVision);
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 2:
+			{
+				_provideNightVision = reader.ReadBoolean();
+				goto case 1;
+			}
+			case 1:
+			{
+				break;
+			}
 		}
 	}
 }

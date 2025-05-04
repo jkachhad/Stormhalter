@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class TrollVest : Armor, ITreasure
+public class TrollVest : Armor, ITreasure
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000096; /* vest */
@@ -36,6 +36,13 @@ public partial class TrollVest : Armor, ITreasure
 	public TrollVest() : base(251)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="TrollVest"/> class.
+	/// </summary>
+	public TrollVest(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -44,5 +51,29 @@ public partial class TrollVest : Armor, ITreasure
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250021)); /* The vest appears quite thick. */
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }
