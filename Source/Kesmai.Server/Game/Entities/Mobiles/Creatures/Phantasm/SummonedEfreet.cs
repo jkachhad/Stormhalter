@@ -42,7 +42,9 @@ public partial class SummonedEfreet : Efreet
 	    // Focus level is a multiplier for the stats of the pet. 
 	    var focusLevel = 1;
 	    var magicSkill = player.GetSkillLevel(Skill.Magic);
-	    var focusItems = player.Inventory.OfType<IPetFocus>().ToList();
+	    var focusItemsWorn = player.Paperdoll.OfType<IPetFocus>().ToList();
+	    var focusItemsHands = player.Hands.OfType<IPetFocus>().ToList();
+	    var focusItems = focusItemsWorn.Concat(focusItemsHands).ToList();
 	    // Search for and get the highest focus level from the items.
 	    if (focusItems.Count > 0)
 		    focusLevel += (focusItems.Max(e => e.FocusLevel)*.01);
