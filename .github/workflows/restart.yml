@@ -1,0 +1,15 @@
+name: Restart Sandbox
+
+on:
+  workflow_dispatch:
+
+jobs:
+  send-udp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install netcat
+        run: sudo apt-get install -y netcat
+
+      - name: Send UDP Packet (0x01)
+        run: |
+          echo -ne "${{ secrets.RESTART_COMMAND }}" | nc -u -w1 "${{ secrets.SANDBOX_HOST }}" "${{ secrets.SANDBOX_PORT }}"
