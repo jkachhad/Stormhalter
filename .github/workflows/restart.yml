@@ -7,8 +7,8 @@ jobs:
   send-udp:
     runs-on: ubuntu-latest
     steps:
-      - name: Install netcat
-        run: sudo apt-get install -y netcat
+      - name: Install netcat (openbsd)
+        run: sudo apt-get install -y netcat-openbsd
 
       - name: Restart Packet
         run: |
