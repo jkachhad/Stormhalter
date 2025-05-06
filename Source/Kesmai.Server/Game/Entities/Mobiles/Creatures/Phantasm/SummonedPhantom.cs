@@ -30,16 +30,22 @@ public partial class SummonedPhantom : Phantom
 
     private (int health, int defense, int attack, int magicResist) PowerCurve()
     {
-        var player = Director;
-        var level = player.Level;
-        var magicSkill = player.GetSkillLevel(Skill.Magic);
+	    var player = Director;
+	    var level = player.Level;
+	    // Focus level is a multiplier for the stats of the pet. 
+	    var focusLevel = 1;
+	    var magicSkill = player.GetSkillLevel(Skill.Magic);
+	    var focusItems = player.Inventory.OfType<IPetFocus>().ToList();
+	    // Search for and get the highest focus level from the items.
+	    if (focusItems.Count > 0)
+		    focusLevel += (focusItems.Max(e => e.FocusLevel)*.01);
 
-        var health = (level + (int)magicSkill)*11;
-        var defense = level + 9;
-		var attack = level;
-		var magicResist = level.Clamp(0,40);
+        var health = (level + (int)magicSkill)*11 * focusLevel;
+        var defense = (level + 9) * focusLevel;
+		var attack = level * focusLevel;
+		var magicResist = (level.Clamp(0,40)) * focusLevel;
         
-        return (health, defense, attack, magicResist);
+		return ((int)health,(int)defense, (int)attack, (int)magicResist);
     }	
 		
 	protected override void OnLoad()
@@ -52,8 +58,6 @@ public partial class SummonedPhantom : Phantom
 	public override void OnEnterWorld()
 	{
 		base.OnEnterWorld();
-		
-		var (health, defense, attack, magicResist) = PowerCurve();
 		
 		Health = MaxHealth = health;
 		BaseDodge = defense;
