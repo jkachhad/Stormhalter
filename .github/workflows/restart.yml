@@ -10,6 +10,6 @@ jobs:
       - name: Install netcat
         run: sudo apt-get install -y netcat
 
-      - name: Send UDP Packet (0x01)
+      - name: Restart Packet
         run: |
           echo -ne "${{ secrets.RESTART_COMMAND }}" | nc -u -w1 "${{ secrets.SANDBOX_HOST }}" "${{ secrets.SANDBOX_PORT }}"
