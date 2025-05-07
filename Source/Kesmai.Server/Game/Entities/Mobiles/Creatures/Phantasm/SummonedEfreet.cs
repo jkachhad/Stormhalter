@@ -37,16 +37,24 @@ public partial class SummonedEfreet : Efreet
 	}
 	private (int health, int defense, int attack, int magicResist) PowerCurve()
     {
-        var player = Director;
-        var level = player.Level;
-        var magicSkill = player.GetSkillLevel(Skill.Magic);
+	    var player = Director;
+	    var level = player.Level;
+	    // Focus level is a multiplier for the stats of the pet. 
+	    var focusLevel = 1;
+	    var magicSkill = player.GetSkillLevel(Skill.Magic);
+	    var focusItemsWorn = player.Paperdoll.OfType<IPetFocus>().ToList();
+	    var focusItemsHands = player.Hands.OfType<IPetFocus>().ToList();
+	    var focusItems = focusItemsWorn.Concat(focusItemsHands).ToList();
+	    // Search for and get the highest focus level from the items.
+	    if (focusItems.Count > 0)
+		    focusLevel += (focusItems.Max(e => e.FocusLevel)*.01);
 
-        var health = (level + (int)magicSkill)*11;
-        var defense = (30 + ((level - 21)* 0.5));
-		var attack = level - 3;
-		var magicResist = (level + 9).Clamp(30,40);
+        var health = (level + (int)magicSkill)*11* focusLevel;
+        var defense = (30 + ((level - 21)* 0.5)) * focusLevel;
+		var attack = (level - 3) * focusLevel;
+		var magicResist = ((level + 9).Clamp(30,40))* focusLevel;
         
-        return (health,(int)defense, attack, magicResist);
+        return ((int)health,(int)defense, (int)attack, (int)magicResist);
     }		
 
 	protected override void OnLoad()
