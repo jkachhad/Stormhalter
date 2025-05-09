@@ -47,9 +47,9 @@ public partial class SummonedPhantom : Phantom
 		    focusLevel += (int)(focusItems.Max(e => e.FocusLevel) * 0.01);
 
         var health = (level + (int)magicSkill)*11 * focusLevel;
-        var defense = (level + 9) * focusLevel;
-		var attack = level * focusLevel;
-		var magicResist = (level.Clamp(0,40)) * focusLevel;
+        var defense = (level + 9) + (focusLevel * .1);
+		var attack = level;
+		var magicResist = (level.Clamp(0,40));
         
 		return ((int)health,(int)defense, (int)attack, (int)magicResist);
     }	

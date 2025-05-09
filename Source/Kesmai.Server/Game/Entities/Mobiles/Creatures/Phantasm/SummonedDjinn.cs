@@ -53,9 +53,9 @@ public partial class SummonedDjinn : Djinn
 		
 
         var health = (level + (int)magicSkill)* 11 * focusLevel;
-        var defense = (level + 3) * focusLevel;
-		var attack = (level - 3) * focusLevel;
-		var magicResist = (level.Clamp(0,40) * focusLevel);
+        var defense = (level + 3)+(focusLevel * .1);
+		var attack = (level - 3);
+		var magicResist = level.Clamp(0,40);
         
 		return ((int)health,(int)defense, (int)attack, (int)magicResist);
     }

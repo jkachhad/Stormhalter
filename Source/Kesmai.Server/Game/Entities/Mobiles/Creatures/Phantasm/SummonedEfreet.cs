@@ -54,9 +54,9 @@ public partial class SummonedEfreet : Efreet
 		    focusLevel += (int)(focusItems.Max(e => e.FocusLevel) * 0.01);
 
         var health = (level + (int)magicSkill)*11* focusLevel;
-        var defense = (30 + ((level - 21)* 0.5)) * focusLevel;
-		var attack = (level - 3) * focusLevel;
-		var magicResist = ((level + 9).Clamp(30,40))* focusLevel;
+        var defense = (30 + ((level - 21)* 0.5)) + (focusLevel * .1);
+		var attack = (level - 3);
+		var magicResist = ((level + 9).Clamp(30,40));
         
         return ((int)health,(int)defense, (int)attack, (int)magicResist);
     }		
