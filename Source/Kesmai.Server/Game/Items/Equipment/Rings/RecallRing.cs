@@ -165,7 +165,7 @@ public class RecallRing : Ring
 		/* Recalls rings trigger their effect when equipped. When the world is loaded, each item is
 		 * called to be equipped on the respective entity. Recall rings that are not active and
 		 * in a container slot, would inappropriately trigger to be equipped. */
-		if (PersistenceManager.IsLoading)
+		if (PersistenceManager.Instance.IsLoading)
 			return false;
 			
 		if (_isActive || !base.OnEquip(entity))
