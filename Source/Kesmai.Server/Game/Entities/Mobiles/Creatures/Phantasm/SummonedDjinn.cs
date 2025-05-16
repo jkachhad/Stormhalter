@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using System.Linq;
+using Kesmai.Server.Items;
 using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Game;
@@ -38,14 +40,24 @@ public partial class SummonedDjinn : Djinn
     {
         var player = Director;
         var level = player.Level;
+        // Focus level is a multiplier for the stats of the pet. 
+        var focusLevel = 1;
         var magicSkill = player.GetSkillLevel(Skill.Magic);
+        var focusItemsWorn = player.Paperdoll.OfType<IPetFocus>().ToList();
+        var focusItemsHands = player.Hands.OfType<IPetFocus>().ToList();
+        var focusItems = focusItemsWorn.Concat(focusItemsHands).ToList();
+        
+		// Search for and get the highest focus level from the items.
+		if (focusItems.Count > 0)
+			focusLevel += (int)(focusItems.Max(e => e.FocusLevel) * 0.01);
+		
 
-        var health = (level + (int)magicSkill)*11;
-        var defense = level + 3;
-		var attack = level - 3;
+        var health = (level + (int)magicSkill)* 11 * focusLevel;
+        var defense = (level + 3)+(focusLevel * .1);
+		var attack = (level - 3);
 		var magicResist = level.Clamp(0,40);
         
-        return (health, defense, attack, magicResist);
+		return ((int)health,(int)defense, (int)attack, (int)magicResist);
     }
 
 	protected override void OnLoad()
