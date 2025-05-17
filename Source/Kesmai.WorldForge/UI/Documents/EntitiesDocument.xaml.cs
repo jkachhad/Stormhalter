@@ -197,8 +197,17 @@ public partial class EntitiesDocument : UserControl
 	}
 }
 
-public class EntitiesViewModel : ObservableRecipient
+public class EntitiesViewModel : ObservableRecipient, IDisposable
 {
+	private bool _isDisposed = false;
+	public void Dispose()
+	{
+		_selectedEntity = null;
+		_groups = null;
+		_relatedSpawners.Clear();
+		_isDisposed = true;
+	}
+
 	public class SelectedEntityChangedMessage : ValueChangedMessage<Entity>
 	{
 		public SelectedEntityChangedMessage(Entity value) : base(value)
@@ -274,26 +283,43 @@ public class EntitiesViewModel : ObservableRecipient
 		get => _selectedEntity;
 		set
 		{
-			// My attempt to add some garbagre collection
+			if (_isDisposed)
+			{
+				Reinitialize();
+			}
+			
+			// Clear the previous selected entity
 			_selectedEntity = null;
 
-			
+			// Set the new selected entity
 			SetProperty(ref _selectedEntity, value, true);
 			OnPropertyChanged("SelectedEntity");
 
-			_relatedSpawners.Clear();
-			foreach (Spawner spawner in _segment.Spawns.Location.Where(s => s.Entries.Any(e => e.Entity == SelectedEntity)))
-			{
-				_relatedSpawners.Add(spawner);
-			}
-			foreach (Spawner spawner in _segment.Spawns.Region.Where(s => s.Entries.Any(e => e.Entity == SelectedEntity)))
-			{
-				_relatedSpawners.Add(spawner);
-			}
+			// Clear related spawners
+			_relatedSpawners?.Clear();
 
-			if (value != null)
-				WeakReferenceMessenger.Default.Send(new SelectedEntityChangedMessage(value));
+			if (_selectedEntity != null && _segment != null)
+			{
+				foreach (Spawner spawner in _segment.Spawns.Location.Where(s => s.Entries.Any(e => e.Entity == _selectedEntity)))
+				{
+					_relatedSpawners?.Add(spawner);
+				}
+				foreach (Spawner spawner in _segment.Spawns.Region.Where(s => s.Entries.Any(e => e.Entity == _selectedEntity)))
+				{
+					_relatedSpawners?.Add(spawner);
+				}
+
+				// Send message only if the selected entity is not null
+				WeakReferenceMessenger.Default.Send(new SelectedEntityChangedMessage(_selectedEntity));
+			}
 		}
+	}
+	
+	private void Reinitialize()
+	{
+		_groups = new WfGroups();
+		_relatedSpawners = new ObservableCollection<Spawner>();
+		_isDisposed = false;
 	}
 
 	public SegmentEntities Source => _segment.Entities;
@@ -340,7 +366,8 @@ public class EntitiesViewModel : ObservableRecipient
 
 	public EntitiesViewModel(Segment segment)
 	{
-		_segment = segment;
+		_segment = segment ?? throw new ArgumentNullException(nameof(segment));
+		_relatedSpawners = new ObservableCollection<Spawner>();
 
 		AddEntityCommand = new RelayCommand(AddEntity);
 			
