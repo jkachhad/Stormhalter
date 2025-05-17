@@ -51,8 +51,6 @@ public partial class SpawnsDocument : UserControl
 		WeakReferenceMessenger.Default.Register<SpawnsDocument, UnregisterEvents>(this,
 			(r, m) => { WeakReferenceMessenger.Default.UnregisterAll(this); });
 	}
-
-
 	public Entity GetSelectedEntity()
 	{
 		SpawnEntry entry = null;
@@ -71,7 +69,6 @@ public partial class SpawnsDocument : UserControl
 
 		return entry.Entity;
 	}
-
 	private void OnLocationSpawnerChanged(SpawnsDocument recipient, SpawnsViewModel.SelectedLocationSpawnerChangedMessage message)
 	{
 		_scriptsTabControl.SelectedIndex = 0;

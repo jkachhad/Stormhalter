@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Xml.Linq;
-using CommonServiceLocator;
+﻿using CommonServiceLocator;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using DigitalRune.Collections;
 using DigitalRune.Graphics;
 using DigitalRune.ServiceLocation;
@@ -15,13 +12,17 @@ using Kesmai.WorldForge.Roslyn;
 using Kesmai.WorldForge.UI;
 using Kesmai.WorldForge.UI.Documents;
 using Kesmai.WorldForge.UI.Windows;
-using Microsoft.CodeAnalysis.CSharp;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using RoslynPad.Roslyn;
+using SharpDX.Direct3D9;
+using System;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Xml.Linq;
 
 namespace Kesmai.WorldForge.Editor;
 
@@ -151,12 +152,16 @@ public class ApplicationPresenter : ObservableRecipient
 	{
 		get => _activeDocument;
 		set
-		{
-			if (value != _activeDocument)
-			{
-				_previousDocument = null;
-			}
-			SetProperty(ref _activeDocument, value, true);
+        {
+            if (value != _activeDocument)
+            {
+                if (_activeDocument is IDisposable disposable)
+                {
+                    disposable.Dispose();
+                }
+                _previousDocument = _activeDocument;
+                SetProperty(ref _activeDocument, value, true);
+            }
 		}
 	}
     public RelayCommand ExportToPdfCommand { get; set; }

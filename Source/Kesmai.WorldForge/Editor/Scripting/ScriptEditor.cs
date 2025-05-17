@@ -13,14 +13,9 @@ using DigitalRune.ServiceLocation;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Folding;
-using ICSharpCode.AvalonEdit.Utils;
-using ICSharpCode.AvalonEdit.Rendering;
 using Kesmai.WorldForge.Editor;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using RoslynPad.Editor;
-using DigitalRune.Linq;
 
 namespace Kesmai.WorldForge.Scripting;
 

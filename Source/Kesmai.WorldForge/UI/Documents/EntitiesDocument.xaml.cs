@@ -199,7 +199,15 @@ public partial class EntitiesDocument : UserControl
 
 public class EntitiesViewModel : ObservableRecipient
 {
-	public class SelectedEntityChangedMessage : ValueChangedMessage<Entity>
+    private bool _isDisposed = false;
+    public void Dispose()
+    {
+        _selectedEntity = null;
+        _groups = null;
+        _relatedSpawners.Clear();
+        _isDisposed = true;
+    }
+    public class SelectedEntityChangedMessage : ValueChangedMessage<Entity>
 	{
 		public SelectedEntityChangedMessage(Entity value) : base(value)
 		{
@@ -274,30 +282,46 @@ public class EntitiesViewModel : ObservableRecipient
 	{
 		get => _selectedEntity;
 		set
-		{
-			// My attempt to add some garbagre collection
-			_selectedEntity = null;
+        {
+            if (_isDisposed)
+            {
+                Reinitialize();
+            }
 
-			
-			SetProperty(ref _selectedEntity, value, true);
-			OnPropertyChanged("SelectedEntity");
+            // Clear the previous selected entity
+            _selectedEntity = null;
 
-			_relatedSpawners.Clear();
-			foreach (Spawner spawner in _segment.Spawns.Location.Where(s => s.Entries.Any(e => e.Entity == SelectedEntity)))
-			{
-				_relatedSpawners.Add(spawner);
-			}
-			foreach (Spawner spawner in _segment.Spawns.Region.Where(s => s.Entries.Any(e => e.Entity == SelectedEntity)))
-			{
-				_relatedSpawners.Add(spawner);
-			}
+            // Set the new selected entity
+            SetProperty(ref _selectedEntity, value, true);
+            OnPropertyChanged("SelectedEntity");
 
-			if (value != null)
-				WeakReferenceMessenger.Default.Send(new SelectedEntityChangedMessage(value));
-		}
-	}
+            // Clear related spawners
+            _relatedSpawners?.Clear();
 
-	public SegmentEntities Source => _segment.Entities;
+            if (_selectedEntity != null && _segment != null)
+            {
+                foreach (Spawner spawner in _segment.Spawns.Location.Where(s => s.Entries.Any(e => e.Entity == _selectedEntity)))
+                {
+                    _relatedSpawners?.Add(spawner);
+                }
+                foreach (Spawner spawner in _segment.Spawns.Region.Where(s => s.Entries.Any(e => e.Entity == _selectedEntity)))
+                {
+                    _relatedSpawners?.Add(spawner);
+                }
+
+                // Send message only if the selected entity is not null
+                WeakReferenceMessenger.Default.Send(new SelectedEntityChangedMessage(_selectedEntity));
+            }
+        }
+    }
+    private void Reinitialize()
+    {
+        _groups = new WfGroups();
+        _relatedSpawners = new ObservableCollection<Spawner>();
+        _isDisposed = false;
+    }
+
+    public SegmentEntities Source => _segment.Entities;
 
 	private ObservableCollection<Spawner> _relatedSpawners = new ObservableCollection<Spawner>();
 
@@ -420,7 +444,7 @@ public class EntitiesViewModel : ObservableRecipient
 			Name = $"Entity {_newEntityCount++}",
 			Group = "Unassigned"
 		};
-		if (SelectedEntity.Group != null)
+		if (SelectedEntity?.Group != null)
 			newEntity.Group = SelectedEntity.Group;
 		var entityGroup = _groups.Groups.Where(g => g.Name == newEntity.Group).FirstOrDefault();
 
