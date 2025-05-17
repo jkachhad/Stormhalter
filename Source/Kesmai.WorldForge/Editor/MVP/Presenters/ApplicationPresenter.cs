@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
 using CommonServiceLocator;
@@ -163,7 +164,11 @@ public class ApplicationPresenter : ObservableRecipient
 	{
 		var messenger = WeakReferenceMessenger.Default;
 
-        ExportToPdfCommand = new RelayCommand(ExportToPdf, () => (ActiveDocument is SegmentRegion));
+        ExportToPdfCommand = new RelayCommand(() =>
+        {
+            ((Func<Task>)(() => ExportToPdfAsync())).FireAndForget();
+        }, () => (ActiveDocument is SegmentRegion));
+
         ExportToPdfCommand.DependsOn(() => ActiveDocument);
         messenger.Register<ApplicationPresenter, GetActiveSegmentRequestMessage>(this,
 			(r, m) => m.Reply(r.Segment));
@@ -913,23 +918,54 @@ public class ApplicationPresenter : ObservableRecipient
 		if (graphicsScreen != null)
 			graphicsScreen.InvalidateRender();
 	}
-	private void ExportToPdf()
-	{
-		if (ActiveDocument is SegmentRegion region)
-		{
-			var dialog = new Microsoft.Win32.SaveFileDialog()
-			{
-				DefaultExt = ".pdf",
-				Filter = "PDF Files (*.pdf)|*.pdf"
-			};
 
-			if (dialog.ShowDialog() == true)
-			{
-				var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
-				var pdfExportService = new PdfExportService(terrainManager);
-				pdfExportService.ExportCurrentView(region, dialog.FileName);
-				
-			}
-		}
-	}
+    private async Task ExportToPdfAsync()
+    {
+        if (ActiveDocument is SegmentRegion region)
+        {
+            var dialog = new Microsoft.Win32.SaveFileDialog()
+            {
+                DefaultExt = ".pdf",
+                Filter = "PDF Files (*.pdf)|*.pdf"
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
+                var pdfExportService = new PdfExportService(terrainManager);
+                await pdfExportService.ExportCurrentViewAsync(region, dialog.FileName);
+            }
+        }
+    }
 }
+// Extension method to handle async void safely
+public static class TaskExtensions
+{
+    // Original extension for Task
+    public static void FireAndForget(this Task task, Action<Exception> onException = null)
+    {
+        _ = FireAndHandleExceptionsAsync(() => task, onException);
+    }
+
+    // Alternative extension for Func<Task>, which avoids VSTHRD003
+    public static void FireAndForget(this Func<Task> taskFactory, Action<Exception> onException = null)
+    {
+        _ = FireAndHandleExceptionsAsync(taskFactory, onException);
+    }
+
+    private static async Task FireAndHandleExceptionsAsync(Func<Task> taskFactory, Action<Exception> onException)
+    {
+        if (taskFactory == null)
+            throw new ArgumentNullException(nameof(taskFactory));
+
+        try
+        {
+            await taskFactory().ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            onException?.Invoke(ex);
+        }
+    }
+}
+

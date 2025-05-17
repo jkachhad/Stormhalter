@@ -24,7 +24,7 @@ namespace Kesmai.WorldForge
             _terrainManager = terrainManager;
         }
 
-        public async Task ExportCurrentView(SegmentRegion region, string filePath)
+        public async Task ExportCurrentViewAsync(SegmentRegion region, string filePath)
         {
             using (FileStream fs = new FileStream(filePath, FileMode.Create))
             {
@@ -46,7 +46,7 @@ namespace Kesmai.WorldForge
                     progressBarWindow.UpdateProgress(value);
                 });
 
-                await RenderFullRegion(document, region, progress);
+                await RenderFullRegionAsync(document, region, progress);
 
                 // Close the ProgressBarWindow when the operation is complete
                 progressBarWindow.Close();
@@ -60,7 +60,7 @@ namespace Kesmai.WorldForge
             Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
         }
 
-        private async Task RenderFullRegion(Document document, SegmentRegion region, IProgress<int> progress)
+        private async Task RenderFullRegionAsync(Document document, SegmentRegion region, IProgress<int> progress)
         {
             var bounds = GetRegionBounds(region);
             int width = (bounds.right - bounds.left + 1) * TileSize;

@@ -48,13 +48,14 @@ public partial class AuthenticationWindow : Window
 				Network.OnConnect += Connected;
 				Network.OnDisconnect += Disconnected;
 				Network.OnIncoming += Incoming;
-					
-#if (!DEBUG) 
-					Task.Run(() => Authenticate("play.stormhalter.com", 2594));
+
+#if (!DEBUG)
+				Task.Run(() => Authenticate("play.stormhalter.com", 2594));
 #else
-				Task.Run(() => Authenticate("127.0.0.1", 2594));
+                Task.Run(() => Authenticate("play.stormhalter.com", 2594));
+                //Task.Run(() => Authenticate("127.0.0.1", 2594));
 #endif
-			};
+            };
 
 			Unloaded += (sender, args) =>
 			{
@@ -69,61 +70,67 @@ public partial class AuthenticationWindow : Window
 		}
 	}
 
-	private void Incoming(NetIncomingMessage message)
-	{
-		var command = message.ReadInt16();
-					
-		switch (command)
-		{
-			case 0x01: /* Components Data. */
-			{
-				var length = message.ReadInt32();
-				var data = message.ReadBytes(length);
-				if (data.Length > 0)
-				{
-					using (var stream = new MemoryStream())
-					{
-						stream.Write(data, 0, length);
-						stream.Seek(0, SeekOrigin.Begin);
+    private async Task IncomingAsync(NetIncomingMessage message)
+    {
+        var command = message.ReadInt16();
 
-						var components = Core.ComponentsResource = XDocument.Load(stream);
-	
-						if (_componentsFile.Exists)
-							_componentsFile.Delete();
-									
-						components.Save(_componentsFile.FullName);
-					}
-				}
-	
-				IncreaseProgress();
-				break;
-			}
-			case 0x02: /* Assembly Data. */
-			{
-				var length = message.ReadInt32();
-				var data = message.ReadBytes(length);
-				if (data.Length > 0)
-				{
-					Core.ScriptingData = data;
-								
-					if (_scriptsFile.Exists)
-						_scriptsFile.Delete();
-								
-					File.WriteAllBytesAsync(_scriptsFile.FullName, data);
-				}
-				IncreaseProgress();
-				break;
-			}
-			case 0x10: /* Complete */
-			{
-				IncreaseProgress();
-				SetStatus("Complete.", _normalBrush);
-					
-				OnComplete(false);
-				break;
-			}
-		}
-	}
+        switch (command)
+        {
+            case 0x01: /* Components Data. */
+                {
+                    var length = message.ReadInt32();
+                    var data = message.ReadBytes(length);
+                    if (data.Length > 0)
+                    {
+                        using (var stream = new MemoryStream())
+                        {
+                            await stream.WriteAsync(data, 0, length);
+                            stream.Seek(0, SeekOrigin.Begin);
+
+                            var components = Core.ComponentsResource = XDocument.Load(stream);
+
+                            if (_componentsFile.Exists)
+                                _componentsFile.Delete();
+
+                            components.Save(_componentsFile.FullName);
+                        }
+                    }
+
+                    IncreaseProgress();
+                    break;
+                }
+            case 0x02: /* Assembly Data. */
+                {
+                    var length = message.ReadInt32();
+                    var data = message.ReadBytes(length);
+                    if (data.Length > 0)
+                    {
+                        Core.ScriptingData = data;
+
+                        if (_scriptsFile.Exists)
+                            _scriptsFile.Delete();
+
+                        await File.WriteAllBytesAsync(_scriptsFile.FullName, data);
+                    }
+                    IncreaseProgress();
+                    break;
+                }
+            case 0x10: /* Complete */
+                {
+                    IncreaseProgress();
+                    SetStatus("Complete.", _normalBrush);
+
+                    OnComplete(false);
+                    break;
+                }
+        }
+    }
+
+    // Update the event handler to call the new Task-based method
+    private void Incoming(NetIncomingMessage message)
+    {
+        _ = IncomingAsync(message);
+    }
 
 	private void Disconnected()
 	{

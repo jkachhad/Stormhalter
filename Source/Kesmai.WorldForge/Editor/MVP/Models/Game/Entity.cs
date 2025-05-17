@@ -58,9 +58,9 @@ public class Entity : ObservableObject, ICloneable
 			}
 		}
 	}
-	public event PropertyChangedEventHandler PropertyChanged;
+	public new event PropertyChangedEventHandler PropertyChanged;
 
-	protected virtual void OnPropertyChanged(string propertyName)
+	protected new virtual void OnPropertyChanged(string propertyName)
 	{
 		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 	}	

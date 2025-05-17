@@ -252,7 +252,8 @@ public class EntitiesViewModel : ObservableRecipient
 	public string Name => "(Entities)";
 
 	private int _newEntityCount = 1;
-	private int _newGroupCount = 1;
+	//unused variable
+	//private int _newGroupCount = 1;
 
 	private Entity _selectedEntity;
 	private Segment _segment;

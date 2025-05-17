@@ -1031,7 +1031,7 @@ public class WorldGraphicsScreen : GraphicsScreen
 				if (!viewRectangle.Intersects(rectangle))
 					continue;
 
-				if (rectangle.X == 3 && rectangle.Y == 3) { var breakpoint = true; }
+				// if (rectangle.X == 3 && rectangle.Y == 3) { var breakpoint = true; } removed because breakpoint not used
 
 				var bounds = GetRenderRectangle(viewRectangle, rectangle);
 

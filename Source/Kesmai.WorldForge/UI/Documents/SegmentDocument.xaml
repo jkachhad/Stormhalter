@@ -15,22 +15,28 @@
         </Grid.ColumnDefinitions>
         
         <StackPanel Margin="5">
-            <syncfusion:PropertyGrid x:Name="_propertyGrid" SelectedObject="{Binding Segment, Mode=OneTime}"
-                                     Width="300" AutoGenerateItems="False"
-                                     DisableAnimationOnObjectSelection="True">
-                <syncfusion:PropertyGrid.Items>
-                    <syncfusion:PropertyGridItem PropertyName="Name" />
-                </syncfusion:PropertyGrid.Items>
-            </syncfusion:PropertyGrid>
+          <syncfusion:PropertyGrid x:Name="_propertyGrid" SelectedObject="{Binding Segment, Mode=OneTime}"
+                                   Width="300" AutoGenerateItems="False"
+                                   DisableAnimationOnObjectSelection="True">
+            <syncfusion:PropertyGrid.Items>
+              <syncfusion:PropertyGridItem PropertyName="Name" />
+            </syncfusion:PropertyGrid.Items>
+          </syncfusion:PropertyGrid>
         </StackPanel>
         
         <TabControl Grid.Column="1">
-            <TabItem Header="Internal">
-                <Border Margin="2" 
-                        BorderBrush="Black" BorderThickness="1">
-                    <scripting:ScriptEditor Script="{Binding Segment.Internal}" />
-                </Border>
-            </TabItem>
+          <TabItem Header="Internal">
+            <DockPanel Margin="2">
+              <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,5">
+                <Button Content="Expand All" Width="100" Margin="0,0,5,0" Click="OnExpandAllClicked" />
+                <Button Content="Collapse All" Width="100" Click="OnCollapseAllClicked" />
+              </StackPanel>
+
+              <Border BorderBrush="Black" BorderThickness="1">
+                <scripting:ScriptEditor x:Name="_internalEditor" Script="{Binding Segment.Internal}" />
+              </Border>
+            </DockPanel>
+          </TabItem>
             
             <TabItem Header="Definition">
                 <Border Margin="2" 

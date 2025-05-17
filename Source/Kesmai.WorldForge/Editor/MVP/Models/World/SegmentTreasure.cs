@@ -49,13 +49,13 @@ public class SegmentTreasure : ObservableObject
 
 		InvalidateChance();
 	}
-
-	private void EntriesOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs args)
+	#nullable enable
+    private void EntriesOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs args)
 	{
 		InvalidateChance();
 	}
-
-	public SegmentTreasure(XElement element)
+	#nullable disable
+    public SegmentTreasure(XElement element)
 	{
 		_name = (string)element.Attribute("name");
 			

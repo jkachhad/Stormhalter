@@ -77,7 +77,7 @@ public abstract class PresentationTarget : D3DImagePresentationTarget
 	protected WpfInputManager _inputManager;
 	protected WpfUIManager _uiManager;
 
-	private Selection _selection;
+	//private Selection _selection; removed because not used anywhere
 		
 	public bool HasScreens => _isInitialized;
 		

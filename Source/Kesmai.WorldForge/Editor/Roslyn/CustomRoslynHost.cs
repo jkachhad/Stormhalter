@@ -17,6 +17,7 @@ using RoslynPad.Roslyn;
 
 namespace Kesmai.WorldForge.Roslyn;
 
+#nullable enable
 public class CustomRoslynHost : RoslynHost
 {
 	private CustomResolver _resolver;
@@ -34,8 +35,7 @@ public class CustomRoslynHost : RoslynHost
 	{
 		_resolver = new CustomResolver(segment);
 	}
-        
-	protected override Project CreateProject(Solution solution, DocumentCreationArgs args, CompilationOptions compilationOptions, Project? previousProject = null)
+    protected override Project CreateProject(Solution solution, DocumentCreationArgs args, CompilationOptions compilationOptions, Project? previousProject = null)
 	{
 		var name = "WorldForge";
 		var id = ProjectId.CreateNewId(name);
@@ -74,12 +74,11 @@ public class CustomRoslynHost : RoslynHost
 			compilationOptions: compilationOptions,
 			metadataReferences: previousProject != null ? ImmutableArray<MetadataReference>.Empty : references,
 			projectReferences: previousProject != null ? new[] { new ProjectReference(previousProject.Id) } : null
-		));
-			
-		return solution.GetProject(id);
+        ));
+
+        return solution.GetProject(id) ?? throw new InvalidOperationException($"Project with ID '{id}' could not be found.");
 	}
 }
-
 public class CustomResolver : SourceReferenceResolver
 {
 	private readonly SourceText _cache;
@@ -101,12 +100,11 @@ public class CustomResolver : SourceReferenceResolver
 	}
 
 	public override SourceText ReadText(string resolvedPath) => _cache;
+    public override string? NormalizePath(string path, string? baseFilePath) => path;
+	public override string? ResolveReference(string path, string? baseFilePath) => path;
+	public override Stream OpenRead(string resolvedPath) => Stream.Null;
 
-	public override string NormalizePath(string path, string baseFilePath) => path;
-	public override string ResolveReference(string path, string baseFilePath) => path;
-	public override Stream OpenRead(string resolvedPath) => null;
-
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		if (ReferenceEquals(null, obj))
 			return false;
@@ -122,9 +120,9 @@ public class CustomResolver : SourceReferenceResolver
 
 		return true;
 	}
-
-	public override int GetHashCode()
+    public override int GetHashCode()
 	{
 		return _cache.GetHashCode();
 	}
 }
+#nullable disable
