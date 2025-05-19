@@ -89,6 +89,7 @@ public class SpawnsGraphicsScreen : WorldGraphicsScreen
 			if (inclusion != null)
 					
 				CenterCameraOn((int)(inclusion.Left+inclusion.Width/2), (int)(inclusion.Top+inclusion.Height/2));
+
 		}
 	}
 
@@ -132,7 +133,7 @@ public class SpawnsGraphicsScreen : WorldGraphicsScreen
 		}
 		if (_spawner is LocationSpawner ls)
 		{
-			var viewRectangle = GetViewRectangle();
+            var viewRectangle = GetViewRectangle();
 			var _mx = ls.X;
 			var _my = ls.Y;
 			if (viewRectangle.Contains(_mx, _my))
@@ -523,10 +524,10 @@ public class WorldGraphicsScreen : GraphicsScreen
 	}
 
 	private void HandleInput(object sender, InputEventArgs args)
-	{
-		_isMouseOver = false;
+    {
+        _isMouseOver = false;
 
-		var inputService = _uiScreen.InputService;
+        var inputService = _uiScreen.InputService;
 		var region = _presentationTarget.Region;
 
 		if (inputService == null || inputService.IsMouseOrTouchHandled || region is null)
@@ -543,7 +544,7 @@ public class WorldGraphicsScreen : GraphicsScreen
 		if (!_isMouseOver)
 			return;
 
-		if (_uiScreen != null && _uiScreen.ControlDirectlyUnderMouse != null)
+        if (_uiScreen != null && _uiScreen.ControlDirectlyUnderMouse != null)
 		{
 			var controlType = _uiScreen.ControlDirectlyUnderMouse.GetType();
 
@@ -562,14 +563,14 @@ public class WorldGraphicsScreen : GraphicsScreen
 				selectedTool.OnHandleInput(_presentationTarget, inputService);
 		}
 
-		if (!inputService.IsMouseOrTouchHandled)
-		{
-			if (_contextMenu != null && (_contextMenu.IsEnabled && _contextMenu.Items.Count > 0))
-			{
-				if (inputService.IsReleased(MouseButtons.Right))
-				{
+        if (!inputService.IsMouseOrTouchHandled)
+        {
+            if (_contextMenu != null && (_contextMenu.IsEnabled && _contextMenu.Items.Count > 0))
+            {
+                if (inputService.IsReleased(MouseButtons.Right))
+                {
 
-					var currentPosition = inputService.MousePosition;
+                    var currentPosition = inputService.MousePosition;
 					var (cx, cy) = this.ToWorldCoordinates((int)currentPosition.X, (int)currentPosition.Y);
 					bool isInSelection = _selection.IsSelected(cx, cy, region);
 					bool isInRegionSpawner = false;
@@ -579,8 +580,8 @@ public class WorldGraphicsScreen : GraphicsScreen
 						tileHasOneTeleporter = true;
                    
 					if (_presenter.ActiveDocument is UI.Documents.SpawnsViewModel)
-					{
-						var response = WeakReferenceMessenger.Default.Send<Kesmai.WorldForge.UI.Documents.SpawnsDocument.GetCurrentTypeSelection>();
+                    {
+                        var response = WeakReferenceMessenger.Default.Send<Kesmai.WorldForge.UI.Documents.SpawnsDocument.GetCurrentTypeSelection>();
 						if (response.HasReceivedResponse)
 							isInRegionSpawner = response.Response == 1;
 					}
@@ -724,7 +725,7 @@ public class WorldGraphicsScreen : GraphicsScreen
 	public void InvalidateRender()
 	{
 		_invalidateRender = true;
-	}
+    }
 
 	public Rectangle GetRenderRectangle(Rectangle viewRectangle, Rectangle inlay, int offset) {
 		var ox = inlay.Left - viewRectangle.Left;
@@ -762,8 +763,8 @@ public class WorldGraphicsScreen : GraphicsScreen
 	}
 
 	protected override void OnRender(RenderContext context)
-	{
-		var graphicsService = context.GraphicsService;
+    {
+        var graphicsService = context.GraphicsService;
 		var graphicsDevice = graphicsService.GraphicsDevice;
 		var spritebatch = graphicsService.GetSpriteBatch();
 		var viewRectangle = GetViewRectangle();

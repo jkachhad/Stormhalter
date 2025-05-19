@@ -16,7 +16,7 @@
         <CollectionViewSource 
             x:Key="collectionViewSourceLocation"
             Source="{Binding Source.Location}">
-            
+
             <CollectionViewSource.SortDescriptions>
                 <componentModel:SortDescription PropertyName="Name" 
                                                 Direction="Ascending" />
@@ -31,55 +31,82 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
     </UserControl.Resources>
+    
     <TabControl x:Name="_typeSelector">
+        
         <TabItem Header="Location">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                
+
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="218"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    
+
                     <ToolBar Padding="2" Grid.Row="0">
                         <ToolBar.Items>
                             <Button Width="24" Height="24"
-                                    Command="{Binding AddLocationSpawnerCommand}"
-                                    ToolTip="Add empty Spawner">
+                        Command="{Binding AddLocationSpawnerCommand}"
+                        ToolTip="Add empty Spawner">
                                 <Image Source="../../Resources/Add.png"/>
                             </Button>
                             <Button Width="24" Height="24"
-                                    Command="{Binding RemoveLocationSpawnerCommand}"
-                                    ToolTip="Remove Spawner"
-                                    CommandParameter="{Binding SelectedLocationSpawner}">
+                        Command="{Binding RemoveLocationSpawnerCommand}"
+                        ToolTip="Remove Spawner"
+                        CommandParameter="{Binding SelectedLocationSpawner}">
                                 <Image Source="../../Resources/Delete.png" />
                             </Button>
                             <Button Width="24" Height="24"
-                                    Command="{Binding CopyLocationSpawnerCommand}"
-                                    ToolTip="Copy Spawner to Clipboard"
-                                    CommandParameter="{Binding SelectedLocationSpawner}">
+                        Command="{Binding CopyLocationSpawnerCommand}"
+                        ToolTip="Copy Spawner to Clipboard"
+                        CommandParameter="{Binding SelectedLocationSpawner}">
                                 <Image Source="../../Resources/Export.png" />
                             </Button>
                             <Button Width="24" Height="24"
-                                    Command="{Binding CloneLocationSpawnerCommand}"
-                                    ToolTip="Clone Spawner"
-                                    CommandParameter="{Binding SelectedLocationSpawner}">
+                        Command="{Binding CloneLocationSpawnerCommand}"
+                        ToolTip="Clone Spawner"
+                        CommandParameter="{Binding SelectedLocationSpawner}">
                                 <Image Source="../../Resources/Copy.png" />
                             </Button>
                             <Button Width="24" Height="24"
-                                    Command="{Binding PasteSpawnerCommand}"
-                                    ToolTip="Paste Spawner from Clipboard">
+                        Command="{Binding PasteSpawnerCommand}"
+                        ToolTip="Paste Spawner from Clipboard">
                                 <Image Source="../../Resources/Import.png" />
                             </Button>
                         </ToolBar.Items>
                     </ToolBar>
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" 
+                                HorizontalScrollBarVisibility="Disabled" 
+                                PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" 
+                                MinHeight="300" MaxHeight="400">
+                        <TreeView x:Name="_locationTree"
+                                    ItemsSource="{Binding LocationGroups.Groups}"
+                                    SelectedItemChanged="TreeView_SelectedItemChanged"
+                                    VirtualizingStackPanel.IsVirtualizing="True"
+                                    VirtualizingStackPanel.VirtualizationMode="Recycling"
+                                    ScrollViewer.CanContentScroll="True">
+                            <TreeView.ItemTemplate>
+                                <HierarchicalDataTemplate ItemsSource="{Binding Spawners}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name, Mode=OneWay}" FontWeight="Bold" />
+                                    </StackPanel>
+                                    <HierarchicalDataTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+                                            <Setter Property="TreeViewItem.IsExpanded" Value="True" />
+                                        </DataTrigger>
+                                    </HierarchicalDataTemplate.Triggers>
+                                </HierarchicalDataTemplate>
+                            </TreeView.ItemTemplate>
+                        </TreeView>
+                    </ScrollViewer>
 
-                    <ListBox Width="300" Grid.Row="1"
+                    <ListBox Width="300" Grid.Row="2"
                                 x:Name="_locationSpawnerList"
                                 ItemsSource="{Binding Source={StaticResource collectionViewSourceLocation}}" 
                                 SelectedItem="{Binding SelectedLocationSpawner, Mode=TwoWay}"
@@ -96,7 +123,7 @@
                                                     <DataTrigger Binding="{Binding Enabled}" Value="True">
                                                         <Setter Property="Foreground" Value="Black"/>
                                                     </DataTrigger>
-                                            
+
                                                     <DataTrigger Binding="{Binding Enabled}" Value="False">
                                                         <Setter Property="Foreground" Value="Gray"/>
                                                     </DataTrigger>
@@ -108,12 +135,13 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-
-                    <syncfusion:PropertyGrid Grid.Row="2" Margin="0,3,0,0"
-                                             SelectedObject="{Binding SelectedLocationSpawner}"
-                                             SortDirection="{x:Null}"
-                                             AutoGenerateItems="False"
-                                             DisableAnimationOnObjectSelection="True">
+                    <syncfusion:PropertyGrid    Grid.Row="3" Margin="0,3,0,0"
+                                                SelectedObject="{Binding SelectedLocationSpawner}"
+                                                SortDirection="{x:Null}"
+                                                AutoGenerateItems="False"
+                                                DisableAnimationOnObjectSelection="True"
+                                                ValueChanged="LocationPropertyGrid_ValueChanged"
+                                                MinHeight="100" MaxHeight="250">
                         <syncfusion:PropertyGrid.Items>
                             <syncfusion:PropertyGridItem PropertyName="Name" />
                             <syncfusion:PropertyGridItem PropertyName="X" CategoryName="Location" />
@@ -125,7 +153,7 @@
                         </syncfusion:PropertyGrid.Items>
                     </syncfusion:PropertyGrid>
                 </Grid>
-                
+
                 <Grid Grid.Column="1" x:Name="locationGrid">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="200"></RowDefinition>
@@ -134,7 +162,7 @@
                         <RowDefinition Height="3"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    
+
                     <TabControl Grid.Row="0" ItemsSource="{Binding SelectedLocationSpawner.Scripts}" x:Name="_scriptsTabControl" 
                                 Margin="5" MinHeight="300">
                         <TabControl.ItemTemplate>
@@ -149,7 +177,7 @@
                                                     <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=TabItem}}" Value="True">
                                                         <Setter Property="FontWeight" Value="Bold"/>
                                                     </DataTrigger>
-                                            
+
                                                     <DataTrigger Binding="{Binding IsEnabled}" Value="False">
                                                         <Setter Property="Foreground" Value="Gray"/>
                                                     </DataTrigger>
@@ -182,7 +210,7 @@
                             <DataGridComboBoxColumn MinWidth="200" Header="Entity" 
                                                     ItemsSource="{Binding Source={StaticResource EntitiesCollection}}"
                                                     SelectedItemBinding="{Binding Entity, UpdateSourceTrigger=PropertyChanged}"></DataGridComboBoxColumn>
-                        
+
                             <DataGridTextColumn MinWidth="70" Header="Size" Binding="{Binding Size, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                             <DataGridTextColumn MinWidth="70" Header="Minimum" Binding="{Binding Minimum, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                             <DataGridTextColumn MinWidth="70" Header="Maximum" Binding="{Binding Maximum, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
@@ -221,25 +249,26 @@
                 </Grid>
             </Grid>
         </TabItem>
-        
-        
+
+
         <TabItem Header="Region">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                
-                <Grid>
-                    <Grid.RowDefinitions>
+
+                <Grid Grid.Column="0" x:Name="regionMenu">
+                        <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="295"></RowDefinition>
-                        <RowDefinition Height="120"></RowDefinition>
-                        <RowDefinition Height="120"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    
-                    <ToolBar Padding="2">
+
+                    <ToolBar Grid.Row="0" Padding="2">
                         <ToolBar.Items>
                             <Button Width="24" Height="24"
                                     Command="{Binding AddRegionSpawnerCommand}"
@@ -271,12 +300,38 @@
                             </Button>
                         </ToolBar.Items>
                     </ToolBar>
-                    
-                    <ListBox Width="300" Grid.Row="1"
+
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" 
+                                HorizontalScrollBarVisibility="Disabled" 
+                                PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" 
+                                MinHeight="100" MaxHeight="300">
+                        <TreeView x:Name="_regionTree"
+                            ItemsSource="{Binding RegionGroups.Groups}"
+                            SelectedItemChanged="TreeView_SelectedItemChanged"
+                            VirtualizingStackPanel.IsVirtualizing="True"
+                            VirtualizingStackPanel.VirtualizationMode="Recycling"
+                            ScrollViewer.CanContentScroll="True">
+                            <TreeView.ItemTemplate>
+                                <HierarchicalDataTemplate ItemsSource="{Binding Spawners}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name, Mode=OneWay}" FontWeight="Bold" />
+                                    </StackPanel>
+                                    <HierarchicalDataTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+                                            <Setter Property="TreeViewItem.IsExpanded" Value="True" />
+                                        </DataTrigger>
+                                    </HierarchicalDataTemplate.Triggers>
+                                </HierarchicalDataTemplate>
+                            </TreeView.ItemTemplate>
+                        </TreeView>
+                    </ScrollViewer>
+
+                    <ListBox Width="300" Grid.Row="2"
                                 x:Name="_regionSpawnerList"
                                 ItemsSource="{Binding Source={StaticResource collectionViewSourceRegion}}" 
                                 SelectedItem="{Binding SelectedRegionSpawner, Mode=TwoWay}"
-                                SelectedIndex="0">
+                                SelectedIndex="0"
+                                MinHeight="80" MaxHeight="150">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -288,7 +343,7 @@
                                                     <DataTrigger Binding="{Binding Enabled}" Value="True">
                                                         <Setter Property="Foreground" Value="Black"/>
                                                     </DataTrigger>
-                                            
+
                                                     <DataTrigger Binding="{Binding Enabled}" Value="False">
                                                         <Setter Property="Foreground" Value="Gray"/>
                                                     </DataTrigger>
@@ -300,12 +355,13 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    
-                    <syncfusion:PropertyGrid Grid.Row="2" Margin="0,3,0,0"
+                    <syncfusion:PropertyGrid Grid.Row="3" Margin="0,3,0,0"
                                              SelectedObject="{Binding SelectedRegionSpawner}"
                                              SortDirection="{x:Null}"
                                              AutoGenerateItems="False"
-                                             DisableAnimationOnObjectSelection="True">
+                                             DisableAnimationOnObjectSelection="True"
+                                             ValueChanged="LocationPropertyGrid_ValueChanged"
+                                            MinHeight="100" MaxHeight="250">
                         <syncfusion:PropertyGrid.Items>
                             <syncfusion:PropertyGridItem PropertyName="Name" />
                             <syncfusion:PropertyGridItem PropertyName="Region" />
@@ -317,15 +373,16 @@
                             <syncfusion:PropertyGridItem PropertyName="OpenFloorTiles" IsReadOnly="True" />
                             <syncfusion:PropertyGridItem PropertyName="TotalHP" IsReadOnly="True" />
                             <syncfusion:PropertyGridItem PropertyName="TotalXP" IsReadOnly="True" />
-							<!-- Threat calc for a spawn needs work. This may not even be something we can 'guess' at without compiling the segment-->
-							<syncfusion:PropertyGridItem PropertyName="Threat" IsReadOnly="True" />
+                            <!-- Threat calc for a spawn needs work. This may not even be something we can 'guess' at without compiling the segment-->
+                            <syncfusion:PropertyGridItem PropertyName="Threat" IsReadOnly="True" />
                             <syncfusion:PropertyGridItem PropertyName="MeleeXPPerThreat" DisplayName="XP/Melee Threat"/>
                             <syncfusion:PropertyGridItem PropertyName="RangedXPPerThreat" DisplayName="XP/Range Threat"/>
                             <syncfusion:PropertyGridItem PropertyName="MagicXPPerThreat" DisplayName="XP/Magic Threat"/>
                         </syncfusion:PropertyGrid.Items>
                     </syncfusion:PropertyGrid>
-                    
-                    <GroupBox Header="Inclusions" Grid.Row="3">
+
+                    <GroupBox Header="Inclusions" Grid.Row="4"
+                                MinHeight="100" MaxHeight="200">
                         <DataGrid AutoGenerateColumns="False" 
                                   ItemsSource="{Binding SelectedRegionSpawner.Inclusions}"
                                   CanUserAddRows="true" CanUserDeleteRows="true"
@@ -338,8 +395,9 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </GroupBox>
-                    
-                    <GroupBox Header="Exclusions" Grid.Row="4">
+
+                    <GroupBox Header="Exclusions" Grid.Row="5"
+                                MinHeight="100" MaxHeight="200">
                         <DataGrid AutoGenerateColumns="False" 
                                   ItemsSource="{Binding SelectedRegionSpawner.Exclusions}"
                                   CanUserAddRows="true" CanUserDeleteRows="true"
@@ -353,18 +411,18 @@
                         </DataGrid>
                     </GroupBox>
                 </Grid>
-                
+
                 <Grid Grid.Column="1" x:Name="regionGrid">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"></RowDefinition>
-                        <RowDefinition Height="3"></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
-                        <RowDefinition Height="3"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    
+
                     <TabControl Grid.Row="0" ItemsSource="{Binding SelectedRegionSpawner.Scripts}" x:Name="_scriptsRegionTabControl" 
-                                Margin="5" MinHeight="300">
+                                Margin="5" MinHeight="100">
                         <TabControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Margin="2">
@@ -377,7 +435,7 @@
                                                     <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=TabItem}}" Value="True">
                                                         <Setter Property="FontWeight" Value="Bold"/>
                                                     </DataTrigger>
-                                            
+
                                                     <DataTrigger Binding="{Binding IsEnabled}" Value="False">
                                                         <Setter Property="Foreground" Value="Gray"/>
                                                     </DataTrigger>
@@ -411,7 +469,7 @@
                             <DataGridComboBoxColumn MinWidth="200" Header="Entity" 
                                                     ItemsSource="{Binding Source={StaticResource EntitiesCollection}}"
                                                     SelectedItemBinding="{Binding Entity, UpdateSourceTrigger=PropertyChanged}"></DataGridComboBoxColumn>
-                        
+
                             <DataGridTextColumn MinWidth="70" Header="Size" Binding="{Binding Size, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                             <DataGridTextColumn MinWidth="70" Header="Minimum" Binding="{Binding Minimum, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                             <DataGridTextColumn MinWidth="70" Header="Maximum" Binding="{Binding Maximum, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>

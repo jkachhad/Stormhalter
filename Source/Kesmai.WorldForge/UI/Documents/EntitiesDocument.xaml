@@ -43,14 +43,15 @@
                         <Image Source="../../Resources/Add.png"/>
                     </Button>
                     <Button Width="24" Height="24"
-                            Command="{Binding AddGroupCommand}"
-                            ToolTip="Add Group">
-                        <Image Source="../../Resources/plus.png"/>
-                    </Button>
-                    <Button Width="24" Height="24"
                             Command="{Binding RemoveEntityCommand}"
                             CommandParameter="{Binding SelectedEntity}">
                         <Image Source="../../Resources/Delete.png" />
+                    </Button>
+                    <Separator />
+                    <Button Width="24" Height="24"
+                            Command="{Binding AddGroupCommand}"
+                            ToolTip="Add Group">
+                        <Image Source="../../Resources/plus.png"/>
                     </Button>
                     <Button Width="24" Height="24"
                             Command="{Binding RemoveGroupCommand}"

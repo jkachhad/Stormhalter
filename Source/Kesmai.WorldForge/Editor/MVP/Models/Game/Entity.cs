@@ -132,7 +132,7 @@ public class Entity : ObservableObject, ICloneable
 	public double? MeleeXPPerThreat
 	{
 		get {
-			if(XP == null || XP < 1 || Threat.Item1 is null) return null;
+			if(XP == null || XP < 1 || Threat?.Item1 is null || HP is null) return null;
 
 			return Math.Round( (double) XP / (double) Threat.Item1 / (double)HP, 2);
 		}
@@ -140,8 +140,9 @@ public class Entity : ObservableObject, ICloneable
 
 	public double? RangedXPPerThreat
 	{
-		get {
-			if(XP == null || XP < 1 || Threat.Item2 is null) return null;
+		get
+        {
+            if (XP == null || XP < 1 || Threat?.Item2 is null || HP is null) return null;
 
 			return Math.Round( (double) XP / (double) Threat.Item2 / (double)HP, 2 );
 		}
@@ -149,8 +150,9 @@ public class Entity : ObservableObject, ICloneable
 
 	public double? MagicXPPerThreat
 	{
-		get {
-			if(XP == null || XP < 1 || Threat.Item3 is null) return null;
+		get
+        {
+            if (XP == null || XP < 1 || Threat?.Item3 is null || HP is null) return null;
 
 			return Math.Round( (double) XP / (double) Threat.Item3 / (double)HP, 2);
 		}
