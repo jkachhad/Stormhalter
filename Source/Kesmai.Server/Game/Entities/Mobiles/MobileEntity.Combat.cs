@@ -27,6 +27,24 @@ public abstract partial class MobileEntity
 
 		return damageModifier;
 	}
+
+	/// <summary>
+	/// Calculates this <see cref="MobileEntity"/> melee damage mitigation against the specified <see cref="ItemEntity"/>.
+	/// </summary>
+	public int CalculateMeleeMitigation(ItemEntity weapon)
+		=> Stats[EntityStat.MeleeDamageMitigation].Value;
+	
+	/// <summary>
+	/// Calculates this <see cref="MobileEntity"/> projectile damage mitigation against the specified <see cref="ItemEntity"/>.
+	/// </summary>
+	public int CalculateProjectileMitigation(ItemEntity weapon)
+		=> Stats[EntityStat.ProjectileDamageMitigation].Value;
+	
+	/// <summary>
+	/// Calculates this <see cref="MobileEntity"/> ranged damage mitigation against the specified <see cref="ItemEntity"/>.
+	/// </summary>
+	public int CalculateRangedMitigation(ItemEntity weapon)
+		=> Stats[EntityStat.RangedDamageMitigation].Value;
 		
 	/// <summary>
 	/// Checks if the <see cref="ShieldPenetration"/> value can penetrate the shield for this instance.
