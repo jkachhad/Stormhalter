@@ -8,27 +8,6 @@ namespace Kesmai.Server.Game;
 public abstract partial class MobileEntity
 {
 	/// <summary>
-	/// Calculates the damage modifier against the specified item.
-	/// </summary>
-	public int CalculateDamageModifier(ItemEntity item)
-	{
-		var damageModifier = 0;
-
-		/* Calculate armor bonus from chest pieces. */
-		var paperdoll = Paperdoll;
-			
-		if (paperdoll is null)
-			return 0;
-			
-		var armor = paperdoll.Armor;
-			
-		if (armor != null)
-			damageModifier += armor.GetArmorBonus(item);
-
-		return damageModifier;
-	}
-
-	/// <summary>
 	/// Calculates this <see cref="MobileEntity"/> melee damage mitigation against the specified <see cref="ItemEntity"/>.
 	/// </summary>
 	public int CalculateMeleeMitigation(ItemEntity weapon)
