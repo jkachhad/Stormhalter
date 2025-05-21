@@ -41,6 +41,28 @@ public class AlligatorVest : Armor
 	public AlligatorVest(Serial serial) : base(serial)
 	{
 	}
+	
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
+	{
+		base.OnActivateBonus(entity);
+
+		entity.Stats[EntityStat.MeleeDamageMitigation].Add(+1, ModifierType.Constant);
+		entity.Stats[EntityStat.RangedDamageMitigation].Add(+1, ModifierType.Constant);
+	}
+
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
+	{
+		base.OnInactivateBonus(entity);
+        
+		entity.Stats[EntityStat.MeleeDamageMitigation].Remove(+1, ModifierType.Constant);
+		entity.Stats[EntityStat.RangedDamageMitigation].Remove(+1, ModifierType.Constant);
+	}
 		
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)

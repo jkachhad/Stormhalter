@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
@@ -48,6 +49,30 @@ public class DragonScaleArmor : Armor, ITreasure
 	/// </summary>
 	public DragonScaleArmor(Serial serial) : base(serial)
 	{
+	}
+	
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
+	{
+		base.OnActivateBonus(entity);
+
+		entity.Stats[EntityStat.MeleeDamageMitigation].Add(+3, ModifierType.Constant);
+		entity.Stats[EntityStat.RangedDamageMitigation].Add(+3, ModifierType.Constant);
+		entity.Stats[EntityStat.ProjectileDamageMitigation].Add(+3, ModifierType.Constant);
+	}
+
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
+	{
+		base.OnInactivateBonus(entity);
+        
+		entity.Stats[EntityStat.MeleeDamageMitigation].Remove(+3, ModifierType.Constant);
+		entity.Stats[EntityStat.RangedDamageMitigation].Remove(+3, ModifierType.Constant);
+		entity.Stats[EntityStat.ProjectileDamageMitigation].Remove(+3, ModifierType.Constant);
 	}
 		
 	/// <inheritdoc />

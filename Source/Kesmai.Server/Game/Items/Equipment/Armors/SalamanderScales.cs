@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Kesmai.Server.Game;
 using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
@@ -47,6 +48,30 @@ public class SalamanderScales : Armor, ITreasure
 	{
 	}
 
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
+	{
+		base.OnActivateBonus(entity);
+
+		entity.Stats[EntityStat.MeleeDamageMitigation].Add(+2, ModifierType.Constant);
+		entity.Stats[EntityStat.RangedDamageMitigation].Add(+2, ModifierType.Constant);
+		entity.Stats[EntityStat.ProjectileDamageMitigation].Add(+2, ModifierType.Constant);
+	}
+
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
+	{
+		base.OnInactivateBonus(entity);
+        
+		entity.Stats[EntityStat.MeleeDamageMitigation].Remove(+2, ModifierType.Constant);
+		entity.Stats[EntityStat.RangedDamageMitigation].Remove(+2, ModifierType.Constant);
+		entity.Stats[EntityStat.ProjectileDamageMitigation].Remove(+2, ModifierType.Constant);
+	}
+	
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
