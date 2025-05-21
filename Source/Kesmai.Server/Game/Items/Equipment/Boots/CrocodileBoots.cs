@@ -40,10 +40,12 @@ public class CrocodileBoots : Boots, ITreasure
 			entries.Add(new LocalizationEntry(6250103)); /* The boots contain the spell of Breathe Water. */
 	}
 
-	/// <inheritdoc />
-	protected override bool OnEquip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
 	{
-		var onEquip = base.OnEquip(entity);
+		base.OnActivateBonus(entity);
 
 		if (!entity.GetStatus(typeof(BreatheWaterStatus), out var status))
 		{
@@ -59,20 +61,17 @@ public class CrocodileBoots : Boots, ITreasure
 		{
 			status.AddSource(new ItemSource(this));
 		}
-
-		return onEquip;
 	}
 
-	/// <inheritdoc />
-	protected override bool OnUnequip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
 	{
-		if (!base.OnUnequip(entity))
-			return false;
+		base.OnInactivateBonus(entity);
 
 		if (entity.GetStatus(typeof(BreatheWaterStatus), out var status))
 			status.RemoveSource(this);
-
-		return true;
 	}
 	
 	/// <inheritdoc />

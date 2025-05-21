@@ -56,10 +56,12 @@ public class ShieldRing : Ring, ITreasure
 			entries.Add(new LocalizationEntry(6250128)); /* The ring contains a medium spell of Shield. */
 	}
 
-	protected override bool OnEquip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
 	{
-		if (!base.OnEquip(entity))
-			return false;
+		base.OnActivateBonus(entity);
 
 		if (!entity.GetStatus(typeof(ShieldStatus), out var status))
 		{
@@ -77,21 +79,19 @@ public class ShieldRing : Ring, ITreasure
 		}
 
 		entity.Stats[EntityStat.Barrier].Add(+Shield, ModifierType.Constant);
-
-		return true;
 	}
 
-	protected override bool OnUnequip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
 	{
-		if (!base.OnUnequip(entity))
-			return false;
+		base.OnInactivateBonus(entity);
 
 		if (entity.GetStatus(typeof(ShieldStatus), out var status))
 			status.RemoveSource(this);
 		
 		entity.Stats[EntityStat.Barrier].Remove(+Shield, ModifierType.Constant);
-
-		return true;
 	}
 	
 	/// <summary>

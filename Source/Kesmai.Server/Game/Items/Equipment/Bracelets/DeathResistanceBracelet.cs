@@ -39,10 +39,12 @@ public class DeathResistanceBracelet : Bracelet, ITreasure
 			entries.Add(new LocalizationEntry(6250056)); /* The bracelet contains the spell of Death Resistance. */
 	}
 
-	protected override bool OnEquip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
 	{
-		if (!base.OnEquip(entity))
-			return false;
+		base.OnActivateBonus(entity);
 
 		if (!entity.GetStatus(typeof(DeathResistanceStatus), out var resistance))
 		{
@@ -58,19 +60,17 @@ public class DeathResistanceBracelet : Bracelet, ITreasure
 		{
 			resistance.AddSource(new ItemSource(this));
 		}
-
-		return true;
 	}
 
-	protected override bool OnUnequip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
 	{
-		if (!base.OnUnequip(entity))
-			return false;
-			
+		base.OnInactivateBonus(entity);
+
 		if (entity.GetStatus(typeof(DeathResistanceStatus), out var resistance))
 			resistance.RemoveSource(this);
-
-		return true;
 	}
 	
 	/// <inheritdoc />

@@ -44,10 +44,12 @@ public abstract class StunDeathProtectionAmulet : Amulet, ITreasure, ICharged
 	{
 	}
 
-	protected override bool OnEquip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
 	{
-		if (!base.OnEquip(entity))
-			return false;
+		base.OnActivateBonus(entity);
 
 		if (_chargesCurrent > 0)
 		{
@@ -66,19 +68,17 @@ public abstract class StunDeathProtectionAmulet : Amulet, ITreasure, ICharged
 				status.AddSource(new ItemSource(this));
 			}
 		}
-
-		return true;
 	}
 		
-	protected override bool OnUnequip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
 	{
-		if (!base.OnUnequip(entity))
-			return false;
+		base.OnInactivateBonus(entity);
 
 		if (entity.GetStatus(typeof(StunDeathProtectionStatus), out var status))
 			status.RemoveSource(this);
-
-		return true;
 	}
 		
 	public override void OnStrip(Corpse corpse)

@@ -52,26 +52,26 @@ public class DexterityRing : Ring, ITreasure
 			entries.Add(new LocalizationEntry(6250044)); /* The ring greatly increases dexterity. */
 	}
 		
-	protected override bool OnEquip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
 	{
-		if (!base.OnEquip(entity))
-			return false;
-			
+		base.OnActivateBonus(entity);
+
 		/* Bonus dexterity is not modified like strength rings.
 		 * There is a cap of max +2, calculated by DexterityAttribute. */
 		entity.Stats[EntityStat.Dexterity].Update();
-
-		return true;
 	}
 
-	protected override bool OnUnequip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
 	{
-		if (!base.OnUnequip(entity))
-			return false;
-			
+		base.OnInactivateBonus(entity);
+
 		entity.Stats[EntityStat.Dexterity].Update();
-			
-		return true;
 	}
 	
 	/// <inheritdoc />

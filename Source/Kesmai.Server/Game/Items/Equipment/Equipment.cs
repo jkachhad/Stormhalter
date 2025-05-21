@@ -100,11 +100,13 @@ public abstract class Equipment : ItemEntity
 		}
 	}
 
-	protected override bool OnEquip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
 	{
-		if (!base.OnEquip(entity))
-			return false;
-			
+		base.OnActivateBonus(entity);
+
 		if (CanUse(entity))
 		{
 			if (ProtectionFromFire > 0)
@@ -125,15 +127,15 @@ public abstract class Equipment : ItemEntity
 			if (ManaRegeneration > 0)
 				entity.Stats[EntityStat.ManaRegenerationRate].Add(+ManaRegeneration, ModifierType.Constant);
 		}
-
-		return true;
 	}
 		
-	protected override bool OnUnequip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
 	{
-		if (!base.OnUnequip(entity))
-			return false;
-			
+		base.OnInactivateBonus(entity);
+		
 		if (CanUse(entity))
 		{
 			if (ProtectionFromFire > 0)
@@ -154,8 +156,6 @@ public abstract class Equipment : ItemEntity
 			if (ManaRegeneration > 0)
 				entity.Stats[EntityStat.ManaRegenerationRate].Remove(+ManaRegeneration, ModifierType.Constant);
 		}
-
-		return true;
 	}
 	
 	/// <inheritdoc />

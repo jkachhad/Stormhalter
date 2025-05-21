@@ -52,10 +52,12 @@ public class StrengthBracelet : Bracelet, ITreasure
 			entries.Add(new LocalizationEntry(6250058)); /* The bracelet contains a medium spell of Strength. */
 	}
 
-	protected override bool OnEquip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
 	{
-		if (!base.OnEquip(entity))
-			return false;
+		base.OnActivateBonus(entity);
 
 		if (!entity.GetStatus(typeof(StrengthSpellStatus), out var status))
 		{
@@ -73,21 +75,19 @@ public class StrengthBracelet : Bracelet, ITreasure
 		}
 			
 		entity.Stats[EntityStat.Strength].Add(+StrengthBonus, ModifierType.Constant);
-
-		return true;
 	}
 
-	protected override bool OnUnequip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
 	{
-		if (!base.OnUnequip(entity))
-			return false;
-			
+		base.OnInactivateBonus(entity);
+
 		entity.Stats[EntityStat.Strength].Remove(+StrengthBonus, ModifierType.Constant);
 			
 		if (entity.GetStatus(typeof(StrengthSpellStatus), out var status))
 			status.RemoveSource(this);
-
-		return true;
 	}
 	
 	/// <inheritdoc />
