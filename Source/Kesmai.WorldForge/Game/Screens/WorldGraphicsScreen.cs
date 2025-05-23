@@ -321,7 +321,8 @@ public class WorldGraphicsScreen : GraphicsScreen
 		var createSpawnMenuItem = new MenuButton() { Content = new TextBlock() { Text = "Create Location Spawner.." } };
 		var createRegionSpawnerMenuItem = new MenuButton() { Content = new TextBlock() { Text = "Create Region Spawner.." } };
 		var createSubregionMenuItem = new MenuButton() { Content = new TextBlock() { Text = "Create Subregion.." } };
-		var createLocationMenuItem = new MenuButton() { Content = new TextBlock() { Text = "Create Named Location.." } };
+        var SubregionIncludeMenuItem = new MenuButton() { Content = new TextBlock() { Text = "Add selection to Subregion.." } };
+        var createLocationMenuItem = new MenuButton() { Content = new TextBlock() { Text = "Create Named Location.." } };
 		var regionSpawnerIncludeMenuItem = new MenuButton() { Content = new TextBlock() { Text = "Add selection to Inclusions.." } };
 		var regionSpawnerExcludeMenuItem = new MenuButton() { Content = new TextBlock() { Text = "Add selection to Exclusions.." } };
 		var configureTeleporterMenuItem = new MenuButton() { Content = new TextBlock() { Text = "Set as Teleporter Destination..", IsVisible = false } };
@@ -333,7 +334,8 @@ public class WorldGraphicsScreen : GraphicsScreen
 		createLocationMenuItem.Click += CreateLocation;
 		createRegionSpawnerMenuItem.Click += CreateRegionSpawner;
 		createSubregionMenuItem.Click += CreateSubregion;
-		regionSpawnerIncludeMenuItem.Click += RegionSpawnerInclude;
+        SubregionIncludeMenuItem.Click += SubregionInclude;
+        regionSpawnerIncludeMenuItem.Click += RegionSpawnerInclude;
 		regionSpawnerExcludeMenuItem.Click += RegionSpawnerExclude;
 		configureTeleporterMenuItem.Click += ConfigureTeleporter;
 		cancelConfigureTeleporterMenuItem.Click += (o, e) => { _presenter.ConfiguringTeleporter = null; };
@@ -342,7 +344,8 @@ public class WorldGraphicsScreen : GraphicsScreen
 		_contextMenu.Items.Add(createSpawnMenuItem);
 		_contextMenu.Items.Add(createLocationMenuItem);
 		_contextMenu.Items.Add(createSubregionMenuItem);
-		_contextMenu.Items.Add(createRegionSpawnerMenuItem);
+        _contextMenu.Items.Add(SubregionIncludeMenuItem);
+        _contextMenu.Items.Add(createRegionSpawnerMenuItem);
 		_contextMenu.Items.Add(regionSpawnerIncludeMenuItem);
 		_contextMenu.Items.Add(regionSpawnerExcludeMenuItem);
 		_contextMenu.Items.Add(configureTeleporterMenuItem);
@@ -353,7 +356,8 @@ public class WorldGraphicsScreen : GraphicsScreen
 		_pointContextItems.Add(createLocationMenuItem);
 		_selectionContextItems.Add(createRegionSpawnerMenuItem);
 		_selectionContextItems.Add(createSubregionMenuItem);
-		_spawnerContextItems.Add(regionSpawnerIncludeMenuItem);
+        _selectionContextItems.Add(SubregionIncludeMenuItem);
+        _spawnerContextItems.Add(regionSpawnerIncludeMenuItem);
 		_spawnerContextItems.Add(regionSpawnerExcludeMenuItem);
 		_teleporterDestinationContextItems.Add(configureTeleporterMenuItem);
 		_teleporterDestinationContextItems.Add(cancelConfigureTeleporterMenuItem);
@@ -472,7 +476,20 @@ public class WorldGraphicsScreen : GraphicsScreen
 		_selection.Select(insideNewSubregion, _presentationTarget.Region);
 		_presenter.SwapDocument("Subregion");
 	}
-	private void RegionSpawnerInclude(object sender, EventArgs args)
+    
+    private void SubregionInclude(object sender, EventArgs args)
+    {
+        var currentSubregion = (_presenter.ActiveDocument as UI.Documents.SubregionViewModel).SelectedSubregion;
+        if (currentSubregion == null)
+            return;
+        foreach (Rectangle rect in _selection)
+        {
+            var bounds = new SegmentBounds((int)rect.Left, (int)rect.Top, (int)rect.Right - 1, (int)rect.Bottom - 1);
+            currentSubregion.Rectangles.Add(bounds);
+        }
+        InvalidateRender();
+    }
+    private void RegionSpawnerInclude(object sender, EventArgs args)
 	{
 		var currentSpawner = (_presenter.ActiveDocument as UI.Documents.SpawnsViewModel).SelectedRegionSpawner;
 		if (currentSpawner == null)

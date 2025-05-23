@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Kesmai.WorldForge.UI.Documents"
+             xmlns:local="clr-namespace:Kesmai.WorldForge.UI.Documents" 
+             xmlns:spawn="clr-namespace:Kesmai.WorldForge.Editor;assembly=Kesmai.WorldForge"
              xmlns:worldForge="clr-namespace:Kesmai.WorldForge"
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
              xmlns:scripting="clr-namespace:Kesmai.WorldForge.Scripting"
@@ -13,6 +14,7 @@
              
              FontFamily="Tahoma" FontSize="14">
     <UserControl.Resources>
+        
         <CollectionViewSource 
             x:Key="collectionViewSourceLocation"
             Source="{Binding Source.Location}">
@@ -30,10 +32,60 @@
                                                 Direction="Ascending" />
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
-    </UserControl.Resources>
-    
-    <TabControl x:Name="_typeSelector">
+
+
+
+
+
+        <HierarchicalDataTemplate DataType="{x:Type local:SpawnsViewModel+SpawnerGroup}" ItemsSource="{Binding Spawners}">
+
+            <TextBlock Text="{Binding Name}" FontWeight="Bold" Margin="3"/>
+
+            <HierarchicalDataTemplate.ItemContainerStyle>
+                <Style TargetType="TreeViewItem">
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+                    <Setter Property="ToolTip" Value="{Binding Debug}"/>
+
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Background"  Value="{DynamicResource {x:Static SystemColors.MenuHighlightColor}}"/>
+                            <Setter Property="Foreground"  Value="{DynamicResource {x:Static SystemColors.ControlDarkColor}}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </HierarchicalDataTemplate.ItemContainerStyle>
+        </HierarchicalDataTemplate>
+
+        <DataTemplate DataType="{x:Type worldForge:LocationSpawner}">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <CheckBox IsChecked="{Binding Enabled}" Margin="3"/>
+                <TextBlock Text="{Binding Name}" Margin="3"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type worldForge:RegionSpawner}">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <CheckBox IsChecked="{Binding Enabled}" Margin="3"/>
+                <TextBlock Text="{Binding Name}" Margin="3"/>
+            </StackPanel>
+        </DataTemplate>
         
+        <Style x:Key="MyTreeItemStyle" TargetType="TreeViewItem">
+            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+            <Setter Property="ToolTip" Value="{Binding Debug}"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                    <Setter Property="Background"  Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                    <Setter Property="Foreground"  Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        
+    </UserControl.Resources>
+    <TabControl x:Name="_typeSelector">
         <TabItem Header="Location">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -44,9 +96,8 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
 
                     <ToolBar Padding="2" Grid.Row="0">
@@ -81,67 +132,29 @@
                             </Button>
                         </ToolBar.Items>
                     </ToolBar>
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" 
-                                HorizontalScrollBarVisibility="Disabled" 
-                                PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" 
-                                MinHeight="300" MaxHeight="400">
+
+                    <ScrollViewer Grid.Row="1"
+                                  VerticalScrollBarVisibility="Auto" 
+                                  HorizontalScrollBarVisibility="Disabled" 
+                                  PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" 
+                                  MinHeight="300" MaxHeight="800" MinWidth="300">
+
                         <TreeView x:Name="_locationTree"
-                                    ItemsSource="{Binding LocationGroups.Groups}"
-                                    SelectedItemChanged="TreeView_SelectedItemChanged"
-                                    VirtualizingStackPanel.IsVirtualizing="True"
-                                    VirtualizingStackPanel.VirtualizationMode="Recycling"
-                                    ScrollViewer.CanContentScroll="True">
-                            <TreeView.ItemTemplate>
-                                <HierarchicalDataTemplate ItemsSource="{Binding Spawners}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Name, Mode=OneWay}" FontWeight="Bold" />
-                                    </StackPanel>
-                                    <HierarchicalDataTemplate.Triggers>
-                                        <DataTrigger Binding="{Binding IsExpanded}" Value="True">
-                                            <Setter Property="TreeViewItem.IsExpanded" Value="True" />
-                                        </DataTrigger>
-                                    </HierarchicalDataTemplate.Triggers>
-                                </HierarchicalDataTemplate>
-                            </TreeView.ItemTemplate>
-                        </TreeView>
+                                  ItemsSource="{Binding LocationGroups.Groups}"
+                                  ItemContainerStyle="{StaticResource MyTreeItemStyle}"
+                                  SelectedItemChanged="TreeView_SelectedItemChanged"
+                                  VirtualizingStackPanel.IsVirtualizing="True"
+                                  VirtualizingStackPanel.VirtualizationMode="Recycling"
+                                  ScrollViewer.CanContentScroll="True"/>
                     </ScrollViewer>
-
-                    <ListBox Width="300" Grid.Row="2"
-                                x:Name="_locationSpawnerList"
-                                ItemsSource="{Binding Source={StaticResource collectionViewSourceLocation}}" 
-                                SelectedItem="{Binding SelectedLocationSpawner, Mode=TwoWay}"
-                                SelectionMode="Single"
-                                SelectedIndex="0">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <CheckBox IsChecked="{Binding Enabled}" Margin="3" />
-                                    <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="3">
-                                        <TextBlock.Style>
-                                            <Style TargetType="TextBlock">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Enabled}" Value="True">
-                                                        <Setter Property="Foreground" Value="Black"/>
-                                                    </DataTrigger>
-
-                                                    <DataTrigger Binding="{Binding Enabled}" Value="False">
-                                                        <Setter Property="Foreground" Value="Gray"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+                    
                     <syncfusion:PropertyGrid    Grid.Row="3" Margin="0,3,0,0"
                                                 SelectedObject="{Binding SelectedLocationSpawner}"
                                                 SortDirection="{x:Null}"
                                                 AutoGenerateItems="False"
                                                 DisableAnimationOnObjectSelection="True"
                                                 ValueChanged="LocationPropertyGrid_ValueChanged"
-                                                MinHeight="100" MaxHeight="250">
+                                                MinHeight="300" MaxHeight="450">
                         <syncfusion:PropertyGrid.Items>
                             <syncfusion:PropertyGridItem PropertyName="Name" />
                             <syncfusion:PropertyGridItem PropertyName="X" CategoryName="Location" />
@@ -262,7 +275,6 @@
                         <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
@@ -300,67 +312,28 @@
                             </Button>
                         </ToolBar.Items>
                     </ToolBar>
+                    
+                    <ScrollViewer Grid.Row="1"
+                                  VerticalScrollBarVisibility="Auto" 
+                                  HorizontalScrollBarVisibility="Disabled" 
+                                  PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" 
+                                  MinHeight="300" MaxHeight="400" MinWidth="200">
 
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" 
-                                HorizontalScrollBarVisibility="Disabled" 
-                                PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" 
-                                MinHeight="100" MaxHeight="300">
                         <TreeView x:Name="_regionTree"
-                            ItemsSource="{Binding RegionGroups.Groups}"
-                            SelectedItemChanged="TreeView_SelectedItemChanged"
-                            VirtualizingStackPanel.IsVirtualizing="True"
-                            VirtualizingStackPanel.VirtualizationMode="Recycling"
-                            ScrollViewer.CanContentScroll="True">
-                            <TreeView.ItemTemplate>
-                                <HierarchicalDataTemplate ItemsSource="{Binding Spawners}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Name, Mode=OneWay}" FontWeight="Bold" />
-                                    </StackPanel>
-                                    <HierarchicalDataTemplate.Triggers>
-                                        <DataTrigger Binding="{Binding IsExpanded}" Value="True">
-                                            <Setter Property="TreeViewItem.IsExpanded" Value="True" />
-                                        </DataTrigger>
-                                    </HierarchicalDataTemplate.Triggers>
-                                </HierarchicalDataTemplate>
-                            </TreeView.ItemTemplate>
-                        </TreeView>
+                                  ItemsSource="{Binding RegionGroups.Groups}"
+                                  ItemContainerStyle="{StaticResource MyTreeItemStyle}"
+                                  SelectedItemChanged="TreeView_SelectedItemChanged"
+                                  VirtualizingStackPanel.IsVirtualizing="True"
+                                  VirtualizingStackPanel.VirtualizationMode="Recycling"
+                                  ScrollViewer.CanContentScroll="True"/>
                     </ScrollViewer>
-
-                    <ListBox Width="300" Grid.Row="2"
-                                x:Name="_regionSpawnerList"
-                                ItemsSource="{Binding Source={StaticResource collectionViewSourceRegion}}" 
-                                SelectedItem="{Binding SelectedRegionSpawner, Mode=TwoWay}"
-                                SelectedIndex="0"
-                                MinHeight="80" MaxHeight="150">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <CheckBox IsChecked="{Binding Enabled}" Margin="3" />
-                                    <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="3">
-                                        <TextBlock.Style>
-                                            <Style TargetType="TextBlock">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Enabled}" Value="True">
-                                                        <Setter Property="Foreground" Value="Black"/>
-                                                    </DataTrigger>
-
-                                                    <DataTrigger Binding="{Binding Enabled}" Value="False">
-                                                        <Setter Property="Foreground" Value="Gray"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <syncfusion:PropertyGrid Grid.Row="3" Margin="0,3,0,0"
+                    
+                    <syncfusion:PropertyGrid Grid.Row="2" Margin="0,3,0,0"
                                              SelectedObject="{Binding SelectedRegionSpawner}"
                                              SortDirection="{x:Null}"
                                              AutoGenerateItems="False"
                                              DisableAnimationOnObjectSelection="True"
-                                             ValueChanged="LocationPropertyGrid_ValueChanged"
+                                             ValueChanged="RegionPropertyGrid_ValueChanged"
                                             MinHeight="100" MaxHeight="250">
                         <syncfusion:PropertyGrid.Items>
                             <syncfusion:PropertyGridItem PropertyName="Name" />
@@ -381,7 +354,7 @@
                         </syncfusion:PropertyGrid.Items>
                     </syncfusion:PropertyGrid>
 
-                    <GroupBox Header="Inclusions" Grid.Row="4"
+                    <GroupBox Header="Inclusions" Grid.Row="3"
                                 MinHeight="100" MaxHeight="200">
                         <DataGrid AutoGenerateColumns="False" 
                                   ItemsSource="{Binding SelectedRegionSpawner.Inclusions}"
@@ -396,7 +369,7 @@
                         </DataGrid>
                     </GroupBox>
 
-                    <GroupBox Header="Exclusions" Grid.Row="5"
+                    <GroupBox Header="Exclusions" Grid.Row="4"
                                 MinHeight="100" MaxHeight="200">
                         <DataGrid AutoGenerateColumns="False" 
                                   ItemsSource="{Binding SelectedRegionSpawner.Exclusions}"

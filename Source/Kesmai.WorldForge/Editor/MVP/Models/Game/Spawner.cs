@@ -56,8 +56,21 @@ public abstract class Spawner : ObservableObject
 	{
 		return Name;
 	}
-        
-	public bool Enabled
+
+    private bool _isSelected;
+    public bool IsSelected
+    {
+        get => _isSelected;
+        set => SetProperty(ref _isSelected, value);
+    }
+    private string _debug;
+    public string Debug
+    {
+        get => _debug;
+        set => SetProperty(ref _debug, value);
+    }
+
+    public bool Enabled
 	{
 		get => _enabled;
 		set => SetProperty(ref _enabled, value);
@@ -214,9 +227,9 @@ public class LocationSpawner : Spawner
 	{
 		get => _region;
 		set => SetProperty(ref _region, value);
-	}
+    }
 
-	public LocationSpawner()
+    public LocationSpawner()
 	{
 	}
 

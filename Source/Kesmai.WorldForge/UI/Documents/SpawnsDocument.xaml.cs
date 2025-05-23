@@ -3,11 +3,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using DigitalRune.ServiceLocation;
-using DotNext.Collections.Generic;
+using DotNext.Buffers;
+using ICSharpCode.AvalonEdit.Document;
 using Kesmai.WorldForge.Editor;
-using Microsoft.Xna.Framework;
-using System;
 using Syncfusion.Windows.PropertyGrid;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,7 +15,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Xml.Linq;
-using static Kesmai.WorldForge.UI.Documents.SpawnsViewModel;
 
 namespace Kesmai.WorldForge.UI.Documents;
 
@@ -77,20 +74,108 @@ public partial class SpawnsDocument : UserControl
     }
     private void LocationPropertyGrid_ValueChanged(object sender, ValueChangedEventArgs e)
     {
-        if (DataContext is SpawnsViewModel vm)
+        if ((e.Property.Name != "Name" && e.Property.Name != "Region") || Equals(e.OldValue, e.NewValue))
+            return;
+        if (!(DataContext is SpawnsViewModel vm))
+            return;
+
+        var pg = (PropertyGrid)sender;
+        var spawner = pg.SelectedObject as LocationSpawner;
+        if (spawner == null) return;
+        var name = spawner.Name;
+        var region = spawner.Region;
+        string regionNewName = "", regionOldName = "";
+        if (e.Property.Name == "Region")
         {
-            vm.LocationGroups.Import(vm.Source.Location);
-            vm.RefreshLocationGroups();   // rebuild & re-expand your Location tree
+            regionNewName = vm.GetSegment()?.GetRegion((int)e.NewValue)?.Name;
+            regionOldName = vm.GetSegment()?.GetRegion((int)e.OldValue)?.Name;
         }
+
+        var expanded = vm.LocationGroups.Groups
+                            .Where(g => g.IsExpanded)
+                            .Select(g => g.Name)
+                            .ToHashSet();
+
+        vm.LocationGroups.Import(vm.Source.Location);
+
+        foreach (var grp in vm.LocationGroups.Groups)
+        {
+            foreach (var spn in grp.Spawners)
+            {
+                grp.IsSelected = false;
+                if (spn.Name == name)
+                    spn.IsSelected = true;
+                grp.Debug = $"{e.Property.Name} , {grp.Name} , {regionNewName} , {regionOldName} , {regionOldName}  ";
+            }
+            if (e.Property.Name == "Region")
+            {
+                if (grp.Name == regionNewName)
+                    grp.IsExpanded = true;
+                else if (grp.Name == regionOldName)
+                    grp.IsExpanded = false;
+                else
+                    grp.IsExpanded = expanded.Contains(grp.Name);
+            }
+            else
+                grp.IsExpanded = expanded.Contains(grp.Name);
+
+        }
+        CollectionViewSource.GetDefaultView(vm.LocationGroups.Groups)
+                            .Refresh();
     }
 
     private void RegionPropertyGrid_ValueChanged(object sender, ValueChangedEventArgs e)
     {
-        if (DataContext is SpawnsViewModel vm)
+        if ((e.Property.Name != "Name" && e.Property.Name != "Region") || Equals(e.OldValue, e.NewValue))
+            return;
+        if (!(DataContext is SpawnsViewModel vm))
+            return;
+
+        var pg = (PropertyGrid)sender;
+        var spawner = pg.SelectedObject as RegionSpawner;
+        if (spawner == null) return;
+        var name = spawner.Name;
+        var region = spawner.Region;
+        string regionNewName = "", regionOldName = "";
+        if (e.Property.Name == "Region")
         {
-            vm.RegionGroups.Import(vm.Source.Region);
-            vm.RefreshRegionGroups();     // rebuild & re-expand your Region tree
+            regionNewName = vm.GetSegment()?.GetRegion((int)e.NewValue)?.Name;
+            regionOldName = vm.GetSegment()?.GetRegion((int)e.OldValue)?.Name;
         }
+
+
+        var expanded = vm.RegionGroups.Groups
+                         .Where(g => g.IsExpanded)
+                         .Select(g => g.Name)
+                         .ToHashSet();
+
+        vm.RegionGroups.Import(vm.Source.Region);
+
+        foreach (var grp in vm.RegionGroups.Groups)
+        {
+            foreach (var spn in grp.Spawners)
+            {
+                grp.IsSelected = false;
+                if (spn.Name == name)
+                    spn.IsSelected = true;
+                grp.Debug = $" ";
+            }
+            if (e.Property.Name == "Region")
+            {
+                if (grp.Name == regionNewName)
+                    grp.IsExpanded = true;
+                else if (grp.Name == regionOldName)
+                    grp.IsExpanded = false;
+                else
+                    grp.IsExpanded = expanded.Contains(grp.Name);
+            }
+            else
+                grp.IsExpanded = expanded.Contains(grp.Name);
+
+        }
+
+        CollectionViewSource.GetDefaultView(vm.RegionGroups.Groups)
+                            .Refresh();
     }
 
     public Entity GetSelectedEntity()
@@ -125,7 +210,7 @@ public partial class SpawnsDocument : UserControl
             _locationPresenter.Region = segment.GetRegion(spawn.Region);
             _locationPresenter.SetLocation(spawn);
         }
-        _locationSpawnerList.ScrollIntoView(_locationSpawnerList.SelectedItem);
+
         if (DataContext is not SpawnsViewModel viewModel)
             return;
         if (message?.Source == null)
@@ -135,6 +220,7 @@ public partial class SpawnsDocument : UserControl
     private void OnRegionSpawnerChanged(SpawnsDocument recipient, SpawnsViewModel.SelectedRegionSpawnerChangedMessage message)
     {
         _scriptsTabControl.SelectedIndex = 0;
+
         var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
         var segment = segmentRequest.Response;
 
@@ -144,7 +230,7 @@ public partial class SpawnsDocument : UserControl
             _regionPresenter.Region = segment.GetRegion(spawn.Region);
             _regionPresenter.SetLocation(spawn);
         }
-        _regionSpawnerList.ScrollIntoView(_regionSpawnerList.SelectedItem);
+        //_regionSpawnerList.ScrollIntoView(_regionSpawnerList.SelectedItem);
 
         if (DataContext is not SpawnsViewModel viewModel)
             return;
@@ -178,6 +264,7 @@ public class SpawnsViewModel : ObservableRecipient
     public class SpawnerGroup : ObservableObject
     {
         public string Name { get; set; }
+        public string SpawnerName { get; set; }
         public ObservableCollection<Spawner> Spawners { get; set; } = new();
 
         private bool _isExpanded;
@@ -185,6 +272,18 @@ public class SpawnsViewModel : ObservableRecipient
         {
             get => _isExpanded;
             set => SetProperty(ref _isExpanded, value);
+        }
+        private bool _isSelected;
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set => SetProperty(ref _isSelected, value);
+        }
+        private string _debug;
+        public string Debug
+        {
+            get => _debug;
+            set => SetProperty(ref _debug, value);
         }
     }
     public SpawnerGroups LocationGroups { get; private set; }
@@ -203,9 +302,11 @@ public class SpawnsViewModel : ObservableRecipient
         public void Import(IEnumerable<LocationSpawner> spawners)
         {
             Groups.Clear();
-            foreach (var spawner in spawners.OrderBy(s => s.Name))
+            foreach (var spawner in spawners.OrderBy(s => s.Region))
             {
-                string groupName = _segment.GetRegion(spawner.Region)?.Name ?? $"Region {spawner.Region}";
+                string groupName = _segment.GetRegion(spawner.Region) is { Name: var name }
+                    ? $"{spawner.Region}: {name}"
+                    : $"Region {spawner.Region}";
                 var group = Groups.FirstOrDefault(g => g.Name == groupName);
                 if (group == null)
                 {
@@ -219,9 +320,11 @@ public class SpawnsViewModel : ObservableRecipient
         public void Import(IEnumerable<RegionSpawner> spawners)
         {
             Groups.Clear();
-            foreach (var spawner in spawners.OrderBy(s => s.Name))
+            foreach (var spawner in spawners.OrderBy(s => s.Region))
             {
-                string groupName = _segment.GetRegion(spawner.Region)?.Name ?? $"Region {spawner.Region}";
+                string groupName = _segment.GetRegion(spawner.Region) is { Name: var name }
+                    ? $"{spawner.Region}: {name}"
+                    : $"Region {spawner.Region}";
                 var group = Groups.FirstOrDefault(g => g.Name == groupName);
                 if (group == null)
                 {
@@ -239,6 +342,7 @@ public class SpawnsViewModel : ObservableRecipient
     private LocationSpawner _selectedLocationSpawner;
     private RegionSpawner _selectedRegionSpawner;
 
+    public Segment GetSegment() => _segment;
     public LocationSpawner SelectedLocationSpawner
     {
         get => _selectedLocationSpawner;
@@ -296,7 +400,9 @@ public class SpawnsViewModel : ObservableRecipient
         RegionGroups = new SpawnerGroups(_segment);
 
         LocationGroups.Import(_segment.Spawns.Location);
+        RefreshLocationGroups();
         RegionGroups.Import(_segment.Spawns.Region);
+        RefreshRegionGroups();
 
         AddLocationSpawnerCommand = new RelayCommand(AddLocationSpawner);
         RemoveLocationSpawnerCommand = new RelayCommand<LocationSpawner>(RemoveLocationSpawner,
@@ -372,6 +478,7 @@ public class SpawnsViewModel : ObservableRecipient
         SelectedLocationSpawner = newSpawner;
 
         LocationGroups.Import(Source.Location); //  Refresh group view
+        RefreshLocationGroups();
     }
 
     public void RemoveLocationSpawner(LocationSpawner spawner)
@@ -383,6 +490,7 @@ public class SpawnsViewModel : ObservableRecipient
         {
             Source.Location.Remove(spawner);
             LocationGroups.Import(Source.Location); //  Refresh group view
+            RefreshLocationGroups();
         }
     }
 
@@ -398,6 +506,7 @@ public class SpawnsViewModel : ObservableRecipient
         SelectedRegionSpawner = newSpawner;
 
         RegionGroups.Import(Source.Region); //  Refresh group view
+        RefreshRegionGroups();
     }
 
     public void RemoveRegionSpawner(RegionSpawner spawner)
@@ -409,6 +518,7 @@ public class SpawnsViewModel : ObservableRecipient
         {
             Source.Region.Remove(spawner);
             RegionGroups.Import(Source.Region); //  Refresh group view
+            RefreshRegionGroups();
         }
     }
 
@@ -442,6 +552,7 @@ public class SpawnsViewModel : ObservableRecipient
 
             Source.Location.Add((LocationSpawner)spawner);
             LocationGroups.Import(Source.Location); //  Refresh group view
+            RefreshLocationGroups();
         }
         else if (clipboard.Root.Attribute("type").Value == "RegionSpawner")
         {
@@ -451,6 +562,7 @@ public class SpawnsViewModel : ObservableRecipient
 
             Source.Region.Add((RegionSpawner)spawner);
             RegionGroups.Import(Source.Region); //  Refresh group view
+            RefreshRegionGroups();
         }
 
         if (spawner != null)
@@ -478,6 +590,7 @@ public class SpawnsViewModel : ObservableRecipient
 
             Source.Location.Add((LocationSpawner)newSpawner);
             LocationGroups.Import(Source.Location); //  Refresh group view
+            RefreshLocationGroups();
         }
         else if (spawner is RegionSpawner r)
         {
@@ -487,6 +600,7 @@ public class SpawnsViewModel : ObservableRecipient
 
             Source.Region.Add((RegionSpawner)newSpawner);
             RegionGroups.Import(Source.Region); //  Refresh group view
+            RefreshRegionGroups();
         }
 
         foreach (var entry in spawner.Entries)
