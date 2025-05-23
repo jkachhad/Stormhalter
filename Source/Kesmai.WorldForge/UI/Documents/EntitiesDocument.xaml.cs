@@ -197,7 +197,7 @@ public partial class EntitiesDocument : UserControl
 	}
 }
 
-public class EntitiesViewModel : ObservableRecipient
+public class EntitiesViewModel : ObservableRecipient, IDisposable
 {
     private bool _isDisposed = false;
     public void Dispose()
@@ -365,7 +365,8 @@ public class EntitiesViewModel : ObservableRecipient
 
 	public EntitiesViewModel(Segment segment)
 	{
-		_segment = segment;
+		_segment = segment ?? throw new ArgumentNullException(nameof(segment));
+		_relatedSpawners = new ObservableCollection<Spawner>();
 
 		AddEntityCommand = new RelayCommand(AddEntity);
 			

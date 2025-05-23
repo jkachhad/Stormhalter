@@ -63,11 +63,13 @@ public class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
 	{
 	}
 
-	protected override bool OnEquip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
 	{
-		if (!base.OnEquip(entity))
-			return false;
-			
+		base.OnActivateBonus(entity);
+
 		if (_chargesCurrent > 0)
 		{
 			if (!entity.GetStatus(typeof(FireProtectionStatus), out var fireStatus))
@@ -100,22 +102,20 @@ public class FireIceProtectionAmulet : Amulet, ITreasure, ICharged
 				iceStatus.AddSource(new ItemSource(this));
 			}
 		}
-
-		return true;
 	}
 
-	protected override bool OnUnequip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
 	{
-		if (!base.OnUnequip(entity))
-			return false;
+		base.OnInactivateBonus(entity);
 
 		if (entity.GetStatus(typeof(FireProtectionStatus), out var fireStatus))
 			fireStatus.RemoveSource(this);
 			
 		if (entity.GetStatus(typeof(IceProtectionStatus), out var iceStatus))
 			iceStatus.RemoveSource(this);
-
-		return true;
 	}
 		
 	public override void OnStrip(Corpse corpse)

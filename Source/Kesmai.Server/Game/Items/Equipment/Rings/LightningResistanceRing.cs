@@ -38,10 +38,12 @@ public class LightningResistanceRing : Ring, ITreasure
 			entries.Add(new LocalizationEntry(6250046)); /* The ring contains the spell of Lightning Resist. */
 	}
 
-	protected override bool OnEquip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
 	{
-		if (!base.OnEquip(entity))
-			return false;
+		base.OnActivateBonus(entity);
 
 		if (!entity.GetStatus(typeof(LightningResistanceStatus), out var resistStatus))
 		{
@@ -57,19 +59,17 @@ public class LightningResistanceRing : Ring, ITreasure
 		{
 			resistStatus.AddSource(new ItemSource(this));
 		}
-
-		return true;
 	}
 
-	protected override bool OnUnequip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
 	{
-		if (!base.OnUnequip(entity))
-			return false;
-			
+		base.OnInactivateBonus(entity);
+
 		if (entity.GetStatus(typeof(LightningResistanceStatus), out var iceStatus))
 			iceStatus.RemoveSource(this);
-
-		return true;
 	}
 	
 	/// <inheritdoc />

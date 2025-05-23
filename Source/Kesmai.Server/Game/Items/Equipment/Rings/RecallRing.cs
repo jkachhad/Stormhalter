@@ -188,6 +188,9 @@ public class RecallRing : Ring
 	{
 		if (!base.OnUnequip(entity))
 			return false;
+		
+		if (Deleted)
+			_isActive = false;
 
 		if (_isActive)
 		{

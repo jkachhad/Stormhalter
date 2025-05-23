@@ -39,10 +39,12 @@ public class BlindFearProtectionBracelet : Bracelet, ITreasure
 			entries.Add(new LocalizationEntry(6250032)); /* The bracelet contains the spell of Protection from Blind and Fear. */
 	}
 
-	protected override bool OnEquip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
 	{
-		if (!base.OnEquip(entity))
-			return false;
+		base.OnActivateBonus(entity);
 
 		if (!entity.GetStatus(typeof(BlindFearProtectionStatus), out var resistance))
 		{
@@ -58,19 +60,17 @@ public class BlindFearProtectionBracelet : Bracelet, ITreasure
 		{
 			resistance.AddSource(new ItemSource(this));
 		}
-
-		return true;
 	}
 
-	protected override bool OnUnequip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
 	{
-		if (!base.OnUnequip(entity))
-			return false;
-			
+		base.OnInactivateBonus(entity);
+
 		if (entity.GetStatus(typeof(BlindFearProtectionStatus), out var resistance))
 			resistance.RemoveSource(this);
-
-		return true;
 	}
 	
 	/// <inheritdoc />

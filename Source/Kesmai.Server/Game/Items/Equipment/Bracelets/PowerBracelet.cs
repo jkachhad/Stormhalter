@@ -69,11 +69,13 @@ public class PowerBracelet : Bracelet, ITreasure
 		return bonus;
 	}
 		
-	protected override bool OnEquip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
 	{
-		if (!base.OnEquip(entity))
-			return false;
-			
+		base.OnActivateBonus(entity);
+
 		if (CanUse(entity))
 		{
 			var magicDamageDealtIncrease = GetMagicDamageDealtIncrease();
@@ -81,15 +83,15 @@ public class PowerBracelet : Bracelet, ITreasure
 			if (magicDamageDealtIncrease > 0)
 				entity.Stats[EntityStat.MagicDamageDealtIncrease].Add(+magicDamageDealtIncrease, ModifierType.Constant);
 		}
-
-		return true;
 	}
 		
-	protected override bool OnUnequip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
 	{
-		if (!base.OnUnequip(entity))
-			return false;
-			
+		base.OnInactivateBonus(entity);
+
 		if (CanUse(entity))
 		{
 			var magicDamageDealtIncrease = GetMagicDamageDealtIncrease();
@@ -97,8 +99,6 @@ public class PowerBracelet : Bracelet, ITreasure
 			if (magicDamageDealtIncrease > 0)
 				entity.Stats[EntityStat.MagicDamageDealtIncrease].Remove(+magicDamageDealtIncrease, ModifierType.Constant);
 		}
-
-		return true;
 	}
 	
 	/// <inheritdoc />

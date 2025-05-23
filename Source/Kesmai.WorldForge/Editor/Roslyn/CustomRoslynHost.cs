@@ -171,15 +171,10 @@ public class CustomResolver : SourceReferenceResolver, IDisposable
         foreach (var entities in segment.Entities.Select(t => t.Name))
             builder.AppendLine($"Func<CreatureEntity> {entities};");
 
-
-
-
         _cache = SourceText.From(builder.ToString());
     }
 
     public override SourceText ReadText(string resolvedPath) => _cache;
-
-
 
     public override string NormalizePath(string path, string baseFilePath) => path;
     public override string ResolveReference(string path, string baseFilePath) => path;

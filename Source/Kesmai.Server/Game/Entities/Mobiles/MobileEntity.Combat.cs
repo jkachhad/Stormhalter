@@ -8,25 +8,22 @@ namespace Kesmai.Server.Game;
 public abstract partial class MobileEntity
 {
 	/// <summary>
-	/// Calculates the damage modifier against the specified item.
+	/// Calculates this <see cref="MobileEntity"/> melee damage mitigation against the specified <see cref="ItemEntity"/>.
 	/// </summary>
-	public int CalculateDamageModifier(ItemEntity item)
-	{
-		var damageModifier = 0;
-
-		/* Calculate armor bonus from chest pieces. */
-		var paperdoll = Paperdoll;
-			
-		if (paperdoll is null)
-			return 0;
-			
-		var armor = paperdoll.Armor;
-			
-		if (armor != null)
-			damageModifier += armor.GetArmorBonus(item);
-
-		return damageModifier;
-	}
+	public int CalculateMeleeMitigation(ItemEntity weapon)
+		=> Stats[EntityStat.MeleeDamageMitigation].Value;
+	
+	/// <summary>
+	/// Calculates this <see cref="MobileEntity"/> projectile damage mitigation against the specified <see cref="ItemEntity"/>.
+	/// </summary>
+	public int CalculateProjectileMitigation(ItemEntity weapon)
+		=> Stats[EntityStat.ProjectileDamageMitigation].Value;
+	
+	/// <summary>
+	/// Calculates this <see cref="MobileEntity"/> ranged damage mitigation against the specified <see cref="ItemEntity"/>.
+	/// </summary>
+	public int CalculateRangedMitigation(ItemEntity weapon)
+		=> Stats[EntityStat.RangedDamageMitigation].Value;
 		
 	/// <summary>
 	/// Checks if the <see cref="ShieldPenetration"/> value can penetrate the shield for this instance.
