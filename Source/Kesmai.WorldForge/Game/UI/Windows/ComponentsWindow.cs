@@ -267,7 +267,11 @@ public class ComponentsWindow : Window
 			{
 				if (inputService.IsReleased(Keys.C))
 				{
-					Clipboard.SetText(SelectedItem.Component.GetXElement().ToString());
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        // copy=false means “don’t call FlushClipboard”
+                        Clipboard.SetDataObject(SelectedItem.Component.GetXElement().ToString(), false);
+                    });
 				}
 				if (inputService.IsReleased(Keys.V))
 				{
