@@ -1,10 +1,11 @@
-﻿using System;
-using System.Windows;
-using CommonServiceLocator;
+﻿using CommonServiceLocator;
 using DigitalRune.Graphics;
 using DigitalRune.Graphics.Interop;
 using DigitalRune.ServiceLocation;
 using Kesmai.WorldForge.Editor;
+using Microsoft.CodeAnalysis;
+using System;
+using System.Windows;
 
 namespace Kesmai.WorldForge;
 
@@ -47,8 +48,10 @@ public class SpawnsPresentationTarget : PresentationTarget
 	public void SetLocation(Spawner spawner)
 	{
 		if (_screen != null)
+		{
 			_screen.SetSpawner(spawner);
-	}
+		}
+    }
 }
 
 public class SubregionsPresentationTarget : PresentationTarget
@@ -77,7 +80,7 @@ public abstract class PresentationTarget : D3DImagePresentationTarget
 	protected WpfInputManager _inputManager;
 	protected WpfUIManager _uiManager;
 
-	private Selection _selection;
+	//private Selection _selection; removed because not used anywhere
 		
 	public bool HasScreens => _isInitialized;
 		

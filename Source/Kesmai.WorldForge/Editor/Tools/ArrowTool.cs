@@ -101,19 +101,20 @@ public class ArrowTool : Tool
 			}
 		}
 		else if (inputService.IsDown(MouseButtons.Right))
-		{
-			if (_dragStart != Vector2F.Zero)
-			{
-				_dragDelta = graphicsScreen.CameraDrag = currentPosition - _dragStart;
+        {
+            if (_dragStart != Vector2F.Zero)
+            {
+                _dragDelta = graphicsScreen.CameraDrag = currentPosition - _dragStart;
 
 				if (_dragDelta.Magnitude > 2.0f)
 					_isDragging = true;
 
-				inputService.IsMouseOrTouchHandled = true;
-			}
-			else
-			{
-				_dragStart = currentPosition;
+                inputService.IsMouseOrTouchHandled = true;
+            }
+
+            else
+            {
+                _dragStart = currentPosition;
 			}
 		}
 		else if (inputService.IsDown(MouseButtons.Left))
@@ -146,15 +147,16 @@ public class ArrowTool : Tool
 				var deltaX = (_dragDelta.X / (presenter.UnitSize * graphicsScreen.ZoomFactor));
 				var deltaY = (_dragDelta.Y / (presenter.UnitSize * graphicsScreen.ZoomFactor));
 
-				graphicsScreen.CameraLocation -= new Vector2F(deltaX, deltaY);
+                graphicsScreen.CameraLocation -= new Vector2F(deltaX, deltaY);
 				graphicsScreen.CameraDrag = Vector2F.Zero;
 
-				_isDragging = false;
+                _isDragging = false;
 					
 				inputService.IsMouseOrTouchHandled = true;
-			}
-				
-			_dragStart = Vector2F.Zero;
+            }
+
+
+            _dragStart = Vector2F.Zero;
 			_dragDelta = Vector2F.Zero;
 
 			if (_isSelecting)

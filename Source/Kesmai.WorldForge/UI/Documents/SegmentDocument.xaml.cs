@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Scripting;
@@ -29,7 +30,17 @@ public partial class SegmentDocument : UserControl
 	public SegmentDocument()
 	{
 		InitializeComponent();
-	}
+    }
+
+    private void OnExpandAllClicked(object sender, RoutedEventArgs e)
+    {
+        _internalEditor.ExpandAllFolds();
+    }
+
+    private void OnCollapseAllClicked(object sender, RoutedEventArgs e)
+    {
+        _internalEditor.CollapseAllFolds();
+    }
 }
 
 public class SegmentViewModel : ObservableObject, IDisposable
@@ -47,10 +58,9 @@ public class SegmentViewModel : ObservableObject, IDisposable
 	public SegmentViewModel(Segment segment)
 	{
 		_segment = segment;
-	}
-	
-	public void Dispose()
-	{
-		_segment = null;
-	}
+    }
+    public void Dispose()
+    {
+        _segment = null;
+    }
 }

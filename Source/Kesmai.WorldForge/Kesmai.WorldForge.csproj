@@ -2,7 +2,7 @@
     <PropertyGroup>
         <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
         
-        <OutputType></OutputType>
+        <OutputType>WinExe</OutputType>
         <TargetFramework>net8.0-windows</TargetFramework>
         <PreserveCompilationContext>false</PreserveCompilationContext>
         <UseWPF>true</UseWPF>
@@ -22,6 +22,10 @@
 
         <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
         <AllowedReferenceRelatedFileExtensions>None</AllowedReferenceRelatedFileExtensions>
+        <NoWarn>$(NoWarn);CA1416</NoWarn>
+        <NoWarn>$(NoWarn);VSTHRD003</NoWarn>
+        <NoWarn>$(NoWarn);VSTHRD110</NoWarn>
+        <NoWarn>$(NoWarn);MSB3539</NoWarn>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug'">
@@ -44,21 +48,25 @@
     
     <ItemGroup>
       <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
-      <PackageReference Include="CommonServiceLocator" Version="2.0.7" />
+      <PackageReference Include="CommonServiceLocator" Version="2.0.6" />
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-      <PackageReference Include="Dirkster.AvalonDock" Version="4.72.1" />
-      <PackageReference Include="DotNetZip" Version="1.16.0" />
+      <PackageReference Include="Dirkster.AvalonDock" Version="4.50.2" />
+       <PackageReference Include="DotNetZip" Version="1.16.0">
+         <NoWarn>NU1903</NoWarn>
+      </PackageReference>
       <PackageReference Include="DotNext" Version="5.12.1" />
-      <PackageReference Include="iTextSharp" Version="5.5.13.4" />
-      <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.1.303" />
-      <PackageReference Include="RedGate.SmartAssembly.MSBuild" Version="8.2.1.5254">
+      <PackageReference Include="iTextSharp" Version="5.5.13.4">
+        <NoWarn>NU1701</NoWarn>
+      </PackageReference>
+      <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.2.1105" />
+      <PackageReference Include="RedGate.SmartAssembly.MSBuild" Version="8.0.1.4676-preview">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="RoslynPad.Editor.Windows" Version="4.8.0" />
-      <PackageReference Include="Syncfusion.PropertyGrid.WPF" Version="26.1.42" />
+      <PackageReference Include="RoslynPad.Editor.Windows" Version="4.12.1" />
+      <PackageReference Include="Syncfusion.PropertyGrid.WPF" Version="18.4.0.44" />
       <PackageReference Include="System.Linq" Version="4.3.0" />
-      <PackageReference Include="WriteableBitmapEx" Version="1.6.8" />
+      <PackageReference Include="WriteableBitmapEx" Version="1.6.7" />
     </ItemGroup>
 
     <ItemGroup>
@@ -124,7 +132,6 @@
     <PropertyGroup>
         <SmartAssemblyIsEnabled>false</SmartAssemblyIsEnabled>
         <EnableWindowsTargeting>true</EnableWindowsTargeting>
-        
     </PropertyGroup>
 
     <Target Name="SmartAssemblyTarget" AfterTargets="Publish">

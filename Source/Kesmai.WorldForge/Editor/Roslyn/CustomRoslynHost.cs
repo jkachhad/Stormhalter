@@ -18,6 +18,7 @@ using RoslynPad.Roslyn;
 
 namespace Kesmai.WorldForge.Roslyn;
 
+#nullable enable
 public class CustomRoslynHost : RoslynHost, IDisposable
 {
     private CustomResolver _resolver;
@@ -39,79 +40,79 @@ public class CustomRoslynHost : RoslynHost, IDisposable
     }
 
     protected override Project CreateProject(Solution solution, DocumentCreationArgs args, CompilationOptions compilationOptions, Project? previousProject = null)
-{
-    var name = "WorldForge";
-    var id = ProjectId.CreateNewId(name);
-
-    // Check if the project already exists in the solution
-    var existingProject = solution.Projects.FirstOrDefault(p => p.Name == name);
-
-    if (existingProject != null)
     {
-        // Optionally update existing project's options, references, etc., if necessary
-        var updatedCompilationOptions = compilationOptions
+        var name = "WorldForge";
+        var id = ProjectId.CreateNewId(name);
+
+        // Check if the project already exists in the solution
+        var existingProject = solution.Projects.FirstOrDefault(p => p.Name == name);
+
+        if (existingProject != null)
+        {
+            // Optionally update existing project's options, references, etc., if necessary
+            var updatedCompilationOptions = compilationOptions
+                .WithScriptClassName(name)
+                .WithSourceReferenceResolver(_resolver);
+
+            var project = existingProject
+                .WithCompilationOptions(updatedCompilationOptions)
+                .WithParseOptions(new CSharpParseOptions(LanguageVersion.CSharp10, DocumentationMode.None, SourceCodeKind.Script));
+
+            // Return the existing, possibly updated, project
+            return project;
+        }
+
+        // If no existing project is found, create a new one
+        var parseOptions = new CSharpParseOptions(
+            kind: SourceCodeKind.Script,
+            languageVersion: LanguageVersion.CSharp10,
+            documentationMode: DocumentationMode.None // Skip documentation comments
+        );
+
+        compilationOptions = compilationOptions
             .WithScriptClassName(name)
             .WithSourceReferenceResolver(_resolver);
 
-        var project = existingProject
-            .WithCompilationOptions(updatedCompilationOptions)
-            .WithParseOptions(new CSharpParseOptions(LanguageVersion.CSharp10, DocumentationMode.None, SourceCodeKind.Script));
-
-        // Return the existing, possibly updated, project
-        return project;
-    }
-
-    // If no existing project is found, create a new one
-    var parseOptions = new CSharpParseOptions(
-        kind: SourceCodeKind.Script,
-        languageVersion: LanguageVersion.CSharp10,
-        documentationMode: DocumentationMode.None // Skip documentation comments
-    );
-
-    compilationOptions = compilationOptions
-        .WithScriptClassName(name)
-        .WithSourceReferenceResolver(_resolver);
-			
-    if (compilationOptions is CSharpCompilationOptions csharpCompilationOptions)
-    {
-        compilationOptions = csharpCompilationOptions
-            .WithNullableContextOptions(NullableContextOptions.Disable);
-    }
-
-    var references = AppDomain.CurrentDomain.GetAssemblies()
-        .Where(a => !a.IsDynamic && !string.IsNullOrEmpty(a.Location))
-        .Select(a =>
+        if (compilationOptions is CSharpCompilationOptions csharpCompilationOptions)
         {
-            var location = a.Location;
-            return !string.IsNullOrEmpty(location) ? MetadataReference.CreateFromFile(location) : null;
-        })
-        .Where(reference => reference != null)
-        .ToList();
+            compilationOptions = csharpCompilationOptions
+                .WithNullableContextOptions(NullableContextOptions.Disable);
+        }
 
-    // Add DotNext.dll to the references
-    var dotNextDllPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DotNext.dll"); // Path to DotNext.dll in the assemblies folder
-    references.Add(MetadataReference.CreateFromFile(dotNextDllPath));
+        var references = AppDomain.CurrentDomain.GetAssemblies()
+            .Where(a => !a.IsDynamic && !string.IsNullOrEmpty(a.Location))
+            .Select(a =>
+            {
+                var location = a.Location;
+                return !string.IsNullOrEmpty(location) ? MetadataReference.CreateFromFile(location) : null;
+            })
+            .Where(reference => reference != null)
+            .ToList();
 
-    var scriptingData = Core.ScriptingData;
+        // Add DotNext.dll to the references
+        var dotNextDllPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DotNext.dll"); // Path to DotNext.dll in the assemblies folder
+        references.Add(MetadataReference.CreateFromFile(dotNextDllPath));
 
-    if (scriptingData != null)
-        references.Add(MetadataReference.CreateFromImage(scriptingData));
+        var scriptingData = Core.ScriptingData;
 
-    var projectInfo = ProjectInfo.Create(
-        id, VersionStamp.Create(),
-        name, name,
-        LanguageNames.CSharp,
-        isSubmission: true,
-        parseOptions: parseOptions,
-        compilationOptions: compilationOptions,
-        metadataReferences: previousProject != null ? ImmutableArray<MetadataReference>.Empty : references,
-        projectReferences: previousProject != null ? new[] { new ProjectReference(previousProject.Id) } : null
-    );
+        if (scriptingData != null)
+            references.Add(MetadataReference.CreateFromImage(scriptingData));
 
-    _solution = solution.AddProject(projectInfo);
+        var projectInfo = ProjectInfo.Create(
+            id, VersionStamp.Create(),
+            name, name,
+            LanguageNames.CSharp,
+            isSubmission: true,
+            parseOptions: parseOptions,
+            compilationOptions: compilationOptions,
+            metadataReferences: previousProject != null ? ImmutableArray<MetadataReference>.Empty : references,
+            projectReferences: previousProject != null ? new[] { new ProjectReference(previousProject.Id) } : null
+        );
 
-    return _solution.GetProject(id);
-}
+        _solution = solution.AddProject(projectInfo);
+
+        return _solution.GetProject(id);
+    }
 
 
     public void Dispose()
@@ -206,4 +207,4 @@ public class CustomResolver : SourceReferenceResolver, IDisposable
         return _cache.GetHashCode();
     }
 }
-
+#nullable disable

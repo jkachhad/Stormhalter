@@ -46,7 +46,7 @@ public class WpfUIManager : IUIService
 			}
 		}
 
-		foreach (var screen in _sortedScreens)
+        foreach (var screen in _sortedScreens)
 			screen.NewFrame();
 		foreach (var screen in _sortedScreens)
 			screen.Update(deltaTime);

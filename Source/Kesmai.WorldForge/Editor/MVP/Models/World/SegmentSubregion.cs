@@ -52,9 +52,16 @@ public class SegmentSubregion : ObservableObject
 	{
 		get => _region;
 		set => SetProperty(ref _region, value);
-	}
+    }
 
-	public IEnumerable<SubregionType> Types => Enum.GetValues(typeof(SubregionType)).Cast<SubregionType>();
+    private bool _isSelected;
+    public bool IsSelected
+    {
+        get => _isSelected;
+        set => SetProperty(ref _isSelected, value);
+    }
+
+    public IEnumerable<SubregionType> Types => Enum.GetValues(typeof(SubregionType)).Cast<SubregionType>();
 
 	private ObservableCollection<SegmentBounds> _rectangles = new ObservableCollection<SegmentBounds>();
 

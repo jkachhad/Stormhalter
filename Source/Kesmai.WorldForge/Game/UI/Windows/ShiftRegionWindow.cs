@@ -128,7 +128,7 @@ public class ShiftRegionWindow : Window
 		if (!int.TryParse(_xTextBox.Text, out var sx) || !int.TryParse(_yTextBox.Text, out var sy))
 			return;
 
-		var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
+        var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
 		var segment = segmentRequest.Response;
 
 		var oldTiles = _region.GetTiles((tile) => true).ToList();

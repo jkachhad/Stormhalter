@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -10,6 +12,7 @@ using CommonServiceLocator;
 using DigitalRune.ServiceLocation;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
+using ICSharpCode.AvalonEdit.Folding;
 using Kesmai.WorldForge.Editor;
 using Microsoft.CodeAnalysis;
 using RoslynPad.Editor;
@@ -54,8 +57,9 @@ public class ScriptEditor : RoslynCodeEditor
 		HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
 			
 		FontFamily = new FontFamily("Consolas");
-			
-		Loaded += OnLoaded;
+
+
+        Loaded += OnLoaded;
 	}
 
 	protected override void OnLostKeyboardFocus(KeyboardFocusChangedEventArgs e)
@@ -64,21 +68,33 @@ public class ScriptEditor : RoslynCodeEditor
 			UpdateText();
 	}
 
-	private async void OnLoaded(object sender, RoutedEventArgs e)
-	{
-		if (_initialized)
-			return;
-		
-		var services = (ServiceContainer)ServiceLocator.Current;
-		var applicationPresenter = services.GetInstance<ApplicationPresenter>();
+    private async Task OnLoadedAsync(object sender, RoutedEventArgs e)
+    {
+        if (_initialized)
+            return;
 
-		await InitializeAsync(applicationPresenter.RoslynHost, new ClassificationHighlightColors(),
-			Directory.GetCurrentDirectory(), String.Empty, SourceCodeKind.Script);
-		
-		_initialized = true;
-	}
+        var services = (ServiceContainer)ServiceLocator.Current;
+        var applicationPresenter = services.GetInstance<ApplicationPresenter>();
 
-	protected override void OnTextChanged(EventArgs e)
+        await InitializeAsync(applicationPresenter.RoslynHost, new ClassificationHighlightColors(),
+            Directory.GetCurrentDirectory(), string.Empty, SourceCodeKind.Script);
+
+        // Delay folding until TextArea is fully initialized
+        await Dispatcher.BeginInvoke(new Action(() =>
+        {
+            InitializeFolding();
+        }), DispatcherPriority.Loaded);
+        InitializeFolding();
+        _initialized = true;
+    }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("VSTHRD", "VSTHRD100:Avoid async void methods")]
+    private async void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        await OnLoadedAsync(sender, e);
+    }
+
+    protected override void OnTextChanged(EventArgs e)
 	{
 		if (!_initialized)
 			return;
@@ -108,8 +124,8 @@ public class ScriptEditor : RoslynCodeEditor
 			
 		if (script != null)
 			script.Parse(this);
-			
-		IsModified = false;
+
+        IsModified = false;
 	}
 
 	public void Insert(string text, bool readOnly = false)
@@ -170,5 +186,101 @@ public class ScriptEditor : RoslynCodeEditor
 				EndOffset = Document.TextLength
 			};
 		}
-	}
+    }
+
+    private bool _foldingInitialized;
+
+    public void InitializeFolding()
+    {
+        if (_foldingInitialized)
+            return;
+        HookFoldingMarginClick();
+        _foldingInitialized = true;
+    }
+
+    public void ExpandAllFolds()
+    {
+        if (FoldingManager != null)
+        {
+            foreach (var fold in FoldingManager.AllFoldings)
+                fold.IsFolded = false;
+        }
+        this.TextArea.TextView.InvalidateVisual();
+    }
+
+    public void CollapseAllFolds()
+    {
+		if (FoldingManager != null)
+        {
+            bool isFirst = true;
+            foreach (var fold in FoldingManager.AllFoldings)
+            {
+                if (isFirst)
+                {
+                    isFirst = false;
+                    continue; // Skip the first fold
+                }
+
+                // Expand blocks inside braces (small inner folds)
+                if (fold.Title != null && fold.Title.StartsWith("{"))
+                {
+                    fold.IsFolded = false; // Expand inner block
+                }
+                else
+                {
+                    fold.IsFolded = true; // Collapse outer block
+                }
+            }
+        }
+        this.TextArea.TextView.InvalidateVisual();
+    }
+
+    private void HookFoldingMarginClick()
+    {
+        var foldingMargin = TextArea.LeftMargins
+            .OfType<FoldingMargin>()
+            .FirstOrDefault();
+
+        if (foldingMargin != null)
+        {
+            foldingMargin.PreviewMouseLeftButtonDown += FoldingMargin_MouseLeftButtonDown;
+        }
+    }
+
+    private void FoldingMargin_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        var posInMargin = e.GetPosition(sender as IInputElement);
+        double correctedY = posInMargin.Y + TextArea.TextView.VerticalOffset;
+
+        var visualLine = TextArea.TextView.GetVisualLineFromVisualTop(correctedY);
+        if (visualLine == null)
+            return;
+
+        int offset = visualLine.FirstDocumentLine.Offset;
+
+        if (offset < 10)
+			return;
+
+        var fold = FoldingManager.AllFoldings.FirstOrDefault(f => f.StartOffset >= offset && offset <= f.EndOffset);
+
+        if (fold != null && fold.IsFolded)
+        {
+            ExpandDirectChildren(fold);
+            TextArea.TextView.InvalidateVisual();
+            e.Handled = true;
+        }
+    }
+
+    void ExpandDirectChildren(FoldingSection parent)
+    {
+        parent.IsFolded = false;
+
+		var fold = FoldingManager.AllFoldings.Where(f => f.StartOffset > parent.StartOffset && f.StartOffset <= parent.EndOffset);
+
+        foreach (var child in fold)
+        {
+            child.IsFolded = false;
+            this.TextArea.TextView.InvalidateVisual();
+        }
+    }
 }

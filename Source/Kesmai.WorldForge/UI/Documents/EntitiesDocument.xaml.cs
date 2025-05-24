@@ -199,16 +199,15 @@ public partial class EntitiesDocument : UserControl
 
 public class EntitiesViewModel : ObservableRecipient, IDisposable
 {
-	private bool _isDisposed = false;
-	public void Dispose()
-	{
-		_selectedEntity = null;
-		_groups = null;
-		_relatedSpawners.Clear();
-		_isDisposed = true;
-	}
-
-	public class SelectedEntityChangedMessage : ValueChangedMessage<Entity>
+    private bool _isDisposed = false;
+    public void Dispose()
+    {
+        _selectedEntity = null;
+        _groups = null;
+        _relatedSpawners.Clear();
+        _isDisposed = true;
+    }
+    public class SelectedEntityChangedMessage : ValueChangedMessage<Entity>
 	{
 		public SelectedEntityChangedMessage(Entity value) : base(value)
 		{
@@ -261,7 +260,8 @@ public class EntitiesViewModel : ObservableRecipient, IDisposable
 	public string Name => "(Entities)";
 
 	private int _newEntityCount = 1;
-	private int _newGroupCount = 1;
+	//unused variable
+	//private int _newGroupCount = 1;
 
 	private Entity _selectedEntity;
 	private Segment _segment;
@@ -282,47 +282,46 @@ public class EntitiesViewModel : ObservableRecipient, IDisposable
 	{
 		get => _selectedEntity;
 		set
-		{
-			if (_isDisposed)
-			{
-				Reinitialize();
-			}
-			
-			// Clear the previous selected entity
-			_selectedEntity = null;
+        {
+            if (_isDisposed)
+            {
+                Reinitialize();
+            }
 
-			// Set the new selected entity
-			SetProperty(ref _selectedEntity, value, true);
-			OnPropertyChanged("SelectedEntity");
+            // Clear the previous selected entity
+            _selectedEntity = null;
 
-			// Clear related spawners
-			_relatedSpawners?.Clear();
+            // Set the new selected entity
+            SetProperty(ref _selectedEntity, value, true);
+            OnPropertyChanged("SelectedEntity");
 
-			if (_selectedEntity != null && _segment != null)
-			{
-				foreach (Spawner spawner in _segment.Spawns.Location.Where(s => s.Entries.Any(e => e.Entity == _selectedEntity)))
-				{
-					_relatedSpawners?.Add(spawner);
-				}
-				foreach (Spawner spawner in _segment.Spawns.Region.Where(s => s.Entries.Any(e => e.Entity == _selectedEntity)))
-				{
-					_relatedSpawners?.Add(spawner);
-				}
+            // Clear related spawners
+            _relatedSpawners?.Clear();
 
-				// Send message only if the selected entity is not null
-				WeakReferenceMessenger.Default.Send(new SelectedEntityChangedMessage(_selectedEntity));
-			}
-		}
-	}
-	
-	private void Reinitialize()
-	{
-		_groups = new WfGroups();
-		_relatedSpawners = new ObservableCollection<Spawner>();
-		_isDisposed = false;
-	}
+            if (_selectedEntity != null && _segment != null)
+            {
+                foreach (Spawner spawner in _segment.Spawns.Location.Where(s => s.Entries.Any(e => e.Entity == _selectedEntity)))
+                {
+                    _relatedSpawners?.Add(spawner);
+                }
+                foreach (Spawner spawner in _segment.Spawns.Region.Where(s => s.Entries.Any(e => e.Entity == _selectedEntity)))
+                {
+                    _relatedSpawners?.Add(spawner);
+                }
 
-	public SegmentEntities Source => _segment.Entities;
+                // Send message only if the selected entity is not null
+                WeakReferenceMessenger.Default.Send(new SelectedEntityChangedMessage(_selectedEntity));
+            }
+        }
+    }
+    private void Reinitialize()
+    {
+        _groups = new WfGroups();
+        _relatedSpawners = new ObservableCollection<Spawner>();
+        _isDisposed = false;
+    }
+
+    public SegmentEntities Source => _segment.Entities;
 
 	private ObservableCollection<Spawner> _relatedSpawners = new ObservableCollection<Spawner>();
 
@@ -446,7 +445,7 @@ public class EntitiesViewModel : ObservableRecipient, IDisposable
 			Name = $"Entity {_newEntityCount++}",
 			Group = "Unassigned"
 		};
-		if (SelectedEntity.Group != null)
+		if (SelectedEntity?.Group != null)
 			newEntity.Group = SelectedEntity.Group;
 		var entityGroup = _groups.Groups.Where(g => g.Name == newEntity.Group).FirstOrDefault();
 
