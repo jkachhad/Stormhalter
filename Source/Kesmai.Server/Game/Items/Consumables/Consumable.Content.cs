@@ -791,7 +791,7 @@ public class ConsumableStrengthStat : IConsumableContent
 		{
 			var strength = player.Stats[EntityStat.BaseStrength];
 
-			if (strength.Base < strength.Maximum)
+			if (strength.Base < strength.MaximumValue)
 				strength.Base++;
 
 			player.SendLocalizedMessage(6100100); /* You feel a little bit more like Hercules. */
@@ -837,7 +837,7 @@ public class ConsumableDexterityStat : IConsumableContent
 		{
 			var dexterity = player.Stats[EntityStat.BaseDexterity];
 
-			if (dexterity.Base < dexterity.Maximum)
+			if (dexterity.Base < dexterity.MaximumValue)
 				dexterity.Base++;
 
 			player.SendLocalizedMessage(6100102); /* You feel more agile. */
@@ -883,7 +883,7 @@ public class ConsumableIntelligenceStat : IConsumableContent
 		{
 			var intelligence = player.Stats[EntityStat.BaseIntelligence];
 
-			if (intelligence.Base < intelligence.Maximum)
+			if (intelligence.Base < intelligence.MaximumValue)
 				intelligence.Base++;
 
 			player.SendLocalizedMessage(6100103); /* You feel more ingenious. */
@@ -924,7 +924,7 @@ public class ConsumableWillpowerStat : IConsumableContent
 		{
 			var willpower = player.Stats[EntityStat.BaseWillpower];
 
-			if (willpower.Base < willpower.Maximum)
+			if (willpower.Base < willpower.MaximumValue)
 				willpower.Base++;
 
 			player.SendLocalizedMessage(6100105); /* You feel more resolute. */
@@ -965,7 +965,7 @@ public class ConsumableWisdomStat : IConsumableContent
 		{
 			var wisdom = player.Stats[EntityStat.BaseWisdom];
 
-			if (wisdom.Base < wisdom.Maximum)
+			if (wisdom.Base < wisdom.MaximumValue)
 				wisdom.Base++;
 
 			player.SendLocalizedMessage(6100104); /* You feel more enlightened. */
@@ -1008,7 +1008,7 @@ public class ConsumableConstitutionStat : IConsumableContent
 		var baseConstitution = player.Stats[EntityStat.BaseConstitution];
 
 		/* Compare base value with the maximum value.*/
-		if (baseConstitution.Base < baseConstitution.Maximum)
+		if (baseConstitution.Base < baseConstitution.MaximumValue)
 			baseConstitution.Base += 2;
 
 		player.SendLocalizedMessage(6100106); /* You feel more hale. */

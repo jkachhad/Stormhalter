@@ -26,11 +26,12 @@
         <NoWarn>$(NoWarn);VSTHRD003</NoWarn>
         <NoWarn>$(NoWarn);VSTHRD110</NoWarn>
         <NoWarn>$(NoWarn);MSB3539</NoWarn>
+        <Configurations>Release;Debug</Configurations>
+        <Platforms>Windows</Platforms>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug'">
       <OutputPath>$(SolutionDir)\..\Build\Debug\WorldForge</OutputPath>
-        <PlatformTarget>AnyCPU</PlatformTarget>  
       <DefineConstants>TRACE;DEBUG;WorldForge;Interop;CanImport;</DefineConstants>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
       <Optimize>false</Optimize>
@@ -39,7 +40,6 @@
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release'">
       <OutputPath>$(SolutionDir)\..\Build\Release\WorldForge</OutputPath>
-        <PlatformTarget>AnyCPU</PlatformTarget>
       <DefineConstants>TRACE;WorldForge;Interop;</DefineConstants>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
       <Optimize>true</Optimize>
