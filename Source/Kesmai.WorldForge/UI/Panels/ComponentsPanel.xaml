@@ -27,6 +27,15 @@
                         
                         <TextBlock Text="{Binding Name}" VerticalAlignment="Center" 
                                    FontWeight="Bold"/>
+                        <StackPanel.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Delete"
+          Command="{Binding PlacementTarget.DataContext.DeletePrefabCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+          CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+
+
+                            </ContextMenu>
+                        </StackPanel.ContextMenu>
                     </StackPanel>
                 </DataTemplate>
             </ComboBox.ItemTemplate>

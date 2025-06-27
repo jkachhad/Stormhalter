@@ -4,12 +4,16 @@
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                 xmlns:ui="clr-namespace:Kesmai.WorldForge.UI"
+                xmlns:local="clr-namespace:Kesmai.WorldForge.UI"
 
                 mc:Ignorable="d"
                 
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 ItemContainerStyle="{DynamicResource ComponentGridItemStyle}">
     <ListBox.Resources>
+
+        <!-- Converter for showing Delete only for TilePrefabComponent -->
+        <local:PrefabOnlyVisibilityConverter x:Key="PrefabOnlyVisibilityConverter" />
         <Style x:Key="ComponentGridItemStyle" TargetType="ListBoxItem">
             <Setter Property="Template">
                 <Setter.Value>
@@ -38,13 +42,23 @@
     </ListBox.Resources>
     <ListBox.ItemTemplate>
         <DataTemplate>
-            <StackPanel>
-            <Border BorderBrush="Gainsboro" BorderThickness="1" Padding="1">
-                <ui:ComponentImage Component="{Binding}"></ui:ComponentImage>
-            </Border>
-            <TextBlock FontWeight="Bold" Text="{Binding Name}" Padding="3"
-                       TextAlignment="Center"
-                       Background="GhostWhite" MaxWidth="104" />
+            <StackPanel Tag="{x:Static local:ComponentsPanel.Instance}">
+                <StackPanel.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem   Header="Delete"
+                                    Visibility="{Binding Converter={StaticResource PrefabOnlyVisibilityConverter}}"
+                                    Loaded="menuItemDeletePrefabLoaded"
+                                    CommandParameter="{Binding}" />
+
+                    </ContextMenu>
+                </StackPanel.ContextMenu>
+
+                <Border BorderBrush="Gainsboro" BorderThickness="1" Padding="1">
+                    <ui:ComponentImage Component="{Binding}" />
+                </Border>
+                <TextBlock FontWeight="Bold" Text="{Binding Name}" Padding="3"
+                           TextAlignment="Center"
+                           Background="GhostWhite" MaxWidth="104" />
             </StackPanel>
         </DataTemplate>
     </ListBox.ItemTemplate>

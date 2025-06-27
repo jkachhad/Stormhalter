@@ -1,180 +1,182 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Windows;
 using System.Xml.Linq;
-using DigitalRune.Game.UI.Controls;
-using DigitalRune.Mathematics.Algebra;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DigitalRune.Game.UI;
+using DigitalRune.Game.UI.Controls;
+using DigitalRune.Mathematics.Algebra;
 using Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge.Models;
 
 public abstract class TerrainComponent : ObservableObject
 {
-	#region Static
+    #region Static
 
-	private static Color _defaultColor = Color.White;
+    private static Color _defaultColor = Color.White;
 
-	#endregion
+    #endregion
+    public Guid Id { get; } = Guid.NewGuid();
 
-	#region Fields
+    #region Fields
 
-	#endregion
+    #endregion
 
-	#region Properties and Events
+    #region Properties and Events
 
-	/// <summary>
-	/// Gets the name descriptor for this component. This properly should not be closed or serialized.
-	/// It's primarily internal for tooltips.
-	/// </summary>
-	[Browsable(false)]
-	public string Name { get; set; } = "(unknown)";
+    /// <summary>
+    /// Gets the name descriptor for this component. This properly should not be closed or serialized.
+    /// It's primarily internal for tooltips.
+    /// </summary>
+    [Browsable( false )]
+    public string Name { get; set; } = "(unknown)";
 
-	/// <summary>
-	/// Gets or sets the color.
-	/// </summary>
-	[Browsable(true)]
-	public Color Color { get; set; }
+    /// <summary>
+    /// Gets or sets the color.
+    /// </summary>
+    [Browsable( true )]
+    public Color Color { get; set; }
 
-	/// <summary>
-	/// Gets or sets a comment
-	/// </summary>
-	[Browsable(true)]
-	public String Comment { get; set; }
+    /// <summary>
+    /// Gets or sets a comment
+    /// </summary>
+    [Browsable( true )]
+    public String Comment { get; set; }
 
-	#endregion
+    #endregion
 
-	#region Constructors and Cleanup
+    #region Constructors and Cleanup
 
-	/// <summary>
-	/// Initializes a new instance of the <see cref="TerrainComponent"/> class.
-	/// </summary>
-	protected TerrainComponent()
-	{
-		Color = _defaultColor;
-	}
-	    
-	protected TerrainComponent(XElement element)
-	{
-		/* The components palette includes a name attribute for the purposes of describing components in the
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TerrainComponent"/> class.
+    /// </summary>
+    protected TerrainComponent()
+    {
+        Color = _defaultColor;
+    }
+
+    protected TerrainComponent( XElement element )
+    {
+        /* The components palette includes a name attribute for the purposes of describing components in the
 		 * editor. It it not serialized. */
-		var nameAttribute = element.Attribute("name");
+        var nameAttribute = element.Attribute( "name" );
 
-		if (nameAttribute != null)
-			Name = nameAttribute.Value;
-		    
-		var colorElement = element.Element("color");
+        if( nameAttribute != null )
+            Name = nameAttribute.Value;
 
-		if (colorElement != null)
-		{
-			var colorR = (int)colorElement.Attribute("r");
-			var colorG = (int)colorElement.Attribute("g");
-			var colorB = (int)colorElement.Attribute("b");
-			var colorA = (int)colorElement.Attribute("a");
+        var colorElement = element.Element( "color" );
 
-			Color = new Color(colorR, colorG, colorB, colorA);
-		}
-		else
-		{
-			Color = _defaultColor;
-		}
+        if( colorElement != null )
+        {
+            var colorR = (int)colorElement.Attribute( "r" );
+            var colorG = (int)colorElement.Attribute( "g" );
+            var colorB = (int)colorElement.Attribute( "b" );
+            var colorA = (int)colorElement.Attribute( "a" );
 
-		var commentElement = element.Element("comment");
-		if (commentElement != null)
-		{
-			Comment = commentElement.Value;
-		}
-	}
+            Color = new Color( colorR, colorG, colorB, colorA );
+        }
+        else
+        {
+            Color = _defaultColor;
+        }
 
-	#endregion
+        var commentElement = element.Element( "comment" );
+        if( commentElement != null )
+        {
+            Comment = commentElement.Value;
+        }
+    }
 
-	#region Methods
-		
-	/// <summary>
-	/// Gets an XML element that describes this component.
-	/// </summary>
-	public virtual XElement GetXElement()
-	{
-		var element = new XElement("component");
+    #endregion
 
-		element.Add(new XAttribute("type", GetTypeAlias()));
+    #region Methods
 
-		if (Color != Color.White)
-		{
-			element.Add(new XElement("color",
-				new XAttribute("r", Color.R), new XAttribute("g", Color.G), new XAttribute("b", Color.B),
-				new XAttribute("a", Color.A)
-			));
-		}
-		if (!String.IsNullOrWhiteSpace(Comment))
-		{
-			element.Add(new XElement("comment", Comment));
-		}
+    /// <summary>
+    /// Gets an XML element that describes this component.
+    /// </summary>
+    public virtual XElement GetXElement()
+    {
+        var element = new XElement( "component" );
+
+        element.Add( new XAttribute( "type", GetTypeAlias() ) );
+
+        if( Color != Color.White )
+        {
+            element.Add( new XElement( "color",
+                new XAttribute( "r", Color.R ), new XAttribute( "g", Color.G ), new XAttribute( "b", Color.B ),
+                new XAttribute( "a", Color.A )
+            ) );
+        }
+        if( !String.IsNullOrWhiteSpace( Comment ) )
+        {
+            element.Add( new XElement( "comment", Comment ) );
+        }
 
 
-		return element;
-	}
+        return element;
+    }
 
-	protected virtual string GetTypeAlias()
-	{
-		return GetType().Name;
-	}
-		
-	/// <summary>
-	/// Gets the rendered terrain.
-	/// </summary>
-	public virtual IEnumerable<ComponentRender> GetTerrain()
-	{
-		yield break;
-	}
-		
-	public void SetColor(int r, int g, int b)
-	{
-		Color = new Color(r, g, b);
-	}
-	    
-	public void SetColor(int r, int g, int b, int a)
-	{
-		Color = new Color(r, g, b, a);
-	}
+    protected virtual string GetTypeAlias()
+    {
+        return GetType().Name;
+    }
 
-	public abstract TerrainComponent Clone();
+    /// <summary>
+    /// Gets the rendered terrain.
+    /// </summary>
+    public virtual IEnumerable<ComponentRender> GetTerrain()
+    {
+        yield break;
+    }
 
-	public virtual IEnumerable<Button> GetInspectorActions()
-	{
-		var templateButton = new Button()
-		{
-			Content = new TextBlock()
-			{
-				Foreground = Color.OrangeRed, Stroke = Color.Black,
-				FontStyle = MSDFStyle.Outline,
+    public void SetColor( int r, int g, int b )
+    {
+        Color = new Color( r, g, b );
+    }
 
-				Font = "Tahoma", FontSize = 10,
-				Text = "Template",
+    public void SetColor( int r, int g, int b, int a )
+    {
+        Color = new Color( r, g, b, a );
+    }
 
-				Margin = new Vector4F(3, 3, 3, 3)
-			}
-		};
-			
-		templateButton.Click += (o, args) =>
-		{
-			var element = GetXElement();
-			var typeAttribute = element.Attribute("type");
+    public abstract TerrainComponent Clone();
 
-			if (typeAttribute != null)
-			{
-				element.Name = typeAttribute.Value;
-				typeAttribute.Remove();
-			}
+    public virtual IEnumerable<Button> GetInspectorActions()
+    {
+        var templateButton = new Button()
+        {
+            Content = new TextBlock()
+            {
+                Foreground = Color.OrangeRed,
+                Stroke = Color.Black,
+                FontStyle = MSDFStyle.Outline,
 
-			Clipboard.SetText(element.ToString());
-		};
+                Font = "Tahoma",
+                FontSize = 10,
+                Text = "Template",
 
-		yield return templateButton;
-	}
+                Margin = new Vector4F( 3, 3, 3, 3 )
+            }
+        };
 
-	#endregion
+        templateButton.Click += ( o, args ) =>
+        {
+            var element = GetXElement();
+            var typeAttribute = element.Attribute( "type" );
+
+            if( typeAttribute != null )
+            {
+                element.Name = typeAttribute.Value;
+                typeAttribute.Remove();
+            }
+
+            Clipboard.SetText( element.ToString() );
+        };
+
+        yield return templateButton;
+    }
+
+    #endregion
 }

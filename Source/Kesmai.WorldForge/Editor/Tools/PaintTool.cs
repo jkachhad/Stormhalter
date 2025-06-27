@@ -11,147 +11,164 @@ using DigitalRune.Game.UI;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using DigitalRune.Game.UI.Rendering;
+using Kesmai.WorldForge.Windows;
 
 namespace Kesmai.WorldForge;
 
 public class PaintTool : Tool
 {
-	private bool _isShiftDown;
-	private bool _isAltDown;
+    private bool _isShiftDown;
+    private bool _isAltDown;
 
-	public PaintTool() : base("Paint", "Editor-Icon-Paint")
-	{
-	}
+    public PaintTool ( ) : base ( "Paint", "Editor-Icon-Paint" )
+    {
+    }
+    private IEnumerable<TerrainComponent> GetSimilarComponents ( SegmentTile tile, Type componentType )
+    {
+        var floorTypes = new List<string> ( ) {
+        "FloorComponent", "WaterComponent", "IceComponent", "SkyComponent"
+    };
 
-	public override void OnHandleInput(PresentationTarget target, IInputService inputService)
-	{
-		base.OnHandleInput(target, inputService);
-			
-		if (inputService.IsMouseOrTouchHandled)
-			return;
-			
-		var services = ServiceLocator.Current;
-		var presenter = services.GetInstance<ApplicationPresenter>();
+        if ( floorTypes.Contains ( componentType.Name ) )
+        {
+            return tile.GetComponents<TerrainComponent> ( c =>
+                c is FloorComponent || c is WaterComponent || c is IceComponent || c is SkyComponent );
+        }
+        else
+        {
+            return tile.GetComponents<TerrainComponent> ( c =>
+                c.GetType ( ).IsAssignableFrom ( componentType ) );
+        }
+    }
 
-		var graphicsScreen = target.WorldScreen;
-		var region = target.Region;
-		var selection = presenter.Selection;
 
-		if (!inputService.IsKeyboardHandled)
-		{
+    public override void OnHandleInput ( PresentationTarget target, IInputService inputService )
+    {
+        base.OnHandleInput ( target, inputService );
 
-			_isShiftDown = inputService.IsDown(Keys.LeftShift) || inputService.IsDown(Keys.RightShift);
-			_isAltDown = inputService.IsDown(Keys.LeftAlt) || inputService.IsDown(Keys.RightAlt);
+        if ( inputService.IsMouseOrTouchHandled )
+            return;
 
-			if (inputService.IsReleased(Keys.Escape))
-			{
-				presenter.SelectTool(default(Tool));
-				inputService.IsKeyboardHandled = true;
-			}
-		}
-			
-		var (cx, cy) = graphicsScreen.ToWorldCoordinates((int)_position.X, (int)_position.Y);
+        var services = ServiceLocator.Current;
+        var presenter = services.GetInstance<ApplicationPresenter> ( );
 
-		if (!selection.Any())
-			return;
+        var graphicsScreen = target.WorldScreen;
+        var region = target.Region;
+        var selection = presenter.Selection;
 
-		if (inputService.IsReleased(MouseButtons.Left) && selection.IsSelected(cx, cy, region))
-		{
-			var component = presenter.SelectedComponent;
+        if ( !inputService.IsKeyboardHandled )
+        {
 
-			if (component != null)
-			{
-				var componentType = component.GetType();
-				var floorTypes = new List<String>() {
-					"FloorComponent",
-					"WaterComponent",
-					"IceComponent",
-					"SkyComponent"
-				};
-				IEnumerable<TerrainComponent> similar = Enumerable.Empty<TerrainComponent>();
+            _isShiftDown = inputService.IsDown ( Keys.LeftShift ) || inputService.IsDown ( Keys.RightShift );
+            _isAltDown = inputService.IsDown ( Keys.LeftAlt ) || inputService.IsDown ( Keys.RightAlt );
 
-				foreach (var area in selection)
-				{
-					for (var x = area.Left; x < area.Right; x++)
-					for (var y = area.Top; y < area.Bottom; y++)
-					{
-						var selectedTile = region.GetTile(x, y);
-							
-						if (selectedTile == null)
-							region.SetTile(x, y, selectedTile = new SegmentTile(x, y));
+            if ( inputService.IsReleased ( Keys.Escape ) )
+            {
+                presenter.SelectTool ( default ( Tool ) );
+                inputService.IsKeyboardHandled = true;
+            }
+        }
 
-						// Shift = Append; Alt = Replace
-						// if not shift and not alt, then clobber like components.
-						// if Shift, then there are no like components to clobber
-						// if Alt, then all components get clobbered.
-						// Alt wins in the case of shift+alt
+        var (cx, cy) = graphicsScreen.ToWorldCoordinates ( (int) _position.X, (int) _position.Y );
 
-						if (!_isShiftDown && !_isAltDown) //not appending and not replacing.
-						{
-							if (floorTypes.Contains(componentType.Name))
-							{
-								similar = selectedTile.GetComponents<TerrainComponent>(c => c is FloorComponent || c is WaterComponent || c is IceComponent || c is SkyComponent);
-							}
-							else
-							{
-								similar = selectedTile.GetComponents<TerrainComponent>(c => c.GetType().IsAssignableFrom(componentType));
-							}
-						}
-						if (_isAltDown) // replacing
-						{
-							similar = selectedTile.GetComponents<TerrainComponent>();
-						}
+        if ( !selection.Any ( ) )
+            return;
 
-						foreach (var similarComponent in similar)
-							selectedTile.RemoveComponent(similarComponent);
+        if ( inputService.IsReleased ( MouseButtons.Left ) && selection.IsSelected ( cx, cy, region ) )
+        {
+            var component = presenter.SelectedComponent;
 
-						selectedTile.Components.Add(component.Clone());
-						selectedTile.UpdateTerrain();
-					}
-				}
-					
-				graphicsScreen.InvalidateRender();
-			}
-		}
-	}
+            var baseComponent = presenter.SelectedComponent;
 
-	public override void OnActivate()
-	{
-		base.OnActivate();
-		_cursor = Cursors.Arrow;
-	}
-		
-	public override void OnDeactivate()
-	{
-		base.OnDeactivate();
-	}
+            if ( baseComponent != null )
+            {
+                // Create a temporary tile and insert the component clone
+                var tempTile = new SegmentTile ( cx, cy );
+                tempTile.Components.Add ( baseComponent.Clone ( ) );
+                tempTile.UpdateTerrain ( );
 
-	public override void OnRender(RenderContext context)
-	{
-		base.OnRender(context);
+                var componentWindow = new ComponentsWindow ( region, tempTile, graphicsScreen );
+                componentWindow.Show ( graphicsScreen.UI );
+                componentWindow.Center ( );
 
-		var graphicsService = context.GraphicsService;
-		var spriteBatch = graphicsService.GetSpriteBatch();
+                componentWindow.Closed += ( s, e ) =>
+                {
+                    var configuredComponent = tempTile.Components.FirstOrDefault ( );
 
-		var presentationTarget = context.GetPresentationTarget();
+                    if ( configuredComponent == null )
+                        return;
 
-		var worldScreen = presentationTarget.WorldScreen;
-		var uiScreen = worldScreen.UI;
-		var renderer = uiScreen.Renderer;
-		var spriteFont = renderer.GetFontRenderer("Tahoma", 10);
+                    foreach ( var area in selection )
+                    {
+                        for ( var x = area.Left; x < area.Right; x++ )
+                            for ( var y = area.Top; y < area.Bottom; y++ )
+                            {
+                                var selectedTile = region.GetTile ( x, y );
 
-		var text = String.Empty;
+                                if ( selectedTile == null )
+                                    region.SetTile ( x, y, selectedTile = new SegmentTile ( x, y ) );
 
-		if (_isShiftDown)
-			text = "Append";
-		if (_isAltDown)
-			text = "Replace";
+                                if ( !_isShiftDown && !_isAltDown )
+                                {
+                                    var similar = GetSimilarComponents ( selectedTile, baseComponent.GetType ( ) );
+                                    foreach ( var similarComponent in similar )
+                                        selectedTile.RemoveComponent ( similarComponent );
+                                }
+                                else if ( _isAltDown )
+                                {
+                                    selectedTile.Components.Clear ( );
+                                }
 
-		var position = (Vector2)_position + new Vector2(10.0f, -10.0f);
+                                selectedTile.Components.Add ( configuredComponent.Clone ( ) );
+                                selectedTile.UpdateTerrain ( );
+                            }
+                    }
 
-		spriteFont.DrawString(spriteBatch, RenderTransform.Identity, text, position + new Vector2(1f, 1f),
-			Color.Black);
-		spriteFont.DrawString(spriteBatch, RenderTransform.Identity, text, position,
-			Color.Yellow);
-	}
+                    graphicsScreen.InvalidateRender ( );
+                };
+            }
+
+
+        }
+    }
+
+    public override void OnActivate ( )
+    {
+        base.OnActivate ( );
+        _cursor = Cursors.Arrow;
+    }
+
+    public override void OnDeactivate ( )
+    {
+        base.OnDeactivate ( );
+    }
+
+    public override void OnRender ( RenderContext context )
+    {
+        base.OnRender ( context );
+
+        var graphicsService = context.GraphicsService;
+        var spriteBatch = graphicsService.GetSpriteBatch ( );
+
+        var presentationTarget = context.GetPresentationTarget ( );
+
+        var worldScreen = presentationTarget.WorldScreen;
+        var uiScreen = worldScreen.UI;
+        var renderer = uiScreen.Renderer;
+        var spriteFont = renderer.GetFontRenderer ( "Tahoma", 10 );
+
+        var text = String.Empty;
+
+        if ( _isShiftDown )
+            text = "Append";
+        if ( _isAltDown )
+            text = "Replace";
+
+        var position = (Vector2) _position + new Vector2 ( 10.0f, -10.0f );
+
+        spriteFont.DrawString ( spriteBatch, RenderTransform.Identity, text, position + new Vector2 ( 1f, 1f ),
+            Color.Black );
+        spriteFont.DrawString ( spriteBatch, RenderTransform.Identity, text, position,
+            Color.Yellow );
+    }
 }
