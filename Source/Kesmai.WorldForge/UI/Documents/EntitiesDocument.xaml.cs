@@ -99,7 +99,8 @@ public partial class EntitiesDocument : UserControl
 		{
 			if (selectedItem.DataContext is Entity entity)
 			{
-				_draggedEntity = (Entity)selectedItem.DataContext;
+				_draggedEntity = (Entity)selectedItem?.DataContext;
+				System.Diagnostics.Debug.WriteLine($"{treeView})");
 				DragDrop.DoDragDrop(treeView, _draggedEntity, DragDropEffects.Move);
 			}
 			else if (selectedItem.DataContext is EntitiesViewModel.WfGroup group)
@@ -203,7 +204,7 @@ public class EntitiesViewModel : ObservableRecipient, IDisposable
     public void Dispose()
     {
         _selectedEntity = null;
-        _groups = null;
+        //_groups = null;
         _relatedSpawners.Clear();
         _isDisposed = true;
     }
