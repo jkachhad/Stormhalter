@@ -13,7 +13,20 @@
         <TreeView x:Name="_fileTree"
                   ItemsSource="{Binding Files}"
                   SelectedItemChanged="OnSelectedItemChanged"
-                  DisplayMemberPath="Name" />
+                  DisplayMemberPath="Name">
+            <TreeView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add File"
+                              Command="{Binding DataContext.AddFileCommand, ElementName=_fileTree}" />
+                    <MenuItem Header="Rename"
+                              Command="{Binding DataContext.RenameFileCommand, ElementName=_fileTree}"
+                              CommandParameter="{Binding SelectedItem, ElementName=_fileTree}" />
+                    <MenuItem Header="Delete"
+                              Command="{Binding DataContext.DeleteFileCommand, ElementName=_fileTree}"
+                              CommandParameter="{Binding SelectedItem, ElementName=_fileTree}" />
+                </ContextMenu>
+            </TreeView.ContextMenu>
+        </TreeView>
         <Border Grid.Column="1" Margin="2" BorderBrush="Black" BorderThickness="1">
             <scripting:ScriptEditor x:Name="_codeEditor" />
         </Border>
