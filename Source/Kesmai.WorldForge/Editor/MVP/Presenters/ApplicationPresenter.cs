@@ -614,11 +614,14 @@ public class ApplicationPresenter : ObservableRecipient
 		Documents.Add(new LocationsViewModel(segment));
 		Documents.Add(new SubregionViewModel(segment));
 		Documents.Add(new EntitiesViewModel(segment));
-		Documents.Add(new SpawnsViewModel(segment));
-		Documents.Add(new TreasuresViewModel(segment));
-		
-		Segment = segment;
-		Segment.UpdateTiles();
+                Documents.Add(new SpawnsViewModel(segment));
+                Documents.Add(new TreasuresViewModel(segment));
+                var solutionPath = Path.Combine(_segmentFileFolder.FullName, $"{segment.Name}.sln");
+                if (File.Exists(solutionPath))
+                    Documents.Add(new SolutionViewModel(solutionPath));
+
+                Segment = segment;
+                Segment.UpdateTiles();
 		
 		SelectFilter(Filters.FirstOrDefault());
 		SelectTool(Tools.FirstOrDefault());
