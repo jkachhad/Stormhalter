@@ -8,6 +8,11 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Linq;
+using System.Threading.Tasks;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.MSBuild;
+using Microsoft.Build.Locator;
+using Microsoft.CodeAnalysis.Text;
 using Microsoft.Win32;
 
 namespace Kesmai.WorldForge.UI.Documents;
@@ -21,9 +26,15 @@ public partial class SolutionDocument : UserControl
 
     private void OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
     {
-        if (e.NewValue is SolutionFile file && File.Exists(file.FullPath))
+        if (e.NewValue is SolutionFile file)
         {
-            _codeEditor.Document.Text = File.ReadAllText(file.FullPath);
+            var vm = DataContext as SolutionViewModel;
+            var document = vm?.CurrentSolution?.GetDocument(file.DocumentId);
+            if (document != null)
+            {
+                var text = document.GetTextAsync().Result;
+                _codeEditor.Document.Text = text.ToString();
+            }
         }
     }
 }
@@ -33,16 +44,22 @@ public class SolutionFile : ObservableObject
     public string Name { get; set; }
     public string FullPath { get; set; }
     public string ProjectPath { get; set; }
+    public DocumentId DocumentId { get; set; }
     public ObservableCollection<SolutionFile> Children { get; } = new();
 }
 
 public class SolutionViewModel : ObservableObject, IDisposable
 {
-    public string Name => "(Solution)";
+    private readonly string _segmentName;
+    public string Name => $"{_segmentName} (Solution)";
     public ObservableCollection<SolutionFile> Files { get; } = new();
 
     private readonly string _solutionPath;
-    private readonly List<string> _projects = new();
+    private readonly List<ProjectId> _projects = new();
+    private AdhocWorkspace _workspace;
+    private Solution _solution;
+
+    internal Solution CurrentSolution => _solution;
 
     public RelayCommand AddFileCommand { get; }
     public RelayCommand<SolutionFile> DeleteFileCommand { get; }
@@ -51,6 +68,7 @@ public class SolutionViewModel : ObservableObject, IDisposable
     public SolutionViewModel(string solutionPath)
     {
         _solutionPath = solutionPath;
+        _segmentName = Path.GetFileNameWithoutExtension(solutionPath);
         LoadSolution();
 
         AddFileCommand = new RelayCommand(AddFile);
@@ -63,50 +81,48 @@ public class SolutionViewModel : ObservableObject, IDisposable
         if (!File.Exists(_solutionPath))
             return;
 
-        var baseDir = Path.GetDirectoryName(_solutionPath);
-        _projects.Clear();
-        foreach (var line in File.ReadLines(_solutionPath))
-        {
-            var trimmed = line.TrimStart();
-            if (!trimmed.StartsWith("Project("))
-                continue;
-            var parts = trimmed.Split(',');
-            if (parts.Length < 2)
-                continue;
-            var projectPath = parts[1].Trim().Trim('"');
-            projectPath = Path.Combine(baseDir, projectPath);
-            if (!File.Exists(projectPath))
-                continue;
-            _projects.Add(projectPath);
-            ParseProject(projectPath);
-        }
-    }
+        MSBuildLocator.RegisterDefaults();
+        using var msWorkspace = MSBuildWorkspace.Create();
+        var loadedSolution = msWorkspace.OpenSolutionAsync(_solutionPath).Result;
 
-    private void ParseProject(string projectPath)
-    {
-        var projectDir = Path.GetDirectoryName(projectPath);
-        var doc = XDocument.Load(projectPath);
-        foreach (var compile in doc.Descendants().Where(e => e.Name.LocalName == "Compile"))
+        _workspace = new AdhocWorkspace();
+        _workspace.TryApplyChanges(loadedSolution);
+        _solution = _workspace.CurrentSolution;
+
+        _projects.Clear();
+        foreach (var project in _solution.Projects)
         {
-            var include = compile.Attribute("Include")?.Value;
-            if (string.IsNullOrEmpty(include))
-                continue;
-            var filePath = Path.Combine(projectDir, include.Replace('\\', Path.DirectorySeparatorChar));
-            Files.Add(new SolutionFile { Name = Path.GetFileName(filePath), FullPath = filePath, ProjectPath = projectPath });
+            _projects.Add(project.Id);
+            foreach (var document in project.Documents)
+            {
+                if (document.FilePath == null)
+                    continue;
+                Files.Add(new SolutionFile
+                {
+                    Name = Path.GetFileName(document.FilePath),
+                    FullPath = document.FilePath,
+                    ProjectPath = project.FilePath ?? string.Empty,
+                    DocumentId = document.Id
+                });
+            }
         }
     }
 
     private void AddFile()
     {
-        var project = _projects.FirstOrDefault();
-        if (string.IsNullOrEmpty(project))
+        var projectId = _projects.FirstOrDefault();
+        if (projectId == default)
+            return;
+
+        var project = _solution.GetProject(projectId);
+        if (project == null)
             return;
 
         var dialog = new SaveFileDialog
         {
             DefaultExt = ".cs",
             Filter = "C# File (*.cs)|*.cs",
-            InitialDirectory = Path.GetDirectoryName(project)
+            InitialDirectory = Path.GetDirectoryName(project.FilePath)
         };
 
         if (dialog.ShowDialog() == true)
@@ -114,13 +130,19 @@ public class SolutionViewModel : ObservableObject, IDisposable
             if (!File.Exists(dialog.FileName))
                 File.WriteAllText(dialog.FileName, string.Empty);
 
-            UpdateProjectAdd(project, dialog.FileName);
+            var documentId = DocumentId.CreateNewId(projectId);
+            var newSolution = project.AddDocument(documentId, Path.GetFileName(dialog.FileName), SourceText.From(string.Empty), filePath: dialog.FileName).Project.Solution;
+            _workspace.TryApplyChanges(newSolution);
+            _solution = _workspace.CurrentSolution;
+
+            UpdateProjectAdd(project.FilePath!, dialog.FileName);
 
             Files.Add(new SolutionFile
             {
                 Name = Path.GetFileName(dialog.FileName),
                 FullPath = dialog.FileName,
-                ProjectPath = project
+                ProjectPath = project.FilePath ?? string.Empty,
+                DocumentId = documentId
             });
         }
     }
@@ -135,6 +157,14 @@ public class SolutionViewModel : ObservableObject, IDisposable
 
         if (File.Exists(file.FullPath))
             File.Delete(file.FullPath);
+
+        var project = _solution.GetProject(file.DocumentId.ProjectId);
+        if (project != null)
+        {
+            var newSolution = project.RemoveDocument(file.DocumentId).Solution;
+            _workspace.TryApplyChanges(newSolution);
+            _solution = _workspace.CurrentSolution;
+        }
 
         UpdateProjectRemove(file.ProjectPath, file.FullPath);
 
@@ -157,6 +187,10 @@ public class SolutionViewModel : ObservableObject, IDisposable
         var newPath = Path.Combine(Path.GetDirectoryName(file.FullPath)!, newName);
 
         File.Move(file.FullPath, newPath);
+
+        var newSolution = _solution.WithDocumentFilePath(file.DocumentId, newPath);
+        _workspace.TryApplyChanges(newSolution);
+        _solution = _workspace.CurrentSolution;
 
         UpdateProjectRename(file.ProjectPath, file.FullPath, newPath);
 
@@ -206,5 +240,6 @@ public class SolutionViewModel : ObservableObject, IDisposable
     public void Dispose()
     {
         Files.Clear();
+        _workspace?.Dispose();
     }
 }
