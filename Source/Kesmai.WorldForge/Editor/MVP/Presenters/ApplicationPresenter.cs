@@ -41,7 +41,8 @@ public class ApplicationPresenter : ObservableRecipient
 	private DirectoryInfo _segmentFileFolder;
 		
 	private Segment _segment;
-	private CustomRoslynHost _roslynHost;
+        private CustomRoslynHost _roslynHost;
+        private MapProjectWorkspace _projectWorkspace;
 	private Selection _selection;
 	private TerrainSelector _filter;
 	private Tool _selectedTool;
@@ -76,7 +77,8 @@ public class ApplicationPresenter : ObservableRecipient
 		set => _selectedTool = value;
 	}
 
-	public IRoslynHost RoslynHost => _roslynHost;
+        public IRoslynHost RoslynHost => _roslynHost;
+        public MapProjectWorkspace ProjectWorkspace => _projectWorkspace;
 
 	private ComponentsCategory _selectedComponentCategory;
 	private TerrainComponent _selectedComponent;
@@ -526,17 +528,19 @@ public class ApplicationPresenter : ObservableRecipient
 		_segmentFilePath = String.Empty;
 	}
 
-	private void CloseSegment()
-	{
-		if (_segment == null)
-			throw new InvalidOperationException("Attempt to close a segment when an active segment does not exist.");
+        private void CloseSegment()
+        {
+                if (_segment == null)
+                        throw new InvalidOperationException("Attempt to close a segment when an active segment does not exist.");
 
-		Segment = null;
-		WeakReferenceMessenger.Default.Send(new UnregisterEvents());
-		Documents.Clear();
-			
-		_segmentFilePath = String.Empty;
-	}
+                Segment = null;
+                _projectWorkspace?.Dispose();
+                _projectWorkspace = null;
+                WeakReferenceMessenger.Default.Send(new UnregisterEvents());
+                Documents.Clear();
+
+                _segmentFilePath = String.Empty;
+        }
 
 	private void CompileSegment()
 	{
@@ -573,11 +577,11 @@ public class ApplicationPresenter : ObservableRecipient
 		if (!openResult.HasValue || openResult != true)
 			return;
 
-		var targetFile = dialog.FileName;
-		var targetFileInfo = new FileInfo(targetFile);
-		
-		_segmentFilePath = targetFile;
-		_segmentFileFolder = targetFileInfo.Directory;
+                var targetFile = dialog.FileName;
+                var targetFileInfo = new FileInfo(targetFile);
+
+                        _segmentFilePath = targetFile;
+                _segmentFileFolder = targetFileInfo.Directory;
 			
 		var segment = new Segment();
 		
@@ -618,14 +622,15 @@ public class ApplicationPresenter : ObservableRecipient
 		Documents.Add(new TreasuresViewModel(segment));
 		
 		Segment = segment;
-		Segment.UpdateTiles();
-		
-		SelectFilter(Filters.FirstOrDefault());
-		SelectTool(Tools.FirstOrDefault());
-	}
+                Segment.UpdateTiles();
 
-	private void SaveSegment(bool queryPath)
-	{
+                SelectFilter(Filters.FirstOrDefault());
+                SelectTool(Tools.FirstOrDefault());
+                SetupWorkspace();
+        }
+
+        private void SaveSegment(bool queryPath)
+        {
 		var targetFile = String.Empty;
 
 		if (!CheckScriptSyntax())
@@ -660,6 +665,7 @@ public class ApplicationPresenter : ObservableRecipient
 				File.Delete(targetFile);
 
 			_segmentFilePath = targetFile;
+                        _segmentFileFolder = new FileInfo(targetFile).Directory;
 
 			var projectFile = new XDocument();
 			var segmentElement = new XElement("segment",
@@ -678,14 +684,36 @@ public class ApplicationPresenter : ObservableRecipient
 				File.Delete(definitionFilePath);
 			
 			using (var stream = new FileStream(definitionFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
-			using (var writer = new StreamWriter(stream))
-				writer.Write(_segment.Definition.Blocks[1]);
+                        using (var writer = new StreamWriter(stream))
+                                writer.Write(_segment.Definition.Blocks[1]);
+
+                        SetupWorkspace();
 		}
-		catch (Exception ex)
-		{
-			MessageBox.Show($"Error when saving project: {ex.Message}", "Unable to save", MessageBoxButton.OK, MessageBoxImage.Error);
-		}
-	}
+                catch (Exception ex)
+                {
+                        MessageBox.Show($"Error when saving project: {ex.Message}", "Unable to save", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+        }
+
+        private void SetupWorkspace()
+        {
+                if (_segmentFileFolder != null && Segment != null)
+                {
+                        _projectWorkspace?.Dispose();
+                        _projectWorkspace = new MapProjectWorkspace(_segmentFileFolder.FullName, Segment.Name);
+
+                        var solutionVm = Documents.OfType<SolutionViewModel>().FirstOrDefault();
+                        if (solutionVm == null)
+                        {
+                                solutionVm = new SolutionViewModel(_projectWorkspace);
+                                Documents.Insert(0, solutionVm);
+                        }
+                        else
+                        {
+                                solutionVm.SetWorkspace(_projectWorkspace);
+                        }
+                }
+        }
 
 	private bool CheckScriptSyntax() //Enumerate all script segments and verify that they pass syntax checks
 	{
