@@ -112,9 +112,9 @@ public class PeekSpell : DelayedSpell
 			player.Unpeek();
 	}
 
-	protected override void OnCancel()
+	protected override void OnCancel(bool silent)
 	{
-		base.OnCancel();
+		base.OnCancel(silent);
 			
 		_caster.CloseGumps<PeekSpellGump>();
 	}
