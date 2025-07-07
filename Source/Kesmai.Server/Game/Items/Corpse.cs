@@ -119,6 +119,7 @@ public class Corpse : ItemEntity
 			return false;
 			
 		Strip();
+		Move(Location, true);
 			
 		entity.QueueRoundTimer();
 		return true;
