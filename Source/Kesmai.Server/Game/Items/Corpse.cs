@@ -176,8 +176,6 @@ public class Corpse : ItemEntity
 			item.OnStrip(this);
 			item.Move(Location, true, Segment);
 		}
-
-		Move(Location, true);
 	}
 
 	public ItemEntity Tan()
