@@ -390,9 +390,14 @@ public class ComponentsWindow : Window
 
             if ( ( inputService.IsDown ( Keys.LeftControl ) || inputService.IsDown ( Keys.RightControl ) ) )
             {
-                if ( inputService.IsReleased ( Keys.C ) )
-                    Clipboard.SetText ( SelectedItem.Component.GetXElement ( ).ToString ( ) );
-
+                if (inputService.IsReleased(Keys.C))
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        // copy=false means don't call FlushClipboard
+                        Clipboard.SetDataObject(SelectedItem.Component.GetXElement().ToString(), false);
+                    });
+                }
                 if ( inputService.IsReleased ( Keys.V ) )
                 {
                     try
