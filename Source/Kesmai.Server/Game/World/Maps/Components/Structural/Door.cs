@@ -215,7 +215,7 @@ public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMove
 
 	private void Delta(SegmentTile parent)
 	{
-		parent.Delta(TileDelta.Terrain);
+		parent.Delta(TileDelta.Terrain, true);
 		parent.UpdateFlags();
 	}
 

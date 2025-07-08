@@ -119,6 +119,7 @@ public class Corpse : ItemEntity
 			return false;
 			
 		Strip();
+		Move(Location, true);
 			
 		entity.QueueRoundTimer();
 		return true;
@@ -176,8 +177,6 @@ public class Corpse : ItemEntity
 			item.OnStrip(this);
 			item.Move(Location, true, Segment);
 		}
-
-		Move(Location, true);
 	}
 
 	public ItemEntity Tan()

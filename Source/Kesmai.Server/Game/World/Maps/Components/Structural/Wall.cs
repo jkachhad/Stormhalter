@@ -164,6 +164,6 @@ public class Wall : TerrainComponent, IHandleInteraction, IHandleVision, IHandle
 		if (_ruins != null)
 			parent.Add(Ruins.Construct(_color, _ruins.ID));
 			
-		parent.Delta(TileDelta.Terrain);
+		parent.Delta(TileDelta.Terrain, true);
 	}
 }
