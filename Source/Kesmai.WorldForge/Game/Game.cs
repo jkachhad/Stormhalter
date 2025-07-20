@@ -32,9 +32,9 @@ public class Game
 		// ----- Storage
 		// Create a "virtual file system" for reading game assets.
 		var vfsStorage = new VfsStorage();
-			
+		
 		vfsStorage.MountInfos.Add(new VfsMountInfo(new TitleStorage(String.Empty), null));
-
+		
 		try
 		{
 			vfsStorage.MountInfos.Add(new VfsMountInfo(new GZipStorage(vfsStorage, "Data.bin"), null));
@@ -47,7 +47,7 @@ public class Game
 			MessageBox.Show("Missing either Data.bin, Kesmai.bin, Stormhalter.bin, or UI.bin.");
 			throw;
 		}
-
+		
 		vfsStorage.Readers.Add(typeof(XDocument), new XDocumentReader());
 
 		// ----- Content
