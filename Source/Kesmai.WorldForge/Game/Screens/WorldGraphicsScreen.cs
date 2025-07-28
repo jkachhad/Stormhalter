@@ -1,5 +1,7 @@
-﻿using CommonServiceLocator;
-using CommunityToolkit.Mvvm.Messaging;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using CommonServiceLocator;
 using DigitalRune.Game.Input;
 using DigitalRune.Game.UI;
 using DigitalRune.Game.UI.Controls;
@@ -10,13 +12,11 @@ using DigitalRune.ServiceLocation;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Models;
 using Kesmai.WorldForge.UI.Documents;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Kesmai.WorldForge;
 
