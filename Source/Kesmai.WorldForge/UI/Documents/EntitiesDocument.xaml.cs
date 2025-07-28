@@ -491,19 +491,31 @@ public class EntitiesViewModel : ObservableRecipient, IDisposable
 				group.Entities.Remove(entity);
 		}
 	}
+    public void CopyEntity(Entity entity)
+    {
+        if (entity.Clone() is Entity entity2)
+        {
+            Source.Add(entity2);
+            string group = entity2.Group;
 
-	public void CopyEntity(Entity entity)
-	{
-		if (entity.Clone() is Entity clonedEntity)
-		{
-			Source.Add(clonedEntity);
-			var group = clonedEntity.Group;
-			var wfGroup = _groups.Groups.Where(g => g.Name == group).FirstOrDefault();
-			wfGroup.Entities.Add(clonedEntity);
-	
-			SelectedEntity = clonedEntity;
-		}
-	}
+            // Try to find the matching group
+            var matchingGroup = _groups.Groups.FirstOrDefault(g => g.Name == group);
+
+            if (matchingGroup != null)
+            {
+                matchingGroup.Entities.Add(entity2);
+            }
+            else
+            {
+                // If no matching group, create a new one
+                var newGroup = new WfGroup { Name = group ?? "AAUnassigned" };
+                newGroup.Entities.Add(entity2);
+                _groups.Groups.Add(newGroup);
+            }
+
+            SelectedEntity = entity2;
+        }
+    }
 
 	public void ExportEntity(Entity entity)
 	{

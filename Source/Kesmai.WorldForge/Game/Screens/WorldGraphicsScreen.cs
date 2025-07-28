@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CommonServiceLocator;
+﻿using CommonServiceLocator;
+using CommunityToolkit.Mvvm.Messaging;
 using DigitalRune.Game.Input;
 using DigitalRune.Game.UI;
 using DigitalRune.Game.UI.Controls;
@@ -11,11 +9,14 @@ using DigitalRune.Mathematics.Algebra;
 using DigitalRune.ServiceLocation;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Models;
-using CommunityToolkit.Mvvm.Messaging;
+using Kesmai.WorldForge.UI.Documents;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Kesmai.WorldForge;
 
@@ -93,7 +94,7 @@ public class SpawnsGraphicsScreen : WorldGraphicsScreen
 		}
 	}
 
-	protected override void OnAfterRender(SpriteBatch spriteBatch)
+    protected override void OnAfterRender(SpriteBatch spriteBatch)
 	{
 		base.OnAfterRender(spriteBatch);
 
@@ -479,7 +480,12 @@ public class WorldGraphicsScreen : GraphicsScreen
     
     private void SubregionInclude(object sender, EventArgs args)
     {
-        var currentSubregion = (_presenter.ActiveDocument as UI.Documents.SubregionViewModel).SelectedSubregion;
+        var subregionViewModel = _presenter.ActiveDocument as SubregionViewModel;
+        if (subregionViewModel == null)
+            return;
+
+        SegmentSubregion currentSubregion = subregionViewModel.SelectedSubregion;
+        //var currentSubregion = (_presenter.ActiveDocument as UI.Documents.SubregionViewModel).SelectedSubregion;
         if (currentSubregion == null)
             return;
         foreach (Rectangle rect in _selection)
