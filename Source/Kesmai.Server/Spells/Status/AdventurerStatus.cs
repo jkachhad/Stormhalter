@@ -45,8 +45,8 @@ public class AdventurerStatus : SpellStatus
 	{
 		if (_internalTimer != null && _internalTimer.Running)
 			_internalTimer.Stop();
-			
-		_internalTimer = Timer.DelayCall(TimeSpan.FromMinutes(3.0), OnTick);
+	
+		_internalTimer = Timer.DelayCall(_entity.Facet.TimeSpan.FromMinutes(3.0), OnTick);
 	}
 		
 	private void OnTick()

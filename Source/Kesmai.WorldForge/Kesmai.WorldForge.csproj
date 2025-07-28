@@ -3,9 +3,10 @@
         <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
         
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net8.0-windows</TargetFramework>
+
         <PreserveCompilationContext>false</PreserveCompilationContext>
         <UseWPF>true</UseWPF>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <FileAlignment>512</FileAlignment>
@@ -27,23 +28,7 @@
         <NoWarn>$(NoWarn);VSTHRD110</NoWarn>
         <NoWarn>$(NoWarn);MSB3539</NoWarn>
         <Configurations>Release;Debug</Configurations>
-        <Platforms>Windows</Platforms>
-    </PropertyGroup>
-
-    <PropertyGroup Condition=" '$(Configuration)' == 'Debug'">
-      <OutputPath>$(SolutionDir)\..\Build\Debug\WorldForge</OutputPath>
-      <DefineConstants>TRACE;DEBUG;WorldForge;Interop;CanImport;</DefineConstants>
-      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-      <Optimize>false</Optimize>
-      <DebugType>full</DebugType>
-    </PropertyGroup>
-
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release'">
-      <OutputPath>$(SolutionDir)\..\Build\Release\WorldForge</OutputPath>
-      <DefineConstants>TRACE;WorldForge;Interop;</DefineConstants>
-      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-      <Optimize>true</Optimize>
-      <DebugType>none</DebugType>
+        <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
     
     <ItemGroup>
@@ -58,7 +43,7 @@
       <PackageReference Include="iTextSharp" Version="5.5.13.4">
         <NoWarn>NU1701</NoWarn>
       </PackageReference>
-      <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.2.1105" />
+      <PackageReference Include="MonoGame.Framework.WindowsDX" Version="$(MonoGameVersion)" />
       <PackageReference Include="RedGate.SmartAssembly.MSBuild" Version="8.0.1.4676-preview">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

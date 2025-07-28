@@ -1,5 +1,25 @@
 <Project>
- <PropertyGroup>
-    <SolutionDir>$(MSBuildThisFileDirectory)</SolutionDir>
- </PropertyGroup>
+    <PropertyGroup>
+        <!-- Set the solution directory to the directory of this file -->
+        <SolutionDir>$(MSBuildThisFileDirectory)</SolutionDir>
+
+        <!-- Clean -->
+        <BaseIntermediateOutputPath>.vs</BaseIntermediateOutputPath>
+        <MSBuildProjectExtensionsPath>.vs</MSBuildProjectExtensionsPath>
+
+        <!-- Common target framework -->
+        <TargetFramework>net8.0-windows</TargetFramework>
+
+        <!-- Set the common monogame version -->
+        <MonoGameVersion>3.8.2.1105</MonoGameVersion>
+
+        <!-- Common configuration and platform settings -->
+        <Configurations>Debug;Release</Configurations>
+        <Platforms>AnyCPU</Platforms>
+
+        <!-- Project state -->
+        <ProjectState>Beta</ProjectState>
+
+        <DefineConstants>$(ProjectState)</DefineConstants>
+    </PropertyGroup>
 </Project>
