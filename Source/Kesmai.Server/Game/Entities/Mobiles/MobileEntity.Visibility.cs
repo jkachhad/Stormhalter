@@ -80,6 +80,89 @@ public abstract partial class MobileEntity
 	};
 
 	/// <summary>
+	/// Represents a filter condition with optional negation and OR grouping
+	/// </summary>
+	private class FilterCondition
+	{
+		public string FilterName { get; set; }
+		public bool IsNegated { get; set; }
+		public bool IsOrGroup { get; set; }
+	}
+
+	/// <summary>
+	/// Parses filter string into individual conditions, handling | (or) and ! (not) operators
+	/// </summary>
+	private static List<FilterCondition> ParseFilterConditions(string filterString)
+	{
+		var conditions = new List<FilterCondition>();
+		var parts = filterString.Split('|', StringSplitOptions.RemoveEmptyEntries);
+		
+		foreach (var part in parts)
+		{
+			var trimmedPart = part.Trim();
+			var isNegated = trimmedPart.StartsWith('!');
+			var filterName = isNegated ? trimmedPart.Substring(1).Trim() : trimmedPart;
+			
+			conditions.Add(new FilterCondition
+			{
+				FilterName = filterName,
+				IsNegated = isNegated,
+				IsOrGroup = parts.Length > 1
+			});
+		}
+		
+		return conditions;
+	}
+
+	/// <summary>
+	/// Applies a single filter condition to the entities list
+	/// </summary>
+	private static void ApplyFilterCondition(FilterCondition condition, MobileEntity source, List<MobileEntity> entities)
+	{
+		// Check basic filters first
+		if (_basicFilters.TryGetValue(condition.FilterName.ToLower(), out var basicFilter))
+		{
+			if (condition.IsNegated)
+			{
+				// For negated filters, we need to invert the logic
+				// Store original entities and apply inverse filter
+				var originalEntities = entities.ToList();
+				basicFilter(source, entities);
+				var removedEntities = originalEntities.Except(entities).ToList();
+				entities.Clear();
+				entities.AddRange(removedEntities);
+			}
+			else
+			{
+				basicFilter(source, entities);
+			}
+			return;
+		}
+
+		// Check advanced filters
+		foreach (var (filterRegex, function) in _advancedFilters)
+		{
+			if (!filterRegex.TryGetMatch(condition.FilterName.ToLower(), out var advancedFilters)) 
+				continue;
+			
+			if (condition.IsNegated)
+			{
+				// For negated advanced filters, we need to invert the logic
+				var originalEntities = entities.ToList();
+				function(advancedFilters, source, entities);
+				var removedEntities = originalEntities.Except(entities).ToList();
+				entities.Clear();
+				entities.AddRange(removedEntities);
+			}
+			else
+			{
+				function(advancedFilters, source, entities);
+			}
+			return;
+		}
+	}
+
+	/// <summary>
 	/// Finds an entity with the specified name reference.
 	/// </summary>
 	public MobileEntity FindMobileByName(string name)
@@ -102,21 +185,30 @@ public abstract partial class MobileEntity
 			var targetFilters = filterTargetMatch.Groups[3].Value.Split(":");
 
 			// apply filters.
-			foreach (var filterName in targetFilters)
+			foreach (var filterString in targetFilters)
 			{
-				if (_basicFilters.TryGetValue(filterName.ToLower(), out var basicFilter))
+				var conditions = ParseFilterConditions(filterString);
+				
+				if (conditions.Count == 1)
 				{
-					basicFilter(this, entities);
-					continue;
+					// Single condition - apply directly
+					ApplyFilterCondition(conditions[0], this, entities);
 				}
-
-				foreach (var (filterRegex, function) in _advancedFilters)
+				else if (conditions.Count > 1)
 				{
-					if (!filterRegex.TryGetMatch(filterName.ToLower(), out var advancedFilters)) 
-						continue;
+					// Multiple conditions with OR operator
+					var orResults = new List<MobileEntity>();
 					
-					function(advancedFilters, this, entities);
-					break;
+					foreach (var condition in conditions)
+					{
+						var tempEntities = entities.ToList();
+						ApplyFilterCondition(condition, this, tempEntities);
+						orResults.AddRange(tempEntities);
+					}
+					
+					// Keep only entities that match any of the OR conditions
+					entities.Clear();
+					entities.AddRange(orResults.Distinct());
 				}
 			}
 			
