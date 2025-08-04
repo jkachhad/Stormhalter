@@ -90,28 +90,65 @@ public abstract partial class MobileEntity
 	}
 
 	/// <summary>
-	/// Parses filter string into individual conditions, handling | (or) and ! (not) operators
+	/// Represents a complete filter expression that can contain multiple AND conditions
 	/// </summary>
-	private static List<FilterCondition> ParseFilterConditions(string filterString)
+	private class FilterExpression
 	{
-		var conditions = new List<FilterCondition>();
-		var parts = filterString.Split('|', StringSplitOptions.RemoveEmptyEntries);
+		public List<FilterCondition> AndConditions { get; set; } = new();
+		public bool IsOrGroup { get; set; }
+	}
+
+	/// <summary>
+	/// Parses filter string into expressions, handling | (or) and : (and) operators
+	/// </summary>
+	private static List<FilterExpression> ParseFilterExpressions(string filterString)
+	{
+		var expressions = new List<FilterExpression>();
 		
-		foreach (var part in parts)
+		// First split by OR operator to get OR groups
+		var orGroups = filterString.Split('|', StringSplitOptions.RemoveEmptyEntries);
+		
+		foreach (var orGroup in orGroups)
 		{
-			var trimmedPart = part.Trim();
-			var isNegated = trimmedPart.StartsWith('!');
-			var filterName = isNegated ? trimmedPart.Substring(1).Trim() : trimmedPart;
-			
-			conditions.Add(new FilterCondition
+			var trimmedGroup = orGroup.Trim();
+			var expression = new FilterExpression
 			{
-				FilterName = filterName,
-				IsNegated = isNegated,
-				IsOrGroup = parts.Length > 1
-			});
+				IsOrGroup = orGroups.Length > 1
+			};
+			
+			// Within each OR group, split by AND operator (colon)
+			var andConditions = trimmedGroup.Split(':', StringSplitOptions.RemoveEmptyEntries);
+			
+			foreach (var condition in andConditions)
+			{
+				var trimmedCondition = condition.Trim();
+				var isNegated = trimmedCondition.StartsWith('!');
+				var filterName = isNegated ? trimmedCondition.Substring(1).Trim() : trimmedCondition;
+				
+				expression.AndConditions.Add(new FilterCondition
+				{
+					FilterName = filterName,
+					IsNegated = isNegated,
+					IsOrGroup = false // AND conditions are never OR groups
+				});
+			}
+			
+			expressions.Add(expression);
 		}
 		
-		return conditions;
+		return expressions;
+	}
+
+	/// <summary>
+	/// Applies a single filter expression (AND group) to the entities list
+	/// </summary>
+	private static void ApplyFilterExpression(FilterExpression expression, MobileEntity source, List<MobileEntity> entities)
+	{
+		// Apply all AND conditions sequentially
+		foreach (var condition in expression.AndConditions)
+		{
+			ApplyFilterCondition(condition, source, entities);
+		}
 	}
 
 	/// <summary>
@@ -182,34 +219,39 @@ public abstract partial class MobileEntity
 		// the client sends reference in the form of "@name[filter]"
 		if (_filterTarget.TryGetMatch(name, out var filterTargetMatch))
 		{
-			var targetFilters = filterTargetMatch.Groups[3].Value.Split(":");
+			var filterString = filterTargetMatch.Groups[3].Value;
 
-			// apply filters.
-			foreach (var filterString in targetFilters)
+			// Parse the filter string into expressions
+			var expressions = ParseFilterExpressions(filterString);
+			
+			if (expressions.Count == 1)
 			{
-				var conditions = ParseFilterConditions(filterString);
+				// Single expression - apply directly
+				ApplyFilterExpression(expressions[0], this, entities);
+			}
+			else if (expressions.Count > 1)
+			{
+				// Multiple expressions with priority-based OR operator
+				// Process expressions in order and return the first one that has results
+				var originalEntities = entities.ToList();
+				var finalResults = new List<MobileEntity>();
 				
-				if (conditions.Count == 1)
+				foreach (var expression in expressions)
 				{
-					// Single condition - apply directly
-					ApplyFilterCondition(conditions[0], this, entities);
-				}
-				else if (conditions.Count > 1)
-				{
-					// Multiple conditions with OR operator
-					var orResults = new List<MobileEntity>();
+					var tempEntities = originalEntities.ToList();
+					ApplyFilterExpression(expression, this, tempEntities);
 					
-					foreach (var condition in conditions)
+					// If this expression found results, use them and stop processing
+					if (tempEntities.Any())
 					{
-						var tempEntities = entities.ToList();
-						ApplyFilterCondition(condition, this, tempEntities);
-						orResults.AddRange(tempEntities);
+						finalResults = tempEntities;
+						break;
 					}
-					
-					// Keep only entities that match any of the OR conditions
-					entities.Clear();
-					entities.AddRange(orResults.Distinct());
 				}
+				
+				// Replace entities with the results from the first matching expression
+				entities.Clear();
+				entities.AddRange(finalResults);
 			}
 			
 			name = filterTargetMatch.Groups[1].Value;
