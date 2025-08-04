@@ -80,81 +80,253 @@ public abstract partial class MobileEntity
 	};
 
 	/// <summary>
-	/// Represents a filter condition with optional negation and OR grouping
+	/// Represents a node in the filter expression AST
 	/// </summary>
-	private class FilterCondition
+	private abstract class FilterNode
+	{
+		public abstract List<MobileEntity> Evaluate(MobileEntity source, List<MobileEntity> entities);
+	}
+
+	/// <summary>
+	/// Represents a leaf node with a single filter condition
+	/// </summary>
+	private class FilterLeaf : FilterNode
 	{
 		public string FilterName { get; set; }
 		public bool IsNegated { get; set; }
-		public bool IsOrGroup { get; set; }
-	}
 
-	/// <summary>
-	/// Represents a complete filter expression that can contain multiple AND conditions
-	/// </summary>
-	private class FilterExpression
-	{
-		public List<FilterCondition> AndConditions { get; set; } = new();
-		public bool IsOrGroup { get; set; }
-	}
-
-	/// <summary>
-	/// Parses filter string into expressions, handling | (or) and : (and) operators
-	/// </summary>
-	private static List<FilterExpression> ParseFilterExpressions(string filterString)
-	{
-		var expressions = new List<FilterExpression>();
-		
-		// First split by OR operator to get OR groups
-		var orGroups = filterString.Split('|', StringSplitOptions.RemoveEmptyEntries);
-		
-		foreach (var orGroup in orGroups)
+		public FilterLeaf(string filterName, bool isNegated = false)
 		{
-			var trimmedGroup = orGroup.Trim();
-			var expression = new FilterExpression
+			FilterName = filterName;
+			IsNegated = isNegated;
+		}
+
+		public override List<MobileEntity> Evaluate(MobileEntity source, List<MobileEntity> entities)
+		{
+			var result = entities.ToList();
+			ApplyFilterCondition(this, source, result);
+			return result;
+		}
+	}
+
+	/// <summary>
+	/// Represents an AND operation between multiple nodes
+	/// </summary>
+	private class AndNode : FilterNode
+	{
+		public List<FilterNode> Children { get; set; } = new();
+
+		public override List<MobileEntity> Evaluate(MobileEntity source, List<MobileEntity> entities)
+		{
+			var result = entities.ToList();
+			foreach (var child in Children)
 			{
-				IsOrGroup = orGroups.Length > 1
-			};
-			
-			// Within each OR group, split by AND operator (colon)
-			var andConditions = trimmedGroup.Split(':', StringSplitOptions.RemoveEmptyEntries);
-			
-			foreach (var condition in andConditions)
-			{
-				var trimmedCondition = condition.Trim();
-				var isNegated = trimmedCondition.StartsWith('!');
-				var filterName = isNegated ? trimmedCondition.Substring(1).Trim() : trimmedCondition;
-				
-				expression.AndConditions.Add(new FilterCondition
-				{
-					FilterName = filterName,
-					IsNegated = isNegated,
-					IsOrGroup = false // AND conditions are never OR groups
-				});
+				result = child.Evaluate(source, result);
+				if (!result.Any()) break; // Short-circuit if any condition fails
 			}
-			
-			expressions.Add(expression);
+			return result;
 		}
-		
-		return expressions;
 	}
 
 	/// <summary>
-	/// Applies a single filter expression (AND group) to the entities list
+	/// Represents an OR operation between multiple nodes (with priority)
 	/// </summary>
-	private static void ApplyFilterExpression(FilterExpression expression, MobileEntity source, List<MobileEntity> entities)
+	private class OrNode : FilterNode
 	{
-		// Apply all AND conditions sequentially
-		foreach (var condition in expression.AndConditions)
+		public List<FilterNode> Children { get; set; } = new();
+
+		public override List<MobileEntity> Evaluate(MobileEntity source, List<MobileEntity> entities)
 		{
-			ApplyFilterCondition(condition, source, entities);
+			// Priority-based OR: return first child that has results
+			foreach (var child in Children)
+			{
+				var childResult = child.Evaluate(source, entities);
+				if (childResult.Any())
+				{
+					return childResult;
+				}
+			}
+			return new List<MobileEntity>(); // No results from any child
 		}
 	}
+
+	/// <summary>
+	/// Parser for filter expressions that builds an AST
+	/// </summary>
+	private class FilterParser
+	{
+		private string _input;
+		private int _position;
+		private readonly List<char> _tokens;
+
+		public FilterParser(string input)
+		{
+			_input = input;
+			_position = 0;
+			_tokens = input.ToList();
+		}
+
+		private char Peek() => _position < _tokens.Count ? _tokens[_position] : '\0';
+		private char Advance() => _position < _tokens.Count ? _tokens[_position++] : '\0';
+		private bool IsAtEnd() => _position >= _tokens.Count;
+
+		private void SkipWhitespace()
+		{
+			while (!IsAtEnd() && char.IsWhiteSpace(Peek()))
+			{
+				Advance();
+			}
+		}
+
+		/// <summary>
+		/// Parse the entire expression
+		/// </summary>
+		public FilterNode Parse()
+		{
+			SkipWhitespace();
+			var result = ParseOr();
+			SkipWhitespace();
+			if (!IsAtEnd())
+			{
+				throw new ArgumentException($"Unexpected character at position {_position}: {Peek()}");
+			}
+			return result;
+		}
+
+		/// <summary>
+		/// Parse OR expressions (lowest precedence)
+		/// </summary>
+		private FilterNode ParseOr()
+		{
+			var left = ParseAnd();
+			SkipWhitespace();
+
+			if (Peek() == '|')
+			{
+				var orNode = new OrNode();
+				orNode.Children.Add(left);
+
+				while (Peek() == '|')
+				{
+					Advance(); // consume '|'
+					SkipWhitespace();
+					orNode.Children.Add(ParseAnd());
+					SkipWhitespace();
+				}
+
+				return orNode;
+			}
+
+			return left;
+		}
+
+		/// <summary>
+		/// Parse AND expressions (medium precedence)
+		/// </summary>
+		private FilterNode ParseAnd()
+		{
+			var left = ParsePrimary();
+			SkipWhitespace();
+
+			if (Peek() == ':')
+			{
+				var andNode = new AndNode();
+				andNode.Children.Add(left);
+
+				while (Peek() == ':')
+				{
+					Advance(); // consume ':'
+					SkipWhitespace();
+					andNode.Children.Add(ParsePrimary());
+					SkipWhitespace();
+				}
+
+				return andNode;
+			}
+
+			return left;
+		}
+
+		/// <summary>
+		/// Parse primary expressions (highest precedence)
+		/// </summary>
+		private FilterNode ParsePrimary()
+		{
+			SkipWhitespace();
+
+			if (Peek() == '(')
+			{
+				Advance(); // consume '('
+				var result = ParseOr();
+				SkipWhitespace();
+				
+				if (Peek() != ')')
+				{
+					throw new ArgumentException($"Expected ')' at position {_position}");
+				}
+				Advance(); // consume ')'
+				return result;
+			}
+
+			if (Peek() == '!')
+			{
+				Advance(); // consume '!'
+				SkipWhitespace();
+				var filterName = ParseIdentifier();
+				return new FilterLeaf(filterName, true);
+			}
+
+			var name = ParseIdentifier();
+			return new FilterLeaf(name, false);
+		}
+
+		/// <summary>
+		/// Parse a filter identifier (basic filter name or advanced filter with parameters)
+		/// </summary>
+		private string ParseIdentifier()
+		{
+			var start = _position;
+			
+			// Handle advanced filters like distance(3), serial(12345), etc.
+			if (char.IsLetter(Peek()))
+			{
+				while (!IsAtEnd() && (char.IsLetterOrDigit(Peek()) || Peek() == '_'))
+				{
+					Advance();
+				}
+
+				// Check for function call syntax
+				if (Peek() == '(')
+				{
+					Advance(); // consume '('
+					
+					// Parse parameters (simplified - just consume until closing paren)
+					while (!IsAtEnd() && Peek() != ')')
+					{
+						Advance();
+					}
+					
+					if (Peek() == ')')
+					{
+						Advance(); // consume ')'
+					}
+				}
+			}
+			else
+			{
+				throw new ArgumentException($"Expected identifier at position {_position}");
+			}
+
+			return _input.Substring(start, _position - start);
+		}
+	}
+
+
 
 	/// <summary>
 	/// Applies a single filter condition to the entities list
 	/// </summary>
-	private static void ApplyFilterCondition(FilterCondition condition, MobileEntity source, List<MobileEntity> entities)
+	private static void ApplyFilterCondition(FilterLeaf condition, MobileEntity source, List<MobileEntity> entities)
 	{
 		// Check basic filters first
 		if (_basicFilters.TryGetValue(condition.FilterName.ToLower(), out var basicFilter))
@@ -221,37 +393,21 @@ public abstract partial class MobileEntity
 		{
 			var filterString = filterTargetMatch.Groups[3].Value;
 
-			// Parse the filter string into expressions
-			var expressions = ParseFilterExpressions(filterString);
-			
-			if (expressions.Count == 1)
+			// Parse the filter string into an AST
+			try
 			{
-				// Single expression - apply directly
-				ApplyFilterExpression(expressions[0], this, entities);
-			}
-			else if (expressions.Count > 1)
-			{
-				// Multiple expressions with priority-based OR operator
-				// Process expressions in order and return the first one that has results
-				var originalEntities = entities.ToList();
-				var finalResults = new List<MobileEntity>();
+				var parser = new FilterParser(filterString);
+				var ast = parser.Parse();
 				
-				foreach (var expression in expressions)
-				{
-					var tempEntities = originalEntities.ToList();
-					ApplyFilterExpression(expression, this, tempEntities);
-					
-					// If this expression found results, use them and stop processing
-					if (tempEntities.Any())
-					{
-						finalResults = tempEntities;
-						break;
-					}
-				}
-				
-				// Replace entities with the results from the first matching expression
+				// Evaluate the AST to get filtered entities
+				var filteredEntities = ast.Evaluate(this, entities);
 				entities.Clear();
-				entities.AddRange(finalResults);
+				entities.AddRange(filteredEntities);
+			}
+			catch (ArgumentException ex)
+			{
+				// Log parsing errors but continue with unfiltered entities
+				Log.Warn($"Filter parsing error: {ex.Message}");
 			}
 			
 			name = filterTargetMatch.Groups[1].Value;
