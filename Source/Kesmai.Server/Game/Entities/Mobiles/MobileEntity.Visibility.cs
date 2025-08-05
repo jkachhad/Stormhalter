@@ -423,6 +423,43 @@ public abstract partial class MobileEntity
 		if (entities.Contains(lastTarget))
 			return lastTarget;
 		
+		// For OR filters, we need to respect the priority order
+		// If we have multiple entities and the filter string contains OR operations,
+		// we should prioritize based on the original filter order
+		if (entities.Any() && !String.IsNullOrEmpty(filterTargetMatch?.Groups[3].Value))
+		{
+			var filterString = filterTargetMatch.Groups[3].Value;
+			if (filterString.Contains('|'))
+			{
+				// For OR filters, we need to find the entity that matches the highest priority condition
+				// Parse the filter again to get the individual conditions
+				try
+				{
+					var parser = new FilterParser(filterString);
+					var ast = parser.Parse();
+					
+					// If it's an OR node, check each child in priority order
+					if (ast is OrNode orNode)
+					{
+						foreach (var child in orNode.Children)
+						{
+							var childResult = child.Evaluate(this, entities);
+							if (childResult.Any())
+							{
+								// Return the first entity that matches this priority condition
+								return childResult.FirstOrDefault();
+							}
+						}
+					}
+				}
+				catch (ArgumentException ex)
+				{
+					// If parsing fails, fall back to default behavior
+					Log.Warn($"OR filter priority parsing error: {ex.Message}");
+				}
+			}
+		}
+		
 		// return the first entity that matches the filters.
 		if (entities.Any())
 			return entities.FirstOrDefault();
