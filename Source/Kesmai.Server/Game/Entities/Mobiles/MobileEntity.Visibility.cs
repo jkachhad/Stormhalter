@@ -158,6 +158,12 @@ public abstract partial class MobileEntity
 		private string _input;
 		private int _position;
 		private readonly List<char> _tokens;
+		
+		// Limits to prevent abuse and performance issues
+		private const int MAX_FILTER_LENGTH = 200; // Maximum total filter string length
+		private const int MAX_OR_CONDITIONS = 5;   // Maximum number of OR conditions
+		private const int MAX_AND_CONDITIONS = 3;  // Maximum number of AND conditions per OR condition
+		private const int MAX_NESTING_DEPTH = 3;   // Maximum nesting depth of parentheses
 
 		public FilterParser(string input)
 		{
@@ -183,8 +189,14 @@ public abstract partial class MobileEntity
 		/// </summary>
 		public FilterNode Parse()
 		{
+			// Validate input length
+			if (_input.Length > MAX_FILTER_LENGTH)
+			{
+				throw new ArgumentException($"Filter expression too long. Maximum length is {MAX_FILTER_LENGTH} characters, got {_input.Length}.");
+			}
+			
 			SkipWhitespace();
-			var result = ParseOr();
+			var result = ParseOr(0); // Track nesting depth
 			SkipWhitespace();
 			if (!IsAtEnd())
 			{
@@ -196,9 +208,14 @@ public abstract partial class MobileEntity
 		/// <summary>
 		/// Parse OR expressions (lowest precedence)
 		/// </summary>
-		private FilterNode ParseOr()
+		private FilterNode ParseOr(int depth)
 		{
-			var left = ParseAnd();
+			if (depth > MAX_NESTING_DEPTH)
+			{
+				throw new ArgumentException($"Filter expression too deeply nested. Maximum depth is {MAX_NESTING_DEPTH}.");
+			}
+			
+			var left = ParseAnd(depth);
 			SkipWhitespace();
 
 			if (Peek() == '|')
@@ -208,9 +225,15 @@ public abstract partial class MobileEntity
 
 				while (Peek() == '|')
 				{
+					// Check OR condition limit
+					if (orNode.Children.Count >= MAX_OR_CONDITIONS)
+					{
+						throw new ArgumentException($"Too many OR conditions. Maximum is {MAX_OR_CONDITIONS}.");
+					}
+					
 					Advance(); // consume '|'
 					SkipWhitespace();
-					orNode.Children.Add(ParseAnd());
+					orNode.Children.Add(ParseAnd(depth));
 					SkipWhitespace();
 				}
 
@@ -223,9 +246,9 @@ public abstract partial class MobileEntity
 		/// <summary>
 		/// Parse AND expressions (medium precedence)
 		/// </summary>
-		private FilterNode ParseAnd()
+		private FilterNode ParseAnd(int depth)
 		{
-			var left = ParsePrimary();
+			var left = ParsePrimary(depth);
 			SkipWhitespace();
 
 			if (Peek() == ':')
@@ -235,9 +258,15 @@ public abstract partial class MobileEntity
 
 				while (Peek() == ':')
 				{
+					// Check AND condition limit
+					if (andNode.Children.Count >= MAX_AND_CONDITIONS)
+					{
+						throw new ArgumentException($"Too many AND conditions. Maximum is {MAX_AND_CONDITIONS}.");
+					}
+					
 					Advance(); // consume ':'
 					SkipWhitespace();
-					andNode.Children.Add(ParsePrimary());
+					andNode.Children.Add(ParsePrimary(depth));
 					SkipWhitespace();
 				}
 
@@ -250,14 +279,14 @@ public abstract partial class MobileEntity
 		/// <summary>
 		/// Parse primary expressions (highest precedence)
 		/// </summary>
-		private FilterNode ParsePrimary()
+		private FilterNode ParsePrimary(int depth)
 		{
 			SkipWhitespace();
 
 			if (Peek() == '(')
 			{
 				Advance(); // consume '('
-				var result = ParseOr();
+				var result = ParseOr(depth + 1);
 				SkipWhitespace();
 				
 				if (Peek() != ')')
@@ -388,6 +417,9 @@ public abstract partial class MobileEntity
 	/// </summary>
 	public MobileEntity FindMobileByName(string name, List<MobileEntity> entities)
 	{
+		// Store the original entities list for OR priority evaluation
+		var originalEntities = entities.ToList();
+		
 		// the client sends reference in the form of "@name[filter]"
 		if (_filterTarget.TryGetMatch(name, out var filterTargetMatch))
 		{
@@ -443,7 +475,8 @@ public abstract partial class MobileEntity
 					{
 						foreach (var child in orNode.Children)
 						{
-							var childResult = child.Evaluate(this, entities);
+							// Use the original entities list for proper evaluation
+							var childResult = child.Evaluate(this, originalEntities);
 							if (childResult.Any())
 							{
 								// Return the first entity that matches this priority condition
