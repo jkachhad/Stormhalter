@@ -14,26 +14,33 @@ public abstract partial class MobileEntity
 
 	private static readonly Dictionary<string, Action<MobileEntity, List<MobileEntity>>> _basicFilters = new()
 	{
+		// Alignment filters
 		["hostile"] = (source, entities) => entities.RemoveAll(entity => !source.IsHostile(entity)),
 		["friendly"] = (source, entities) => entities.RemoveAll(entity => source.IsHostile(entity)),
 		
+		// Type filters
 		["pc"] = (source, entities) => entities.RemoveAll(entity => (entity is not PlayerEntity)),
 		["npc"] = (source, entities) => entities.RemoveAll(entity => (entity is not CreatureEntity)),
 		["conjured"] = (source, entities) => entities.RemoveAll(entity => entity is CreatureEntity { IsSubordinate: false }),
 		
+		// Health state filters
 		["injured"] = (source, entities) => entities.RemoveAll(entity => (entity.Health != entity.MaxHealth)),
 		["healthy"] = (source, entities) => entities.RemoveAll(entity => (entity.Health < entity.MaxHealth)),
 		["deathly"] = (source, entities) => entities.RemoveAll(entity => (Combat.GetHealthState(entity) != 1)),
 		
+		// Activity filters
 		["casting"] = (source, entities) => entities.RemoveAll(entity => (entity.Spell is null)), 
 
+		// Weapon type filters
 		["melee"] = (source, entities) => entities.RemoveAll(entity => (entity.GetWeapon() is not MeleeWeapon)),
 		["ranged"] = (source, entities) => entities.RemoveAll(entity => (entity.GetWeapon() is not ProjectileWeapon)),
 		
+		// Distance filters
 		["near"] = (source, entities) => entities.RemoveAll(entity => source.GetDistanceToMax(entity.Location) > 0),
 		["distant"] = (source, entities) => entities.RemoveAll(entity => source.GetDistanceToMax(entity.Location) is 0),
 		["far"] = (source, entities) => entities.RemoveAll(entity => source.GetDistanceToMax(entity.Location) < 3),
 		
+		// Effect filters
 		["poisoned"] = (source, entities) => entities.RemoveAll(entity => !entity.IsPoisoned),
 		["feared"] = (source, entities) => entities.RemoveAll(entity => !entity.IsFeared),
 		["stunned"] = (source, entities) => entities.RemoveAll(entity => !entity.IsStunned && !entity.IsDazed),
@@ -76,26 +83,26 @@ public abstract partial class MobileEntity
 				if (entity != null)
 					entities = [entity];
 			}
-		}, 
+		},
 	};
 
 	/// <summary>
-	/// Represents a node in the filter expression AST
+	/// Represents a filter expression that can be evaluated
 	/// </summary>
-	private abstract class FilterNode
+	private abstract class FilterExpression
 	{
 		public abstract List<MobileEntity> Evaluate(MobileEntity source, List<MobileEntity> entities);
 	}
 
 	/// <summary>
-	/// Represents a leaf node with a single filter condition
+	/// Represents a single filter condition
 	/// </summary>
-	private class FilterLeaf : FilterNode
+	private class FilterCondition : FilterExpression
 	{
-		public string FilterName { get; set; }
-		public bool IsNegated { get; set; }
+		public string FilterName { get; }
+		public bool IsNegated { get; }
 
-		public FilterLeaf(string filterName, bool isNegated = false)
+		public FilterCondition(string filterName, bool isNegated = false)
 		{
 			FilterName = filterName;
 			IsNegated = isNegated;
@@ -104,133 +111,113 @@ public abstract partial class MobileEntity
 		public override List<MobileEntity> Evaluate(MobileEntity source, List<MobileEntity> entities)
 		{
 			var result = entities.ToList();
-			ApplyFilterCondition(this, source, result);
+			ApplyFilter(this, source, result);
 			return result;
 		}
 	}
 
 	/// <summary>
-	/// Represents an AND operation between multiple nodes
+	/// Represents a logical operation (AND/OR) between multiple expressions
 	/// </summary>
-	private class AndNode : FilterNode
+	private class LogicalOperation : FilterExpression
 	{
-		public List<FilterNode> Children { get; set; } = new();
+		public List<FilterExpression> Children { get; } = new();
+		public bool IsOrOperation { get; }
 
-		public override List<MobileEntity> Evaluate(MobileEntity source, List<MobileEntity> entities)
+		public LogicalOperation(bool isOrOperation)
 		{
-			var result = entities.ToList();
-			foreach (var child in Children)
-			{
-				result = child.Evaluate(source, result);
-				if (!result.Any()) break; // Short-circuit if any condition fails
-			}
-			return result;
+			IsOrOperation = isOrOperation;
 		}
-	}
-
-	/// <summary>
-	/// Represents an OR operation between multiple nodes (with priority)
-	/// </summary>
-	private class OrNode : FilterNode
-	{
-		public List<FilterNode> Children { get; set; } = new();
 
 		public override List<MobileEntity> Evaluate(MobileEntity source, List<MobileEntity> entities)
 		{
-			// Priority-based OR: return first child that has results
-			foreach (var child in Children)
+			if (IsOrOperation)
 			{
-				var childResult = child.Evaluate(source, entities);
-				if (childResult.Any())
+				// OR: return first child that has results
+				foreach (var child in Children)
 				{
-					return childResult;
+					var childResult = child.Evaluate(source, entities);
+					if (childResult.Any())
+						return childResult;
 				}
+				return new List<MobileEntity>();
 			}
-			return new List<MobileEntity>(); // No results from any child
+			else
+			{
+				// AND: apply all children sequentially
+				var result = entities.ToList();
+				foreach (var child in Children)
+				{
+					result = child.Evaluate(source, result);
+					if (!result.Any()) break; // Short-circuit
+				}
+				return result;
+			}
 		}
 	}
 
 	/// <summary>
-	/// Parser for filter expressions that builds an AST
+	/// Simplified parser for filter expressions
 	/// </summary>
 	private class FilterParser
 	{
-		private string _input;
+		private readonly string _input;
 		private int _position;
-		private readonly List<char> _tokens;
 		
-		// Limits to prevent abuse and performance issues
-		private const int MAX_FILTER_LENGTH = 200; // Maximum total filter string length
-		private const int MAX_OR_CONDITIONS = 5;   // Maximum number of OR conditions
-		private const int MAX_AND_CONDITIONS = 3;  // Maximum number of AND conditions per OR condition
-		private const int MAX_NESTING_DEPTH = 3;   // Maximum nesting depth of parentheses
+		// Limits to prevent abuse
+		private const int MAX_FILTER_LENGTH = 200;
+		private const int MAX_OR_CONDITIONS = 5;
+		private const int MAX_AND_CONDITIONS = 3;
+		private const int MAX_NESTING_DEPTH = 3;
 
 		public FilterParser(string input)
 		{
 			_input = input;
 			_position = 0;
-			_tokens = input.ToList();
 		}
 
-		private char Peek() => _position < _tokens.Count ? _tokens[_position] : '\0';
-		private char Advance() => _position < _tokens.Count ? _tokens[_position++] : '\0';
-		private bool IsAtEnd() => _position >= _tokens.Count;
+		private char Peek() => _position < _input.Length ? _input[_position] : '\0';
+		private char Advance() => _position < _input.Length ? _input[_position++] : '\0';
+		private bool IsAtEnd() => _position >= _input.Length;
 
 		private void SkipWhitespace()
 		{
 			while (!IsAtEnd() && char.IsWhiteSpace(Peek()))
-			{
 				Advance();
-			}
 		}
 
-		/// <summary>
-		/// Parse the entire expression
-		/// </summary>
-		public FilterNode Parse()
+		public FilterExpression Parse()
 		{
-			// Validate input length
 			if (_input.Length > MAX_FILTER_LENGTH)
-			{
-				throw new ArgumentException($"Filter expression too long. Maximum length is {MAX_FILTER_LENGTH} characters, got {_input.Length}.");
-			}
+				throw new ArgumentException($"Filter expression too long. Maximum length is {MAX_FILTER_LENGTH} characters.");
+
+			SkipWhitespace();
+			var result = ParseOr(0);
+			SkipWhitespace();
 			
-			SkipWhitespace();
-			var result = ParseOr(0); // Track nesting depth
-			SkipWhitespace();
 			if (!IsAtEnd())
-			{
 				throw new ArgumentException($"Unexpected character at position {_position}: {Peek()}");
-			}
+				
 			return result;
 		}
 
-		/// <summary>
-		/// Parse OR expressions (lowest precedence)
-		/// </summary>
-		private FilterNode ParseOr(int depth)
+		private FilterExpression ParseOr(int depth)
 		{
 			if (depth > MAX_NESTING_DEPTH)
-			{
 				throw new ArgumentException($"Filter expression too deeply nested. Maximum depth is {MAX_NESTING_DEPTH}.");
-			}
-			
+
 			var left = ParseAnd(depth);
 			SkipWhitespace();
 
 			if (Peek() == '|')
 			{
-				var orNode = new OrNode();
-				orNode.Children.Add(left);
+				var orNode = new LogicalOperation(true) { Children = { left } };
 
 				while (Peek() == '|')
 				{
-					// Check OR condition limit
 					if (orNode.Children.Count >= MAX_OR_CONDITIONS)
-					{
 						throw new ArgumentException($"Too many OR conditions. Maximum is {MAX_OR_CONDITIONS}.");
-					}
-					
+
 					Advance(); // consume '|'
 					SkipWhitespace();
 					orNode.Children.Add(ParseAnd(depth));
@@ -243,27 +230,20 @@ public abstract partial class MobileEntity
 			return left;
 		}
 
-		/// <summary>
-		/// Parse AND expressions (medium precedence)
-		/// </summary>
-		private FilterNode ParseAnd(int depth)
+		private FilterExpression ParseAnd(int depth)
 		{
 			var left = ParsePrimary(depth);
 			SkipWhitespace();
 
 			if (Peek() == ':')
 			{
-				var andNode = new AndNode();
-				andNode.Children.Add(left);
+				var andNode = new LogicalOperation(false) { Children = { left } };
 
 				while (Peek() == ':')
 				{
-					// Check AND condition limit
 					if (andNode.Children.Count >= MAX_AND_CONDITIONS)
-					{
 						throw new ArgumentException($"Too many AND conditions. Maximum is {MAX_AND_CONDITIONS}.");
-					}
-					
+
 					Advance(); // consume ':'
 					SkipWhitespace();
 					andNode.Children.Add(ParsePrimary(depth));
@@ -276,10 +256,7 @@ public abstract partial class MobileEntity
 			return left;
 		}
 
-		/// <summary>
-		/// Parse primary expressions (highest precedence)
-		/// </summary>
-		private FilterNode ParsePrimary(int depth)
+		private FilterExpression ParsePrimary(int depth)
 		{
 			SkipWhitespace();
 
@@ -290,9 +267,8 @@ public abstract partial class MobileEntity
 				SkipWhitespace();
 				
 				if (Peek() != ')')
-				{
 					throw new ArgumentException($"Expected ')' at position {_position}");
-				}
+					
 				Advance(); // consume ')'
 				return result;
 			}
@@ -301,102 +277,78 @@ public abstract partial class MobileEntity
 			{
 				Advance(); // consume '!'
 				SkipWhitespace();
-				var filterName = ParseIdentifier();
-				return new FilterLeaf(filterName, true);
+				return new FilterCondition(ParseIdentifier(), true);
 			}
 
-			var name = ParseIdentifier();
-			return new FilterLeaf(name, false);
+			return new FilterCondition(ParseIdentifier(), false);
 		}
 
-		/// <summary>
-		/// Parse a filter identifier (basic filter name or advanced filter with parameters)
-		/// </summary>
 		private string ParseIdentifier()
 		{
 			var start = _position;
 			
-			// Handle advanced filters like distance(3), serial(12345), etc.
-			if (char.IsLetter(Peek()))
-			{
-				while (!IsAtEnd() && (char.IsLetterOrDigit(Peek()) || Peek() == '_'))
-				{
-					Advance();
-				}
-
-				// Check for function call syntax
-				if (Peek() == '(')
-				{
-					Advance(); // consume '('
-					
-					// Parse parameters (simplified - just consume until closing paren)
-					while (!IsAtEnd() && Peek() != ')')
-					{
-						Advance();
-					}
-					
-					if (Peek() == ')')
-					{
-						Advance(); // consume ')'
-					}
-				}
-			}
-			else
-			{
+			if (!char.IsLetter(Peek()))
 				throw new ArgumentException($"Expected identifier at position {_position}");
+
+			// Parse identifier
+			while (!IsAtEnd() && (char.IsLetterOrDigit(Peek()) || Peek() == '_'))
+				Advance();
+
+			// Handle function call syntax
+			if (Peek() == '(')
+			{
+				Advance(); // consume '('
+				while (!IsAtEnd() && Peek() != ')')
+					Advance();
+					
+				if (Peek() == ')')
+					Advance(); // consume ')'
 			}
 
 			return _input.Substring(start, _position - start);
 		}
 	}
 
-
-
 	/// <summary>
-	/// Applies a single filter condition to the entities list
+	/// Applies a filter condition to the entities list
 	/// </summary>
-	private static void ApplyFilterCondition(FilterLeaf condition, MobileEntity source, List<MobileEntity> entities)
+	private static void ApplyFilter(FilterCondition condition, MobileEntity source, List<MobileEntity> entities)
 	{
-		// Check basic filters first
+		// Try basic filters first
 		if (_basicFilters.TryGetValue(condition.FilterName.ToLower(), out var basicFilter))
 		{
-			if (condition.IsNegated)
-			{
-				// For negated filters, we need to invert the logic
-				// Store original entities and apply inverse filter
-				var originalEntities = entities.ToList();
-				basicFilter(source, entities);
-				var removedEntities = originalEntities.Except(entities).ToList();
-				entities.Clear();
-				entities.AddRange(removedEntities);
-			}
-			else
-			{
-				basicFilter(source, entities);
-			}
+			ApplyFilterWithNegation(basicFilter, condition.IsNegated, source, entities);
 			return;
 		}
 
-		// Check advanced filters
+		// Try advanced filters
 		foreach (var (filterRegex, function) in _advancedFilters)
 		{
-			if (!filterRegex.TryGetMatch(condition.FilterName.ToLower(), out var advancedFilters)) 
-				continue;
-			
-			if (condition.IsNegated)
+			if (filterRegex.TryGetMatch(condition.FilterName.ToLower(), out var match))
 			{
-				// For negated advanced filters, we need to invert the logic
-				var originalEntities = entities.ToList();
-				function(advancedFilters, source, entities);
-				var removedEntities = originalEntities.Except(entities).ToList();
-				entities.Clear();
-				entities.AddRange(removedEntities);
+				ApplyFilterWithNegation((s, e) => function(match, s, e), condition.IsNegated, source, entities);
+				return;
 			}
-			else
-			{
-				function(advancedFilters, source, entities);
-			}
-			return;
+		}
+	}
+
+	/// <summary>
+	/// Applies a filter with proper negation handling
+	/// </summary>
+	private static void ApplyFilterWithNegation(Action<MobileEntity, List<MobileEntity>> filter, bool isNegated, MobileEntity source, List<MobileEntity> entities)
+	{
+		if (isNegated)
+		{
+			// For negated filters, invert the logic
+			var originalEntities = entities.ToList();
+			filter(source, entities);
+			var removedEntities = originalEntities.Except(entities).ToList();
+			entities.Clear();
+			entities.AddRange(removedEntities);
+		}
+		else
+		{
+			filter(source, entities);
 		}
 	}
 
@@ -405,7 +357,6 @@ public abstract partial class MobileEntity
 	/// </summary>
 	public MobileEntity FindMobileByName(string name)
 	{
-		// get all the visible entities.
 		var entities = GetBeheldInVisibility().SelectMany(g => g.Members)
 			.OrderBy(m => m, new MobileDistanceComparer(this)).ToList();
 
@@ -417,87 +368,73 @@ public abstract partial class MobileEntity
 	/// </summary>
 	public MobileEntity FindMobileByName(string name, List<MobileEntity> entities)
 	{
-		// Store the original entities list for OR priority evaluation
 		var originalEntities = entities.ToList();
+		var filterString = "";
+		var hasFilter = false;
 		
-		// the client sends reference in the form of "@name[filter]"
+		// Parse filter target format "@name[filter]"
 		if (_filterTarget.TryGetMatch(name, out var filterTargetMatch))
 		{
-			var filterString = filterTargetMatch.Groups[3].Value;
-
-			// Parse the filter string into an AST
-			try
-			{
-				var parser = new FilterParser(filterString);
-				var ast = parser.Parse();
-				
-				// Evaluate the AST to get filtered entities
-				var filteredEntities = ast.Evaluate(this, entities);
-				entities.Clear();
-				entities.AddRange(filteredEntities);
-			}
-			catch (ArgumentException ex)
-			{
-				// Log parsing errors but continue with unfiltered entities
-				Log.Warn($"Filter parsing error: {ex.Message}");
-			}
-			
+			filterString = filterTargetMatch.Groups[3].Value;
 			name = filterTargetMatch.Groups[1].Value;
-		}
-		
-		// if a name is specified, filter the entities by name.
-		if (!String.IsNullOrEmpty(name))
-			entities.RemoveAll(entity => !entity.RespondsTo(name));
-		
-		// check if the last target matches the filters.
-		var lastTarget = FindMostRecentTarget();
+			hasFilter = !string.IsNullOrEmpty(filterString);
 
-		if (entities.Contains(lastTarget))
-			return lastTarget;
-		
-		// For OR filters, we need to respect the priority order
-		// If we have multiple entities and the filter string contains OR operations,
-		// we should prioritize based on the original filter order
-		if (entities.Any() && !String.IsNullOrEmpty(filterTargetMatch?.Groups[3].Value))
-		{
-			var filterString = filterTargetMatch.Groups[3].Value;
-			if (filterString.Contains('|'))
+			// Apply filter if present
+			if (hasFilter)
 			{
-				// For OR filters, we need to find the entity that matches the highest priority condition
-				// Parse the filter again to get the individual conditions
 				try
 				{
 					var parser = new FilterParser(filterString);
-					var ast = parser.Parse();
-					
-					// If it's an OR node, check each child in priority order
-					if (ast is OrNode orNode)
-					{
-						foreach (var child in orNode.Children)
-						{
-							// Use the original entities list for proper evaluation
-							var childResult = child.Evaluate(this, originalEntities);
-							if (childResult.Any())
-							{
-								// Return the first entity that matches this priority condition
-								return childResult.FirstOrDefault();
-							}
-						}
-					}
+					var filterExpression = parser.Parse();
+					var filteredEntities = filterExpression.Evaluate(this, entities);
+					entities.Clear();
+					entities.AddRange(filteredEntities);
 				}
 				catch (ArgumentException ex)
 				{
-					// If parsing fails, fall back to default behavior
-					Log.Warn($"OR filter priority parsing error: {ex.Message}");
+					Log.Warn($"Filter parsing error: {ex.Message}");
 				}
 			}
 		}
 		
-		// return the first entity that matches the filters.
-		if (entities.Any())
-			return entities.FirstOrDefault();
-
-		return default(MobileEntity);
+		// Filter by name if specified
+		if (!String.IsNullOrEmpty(name))
+			entities.RemoveAll(entity => !entity.RespondsTo(name));
+		
+		// Check if last target matches
+		var lastTarget = FindMostRecentTarget();
+		if (entities.Contains(lastTarget))
+			return lastTarget;
+		
+		// Handle OR filter priority
+		if (entities.Any() && hasFilter && filterString.Contains('|'))
+		{
+			try
+			{
+				var parser = new FilterParser(filterString);
+				var filterExpression = parser.Parse();
+				
+				if (filterExpression is LogicalOperation orNode && orNode.IsOrOperation)
+				{
+					foreach (var child in orNode.Children)
+					{
+						var childResult = child.Evaluate(this, originalEntities);
+						if (childResult.Any())
+							return childResult.FirstOrDefault();
+					}
+				}
+			}
+			catch (ArgumentException ex)
+			{
+				Log.Warn($"OR filter priority parsing error: {ex.Message}");
+			}
+		}
+		
+		// If a filter was applied and no entities match, return null (no target)
+		if (hasFilter && !entities.Any())
+			return null;
+		
+		return entities.FirstOrDefault();
 	}
 
 	public IEnumerable<ItemEntity> FindItemsByName(string name)
