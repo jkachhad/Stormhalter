@@ -58,6 +58,28 @@ public class Rope : ActiveTeleporter
 	}
 
 	/// <summary>
+	/// Handles rope interaction. Since rope sprites can appear on angled wall tiles with visual offsets,
+	/// we allow interaction when the player is on the rope component's tile or adjacent to it.
+	/// This ensures all ropes work properly regardless of visual positioning.
+	/// </summary>
+	public override bool HandleInteraction(SegmentTile parent, MobileEntity entity, ActionType action)
+	{
+		var playerLocation = entity.Location;
+		var ropeLocation = parent.Location;
+		
+		// Allow interaction if player is on the rope component's tile
+		if (playerLocation == ropeLocation)
+			return base.HandleInteraction(parent, entity, action);
+		
+		// Allow interaction if player is adjacent to the rope component
+		var distance = entity.GetDistanceToMax(ropeLocation);
+		if (distance <= 1)
+			return base.HandleInteraction(parent, entity, action);
+		
+		return false;
+	}
+
+	/// <summary>
 	/// Checks the action to perform a teleport.
 	/// </summary>
 	protected override bool CheckTeleport(SegmentTile parent, MobileEntity entity, ActionType action)
