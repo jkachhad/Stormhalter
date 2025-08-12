@@ -74,7 +74,7 @@ public class CreateWebSpell : DelayedSpell, IWorldSpell
 				var duration = facet.TimeSpan.FromRounds(rounds);
 						
 				if (!segmentTile.ContainsComponent<Fire>())
-					segmentTile.Add(Web.Construct(Color.White, duration));
+					segmentTile.Add(Web.Construct(Color.White, duration, true));
 
 				if (_caster is PlayerEntity player && _item == null)
 					player.AwardMagicSkill(this);
