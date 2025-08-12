@@ -156,22 +156,20 @@ public abstract partial class MobileEntity
 	/// <summary>
 	/// Parser for filter expressions that builds an AST
 	/// </summary>
-	private class FilterParser
+	private ref struct FilterParser
 	{
-		private string _input;
+		private readonly ReadOnlySpan<char> _input;
 		private int _position;
-		private readonly List<char> _tokens;
 
 		public FilterParser(string input)
 		{
-			_input = input;
+			_input = input.AsSpan();
 			_position = 0;
-			_tokens = input.ToList();
 		}
 
-		private char Peek() => _position < _tokens.Count ? _tokens[_position] : '\0';
-		private char Advance() => _position < _tokens.Count ? _tokens[_position++] : '\0';
-		private bool IsAtEnd() => _position >= _tokens.Count;
+		private char Peek() => _position < _input.Length ? _input[_position] : '\0';
+		private char Advance() => _position < _input.Length ? _input[_position++] : '\0';
+		private bool IsAtEnd() => _position >= _input.Length;
 
 		private void SkipWhitespace()
 		{
@@ -320,7 +318,7 @@ public abstract partial class MobileEntity
 				throw new ArgumentException($"Expected identifier at position {_position}");
 			}
 
-			return _input.Substring(start, _position - start);
+			return _input.Slice(start, _position - start).ToString();
 		}
 	}
 
