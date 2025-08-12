@@ -171,22 +171,12 @@ public abstract partial class MobileEntity
 		private char Advance() => _position < _input.Length ? _input[_position++] : '\0';
 		private bool IsAtEnd() => _position >= _input.Length;
 
-		private void SkipWhitespace()
-		{
-			while (!IsAtEnd() && char.IsWhiteSpace(Peek()))
-			{
-				Advance();
-			}
-		}
-
 		/// <summary>
 		/// Parse the entire expression
 		/// </summary>
 		public FilterNode Parse()
 		{
-			SkipWhitespace();
 			var result = ParseOr();
-			SkipWhitespace();
 			if (!IsAtEnd())
 			{
 				throw new ArgumentException($"Unexpected character at position {_position}: {Peek()}");
@@ -200,7 +190,6 @@ public abstract partial class MobileEntity
 		private FilterNode ParseOr()
 		{
 			var left = ParseAnd();
-			SkipWhitespace();
 
 			if (Peek() == '|')
 			{
@@ -210,9 +199,7 @@ public abstract partial class MobileEntity
 				while (Peek() == '|')
 				{
 					Advance(); // consume '|'
-					SkipWhitespace();
 					orNode.Children.Add(ParseAnd());
-					SkipWhitespace();
 				}
 
 				return orNode;
@@ -227,7 +214,6 @@ public abstract partial class MobileEntity
 		private FilterNode ParseAnd()
 		{
 			var left = ParsePrimary();
-			SkipWhitespace();
 
 			if (Peek() == ':')
 			{
@@ -237,9 +223,7 @@ public abstract partial class MobileEntity
 				while (Peek() == ':')
 				{
 					Advance(); // consume ':'
-					SkipWhitespace();
 					andNode.Children.Add(ParsePrimary());
-					SkipWhitespace();
 				}
 
 				return andNode;
@@ -253,14 +237,11 @@ public abstract partial class MobileEntity
 		/// </summary>
 		private FilterNode ParsePrimary()
 		{
-			SkipWhitespace();
-
 			if (Peek() == '(')
 			{
 				Advance(); // consume '('
 				var result = ParseOr();
-				SkipWhitespace();
-				
+
 				if (Peek() != ')')
 				{
 					throw new ArgumentException($"Expected ')' at position {_position}");
@@ -272,7 +253,6 @@ public abstract partial class MobileEntity
 			if (Peek() == '!')
 			{
 				Advance(); // consume '!'
-				SkipWhitespace();
 				var filterName = ParseIdentifier();
 				return new FilterLeaf(filterName, true);
 			}
@@ -287,7 +267,7 @@ public abstract partial class MobileEntity
 		private string ParseIdentifier()
 		{
 			var start = _position;
-			
+
 			// Handle advanced filters like distance(3), serial(12345), etc.
 			if (char.IsLetter(Peek()))
 			{
@@ -300,13 +280,13 @@ public abstract partial class MobileEntity
 				if (Peek() == '(')
 				{
 					Advance(); // consume '('
-					
+
 					// Parse parameters (simplified - just consume until closing paren)
 					while (!IsAtEnd() && Peek() != ')')
 					{
 						Advance();
 					}
-					
+
 					if (Peek() == ')')
 					{
 						Advance(); // consume ')'
@@ -321,8 +301,6 @@ public abstract partial class MobileEntity
 			return _input.Slice(start, _position - start).ToString();
 		}
 	}
-
-
 
 	/// <summary>
 	/// Applies a single filter condition to the entities list
@@ -392,14 +370,16 @@ public abstract partial class MobileEntity
 		// the client sends reference in the form of "@name[filter]"
 		if (_filterTarget.TryGetMatch(name, out var filterTargetMatch))
 		{
-			var filterString = filterTargetMatch.Groups[3].Value;
+			// Remove all whitespace from the filter string before parsing.
+			// None of filters have whitespace in them, should be safe.
+			var filterString = filterTargetMatch.Groups[3].Value.Replace(" ", String.Empty);
 
 			// Parse the filter string into an AST
 			try
 			{
 				var parser = new FilterParser(filterString);
 				var ast = parser.Parse();
-				
+
 				// Evaluate the AST to get filtered entities
 				var filteredEntities = ast.Evaluate(this, entities);
 				entities.Clear();
@@ -410,7 +390,7 @@ public abstract partial class MobileEntity
 				// Log parsing errors but continue with unfiltered entities
 				Log.Warn($"Filter parsing error: {ex.Message}");
 			}
-			
+
 			name = filterTargetMatch.Groups[1].Value;
 		}
 		
