@@ -10,7 +10,7 @@ namespace Kesmai.Server.Game;
 
 public abstract partial class MobileEntity
 {
-	private static readonly Regex _filterTarget = new Regex(@"^@(\w*)(\[(.*?)\])?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+	private static readonly Regex _filterTarget = new Regex(@"^\s*@\s*(\w*)(\[(.*?)\])\s*?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
 	private static readonly Dictionary<string, Action<MobileEntity, List<MobileEntity>>> _basicFilters = new()
 	{
