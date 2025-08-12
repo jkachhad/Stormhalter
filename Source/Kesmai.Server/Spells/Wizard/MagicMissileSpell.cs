@@ -51,6 +51,7 @@ public class MagicMissileSpell : DelayedSpell
 			var baseDamage = 4 * skill;
 			var damage = SpellHelper.AdjustDamage((int)baseDamage, 0.9, 1.1);
 
+			defender.ScaleSpellDamage(attacker, ref damage, true);
 			defender.ApplySpellDamage(attacker, this, damage, true);
 
 			if (_caster is PlayerEntity player && _item == null)

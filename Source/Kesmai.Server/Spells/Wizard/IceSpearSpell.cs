@@ -50,7 +50,8 @@ public class IceSpearSpell : DelayedSpell
 			var skill = _skillLevel;
 			var baseDamage = 12.5 * skill;
 			var damage = SpellHelper.AdjustDamage((int)baseDamage, 0.9, 1.1);
-
+			
+			defender.ScaleSpellDamage(attacker, ref damage, true);
 			defender.ApplySpellDamage(attacker, this, damage, true);
 
 			if (_caster is PlayerEntity player && _item == null)
