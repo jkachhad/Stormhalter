@@ -74,7 +74,10 @@ public abstract partial class MobileEntity
 				var entity = entities[index - 1];
 
 				if (entity != null)
-					entities = [entity];
+				{
+					entities.Clear();
+					entities.Add(entity);
+				}
 			}
 		}, 
 	};
