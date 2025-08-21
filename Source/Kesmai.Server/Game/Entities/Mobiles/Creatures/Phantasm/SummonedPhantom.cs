@@ -11,9 +11,11 @@ public partial class SummonedPhantom : Phantom
 	public override bool CanOrderFollow => true;
 	public override bool CanOrderAttack => true;
 	public override bool CanOrderCarry => true;
+	private double _focusLevelModifier = 0.0;
 
-	public SummonedPhantom()
+	public SummonedPhantom(double focusLevelModifier = 0.0)
     {
+		_focusLevelModifier = focusLevelModifier;
         Summoned = true;
             
         Health = MaxHealth = 1;
@@ -33,22 +35,25 @@ public partial class SummonedPhantom : Phantom
     private (int health, int defense, int attack, int magicResist) PowerCurve()
     {
 	    var player = Director;
-	    var level = player.Level;
-	    
-	    // Focus level is a multiplier for the stats of the pet. 
-	    var focusLevel = 1;
-	    var magicSkill = player.GetSkillLevel(Skill.Magic);
-	    var focusItemsWorn = player.Paperdoll.OfType<IPetFocus>().ToList();
-	    var focusItemsHands = player.Hands.OfType<IPetFocus>().ToList();
-	    var focusItems = focusItemsWorn.Concat(focusItemsHands).ToList();
-	    
-	    // Search for and get the highest focus level from the items.
-	    if (focusItems.Count > 0)
-		    focusLevel += (int)(focusItems.Max(e => e.FocusLevel) * 0.01);
+        var level = player.Level;
+        // Focus level is a multiplier for the stats of the pet. 
+        double focusLevel = 1;
+        var magicSkill = player.GetSkillLevel(Skill.Magic);
+        var focusItemsWorn = player.Paperdoll.OfType<IPetFocus>().ToList();
+        var focusItemsHands = player.Hands.OfType<IPetFocus>().ToList();
+        var focusItems = focusItemsWorn.Concat(focusItemsHands).ToList();
+        
+		// Search for and get the highest focus level from the items.
+		if (focusItems.Count > 0)
+			focusLevel += (focusItems.Max(e => e.FocusLevel) * 0.01);
+		
+		// Allow for tuning strength without recompiling.
+		if (_focusLevelModifier != 0)
+			focusLevel += _focusLevelModifier;
 
         var health = (level + (int)magicSkill)*11 * focusLevel;
-        var defense = (level + 9) + (focusLevel * .1);
-		var attack = level;
+        var defense = (level + 9) +((focusLevel - 1)* 10);
+		var attack = level +((focusLevel - 1)* 10);
 		var magicResist = (level.Clamp(0,40));
         
 		return ((int)health,(int)defense, (int)attack, (int)magicResist);
