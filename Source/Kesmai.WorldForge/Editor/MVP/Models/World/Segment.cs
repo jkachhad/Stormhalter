@@ -41,7 +41,8 @@ public class Segment : ObservableObject
 		set => SetProperty(ref _definition, value);
 	}
 	
-	public NotifyingCollection<SegmentRegion> Regions { get; set; } = new NotifyingCollection<SegmentRegion>();
+        public NotifyingCollection<SegmentRegion> Regions =>
+                ServiceLocator.Current.GetInstance<ApplicationPresenter>().Project.Regions;
 	public SegmentLocations Locations { get; set; } = new SegmentLocations();
 	public SegmentSubregions Subregions { get; set; } = new SegmentSubregions();
 	public SegmentEntities Entities { get; set; } = new SegmentEntities();
@@ -60,8 +61,7 @@ public class Segment : ObservableObject
 			});
 		}
 			
-		Regions = new NotifyingCollection<SegmentRegion>();
-		Regions.CollectionChanged += OnRegionsChanged;
+                Regions.CollectionChanged += OnRegionsChanged;
 
 		ValidateScripts();
 	}
@@ -121,8 +121,9 @@ public class Segment : ObservableObject
 			return;
 		}
 			
-		/* Loading deprecated formats. */
-		var regions = new List<SegmentRegion>();
+                /* Loading deprecated formats. */
+                Regions.Clear();
+                var regions = new List<SegmentRegion>();
 
 		foreach (var regionElement in element.Elements("region"))
 			regions.Add(new SegmentRegion(regionElement));
@@ -148,14 +149,16 @@ public class Segment : ObservableObject
 
 	public void Load(XElement element, Version version)
 	{
-		var regionsElement = element.Element("regions");
-		var locationsElement = element.Element("locations");
-		var subregionsElement = element.Element("subregions");
-		var entitiesElement = element.Element("entities");
-		var spawnsElement = element.Element("spawns");
-		var treasuresElement = element.Element("treasures");
-		var hoardsElement = element.Element("hoards");
-		var scriptsElements = element.Elements("script").ToList();
+                var regionsElement = element.Element("regions");
+                var locationsElement = element.Element("locations");
+                var subregionsElement = element.Element("subregions");
+                var entitiesElement = element.Element("entities");
+                var spawnsElement = element.Element("spawns");
+                var treasuresElement = element.Element("treasures");
+                var hoardsElement = element.Element("hoards");
+                var scriptsElements = element.Elements("script").ToList();
+
+                Regions.Clear();
 			
 		if (regionsElement != null)
 		{

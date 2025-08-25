@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using DigitalRune.Collections;
 using System.ComponentModel;
 namespace Kesmai.WorldForge.Editor;
 
@@ -34,7 +35,7 @@ public class SegmentProject : INotifyPropertyChanged
     }
 
     public ObservableCollection<VirtualFile> VirtualFiles { get; } = new();
-    public ObservableCollection<Region> Regions { get; } = new();
+    public NotifyingCollection<SegmentRegion> Regions { get; } = new();
     public ObservableCollection<Spawn> Spawns { get; } = new();
     public ObservableCollection<Treasure> Treasures { get; } = new();
     public ObservableCollection<Hoard> Hoards { get; } = new();
@@ -44,9 +45,9 @@ public class SegmentProject : INotifyPropertyChanged
         VirtualFiles.Add(new VirtualFile { Name = "Internal", Text = string.Empty });
         VirtualFiles.Add(new VirtualFile { Name = "WorldForge", Text = string.Empty });
 
-        Regions.Add(new Region { Name = "Region 1" });
-        Regions.Add(new Region { Name = "Region 2" });
-        Regions.Add(new Region { Name = "Region 3" });
+        Regions.Add(new SegmentRegion(1));
+        Regions.Add(new SegmentRegion(2));
+        Regions.Add(new SegmentRegion(3));
 
         Spawns.Add(new Spawn { Name = "Spawn 1" });
         Spawns.Add(new Spawn { Name = "Spawn 2" });
