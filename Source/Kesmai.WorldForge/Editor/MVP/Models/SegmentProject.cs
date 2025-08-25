@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using DigitalRune.Collections;
 using System.ComponentModel;
 namespace Kesmai.WorldForge.Editor;
@@ -34,11 +33,11 @@ public class SegmentProject : INotifyPropertyChanged
         }
     }
 
-    public ObservableCollection<VirtualFile> VirtualFiles { get; } = new();
+    public NotifyingCollection<VirtualFile> VirtualFiles { get; } = new();
     public NotifyingCollection<SegmentRegion> Regions { get; } = new();
-    public ObservableCollection<Spawn> Spawns { get; } = new();
-    public ObservableCollection<Treasure> Treasures { get; } = new();
-    public ObservableCollection<Hoard> Hoards { get; } = new();
+    public NotifyingCollection<Spawn> Spawns { get; } = new();
+    public NotifyingCollection<Treasure> Treasures { get; } = new();
+    public NotifyingCollection<Hoard> Hoards { get; } = new();
 
     public SegmentProject()
     {

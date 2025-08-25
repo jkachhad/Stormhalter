@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
@@ -15,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.VisualBasic;
 using Kesmai.WorldForge.Editor;
+using DigitalRune.Collections;
 
 namespace Kesmai.WorldForge.UI;
 
@@ -253,7 +253,7 @@ public partial class VirtualFileTreeControl : UserControl
     private TreeViewItem CreateVirtualFileNode(VirtualFile file) =>
         CreateInMemoryNode(file, file.Name + ".cs");
 
-    private TreeViewItem CreateCategoryNode<T>(string name, ObservableCollection<T> collection) where T : ISegmentObject, new()
+    private TreeViewItem CreateCategoryNode<T>(string name, NotifyingCollection<T> collection) where T : ISegmentObject, new()
     {
         var item = new TreeViewItem { Tag = $"category:{name}" };
         item.Header = CreateHeader(name, name, true);
@@ -332,7 +332,7 @@ public partial class VirtualFileTreeControl : UserControl
         parent.Items.Add(CreateDirectoryNode(new DirectoryInfo(path)));
     }
 
-    private void AddSegmentObject<T>(ObservableCollection<T> collection, string typeName) where T : ISegmentObject, new()
+    private void AddSegmentObject<T>(NotifyingCollection<T> collection, string typeName) where T : ISegmentObject, new()
     {
         var defaultName = $"{typeName} {collection.Count + 1}";
         var name = Interaction.InputBox("Name", $"Add {typeName}", defaultName);
