@@ -19,9 +19,10 @@ public class Segment : ObservableObject
 		"Entrance", "Resurrect", "Facet", "Thief", 
 	};
 		
-	private string _name;
-	private Script _internal;
-	private Script _definition;
+        private string _name;
+        private Script _internal;
+        private Script _definition;
+    private SegmentProject _project = new SegmentProject();
 
 	public string Name
 	{
@@ -35,14 +36,19 @@ public class Segment : ObservableObject
 		set => SetProperty(ref _internal, value);
 	}
 
-	public Script Definition
-	{
-		get => _definition;
-		set => SetProperty(ref _definition, value);
-	}
-	
-        public NotifyingCollection<SegmentRegion> Regions =>
-                ServiceLocator.Current.GetInstance<ApplicationPresenter>().Project.Regions;
+        public Script Definition
+        {
+                get => _definition;
+                set => SetProperty(ref _definition, value);
+        }
+
+    public SegmentProject Project
+    {
+            get => _project;
+            set => SetProperty(ref _project, value);
+    }
+
+        public NotifyingCollection<SegmentRegion> Regions => Project.Regions;
 	public SegmentLocations Locations { get; set; } = new SegmentLocations();
 	public SegmentSubregions Subregions { get; set; } = new SegmentSubregions();
 	public SegmentEntities Entities { get; set; } = new SegmentEntities();

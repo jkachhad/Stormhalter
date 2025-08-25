@@ -225,7 +225,7 @@
 
                     <LayoutAnchorablePane FloatingWidth="250" DockWidth="250" DockMinWidth="250">
                         <LayoutAnchorable x:Name="_projectWindow" Title="Project">
-                            <ui:VirtualFileTreeControl Project="{Binding Project}" />
+                            <ui:VirtualFileTreeControl Project="{Binding Segment.Project}" />
                         </LayoutAnchorable>
                     </LayoutAnchorablePane>
 
