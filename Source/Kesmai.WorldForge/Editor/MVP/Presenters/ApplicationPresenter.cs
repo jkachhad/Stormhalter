@@ -40,8 +40,8 @@ public class ApplicationPresenter : ObservableRecipient
 	private string _segmentFilePath;
 	private DirectoryInfo _segmentFileFolder;
 		
-        private Segment _segment;
-        private SegmentProject _project = new SegmentProject();
+    private Segment _segment;
+    private SegmentProject _project = new SegmentProject();
 	private CustomRoslynHost _roslynHost;
 	private Selection _selection;
 	private TerrainSelector _filter;
@@ -104,27 +104,28 @@ public class ApplicationPresenter : ObservableRecipient
 		}
 	}
 
-        public int UnitSize => _unitSize;
+    public int UnitSize => _unitSize;
 
-        public Segment Segment
-	{
-		get => _segment;
-		set
-		{
-			if (SetProperty(ref _segment, value, true))
-			{
-				if (value != null)
-					_roslynHost = new CustomRoslynHost(_segment);
+    public Segment Segment
+    {
+	    get => _segment;
+	    set
+	    {
+	        if (SetProperty(ref _segment, value, true))
+	        {
+		        if (value != null)
+			        _roslynHost = new CustomRoslynHost(_segment);
 
-				ActiveDocument = Documents.FirstOrDefault();
-                }
-        }
+		        ActiveDocument = Documents.FirstOrDefault();
+	        }
+	    }
+    }
 
-        public SegmentProject Project
-        {
-                get => _project;
-                set => SetProperty(ref _project, value);
-        }
+    public SegmentProject Project
+    {
+            get => _project;
+            set => SetProperty(ref _project, value);
+    }
 
 	public NotifyingCollection<TerrainSelector> Filters { get; set; }
 	public NotifyingCollection<Tool> Tools { get; set; }
@@ -173,10 +174,10 @@ public class ApplicationPresenter : ObservableRecipient
     public RelayCommand ExportToPdfCommand { get; set; }
     public ApplicationPresenter()
 	{
-                var messenger = WeakReferenceMessenger.Default;
+		var messenger = WeakReferenceMessenger.Default;
 
-                _project.Name = "Example";
-                _project.RootPath = @"C:\\Example";
+		_project.Name = "Example";
+		_project.RootPath = @"C:\\Example";
 
         ExportToPdfCommand = new RelayCommand(() =>
         {

@@ -13,7 +13,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 namespace Kesmai.WorldForge.Editor;
 
 [DebuggerDisplay("{Name} [{ID}]")]
-public class SegmentRegion : ObservableObject
+public class SegmentRegion : ObservableObject, ISegmentObject
 {
 	private int _id;
 	private string _name;

@@ -76,7 +76,7 @@ public partial class VirtualFileTreeControl : UserControl
         }
     }
 
-    private void OnItemsChanged(object? sender, NotifyCollectionChangedEventArgs e) => LoadRoot();
+    private void OnItemsChanged<T>(object? sender, CollectionChangedEventArgs<T> e) => LoadRoot();
 
     private void SetupWatcher()
     {
