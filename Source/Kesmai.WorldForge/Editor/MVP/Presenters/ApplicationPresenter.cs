@@ -170,9 +170,6 @@ public class ApplicationPresenter : ObservableRecipient
 	{
 		var messenger = WeakReferenceMessenger.Default;
 
-		_project.Name = "Example";
-		_project.RootPath = @"C:\\Example";
-
         ExportToPdfCommand = new RelayCommand(() =>
         {
             ((Func<Task>)(() => ExportToPdfAsync())).FireAndForget();
