@@ -13,7 +13,7 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace Kesmai.WorldForge.Editor;
 
-public class SegmentTreasure : ObservableObject
+public class SegmentTreasure : ObservableObject, ISegmentObject
 {
 	private string _name;
 	private string _notes;

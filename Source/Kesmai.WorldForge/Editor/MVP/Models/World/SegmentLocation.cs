@@ -7,7 +7,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Kesmai.WorldForge.Editor;
 
-public class SegmentLocation : ObservableObject, ICloneable
+public class SegmentLocation : ObservableObject, ICloneable, ISegmentObject
 {
 	private string _name;
 

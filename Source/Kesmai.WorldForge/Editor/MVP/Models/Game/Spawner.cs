@@ -34,7 +34,7 @@ public class SpawnerAfterSpawnScriptTemplate : ScriptTemplate
 	
 [ScriptTemplate("OnBeforeSpawn", typeof(SpawnerBeforeSpawnScriptTemplate))]
 [ScriptTemplate("OnAfterSpawn", typeof(SpawnerAfterSpawnScriptTemplate))]
-public abstract class Spawner : ObservableObject
+public abstract class Spawner : ObservableObject, ISegmentObject
 {
 	private string _name;
 	private bool _enabled;
