@@ -1,7 +1,5 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using Kesmai.Prototype.VirtualFileTree;
-
 namespace Kesmai.WorldForge.Editor;
 
 public class SegmentProject : INotifyPropertyChanged
