@@ -20,14 +20,14 @@ namespace Kesmai.WorldForge.UI;
 
 public partial class VirtualFileTreeControl : UserControl
 {
-    public static readonly DependencyProperty ProjectProperty =
-        DependencyProperty.Register(nameof(Project), typeof(SegmentProject), typeof(VirtualFileTreeControl),
-            new PropertyMetadata(null, OnProjectChanged));
+    public static readonly DependencyProperty SegmentProperty =
+        DependencyProperty.Register(nameof(Segment), typeof(Segment), typeof(VirtualFileTreeControl),
+            new PropertyMetadata(null, OnSegmentChanged));
 
-    public SegmentProject? Project
+    public Segment? Segment
     {
-        get => (SegmentProject?)GetValue(ProjectProperty);
-        set => SetValue(ProjectProperty, value);
+        get => (Segment?)GetValue(SegmentProperty);
+        set => SetValue(SegmentProperty, value);
     }
 
     private FileSystemWatcher? _watcher;
@@ -38,53 +38,56 @@ public partial class VirtualFileTreeControl : UserControl
         Unloaded += (_, _) => _watcher?.Dispose();
     }
 
-    private static void OnProjectChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    private static void OnSegmentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         var control = (VirtualFileTreeControl)d;
-        if (e.OldValue is SegmentProject oldProject)
+        if (e.OldValue is Segment oldSegment)
         {
-            oldProject.PropertyChanged -= control.OnProjectPropertyChanged;
-            oldProject.VirtualFiles.CollectionChanged -= control.OnItemsChanged;
-            oldProject.Regions.CollectionChanged -= control.OnItemsChanged;
-            oldProject.Spawns.CollectionChanged -= control.OnItemsChanged;
-            oldProject.Treasures.CollectionChanged -= control.OnItemsChanged;
-            oldProject.Hoards.CollectionChanged -= control.OnItemsChanged;
+            oldSegment.PropertyChanged -= control.OnSegmentPropertyChanged;
+            oldSegment.VirtualFiles.CollectionChanged -= control.OnNotifyingItemsChanged;
+            oldSegment.Regions.CollectionChanged -= control.OnNotifyingItemsChanged;
+            oldSegment.Locations.CollectionChanged -= control.OnCollectionChanged;
+            oldSegment.Spawns.Location.CollectionChanged -= control.OnCollectionChanged;
+            oldSegment.Spawns.Region.CollectionChanged -= control.OnCollectionChanged;
+            oldSegment.Treasures.CollectionChanged -= control.OnCollectionChanged;
         }
-        if (e.NewValue is SegmentProject newProject)
+        if (e.NewValue is Segment newSegment)
         {
-            newProject.PropertyChanged += control.OnProjectPropertyChanged;
-            newProject.VirtualFiles.CollectionChanged += control.OnItemsChanged;
-            newProject.Regions.CollectionChanged += control.OnItemsChanged;
-            newProject.Spawns.CollectionChanged += control.OnItemsChanged;
-            newProject.Treasures.CollectionChanged += control.OnItemsChanged;
-            newProject.Hoards.CollectionChanged += control.OnItemsChanged;
+            newSegment.PropertyChanged += control.OnSegmentPropertyChanged;
+            newSegment.VirtualFiles.CollectionChanged += control.OnNotifyingItemsChanged;
+            newSegment.Regions.CollectionChanged += control.OnNotifyingItemsChanged;
+            newSegment.Locations.CollectionChanged += control.OnCollectionChanged;
+            newSegment.Spawns.Location.CollectionChanged += control.OnCollectionChanged;
+            newSegment.Spawns.Region.CollectionChanged += control.OnCollectionChanged;
+            newSegment.Treasures.CollectionChanged += control.OnCollectionChanged;
         }
         control.SetupWatcher();
         control.LoadRoot();
     }
 
-    private void OnProjectPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    private void OnSegmentPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(SegmentProject.RootPath))
+        if (e.PropertyName == nameof(Segment.RootPath))
         {
             SetupWatcher();
             LoadRoot();
         }
-        else if (e.PropertyName == nameof(SegmentProject.Name))
+        else if (e.PropertyName == nameof(Segment.Name))
         {
             LoadRoot();
         }
     }
 
-    private void OnItemsChanged<T>(object? sender, CollectionChangedEventArgs<T> e) => LoadRoot();
+    private void OnNotifyingItemsChanged<T>(object? sender, CollectionChangedEventArgs<T> e) => LoadRoot();
+    private void OnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e) => LoadRoot();
 
     private void SetupWatcher()
     {
         _watcher?.Dispose();
         _watcher = null;
-        if (Project == null)
+        if (Segment == null)
             return;
-        var root = Project.RootPath;
+        var root = Segment.RootPath;
         if (string.IsNullOrEmpty(root) || !Directory.Exists(root))
             return;
 
@@ -125,12 +128,12 @@ public partial class VirtualFileTreeControl : UserControl
             SaveExpansionState(item, expanded);
 
         Tree.Items.Clear();
-        if (Project == null)
+        if (Segment == null)
             return;
 
-        var rootPath = Project.RootPath;
+        var rootPath = Segment.RootPath;
         var rootItem = new TreeViewItem { Tag = rootPath };
-        rootItem.Header = CreateHeader(Project.Name, rootPath, true);
+        rootItem.Header = CreateHeader(Segment.Name, rootPath, true);
         rootItem.PreviewMouseRightButtonDown += SelectOnRightClick;
 
         TreeViewItem? sourceItem = null;
@@ -140,16 +143,23 @@ public partial class VirtualFileTreeControl : UserControl
             Directory.CreateDirectory(sourcePath);
             sourceItem = CreateDirectoryNode(new DirectoryInfo(sourcePath));
 
-            foreach (var file in Project.VirtualFiles)
+            foreach (var file in Segment.VirtualFiles)
                 sourceItem.Items.Add(CreateVirtualFileNode(file));
 
             rootItem.Items.Add(sourceItem);
         }
 
-        rootItem.Items.Add(CreateCategoryNode("Region", Project.Regions));
-        rootItem.Items.Add(CreateCategoryNode("Spawn", Project.Spawns));
-        rootItem.Items.Add(CreateCategoryNode("Treasure", Project.Treasures));
-        rootItem.Items.Add(CreateCategoryNode("Hoard", Project.Hoards));
+        rootItem.Items.Add(CreateCategoryNode("Region", Segment.Regions));
+        rootItem.Items.Add(CreateCategoryNode("Location", Segment.Locations));
+
+        var spawnsItem = new TreeViewItem { Tag = "category:Spawn" };
+        spawnsItem.Header = CreateHeader("Spawn", "Spawn", true);
+        spawnsItem.PreviewMouseRightButtonDown += SelectOnRightClick;
+        spawnsItem.Items.Add(CreateCategoryNode("Location", Segment.Spawns.Location, "Location Spawner", "category:Spawn/Location"));
+        spawnsItem.Items.Add(CreateCategoryNode("Region", Segment.Spawns.Region, "Region Spawner", "category:Spawn/Region"));
+        rootItem.Items.Add(spawnsItem);
+
+        rootItem.Items.Add(CreateCategoryNode("Treasure", Segment.Treasures));
 
         if (!string.IsNullOrEmpty(rootPath))
         {
@@ -253,18 +263,19 @@ public partial class VirtualFileTreeControl : UserControl
     private TreeViewItem CreateVirtualFileNode(VirtualFile file) =>
         CreateInMemoryNode(file, file.Name + ".cs");
 
-    private TreeViewItem CreateCategoryNode<T>(string name, NotifyingCollection<T> collection) where T : ISegmentObject, new()
+    private TreeViewItem CreateCategoryNode<T>(string name, IList<T> collection, string? menuName = null, string? tag = null) where T : ISegmentObject, new()
     {
-        var item = new TreeViewItem { Tag = $"category:{name}" };
+        var item = new TreeViewItem { Tag = tag ?? $"category:{name}" };
         item.Header = CreateHeader(name, name, true);
         item.PreviewMouseRightButtonDown += SelectOnRightClick;
 
         foreach (var child in collection)
-            item.Items.Add(CreateCategoryEntryNode(child, collection));
+            item.Items.Add(CreateCategoryEntryNode(child, (IList)collection));
 
         var menu = new ContextMenu();
-        var add = new MenuItem { Header = $"Add {name}" };
-        add.Click += (s, e) => AddSegmentObject(collection, name);
+        var addText = menuName ?? name;
+        var add = new MenuItem { Header = $"Add {addText}" };
+        add.Click += (s, e) => AddSegmentObject(collection, addText);
         menu.Items.Add(add);
         item.ContextMenu = menu;
 
@@ -332,7 +343,7 @@ public partial class VirtualFileTreeControl : UserControl
         parent.Items.Add(CreateDirectoryNode(new DirectoryInfo(path)));
     }
 
-    private void AddSegmentObject<T>(NotifyingCollection<T> collection, string typeName) where T : ISegmentObject, new()
+    private void AddSegmentObject<T>(IList<T> collection, string typeName) where T : ISegmentObject, new()
     {
         var defaultName = $"{typeName} {collection.Count + 1}";
         var name = Interaction.InputBox("Name", $"Add {typeName}", defaultName);

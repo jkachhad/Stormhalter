@@ -41,7 +41,6 @@ public class ApplicationPresenter : ObservableRecipient
 	private DirectoryInfo _segmentFileFolder;
 		
     private Segment _segment;
-    private SegmentProject _project = new SegmentProject();
 	private CustomRoslynHost _roslynHost;
 	private Selection _selection;
 	private TerrainSelector _filter;
@@ -121,11 +120,6 @@ public class ApplicationPresenter : ObservableRecipient
 	    }
     }
 
-    public SegmentProject Project
-    {
-            get => _project;
-            set => SetProperty(ref _project, value);
-    }
 
 	public NotifyingCollection<TerrainSelector> Filters { get; set; }
 	public NotifyingCollection<Tool> Tools { get; set; }
@@ -176,8 +170,6 @@ public class ApplicationPresenter : ObservableRecipient
 	{
 		var messenger = WeakReferenceMessenger.Default;
 
-		_project.Name = "Example";
-		_project.RootPath = @"C:\\Example";
 
         ExportToPdfCommand = new RelayCommand(() =>
         {
