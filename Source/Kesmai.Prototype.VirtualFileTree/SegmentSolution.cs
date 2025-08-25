@@ -36,9 +36,10 @@ public class SegmentSolution : INotifyPropertyChanged
 
     public ObservableCollection<VirtualFile> VirtualFiles { get; } = new();
     public ObservableCollection<Region> Regions { get; } = new();
-    public ObservableCollection<Spawn> Spawns { get; } = new();
-    public ObservableCollection<Treasure> Treasures { get; } = new();
-    public ObservableCollection<Hoard> Hoards { get; } = new();
+    public ObservableCollection<SegmentLocation> Locations { get; } = new();
+    public ObservableCollection<SegmentSpawn> Spawns { get; } = new();
+    public ObservableCollection<SegmentTreasure> Treasures { get; } = new();
+    public ObservableCollection<SegmentHoard> Hoards { get; } = new();
 
     public SegmentSolution()
     {
@@ -49,17 +50,20 @@ public class SegmentSolution : INotifyPropertyChanged
         Regions.Add(new Region { Name = "Region 2" });
         Regions.Add(new Region { Name = "Region 3" });
 
-        Spawns.Add(new Spawn { Name = "Spawn 1" });
-        Spawns.Add(new Spawn { Name = "Spawn 2" });
-        Spawns.Add(new Spawn { Name = "Spawn 3" });
+        Locations.Add(new SegmentLocation { Name = "Entrance" });
+        Locations.Add(new SegmentLocation { Name = "Resurrect" });
 
-        Treasures.Add(new Treasure { Name = "Treasure 1" });
-        Treasures.Add(new Treasure { Name = "Treasure 2" });
-        Treasures.Add(new Treasure { Name = "Treasure 3" });
+        Spawns.Add(new SegmentSpawn { Name = "Spawn 1" });
+        Spawns.Add(new SegmentSpawn { Name = "Spawn 2" });
+        Spawns.Add(new SegmentSpawn { Name = "Spawn 3" });
 
-        Hoards.Add(new Hoard { Name = "Hoard 1" });
-        Hoards.Add(new Hoard { Name = "Hoard 2" });
-        Hoards.Add(new Hoard { Name = "Hoard 3" });
+        Treasures.Add(new SegmentTreasure { Name = "Treasure 1" });
+        Treasures.Add(new SegmentTreasure { Name = "Treasure 2" });
+        Treasures.Add(new SegmentTreasure { Name = "Treasure 3" });
+
+        Hoards.Add(new SegmentHoard { Name = "Hoard 1" });
+        Hoards.Add(new SegmentHoard { Name = "Hoard 2" });
+        Hoards.Add(new SegmentHoard { Name = "Hoard 3" });
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

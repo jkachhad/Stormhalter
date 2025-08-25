@@ -1,6 +1,6 @@
 namespace Kesmai.Prototype.VirtualFileTree;
 
-public class Spawn : ISegmentObject
+public class SegmentSpawn : ISegmentObject
 {
     public string Name { get; set; } = string.Empty;
 }

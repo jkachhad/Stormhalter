@@ -9,16 +9,12 @@ using Kesmai.WorldForge.Models;
 using Kesmai.WorldForge.Scripting;
 using Kesmai.WorldForge.UI.Documents;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Project = Kesmai.WorldForge.Editor.Project;
 
 namespace Kesmai.WorldForge.Editor;
 
 public class Segment : ObservableObject
 {
-	private static List<string> _reservedLocations = new List<string>()
-	{
-		"Entrance", "Resurrect", "Facet", "Thief", 
-	};
-		
         private string _name;
         private Script _internal;
         private Script _definition;
@@ -49,25 +45,18 @@ public class Segment : ObservableObject
     }
 
         public NotifyingCollection<SegmentRegion> Regions => Project.Regions;
-	public SegmentLocations Locations { get; set; } = new SegmentLocations();
-	public SegmentSubregions Subregions { get; set; } = new SegmentSubregions();
-	public SegmentEntities Entities { get; set; } = new SegmentEntities();
-	public SegmentSpawns Spawns { get; set; } = new SegmentSpawns();
-	public SegmentTreasures Treasures { get; set; } = new SegmentTreasures();
+        public SegmentLocations Locations => Project.Locations;
+        public SegmentSubregions Subregions => Project.Subregions;
+        public SegmentEntities Entities => Project.Entities;
+        public NotifyingCollection<Project.SegmentSpawn> Spawns => Project.Spawns;
+        public NotifyingCollection<Project.SegmentTreasure> Treasures => Project.Treasures;
+        public NotifyingCollection<Project.SegmentHoard> Hoards => Project.Hoards;
 
 	public Segment()
 	{
-		Name = "Segment";
+                Name = "Segment";
 
-		foreach (var location in _reservedLocations)
-		{
-			Locations.Add(new SegmentLocation()
-			{
-				Name = location
-			});
-		}
-			
-                Regions.CollectionChanged += OnRegionsChanged;
+                Project.Regions.CollectionChanged += OnRegionsChanged;
 
 		ValidateScripts();
 	}
@@ -117,7 +106,7 @@ public class Segment : ObservableObject
 	public void Load(XElement element)
 	{
 		Name = (string)element.Attribute("name");
-		Locations = new SegmentLocations();
+                Project.Locations = new SegmentLocations();
 			
 		var versionAttribute = element.Attribute("version");
 
@@ -145,7 +134,7 @@ public class Segment : ObservableObject
 			{
 				var location = new SegmentLocation(locationElement);
 
-				if (_reservedLocations.Contains(location.Name))
+                if (SegmentProject.ReservedLocations.Contains(location.Name))
 					location.IsReserved = true;
 
 				Locations.Add(location);
@@ -178,7 +167,7 @@ public class Segment : ObservableObject
 
 			foreach (var location in Locations)
 			{
-				if (_reservedLocations.Contains(location.Name))
+                                if (SegmentProject.ReservedLocations.Contains(location.Name))
 					location.IsReserved = true;
 			}
 		}

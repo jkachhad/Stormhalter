@@ -1,7 +1,6 @@
 namespace Kesmai.Prototype.VirtualFileTree;
 
-public class Hoard : ISegmentObject
+public class SegmentLocation : ISegmentObject
 {
     public string Name { get; set; } = string.Empty;
 }
-

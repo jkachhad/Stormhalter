@@ -45,6 +45,7 @@ namespace Kesmai.Prototype.VirtualFileTree
                 oldSolution.PropertyChanged -= control.OnSolutionPropertyChanged;
                 oldSolution.VirtualFiles.CollectionChanged -= control.OnItemsChanged;
                 oldSolution.Regions.CollectionChanged -= control.OnItemsChanged;
+                oldSolution.Locations.CollectionChanged -= control.OnItemsChanged;
                 oldSolution.Spawns.CollectionChanged -= control.OnItemsChanged;
                 oldSolution.Treasures.CollectionChanged -= control.OnItemsChanged;
                 oldSolution.Hoards.CollectionChanged -= control.OnItemsChanged;
@@ -54,6 +55,7 @@ namespace Kesmai.Prototype.VirtualFileTree
                 newSolution.PropertyChanged += control.OnSolutionPropertyChanged;
                 newSolution.VirtualFiles.CollectionChanged += control.OnItemsChanged;
                 newSolution.Regions.CollectionChanged += control.OnItemsChanged;
+                newSolution.Locations.CollectionChanged += control.OnItemsChanged;
                 newSolution.Spawns.CollectionChanged += control.OnItemsChanged;
                 newSolution.Treasures.CollectionChanged += control.OnItemsChanged;
                 newSolution.Hoards.CollectionChanged += control.OnItemsChanged;
@@ -146,6 +148,7 @@ namespace Kesmai.Prototype.VirtualFileTree
             }
 
             rootItem.Items.Add(CreateCategoryNode("Region", Solution.Regions));
+            rootItem.Items.Add(CreateCategoryNode("Locations", Solution.Locations));
             rootItem.Items.Add(CreateCategoryNode("Spawn", Solution.Spawns));
             rootItem.Items.Add(CreateCategoryNode("Treasure", Solution.Treasures));
             rootItem.Items.Add(CreateCategoryNode("Hoard", Solution.Hoards));

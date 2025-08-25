@@ -14,7 +14,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.VisualBasic;
 using Kesmai.WorldForge.Editor;
-using DigitalRune.Collections;
 
 namespace Kesmai.WorldForge.UI;
 
@@ -49,6 +48,7 @@ public partial class VirtualFileTreeControl : UserControl
             oldProject.Spawns.CollectionChanged -= control.OnItemsChanged;
             oldProject.Treasures.CollectionChanged -= control.OnItemsChanged;
             oldProject.Hoards.CollectionChanged -= control.OnItemsChanged;
+            oldProject.Locations.CollectionChanged -= control.OnItemsChanged;
         }
         if (e.NewValue is SegmentProject newProject)
         {
@@ -58,6 +58,7 @@ public partial class VirtualFileTreeControl : UserControl
             newProject.Spawns.CollectionChanged += control.OnItemsChanged;
             newProject.Treasures.CollectionChanged += control.OnItemsChanged;
             newProject.Hoards.CollectionChanged += control.OnItemsChanged;
+            newProject.Locations.CollectionChanged += control.OnItemsChanged;
         }
         control.SetupWatcher();
         control.LoadRoot();
@@ -76,7 +77,7 @@ public partial class VirtualFileTreeControl : UserControl
         }
     }
 
-    private void OnItemsChanged<T>(object? sender, CollectionChangedEventArgs<T> e) => LoadRoot();
+    private void OnItemsChanged(object? sender, EventArgs e) => LoadRoot();
 
     private void SetupWatcher()
     {
@@ -147,6 +148,7 @@ public partial class VirtualFileTreeControl : UserControl
         }
 
         rootItem.Items.Add(CreateCategoryNode("Region", Project.Regions));
+        rootItem.Items.Add(CreateCategoryNode("Locations", Project.Locations));
         rootItem.Items.Add(CreateCategoryNode("Spawn", Project.Spawns));
         rootItem.Items.Add(CreateCategoryNode("Treasure", Project.Treasures));
         rootItem.Items.Add(CreateCategoryNode("Hoard", Project.Hoards));
@@ -253,14 +255,14 @@ public partial class VirtualFileTreeControl : UserControl
     private TreeViewItem CreateVirtualFileNode(VirtualFile file) =>
         CreateInMemoryNode(file, file.Name + ".cs");
 
-    private TreeViewItem CreateCategoryNode<T>(string name, NotifyingCollection<T> collection) where T : ISegmentObject, new()
+    private TreeViewItem CreateCategoryNode<T>(string name, IList<T> collection) where T : ISegmentObject, new()
     {
         var item = new TreeViewItem { Tag = $"category:{name}" };
         item.Header = CreateHeader(name, name, true);
         item.PreviewMouseRightButtonDown += SelectOnRightClick;
 
         foreach (var child in collection)
-            item.Items.Add(CreateCategoryEntryNode(child, collection));
+            item.Items.Add(CreateCategoryEntryNode(child, (IList)collection));
 
         var menu = new ContextMenu();
         var add = new MenuItem { Header = $"Add {name}" };
@@ -332,7 +334,7 @@ public partial class VirtualFileTreeControl : UserControl
         parent.Items.Add(CreateDirectoryNode(new DirectoryInfo(path)));
     }
 
-    private void AddSegmentObject<T>(NotifyingCollection<T> collection, string typeName) where T : ISegmentObject, new()
+    private void AddSegmentObject<T>(IList<T> collection, string typeName) where T : ISegmentObject, new()
     {
         var defaultName = $"{typeName} {collection.Count + 1}";
         var name = Interaction.InputBox("Name", $"Add {typeName}", defaultName);
