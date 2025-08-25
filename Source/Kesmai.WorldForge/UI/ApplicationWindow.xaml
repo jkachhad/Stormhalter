@@ -10,6 +10,7 @@
         xmlns:ui="clr-namespace:Kesmai.WorldForge.UI"
         xmlns:editor="clr-namespace:Kesmai.WorldForge.Editor"
         xmlns:documents="clr-namespace:Kesmai.WorldForge.UI.Documents"
+        xmlns:vf="clr-namespace:Kesmai.Prototype.VirtualFileTree;assembly=Kesmai.Prototype.VirtualFileTree"
 
         mc:Ignorable="d"
 		
@@ -222,17 +223,23 @@
             
             <LayoutRoot>
                 <LayoutPanel Orientation="Horizontal">
-                    
+
+                    <LayoutAnchorablePane FloatingWidth="250" DockWidth="250" DockMinWidth="250">
+                        <LayoutAnchorable x:Name="_projectWindow" Title="Project">
+                            <vf:VirtualFileTreeControl Solution="{Binding Project}" />
+                        </LayoutAnchorable>
+                    </LayoutAnchorablePane>
+
                     <!-- Documents -->
                     <LayoutDocumentPaneGroup CanRepositionItems="False">
                         <LayoutDocumentPane>
-   
+
                         </LayoutDocumentPane>
                     </LayoutDocumentPaneGroup>
-                    
+
                     <LayoutAnchorablePane FloatingWidth="365" DockWidth="365" DockMinWidth="365" >
                         <LayoutAnchorable x:Name="_componentsWindow" Title="Components" ContentId="component">
-                                <ui:ComponentsPanel Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" 
+                                <ui:ComponentsPanel Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
                                                     OpacityMask="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
                                                     VerticalAlignment="Stretch" MinWidth="365"></ui:ComponentsPanel>
                             </LayoutAnchorable>
