@@ -9,6 +9,7 @@ using Kesmai.WorldForge.Models;
 using Kesmai.WorldForge.Scripting;
 using Kesmai.WorldForge.UI.Documents;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Kesmai.WorldForge;
 
 namespace Kesmai.WorldForge.Editor;
 
@@ -302,9 +303,70 @@ public class Segment : ObservableObject
 		element.Add(subregionsElement);
 		element.Add(entitiesElement);
 		element.Add(spawnsElement);
-		element.Add(treasuresElement);
-		element.Add(hoardsElement);
-	}
+                element.Add(treasuresElement);
+                element.Add(hoardsElement);
+        }
+
+        public void SaveAsDirectory(string path)
+        {
+                if (String.IsNullOrWhiteSpace(path))
+                        throw new ArgumentException(nameof(path));
+
+                Directory.CreateDirectory(path);
+
+                string Sanitize(string name)
+                {
+                        var invalid = Path.GetInvalidFileNameChars();
+                        return String.Join("_", name.Split(invalid, StringSplitOptions.RemoveEmptyEntries));
+                }
+
+                #region Scripts
+                var sourceDir = Path.Combine(path, "Source");
+                Directory.CreateDirectory(sourceDir);
+
+                if (_internal != null)
+                        File.WriteAllText(Path.Combine(sourceDir, "Internal.cs"), _internal.ToString());
+
+                if (_definition != null)
+                        File.WriteAllText(Path.Combine(sourceDir, "Definition.cs"), _definition.ToString());
+
+                var spawnsSourceDir = Path.Combine(sourceDir, "Spawns");
+                var allSpawners = new List<Spawner>();
+                allSpawners.AddRange(Spawns.Location.Cast<Spawner>());
+                allSpawners.AddRange(Spawns.Region.Cast<Spawner>());
+
+                foreach (var spawner in allSpawners)
+                {
+                        var spawnerDir = Path.Combine(spawnsSourceDir, Sanitize(spawner.Name));
+                        Directory.CreateDirectory(spawnerDir);
+
+                        foreach (var script in spawner.Scripts)
+                                File.WriteAllText(Path.Combine(spawnerDir, Sanitize(script.Name) + ".cs"), script.ToString());
+                }
+
+                #endregion
+
+                #region Regions
+                var regionDir = Path.Combine(path, "Region");
+                Directory.CreateDirectory(regionDir);
+
+                foreach (var region in Regions)
+                        region.GetXElement().Save(Path.Combine(regionDir, Sanitize(region.Name) + ".xml"));
+                #endregion
+
+                void WriteCategory(Action<XElement> saveAction, string elementName, string fileName)
+                {
+                        var element = new XElement(elementName);
+                        saveAction(element);
+                        element.Save(Path.Combine(path, fileName));
+                }
+
+                WriteCategory(Locations.Save, "locations", "Locations.xml");
+                WriteCategory(Subregions.Save, "subregions", "Subregions.xml");
+                WriteCategory(Entities.Save, "entities", "Entities.xml");
+                WriteCategory(Spawns.Save, "spawns", "Spawns.xml");
+                WriteCategory(Treasures.Save, "treasures", "Treasures.xml");
+        }
 		
 	public void UpdateTiles()
 	{
