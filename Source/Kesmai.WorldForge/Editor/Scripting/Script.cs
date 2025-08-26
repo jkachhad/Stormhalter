@@ -88,8 +88,8 @@ public class Script : ObservableObject
 		{
 			for (var i = 0; i < segments.Count; i++)
 			{
-				builder.Append(segments[i]);
 				builder.Append(blocks[i]);
+				builder.Append(segments[i]);
 					
 				if (i < (segments.Count - 1))
 					continue;
