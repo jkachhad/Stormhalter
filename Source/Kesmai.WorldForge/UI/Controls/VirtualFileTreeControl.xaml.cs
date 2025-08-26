@@ -233,6 +233,19 @@ public partial class VirtualFileTreeControl : UserControl
         return panel;
     }
 
+    private static StackPanel CreateColoredHeader(string text, Brush brush, bool isCircle)
+    {
+        var panel = new StackPanel { Orientation = Orientation.Horizontal };
+        Shape icon = isCircle ? new Ellipse() : new Rectangle();
+        icon.Width = 10;
+        icon.Height = 10;
+        icon.Fill = brush;
+        icon.Margin = new Thickness(2, 0, 2, 0);
+        panel.Children.Add(icon);
+        panel.Children.Add(new TextBlock { Text = text });
+        return panel;
+    }
+
     private TreeViewItem CreateDirectoryNode(DirectoryInfo dir)
     {
         var item = new TreeViewItem { Tag = dir.FullName };
@@ -289,7 +302,12 @@ public partial class VirtualFileTreeControl : UserControl
     private TreeViewItem CreateCategoryNode<T>(string name, IList<T> collection, string? menuName = null, string? tag = null) where T : ISegmentObject, new()
     {
         var item = new TreeViewItem { Tag = tag ?? $"category:{name}" };
-        item.Header = CreateHeader(name, name, true);
+        if (name == "Location")
+            item.Header = CreateColoredHeader(name, Brushes.LightPink, true);
+        else if (name == "Region")
+            item.Header = CreateColoredHeader(name, Brushes.MediumPurple, false);
+        else
+            item.Header = CreateHeader(name, name, true);
         item.PreviewMouseRightButtonDown += SelectOnRightClick;
 
         foreach (var child in collection)
@@ -308,7 +326,12 @@ public partial class VirtualFileTreeControl : UserControl
     private TreeViewItem CreateCategoryEntryNode(ISegmentObject obj, IList collection)
     {
         var item = new TreeViewItem { Tag = obj };
-        item.Header = CreateHeader(obj.Name, obj.Name, false);
+        if (obj is SegmentLocation)
+            item.Header = CreateColoredHeader(obj.Name, Brushes.LightPink, true);
+        else if (obj is SegmentRegion)
+            item.Header = CreateColoredHeader(obj.Name, Brushes.MediumPurple, false);
+        else
+            item.Header = CreateHeader(obj.Name, obj.Name, false);
         item.PreviewMouseRightButtonDown += SelectOnRightClick;
 
         var menu = new ContextMenu();
@@ -326,7 +349,7 @@ public partial class VirtualFileTreeControl : UserControl
     private TreeViewItem CreateSpawnerRegionNode(SegmentRegion region)
     {
         var item = new TreeViewItem { Tag = $"category:Spawn/{region.ID}" };
-        item.Header = CreateHeader(region.Name, region.Name, true);
+        item.Header = CreateColoredHeader(region.Name, Brushes.MediumPurple, false);
         item.PreviewMouseRightButtonDown += SelectOnRightClick;
 
         foreach (var spawner in Segment.Spawns.Location.Where(s => GetRegionId(s) == region.ID))
