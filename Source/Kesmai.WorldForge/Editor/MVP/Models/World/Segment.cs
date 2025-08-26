@@ -329,21 +329,6 @@ public class Segment : ObservableObject
 
                 if (_definition != null)
                         File.WriteAllText(Path.Combine(sourceDir, "Definition.cs"), _definition.ToString());
-
-                var spawnsSourceDir = Path.Combine(sourceDir, "Spawns");
-                var allSpawners = new List<Spawner>();
-                allSpawners.AddRange(Spawns.Location.Cast<Spawner>());
-                allSpawners.AddRange(Spawns.Region.Cast<Spawner>());
-
-                foreach (var spawner in allSpawners)
-                {
-                        var spawnerDir = Path.Combine(spawnsSourceDir, Sanitize(spawner.Name));
-                        Directory.CreateDirectory(spawnerDir);
-
-                        foreach (var script in spawner.Scripts)
-                                File.WriteAllText(Path.Combine(spawnerDir, Sanitize(script.Name) + ".cs"), script.ToString());
-                }
-
                 #endregion
 
                 #region Regions
