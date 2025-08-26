@@ -301,13 +301,11 @@ public partial class VirtualFileTreeControl : UserControl
 
     private TreeViewItem CreateCategoryNode<T>(string name, IList<T> collection, string? menuName = null, string? tag = null) where T : ISegmentObject, new()
     {
-        var item = new TreeViewItem { Tag = tag ?? $"category:{name}" };
-        if (name == "Location")
-            item.Header = CreateColoredHeader(name, Brushes.LightPink, true);
-        else if (name == "Region")
-            item.Header = CreateColoredHeader(name, Brushes.MediumPurple, false);
-        else
-            item.Header = CreateHeader(name, name, true);
+        var item = new TreeViewItem
+        {
+            Tag = tag ?? $"category:{name}",
+            Header = CreateHeader(name, name, true)
+        };
         item.PreviewMouseRightButtonDown += SelectOnRightClick;
 
         foreach (var child in collection)
