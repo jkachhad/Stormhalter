@@ -746,21 +746,33 @@ public class ApplicationPresenter : ObservableRecipient
                 WriteCategory(_segment.Spawns.Save, "spawns", "Spawns.xml");
                 WriteCategory(_segment.Treasures.Save, "treasures", "Treasures.xml");
 
-                var resourceName = $"{typeof(ApplicationPresenter).Assembly.GetName().Name}.Editor.Templates.Segment.csproj.template";
-                using var resourceStream = typeof(ApplicationPresenter).Assembly.GetManifestResourceStream(resourceName);
-                if (resourceStream != null)
+                var segmentName = Sanitize(_segment.Name);
+                var project = new XDocument(
+                        new XElement("Project",
+                                new XAttribute("Sdk", "Microsoft.NET.Sdk"),
+                                new XElement("PropertyGroup",
+                                        new XElement("OutputType", "Library"),
+                                        new XElement("TargetFramework", "net8.0"),
+                                        new XElement("RootNamespace", segmentName),
+                                        new XElement("AssemblyName", segmentName)
+                                ),
+                                new XElement("ItemGroup",
+                                        new XElement("Compile", new XAttribute("Include", "Source/**/*.cs"))
+                                )
+                        )
+                );
+
+                if (additionalFiles.Any())
                 {
-                        using var reader = new StreamReader(resourceStream);
-                        var template = reader.ReadToEnd();
-                        var segmentName = Sanitize(_segment.Name);
-                        var additionalFilesContent = string.Join(Environment.NewLine,
-                                additionalFiles.Select(f => $"    <AdditionalFiles Include=\"{f.Replace('\\', '/')}\" />"));
-                        var additionalFilesGroup = string.IsNullOrEmpty(additionalFilesContent) ? string.Empty :
-                                $"  <ItemGroup>{Environment.NewLine}{additionalFilesContent}{Environment.NewLine}  </ItemGroup>{Environment.NewLine}";
-                        var content = template.Replace("$SEGMENT_NAME$", segmentName)
-                                              .Replace("$ADDITIONAL_FILES$", additionalFilesGroup);
-                        File.WriteAllText(Path.Combine(path, $"{segmentName}.csproj"), content);
+                        project.Root?.Add(
+                                new XElement("ItemGroup",
+                                        additionalFiles.Select(f =>
+                                                new XElement("AdditionalFiles", new XAttribute("Include", f.Replace('\\', '/'))))
+                                )
+                        );
                 }
+
+                project.Save(Path.Combine(path, $"{segmentName}.csproj"));
         }
 
 	private bool CheckScriptSyntax() //Enumerate all script segments and verify that they pass syntax checks
