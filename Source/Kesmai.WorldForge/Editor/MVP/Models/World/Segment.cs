@@ -91,6 +91,7 @@ public class Segment : ObservableObject
                 Treasures.Add(new SegmentTreasure { Name = "Treasure 1" });
                 Treasures.Add(new SegmentTreasure { Name = "Treasure 2" });
                 Treasures.Add(new SegmentTreasure { Name = "Treasure 3" });
+                Treasures.Add(new SegmentHoard { Name = "Hoard 1" });
 
                 Regions.CollectionChanged += OnRegionsChanged;
 

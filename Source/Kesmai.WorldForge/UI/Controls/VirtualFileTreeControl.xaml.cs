@@ -182,7 +182,7 @@ public partial class VirtualFileTreeControl : UserControl
             spawnsItem.Items.Add(CreateSpawnerRegionNode(region));
         rootItem.Items.Add(spawnsItem);
 
-        rootItem.Items.Add(CreateCategoryNode("Treasure", Segment.Treasures));
+        rootItem.Items.Add(CreateTreasureCategoryNode());
 
         if (!string.IsNullOrEmpty(rootPath))
         {
@@ -374,6 +374,63 @@ public partial class VirtualFileTreeControl : UserControl
         item.ContextMenu = menu;
 
         return item;
+    }
+
+    private TreeViewItem CreateTreasureCategoryNode()
+    {
+        var item = new TreeViewItem { Tag = "category:Treasure" };
+        item.Header = CreateHeader("Treasure", "Treasure", true);
+        item.PreviewMouseRightButtonDown += SelectOnRightClick;
+
+        foreach (var treasure in Segment.Treasures)
+            item.Items.Add(CreateTreasureEntryNode(treasure));
+
+        var menu = new ContextMenu();
+        var addTreasure = new MenuItem { Header = "Add Treasure" };
+        addTreasure.Click += (s, e) => AddSegmentObject(Segment.Treasures, "Treasure");
+        var addHoard = new MenuItem { Header = "Add Hoard" };
+        addHoard.Click += (s, e) => AddHoard();
+        menu.Items.Add(addTreasure);
+        menu.Items.Add(addHoard);
+        item.ContextMenu = menu;
+
+        return item;
+    }
+
+    private TreeViewItem CreateTreasureEntryNode(SegmentTreasure treasure)
+    {
+        var item = new TreeViewItem { Tag = treasure };
+        item.PreviewMouseRightButtonDown += SelectOnRightClick;
+
+        var panel = new StackPanel { Orientation = Orientation.Horizontal };
+        Shape icon = treasure is SegmentHoard
+            ? new Rectangle { Width = 10, Height = 10, Fill = Brushes.Red }
+            : new Ellipse { Width = 10, Height = 10, Fill = Brushes.Green };
+        icon.Margin = new Thickness(2, 0, 2, 0);
+        panel.Children.Add(icon);
+        panel.Children.Add(new TextBlock { Text = treasure.Name });
+        item.Header = panel;
+
+        var menu = new ContextMenu();
+        var rename = new MenuItem { Header = "Rename" };
+        rename.Click += (s, e) => RenameSegmentObject(treasure, item);
+        var delete = new MenuItem { Header = "Delete" };
+        delete.Click += (s, e) => DeleteSegmentObject(treasure, item, Segment.Treasures);
+        menu.Items.Add(rename);
+        menu.Items.Add(delete);
+        item.ContextMenu = menu;
+
+        return item;
+    }
+
+    private void AddHoard()
+    {
+        var count = Segment.Treasures.Count(t => t is SegmentHoard) + 1;
+        var defaultName = $"Hoard {count}";
+        var name = Interaction.InputBox("Name", "Add Hoard", defaultName);
+        if (string.IsNullOrWhiteSpace(name))
+            return;
+        Segment.Treasures.Add(new SegmentHoard { Name = name });
     }
 
     private void AddSpawner<T>(IList<T> collection, string typeName, int regionId) where T : Spawner, new()
