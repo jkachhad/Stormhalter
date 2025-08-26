@@ -682,11 +682,61 @@ public class ApplicationPresenter : ObservableRecipient
 			using (var stream = new FileStream(definitionFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
 			using (var writer = new StreamWriter(stream))
 				writer.Write(_segment.Definition.Blocks[1]);
+
+			var saveFolder = new FileInfo(targetFile).Directory;
+
+			SaveAsDirectory(@$"{saveFolder}\{_segment.Name}");
 		}
 		catch (Exception ex)
 		{
 			MessageBox.Show($"Error when saving project: {ex.Message}", "Unable to save", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
+	}
+	
+	public void SaveAsDirectory(string path)
+	{
+		if (String.IsNullOrWhiteSpace(path))
+			throw new ArgumentException(nameof(path));
+
+		Directory.CreateDirectory(path);
+
+		string Sanitize(string name)
+		{
+			var invalid = Path.GetInvalidFileNameChars();
+			return String.Join("_", name.Split(invalid, StringSplitOptions.RemoveEmptyEntries));
+		}
+
+		#region Scripts
+		var sourceDir = Path.Combine(path, "Source");
+		Directory.CreateDirectory(sourceDir);
+
+		if (_segment.Internal != null)
+			File.WriteAllText(Path.Combine(sourceDir, "Internal.cs"), _segment.Internal.ToString());
+
+		if (_segment.Definition != null)
+			File.WriteAllText(Path.Combine(sourceDir, "Definition.cs"), _segment.Definition.ToString());
+		#endregion
+
+		#region Regions
+		var regionDir = Path.Combine(path, "Region");
+		Directory.CreateDirectory(regionDir);
+
+		foreach (var region in _segment.Regions)
+			region.GetXElement().Save(Path.Combine(regionDir, Sanitize(region.Name) + ".xml"));
+		#endregion
+
+		void WriteCategory(Action<XElement> saveAction, string elementName, string fileName)
+		{
+			var element = new XElement(elementName);
+			saveAction(element);
+			element.Save(Path.Combine(path, fileName));
+		}
+
+		/*WriteCategory(Locations.Save, "locations", "Locations.xml");
+		WriteCategory(Subregions.Save, "subregions", "Subregions.xml");
+		WriteCategory(Entities.Save, "entities", "Entities.xml");
+		WriteCategory(Spawns.Save, "spawns", "Spawns.xml");
+		WriteCategory(Treasures.Save, "treasures", "Treasures.xml");*/
 	}
 
 	private bool CheckScriptSyntax() //Enumerate all script segments and verify that they pass syntax checks
