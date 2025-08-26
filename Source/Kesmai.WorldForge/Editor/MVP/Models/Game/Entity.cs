@@ -8,6 +8,7 @@ using Kesmai.WorldForge.Scripting;
 using Kesmai.WorldForge.UI.Documents;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.ComponentModel;
+using Kesmai.WorldForge.Editor;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace Kesmai.WorldForge;
 [ScriptTemplate("OnSpawn", typeof(EntitySpawnScriptTemplate))]
 [ScriptTemplate("OnDeath", typeof(EntityDeathScriptTemplate))]
 [ScriptTemplate("OnIncomingPlayer", typeof(EntityIncomingPlayerScriptTemplate))]
-public class Entity : ObservableObject, ICloneable
+public class Entity : ObservableObject, ICloneable, ISegmentObject
 {
 	private string _name;
 	private string _notes;

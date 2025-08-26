@@ -50,6 +50,9 @@ public partial class VirtualFileTreeControl : UserControl
             oldSegment.VirtualFiles.CollectionChanged -= control.OnNotifyingItemsChanged;
             oldSegment.Regions.CollectionChanged -= control.OnNotifyingItemsChanged;
             oldSegment.Locations.CollectionChanged -= control.OnCollectionChanged;
+            oldSegment.Entities.CollectionChanged -= control.OnEntitiesCollectionChanged;
+            foreach (var s in oldSegment.Entities)
+                s.PropertyChanged -= control.OnEntityPropertyChanged;
             oldSegment.Spawns.Location.CollectionChanged -= control.OnSpawnsCollectionChanged;
             foreach (var s in oldSegment.Spawns.Location)
                 s.PropertyChanged -= control.OnSpawnerPropertyChanged;
@@ -64,6 +67,9 @@ public partial class VirtualFileTreeControl : UserControl
             newSegment.VirtualFiles.CollectionChanged += control.OnNotifyingItemsChanged;
             newSegment.Regions.CollectionChanged += control.OnNotifyingItemsChanged;
             newSegment.Locations.CollectionChanged += control.OnCollectionChanged;
+            newSegment.Entities.CollectionChanged += control.OnEntitiesCollectionChanged;
+            foreach (var en in newSegment.Entities)
+                en.PropertyChanged += control.OnEntityPropertyChanged;
             newSegment.Spawns.Location.CollectionChanged += control.OnSpawnsCollectionChanged;
             foreach (var s in newSegment.Spawns.Location)
                 s.PropertyChanged += control.OnSpawnerPropertyChanged;
@@ -83,10 +89,8 @@ public partial class VirtualFileTreeControl : UserControl
             SetupWatcher();
             LoadRoot();
         }
-        else if (e.PropertyName == nameof(Segment.Name))
-        {
-            LoadRoot();
-        }
+        // Segment name changes no longer affect the tree structure, since the
+        // segment name is no longer shown as a root node.
     }
 
     private void OnNotifyingItemsChanged<T>(object? sender, CollectionChangedEventArgs<T> e) => LoadRoot();
@@ -103,6 +107,19 @@ public partial class VirtualFileTreeControl : UserControl
     }
 
     private void OnSpawnerPropertyChanged(object? sender, PropertyChangedEventArgs e) => LoadRoot();
+
+    private void OnEntitiesCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (e.OldItems != null)
+            foreach (Entity en in e.OldItems)
+                en.PropertyChanged -= OnEntityPropertyChanged;
+        if (e.NewItems != null)
+            foreach (Entity en in e.NewItems)
+                en.PropertyChanged += OnEntityPropertyChanged;
+        LoadRoot();
+    }
+
+    private void OnEntityPropertyChanged(object? sender, PropertyChangedEventArgs e) => LoadRoot();
 
     private void SetupWatcher()
     {
@@ -155,51 +172,42 @@ public partial class VirtualFileTreeControl : UserControl
             return;
 
         var rootPath = Segment.RootPath;
-        var rootItem = new TreeViewItem { Tag = rootPath };
-        rootItem.Header = CreateHeader(Segment.Name, rootPath, true);
-        rootItem.PreviewMouseRightButtonDown += SelectOnRightClick;
 
-        TreeViewItem? sourceItem = null;
-        if (!string.IsNullOrEmpty(rootPath) && Directory.Exists(rootPath))
-        {
-            var sourcePath = Path.Combine(rootPath, "Source");
-            Directory.CreateDirectory(sourcePath);
-            sourceItem = CreateDirectoryNode(new DirectoryInfo(sourcePath));
+        // Add Region category
+        Tree.Items.Add(CreateCategoryNode("Region", Segment.Regions));
 
-            foreach (var file in Segment.VirtualFiles)
-                sourceItem.Items.Add(CreateVirtualFileNode(file));
+        // Add Locations category
+        Tree.Items.Add(CreateCategoryNode("Location", Segment.Locations));
 
-            rootItem.Items.Add(sourceItem);
-        }
-
-        rootItem.Items.Add(CreateCategoryNode("Region", Segment.Regions));
-        rootItem.Items.Add(CreateCategoryNode("Location", Segment.Locations));
-
+        // Add Spawns grouped by region
         var spawnsItem = new TreeViewItem { Tag = "category:Spawn" };
         spawnsItem.Header = CreateHeader("Spawn", "Spawn", true);
         spawnsItem.PreviewMouseRightButtonDown += SelectOnRightClick;
         foreach (var region in Segment.Regions)
             spawnsItem.Items.Add(CreateSpawnerRegionNode(region));
-        rootItem.Items.Add(spawnsItem);
+        Tree.Items.Add(spawnsItem);
 
-        rootItem.Items.Add(CreateTreasureCategoryNode());
+        // Add Entities grouped by entity group
+        Tree.Items.Add(CreateEntityCategoryNode());
 
-        if (!string.IsNullOrEmpty(rootPath))
+        // Add Treasure category
+        Tree.Items.Add(CreateTreasureCategoryNode());
+
+        // Add Source directory last
+        if (!string.IsNullOrEmpty(rootPath) && Directory.Exists(rootPath))
         {
-            var menu = new ContextMenu();
-            var addFile = new MenuItem { Header = "Add System File" };
-            addFile.Click += (s, e) =>
-            {
-                var dir = Path.Combine(rootPath, "Source");
-                Directory.CreateDirectory(dir);
-                AddFile(dir, sourceItem ?? rootItem);
-            };
-            menu.Items.Add(addFile);
-            rootItem.ContextMenu = menu;
+            var sourcePath = Path.Combine(rootPath, "Source");
+            Directory.CreateDirectory(sourcePath);
+            var sourceItem = CreateDirectoryNode(new DirectoryInfo(sourcePath));
+
+            foreach (var file in Segment.VirtualFiles)
+                sourceItem.Items.Add(CreateVirtualFileNode(file));
+
+            Tree.Items.Add(sourceItem);
         }
 
-        Tree.Items.Add(rootItem);
-        RestoreExpansionState(rootItem, expanded);
+        foreach (var item in Tree.Items.OfType<TreeViewItem>())
+            RestoreExpansionState(item, expanded);
     }
 
     private static void SaveExpansionState(TreeViewItem item, HashSet<string> expanded)
@@ -342,6 +350,77 @@ public partial class VirtualFileTreeControl : UserControl
         item.ContextMenu = menu;
 
         return item;
+    }
+
+    private TreeViewItem CreateEntityCategoryNode()
+    {
+        var item = new TreeViewItem { Tag = "category:Entity" };
+        item.Header = CreateHeader("Entity", "Entity", true);
+        item.PreviewMouseRightButtonDown += SelectOnRightClick;
+
+        foreach (var group in Segment.Entities
+                     .GroupBy(e => string.IsNullOrEmpty(e.Group) ? "Unassigned" : e.Group)
+                     .OrderBy(g => g.Key))
+            item.Items.Add(CreateEntityGroupNode(group.Key, group));
+
+        var menu = new ContextMenu();
+        var add = new MenuItem { Header = "Add Entity" };
+        add.Click += (s, e) => AddEntity("Unassigned");
+        menu.Items.Add(add);
+        item.ContextMenu = menu;
+
+        return item;
+    }
+
+    private TreeViewItem CreateEntityGroupNode(string groupName, IEnumerable<Entity> entities)
+    {
+        var item = new TreeViewItem { Tag = $"category:Entity/{groupName}" };
+        item.Header = CreateHeader(groupName, groupName, true);
+        item.PreviewMouseRightButtonDown += SelectOnRightClick;
+
+        foreach (var entity in entities)
+            item.Items.Add(CreateEntityEntryNode(entity));
+
+        var menu = new ContextMenu();
+        var add = new MenuItem { Header = "Add Entity" };
+        add.Click += (s, e) => AddEntity(groupName);
+        menu.Items.Add(add);
+        item.ContextMenu = menu;
+
+        return item;
+    }
+
+    private TreeViewItem CreateEntityEntryNode(Entity entity)
+    {
+        var item = new TreeViewItem { Tag = entity };
+        item.PreviewMouseRightButtonDown += SelectOnRightClick;
+
+        var panel = new StackPanel { Orientation = Orientation.Horizontal };
+        var icon = new Ellipse { Width = 10, Height = 10, Fill = Brushes.Yellow, Margin = new Thickness(2, 0, 2, 0) };
+        panel.Children.Add(icon);
+        panel.Children.Add(new TextBlock { Text = entity.Name });
+        item.Header = panel;
+
+        var menu = new ContextMenu();
+        var rename = new MenuItem { Header = "Rename" };
+        rename.Click += (s, e) => RenameSegmentObject(entity, item);
+        var delete = new MenuItem { Header = "Delete" };
+        delete.Click += (s, e) => DeleteSegmentObject(entity, item, Segment.Entities);
+        menu.Items.Add(rename);
+        menu.Items.Add(delete);
+        item.ContextMenu = menu;
+
+        return item;
+    }
+
+    private void AddEntity(string group)
+    {
+        var defaultName = $"Entity {Segment.Entities.Count + 1}";
+        var name = Interaction.InputBox("Name", "Add Entity", defaultName);
+        if (string.IsNullOrWhiteSpace(name))
+            return;
+        var entity = new Entity { Name = name, Group = group };
+        Segment.Entities.Add(entity);
     }
 
     private TreeViewItem CreateSpawnerRegionNode(SegmentRegion region)
