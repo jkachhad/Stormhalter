@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>$SEGMENT_NAME$</RootNamespace>
+    <AssemblyName>$SEGMENT_NAME$</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Source\\**\\*.cs" />
+  </ItemGroup>
+</Project>

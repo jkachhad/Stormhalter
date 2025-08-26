@@ -734,10 +734,21 @@ public class ApplicationPresenter : ObservableRecipient
 
 		WriteCategory(_segment.Locations.Save, "locations", "Locations.xml");
 		WriteCategory(_segment.Subregions.Save, "subregions", "Subregions.xml");
-		WriteCategory(_segment.Entities.Save, "entities", "Entities.xml");
-		WriteCategory(_segment.Spawns.Save, "spawns", "Spawns.xml");
-		WriteCategory(_segment.Treasures.Save, "treasures", "Treasures.xml");
-	}
+                WriteCategory(_segment.Entities.Save, "entities", "Entities.xml");
+                WriteCategory(_segment.Spawns.Save, "spawns", "Spawns.xml");
+                WriteCategory(_segment.Treasures.Save, "treasures", "Treasures.xml");
+
+                var resourceName = $"{typeof(ApplicationPresenter).Assembly.GetName().Name}.Editor.Templates.Segment.csproj.template";
+                using var resourceStream = typeof(ApplicationPresenter).Assembly.GetManifestResourceStream(resourceName);
+                if (resourceStream != null)
+                {
+                        using var reader = new StreamReader(resourceStream);
+                        var template = reader.ReadToEnd();
+                        var segmentName = Sanitize(_segment.Name);
+                        var content = template.Replace("$SEGMENT_NAME$", segmentName);
+                        File.WriteAllText(Path.Combine(path, $"{segmentName}.csproj"), content);
+                }
+        }
 
 	private bool CheckScriptSyntax() //Enumerate all script segments and verify that they pass syntax checks
 	{

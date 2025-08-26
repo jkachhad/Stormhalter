@@ -108,6 +108,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <EmbeddedResource Include="Editor\\Templates\\Segment.csproj.template" />
+    </ItemGroup>
+
+    <ItemGroup>
       <Compile Remove="obj\**" />
       <EmbeddedResource Remove="obj\**" />
       <None Remove="obj\**" />
