@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using Microsoft.VisualBasic;
 using Kesmai.WorldForge;
 using Kesmai.WorldForge.Editor;
@@ -326,24 +327,49 @@ public partial class VirtualFileTreeControl : UserControl
         var item = new TreeViewItem { Tag = $"category:Spawn/{region.ID}" };
         item.Header = CreateHeader(region.Name, region.Name, true);
         item.PreviewMouseRightButtonDown += SelectOnRightClick;
-        item.Items.Add(CreateSpawnerCategoryNode<LocationSpawner>("Location", Segment.Spawns.Location, region.ID, "Location Spawner", $"category:Spawn/{region.ID}/Location"));
-        item.Items.Add(CreateSpawnerCategoryNode<RegionSpawner>("Region", Segment.Spawns.Region, region.ID, "Region Spawner", $"category:Spawn/{region.ID}/Region"));
+
+        foreach (var spawner in Segment.Spawns.Location.Where(s => GetRegionId(s) == region.ID))
+            item.Items.Add(CreateSpawnerEntryNode(spawner, Segment.Spawns.Location));
+
+        foreach (var spawner in Segment.Spawns.Region.Where(s => GetRegionId(s) == region.ID))
+            item.Items.Add(CreateSpawnerEntryNode(spawner, Segment.Spawns.Region));
+
+        var menu = new ContextMenu();
+        var addLocation = new MenuItem { Header = "Add Location Spawner" };
+        addLocation.Click += (s, e) => AddSpawner(Segment.Spawns.Location, "Location Spawner", region.ID);
+        var addRegion = new MenuItem { Header = "Add Region Spawner" };
+        addRegion.Click += (s, e) => AddSpawner(Segment.Spawns.Region, "Region Spawner", region.ID);
+        menu.Items.Add(addLocation);
+        menu.Items.Add(addRegion);
+        item.ContextMenu = menu;
+
         return item;
     }
 
-    private TreeViewItem CreateSpawnerCategoryNode<T>(string name, IList<T> collection, int regionId, string menuName, string tag) where T : Spawner, new()
+    private TreeViewItem CreateSpawnerEntryNode(Spawner spawner, IList collection)
     {
-        var item = new TreeViewItem { Tag = tag };
-        item.Header = CreateHeader(name, name, true);
+        var item = new TreeViewItem { Tag = spawner };
         item.PreviewMouseRightButtonDown += SelectOnRightClick;
 
-        foreach (var child in collection.Where(s => GetRegionId(s) == regionId))
-            item.Items.Add(CreateCategoryEntryNode(child, (IList)collection));
+        var panel = new StackPanel { Orientation = Orientation.Horizontal };
+        Shape icon = spawner switch
+        {
+            LocationSpawner => new Ellipse { Width = 10, Height = 10, Fill = Brushes.SkyBlue },
+            RegionSpawner => new Rectangle { Width = 10, Height = 10, Fill = Brushes.Orange },
+            _ => new Rectangle { Width = 10, Height = 10, Fill = Brushes.Gray }
+        };
+        icon.Margin = new Thickness(2, 0, 2, 0);
+        panel.Children.Add(icon);
+        panel.Children.Add(new TextBlock { Text = spawner.Name });
+        item.Header = panel;
 
         var menu = new ContextMenu();
-        var add = new MenuItem { Header = $"Add {menuName}" };
-        add.Click += (s, e) => AddSpawner(collection, menuName, regionId);
-        menu.Items.Add(add);
+        var rename = new MenuItem { Header = "Rename" };
+        rename.Click += (s, e) => RenameSegmentObject(spawner, item);
+        var delete = new MenuItem { Header = "Delete" };
+        delete.Click += (s, e) => DeleteSegmentObject(spawner, item, collection);
+        menu.Items.Add(rename);
+        menu.Items.Add(delete);
         item.ContextMenu = menu;
 
         return item;
