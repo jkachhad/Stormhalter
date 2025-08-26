@@ -19,9 +19,10 @@ public class Segment : ObservableObject
 		"Entrance", "Resurrect", "Facet", "Thief", 
 	};
 		
-	private string _name;
-	private Script _internal;
-	private Script _definition;
+        private string _name;
+        private string _rootPath;
+        private Script _internal;
+        private Script _definition;
 
 	public string Name
 	{
@@ -29,42 +30,73 @@ public class Segment : ObservableObject
 		set => SetProperty(ref _name, value);
 	}
 		
-	public Script Internal
-	{
-		get => _internal;
-		set => SetProperty(ref _internal, value);
-	}
+        public string RootPath
+        {
+                get => _rootPath;
+                set => SetProperty(ref _rootPath, value);
+        }
 
-	public Script Definition
-	{
-		get => _definition;
-		set => SetProperty(ref _definition, value);
-	}
-	
-        public NotifyingCollection<SegmentRegion> Regions =>
-                ServiceLocator.Current.GetInstance<ApplicationPresenter>().Project.Regions;
-	public SegmentLocations Locations { get; set; } = new SegmentLocations();
-	public SegmentSubregions Subregions { get; set; } = new SegmentSubregions();
-	public SegmentEntities Entities { get; set; } = new SegmentEntities();
-	public SegmentSpawns Spawns { get; set; } = new SegmentSpawns();
-	public SegmentTreasures Treasures { get; set; } = new SegmentTreasures();
+        public Script Internal
+        {
+                get => _internal;
+                set => SetProperty(ref _internal, value);
+        }
 
-	public Segment()
-	{
-		Name = "Segment";
+        public Script Definition
+        {
+                get => _definition;
+                set => SetProperty(ref _definition, value);
+        }
 
-		foreach (var location in _reservedLocations)
-		{
-			Locations.Add(new SegmentLocation()
-			{
-				Name = location
-			});
-		}
-			
+        public NotifyingCollection<SegmentRegion> Regions { get; } = new NotifyingCollection<SegmentRegion>();
+        public SegmentLocations Locations { get; set; } = new SegmentLocations();
+        public SegmentSubregions Subregions { get; set; } = new SegmentSubregions();
+        public SegmentEntities Entities { get; set; } = new SegmentEntities();
+        public SegmentSpawns Spawns { get; set; } = new SegmentSpawns();
+        public SegmentTreasures Treasures { get; set; } = new SegmentTreasures();
+        public NotifyingCollection<VirtualFile> VirtualFiles { get; } = new NotifyingCollection<VirtualFile>();
+
+        public Segment()
+        {
+                Name = "Example";
+                RootPath = @"C:\\Example";
+
+                VirtualFiles.Add(new VirtualFile { Name = "Internal", Text = string.Empty });
+                VirtualFiles.Add(new VirtualFile { Name = "WorldForge", Text = string.Empty });
+
+                Regions.Add(new SegmentRegion(1));
+                Regions.Add(new SegmentRegion(2));
+                Regions.Add(new SegmentRegion(3));
+
+                foreach (var location in _reservedLocations)
+                {
+                        Locations.Add(new SegmentLocation()
+                        {
+                                Name = location
+                        });
+                }
+
+                Locations.Add(new SegmentLocation { Name = "Location 1" });
+                Locations.Add(new SegmentLocation { Name = "Location 2" });
+                Locations.Add(new SegmentLocation { Name = "Location 3" });
+
+                Spawns.Location.Add(new LocationSpawner { Name = "Location Spawn 1" });
+                Spawns.Location.Add(new LocationSpawner { Name = "Location Spawn 2" });
+                Spawns.Location.Add(new LocationSpawner { Name = "Location Spawn 3" });
+
+                Spawns.Region.Add(new RegionSpawner { Name = "Region Spawn 1" });
+                Spawns.Region.Add(new RegionSpawner { Name = "Region Spawn 2" });
+                Spawns.Region.Add(new RegionSpawner { Name = "Region Spawn 3" });
+
+                Treasures.Add(new SegmentTreasure { Name = "Treasure 1" });
+                Treasures.Add(new SegmentTreasure { Name = "Treasure 2" });
+                Treasures.Add(new SegmentTreasure { Name = "Treasure 3" });
+                Treasures.Add(new SegmentHoard { Name = "Hoard 1" });
+
                 Regions.CollectionChanged += OnRegionsChanged;
 
-		ValidateScripts();
-	}
+                ValidateScripts();
+        }
 		
 	private void ValidateScripts()
 	{
