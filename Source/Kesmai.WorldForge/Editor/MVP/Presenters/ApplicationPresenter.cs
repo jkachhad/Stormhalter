@@ -732,11 +732,11 @@ public class ApplicationPresenter : ObservableRecipient
 			element.Save(Path.Combine(path, fileName));
 		}
 
-		/*WriteCategory(Locations.Save, "locations", "Locations.xml");
-		WriteCategory(Subregions.Save, "subregions", "Subregions.xml");
-		WriteCategory(Entities.Save, "entities", "Entities.xml");
-		WriteCategory(Spawns.Save, "spawns", "Spawns.xml");
-		WriteCategory(Treasures.Save, "treasures", "Treasures.xml");*/
+		WriteCategory(_segment.Locations.Save, "locations", "Locations.xml");
+		WriteCategory(_segment.Subregions.Save, "subregions", "Subregions.xml");
+		WriteCategory(_segment.Entities.Save, "entities", "Entities.xml");
+		WriteCategory(_segment.Spawns.Save, "spawns", "Spawns.xml");
+		WriteCategory(_segment.Treasures.Save, "treasures", "Treasures.xml");
 	}
 
 	private bool CheckScriptSyntax() //Enumerate all script segments and verify that they pass syntax checks
