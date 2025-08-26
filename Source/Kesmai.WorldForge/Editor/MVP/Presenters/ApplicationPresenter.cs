@@ -18,6 +18,7 @@ using RoslynPad.Roslyn;
 using SharpDX.Direct3D9;
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -693,51 +694,86 @@ public class ApplicationPresenter : ObservableRecipient
 		}
 	}
 	
-	public void SaveAsDirectory(string path)
-	{
-		if (String.IsNullOrWhiteSpace(path))
-			throw new ArgumentException(nameof(path));
+        public void SaveAsDirectory(string path)
+        {
+                if (String.IsNullOrWhiteSpace(path))
+                        throw new ArgumentException(nameof(path));
 
-		Directory.CreateDirectory(path);
+                Directory.CreateDirectory(path);
 
-		string Sanitize(string name)
-		{
-			var invalid = Path.GetInvalidFileNameChars();
-			return String.Join("_", name.Split(invalid, StringSplitOptions.RemoveEmptyEntries));
-		}
+                string Sanitize(string name)
+                {
+                        var invalid = Path.GetInvalidFileNameChars();
+                        return String.Join("_", name.Split(invalid, StringSplitOptions.RemoveEmptyEntries));
+                }
 
-		#region Scripts
-		var sourceDir = Path.Combine(path, "Source");
-		Directory.CreateDirectory(sourceDir);
+                var additionalFiles = new List<string>();
 
-		if (_segment.Internal != null)
-			File.WriteAllText(Path.Combine(sourceDir, "Internal.cs"), _segment.Internal.ToString());
+                #region Scripts
+                var sourceDir = Path.Combine(path, "Source");
+                Directory.CreateDirectory(sourceDir);
 
-		if (_segment.Definition != null)
-			File.WriteAllText(Path.Combine(sourceDir, "Definition.cs"), _segment.Definition.ToString());
-		#endregion
+                if (_segment.Internal != null)
+                        File.WriteAllText(Path.Combine(sourceDir, "Internal.cs"), _segment.Internal.ToString());
 
-		#region Regions
-		var regionDir = Path.Combine(path, "Region");
-		Directory.CreateDirectory(regionDir);
+                if (_segment.Definition != null)
+                        File.WriteAllText(Path.Combine(sourceDir, "Definition.cs"), _segment.Definition.ToString());
+                #endregion
 
-		foreach (var region in _segment.Regions)
-			region.GetXElement().Save(Path.Combine(regionDir, Sanitize(region.Name) + ".xml"));
-		#endregion
+                #region Regions
+                var regionDir = Path.Combine(path, "Region");
+                Directory.CreateDirectory(regionDir);
 
-		void WriteCategory(Action<XElement> saveAction, string elementName, string fileName)
-		{
-			var element = new XElement(elementName);
-			saveAction(element);
-			element.Save(Path.Combine(path, fileName));
-		}
+                foreach (var region in _segment.Regions)
+                {
+                        var fileName = Sanitize(region.Name) + ".xml";
+                        region.GetXElement().Save(Path.Combine(regionDir, fileName));
+                        additionalFiles.Add(Path.Combine("Region", fileName));
+                }
+                #endregion
 
-		WriteCategory(_segment.Locations.Save, "locations", "Locations.xml");
-		WriteCategory(_segment.Subregions.Save, "subregions", "Subregions.xml");
-		WriteCategory(_segment.Entities.Save, "entities", "Entities.xml");
-		WriteCategory(_segment.Spawns.Save, "spawns", "Spawns.xml");
-		WriteCategory(_segment.Treasures.Save, "treasures", "Treasures.xml");
-	}
+                void WriteCategory(Action<XElement> saveAction, string elementName, string fileName)
+                {
+                        var element = new XElement(elementName);
+                        saveAction(element);
+                        element.Save(Path.Combine(path, fileName));
+                        additionalFiles.Add(fileName);
+                }
+
+                WriteCategory(_segment.Locations.Save, "locations", "Locations.xml");
+                WriteCategory(_segment.Subregions.Save, "subregions", "Subregions.xml");
+                WriteCategory(_segment.Entities.Save, "entities", "Entities.xml");
+                WriteCategory(_segment.Spawns.Save, "spawns", "Spawns.xml");
+                WriteCategory(_segment.Treasures.Save, "treasures", "Treasures.xml");
+
+                var segmentName = Sanitize(_segment.Name);
+                var project = new XDocument(
+                        new XElement("Project",
+                                new XAttribute("Sdk", "Microsoft.NET.Sdk"),
+                                new XElement("PropertyGroup",
+                                        new XElement("OutputType", "Library"),
+                                        new XElement("TargetFramework", "net8.0"),
+                                        new XElement("RootNamespace", segmentName),
+                                        new XElement("AssemblyName", segmentName)
+                                ),
+                                new XElement("ItemGroup",
+                                        new XElement("Compile", new XAttribute("Include", "Source/**/*.cs"))
+                                )
+                        )
+                );
+
+                if (additionalFiles.Any())
+                {
+                        project.Root?.Add(
+                                new XElement("ItemGroup",
+                                        additionalFiles.Select(f =>
+                                                new XElement("AdditionalFiles", new XAttribute("Include", f.Replace('\\', '/'))))
+                                )
+                        );
+                }
+
+                project.Save(Path.Combine(path, $"{segmentName}.csproj"));
+        }
 
 	private bool CheckScriptSyntax() //Enumerate all script segments and verify that they pass syntax checks
 	{
