@@ -13,6 +13,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.VisualBasic;
+using Kesmai.WorldForge;
 using Kesmai.WorldForge.Editor;
 using DigitalRune.Collections;
 
@@ -47,8 +48,12 @@ public partial class VirtualFileTreeControl : UserControl
             oldSegment.VirtualFiles.CollectionChanged -= control.OnNotifyingItemsChanged;
             oldSegment.Regions.CollectionChanged -= control.OnNotifyingItemsChanged;
             oldSegment.Locations.CollectionChanged -= control.OnCollectionChanged;
-            oldSegment.Spawns.Location.CollectionChanged -= control.OnCollectionChanged;
-            oldSegment.Spawns.Region.CollectionChanged -= control.OnCollectionChanged;
+            oldSegment.Spawns.Location.CollectionChanged -= control.OnSpawnsCollectionChanged;
+            foreach (var s in oldSegment.Spawns.Location)
+                s.PropertyChanged -= control.OnSpawnerPropertyChanged;
+            oldSegment.Spawns.Region.CollectionChanged -= control.OnSpawnsCollectionChanged;
+            foreach (var s in oldSegment.Spawns.Region)
+                s.PropertyChanged -= control.OnSpawnerPropertyChanged;
             oldSegment.Treasures.CollectionChanged -= control.OnCollectionChanged;
         }
         if (e.NewValue is Segment newSegment)
@@ -57,8 +62,12 @@ public partial class VirtualFileTreeControl : UserControl
             newSegment.VirtualFiles.CollectionChanged += control.OnNotifyingItemsChanged;
             newSegment.Regions.CollectionChanged += control.OnNotifyingItemsChanged;
             newSegment.Locations.CollectionChanged += control.OnCollectionChanged;
-            newSegment.Spawns.Location.CollectionChanged += control.OnCollectionChanged;
-            newSegment.Spawns.Region.CollectionChanged += control.OnCollectionChanged;
+            newSegment.Spawns.Location.CollectionChanged += control.OnSpawnsCollectionChanged;
+            foreach (var s in newSegment.Spawns.Location)
+                s.PropertyChanged += control.OnSpawnerPropertyChanged;
+            newSegment.Spawns.Region.CollectionChanged += control.OnSpawnsCollectionChanged;
+            foreach (var s in newSegment.Spawns.Region)
+                s.PropertyChanged += control.OnSpawnerPropertyChanged;
             newSegment.Treasures.CollectionChanged += control.OnCollectionChanged;
         }
         control.SetupWatcher();
@@ -80,6 +89,18 @@ public partial class VirtualFileTreeControl : UserControl
 
     private void OnNotifyingItemsChanged<T>(object? sender, CollectionChangedEventArgs<T> e) => LoadRoot();
     private void OnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e) => LoadRoot();
+    private void OnSpawnsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (e.OldItems != null)
+            foreach (Spawner s in e.OldItems)
+                s.PropertyChanged -= OnSpawnerPropertyChanged;
+        if (e.NewItems != null)
+            foreach (Spawner s in e.NewItems)
+                s.PropertyChanged += OnSpawnerPropertyChanged;
+        LoadRoot();
+    }
+
+    private void OnSpawnerPropertyChanged(object? sender, PropertyChangedEventArgs e) => LoadRoot();
 
     private void SetupWatcher()
     {
@@ -155,8 +176,8 @@ public partial class VirtualFileTreeControl : UserControl
         var spawnsItem = new TreeViewItem { Tag = "category:Spawn" };
         spawnsItem.Header = CreateHeader("Spawn", "Spawn", true);
         spawnsItem.PreviewMouseRightButtonDown += SelectOnRightClick;
-        spawnsItem.Items.Add(CreateCategoryNode("Location", Segment.Spawns.Location, "Location Spawner", "category:Spawn/Location"));
-        spawnsItem.Items.Add(CreateCategoryNode("Region", Segment.Spawns.Region, "Region Spawner", "category:Spawn/Region"));
+        foreach (var region in Segment.Regions)
+            spawnsItem.Items.Add(CreateSpawnerRegionNode(region));
         rootItem.Items.Add(spawnsItem);
 
         rootItem.Items.Add(CreateCategoryNode("Treasure", Segment.Treasures));
@@ -299,6 +320,53 @@ public partial class VirtualFileTreeControl : UserControl
 
         return item;
     }
+
+    private TreeViewItem CreateSpawnerRegionNode(SegmentRegion region)
+    {
+        var item = new TreeViewItem { Tag = $"category:Spawn/{region.ID}" };
+        item.Header = CreateHeader(region.Name, region.Name, true);
+        item.PreviewMouseRightButtonDown += SelectOnRightClick;
+        item.Items.Add(CreateSpawnerCategoryNode<LocationSpawner>("Location", Segment.Spawns.Location, region.ID, "Location Spawner", $"category:Spawn/{region.ID}/Location"));
+        item.Items.Add(CreateSpawnerCategoryNode<RegionSpawner>("Region", Segment.Spawns.Region, region.ID, "Region Spawner", $"category:Spawn/{region.ID}/Region"));
+        return item;
+    }
+
+    private TreeViewItem CreateSpawnerCategoryNode<T>(string name, IList<T> collection, int regionId, string menuName, string tag) where T : Spawner, new()
+    {
+        var item = new TreeViewItem { Tag = tag };
+        item.Header = CreateHeader(name, name, true);
+        item.PreviewMouseRightButtonDown += SelectOnRightClick;
+
+        foreach (var child in collection.Where(s => GetRegionId(s) == regionId))
+            item.Items.Add(CreateCategoryEntryNode(child, (IList)collection));
+
+        var menu = new ContextMenu();
+        var add = new MenuItem { Header = $"Add {menuName}" };
+        add.Click += (s, e) => AddSpawner(collection, menuName, regionId);
+        menu.Items.Add(add);
+        item.ContextMenu = menu;
+
+        return item;
+    }
+
+    private void AddSpawner<T>(IList<T> collection, string typeName, int regionId) where T : Spawner, new()
+    {
+        var defaultName = $"{typeName} {collection.Count + 1}";
+        var name = Interaction.InputBox("Name", $"Add {typeName}", defaultName);
+        if (string.IsNullOrWhiteSpace(name))
+            return;
+        var spawner = new T { Name = name };
+        dynamic dyn = spawner;
+        dyn.Region = regionId;
+        collection.Add(spawner);
+    }
+
+    private static int GetRegionId(Spawner spawner) => spawner switch
+    {
+        LocationSpawner ls => ls.Region,
+        RegionSpawner rs => rs.Region,
+        _ => 0
+    };
 
     private TreeViewItem CreateInMemoryNode(ISegmentObject obj, string displayName)
     {
