@@ -89,10 +89,8 @@ public partial class VirtualFileTreeControl : UserControl
             SetupWatcher();
             LoadRoot();
         }
-        else if (e.PropertyName == nameof(Segment.Name))
-        {
-            LoadRoot();
-        }
+        // Segment name changes no longer affect the tree structure, since the
+        // segment name is no longer shown as a root node.
     }
 
     private void OnNotifyingItemsChanged<T>(object? sender, CollectionChangedEventArgs<T> e) => LoadRoot();
@@ -174,53 +172,42 @@ public partial class VirtualFileTreeControl : UserControl
             return;
 
         var rootPath = Segment.RootPath;
-        var rootItem = new TreeViewItem { Tag = rootPath };
-        rootItem.Header = CreateHeader(Segment.Name, rootPath, true);
-        rootItem.PreviewMouseRightButtonDown += SelectOnRightClick;
 
-        TreeViewItem? sourceItem = null;
-        if (!string.IsNullOrEmpty(rootPath) && Directory.Exists(rootPath))
-        {
-            var sourcePath = Path.Combine(rootPath, "Source");
-            Directory.CreateDirectory(sourcePath);
-            sourceItem = CreateDirectoryNode(new DirectoryInfo(sourcePath));
+        // Add Region category
+        Tree.Items.Add(CreateCategoryNode("Region", Segment.Regions));
 
-            foreach (var file in Segment.VirtualFiles)
-                sourceItem.Items.Add(CreateVirtualFileNode(file));
+        // Add Locations category
+        Tree.Items.Add(CreateCategoryNode("Location", Segment.Locations));
 
-            rootItem.Items.Add(sourceItem);
-        }
-
-        rootItem.Items.Add(CreateCategoryNode("Region", Segment.Regions));
-        rootItem.Items.Add(CreateCategoryNode("Location", Segment.Locations));
-
-        rootItem.Items.Add(CreateEntityCategoryNode());
-
+        // Add Spawns grouped by region
         var spawnsItem = new TreeViewItem { Tag = "category:Spawn" };
         spawnsItem.Header = CreateHeader("Spawn", "Spawn", true);
         spawnsItem.PreviewMouseRightButtonDown += SelectOnRightClick;
         foreach (var region in Segment.Regions)
             spawnsItem.Items.Add(CreateSpawnerRegionNode(region));
-        rootItem.Items.Add(spawnsItem);
+        Tree.Items.Add(spawnsItem);
 
-        rootItem.Items.Add(CreateTreasureCategoryNode());
+        // Add Entities grouped by entity group
+        Tree.Items.Add(CreateEntityCategoryNode());
 
-        if (!string.IsNullOrEmpty(rootPath))
+        // Add Treasure category
+        Tree.Items.Add(CreateTreasureCategoryNode());
+
+        // Add Source directory last
+        if (!string.IsNullOrEmpty(rootPath) && Directory.Exists(rootPath))
         {
-            var menu = new ContextMenu();
-            var addFile = new MenuItem { Header = "Add System File" };
-            addFile.Click += (s, e) =>
-            {
-                var dir = Path.Combine(rootPath, "Source");
-                Directory.CreateDirectory(dir);
-                AddFile(dir, sourceItem ?? rootItem);
-            };
-            menu.Items.Add(addFile);
-            rootItem.ContextMenu = menu;
+            var sourcePath = Path.Combine(rootPath, "Source");
+            Directory.CreateDirectory(sourcePath);
+            var sourceItem = CreateDirectoryNode(new DirectoryInfo(sourcePath));
+
+            foreach (var file in Segment.VirtualFiles)
+                sourceItem.Items.Add(CreateVirtualFileNode(file));
+
+            Tree.Items.Add(sourceItem);
         }
 
-        Tree.Items.Add(rootItem);
-        RestoreExpansionState(rootItem, expanded);
+        foreach (var item in Tree.Items.OfType<TreeViewItem>())
+            RestoreExpansionState(item, expanded);
     }
 
     private static void SaveExpansionState(TreeViewItem item, HashSet<string> expanded)
