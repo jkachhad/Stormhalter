@@ -51,8 +51,8 @@ public partial class VirtualFileTreeControl : UserControl
             oldSegment.Regions.CollectionChanged -= control.OnNotifyingItemsChanged;
             oldSegment.Locations.CollectionChanged -= control.OnCollectionChanged;
             oldSegment.Entities.CollectionChanged -= control.OnEntitiesCollectionChanged;
-            foreach (var e in oldSegment.Entities)
-                e.PropertyChanged -= control.OnEntityPropertyChanged;
+            foreach (var s in oldSegment.Entities)
+                s.PropertyChanged -= control.OnEntityPropertyChanged;
             oldSegment.Spawns.Location.CollectionChanged -= control.OnSpawnsCollectionChanged;
             foreach (var s in oldSegment.Spawns.Location)
                 s.PropertyChanged -= control.OnSpawnerPropertyChanged;
