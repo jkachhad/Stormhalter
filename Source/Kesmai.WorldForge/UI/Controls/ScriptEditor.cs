@@ -159,7 +159,7 @@ public class ScriptEditor : TextEditor
             var segment = new TextSegment { StartOffset = start, Length = length };
             foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textView, segment))
             {
-                var full = new Rect(rect.Location, new Size(textView.Bounds.Width, rect.Height));
+                var full = new Rect(rect.Location, new Size(textView.ActualWidth, rect.Height));
                 drawingContext.DrawRectangle(_backgroundBrush, null, full);
             }
         }
