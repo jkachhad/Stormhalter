@@ -1,6 +1,6 @@
 using System;
 
-namespace Kesmai.Prototype.RoslynWorkspace;
+namespace Kesmai.WorldForge.Roslyn;
 
 public class InMemorySource
 {

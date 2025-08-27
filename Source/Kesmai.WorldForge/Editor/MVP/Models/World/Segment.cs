@@ -10,18 +10,21 @@ using Kesmai.WorldForge.Scripting;
 using Kesmai.WorldForge.UI.Documents;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Kesmai.WorldForge;
+using Kesmai.WorldForge.Roslyn;
+using RoslynPad.Roslyn;
 
 namespace Kesmai.WorldForge.Editor;
 
-public class Segment : ObservableObject
+public class Segment : ObservableObject, IDisposable
 {
 	private static List<string> _reservedLocations = new List<string>()
 	{
 		"Entrance", "Resurrect", "Facet", "Thief", 
 	};
 		
-	private string _name;
-	private string _rootPath;
+        private string _name;
+        private string _rootPath;
+    private SegmentWorkspace _workspace;
 
 	public string Name
 	{
@@ -29,11 +32,33 @@ public class Segment : ObservableObject
 		set => SetProperty(ref _name, value);
 	}
 		
-	public string RootPath
-	{
-		get => _rootPath;
-		set => SetProperty(ref _rootPath, value);
-	}
+        public string RootPath
+        {
+                get => _rootPath;
+                set
+        {
+            if (SetProperty(ref _rootPath, value))
+            {
+                Workspace?.Dispose();
+                Workspace = null;
+            }
+        }
+        }
+
+    public void InitializeWorkspace(RoslynHost host)
+    {
+        if (!string.IsNullOrEmpty(RootPath))
+        {
+            Workspace?.Dispose();
+            Workspace = new SegmentWorkspace(RootPath, host);
+        }
+    }
+
+    public SegmentWorkspace Workspace
+    {
+            get => _workspace;
+            private set => SetProperty(ref _workspace, value);
+    }
 	
 	public NotifyingCollection<SegmentRegion> Regions { get; } = new NotifyingCollection<SegmentRegion>();
 	public SegmentLocations Locations { get; set; } = new SegmentLocations();
@@ -43,10 +68,10 @@ public class Segment : ObservableObject
 	public SegmentTreasures Treasures { get; set; } = new SegmentTreasures();
 	public NotifyingCollection<VirtualFile> VirtualFiles { get; } = new NotifyingCollection<VirtualFile>();
 
-	public Segment()
-	{
-		Regions.CollectionChanged += OnRegionsChanged;
-	}
+        public Segment()
+        {
+                Regions.CollectionChanged += OnRegionsChanged;
+        }
 
 	private void OnRegionsChanged(object sender, CollectionChangedEventArgs<SegmentRegion> args)
 	{
@@ -62,9 +87,14 @@ public class Segment : ObservableObject
 		if (updateNew)
 			args.NewItems.ForEach(region => { presenter.Documents.Add(region); });
 
-		if (updateOld)
-			args.OldItems.ForEach(region => { presenter.Documents.Remove(region); });
-	}
+                if (updateOld)
+                        args.OldItems.ForEach(region => { presenter.Documents.Remove(region); });
+        }
+
+    public void Dispose()
+    {
+        Workspace?.Dispose();
+    }
 		
 		
 	public void Load(XElement element)

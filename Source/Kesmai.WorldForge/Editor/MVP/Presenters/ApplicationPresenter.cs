@@ -42,7 +42,7 @@ public class ApplicationPresenter : ObservableRecipient
 	private DirectoryInfo _segmentFileFolder;
 		
     private Segment _segment;
-	private CustomRoslynHost _roslynHost;
+        private SegmentRoslynHost _roslynHost;
 	private Selection _selection;
 	private TerrainSelector _filter;
 	private Tool _selectedTool;
@@ -108,17 +108,30 @@ public class ApplicationPresenter : ObservableRecipient
 
     public Segment Segment
     {
-	    get => _segment;
-	    set
-	    {
-	        if (SetProperty(ref _segment, value, true))
-	        {
-		        if (value != null)
-			        _roslynHost = new CustomRoslynHost(_segment);
+            get => _segment;
+            set
+            {
+                var old = _segment;
+                if (SetProperty(ref _segment, value, true))
+                {
+                        old?.Dispose();
 
-		        ActiveDocument = Documents.FirstOrDefault();
-	        }
-	    }
+                        if (value != null)
+                        {
+                                _roslynHost = new SegmentRoslynHost(_segment);
+                                _segment.InitializeWorkspace(_roslynHost);
+                        }
+                        else
+                                _roslynHost = null;
+
+                        ActiveDocument = value != null ? Documents.FirstOrDefault() : null;
+                }
+            }
+    }
+
+    public void UpdateInternalDocument(string text)
+    {
+        Segment?.Workspace?.UpdateInternal(text);
     }
 
 
@@ -596,17 +609,18 @@ public class ApplicationPresenter : ObservableRecipient
 		}
 		if (rootElement != null)
 		{
-			if (rootElement.Name != "segment")
-			{
-				MessageBox.Show($"Provided file is not a WorldForge Segment file.", "Open Segment Error", MessageBoxButton.OK);
-				return;
-			}
-			segment.Load(rootElement);
-		}
+                        if (rootElement.Name != "segment")
+                        {
+                                MessageBox.Show($"Provided file is not a WorldForge Segment file.", "Open Segment Error", MessageBoxButton.OK);
+                                return;
+                        }
+                        segment.Load(rootElement);
+                        segment.RootPath = $@"{_segmentFileFolder.FullName}\{segment.Name}";
+                }
 
-		Documents.Add(new SegmentViewModel(segment));
-		Documents.Add(new LocationsViewModel(segment));
-		Documents.Add(new SubregionViewModel(segment));
+                Documents.Add(new SegmentViewModel(segment));
+                Documents.Add(new LocationsViewModel(segment));
+                Documents.Add(new SubregionViewModel(segment));
 		Documents.Add(new EntitiesViewModel(segment));
 		Documents.Add(new SpawnsViewModel(segment));
 		Documents.Add(new TreasuresViewModel(segment));
@@ -743,17 +757,63 @@ public class ApplicationPresenter : ObservableRecipient
 			);
 		}
 		
-		project.Root?.Add(
-			new XElement("ItemGroup",
-				new XElement("PackageReference", new XAttribute("Include", "Kesmai.Server.Reference"), new XAttribute("Version", "*"))
-			)
-		);
+                project.Root?.Add(
+                        new XElement("ItemGroup",
+                                new XElement("PackageReference", new XAttribute("Include", "Kesmai.Server.Reference"), new XAttribute("Version", "*"))
+                        )
+                );
 
-		project.Save(Path.Combine(path, $"{segmentName}.csproj"));
-	}
+                project.Save(Path.Combine(path, $"{segmentName}.csproj"));
+        }
 
-	private bool CheckScriptSyntax() //Enumerate all script segments and verify that they pass syntax checks
-	{
+        public Segment LoadFromDirectory(string path)
+        {
+                if (String.IsNullOrWhiteSpace(path))
+                        throw new ArgumentException(nameof(path));
+
+                var directory = new DirectoryInfo(path);
+                var segment = new Segment
+                {
+                        Name = directory.Name
+                };
+
+                var segmentElement = new XElement("segment",
+                        new XAttribute("name", segment.Name ?? "(Unknown)"),
+                        new XAttribute("version", Core.Version));
+
+                var regionDir = Path.Combine(path, "Region");
+                if (Directory.Exists(regionDir))
+                {
+                        var regionsElement = new XElement("regions");
+                        foreach (var file in Directory.EnumerateFiles(regionDir, "*.xml"))
+                                regionsElement.Add(XElement.Load(file));
+
+                        segmentElement.Add(regionsElement);
+                }
+
+                void AddCategory(string fileName)
+                {
+                        var file = Path.Combine(path, fileName);
+                        if (File.Exists(file))
+                                segmentElement.Add(XElement.Load(file));
+                }
+
+                AddCategory("Locations.xml");
+                AddCategory("Subregions.xml");
+                AddCategory("Entities.xml");
+                AddCategory("Spawns.xml");
+                AddCategory("Treasures.xml");
+
+                segment.Load(segmentElement, Core.Version);
+
+                // initialize the workspace and pull in any scripts from the Source folder
+                segment.RootPath = path;
+
+                return segment;
+        }
+
+        private bool CheckScriptSyntax() //Enumerate all script segments and verify that they pass syntax checks
+        {
 		var syntaxErrors = default(IEnumerable<Diagnostic>);
 		
 		//Entity scripts:
