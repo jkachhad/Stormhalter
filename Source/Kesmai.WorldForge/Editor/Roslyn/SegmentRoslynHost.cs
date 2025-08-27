@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -23,12 +24,53 @@ public class SegmentRoslynHost : RoslynHost, IDisposable
             Assembly.Load("RoslynPad.Roslyn.Windows"),
             Assembly.Load("RoslynPad.Editor.Windows"),
         },
-        RoslynHostReferences.NamespaceDefault.With(imports: new[]
-        {
-            "WorldForge",
-        }))
+        RoslynHostReferences.NamespaceDefault.With(imports: GetImports(segment)))
     {
         _segment = segment;
+        _segment.PropertyChanged += OnSegmentPropertyChanged;
+    }
+
+    private static string SanitizeSegmentName(string name)
+    {
+        if (string.IsNullOrEmpty(name))
+            return string.Empty;
+
+        var chars = name.Where(ch => char.IsLetterOrDigit(ch) || ch == '_').ToArray();
+        var sanitized = new string(chars);
+
+        if (string.IsNullOrEmpty(sanitized) || !char.IsLetter(sanitized[0]) && sanitized[0] != '_')
+        {
+            sanitized = "_" + sanitized;
+        }
+
+        return sanitized;
+    }
+
+    private static string[] GetImports(Segment segment)
+    {
+        var sanitized = SanitizeSegmentName(segment?.Name ?? string.Empty);
+
+        return new[]
+        {
+            "WorldForge",
+            $"using static Kesmai.Server.Segment.{sanitized}.Internal",
+        };
+    }
+
+    private void OnSegmentPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(Segment.Name))
+        {
+            RefreshImports();
+        }
+    }
+
+    private void RefreshImports()
+    {
+        References = RoslynHostReferences.NamespaceDefault.With(imports: GetImports(_segment));
+
+        // Refresh the segment workspace to ensure the new imports are applied.
+        _segment.InitializeWorkspace(this);
     }
 
     protected override Project CreateProject(Solution solution, DocumentCreationArgs args, CompilationOptions compilationOptions, Project? previousProject = null)
@@ -114,6 +156,8 @@ public class SegmentRoslynHost : RoslynHost, IDisposable
     {
         if (_disposed)
             return;
+
+        _segment.PropertyChanged -= OnSegmentPropertyChanged;
 
         if (_solution != null)
         {
