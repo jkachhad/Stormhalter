@@ -134,7 +134,7 @@ public class ScriptEditor : TextEditor
         public ReadOnlyBackgroundRenderer(ScriptEditor editor)
         {
             _editor = editor;
-            _backgroundBrush = new SolidColorBrush(Color.FromRgb(0x22, 0x22, 0x22));
+            _backgroundBrush = new SolidColorBrush(Color.FromRgb(0xEE, 0xEE, 0xEE));
             _backgroundBrush.Freeze();
         }
 
