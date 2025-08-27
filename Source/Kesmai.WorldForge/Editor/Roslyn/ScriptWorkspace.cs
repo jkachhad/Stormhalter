@@ -25,6 +25,13 @@ public class ScriptWorkspace
             });
 
         _project = _workspace.AddProject(projectInfo);
+
+        const string hostCode = @"public static class ScriptHost
+{
+    public static void Greet(string name) { }
+}";
+
+        _workspace.AddDocument(_project.Id, "ScriptHost.cs", SourceText.From(hostCode));
     }
 
     public Document CreateDocument(string name, EntityScript script)
