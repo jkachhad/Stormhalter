@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
+using ICSharpCode.AvalonEdit.Editing;
 
 namespace Kesmai.WorldForge.UI.Controls;
 
