@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Media;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
+using ICSharpCode.AvalonEdit.Rendering;
 
 namespace Kesmai.WorldForge.UI.Controls;
 
@@ -16,6 +18,7 @@ public class ScriptEditor : TextEditor
     private bool _isUpdating;
     private int _prefixLength;
     private int _suffixLength;
+    private readonly ReadOnlyBackgroundRenderer _backgroundRenderer;
 
     /// <summary>
     /// Identifies the <see cref="Body"/> dependency property.
@@ -57,6 +60,9 @@ public class ScriptEditor : TextEditor
 
     public ScriptEditor()
     {
+        _backgroundRenderer = new ReadOnlyBackgroundRenderer(this);
+        TextArea.TextView.BackgroundRenderers.Add(_backgroundRenderer);
+
         TextChanged += (_, __) =>
         {
             if (_isUpdating)
@@ -112,10 +118,50 @@ public class ScriptEditor : TextEditor
             base.Text = prefix + body + suffix;
             TextArea.Caret.Offset = _prefixLength;
             TextArea.ReadOnlySectionProvider = new HeaderFooterReadOnlySectionProvider(this);
+            TextArea.TextView.InvalidateLayer(KnownLayer.Background);
         }
         finally
         {
             _isUpdating = false;
+        }
+    }
+
+    private class ReadOnlyBackgroundRenderer : IBackgroundRenderer
+    {
+        private readonly ScriptEditor _editor;
+        private readonly Brush _backgroundBrush;
+
+        public ReadOnlyBackgroundRenderer(ScriptEditor editor)
+        {
+            _editor = editor;
+            _backgroundBrush = new SolidColorBrush(Color.FromRgb(0x22, 0x22, 0x22));
+            _backgroundBrush.Freeze();
+        }
+
+        public KnownLayer Layer => KnownLayer.Background;
+
+        public void Draw(TextView textView, DrawingContext drawingContext)
+        {
+            if (textView.Document == null)
+                return;
+
+            int docLength = textView.Document.TextLength;
+
+            DrawSegment(drawingContext, textView, 0, _editor._prefixLength);
+            DrawSegment(drawingContext, textView, docLength - _editor._suffixLength, _editor._suffixLength);
+        }
+
+        private void DrawSegment(DrawingContext drawingContext, TextView textView, int start, int length)
+        {
+            if (length <= 0)
+                return;
+
+            var segment = new TextSegment { StartOffset = start, Length = length };
+            foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textView, segment))
+            {
+                var full = new Rect(rect.Location, new Size(textView.Bounds.Width, rect.Height));
+                drawingContext.DrawRectangle(_backgroundBrush, null, full);
+            }
         }
     }
 
