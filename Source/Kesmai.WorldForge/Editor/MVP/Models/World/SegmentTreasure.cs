@@ -7,13 +7,15 @@ using DigitalRune.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using Kesmai.WorldForge.Editor.Scripting;
 
 namespace Kesmai.WorldForge.Editor;
 
 public class SegmentTreasure : ObservableObject, ISegmentObject
 {
 	private string _name;
-	private string _notes;
+        private string _notes;
+        public ScriptHost Scripts { get; } = new ScriptHost();
 		
 	private ObservableCollection<TreasureEntry> _entries = new ObservableCollection<TreasureEntry>();
 		
@@ -39,43 +41,46 @@ public class SegmentTreasure : ObservableObject, ISegmentObject
 
 	public virtual bool IsHoard => false;
 		
-	public SegmentTreasure()
-	{
-		_entries.Add(new TreasureEntry(this));
-		_entries.CollectionChanged += EntriesOnCollectionChanged;
+        public SegmentTreasure()
+        {
+                _entries.Add(new TreasureEntry(this));
+                _entries.CollectionChanged += EntriesOnCollectionChanged;
 
-		InvalidateChance();
-	}
+                Scripts.SetScript("GetChance", string.Empty);
+                InvalidateChance();
+        }
 	#nullable enable
     private void EntriesOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs args)
 	{
 		InvalidateChance();
 	}
 	#nullable disable
-    public SegmentTreasure(XElement element)
-	{
-		_name = (string)element.Attribute("name");
-			
-		if (element.TryGetElement("notes", out var notesElement))
-			_notes = (string)notesElement;
-			
-		foreach(var entryElement in element.Elements("entry"))
-			_entries.Add(new TreasureEntry(this, entryElement));
+        public SegmentTreasure(XElement element)
+        {
+                _name = (string)element.Attribute("name");
 
-		InvalidateChance();
-	}
+                if (element.TryGetElement("notes", out var notesElement))
+                        _notes = (string)notesElement;
 
-	public SegmentTreasure(SegmentTreasure treasure)
-	{
-		_name = treasure.Name;
-		_notes = treasure.Notes;
-		_entries.AddRange(treasure.Entries.Select(e => new TreasureEntry(e)
-		{
-			Treasure = treasure
-		}));
+                foreach(var entryElement in element.Elements("entry"))
+                        _entries.Add(new TreasureEntry(this, entryElement));
 
-		InvalidateChance();
-	}
+                Scripts.SetScript("GetChance", string.Empty);
+                InvalidateChance();
+        }
+
+        public SegmentTreasure(SegmentTreasure treasure)
+        {
+                _name = treasure.Name;
+                _notes = treasure.Notes;
+                _entries.AddRange(treasure.Entries.Select(e => new TreasureEntry(e)
+                {
+                        Treasure = treasure
+                }));
+
+                Scripts.SetScript("GetChance", string.Empty);
+                InvalidateChance();
+        }
 
 	public virtual XElement GetXElement()
 	{

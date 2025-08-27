@@ -3,6 +3,7 @@ using System.Xml.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.ComponentModel;
 using Kesmai.WorldForge.Editor;
+using Kesmai.WorldForge.Editor.Scripting;
 
 namespace Kesmai.WorldForge;
 
@@ -10,7 +11,8 @@ public class Entity : ObservableObject, ICloneable, ISegmentObject
 {
 	private string _name;
 	private string _notes;
-	private string _group;
+        private string _group;
+        public ScriptHost Scripts { get; } = new ScriptHost();
 	
 	public string Name
 	{
@@ -48,9 +50,12 @@ public class Entity : ObservableObject, ICloneable, ISegmentObject
 		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 	}	
 	
-	public Entity()
-	{
-	}
+        public Entity()
+        {
+            Scripts.SetScript("OnSpawn", string.Empty);
+            Scripts.SetScript("OnDeath", string.Empty);
+            Scripts.SetScript("OnCreate", string.Empty);
+        }
 		
 	public Entity(XElement element)
 	{

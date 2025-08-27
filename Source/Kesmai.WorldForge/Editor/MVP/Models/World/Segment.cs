@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using CommonServiceLocator;
 using DigitalRune.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Kesmai.WorldForge.Editor.Scripting;
 
 namespace Kesmai.WorldForge.Editor;
 
@@ -40,9 +41,11 @@ public class Segment : ObservableObject
 	public SegmentLocations Locations { get; set; } = new SegmentLocations();
 	public SegmentSubregions Subregions { get; set; } = new SegmentSubregions();
 	public SegmentEntities Entities { get; set; } = new SegmentEntities();
-	public SegmentSpawns Spawns { get; set; } = new SegmentSpawns();
-	public SegmentTreasures Treasures { get; set; } = new SegmentTreasures();
-	public NotifyingCollection<VirtualFile> VirtualFiles { get; } = new NotifyingCollection<VirtualFile>();
+        public SegmentSpawns Spawns { get; set; } = new SegmentSpawns();
+        public SegmentTreasures Treasures { get; set; } = new SegmentTreasures();
+        public NotifyingCollection<VirtualFile> VirtualFiles { get; } = new NotifyingCollection<VirtualFile>();
+        public ScriptHost Scripts { get; } = new ScriptHost();
+        public string? ScriptFile { get; set; }
 
         public Segment()
         {

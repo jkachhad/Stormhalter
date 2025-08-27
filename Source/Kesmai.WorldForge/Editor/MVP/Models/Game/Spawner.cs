@@ -9,6 +9,7 @@ using Kesmai.WorldForge.Editor;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
+using Kesmai.WorldForge.Editor.Scripting;
 
 namespace Kesmai.WorldForge;
 
@@ -279,13 +280,14 @@ public class SpawnEntry : ObservableObject
 		
 	private int _size;
 	private int _minimum;
-	private int _maximum;
-		
-	public Entity Entity
-	{
-		get => _entity;
-		set => SetProperty(ref _entity, value);
-	}
+        private int _maximum;
+        public ScriptHost Scripts { get; } = new ScriptHost();
+
+        public Entity Entity
+        {
+                get => _entity;
+                set => SetProperty(ref _entity, value);
+        }
 		
 	public int Size
 	{
@@ -305,24 +307,27 @@ public class SpawnEntry : ObservableObject
 		set => SetProperty( ref _maximum, value);
 	}
 
-	public SpawnEntry()
-	{
-		Size = 1;
-	}
+        public SpawnEntry()
+        {
+                Size = 1;
+                Scripts.SetScript("OnSpawn", string.Empty);
+        }
 
-	public SpawnEntry(XElement element)
-	{
-		Size = (int)element.Attribute("size");
-			
-		var minimumAttribute = element.Attribute("minimum");
-		var maximumAttribute = element.Attribute("maximum");
+        public SpawnEntry(XElement element)
+        {
+                Size = (int)element.Attribute("size");
 
-		if (minimumAttribute != null)
-			Minimum = (int)minimumAttribute;
-			
-		if (maximumAttribute != null)
-			Maximum = (int)maximumAttribute;
-	}
+                var minimumAttribute = element.Attribute("minimum");
+                var maximumAttribute = element.Attribute("maximum");
+
+                if (minimumAttribute != null)
+                        Minimum = (int)minimumAttribute;
+
+                if (maximumAttribute != null)
+                        Maximum = (int)maximumAttribute;
+
+                Scripts.SetScript("OnSpawn", string.Empty);
+        }
 
 	public XElement GetXElement()
 	{
