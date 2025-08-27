@@ -60,7 +60,7 @@ public class SegmentWorkspace : IDisposable
         var text = File.ReadAllText(filePath);
 
         var documentId = DocumentId.CreateNewId(project.Id);
-        var solution = Workspace.CurrentSolution.AddDocument(documentId, Path.GetFileName(filePath), SourceText.From(text), filePath);
+        var solution = Workspace.CurrentSolution.AddDocument(documentId, Path.GetFileName(filePath), filePath, null, SourceText.From(text));
         Workspace.TryApplyChanges(solution);
         _documents[filePath] = documentId;
 
@@ -71,7 +71,7 @@ public class SegmentWorkspace : IDisposable
     {
         var project = Workspace.CurrentSolution.Projects.First();
         var documentId = DocumentId.CreateNewId(project.Id);
-        var solution = Workspace.CurrentSolution.AddDocument(documentId, source.Name, SourceText.From(source.Text));
+        var solution = Workspace.CurrentSolution.AddDocument(documentId, source.Name, null, null, SourceText.From(source.Text));
         Workspace.TryApplyChanges(solution);
 
         source.TextChanged += (_, _) =>
