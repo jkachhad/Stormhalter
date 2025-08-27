@@ -108,17 +108,27 @@ public class ApplicationPresenter : ObservableRecipient
 
     public Segment Segment
     {
-	    get => _segment;
-	    set
-	    {
-	        if (SetProperty(ref _segment, value, true))
-	        {
-		        if (value != null)
-			        _roslynHost = new CustomRoslynHost(_segment);
+            get => _segment;
+            set
+            {
+                var old = _segment;
+                if (SetProperty(ref _segment, value, true))
+                {
+                        old?.Dispose();
 
-		        ActiveDocument = Documents.FirstOrDefault();
-	        }
-	    }
+                        if (value != null)
+                                _roslynHost = new CustomRoslynHost(_segment);
+                        else
+                                _roslynHost = null;
+
+                        ActiveDocument = value != null ? Documents.FirstOrDefault() : null;
+                }
+            }
+    }
+
+    public void UpdateInternalDocument(string text)
+    {
+        Segment?.Workspace?.UpdateInternal(text);
     }
 
 
