@@ -1,15 +1,33 @@
+using CommunityToolkit.Mvvm.ComponentModel;
+
 namespace Kesmai.WorldForge.Roslyn;
 
-public abstract class EntityScript
+public abstract class EntityScript : ObservableObject
 {
-    protected EntityScript(string body)
+    private string _body;
+    private bool _isEnabled = true;
+
+    protected EntityScript(string name, string body)
     {
-        Body = body;
+        Name = name;
+        _body = body;
     }
 
     protected abstract string MethodSignature { get; }
 
-    public string Body { get; set; }
+    public string Name { get; }
+
+    public bool IsEnabled
+    {
+        get => _isEnabled;
+        set => SetProperty(ref _isEnabled, value);
+    }
+
+    public string Body
+    {
+        get => _body;
+        set => SetProperty(ref _body, value);
+    }
 
     public string ToDocumentText()
     {
@@ -20,7 +38,7 @@ public abstract class EntityScript
 public class OnDeathScript : EntityScript
 {
     public OnDeathScript()
-        : base("killer.SendMessage(\"You have killed {0}.\", this.Name);")
+        : base("OnDeath", "killer.SendMessage(\"You have killed {0}.\", this.Name);")
     {
     }
 
@@ -31,7 +49,7 @@ public class OnDeathScript : EntityScript
 public class OnIncomingPlayerScript : EntityScript
 {
     public OnIncomingPlayerScript()
-        : base("player.SendMessage(\"Welcome to the game, {0}!\", player.Name);")
+        : base("OnIncomingPlayer", "player.SendMessage(\"Welcome to the game, {0}!\", player.Name);")
     {
     }
 

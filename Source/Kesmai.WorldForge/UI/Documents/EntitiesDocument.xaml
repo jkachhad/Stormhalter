@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
              xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              
@@ -161,7 +162,10 @@
                 </TabControl.ItemTemplate>
                 <TabControl.ContentTemplate>
                     <DataTemplate>
-                       
+                        <avalonedit:TextEditor
+                            SyntaxHighlighting="C#"
+                            ShowLineNumbers="True"
+                            Text="{Binding Body, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </DataTemplate>
                 </TabControl.ContentTemplate>
             </TabControl>

@@ -13,6 +13,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using Kesmai.WorldForge.Roslyn;
 
 namespace Kesmai.WorldForge.UI.Documents;
 
@@ -128,12 +129,19 @@ public partial class EntitiesDocument : UserControl
 			.Register<EntitiesDocument, Entity>(
 				this, (r, m) => { ChangeEntity(m); });
 
-		WeakReferenceMessenger.Default.Register<EntitiesDocument, GetSelectedSpawner>(this,
-			(r, m) => m.Reply(_spawnersList.SelectedItem as Spawner));
+                WeakReferenceMessenger.Default.Register<EntitiesDocument, GetSelectedSpawner>(this,
+                        (r, m) => m.Reply(_spawnersList.SelectedItem as Spawner));
 
-		WeakReferenceMessenger.Default.Register<EntitiesDocument, UnregisterEvents>(this,
-			(r, m) => { WeakReferenceMessenger.Default.UnregisterAll(this); });
-	}
+                WeakReferenceMessenger.Default.Register<EntitiesDocument, GetCurrentScriptSelection>(this,
+                        (r, m) =>
+                        {
+                                if (_scriptsTabControl.SelectedItem is EntityScript script)
+                                        m.Reply(script.Name);
+                        });
+
+                WeakReferenceMessenger.Default.Register<EntitiesDocument, UnregisterEvents>(this,
+                        (r, m) => { WeakReferenceMessenger.Default.UnregisterAll(this); });
+        }
 
 	private void ChangeEntity(Entity entity)
 	{
