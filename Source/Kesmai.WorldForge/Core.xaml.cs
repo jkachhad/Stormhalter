@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Threading;
 using System.Xml.Linq;
 using DigitalRune.ServiceLocation;
 using CommonServiceLocator;
-using DigitalRune.Collections;
 using Kesmai.WorldForge.Editor;
-using Kesmai.WorldForge.Scripting;
-using Lidgren.Network;
 using Syncfusion.Licensing;
 
 namespace Kesmai.WorldForge;
@@ -84,9 +75,7 @@ public partial class Core : Application
 
 		if (Current.Resources["applicationPresenter"] is ApplicationPresenter presenter)
 			ServiceContainer.Register(typeof(ApplicationPresenter), null, presenter);
-			
-		ServiceContainer.Register(typeof(ScriptTemplateProvider), null, new ScriptTemplateProvider());
-			
+
 		SyncfusionLicenseProvider.RegisterLicense("Mzk1NTI2QDMxMzgyZTM0MmUzMG85YlBIdldReGhYeUl3OFQxWUpUVDhyZ3gyRFpESm1NRUF1aUtpM01pcUk9");
 			
 		Network.Initialize();

@@ -3,10 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Xml.Linq;
-using CommonServiceLocator;
 using DigitalRune.Collections;
-using Kesmai.WorldForge.Scripting;
-using Kesmai.WorldForge.UI.Documents;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
@@ -103,10 +100,8 @@ public class SegmentTreasure : ObservableObject, ISegmentObject
 	}
 }
 
-[ScriptTemplate("GetChance", typeof(HoardGetChanceScriptTemplate))]
 public class SegmentHoard : SegmentTreasure
 {
-	private ObservableCollection<Script> _scripts = new ObservableCollection<Script>();
 	private double _chance;
 	
 	public double Chance
@@ -115,75 +110,28 @@ public class SegmentHoard : SegmentTreasure
 		set => SetProperty(ref _chance, value);
 	}
 	
-	public ObservableCollection<Script> Scripts
-	{
-		get => _scripts;
-		set => SetProperty(ref _scripts, value);
-	}
-	
 	public override bool IsHoard => true;
 	
-	public SegmentHoard() : base()
+	public SegmentHoard()
 	{
-		ValidateScripts();
 	}
 	
 	public SegmentHoard(XElement element) : base(element)
 	{
-		foreach (var scriptElement in element.Elements("script"))
-			_scripts.Add(new Script(scriptElement));
-
-		ValidateScripts();
 	}
 	
 	public SegmentHoard(SegmentHoard hoard) : base(hoard)
 	{
-		_scripts.Clear();
-		_scripts.AddRange(hoard.Scripts.Select(s => s.Clone()));
-
-		ValidateScripts();
-	}
-	
-	private void ValidateScripts()
-	{
-		if (_scripts.All(s => s.Name != "GetChance"))
-		{
-			_scripts.Add(new Script("GetChance", true,
-				String.Empty, 
-				"\n\treturn 100;\n", 
-				String.Empty
-			));
-		}
-
-		var provider = ServiceLocator.Current.GetInstance<ScriptTemplateProvider>();
-		var attributes = GetType().GetCustomAttributes(typeof(ScriptTemplateAttribute), false)
-			.OfType<ScriptTemplateAttribute>().ToList();
-
-		if (attributes.Any())
-		{
-			foreach (var script in _scripts)
-			{
-				var attr = attributes.FirstOrDefault(
-					a => String.Equals(a.Name, script.Name, StringComparison.Ordinal));
-
-				if (attr != null && provider.TryGetTemplate(attr.TemplateType, out var template))
-					script.Template = template;
-			}
-		}
 	}
 	
 	public override XElement GetXElement()
 	{
 		var element = base.GetXElement();
 
-		foreach (var script in _scripts)
-			element.Add(script.GetXElement());
-
 		return element;
 	}
 }
-	
-[ScriptTemplate("OnCreate", typeof(TreasureItemScriptTemplate))]
+
 public class TreasureEntry : ObservableObject
 {
 	public class TreasureEntryWeightChanged : ValueChangedMessage<double>
@@ -192,8 +140,7 @@ public class TreasureEntry : ObservableObject
 		{
 		}
 	}
-		
-	private ObservableCollection<Script> _scripts = new ObservableCollection<Script>();
+	
 	private int _weight;
 	private string _notes;
 	private double _chance;
@@ -205,13 +152,7 @@ public class TreasureEntry : ObservableObject
 		get => _treasure;
 		set => SetProperty(ref _treasure, value);
 	}
-		
-	public ObservableCollection<Script> Scripts
-	{
-		get => _scripts;
-		set => SetProperty(ref _scripts, value);
-	}
-		
+
 	public int Weight
 	{
 		get => _weight;
@@ -240,8 +181,6 @@ public class TreasureEntry : ObservableObject
 	{
 		_treasure = treasure;
 		_weight = 1;
-			
-		ValidateScripts();
 	}
 		
 	public TreasureEntry(SegmentTreasure treasure, XElement element)
@@ -251,11 +190,6 @@ public class TreasureEntry : ObservableObject
 			
 		if (element.TryGetElement("notes", out var notesElement))
 			_notes = (string)notesElement;
-
-		foreach (var scriptElement in element.Elements("script"))
-			_scripts.Add(new Script(scriptElement));
-			
-		ValidateScripts();
 	}
 
 	public TreasureEntry(TreasureEntry entry)
@@ -264,39 +198,8 @@ public class TreasureEntry : ObservableObject
 		_weight = entry.Weight;
 
 		_notes = entry.Notes;
-
-		_scripts.Clear();
-		_scripts.AddRange(entry.Scripts.Select(s => s.Clone()));
 	}
-		
-	private void ValidateScripts()
-	{
-		if (_scripts.All(s => s.Name != "OnCreate"))
-		{
-			_scripts.Add(new Script("OnCreate", true,
-				String.Empty, 
-				"\n\treturn new ItemEntity();\n", 
-				String.Empty
-			));
-		}
-
-		var provider = ServiceLocator.Current.GetInstance<ScriptTemplateProvider>();
-		var attributes = GetType().GetCustomAttributes(typeof(ScriptTemplateAttribute), false)
-			.OfType<ScriptTemplateAttribute>().ToList();
-
-		if (attributes.Any())
-		{
-			foreach (var script in _scripts)
-			{
-				var attr = attributes.FirstOrDefault(
-					a => String.Equals(a.Name, script.Name, StringComparison.Ordinal));
-
-				if (attr != null && provider.TryGetTemplate(attr.TemplateType, out var template))
-					script.Template = template;
-			}
-		}
-	}
-
+	
 	public XElement GetXElement()
 	{
 		var element = new XElement("entry",
@@ -304,9 +207,6 @@ public class TreasureEntry : ObservableObject
 			
 		if (!String.IsNullOrEmpty(_notes))
 			element.Add(new XElement("notes", _notes));
-
-		foreach (var script in _scripts)
-			element.Add(script.GetXElement());
 
 		return element;
 	}

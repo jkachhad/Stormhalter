@@ -9,40 +9,12 @@ using System.Windows.Media;
 using System.Xml.Linq;
 using CommonServiceLocator;
 using Kesmai.WorldForge.Editor;
-using Kesmai.WorldForge.Scripting;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace Kesmai.WorldForge.UI.Documents;
-
-public class EntitySpawnScriptTemplate : ScriptTemplate
-{
-	public override IEnumerable<string> GetSegments()
-	{
-                yield return "CreatureEntity OnSpawn()\n{";
-		yield return "}";
-	}
-}
-	
-public class EntityDeathScriptTemplate : ScriptTemplate
-{
-	public override IEnumerable<string> GetSegments()
-	{
-                yield return "void OnDeath(MobileEntity source, MobileEntity killer)\n{";
-		yield return "}";
-	}
-}
-	
-public class EntityIncomingPlayerScriptTemplate : ScriptTemplate
-{
-	public override IEnumerable<string> GetSegments()
-	{
-                yield return "void OnIncomingPlayer(MobileEntity source, PlayerEntity player)\n{";
-		yield return "}";
-	}
-}
 
 public static class DependencyObjectExtensions
 {
@@ -159,9 +131,6 @@ public partial class EntitiesDocument : UserControl
 		WeakReferenceMessenger.Default.Register<EntitiesDocument, GetSelectedSpawner>(this,
 			(r, m) => m.Reply(_spawnersList.SelectedItem as Spawner));
 
-		WeakReferenceMessenger.Default.Register<EntitiesDocument, GetCurrentScriptSelection>(this,
-			(r, m) => m.Reply(GetScriptSelection()));
-
 		WeakReferenceMessenger.Default.Register<EntitiesDocument, UnregisterEvents>(this,
 			(r, m) => { WeakReferenceMessenger.Default.UnregisterAll(this); });
 	}
@@ -183,18 +152,6 @@ public partial class EntitiesDocument : UserControl
 	private void OnEntityChanged(EntitiesDocument recipient, EntitiesViewModel.SelectedEntityChangedMessage message)
 	{
 		_scriptsTabControl.SelectedIndex = 0;
-	}
-
-	public String GetScriptSelection ()
-	{
-		if (_scriptsTabControl.HasItems)
-		{
-			ContentPresenter cp = _scriptsTabControl.Template.FindName("PART_SelectedContentHost", _scriptsTabControl) as ContentPresenter;
-			ScriptEditor editor = _scriptsTabControl.ContentTemplate.FindName("_editor", cp) as ScriptEditor;
-			return editor.SelectedText;
-		} else 
-			return null;
-
 	}
 }
 

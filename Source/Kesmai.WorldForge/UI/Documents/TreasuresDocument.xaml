@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Kesmai.WorldForge.UI.Documents"
-             xmlns:scripting="clr-namespace:Kesmai.WorldForge.Scripting"
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
              xmlns:worldForge="clr-namespace:Kesmai.WorldForge"
              xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
@@ -177,8 +176,7 @@
                         
                         <TabControl.ContentTemplate>
                             <DataTemplate>
-                                <scripting:ScriptEditor Script="{Binding}" IsEnabled="{Binding IsEnabled}"
-                                                        Height="100" MaxHeight="300" />
+                              
                             </DataTemplate>
                         </TabControl.ContentTemplate>
                     </TabControl>
@@ -273,8 +271,7 @@
                                     
                                     <TabControl.ContentTemplate>
                                         <DataTemplate>
-                                            <scripting:ScriptEditor Script="{Binding}" IsEnabled="{Binding IsEnabled}"
-                                                                    Height="100" MaxHeight="300" />
+                            
                                         </DataTemplate>
                                     </TabControl.ContentTemplate>
                                 </TabControl>

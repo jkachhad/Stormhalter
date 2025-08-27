@@ -365,7 +365,6 @@ public class SpawnsViewModel : ObservableRecipient
             if (value != null)
             {
                 WeakReferenceMessenger.Default.Send(new SelectedRegionSpawnerChangedMessage(value, source: "TreeView"));
-                value.CalculateStats();
             }
         }
     }

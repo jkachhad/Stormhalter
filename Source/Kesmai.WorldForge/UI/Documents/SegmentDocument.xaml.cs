@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using Kesmai.WorldForge.Editor;
-using Kesmai.WorldForge.Scripting;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Kesmai.WorldForge.UI.Documents;

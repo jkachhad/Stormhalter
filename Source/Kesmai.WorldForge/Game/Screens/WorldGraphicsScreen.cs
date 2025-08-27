@@ -1006,12 +1006,6 @@ public class WorldGraphicsScreen : GraphicsScreen
 
 							spritebatch.DrawRectangle(bounds, _inclusionBorder);
 							spritebatch.FillRectangle(bounds, _inclusionFill);
-
-							if (r.Threat is null)
-							{
-								r.CalculateStats();
-							}
-							_drawStrings.Add(Tuple.Create($"{r.Name} " + r.Threat.ToString(), new Vector2(bounds.Left + 2, bounds.Top + 2 + (offset * 15)), Color.Black));
 						}
 					}
 				}

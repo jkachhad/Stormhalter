@@ -8,14 +8,9 @@ using DigitalRune.Graphics;
 using DigitalRune.ServiceLocation;
 using Kesmai.WorldForge.Models;
 using Kesmai.WorldForge.MVP;
-using Kesmai.WorldForge.Roslyn;
 using Kesmai.WorldForge.UI;
 using Kesmai.WorldForge.UI.Documents;
 using Kesmai.WorldForge.UI.Windows;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using RoslynPad.Roslyn;
-using SharpDX.Direct3D9;
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
@@ -42,7 +37,6 @@ public class ApplicationPresenter : ObservableRecipient
 	private DirectoryInfo _segmentFileFolder;
 		
     private Segment _segment;
-        private SegmentRoslynHost _roslynHost;
 	private Selection _selection;
 	private TerrainSelector _filter;
 	private Tool _selectedTool;
@@ -77,8 +71,6 @@ public class ApplicationPresenter : ObservableRecipient
 		set => _selectedTool = value;
 	}
 
-	public IRoslynHost RoslynHost => _roslynHost;
-
 	private ComponentsCategory _selectedComponentCategory;
 	private TerrainComponent _selectedComponent;
 		
@@ -111,18 +103,8 @@ public class ApplicationPresenter : ObservableRecipient
             get => _segment;
             set
             {
-                var old = _segment;
                 if (SetProperty(ref _segment, value, true))
-                {
-                        old?.Dispose();
-
-                        if (value != null)
-	                        _roslynHost = new SegmentRoslynHost(_segment);
-                        else
-	                        _roslynHost = null;
-
-                        ActiveDocument = value != null ? Documents.FirstOrDefault() : null;
-                }
+	                ActiveDocument = value != null ? Documents.FirstOrDefault() : null;
             }
     }
 
@@ -627,10 +609,7 @@ public class ApplicationPresenter : ObservableRecipient
 	private void SaveSegment(bool queryPath)
 	{
 		var targetFile = String.Empty;
-
-		if (!CheckScriptSyntax())
-			return;
-
+		
 		if (!queryPath && String.IsNullOrEmpty(_segmentFilePath))
 			queryPath = true;
 
@@ -804,170 +783,7 @@ public class ApplicationPresenter : ObservableRecipient
                 return segment;
         }
 
-        private bool CheckScriptSyntax() //Enumerate all script segments and verify that they pass syntax checks
-        {
-		var syntaxErrors = default(IEnumerable<Diagnostic>);
-		
-		//Entity scripts:
-		foreach (Entity entity in Segment.Entities)
-		{
-			foreach (Scripting.Script script in entity.Scripts.Where(s=>s.IsEnabled))
-			{
-				syntaxErrors = CSharpSyntaxTree.ParseText("void OnSpawn(){" + script.Blocks[1] + "}").GetDiagnostics();
-				if (syntaxErrors.Count() > 0)
-				{
-					var errorList = String.Join('\n', syntaxErrors.Take(3).Select(err => (err.Location.GetLineSpan().StartLinePosition.Line + 3) + ":" + err.GetMessage()));
-					if (syntaxErrors.Count() > 3)
-						errorList += "\n...";
-					var messageResult = MessageBox.Show($"Entity '{entity.Name}' has syntax errors in script '{script.Name}'.\nDo you wish to continue?\n\n{errorList}", "Syntax Errors in scripts", MessageBoxButton.YesNo);
-					if (messageResult == MessageBoxResult.No)
-					{
-						ActiveDocument = Documents.Where(d => d is EntitiesViewModel).FirstOrDefault() as EntitiesViewModel;
-						(ActiveDocument as EntitiesViewModel).SelectedEntity = entity;
-						return false;
-					}
-				}
-			}
-		}
-		//Entity duplicate name check
-		var entityDuplicates = Segment.Entities.GroupBy(e => e.Name, StringComparer.InvariantCultureIgnoreCase).Where(g => g.Count() > 1);
-		foreach (var duplicate in entityDuplicates)
-		{
-			var messageResult = MessageBox.Show($"Entity '{duplicate.Key}' has {duplicate.Count()} definitions.\nDo you wish to continue?", "Duplicate Entities found", MessageBoxButton.YesNo);
-			if (messageResult == MessageBoxResult.No)
-			{
-				ActiveDocument = Documents.Where(d => d is EntitiesViewModel).FirstOrDefault() as EntitiesViewModel;
-				(ActiveDocument as EntitiesViewModel).SelectedEntity = duplicate.First();
-				return false;
-			}
-		}
-
-		//Spawner scripts:
-		foreach (LocationSpawner spawner in Segment.Spawns.Location)
-		{
-			foreach (Scripting.Script script in spawner.Scripts.Where(script=>script.IsEnabled))
-			{
-				syntaxErrors = CSharpSyntaxTree.ParseText("void OnSpawn(){" + script.Blocks[1] + "}").GetDiagnostics();
-				if (syntaxErrors.Count() > 0)
-				{
-					var errorList = String.Join('\n', syntaxErrors.Take(3).Select(err => (err.Location.GetLineSpan().StartLinePosition.Line + 3) + ":" + err.GetMessage()));
-					if (syntaxErrors.Count() > 3)
-						errorList += "\n...";
-					var messageResult = MessageBox.Show($"Location Spawner '{spawner.Name}' has syntax errors in script '{script.Name}'.\nDo you wish to continue?\n\n{errorList}", "Syntax Errors in scripts", MessageBoxButton.YesNo);
-					if (messageResult == MessageBoxResult.No)
-					{
-							
-						ActiveDocument = Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
-						(ActiveDocument as SpawnsViewModel).SelectedLocationSpawner = spawner;
-						WeakReferenceMessenger.Default.Send(spawner as Spawner);
-						return false;
-					}
-				}
-			}
-		}
-		//Spawner duplicate name checks
-		var locationSpawnerDuplicates = Segment.Spawns.Location.GroupBy(e => e.Name, StringComparer.InvariantCultureIgnoreCase).Where(g => g.Count() > 1);
-		foreach (var duplicate in locationSpawnerDuplicates)
-		{
-			var messageResult = MessageBox.Show($"Spawner '{duplicate.Key}' has {duplicate.Count()} definitions.\nDo you wish to continue?", "Duplicate Spawners found", MessageBoxButton.YesNo);
-			if (messageResult == MessageBoxResult.No)
-			{
-				ActiveDocument = Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
-				(ActiveDocument as SpawnsViewModel).SelectedLocationSpawner = duplicate.First();
-				WeakReferenceMessenger.Default.Send(duplicate.First() as Spawner);
-				return false;
-			}
-		}
-		var regionSpawnerDuplicates = Segment.Spawns.Region.GroupBy(e => e.Name, StringComparer.InvariantCultureIgnoreCase).Where(g => g.Count() > 1);
-		foreach (var duplicate in regionSpawnerDuplicates)
-		{
-			var messageResult = MessageBox.Show($"Spawner '{duplicate.Key}' has {duplicate.Count()} definitions.\nDo you wish to continue?", "Duplicate Spawners found", MessageBoxButton.YesNo);
-			if (messageResult == MessageBoxResult.No)
-			{
-				ActiveDocument = Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
-				(ActiveDocument as SpawnsViewModel).SelectedRegionSpawner = duplicate.First();
-				WeakReferenceMessenger.Default.Send(duplicate.First() as Spawner);
-				return false;
-			}
-		}
-
-		//Treasure scripts:
-		foreach (SegmentTreasure treasurePool in Segment.Treasures)
-		{
-			foreach (TreasureEntry entry in treasurePool.Entries)
-			{
-				foreach (Scripting.Script script in entry.Scripts.Where(s=>s.IsEnabled))
-				{
-					syntaxErrors = CSharpSyntaxTree.ParseText("void OnCreate(){" + script.Blocks[1] + "}").GetDiagnostics();
-					if (syntaxErrors.Count() > 0)
-					{
-						var errorList = String.Join('\n', syntaxErrors.Take(3).Select(err => (err.Location.GetLineSpan().StartLinePosition.Line + 3) + ":" + err.GetMessage()));
-						if (syntaxErrors.Count() > 3)
-							errorList += "\n...";
-						var messageResult = MessageBox.Show($"Treasure '{treasurePool.Name}' has syntax errors in script '{treasurePool.Entries.IndexOf(entry)+1}'.\nDo you wish to continue?\n\n{errorList}", "Syntax Errors in scripts", MessageBoxButton.YesNo);
-						if (messageResult == MessageBoxResult.No) {
-							ActiveDocument = Documents.Where(d => d is TreasuresViewModel).FirstOrDefault() as TreasuresViewModel;
-							(ActiveDocument as TreasuresViewModel).SelectedTreasure = treasurePool;
-							return false;
-						}
-					}
-				}
-			}
-		}
-		//Treasure duplicate name check
-		var treasureDuplicates = Segment.Treasures.GroupBy(e => e.Name, StringComparer.InvariantCultureIgnoreCase).Where(g => g.Count() > 1);
-		foreach (var duplicate in treasureDuplicates)
-		{
-			var messageResult = MessageBox.Show($"Treasure '{duplicate.Key}' has {duplicate.Count()} definitions.\nDo you wish to continue?", "Duplicate Treasures found", MessageBoxButton.YesNo);
-			if (messageResult == MessageBoxResult.No)
-			{
-				ActiveDocument = Documents.Where(d => d is TreasuresViewModel).FirstOrDefault() as TreasuresViewModel;
-				(ActiveDocument as TreasuresViewModel).SelectedTreasure = duplicate.First();
-				return false;
-			}
-		}
-
-		//Location duplicate name check
-		var locationDuplicates = Segment.Locations.GroupBy(e => e.Name, StringComparer.InvariantCultureIgnoreCase).Where(g => g.Count() > 1);
-		foreach (var duplicate in locationDuplicates)
-		{
-			var messageResult = MessageBox.Show($"Location '{duplicate.Key}' has {duplicate.Count()} definitions.\nDo you wish to continue?", "Duplicate Locations found", MessageBoxButton.YesNo);
-			if (messageResult == MessageBoxResult.No)
-			{
-				ActiveDocument = Documents.Where(d => d is LocationsViewModel).FirstOrDefault() as LocationsViewModel;
-				(ActiveDocument as LocationsViewModel).SelectedLocation = duplicate.First();
-				return false;
-			}
-		}
-
-		//Subregion duplicate name check
-		var subregionDuplicates = Segment.Subregions.GroupBy(e => e.Name, StringComparer.InvariantCultureIgnoreCase).Where(g => g.Count() > 1);
-		foreach (var duplicate in subregionDuplicates)
-		{
-			var messageResult = MessageBox.Show($"Subregion '{duplicate.Key}' has {duplicate.Count()} definitions.\nDo you wish to continue?", "Duplicate Subregions found", MessageBoxButton.YesNo);
-			if (messageResult == MessageBoxResult.No)
-			{
-				ActiveDocument = Documents.Where(d => d is SubregionViewModel).FirstOrDefault() as SubregionViewModel;
-				(ActiveDocument as SubregionViewModel).SelectedSubregion = duplicate.First();
-				return false;
-			}
-		}
-
-		/* Prevent any region with id = 0 */
-		foreach (var region in Segment.Regions)
-		{
-			if (region.ID is not 0)
-				continue;
-			
-			MessageBox.Show($"Unable to save: Region '{region.Name}' has ID = 0.", "Invalid Region ID", MessageBoxButton.OK);
-
-			ActiveDocument = region;
-			return false;
-		}
-
-		return true;
-	}
-
+	
 	private void CreateRegion()
 	{
 		if (_segment == null)

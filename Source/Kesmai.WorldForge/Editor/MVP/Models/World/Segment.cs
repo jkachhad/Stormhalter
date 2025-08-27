@@ -1,21 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using CommonServiceLocator;
 using DigitalRune.Collections;
-using Kesmai.WorldForge.Models;
-using Kesmai.WorldForge.Scripting;
-using Kesmai.WorldForge.UI.Documents;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Kesmai.WorldForge;
-using Kesmai.WorldForge.Roslyn;
-using RoslynPad.Roslyn;
 
 namespace Kesmai.WorldForge.Editor;
 
-public class Segment : ObservableObject, IDisposable
+public class Segment : ObservableObject
 {
 	private static List<string> _reservedLocations = new List<string>()
 	{
@@ -74,11 +67,6 @@ public class Segment : ObservableObject, IDisposable
                         args.OldItems.ForEach(region => { presenter.Documents.Remove(region); });
         }
 
-    public void Dispose()
-    {
-    }
-		
-		
 	public void Load(XElement element)
 	{
 		Name = (string)element.Attribute("name");

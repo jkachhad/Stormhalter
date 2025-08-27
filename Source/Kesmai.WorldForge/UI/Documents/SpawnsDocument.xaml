@@ -7,7 +7,6 @@
              xmlns:spawn="clr-namespace:Kesmai.WorldForge.Editor;assembly=Kesmai.WorldForge"
              xmlns:worldForge="clr-namespace:Kesmai.WorldForge"
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
-             xmlns:scripting="clr-namespace:Kesmai.WorldForge.Scripting"
              xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="600"
@@ -203,7 +202,7 @@
                         </TabControl.ItemTemplate>
                         <TabControl.ContentTemplate>
                             <DataTemplate>
-                                <scripting:ScriptEditor Script="{Binding}" IsEnabled="{Binding IsEnabled}" />
+                               
                             </DataTemplate>
                         </TabControl.ContentTemplate>
                     </TabControl>
@@ -421,7 +420,7 @@
                         </TabControl.ItemTemplate>
                         <TabControl.ContentTemplate>
                             <DataTemplate>
-                                <scripting:ScriptEditor Script="{Binding}" IsEnabled="{Binding IsEnabled}" />
+                               
                             </DataTemplate>
                         </TabControl.ContentTemplate>
                     </TabControl>
