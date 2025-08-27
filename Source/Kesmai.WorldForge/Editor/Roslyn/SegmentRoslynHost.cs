@@ -23,12 +23,25 @@ public class SegmentRoslynHost : RoslynHost, IDisposable
             Assembly.Load("RoslynPad.Roslyn.Windows"),
             Assembly.Load("RoslynPad.Editor.Windows"),
         },
-        RoslynHostReferences.NamespaceDefault.With(imports: new[]
-        {
-            "WorldForge",
-        }))
+        RoslynHostReferences.NamespaceDefault.With(imports: CreateImports(segment)))
     {
         _segment = segment;
+    }
+
+    private static string[] CreateImports(Segment segment)
+    {
+        var imports = new List<string>
+        {
+            "WorldForge"
+        };
+
+        if (!string.IsNullOrEmpty(segment?.Name))
+        {
+            imports.Add($"Kesmai.Server.Segment.{segment.Name}");
+            imports.Add($"static Kesmai.Server.Segment.{segment.Name}.Internal");
+        }
+
+        return imports.ToArray();
     }
 
     protected override Project CreateProject(Solution solution, DocumentCreationArgs args, CompilationOptions compilationOptions, Project? previousProject = null)

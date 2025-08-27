@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommonServiceLocator;
+using Kesmai.WorldForge.Editor;
 
 namespace Kesmai.WorldForge.Scripting;
 
@@ -77,27 +79,44 @@ public class Script : ObservableObject
 		};
 	}
 
-	public override string ToString()
-	{
-		var segments = Template.GetSegments().ToList();
-		var blocks = Blocks;
+        public override string ToString()
+        {
+                var segments = Template.GetSegments().ToList();
+                var blocks = Blocks;
 
-		var builder = new StringBuilder();
-			
-		if (blocks.Any() && blocks.Count >= (segments.Count + 1))
-		{
-			for (var i = 0; i < segments.Count; i++)
-			{
-				builder.Append(blocks[i]);
-				builder.Append(segments[i]);
-					
-				if (i < (segments.Count - 1))
-					continue;
+                var builder = new StringBuilder();
 
-				builder.Append(blocks[i + 1]);
-			}
-		}
+                if (!String.Equals(Name, "Internal", StringComparison.OrdinalIgnoreCase))
+                {
+                        try
+                        {
+                                var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+                                var segmentName = presenter.Segment?.Name;
 
-		return builder.ToString();
-	}
+                                if (!String.IsNullOrEmpty(segmentName))
+                                {
+                                        builder.Append($"using static Kesmai.Server.Segment.{segmentName}.Internal;\n");
+                                }
+                        }
+                        catch
+                        {
+                        }
+                }
+
+                if (blocks.Any() && blocks.Count >= (segments.Count + 1))
+                {
+                        for (var i = 0; i < segments.Count; i++)
+                        {
+                                builder.Append(blocks[i]);
+                                builder.Append(segments[i]);
+
+                                if (i < (segments.Count - 1))
+                                        continue;
+
+                                builder.Append(blocks[i + 1]);
+                        }
+                }
+
+                return builder.ToString();
+        }
 }
