@@ -10,7 +10,7 @@ namespace Kesmai.WorldForge.Roslyn;
 
 public class SegmentWorkspace : IDisposable
 {
-    public AdhocWorkspace Workspace { get; }
+    public Workspace Workspace { get; }
 
     private readonly InMemorySource _internal;
     private readonly Dictionary<string, DocumentId> _documents = new(StringComparer.OrdinalIgnoreCase);
@@ -20,15 +20,18 @@ public class SegmentWorkspace : IDisposable
     {
         var sourcePath = Path.Combine(rootPath, "Source");
 
-        Workspace = (AdhocWorkspace)host.CreateWorkspace();
-        var project = Workspace.AddProject("InMemoryProject", LanguageNames.CSharp);
+        Workspace = host.CreateWorkspace();
+
+        var projectId = ProjectId.CreateNewId();
+        var solution = Workspace.CurrentSolution
+            .AddProject(projectId, "InMemoryProject", "InMemoryProject", LanguageNames.CSharp);
 
         var mscorlib = MetadataReference.CreateFromFile(typeof(object).Assembly.Location);
         var systemCore = MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location);
 
-        project = project.AddMetadataReference(mscorlib);
-        project = project.AddMetadataReference(systemCore);
-        Workspace.TryApplyChanges(project.Solution);
+        solution = solution.AddMetadataReference(projectId, mscorlib);
+        solution = solution.AddMetadataReference(projectId, systemCore);
+        Workspace.TryApplyChanges(solution);
 
         foreach (var path in Directory.EnumerateFiles(sourcePath, "*.cs", SearchOption.AllDirectories))
             AddDocument(path);
@@ -56,23 +59,20 @@ public class SegmentWorkspace : IDisposable
         var project = Workspace.CurrentSolution.Projects.First();
         var text = File.ReadAllText(filePath);
 
-        var loader = TextLoader.From(TextAndVersion.Create(SourceText.From(text), VersionStamp.Create()));
-        var documentInfo = DocumentInfo.Create(
-            DocumentId.CreateNewId(project.Id),
-            Path.GetFileName(filePath),
-            filePath: filePath,
-            loader: loader);
+        var documentId = DocumentId.CreateNewId(project.Id);
+        var solution = Workspace.CurrentSolution.AddDocument(documentId, Path.GetFileName(filePath), SourceText.From(text), filePath);
+        Workspace.TryApplyChanges(solution);
+        _documents[filePath] = documentId;
 
-        var document = Workspace.AddDocument(documentInfo);
-        _documents[filePath] = document.Id;
-        return document;
+        return Workspace.CurrentSolution.GetDocument(documentId)!;
     }
 
     private Document AddDocument(InMemorySource source)
     {
         var project = Workspace.CurrentSolution.Projects.First();
-        var document = Workspace.AddDocument(project.Id, source.Name, SourceText.From(source.Text));
-        var documentId = document.Id;
+        var documentId = DocumentId.CreateNewId(project.Id);
+        var solution = Workspace.CurrentSolution.AddDocument(documentId, source.Name, SourceText.From(source.Text));
+        Workspace.TryApplyChanges(solution);
 
         source.TextChanged += (_, _) =>
         {
@@ -80,7 +80,7 @@ public class SegmentWorkspace : IDisposable
             Workspace.TryApplyChanges(Workspace.CurrentSolution.WithDocumentText(documentId, text));
         };
 
-        return document;
+        return Workspace.CurrentSolution.GetDocument(documentId)!;
     }
 
     private void OnFileChanged(string path)
