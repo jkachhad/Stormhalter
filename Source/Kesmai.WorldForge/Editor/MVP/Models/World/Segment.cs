@@ -24,7 +24,7 @@ public class Segment : ObservableObject, IDisposable
 		
         private string _name;
         private string _rootPath;
-    private SegmentWorkspace _workspace;
+
 
 	public string Name
 	{
@@ -39,27 +39,10 @@ public class Segment : ObservableObject, IDisposable
         {
             if (SetProperty(ref _rootPath, value))
             {
-                Workspace?.Dispose();
-                Workspace = null;
             }
         }
         }
-
-    public void InitializeWorkspace(RoslynHost host)
-    {
-        if (!string.IsNullOrEmpty(RootPath))
-        {
-            Workspace?.Dispose();
-            Workspace = new SegmentWorkspace(RootPath, host);
-        }
-    }
-
-    public SegmentWorkspace Workspace
-    {
-            get => _workspace;
-            private set => SetProperty(ref _workspace, value);
-    }
-	
+        
 	public NotifyingCollection<SegmentRegion> Regions { get; } = new NotifyingCollection<SegmentRegion>();
 	public SegmentLocations Locations { get; set; } = new SegmentLocations();
 	public SegmentSubregions Subregions { get; set; } = new SegmentSubregions();
@@ -93,7 +76,6 @@ public class Segment : ObservableObject, IDisposable
 
     public void Dispose()
     {
-        Workspace?.Dispose();
     }
 		
 		

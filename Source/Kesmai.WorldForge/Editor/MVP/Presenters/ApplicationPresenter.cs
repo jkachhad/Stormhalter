@@ -117,21 +117,13 @@ public class ApplicationPresenter : ObservableRecipient
                         old?.Dispose();
 
                         if (value != null)
-                        {
-                                _roslynHost = new SegmentRoslynHost(_segment);
-                                _segment.InitializeWorkspace(_roslynHost);
-                        }
+	                        _roslynHost = new SegmentRoslynHost(_segment);
                         else
-                                _roslynHost = null;
+	                        _roslynHost = null;
 
                         ActiveDocument = value != null ? Documents.FirstOrDefault() : null;
                 }
             }
-    }
-
-    public void UpdateInternalDocument(string text)
-    {
-        Segment?.Workspace?.UpdateInternal(text);
     }
 
 
