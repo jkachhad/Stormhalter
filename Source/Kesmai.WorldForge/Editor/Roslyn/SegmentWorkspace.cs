@@ -61,7 +61,7 @@ public class SegmentWorkspace : IDisposable
 
         var documentId = DocumentId.CreateNewId(project.Id);
         var sourceText = SourceText.From(text);
-        var solution = Workspace.CurrentSolution.AddDocument(documentId, Path.GetFileName(filePath), sourceText, filePath);
+        var solution = Workspace.CurrentSolution.AddDocument(documentId, Path.GetFileName(filePath), sourceText, filePath: filePath);
         Workspace.TryApplyChanges(solution);
         _documents[filePath] = documentId;
 
