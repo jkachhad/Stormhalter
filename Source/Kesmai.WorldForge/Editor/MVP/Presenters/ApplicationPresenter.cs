@@ -603,15 +603,6 @@ public class ApplicationPresenter : ObservableRecipient
 			}
 			segment.Load(rootElement);
 		}
-			
-		var definitionFilePath = $@"{_segmentFileFolder.FullName}\{segment.Name}.cs";
-
-		if (File.Exists(definitionFilePath))
-		{
-			using (var stream = new FileStream(definitionFilePath, FileMode.Open, FileAccess.Read, FileShare.None))
-			using (var reader = new StreamReader(stream))
-				segment.Definition.Blocks[1] = reader.ReadToEnd();
-		}
 
 		Documents.Add(new SegmentViewModel(segment));
 		Documents.Add(new LocationsViewModel(segment));
@@ -674,16 +665,7 @@ public class ApplicationPresenter : ObservableRecipient
 			projectFile.Add(segmentElement);
 
 			projectFile.Save(targetFile);
-
-			var definitionFilePath = $@"{_segmentFileFolder.FullName}\{_segment.Name}.cs";
-
-			if (File.Exists(definitionFilePath))
-				File.Delete(definitionFilePath);
 			
-			using (var stream = new FileStream(definitionFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
-			using (var writer = new StreamWriter(stream))
-				writer.Write(_segment.Definition.Blocks[1]);
-
 			var saveFolder = new FileInfo(targetFile).Directory;
 
 			SaveAsDirectory(@$"{saveFolder}\{_segment.Name}");
@@ -715,9 +697,6 @@ public class ApplicationPresenter : ObservableRecipient
 
 		if (_segment.Internal != null)
 		        File.WriteAllText(Path.Combine(sourceDir, "Internal.cs"), _segment.Internal.ToString());
-
-		if (_segment.Definition != null)
-		        File.WriteAllText(Path.Combine(sourceDir, "Definition.cs"), _segment.Definition.ToString());
 		#endregion
 
 		#region Regions

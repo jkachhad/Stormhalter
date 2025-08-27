@@ -17,14 +17,6 @@ public class SegmentInternalScriptTemplate : ScriptTemplate
 	}
 }
 
-public class SegmentDefinitionScriptTemplate : ScriptTemplate
-{
-	public override IEnumerable<string> GetSegments()
-	{
-		yield return "#load \"WorldForge\"\n";
-	}
-}
-	
 public partial class SegmentDocument : UserControl
 {
 	public SegmentDocument()

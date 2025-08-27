@@ -61,14 +61,6 @@ public partial class CompileWindow : Window
 			}
 		}
 		
-		using (var gzipStream = new GZipStream(compressedInternal, CompressionMode.Compress, false))
-		{
-			var data = Encoding.UTF8.GetBytes(segment.Definition.Blocks[0]);
-			
-			gzipStream.Write(data, 0, (int)data.Length);
-			gzipStream.Flush();
-		}
-		
 		Network.RequestCompile(compressedDocument.ToArray(), compressedInternal.ToArray());
 	}
 	
