@@ -4,22 +4,23 @@ using System.IO;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
+using RoslynPad.Roslyn;
 
 namespace Kesmai.WorldForge.Roslyn;
 
 public class SegmentWorkspace : IDisposable
 {
-    public AdhocWorkspace Workspace { get; }
+    public Workspace Workspace { get; }
 
     private readonly InMemorySource _internal;
     private readonly Dictionary<string, DocumentId> _documents = new(StringComparer.OrdinalIgnoreCase);
     private readonly FileSystemWatcher _watcher;
 
-    public SegmentWorkspace(string rootPath)
+    public SegmentWorkspace(string rootPath, IRoslynHost host)
     {
         var sourcePath = Path.Combine(rootPath, "Source");
 
-        Workspace = new AdhocWorkspace();
+        Workspace = host.CreateWorkspace();
         var project = Workspace.AddProject("InMemoryProject", LanguageNames.CSharp);
 
         var mscorlib = MetadataReference.CreateFromFile(typeof(object).Assembly.Location);

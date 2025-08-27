@@ -11,6 +11,7 @@ using Kesmai.WorldForge.UI.Documents;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Kesmai.WorldForge;
 using Kesmai.WorldForge.Roslyn;
+using RoslynPad.Roslyn;
 
 namespace Kesmai.WorldForge.Editor;
 
@@ -39,10 +40,19 @@ public class Segment : ObservableObject, IDisposable
             if (SetProperty(ref _rootPath, value))
             {
                 Workspace?.Dispose();
-                Workspace = !string.IsNullOrEmpty(value) ? new SegmentWorkspace(value) : null;
+                Workspace = null;
             }
         }
         }
+
+    public void InitializeWorkspace(IRoslynHost host)
+    {
+        if (!string.IsNullOrEmpty(RootPath))
+        {
+            Workspace?.Dispose();
+            Workspace = new SegmentWorkspace(RootPath, host);
+        }
+    }
 
     public SegmentWorkspace Workspace
     {

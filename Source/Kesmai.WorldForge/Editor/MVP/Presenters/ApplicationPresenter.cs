@@ -117,7 +117,10 @@ public class ApplicationPresenter : ObservableRecipient
                         old?.Dispose();
 
                         if (value != null)
+                        {
                                 _roslynHost = new SegmentRoslynHost(_segment);
+                                _segment.InitializeWorkspace(_roslynHost);
+                        }
                         else
                                 _roslynHost = null;
 
