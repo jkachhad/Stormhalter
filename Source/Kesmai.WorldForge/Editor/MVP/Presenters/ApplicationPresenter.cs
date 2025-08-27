@@ -751,9 +751,10 @@ public class ApplicationPresenter : ObservableRecipient
 				new XAttribute("Sdk", "Microsoft.NET.Sdk"),
 				new XElement("PropertyGroup",
 					new XElement("OutputType", "Library"),
-					new XElement("TargetFramework", "net8.0"),
+					new XElement("TargetFramework", "net8.0-windows8.0"),
 					new XElement("RootNamespace", segmentName),
-					new XElement("AssemblyName", segmentName)
+					new XElement("AssemblyName", segmentName),
+					new XElement("EnableDefaultItems", false)
 				),
 				new XElement("ItemGroup",
 					new XElement("Compile", new XAttribute("Include", "Source/**/*.cs"))
@@ -770,6 +771,12 @@ public class ApplicationPresenter : ObservableRecipient
 				)
 			);
 		}
+		
+		project.Root?.Add(
+			new XElement("ItemGroup",
+				new XElement("PackageReference", new XAttribute("Include", "Kesmai.Server.Reference"), new XAttribute("Version", "*"))
+			)
+		);
 
 		project.Save(Path.Combine(path, $"{segmentName}.csproj"));
 	}
