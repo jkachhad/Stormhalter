@@ -162,10 +162,11 @@
                 </TabControl.ItemTemplate>
                 <TabControl.ContentTemplate>
                     <DataTemplate>
-                        <controls:BindableTextEditor
+                        <controls:ScriptEditor
                             SyntaxHighlighting="C#"
                             ShowLineNumbers="True"
-                            Text="{Binding Body, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            Header="{Binding MethodSignature}"
+                            Body="{Binding Body, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </DataTemplate>
                 </TabControl.ContentTemplate>
             </TabControl>

@@ -13,7 +13,7 @@ public abstract class EntityScript : ObservableObject
         _body = body;
     }
 
-    protected abstract string MethodSignature { get; }
+    public abstract string MethodSignature { get; }
 
     public string Name { get; }
 
@@ -42,7 +42,7 @@ public class OnDeathScript : EntityScript
     {
     }
 
-    protected override string MethodSignature =>
+    public override string MethodSignature =>
         "public void OnDeath(MobileEntity source, MobileEntity killer)";
 }
 
@@ -53,7 +53,7 @@ public class OnIncomingPlayerScript : EntityScript
     {
     }
 
-    protected override string MethodSignature =>
+    public override string MethodSignature =>
         "public void OnIncomingPlayer(MobileEntity source, MobileEntity player)";
 }
 
