@@ -22,7 +22,6 @@ public class Segment : ObservableObject
 		
 	private string _name;
 	private string _rootPath;
-	private Script _internal;
 
 	public string Name
 	{
@@ -34,12 +33,6 @@ public class Segment : ObservableObject
 	{
 		get => _rootPath;
 		set => SetProperty(ref _rootPath, value);
-	}
-
-	public Script Internal
-	{
-		get => _internal;
-		set => SetProperty(ref _internal, value);
 	}
 	
 	public NotifyingCollection<SegmentRegion> Regions { get; } = new NotifyingCollection<SegmentRegion>();
@@ -53,25 +46,6 @@ public class Segment : ObservableObject
 	public Segment()
 	{
 		Regions.CollectionChanged += OnRegionsChanged;
-
-		ValidateScripts();
-	}
-		
-	private void ValidateScripts()
-	{
-		if (_internal == null)
-		{
-			_internal = new Script("Internal", true,
-				String.Empty,
-				"\n",
-				String.Empty
-			);
-		}
-
-		var provider = ServiceLocator.Current.GetInstance<ScriptTemplateProvider>();
-			
-		if (provider.TryGetTemplate(typeof(SegmentInternalScriptTemplate), out var internalTemplate))
-			_internal.Template = internalTemplate;
 	}
 
 	private void OnRegionsChanged(object sender, CollectionChangedEventArgs<SegmentRegion> args)
@@ -141,7 +115,6 @@ public class Segment : ObservableObject
 		var spawnsElement = element.Element("spawns");
 		var treasuresElement = element.Element("treasures");
 		var hoardsElement = element.Element("hoards");
-		var scriptsElements = element.Elements("script").ToList();
 
 		Regions.Clear();
 			
@@ -161,26 +134,7 @@ public class Segment : ObservableObject
 					location.IsReserved = true;
 			}
 		}
-
-		if (scriptsElements.Any())
-		{
-			var internalScriptElement = scriptsElements
-				.FirstOrDefault(e => String.Equals(e.Attribute("name")?.Value, "Internal", StringComparison.Ordinal));
-
-			if (internalScriptElement != null)
-			{
-				_internal = new Script(internalScriptElement);
-			}
-			else
-			{
-				_internal = new Script("Internal", true,
-					String.Empty,
-					"\n",
-					String.Empty
-				);
-			}
-		}
-
+		
 		if (subregionsElement != null)
 			Subregions.Load(subregionsElement, version);
 
@@ -192,8 +146,6 @@ public class Segment : ObservableObject
 
 		if (treasuresElement != null)
 			Treasures.Load(treasuresElement, version);
-			
-		ValidateScripts();
 	}
 
 	public SegmentRegion GetRegion(int id)
@@ -247,9 +199,7 @@ public class Segment : ObservableObject
 		Treasures.Save(treasuresElement);
 			
 		#endregion
-
-		element.Add(_internal.GetXElement());
-			
+		
 		element.Add(regionsElement);
 		element.Add(locationsElement);
 		element.Add(subregionsElement);

@@ -8,30 +8,11 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Kesmai.WorldForge.UI.Documents;
 
-public class SegmentInternalScriptTemplate : ScriptTemplate
-{
-	public override IEnumerable<string> GetSegments()
-	{
-		yield return "public class Internal\n{";
-		yield return "}";
-	}
-}
-
 public partial class SegmentDocument : UserControl
 {
 	public SegmentDocument()
 	{
 		InitializeComponent();
-    }
-
-    private void OnExpandAllClicked(object sender, RoutedEventArgs e)
-    {
-        _internalEditor.ExpandAllFolds();
-    }
-
-    private void OnCollapseAllClicked(object sender, RoutedEventArgs e)
-    {
-        _internalEditor.CollapseAllFolds();
     }
 }
 

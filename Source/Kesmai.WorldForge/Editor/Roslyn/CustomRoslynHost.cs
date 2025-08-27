@@ -161,10 +161,7 @@ public class CustomResolver : SourceReferenceResolver, IDisposable
     public CustomResolver(Segment segment)
     {
         var builder = new StringBuilder();
-
-        if (segment.Internal != null)
-            builder.AppendLine(segment.Internal.ToString());
-
+        
         foreach (var lootTemplate in segment.Treasures.Select(t => t.Name))
             builder.AppendLine($"Func<MobileEntity, Container, ItemEntity> {lootTemplate};");
 

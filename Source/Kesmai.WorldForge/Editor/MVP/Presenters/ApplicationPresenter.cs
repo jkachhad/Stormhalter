@@ -691,14 +691,6 @@ public class ApplicationPresenter : ObservableRecipient
 
 		var additionalFiles = new List<string>();
 
-		#region Scripts
-		var sourceDir = Path.Combine(path, "Source");
-		Directory.CreateDirectory(sourceDir);
-
-		if (_segment.Internal != null)
-		        File.WriteAllText(Path.Combine(sourceDir, "Internal.cs"), _segment.Internal.ToString());
-		#endregion
-
 		#region Regions
 		var regionDir = Path.Combine(path, "Region");
 		Directory.CreateDirectory(regionDir);
@@ -762,22 +754,8 @@ public class ApplicationPresenter : ObservableRecipient
 
 	private bool CheckScriptSyntax() //Enumerate all script segments and verify that they pass syntax checks
 	{
-		//Segment code:
-		var syntaxErrors = CSharpSyntaxTree.ParseText(Segment.Internal.Blocks[1], new CSharpParseOptions(kind: SourceCodeKind.Script)).GetDiagnostics();
-		var syntaxErrorRefined = syntaxErrors.Where(e => e.Severity == DiagnosticSeverity.Error).ToList();
-		if (syntaxErrorRefined.Count()>0)
-		{
-			var errorList = String.Join('\n', syntaxErrorRefined.Take(6).Select(err => (err.Location.GetLineSpan().StartLinePosition.Line+2) + ":" + err.GetMessage()));
-			if (syntaxErrorRefined.Count() > 3)
-				errorList += "\n...";
-			var messageResult = MessageBox.Show($"Segment code has syntax errors.\nDo you wish to continue?\n\n{errorList}", "Syntax Errors in scripts", MessageBoxButton.YesNo);
-			if (messageResult == MessageBoxResult.No)
-			{
-				ActiveDocument = Documents.Where(d => d is SegmentViewModel).FirstOrDefault() as SegmentViewModel;
-				return false;
-			}
-		}
-
+		var syntaxErrors = default(IEnumerable<Diagnostic>);
+		
 		//Entity scripts:
 		foreach (Entity entity in Segment.Entities)
 		{
