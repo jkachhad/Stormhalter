@@ -42,7 +42,7 @@ public class ApplicationPresenter : ObservableRecipient
 	private DirectoryInfo _segmentFileFolder;
 		
     private Segment _segment;
-	private CustomRoslynHost _roslynHost;
+        private SegmentRoslynHost _roslynHost;
 	private Selection _selection;
 	private TerrainSelector _filter;
 	private Tool _selectedTool;
@@ -117,7 +117,7 @@ public class ApplicationPresenter : ObservableRecipient
                         old?.Dispose();
 
                         if (value != null)
-                                _roslynHost = new CustomRoslynHost(_segment);
+                                _roslynHost = new SegmentRoslynHost(_segment);
                         else
                                 _roslynHost = null;
 
