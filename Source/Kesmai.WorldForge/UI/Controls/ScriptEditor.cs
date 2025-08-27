@@ -1,11 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Media;
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
+using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Rendering;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Completion;
+using Kesmai.WorldForge.Roslyn;
 
 namespace Kesmai.WorldForge.UI.Controls;
 
@@ -19,6 +26,10 @@ public class ScriptEditor : TextEditor
     private int _prefixLength;
     private int _suffixLength;
     private readonly ReadOnlyBackgroundRenderer _backgroundRenderer;
+    private readonly TextMarkerService _markerService;
+    private Document? _document;
+    private CompletionWindow? _completionWindow;
+    private static readonly ScriptWorkspace _workspace = new();
 
     /// <summary>
     /// Identifies the <see cref="Body"/> dependency property.
@@ -60,10 +71,18 @@ public class ScriptEditor : TextEditor
 
     public ScriptEditor()
     {
+        SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("C#");
+
         _backgroundRenderer = new ReadOnlyBackgroundRenderer(this);
         TextArea.TextView.BackgroundRenderers.Add(_backgroundRenderer);
 
-        TextChanged += (_, __) =>
+        _markerService = new TextMarkerService(Document);
+        TextArea.TextView.BackgroundRenderers.Add(_markerService);
+
+        TextArea.TextEntering += TextArea_TextEntering;
+        TextArea.TextEntered += TextArea_TextEntered;
+
+        TextChanged += async (_, __) =>
         {
             if (_isUpdating)
                 return;
@@ -76,6 +95,11 @@ public class ScriptEditor : TextEditor
                 {
                     var body = text.Substring(_prefixLength, text.Length - _prefixLength - _suffixLength);
                     SetCurrentValue(BodyProperty, body);
+                    if (DataContext is EntityScript script)
+                    {
+                        script.Body = body;
+                        await UpdateRoslynAsync(script);
+                    }
                 }
             }
             finally
@@ -119,11 +143,89 @@ public class ScriptEditor : TextEditor
             TextArea.Caret.Offset = _prefixLength;
             TextArea.ReadOnlySectionProvider = new HeaderFooterReadOnlySectionProvider(this);
             TextArea.TextView.InvalidateLayer(KnownLayer.Background);
+
+            if (DataContext is EntityScript script)
+            {
+                script.Body = body;
+                _ = UpdateRoslynAsync(script);
+            }
         }
         finally
         {
             _isUpdating = false;
         }
+    }
+
+    private async Task UpdateRoslynAsync(EntityScript script)
+    {
+        if (_document == null)
+            _document = _workspace.CreateDocument(script.Name, script);
+        else
+            _document = _workspace.UpdateDocument(_document, script);
+
+        await UpdateDiagnosticsAsync();
+    }
+
+    private async Task UpdateDiagnosticsAsync()
+    {
+        if (_document == null)
+            return;
+
+        var diagnostics = await _workspace.GetDiagnosticsAsync(_document).ConfigureAwait(true);
+        _markerService.Clear();
+        foreach (var d in diagnostics)
+        {
+            if (d.Location.IsInSource)
+            {
+                var span = d.Location.SourceSpan;
+                _markerService.Mark(span.Start, span.Length);
+            }
+        }
+        TextArea.TextView.InvalidateLayer(KnownLayer.Selection);
+    }
+
+    private async void TextArea_TextEntered(object? sender, TextCompositionEventArgs e)
+    {
+        if (_document != null && e.Text == ".")
+        {
+            await ShowCompletionAsync();
+        }
+    }
+
+    private void TextArea_TextEntering(object? sender, TextCompositionEventArgs e)
+    {
+        if (e.Text.Length > 0 && _completionWindow != null)
+        {
+            if (!char.IsLetterOrDigit(e.Text[0]))
+            {
+                _completionWindow.CompletionList.RequestInsertion(e);
+            }
+        }
+    }
+
+    private async Task ShowCompletionAsync()
+    {
+        if (_document == null)
+            return;
+
+        var service = CompletionService.GetService(_document);
+        if (service == null)
+            return;
+
+        var results = await service.GetCompletionsAsync(_document, TextArea.Caret.Offset);
+        if (results == null)
+            return;
+
+        _completionWindow = new CompletionWindow(TextArea);
+        var data = _completionWindow.CompletionList.CompletionData;
+        foreach (var item in results.Items)
+        {
+            var desc = await service.GetDescriptionAsync(_document, item);
+            data.Add(new RoslynCompletionData(item, desc.ToString()));
+        }
+
+        _completionWindow.Closed += (_, __) => _completionWindow = null;
+        _completionWindow.Show();
     }
 
     private class ReadOnlyBackgroundRenderer : IBackgroundRenderer

@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Host.Mef;
 using Microsoft.CodeAnalysis.Text;
 
 namespace Kesmai.WorldForge.Roslyn;
@@ -13,7 +14,8 @@ public class ScriptWorkspace
 
     public ScriptWorkspace()
     {
-        _workspace = new AdhocWorkspace();
+        var host = MefHostServices.Create(MefHostServices.DefaultAssemblies);
+        _workspace = new AdhocWorkspace(host);
 
         var projectInfo = ProjectInfo.Create(ProjectId.CreateNewId(), VersionStamp.Create(), "ScriptProject", "ScriptProject", LanguageNames.CSharp)
             .WithMetadataReferences(new[]

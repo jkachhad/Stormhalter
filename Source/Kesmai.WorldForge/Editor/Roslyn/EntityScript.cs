@@ -31,7 +31,7 @@ public abstract class EntityScript : ObservableObject
 
     public string ToDocumentText()
     {
-        return $"{MethodSignature}\n{{\n\t{Body}\n}}";
+        return $"{MethodSignature}\n{{\n{Body}\n}}";
     }
 }
 
