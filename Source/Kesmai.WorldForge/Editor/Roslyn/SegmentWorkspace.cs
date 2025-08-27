@@ -20,7 +20,8 @@ public class SegmentWorkspace : IDisposable
     {
         var sourcePath = Path.Combine(rootPath, "Source");
 
-        Workspace = host.CreateWorkspace();
+        using var hostWorkspace = host.CreateWorkspace();
+        Workspace = new AdhocWorkspace(hostWorkspace.Services.HostServices, "Custom");
 
         var projectId = ProjectId.CreateNewId();
         var solution = Workspace.CurrentSolution
