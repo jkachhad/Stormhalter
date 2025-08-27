@@ -20,7 +20,7 @@ public abstract class EntityScript
 public class OnDeathScript : EntityScript
 {
     public OnDeathScript()
-        : base(@"killer.SendMessage(""You have killed {0}.", this.Name);")
+        : base("killer.SendMessage(\"You have killed {0}.\", this.Name);")
     {
     }
 
@@ -31,7 +31,7 @@ public class OnDeathScript : EntityScript
 public class OnIncomingPlayerScript : EntityScript
 {
     public OnIncomingPlayerScript()
-        : base(@"player.SendMessage(""Welcome to the game, {0}!"", player.Name);")
+        : base("player.SendMessage(\"Welcome to the game, {0}!\", player.Name);")
     {
     }
 
