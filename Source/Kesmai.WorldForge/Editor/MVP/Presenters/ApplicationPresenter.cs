@@ -770,8 +770,7 @@ public class ApplicationPresenter : ObservableRecipient
                 var directory = new DirectoryInfo(path);
                 var segment = new Segment
                 {
-                        Name = directory.Name,
-                        RootPath = path
+                        Name = directory.Name
                 };
 
                 var segmentElement = new XElement("segment",
@@ -802,6 +801,10 @@ public class ApplicationPresenter : ObservableRecipient
                 AddCategory("Treasures.xml");
 
                 segment.Load(segmentElement, Core.Version);
+
+                // initialize the workspace and pull in any scripts from the Source folder
+                segment.RootPath = path;
+
                 return segment;
         }
 
