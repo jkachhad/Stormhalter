@@ -10,17 +10,17 @@ namespace Kesmai.WorldForge.Roslyn;
 
 public class SegmentWorkspace : IDisposable
 {
-    public Workspace Workspace { get; }
+    public AdhocWorkspace Workspace { get; }
 
     private readonly InMemorySource _internal;
     private readonly Dictionary<string, DocumentId> _documents = new(StringComparer.OrdinalIgnoreCase);
     private readonly FileSystemWatcher _watcher;
 
-    public SegmentWorkspace(string rootPath, IRoslynHost host)
+    public SegmentWorkspace(string rootPath, RoslynHost host)
     {
         var sourcePath = Path.Combine(rootPath, "Source");
 
-        Workspace = host.CreateWorkspace();
+        Workspace = (AdhocWorkspace)host.CreateWorkspace();
         var project = Workspace.AddProject("InMemoryProject", LanguageNames.CSharp);
 
         var mscorlib = MetadataReference.CreateFromFile(typeof(object).Assembly.Location);

@@ -45,7 +45,7 @@ public class Segment : ObservableObject, IDisposable
         }
         }
 
-    public void InitializeWorkspace(IRoslynHost host)
+    public void InitializeWorkspace(RoslynHost host)
     {
         if (!string.IsNullOrEmpty(RootPath))
         {
