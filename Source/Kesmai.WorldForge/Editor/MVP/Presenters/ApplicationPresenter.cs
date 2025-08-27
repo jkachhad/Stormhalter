@@ -753,17 +753,60 @@ public class ApplicationPresenter : ObservableRecipient
 			);
 		}
 		
-		project.Root?.Add(
-			new XElement("ItemGroup",
-				new XElement("PackageReference", new XAttribute("Include", "Kesmai.Server.Reference"), new XAttribute("Version", "*"))
-			)
-		);
+                project.Root?.Add(
+                        new XElement("ItemGroup",
+                                new XElement("PackageReference", new XAttribute("Include", "Kesmai.Server.Reference"), new XAttribute("Version", "*"))
+                        )
+                );
 
-		project.Save(Path.Combine(path, $"{segmentName}.csproj"));
-	}
+                project.Save(Path.Combine(path, $"{segmentName}.csproj"));
+        }
 
-	private bool CheckScriptSyntax() //Enumerate all script segments and verify that they pass syntax checks
-	{
+        public Segment LoadFromDirectory(string path)
+        {
+                if (String.IsNullOrWhiteSpace(path))
+                        throw new ArgumentException(nameof(path));
+
+                var directory = new DirectoryInfo(path);
+                var segment = new Segment
+                {
+                        Name = directory.Name,
+                        RootPath = path
+                };
+
+                var segmentElement = new XElement("segment",
+                        new XAttribute("name", segment.Name ?? "(Unknown)"),
+                        new XAttribute("version", Core.Version));
+
+                var regionDir = Path.Combine(path, "Region");
+                if (Directory.Exists(regionDir))
+                {
+                        var regionsElement = new XElement("regions");
+                        foreach (var file in Directory.EnumerateFiles(regionDir, "*.xml"))
+                                regionsElement.Add(XElement.Load(file));
+
+                        segmentElement.Add(regionsElement);
+                }
+
+                void AddCategory(string fileName)
+                {
+                        var file = Path.Combine(path, fileName);
+                        if (File.Exists(file))
+                                segmentElement.Add(XElement.Load(file));
+                }
+
+                AddCategory("Locations.xml");
+                AddCategory("Subregions.xml");
+                AddCategory("Entities.xml");
+                AddCategory("Spawns.xml");
+                AddCategory("Treasures.xml");
+
+                segment.Load(segmentElement, Core.Version);
+                return segment;
+        }
+
+        private bool CheckScriptSyntax() //Enumerate all script segments and verify that they pass syntax checks
+        {
 		var syntaxErrors = default(IEnumerable<Diagnostic>);
 		
 		//Entity scripts:
