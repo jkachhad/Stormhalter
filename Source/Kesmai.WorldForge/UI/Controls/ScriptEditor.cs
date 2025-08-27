@@ -110,7 +110,7 @@ public class ScriptEditor : TextEditor
             _suffixLength = suffix.Length;
 
             base.Text = prefix + body + suffix;
-            TextArea.CaretOffset = _prefixLength;
+            TextArea.Caret.Offset = _prefixLength;
             TextArea.ReadOnlySectionProvider = new HeaderFooterReadOnlySectionProvider(this);
         }
         finally
@@ -139,7 +139,7 @@ public class ScriptEditor : TextEditor
             int start = Math.Max(segment.Offset, _editor._prefixLength);
             int end = Math.Min(segment.EndOffset, _editor.Document.TextLength - _editor._suffixLength);
             if (start < end)
-                yield return new SimpleSegment(start, end - start);
+                yield return new TextSegment { StartOffset = start, Length = end - start };
         }
     }
 }
