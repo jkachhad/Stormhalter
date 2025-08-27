@@ -609,17 +609,18 @@ public class ApplicationPresenter : ObservableRecipient
 		}
 		if (rootElement != null)
 		{
-			if (rootElement.Name != "segment")
-			{
-				MessageBox.Show($"Provided file is not a WorldForge Segment file.", "Open Segment Error", MessageBoxButton.OK);
-				return;
-			}
-			segment.Load(rootElement);
-		}
+                        if (rootElement.Name != "segment")
+                        {
+                                MessageBox.Show($"Provided file is not a WorldForge Segment file.", "Open Segment Error", MessageBoxButton.OK);
+                                return;
+                        }
+                        segment.Load(rootElement);
+                        segment.RootPath = $@"{_segmentFileFolder.FullName}\{segment.Name}";
+                }
 
-		Documents.Add(new SegmentViewModel(segment));
-		Documents.Add(new LocationsViewModel(segment));
-		Documents.Add(new SubregionViewModel(segment));
+                Documents.Add(new SegmentViewModel(segment));
+                Documents.Add(new LocationsViewModel(segment));
+                Documents.Add(new SubregionViewModel(segment));
 		Documents.Add(new EntitiesViewModel(segment));
 		Documents.Add(new SpawnsViewModel(segment));
 		Documents.Add(new TreasuresViewModel(segment));
