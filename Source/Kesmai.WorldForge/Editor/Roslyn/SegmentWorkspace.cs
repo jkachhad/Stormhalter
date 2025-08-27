@@ -20,7 +20,7 @@ public class SegmentWorkspace : IDisposable
     {
         var sourcePath = Path.Combine(rootPath, "Source");
 
-        Workspace = host.CreateWorkspace();
+        Workspace = new AdhocWorkspace(host.MefHostServices);
 
         var projectId = ProjectId.CreateNewId();
         var solution = Workspace.CurrentSolution
