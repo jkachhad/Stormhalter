@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using ICSharpCode.AvalonEdit.Document;
@@ -38,7 +39,7 @@ public class RoslynHighlightingColorizer : DocumentColorizingTransformer
     public async Task UpdateAsync(RoslynDocument document)
     {
         var text = await document.GetTextAsync().ConfigureAwait(true);
-        _classifications = await Classifier.GetClassifiedSpansAsync(document, new TextSpan(0, text.Length)).ConfigureAwait(true);
+        _classifications = (await Classifier.GetClassifiedSpansAsync(document, new TextSpan(0, text.Length)).ConfigureAwait(true)).ToList();
     }
 
     protected override void ColorizeLine(DocumentLine line)
