@@ -163,7 +163,6 @@
                 <TabControl.ContentTemplate>
                     <DataTemplate>
                         <controls:ScriptEditor
-                            SyntaxHighlighting="C#"
                             ShowLineNumbers="True"
                             Header="{Binding MethodSignature}"
                             Body="{Binding Body, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />

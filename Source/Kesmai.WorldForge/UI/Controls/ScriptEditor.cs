@@ -8,7 +8,6 @@ using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
-using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Rendering;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Completion;
@@ -26,6 +25,7 @@ public class ScriptEditor : TextEditor
     private int _prefixLength;
     private int _suffixLength;
     private readonly ReadOnlyBackgroundRenderer _backgroundRenderer;
+    private readonly RoslynHighlightingColorizer _colorizer;
     private readonly TextMarkerService _markerService;
     private Document? _document;
     private CompletionWindow? _completionWindow;
@@ -71,10 +71,11 @@ public class ScriptEditor : TextEditor
 
     public ScriptEditor()
     {
-        SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("C#");
-
         _backgroundRenderer = new ReadOnlyBackgroundRenderer(this);
         TextArea.TextView.BackgroundRenderers.Add(_backgroundRenderer);
+
+        _colorizer = new RoslynHighlightingColorizer();
+        TextArea.TextView.LineTransformers.Add(_colorizer);
 
         _markerService = new TextMarkerService(Document);
         TextArea.TextView.BackgroundRenderers.Add(_markerService);
@@ -162,6 +163,9 @@ public class ScriptEditor : TextEditor
             _document = _workspace.CreateDocument(script.Name, script);
         else
             _document = _workspace.UpdateDocument(_document, script);
+
+        await _colorizer.UpdateAsync(_document);
+        TextArea.TextView.Redraw();
 
         await UpdateDiagnosticsAsync();
     }
