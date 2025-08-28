@@ -60,7 +60,11 @@ public class RoslynHighlightingColorizer : DocumentColorizingTransformer
                         element.TextRunProperties.SetBackgroundBrush(background);
 
                     if (color.FontWeight != null)
-                        element.TextRunProperties.SetFontWeight(color.FontWeight.Value);
+                    {
+                        var typeface = element.TextRunProperties.Typeface;
+                        var bold = new Typeface(typeface.FontFamily, typeface.Style, color.FontWeight.Value, typeface.Stretch);
+                        element.TextRunProperties.SetTypeface(bold);
+                    }
                 });
             }
         }
