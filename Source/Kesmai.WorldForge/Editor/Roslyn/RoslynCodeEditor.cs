@@ -181,9 +181,9 @@ public class RoslynCodeEditor : TextEditor
         UpdateDocument();
 
         Background = Brushes.White;
-        
-        TextArea.TextView.LineTransformers.Add(new BodyColorizingTransformer(this));
+
         TextArea.TextView.LineTransformers.Add(new RoslynColorizingTransformer(this));
+        TextArea.TextView.LineTransformers.Add(new RoslynDiagnosticsTransformer(this));
         
         TextArea.ReadOnlySectionProvider = new ReadOnlySectionsProvider(this);
         
@@ -374,37 +374,73 @@ public class RoslynCodeEditor : TextEditor
         };
     }
     
-    private class BodyColorizingTransformer : DocumentColorizingTransformer
+    private class RoslynDiagnosticsTransformer : DocumentColorizingTransformer
     {
         private readonly RoslynCodeEditor _editor;
+        private IList<Diagnostic> _diagnostics = new List<Diagnostic>();
+        private static readonly TextDecoration ErrorTextDecoration = new()
+        {
+            Location = TextDecorationLocation.Underline,
+            Pen = new Pen(Brushes.Red, 1),
+            PenThicknessUnit = TextDecorationUnit.FontRecommended
+        };
 
-        public BodyColorizingTransformer(RoslynCodeEditor editor)
+        public RoslynDiagnosticsTransformer(RoslynCodeEditor editor)
         {
             _editor = editor;
+            _editor.Document.Changed += (_, __) => UpdateDiagnostics();
+            UpdateDiagnostics();
+        }
+
+        private async void UpdateDiagnostics()
+        {
+            _editor.UpdateWorkspaceDocument();
+            var document = _editor._workspace.CurrentSolution.GetDocument(_editor._documentId);
+            if (document == null)
+            {
+                _diagnostics = new List<Diagnostic>();
+                return;
+            }
+
+            var tree = await document.GetSyntaxTreeAsync();
+            if (tree == null)
+            {
+                _diagnostics = new List<Diagnostic>();
+                return;
+            }
+
+            _diagnostics = tree.GetDiagnostics().Where(d => d.Severity == DiagnosticSeverity.Error).ToList();
+            _editor.TextArea.TextView.Redraw();
         }
 
         protected override void ColorizeLine(DocumentLine line)
         {
-            var body = _editor.BodySegment;
-            if (body.Length == 0)
+            if (_diagnostics.Count == 0)
                 return;
 
             int lineStart = line.Offset;
             int lineEnd = line.EndOffset;
-            
-            if (lineEnd <= body.StartOffset || lineStart >= body.EndOffset)
-                return;
-
-            int start = Math.Max(lineStart, body.StartOffset);
-            int end = Math.Min(lineEnd, body.EndOffset);
-
-            ChangeLinePart(start, end, element =>
+            foreach (var diagnostic in _diagnostics)
             {
-                element.TextRunProperties.SetBackgroundBrush(Brushes.White);
-            });
+                var span = diagnostic.Location.SourceSpan;
+                if (span.End <= lineStart || span.Start >= lineEnd)
+                    continue;
+
+                int start = Math.Max(span.Start, lineStart);
+                int end = Math.Min(span.End, lineEnd);
+                ChangeLinePart(start, end, element =>
+                {
+                    var decorations = element.TextRunProperties.TextDecorations != null
+                        ? new TextDecorationCollection(element.TextRunProperties.TextDecorations)
+                        : new TextDecorationCollection();
+                    decorations.Add(ErrorTextDecoration);
+                    element.TextRunProperties.SetTextDecorations(decorations);
+                });
+            }
         }
     }
-
+    
+    
     private class ReadOnlySectionsProvider : IReadOnlySectionProvider
     {
         private readonly RoslynCodeEditor _editor;
