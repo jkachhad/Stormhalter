@@ -172,6 +172,13 @@ public class ApplicationPresenter : ObservableRecipient
 		}
 	}
     public RelayCommand ExportToPdfCommand { get; set; }
+    
+    private AdhocWorkspace _workspace;
+    private ProjectId _projectId;
+
+    public AdhocWorkspace Workspace => _workspace;
+    public ProjectId ProjectId => _projectId;
+    
     public ApplicationPresenter()
 	{
 		var messenger = WeakReferenceMessenger.Default;
@@ -554,6 +561,35 @@ public class ApplicationPresenter : ObservableRecipient
 		new CompileWindow().ShowDialog();
 	}
 
+	public void UpdateWorkspace()
+	{
+		_workspace = new AdhocWorkspace();
+		
+		/* Segment specific workspace. */
+		var project = Workspace.AddProject("Segment", LanguageNames.CSharp)
+			/* Namespace to match external files. */
+			.WithDefaultNamespace("Kesmai.Server.Segments")
+			/* C# minimum to support global usings. */
+			.WithParseOptions(new CSharpParseOptions(LanguageVersion.CSharp10))
+			/* Minimum references to prevent overloading */
+			.AddMetadataReference(MetadataReference.CreateFromFile(typeof(object).Assembly.Location))
+			.AddMetadataReference(MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location));
+		
+		_workspace.TryApplyChanges(project.Solution);
+
+		/*const string sourceDirectory = @"C:\\Example\\Source";
+		if (Directory.Exists(sourceDirectory))
+		{
+			foreach (var file in Directory.EnumerateFiles(sourceDirectory, "*.cs", SearchOption.AllDirectories))
+			{
+				var text = SourceText.From(File.ReadAllText(file));
+				Workspace.AddDocument(project.Id, Path.GetFileName(file), text);
+			}
+		}*/
+
+		_projectId = project.Id;
+	}
+
 	private void OpenSegment()
 	{
 		var overwrite = true;
@@ -622,6 +658,8 @@ public class ApplicationPresenter : ObservableRecipient
 		
 		SelectFilter(Filters.FirstOrDefault());
 		SelectTool(Tools.FirstOrDefault());
+
+		UpdateWorkspace();
 	}
 
 	private void SaveSegment(bool queryPath)
