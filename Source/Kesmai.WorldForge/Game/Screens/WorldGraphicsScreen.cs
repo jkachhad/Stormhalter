@@ -400,7 +400,6 @@ public class WorldGraphicsScreen : GraphicsScreen
 		segment.Spawns.Location.Add(newSpawner);
 
 		_selection.Select(new Rectangle(tile.X, tile.Y, 1, 1), region);
-		_presenter.SwapDocument("Spawn");
 	}
 
 	private void CreateLocation(object sender, EventArgs args)
@@ -422,8 +421,6 @@ public class WorldGraphicsScreen : GraphicsScreen
 		});
 
 		_selection.Select(new Rectangle(tile.X, tile.Y, 1, 1), region);
-		_presenter.SwapDocument("Location");
-
 	}
 
 	private void CreateRegionSpawner(object sender, EventArgs args)
@@ -449,7 +446,6 @@ public class WorldGraphicsScreen : GraphicsScreen
 
 		Rectangle insideNewSpawner = new Rectangle(_selection.First().Left, _selection.First().Top, 1, 1);
 		_selection.Select(insideNewSpawner, _presentationTarget.Region);
-		_presenter.SwapDocument("Spawn");
 			
 	}
 	private void CreateSubregion(object sender, EventArgs args)
@@ -474,7 +470,6 @@ public class WorldGraphicsScreen : GraphicsScreen
 
 		Rectangle insideNewSubregion = new Rectangle(_selection.First().Left, _selection.First().Top, 1, 1);
 		_selection.Select(insideNewSubregion, _presentationTarget.Region);
-		_presenter.SwapDocument("Subregion");
 	}
     
     private void SubregionInclude(object sender, EventArgs args)

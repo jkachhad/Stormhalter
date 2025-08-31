@@ -14,7 +14,6 @@ using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Rendering;
 using Kesmai.WorldForge.Editor;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Completion;
 using Microsoft.CodeAnalysis.CSharp;
 using SourceText = Microsoft.CodeAnalysis.Text.SourceText;
 using TextDocument = ICSharpCode.AvalonEdit.Document.TextDocument;

@@ -6,6 +6,7 @@
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
              xmlns:scripting="clr-namespace:Kesmai.WorldForge.Scripting"
              xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             xmlns:worldForge="clr-namespace:Kesmai.WorldForge"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              
@@ -155,7 +156,7 @@
                 </TabControl.ItemTemplate>
                 <TabControl.ContentTemplate>
                     <DataTemplate>
-                        <scripting:ScriptEditor Script="{Binding}" IsEnabled="{Binding IsEnabled}" x:Name="_editor"/>
+                        <worldForge:CodeEditor IsEnabled="{Binding IsEnabled}" />
                     </DataTemplate>
                 </TabControl.ContentTemplate>
             </TabControl>

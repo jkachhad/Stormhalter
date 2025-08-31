@@ -7,41 +7,6 @@ namespace Kesmai.WorldForge.Scripting;
 
 public abstract class ScriptTemplate
 {
-	public void Apply(ScriptEditor editor, Script script)
-	{
-		editor.Clear();
-		editor.ReadOnlySegments.Clear();
-			
-		OnApply(editor, script);
-			
-		var document = editor.Document;
-		var blocks = script.Blocks;
-		var readonlySegments = editor.ReadOnlySegments.ToList();
-				
-		if (blocks.Any() && blocks.Count >= (readonlySegments.Count + 1))
-		{
-			for (var i = 0; i < readonlySegments.Count; i++)
-			{
-				var segment = readonlySegments[i];
-					
-				document.Insert(segment.StartOffset, blocks[i], AnchorMovementType.AfterInsertion);
-						
-				if (i < (readonlySegments.Count - 1))
-					continue;
-
-				document.Insert(segment.EndOffset, blocks[i + 1], AnchorMovementType.BeforeInsertion);
-			}
-		}
-			
-		document.UndoStack.ClearAll();
-	}
-
-	protected virtual void OnApply(ScriptEditor editor, Script script)
-	{
-		foreach (var segment in GetSegments())
-			editor.Insert(segment, true);
-	}
-
 	public abstract IEnumerable<string> GetSegments();
 }
 

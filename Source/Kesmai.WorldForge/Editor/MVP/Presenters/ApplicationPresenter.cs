@@ -8,13 +8,10 @@ using DigitalRune.Graphics;
 using DigitalRune.ServiceLocation;
 using Kesmai.WorldForge.Models;
 using Kesmai.WorldForge.MVP;
-using Kesmai.WorldForge.Roslyn;
 using Kesmai.WorldForge.UI;
 using Kesmai.WorldForge.UI.Documents;
 using Kesmai.WorldForge.UI.Windows;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using RoslynPad.Roslyn;
 using SharpDX.Direct3D9;
 using System;
 using System.Collections.ObjectModel;
@@ -24,6 +21,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace Kesmai.WorldForge.Editor;
 
@@ -34,6 +32,7 @@ public class GetActiveSegmentRequestMessage : RequestMessage<Segment>
 public class UnregisterEvents
 {
 }
+
 public class ApplicationPresenter : ObservableRecipient
 {
 	private int _unitSize = 55;
@@ -42,7 +41,6 @@ public class ApplicationPresenter : ObservableRecipient
 	private DirectoryInfo _segmentFileFolder;
 		
     private Segment _segment;
-        private SegmentRoslynHost _roslynHost;
 	private Selection _selection;
 	private TerrainSelector _filter;
 	private Tool _selectedTool;
@@ -76,8 +74,6 @@ public class ApplicationPresenter : ObservableRecipient
 		get => _selectedTool ?? Tool.Default;
 		set => _selectedTool = value;
 	}
-
-	public IRoslynHost RoslynHost => _roslynHost;
 
 	private ComponentsCategory _selectedComponentCategory;
 	private TerrainComponent _selectedComponent;
@@ -115,12 +111,6 @@ public class ApplicationPresenter : ObservableRecipient
                 if (SetProperty(ref _segment, value, true))
                 {
                         old?.Dispose();
-
-                        if (value != null)
-	                        _roslynHost = new SegmentRoslynHost(_segment);
-                        else
-	                        _roslynHost = null;
-
                         ActiveDocument = value != null ? Documents.FirstOrDefault() : null;
                 }
             }
@@ -233,9 +223,7 @@ public class ApplicationPresenter : ObservableRecipient
 				UseShellExecute = true
 			}); 
 		});
-
-		SwapDocumentCommand = new RelayCommand<string>(SwapDocument);
-
+		
 		WeakReferenceMessenger.Default
 			.Register<ApplicationPresenter, VisibilityOptionsChanged>(
 				this, (r, m) => {
@@ -286,149 +274,7 @@ public class ApplicationPresenter : ObservableRecipient
 
 		Selection = new Selection();
 	}
-
-	public void SwapDocument(String Target)
-	{
-		switch (Target)
-		{
-			case "Spawn": //Ctrl-P
-			{
-				var sel = _selection.FirstOrDefault();
-				LocationSpawner targetLS = null;
-				RegionSpawner targetRS = null;
-				if (ActiveDocument is EntitiesViewModel)
-				{
-					var spawnRequest = WeakReferenceMessenger.Default.Send<EntitiesDocument.GetSelectedSpawner>();
-					if (spawnRequest.HasReceivedResponse)
-					{
-						Spawner target = spawnRequest.Response;
-						ActiveDocument = Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
-						if (target is LocationSpawner)
-							(ActiveDocument as SpawnsViewModel).SelectedLocationSpawner = target as LocationSpawner;
-						if (target is RegionSpawner)
-							(ActiveDocument as SpawnsViewModel).SelectedRegionSpawner = target as RegionSpawner;
-						WeakReferenceMessenger.Default.Send(target as Spawner);
-						break;
-					}
-				}
-				if (sel is { Width: 1, Height: 1 })
-				{
-					targetLS = Segment.Spawns.Location.Where(s => s.Region == _selection.Region.ID && s.X == sel.Left && s.Y == sel.Top).LastOrDefault();
-					targetRS = Segment.Spawns.Region.Where(s => s.Region == _selection.Region.ID && s.Inclusions.Any(i => i.ToRectangle().Contains(sel.Left, sel.Top))).LastOrDefault();
-				}
-				ActiveDocument = Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
-				if (targetRS is not null && targetLS is null)
-				{
-					(ActiveDocument as SpawnsViewModel).SelectedRegionSpawner = targetRS;
-					WeakReferenceMessenger.Default.Send(targetRS as Spawner);
-				}
-				if (targetLS is not null) { 
-					(ActiveDocument as SpawnsViewModel).SelectedLocationSpawner = targetLS;
-					WeakReferenceMessenger.Default.Send(targetLS as Spawner);
-				}
-				break;
-			}
-			case "Segment": //Ctrl-G
-				ActiveDocument = Documents.Where(d => d is SegmentViewModel).FirstOrDefault() as SegmentViewModel;
-				break;
-			case "Entity": //Ctrl-E
-			{
-				Entity target = null;
-				//There's probably a better way to do this. but I can't search one up. Can I send a more generic message and have both documents register for it but decline to respond if they are not active?
-				var spawnEntityRequest = WeakReferenceMessenger.Default.Send<SpawnsDocument.GetActiveEntity>();
-				var treasureEntityRequest = WeakReferenceMessenger.Default.Send<TreasuresDocument.GetActiveEntity>();
-				if (spawnEntityRequest.HasReceivedResponse && spawnEntityRequest.Response != null) 
-					target = spawnEntityRequest.Response;
-				if (treasureEntityRequest.HasReceivedResponse && treasureEntityRequest.Response != null)
-					target = treasureEntityRequest.Response;
-				ActiveDocument = Documents.Where(d => d is EntitiesViewModel).FirstOrDefault() as EntitiesViewModel;
-				if (target is not null)
-					(ActiveDocument as EntitiesViewModel).SelectedEntity = target;
-				break;
-			}
-			case "Treasure": //Ctrl-T
-				String targetTreasure = null;
-				if (ActiveDocument is EntitiesViewModel e)
-				{
-					var treasureRequest = WeakReferenceMessenger.Default.Send<EntitiesDocument.GetCurrentScriptSelection>();
-					if (treasureRequest.HasReceivedResponse)
-						targetTreasure = treasureRequest.Response;
-				}
-				ActiveDocument = Documents.Where(d => d is TreasuresViewModel).FirstOrDefault() as TreasuresViewModel;
-				if (targetTreasure is not null)
-				{
-					var targetTreasureObject = (ActiveDocument as TreasuresViewModel).Treasures.Where(t => t.Name == targetTreasure).FirstOrDefault();
-					if (targetTreasureObject is not null)
-						(ActiveDocument as TreasuresViewModel).SelectedTreasure = targetTreasureObject;
-				}
-				break;
-			case "Location": //Ctrl-L
-			{
-				var sel = _selection.FirstOrDefault();
-				SegmentLocation target = null;
-				if (sel is { Width: 1, Height: 1 })
-				{
-					target = Segment.Locations.Where(l => l.Region == _selection.Region.ID && l.X == sel.Left && l.Y == sel.Top).LastOrDefault();
-				}
-				ActiveDocument = Documents.Where(d => d is LocationsViewModel).FirstOrDefault() as LocationsViewModel;
-				if (target is not null)
-					(ActiveDocument as LocationsViewModel).SelectedLocation = target;
-				break;
-			}
-			case "Subregion": //Ctrl-U
-			{
-				var sel = _selection.FirstOrDefault();
-				SegmentSubregion target = null;
-				if (sel is { Width: 1, Height: 1 })
-				{
-					target = Segment.Subregions.Where(s => s.Region == _selection.Region.ID && s.Rectangles.Any(rect => rect.ToRectangle().Contains(sel.Left, sel.Top))).LastOrDefault();
-				}
-				ActiveDocument = Documents.Where(d => d is SubregionViewModel).FirstOrDefault() as SubregionViewModel;
-				if (target is not null)
-					(ActiveDocument as SubregionViewModel).SelectedSubregion = target;
-				break;
-			}
-			case "Teleporter": //Ctrl-D
-			{
-				var sel = _selection.FirstOrDefault();
-				TeleportComponent target = null;
-				if (sel is { Width:1, Height: 1 })
-				{
-					var tile = _selection.Region.GetTile(sel.Left, sel.Top);
-					target = tile.GetComponents<TeleportComponent>().FirstOrDefault();
-				}
-				if (target is not null)
-				{
-					ActiveDocument = Documents.Where(d => d is SegmentRegion dr && dr.ID == target.DestinationRegion).FirstOrDefault();
-					WeakReferenceMessenger.Default.Send(new JumpSegmentRegionLocation(target.DestinationRegion, target.DestinationX, target.DestinationY));
-					_selection.Select(new Microsoft.Xna.Framework.Rectangle(target.DestinationX,target.DestinationY,1,1), Segment.GetRegion(target.DestinationRegion));
-				}
-				break;
-			}
-			case "RegionLeft": //Ctrl-Left
-			{
-				if (ActiveDocument is SegmentRegion)
-				{
-					var sortedRegions = Segment.Regions.OrderBy(r => r.ID);
-					int regionID = (ActiveDocument as SegmentRegion).ID;
-					SegmentRegion nextRegion = sortedRegions.LastOrDefault(r => r.ID < regionID);
-					if (nextRegion != null) { ActiveDocument = nextRegion; } else { ActiveDocument = sortedRegions.Last(); }
-				}
-				break;
-			}
-			case "RegionRight": //Ctrl-Right
-			{
-				if (ActiveDocument is SegmentRegion)
-				{
-					var sortedRegions = Segment.Regions.OrderBy(r => r.ID);
-					int regionID = (ActiveDocument as SegmentRegion).ID;
-					SegmentRegion nextRegion = sortedRegions.FirstOrDefault(r => r.ID > regionID);
-					if (nextRegion != null) { ActiveDocument = nextRegion; } else { ActiveDocument = sortedRegions.First(); }
-				}
-				break;
-			}
-		}
-	}
+	
 	public void SelectFilter(TerrainSelector nextFilter)
 	{
 		foreach (var filter in Filters)

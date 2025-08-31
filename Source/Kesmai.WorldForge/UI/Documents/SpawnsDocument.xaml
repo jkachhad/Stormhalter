@@ -45,6 +45,7 @@
                 <Style TargetType="TreeViewItem">
                     <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
                     <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+                    <Setter Property="ToolTip" Value="{Binding Debug}"/>
 
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsSelected}" Value="True">
@@ -201,7 +202,7 @@
                         </TabControl.ItemTemplate>
                         <TabControl.ContentTemplate>
                             <DataTemplate>
-                                <scripting:ScriptEditor Script="{Binding}" IsEnabled="{Binding IsEnabled}" />
+                                <worldForge:CodeEditor IsEnabled="{Binding IsEnabled}" />
                             </DataTemplate>
                         </TabControl.ContentTemplate>
                     </TabControl>
@@ -381,7 +382,7 @@
                         </TabControl.ItemTemplate>
                         <TabControl.ContentTemplate>
                             <DataTemplate>
-                                <scripting:ScriptEditor Script="{Binding}" IsEnabled="{Binding IsEnabled}" />
+                                <worldForge:CodeEditor IsEnabled="{Binding IsEnabled}" />
                             </DataTemplate>
                         </TabControl.ContentTemplate>
                     </TabControl>

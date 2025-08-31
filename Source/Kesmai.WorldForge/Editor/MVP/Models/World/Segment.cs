@@ -10,8 +10,6 @@ using Kesmai.WorldForge.Scripting;
 using Kesmai.WorldForge.UI.Documents;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Kesmai.WorldForge;
-using Kesmai.WorldForge.Roslyn;
-using RoslynPad.Roslyn;
 
 namespace Kesmai.WorldForge.Editor;
 

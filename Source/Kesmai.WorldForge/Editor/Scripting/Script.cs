@@ -60,15 +60,7 @@ public class Script : ObservableObject
 			
 		return element;
 	}
-		
-	public void Parse(ScriptEditor editor)
-	{
-		_blocks.Clear();
-
-		foreach (var segment in editor.GetNonReadOnlySegments())
-			_blocks.Add(editor.Document.GetText(segment));
-	}
-
+	
 	public Script Clone()
 	{
 		return new Script(_name, _enabled, _blocks.ToArray())
