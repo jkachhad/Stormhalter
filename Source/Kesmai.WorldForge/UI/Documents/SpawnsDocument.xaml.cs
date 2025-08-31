@@ -105,7 +105,6 @@ public partial class SpawnsDocument : UserControl
                 grp.IsSelected = false;
                 if (spn.Name == name)
                     spn.IsSelected = true;
-                grp.Debug = $"{e.Property.Name} , {grp.Name} , {regionNewName} , {regionOldName} , {regionOldName}  ";
             }
             if (e.Property.Name == "Region")
             {
@@ -158,7 +157,6 @@ public partial class SpawnsDocument : UserControl
                 grp.IsSelected = false;
                 if (spn.Name == name)
                     spn.IsSelected = true;
-                grp.Debug = $" ";
             }
             if (e.Property.Name == "Region")
             {
@@ -279,12 +277,6 @@ public class SpawnsViewModel : ObservableRecipient
             get => _isSelected;
             set => SetProperty(ref _isSelected, value);
         }
-        private string _debug;
-        public string Debug
-        {
-            get => _debug;
-            set => SetProperty(ref _debug, value);
-        }
     }
     public SpawnerGroups LocationGroups { get; private set; }
     public SpawnerGroups RegionGroups { get; private set; }
@@ -365,7 +357,6 @@ public class SpawnsViewModel : ObservableRecipient
             if (value != null)
             {
                 WeakReferenceMessenger.Default.Send(new SelectedRegionSpawnerChangedMessage(value, source: "TreeView"));
-                value.CalculateStats();
             }
         }
     }

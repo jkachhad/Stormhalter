@@ -31,7 +31,6 @@
                 <Style TargetType="TreeViewItem">
                     <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
                     <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
-                    <Setter Property="ToolTip" Value="{Binding Debug}"/>
 
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsSelected}" Value="True">
@@ -53,7 +52,6 @@
         <Style x:Key="MyTreeItemStyle" TargetType="TreeViewItem">
             <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
             <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
-            <Setter Property="ToolTip" Value="{Binding Debug}"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding IsSelected}" Value="True">
                     <Setter Property="Background"  Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>

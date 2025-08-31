@@ -90,7 +90,6 @@ public partial class SubregionDocument : UserControl
                 grp.IsSelected = false;
                 if (ssr.Name == name)
                     ssr.IsSelected = true;
-                grp.Debug = $"  ";
             }
             if (e.Property.Name == "Region")
             {
@@ -155,12 +154,6 @@ public class SubregionViewModel : ObservableRecipient
         {
             get => _isSelected;
             set => SetProperty(ref _isSelected, value);
-        }
-        private string _debug;
-        public string Debug
-        {
-            get => _debug;
-            set => SetProperty(ref _debug, value);
         }
     }
     public SegmentSubregionGroups Groups { get; private set; }
