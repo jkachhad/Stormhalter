@@ -149,9 +149,9 @@ public class SegmentHoard : SegmentTreasure
 		var attributes = GetType().GetCustomAttributes(typeof(ScriptAttribute), inherit: false)
 			.Cast<ScriptAttribute>();
 
-		foreach (var attribute in attributes)
+		foreach (var attribute in attributes.Where(a => _scripts.All(s => s.Name != a.Name)))
 		{
-			Scripts.Add(new Script
+			_scripts.Add(new Script
 			{
 				Name = attribute.Name,
 				Signature = attribute.Signature,
@@ -264,9 +264,9 @@ public class TreasureEntry : ObservableObject
 		var attributes = GetType().GetCustomAttributes(typeof(ScriptAttribute), inherit: false)
 			.Cast<ScriptAttribute>();
 
-		foreach (var attribute in attributes)
+		foreach (var attribute in attributes.Where(a => _scripts.All(s => s.Name != a.Name)))
 		{
-			Scripts.Add(new Script
+			_scripts.Add(new Script
 			{
 				Name = attribute.Name,
 				Signature = attribute.Signature,

@@ -118,9 +118,9 @@ public abstract class Spawner : ObservableObject, ISegmentObject
 		var attributes = GetType().GetCustomAttributes(typeof(ScriptAttribute), inherit: false)
 			.Cast<ScriptAttribute>();
 
-		foreach (var attribute in attributes)
+		foreach (var attribute in attributes.Where(a => _scripts.All(s => s.Name != a.Name)))
 		{
-			Scripts.Add(new Script
+			_scripts.Add(new Script
 			{
 				Name = attribute.Name,
 				Signature = attribute.Signature,
