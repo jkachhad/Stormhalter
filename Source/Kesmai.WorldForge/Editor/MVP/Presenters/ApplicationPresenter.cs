@@ -469,6 +469,8 @@ public class ApplicationPresenter : ObservableRecipient
 		
 		SelectFilter(Filters.FirstOrDefault());
 		SelectTool(Tools.FirstOrDefault());
+
+		_segment.UpdateWorkspace();
 	}
 
 	private void SaveSegment(bool queryPath)

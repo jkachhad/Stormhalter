@@ -128,6 +128,9 @@ public class RoslynCodeEditor : TextEditor
     private readonly DocumentId _documentId;
 
     private RoslynCompletionWindow? _completionWindow;
+    
+    internal AdhocWorkspace Workspace => _workspace;
+    internal DocumentId DocumentId => _documentId;
 
     public TextSegment SignatureSegment { get; } = new();
     public TextSegment HeaderSegment { get; } = new();
@@ -169,11 +172,16 @@ public class RoslynCodeEditor : TextEditor
 
         UpdateDocument();
 
-        Background = Brushes.LightGray;
+        Background = Brushes.White;
+        
         TextArea.TextView.LineTransformers.Add(new BodyColorizingTransformer(this));
-
         TextArea.ReadOnlySectionProvider = new ReadOnlySectionsProvider(this);
+        
         Document.Changed += DocumentOnChanged;
+        
+        TextArea.TextEntering += TextAreaOnTextEntering;
+        TextArea.TextEntered += TextAreaOnTextEntered;
+        TextArea.PreviewKeyDown += TextAreaOnPreviewKeyDown;
     }
 
     private void UpdateDocument()
@@ -223,6 +231,50 @@ public class RoslynCodeEditor : TextEditor
         {
             var newDoc = document.WithText(SourceText.From(Document.Text));
             _workspace.TryApplyChanges(newDoc.Project.Solution);
+        }
+    }
+    
+    private async Task ShowCompletionAsync()
+    {
+        if (_completionWindow != null)
+            _completionWindow.Close();
+
+        var window = _completionWindow = new RoslynCompletionWindow(this);
+        
+        await window.InitializeAsync();
+
+        if (window.CompletionList.CompletionData.Count > 0)
+        {
+            window.Closed += (_, _) => _completionWindow = null;
+            window.Show();
+        }
+    }
+
+    private async void TextAreaOnTextEntered(object? sender, TextCompositionEventArgs e)
+    {
+        if (e.Text == ".")
+        {
+            await ShowCompletionAsync();
+        }
+    }
+
+    private void TextAreaOnTextEntering(object? sender, TextCompositionEventArgs e)
+    {
+        if (e.Text.Length > 0 && _completionWindow != null)
+        {
+            if (!char.IsLetterOrDigit(e.Text[0]))
+            {
+                _completionWindow.CompletionList.RequestInsertion(e);
+            }
+        }
+    }
+
+    private async void TextAreaOnPreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Space && Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
+        {
+            await ShowCompletionAsync();
+            e.Handled = true;
         }
     }
     
