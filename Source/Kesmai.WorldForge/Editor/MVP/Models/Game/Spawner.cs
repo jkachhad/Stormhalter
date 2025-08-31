@@ -115,38 +115,19 @@ public abstract class Spawner : ObservableObject, ISegmentObject
 
 	private void ValidateScripts()
 	{
-		if (_scripts.All(s => s.Name != "OnAfterSpawn"))
-		{
-			_scripts.Add(new Script("OnAfterSpawn", false,
-				String.Empty,
-				"\n\n",
-				String.Empty
-			));
-		}
-			
-		if (_scripts.All(s => s.Name != "OnBeforeSpawn"))
-		{
-			_scripts.Add(new Script("OnBeforeSpawn", false,
-				String.Empty,
-				"\n\n",
-				String.Empty
-			));
-		}
-			
-		var provider = ServiceLocator.Current.GetInstance<ScriptTemplateProvider>();
-		var attributes = GetType().GetCustomAttributes(typeof(ScriptTemplateAttribute), true)
-			.OfType<ScriptTemplateAttribute>().ToList();
+		var attributes = GetType().GetCustomAttributes(typeof(ScriptAttribute), inherit: false)
+			.Cast<ScriptAttribute>();
 
-		if (attributes.Any())
+		foreach (var attribute in attributes)
 		{
-			foreach (var script in _scripts)
+			Scripts.Add(new Script
 			{
-				var attr = attributes.FirstOrDefault(
-					a => String.Equals(a.Name, script.Name, StringComparison.Ordinal));
-
-				if (attr != null && provider.TryGetTemplate(attr.TemplateType, out var template))
-					script.Template = template;
-			}
+				Name = attribute.Name,
+				Signature = attribute.Signature,
+				Header = attribute.Header,
+				Body = attribute.Body,
+				Footer = attribute.Footer
+			});
 		}
 	}
 

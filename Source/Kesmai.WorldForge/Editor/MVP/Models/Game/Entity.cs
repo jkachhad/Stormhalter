@@ -18,7 +18,7 @@ using Microsoft.CodeAnalysis;
 
 namespace Kesmai.WorldForge;
 
-[Script("OnSpawn", "CreatureEntity OnSpawn()", "{", "}")]
+[Script("OnSpawn", "CreatureEntity OnSpawn()", "{", "}", "\treturn new MobileEntity();")]
 [Script("OnDeath", "void OnDeath(MobileEntity source, MobileEntity killer)", "{", "}")]
 [Script("OnIncomingPlayer", "void OnIncomingPlayer(MobileEntity source, PlayerEntity player)", "{", "}")]
 public class Entity : ObservableObject, ICloneable, ISegmentObject
@@ -94,47 +94,19 @@ public class Entity : ObservableObject, ICloneable, ISegmentObject
 
 	private void ValidateScripts()
 	{
-		if (_scripts.All(s => s.Name != "OnSpawn"))
-		{
-			_scripts.Add(new Script("OnSpawn", true,
-				String.Empty,
-				"\n\treturn new MobileEntity();\n",
-				String.Empty
-			));
-		}
-			
-		if (_scripts.All(s => s.Name != "OnDeath"))
-		{
-			_scripts.Add(new Script("OnDeath", false,
-				String.Empty, 
-				"\n", 
-				String.Empty
-			));
-		}
-			
-		if (_scripts.All(s => s.Name != "OnIncomingPlayer"))
-		{
-			_scripts.Add(new Script("OnIncomingPlayer", false,
-				String.Empty, 
-				"\n", 
-				String.Empty
-			));
-		}
+		var attributes = GetType().GetCustomAttributes(typeof(ScriptAttribute), inherit: false)
+			.Cast<ScriptAttribute>();
 
-		var provider = ServiceLocator.Current.GetInstance<ScriptTemplateProvider>();
-		var attributes = GetType().GetCustomAttributes(typeof(ScriptTemplateAttribute), false)
-			.OfType<ScriptTemplateAttribute>().ToList();
-
-		if (attributes.Any())
+		foreach (var attribute in attributes)
 		{
-			foreach (var script in _scripts)
+			Scripts.Add(new Script
 			{
-				var attr = attributes.FirstOrDefault(
-					a => String.Equals(a.Name, script.Name, StringComparison.Ordinal));
-
-				if (attr != null && provider.TryGetTemplate(attr.TemplateType, out var template))
-					script.Template = template;
-			}
+				Name = attribute.Name,
+				Signature = attribute.Signature,
+				Header = attribute.Header,
+				Body = attribute.Body,
+				Footer = attribute.Footer
+			});
 		}
 	}
 		
