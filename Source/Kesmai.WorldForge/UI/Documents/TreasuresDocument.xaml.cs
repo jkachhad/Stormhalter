@@ -86,7 +86,7 @@ public class TreasuresViewModel : ObservableRecipient
 				{
 					foreach (Script script in entity.Scripts)
 					{
-						if (script.Blocks[1].Contains(_selectedTreasure.Name))
+						if (script.Body.Contains(_selectedTreasure.Name))
 							_relatedEntities.Add(entity);
 					}
 				}

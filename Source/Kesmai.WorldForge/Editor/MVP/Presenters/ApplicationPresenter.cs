@@ -697,7 +697,7 @@ public class ApplicationPresenter : ObservableRecipient
 		{
 			foreach (Scripting.Script script in entity.Scripts.Where(s=>s.IsEnabled))
 			{
-				syntaxErrors = CSharpSyntaxTree.ParseText("void OnSpawn(){" + script.Blocks[1] + "}").GetDiagnostics();
+				syntaxErrors = CSharpSyntaxTree.ParseText("void OnSpawn(){" + script.Body + "}").GetDiagnostics();
 				if (syntaxErrors.Count() > 0)
 				{
 					var errorList = String.Join('\n', syntaxErrors.Take(3).Select(err => (err.Location.GetLineSpan().StartLinePosition.Line + 3) + ":" + err.GetMessage()));
@@ -731,7 +731,7 @@ public class ApplicationPresenter : ObservableRecipient
 		{
 			foreach (Scripting.Script script in spawner.Scripts.Where(script=>script.IsEnabled))
 			{
-				syntaxErrors = CSharpSyntaxTree.ParseText("void OnSpawn(){" + script.Blocks[1] + "}").GetDiagnostics();
+				syntaxErrors = CSharpSyntaxTree.ParseText("void OnSpawn(){" + script.Body + "}").GetDiagnostics();
 				if (syntaxErrors.Count() > 0)
 				{
 					var errorList = String.Join('\n', syntaxErrors.Take(3).Select(err => (err.Location.GetLineSpan().StartLinePosition.Line + 3) + ":" + err.GetMessage()));
@@ -782,7 +782,7 @@ public class ApplicationPresenter : ObservableRecipient
 			{
 				foreach (Scripting.Script script in entry.Scripts.Where(s=>s.IsEnabled))
 				{
-					syntaxErrors = CSharpSyntaxTree.ParseText("void OnCreate(){" + script.Blocks[1] + "}").GetDiagnostics();
+					syntaxErrors = CSharpSyntaxTree.ParseText("void OnCreate(){" + script.Body + "}").GetDiagnostics();
 					if (syntaxErrors.Count() > 0)
 					{
 						var errorList = String.Join('\n', syntaxErrors.Take(3).Select(err => (err.Location.GetLineSpan().StartLinePosition.Line + 3) + ":" + err.GetMessage()));

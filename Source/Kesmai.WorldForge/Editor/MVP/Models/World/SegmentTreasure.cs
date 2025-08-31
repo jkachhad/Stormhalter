@@ -103,7 +103,7 @@ public class SegmentTreasure : ObservableObject, ISegmentObject
 	}
 }
 
-[Script("GetChance", "double GetChance(Facet facet, int regionIndex)", "{", "}")]
+[Script("GetChance", "double GetChance(Facet facet, int regionIndex)", "{", "}", "\treturn 100;")]
 public class SegmentHoard : SegmentTreasure
 {
 	private ObservableCollection<Script> _scripts = new ObservableCollection<Script>();
@@ -146,15 +146,6 @@ public class SegmentHoard : SegmentTreasure
 	
 	private void ValidateScripts()
 	{
-		if (_scripts.All(s => s.Name != "GetChance"))
-		{
-			_scripts.Add(new Script("GetChance", true,
-				String.Empty, 
-				"\n\treturn 100;\n", 
-				String.Empty
-			));
-		}
-
 		var attributes = GetType().GetCustomAttributes(typeof(ScriptAttribute), inherit: false)
 			.Cast<ScriptAttribute>();
 
@@ -182,7 +173,7 @@ public class SegmentHoard : SegmentTreasure
 	}
 }
 
-[Script("OnCreate", "ItemEntity OnCreate(MobileEntity from, Container container)", "{", "}")]
+[Script("OnCreate", "ItemEntity OnCreate(MobileEntity from, Container container)", "{", "}", "\treturn new ItemEntity();")]
 public class TreasureEntry : ObservableObject
 {
 	public class TreasureEntryWeightChanged : ValueChangedMessage<double>
@@ -270,15 +261,6 @@ public class TreasureEntry : ObservableObject
 		
 	private void ValidateScripts()
 	{
-		if (_scripts.All(s => s.Name != "OnCreate"))
-		{
-			_scripts.Add(new Script("OnCreate", true,
-				String.Empty, 
-				"\n\treturn new ItemEntity();\n", 
-				String.Empty
-			));
-		}
-
 		var attributes = GetType().GetCustomAttributes(typeof(ScriptAttribute), inherit: false)
 			.Cast<ScriptAttribute>();
 
