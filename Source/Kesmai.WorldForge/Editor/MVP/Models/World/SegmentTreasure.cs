@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
@@ -130,35 +131,54 @@ public class SegmentHoard : SegmentTreasure
 	
 	public SegmentHoard(XElement element) : base(element)
 	{
-		foreach (var scriptElement in element.Elements("script"))
-			_scripts.Add(new Script(scriptElement));
-
-		ValidateScripts();
+		ValidateScripts(element);
 	}
 	
 	public SegmentHoard(SegmentHoard hoard) : base(hoard)
 	{
 		_scripts.Clear();
 		_scripts.AddRange(hoard.Scripts.Select(s => s.Clone()));
-
-		ValidateScripts();
 	}
 	
-	private void ValidateScripts()
+	private void ValidateScripts(XElement rootElement = default)
 	{
 		var attributes = GetType().GetCustomAttributes(typeof(ScriptAttribute), inherit: false)
 			.Cast<ScriptAttribute>();
 
-		foreach (var attribute in attributes.Where(a => _scripts.All(s => s.Name != a.Name)))
+		var implementations = new Dictionary<string, Script>();
+
+		if (rootElement != null)
 		{
-			_scripts.Add(new Script
+			foreach (var scriptElement in rootElement.Elements("script"))
 			{
-				Name = attribute.Name,
-				Signature = attribute.Signature,
-				Header = attribute.Header,
-				Body = attribute.Body,
-				Footer = attribute.Footer
-			});
+				var script = new Script(scriptElement);
+
+				if (!implementations.TryAdd(script.Name, script))
+					throw new InvalidOperationException($"Duplicate script name '{script.Name}'.");
+			}
+		}
+
+		foreach (var attribute in attributes)
+		{
+			if (implementations.TryGetValue(attribute.Name, out var script))
+			{
+				script.Signature = attribute.Signature;
+				script.Header = attribute.Header;
+				script.Footer = attribute.Footer;
+				
+				_scripts.Add(script);
+			}
+			else
+			{
+				_scripts.Add(new Script
+				{
+					Name = attribute.Name,
+					Signature = attribute.Signature,
+					Header = attribute.Header,
+					Body = attribute.Body,
+					Footer = attribute.Footer
+				});
+			}
 		}
 	}
 	
@@ -241,11 +261,8 @@ public class TreasureEntry : ObservableObject
 			
 		if (element.TryGetElement("notes", out var notesElement))
 			_notes = (string)notesElement;
-
-		foreach (var scriptElement in element.Elements("script"))
-			_scripts.Add(new Script(scriptElement));
-			
-		ValidateScripts();
+		
+		ValidateScripts(element);
 	}
 
 	public TreasureEntry(TreasureEntry entry)
@@ -259,21 +276,45 @@ public class TreasureEntry : ObservableObject
 		_scripts.AddRange(entry.Scripts.Select(s => s.Clone()));
 	}
 		
-	private void ValidateScripts()
+	private void ValidateScripts(XElement rootElement = default)
 	{
 		var attributes = GetType().GetCustomAttributes(typeof(ScriptAttribute), inherit: false)
 			.Cast<ScriptAttribute>();
 
-		foreach (var attribute in attributes.Where(a => _scripts.All(s => s.Name != a.Name)))
+		var implementations = new Dictionary<string, Script>();
+
+		if (rootElement != null)
 		{
-			_scripts.Add(new Script
+			foreach (var scriptElement in rootElement.Elements("script"))
 			{
-				Name = attribute.Name,
-				Signature = attribute.Signature,
-				Header = attribute.Header,
-				Body = attribute.Body,
-				Footer = attribute.Footer
-			});
+				var script = new Script(scriptElement);
+
+				if (!implementations.TryAdd(script.Name, script))
+					throw new InvalidOperationException($"Duplicate script name '{script.Name}'.");
+			}
+		}
+
+		foreach (var attribute in attributes)
+		{
+			if (implementations.TryGetValue(attribute.Name, out var script))
+			{
+				script.Signature = attribute.Signature;
+				script.Header = attribute.Header;
+				script.Footer = attribute.Footer;
+				
+				_scripts.Add(script);
+			}
+			else
+			{
+				_scripts.Add(new Script
+				{
+					Name = attribute.Name,
+					Signature = attribute.Signature,
+					Header = attribute.Header,
+					Body = attribute.Body,
+					Footer = attribute.Footer
+				});
+			}
 		}
 	}
 

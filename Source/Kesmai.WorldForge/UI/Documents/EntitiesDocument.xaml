@@ -156,7 +156,12 @@
                 </TabControl.ItemTemplate>
                 <TabControl.ContentTemplate>
                     <DataTemplate>
-                        <worldForge:CodeEditor IsEnabled="{Binding IsEnabled}" />
+                        <worldForge:CodeEditor Signature="{Binding Signature}"
+                                               Header="{Binding Header}"
+                                               Body="{Binding Body, Mode=TwoWay}"
+                                               Footer="{Binding Footer}" 
+                                                       
+                                               IsEnabled="{Binding IsEnabled}" />
                     </DataTemplate>
                 </TabControl.ContentTemplate>
             </TabControl>
