@@ -175,6 +175,8 @@ public class RoslynCodeEditor : TextEditor
         Background = Brushes.White;
         
         TextArea.TextView.LineTransformers.Add(new BodyColorizingTransformer(this));
+        TextArea.TextView.LineTransformers.Add(new RoslynColorizingTransformer(this));
+        
         TextArea.ReadOnlySectionProvider = new ReadOnlySectionsProvider(this);
         
         Document.Changed += DocumentOnChanged;
@@ -276,6 +278,92 @@ public class RoslynCodeEditor : TextEditor
             await ShowCompletionAsync();
             e.Handled = true;
         }
+    }
+    
+    private class RoslynColorizingTransformer : DocumentColorizingTransformer
+    {
+        private readonly RoslynCodeEditor _editor;
+        private IList<ClassifiedSpan> _spans = new List<ClassifiedSpan>();
+
+        public RoslynColorizingTransformer(RoslynCodeEditor editor)
+        {
+            _editor = editor;
+            _editor.Document.Changed += (_, __) => UpdateHighlighting();
+            UpdateHighlighting();
+        }
+
+        private async void UpdateHighlighting()
+        {
+            _editor.UpdateWorkspaceDocument();
+            
+            var document = _editor.Workspace.CurrentSolution.GetDocument(_editor.DocumentId);
+            
+            if (document == null)
+            {
+                _spans = new List<ClassifiedSpan>();
+                return;
+            }
+
+            var text = await document.GetTextAsync();
+            var span = new TextSpan(0, text.Length);
+            _spans = (await Classifier.GetClassifiedSpansAsync(document, span)).ToList();
+            _editor.TextArea.TextView.Redraw();
+        }
+
+        protected override void ColorizeLine(DocumentLine line)
+        {
+            if (_spans.Count == 0)
+                return;
+
+            int lineStart = line.Offset;
+            int lineEnd = line.EndOffset;
+            foreach (var classified in _spans)
+            {
+                var span = classified.TextSpan;
+                if (span.End <= lineStart || span.Start >= lineEnd)
+                    continue;
+
+                var brush = GetBrush(classified);
+                if (brush == null)
+                    continue;
+
+                int start = Math.Max(span.Start, lineStart);
+                int end = Math.Min(span.End, lineEnd);
+                ChangeLinePart(start, end, element =>
+                {
+                    element.TextRunProperties.SetForegroundBrush(brush);
+                });
+            }
+        }
+
+        private static Brush? GetBrush(ClassifiedSpan span) => span.ClassificationType switch
+        {
+            ClassificationTypeNames.ClassName or
+            ClassificationTypeNames.StructName or
+            ClassificationTypeNames.InterfaceName or
+            ClassificationTypeNames.EnumName or
+            ClassificationTypeNames.DelegateName or
+            ClassificationTypeNames.ModuleName or
+            ClassificationTypeNames.RecordClassName or
+            ClassificationTypeNames.RecordStructName or
+            ClassificationTypeNames.TypeParameterName => Brushes.Teal,
+
+            ClassificationTypeNames.MethodName or
+            ClassificationTypeNames.ExtensionMethodName => Brushes.MediumPurple,
+
+            ClassificationTypeNames.PropertyName or
+            ClassificationTypeNames.EventName or
+            ClassificationTypeNames.FieldName or
+            ClassificationTypeNames.EnumMemberName or
+            ClassificationTypeNames.LocalName or
+            ClassificationTypeNames.ParameterName => Brushes.DarkCyan,
+
+            ClassificationTypeNames.Keyword => Brushes.Blue,
+            ClassificationTypeNames.StringLiteral => Brushes.Brown,
+            ClassificationTypeNames.NumericLiteral => Brushes.Magenta,
+            ClassificationTypeNames.Comment => Brushes.Green,
+            _ => null
+        };
     }
     
     private class BodyColorizingTransformer : DocumentColorizingTransformer
