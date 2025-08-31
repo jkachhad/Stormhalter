@@ -18,13 +18,13 @@ using Microsoft.CodeAnalysis.CSharp;
 using SourceText = Microsoft.CodeAnalysis.Text.SourceText;
 using TextDocument = ICSharpCode.AvalonEdit.Document.TextDocument;
 
-namespace Kesmai.WorldForge;
+namespace Kesmai.WorldForge.Roslyn;
 
 /// <summary>
 /// A <see cref="TextEditor"/> with distinct signature, header, body and footer sections.
 /// The signature, header and footer are read-only; only the body may be edited by the user.
 /// </summary>
-public class CodeEditor : TextEditor
+public class RoslynCodeEditor : TextEditor
 {
     private static readonly string NewLine = Environment.NewLine;
     
@@ -36,12 +36,12 @@ public class CodeEditor : TextEditor
     }
 
     public static readonly DependencyProperty SignatureProperty =
-        DependencyProperty.Register(nameof(Signature), typeof(string), typeof(CodeEditor),
+        DependencyProperty.Register(nameof(Signature), typeof(string), typeof(RoslynCodeEditor),
             new PropertyMetadata(string.Empty, OnSignatureChanged));
 
     private static void OnSignatureChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (d is not CodeEditor editor)
+        if (d is not RoslynCodeEditor editor)
             return;
         
         editor._signature = e.NewValue as string ?? string.Empty;
@@ -58,12 +58,12 @@ public class CodeEditor : TextEditor
     }
 
     public static readonly DependencyProperty HeaderProperty =
-        DependencyProperty.Register(nameof(Header), typeof(string), typeof(CodeEditor),
+        DependencyProperty.Register(nameof(Header), typeof(string), typeof(RoslynCodeEditor),
             new PropertyMetadata(string.Empty, OnHeaderChanged));
 
     private static void OnHeaderChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (d is not CodeEditor editor)
+        if (d is not RoslynCodeEditor editor)
             return;
         
         editor._header = e.NewValue as string ?? string.Empty;
@@ -80,12 +80,12 @@ public class CodeEditor : TextEditor
     }
 
     public static readonly DependencyProperty BodyProperty =
-        DependencyProperty.Register(nameof(Body), typeof(string), typeof(CodeEditor),
+        DependencyProperty.Register(nameof(Body), typeof(string), typeof(RoslynCodeEditor),
             new PropertyMetadata(string.Empty, OnBodyChanged));
 
     private static void OnBodyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (d is not CodeEditor editor)
+        if (d is not RoslynCodeEditor editor)
             return;
         
         if (editor._updatingDocument)
@@ -103,12 +103,12 @@ public class CodeEditor : TextEditor
     }
 
     public static readonly DependencyProperty FooterProperty =
-        DependencyProperty.Register(nameof(Footer), typeof(string), typeof(CodeEditor),
+        DependencyProperty.Register(nameof(Footer), typeof(string), typeof(RoslynCodeEditor),
             new PropertyMetadata(string.Empty, OnFooterChanged));
 
     private static void OnFooterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (d is not CodeEditor editor)
+        if (d is not RoslynCodeEditor editor)
             return;
         
         editor._footer = e.NewValue as string ?? string.Empty;
@@ -127,12 +127,14 @@ public class CodeEditor : TextEditor
     private readonly AdhocWorkspace _workspace;
     private readonly DocumentId _documentId;
 
+    private RoslynCompletionWindow? _completionWindow;
+
     public TextSegment SignatureSegment { get; } = new();
     public TextSegment HeaderSegment { get; } = new();
     public TextSegment BodySegment { get; } = new();
     public TextSegment FooterSegment { get; } = new();
 
-    public CodeEditor()
+    public RoslynCodeEditor()
     {
         Document = new TextDocument();
 
@@ -226,9 +228,9 @@ public class CodeEditor : TextEditor
     
     private class BodyColorizingTransformer : DocumentColorizingTransformer
     {
-        private readonly CodeEditor _editor;
+        private readonly RoslynCodeEditor _editor;
 
-        public BodyColorizingTransformer(CodeEditor editor)
+        public BodyColorizingTransformer(RoslynCodeEditor editor)
         {
             _editor = editor;
         }
@@ -257,9 +259,9 @@ public class CodeEditor : TextEditor
 
     private class ReadOnlySectionsProvider : IReadOnlySectionProvider
     {
-        private readonly CodeEditor _editor;
+        private readonly RoslynCodeEditor _editor;
 
-        public ReadOnlySectionsProvider(CodeEditor editor)
+        public ReadOnlySectionsProvider(RoslynCodeEditor editor)
         {
             _editor = editor;
         }

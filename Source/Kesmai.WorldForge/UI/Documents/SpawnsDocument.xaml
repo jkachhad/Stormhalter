@@ -7,7 +7,7 @@
              xmlns:spawn="clr-namespace:Kesmai.WorldForge.Editor;assembly=Kesmai.WorldForge"
              xmlns:worldForge="clr-namespace:Kesmai.WorldForge"
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
-             xmlns:scripting="clr-namespace:Kesmai.WorldForge.Scripting"
+             xmlns:roslyn="clr-namespace:Kesmai.WorldForge.Roslyn"
              xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="600"
@@ -202,7 +202,7 @@
                         </TabControl.ItemTemplate>
                         <TabControl.ContentTemplate>
                             <DataTemplate>
-                                <worldForge:CodeEditor Signature="{Binding Signature}"
+                                <roslyn:RoslynCodeEditor Signature="{Binding Signature}"
                                                        Header="{Binding Header}"
                                                        Body="{Binding Body, Mode=TwoWay}"
                                                        Footer="{Binding Footer}" 
@@ -387,7 +387,7 @@
                         </TabControl.ItemTemplate>
                         <TabControl.ContentTemplate>
                             <DataTemplate>
-                                <worldForge:CodeEditor Signature="{Binding Signature}"
+                                <roslyn:RoslynCodeEditor Signature="{Binding Signature}"
                                                        Header="{Binding Header}"
                                                        Body="{Binding Body, Mode=TwoWay}"
                                                        Footer="{Binding Footer}" 
