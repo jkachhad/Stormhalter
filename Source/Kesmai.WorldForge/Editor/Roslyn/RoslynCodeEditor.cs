@@ -144,7 +144,7 @@ public class RoslynCodeEditor : TextEditor
         if (segment is null)
             throw new InvalidOperationException("No active segment.");
         
-        _workspace = presenter.Workspace;
+        _workspace = segment.Workspace;
         
         /* Create an editor specific project. */
         var project = _workspace.AddProject($"IntellisenseProject{Guid.NewGuid()}", LanguageNames.CSharp)
@@ -154,7 +154,7 @@ public class RoslynCodeEditor : TextEditor
             .AddMetadataReference(MetadataReference.CreateFromFile(typeof(object).Assembly.Location))
             .AddMetadataReference(MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location))
             /* Add the in-memory segment project. */
-            .AddProjectReference(new ProjectReference(presenter.ProjectId));
+            .AddProjectReference(new ProjectReference(segment.ProjectId));
         
         _workspace.TryApplyChanges(project.Solution);
         
@@ -284,5 +284,3 @@ public class RoslynCodeEditor : TextEditor
         }
     }
 }
-
-
