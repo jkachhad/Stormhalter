@@ -103,7 +103,7 @@ public class SegmentTreasure : ObservableObject, ISegmentObject
 	}
 }
 
-[ScriptTemplate("GetChance", typeof(HoardGetChanceScriptTemplate))]
+[Script("GetChance", "double GetChance(Facet facet, int regionIndex)", "{", "}")]
 public class SegmentHoard : SegmentTreasure
 {
 	private ObservableCollection<Script> _scripts = new ObservableCollection<Script>();
@@ -182,8 +182,8 @@ public class SegmentHoard : SegmentTreasure
 		return element;
 	}
 }
-	
-[ScriptTemplate("OnCreate", typeof(TreasureItemScriptTemplate))]
+
+[Script("OnCreate", "ItemEntity OnCreate(MobileEntity from, Container container)", "{", "}")]
 public class TreasureEntry : ObservableObject
 {
 	public class TreasureEntryWeightChanged : ValueChangedMessage<double>

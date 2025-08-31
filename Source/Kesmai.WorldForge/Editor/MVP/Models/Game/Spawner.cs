@@ -14,26 +14,8 @@ using Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge;
 
-public class SpawnerBeforeSpawnScriptTemplate : ScriptTemplate
-{
-	public override IEnumerable<string> GetSegments()
-	{
-                yield return "void OnBeforeSpawn(Spawner spawner)\n{";
-		yield return "}";
-	}
-}
-	
-public class SpawnerAfterSpawnScriptTemplate : ScriptTemplate
-{
-	public override IEnumerable<string> GetSegments()
-	{
-                yield return "void OnAfterSpawn(Spawner spawner, MobileEntity spawn)\n{";
-		yield return "}";
-	}
-}
-	
-[ScriptTemplate("OnBeforeSpawn", typeof(SpawnerBeforeSpawnScriptTemplate))]
-[ScriptTemplate("OnAfterSpawn", typeof(SpawnerAfterSpawnScriptTemplate))]
+[Script("OnBeforeSpawn", "void OnBeforeSpawn(Spawner spawner)", "{", "}")]
+[Script("OnAfterSpawn", "void OnAfterSpawn(Spawner spawner, MobileEntity spawn)", "{", "}")]
 public abstract class Spawner : ObservableObject, ISegmentObject
 {
 	private string _name;

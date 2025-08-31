@@ -13,24 +13,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace Kesmai.WorldForge.UI.Documents;
-
-public class TreasureItemScriptTemplate : ScriptTemplate
-{
-	public override IEnumerable<string> GetSegments()
-	{
-                yield return "ItemEntity OnCreate(MobileEntity from, Container container)\n{";
-		yield return "}";
-	}
-}
-
-public class HoardGetChanceScriptTemplate : ScriptTemplate
-{
-	public override IEnumerable<string> GetSegments()
-	{
-                yield return "double GetChance(Facet facet, int regionIndex)\n{";
-		yield return "}";
-	}
-}
 	
 public partial class TreasuresDocument : UserControl
 {

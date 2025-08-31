@@ -18,9 +18,9 @@ using Microsoft.CodeAnalysis;
 
 namespace Kesmai.WorldForge;
 
-[ScriptTemplate("OnSpawn", typeof(EntitySpawnScriptTemplate))]
-[ScriptTemplate("OnDeath", typeof(EntityDeathScriptTemplate))]
-[ScriptTemplate("OnIncomingPlayer", typeof(EntityIncomingPlayerScriptTemplate))]
+[Script("OnSpawn", "CreatureEntity OnSpawn()", "{", "}")]
+[Script("OnDeath", "void OnDeath(MobileEntity source, MobileEntity killer)", "{", "}")]
+[Script("OnIncomingPlayer", "void OnIncomingPlayer(MobileEntity source, PlayerEntity player)", "{", "}")]
 public class Entity : ObservableObject, ICloneable, ISegmentObject
 {
 	private string _name;
