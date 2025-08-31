@@ -14,7 +14,9 @@ using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Rendering;
 using Kesmai.WorldForge.Editor;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Classification;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Text;
 using SourceText = Microsoft.CodeAnalysis.Text.SourceText;
 using TextDocument = ICSharpCode.AvalonEdit.Document.TextDocument;
 
@@ -158,6 +160,12 @@ public class RoslynCodeEditor : TextEditor
             .AddMetadataReference(MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location))
             /* Add the in-memory segment project. */
             .AddProjectReference(new ProjectReference(segment.ProjectId));
+        
+        /* Add the scripting reference. */
+        var scriptingData = Core.ScriptingData;
+        
+        if (scriptingData != null)
+            project = project.AddMetadataReference(MetadataReference.CreateFromImage(scriptingData));
         
         _workspace.TryApplyChanges(project.Solution);
         
