@@ -41,7 +41,6 @@ public class ApplicationPresenter : ObservableRecipient
 	private DirectoryInfo _segmentFileFolder;
 		
 	private Segment _segment;
-	private CustomRoslynHost _roslynHost;
 	private Selection _selection;
 	private TerrainSelector _filter;
 	private Tool _selectedTool;
@@ -75,9 +74,7 @@ public class ApplicationPresenter : ObservableRecipient
 		get => _selectedTool ?? Tool.Default;
 		set => _selectedTool = value;
 	}
-
-	public IRoslynHost RoslynHost => _roslynHost;
-
+	
 	private ComponentsCategory _selectedComponentCategory;
 	private TerrainComponent _selectedComponent;
 		
@@ -112,9 +109,6 @@ public class ApplicationPresenter : ObservableRecipient
 		{
 			if (SetProperty(ref _segment, value, true))
 			{
-				if (value != null)
-					_roslynHost = new CustomRoslynHost(_segment);
-
 				ActiveDocument = Documents.FirstOrDefault();
 			}
 		}

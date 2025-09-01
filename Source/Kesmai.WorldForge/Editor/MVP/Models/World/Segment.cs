@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Xml.Linq;
 using CommonServiceLocator;
 using DigitalRune.Collections;
@@ -9,6 +10,7 @@ using Kesmai.WorldForge.Models;
 using Kesmai.WorldForge.Scripting;
 using Kesmai.WorldForge.UI.Documents;
 using CommunityToolkit.Mvvm.ComponentModel;
+using RoslynPad.Roslyn;
 
 namespace Kesmai.WorldForge.Editor;
 
@@ -22,6 +24,8 @@ public class Segment : ObservableObject
 	private string _name;
 	private Script _internal;
 	private Script _definition;
+
+	private RoslynHost _roslynHost;
 
 	public string Name
 	{
@@ -41,6 +45,8 @@ public class Segment : ObservableObject
 		set => SetProperty(ref _definition, value);
 	}
 	
+	public RoslynHost Roslyn => _roslynHost;
+	
 	public NotifyingCollection<SegmentRegion> Regions { get; set; } = new NotifyingCollection<SegmentRegion>();
 	public SegmentLocations Locations { get; set; } = new SegmentLocations();
 	public SegmentSubregions Subregions { get; set; } = new SegmentSubregions();
@@ -50,6 +56,13 @@ public class Segment : ObservableObject
 
 	public Segment()
 	{
+		_roslynHost = new RoslynHost(
+		[
+			// Mef service assemblies.
+			Assembly.Load("RoslynPad.Roslyn.Windows"),
+			Assembly.Load("RoslynPad.Editor.Windows")
+		]);
+		
 		Name = "Segment";
 
 		foreach (var location in _reservedLocations)
