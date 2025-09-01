@@ -10,6 +10,7 @@ using Kesmai.WorldForge.Models;
 using Kesmai.WorldForge.Scripting;
 using Kesmai.WorldForge.UI.Documents;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.CodeAnalysis;
 using RoslynPad.Roslyn;
 
 namespace Kesmai.WorldForge.Editor;
@@ -56,12 +57,33 @@ public class Segment : ObservableObject
 
 	public Segment()
 	{
-		_roslynHost = new RoslynHost(
-		[
-			// Mef service assemblies.
+		var assemblyPath = Path.GetDirectoryName(typeof(object).Assembly.Location);
+            
+		if (String.IsNullOrEmpty(assemblyPath))
+			throw new InvalidOperationException("Cannot find the assembly path for .NET assemblies.");
+		
+		var metadataReferences = new List<MetadataReference>()
+		{
+			MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "mscorlib.dll")),
+			MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.dll")),
+			MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Core.dll")),
+			MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Runtime.dll")),
+		};
+		
+		var scriptingData = Core.ScriptingData;
+        
+		if (scriptingData != null)
+			metadataReferences.Add(MetadataReference.CreateFromImage(scriptingData));
+
+		var serviceAssemblies = new[]
+		{
 			Assembly.Load("RoslynPad.Roslyn.Windows"),
 			Assembly.Load("RoslynPad.Editor.Windows")
-		]);
+		};
+		var roslynReferences = RoslynHostReferences.NamespaceDefault
+			.With(references: metadataReferences);
+		
+		_roslynHost = new RoslynHost(serviceAssemblies, roslynReferences);
 		
 		Name = "Segment";
 
