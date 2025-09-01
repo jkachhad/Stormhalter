@@ -18,7 +18,7 @@ public class SpawnerBeforeSpawnScriptTemplate : ScriptTemplate
 {
 	public override IEnumerable<string> GetSegments()
 	{
-		yield return "#load \"WorldForge\"\nvoid OnBeforeSpawn(Spawner spawner)\n{";
+		yield return "void OnBeforeSpawn(Spawner spawner)\n{";
 		yield return "}";
 	}
 }
@@ -27,7 +27,7 @@ public class SpawnerAfterSpawnScriptTemplate : ScriptTemplate
 {
 	public override IEnumerable<string> GetSegments()
 	{
-		yield return "#load \"WorldForge\"\nvoid OnAfterSpawn(Spawner spawner, MobileEntity spawn)\n{";
+		yield return "void OnAfterSpawn(Spawner spawner, MobileEntity spawn)\n{";
 		yield return "}";
 	}
 }

@@ -21,7 +21,7 @@ public class SegmentDefinitionScriptTemplate : ScriptTemplate
 {
 	public override IEnumerable<string> GetSegments()
 	{
-		yield return "#load \"WorldForge\"\n";
+		yield return String.Empty;
 	}
 }
 	
