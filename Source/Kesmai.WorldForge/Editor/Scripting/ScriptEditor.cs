@@ -77,8 +77,8 @@ public class ScriptEditor : RoslynCodeEditor
         var presenter = services.GetInstance<ApplicationPresenter>();
         var segment = presenter.Segment;
 
-            Directory.GetCurrentDirectory(), string.Empty, SourceCodeKind.Script);
         await InitializeAsync(segment.Roslyn, new ClassificationHighlightColors(),
+            Directory.GetCurrentDirectory(), string.Empty, SourceCodeKind.Regular);
 
         // Delay folding until TextArea is fully initialized
         await Dispatcher.BeginInvoke(new Action(() =>
