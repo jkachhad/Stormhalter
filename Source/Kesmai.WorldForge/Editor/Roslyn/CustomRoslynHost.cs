@@ -21,7 +21,6 @@ namespace Kesmai.WorldForge.Roslyn;
 #nullable enable
 public class CustomRoslynHost : RoslynHost, IDisposable
 {
-    private CustomResolver _resolver;
     private Solution _solution;
     private bool _disposed = false;
 
@@ -36,7 +35,6 @@ public class CustomRoslynHost : RoslynHost, IDisposable
             "WorldForge",
         }))
     {
-        _resolver = new CustomResolver(segment);
     }
 
     protected override Project CreateProject(Solution solution, DocumentCreationArgs args, CompilationOptions compilationOptions, Project? previousProject = null)
@@ -51,8 +49,7 @@ public class CustomRoslynHost : RoslynHost, IDisposable
         {
             // Optionally update existing project's options, references, etc., if necessary
             var updatedCompilationOptions = compilationOptions
-                .WithScriptClassName(name)
-                .WithSourceReferenceResolver(_resolver);
+                .WithScriptClassName(name);
 
             var project = existingProject
                 .WithCompilationOptions(updatedCompilationOptions)
@@ -70,8 +67,7 @@ public class CustomRoslynHost : RoslynHost, IDisposable
         );
 
         compilationOptions = compilationOptions
-            .WithScriptClassName(name)
-            .WithSourceReferenceResolver(_resolver);
+            .WithScriptClassName(name);
 
         if (compilationOptions is CSharpCompilationOptions csharpCompilationOptions)
         {
@@ -129,7 +125,6 @@ public class CustomRoslynHost : RoslynHost, IDisposable
             {
                 // Clean up managed resources
                 CleanupSolution();
-                _resolver = null; // Nullify to release reference
             }
             // Clean up unmanaged resources
             _disposed = true;
@@ -151,60 +146,6 @@ public class CustomRoslynHost : RoslynHost, IDisposable
         GC.Collect();
         GC.WaitForPendingFinalizers();
         GC.Collect();
-    }
-}
-
-public class CustomResolver : SourceReferenceResolver, IDisposable
-{
-    private SourceText _cache;
-
-    public CustomResolver(Segment segment)
-    {
-        var builder = new StringBuilder();
-
-        if (segment.Internal != null)
-            builder.AppendLine(segment.Internal.ToString());
-
-        foreach (var lootTemplate in segment.Treasures.Select(t => t.Name))
-            builder.AppendLine($"Func<MobileEntity, Container, ItemEntity> {lootTemplate};");
-
-        foreach (var entities in segment.Entities.Select(t => t.Name))
-            builder.AppendLine($"Func<CreatureEntity> {entities};");
-
-        _cache = SourceText.From(builder.ToString());
-    }
-
-    public override SourceText ReadText(string resolvedPath) => _cache;
-
-    public override string NormalizePath(string path, string baseFilePath) => path;
-    public override string ResolveReference(string path, string baseFilePath) => path;
-    public override Stream OpenRead(string resolvedPath) => null;
-
-    public void Dispose()
-    {
-        _cache = null; // Clear the cache to release memory
-    }
-
-    public override bool Equals(object obj)
-    {
-        if (ReferenceEquals(null, obj))
-            return false;
-
-        if (ReferenceEquals(this, obj))
-            return true;
-
-        if (obj.GetType() != this.GetType())
-            return false;
-
-        if (obj is CustomResolver other && other._cache != _cache)
-            return false;
-
-        return true;
-    }
-
-    public override int GetHashCode()
-    {
-        return _cache.GetHashCode();
     }
 }
 #nullable disable
