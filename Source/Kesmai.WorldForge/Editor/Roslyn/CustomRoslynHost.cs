@@ -1,36 +1,22 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using Kesmai.WorldForge.Editor;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Host;
+using Microsoft.CodeAnalysis.Text;
 using RoslynPad.Roslyn;
 using RoslynPad.Roslyn.Diagnostics;
 
 namespace Kesmai.WorldForge.Roslyn;
 
-public class CustomRoslynWorkspace : RoslynWorkspace
-{
-    public CustomRoslynWorkspace(HostServices hostServices, string workspaceKind, RoslynHost roslynHost) : base(hostServices, workspaceKind, roslynHost)
-    {
-    }
-
-    public override bool CanApplyChange(ApplyChangesKind feature)
-    {
-        return feature switch
-        {
-            ApplyChangesKind.RemoveProject or ApplyChangesKind.AddProject => true,
-            ApplyChangesKind.AddSolutionAnalyzerReference or ApplyChangesKind.RemoveSolutionAnalyzerReference => true,
-            
-            _ => base.CanApplyChange(feature),
-        };
-    }
-}
-
 public class CustomRoslynHost : RoslynHost
 {
     private CustomRoslynWorkspace _workspace;
+
+    private Solution _segmentSolution;
     
     public CustomRoslynWorkspace Workspace => _workspace;
     
@@ -55,7 +41,7 @@ public class CustomRoslynHost : RoslynHost
         
         var projectReferences = solution.ProjectIds.Select(p => new ProjectReference(p));
         
-        solution = solution.AddProject(ProjectInfo.Create(
+        _segmentSolution = solution.AddProject(ProjectInfo.Create(
                 projectId, VersionStamp.Create(), projectName, projectName,
                 LanguageNames.CSharp,
                 filePath: args.WorkingDirectory,
@@ -65,7 +51,7 @@ public class CustomRoslynHost : RoslynHost
                 metadataReferences: previousProject != null ? [] : DefaultReferences,
                 projectReferences: previousProject != null ? [new ProjectReference(previousProject.Id)] : projectReferences));
         
-        var project = solution.GetProject(projectId)!;
+        var project = _segmentSolution.GetProject(projectId)!;
         
         if (GetUsings(project) is { Length: > 0 } usings)
             project = project.AddDocument("Usings.g.cs", usings).Project;
@@ -79,5 +65,30 @@ public class CustomRoslynHost : RoslynHost
 
             return String.Empty;
         }
+    }
+    
+    public void CreateSegmentProject(Segment segment)
+    {
+        var workspace = _workspace;
+        var solution = workspace.CurrentSolution;
+		
+        var project = solution.AddProject($"Segment", $"Kesmai.Server.Segments.{segment.Name}", LanguageNames.CSharp)
+            /* C# minimum to support global usings. */
+            .WithParseOptions(new CSharpParseOptions(LanguageVersion.CSharp10))
+            /* Minimum references to prevent overloading */
+            .AddMetadataReference(MetadataReference.CreateFromFile(typeof(object).Assembly.Location))
+            .AddMetadataReference(MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location));
+
+        solution = project.Solution;
+
+        var directory = new DirectoryInfo(@"C:\Example\Source");
+		
+        foreach(var file in directory.GetFiles("*.cs", SearchOption.AllDirectories))
+        {
+            solution = solution.AddDocument(DocumentId.CreateNewId(project.Id), file.Name, 
+                SourceText.From(File.ReadAllText(file.FullName)));
+        }
+		
+        workspace.TryApplyChanges(solution);
     }
 }

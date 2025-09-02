@@ -20,6 +20,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
@@ -39,6 +40,8 @@ public class ApplicationPresenter : ObservableRecipient
 		
 	private string _segmentFilePath;
 	private DirectoryInfo _segmentFileFolder;
+	
+	private CustomRoslynHost _roslynHost;
 		
 	private Segment _segment;
 	private Selection _selection;
@@ -49,6 +52,8 @@ public class ApplicationPresenter : ObservableRecipient
 
 	private object _activeDocument;
 	private object _previousDocument;
+	
+	public CustomRoslynHost Roslyn => _roslynHost;
 
 	private TeleportComponent _configuringTeleporter = null;
 	public TeleportComponent ConfiguringTeleporter
@@ -109,6 +114,7 @@ public class ApplicationPresenter : ObservableRecipient
 		{
 			if (SetProperty(ref _segment, value, true))
 			{
+				CreateWorkspace();
 				ActiveDocument = Documents.FirstOrDefault();
 			}
 		}
@@ -616,6 +622,36 @@ public class ApplicationPresenter : ObservableRecipient
 		
 		SelectFilter(Filters.FirstOrDefault());
 		SelectTool(Tools.FirstOrDefault());
+	}
+
+	public void CreateWorkspace()
+	{
+		var metadataReferences = AppDomain.CurrentDomain.GetAssemblies()
+			.Where(a => !a.IsDynamic && !String.IsNullOrEmpty(a.Location))
+			.Select(a => MetadataReference.CreateFromFile(a.Location))
+			.ToList();
+		
+		var scriptingData = Core.ScriptingData;
+        
+		if (scriptingData != null)
+			metadataReferences.Add(MetadataReference.CreateFromImage(scriptingData));
+
+		var serviceAssemblies = new[]
+		{
+			Assembly.Load("RoslynPad.Roslyn.Windows"),
+			Assembly.Load("RoslynPad.Editor.Windows")
+		};
+
+		var namespaceImports = new string[]
+		{
+			$"static Kesmai.Server.Segments.{_segment.Name}",
+		};
+		
+		var roslynReferences = RoslynHostReferences.NamespaceDefault
+			.With(references: metadataReferences, imports: namespaceImports);
+		
+		_roslynHost = new CustomRoslynHost(serviceAssemblies, roslynReferences);
+		_roslynHost.CreateSegmentProject(_segment);
 	}
 
 	private void SaveSegment(bool queryPath)
