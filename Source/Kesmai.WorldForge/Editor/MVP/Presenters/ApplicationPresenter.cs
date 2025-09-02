@@ -622,6 +622,8 @@ public class ApplicationPresenter : ObservableRecipient
 		
 		SelectFilter(Filters.FirstOrDefault());
 		SelectTool(Tools.FirstOrDefault());
+
+		_roslynHost.UpdateEditorDocument();
 	}
 
 	public void CreateWorkspace()
@@ -657,6 +659,7 @@ public class ApplicationPresenter : ObservableRecipient
 		var namespaceImports = new string[]
 		{
 			$"static Kesmai.Server.Segments.{_segment.Name}",
+			$"static Kesmai.Server.Segments.Editor",
 		};
 		
 		var roslynReferences = RoslynHostReferences.NamespaceDefault

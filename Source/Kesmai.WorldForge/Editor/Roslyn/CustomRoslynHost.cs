@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
+using CommonServiceLocator;
 using Kesmai.WorldForge.Editor;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -15,8 +17,8 @@ namespace Kesmai.WorldForge.Roslyn;
 public class CustomRoslynHost : RoslynHost
 {
     private CustomRoslynWorkspace _workspace;
-
-    private Solution _segmentSolution;
+    
+    private DocumentId _editorDocumentId;
     
     public CustomRoslynWorkspace Workspace => _workspace;
     
@@ -34,14 +36,15 @@ public class CustomRoslynHost : RoslynHost
     
     protected override Project CreateProject(Solution solution, DocumentCreationArgs args, CompilationOptions compilationOptions, Project? previousProject = null)
     {
-        var projectName = "Editor";
+        var projectName = "Script";
         var projectId = ProjectId.CreateNewId(projectName);
 
         var parseOptions = ParseOptions.WithKind(args.SourceCodeKind);
         
-        var projectReferences = solution.ProjectIds.Select(p => new ProjectReference(p));
+        var projectReferences = solution.ProjectIds
+            .Select(p => new ProjectReference(p));
         
-        _segmentSolution = solution.AddProject(ProjectInfo.Create(
+        solution = solution.AddProject(ProjectInfo.Create(
                 projectId, VersionStamp.Create(), projectName, projectName,
                 LanguageNames.CSharp,
                 filePath: args.WorkingDirectory,
@@ -51,7 +54,10 @@ public class CustomRoslynHost : RoslynHost
                 metadataReferences: previousProject != null ? [] : DefaultReferences,
                 projectReferences: previousProject != null ? [new ProjectReference(previousProject.Id)] : projectReferences));
         
-        var project = _segmentSolution.GetProject(projectId)!;
+        var project = solution.GetProject(projectId);
+        
+        if (project is null)
+            throw new InvalidOperationException("Could not create project.");
         
         if (GetUsings(project) is { Length: > 0 } usings)
             project = project.AddDocument("Usings.g.cs", usings).Project;
@@ -88,7 +94,42 @@ public class CustomRoslynHost : RoslynHost
             solution = solution.AddDocument(DocumentId.CreateNewId(project.Id), file.Name, 
                 SourceText.From(File.ReadAllText(file.FullName)));
         }
-		
+
+        /* Editor document */
+        _editorDocumentId = DocumentId.CreateNewId(project.Id);
+        
+        solution = solution.AddDocument(DocumentInfo.Create(_editorDocumentId, "Editor.g.cs",
+            loader: TextLoader.From(TextAndVersion.Create(SourceText.From("namespace Kesmai.Server.Segments; public class Editor { public static void Test() { } }"), VersionStamp.Create()))));
+        
+        workspace.TryApplyChanges(solution);
+    }
+    
+    public void UpdateEditorDocument()
+    {
+        var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+        var segment = presenter.Segment;
+
+        var builder = new StringBuilder();
+        
+        builder.AppendLine($"namespace Kesmai.Server.Segments;");
+        builder.AppendLine(String.Empty);
+        builder.AppendLine($@"public class Editor {{");
+
+        foreach (var lootTemplate in segment.Treasures.Select(t => t.Name))
+            builder.AppendLine($"\tpublic static Func<MobileEntity, Container, ItemEntity> {lootTemplate};");
+
+        foreach (var entities in segment.Entities.Select(t => t.Name))
+            builder.AppendLine($"\tpublic static Func<CreatureEntity> {entities};");
+        
+        builder.AppendLine($"}}");
+
+        var workspace = _workspace;
+        var solution = workspace.CurrentSolution;
+        
+        solution = solution.WithDocumentText(_editorDocumentId, TextAndVersion.Create(
+            SourceText.From("namespace Kesmai.Server.Segments; public class Editor { public static void TestB() { } }"), VersionStamp.Create()), 
+            PreservationMode.PreserveIdentity);
+        
         workspace.TryApplyChanges(solution);
     }
 }
