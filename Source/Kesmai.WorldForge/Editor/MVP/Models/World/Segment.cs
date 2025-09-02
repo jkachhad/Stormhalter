@@ -127,9 +127,6 @@ public class Segment : ObservableObject
 			.Where(a => !a.IsDynamic && !String.IsNullOrEmpty(a.Location))
 			.Select(a => MetadataReference.CreateFromFile(a.Location))
 			.ToList();
-
-		metadataReferences.Add(MetadataReference.CreateFromFile(
-			Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DotNext.dll")));
 		
 		var scriptingData = Core.ScriptingData;
         
@@ -172,11 +169,6 @@ public class Segment : ObservableObject
 				SourceText.From(File.ReadAllText(file.FullName)));
 		}
 		
-		/*
-		solution = solution.AddDocument(DocumentId.CreateNewId(project.Id), "ImportA.cs",
-			SourceText.From("namespace Kesmai.Server.Segments; public partial class Kesmai { public static void announceEarthquake() { }}"));
-			*/
-
 		workspace.TryApplyChanges(solution);
 	}
 	
