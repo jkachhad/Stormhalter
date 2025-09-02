@@ -15,8 +15,7 @@ public class CustomRoslynWorkspace : RoslynWorkspace
 		return feature switch
 		{
 			ApplyChangesKind.RemoveProject or ApplyChangesKind.AddProject => true,
-			ApplyChangesKind.AddSolutionAnalyzerReference or ApplyChangesKind.RemoveSolutionAnalyzerReference => true,
-            
+			ApplyChangesKind.AddSolutionAnalyzerReference => true,
 			_ => base.CanApplyChange(feature),
 		};
 	}
