@@ -10,7 +10,10 @@ using Kesmai.WorldForge.Models;
 using Kesmai.WorldForge.Scripting;
 using Kesmai.WorldForge.UI.Documents;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Kesmai.WorldForge.Roslyn;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Text;
 using RoslynPad.Roslyn;
 
 namespace Kesmai.WorldForge.Editor;
@@ -26,14 +29,18 @@ public class Segment : ObservableObject
 	private Script _internal;
 	private Script _definition;
 
-	private RoslynHost _roslynHost;
+	private CustomRoslynHost _roslynHost;
 
 	public string Name
 	{
 		get => _name;
-		set => SetProperty(ref _name, value);
+		set
+		{
+			if (SetProperty(ref _name, value))
+				UpdateWorkspace();
+		}
 	}
-		
+
 	public Script Internal
 	{
 		get => _internal;
@@ -57,35 +64,7 @@ public class Segment : ObservableObject
 
 	public Segment()
 	{
-		var assemblyPath = Path.GetDirectoryName(typeof(object).Assembly.Location);
-            
-		if (String.IsNullOrEmpty(assemblyPath))
-			throw new InvalidOperationException("Cannot find the assembly path for .NET assemblies.");
-		
-		var metadataReferences = new List<MetadataReference>()
-		{
-			MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "mscorlib.dll")),
-			MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.dll")),
-			MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Core.dll")),
-			MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Runtime.dll")),
-		};
-		
-		var scriptingData = Core.ScriptingData;
-        
-		if (scriptingData != null)
-			metadataReferences.Add(MetadataReference.CreateFromImage(scriptingData));
-
-		var serviceAssemblies = new[]
-		{
-			Assembly.Load("RoslynPad.Roslyn.Windows"),
-			Assembly.Load("RoslynPad.Editor.Windows")
-		};
-		var roslynReferences = RoslynHostReferences.NamespaceDefault
-			.With(references: metadataReferences);
-		
-		_roslynHost = new RoslynHost(serviceAssemblies, roslynReferences);
-		
-		Name = "Segment";
+		_name = "Segment";
 
 		foreach (var location in _reservedLocations)
 		{
@@ -141,8 +120,66 @@ public class Segment : ObservableObject
 		if (updateOld)
 			args.OldItems.ForEach(region => { presenter.Documents.Remove(region); });
 	}
+
+	public void UpdateWorkspace()
+	{
+		var metadataReferences = AppDomain.CurrentDomain.GetAssemblies()
+			.Where(a => !a.IsDynamic && !String.IsNullOrEmpty(a.Location))
+			.Select(a => MetadataReference.CreateFromFile(a.Location))
+			.ToList();
+
+		metadataReferences.Add(MetadataReference.CreateFromFile(
+			Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DotNext.dll")));
 		
+		var scriptingData = Core.ScriptingData;
+        
+		if (scriptingData != null)
+			metadataReferences.Add(MetadataReference.CreateFromImage(scriptingData));
+
+		var serviceAssemblies = new[]
+		{
+			Assembly.Load("RoslynPad.Roslyn.Windows"),
+			Assembly.Load("RoslynPad.Editor.Windows")
+		};
+
+		var namespaceImports = new string[]
+		{
+			$"static Kesmai.Server.Segments.{Name}",
+		};
 		
+		var roslynReferences = RoslynHostReferences.NamespaceDefault
+			.With(references: metadataReferences, imports: namespaceImports);
+		
+		_roslynHost = new CustomRoslynHost(serviceAssemblies, roslynReferences);
+
+		var workspace = _roslynHost.Workspace;
+		var solution = workspace.CurrentSolution;
+		
+		var project = solution.AddProject($"Segment", $"Kesmai.Server.Segments.{Name}", LanguageNames.CSharp)
+			/* C# minimum to support global usings. */
+			.WithParseOptions(new CSharpParseOptions(LanguageVersion.CSharp10))
+			/* Minimum references to prevent overloading */
+			.AddMetadataReference(MetadataReference.CreateFromFile(typeof(object).Assembly.Location))
+			.AddMetadataReference(MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location));
+
+		solution = project.Solution;
+
+		var directory = new DirectoryInfo(@"C:\Example\Source");
+		
+		foreach(var file in directory.GetFiles("*.cs", SearchOption.AllDirectories))
+		{
+			solution = solution.AddDocument(DocumentId.CreateNewId(project.Id), file.Name, 
+				SourceText.From(File.ReadAllText(file.FullName)));
+		}
+		
+		/*
+		solution = solution.AddDocument(DocumentId.CreateNewId(project.Id), "ImportA.cs",
+			SourceText.From("namespace Kesmai.Server.Segments; public partial class Kesmai { public static void announceEarthquake() { }}"));
+			*/
+
+		workspace.TryApplyChanges(solution);
+	}
+	
 	public void Load(XElement element)
 	{
 		Name = (string)element.Attribute("name");
