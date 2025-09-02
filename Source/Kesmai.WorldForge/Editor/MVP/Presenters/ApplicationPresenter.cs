@@ -626,8 +626,20 @@ public class ApplicationPresenter : ObservableRecipient
 
 	public void CreateWorkspace()
 	{
+		var blacklistedAssemblies = new[]
+		{
+			"RoslynPad.Roslyn.Windows",
+			"RoslynPad.Editor.Windows",
+			"DigitalRune",
+			"MonoGame",
+			"SharpDX",
+			"WindowsDesktop",
+			"WorldForge"
+		};
+		
 		var metadataReferences = AppDomain.CurrentDomain.GetAssemblies()
 			.Where(a => !a.IsDynamic && !String.IsNullOrEmpty(a.Location))
+			.Where(a => blacklistedAssemblies.All(b => !a.Location.Contains(b)))
 			.Select(a => MetadataReference.CreateFromFile(a.Location))
 			.ToList();
 		
