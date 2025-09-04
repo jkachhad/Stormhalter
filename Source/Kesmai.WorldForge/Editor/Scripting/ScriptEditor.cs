@@ -60,7 +60,8 @@ public class ScriptEditor : RoslynCodeEditor
 			
 		FontFamily = new FontFamily("Consolas");
 
-
+		IsCodeFoldingEnabled = false;
+		
         Loaded += OnLoaded;
 	}
 
