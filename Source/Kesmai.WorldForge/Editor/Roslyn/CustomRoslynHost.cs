@@ -100,13 +100,11 @@ public class CustomRoslynHost : RoslynHost
 
         solution = project.Solution;
 
-        var directory = new DirectoryInfo(@"C:\Example\Source");
-		
-        foreach(var file in directory.GetFiles("*.cs", SearchOption.AllDirectories))
-        {
-            solution = solution.AddDocument(DocumentId.CreateNewId(project.Id), file.Name, 
-                SourceText.From(File.ReadAllText(file.FullName)));
-        }
+        solution = solution.AddDocument(DocumentId.CreateNewId(project.Id), "Internal.g.cs",
+            SourceText.From(segment.Internal.Blocks[1]));
+        
+        solution = solution.AddDocument(DocumentId.CreateNewId(project.Id), "Definition.g.cs",
+            SourceText.From(segment.Definition.Blocks[1]));
         
         workspace.TryApplyChanges(solution);
     }
