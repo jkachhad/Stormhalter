@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Host;
+using Microsoft.CodeAnalysis.Text;
 using RoslynPad.Roslyn;
 
 namespace Kesmai.WorldForge.Roslyn;
@@ -18,5 +19,16 @@ public class CustomRoslynWorkspace : RoslynWorkspace
 			ApplyChangesKind.AddSolutionAnalyzerReference => true,
 			_ => base.CanApplyChange(feature),
 		};
+	}
+	
+	protected override void ApplyDocumentTextChanged(DocumentId id, SourceText text)
+	{
+		if (OpenDocumentId != id)
+		{
+			OnDocumentTextChanged(id, text, PreservationMode.PreserveIdentity);
+			return;
+		}
+
+		base.ApplyDocumentTextChanged(id, text);
 	}
 }
