@@ -18,10 +18,7 @@ namespace Kesmai.WorldForge.Roslyn;
 public class CustomRoslynHost : RoslynHost
 {
     private CustomRoslynWorkspace _workspace;
-    
     private DocumentId _editorDocumentId;
-    
-    public CustomRoslynWorkspace Workspace => _workspace;
     
     public CustomRoslynHost(IEnumerable<Assembly> additionalAssemblies, RoslynHostReferences references) : base(additionalAssemblies, references)
     {
@@ -47,8 +44,6 @@ public class CustomRoslynHost : RoslynHost
         
         return base.GetSolutionAnalyzerReferences();
     }
-    
-    
     
     protected override Project CreateProject(Solution solution, DocumentCreationArgs args, CompilationOptions compilationOptions, Project? previousProject = null)
     {
