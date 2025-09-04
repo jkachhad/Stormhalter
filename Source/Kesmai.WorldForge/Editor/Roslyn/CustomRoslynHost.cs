@@ -48,6 +48,8 @@ public class CustomRoslynHost : RoslynHost
         return base.GetSolutionAnalyzerReferences();
     }
     
+    
+    
     protected override Project CreateProject(Solution solution, DocumentCreationArgs args, CompilationOptions compilationOptions, Project? previousProject = null)
     {
         var projectName = "Script";
@@ -76,6 +78,8 @@ public class CustomRoslynHost : RoslynHost
         if (GetUsings(project) is { Length: > 0 } usings)
             project = project.AddDocument("Usings.g.cs", usings).Project;
 
+        var text = solution.GetDocument(_editorDocumentId)?.GetTextAsync().Result;
+        
         return project;
 
         static string GetUsings(Project project)
@@ -93,6 +97,7 @@ public class CustomRoslynHost : RoslynHost
         var solution = workspace.CurrentSolution;
 		
         var project = solution.AddProject($"Segment", $"Kesmai.Server.Segments.{segment.Name}", LanguageNames.CSharp)
+            .WithCompilationOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
             /* C# minimum to support global usings. */
             .WithParseOptions(new CSharpParseOptions(LanguageVersion.CSharp10))
             /* Minimum references to prevent overloading */
@@ -108,12 +113,27 @@ public class CustomRoslynHost : RoslynHost
             solution = solution.AddDocument(DocumentId.CreateNewId(project.Id), file.Name, 
                 SourceText.From(File.ReadAllText(file.FullName)));
         }
+        
+        workspace.TryApplyChanges(solution);
+    }
 
-        /* Editor document */
+    public void CreateEditorProject()
+    {
+        var workspace = _workspace;
+        var solution = workspace.CurrentSolution;
+		
+        var project = solution.AddProject($"Editor", $"Kesmai.Server.Segments.Editor", LanguageNames.CSharp)
+            .WithCompilationOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
+            /* C# minimum to support global usings. */
+            .WithParseOptions(new CSharpParseOptions(LanguageVersion.CSharp10))
+            /* Minimum references to prevent overloading */
+            .AddMetadataReference(MetadataReference.CreateFromFile(typeof(object).Assembly.Location))
+            .AddMetadataReference(MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location));
+        
         _editorDocumentId = DocumentId.CreateNewId(project.Id);
         
-        solution = solution.AddDocument(DocumentInfo.Create(_editorDocumentId, "Editor.g.cs",
-            loader: TextLoader.From(TextAndVersion.Create(SourceText.From("namespace Kesmai.Server.Segments; public class Editor { public static void Test() { } }"), VersionStamp.Create()))));
+        solution = project.Solution.AddDocument(_editorDocumentId, "Editor.g.cs", 
+            SourceText.From("namespace Kesmai.Server.Segments; public static class Editor { }"));
         
         workspace.TryApplyChanges(solution);
     }
@@ -127,7 +147,7 @@ public class CustomRoslynHost : RoslynHost
         
         builder.AppendLine($"namespace Kesmai.Server.Segments;");
         builder.AppendLine(String.Empty);
-        builder.AppendLine($@"public class Editor {{");
+        builder.AppendLine($@"public static class Editor {{");
 
         foreach (var lootTemplate in segment.Treasures.Select(t => t.Name))
             builder.AppendLine($"\tpublic static Func<MobileEntity, Container, ItemEntity> {lootTemplate};");
@@ -139,11 +159,10 @@ public class CustomRoslynHost : RoslynHost
 
         var workspace = _workspace;
         var solution = workspace.CurrentSolution;
-        
-        solution = solution.WithDocumentText(_editorDocumentId, TextAndVersion.Create(
-            SourceText.From("namespace Kesmai.Server.Segments; public class Editor { public static void TestB() { } }"), VersionStamp.Create()), 
-            PreservationMode.PreserveIdentity);
-        
+
+        solution = solution.WithDocumentText(_editorDocumentId, TextAndVersion.Create(SourceText.From(builder.ToString()),
+                VersionStamp.Create()), PreservationMode.PreserveIdentity);
+
         workspace.TryApplyChanges(solution);
     }
 }

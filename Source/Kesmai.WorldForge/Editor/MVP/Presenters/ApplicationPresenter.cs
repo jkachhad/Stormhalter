@@ -622,7 +622,8 @@ public class ApplicationPresenter : ObservableRecipient
 		
 		SelectFilter(Filters.FirstOrDefault());
 		SelectTool(Tools.FirstOrDefault());
-
+		
+		_roslynHost.CreateEditorProject();
 		_roslynHost.UpdateEditorDocument();
 	}
 
