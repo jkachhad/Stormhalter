@@ -8,6 +8,7 @@ using CommonServiceLocator;
 using Kesmai.WorldForge.Editor;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Text;
 using RoslynPad.Roslyn;
 using RoslynPad.Roslyn.Diagnostics;
@@ -32,6 +33,19 @@ public class CustomRoslynHost : RoslynHost
     public override RoslynWorkspace CreateWorkspace()
     {
         return _workspace;
+    }
+    
+    // Workaround for multiple additions of GetSolutionAnalyzerReferences.
+    private bool _initializedAnalyzers;
+    
+    protected override IEnumerable<AnalyzerReference> GetSolutionAnalyzerReferences()
+    {
+        if (_initializedAnalyzers)
+            return [];
+        
+        _initializedAnalyzers = true;
+        
+        return base.GetSolutionAnalyzerReferences();
     }
     
     protected override Project CreateProject(Solution solution, DocumentCreationArgs args, CompilationOptions compilationOptions, Project? previousProject = null)
