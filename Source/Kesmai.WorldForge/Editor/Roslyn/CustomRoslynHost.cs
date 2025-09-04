@@ -18,6 +18,9 @@ namespace Kesmai.WorldForge.Roslyn;
 public class CustomRoslynHost : RoslynHost
 {
     private CustomRoslynWorkspace _workspace;
+    
+    private DocumentId _internalDocumentId;
+    private DocumentId _definitionDocumentId;
     private DocumentId _editorDocumentId;
     
     public CustomRoslynHost(IEnumerable<Assembly> additionalAssemblies, RoslynHostReferences references) : base(additionalAssemblies, references)
@@ -73,8 +76,6 @@ public class CustomRoslynHost : RoslynHost
         if (GetUsings(project) is { Length: > 0 } usings)
             project = project.AddDocument("Usings.g.cs", usings).Project;
 
-        var text = solution.GetDocument(_editorDocumentId)?.GetTextAsync().Result;
-        
         return project;
 
         static string GetUsings(Project project)
@@ -99,12 +100,35 @@ public class CustomRoslynHost : RoslynHost
             .WithMetadataReferences(DefaultReferences);
 
         solution = project.Solution;
-
-        solution = solution.AddDocument(DocumentId.CreateNewId(project.Id), "Internal.g.cs",
-            SourceText.From(segment.Internal.Blocks[1]));
         
-        solution = solution.AddDocument(DocumentId.CreateNewId(project.Id), "Definition.g.cs",
+        _internalDocumentId = DocumentId.CreateNewId(project.Id);
+        
+        solution = solution.AddDocument(_internalDocumentId, "Internal.g.cs",
+            SourceText.From($"namespace Kesmai.Server.Segments; public partial class {segment.Name} {{ { segment.Internal.Blocks[1] } }}"));
+        
+        _definitionDocumentId = DocumentId.CreateNewId(project.Id);
+        
+        solution = solution.AddDocument(_definitionDocumentId, "Definition.g.cs",
             SourceText.From(segment.Definition.Blocks[1]));
+        
+        segment.Internal.Changed += () => UpdateSegmentDocuments(segment);
+        segment.Definition.Changed += () => UpdateSegmentDocuments(segment);
+        
+        workspace.TryApplyChanges(solution);
+    }
+
+    public void UpdateSegmentDocuments(Segment segment)
+    {
+        var workspace = _workspace;
+        var solution = workspace.CurrentSolution;
+
+        solution = solution.WithDocumentText(_internalDocumentId, TextAndVersion.Create(
+            SourceText.From($"namespace Kesmai.Server.Segments; public partial class {segment.Name} {{ { segment.Internal.Blocks[1] } }}"),
+            VersionStamp.Create()), PreservationMode.PreserveIdentity);
+
+        solution = solution.WithDocumentText(_definitionDocumentId, TextAndVersion.Create(
+            SourceText.From(segment.Definition.Blocks[1]),
+            VersionStamp.Create()), PreservationMode.PreserveIdentity);
         
         workspace.TryApplyChanges(solution);
     }

@@ -661,6 +661,13 @@ public class ApplicationPresenter : ObservableRecipient
 		{
 			$"static Kesmai.Server.Segments.{_segment.Name}",
 			$"static Kesmai.Server.Segments.Editor",
+			"Kesmai.Server.Game",
+			"Kesmai.Server.Items",
+			"Kesmai.Server.Miscellaneous",
+			"Kesmai.Server.Network",
+			"Kesmai.Server.Spells",
+			"SpanReader = DotNext.Buffers.SpanReader<byte>",
+			"SpanWriter = DotNext.Buffers.PoolingArrayBufferWriter<byte>",
 		};
 		
 		var roslynReferences = RoslynHostReferences.NamespaceDefault

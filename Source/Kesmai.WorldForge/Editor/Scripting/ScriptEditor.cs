@@ -32,13 +32,15 @@ public class ScriptEditor : RoslynCodeEditor
 
 	public static void OnScriptChange(object o, DependencyPropertyChangedEventArgs args)
 	{
-		if (o is not ScriptEditor editor || args.NewValue is not Script newScript) 
+		if (o is not ScriptEditor editor || args.NewValue is not Script newScript)  
 			return;
 
 		var template = newScript.Template;
 
 		if (template != null)
 			template.Apply(editor, newScript);
+
+		newScript.InvokeScriptChanged();
 	}
 
 	public Script Script
@@ -121,11 +123,14 @@ public class ScriptEditor : RoslynCodeEditor
 			_updateTimer.Stop();
 			
 		var script = Script;
-			
-		if (script != null)
-			script.Parse(this);
 
-        IsModified = false;
+		if (script != null)
+		{
+			script.Parse(this);
+			script.InvokeScriptChanged();
+		}
+
+		IsModified = false;
 	}
 
 	public void Insert(string text, bool readOnly = false)

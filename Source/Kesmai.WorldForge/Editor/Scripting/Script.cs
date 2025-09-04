@@ -29,6 +29,8 @@ public class Script : ObservableObject
 	public ScriptTemplate Template { get; set; }
 		
 	public List<string> Blocks => _blocks;
+	
+	public event Action Changed;
 
 	public Script(string name, bool enabled, params string[] blocks)
 	{
@@ -99,5 +101,11 @@ public class Script : ObservableObject
 		}
 
 		return builder.ToString();
+	}
+
+	public void InvokeScriptChanged()
+	{
+		if (Changed != null)
+			Changed.Invoke();
 	}
 }
