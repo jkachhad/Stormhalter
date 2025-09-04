@@ -96,8 +96,7 @@ public class CustomRoslynHost : RoslynHost
             /* C# minimum to support global usings. */
             .WithParseOptions(new CSharpParseOptions(LanguageVersion.CSharp10))
             /* Minimum references to prevent overloading */
-            .AddMetadataReference(MetadataReference.CreateFromFile(typeof(object).Assembly.Location))
-            .AddMetadataReference(MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location));
+            .WithMetadataReferences(DefaultReferences);
 
         solution = project.Solution;
 
@@ -122,8 +121,7 @@ public class CustomRoslynHost : RoslynHost
             /* C# minimum to support global usings. */
             .WithParseOptions(new CSharpParseOptions(LanguageVersion.CSharp10))
             /* Minimum references to prevent overloading */
-            .AddMetadataReference(MetadataReference.CreateFromFile(typeof(object).Assembly.Location))
-            .AddMetadataReference(MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location));
+            .WithMetadataReferences(DefaultReferences);
         
         _editorDocumentId = DocumentId.CreateNewId(project.Id);
         
