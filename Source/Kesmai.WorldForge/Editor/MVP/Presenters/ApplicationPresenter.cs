@@ -17,6 +17,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using RoslynPad.Roslyn;
 using SharpDX.Direct3D9;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -166,6 +167,8 @@ public class ApplicationPresenter : ObservableRecipient
 		}
 	}
     public RelayCommand ExportToPdfCommand { get; set; }
+    public RelayCommand ConvertSegmentCommand { get; }
+
     public ApplicationPresenter()
 	{
 		var messenger = WeakReferenceMessenger.Default;
@@ -192,7 +195,9 @@ public class ApplicationPresenter : ObservableRecipient
 			
 		SaveSegmentCommand = new RelayCommand<bool>(SaveSegment, (queryPath) => (Segment != null));
 		SaveSegmentCommand.DependsOn(() => Segment);
-			
+		
+		ConvertSegmentCommand = new RelayCommand(ConvertSegment, () => (Segment is null));
+		ConvertSegmentCommand.DependsOn(() => Segment);
 
 		CreateRegionCommand = new RelayCommand(CreateRegion, () => (Segment != null));
 		CreateRegionCommand.DependsOn(() => Segment);
@@ -268,6 +273,8 @@ public class ApplicationPresenter : ObservableRecipient
 		ShowSubregions = true;
 
 		Selection = new Selection();
+
+		
 	}
 
 	public void SwapDocument(String Target)
@@ -985,6 +992,131 @@ public class ApplicationPresenter : ObservableRecipient
             }
         }
     }
+
+    private void ConvertSegment()
+    {
+        var dialog = new Microsoft.Win32.OpenFileDialog()
+        {
+            DefaultExt = ".mapproj",
+            Filter = "WorldForge - Map Project (*.mapproj)|*.mapproj",
+            Title = "Convert Segment"
+        };
+
+        var result = dialog.ShowDialog();
+
+        if (!result.HasValue || !result.Value)
+	        return;
+
+        var targetFile = new FileInfo(dialog.FileName);
+        var targetPath = targetFile.Directory;
+
+        if (targetPath is null)
+	        throw new InvalidOperationException("Target path is invalid.");
+       
+		// convert the segment from xml to a directory based format
+		var segmentDocument = XDocument.Load(dialog.FileName);
+		var segmentDirectory = targetPath.CreateSubdirectory(Path.GetFileNameWithoutExtension(targetFile.Name));
+
+		// load the segment object, we may use it to populate the definition file
+		var segment = new Segment(); segment.Load(segmentDocument.Root);
+		
+		// create the internal source directory
+		var sourceDirectory = segmentDirectory.CreateSubdirectory("Source");
+
+		File.WriteAllText(Path.Combine(sourceDirectory.FullName, "Internal.cs"), 
+			$"namespace Kesmai.Server.Segments; public partial class {segment.Name} {{ {segment.Internal.Blocks[1]} }}");
+		File.WriteAllText(Path.Combine(sourceDirectory.FullName, $"{segment.Name}.cs"),
+			segment.Definition.Blocks[1]);
+		
+		// convert regions to individual files.
+		var regionsDirectory = segmentDirectory.CreateSubdirectory("Regions");
+
+		foreach (var region in segment.Regions)
+			region.GetXElement().Save(Path.Combine(regionsDirectory.FullName, $"{region.ID}.xml"));
+		
+		// other data
+		void write(Action<XElement> saveAction, string elementName, string fileName)
+		{
+			var element = new XElement(elementName);
+			saveAction(element);
+			element.Save(Path.Combine(segmentDirectory.FullName, fileName));
+		}
+
+		write(segment.Locations.Save, "locations", "Locations.xml");
+		write(segment.Subregions.Save, "subregions", "Subregions.xml");
+		write(segment.Entities.Save, "entities", "Entities.xml");
+		write(segment.Spawns.Save, "spawns", "Spawns.xml");
+		write(segment.Treasures.Save, "treasures", "Treasures.xml");
+		
+		// go through the spawns and clean up scripts.
+		var spawnsPath = Path.Combine(segmentDirectory.FullName, "Spawns.xml");
+		var spawnsDocument = XDocument.Load(spawnsPath);
+		var spawnsRoot = spawnsDocument.Root;
+		
+		if (spawnsRoot is null)
+			throw new InvalidOperationException("Spawns document is invalid.");
+
+		var scripts = spawnsRoot.Elements("spawn").Elements("script").ToList();
+		
+		foreach (var scriptElement in scripts)
+		{
+			var blocks = scriptElement.Elements("block").ToArray();
+			
+			scriptElement.ReplaceWith(new XElement("script",
+				new XAttribute("name", scriptElement.Attribute("name")?.Value ?? "(Unnamed)"),
+				new XAttribute("enabled", scriptElement.Attribute("enabled")?.Value ?? "true"),
+				new XCData(blocks[1].Value))
+			);
+		}
+		
+		spawnsDocument.Save(spawnsPath);
+		
+		// go through the entities and clean up scripts.
+		var entitiesPath = Path.Combine(segmentDirectory.FullName, "Entities.xml");
+		var entitiesDocument = XDocument.Load(entitiesPath);
+		var entitiesRoot = entitiesDocument.Root;
+		
+		if (entitiesRoot is null)
+			throw new InvalidOperationException("Entities document is invalid.");
+		
+		scripts = entitiesRoot.Elements("entity").Elements("script").ToList();
+
+		foreach (var scriptElement in scripts)
+		{
+			var blocks = scriptElement.Elements("block").ToArray();
+			
+			scriptElement.ReplaceWith(new XElement("script",
+				new XAttribute("name", scriptElement.Attribute("name")?.Value ?? "(Unnamed)"),
+				new XAttribute("enabled", scriptElement.Attribute("enabled")?.Value ?? "true"),
+				new XCData(blocks[1].Value))
+			);
+		}
+		
+		entitiesDocument.Save(entitiesPath);
+		
+		// go through the treasures and clean up scripts.
+		var treasuresPath = Path.Combine(segmentDirectory.FullName, "Treasures.xml");
+		var treasuresDocument = XDocument.Load(treasuresPath);
+		var treasuresRoot = treasuresDocument.Root;
+		
+		if (treasuresRoot is null)
+			throw new InvalidOperationException("Treasures document is invalid.");
+		
+		scripts = treasuresRoot.Elements("treasure").Elements("entry").Elements("script").ToList();
+
+		foreach (var scriptElement in scripts)
+		{
+			var blocks = scriptElement.Elements("block").ToArray();
+			
+			scriptElement.ReplaceWith(new XElement("script",
+				new XAttribute("name", scriptElement.Attribute("name")?.Value ?? "(Unnamed)"),
+				new XAttribute("enabled", scriptElement.Attribute("enabled")?.Value ?? "true"),
+				new XCData(blocks[1].Value))
+			);
+		}
+		
+		treasuresDocument.Save(treasuresPath);
+    }
 }
 // Extension method to handle async void safely
 public static class TaskExtensions
@@ -1016,4 +1148,3 @@ public static class TaskExtensions
         }
     }
 }
-

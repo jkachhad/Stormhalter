@@ -56,6 +56,8 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
+                <MenuItem Header="_Convert Segment..." Command="{Binding ConvertSegmentCommand}" />
+                <Separator />
                 <MenuItem Header="_Exit" Command="{Binding ExitApplicationCommand}" />
             </MenuItem>
 
