@@ -128,7 +128,6 @@ public class ApplicationPresenter : ObservableRecipient
 
 	public RelayCommand CreateSegmentCommand { get; set; }
 	public RelayCommand CloseSegmentCommand { get; set; }
-	public RelayCommand CompileSegmentCommand { get; set; }
 	public RelayCommand OpenSegmentCommand { get; set; }
 	public RelayCommand<bool> SaveSegmentCommand { get; set; }
 
@@ -187,9 +186,6 @@ public class ApplicationPresenter : ObservableRecipient
 			
 		CloseSegmentCommand = new RelayCommand(CloseSegment, () => (Segment != null));
 		CloseSegmentCommand.DependsOn(() => Segment);
-			
-		CompileSegmentCommand = new RelayCommand(CompileSegment, () => (Segment != null && !Network.Disconnected));
-		CompileSegmentCommand.DependsOn(() => Segment);
 			
 		OpenSegmentCommand = new RelayCommand(OpenSegment, () => (Segment == null));
 		OpenSegmentCommand.DependsOn(() => Segment);
@@ -539,15 +535,7 @@ public class ApplicationPresenter : ObservableRecipient
 			
 		_segmentFilePath = String.Empty;
 	}
-
-	private void CompileSegment()
-	{
-		if (_segment is null || Network.Disconnected)
-			return;
-
-		new CompileWindow().ShowDialog();
-	}
-
+	
 	private void OpenSegment()
 	{
 		var overwrite = true;
