@@ -13,6 +13,11 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Kesmai.WorldForge.Editor;
 
+public interface ISegmentObject
+{
+	string Name { get; set; }
+}
+
 public class Segment : ObservableObject
 {
 	private static List<string> _reservedLocations = new List<string>()
@@ -21,6 +26,9 @@ public class Segment : ObservableObject
 	};
 		
 	private string _name;
+	private string _path;
+	
+	
 	private Script _internal;
 	private Script _definition;
 	
@@ -28,6 +36,12 @@ public class Segment : ObservableObject
 	{
 		get => _name;
 		set => SetProperty(ref _name, value);
+	}
+
+	public string Path
+	{
+		get => _path;
+		set => _path = value;
 	}
 
 	public Script Internal
