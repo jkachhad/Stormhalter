@@ -114,7 +114,9 @@ public class ApplicationPresenter : ObservableRecipient
 		{
 			if (SetProperty(ref _segment, value, true))
 			{
-				CreateWorkspace();
+				if (_segment != null)
+					CreateWorkspace();
+				
 				ActiveDocument = Documents.FirstOrDefault();
 			}
 		}
@@ -629,6 +631,8 @@ public class ApplicationPresenter : ObservableRecipient
 
 	public void CreateWorkspace()
 	{
+		var refs = Task.Run(() => NuGetResolver.Resolve("Kesmai.Server.Reference", "net8.0-windows8.0"));
+		
 		var blacklistedAssemblies = new[]
 		{
 			"RoslynPad.Roslyn.Windows",
@@ -643,14 +647,12 @@ public class ApplicationPresenter : ObservableRecipient
 		var metadataReferences = AppDomain.CurrentDomain.GetAssemblies()
 			.Where(a => !a.IsDynamic && !String.IsNullOrEmpty(a.Location))
 			.Where(a => blacklistedAssemblies.All(b => !a.Location.Contains(b)))
-			.Select(a => MetadataReference.CreateFromFile(a.Location))
+			.Select(a => (MetadataReference)MetadataReference.CreateFromFile(a.Location))
 			.ToList();
-		
-		var scriptingData = Core.ScriptingData;
-        
-		if (scriptingData != null)
-			metadataReferences.Add(MetadataReference.CreateFromImage(scriptingData));
 
+		foreach (var metadataReference in refs.Result)
+			metadataReferences.Add(metadataReference);
+		
 		var serviceAssemblies = new[]
 		{
 			Assembly.Load("RoslynPad.Roslyn.Windows"),
