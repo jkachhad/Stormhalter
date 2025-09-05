@@ -32,13 +32,15 @@ public class ScriptEditor : RoslynCodeEditor
 
 	public static void OnScriptChange(object o, DependencyPropertyChangedEventArgs args)
 	{
-		if (o is not ScriptEditor editor || args.NewValue is not Script newScript) 
+		if (o is not ScriptEditor editor || args.NewValue is not Script newScript)  
 			return;
 
 		var template = newScript.Template;
 
 		if (template != null)
 			template.Apply(editor, newScript);
+
+		newScript.InvokeScriptChanged();
 	}
 
 	public Script Script
@@ -58,7 +60,8 @@ public class ScriptEditor : RoslynCodeEditor
 			
 		FontFamily = new FontFamily("Consolas");
 
-
+		IsCodeFoldingEnabled = false;
+		
         Loaded += OnLoaded;
 	}
 
@@ -74,10 +77,10 @@ public class ScriptEditor : RoslynCodeEditor
             return;
 
         var services = (ServiceContainer)ServiceLocator.Current;
-        var applicationPresenter = services.GetInstance<ApplicationPresenter>();
+        var presenter = services.GetInstance<ApplicationPresenter>();
 
-        await InitializeAsync(applicationPresenter.RoslynHost, new ClassificationHighlightColors(),
-            Directory.GetCurrentDirectory(), string.Empty, SourceCodeKind.Script);
+        await InitializeAsync(presenter.Roslyn, new ClassificationHighlightColors(),
+            Directory.GetCurrentDirectory(), string.Empty, SourceCodeKind.Regular);
 
         // Delay folding until TextArea is fully initialized
         await Dispatcher.BeginInvoke(new Action(() =>
@@ -121,11 +124,14 @@ public class ScriptEditor : RoslynCodeEditor
 			_updateTimer.Stop();
 			
 		var script = Script;
-			
-		if (script != null)
-			script.Parse(this);
 
-        IsModified = false;
+		if (script != null)
+		{
+			script.Parse(this);
+			script.InvokeScriptChanged();
+		}
+
+		IsModified = false;
 	}
 
 	public void Insert(string text, bool readOnly = false)

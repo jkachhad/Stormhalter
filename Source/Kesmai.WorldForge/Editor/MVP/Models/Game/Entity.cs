@@ -300,7 +300,7 @@ public class Entity : ObservableObject, ICloneable
 				kind: SourceCodeKind.Script,
 				languageVersion: LanguageVersion.CSharp8
 			);
-			var syntaxTree = CSharpSyntaxTree.ParseText("#load \"WorldForge\"\nusing System;\nCreatureEntity OnSpawn(){" + onSpawnScript.Blocks[1] + "}", parseOptions);
+			var syntaxTree = CSharpSyntaxTree.ParseText("using System;\nCreatureEntity OnSpawn(){" + onSpawnScript.Blocks[1] + "}", parseOptions);
 			var syntaxRoot = syntaxTree.GetCompilationUnitRoot();
 
 			var assignments = syntaxRoot.DescendantNodes().OfType<AssignmentExpressionSyntax>();

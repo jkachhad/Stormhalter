@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Xml.Linq;
 using CommonServiceLocator;
 using DigitalRune.Collections;
@@ -22,13 +23,13 @@ public class Segment : ObservableObject
 	private string _name;
 	private Script _internal;
 	private Script _definition;
-
+	
 	public string Name
 	{
 		get => _name;
 		set => SetProperty(ref _name, value);
 	}
-		
+
 	public Script Internal
 	{
 		get => _internal;
@@ -40,7 +41,7 @@ public class Segment : ObservableObject
 		get => _definition;
 		set => SetProperty(ref _definition, value);
 	}
-	
+
 	public NotifyingCollection<SegmentRegion> Regions { get; set; } = new NotifyingCollection<SegmentRegion>();
 	public SegmentLocations Locations { get; set; } = new SegmentLocations();
 	public SegmentSubregions Subregions { get; set; } = new SegmentSubregions();
@@ -50,7 +51,7 @@ public class Segment : ObservableObject
 
 	public Segment()
 	{
-		Name = "Segment";
+		_name = "Segment";
 
 		foreach (var location in _reservedLocations)
 		{
@@ -106,8 +107,7 @@ public class Segment : ObservableObject
 		if (updateOld)
 			args.OldItems.ForEach(region => { presenter.Documents.Remove(region); });
 	}
-		
-		
+	
 	public void Load(XElement element)
 	{
 		Name = (string)element.Attribute("name");

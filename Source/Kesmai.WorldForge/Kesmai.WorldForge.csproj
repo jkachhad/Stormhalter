@@ -19,7 +19,7 @@
 
         <ApplicationManifest>app.manifest</ApplicationManifest>
 
-        <LangVersion>10</LangVersion>
+        <LangVersion>13</LangVersion>
 
         <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
         <AllowedReferenceRelatedFileExtensions>None</AllowedReferenceRelatedFileExtensions>
@@ -44,6 +44,8 @@
         <NoWarn>NU1701</NoWarn>
       </PackageReference>
       <PackageReference Include="MonoGame.Framework.WindowsDX" Version="$(MonoGameVersion)" />
+      <PackageReference Include="NuGet.Frameworks" Version="6.14.0" />
+      <PackageReference Include="NuGet.Resolver" Version="6.14.0" />
       <PackageReference Include="RedGate.SmartAssembly.MSBuild" Version="8.0.1.4676-preview">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -91,9 +93,6 @@
       <Reference Include="DotNext">
         <HintPath>..\..\Dependencies\DotNext.dll</HintPath>
       </Reference>
-      <Reference Include="Lidgren.Network, Version=2012.1.7.0, Culture=neutral, PublicKeyToken=null">
-        <HintPath>..\..\Dependencies\Lidgren.Network.dll</HintPath>
-      </Reference>
     </ItemGroup>
 
     <ItemGroup>
@@ -139,7 +138,6 @@
             <GarbageFile Include="DotNetZip.dll" />
             <GarbageFile Include="Humanizer.dll" />
             <GarbageFile Include="ICSharpCode.AvalonEdit.dll" />
-            <GarbageFile Include="Lidgren.Network.dll" />
             <GarbageFile Include="Microsoft.Bcl.AsyncInterfaces.dll" />
             <GarbageFile Include="Microsoft.CodeAnalysis.AnalyzerUtilities.dll" />
             <GarbageFile Include="Microsoft.CodeAnalysis.CSharp.dll" />

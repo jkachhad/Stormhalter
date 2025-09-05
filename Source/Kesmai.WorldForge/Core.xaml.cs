@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -13,7 +14,6 @@ using CommonServiceLocator;
 using DigitalRune.Collections;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Scripting;
-using Lidgren.Network;
 using Syncfusion.Licensing;
 
 namespace Kesmai.WorldForge;
@@ -44,8 +44,6 @@ public partial class Core : Application
 	}
 		
 	public static XDocument ComponentsResource { get; set; }
-		
-	public static byte[] ScriptingData { get; set; }
 
 	public static string CustomArtPath { get; set; }
 
@@ -55,6 +53,17 @@ public partial class Core : Application
 
 	#region Fields
 
+	private static string StoragePath = ".storage";
+
+	private static string ComponentsName = "Components.cache";
+	private static string ScriptingName = "Scripting.cache";
+	private static string CustomArtConfigName = "CustomArt.cfg";
+
+	private DirectoryInfo _storageDirectory;
+		
+	private FileInfo _componentsFile;
+	private FileInfo _customArtConfig;
+	
 	#endregion
 
 	#region Properties and Events
@@ -89,19 +98,31 @@ public partial class Core : Application
 			
 		SyncfusionLicenseProvider.RegisterLicense("Mzk1NTI2QDMxMzgyZTM0MmUzMG85YlBIdldReGhYeUl3OFQxWUpUVDhyZ3gyRFpESm1NRUF1aUtpM01pcUk9");
 			
-		Network.Initialize();
-	}
-
-	protected override void OnExit(ExitEventArgs e)
-	{
-		Network.Disconnect();
+		_storageDirectory = new DirectoryInfo(StoragePath);
 			
-		base.OnExit(e);
-	}
+		_componentsFile = new FileInfo($@"{_storageDirectory.FullName}\{ComponentsName}");
+		_customArtConfig = new FileInfo($@"{_storageDirectory.FullName}\{CustomArtConfigName}");
 
-	public static void Authenticated()
-	{
-	}
+		InitializeComponent();
+			
+		if (_storageDirectory is { Exists: false })
+			_storageDirectory.Create();
 		
+		Offline = true;
+		
+		if (_componentsFile.Exists)
+			ComponentsResource = XDocument.Load(_componentsFile.FullName);
+
+		if (!_customArtConfig.Exists)
+			File.WriteAllText(_customArtConfig.FullName, $"{_storageDirectory.FullName}\nModify the above line to point to your GitHub local repo's 'Content' directory.\nIf the folder does not exists, WorldForge will default to the .storage folder.\nCreate a Data\\Terrain-External.xml, a WorldForge\\Compontents.xml (get these from the GitHub repo under Content), and then a folder to contain your texture sheets.");
+
+		var CustomArtConfigPath = File.ReadLines(_customArtConfig.FullName).FirstOrDefault();
+		
+		if (Directory.Exists(CustomArtConfigPath))
+			CustomArtPath = CustomArtConfigPath;
+		else
+			CustomArtPath = _storageDirectory.FullName;
+	}
+	
 	#endregion
 }

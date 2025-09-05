@@ -21,7 +21,7 @@ public class EntitySpawnScriptTemplate : ScriptTemplate
 {
 	public override IEnumerable<string> GetSegments()
 	{
-		yield return "#load \"WorldForge\"\nCreatureEntity OnSpawn()\n{";
+		yield return "CreatureEntity OnSpawn()\n{";
 		yield return "}";
 	}
 }
@@ -30,7 +30,7 @@ public class EntityDeathScriptTemplate : ScriptTemplate
 {
 	public override IEnumerable<string> GetSegments()
 	{
-		yield return "#load \"WorldForge\"\nvoid OnDeath(MobileEntity source, MobileEntity killer)\n{";
+		yield return "void OnDeath(MobileEntity source, MobileEntity killer)\n{";
 		yield return "}";
 	}
 }
@@ -39,7 +39,7 @@ public class EntityIncomingPlayerScriptTemplate : ScriptTemplate
 {
 	public override IEnumerable<string> GetSegments()
 	{
-		yield return "#load \"WorldForge\"\nvoid OnIncomingPlayer(MobileEntity source, PlayerEntity player)\n{";
+		yield return "void OnIncomingPlayer(MobileEntity source, PlayerEntity player)\n{";
 		yield return "}";
 	}
 }

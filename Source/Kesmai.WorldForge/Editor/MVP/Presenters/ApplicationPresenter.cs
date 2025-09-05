@@ -20,6 +20,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
@@ -39,9 +40,10 @@ public class ApplicationPresenter : ObservableRecipient
 		
 	private string _segmentFilePath;
 	private DirectoryInfo _segmentFileFolder;
+	
+	private CustomRoslynHost _roslynHost;
 		
 	private Segment _segment;
-	private CustomRoslynHost _roslynHost;
 	private Selection _selection;
 	private TerrainSelector _filter;
 	private Tool _selectedTool;
@@ -50,6 +52,8 @@ public class ApplicationPresenter : ObservableRecipient
 
 	private object _activeDocument;
 	private object _previousDocument;
+	
+	public CustomRoslynHost Roslyn => _roslynHost;
 
 	private TeleportComponent _configuringTeleporter = null;
 	public TeleportComponent ConfiguringTeleporter
@@ -75,9 +79,7 @@ public class ApplicationPresenter : ObservableRecipient
 		get => _selectedTool ?? Tool.Default;
 		set => _selectedTool = value;
 	}
-
-	public IRoslynHost RoslynHost => _roslynHost;
-
+	
 	private ComponentsCategory _selectedComponentCategory;
 	private TerrainComponent _selectedComponent;
 		
@@ -112,9 +114,9 @@ public class ApplicationPresenter : ObservableRecipient
 		{
 			if (SetProperty(ref _segment, value, true))
 			{
-				if (value != null)
-					_roslynHost = new CustomRoslynHost(_segment);
-
+				if (_segment != null)
+					CreateWorkspace();
+				
 				ActiveDocument = Documents.FirstOrDefault();
 			}
 		}
@@ -126,7 +128,6 @@ public class ApplicationPresenter : ObservableRecipient
 
 	public RelayCommand CreateSegmentCommand { get; set; }
 	public RelayCommand CloseSegmentCommand { get; set; }
-	public RelayCommand CompileSegmentCommand { get; set; }
 	public RelayCommand OpenSegmentCommand { get; set; }
 	public RelayCommand<bool> SaveSegmentCommand { get; set; }
 
@@ -185,9 +186,6 @@ public class ApplicationPresenter : ObservableRecipient
 			
 		CloseSegmentCommand = new RelayCommand(CloseSegment, () => (Segment != null));
 		CloseSegmentCommand.DependsOn(() => Segment);
-			
-		CompileSegmentCommand = new RelayCommand(CompileSegment, () => (Segment != null && !Network.Disconnected));
-		CompileSegmentCommand.DependsOn(() => Segment);
 			
 		OpenSegmentCommand = new RelayCommand(OpenSegment, () => (Segment == null));
 		OpenSegmentCommand.DependsOn(() => Segment);
@@ -537,15 +535,7 @@ public class ApplicationPresenter : ObservableRecipient
 			
 		_segmentFilePath = String.Empty;
 	}
-
-	private void CompileSegment()
-	{
-		if (_segment is null || Network.Disconnected)
-			return;
-
-		new CompileWindow().ShowDialog();
-	}
-
+	
 	private void OpenSegment()
 	{
 		var overwrite = true;
@@ -622,6 +612,59 @@ public class ApplicationPresenter : ObservableRecipient
 		
 		SelectFilter(Filters.FirstOrDefault());
 		SelectTool(Tools.FirstOrDefault());
+		
+		_roslynHost.CreateEditorProject();
+		_roslynHost.UpdateEditorDocument();
+	}
+
+	public void CreateWorkspace()
+	{
+		var refs = Task.Run(() => NuGetResolver.Resolve("Kesmai.Server.Reference", "net8.0-windows8.0"));
+		
+		var blacklistedAssemblies = new[]
+		{
+			"RoslynPad.Roslyn.Windows",
+			"RoslynPad.Editor.Windows",
+			"DigitalRune",
+			"MonoGame",
+			"SharpDX",
+			"WindowsDesktop",
+			"WorldForge"
+		};
+		
+		var metadataReferences = AppDomain.CurrentDomain.GetAssemblies()
+			.Where(a => !a.IsDynamic && !String.IsNullOrEmpty(a.Location))
+			.Where(a => blacklistedAssemblies.All(b => !a.Location.Contains(b)))
+			.Select(a => (MetadataReference)MetadataReference.CreateFromFile(a.Location))
+			.ToList();
+
+		foreach (var metadataReference in refs.Result)
+			metadataReferences.Add(metadataReference);
+		
+		var serviceAssemblies = new[]
+		{
+			Assembly.Load("RoslynPad.Roslyn.Windows"),
+			Assembly.Load("RoslynPad.Editor.Windows")
+		};
+
+		var namespaceImports = new string[]
+		{
+			$"static Kesmai.Server.Segments.{_segment.Name}",
+			$"static Kesmai.Server.Segments.Editor",
+			"Kesmai.Server.Game",
+			"Kesmai.Server.Items",
+			"Kesmai.Server.Miscellaneous",
+			"Kesmai.Server.Network",
+			"Kesmai.Server.Spells",
+			"SpanReader = DotNext.Buffers.SpanReader<byte>",
+			"SpanWriter = DotNext.Buffers.PoolingArrayBufferWriter<byte>",
+		};
+		
+		var roslynReferences = RoslynHostReferences.NamespaceDefault
+			.With(references: metadataReferences, imports: namespaceImports);
+		
+		_roslynHost = new CustomRoslynHost(serviceAssemblies, roslynReferences);
+		_roslynHost.CreateSegmentProject(_segment);
 	}
 
 	private void SaveSegment(bool queryPath)
