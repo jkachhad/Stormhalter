@@ -1022,11 +1022,13 @@ public class ApplicationPresenter : ObservableRecipient
 		
 		// create the internal source directory
 		var sourceDirectory = segmentDirectory.CreateSubdirectory("Source");
+		var definitionScript = new FileInfo(Path.Combine(targetPath.FullName, $"{segment.Name}.cs"));
 
 		File.WriteAllText(Path.Combine(sourceDirectory.FullName, "Internal.cs"), 
-			$"namespace Kesmai.Server.Segments; public partial class {segment.Name} {{ {segment.Internal.Blocks[1]} }}");
-		File.WriteAllText(Path.Combine(sourceDirectory.FullName, $"{segment.Name}.cs"),
-			segment.Definition.Blocks[1]);
+			$"namespace Kesmai.Server.Segments;\r\n\r\npublic partial class {segment.Name} {{ {segment.Internal.Blocks[1]} }}");
+
+		if (definitionScript.Exists)
+			definitionScript.CopyTo(Path.Combine(sourceDirectory.FullName, $"{segment.Name}.cs"));
 		
 		// convert regions to individual files.
 		var regionsDirectory = segmentDirectory.CreateSubdirectory("Regions");
