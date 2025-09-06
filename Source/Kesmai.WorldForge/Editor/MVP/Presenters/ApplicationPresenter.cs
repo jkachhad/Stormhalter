@@ -557,65 +557,118 @@ public class ApplicationPresenter : ObservableRecipient
 
 		if (!overwrite)
 			return;
-
-		// TODO: Set open file path for Save
-		var dialog = new Microsoft.Win32.OpenFileDialog()
+		
+		// show dialog for folder selection
+		var dialog = new Microsoft.Win32.OpenFolderDialog()
 		{
-			DefaultExt = ".mapproj",
-			Filter = "WorldForge - Map Project (*.mapproj)|*.mapproj",
+			Multiselect = false,
 		};
-
+		
 		var openResult = dialog.ShowDialog();
-
+		
 		if (!openResult.HasValue || openResult != true)
 			return;
-
-		var targetFile = dialog.FileName;
-		var targetFileInfo = new FileInfo(targetFile);
 		
-		_segmentFilePath = targetFile;
-		_segmentFileFolder = targetFileInfo.Directory;
-			
+		var targetDirectory = new DirectoryInfo(dialog.FolderName);
 		var segment = new Segment();
 		
-		XElement rootElement = null;
-		try
+		var regionsFolder = new DirectoryInfo(Path.Combine(targetDirectory.FullName, "Regions"));
+
+		if (regionsFolder.Exists)
 		{
-			var document = XDocument.Load(targetFile);
-			rootElement = document.Root;
-		} catch (System.Xml.XmlException e)
-		{
-			MessageBox.Show($"Segment File is incorrectly formatted:\n{e.Message}", "Open Segment Error", MessageBoxButton.OK);
-			return;
-		}
-		if (rootElement != null)
-		{
-			if (rootElement.Name != "segment")
+			foreach (var file in regionsFolder.GetFiles("*.xml"))
 			{
-				MessageBox.Show($"Provided file is not a WorldForge Segment file.", "Open Segment Error", MessageBoxButton.OK);
-				return;
+				var regionDocument = XDocument.Load(file.FullName);
+				var regionRoot = regionDocument.Root;
+
+				if (regionRoot is null)
+					throw new Exception($"Region file {file.Name} is not valid XML.");
+				
+				segment.Regions.Add(new SegmentRegion(regionRoot));
 			}
-			segment.Load(rootElement);
 		}
-			
-		var definitionFilePath = $@"{_segmentFileFolder.FullName}\{segment.Name}.cs";
-
-		if (File.Exists(definitionFilePath))
+		
+		var locationsFile = new FileInfo(Path.Combine(targetDirectory.FullName, "Locations.xml"));
+		
+		if (locationsFile.Exists)
 		{
-			using (var stream = new FileStream(definitionFilePath, FileMode.Open, FileAccess.Read, FileShare.None))
-			using (var reader = new StreamReader(stream))
-				segment.Definition.Blocks[1] = reader.ReadToEnd();
-		}
+			var locationDocument = XDocument.Load(locationsFile.FullName);
+			var locationRoot = locationDocument.Root;
 
+			if (locationRoot is null)
+				throw new Exception($"Location file {locationsFile.Name} is not valid XML.");
+			
+			segment.Locations = new SegmentLocations();
+			segment.Locations.Load(locationRoot, Core.Version);
+		}
+		
+		var subregionsFile = new FileInfo(Path.Combine(targetDirectory.FullName, "Subregions.xml"));
+		
+		if (subregionsFile.Exists)
+		{
+			var subregionDocument = XDocument.Load(subregionsFile.FullName);
+			var subregionRoot = subregionDocument.Root;
+
+			if (subregionRoot is null)
+				throw new Exception($"Subregion file {subregionsFile.Name} is not valid XML.");
+			
+			segment.Subregions = new SegmentSubregions();
+			segment.Subregions.Load(subregionRoot, Core.Version);
+		}
+		
+		var entitiesFile = new FileInfo(Path.Combine(targetDirectory.FullName, "Entities.xml"));
+		
+		if (entitiesFile.Exists)
+		{
+			var entityDocument = XDocument.Load(entitiesFile.FullName);
+			var entityRoot = entityDocument.Root;
+
+			if (entityRoot is null)
+				throw new Exception($"Entity file {entitiesFile.Name} is not valid XML.");
+			
+			segment.Entities = new SegmentEntities();
+			segment.Entities.Load(entityRoot, Core.Version);
+		}
+		
+		var spawnsFile = new FileInfo(Path.Combine(targetDirectory.FullName, "Spawns.xml"));
+		
+		if (spawnsFile.Exists)
+		{
+			var spawnDocument = XDocument.Load(spawnsFile.FullName);
+			var spawnRoot = spawnDocument.Root;
+
+			if (spawnRoot is null)
+				throw new Exception($"Spawn file {spawnsFile.Name} is not valid XML.");
+			
+			segment.Spawns = new SegmentSpawns();
+			segment.Spawns.Load(segment.Entities, spawnRoot, Core.Version);
+		}
+		
+		var treasuresFile = new FileInfo(Path.Combine(targetDirectory.FullName, "Treasures.xml"));
+		
+		if (treasuresFile.Exists)
+		{
+			var treasureDocument = XDocument.Load(treasuresFile.FullName);
+			var treasureRoot = treasureDocument.Root;
+
+			if (treasureRoot is null)
+				throw new Exception($"Treasure file {treasuresFile.Name} is not valid XML.");
+			
+			segment.Treasures = new SegmentTreasures();
+			segment.Treasures.Load(treasureRoot, Core.Version);
+		}
+		
+		_segmentFileFolder = targetDirectory;
+		
+		Segment = segment;
+		Segment.UpdateTiles();
+		
 		Documents.Add(new SegmentViewModel(segment));
 		Documents.Add(new LocationsViewModel(segment));
 		Documents.Add(new SubregionViewModel(segment));
 		Documents.Add(new EntitiesViewModel(segment));
 		Documents.Add(new SpawnsViewModel(segment));
 		Documents.Add(new TreasuresViewModel(segment));
-		
-		Segment = segment;
-		Segment.UpdateTiles();
 		
 		SelectFilter(Filters.FirstOrDefault());
 		SelectTool(Tools.FirstOrDefault());
