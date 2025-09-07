@@ -1102,75 +1102,36 @@ public class ApplicationPresenter : ObservableRecipient
 		write(segment.Entities.Save, "entities", "Entities.xml");
 		write(segment.Spawns.Save, "spawns", "Spawns.xml");
 		write(segment.Treasures.Save, "treasures", "Treasures.xml");
-		
-		// go through the spawns and clean up scripts.
-		var spawnsPath = Path.Combine(segmentDirectory.FullName, "Spawns.xml");
-		var spawnsDocument = XDocument.Load(spawnsPath);
-		var spawnsRoot = spawnsDocument.Root;
-		
-		if (spawnsRoot is null)
-			throw new InvalidOperationException("Spawns document is invalid.");
 
-		var scripts = spawnsRoot.Elements("spawn").Elements("script").ToList();
-		
-		foreach (var scriptElement in scripts)
+		void cleanup(string documentName, Func<XDocument, IEnumerable<XElement>> scriptSelector)
 		{
-			var blocks = scriptElement.Elements("block").ToArray();
-			
-			scriptElement.ReplaceWith(new XElement("script",
-				new XAttribute("name", scriptElement.Attribute("name")?.Value ?? "(Unnamed)"),
-				new XAttribute("enabled", scriptElement.Attribute("enabled")?.Value ?? "true"),
-				new XCData(blocks[1].Value))
-			);
-		}
+			var documentPath = Path.Combine(segmentDirectory.FullName, documentName);
+			var document = XDocument.Load(documentPath);
+			var documentRoot = document.Root;
 		
-		spawnsDocument.Save(spawnsPath);
-		
-		// go through the entities and clean up scripts.
-		var entitiesPath = Path.Combine(segmentDirectory.FullName, "Entities.xml");
-		var entitiesDocument = XDocument.Load(entitiesPath);
-		var entitiesRoot = entitiesDocument.Root;
-		
-		if (entitiesRoot is null)
-			throw new InvalidOperationException("Entities document is invalid.");
-		
-		scripts = entitiesRoot.Elements("entity").Elements("script").ToList();
+			if (documentRoot is null)
+				throw new InvalidOperationException($"{documentName} document is invalid.");
 
-		foreach (var scriptElement in scripts)
-		{
-			var blocks = scriptElement.Elements("block").ToArray();
+			var scripts = scriptSelector(document).ToList();
+		
+			foreach (var scriptElement in scripts)
+			{
+				var blocks = scriptElement.Elements("block").ToArray();
 			
-			scriptElement.ReplaceWith(new XElement("script",
-				new XAttribute("name", scriptElement.Attribute("name")?.Value ?? "(Unnamed)"),
-				new XAttribute("enabled", scriptElement.Attribute("enabled")?.Value ?? "true"),
-				new XCData(blocks[1].Value))
-			);
+				scriptElement.ReplaceWith(new XElement("script",
+					new XAttribute("name", scriptElement.Attribute("name")?.Value ?? "(Unnamed)"),
+					new XAttribute("enabled", scriptElement.Attribute("enabled")?.Value ?? "true"),
+					new XCData(blocks[1].Value))
+				);
+			}
+		
+			document.Save(documentPath);
 		}
-		
-		entitiesDocument.Save(entitiesPath);
-		
-		// go through the treasures and clean up scripts.
-		var treasuresPath = Path.Combine(segmentDirectory.FullName, "Treasures.xml");
-		var treasuresDocument = XDocument.Load(treasuresPath);
-		var treasuresRoot = treasuresDocument.Root;
-		
-		if (treasuresRoot is null)
-			throw new InvalidOperationException("Treasures document is invalid.");
-		
-		scripts = treasuresRoot.Elements("treasure").Elements("entry").Elements("script").ToList();
 
-		foreach (var scriptElement in scripts)
-		{
-			var blocks = scriptElement.Elements("block").ToArray();
-			
-			scriptElement.ReplaceWith(new XElement("script",
-				new XAttribute("name", scriptElement.Attribute("name")?.Value ?? "(Unnamed)"),
-				new XAttribute("enabled", scriptElement.Attribute("enabled")?.Value ?? "true"),
-				new XCData(blocks[1].Value))
-			);
-		}
-		
-		treasuresDocument.Save(treasuresPath);
+		// go through and clean up scripts.
+		cleanup("Spawns.xml", (document) => document.Elements("spawn").Elements("script"));
+		cleanup("Entities.xml", (document) => document.Elements("entity").Elements("script"));
+		cleanup("Treasures.xml", (document) => document.Elements("treasure").Elements("entry").Elements("script"));
     }
 }
 // Extension method to handle async void safely
