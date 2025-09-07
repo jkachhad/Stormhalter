@@ -93,9 +93,7 @@ public partial class Core : Application
 
 		if (Current.Resources["applicationPresenter"] is ApplicationPresenter presenter)
 			ServiceContainer.Register(typeof(ApplicationPresenter), null, presenter);
-			
-		ServiceContainer.Register(typeof(ScriptTemplateProvider), null, new ScriptTemplateProvider());
-			
+
 		SyncfusionLicenseProvider.RegisterLicense("Mzk1NTI2QDMxMzgyZTM0MmUzMG85YlBIdldReGhYeUl3OFQxWUpUVDhyZ3gyRFpESm1NRUF1aUtpM01pcUk9");
 			
 		_storageDirectory = new DirectoryInfo(StoragePath);

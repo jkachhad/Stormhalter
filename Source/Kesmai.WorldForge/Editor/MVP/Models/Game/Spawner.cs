@@ -13,27 +13,9 @@ using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge;
-
-public class SpawnerBeforeSpawnScriptTemplate : ScriptTemplate
-{
-	public override IEnumerable<string> GetSegments()
-	{
-		yield return "void OnBeforeSpawn(Spawner spawner)\n{";
-		yield return "}";
-	}
-}
 	
-public class SpawnerAfterSpawnScriptTemplate : ScriptTemplate
-{
-	public override IEnumerable<string> GetSegments()
-	{
-		yield return "void OnAfterSpawn(Spawner spawner, MobileEntity spawn)\n{";
-		yield return "}";
-	}
-}
-	
-[ScriptTemplate("OnBeforeSpawn", typeof(SpawnerBeforeSpawnScriptTemplate))]
-[ScriptTemplate("OnAfterSpawn", typeof(SpawnerAfterSpawnScriptTemplate))]
+[Script("OnBeforeSpawn", "void OnBeforeSpawn(Spawner spawner)", "{", "}")]
+[Script("OnAfterSpawn", "void OnAfterSpawn(Spawner spawner, MobileEntity spawn)", "{", "}")]
 public abstract class Spawner : ObservableObject, ISegmentObject
 {
 	private string _name;
@@ -130,46 +112,48 @@ public abstract class Spawner : ObservableObject, ISegmentObject
 
 		if (maximumElement != null)
 			Maximum = (int)maximumElement;
-			
-		foreach (var scriptElement in element.Elements("script"))
-			_scripts.Add(new Script(scriptElement));
-			
-		ValidateScripts();
+
+		ValidateScripts(element);
 	}
 
-	private void ValidateScripts()
+	private void ValidateScripts(XElement rootElement = default)
 	{
-		if (_scripts.All(s => s.Name != "OnAfterSpawn"))
-		{
-			_scripts.Add(new Script("OnAfterSpawn", false,
-				String.Empty,
-				"\n\n",
-				String.Empty
-			));
-		}
-			
-		if (_scripts.All(s => s.Name != "OnBeforeSpawn"))
-		{
-			_scripts.Add(new Script("OnBeforeSpawn", false,
-				String.Empty,
-				"\n\n",
-				String.Empty
-			));
-		}
-			
-		var provider = ServiceLocator.Current.GetInstance<ScriptTemplateProvider>();
-		var attributes = GetType().GetCustomAttributes(typeof(ScriptTemplateAttribute), true)
-			.OfType<ScriptTemplateAttribute>().ToList();
+		var attributes = GetType().GetCustomAttributes(typeof(ScriptAttribute), inherit: false)
+			.Cast<ScriptAttribute>();
 
-		if (attributes.Any())
+		var implementations = new Dictionary<string, Script>();
+
+		if (rootElement != null)
 		{
-			foreach (var script in _scripts)
+			foreach (var scriptElement in rootElement.Elements("script"))
 			{
-				var attr = attributes.FirstOrDefault(
-					a => String.Equals(a.Name, script.Name, StringComparison.Ordinal));
+				var script = new Script(scriptElement);
 
-				if (attr != null && provider.TryGetTemplate(attr.TemplateType, out var template))
-					script.Template = template;
+				if (!implementations.TryAdd(script.Name, script))
+					throw new InvalidOperationException($"Duplicate script name '{script.Name}'.");
+			}
+		}
+
+		foreach (var attribute in attributes)
+		{
+			if (implementations.TryGetValue(attribute.Name, out var script))
+			{
+				script.Signature = attribute.Signature;
+				script.Header = attribute.Header;
+				script.Footer = attribute.Footer;
+				
+				_scripts.Add(script);
+			}
+			else
+			{
+				_scripts.Add(new Script
+				{
+					Name = attribute.Name,
+					Signature = attribute.Signature,
+					Header = attribute.Header,
+					Body = attribute.Body,
+					Footer = attribute.Footer
+				});
 			}
 		}
 	}
@@ -263,15 +247,6 @@ public class LocationSpawner : Spawner
 public class RegionSpawner : Spawner
 {
 	private int _region;
-
-	private double _averageMobs;
-	private int? _totalXP;
-	private int? _totalHP;
-	private int _openFloortiles;
-	private Tuple<int?, int?, int?> _threat;
-	private double? _meleeXPPerThreat;
-	private double? _rangedXPPerThreat;
-	private double? _magicXPPerThreat;
 		
 	public int Region
 	{
@@ -317,213 +292,6 @@ public class RegionSpawner : Spawner
 					(int)rectangleElement.Attribute("bottom")));
 			}
 		}
-	}
-
-	public void CalculateStats()
-	{
-		//Calculate Open Floor Tiles by finding all tiles that have a floor type component and not a structural component.
-		_openFloortiles = 0;
-		var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
-		var segment = segmentRequest.Response;
-		var region = segment.GetRegion(_region);
-		_threat = new Tuple<int?, int?, int?>(null, null, null);
-
-		if (region is not null)
-		{
-			IEnumerable<SegmentTile> includedTiles = Enumerable.Empty<SegmentTile>();
-			foreach (var rect in Inclusions)
-			{
-				var rectTiles = region.GetTiles(t => rect.ToRectangle().Contains(t.X, t.Y) &&
-				                                     t.Components.Any(floor => floor is Models.FloorComponent || floor is Models.IceComponent || floor is Models.WaterComponent) &&
-				                                     !t.Components.Any(notfloor => notfloor is Models.WallComponent || notfloor is Models.ObstructionComponent));
-				includedTiles = includedTiles.Union(rectTiles);
-			}
-			foreach (var rect in Exclusions)
-			{
-				if (rect is { Left: 0, Right: 0, Top: 0, Bottom: 0 })
-					continue;
-				includedTiles = includedTiles.Where(t => !rect.ToRectangle().Contains(t.X, t.Y));
-			}
-
-			_openFloortiles = includedTiles.Count();
-
-			//Calculate stats that require itterating through entities: Average mobs, total xp, total hp, density.
-			_averageMobs = 0;
-			_totalXP = 0;
-			_totalHP = 0;
-			if (Entries.Count != 0)
-			{
-				double averageEntry = 0;
-				double averageXP = 0;
-				double averageXPMelee = 0;
-				double averageXPRanged = 0;
-				double averageXPMagic = 0;
-				double averageHP = 0;
-				double averageHPMelee = 0;
-				double averageHPRanged = 0;
-				double averageHPMagic = 0;
-				double averageMeleeThreat = 0;
-				double averageRangedThreat = 0;
-				double averageMagicThreat = 0;
-				double countMeleeThreat = 0;
-				double countRangedThreat = 0;
-				double countMagicThreat = 0;
-				int minimumMobs = 0;
-				int minimumXP = 0;
-				int minimumHP = 0;
-				int minimumSlots = 0;
-				int maximumMobs = 0;
-				int maximumXP = 0;
-				int maximumHP = 0;
-				int maximumSlots = 0;
-				foreach (var entry in Entries.Where(e=>e.Entity.HP is not null && e.Entity.XP is not null))
-				{
-					averageEntry += entry.Size;
-					averageHP += entry.Size * (int)entry.Entity.HP;
-					averageXP += entry.Size * (int)entry.Entity.XP;
-					if(entry.Entity.Threat.Item1 is not null)
-					{
-						averageMeleeThreat += (int)entry.Entity.Threat.Item1;
-						countMeleeThreat++;
-						averageHPMelee += entry.Size * (int)entry.Entity.HP;
-						averageXPMelee += entry.Size * (int)entry.Entity.XP;
-					}
-					if(entry.Entity.Threat.Item2 is not null)
-					{
-						averageRangedThreat += (int)entry.Entity.Threat.Item2;
-						countRangedThreat++;
-						averageHPRanged += entry.Size * (int)entry.Entity.HP;
-						averageXPRanged += entry.Size * (int)entry.Entity.XP;
-					}
-					if (entry.Entity.Threat.Item3 is not null)
-					{
-						averageMagicThreat += (int)entry.Entity.Threat.Item3;
-						countMagicThreat++;
-						averageHPMagic += entry.Size * (int)entry.Entity.HP;
-						averageXPMagic += entry.Size * (int)entry.Entity.XP;
-					}
-					minimumMobs += entry.Minimum * entry.Size;
-					minimumHP += entry.Minimum * entry.Size * (int)entry.Entity.HP;
-					minimumXP += entry.Minimum * entry.Size * (int)entry.Entity.XP;
-					minimumSlots += entry.Minimum;
-					maximumMobs += entry.Maximum * entry.Size;
-					maximumHP += entry.Maximum * entry.Size * (int)entry.Entity.HP;
-					maximumXP += entry.Maximum * entry.Size * (int)entry.Entity.XP;
-					maximumSlots += entry.Maximum ==0 ? Maximum : entry.Maximum;
-
-				}
-				averageEntry = averageEntry / Entries.Count();
-				averageHP = averageHP / Entries.Count();
-				averageXP = averageXP / Entries.Count();
-				if (countMeleeThreat > 0)
-				{
-					averageMeleeThreat = averageMeleeThreat / countMeleeThreat;
-					averageXPMelee = averageXPMelee / countMeleeThreat;
-					averageHPMelee = averageHPMelee / countMeleeThreat;
-					_meleeXPPerThreat = (averageXPMelee / averageMeleeThreat) / averageHPMelee;
-				}
-				if (countRangedThreat > 0)
-				{
-					averageRangedThreat = averageRangedThreat / countRangedThreat;
-					averageXPRanged = averageXPRanged / countRangedThreat;
-					averageHPRanged = averageHPRanged / countRangedThreat;
-					_rangedXPPerThreat = (averageXPRanged / averageRangedThreat) / averageHPRanged;
-				}
-				if (countMagicThreat > 0)
-				{
-					averageMagicThreat = averageMagicThreat / countMagicThreat;
-					averageXPMagic = averageXPMagic / countMagicThreat;
-					averageHPMagic = averageHPMagic / countMagicThreat;
-					_magicXPPerThreat = (averageXPMagic / averageMagicThreat) / averageHPMagic;
-				}
-
-				//For spawners that have a maximum of 0 or a Maximum higher than the alotted entries, there is no cap on mobs, and all entries will spawn their maximum
-				if (Maximum == 0 || Maximum>=maximumSlots)
-				{
-					_averageMobs = maximumMobs;
-					_totalHP = maximumHP;
-					_totalXP = maximumXP;
-				}
-				//For spawners that have fewer slots available than needed to fill the minimums, average mobs is just slots times our average size.
-				else if (Maximum < minimumSlots)
-				{
-					_averageMobs = averageEntry * Maximum;
-					_totalHP = (int)(averageHP * Maximum);
-					_totalXP = (int)(averageXP * Maximum);
-				}
-				//For other spawners, we need to first fill the minimums, then add remaining slots * our average.
-				else
-				{
-					_averageMobs = minimumMobs + (Maximum - minimumSlots) * averageEntry;
-					_totalHP = (int)(minimumHP + (Maximum - minimumSlots) * averageHP);
-					_totalXP = (int)(minimumXP + (Maximum - minimumSlots) * averageXP);
-				}
-				_threat = new Tuple<int?, int?, int?>(averageMeleeThreat>0?(int)averageMeleeThreat:null, averageRangedThreat>0?(int)averageRangedThreat:null, averageMagicThreat>0?(int)averageMagicThreat:null);
-			}
-			//If any of the entities referenced have a null for HP or XP, invalidate that calculation
-			if (Entries.Any(e => e.Entity.HP is null))
-				_totalHP = null;
-			if (Entries.Any(e => e.Entity.XP is null))
-				_totalXP = null;
-			//If the Spawner has a 0 Maximum AND any of the entities also have a 0 maximum. I think this spawner will spawn without cap. Show as broken
-			if (Maximum == 0 && Entries.Any(e => e.Maximum == 0))
-			{
-				_averageMobs = 0;
-				_totalHP = null;
-				_totalXP = null;
-			}
-		}
-	}
-	public int OpenFloorTiles
-	{
-		get => _openFloortiles;
-	}
-
-	public double AverageMobs
-	{
-		get => _averageMobs;
-	}
-
-	[Description("Approximate mobs per open floor tile")]
-	public double Density
-	{
-		get
-		{
-			return _averageMobs / _openFloortiles;
-		}
-	}
-
-	[Description("Average XP for a full clear of the spawn")]
-	public int? TotalXP
-	{
-		get => _totalXP;
-	}
-
-	[Description("Average damage dealt required to clear the spawn")]
-	public int? TotalHP
-	{
-		get => _totalHP;
-	}
-		
-	[Description("Damage output score for the spawn. Does not take into account custom damage values. Gets wonky when evaluating lairs.")]
-	public Tuple<int?, int?, int?> Threat
-	{
-		get => _threat;
-	}
-
-	public double? MeleeXPPerThreat
-	{
-		get => _meleeXPPerThreat;
-	}
-
-	public double? RangedXPPerThreat
-	{
-		get => _rangedXPPerThreat;
-	}
-
-	public double? MagicXPPerThreat
-	{
-		get => _magicXPPerThreat;
 	}
 
 	public override XElement GetXElement()

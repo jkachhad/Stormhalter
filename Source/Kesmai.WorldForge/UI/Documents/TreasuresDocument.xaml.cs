@@ -13,24 +13,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace Kesmai.WorldForge.UI.Documents;
-
-public class TreasureItemScriptTemplate : ScriptTemplate
-{
-	public override IEnumerable<string> GetSegments()
-	{
-		yield return "ItemEntity OnCreate(MobileEntity from, Container container)\n{";
-		yield return "}";
-	}
-}
-
-public class HoardGetChanceScriptTemplate : ScriptTemplate
-{
-	public override IEnumerable<string> GetSegments()
-	{
-		yield return "double GetChance(Facet facet, int regionIndex)\n{";
-		yield return "}";
-	}
-}
 	
 public partial class TreasuresDocument : UserControl
 {
@@ -97,18 +79,6 @@ public class TreasuresViewModel : ObservableRecipient
 				WeakReferenceMessenger.Default.Send(new SelectedTreasureChangedMessage(value));
 
 			_relatedEntities.Clear();
-
-			if (_selectedTreasure != null)
-			{
-				foreach (Entity entity in _segment.Entities)
-				{
-					foreach (Script script in entity.Scripts)
-					{
-						if (script.Blocks[1].Contains(_selectedTreasure.Name))
-							_relatedEntities.Add(entity);
-					}
-				}
-			}
 		}
 	}
 

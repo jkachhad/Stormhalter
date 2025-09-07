@@ -177,7 +177,13 @@
                         
                         <TabControl.ContentTemplate>
                             <DataTemplate>
-                                <scripting:ScriptEditor Script="{Binding}" IsEnabled="{Binding IsEnabled}"
+                                <scripting:ScriptEditor Signature="{Binding Signature}"
+                                                        Header="{Binding Header}"
+                                                        Body="{Binding Body, Mode=TwoWay}"
+                                                        Footer="{Binding Footer}" 
+                                                       
+                                                        IsEnabled="{Binding IsEnabled}"
+                                                        
                                                         Height="100" MaxHeight="300" />
                             </DataTemplate>
                         </TabControl.ContentTemplate>
@@ -273,7 +279,13 @@
                                     
                                     <TabControl.ContentTemplate>
                                         <DataTemplate>
-                                            <scripting:ScriptEditor Script="{Binding}" IsEnabled="{Binding IsEnabled}"
+                                            <scripting:ScriptEditor Signature="{Binding Signature}"
+                                                                    Header="{Binding Header}"
+                                                                    Body="{Binding Body, Mode=TwoWay}"
+                                                                    Footer="{Binding Footer}" 
+                                                       
+                                                                    IsEnabled="{Binding IsEnabled}"
+                                                                    
                                                                     Height="100" MaxHeight="300" />
                                         </DataTemplate>
                                     </TabControl.ContentTemplate>

@@ -926,10 +926,22 @@ public class ApplicationPresenter : ObservableRecipient
 		
 		// convert regions to individual files.
 		var regionsDirectory = segmentDirectory.CreateSubdirectory("Regions");
-		var regionElements = segmentRoot.Elements("regions").Elements("region");
+		var regionsElement = segmentRoot.Element("regions");
+		
+		if (regionsElement is null)
+			throw new InvalidOperationException("Segment file is invalid.");
+		
+		var regionElements = regionsElement.Elements("region");
 
 		foreach (var region in regionElements)
-			region.Save(Path.Combine(regionsDirectory.FullName, $"{region.Attribute("id")}.xml"));
+		{
+			var idElement = region.Element("id");
+			
+			if (idElement is null)
+				throw new InvalidOperationException("Region is missing an ID.");
+			
+			region.Save(Path.Combine(regionsDirectory.FullName, $"{idElement.Value}.xml"));
+		}
 
 		// other data
 		void write(XElement rootElement, string fileName)
@@ -943,7 +955,7 @@ public class ApplicationPresenter : ObservableRecipient
 		write(segmentRoot.Element("spawns"), "Spawns.xml");
 		write(segmentRoot.Element("treasures"), "Treasures.xml");
 		
-		void cleanup(string documentName, Func<XDocument, IEnumerable<XElement>> scriptSelector)
+		void cleanup(string documentName, Func<XElement, IEnumerable<XElement>> scriptSelector)
 		{
 			var documentPath = Path.Combine(segmentDirectory.FullName, documentName);
 			var document = XDocument.Load(documentPath);
@@ -952,16 +964,20 @@ public class ApplicationPresenter : ObservableRecipient
 			if (documentRoot is null)
 				throw new InvalidOperationException($"{documentName} document is invalid.");
 
-			var scripts = scriptSelector(document).ToList();
+			var scripts = scriptSelector(documentRoot).ToList();
 		
 			foreach (var scriptElement in scripts)
 			{
 				var blocks = scriptElement.Elements("block").ToArray();
+				var body = blocks[1].Value;
+				
+				// trim leading/trailing new line
+				body = body.Trim('\r', '\n');
 			
 				scriptElement.ReplaceWith(new XElement("script",
 					new XAttribute("name", scriptElement.Attribute("name")?.Value ?? "(Unnamed)"),
 					new XAttribute("enabled", scriptElement.Attribute("enabled")?.Value ?? "true"),
-					new XCData(blocks[1].Value))
+					new XCData(body))
 				);
 			}
 		
@@ -969,9 +985,9 @@ public class ApplicationPresenter : ObservableRecipient
 		}
 
 		// go through and clean up scripts.
-		cleanup("Spawns.xml", (document) => document.Elements("spawn").Elements("script"));
-		cleanup("Entities.xml", (document) => document.Elements("entity").Elements("script"));
-		cleanup("Treasures.xml", (document) => document.Elements("treasure").Elements("entry").Elements("script"));
+		cleanup("Spawns.xml", (root) => root.Elements("spawn").Elements("script"));
+		cleanup("Entities.xml", (root) => root.Elements("entity").Elements("script"));
+		cleanup("Treasures.xml", (root) => root.Elements("treasure").Elements("entry").Elements("script"));
 		
 		// create the project file
 		var projectRoot = new XElement("Project",

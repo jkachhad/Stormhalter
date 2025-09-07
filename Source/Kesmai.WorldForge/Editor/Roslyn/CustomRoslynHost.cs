@@ -101,6 +101,8 @@ public class CustomRoslynHost : RoslynHost
 
         solution = project.Solution;
         
+        // TODO: Load documents from sources folder.
+        /*
         _internalDocumentId = DocumentId.CreateNewId(project.Id);
         
         solution = solution.AddDocument(_internalDocumentId, "Internal.g.cs",
@@ -113,6 +115,7 @@ public class CustomRoslynHost : RoslynHost
         
         segment.Internal.Changed += () => UpdateSegmentDocuments(segment);
         segment.Definition.Changed += () => UpdateSegmentDocuments(segment);
+        */
         
         workspace.TryApplyChanges(solution);
     }
@@ -122,6 +125,7 @@ public class CustomRoslynHost : RoslynHost
         var workspace = _workspace;
         var solution = workspace.CurrentSolution;
 
+        /*
         solution = solution.WithDocumentText(_internalDocumentId, TextAndVersion.Create(
             SourceText.From($"namespace Kesmai.Server.Segments; public partial class {segment.Name} {{ { segment.Internal.Blocks[1] } }}"),
             VersionStamp.Create()), PreservationMode.PreserveIdentity);
@@ -129,6 +133,7 @@ public class CustomRoslynHost : RoslynHost
         solution = solution.WithDocumentText(_definitionDocumentId, TextAndVersion.Create(
             SourceText.From(segment.Definition.Blocks[1]),
             VersionStamp.Create()), PreservationMode.PreserveIdentity);
+        */
         
         workspace.TryApplyChanges(solution);
     }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
@@ -103,7 +104,7 @@ public class SegmentTreasure : ObservableObject, ISegmentObject
 	}
 }
 
-[ScriptTemplate("GetChance", typeof(HoardGetChanceScriptTemplate))]
+[Script("GetChance", "double GetChance(Facet facet, int regionIndex)", "{", "}", "\treturn 100;")]
 public class SegmentHoard : SegmentTreasure
 {
 	private ObservableCollection<Script> _scripts = new ObservableCollection<Script>();
@@ -123,51 +124,60 @@ public class SegmentHoard : SegmentTreasure
 	
 	public override bool IsHoard => true;
 	
-	public SegmentHoard() : base()
+	public SegmentHoard()
 	{
 		ValidateScripts();
 	}
 	
 	public SegmentHoard(XElement element) : base(element)
 	{
-		foreach (var scriptElement in element.Elements("script"))
-			_scripts.Add(new Script(scriptElement));
-
-		ValidateScripts();
+		ValidateScripts(element);
 	}
 	
 	public SegmentHoard(SegmentHoard hoard) : base(hoard)
 	{
 		_scripts.Clear();
 		_scripts.AddRange(hoard.Scripts.Select(s => s.Clone()));
-
-		ValidateScripts();
 	}
 	
-	private void ValidateScripts()
+	private void ValidateScripts(XElement rootElement = default)
 	{
-		if (_scripts.All(s => s.Name != "GetChance"))
+		var attributes = GetType().GetCustomAttributes(typeof(ScriptAttribute), inherit: false)
+			.Cast<ScriptAttribute>();
+
+		var implementations = new Dictionary<string, Script>();
+
+		if (rootElement != null)
 		{
-			_scripts.Add(new Script("GetChance", true,
-				String.Empty, 
-				"\n\treturn 100;\n", 
-				String.Empty
-			));
+			foreach (var scriptElement in rootElement.Elements("script"))
+			{
+				var script = new Script(scriptElement);
+
+				if (!implementations.TryAdd(script.Name, script))
+					throw new InvalidOperationException($"Duplicate script name '{script.Name}'.");
+			}
 		}
 
-		var provider = ServiceLocator.Current.GetInstance<ScriptTemplateProvider>();
-		var attributes = GetType().GetCustomAttributes(typeof(ScriptTemplateAttribute), false)
-			.OfType<ScriptTemplateAttribute>().ToList();
-
-		if (attributes.Any())
+		foreach (var attribute in attributes)
 		{
-			foreach (var script in _scripts)
+			if (implementations.TryGetValue(attribute.Name, out var script))
 			{
-				var attr = attributes.FirstOrDefault(
-					a => String.Equals(a.Name, script.Name, StringComparison.Ordinal));
-
-				if (attr != null && provider.TryGetTemplate(attr.TemplateType, out var template))
-					script.Template = template;
+				script.Signature = attribute.Signature;
+				script.Header = attribute.Header;
+				script.Footer = attribute.Footer;
+				
+				_scripts.Add(script);
+			}
+			else
+			{
+				_scripts.Add(new Script
+				{
+					Name = attribute.Name,
+					Signature = attribute.Signature,
+					Header = attribute.Header,
+					Body = attribute.Body,
+					Footer = attribute.Footer
+				});
 			}
 		}
 	}
@@ -183,7 +193,7 @@ public class SegmentHoard : SegmentTreasure
 	}
 }
 	
-[ScriptTemplate("OnCreate", typeof(TreasureItemScriptTemplate))]
+[Script("OnCreate", "ItemEntity OnCreate(MobileEntity from, Container container)", "{", "}", "\treturn new ItemEntity();")]
 public class TreasureEntry : ObservableObject
 {
 	public class TreasureEntryWeightChanged : ValueChangedMessage<double>
@@ -252,10 +262,7 @@ public class TreasureEntry : ObservableObject
 		if (element.TryGetElement("notes", out var notesElement))
 			_notes = (string)notesElement;
 
-		foreach (var scriptElement in element.Elements("script"))
-			_scripts.Add(new Script(scriptElement));
-			
-		ValidateScripts();
+		ValidateScripts(element);
 	}
 
 	public TreasureEntry(TreasureEntry entry)
@@ -269,30 +276,44 @@ public class TreasureEntry : ObservableObject
 		_scripts.AddRange(entry.Scripts.Select(s => s.Clone()));
 	}
 		
-	private void ValidateScripts()
+	private void ValidateScripts(XElement rootElement = default)
 	{
-		if (_scripts.All(s => s.Name != "OnCreate"))
+		var attributes = GetType().GetCustomAttributes(typeof(ScriptAttribute), inherit: false)
+			.Cast<ScriptAttribute>();
+
+		var implementations = new Dictionary<string, Script>();
+
+		if (rootElement != null)
 		{
-			_scripts.Add(new Script("OnCreate", true,
-				String.Empty, 
-				"\n\treturn new ItemEntity();\n", 
-				String.Empty
-			));
+			foreach (var scriptElement in rootElement.Elements("script"))
+			{
+				var script = new Script(scriptElement);
+
+				if (!implementations.TryAdd(script.Name, script))
+					throw new InvalidOperationException($"Duplicate script name '{script.Name}'.");
+			}
 		}
 
-		var provider = ServiceLocator.Current.GetInstance<ScriptTemplateProvider>();
-		var attributes = GetType().GetCustomAttributes(typeof(ScriptTemplateAttribute), false)
-			.OfType<ScriptTemplateAttribute>().ToList();
-
-		if (attributes.Any())
+		foreach (var attribute in attributes)
 		{
-			foreach (var script in _scripts)
+			if (implementations.TryGetValue(attribute.Name, out var script))
 			{
-				var attr = attributes.FirstOrDefault(
-					a => String.Equals(a.Name, script.Name, StringComparison.Ordinal));
-
-				if (attr != null && provider.TryGetTemplate(attr.TemplateType, out var template))
-					script.Template = template;
+				script.Signature = attribute.Signature;
+				script.Header = attribute.Header;
+				script.Footer = attribute.Footer;
+				
+				_scripts.Add(script);
+			}
+			else
+			{
+				_scripts.Add(new Script
+				{
+					Name = attribute.Name,
+					Signature = attribute.Signature,
+					Header = attribute.Header,
+					Body = attribute.Body,
+					Footer = attribute.Footer
+				});
 			}
 		}
 	}

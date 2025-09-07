@@ -107,13 +107,6 @@
                 <syncfusion:PropertyGrid.Items>
                     <syncfusion:PropertyGridItem PropertyName="Name" />
                     <syncfusion:PropertyGridItem IsReadOnly="True" PropertyName="Group" />
-                    <syncfusion:PropertyGridItem PropertyName="XP" />
-                    <syncfusion:PropertyGridItem PropertyName="HP" />
-                    <syncfusion:PropertyGridItem PropertyName="Threat"/>
-                    <syncfusion:PropertyGridItem PropertyName="Flags"/>
-                    <syncfusion:PropertyGridItem PropertyName="MeleeXPPerThreat" DisplayName="XP/Melee Threat"/>
-                    <syncfusion:PropertyGridItem PropertyName="RangedXPPerThreat" DisplayName="XP/Range Threat"/>
-                    <syncfusion:PropertyGridItem PropertyName="MagicXPPerThreat" DisplayName="XP/Magic Threat"/>
                 </syncfusion:PropertyGrid.Items>
             </syncfusion:PropertyGrid>
             <StackPanel Grid.Row="3" Margin="0,3,0,0">
@@ -162,7 +155,12 @@
                 </TabControl.ItemTemplate>
                 <TabControl.ContentTemplate>
                     <DataTemplate>
-                        <scripting:ScriptEditor Script="{Binding}" IsEnabled="{Binding IsEnabled}" x:Name="_editor"/>
+                        <scripting:ScriptEditor Signature="{Binding Signature}"
+                                                Header="{Binding Header}"
+                                                Body="{Binding Body, Mode=TwoWay}"
+                                                Footer="{Binding Footer}" 
+                                                       
+                                                IsEnabled="{Binding IsEnabled}" />
                     </DataTemplate>
                 </TabControl.ContentTemplate>
             </TabControl>

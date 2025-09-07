@@ -17,33 +17,6 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace Kesmai.WorldForge.UI.Documents;
 
-public class EntitySpawnScriptTemplate : ScriptTemplate
-{
-	public override IEnumerable<string> GetSegments()
-	{
-		yield return "CreatureEntity OnSpawn()\n{";
-		yield return "}";
-	}
-}
-	
-public class EntityDeathScriptTemplate : ScriptTemplate
-{
-	public override IEnumerable<string> GetSegments()
-	{
-		yield return "void OnDeath(MobileEntity source, MobileEntity killer)\n{";
-		yield return "}";
-	}
-}
-	
-public class EntityIncomingPlayerScriptTemplate : ScriptTemplate
-{
-	public override IEnumerable<string> GetSegments()
-	{
-		yield return "void OnIncomingPlayer(MobileEntity source, PlayerEntity player)\n{";
-		yield return "}";
-	}
-}
-
 public static class DependencyObjectExtensions
 {
 	public static T GetParentOfType<T>(this DependencyObject element) where T : DependencyObject

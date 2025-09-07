@@ -77,31 +77,6 @@ public class Segment : ObservableObject
 			
 		Regions = new NotifyingCollection<SegmentRegion>();
 		Regions.CollectionChanged += OnRegionsChanged;
-
-		ValidateScripts();
-	}
-		
-	private void ValidateScripts()
-	{
-		if (_internal == null)
-		{
-			_internal = new Script("Internal", true,
-				String.Empty,
-				"\n",
-				String.Empty
-			);
-		}
-
-		if (_definition is null)
-			_definition = new Script("definition", true, String.Empty, String.Empty);
-
-		var provider = ServiceLocator.Current.GetInstance<ScriptTemplateProvider>();
-			
-		if (provider.TryGetTemplate(typeof(SegmentInternalScriptTemplate), out var internalTemplate))
-			_internal.Template = internalTemplate;
-		
-		if (provider.TryGetTemplate(typeof(SegmentDefinitionScriptTemplate), out var definitionTemplate))
-			_definition.Template = definitionTemplate;
 	}
 
 	private void OnRegionsChanged(object sender, CollectionChangedEventArgs<SegmentRegion> args)
@@ -188,25 +163,6 @@ public class Segment : ObservableObject
 			}
 		}
 
-		if (scriptsElements.Any())
-		{
-			var internalScriptElement = scriptsElements
-				.FirstOrDefault(e => String.Equals(e.Attribute("name")?.Value, "Internal", StringComparison.Ordinal));
-
-			if (internalScriptElement != null)
-			{
-				_internal = new Script(internalScriptElement);
-			}
-			else
-			{
-				_internal = new Script("Internal", true,
-					String.Empty,
-					"\n",
-					String.Empty
-				);
-			}
-		}
-
 		if (subregionsElement != null)
 			Subregions.Load(subregionsElement, version);
 
@@ -218,8 +174,6 @@ public class Segment : ObservableObject
 
 		if (treasuresElement != null)
 			Treasures.Load(treasuresElement, version);
-			
-		ValidateScripts();
 	}
 
 	public SegmentRegion GetRegion(int id)
