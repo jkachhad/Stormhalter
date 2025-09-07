@@ -604,8 +604,6 @@ public class ApplicationPresenter : ObservableRecipient
 
 				assignment();
 				load(documentRoot, Core.Version);
-				
-				segment.Locations.Load(documentRoot, Core.Version);
 			}
 		}
 		
