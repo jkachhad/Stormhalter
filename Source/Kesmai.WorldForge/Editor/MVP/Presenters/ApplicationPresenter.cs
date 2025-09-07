@@ -1096,8 +1096,52 @@ public class ApplicationPresenter : ObservableRecipient
 		cleanup("Spawns.xml", (document) => document.Elements("spawn").Elements("script"));
 		cleanup("Entities.xml", (document) => document.Elements("entity").Elements("script"));
 		cleanup("Treasures.xml", (document) => document.Elements("treasure").Elements("entry").Elements("script"));
+		
+		// create the project file
+		var projectRoot = new XElement("Project",
+			new XAttribute("Sdk", "Microsoft.NET.Sdk"),
+			new XElement("PropertyGroup",
+				new XElement("OutputType", "Library"),
+				new XElement("TargetFramework", "net8.0-windows8.0"),
+				new XElement("RootNamespace", segment.Name),
+				new XElement("AssemblyName", segment.Name),
+				new XElement("EnableDefaultItems", false)
+			),
+			new XElement("ItemGroup",
+				new XElement("Compile", new XAttribute("Include", "Source/**/*.cs"))
+			)
+		);
+		
+
+		var additionalFiles = new []
+		{
+			"Locations.xml",
+			"Subregions.xml",
+			"Entities.xml",
+			"Spawns.xml",
+			"Treasures.xml"
+		};
+
+		if (additionalFiles.Any())
+		{
+			projectRoot.Add(
+				new XElement("ItemGroup",
+					additionalFiles.Select(f =>
+						new XElement("AdditionalFiles", new XAttribute("Include", f.Replace('\\', '/'))))
+				)
+			);
+		}
+
+		projectRoot.Add(
+			new XElement("ItemGroup",
+				new XElement("PackageReference", new XAttribute("Include", "Kesmai.Server.Reference"), new XAttribute("Version", "*"))
+			)
+		);
+
+		new XDocument(projectRoot).Save(Path.Combine(segmentDirectory.FullName, $"{segment.Name}.csproj"));
     }
 }
+
 // Extension method to handle async void safely
 public static class TaskExtensions
 {
