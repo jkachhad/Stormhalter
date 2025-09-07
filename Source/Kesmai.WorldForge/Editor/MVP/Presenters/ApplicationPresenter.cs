@@ -38,8 +38,7 @@ public class UnregisterEvents
 public class ApplicationPresenter : ObservableRecipient
 {
 	private int _unitSize = 55;
-		
-	private string _segmentFilePath;
+	
 	private DirectoryInfo _segmentFileFolder;
 	
 	private CustomRoslynHost _roslynHost;
@@ -528,7 +527,10 @@ public class ApplicationPresenter : ObservableRecipient
 		Documents.Add(new SpawnsViewModel(Segment));
 		Documents.Add(new TreasuresViewModel(Segment));
 
-		_segmentFilePath = String.Empty;
+		_roslynHost.CreateEditorProject();
+		_roslynHost.UpdateEditorDocument();
+		
+		_segmentFileFolder = null;
 	}
 
 	private void CloseSegment()
@@ -539,8 +541,8 @@ public class ApplicationPresenter : ObservableRecipient
 		Segment = null;
 		WeakReferenceMessenger.Default.Send(new UnregisterEvents());
 		Documents.Clear();
-			
-		_segmentFilePath = String.Empty;
+		
+		_segmentFileFolder = null;
 	}
 	
 	private void OpenSegment()
@@ -693,20 +695,16 @@ public class ApplicationPresenter : ObservableRecipient
 
 	private void SaveSegment(bool queryPath)
 	{
-		var targetFile = String.Empty;
-
-		if (!CheckScriptSyntax())
-			return;
-
-		if (!queryPath && String.IsNullOrEmpty(_segmentFilePath))
+		var targetPath = String.Empty;
+		
+		if (!queryPath && (_segmentFileFolder is null || !_segmentFileFolder.Exists))
 			queryPath = true;
 
 		if (queryPath)
 		{
-			var dialog = new Microsoft.Win32.SaveFileDialog()
+			var dialog = new Microsoft.Win32.OpenFolderDialog()
 			{
-				DefaultExt = ".mapproj",
-				Filter = "WorldForge - Map Project (*.mapproj)|*.mapproj",
+				Multiselect = false,
 			};
 
 			var saveResult = dialog.ShowDialog();
@@ -714,39 +712,79 @@ public class ApplicationPresenter : ObservableRecipient
 			if (!saveResult.HasValue || saveResult != true)
 				return;
 
-			targetFile = dialog.FileName;
+			targetPath = dialog.FolderName;
 		}
 		else
 		{
-			targetFile = _segmentFilePath;
+			targetPath = _segmentFileFolder.FullName;
 		}
 
 		try
 		{
-			if (File.Exists(targetFile))
-				File.Delete(targetFile);
-
-			_segmentFilePath = targetFile;
-
-			var projectFile = new XDocument();
-			var segmentElement = new XElement("segment",
-				new XAttribute("name", _segment.Name ?? "(Unknown)"),
-				new XAttribute("version", Core.Version));
-
-			_segment.Save(segmentElement);
-
-			projectFile.Add(segmentElement);
-
-			projectFile.Save(targetFile);
-
-			var definitionFilePath = $@"{_segmentFileFolder.FullName}\{_segment.Name}.cs";
-
-			if (File.Exists(definitionFilePath))
-				File.Delete(definitionFilePath);
+			var regionsDirectory = new DirectoryInfo(Path.Combine(targetPath, "Regions"));
 			
-			using (var stream = new FileStream(definitionFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
-			using (var writer = new StreamWriter(stream))
-				writer.Write(_segment.Definition.Blocks[1]);
+			if (!regionsDirectory.Exists)
+				regionsDirectory.Create();
+			
+			foreach (var region in _segment.Regions)
+				region.GetXElement().Save(Path.Combine(regionsDirectory.FullName, $"{region.ID}.xml"));
+			
+			void write(Action<XElement> saveAction, string elementName, string fileName)
+			{
+				var element = new XElement(elementName);
+				saveAction(element);
+				element.Save(Path.Combine(targetPath, fileName));
+			}
+
+			write(_segment.Locations.Save, "locations", "Locations.xml");
+			write(_segment.Subregions.Save, "subregions", "Subregions.xml");
+			write(_segment.Entities.Save, "entities", "Entities.xml");
+			write(_segment.Spawns.Save, "spawns", "Spawns.xml");
+			write(_segment.Treasures.Save, "treasures", "Treasures.xml");
+			
+			// find the project file and save it
+			var segmentProject = new FileInfo(Path.Combine(targetPath, $"{_segment.Name}.csproj"));
+
+			if (!segmentProject.Exists)
+			{
+				var projectRoot = new XElement("Project",
+					new XAttribute("Sdk", "Microsoft.NET.Sdk"),
+					new XElement("PropertyGroup",
+						new XElement("OutputType", "Library"),
+						new XElement("TargetFramework", "net8.0-windows8.0"),
+						new XElement("RootNamespace", _segment.Name),
+						new XElement("AssemblyName", _segment.Name),
+						new XElement("EnableDefaultItems", false)
+					),
+					new XElement("ItemGroup",
+						new XElement("Compile", new XAttribute("Include", "Source/**/*.cs"))
+					),
+					new XElement("ItemGroup",
+						new XElement("PackageReference", new XAttribute("Include", "Kesmai.Server.Reference"), new XAttribute("Version", "*"))
+					)
+				);
+		
+				var additionalFiles = new []
+				{
+					"Locations.xml",
+					"Subregions.xml",
+					"Entities.xml",
+					"Spawns.xml",
+					"Treasures.xml"
+				};
+
+				if (additionalFiles.Any())
+				{
+					projectRoot.Add(
+						new XElement("ItemGroup",
+							additionalFiles.Select(f =>
+								new XElement("AdditionalFiles", new XAttribute("Include", f.Replace('\\', '/'))))
+						)
+					);
+				}
+				
+				new XDocument(projectRoot).Save(segmentProject.FullName);
+			}
 		}
 		catch (Exception ex)
 		{
@@ -1035,38 +1073,56 @@ public class ApplicationPresenter : ObservableRecipient
 		var segmentDirectory = targetPath.CreateSubdirectory(Path.GetFileNameWithoutExtension(targetFile.Name));
 
 		// load the segment object, we may use it to populate the definition file
-		var segment = new Segment(); segment.Load(segmentDocument.Root);
+		var segmentRoot = segmentDocument.Root;
+		
+		if (segmentRoot is null)
+			throw new InvalidOperationException("Segment file is invalid.");
+
+		var segmentNameAttribute = segmentRoot.Attribute("name");
+		var versionAttribute = segmentRoot.Attribute("version");
+
+		if (segmentNameAttribute is null || versionAttribute is null)
+			throw new InvalidOperationException("Segment file is invalid.");
+		
+		var segmentName = segmentNameAttribute.Value;
+		var segmentVersion = Version.Parse(versionAttribute.Value);
+
+		var segmentScriptElement = segmentRoot.Element("script");
 		
 		// create the internal source directory
 		var sourceDirectory = segmentDirectory.CreateSubdirectory("Source");
-		var definitionScript = new FileInfo(Path.Combine(targetPath.FullName, $"{segment.Name}.cs"));
+		var definitionScript = new FileInfo(Path.Combine(targetPath.FullName, $"{segmentName}.cs"));
 
-		File.WriteAllText(Path.Combine(sourceDirectory.FullName, "Internal.cs"), 
-			$"namespace Kesmai.Server.Segments;\r\n\r\npublic partial class {segment.Name} {{ {segment.Internal.Blocks[1]} }}");
+		if (segmentScriptElement != null)
+		{
+			var internalScript = segmentScriptElement.Elements("block").ToArray()[1];
+			
+			File.WriteAllText(Path.Combine(sourceDirectory.FullName, "Internal.cs"),
+				$"namespace Kesmai.Server.Segments;\r\n\r\npublic partial class {segmentName} {{ {internalScript} }}");
+		}
 
 		if (definitionScript.Exists)
-			definitionScript.CopyTo(Path.Combine(sourceDirectory.FullName, $"{segment.Name}.cs"));
+			definitionScript.CopyTo(Path.Combine(sourceDirectory.FullName, $"{segmentName}.cs"));
 		
 		// convert regions to individual files.
 		var regionsDirectory = segmentDirectory.CreateSubdirectory("Regions");
+		var regionElements = segmentRoot.Elements("regions").Elements("region");
 
-		foreach (var region in segment.Regions)
-			region.GetXElement().Save(Path.Combine(regionsDirectory.FullName, $"{region.ID}.xml"));
-		
+		foreach (var region in regionElements)
+			region.Save(Path.Combine(regionsDirectory.FullName, $"{region.Attribute("id")}.xml"));
+
 		// other data
-		void write(Action<XElement> saveAction, string elementName, string fileName)
+		void write(XElement rootElement, string fileName)
 		{
-			var element = new XElement(elementName);
-			saveAction(element);
-			element.Save(Path.Combine(segmentDirectory.FullName, fileName));
+			rootElement.Save(Path.Combine(segmentDirectory.FullName, fileName));
 		}
 
-		write(segment.Locations.Save, "locations", "Locations.xml");
-		write(segment.Subregions.Save, "subregions", "Subregions.xml");
-		write(segment.Entities.Save, "entities", "Entities.xml");
-		write(segment.Spawns.Save, "spawns", "Spawns.xml");
-		write(segment.Treasures.Save, "treasures", "Treasures.xml");
-
+		write(segmentRoot.Element("locations"), "Locations.xml");
+		write(segmentRoot.Element("subregions"), "Subregions.xml");
+		write(segmentRoot.Element("entities"), "Entities.xml");
+		write(segmentRoot.Element("spawns"), "Spawns.xml");
+		write(segmentRoot.Element("treasures"), "Treasures.xml");
+		
 		void cleanup(string documentName, Func<XDocument, IEnumerable<XElement>> scriptSelector)
 		{
 			var documentPath = Path.Combine(segmentDirectory.FullName, documentName);
@@ -1103,16 +1159,18 @@ public class ApplicationPresenter : ObservableRecipient
 			new XElement("PropertyGroup",
 				new XElement("OutputType", "Library"),
 				new XElement("TargetFramework", "net8.0-windows8.0"),
-				new XElement("RootNamespace", segment.Name),
-				new XElement("AssemblyName", segment.Name),
+				new XElement("RootNamespace", segmentName),
+				new XElement("AssemblyName", segmentName),
 				new XElement("EnableDefaultItems", false)
 			),
 			new XElement("ItemGroup",
 				new XElement("Compile", new XAttribute("Include", "Source/**/*.cs"))
+			),
+			new XElement("ItemGroup",
+				new XElement("PackageReference", new XAttribute("Include", "Kesmai.Server.Reference"), new XAttribute("Version", "*"))
 			)
 		);
 		
-
 		var additionalFiles = new []
 		{
 			"Locations.xml",
@@ -1132,13 +1190,7 @@ public class ApplicationPresenter : ObservableRecipient
 			);
 		}
 
-		projectRoot.Add(
-			new XElement("ItemGroup",
-				new XElement("PackageReference", new XAttribute("Include", "Kesmai.Server.Reference"), new XAttribute("Version", "*"))
-			)
-		);
-
-		new XDocument(projectRoot).Save(Path.Combine(segmentDirectory.FullName, $"{segment.Name}.csproj"));
+		new XDocument(projectRoot).Save(Path.Combine(segmentDirectory.FullName, $"{segmentName}.csproj"));
     }
 }
 
