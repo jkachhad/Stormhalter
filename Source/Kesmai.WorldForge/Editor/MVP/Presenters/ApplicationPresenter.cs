@@ -587,76 +587,40 @@ public class ApplicationPresenter : ObservableRecipient
 				segment.Regions.Add(new SegmentRegion(regionRoot));
 			}
 		}
-		
-		var locationsFile = new FileInfo(Path.Combine(targetDirectory.FullName, "Locations.xml"));
-		
-		if (locationsFile.Exists)
-		{
-			var locationDocument = XDocument.Load(locationsFile.FullName);
-			var locationRoot = locationDocument.Root;
 
-			if (locationRoot is null)
-				throw new Exception($"Location file {locationsFile.Name} is not valid XML.");
-			
-			segment.Locations = new SegmentLocations();
-			segment.Locations.Load(locationRoot, Core.Version);
+		void process(string documentName, Action assignment, Action<XElement, Version> load)
+		{
+			var documentFile = new FileInfo(Path.Combine(targetDirectory.FullName, documentName));
+		
+			if (documentFile.Exists)
+			{
+				var document = XDocument.Load(documentFile.FullName);
+				var documentRoot = document.Root;
+
+				if (documentRoot is null)
+					throw new Exception($"Location file {documentFile.Name} is not valid XML.");
+
+				assignment();
+				load(documentRoot, Core.Version);
+				
+				segment.Locations.Load(documentRoot, Core.Version);
+			}
 		}
 		
-		var subregionsFile = new FileInfo(Path.Combine(targetDirectory.FullName, "Subregions.xml"));
+		process("Locations.xml", () => segment.Locations = new SegmentLocations(), 
+			(root, version) => segment.Locations.Load(root, version));
 		
-		if (subregionsFile.Exists)
-		{
-			var subregionDocument = XDocument.Load(subregionsFile.FullName);
-			var subregionRoot = subregionDocument.Root;
-
-			if (subregionRoot is null)
-				throw new Exception($"Subregion file {subregionsFile.Name} is not valid XML.");
-			
-			segment.Subregions = new SegmentSubregions();
-			segment.Subregions.Load(subregionRoot, Core.Version);
-		}
+		process("Subregions.xml", () => segment.Subregions = new SegmentSubregions(), 
+			(root, version) => segment.Subregions.Load(root, version));
 		
-		var entitiesFile = new FileInfo(Path.Combine(targetDirectory.FullName, "Entities.xml"));
+		process("Entities.xml", () => segment.Entities = new SegmentEntities(),
+			(root, version) => segment.Entities.Load(root, version));
 		
-		if (entitiesFile.Exists)
-		{
-			var entityDocument = XDocument.Load(entitiesFile.FullName);
-			var entityRoot = entityDocument.Root;
-
-			if (entityRoot is null)
-				throw new Exception($"Entity file {entitiesFile.Name} is not valid XML.");
-			
-			segment.Entities = new SegmentEntities();
-			segment.Entities.Load(entityRoot, Core.Version);
-		}
+		process("Spawns.xml", () => segment.Spawns = new SegmentSpawns(),
+			(root, version) => segment.Spawns.Load(segment.Entities, root, version));
 		
-		var spawnsFile = new FileInfo(Path.Combine(targetDirectory.FullName, "Spawns.xml"));
-		
-		if (spawnsFile.Exists)
-		{
-			var spawnDocument = XDocument.Load(spawnsFile.FullName);
-			var spawnRoot = spawnDocument.Root;
-
-			if (spawnRoot is null)
-				throw new Exception($"Spawn file {spawnsFile.Name} is not valid XML.");
-			
-			segment.Spawns = new SegmentSpawns();
-			segment.Spawns.Load(segment.Entities, spawnRoot, Core.Version);
-		}
-		
-		var treasuresFile = new FileInfo(Path.Combine(targetDirectory.FullName, "Treasures.xml"));
-		
-		if (treasuresFile.Exists)
-		{
-			var treasureDocument = XDocument.Load(treasuresFile.FullName);
-			var treasureRoot = treasureDocument.Root;
-
-			if (treasureRoot is null)
-				throw new Exception($"Treasure file {treasuresFile.Name} is not valid XML.");
-			
-			segment.Treasures = new SegmentTreasures();
-			segment.Treasures.Load(treasureRoot, Core.Version);
-		}
+		process("Treasures.xml", () => segment.Treasures = new SegmentTreasures(),
+			(root, version) => segment.Treasures.Load(root, version));
 		
 		_segmentFileFolder = targetDirectory;
 		
