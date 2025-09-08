@@ -19,7 +19,7 @@ namespace Kesmai.WorldForge.Roslyn;
 public class CustomRoslynHost : RoslynHost
 {
     private CustomRoslynWorkspace _workspace;
-    
+
     private DocumentId _editorDocumentId;
 
     private Dictionary<string, DocumentId> _segmentDocuments 
@@ -44,7 +44,8 @@ public class CustomRoslynHost : RoslynHost
         segmentSolution = segmentProject.Solution;
         
         // add documents to segment project.
-        var segmentDocuments = Directory.GetFiles(segment.Path, "*.cs", SearchOption.AllDirectories);
+        var segmentDocuments = Directory.GetFiles(segment.Path, "*.cs", SearchOption.AllDirectories)
+            .Where(p => !p.Contains(@"\obj\") && !p.Contains(@"\bin\"));
 
         foreach (var segmentDocument in segmentDocuments)
         {
@@ -81,19 +82,6 @@ public class CustomRoslynHost : RoslynHost
     public override RoslynWorkspace CreateWorkspace()
     {
         return _workspace;
-    }
-    
-    // Workaround for multiple additions of GetSolutionAnalyzerReferences.
-    private bool _initializedAnalyzers;
-    
-    protected override IEnumerable<AnalyzerReference> GetSolutionAnalyzerReferences()
-    {
-        if (_initializedAnalyzers)
-            return [];
-        
-        _initializedAnalyzers = true;
-        
-        return base.GetSolutionAnalyzerReferences();
     }
     
     protected override Project CreateProject(Solution solution, DocumentCreationArgs args, CompilationOptions compilationOptions, Project? previousProject = null)
@@ -135,21 +123,76 @@ public class CustomRoslynHost : RoslynHost
         }
     }
 
-    public void UpdateSegmentDocuments(Segment segment)
+    public void OnSegmentFileCreated(FileSystemEventArgs args)
     {
         var workspace = _workspace;
         var solution = workspace.CurrentSolution;
 
-        /*
-        solution = solution.WithDocumentText(_internalDocumentId, TextAndVersion.Create(
-            SourceText.From($"namespace Kesmai.Server.Segments; public partial class {segment.Name} {{ { segment.Internal.Blocks[1] } }}"),
-            VersionStamp.Create()), PreservationMode.PreserveIdentity);
-
-        solution = solution.WithDocumentText(_definitionDocumentId, TextAndVersion.Create(
-            SourceText.From(segment.Definition.Blocks[1]),
-            VersionStamp.Create()), PreservationMode.PreserveIdentity);
-        */
+        if (_segmentDocuments.ContainsKey(args.FullPath))
+            return;
         
+        var segmentProject = solution.Projects.FirstOrDefault(p => p.Name.Equals("Segment"));
+
+        if (segmentProject is null)
+            return;
+        
+        var documentId = DocumentId.CreateNewId(segmentProject.Id);
+        var documentName = Path.GetFileName(args.FullPath);
+        var documentText = File.ReadAllText(args.FullPath);
+            
+        solution = solution.AddDocument(documentId, documentName, 
+            SourceText.From(documentText), filePath: args.FullPath);
+            
+        _segmentDocuments[args.FullPath] = documentId;
+                
+        workspace.TryApplyChanges(solution);
+    }
+
+    public void OnSegmentFileDeleted(FileSystemEventArgs args)
+    {
+        if (!_segmentDocuments.TryGetValue(args.FullPath, out var documentId))
+            return;
+        
+        var workspace = _workspace;
+        var solution = workspace.CurrentSolution;
+
+        solution = solution.RemoveDocument(documentId);
+        
+        _segmentDocuments.Remove(args.FullPath);
+
+        workspace.TryApplyChanges(solution);
+    }
+    
+    public void OnSegmentFileRenamed(RenamedEventArgs args)
+    {
+        if (!_segmentDocuments.TryGetValue(args.OldFullPath, out var documentId)) 
+            return;
+        
+        var workspace = _workspace;
+        var solution = workspace.CurrentSolution;
+
+        solution = solution.WithDocumentName(documentId, Path.GetFileName(args.FullPath));
+            
+        _segmentDocuments.Remove(args.OldFullPath);
+        _segmentDocuments[args.FullPath] = documentId;
+            
+        workspace.TryApplyChanges(solution);
+    }
+    
+    public void OnSegmentFileChanged(FileSystemEventArgs args)
+    {
+        if (!_segmentDocuments.TryGetValue(args.FullPath, out var documentId))
+            return;
+        
+        var workspace = _workspace;
+        var solution = workspace.CurrentSolution;
+
+        var documentText = File.ReadAllText(args.FullPath);
+            
+        solution = solution.WithDocumentText(documentId, TextAndVersion.Create(
+            SourceText.From(documentText),
+            VersionStamp.Create()), PreservationMode.PreserveIdentity);
+            
         workspace.TryApplyChanges(solution);
     }
 
@@ -179,5 +222,18 @@ public class CustomRoslynHost : RoslynHost
                 VersionStamp.Create()), PreservationMode.PreserveIdentity);
 
         workspace.TryApplyChanges(solution);
+    }
+    
+    // Workaround for multiple additions of GetSolutionAnalyzerReferences.
+    private bool _initializedAnalyzers;
+    
+    protected override IEnumerable<AnalyzerReference> GetSolutionAnalyzerReferences()
+    {
+        if (_initializedAnalyzers)
+            return [];
+        
+        _initializedAnalyzers = true;
+        
+        return base.GetSolutionAnalyzerReferences();
     }
 }

@@ -65,17 +65,32 @@ public sealed class SegmentProject : IDisposable
         _watcher = null;
     }
 
-    private void OnChanged(object sender, FileSystemEventArgs e) =>
-        WeakReferenceMessenger.Default.Send(new SegmentFileChangedMessage(e));
+    private void OnChanged(object sender, FileSystemEventArgs e)
+    {
+        if (!IsIgnoredPath(e.FullPath))
+            WeakReferenceMessenger.Default.Send(new SegmentFileChangedMessage(e));
+    }
 
-    private void OnCreated(object sender, FileSystemEventArgs e) =>
-        WeakReferenceMessenger.Default.Send(new SegmentFileCreatedMessage(e));
+    private void OnCreated(object sender, FileSystemEventArgs e)
+    {
+        if (!IsIgnoredPath(e.FullPath))
+            WeakReferenceMessenger.Default.Send(new SegmentFileCreatedMessage(e));
+    }
 
-    private void OnDeleted(object sender, FileSystemEventArgs e) =>
-        WeakReferenceMessenger.Default.Send(new SegmentFileDeletedMessage(e));
+    private void OnDeleted(object sender, FileSystemEventArgs e)
+    {
+        if (!IsIgnoredPath(e.FullPath))
+            WeakReferenceMessenger.Default.Send(new SegmentFileDeletedMessage(e));
+    }
 
-    private void OnRenamed(object sender, RenamedEventArgs e) =>
-        WeakReferenceMessenger.Default.Send(new SegmentFileRenamedMessage(e));
+    private void OnRenamed(object sender, RenamedEventArgs e)
+    {
+        if (!IsIgnoredPath(e.FullPath))
+            WeakReferenceMessenger.Default.Send(new SegmentFileRenamedMessage(e));
+    }
+    
+    private bool IsIgnoredPath(string path) => 
+        path.Contains(@"\bin\") || path.Contains(@"\obj\") || path.EndsWith("~");
 
     public void Dispose() => _watcher.Dispose();
 }

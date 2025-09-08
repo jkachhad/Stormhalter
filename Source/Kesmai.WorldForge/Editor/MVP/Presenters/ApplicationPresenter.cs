@@ -563,6 +563,7 @@ public class ApplicationPresenter : ObservableRecipient
 		var targetDirectory = new DirectoryInfo(dialog.FolderName);
 		var segment = new Segment()
 		{
+			Name = targetDirectory.Name,
 			Path = targetDirectory.FullName
 		};
 		
@@ -855,7 +856,7 @@ public class ApplicationPresenter : ObservableRecipient
 			var internalScript = segmentScriptElement.Elements("block").ToArray()[1];
 			
 			File.WriteAllText(Path.Combine(sourceDirectory.FullName, "Internal.cs"),
-				$"namespace Kesmai.Server.Segments;\r\n\r\npublic partial class {segmentName} {{ {internalScript} }}");
+				$"namespace Kesmai.Server.Segments;\r\n\r\npublic partial class {segmentName}\n{{\n{internalScript.Value.Trim('\r', '\n')}\n}}");
 		}
 
 		if (definitionScript.Exists)
