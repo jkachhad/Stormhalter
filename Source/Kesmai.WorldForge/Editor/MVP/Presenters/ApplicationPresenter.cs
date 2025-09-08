@@ -44,7 +44,7 @@ public class ApplicationPresenter : ObservableRecipient
 	private CustomRoslynHost _roslynHost;
 		
 	private Segment _segment;
-	private SegmentWatcher _segmentWatcher;
+	private SegmentProject _segmentProject;
 	
 	private Selection _selection;
 	private TerrainSelector _filter;

@@ -5,11 +5,11 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace Kesmai.WorldForge.Editor;
 
-public sealed class SegmentWatcher : IDisposable
+public sealed class SegmentProject : IDisposable
 {
     private FileSystemWatcher _watcher;
 
-    public SegmentWatcher()
+    public SegmentProject()
     {
         WeakReferenceMessenger.Default.Register<SegmentChangedMessage>(this, (_, message) =>
         {
