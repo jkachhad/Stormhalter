@@ -140,11 +140,10 @@ public class ScriptEditor : RoslynCodeEditor
             return;
         
         Loaded -= OnLoaded;
+        
+        var workspace = ServiceLocator.Current.GetInstance<SegmentWorkspace>();
 
-        var services = (ServiceContainer)ServiceLocator.Current;
-        var presenter = services.GetInstance<ApplicationPresenter>();
-
-        await InitializeAsync(presenter.Roslyn, new ClassificationHighlightColors(),
+        await InitializeAsync(workspace.Roslyn, new ClassificationHighlightColors(),
             Directory.GetCurrentDirectory(), string.Empty, SourceCodeKind.Regular);
         
         UpdateDocument();

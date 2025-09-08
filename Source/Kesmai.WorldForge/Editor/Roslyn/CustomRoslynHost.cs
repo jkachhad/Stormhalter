@@ -23,11 +23,58 @@ public class CustomRoslynHost : RoslynHost
     private DocumentId _definitionDocumentId;
     private DocumentId _editorDocumentId;
     
-    public CustomRoslynHost(IEnumerable<Assembly> additionalAssemblies, RoslynHostReferences references) : base(additionalAssemblies, references)
+    public CustomRoslynHost(Segment segment, IEnumerable<Assembly> additionalAssemblies, RoslynHostReferences references) : base(additionalAssemblies, references)
     {
         _workspace = new CustomRoslynWorkspace(HostServices, WorkspaceKind.Host, this);
         _workspace.Services.GetRequiredService<IDiagnosticsUpdater>()
             .DisabledDiagnostics = DisabledDiagnostics;
+        
+        // create segment project
+        var segmentSolution = _workspace.CurrentSolution;
+		
+        var segmentProject = segmentSolution.AddProject($"Segment", $"Kesmai.Server.Segments.{segment.Name}", LanguageNames.CSharp)
+            .WithCompilationOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
+            /* C# minimum to support global usings. */
+            .WithParseOptions(new CSharpParseOptions(LanguageVersion.CSharp10))
+            /* Minimum references to prevent overloading */
+            .WithMetadataReferences(DefaultReferences);
+
+        segmentSolution = segmentProject.Solution;
+        
+        // TODO: Load documents from sources folder.
+        /*
+        _internalDocumentId = DocumentId.CreateNewId(project.Id);
+
+        solution = solution.AddDocument(_internalDocumentId, "Internal.g.cs",
+            SourceText.From($"namespace Kesmai.Server.Segments; public partial class {segment.Name} {{ { segment.Internal.Blocks[1] } }}"));
+
+        _definitionDocumentId = DocumentId.CreateNewId(project.Id);
+
+        solution = solution.AddDocument(_definitionDocumentId, "Definition.g.cs",
+            SourceText.From(segment.Definition.Blocks[1]));
+
+        segment.Internal.Changed += () => UpdateSegmentDocuments(segment);
+        segment.Definition.Changed += () => UpdateSegmentDocuments(segment);
+        */
+        
+        _workspace.TryApplyChanges(segmentSolution);
+        
+        // create editor project
+        var editorSolution = _workspace.CurrentSolution;
+		
+        var editorProject = editorSolution.AddProject($"Editor", $"Kesmai.Server.Segments.Editor", LanguageNames.CSharp)
+            .WithCompilationOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
+            /* C# minimum to support global usings. */
+            .WithParseOptions(new CSharpParseOptions(LanguageVersion.CSharp10))
+            /* Minimum references to prevent overloading */
+            .WithMetadataReferences(DefaultReferences);
+        
+        _editorDocumentId = DocumentId.CreateNewId(editorProject.Id);
+        
+        editorSolution = editorProject.Solution.AddDocument(_editorDocumentId, "Editor.g.cs", 
+            SourceText.From("namespace Kesmai.Server.Segments; public static class Editor { }"));
+        
+        _workspace.TryApplyChanges(editorSolution);
     }
 
     public override RoslynWorkspace CreateWorkspace()
@@ -86,39 +133,6 @@ public class CustomRoslynHost : RoslynHost
             return String.Empty;
         }
     }
-    
-    public void CreateSegmentProject(Segment segment)
-    {
-        var workspace = _workspace;
-        var solution = workspace.CurrentSolution;
-		
-        var project = solution.AddProject($"Segment", $"Kesmai.Server.Segments.{segment.Name}", LanguageNames.CSharp)
-            .WithCompilationOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
-            /* C# minimum to support global usings. */
-            .WithParseOptions(new CSharpParseOptions(LanguageVersion.CSharp10))
-            /* Minimum references to prevent overloading */
-            .WithMetadataReferences(DefaultReferences);
-
-        solution = project.Solution;
-        
-        // TODO: Load documents from sources folder.
-        /*
-        _internalDocumentId = DocumentId.CreateNewId(project.Id);
-        
-        solution = solution.AddDocument(_internalDocumentId, "Internal.g.cs",
-            SourceText.From($"namespace Kesmai.Server.Segments; public partial class {segment.Name} {{ { segment.Internal.Blocks[1] } }}"));
-        
-        _definitionDocumentId = DocumentId.CreateNewId(project.Id);
-        
-        solution = solution.AddDocument(_definitionDocumentId, "Definition.g.cs",
-            SourceText.From(segment.Definition.Blocks[1]));
-        
-        segment.Internal.Changed += () => UpdateSegmentDocuments(segment);
-        segment.Definition.Changed += () => UpdateSegmentDocuments(segment);
-        */
-        
-        workspace.TryApplyChanges(solution);
-    }
 
     public void UpdateSegmentDocuments(Segment segment)
     {
@@ -138,26 +152,6 @@ public class CustomRoslynHost : RoslynHost
         workspace.TryApplyChanges(solution);
     }
 
-    public void CreateEditorProject()
-    {
-        var workspace = _workspace;
-        var solution = workspace.CurrentSolution;
-		
-        var project = solution.AddProject($"Editor", $"Kesmai.Server.Segments.Editor", LanguageNames.CSharp)
-            .WithCompilationOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
-            /* C# minimum to support global usings. */
-            .WithParseOptions(new CSharpParseOptions(LanguageVersion.CSharp10))
-            /* Minimum references to prevent overloading */
-            .WithMetadataReferences(DefaultReferences);
-        
-        _editorDocumentId = DocumentId.CreateNewId(project.Id);
-        
-        solution = project.Solution.AddDocument(_editorDocumentId, "Editor.g.cs", 
-            SourceText.From("namespace Kesmai.Server.Segments; public static class Editor { }"));
-        
-        workspace.TryApplyChanges(solution);
-    }
-    
     public void UpdateEditorDocument()
     {
         var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();

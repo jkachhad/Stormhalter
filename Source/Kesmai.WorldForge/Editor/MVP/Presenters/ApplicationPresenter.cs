@@ -40,11 +40,8 @@ public class UnregisterEvents
 public class ApplicationPresenter : ObservableRecipient
 {
 	private int _unitSize = 55;
-
-	private CustomRoslynHost _roslynHost;
-		
+	
 	private Segment _segment;
-	private SegmentProject _segmentProject;
 	
 	private Selection _selection;
 	private TerrainSelector _filter;
@@ -55,8 +52,6 @@ public class ApplicationPresenter : ObservableRecipient
 	private object _activeDocument;
 	private object _previousDocument;
 	
-	public CustomRoslynHost Roslyn => _roslynHost;
-
 	private TeleportComponent _configuringTeleporter = null;
 	public TeleportComponent ConfiguringTeleporter
 	{
@@ -117,9 +112,6 @@ public class ApplicationPresenter : ObservableRecipient
 			if (SetProperty(ref _segment, value, true))
 			{
 				WeakReferenceMessenger.Default.Send(new SegmentChangedMessage(Segment));
-				
-				if (_segment != null)
-					CreateWorkspace();
 				
 				ActiveDocument = Documents.FirstOrDefault();
 			}
@@ -530,9 +522,6 @@ public class ApplicationPresenter : ObservableRecipient
 		Documents.Add(new EntitiesViewModel(Segment));
 		Documents.Add(new SpawnsViewModel(Segment));
 		Documents.Add(new TreasuresViewModel(Segment));
-
-		_roslynHost.CreateEditorProject();
-		_roslynHost.UpdateEditorDocument();
 	}
 
 	private void CloseSegment()
@@ -637,59 +626,6 @@ public class ApplicationPresenter : ObservableRecipient
 		
 		SelectFilter(Filters.FirstOrDefault());
 		SelectTool(Tools.FirstOrDefault());
-		
-		_roslynHost.CreateEditorProject();
-		_roslynHost.UpdateEditorDocument();
-	}
-
-	public void CreateWorkspace()
-	{
-		var refs = Task.Run(() => NuGetResolver.Resolve("Kesmai.Server.Reference", "net8.0-windows8.0"));
-		
-		var blacklistedAssemblies = new[]
-		{
-			"RoslynPad.Roslyn.Windows",
-			"RoslynPad.Editor.Windows",
-			"DigitalRune",
-			"MonoGame",
-			"SharpDX",
-			"WindowsDesktop",
-			"WorldForge"
-		};
-		
-		var metadataReferences = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(a => !a.IsDynamic && !String.IsNullOrEmpty(a.Location))
-			.Where(a => blacklistedAssemblies.All(b => !a.Location.Contains(b)))
-			.Select(a => (MetadataReference)MetadataReference.CreateFromFile(a.Location))
-			.ToList();
-
-		foreach (var metadataReference in refs.Result)
-			metadataReferences.Add(metadataReference);
-		
-		var serviceAssemblies = new[]
-		{
-			Assembly.Load("RoslynPad.Roslyn.Windows"),
-			Assembly.Load("RoslynPad.Editor.Windows")
-		};
-
-		var namespaceImports = new string[]
-		{
-			$"static Kesmai.Server.Segments.{_segment.Name}",
-			$"static Kesmai.Server.Segments.Editor",
-			"Kesmai.Server.Game",
-			"Kesmai.Server.Items",
-			"Kesmai.Server.Miscellaneous",
-			"Kesmai.Server.Network",
-			"Kesmai.Server.Spells",
-			"SpanReader = DotNext.Buffers.SpanReader<byte>",
-			"SpanWriter = DotNext.Buffers.PoolingArrayBufferWriter<byte>",
-		};
-		
-		var roslynReferences = RoslynHostReferences.NamespaceDefault
-			.With(references: metadataReferences, imports: namespaceImports);
-		
-		_roslynHost = new CustomRoslynHost(serviceAssemblies, roslynReferences);
-		_roslynHost.CreateSegmentProject(_segment);
 	}
 
 	private void SaveSegment(bool queryPath)

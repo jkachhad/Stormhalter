@@ -92,6 +92,7 @@ public partial class Core : Application
 		Version = Assembly.GetExecutingAssembly().GetName().Version;
 
 		ServiceContainer.Register(typeof(SegmentProject), null, new SegmentProject());
+		ServiceContainer.Register(typeof(SegmentWorkspace), null, new SegmentWorkspace());
 		
 		if (Current.Resources["applicationPresenter"] is ApplicationPresenter presenter)
 			ServiceContainer.Register(typeof(ApplicationPresenter), null, presenter);
