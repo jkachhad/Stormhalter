@@ -27,11 +27,7 @@ public class Segment : ObservableObject
 		
 	private string _name;
 	private string _path;
-	
-	
-	private Script _internal;
-	private Script _definition;
-	
+
 	public string Name
 	{
 		get => _name;
@@ -43,19 +39,7 @@ public class Segment : ObservableObject
 		get => _path;
 		set => _path = value;
 	}
-
-	public Script Internal
-	{
-		get => _internal;
-		set => SetProperty(ref _internal, value);
-	}
-
-	public Script Definition
-	{
-		get => _definition;
-		set => SetProperty(ref _definition, value);
-	}
-
+	
 	public NotifyingCollection<SegmentRegion> Regions { get; set; } = new NotifyingCollection<SegmentRegion>();
 	public SegmentLocations Locations { get; set; } = new SegmentLocations();
 	public SegmentSubregions Subregions { get; set; } = new SegmentSubregions();
@@ -97,146 +81,9 @@ public class Segment : ObservableObject
 			args.OldItems.ForEach(region => { presenter.Documents.Remove(region); });
 	}
 	
-	public void Load(XElement element)
-	{
-		Name = (string)element.Attribute("name");
-		Locations = new SegmentLocations();
-			
-		var versionAttribute = element.Attribute("version");
-
-		if (versionAttribute != null)
-		{
-			Load(element, new Version((string)versionAttribute));
-			return;
-		}
-			
-		/* Loading deprecated formats. */
-		var regions = new List<SegmentRegion>();
-
-		foreach (var regionElement in element.Elements("region"))
-			regions.Add(new SegmentRegion(regionElement));
-		
-		if (regions.Count > 0)
-			Regions.AddRange(regions);
-		
-		var locationsElement = element.Element("locations");
-
-		if (locationsElement != null)
-		{
-			foreach (var locationElement in locationsElement.Elements("location"))
-			{
-				var location = new SegmentLocation(locationElement);
-
-				if (_reservedLocations.Contains(location.Name))
-					location.IsReserved = true;
-
-				Locations.Add(location);
-			}
-		}
-	}
-
-	public void Load(XElement element, Version version)
-	{
-		var regionsElement = element.Element("regions");
-		var locationsElement = element.Element("locations");
-		var subregionsElement = element.Element("subregions");
-		var entitiesElement = element.Element("entities");
-		var spawnsElement = element.Element("spawns");
-		var treasuresElement = element.Element("treasures");
-		var hoardsElement = element.Element("hoards");
-		var scriptsElements = element.Elements("script").ToList();
-			
-		if (regionsElement != null)
-		{
-			foreach (var regionElement in regionsElement.Elements("region"))
-				Regions.Add(new SegmentRegion(regionElement));
-		}
-	
-		if (locationsElement != null)
-		{
-			Locations.Load(locationsElement, version);
-
-			foreach (var location in Locations)
-			{
-				if (_reservedLocations.Contains(location.Name))
-					location.IsReserved = true;
-			}
-		}
-
-		if (subregionsElement != null)
-			Subregions.Load(subregionsElement, version);
-
-		if (entitiesElement != null)
-			Entities.Load(entitiesElement, version);
-
-		if (spawnsElement != null)
-			Spawns.Load(Entities, spawnsElement, version);
-
-		if (treasuresElement != null)
-			Treasures.Load(treasuresElement, version);
-	}
-
 	public SegmentRegion GetRegion(int id)
 	{
 		return Regions.FirstOrDefault(region => region.ID == id);
-	}
-	
-	public void Save(XElement element)
-	{
-		var regionsElement = new XElement("regions");
-		var locationsElement = new XElement("locations");
-		var subregionsElement = new XElement("subregions");
-		var entitiesElement = new XElement("entities");
-		var spawnsElement = new XElement("spawns");
-		var treasuresElement = new XElement("treasures");
-		var hoardsElement = new XElement("hoards");
-			
-		#region Regions
-			
-		foreach (var region in Regions)
-			regionsElement.Add(region.GetXElement());
-
-		#endregion
-			
-		#region Locations
-
-		Locations.Save(locationsElement);
-
-		#endregion
-			
-		#region Subregions
-
-		Subregions.Save(subregionsElement);
-
-		#endregion
-			
-		#region Entities
-
-		Entities.Save(entitiesElement);
-
-		#endregion
-			
-		#region Spawns
-
-		Spawns.Save(spawnsElement);
-
-		#endregion
-			
-		#region Treasures
-
-		Treasures.Save(treasuresElement);
-			
-		#endregion
-
-		element.Add(_internal.GetXElement());
-			
-		element.Add(regionsElement);
-		element.Add(locationsElement);
-		element.Add(subregionsElement);
-		element.Add(entitiesElement);
-		element.Add(spawnsElement);
-		element.Add(treasuresElement);
-		element.Add(hoardsElement);
 	}
 		
 	public void UpdateTiles()
