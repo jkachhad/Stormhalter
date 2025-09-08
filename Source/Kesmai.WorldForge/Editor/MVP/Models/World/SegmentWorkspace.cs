@@ -11,7 +11,7 @@ namespace Kesmai.WorldForge.Editor;
 
 public class SegmentWorkspace
 {
-	public CustomRoslynHost Roslyn { get; set; }
+	public CustomRoslynHost Host { get; set; }
 	
 	public SegmentWorkspace()
 	{
@@ -72,15 +72,15 @@ public class SegmentWorkspace
 		var roslynReferences = RoslynHostReferences.NamespaceDefault
 			.With(references: metadataReferences, imports: namespaceImports);
 		
-		Roslyn = new CustomRoslynHost(segment, serviceAssemblies, roslynReferences);
-		Roslyn.UpdateEditorDocument();
+		Host = new CustomRoslynHost(segment, serviceAssemblies, roslynReferences);
+		Host.UpdateEditorDocument();
 	}
 
 	public void Reset()
 	{
-		if (Roslyn is null)
+		if (Host is null)
 			return;
 
-		Roslyn = null;
+		Host = null;
 	}
 }

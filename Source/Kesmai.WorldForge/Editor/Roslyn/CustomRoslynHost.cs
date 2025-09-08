@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using CommonServiceLocator;
+using CommunityToolkit.Mvvm.Messaging;
 using Kesmai.WorldForge.Editor;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -19,9 +20,10 @@ public class CustomRoslynHost : RoslynHost
 {
     private CustomRoslynWorkspace _workspace;
     
-    private DocumentId _internalDocumentId;
-    private DocumentId _definitionDocumentId;
     private DocumentId _editorDocumentId;
+
+    private Dictionary<string, DocumentId> _segmentDocuments 
+        = new Dictionary<string, DocumentId>();
     
     public CustomRoslynHost(Segment segment, IEnumerable<Assembly> additionalAssemblies, RoslynHostReferences references) : base(additionalAssemblies, references)
     {
@@ -41,21 +43,20 @@ public class CustomRoslynHost : RoslynHost
 
         segmentSolution = segmentProject.Solution;
         
-        // TODO: Load documents from sources folder.
-        /*
-        _internalDocumentId = DocumentId.CreateNewId(project.Id);
+        // add documents to segment project.
+        var segmentDocuments = Directory.GetFiles(segment.Path, "*.cs", SearchOption.AllDirectories);
 
-        solution = solution.AddDocument(_internalDocumentId, "Internal.g.cs",
-            SourceText.From($"namespace Kesmai.Server.Segments; public partial class {segment.Name} {{ { segment.Internal.Blocks[1] } }}"));
-
-        _definitionDocumentId = DocumentId.CreateNewId(project.Id);
-
-        solution = solution.AddDocument(_definitionDocumentId, "Definition.g.cs",
-            SourceText.From(segment.Definition.Blocks[1]));
-
-        segment.Internal.Changed += () => UpdateSegmentDocuments(segment);
-        segment.Definition.Changed += () => UpdateSegmentDocuments(segment);
-        */
+        foreach (var segmentDocument in segmentDocuments)
+        {
+            var documentId = DocumentId.CreateNewId(segmentProject.Id);
+            var documentName = Path.GetFileName(segmentDocument);
+            var documentText = File.ReadAllText(segmentDocument);
+            
+            segmentSolution = segmentSolution.AddDocument(documentId, documentName, 
+                SourceText.From(documentText), filePath: segmentDocument);
+            
+            _segmentDocuments[segmentDocument] = documentId;
+        }
         
         _workspace.TryApplyChanges(segmentSolution);
         

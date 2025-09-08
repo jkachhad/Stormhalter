@@ -143,7 +143,7 @@ public class ScriptEditor : RoslynCodeEditor
         
         var workspace = ServiceLocator.Current.GetInstance<SegmentWorkspace>();
 
-        await InitializeAsync(workspace.Roslyn, new ClassificationHighlightColors(),
+        await InitializeAsync(workspace.Host, new ClassificationHighlightColors(),
             Directory.GetCurrentDirectory(), string.Empty, SourceCodeKind.Regular);
         
         UpdateDocument();
