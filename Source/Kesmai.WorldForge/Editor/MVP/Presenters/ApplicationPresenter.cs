@@ -31,6 +31,8 @@ namespace Kesmai.WorldForge.Editor;
 public class GetActiveSegmentRequestMessage : RequestMessage<Segment>
 {
 }
+
+public class SegmentChangedMessage(Segment Segment) : ValueChangedMessage<Segment>(Segment);
 	
 public class UnregisterEvents
 {
@@ -38,12 +40,12 @@ public class UnregisterEvents
 public class ApplicationPresenter : ObservableRecipient
 {
 	private int _unitSize = 55;
-	
-	private DirectoryInfo _segmentFileFolder;
-	
+
 	private CustomRoslynHost _roslynHost;
 		
 	private Segment _segment;
+	private SegmentWatcher _segmentWatcher;
+	
 	private Selection _selection;
 	private TerrainSelector _filter;
 	private Tool _selectedTool;
@@ -114,6 +116,8 @@ public class ApplicationPresenter : ObservableRecipient
 		{
 			if (SetProperty(ref _segment, value, true))
 			{
+				WeakReferenceMessenger.Default.Send(new SegmentChangedMessage(Segment));
+				
 				if (_segment != null)
 					CreateWorkspace();
 				
@@ -519,7 +523,7 @@ public class ApplicationPresenter : ObservableRecipient
 			throw new InvalidOperationException("Attempt to create a segment when an active segment already exists.");
 
 		Segment = new Segment();
-			
+		
 		Documents.Add(new SegmentViewModel(Segment));
 		Documents.Add(new LocationsViewModel(Segment));
 		Documents.Add(new SubregionViewModel(Segment));
@@ -529,8 +533,6 @@ public class ApplicationPresenter : ObservableRecipient
 
 		_roslynHost.CreateEditorProject();
 		_roslynHost.UpdateEditorDocument();
-		
-		_segmentFileFolder = null;
 	}
 
 	private void CloseSegment()
@@ -541,8 +543,6 @@ public class ApplicationPresenter : ObservableRecipient
 		Segment = null;
 		WeakReferenceMessenger.Default.Send(new UnregisterEvents());
 		Documents.Clear();
-		
-		_segmentFileFolder = null;
 	}
 	
 	private void OpenSegment()
@@ -572,7 +572,10 @@ public class ApplicationPresenter : ObservableRecipient
 			return;
 		
 		var targetDirectory = new DirectoryInfo(dialog.FolderName);
-		var segment = new Segment();
+		var segment = new Segment()
+		{
+			Path = targetDirectory.FullName
+		};
 		
 		var regionsFolder = new DirectoryInfo(Path.Combine(targetDirectory.FullName, "Regions"));
 
@@ -621,9 +624,7 @@ public class ApplicationPresenter : ObservableRecipient
 		
 		process("Treasures.xml", () => segment.Treasures = new SegmentTreasures(),
 			(root, version) => segment.Treasures.Load(root, version));
-		
-		_segmentFileFolder = targetDirectory;
-		
+
 		Segment = segment;
 		Segment.UpdateTiles();
 		
@@ -695,7 +696,7 @@ public class ApplicationPresenter : ObservableRecipient
 	{
 		var targetPath = String.Empty;
 		
-		if (!queryPath && (_segmentFileFolder is null || !_segmentFileFolder.Exists))
+		if (!queryPath && String.IsNullOrEmpty(_segment.Path))
 			queryPath = true;
 
 		if (queryPath)
@@ -714,7 +715,7 @@ public class ApplicationPresenter : ObservableRecipient
 		}
 		else
 		{
-			targetPath = _segmentFileFolder.FullName;
+			targetPath = _segment.Path;
 		}
 
 		try
