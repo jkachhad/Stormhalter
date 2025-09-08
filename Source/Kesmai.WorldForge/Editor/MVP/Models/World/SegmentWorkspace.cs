@@ -50,7 +50,29 @@ public class SegmentWorkspace
 			"MonoGame",
 			"SharpDX",
 			"WindowsDesktop",
-			"WorldForge"
+			"WorldForge",
+			
+			"Microsoft.Win32",
+			
+			"System.ComponentModel",
+			"System.Diagnostics",
+			"System.Reflection",
+			"System.Threading",
+			"System.Net",
+			"System.IO",
+			
+			"System.Private.Uri",
+			"System.Private.Xml",
+			
+			"System.Runtime.Extensions",
+			"System.Runtime.InteropServices",
+			"System.Runtime.CompilerServices.VisualC",
+			
+			"System.Collections.NonGeneric",
+			"System.Collections.Specialized",
+			"System.Memory",
+			"System.Xml",
+			"System.Resources",
 		};
 		
 		var metadataReferences = AppDomain.CurrentDomain.GetAssemblies()
