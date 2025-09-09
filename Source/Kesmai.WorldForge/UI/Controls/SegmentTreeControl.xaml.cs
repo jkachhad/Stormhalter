@@ -43,6 +43,15 @@ public partial class SegmentTreeControl : UserControl
         
         WeakReferenceMessenger.Default.Register<SegmentLocationsChanged>(this, (r, m) => UpdateLocations());
         WeakReferenceMessenger.Default.Register<SegmentLocationChanged>(this, (r, m) => UpdateLocations());
+        
+        WeakReferenceMessenger.Default.Register<SegmentEntitiesChanged>(this, (r, m) => UpdateEntities());
+        WeakReferenceMessenger.Default.Register<SegmentEntityChanged>(this, (r, m) => UpdateEntities());
+        
+        WeakReferenceMessenger.Default.Register<SegmentTreasuresChanged>(this, (r, m) => UpdateTreasures());
+        WeakReferenceMessenger.Default.Register<SegmentTreasureChanged>(this, (r, m) => UpdateTreasures());
+        
+        WeakReferenceMessenger.Default.Register<SegmentSpawnsChanged>(this, (r, m) => UpdateSpawns());
+        WeakReferenceMessenger.Default.Register<SegmentSpawnChanged>(this, (r, m) => UpdateSpawns());
     }
 
     private static void OnSegmentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -51,32 +60,11 @@ public partial class SegmentTreeControl : UserControl
         if (e.OldValue is Segment oldSegment)
         {
             oldSegment.PropertyChanged -= control.OnSegmentPropertyChanged;
-            /*oldSegment.VirtualFiles.CollectionChanged -= control.OnNotifyingItemsChanged;*/
-            oldSegment.Entities.CollectionChanged -= control.OnEntitiesCollectionChanged;
-            foreach (var s in oldSegment.Entities)
-                s.PropertyChanged -= control.OnEntityPropertyChanged;
-            oldSegment.Spawns.Location.CollectionChanged -= control.OnSpawnsCollectionChanged;
-            foreach (var s in oldSegment.Spawns.Location)
-                s.PropertyChanged -= control.OnSpawnerPropertyChanged;
-            oldSegment.Spawns.Region.CollectionChanged -= control.OnSpawnsCollectionChanged;
-            foreach (var s in oldSegment.Spawns.Region)
-                s.PropertyChanged -= control.OnSpawnerPropertyChanged;
-            oldSegment.Treasures.CollectionChanged -= control.OnCollectionChanged;
+
         }
         if (e.NewValue is Segment newSegment)
         {
             newSegment.PropertyChanged += control.OnSegmentPropertyChanged;
-            /*newSegment.VirtualFiles.CollectionChanged += control.OnNotifyingItemsChanged;*/
-            newSegment.Entities.CollectionChanged += control.OnEntitiesCollectionChanged;
-            foreach (var en in newSegment.Entities)
-                en.PropertyChanged += control.OnEntityPropertyChanged;
-            newSegment.Spawns.Location.CollectionChanged += control.OnSpawnsCollectionChanged;
-            foreach (var s in newSegment.Spawns.Location)
-                s.PropertyChanged += control.OnSpawnerPropertyChanged;
-            newSegment.Spawns.Region.CollectionChanged += control.OnSpawnsCollectionChanged;
-            foreach (var s in newSegment.Spawns.Region)
-                s.PropertyChanged += control.OnSpawnerPropertyChanged;
-            newSegment.Treasures.CollectionChanged += control.OnCollectionChanged;
         }
         control.LoadRoot();
     }
@@ -90,36 +78,12 @@ public partial class SegmentTreeControl : UserControl
         // Segment name changes no longer affect the tree structure, since the
         // segment name is no longer shown as a root node.
     }
-    
-    private void OnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e) => LoadRoot();
-    private void OnSpawnsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
-    {
-        if (e.OldItems != null)
-            foreach (Spawner s in e.OldItems)
-                s.PropertyChanged -= OnSpawnerPropertyChanged;
-        if (e.NewItems != null)
-            foreach (Spawner s in e.NewItems)
-                s.PropertyChanged += OnSpawnerPropertyChanged;
-        LoadRoot();
-    }
 
-    private void OnSpawnerPropertyChanged(object? sender, PropertyChangedEventArgs e) => LoadRoot();
-
-    private void OnEntitiesCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
-    {
-        if (e.OldItems != null)
-            foreach (Entity en in e.OldItems)
-                en.PropertyChanged -= OnEntityPropertyChanged;
-        if (e.NewItems != null)
-            foreach (Entity en in e.NewItems)
-                en.PropertyChanged += OnEntityPropertyChanged;
-        LoadRoot();
-    }
-
-    private void OnEntityPropertyChanged(object? sender, PropertyChangedEventArgs e) => LoadRoot();
-    
     private TreeViewItem _regionsNode;
     private TreeViewItem _locationsNode;
+    private TreeViewItem _entitiesNode;
+    private TreeViewItem _spawnersNode;
+    private TreeViewItem _treasureNode;
     
     public void UpdateRegions()
     {
@@ -188,8 +152,123 @@ public partial class SegmentTreeControl : UserControl
         
         _locationsNode.ContextMenu = menu;
     }
-    
 
+    public void UpdateSpawns()
+    {
+        if (Segment is null)
+            return;
+
+        if (_spawnersNode is null)
+        {
+            _spawnersNode = new TreeViewItem
+            {
+                Tag = $"category:Spawns",
+                Header = CreateHeader("Spawns", "Spawns", true)
+            };
+            _spawnersNode.PreviewMouseRightButtonDown += SelectOnRightClick;
+        }
+
+        var collection = Segment.Spawns;
+        
+        _spawnersNode.Items.Clear();
+        
+        foreach (var region in Segment.Regions)
+            _spawnersNode.Items.Add(CreateSpawnerRegionNode(region));
+
+        var menu = new ContextMenu();
+        var addLocation = new MenuItem
+        {
+            Header = $"Add Location Spawner" 
+        };
+        addLocation.Click += (s, e) => AddSpawner(collection.Location, "Location Spawner", 0);
+        var addRegion = new MenuItem
+        {
+            Header = $"Add Region Spawner" 
+        };
+        addRegion.Click += (s, e) => AddSpawner(collection.Region, "Region Spawner", 0);
+        
+        menu.Items.Add(addLocation);
+        menu.Items.Add(addRegion);
+        
+        _spawnersNode.ContextMenu = menu;
+    }
+
+    public void UpdateEntities()
+    {
+        if (Segment is null)
+            return;
+
+        if (_entitiesNode is null)
+        {
+            _entitiesNode = new TreeViewItem
+            {
+                Tag = $"category:Entity",
+                Header = CreateHeader("Entity", "Entity", true)
+            };
+            _entitiesNode.PreviewMouseRightButtonDown += SelectOnRightClick;
+        }
+
+        var collection = Segment.Entities
+            .GroupBy(e => string.IsNullOrEmpty(e.Group) ? "Unassigned" : e.Group)
+            .OrderBy(g => g.Key).ToList();
+        
+        _entitiesNode.Items.Clear();
+        
+        foreach (var group in collection)
+            _entitiesNode.Items.Add(CreateEntityGroupNode(group.Key, group));
+
+        var menu = new ContextMenu();
+        var add = new MenuItem
+        {
+            Header = $"Add Entity" 
+        };
+        add.Click += (s, e) => AddEntity("Unassigned");
+        
+        menu.Items.Add(add);
+        
+        _entitiesNode.ContextMenu = menu;
+    }
+
+    public void UpdateTreasures()
+    {
+        if (Segment is null)
+            return;
+
+        if (_treasureNode is null)
+        {
+            _treasureNode = new TreeViewItem
+            {
+                Tag = $"category:Treasure",
+                Header = CreateHeader("Treasure", "Treasure", true)
+            };
+            _treasureNode.PreviewMouseRightButtonDown += SelectOnRightClick;
+        }
+
+        var collection = Segment.Treasures;
+        
+        _treasureNode.Items.Clear();
+        
+        foreach (var child in collection)
+            _treasureNode.Items.Add(CreateTreasureEntryNode(child));
+
+        var menu = new ContextMenu();
+        var addTreasure = new MenuItem
+        {
+            Header = $"Add Treasure" 
+        };
+        addTreasure.Click += (s, e) => AddSegmentObject(collection, "Treasure");
+        var addHoard = new MenuItem
+        {
+            Header = $"Add Hoard" 
+        };
+        addHoard.Click += (s, e) => AddHoard();
+        
+        menu.Items.Add(addTreasure);
+        menu.Items.Add(addHoard);
+        
+        _treasureNode.ContextMenu = menu;
+    }
+    
     private void LoadRoot()
     {
         var expanded = new HashSet<string>();
@@ -204,23 +283,15 @@ public partial class SegmentTreeControl : UserControl
         
         UpdateRegions();
         UpdateLocations();
+        UpdateSpawns();
+        UpdateEntities();
+        UpdateTreasures();
         
         Tree.Items.Add(_regionsNode);
         Tree.Items.Add(_locationsNode);
-        
-        // Add Spawns grouped by region
-        var spawnsItem = new TreeViewItem { Tag = "category:Spawn" };
-        spawnsItem.Header = CreateHeader("Spawn", "Spawn", true);
-        spawnsItem.PreviewMouseRightButtonDown += SelectOnRightClick;
-        foreach (var region in Segment.Regions)
-            spawnsItem.Items.Add(CreateSpawnerRegionNode(region));
-        Tree.Items.Add(spawnsItem);
-
-        // Add Entities grouped by entity group
-        Tree.Items.Add(CreateEntityCategoryNode());
-
-        // Add Treasure category
-        Tree.Items.Add(CreateTreasureCategoryNode());
+        Tree.Items.Add(_spawnersNode);
+        Tree.Items.Add(_entitiesNode);
+        Tree.Items.Add(_treasureNode);
 
         // Add Source directory last
         if (!string.IsNullOrEmpty(rootPath) && Directory.Exists(rootPath))
@@ -344,29 +415,7 @@ public partial class SegmentTreeControl : UserControl
     private TreeViewItem CreateVirtualFileNode(VirtualFile file) =>
         CreateInMemoryNode(file, file.Name + ".cs");
         */
-
-    private TreeViewItem CreateCategoryNode<T>(string name, IList<T> collection, string? menuName = null, string? tag = null) where T : ISegmentObject, new()
-    {
-        var item = new TreeViewItem
-        {
-            Tag = tag ?? $"category:{name}",
-            Header = CreateHeader(name, name, true)
-        };
-        item.PreviewMouseRightButtonDown += SelectOnRightClick;
-
-        foreach (var child in collection)
-            item.Items.Add(CreateCategoryEntryNode(child, (IList)collection));
-
-        var menu = new ContextMenu();
-        var addText = menuName ?? name;
-        var add = new MenuItem { Header = $"Add {addText}" };
-        add.Click += (s, e) => AddSegmentObject(collection, addText);
-        menu.Items.Add(add);
-        item.ContextMenu = menu;
-
-        return item;
-    }
-
+    
     private TreeViewItem CreateCategoryEntryNode(ISegmentObject obj, IList collection)
     {
         var item = new TreeViewItem { Tag = obj };
@@ -385,26 +434,6 @@ public partial class SegmentTreeControl : UserControl
         delete.Click += (s, e) => DeleteSegmentObject(obj, item, collection);
         menu.Items.Add(rename);
         menu.Items.Add(delete);
-        item.ContextMenu = menu;
-
-        return item;
-    }
-
-    private TreeViewItem CreateEntityCategoryNode()
-    {
-        var item = new TreeViewItem { Tag = "category:Entity" };
-        item.Header = CreateHeader("Entity", "Entity", true);
-        item.PreviewMouseRightButtonDown += SelectOnRightClick;
-
-        foreach (var group in Segment.Entities
-                     .GroupBy(e => string.IsNullOrEmpty(e.Group) ? "Unassigned" : e.Group)
-                     .OrderBy(g => g.Key))
-            item.Items.Add(CreateEntityGroupNode(group.Key, group));
-
-        var menu = new ContextMenu();
-        var add = new MenuItem { Header = "Add Entity" };
-        add.Click += (s, e) => AddEntity("Unassigned");
-        menu.Items.Add(add);
         item.ContextMenu = menu;
 
         return item;
@@ -513,28 +542,7 @@ public partial class SegmentTreeControl : UserControl
 
         return item;
     }
-
-    private TreeViewItem CreateTreasureCategoryNode()
-    {
-        var item = new TreeViewItem { Tag = "category:Treasure" };
-        item.Header = CreateHeader("Treasure", "Treasure", true);
-        item.PreviewMouseRightButtonDown += SelectOnRightClick;
-
-        foreach (var treasure in Segment.Treasures)
-            item.Items.Add(CreateTreasureEntryNode(treasure));
-
-        var menu = new ContextMenu();
-        var addTreasure = new MenuItem { Header = "Add Treasure" };
-        addTreasure.Click += (s, e) => AddSegmentObject(Segment.Treasures, "Treasure");
-        var addHoard = new MenuItem { Header = "Add Hoard" };
-        addHoard.Click += (s, e) => AddHoard();
-        menu.Items.Add(addTreasure);
-        menu.Items.Add(addHoard);
-        item.ContextMenu = menu;
-
-        return item;
-    }
-
+    
     private TreeViewItem CreateTreasureEntryNode(SegmentTreasure treasure)
     {
         var item = new TreeViewItem { Tag = treasure };

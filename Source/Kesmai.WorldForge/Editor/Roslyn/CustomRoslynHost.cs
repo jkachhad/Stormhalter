@@ -82,7 +82,7 @@ public class CustomRoslynHost : RoslynHost
         WeakReferenceMessenger.Default.Register<SegmentLocationChanged>(this, (_, _) => OnSegmentChanged());
         WeakReferenceMessenger.Default.Register<SegmentEntityChanged>(this, (_, _) => OnSegmentChanged());
         WeakReferenceMessenger.Default.Register<SegmentTreasuresChanged>(this, (_, _) => OnSegmentChanged());
-        WeakReferenceMessenger.Default.Register<SegmentSpawnerChanged>(this, (_, _) => OnSegmentChanged());
+        WeakReferenceMessenger.Default.Register<SegmentSpawnChanged>(this, (_, _) => OnSegmentChanged());
     }
 
     public override RoslynWorkspace CreateWorkspace()

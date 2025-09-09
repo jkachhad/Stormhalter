@@ -15,7 +15,7 @@ using Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge;
 
-public class SegmentSpawnerChanged(Spawner spawner) : ValueChangedMessage<Spawner>(spawner);
+public class SegmentSpawnChanged(Spawner spawner) : ValueChangedMessage<Spawner>(spawner);
 	
 [Script("OnBeforeSpawn", "void OnBeforeSpawn(Spawner spawner)", "{", "}")]
 [Script("OnAfterSpawn", "void OnAfterSpawn(Spawner spawner, MobileEntity spawn)", "{", "}")]
@@ -37,7 +37,7 @@ public abstract class Spawner : ObservableObject, ISegmentObject
 		set
 		{
 			if (SetProperty(ref _name, value))
-				WeakReferenceMessenger.Default.Send(new SegmentSpawnerChanged(this));
+				WeakReferenceMessenger.Default.Send(new SegmentSpawnChanged(this));
 		}
 	}
 
