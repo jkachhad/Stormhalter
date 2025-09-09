@@ -268,9 +268,19 @@ public class ApplicationPresenter : ObservableRecipient
 		ShowSubregions = true;
 
 		Selection = new Selection();
+		
+		messenger.Register<SegmentObjectDoubleClick>(this, (r, message) =>
+		{
+			SetActiveDocument(message.Value);
+		});
+	}
 
-		WeakReferenceMessenger.Default.Register<SegmentRegionAdded>(this, (r, m) => Documents.Add(m.Value));
-		WeakReferenceMessenger.Default.Register<SegmentRegionRemoved>(this, (r, m) => Documents.Remove(m.Value));
+	public void SetActiveDocument(ISegmentObject target)
+	{
+		if (!Documents.Contains(target))
+			Documents.Add(target);
+
+		ActiveDocument = target;
 	}
 
 	public void SwapDocument(String Target)
