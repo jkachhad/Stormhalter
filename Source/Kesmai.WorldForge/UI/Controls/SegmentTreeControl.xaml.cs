@@ -39,6 +39,7 @@ public partial class SegmentTreeControl : UserControl
         InitializeComponent();
 
         WeakReferenceMessenger.Default.Register<SegmentRegionsChanged>(this, (r, m) => UpdateRegions());
+        WeakReferenceMessenger.Default.Register<SegmentRegionChanged>(this, (r, m) => UpdateRegions());
     }
 
     private static void OnSegmentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -48,7 +49,6 @@ public partial class SegmentTreeControl : UserControl
         {
             oldSegment.PropertyChanged -= control.OnSegmentPropertyChanged;
             /*oldSegment.VirtualFiles.CollectionChanged -= control.OnNotifyingItemsChanged;*/
-            oldSegment.Regions.CollectionChanged -= control.OnCollectionChanged;
             oldSegment.Locations.CollectionChanged -= control.OnCollectionChanged;
             oldSegment.Entities.CollectionChanged -= control.OnEntitiesCollectionChanged;
             foreach (var s in oldSegment.Entities)
@@ -65,7 +65,6 @@ public partial class SegmentTreeControl : UserControl
         {
             newSegment.PropertyChanged += control.OnSegmentPropertyChanged;
             /*newSegment.VirtualFiles.CollectionChanged += control.OnNotifyingItemsChanged;*/
-            newSegment.Regions.CollectionChanged += control.OnCollectionChanged;
             newSegment.Locations.CollectionChanged += control.OnCollectionChanged;
             newSegment.Entities.CollectionChanged += control.OnEntitiesCollectionChanged;
             foreach (var en in newSegment.Entities)
