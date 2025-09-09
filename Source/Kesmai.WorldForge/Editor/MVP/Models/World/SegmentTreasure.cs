@@ -14,6 +14,8 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace Kesmai.WorldForge.Editor;
 
+public class SegmentTreasureChanged(SegmentTreasure treasure) : ValueChangedMessage<SegmentTreasure>(treasure);
+
 public class SegmentTreasure : ObservableObject, ISegmentObject
 {
 	private string _name;
@@ -30,9 +32,13 @@ public class SegmentTreasure : ObservableObject, ISegmentObject
 	public string Name
 	{
 		get => _name;
-		set => SetProperty(ref _name, value);
+		set
+		{
+			if (SetProperty(ref _name, value))
+				WeakReferenceMessenger.Default.Send(new SegmentTreasureChanged(this));
+		}
 	}
-		
+
 	public string Notes
 	{
 		get => _notes;
