@@ -40,6 +40,9 @@ public partial class SegmentTreeControl : UserControl
 
         WeakReferenceMessenger.Default.Register<SegmentRegionsChanged>(this, (r, m) => UpdateRegions());
         WeakReferenceMessenger.Default.Register<SegmentRegionChanged>(this, (r, m) => UpdateRegions());
+        
+        WeakReferenceMessenger.Default.Register<SegmentLocationsChanged>(this, (r, m) => UpdateLocations());
+        WeakReferenceMessenger.Default.Register<SegmentLocationChanged>(this, (r, m) => UpdateLocations());
     }
 
     private static void OnSegmentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -49,7 +52,6 @@ public partial class SegmentTreeControl : UserControl
         {
             oldSegment.PropertyChanged -= control.OnSegmentPropertyChanged;
             /*oldSegment.VirtualFiles.CollectionChanged -= control.OnNotifyingItemsChanged;*/
-            oldSegment.Locations.CollectionChanged -= control.OnCollectionChanged;
             oldSegment.Entities.CollectionChanged -= control.OnEntitiesCollectionChanged;
             foreach (var s in oldSegment.Entities)
                 s.PropertyChanged -= control.OnEntityPropertyChanged;
@@ -65,7 +67,6 @@ public partial class SegmentTreeControl : UserControl
         {
             newSegment.PropertyChanged += control.OnSegmentPropertyChanged;
             /*newSegment.VirtualFiles.CollectionChanged += control.OnNotifyingItemsChanged;*/
-            newSegment.Locations.CollectionChanged += control.OnCollectionChanged;
             newSegment.Entities.CollectionChanged += control.OnEntitiesCollectionChanged;
             foreach (var en in newSegment.Entities)
                 en.PropertyChanged += control.OnEntityPropertyChanged;
@@ -118,6 +119,7 @@ public partial class SegmentTreeControl : UserControl
     private void OnEntityPropertyChanged(object? sender, PropertyChangedEventArgs e) => LoadRoot();
     
     private TreeViewItem _regionsNode;
+    private TreeViewItem _locationsNode;
     
     public void UpdateRegions()
     {
@@ -152,6 +154,40 @@ public partial class SegmentTreeControl : UserControl
         
         _regionsNode.ContextMenu = menu;
     }
+
+    public void UpdateLocations()
+    {
+        if (Segment is null)
+            return;
+
+        if (_locationsNode is null)
+        {
+            _locationsNode = new TreeViewItem
+            {
+                Tag = $"category:Locations",
+                Header = CreateHeader("Locations", "Locations", true)
+            };
+            _locationsNode.PreviewMouseRightButtonDown += SelectOnRightClick;
+        }
+
+        var collection = Segment.Locations;
+        
+        _locationsNode.Items.Clear();
+        
+        foreach (var child in collection)
+            _locationsNode.Items.Add(CreateCategoryEntryNode(child, collection));
+
+        var menu = new ContextMenu();
+        var add = new MenuItem
+        {
+            Header = $"Add Location" 
+        };
+        add.Click += (s, e) => AddSegmentObject(collection, "Location");
+        
+        menu.Items.Add(add);
+        
+        _locationsNode.ContextMenu = menu;
+    }
     
 
     private void LoadRoot()
@@ -165,15 +201,13 @@ public partial class SegmentTreeControl : UserControl
             return;
 
         var rootPath = Segment.Path;
-
-        // Add Region category
+        
         UpdateRegions();
+        UpdateLocations();
         
         Tree.Items.Add(_regionsNode);
-
-        // Add Locations category
-        Tree.Items.Add(CreateCategoryNode("Location", Segment.Locations));
-
+        Tree.Items.Add(_locationsNode);
+        
         // Add Spawns grouped by region
         var spawnsItem = new TreeViewItem { Tag = "category:Spawn" };
         spawnsItem.Header = CreateHeader("Spawn", "Spawn", true);
