@@ -14,6 +14,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.VisualBasic;
 using Kesmai.WorldForge;
 using Kesmai.WorldForge.Editor;
@@ -39,6 +40,8 @@ public partial class SegmentTreeControl : UserControl
     {
         InitializeComponent();
         Unloaded += (_, _) => _watcher?.Dispose();
+        
+        WeakReferenceMessenger.Default.Register<SegmentRegionsChanged>(this, (r, m) => UpdateRegions());
     }
 
     private static void OnSegmentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -160,6 +163,43 @@ public partial class SegmentTreeControl : UserControl
         return string.IsNullOrEmpty(ext) || string.Equals(ext, ".cs", StringComparison.OrdinalIgnoreCase);
     }
 
+    private TreeViewItem _regionsNode;
+    
+    public void UpdateRegions()
+    {
+        if (Segment is null)
+            return;
+
+        if (_regionsNode is null)
+        {
+            _regionsNode = new TreeViewItem
+            {
+                Tag = $"category:Regions",
+                Header = CreateHeader("Regions", "Regions", true)
+            };
+            _regionsNode.PreviewMouseRightButtonDown += SelectOnRightClick;
+        }
+
+        var collection = Segment.Regions;
+        
+        _regionsNode.Items.Clear();
+        
+        foreach (var child in collection)
+            _regionsNode.Items.Add(CreateCategoryEntryNode(child, collection));
+
+        var menu = new ContextMenu();
+        var add = new MenuItem
+        {
+            Header = $"Add Region" 
+        };
+        add.Click += (s, e) => AddSegmentObject(collection, "Region");
+        
+        menu.Items.Add(add);
+        
+        _regionsNode.ContextMenu = menu;
+    }
+    
+
     private void LoadRoot()
     {
         var expanded = new HashSet<string>();
@@ -173,7 +213,9 @@ public partial class SegmentTreeControl : UserControl
         var rootPath = Segment.Path;
 
         // Add Region category
-        Tree.Items.Add(CreateCategoryNode("Region", Segment.Regions));
+        UpdateRegions();
+        
+        Tree.Items.Add(_regionsNode);
 
         // Add Locations category
         Tree.Items.Add(CreateCategoryNode("Location", Segment.Locations));
@@ -227,16 +269,23 @@ public partial class SegmentTreeControl : UserControl
 
     private StackPanel CreateHeader(string name, string path, bool isDirectory)
     {
-        var panel = new StackPanel { Orientation = Orientation.Horizontal };
+        var panel = new StackPanel
+        {
+            Orientation = Orientation.Horizontal 
+        };
+        
         var image = new Image
         {
             Width = 16,
             Height = 16,
             Margin = new Thickness(2, 0, 2, 0),
+            
             Source = GetIcon(path, isDirectory)
         };
+        
         panel.Children.Add(image);
         panel.Children.Add(new TextBlock { Text = name });
+        
         return panel;
     }
 
