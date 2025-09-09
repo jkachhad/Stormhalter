@@ -4,8 +4,12 @@ using System.Windows;
 using System.Xml.Linq;
 using CommonServiceLocator;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace Kesmai.WorldForge.Editor;
+
+public class SegmentLocationChanged(SegmentLocation location) : ValueChangedMessage<SegmentLocation>(location);
 
 public class SegmentLocation : ObservableObject, ICloneable, ISegmentObject
 {
@@ -18,7 +22,12 @@ public class SegmentLocation : ObservableObject, ICloneable, ISegmentObject
 	public string Name
 	{
 		get => _name;
-		set => SetProperty(ref _name, value);
+		set
+		{
+			// only trigger a change on name to update project references.
+			if (SetProperty(ref _name, value))
+				WeakReferenceMessenger.Default.Send(new SegmentLocationChanged(this));
+		}
 	}
 
 	public int X

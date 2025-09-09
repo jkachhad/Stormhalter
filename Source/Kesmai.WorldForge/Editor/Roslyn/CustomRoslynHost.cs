@@ -77,6 +77,10 @@ public class CustomRoslynHost : RoslynHost
             SourceText.From("namespace Kesmai.Server.Segments; public static class Editor { }"));
         
         _workspace.TryApplyChanges(editorSolution);
+        
+        // bind events
+        WeakReferenceMessenger.Default.Register<SegmentLocationChanged>(this,
+            (_, _) => OnSegmentChanged());
     }
 
     public override RoslynWorkspace CreateWorkspace()
@@ -196,7 +200,7 @@ public class CustomRoslynHost : RoslynHost
         workspace.TryApplyChanges(solution);
     }
 
-    public void UpdateEditorDocument()
+    public void OnSegmentChanged()
     {
         var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
         var segment = presenter.Segment;

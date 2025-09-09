@@ -107,7 +107,7 @@ public class SegmentWorkspace
 			.With(references: metadataReferences, imports: namespaceImports);
 		
 		Host = new CustomRoslynHost(segment, serviceAssemblies, roslynReferences);
-		Host.UpdateEditorDocument();
+		Host.OnSegmentChanged();
 	}
 
 	public void Reset()
