@@ -269,7 +269,8 @@ public class ApplicationPresenter : ObservableRecipient
 
 		Selection = new Selection();
 
-		
+		WeakReferenceMessenger.Default.Register<SegmentRegionAdded>(this, (r, m) => Documents.Add(m.Value));
+		WeakReferenceMessenger.Default.Register<SegmentRegionRemoved>(this, (r, m) => Documents.Remove(m.Value));
 	}
 
 	public void SwapDocument(String Target)

@@ -9,8 +9,12 @@ using System.Linq;
 using System.Xml.Linq;
 using CommonServiceLocator;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace Kesmai.WorldForge.Editor;
+
+public class SegmentRegionChanged(SegmentRegion region) : ValueChangedMessage<SegmentRegion>(region);
 
 [DebuggerDisplay("{Name} [{ID}]")]
 public class SegmentRegion : ObservableObject, ISegmentObject
@@ -41,7 +45,11 @@ public class SegmentRegion : ObservableObject, ISegmentObject
 	public string Name
 	{
 		get => _name;
-		set => SetProperty(ref _name, value);
+		set
+		{
+			if (SetProperty(ref _name, value))
+				WeakReferenceMessenger.Default.Send(new SegmentRegionChanged(this));
+		}
 	}
 
 	[Browsable(true)]

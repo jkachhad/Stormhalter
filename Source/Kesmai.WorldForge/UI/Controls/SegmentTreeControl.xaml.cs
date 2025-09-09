@@ -48,7 +48,7 @@ public partial class SegmentTreeControl : UserControl
         {
             oldSegment.PropertyChanged -= control.OnSegmentPropertyChanged;
             /*oldSegment.VirtualFiles.CollectionChanged -= control.OnNotifyingItemsChanged;*/
-            oldSegment.Regions.CollectionChanged -= control.OnNotifyingItemsChanged;
+            oldSegment.Regions.CollectionChanged -= control.OnCollectionChanged;
             oldSegment.Locations.CollectionChanged -= control.OnCollectionChanged;
             oldSegment.Entities.CollectionChanged -= control.OnEntitiesCollectionChanged;
             foreach (var s in oldSegment.Entities)
@@ -65,7 +65,7 @@ public partial class SegmentTreeControl : UserControl
         {
             newSegment.PropertyChanged += control.OnSegmentPropertyChanged;
             /*newSegment.VirtualFiles.CollectionChanged += control.OnNotifyingItemsChanged;*/
-            newSegment.Regions.CollectionChanged += control.OnNotifyingItemsChanged;
+            newSegment.Regions.CollectionChanged += control.OnCollectionChanged;
             newSegment.Locations.CollectionChanged += control.OnCollectionChanged;
             newSegment.Entities.CollectionChanged += control.OnEntitiesCollectionChanged;
             foreach (var en in newSegment.Entities)
@@ -92,8 +92,7 @@ public partial class SegmentTreeControl : UserControl
         // Segment name changes no longer affect the tree structure, since the
         // segment name is no longer shown as a root node.
     }
-
-    private void OnNotifyingItemsChanged<T>(object? sender, CollectionChangedEventArgs<T> e) => LoadRoot();
+    
     private void OnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e) => LoadRoot();
     private void OnSpawnsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {

@@ -40,7 +40,7 @@ public class Segment : ObservableObject
 		set => _path = value;
 	}
 	
-	public NotifyingCollection<SegmentRegion> Regions { get; set; } = new NotifyingCollection<SegmentRegion>();
+	public SegmentRegions Regions { get; set; } = new SegmentRegions();
 	public SegmentLocations Locations { get; set; } = new SegmentLocations();
 	public SegmentSubregions Subregions { get; set; } = new SegmentSubregions();
 	public SegmentEntities Entities { get; set; } = new SegmentEntities();
@@ -58,27 +58,6 @@ public class Segment : ObservableObject
 				Name = location
 			});
 		}
-			
-		Regions = new NotifyingCollection<SegmentRegion>();
-		Regions.CollectionChanged += OnRegionsChanged;
-	}
-
-	private void OnRegionsChanged(object sender, CollectionChangedEventArgs<SegmentRegion> args)
-	{
-		var updateNew = (args.Action == CollectionChangedAction.Add);
-		var updateOld = (args.Action == CollectionChangedAction.Remove || args.Action == CollectionChangedAction.Clear);
-
-		if (args.Action == CollectionChangedAction.Replace)
-			updateNew = updateOld = true;
-
-		var services = ServiceLocator.Current;
-		var presenter = services.GetInstance<ApplicationPresenter>();
-
-		if (updateNew)
-			args.NewItems.ForEach(region => { presenter.Documents.Add(region); });
-
-		if (updateOld)
-			args.OldItems.ForEach(region => { presenter.Documents.Remove(region); });
 	}
 	
 	public SegmentRegion GetRegion(int id)
