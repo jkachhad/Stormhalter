@@ -66,14 +66,14 @@ public partial class SegmentTreeControl : UserControl
         {
             newSegment.PropertyChanged += control.OnSegmentPropertyChanged;
         }
-        control.LoadRoot();
+        control.Update();
     }
 
     private void OnSegmentPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(Segment.Path))
         {
-            LoadRoot();
+            Update();
         }
         // Segment name changes no longer affect the tree structure, since the
         // segment name is no longer shown as a root node.
@@ -269,7 +269,7 @@ public partial class SegmentTreeControl : UserControl
         _treasureNode.ContextMenu = menu;
     }
     
-    private void LoadRoot()
+    private void Update()
     {
         var expanded = new HashSet<string>();
         foreach (var item in Tree.Items.OfType<TreeViewItem>())
