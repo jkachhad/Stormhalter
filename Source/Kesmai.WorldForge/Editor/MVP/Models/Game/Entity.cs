@@ -13,11 +13,14 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Generic;
 using System.Configuration;
 using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using Kesmai.WorldForge.Editor;
 using Microsoft.CodeAnalysis;
 
 namespace Kesmai.WorldForge;
 
+public class SegmentEntityChanged(Entity entity) : ValueChangedMessage<Entity>(entity);
+	
 [Script("OnSpawn", "CreatureEntity OnSpawn()", "{", "}", "\treturn new MobileEntity();")]
 [Script("OnDeath", "void OnDeath(MobileEntity source, MobileEntity killer)", "{", "}")]
 [Script("OnIncomingPlayer", "void OnIncomingPlayer(MobileEntity source, PlayerEntity player)", "{", "}")]
@@ -37,6 +40,8 @@ public class Entity : ObservableObject, ICloneable, ISegmentObject
 			if (SetProperty(ref _name, value))
 			{
 				OnPropertyChanged("Name");
+				
+				WeakReferenceMessenger.Default.Send(new SegmentEntityChanged(this));
 			}
 		}
 		

@@ -79,8 +79,8 @@ public class CustomRoslynHost : RoslynHost
         _workspace.TryApplyChanges(editorSolution);
         
         // bind events
-        WeakReferenceMessenger.Default.Register<SegmentLocationChanged>(this,
-            (_, _) => OnSegmentChanged());
+        WeakReferenceMessenger.Default.Register<SegmentLocationChanged>(this, (_, _) => OnSegmentChanged());
+        WeakReferenceMessenger.Default.Register<SegmentEntityChanged>(this, (_, _) => OnSegmentChanged());
     }
 
     public override RoslynWorkspace CreateWorkspace()

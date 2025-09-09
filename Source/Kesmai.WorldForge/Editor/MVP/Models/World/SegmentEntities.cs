@@ -6,8 +6,14 @@ using System.Linq;
 using System.Windows;
 using System.Xml.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace Kesmai.WorldForge.Editor;
+
+public class SegmentEntityCreated(Entity entity) : ValueChangedMessage<Entity>(entity);
+public class SegmentEntityDeleted(Entity entity) : ValueChangedMessage<Entity>(entity);
+public class SegmentEntitiesChanged(Entity entity) : ValueChangedMessage<Entity>(entity);
 
 public class SegmentEntities : ObservableCollection<Entity>
 {
@@ -34,7 +40,26 @@ public class SegmentEntities : ObservableCollection<Entity>
 
 			element.Add(entity.GetXElement());
 		}
-				
+	}
+	
+	protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs args)
+	{
+		base.OnCollectionChanged(args);
+			
+		if (args.NewItems != null)
+		{
+			foreach (var newItem in args.NewItems.OfType<Entity>())
+				WeakReferenceMessenger.Default.Send(new SegmentEntityCreated(newItem));
+		}
+			
+		if (args.OldItems != null)
+		{
+			foreach (var oldItem in args.OldItems.OfType<Entity>())
+				WeakReferenceMessenger.Default.Send(new SegmentEntityDeleted(oldItem));
+		}
+			
+		foreach (var item in this)
+			WeakReferenceMessenger.Default.Send(new SegmentEntitiesChanged(item));
 	}
 }
 
