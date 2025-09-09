@@ -5,10 +5,14 @@ using System.Drawing;
 using System.Linq;
 using System.Xml.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using Color = Microsoft.Xna.Framework.Color;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace Kesmai.WorldForge.Editor;
+
+public class SegmentSubregionChanged(SegmentSubregion subregion) : ValueChangedMessage<SegmentSubregion>(subregion);
 
 public class SegmentSubregion : ObservableObject
 {
@@ -33,8 +37,13 @@ public class SegmentSubregion : ObservableObject
 	public string Name
 	{
 		get => _name;
-		set => SetProperty(ref _name, value);
+		set
+		{
+			if (SetProperty(ref _name, value))
+				WeakReferenceMessenger.Default.Send(new SegmentSubregionChanged(this));
+		}
 	}
+
 	public Color Color { get; set; }
 	public Color Border { get; set; }
 		
