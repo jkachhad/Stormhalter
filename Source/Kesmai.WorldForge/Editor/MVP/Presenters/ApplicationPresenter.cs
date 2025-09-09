@@ -269,6 +269,16 @@ public class ApplicationPresenter : ObservableRecipient
 
 		Selection = new Selection();
 		
+		messenger.Register<DocumentClosed>(this, (r, message) =>
+		{
+			var content = message.Document.Content;
+			
+			if (Documents.Contains(content))
+				Documents.Remove(content);
+			
+			ActiveDocument = Documents.FirstOrDefault();
+		});
+		
 		messenger.Register<SegmentObjectDoubleClick>(this, (r, message) =>
 		{
 			SetActiveDocument(message.Value);

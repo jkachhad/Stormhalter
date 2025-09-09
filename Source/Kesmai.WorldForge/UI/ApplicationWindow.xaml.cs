@@ -1,8 +1,12 @@
 ﻿using System.Windows;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Windows.Input;
+using AvalonDock;
+using AvalonDock.Layout;
 
 namespace Kesmai.WorldForge;
+
+public record DocumentClosed(LayoutDocument Document);
 
 /// <summary>
 /// Interaction logic for ApplicationWindow.xaml
@@ -36,5 +40,13 @@ public partial class ApplicationWindow : Window
 			.Register<ApplicationWindow, ToolStopMessage>(
 				this, (r, m) => {
 				});
+		
+		_dockingManager.DocumentClosed += OnDocumentClosed;
+	}
+
+	private void OnDocumentClosed(object sender, DocumentClosedEventArgs args)
+	{
+		if (args.Document != null)
+			WeakReferenceMessenger.Default.Send(new DocumentClosed(args.Document));
 	}
 }
