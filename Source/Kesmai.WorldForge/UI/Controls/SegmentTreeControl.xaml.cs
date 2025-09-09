@@ -34,13 +34,10 @@ public partial class SegmentTreeControl : UserControl
         set => SetValue(SegmentProperty, value);
     }
 
-    private FileSystemWatcher? _watcher;
-
     public SegmentTreeControl()
     {
         InitializeComponent();
-        Unloaded += (_, _) => _watcher?.Dispose();
-        
+
         WeakReferenceMessenger.Default.Register<SegmentRegionsChanged>(this, (r, m) => UpdateRegions());
     }
 
@@ -81,7 +78,6 @@ public partial class SegmentTreeControl : UserControl
                 s.PropertyChanged += control.OnSpawnerPropertyChanged;
             newSegment.Treasures.CollectionChanged += control.OnCollectionChanged;
         }
-        control.SetupWatcher();
         control.LoadRoot();
     }
 
@@ -89,7 +85,6 @@ public partial class SegmentTreeControl : UserControl
     {
         if (e.PropertyName == nameof(Segment.Path))
         {
-            SetupWatcher();
             LoadRoot();
         }
         // Segment name changes no longer affect the tree structure, since the
@@ -122,47 +117,7 @@ public partial class SegmentTreeControl : UserControl
     }
 
     private void OnEntityPropertyChanged(object? sender, PropertyChangedEventArgs e) => LoadRoot();
-
-    private void SetupWatcher()
-    {
-        _watcher?.Dispose();
-        _watcher = null;
-        if (Segment == null)
-            return;
-        var root = Segment.Path;
-        if (string.IsNullOrEmpty(root) || !Directory.Exists(root))
-            return;
-
-        _watcher = new FileSystemWatcher(root)
-        {
-            IncludeSubdirectories = true,
-            EnableRaisingEvents = true
-        };
-        _watcher.Created += OnFileSystemChanged;
-        _watcher.Deleted += OnFileSystemChanged;
-        _watcher.Renamed += OnFileSystemRenamed;
-    }
-
-    private void OnFileSystemChanged(object sender, FileSystemEventArgs e)
-    {
-        if (!ShouldRefresh(e.FullPath))
-            return;
-        Dispatcher.Invoke(LoadRoot);
-    }
-
-    private void OnFileSystemRenamed(object sender, RenamedEventArgs e)
-    {
-        if (!ShouldRefresh(e.FullPath) && !ShouldRefresh(e.OldFullPath))
-            return;
-        Dispatcher.Invoke(LoadRoot);
-    }
-
-    private static bool ShouldRefresh(string path)
-    {
-        var ext = Path.GetExtension(path);
-        return string.IsNullOrEmpty(ext) || string.Equals(ext, ".cs", StringComparison.OrdinalIgnoreCase);
-    }
-
+    
     private TreeViewItem _regionsNode;
     
     public void UpdateRegions()
