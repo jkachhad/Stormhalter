@@ -24,6 +24,7 @@ using DigitalRune.Collections;
 namespace Kesmai.WorldForge.UI;
 
 public class SegmentObjectDoubleClick(ISegmentObject target) : ValueChangedMessage<ISegmentObject>(target);
+public class SegmentObjectClick(ISegmentObject target) : ValueChangedMessage<ISegmentObject>(target);
 public class SegmentObjectSelected(ISegmentObject target) : ValueChangedMessage<ISegmentObject>(target);
 
 public partial class SegmentTreeControl : UserControl
@@ -131,6 +132,7 @@ public partial class SegmentTreeControl : UserControl
                 Tag = region,
                 Header = CreateColoredHeader(region.Name, Brushes.MediumPurple, false)
             };
+            item.MouseLeftButtonUp += OnClick;
             item.PreviewMouseRightButtonDown += OnSelect;
             item.MouseDoubleClick += OnDoubleClick;
 
@@ -151,6 +153,12 @@ public partial class SegmentTreeControl : UserControl
         }
     }
 
+    private void OnClick(object sender, MouseButtonEventArgs args)
+    {
+        if (sender is TreeViewItem item && item.Tag is ISegmentObject obj)
+            WeakReferenceMessenger.Default.Send(new SegmentObjectClick(obj));
+    }
+    
     private void OnDoubleClick(object sender, MouseButtonEventArgs args)
     {
         if (sender is TreeViewItem item && item.Tag is ISegmentObject obj)
@@ -498,6 +506,7 @@ public partial class SegmentTreeControl : UserControl
     private TreeViewItem CreateEntityEntryNode(Entity entity)
     {
         var item = new TreeViewItem { Tag = entity };
+        item.MouseLeftButtonUp += OnClick;
         item.PreviewMouseRightButtonDown += OnSelect;
 
         var panel = new StackPanel { Orientation = Orientation.Horizontal };

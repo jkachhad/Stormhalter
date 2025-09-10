@@ -279,13 +279,37 @@ public class ApplicationPresenter : ObservableRecipient
 			ActiveDocument = Documents.FirstOrDefault();
 		});
 		
-		messenger.Register<SegmentObjectDoubleClick>(this, (r, message) =>
+		messenger.Register<SegmentObjectClick>(this, (r, message) =>
 		{
-			SetActiveDocument(message.Value);
+			var content = message.Value;
+
+			switch (content)
+			{
+				case SegmentRegion region:
+				{
+					SetActiveDocument(content);
+					break;
+				}
+				case Entity entity:
+				{
+					var entityViewModel = Documents.OfType<EntitiesViewModel>().FirstOrDefault();
+					
+					if (entityViewModel is null)
+						Documents.Add(entityViewModel = new EntitiesViewModel(_segment));
+
+					if (ActiveDocument != entityViewModel)
+						SetActiveDocument(entityViewModel);
+					
+					entityViewModel.SelectedEntity = entity;
+					break;
+				}
+			}
+			
+			
 		});
 	}
 
-	public void SetActiveDocument(ISegmentObject target)
+	public void SetActiveDocument(object target)
 	{
 		if (!Documents.Contains(target))
 			Documents.Add(target);
