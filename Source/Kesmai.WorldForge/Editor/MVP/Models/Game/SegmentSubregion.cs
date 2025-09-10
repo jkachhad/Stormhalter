@@ -14,7 +14,7 @@ namespace Kesmai.WorldForge.Editor;
 
 public class SegmentSubregionChanged(SegmentSubregion subregion) : ValueChangedMessage<SegmentSubregion>(subregion);
 
-public class SegmentSubregion : ObservableObject
+public class SegmentSubregion : ObservableObject, ISegmentObject
 {
 	private static Color _pink = Color.FromNonPremultiplied(255, 192, 203, 75);
 	private static Color _pinkBorder = Color.Pink;
