@@ -471,6 +471,7 @@ public partial class SegmentTreeControl : UserControl
             item.Header = CreateColoredHeader(obj.Name, Brushes.MediumPurple, false);
         else
             item.Header = CreateHeader(obj.Name, obj.Name, false);
+        item.MouseLeftButtonUp += OnClick;
         item.PreviewMouseRightButtonDown += OnSelect;
 
         var menu = new ContextMenu();
@@ -564,6 +565,7 @@ public partial class SegmentTreeControl : UserControl
     private TreeViewItem CreateSpawnerEntryNode(Spawner spawner, IList collection)
     {
         var item = new TreeViewItem { Tag = spawner };
+        item.MouseLeftButtonUp += OnClick;
         item.PreviewMouseRightButtonDown += OnSelect;
 
         var panel = new StackPanel { Orientation = Orientation.Horizontal };
@@ -593,6 +595,7 @@ public partial class SegmentTreeControl : UserControl
     private TreeViewItem CreateTreasureEntryNode(SegmentTreasure treasure)
     {
         var item = new TreeViewItem { Tag = treasure };
+        item.MouseLeftButtonUp += OnClick;
         item.PreviewMouseRightButtonDown += OnSelect;
 
         var panel = new StackPanel { Orientation = Orientation.Horizontal };

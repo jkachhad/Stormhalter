@@ -290,22 +290,85 @@ public class ApplicationPresenter : ObservableRecipient
 					SetActiveDocument(content);
 					break;
 				}
+				case SegmentLocation location:
+				{
+					var locationViewModel = Documents.OfType<LocationsViewModel>().FirstOrDefault();
+
+					if (locationViewModel is null)
+						Documents.Add(locationViewModel = new LocationsViewModel(_segment));
+
+					if (ActiveDocument != locationViewModel)
+						SetActiveDocument(locationViewModel);
+
+					locationViewModel.SelectedLocation = location;
+					break;
+				}
+				case LocationSpawner locationSpawner:
+				{
+					var spawnsViewModel = Documents.OfType<SpawnsViewModel>().FirstOrDefault();
+
+					if (spawnsViewModel is null)
+						Documents.Add(spawnsViewModel = new SpawnsViewModel(_segment));
+
+					if (ActiveDocument != spawnsViewModel)
+						SetActiveDocument(spawnsViewModel);
+
+					spawnsViewModel.SelectedLocationSpawner = locationSpawner;
+					break;
+				}
+				case RegionSpawner regionSpawner:
+				{
+					var spawnsViewModel = Documents.OfType<SpawnsViewModel>().FirstOrDefault();
+
+					if (spawnsViewModel is null)
+						Documents.Add(spawnsViewModel = new SpawnsViewModel(_segment));
+
+					if (ActiveDocument != spawnsViewModel)
+						SetActiveDocument(spawnsViewModel);
+
+					spawnsViewModel.SelectedRegionSpawner = regionSpawner;
+					break;
+				}
+				case SegmentTreasure treasure:
+				{
+					var treasureViewModel = Documents.OfType<TreasuresViewModel>().FirstOrDefault();
+
+					if (treasureViewModel is null)
+						Documents.Add(treasureViewModel = new TreasuresViewModel(_segment));
+
+					if (ActiveDocument != treasureViewModel)
+						SetActiveDocument(treasureViewModel);
+
+					treasureViewModel.SelectedTreasure = treasure;
+					break;
+				}
+				case SegmentSubregion subregion:
+				{
+					var subregionViewModel = Documents.OfType<SubregionViewModel>().FirstOrDefault();
+
+					if (subregionViewModel is null)
+						Documents.Add(subregionViewModel = new SubregionViewModel(_segment));
+
+					if (ActiveDocument != subregionViewModel)
+						SetActiveDocument(subregionViewModel);
+
+					subregionViewModel.SelectedSubregion = subregion;
+					break;
+				}
 				case Entity entity:
 				{
 					var entityViewModel = Documents.OfType<EntitiesViewModel>().FirstOrDefault();
-					
+
 					if (entityViewModel is null)
 						Documents.Add(entityViewModel = new EntitiesViewModel(_segment));
 
 					if (ActiveDocument != entityViewModel)
 						SetActiveDocument(entityViewModel);
-					
+
 					entityViewModel.SelectedEntity = entity;
 					break;
 				}
 			}
-			
-			
 		});
 	}
 
@@ -562,11 +625,6 @@ public class ApplicationPresenter : ObservableRecipient
 		Segment = new Segment();
 		
 		Documents.Add(new SegmentViewModel(Segment));
-		Documents.Add(new LocationsViewModel(Segment));
-		Documents.Add(new SubregionViewModel(Segment));
-		Documents.Add(new EntitiesViewModel(Segment));
-		Documents.Add(new SpawnsViewModel(Segment));
-		Documents.Add(new TreasuresViewModel(Segment));
 	}
 
 	private void CloseSegment()
@@ -664,11 +722,6 @@ public class ApplicationPresenter : ObservableRecipient
 		Segment.UpdateTiles();
 		
 		Documents.Add(new SegmentViewModel(segment));
-		Documents.Add(new LocationsViewModel(segment));
-		Documents.Add(new SubregionViewModel(segment));
-		Documents.Add(new EntitiesViewModel(segment));
-		Documents.Add(new SpawnsViewModel(segment));
-		Documents.Add(new TreasuresViewModel(segment));
 		
 		SelectFilter(Filters.FirstOrDefault());
 		SelectTool(Tools.FirstOrDefault());
