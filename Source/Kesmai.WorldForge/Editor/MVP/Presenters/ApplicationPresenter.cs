@@ -568,47 +568,7 @@ public class ApplicationPresenter : ObservableRecipient
 				worldScreen.InvalidateRender();
 		}
 	}
-		
-	private void JumpSpawner (Spawner spawner)
-	{
-		var viewmodel = ActiveDocument as SpawnsViewModel;
-
-		if (spawner is LocationSpawner)
-		{
-			viewmodel.SelectedLocationSpawner = spawner as LocationSpawner;
-		}
-
-		if (spawner is RegionSpawner)
-		{
-			viewmodel.SelectedRegionSpawner = spawner as RegionSpawner;
-		}
-	}
-
-	private void JumpSubregion(SegmentSubregion subregion)
-	{
-		var viewmodel = ActiveDocument as SubregionViewModel;
-		viewmodel.SelectedSubregion = subregion;
-	}
-
-	private void JumpEntity(Entity entity)
-	{
-		var viewmodel = ActiveDocument as EntitiesViewModel;
-		viewmodel.SelectedEntity = entity;
-
-	}
-
-	private void JumpLocation (SegmentLocation location)
-	{
-		var viewmodel = ActiveDocument as LocationsViewModel;
-		viewmodel.SelectedLocation = location;
-	}
-
-	private void JumpTreasure (SegmentTreasure treasure)
-	{
-		var viewmodel = ActiveDocument as TreasuresViewModel;
-		viewmodel.SelectedTreasure = treasure;
-	}
-
+	
 	public void JumpPrevious ()
 	{
 		if (_previousDocument != _activeDocument && _previousDocument != null)
