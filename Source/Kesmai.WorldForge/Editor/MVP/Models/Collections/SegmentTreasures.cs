@@ -19,6 +19,8 @@ public class SegmentTreasures : ObservableCollection<SegmentTreasure>
 
 	public void Load(XElement element, Version version)
 	{
+		Clear();
+		
 		foreach (var treasureElement in element.Elements("treasure"))
 		{
 			var isHoardAttribute = treasureElement.Attribute("hoard");

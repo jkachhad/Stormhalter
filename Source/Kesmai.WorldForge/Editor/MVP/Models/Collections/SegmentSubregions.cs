@@ -16,6 +16,8 @@ public class SegmentSubregions : ObservableCollection<SegmentSubregion>
 {
 	public void Load(XElement element, Version version)
 	{
+		Clear();
+		
 		foreach (var subregionElement in element.Elements("subregion"))
 			Add(new SegmentSubregion(subregionElement));
 	}

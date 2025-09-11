@@ -49,6 +49,9 @@ public class SegmentSpawns : ObservableObject
 
 	public void Load(SegmentEntities entities, XElement element, Version version)
 	{
+		Location.Clear();
+		Region.Clear();
+		
 		foreach (var spawnElement in element.Elements("spawn"))
 		{
 			var type = spawnElement.Attribute("type");
