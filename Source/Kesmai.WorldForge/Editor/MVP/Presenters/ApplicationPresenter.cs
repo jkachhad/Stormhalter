@@ -627,7 +627,7 @@ public class ApplicationPresenter : ObservableRecipient
 		var segment = new Segment()
 		{
 			Name = targetDirectory.Name,
-			Path = targetDirectory.FullName
+			Directory = targetDirectory.FullName
 		};
 		
 		var regionsFolder = new DirectoryInfo(Path.Combine(targetDirectory.FullName, "Regions"));
@@ -691,7 +691,7 @@ public class ApplicationPresenter : ObservableRecipient
 	{
 		var targetPath = String.Empty;
 		
-		if (!queryPath && String.IsNullOrEmpty(_segment.Path))
+		if (!queryPath && String.IsNullOrEmpty(_segment.Directory))
 			queryPath = true;
 
 		if (queryPath)
@@ -710,7 +710,7 @@ public class ApplicationPresenter : ObservableRecipient
 		}
 		else
 		{
-			targetPath = _segment.Path;
+			targetPath = _segment.Directory;
 		}
 
 		try

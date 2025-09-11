@@ -20,12 +20,12 @@ public sealed class SegmentProject : IDisposable
 
             if (segment != null)
             {
-                var path = segment.Path;
+                var path = segment.Directory;
                 
                 if (!Directory.Exists(path))
                     throw new DirectoryNotFoundException(path);
                 
-                Start(segment.Path);
+                Start(segment.Directory);
             }
         });
     }
@@ -68,25 +68,25 @@ public sealed class SegmentProject : IDisposable
     private void OnChanged(object sender, FileSystemEventArgs e)
     {
         if (!IsIgnoredPath(e.FullPath))
-            WeakReferenceMessenger.Default.Send(new SegmentFileChangedMessage(e));
+            WeakReferenceMessenger.Default.SendDelayed(new SegmentFileChangedMessage(e), TimeSpan.FromSeconds(1.0));
     }
 
     private void OnCreated(object sender, FileSystemEventArgs e)
     {
         if (!IsIgnoredPath(e.FullPath))
-            WeakReferenceMessenger.Default.Send(new SegmentFileCreatedMessage(e));
+            WeakReferenceMessenger.Default.SendDelayed(new SegmentFileCreatedMessage(e), TimeSpan.FromSeconds(1.0));
     }
 
     private void OnDeleted(object sender, FileSystemEventArgs e)
     {
         if (!IsIgnoredPath(e.FullPath))
-            WeakReferenceMessenger.Default.Send(new SegmentFileDeletedMessage(e));
+            WeakReferenceMessenger.Default.SendDelayed(new SegmentFileDeletedMessage(e), TimeSpan.FromSeconds(1.0));
     }
 
     private void OnRenamed(object sender, RenamedEventArgs e)
     {
         if (!IsIgnoredPath(e.FullPath))
-            WeakReferenceMessenger.Default.Send(new SegmentFileRenamedMessage(e));
+            WeakReferenceMessenger.Default.SendDelayed(new SegmentFileRenamedMessage(e), TimeSpan.FromSeconds(1.0));
     }
     
     private bool IsIgnoredPath(string path) => 

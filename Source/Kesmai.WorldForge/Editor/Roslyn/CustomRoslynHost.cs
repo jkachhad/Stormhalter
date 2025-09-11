@@ -44,7 +44,7 @@ public class CustomRoslynHost : RoslynHost
         segmentSolution = segmentProject.Solution;
         
         // add documents to segment project.
-        var segmentDocuments = Directory.GetFiles(segment.Path, "*.cs", SearchOption.AllDirectories)
+        var segmentDocuments = Directory.GetFiles(segment.Directory, "*.cs", SearchOption.AllDirectories)
             .Where(p => !p.Contains(@"\obj\") && !p.Contains(@"\bin\"));
 
         foreach (var segmentDocument in segmentDocuments)
@@ -83,6 +83,12 @@ public class CustomRoslynHost : RoslynHost
         WeakReferenceMessenger.Default.Register<SegmentEntityChanged>(this, (_, _) => OnSegmentChanged());
         WeakReferenceMessenger.Default.Register<SegmentTreasuresChanged>(this, (_, _) => OnSegmentChanged());
         WeakReferenceMessenger.Default.Register<SegmentSpawnChanged>(this, (_, _) => OnSegmentChanged());
+        
+        // watch for file changes
+        WeakReferenceMessenger.Default.Register<SegmentFileCreatedMessage>(this, (_, message) => OnSegmentFileCreated(message.Value));
+        WeakReferenceMessenger.Default.Register<SegmentFileDeletedMessage>(this, (_, message) => OnSegmentFileDeleted(message.Value));
+        WeakReferenceMessenger.Default.Register<SegmentFileRenamedMessage>(this, (_, message) => OnSegmentFileRenamed(message.Value));
+        WeakReferenceMessenger.Default.Register<SegmentFileChangedMessage>(this, (_, message) => OnSegmentFileChanged(message.Value));
     }
 
     public override RoslynWorkspace CreateWorkspace()
@@ -131,6 +137,13 @@ public class CustomRoslynHost : RoslynHost
 
     public void OnSegmentFileCreated(FileSystemEventArgs args)
     {
+        var path = args.FullPath;
+        var extension = Path.GetExtension(path).ToLower();
+        
+        // we only process C# files.
+        if (!extension.Equals(".cs", StringComparison.OrdinalIgnoreCase))
+            return;
+        
         var workspace = _workspace;
         var solution = workspace.CurrentSolution;
 
@@ -156,6 +169,13 @@ public class CustomRoslynHost : RoslynHost
 
     public void OnSegmentFileDeleted(FileSystemEventArgs args)
     {
+        var path = args.FullPath;
+        var extension = Path.GetExtension(path).ToLower();
+        
+        // we only process C# files.
+        if (!extension.Equals(".cs", StringComparison.OrdinalIgnoreCase))
+            return;
+        
         if (!_segmentDocuments.TryGetValue(args.FullPath, out var documentId))
             return;
         
@@ -171,6 +191,13 @@ public class CustomRoslynHost : RoslynHost
     
     public void OnSegmentFileRenamed(RenamedEventArgs args)
     {
+        var path = args.FullPath;
+        var extension = Path.GetExtension(path).ToLower();
+        
+        // we only process C# files.
+        if (!extension.Equals(".cs", StringComparison.OrdinalIgnoreCase))
+            return;
+        
         if (!_segmentDocuments.TryGetValue(args.OldFullPath, out var documentId)) 
             return;
         
@@ -187,6 +214,13 @@ public class CustomRoslynHost : RoslynHost
     
     public void OnSegmentFileChanged(FileSystemEventArgs args)
     {
+        var path = args.FullPath;
+        var extension = Path.GetExtension(path).ToLower();
+        
+        // we only process C# files.
+        if (!extension.Equals(".cs", StringComparison.OrdinalIgnoreCase))
+            return;
+        
         if (!_segmentDocuments.TryGetValue(args.FullPath, out var documentId))
             return;
         

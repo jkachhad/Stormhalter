@@ -24,18 +24,6 @@ public class SegmentWorkspace
 			if (segment != null)
 				Start(segment);
 		});
-		
-		WeakReferenceMessenger.Default.Register<SegmentFileCreatedMessage>(this, 
-			(_, message) => Host.OnSegmentFileCreated(message.Value));
-		
-		WeakReferenceMessenger.Default.Register<SegmentFileDeletedMessage>(this, 
-			(_, message) => Host.OnSegmentFileDeleted(message.Value));
-		
-		WeakReferenceMessenger.Default.Register<SegmentFileRenamedMessage>(this,
-			(_, message) => Host.OnSegmentFileRenamed(message.Value));
-		
-		WeakReferenceMessenger.Default.Register<SegmentFileChangedMessage>(this,
-			(_, message) => Host.OnSegmentFileChanged(message.Value));
 	}
 
 	public void Start(Segment segment)

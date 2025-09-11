@@ -76,7 +76,7 @@ public partial class SegmentTreeControl : UserControl
 
     private void OnSegmentPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(Segment.Path))
+        if (e.PropertyName == nameof(Segment.Directory))
         {
             Update();
         }
@@ -325,7 +325,7 @@ public partial class SegmentTreeControl : UserControl
         if (Segment == null)
             return;
 
-        var rootPath = Segment.Path;
+        var rootPath = Segment.Directory;
         
         UpdateRegions();
         UpdateLocations();

@@ -19,6 +19,8 @@ public class SegmentLocations : ObservableCollection<SegmentLocation>
 
 	public void Load(XElement element, Version version)
 	{
+		Clear();
+		
 		foreach (var locationElement in element.Elements("location"))
 			Add(new SegmentLocation(locationElement));
 	}
@@ -44,7 +46,7 @@ public class SegmentLocations : ObservableCollection<SegmentLocation>
 			foreach (var oldItem in args.OldItems.OfType<SegmentLocation>())
 				WeakReferenceMessenger.Default.Send(new SegmentLocationDeleted(oldItem));
 		}
-		
+
 		WeakReferenceMessenger.Default.Send(new SegmentLocationsChanged(this));
 	}
 }

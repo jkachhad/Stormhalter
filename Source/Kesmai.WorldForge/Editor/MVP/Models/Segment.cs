@@ -10,6 +10,7 @@ using Kesmai.WorldForge.Models;
 using Kesmai.WorldForge.Scripting;
 using Kesmai.WorldForge.UI.Documents;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Kesmai.WorldForge.Editor;
 
@@ -26,7 +27,7 @@ public class Segment : ObservableObject
 	};
 		
 	private string _name;
-	private string _path;
+	private string _directory;
 
 	public string Name
 	{
@@ -34,10 +35,10 @@ public class Segment : ObservableObject
 		set => SetProperty(ref _name, value);
 	}
 
-	public string Path
+	public string Directory
 	{
-		get => _path;
-		set => _path = value;
+		get => _directory;
+		set => _directory = value;
 	}
 	
 	public SegmentRegions Regions { get; set; } = new SegmentRegions();
@@ -58,8 +59,44 @@ public class Segment : ObservableObject
 				Name = location
 			});
 		}
+		
+		// register for changes in files to update the segment
+		WeakReferenceMessenger.Default.Register<SegmentFileChangedMessage>(this, (_, message) => OnSegmentFileChanged(message.Value));
 	}
-	
+
+	public void OnSegmentFileChanged(FileSystemEventArgs args)
+	{
+		var path = args.FullPath;
+		var extension = Path.GetExtension(path).ToLower();
+		
+		// we only process xml files.
+		if (!extension.Equals(".xml", StringComparison.OrdinalIgnoreCase))
+			return;
+		
+		var name = Path.GetFileNameWithoutExtension(path).ToLower();
+		var document = XDocument.Load(path);
+		var rootElement = document.Root;
+
+		if (rootElement is null)
+			return;
+
+		try
+		{
+			switch (name)
+			{
+				case "locations": Locations.Load(rootElement, Core.Version); break;
+				case "subregions": Subregions.Load(rootElement, Core.Version); break;
+				case "entities": Entities.Load(rootElement, Core.Version); break;
+				case "spawns": Spawns.Load(Entities, rootElement, Core.Version); break;
+				case "treasures": Treasures.Load(rootElement, Core.Version); break;
+			}
+		}
+		catch
+		{
+			// ignored
+		}
+	}
+
 	public SegmentRegion GetRegion(int id)
 	{
 		return Regions.FirstOrDefault(region => region.ID == id);
