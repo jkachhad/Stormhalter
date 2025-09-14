@@ -38,7 +38,7 @@ public partial class SegmentTreeControl : UserControl
         get => (Segment?)GetValue(SegmentProperty);
         set => SetValue(SegmentProperty, value);
     }
-
+    
     public SegmentTreeControl()
     {
         InitializeComponent();
@@ -155,14 +155,30 @@ public partial class SegmentTreeControl : UserControl
 
     private void OnClick(object sender, MouseButtonEventArgs args)
     {
-        if (sender is TreeViewItem item && item.Tag is ISegmentObject obj)
-            WeakReferenceMessenger.Default.Send(new SegmentObjectClick(obj));
+        if (sender is TreeViewItem item)
+        {
+            item.IsSelected = true;
+
+            if (item.Tag is ISegmentObject obj)
+            {
+                WeakReferenceMessenger.Default.Send(new SegmentObjectClick(obj));
+                WeakReferenceMessenger.Default.Send(new SegmentObjectSelected(obj));
+            }
+        }
     }
     
     private void OnDoubleClick(object sender, MouseButtonEventArgs args)
     {
-        if (sender is TreeViewItem item && item.Tag is ISegmentObject obj)
-            WeakReferenceMessenger.Default.Send(new SegmentObjectDoubleClick(obj));
+        if (sender is TreeViewItem item)
+        {
+            item.IsSelected = true;
+
+            if (item.Tag is ISegmentObject obj)
+            {
+                WeakReferenceMessenger.Default.Send(new SegmentObjectDoubleClick(obj));
+                WeakReferenceMessenger.Default.Send(new SegmentObjectSelected(obj));
+            }
+        }
     }
 
     public void UpdateLocations()
@@ -318,10 +334,10 @@ public partial class SegmentTreeControl : UserControl
     private void Update()
     {
         var expanded = new HashSet<string>();
-        foreach (var item in Tree.Items.OfType<TreeViewItem>())
+        foreach (var item in _tree.Items.OfType<TreeViewItem>())
             SaveExpansionState(item, expanded);
 
-        Tree.Items.Clear();
+        _tree.Items.Clear();
         if (Segment == null)
             return;
 
@@ -333,11 +349,11 @@ public partial class SegmentTreeControl : UserControl
         UpdateEntities();
         UpdateTreasures();
         
-        Tree.Items.Add(_regionsNode);
-        Tree.Items.Add(_locationsNode);
-        Tree.Items.Add(_spawnersNode);
-        Tree.Items.Add(_entitiesNode);
-        Tree.Items.Add(_treasureNode);
+        _tree.Items.Add(_regionsNode);
+        _tree.Items.Add(_locationsNode);
+        _tree.Items.Add(_spawnersNode);
+        _tree.Items.Add(_entitiesNode);
+        _tree.Items.Add(_treasureNode);
 
         // Add Source directory last
         if (!string.IsNullOrEmpty(rootPath) && Directory.Exists(rootPath))
@@ -349,10 +365,10 @@ public partial class SegmentTreeControl : UserControl
             /*foreach (var file in Segment.VirtualFiles)
                 sourceItem.Items.Add(CreateVirtualFileNode(file));*/
 
-            Tree.Items.Add(sourceItem);
+            _tree.Items.Add(sourceItem);
         }
 
-        foreach (var item in Tree.Items.OfType<TreeViewItem>())
+        foreach (var item in _tree.Items.OfType<TreeViewItem>())
             RestoreExpansionState(item, expanded);
     }
 

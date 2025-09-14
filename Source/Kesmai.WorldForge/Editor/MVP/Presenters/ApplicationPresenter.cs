@@ -51,6 +51,8 @@ public class ApplicationPresenter : ObservableRecipient
 
 	private object _activeDocument;
 	private object _previousDocument;
+
+	private object _activeContent;
 	
 	private TeleportComponent _configuringTeleporter = null;
 	public TeleportComponent ConfiguringTeleporter
@@ -161,7 +163,18 @@ public class ApplicationPresenter : ObservableRecipient
             }
 		}
 	}
-    public RelayCommand ExportToPdfCommand { get; set; }
+
+	public object ActiveContent
+	{
+		get => _activeContent;
+		set
+		{
+			if (value != _activeContent)
+				SetProperty(ref _activeContent, value);
+		}
+	}
+
+	public RelayCommand ExportToPdfCommand { get; set; }
     public RelayCommand ConvertSegmentCommand { get; }
 
     public ApplicationPresenter()
@@ -277,6 +290,11 @@ public class ApplicationPresenter : ObservableRecipient
 				Documents.Remove(content);
 			
 			ActiveDocument = Documents.FirstOrDefault();
+		});
+
+		messenger.Register<SegmentObjectSelected>(this, (r, message) =>
+		{
+			ActiveContent = message.Value;
 		});
 		
 		messenger.Register<SegmentObjectClick>(this, (r, message) =>
