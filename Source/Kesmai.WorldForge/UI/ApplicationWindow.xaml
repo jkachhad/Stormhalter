@@ -10,6 +10,7 @@
         xmlns:ui="clr-namespace:Kesmai.WorldForge.UI"
         xmlns:editor="clr-namespace:Kesmai.WorldForge.Editor"
         xmlns:documents="clr-namespace:Kesmai.WorldForge.UI.Documents"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
 
         mc:Ignorable="d"
 		
@@ -223,11 +224,25 @@
             <LayoutRoot>
                 <LayoutPanel Orientation="Horizontal">
                     
-                    <LayoutAnchorablePane FloatingWidth="250" DockWidth="250" DockMinWidth="250">
-                        <LayoutAnchorable x:Name="_projectWindow" Title="Project">
-                            <ui:SegmentTreeControl Segment="{Binding Segment}" />
-                        </LayoutAnchorable>
-                    </LayoutAnchorablePane>
+                    <LayoutAnchorablePaneGroup DockWidth="300" Orientation="Vertical">
+                        <LayoutAnchorablePane DockHeight="*">
+                            <LayoutAnchorable Title="Project" CanDockAsTabbedDocument="False">
+                                <ui:SegmentTreeControl Segment="{Binding Segment}" />
+                            </LayoutAnchorable>
+                        </LayoutAnchorablePane>
+
+                        <LayoutAnchorablePane DockHeight="*">
+                            <LayoutAnchorable Title="Properties" CanDockAsTabbedDocument="False">
+                                <syncfusion:PropertyGrid SelectedObject="{Binding ActiveDocument, Mode=OneTime}"
+                                                         Width="300" AutoGenerateItems="False"
+                                                         DisableAnimationOnObjectSelection="True">
+                                    <syncfusion:PropertyGrid.Items>
+                                        <syncfusion:PropertyGridItem PropertyName="Name" />
+                                    </syncfusion:PropertyGrid.Items>
+                                </syncfusion:PropertyGrid>
+                            </LayoutAnchorable>
+                        </LayoutAnchorablePane>
+                    </LayoutAnchorablePaneGroup>
                     
                     <!-- Documents -->
                     <LayoutDocumentPaneGroup CanRepositionItems="False">
