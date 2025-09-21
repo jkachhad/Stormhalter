@@ -300,7 +300,7 @@ public class ApplicationPresenter : ObservableRecipient
 			{
 				case SegmentRegion region:
 				{
-					SetActiveDocument(content);
+					SetActiveDocument(content, content);
 					break;
 				}
 				case SegmentLocation location:
@@ -312,7 +312,8 @@ public class ApplicationPresenter : ObservableRecipient
 
 					if (ActiveDocument != locationViewModel)
 						SetActiveDocument(locationViewModel);
-
+					
+					SetActiveContent(location);
 					locationViewModel.SelectedLocation = location;
 					break;
 				}
@@ -325,7 +326,8 @@ public class ApplicationPresenter : ObservableRecipient
 
 					if (ActiveDocument != spawnsViewModel)
 						SetActiveDocument(spawnsViewModel);
-
+					
+					SetActiveContent(locationSpawner);
 					spawnsViewModel.SelectedLocationSpawner = locationSpawner;
 					break;
 				}
@@ -339,6 +341,7 @@ public class ApplicationPresenter : ObservableRecipient
 					if (ActiveDocument != spawnsViewModel)
 						SetActiveDocument(spawnsViewModel);
 
+					SetActiveContent(regionSpawner);
 					spawnsViewModel.SelectedRegionSpawner = regionSpawner;
 					break;
 				}
@@ -352,6 +355,7 @@ public class ApplicationPresenter : ObservableRecipient
 					if (ActiveDocument != treasureViewModel)
 						SetActiveDocument(treasureViewModel);
 
+					SetActiveContent(treasure);
 					treasureViewModel.SelectedTreasure = treasure;
 					break;
 				}
@@ -365,6 +369,7 @@ public class ApplicationPresenter : ObservableRecipient
 					if (ActiveDocument != subregionViewModel)
 						SetActiveDocument(subregionViewModel);
 
+					SetActiveContent(subregion);
 					subregionViewModel.SelectedSubregion = subregion;
 					break;
 				}
@@ -378,6 +383,7 @@ public class ApplicationPresenter : ObservableRecipient
 					if (ActiveDocument != entityViewModel)
 						SetActiveDocument(entityViewModel);
 
+					SetActiveContent(entity);
 					entityViewModel.SelectedEntity = entity;
 					break;
 				}
@@ -385,12 +391,21 @@ public class ApplicationPresenter : ObservableRecipient
 		});
 	}
 
-	public void SetActiveDocument(object target)
+	public void SetActiveDocument(object target, ISegmentObject content = default)
 	{
 		if (!Documents.Contains(target))
 			Documents.Add(target);
 
 		ActiveDocument = target;
+
+		if (content != default)
+			SetActiveContent(content);
+	}
+	
+	public void SetActiveContent(ISegmentObject content)
+	{
+		if (content != null && ActiveContent != content)
+			ActiveContent = content;
 	}
 
 	public void SwapDocument(String Target)
