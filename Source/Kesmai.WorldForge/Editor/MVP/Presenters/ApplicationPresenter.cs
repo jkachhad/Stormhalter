@@ -294,11 +294,6 @@ public class ApplicationPresenter : ObservableRecipient
 
 		messenger.Register<SegmentObjectSelected>(this, (r, message) =>
 		{
-			ActiveContent = message.Value;
-		});
-		
-		messenger.Register<SegmentObjectClick>(this, (r, message) =>
-		{
 			var content = message.Value;
 
 			switch (content)

@@ -24,7 +24,6 @@ using DigitalRune.Collections;
 namespace Kesmai.WorldForge.UI;
 
 public class SegmentObjectDoubleClick(ISegmentObject target) : ValueChangedMessage<ISegmentObject>(target);
-public class SegmentObjectClick(ISegmentObject target) : ValueChangedMessage<ISegmentObject>(target);
 public class SegmentObjectSelected(ISegmentObject target) : ValueChangedMessage<ISegmentObject>(target);
 
 public partial class SegmentTreeControl : UserControl
@@ -57,6 +56,8 @@ public partial class SegmentTreeControl : UserControl
         
         WeakReferenceMessenger.Default.Register<SegmentSpawnsChanged>(this, (r, m) => UpdateSpawns());
         WeakReferenceMessenger.Default.Register<SegmentSpawnChanged>(this, (r, m) => UpdateSpawns());
+        
+        _tree.SelectedItemChanged += OnItemSelected;
     }
 
     private static void OnSegmentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -102,7 +103,6 @@ public partial class SegmentTreeControl : UserControl
                 Tag = $"category:Regions",
                 Header = CreateHeader("Regions", "Regions", true)
             };
-            _regionsNode.PreviewMouseRightButtonDown += OnSelect;
         }
 
         var collection = Segment.Regions;
@@ -132,8 +132,6 @@ public partial class SegmentTreeControl : UserControl
                 Tag = region,
                 Header = CreateColoredHeader(region.Name, Brushes.MediumPurple, false)
             };
-            item.MouseLeftButtonUp += OnClick;
-            item.PreviewMouseRightButtonDown += OnSelect;
             item.MouseDoubleClick += OnDoubleClick;
 
             var itemMenu = new ContextMenu();
@@ -152,21 +150,14 @@ public partial class SegmentTreeControl : UserControl
             return item;
         }
     }
-
-    private void OnClick(object sender, MouseButtonEventArgs args)
-    {
-        if (sender is TreeViewItem item)
-        {
-            item.IsSelected = true;
-
-            if (item.Tag is ISegmentObject obj)
-            {
-                WeakReferenceMessenger.Default.Send(new SegmentObjectClick(obj));
-                WeakReferenceMessenger.Default.Send(new SegmentObjectSelected(obj));
-            }
-        }
-    }
     
+    private void OnItemSelected(object sender, RoutedPropertyChangedEventArgs<object> e)
+    {
+        // Only send message if the selected item is a segment object.
+        if (e.NewValue is TreeViewItem { Tag: ISegmentObject segmentObject })
+            WeakReferenceMessenger.Default.Send(new SegmentObjectSelected(segmentObject));
+    }
+
     private void OnDoubleClick(object sender, MouseButtonEventArgs args)
     {
         if (sender is TreeViewItem item)
@@ -193,7 +184,6 @@ public partial class SegmentTreeControl : UserControl
                 Tag = $"category:Locations",
                 Header = CreateHeader("Locations", "Locations", true)
             };
-            _locationsNode.PreviewMouseRightButtonDown += OnSelect;
         }
 
         var collection = Segment.Locations;
@@ -227,7 +217,6 @@ public partial class SegmentTreeControl : UserControl
                 Tag = $"category:Spawns",
                 Header = CreateHeader("Spawns", "Spawns", true)
             };
-            _spawnersNode.PreviewMouseRightButtonDown += OnSelect;
         }
 
         var collection = Segment.Spawns;
@@ -267,7 +256,6 @@ public partial class SegmentTreeControl : UserControl
                 Tag = $"category:Entity",
                 Header = CreateHeader("Entity", "Entity", true)
             };
-            _entitiesNode.PreviewMouseRightButtonDown += OnSelect;
         }
 
         var collection = Segment.Entities
@@ -303,7 +291,6 @@ public partial class SegmentTreeControl : UserControl
                 Tag = $"category:Treasure",
                 Header = CreateHeader("Treasure", "Treasure", true)
             };
-            _treasureNode.PreviewMouseRightButtonDown += OnSelect;
         }
 
         var collection = Segment.Treasures;
@@ -427,7 +414,6 @@ public partial class SegmentTreeControl : UserControl
     {
         var item = new TreeViewItem { Tag = dir.FullName };
         item.Header = CreateHeader(dir.Name, dir.FullName, true);
-        item.PreviewMouseRightButtonDown += OnSelect;
 
         foreach (var subDir in dir.GetDirectories())
             item.Items.Add(CreateDirectoryNode(subDir));
@@ -458,7 +444,6 @@ public partial class SegmentTreeControl : UserControl
     {
         var item = new TreeViewItem { Tag = file.FullName };
         item.Header = CreateHeader(file.Name, file.FullName, false);
-        item.PreviewMouseRightButtonDown += OnSelect;
 
         var menu = new ContextMenu();
         var rename = new MenuItem { Header = "Rename" };
@@ -477,7 +462,7 @@ public partial class SegmentTreeControl : UserControl
     private TreeViewItem CreateVirtualFileNode(VirtualFile file) =>
         CreateInMemoryNode(file, file.Name + ".cs");
         */
-    
+
     private TreeViewItem CreateCategoryEntryNode(ISegmentObject obj, IList collection)
     {
         var item = new TreeViewItem { Tag = obj };
@@ -487,9 +472,6 @@ public partial class SegmentTreeControl : UserControl
             item.Header = CreateColoredHeader(obj.Name, Brushes.MediumPurple, false);
         else
             item.Header = CreateHeader(obj.Name, obj.Name, false);
-        item.MouseLeftButtonUp += OnClick;
-        item.PreviewMouseRightButtonDown += OnSelect;
-
         var menu = new ContextMenu();
         var rename = new MenuItem { Header = "Rename" };
         rename.Click += (s, e) => RenameSegmentObject(obj, item);
@@ -506,7 +488,6 @@ public partial class SegmentTreeControl : UserControl
     {
         var item = new TreeViewItem { Tag = $"category:Entity/{groupName}" };
         item.Header = CreateHeader(groupName, groupName, true);
-        item.PreviewMouseRightButtonDown += OnSelect;
 
         foreach (var entity in entities)
             item.Items.Add(CreateEntityEntryNode(entity));
@@ -523,8 +504,6 @@ public partial class SegmentTreeControl : UserControl
     private TreeViewItem CreateEntityEntryNode(Entity entity)
     {
         var item = new TreeViewItem { Tag = entity };
-        item.MouseLeftButtonUp += OnClick;
-        item.PreviewMouseRightButtonDown += OnSelect;
 
         var panel = new StackPanel { Orientation = Orientation.Horizontal };
         var icon = new Ellipse { Width = 10, Height = 10, Fill = Brushes.Yellow, Margin = new Thickness(2, 0, 2, 0) };
@@ -558,7 +537,6 @@ public partial class SegmentTreeControl : UserControl
     {
         var item = new TreeViewItem { Tag = $"category:Spawn/{region.ID}" };
         item.Header = CreateColoredHeader(region.Name, Brushes.MediumPurple, false);
-        item.PreviewMouseRightButtonDown += OnSelect;
 
         foreach (var spawner in Segment.Spawns.Location.Where(s => GetRegionId(s) == region.ID))
             item.Items.Add(CreateSpawnerEntryNode(spawner, Segment.Spawns.Location));
@@ -581,8 +559,6 @@ public partial class SegmentTreeControl : UserControl
     private TreeViewItem CreateSpawnerEntryNode(Spawner spawner, IList collection)
     {
         var item = new TreeViewItem { Tag = spawner };
-        item.MouseLeftButtonUp += OnClick;
-        item.PreviewMouseRightButtonDown += OnSelect;
 
         var panel = new StackPanel { Orientation = Orientation.Horizontal };
         Shape icon = spawner switch
@@ -611,8 +587,6 @@ public partial class SegmentTreeControl : UserControl
     private TreeViewItem CreateTreasureEntryNode(SegmentTreasure treasure)
     {
         var item = new TreeViewItem { Tag = treasure };
-        item.MouseLeftButtonUp += OnClick;
-        item.PreviewMouseRightButtonDown += OnSelect;
 
         var panel = new StackPanel { Orientation = Orientation.Horizontal };
         Shape icon = treasure is SegmentHoard
@@ -668,7 +642,6 @@ public partial class SegmentTreeControl : UserControl
     {
         var item = new TreeViewItem { Tag = obj };
         var header = CreateHeader(displayName, displayName, false);
-        item.PreviewMouseRightButtonDown += OnSelect;
         item.ContextMenu = null;
         if (header.Children.Count > 1 && header.Children[1] is TextBlock text)
         {
@@ -677,17 +650,6 @@ public partial class SegmentTreeControl : UserControl
         }
         item.Header = header;
         return item;
-    }
-
-    private void OnSelect(object sender, MouseButtonEventArgs e)
-    {
-        if (sender is TreeViewItem item)
-        {
-            item.IsSelected = true;
-            
-            if (item.Tag is ISegmentObject obj)
-                WeakReferenceMessenger.Default.Send(new SegmentObjectSelected(obj));
-        }
     }
 
     private void AddFile(string directory, TreeViewItem parent)
@@ -814,4 +776,3 @@ public partial class SegmentTreeControl : UserControl
         }
     }
 }
-
