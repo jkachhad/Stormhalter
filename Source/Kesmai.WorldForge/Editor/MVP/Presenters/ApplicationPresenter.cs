@@ -114,11 +114,7 @@ public class ApplicationPresenter : ObservableRecipient
 		set
 		{
 			if (SetProperty(ref _segment, value, true))
-			{
 				WeakReferenceMessenger.Default.Send(new SegmentChangedMessage(Segment));
-				
-				ActiveDocument = Documents.FirstOrDefault();
-			}
 		}
 	}
 
@@ -283,7 +279,14 @@ public class ApplicationPresenter : ObservableRecipient
 		ShowSubregions = true;
 
 		Selection = new Selection();
-		
+
+		// update active document when the segment changes occurs.
+		messenger.Register<SegmentChangedMessage>(this, (_, message) =>
+		{
+			SetActiveDocument(Documents.FirstOrDefault());
+		});
+
+		// when a document is closed, remove it from the list of documents. Set the next document as active.
 		messenger.Register<DocumentClosed>(this, (r, message) =>
 		{
 			var content = message.Document.Content;
@@ -294,6 +297,8 @@ public class ApplicationPresenter : ObservableRecipient
 			ActiveDocument = Documents.FirstOrDefault();
 		});
 
+		// when a segment object is selected, find or create the appropriate document and set it active.
+		// also set the active content to the selected object, if applicable.
 		messenger.Register<SegmentObjectSelected>(this, (r, message) =>
 		{
 			var content = message.Value;
@@ -302,7 +307,7 @@ public class ApplicationPresenter : ObservableRecipient
 			{
 				case SegmentRegion region:
 				{
-					SetActiveDocument(content, content);
+					SetActiveDocument(region, region);
 					break;
 				}
 				case SegmentLocation location:
