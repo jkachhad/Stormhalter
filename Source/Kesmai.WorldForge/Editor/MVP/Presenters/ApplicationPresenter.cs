@@ -54,7 +54,7 @@ public class ApplicationPresenter : ObservableRecipient
 	private object _activeDocument;
 	private object _previousDocument;
 
-	private object _activeContent;
+	private ISegmentObject _activeContent;
 	
 	private TeleportComponent _configuringTeleporter = null;
 	public TeleportComponent ConfiguringTeleporter
@@ -166,13 +166,13 @@ public class ApplicationPresenter : ObservableRecipient
 		}
 	}
 
-	public object ActiveContent
+	public ISegmentObject ActiveContent
 	{
 		get => _activeContent;
 		set
 		{
-			if (value != _activeContent)
-				SetProperty(ref _activeContent, value);
+			if (value != _activeContent && SetProperty(ref _activeContent, value))
+				WeakReferenceMessenger.Default.Send(new ActiveContentChanged(value as ISegmentObject));
 		}
 	}
 
