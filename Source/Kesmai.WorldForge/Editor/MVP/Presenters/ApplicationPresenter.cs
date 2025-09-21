@@ -33,10 +33,12 @@ public class GetActiveSegmentRequestMessage : RequestMessage<Segment>
 }
 
 public class SegmentChangedMessage(Segment Segment) : ValueChangedMessage<Segment>(Segment);
+public class ActiveContentChanged(ISegmentObject segmentObject) : ValueChangedMessage<ISegmentObject>(segmentObject);
 	
 public class UnregisterEvents
 {
 }
+
 public class ApplicationPresenter : ObservableRecipient
 {
 	private int _unitSize = 55;
