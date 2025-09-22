@@ -40,6 +40,7 @@ public class SegmentViewModel : ObservableObject, IDisposable
 	{
 		_segment = segment;
     }
+	
     public void Dispose()
     {
         _segment = null;

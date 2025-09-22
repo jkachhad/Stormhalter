@@ -370,9 +370,6 @@ public class ApplicationPresenter : ObservableRecipient
 				}
 				break;
 			}
-			case "Segment": //Ctrl-G
-				ActiveDocument = Documents.Where(d => d is SegmentViewModel).FirstOrDefault() as SegmentViewModel;
-				break;
 			case "Entity": //Ctrl-E
 			{
 				Entity target = null;
@@ -519,8 +516,6 @@ public class ApplicationPresenter : ObservableRecipient
 			throw new InvalidOperationException("Attempt to create a segment when an active segment already exists.");
 
 		Segment = new Segment();
-		
-		Documents.Add(new SegmentViewModel(Segment));
 	}
 
 	private void CloseSegment()
@@ -616,8 +611,6 @@ public class ApplicationPresenter : ObservableRecipient
 
 		Segment = segment;
 		Segment.UpdateTiles();
-		
-		Documents.Add(new SegmentViewModel(segment));
 		
 		SelectFilter(Filters.FirstOrDefault());
 		SelectTool(Tools.FirstOrDefault());

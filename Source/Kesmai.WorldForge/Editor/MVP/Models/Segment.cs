@@ -21,7 +21,7 @@ public interface ISegmentObject
 	void Present(ApplicationPresenter presenter);
 }
 
-public class Segment : ObservableObject
+public class Segment : ObservableObject, ISegmentObject
 {
 	private static List<string> _reservedLocations = new List<string>()
 	{
@@ -66,6 +66,20 @@ public class Segment : ObservableObject
 		WeakReferenceMessenger.Default.Register<SegmentFileChangedMessage>(this, (_, message) => OnSegmentFileChanged(message.Value));
 	}
 
+	public void Present(ApplicationPresenter presenter)
+	{
+		var segmentViewModel = presenter.Documents.OfType<SegmentViewModel>().FirstOrDefault();
+
+		if (segmentViewModel is null)
+			presenter.Documents.Add(segmentViewModel = new SegmentViewModel(presenter.Segment));
+
+		if (presenter.ActiveDocument != segmentViewModel)
+			presenter.SetActiveDocument(segmentViewModel);
+
+		presenter.SetActiveContent(this);
+		segmentViewModel.Segment = this;
+	}
+	
 	public void OnSegmentFileChanged(FileSystemEventArgs args)
 	{
 		var path = args.FullPath;

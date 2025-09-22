@@ -86,11 +86,27 @@ public partial class SegmentTreeControl : UserControl
         // segment name is no longer shown as a root node.
     }
 
+    private TreeViewItem _segmentNode;
     private TreeViewItem _regionsNode;
     private TreeViewItem _locationsNode;
     private TreeViewItem _entitiesNode;
     private TreeViewItem _spawnersNode;
     private TreeViewItem _treasureNode;
+
+    public void UpdateSegment()
+    {
+        if (Segment is null)
+            return;
+        
+        if (_segmentNode is null)
+        {
+            _segmentNode = new TreeViewItem
+            {
+                Tag = Segment,
+                Header = CreateHeader("Segment", "Segment.png"),
+            };
+        }
+    }
     
     public void UpdateRegions()
     {
