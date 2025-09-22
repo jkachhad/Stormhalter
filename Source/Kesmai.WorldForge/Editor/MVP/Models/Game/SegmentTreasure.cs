@@ -39,6 +39,20 @@ public class SegmentTreasure : ObservableObject, ISegmentObject
 		}
 	}
 
+	public void Present(ApplicationPresenter presenter)
+	{
+		var treasureViewModel = presenter.Documents.OfType<TreasuresViewModel>().FirstOrDefault();
+
+		if (treasureViewModel is null)
+			presenter.Documents.Add(treasureViewModel = new TreasuresViewModel(presenter.Segment));
+
+		if (presenter.ActiveDocument != treasureViewModel)
+			presenter.SetActiveDocument(treasureViewModel);
+
+		presenter.SetActiveContent(this);
+		treasureViewModel.SelectedTreasure = this;
+	}
+
 	public string Notes
 	{
 		get => _notes;

@@ -17,6 +17,8 @@ namespace Kesmai.WorldForge.Editor;
 public interface ISegmentObject
 {
 	string Name { get; set; }
+	
+	void Present(ApplicationPresenter presenter);
 }
 
 public class Segment : ObservableObject

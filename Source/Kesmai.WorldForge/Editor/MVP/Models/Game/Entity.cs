@@ -46,7 +46,21 @@ public class Entity : ObservableObject, ICloneable, ISegmentObject
 		}
 		
 	}
-		
+
+	public void Present(ApplicationPresenter presenter)
+	{
+		var entityViewModel = presenter.Documents.OfType<EntitiesViewModel>().FirstOrDefault();
+
+		if (entityViewModel is null)
+			presenter.Documents.Add(entityViewModel = new EntitiesViewModel(presenter.Segment));
+
+		if (presenter.ActiveDocument != entityViewModel)
+			presenter.SetActiveDocument(entityViewModel);
+
+		presenter.SetActiveContent(this);
+		entityViewModel.SelectedEntity = this;
+	}
+
 	public string Notes
 	{
 		get => _notes;

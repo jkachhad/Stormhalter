@@ -52,6 +52,11 @@ public class SegmentRegion : ObservableObject, ISegmentObject
 		}
 	}
 
+	public void Present(ApplicationPresenter presenter)
+	{
+		presenter.SetActiveDocument(this, this);
+	}
+
 	[Browsable(true)]
 	public int Elevation
 	{

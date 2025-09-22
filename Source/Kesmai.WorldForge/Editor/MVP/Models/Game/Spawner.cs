@@ -11,6 +11,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using Kesmai.WorldForge.UI.Documents;
 using Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge;
@@ -40,6 +41,8 @@ public abstract class Spawner : ObservableObject, ISegmentObject
 				WeakReferenceMessenger.Default.Send(new SegmentSpawnChanged(this));
 		}
 	}
+
+	public abstract void Present(ApplicationPresenter presenter);
 
 	public override string ToString()
 	{
@@ -235,6 +238,20 @@ public class LocationSpawner : Spawner
 			Region = (int)locationElement.Attribute("region");
 		}
 	}
+	
+	public override void Present(ApplicationPresenter presenter)
+	{
+		var spawnsViewModel = presenter.Documents.OfType<SpawnsViewModel>().FirstOrDefault();
+
+		if (spawnsViewModel is null)
+			presenter.Documents.Add(spawnsViewModel = new SpawnsViewModel(presenter.Segment));
+
+		if (presenter.ActiveDocument != spawnsViewModel)
+			presenter.SetActiveDocument(spawnsViewModel);
+					
+		presenter.SetActiveContent(this);
+		spawnsViewModel.SelectedLocationSpawner = this;
+	}
 
 	public override XElement GetXElement()
 	{
@@ -299,6 +316,20 @@ public class RegionSpawner : Spawner
 					(int)rectangleElement.Attribute("bottom")));
 			}
 		}
+	}
+	
+	public override void Present(ApplicationPresenter presenter)
+	{
+		var spawnsViewModel = presenter.Documents.OfType<SpawnsViewModel>().FirstOrDefault();
+
+		if (spawnsViewModel is null)
+			presenter.Documents.Add(spawnsViewModel = new SpawnsViewModel(presenter.Segment));
+
+		if (presenter.ActiveDocument != spawnsViewModel)
+			presenter.SetActiveDocument(spawnsViewModel);
+					
+		presenter.SetActiveContent(this);
+		spawnsViewModel.SelectedRegionSpawner = this;
 	}
 
 	public override XElement GetXElement()

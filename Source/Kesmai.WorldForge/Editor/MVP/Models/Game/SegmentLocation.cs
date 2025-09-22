@@ -7,6 +7,7 @@ using CommonServiceLocator;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using Kesmai.WorldForge.UI.Documents;
 
 namespace Kesmai.WorldForge.Editor;
 
@@ -69,7 +70,20 @@ public class SegmentLocation : ObservableObject, ICloneable, ISegmentObject
 
 		Region = (int)element.Attribute("region");
 	}
+	
+	public void Present(ApplicationPresenter presenter)
+	{
+		var locationViewModel = presenter.Documents.OfType<LocationsViewModel>().FirstOrDefault();
 
+		if (locationViewModel is null)
+			presenter.Documents.Add(locationViewModel = new LocationsViewModel(presenter.Segment));
+
+		if (presenter.ActiveDocument != locationViewModel)
+			presenter.SetActiveDocument(locationViewModel);
+					
+		presenter.SetActiveContent(this);
+	}
+	
 	public XElement GetXElement()
 	{
 		return new XElement("location", 

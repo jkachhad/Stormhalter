@@ -14,6 +14,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CommonServiceLocator;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.VisualBasic;
@@ -195,6 +196,10 @@ public partial class SegmentTreeControl : UserControl
                     Name = $"Location {collection.Count + 1}" 
                 };
                 collection.Add(location);
+
+                // present the new location to the user.
+                location.Present(ServiceLocator.Current
+                    .GetInstance<ApplicationPresenter>());
             });
         }
         

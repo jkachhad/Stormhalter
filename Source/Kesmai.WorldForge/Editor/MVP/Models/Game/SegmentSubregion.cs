@@ -7,6 +7,7 @@ using System.Xml.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using Kesmai.WorldForge.UI.Documents;
 using Color = Microsoft.Xna.Framework.Color;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
@@ -42,6 +43,21 @@ public class SegmentSubregion : ObservableObject, ISegmentObject
 			if (SetProperty(ref _name, value))
 				WeakReferenceMessenger.Default.Send(new SegmentSubregionChanged(this));
 		}
+	}
+
+	public void Present(ApplicationPresenter presenter)
+	{
+		var subregionViewModel = presenter.Documents
+			.OfType<SubregionViewModel>().FirstOrDefault();
+
+		if (subregionViewModel is null)
+			presenter.Documents.Add(subregionViewModel = new SubregionViewModel(presenter.Segment));
+
+		if (presenter.ActiveDocument != subregionViewModel)
+			presenter.SetActiveDocument(subregionViewModel);
+
+		presenter.SetActiveContent(this);
+		subregionViewModel.SelectedSubregion = this;
 	}
 
 	public Color Color { get; set; }
