@@ -177,6 +177,8 @@ public partial class SegmentTreeControl : UserControl
         if (Segment is null)
             return;
 
+        var collection = Segment.Locations;
+        
         if (_locationsNode is null)
         {
             _locationsNode = new TreeViewItem
@@ -184,25 +186,36 @@ public partial class SegmentTreeControl : UserControl
                 Tag = $"category:Locations",
                 Header = CreateHeader("Locations", "Locations", true)
             };
+            
+            _locationsNode.ContextMenu = new ContextMenu();
+            _locationsNode.ContextMenu.AddItem("Add Location", "Add.png", (s, e) =>
+            {
+                var location = new SegmentLocation
+                {
+                    Name = $"Location {collection.Count + 1}" 
+                };
+                collection.Add(location);
+            });
         }
-
-        var collection = Segment.Locations;
         
         _locationsNode.Items.Clear();
-        
-        foreach (var child in collection)
-            _locationsNode.Items.Add(CreateCategoryEntryNode(child, collection));
 
-        var menu = new ContextMenu();
-        var add = new MenuItem
+        foreach (var child in collection)
         {
-            Header = $"Add Location" 
-        };
-        add.Click += (s, e) => AddSegmentObject(collection, "Location");
-        
-        menu.Items.Add(add);
-        
-        _locationsNode.ContextMenu = menu;
+            var item = new TreeViewItem
+            {
+                Header = CreateColoredHeader(child.Name, Brushes.LightPink, true),
+                Tag = child
+            };
+            
+            item.ContextMenu = new ContextMenu();
+            item.ContextMenu.AddItem("Rename", String.Empty, (s, e) 
+                => RenameSegmentObject(child, item));
+            item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) 
+                => DeleteSegmentObject(child, item, collection));
+            
+            _locationsNode.Items.Add(item);
+        }
     }
 
     public void UpdateSpawns()
@@ -462,27 +475,6 @@ public partial class SegmentTreeControl : UserControl
     private TreeViewItem CreateVirtualFileNode(VirtualFile file) =>
         CreateInMemoryNode(file, file.Name + ".cs");
         */
-
-    private TreeViewItem CreateCategoryEntryNode(ISegmentObject obj, IList collection)
-    {
-        var item = new TreeViewItem { Tag = obj };
-        if (obj is SegmentLocation)
-            item.Header = CreateColoredHeader(obj.Name, Brushes.LightPink, true);
-        else if (obj is SegmentRegion)
-            item.Header = CreateColoredHeader(obj.Name, Brushes.MediumPurple, false);
-        else
-            item.Header = CreateHeader(obj.Name, obj.Name, false);
-        var menu = new ContextMenu();
-        var rename = new MenuItem { Header = "Rename" };
-        rename.Click += (s, e) => RenameSegmentObject(obj, item);
-        var delete = new MenuItem { Header = "Delete" };
-        delete.Click += (s, e) => DeleteSegmentObject(obj, item, collection);
-        menu.Items.Add(rename);
-        menu.Items.Add(delete);
-        item.ContextMenu = menu;
-
-        return item;
-    }
 
     private TreeViewItem CreateEntityGroupNode(string groupName, IEnumerable<Entity> entities)
     {

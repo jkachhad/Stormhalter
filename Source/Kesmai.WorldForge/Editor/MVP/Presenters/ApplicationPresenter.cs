@@ -324,7 +324,6 @@ public class ApplicationPresenter : ObservableRecipient
 						SetActiveDocument(locationViewModel);
 					
 					SetActiveContent(location);
-					locationViewModel.SelectedLocation = location;
 					break;
 				}
 				case LocationSpawner locationSpawner:
@@ -496,19 +495,6 @@ public class ApplicationPresenter : ObservableRecipient
 						(ActiveDocument as TreasuresViewModel).SelectedTreasure = targetTreasureObject;
 				}
 				break;
-			case "Location": //Ctrl-L
-			{
-				var sel = _selection.FirstOrDefault();
-				SegmentLocation target = null;
-				if (sel is { Width: 1, Height: 1 })
-				{
-					target = Segment.Locations.Where(l => l.Region == _selection.Region.ID && l.X == sel.Left && l.Y == sel.Top).LastOrDefault();
-				}
-				ActiveDocument = Documents.Where(d => d is LocationsViewModel).FirstOrDefault() as LocationsViewModel;
-				if (target is not null)
-					(ActiveDocument as LocationsViewModel).SelectedLocation = target;
-				break;
-			}
 			case "Subregion": //Ctrl-U
 			{
 				var sel = _selection.FirstOrDefault();

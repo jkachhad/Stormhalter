@@ -16,23 +16,20 @@ public partial class LocationsDocument : UserControl
 	public LocationsDocument()
 	{
 		InitializeComponent();
+		
+		var messenger = WeakReferenceMessenger.Default;
+		
+		messenger.Register<ActiveContentChanged>(this, (_, message) =>
+		{
+			if (message.Value is not SegmentLocation location)
+				return;
 			
-		WeakReferenceMessenger.Default.Register<LocationsDocument, LocationsViewModel.SelectedLocationChangedMessage>
-		(this, (r, m) => {
 			var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
 			var segment = segmentRequest.Response;
 
-			var location = m.Value;
-
-			if (location != null)
-			{
-				_presenter.Region = segment.GetRegion(location.Region);
-				_presenter.SetLocation(location);
-			}
+			_presenter.Region = segment.GetRegion(location.Region);
+			_presenter.SetLocation(location);
 		});
-
-		WeakReferenceMessenger.Default.Register<LocationsDocument, UnregisterEvents>(this,
-			(r, m) => { WeakReferenceMessenger.Default.UnregisterAll(this); });
 	}
 }
 
@@ -65,8 +62,7 @@ public class LocationsViewModel : ObservableRecipient
 	}
 
 	public SegmentLocations Locations => _segment.Locations;
-		
-	public RelayCommand AddLocationCommand { get; private set; }
+	
 	public RelayCommand<SegmentLocation> RemoveLocationCommand { get; private set; }
 	public RelayCommand<SegmentLocation> CopyLocationCommand { get; private set; }
 	public RelayCommand ImportLocationCommand { get; private set; }
@@ -75,8 +71,6 @@ public class LocationsViewModel : ObservableRecipient
 	public LocationsViewModel(Segment segment)
 	{
 		_segment = segment ?? throw new ArgumentNullException(nameof(segment));
-			
-		AddLocationCommand = new RelayCommand(AddLocation);
 			
 		RemoveLocationCommand = new RelayCommand<SegmentLocation>(RemoveLocation, 
 			(location) => SelectedLocation != null && !SelectedLocation.IsReserved);
@@ -91,17 +85,6 @@ public class LocationsViewModel : ObservableRecipient
 		ExportLocationCommand = new RelayCommand<SegmentLocation>(ExportLocation,
 			(location) => SelectedLocation != null && !SelectedLocation.IsReserved);
 		ExportLocationCommand.DependsOn(() => SelectedLocation);
-	}
-		
-	private void AddLocation()
-	{
-		var newLocation = new SegmentLocation()
-		{
-			Name = $"Location {_newLocationCount++}"
-		};
-			
-		Locations.Add(newLocation);
-		SelectedLocation = newLocation;
 	}
 
 	private void RemoveLocation(SegmentLocation location)
