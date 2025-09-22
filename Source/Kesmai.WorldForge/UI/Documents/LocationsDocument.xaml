@@ -98,18 +98,6 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            
-            <syncfusion:PropertyGrid Grid.Row="2" Margin="0,3,0,0"
-                                     SelectedObject="{Binding SelectedLocation}"
-                                     AutoGenerateItems="False"
-                                     DisableAnimationOnObjectSelection="True">
-                <syncfusion:PropertyGrid.Items>
-                    <syncfusion:PropertyGridItem PropertyName="Name"/>
-                    <syncfusion:PropertyGridItem PropertyName="X" />
-                    <syncfusion:PropertyGridItem PropertyName="Y" />
-                    <syncfusion:PropertyGridItem PropertyName="Region" />
-                </syncfusion:PropertyGrid.Items>
-            </syncfusion:PropertyGrid>
         </Grid>
         
         <worldForge:LocationsPresentationTarget Grid.Column="1" x:Name="_presenter" Margin="2" />

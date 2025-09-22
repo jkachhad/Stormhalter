@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Xml.Linq;
@@ -19,6 +20,7 @@ public class SegmentLocation : ObservableObject, ICloneable, ISegmentObject
 	private int _y;
 	private int _region;
 
+	[Category("Identity")]
 	public string Name
 	{
 		get => _name;
@@ -30,24 +32,28 @@ public class SegmentLocation : ObservableObject, ICloneable, ISegmentObject
 		}
 	}
 
+	[Category("Coordinates")]
 	public int X
 	{
 		get => _x;
 		set => SetProperty(ref _x, value);
 	}
 
+	[Category("Coordinates")]
 	public int Y
 	{
 		get => _y;
 		set => SetProperty(ref _y, value);
 	}
 
+	[Category("Coordinates")]
 	public int Region
 	{
 		get => _region;
 		set => SetProperty(ref _region, value);
 	}
-		
+	
+	[ReadOnly(true)]
 	public bool IsReserved { get; set; }
 
 	public SegmentLocation()
