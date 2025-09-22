@@ -170,7 +170,7 @@ public class ApplicationPresenter : ObservableRecipient
 		set
 		{
 			if (value != _activeContent && SetProperty(ref _activeContent, value))
-				WeakReferenceMessenger.Default.Send(new ActiveContentChanged(value as ISegmentObject));
+				WeakReferenceMessenger.Default.Send(new ActiveContentChanged(value));
 		}
 	}
 
