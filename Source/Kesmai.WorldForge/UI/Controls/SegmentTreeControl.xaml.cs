@@ -421,8 +421,8 @@ public partial class SegmentTreeControl : UserControl
         
         var image = new Image
         {
-            Width = 16,
-            Height = 16,
+            Width = 24,
+            Height = 24,
             Margin = new Thickness(2, 0, 2, 0),
         };
 
@@ -433,7 +433,7 @@ public partial class SegmentTreeControl : UserControl
         }
 
         panel.Children.Add(image);
-        panel.Children.Add(new TextBlock { Text = name });
+        panel.Children.Add(new TextBlock { Text = name, FontSize = 12, VerticalAlignment = VerticalAlignment.Center });
         
         return panel;
     }
