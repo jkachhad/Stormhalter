@@ -118,7 +118,7 @@ public partial class SegmentTreeControl : UserControl
             _regionsNode = new TreeViewItem
             {
                 Tag = $"category:Regions",
-                Header = CreateHeader("Regions", "Regions", true)
+                Header = CreateHeader("Regions", "Regions.png")
             };
         }
 
@@ -201,7 +201,7 @@ public partial class SegmentTreeControl : UserControl
             _locationsNode = new TreeViewItem
             {
                 Tag = $"category:Locations",
-                Header = CreateHeader("Locations", "Locations", true)
+                Header = CreateHeader("Locations", "Locations.png")
             };
             
             _locationsNode.ContextMenu = new ContextMenu();
@@ -249,7 +249,7 @@ public partial class SegmentTreeControl : UserControl
             _spawnersNode = new TreeViewItem
             {
                 Tag = $"category:Spawns",
-                Header = CreateHeader("Spawns", "Spawns", true)
+                Header = CreateHeader("Spawns", "Spawns.png")
             };
         }
 
@@ -288,7 +288,7 @@ public partial class SegmentTreeControl : UserControl
             _entitiesNode = new TreeViewItem
             {
                 Tag = $"category:Entity",
-                Header = CreateHeader("Entity", "Entity", true)
+                Header = CreateHeader("Entity", "Entities.png")
             };
         }
 
@@ -323,7 +323,7 @@ public partial class SegmentTreeControl : UserControl
             _treasureNode = new TreeViewItem
             {
                 Tag = $"category:Treasure",
-                Header = CreateHeader("Treasure", "Treasure", true)
+                Header = CreateHeader("Treasure", "Treasures.png")
             };
         }
 
@@ -359,17 +359,20 @@ public partial class SegmentTreeControl : UserControl
             SaveExpansionState(item, expanded);
 
         _tree.Items.Clear();
-        if (Segment == null)
+        
+        if (Segment is null)
             return;
 
         var rootPath = Segment.Directory;
         
+        UpdateSegment();
         UpdateRegions();
         UpdateLocations();
         UpdateSpawns();
         UpdateEntities();
         UpdateTreasures();
         
+        _tree.Items.Add(_segmentNode);
         _tree.Items.Add(_regionsNode);
         _tree.Items.Add(_locationsNode);
         _tree.Items.Add(_spawnersNode);
@@ -409,7 +412,7 @@ public partial class SegmentTreeControl : UserControl
             RestoreExpansionState(child, expanded);
     }
 
-    private StackPanel CreateHeader(string name, string path, bool isDirectory)
+    private StackPanel CreateHeader(string name, string icon)
     {
         var panel = new StackPanel
         {
@@ -421,10 +424,14 @@ public partial class SegmentTreeControl : UserControl
             Width = 16,
             Height = 16,
             Margin = new Thickness(2, 0, 2, 0),
-            
-            Source = GetIcon(path, isDirectory)
         };
-        
+
+        if (!String.IsNullOrEmpty(icon))
+        {
+            image.Source =
+                new BitmapImage(new Uri($"pack://application:,,,/Kesmai.WorldForge;component/Resources/{icon}"));
+        }
+
         panel.Children.Add(image);
         panel.Children.Add(new TextBlock { Text = name });
         
@@ -447,7 +454,7 @@ public partial class SegmentTreeControl : UserControl
     private TreeViewItem CreateDirectoryNode(DirectoryInfo dir)
     {
         var item = new TreeViewItem { Tag = dir.FullName };
-        item.Header = CreateHeader(dir.Name, dir.FullName, true);
+        item.Header = CreateHeader(dir.Name, "Folder.png");
 
         foreach (var subDir in dir.GetDirectories())
             item.Items.Add(CreateDirectoryNode(subDir));
@@ -477,7 +484,7 @@ public partial class SegmentTreeControl : UserControl
     private TreeViewItem CreateFileNode(FileInfo file)
     {
         var item = new TreeViewItem { Tag = file.FullName };
-        item.Header = CreateHeader(file.Name, file.FullName, false);
+        item.Header = CreateHeader(file.Name, "Folder.png");
 
         var menu = new ContextMenu();
         var rename = new MenuItem { Header = "Rename" };
@@ -500,7 +507,7 @@ public partial class SegmentTreeControl : UserControl
     private TreeViewItem CreateEntityGroupNode(string groupName, IEnumerable<Entity> entities)
     {
         var item = new TreeViewItem { Tag = $"category:Entity/{groupName}" };
-        item.Header = CreateHeader(groupName, groupName, true);
+        item.Header = CreateHeader(groupName, "Folder.png");
 
         foreach (var entity in entities)
             item.Items.Add(CreateEntityEntryNode(entity));
@@ -654,7 +661,7 @@ public partial class SegmentTreeControl : UserControl
     private TreeViewItem CreateInMemoryNode(ISegmentObject obj, string displayName)
     {
         var item = new TreeViewItem { Tag = obj };
-        var header = CreateHeader(displayName, displayName, false);
+        var header = CreateHeader(displayName, "Folder.png");
         item.ContextMenu = null;
         if (header.Children.Count > 1 && header.Children[1] is TextBlock text)
         {
