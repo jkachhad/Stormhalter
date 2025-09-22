@@ -232,12 +232,9 @@
 
                         <LayoutAnchorablePane DockHeight="*">
                             <LayoutAnchorable Title="Properties" CanDockAsTabbedDocument="False">
-                                <syncfusion:PropertyGrid SelectedObject="{Binding ActiveContent}"
-                                                         Width="300" AutoGenerateItems="False"
+                                <syncfusion:PropertyGrid SelectedObject="{Binding ActiveContent, Mode=OneWay}"
+                                                         Width="300"
                                                          DisableAnimationOnObjectSelection="True">
-                                    <syncfusion:PropertyGrid.Items>
-                                        <syncfusion:PropertyGridItem PropertyName="Name" />
-                                    </syncfusion:PropertyGrid.Items>
                                 </syncfusion:PropertyGrid>
                             </LayoutAnchorable>
                         </LayoutAnchorablePane>
