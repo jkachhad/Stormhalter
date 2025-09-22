@@ -176,8 +176,7 @@
         </ToolBarTray>
         
         <DockingManager x:Name="_dockingManager" Grid.Row="2"
-                        DocumentsSource="{Binding Documents}"
-                        ActiveContent="{Binding ActiveDocument, Mode=TwoWay}">
+                        DocumentsSource="{Binding Documents}">
 
             <DockingManager.Resources>
                 <DataTemplate DataType="{x:Type documents:SegmentViewModel}">

@@ -157,7 +157,9 @@ public class ApplicationPresenter : ObservableRecipient
                     disposable.Dispose();
                 }
                 _previousDocument = _activeDocument;
-                SetProperty(ref _activeDocument, value, true);
+                
+                if (SetProperty(ref _activeDocument, value, true))
+	                WeakReferenceMessenger.Default.Send(new DocumentActivate(_activeDocument));
             }
 		}
 	}
@@ -283,7 +285,8 @@ public class ApplicationPresenter : ObservableRecipient
 		// update active document when the segment changes occurs.
 		messenger.Register<SegmentChangedMessage>(this, (_, message) =>
 		{
-			SetActiveDocument(Documents.FirstOrDefault());
+			if (message.Value is not null)
+				SetActiveDocument(Documents.FirstOrDefault());
 		});
 
 		// when a document is closed, remove it from the list of documents. Set the next document as active.
@@ -400,10 +403,13 @@ public class ApplicationPresenter : ObservableRecipient
 
 	public void SetActiveDocument(object target, ISegmentObject content = default)
 	{
-		if (!Documents.Contains(target))
-			Documents.Add(target);
+		if (ActiveDocument != target)
+		{
+			if (!Documents.Contains(target))
+				Documents.Add(target);
 
-		ActiveDocument = target;
+			ActiveDocument = target;
+		}
 
 		if (content != default)
 			SetActiveContent(content);
