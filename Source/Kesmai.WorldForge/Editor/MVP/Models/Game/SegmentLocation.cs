@@ -76,7 +76,7 @@ public class SegmentLocation : ObservableObject, ICloneable, ISegmentObject
 		var locationViewModel = presenter.Documents.OfType<LocationsViewModel>().FirstOrDefault();
 
 		if (locationViewModel is null)
-			presenter.Documents.Add(locationViewModel = new LocationsViewModel(presenter.Segment));
+			presenter.Documents.Add(locationViewModel = new LocationsViewModel());
 
 		if (presenter.ActiveDocument != locationViewModel)
 			presenter.SetActiveDocument(locationViewModel);

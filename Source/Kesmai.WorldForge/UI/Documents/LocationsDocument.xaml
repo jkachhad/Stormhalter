@@ -4,70 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:worldForge="clr-namespace:Kesmai.WorldForge"
-             xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300"
-             
-             FontFamily="Tahoma" FontSize="14">
-    <UserControl.Resources>
-        <CollectionViewSource 
-            x:Key="collectionViewSource"
-            Source="{Binding Locations}">
-            
-            <CollectionViewSource.SortDescriptions>
-                <componentModel:SortDescription PropertyName="Name" 
-                                                Direction="Ascending" />
-            </CollectionViewSource.SortDescriptions>
-        </CollectionViewSource>
-    </UserControl.Resources>
-    
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
-            
-            <ListBox Width="300" Grid.Row="1"
-                        ItemsSource="{Binding Source={StaticResource collectionViewSource}}"
-                        SelectedItem="{Binding SelectedLocation, Mode=TwoWay}"
-                        SelectionMode="Single">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal" 
-                                    VerticalAlignment="Center">
-                            <TextBlock FontWeight="Bold" x:Name="locationName" Text="{Binding Name}" Margin="3" />
-                            <TextBlock FontStyle="Italic" x:Name="locationPoint" TextAlignment="Right" Margin="3">
-                                <TextBlock.Text>
-                                    <MultiBinding StringFormat="X: {0} Y: {1} Region: {2}">
-                                        <Binding Path="X" />
-                                        <Binding Path="Y" />
-                                        <Binding Path="Region" />
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
-                        </StackPanel>
-                        
-                        <DataTemplate.Triggers>
-                            <DataTrigger Binding="{Binding IsReserved}" Value="True">
-                                <Setter TargetName="locationName" Property="Foreground" Value="DodgerBlue"/>
-                            </DataTrigger>
-                                
-                            <DataTrigger Binding="{Binding Region}" Value="0">
-                                <Setter TargetName="locationPoint" Property="Foreground" Value="Red"/>
-                            </DataTrigger>
-                        </DataTemplate.Triggers>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </Grid>
-        
-        <worldForge:LocationsPresentationTarget x:Name="_presenter"
-            Grid.Column="1" Grid.RowSpan="2" />
-    </Grid>
+             d:DesignHeight="300" d:DesignWidth="300">
+    <worldForge:LocationsPresentationTarget x:Name="_presenter" />
 </UserControl>
