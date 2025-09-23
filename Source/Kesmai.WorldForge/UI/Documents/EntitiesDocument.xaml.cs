@@ -300,12 +300,7 @@ public class EntitiesViewModel : ObservableRecipient, IDisposable
 	private ObservableCollection<Spawner> _relatedSpawners = new ObservableCollection<Spawner>();
 
 	public ObservableCollection<Spawner> RelatedSpawners { get=> _relatedSpawners;}
-		
-	public RelayCommand AddEntityCommand { get; set; }
-	public RelayCommand<Entity> RemoveEntityCommand { get; set; }
-	public RelayCommand<Entity> CopyEntityCommand { get; set; }
-	public RelayCommand<Entity> ExportEntityCommand { get; set; }
-	public RelayCommand ImportEntityComamnd { get; set; }
+	
 	public RelayCommand JumpSpawnerCommand { get; set; }
 	
 	public RelayCommand AddGroupCommand { get; set; }
@@ -341,22 +336,6 @@ public class EntitiesViewModel : ObservableRecipient, IDisposable
 	{
 		_segment = segment ?? throw new ArgumentNullException(nameof(segment));
 		_relatedSpawners = new ObservableCollection<Spawner>();
-
-		AddEntityCommand = new RelayCommand(AddEntity);
-			
-		RemoveEntityCommand = new RelayCommand<Entity>(RemoveEntity, 
-			(entity) => (SelectedEntity != null));
-		RemoveEntityCommand.DependsOn(() => SelectedEntity);
-			
-		CopyEntityCommand = new RelayCommand<Entity>(CopyEntity,
-			(entity) => (SelectedEntity != null));
-		CopyEntityCommand.DependsOn(() => SelectedEntity);
-
-		ExportEntityCommand = new RelayCommand<Entity>(ExportEntity,
-			(entity) => (SelectedEntity != null));
-		ExportEntityCommand.DependsOn(() => SelectedEntity);
-
-		ImportEntityComamnd = new RelayCommand(ImportEntity);
 		
 		JumpSpawnerCommand = new RelayCommand(JumpSpawner);
 		
@@ -411,33 +390,6 @@ public class EntitiesViewModel : ObservableRecipient, IDisposable
 		if (result != MessageBoxResult.No && _groups.Groups.Count > 0)
 			_groups.Groups.Remove(group);
 	}
-
-	public void AddEntity()
-	{
-		var newEntity = new Entity()
-		{
-			Name = $"Entity {_newEntityCount++}",
-			Group = "Unassigned"
-		};
-		if (SelectedEntity?.Group != null)
-			newEntity.Group = SelectedEntity.Group;
-		var entityGroup = _groups.Groups.Where(g => g.Name == newEntity.Group).FirstOrDefault();
-
-		var unassigned = _groups.Groups.Where((x => x == entityGroup)).FirstOrDefault();
-		Source.Add(newEntity);
-		if (unassigned is not null)
-			unassigned.Entities.Add(newEntity);
-		else
-		{
-			var group = new WfGroup()
-			{
-				Name = "Unassigned",
-			};
-			group.Entities.Add(newEntity);
-			_groups.Groups.Add(group);
-		}
-		SelectedEntity = newEntity;
-	}
 	
 	public void MoveEntity(Entity entity, WfGroup sourceGroup, WfGroup destinationGroup)
 	{
@@ -450,58 +402,4 @@ public class EntitiesViewModel : ObservableRecipient, IDisposable
 		// Update the group of the entity
 		entity.Group = destinationGroup.Name;
 	}
-
-	public void RemoveEntity(Entity entity)
-	{
-		var result = MessageBox.Show($"Are you sure you wish to delete '{entity.Name}'?", 
-			"WorldForge", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-		if (result != MessageBoxResult.No)
-		{
-			_segment?.Entities.Remove(entity);
-			var group = _groups.Groups.Where(g => g.Entities.Contains(entity)).FirstOrDefault();
-			if (group != null)
-				group.Entities.Remove(entity);
-		}
-	}
-
-	public void CopyEntity(Entity entity)
-	{
-		if (entity.Clone() is Entity clonedEntity)
-		{
-			Source.Add(clonedEntity);
-			var group = clonedEntity.Group;
-			var wfGroup = _groups.Groups.Where(g => g.Name == group).FirstOrDefault();
-			wfGroup.Entities.Add(clonedEntity);
-	
-			SelectedEntity = clonedEntity;
-		}
-	}
-
-	public void ExportEntity(Entity entity)
-	{
-		Clipboard.SetText(entity.GetXElement().ToString());
-	}
-
-	public void ImportEntity()
-	{
-		XDocument clipboard = null;
-		try
-		{
-			clipboard = XDocument.Parse(Clipboard.GetText());
-		}
-		catch { }
-		if (clipboard is null || clipboard.Root.Name.ToString() != "entity")
-			return;
-
-		var newEntity = new Entity(clipboard.Root);
-
-		while (Source.Any(e => e.Name == newEntity.Name))
-			newEntity.Name = $"Copy of {newEntity.Name}";
-
-		Source.Add(newEntity);
-		SelectedEntity = newEntity;
-	}
-	
-	
 }

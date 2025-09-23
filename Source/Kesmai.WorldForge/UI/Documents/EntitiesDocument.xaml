@@ -22,20 +22,8 @@
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="200"></RowDefinition>
             </Grid.RowDefinitions>
-            <!--
             <ToolBar Padding="2" Grid.Row="0">
                 <ToolBar.Items>
-                    <Button Width="24" Height="24"
-                            Command="{Binding AddEntityCommand}"
-                            ToolTip="Add Entity">
-                        <Image Source="../../Resources/Add.png"/>
-                    </Button>
-                    <Button Width="24" Height="24"
-                            Command="{Binding RemoveEntityCommand}"
-                            CommandParameter="{Binding SelectedEntity}">
-                        <Image Source="../../Resources/Delete.png" />
-                    </Button>
-                    <Separator />
                     <Button Width="24" Height="24"
                             Command="{Binding AddGroupCommand}"
                             ToolTip="Add Group">
@@ -47,25 +35,8 @@
                         <Image Source="../../Resources/GreenX.png" />
                     </Button>
                     <Separator />
-                    <Button Width="24" Height="24"
-                            Command="{Binding CopyEntityCommand}"
-                            CommandParameter="{Binding SelectedEntity}">
-                        <Image Source="../../Resources/Copy.png" />
-                    </Button>
-                    <Button Width="24" Height="24"
-                                    Command="{Binding ExportEntityCommand}"
-                                    ToolTip="Copy Entity to Clipboard"
-                                    CommandParameter="{Binding SelectedEntity}">
-                        <Image Source="../../Resources/Export.png" />
-                    </Button>
-                    <Button Width="24" Height="24"
-                                    Command="{Binding ImportEntityComamnd}"
-                                    ToolTip="Paste Entity from Clipboard">
-                        <Image Source="../../Resources/Import.png" />
-                    </Button>
                 </ToolBar.Items>
             </ToolBar>
-            -->
             
             <syncfusion:PropertyGrid Grid.Row="0" Margin="5"
                                      SelectedObject="{Binding SelectedEntity}"
