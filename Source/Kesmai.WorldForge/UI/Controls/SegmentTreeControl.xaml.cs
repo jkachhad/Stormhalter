@@ -258,18 +258,23 @@ public partial class SegmentTreeControl : UserControl
 
         foreach (var child in collection)
         {
+            var isReserved = child.IsReserved;
+            
             var item = new TreeViewItem
             {
-                Header = CreateColoredHeader(child.Name, Brushes.LightPink, true),
+                Header = CreateColoredHeader(child.Name, (isReserved ? Brushes.LightSlateGray : Brushes.LightPink), true),
                 Tag = child
             };
-            
-            item.ContextMenu = new ContextMenu();
-            item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) 
-                => RenameSegmentObject(child, item));
-            item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) 
-                => DeleteSegmentObject(child, item, collection));
-            
+
+            if (isReserved)
+            {
+                item.ContextMenu = new ContextMenu();
+                item.ContextMenu.AddItem("Rename", "Rename.png", (s, e)
+                    => RenameSegmentObject(child, item));
+                item.ContextMenu.AddItem("Delete", "Delete.png", (s, e)
+                    => DeleteSegmentObject(child, item, collection));
+            }
+
             _locationsNode.Items.Add(item);
         }
         

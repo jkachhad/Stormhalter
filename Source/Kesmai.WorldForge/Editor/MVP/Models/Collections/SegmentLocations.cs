@@ -38,7 +38,12 @@ public class SegmentLocations : ObservableCollection<SegmentLocation>
 		if (args.NewItems != null)
 		{
 			foreach (var newItem in args.NewItems.OfType<SegmentLocation>())
+			{
+				if (Segment.IsReservedLocation(newItem.Name))
+					newItem.IsReserved = true;
+				
 				WeakReferenceMessenger.Default.Send(new SegmentLocationCreated(newItem));
+			}
 		}
 			
 		if (args.OldItems != null)

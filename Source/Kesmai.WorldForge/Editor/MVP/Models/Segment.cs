@@ -29,6 +29,15 @@ public class Segment : ObservableObject, ISegmentObject
 	{
 		"Entrance", "Resurrect", "Facet", "Thief", 
 	};
+
+	public static bool IsReservedLocation(string location)
+	{
+		if (String.IsNullOrWhiteSpace(location))
+			return false;
+		
+		return _reservedLocations.Contains(location, 
+			StringComparer.OrdinalIgnoreCase);
+	}
 		
 	private string _name;
 	private string _directory;
