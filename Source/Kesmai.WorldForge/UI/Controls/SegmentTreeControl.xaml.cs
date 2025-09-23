@@ -175,7 +175,7 @@ public partial class SegmentTreeControl : UserControl
         
         _regionsNode.ContextMenu = categoryMenu;
         
-        foreach (var item in _tree.Items.OfType<TreeViewItem>())
+        foreach (var item in _regionsNode.Items.OfType<TreeViewItem>())
             RestoreExpansionState(item, expanded);
         TreeViewItem createRegionNode(SegmentRegion region, SegmentRegions source)
         {
@@ -283,7 +283,7 @@ public partial class SegmentTreeControl : UserControl
             _locationsNode.Items.Add(item);
         }
         
-        foreach (var item in _tree.Items.OfType<TreeViewItem>())
+        foreach (var item in _locationsNode.Items.OfType<TreeViewItem>())
             RestoreExpansionState(item, expanded);
     }
 
@@ -330,7 +330,7 @@ public partial class SegmentTreeControl : UserControl
         
         _spawnersNode.ContextMenu = menu;
         
-        foreach (var item in _tree.Items.OfType<TreeViewItem>())
+        foreach (var item in _spawnersNode.Items.OfType<TreeViewItem>())
             RestoreExpansionState(item, expanded);
     }
 
@@ -373,7 +373,7 @@ public partial class SegmentTreeControl : UserControl
         
         _entitiesNode.ContextMenu = menu;
         
-        foreach (var item in _tree.Items.OfType<TreeViewItem>())
+        foreach (var item in _entitiesNode.Items.OfType<TreeViewItem>())
             RestoreExpansionState(item, expanded);
     }
 
@@ -420,7 +420,7 @@ public partial class SegmentTreeControl : UserControl
         
         _treasureNode.ContextMenu = menu;
         
-        foreach (var item in _tree.Items.OfType<TreeViewItem>())
+        foreach (var item in _treasureNode.Items.OfType<TreeViewItem>())
             RestoreExpansionState(item, expanded);
     }
     
