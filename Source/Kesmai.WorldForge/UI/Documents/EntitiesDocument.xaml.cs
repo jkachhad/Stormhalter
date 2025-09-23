@@ -273,8 +273,6 @@ public class EntitiesViewModel : ObservableRecipient, IDisposable
     }
 
     public SegmentEntities Source => _segment.Entities;
-    
-	public RelayCommand JumpSpawnerCommand { get; set; }
 	
 	public RelayCommand AddGroupCommand { get; set; }
 	
@@ -308,8 +306,6 @@ public class EntitiesViewModel : ObservableRecipient, IDisposable
 	public EntitiesViewModel(Segment segment)
 	{
 		_segment = segment ?? throw new ArgumentNullException(nameof(segment));
-
-		JumpSpawnerCommand = new RelayCommand(JumpSpawner);
 		
 		AddGroupCommand = new RelayCommand(AddGroup);
 		
@@ -318,25 +314,6 @@ public class EntitiesViewModel : ObservableRecipient, IDisposable
 		
 		_groups.ImportSegmentEntities(_segment.Entities);
 		
-	}
-
-	public void JumpSpawner()
-	{
-		var spawnRequest = WeakReferenceMessenger.Default.Send<EntitiesDocument.GetSelectedSpawner>();
-		var spawn = spawnRequest.Response;
-		var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
-		if (spawnRequest.HasReceivedResponse)
-		{
-			Spawner target = spawnRequest.Response;
-			var ActiveDocument = presenter.Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
-			presenter.ActiveDocument = ActiveDocument;
-			if (target is LocationSpawner)
-				(ActiveDocument as SpawnsViewModel).SelectedLocationSpawner = target as LocationSpawner;
-			if (target is RegionSpawner)
-				(ActiveDocument as SpawnsViewModel).SelectedRegionSpawner = target as RegionSpawner;
-			WeakReferenceMessenger.Default.Send(target as Spawner);
-		}
-		WeakReferenceMessenger.Default.Send(spawn as Spawner);
 	}
 
 	public void AddGroup()
