@@ -271,7 +271,7 @@ public partial class SegmentTreeControl : UserControl
                 Tag = child
             };
 
-            if (isReserved)
+            if (!isReserved)
             {
                 item.ContextMenu = new ContextMenu();
                 item.ContextMenu.AddItem("Rename", "Rename.png", (s, e)
