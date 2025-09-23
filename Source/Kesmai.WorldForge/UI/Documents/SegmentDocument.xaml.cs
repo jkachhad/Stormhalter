@@ -14,14 +14,6 @@ public partial class SegmentDocument : UserControl
 	{
 		InitializeComponent();
     }
-
-    private void OnExpandAllClicked(object sender, RoutedEventArgs e)
-    {
-    }
-
-    private void OnCollapseAllClicked(object sender, RoutedEventArgs e)
-    {
-    }
 }
 
 public class SegmentViewModel : ObservableObject, IDisposable
