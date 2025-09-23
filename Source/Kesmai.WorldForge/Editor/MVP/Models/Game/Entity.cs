@@ -39,13 +39,8 @@ public class Entity : ObservableObject, ICloneable, ISegmentObject
 		set
 		{
 			if (SetProperty(ref _name, value))
-			{
-				OnPropertyChanged("Name");
-				
 				WeakReferenceMessenger.Default.Send(new SegmentEntityChanged(this));
-			}
 		}
-		
 	}
 
 	public string Notes
@@ -58,20 +53,8 @@ public class Entity : ObservableObject, ICloneable, ISegmentObject
 	public string Group
 	{
 		get => _group;
-		set
-		{
-			if (SetProperty(ref _group, value))
-			{
-				OnPropertyChanged("Group");
-			}
-		}
+		set => SetProperty(ref _group, value);
 	}
-	public new event PropertyChangedEventHandler PropertyChanged;
-
-	protected new virtual void OnPropertyChanged(string propertyName)
-	{
-		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-	}	
 	
 	public ObservableCollection<Script> Scripts
 	{
