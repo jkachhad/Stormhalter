@@ -88,12 +88,12 @@ public class SegmentSubregion : ObservableObject, ICloneable, ISegmentObject
 		
 	public SegmentSubregion(XElement element)
 	{
-		Name = (string)element.Attribute("name");
+		_name = (string)element.Attribute("name");
 
 		if (Enum.TryParse((string)element.Attribute("type"), true, out SubregionType result))
-			Type = result;
+			_type = result;
 
-		Region = (int)element.Attribute("region");
+		_region = (int)element.Attribute("region");
 
 		var rectanglesElement = element.Element("rectangles");
 
@@ -101,7 +101,7 @@ public class SegmentSubregion : ObservableObject, ICloneable, ISegmentObject
 		{
 			foreach (var rectangleElement in rectanglesElement.Elements("rectangle"))
 			{
-				Rectangles.Add(new SegmentBounds(
+				_rectangles.Add(new SegmentBounds(
 					(int)rectangleElement.Attribute("left"), 
 					(int)rectangleElement.Attribute("top"), 
 					(int)rectangleElement.Attribute("right"), 

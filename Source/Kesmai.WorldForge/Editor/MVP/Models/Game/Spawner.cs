@@ -101,27 +101,27 @@ public abstract class Spawner : ObservableObject, ICloneable, ISegmentObject
 
 	protected Spawner(XElement element)
 	{
-		Name = (string)element.Attribute("name");
+		_name = (string)element.Attribute("name");
 			
 		if (Boolean.TryParse((string)element.Attribute("enabled"), out var enabled))
-			Enabled = enabled;
+			_enabled = enabled;
 		else
-			Enabled = true;
+			_enabled = true;
 
 		if (Int32.TryParse((string)element.Element("minimumDelay"), out var minSeconds))
-			MinimumDelay = TimeSpan.FromSeconds(minSeconds);
+			_minimumDelay = TimeSpan.FromSeconds(minSeconds);
 		else
-			MinimumDelay = TimeSpan.Zero;
+			_minimumDelay = TimeSpan.Zero;
 
 		if (Int32.TryParse((string)element.Element("maximumDelay"), out var maxSeconds))
-			MaximumDelay = TimeSpan.FromSeconds(maxSeconds);
+			_maximumDelay = TimeSpan.FromSeconds(maxSeconds);
 		else
-			MaximumDelay = TimeSpan.Zero;
+			_maximumDelay = TimeSpan.Zero;
 			
 		var maximumElement = element.Element("maximum");
 
 		if (maximumElement != null)
-			Maximum = (int)maximumElement;
+			_maximum = (int)maximumElement;
 
 		ValidateScripts(element);
 	}
@@ -236,9 +236,9 @@ public class LocationSpawner : Spawner
 
 		if (locationElement != null)
 		{
-			X = (int)locationElement.Attribute("x");
-			Y = (int)locationElement.Attribute("y");
-			Region = (int)locationElement.Attribute("region");
+			_x = (int)locationElement.Attribute("x");
+			_y = (int)locationElement.Attribute("y");
+			_region = (int)locationElement.Attribute("region");
 		}
 	}
 	
@@ -313,7 +313,7 @@ public class RegionSpawner : Spawner
 			var regionAttribute = boundsElement.Attribute("region");
 				
 			if (regionAttribute != null)
-				Region = (int)regionAttribute;
+				_region = (int)regionAttribute;
 				
 			foreach (var rectangleElement in boundsElement.Elements("inclusion"))
 			{

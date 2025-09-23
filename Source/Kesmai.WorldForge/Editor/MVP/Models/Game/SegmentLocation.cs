@@ -63,12 +63,12 @@ public class SegmentLocation : ObservableObject, ICloneable, ISegmentObject
 		
 	public SegmentLocation(XElement element)
 	{
-		Name = (string)element.Attribute("name");
+		_name = (string)element.Attribute("name");
 			
-		X = (int)element.Attribute("x");
-		Y = (int)element.Attribute("y");
+		_x = (int)element.Attribute("x");
+		_y = (int)element.Attribute("y");
 
-		Region = (int)element.Attribute("region");
+		_region = (int)element.Attribute("region");
 	}
 	
 	public void Present(ApplicationPresenter presenter)
