@@ -49,6 +49,16 @@ public class Entity : ObservableObject, ICloneable, ISegmentObject
 		set => SetProperty(ref _notes, value);
 	}
 	
+	/// <summary>
+	/// Gets or sets the group for this entity.
+	/// </summary>
+	/// <remarks>
+	/// The group is used to categorize entities in the edit. It is only used for organizational purposes.
+	/// The format is slash-separated values, e.g. "animals\mammals", similar to a path.
+	/// This allows for grouping related entities together in a hierarchical manner.
+	///
+	/// The path will be used to create a folder structure in the segment tree.
+	/// </remarks>
 	[ReadOnly(true)]
 	public string Group
 	{

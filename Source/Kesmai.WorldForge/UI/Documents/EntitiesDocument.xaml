@@ -3,42 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
              xmlns:scripting="clr-namespace:Kesmai.WorldForge.Scripting"
-             xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              
              FontFamily="Tahoma" FontSize="16">
-    
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="200"></RowDefinition>
-            </Grid.RowDefinitions>
-            <ToolBar Padding="2" Grid.Row="0">
-                <ToolBar.Items>
-                    <Button Width="24" Height="24"
-                            Command="{Binding AddGroupCommand}"
-                            ToolTip="Add Group">
-                        <Image Source="../../Resources/plus.png"/>
-                    </Button>
-                    <Button Width="24" Height="24"
-                            Command="{Binding RemoveGroupCommand}"
-                            CommandParameter="{Binding SelectedGroup}">
-                        <Image Source="../../Resources/GreenX.png" />
-                    </Button>
-                    <Separator />
-                </ToolBar.Items>
-            </ToolBar>
-        </Grid>
-        
         <Border Margin="2" Grid.Column="1"
                 BorderBrush="Black" BorderThickness="1">
             <TabControl x:Name="_scriptsTabControl"
@@ -78,7 +47,5 @@
                     </DataTemplate>
                 </TabControl.ContentTemplate>
             </TabControl>
-            
         </Border>
-    </Grid>
 </UserControl>

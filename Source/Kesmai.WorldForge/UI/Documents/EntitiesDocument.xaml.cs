@@ -306,39 +306,9 @@ public class EntitiesViewModel : ObservableRecipient, IDisposable
 	public EntitiesViewModel(Segment segment)
 	{
 		_segment = segment ?? throw new ArgumentNullException(nameof(segment));
-		
-		AddGroupCommand = new RelayCommand(AddGroup);
-		
-		RemoveGroupCommand = new RelayCommand<WfGroup>(RemoveGroup,
-			(group) => (_groups.Groups.Count > 0));
-		
 		_groups.ImportSegmentEntities(_segment.Entities);
-		
 	}
 
-	public void AddGroup()
-	{
-		var newGroup = new WfGroup()
-		{
-			Name = "Unassigned"
-		};
-		_groups.Groups.Add(newGroup);
-		
-	}
-	
-	public void RemoveGroup(WfGroup group)
-	{
-		if (group == null)
-		{
-			return;
-		}
-
-		var result = MessageBox.Show($"Are you sure you wish to delete '{group.Name}'?", 
-			"WorldForge", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-		if (result != MessageBoxResult.No && _groups.Groups.Count > 0)
-			_groups.Groups.Remove(group);
-	}
 	
 	public void MoveEntity(Entity entity, WfGroup sourceGroup, WfGroup destinationGroup)
 	{
