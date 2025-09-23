@@ -32,6 +32,7 @@ public class Entity : ObservableObject, ICloneable, ISegmentObject
 		
 	private ObservableCollection<Script> _scripts = new ObservableCollection<Script>();
 	
+	[Category("Identity")]
 	public string Name
 	{
 		get => _name;
@@ -53,6 +54,7 @@ public class Entity : ObservableObject, ICloneable, ISegmentObject
 		set => SetProperty(ref _notes, value);
 	}
 	
+	[ReadOnly(true)]
 	public string Group
 	{
 		get => _group;
