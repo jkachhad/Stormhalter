@@ -38,6 +38,8 @@ public partial class SegmentTreeControl : UserControl
         get => (Segment?)GetValue(SegmentProperty);
         set => SetValue(SegmentProperty, value);
     }
+
+    private ISegmentObject _copyObject;
     
     public SegmentTreeControl()
     {
@@ -59,6 +61,7 @@ public partial class SegmentTreeControl : UserControl
         WeakReferenceMessenger.Default.Register<SegmentSpawnChanged>(this, (r, m) => UpdateSpawns());
         
         _tree.SelectedItemChanged += OnItemSelected;
+        _tree.KeyDown += OnKeyDown;
     }
 
     private static void OnSegmentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -84,6 +87,26 @@ public partial class SegmentTreeControl : UserControl
         }
         // Segment name changes no longer affect the tree structure, since the
         // segment name is no longer shown as a root node.
+    }
+    
+    private void OnKeyDown(object sender, KeyEventArgs args)
+    {
+        // copy
+        if (args.Key == Key.C && (Keyboard.Modifiers & ModifierKeys.Control) != 0)
+        {
+            if (_tree.SelectedItem is TreeViewItem item && item.Tag is ISegmentObject segmentObject)
+            {
+                _copyObject = segmentObject;
+                args.Handled = true;
+            }
+        }
+        else if (args.Key == Key.V && (Keyboard.Modifiers & ModifierKeys.Control) != 0)
+        {
+            if (_copyObject != null)
+                _copyObject.Copy(Segment);
+            
+            args.Handled = true;
+        }
     }
 
     private TreeViewItem _segmentNode;

@@ -15,7 +15,7 @@ namespace Kesmai.WorldForge.Editor;
 
 public class SegmentSubregionChanged(SegmentSubregion subregion) : ValueChangedMessage<SegmentSubregion>(subregion);
 
-public class SegmentSubregion : ObservableObject, ISegmentObject
+public class SegmentSubregion : ObservableObject, ICloneable, ISegmentObject
 {
 	private static Color _pink = Color.FromNonPremultiplied(255, 192, 203, 75);
 	private static Color _pinkBorder = Color.Pink;
@@ -43,21 +43,6 @@ public class SegmentSubregion : ObservableObject, ISegmentObject
 			if (SetProperty(ref _name, value))
 				WeakReferenceMessenger.Default.Send(new SegmentSubregionChanged(this));
 		}
-	}
-
-	public void Present(ApplicationPresenter presenter)
-	{
-		var subregionViewModel = presenter.Documents
-			.OfType<SubregionViewModel>().FirstOrDefault();
-
-		if (subregionViewModel is null)
-			presenter.Documents.Add(subregionViewModel = new SubregionViewModel(presenter.Segment));
-
-		if (presenter.ActiveDocument != subregionViewModel)
-			presenter.SetActiveDocument(subregionViewModel);
-
-		presenter.SetActiveContent(this);
-		subregionViewModel.SelectedSubregion = this;
 	}
 
 	public Color Color { get; set; }
@@ -126,6 +111,27 @@ public class SegmentSubregion : ObservableObject, ISegmentObject
 
 		UpdateColor();
 	}
+	
+	public void Present(ApplicationPresenter presenter)
+	{
+		var subregionViewModel = presenter.Documents
+			.OfType<SubregionViewModel>().FirstOrDefault();
+
+		if (subregionViewModel is null)
+			presenter.Documents.Add(subregionViewModel = new SubregionViewModel(presenter.Segment));
+
+		if (presenter.ActiveDocument != subregionViewModel)
+			presenter.SetActiveDocument(subregionViewModel);
+
+		presenter.SetActiveContent(this);
+		subregionViewModel.SelectedSubregion = this;
+	}
+	
+	public void Copy(Segment target)
+	{
+		if (Clone() is SegmentSubregion clonedSubregion)
+			target.Subregions.Add(clonedSubregion);
+	}
 		
 	public XElement GetXElement()
 	{
@@ -173,6 +179,14 @@ public class SegmentSubregion : ObservableObject, ISegmentObject
 				break;
 			}
 		}
+	}
+	
+	public object Clone()
+	{
+		return new SegmentSubregion(GetXElement())
+		{
+			Name = $"Copy of {_name}"
+		};
 	}
 }
 

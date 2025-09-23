@@ -70,6 +70,7 @@ public class Entity : ObservableObject, ICloneable, ISegmentObject
 	{
 		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 	}	
+	
 	public ObservableCollection<Script> Scripts
 	{
 		get => _scripts;
@@ -106,6 +107,12 @@ public class Entity : ObservableObject, ICloneable, ISegmentObject
 
 		presenter.SetActiveContent(this);
 		entityViewModel.SelectedEntity = this;
+	}
+	
+	public void Copy(Segment target)
+	{
+		if (Clone() is Entity clonedEntity)
+			target.Entities.Add(clonedEntity);
 	}
 
 	private void ValidateScripts(XElement rootElement = default)

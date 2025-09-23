@@ -17,7 +17,7 @@ namespace Kesmai.WorldForge.Editor;
 public class SegmentRegionChanged(SegmentRegion region) : ValueChangedMessage<SegmentRegion>(region);
 
 [DebuggerDisplay("{Name} [{ID}]")]
-public class SegmentRegion : ObservableObject, ISegmentObject
+public class SegmentRegion : ObservableObject, ICloneable, ISegmentObject
 {
 	private int _id;
 	private string _name;
@@ -50,11 +50,6 @@ public class SegmentRegion : ObservableObject, ISegmentObject
 			if (SetProperty(ref _name, value))
 				WeakReferenceMessenger.Default.Send(new SegmentRegionChanged(this));
 		}
-	}
-
-	public void Present(ApplicationPresenter presenter)
-	{
-		presenter.SetActiveDocument(this, this);
 	}
 
 	[Browsable(true)]
@@ -119,6 +114,17 @@ public class SegmentRegion : ObservableObject, ISegmentObject
 	{
 		_chunkSize = 100;
 		_chunks = new Dictionary<ChunkCoordinate, SegmentTile[,]>();
+	}
+	
+	public void Present(ApplicationPresenter presenter)
+	{
+		presenter.SetActiveDocument(this, this);
+	}
+	
+	public void Copy(Segment target)
+	{
+		if (Clone() is SegmentRegion clonedRegions)
+			target.Regions.Add(clonedRegions);
 	}
 		
 	/// <summary>
@@ -303,6 +309,14 @@ public class SegmentRegion : ObservableObject, ISegmentObject
 		}
 
 		return (left, top, right - left + 1, bottom - top + 1);
+	}
+
+	public object Clone()
+	{
+		return new SegmentRegion(GetXElement())
+		{
+			Name = $"Copy of {_name}"
+		};
 	}
 }
 

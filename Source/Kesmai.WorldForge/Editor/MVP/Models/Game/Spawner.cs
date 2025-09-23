@@ -20,7 +20,7 @@ public class SegmentSpawnChanged(Spawner spawner) : ValueChangedMessage<Spawner>
 	
 [Script("OnBeforeSpawn", "void OnBeforeSpawn(Spawner spawner)", "{", "}")]
 [Script("OnAfterSpawn", "void OnAfterSpawn(Spawner spawner, MobileEntity spawn)", "{", "}")]
-public abstract class Spawner : ObservableObject, ISegmentObject
+public abstract class Spawner : ObservableObject, ICloneable, ISegmentObject
 {
 	private string _name;
 	private bool _enabled;
@@ -196,6 +196,9 @@ public abstract class Spawner : ObservableObject, ISegmentObject
 	{
 		return GetType().Name;
 	}
+
+	public abstract void Copy(Segment segment);
+	public abstract object Clone();
 }
 
 [Obfuscation(Exclude = true, ApplyToMembers = false)]
@@ -252,6 +255,12 @@ public class LocationSpawner : Spawner
 		presenter.SetActiveContent(this);
 		spawnsViewModel.SelectedLocationSpawner = this;
 	}
+	
+	public override void Copy(Segment target)
+	{
+		if (Clone() is LocationSpawner clonedSpawner)
+			target.Spawns.Location.Add(clonedSpawner);
+	}
 
 	public override XElement GetXElement()
 	{
@@ -264,6 +273,14 @@ public class LocationSpawner : Spawner
 		);
 			
 		return element;
+	}
+
+	public override object Clone()
+	{
+		return new LocationSpawner(GetXElement())
+		{
+			Name = $"Copy of {Name}",
+		};
 	}
 }
 
@@ -331,6 +348,12 @@ public class RegionSpawner : Spawner
 		presenter.SetActiveContent(this);
 		spawnsViewModel.SelectedRegionSpawner = this;
 	}
+	
+	public override void Copy(Segment target)
+	{
+		if (Clone() is RegionSpawner clonedSpawner)
+			target.Spawns.Region.Add(clonedSpawner);
+	}
 
 	public override XElement GetXElement()
 	{
@@ -359,6 +382,14 @@ public class RegionSpawner : Spawner
 		element.Add(bounds);
 			
 		return element;
+	}
+	
+	public override object Clone()
+	{
+		return new RegionSpawner(GetXElement())
+		{
+			Name = $"Copy of {Name}",
+		};
 	}
 }
 

@@ -84,6 +84,12 @@ public class SegmentLocation : ObservableObject, ICloneable, ISegmentObject
 		presenter.SetActiveContent(this);
 	}
 	
+	public void Copy(Segment target)
+	{
+		if (Clone() is SegmentLocation clonedLocation)
+			target.Locations.Add(clonedLocation);
+	}
+	
 	public XElement GetXElement()
 	{
 		return new XElement("location", 

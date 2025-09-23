@@ -19,6 +19,8 @@ public interface ISegmentObject
 	string Name { get; set; }
 	
 	void Present(ApplicationPresenter presenter);
+
+	void Copy(Segment segment);
 }
 
 public class Segment : ObservableObject, ISegmentObject
@@ -78,6 +80,11 @@ public class Segment : ObservableObject, ISegmentObject
 
 		presenter.SetActiveContent(this);
 		segmentViewModel.Segment = this;
+	}
+
+	public void Copy(Segment segment)
+	{
+		// ignore any paste to self.
 	}
 	
 	public void OnSegmentFileChanged(FileSystemEventArgs args)

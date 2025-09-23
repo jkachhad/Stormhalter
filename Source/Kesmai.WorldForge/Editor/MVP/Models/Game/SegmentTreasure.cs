@@ -16,10 +16,10 @@ namespace Kesmai.WorldForge.Editor;
 
 public class SegmentTreasureChanged(SegmentTreasure treasure) : ValueChangedMessage<SegmentTreasure>(treasure);
 
-public class SegmentTreasure : ObservableObject, ISegmentObject
+public class SegmentTreasure : ObservableObject, ICloneable, ISegmentObject
 {
-	private string _name;
-	private string _notes;
+	protected string _name;
+	protected string _notes;
 		
 	private ObservableCollection<TreasureEntry> _entries = new ObservableCollection<TreasureEntry>();
 		
@@ -37,20 +37,6 @@ public class SegmentTreasure : ObservableObject, ISegmentObject
 			if (SetProperty(ref _name, value))
 				WeakReferenceMessenger.Default.Send(new SegmentTreasureChanged(this));
 		}
-	}
-
-	public void Present(ApplicationPresenter presenter)
-	{
-		var treasureViewModel = presenter.Documents.OfType<TreasuresViewModel>().FirstOrDefault();
-
-		if (treasureViewModel is null)
-			presenter.Documents.Add(treasureViewModel = new TreasuresViewModel(presenter.Segment));
-
-		if (presenter.ActiveDocument != treasureViewModel)
-			presenter.SetActiveDocument(treasureViewModel);
-
-		presenter.SetActiveContent(this);
-		treasureViewModel.SelectedTreasure = this;
 	}
 
 	public string Notes
@@ -100,6 +86,26 @@ public class SegmentTreasure : ObservableObject, ISegmentObject
 
 		InvalidateChance();
 	}
+	
+	public void Present(ApplicationPresenter presenter)
+	{
+		var treasureViewModel = presenter.Documents.OfType<TreasuresViewModel>().FirstOrDefault();
+
+		if (treasureViewModel is null)
+			presenter.Documents.Add(treasureViewModel = new TreasuresViewModel(presenter.Segment));
+
+		if (presenter.ActiveDocument != treasureViewModel)
+			presenter.SetActiveDocument(treasureViewModel);
+
+		presenter.SetActiveContent(this);
+		treasureViewModel.SelectedTreasure = this;
+	}
+	
+	public virtual void Copy(Segment target)
+	{
+		if (Clone() is SegmentTreasure clonedTreasure)
+			target.Treasures.Add(clonedTreasure);
+	}
 
 	public virtual XElement GetXElement()
 	{
@@ -121,6 +127,14 @@ public class SegmentTreasure : ObservableObject, ISegmentObject
 	{
 		foreach (var entry in _entries)
 			entry.InvalidateChance();
+	}
+	
+	public virtual object Clone()
+	{
+		return new SegmentTreasure(GetXElement())
+		{
+			Name = $"Copy of {_name}",
+		};
 	}
 }
 
@@ -159,7 +173,13 @@ public class SegmentHoard : SegmentTreasure
 		_scripts.Clear();
 		_scripts.AddRange(hoard.Scripts.Select(s => s.Clone()));
 	}
-	
+
+	public override void Copy(Segment target)
+	{
+		if (Clone() is SegmentHoard clonedHoard)
+			target.Treasures.Add(clonedHoard);
+	}
+
 	private void ValidateScripts(XElement rootElement = default)
 	{
 		var attributes = GetType().GetCustomAttributes(typeof(ScriptAttribute), inherit: false)
@@ -210,6 +230,14 @@ public class SegmentHoard : SegmentTreasure
 			element.Add(script.GetXElement());
 
 		return element;
+	}
+	
+	public override object Clone()
+	{
+		return new SegmentHoard(GetXElement())
+		{
+			Name = $"Copy of {_name}",
+		};
 	}
 }
 	
