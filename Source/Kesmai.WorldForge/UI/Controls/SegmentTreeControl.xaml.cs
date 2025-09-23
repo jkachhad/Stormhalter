@@ -95,16 +95,21 @@ public partial class SegmentTreeControl : UserControl
         if (args.Key == Key.C && (Keyboard.Modifiers & ModifierKeys.Control) != 0)
         {
             if (_tree.SelectedItem is TreeViewItem item && item.Tag is ISegmentObject segmentObject)
-            {
                 _copyObject = segmentObject;
-                args.Handled = true;
-            }
+            
+            args.Handled = true;
         }
         else if (args.Key == Key.V && (Keyboard.Modifiers & ModifierKeys.Control) != 0)
         {
             if (_copyObject != null)
+            {
+                var applicationPresenter = ServiceLocator.Current
+                    .GetInstance<ApplicationPresenter>();
+                
                 _copyObject.Copy(Segment);
-            
+                _copyObject.Present(applicationPresenter);
+            }
+
             args.Handled = true;
         }
     }
