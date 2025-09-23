@@ -230,7 +230,7 @@ public partial class SegmentTreeControl : UserControl
             };
             
             item.ContextMenu = new ContextMenu();
-            item.ContextMenu.AddItem("Rename", String.Empty, (s, e) 
+            item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) 
                 => RenameSegmentObject(child, item));
             item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) 
                 => DeleteSegmentObject(child, item, collection));

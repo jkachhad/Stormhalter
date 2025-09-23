@@ -72,10 +72,6 @@ public class LocationsViewModel : ObservableRecipient
 	{
 		_segment = segment ?? throw new ArgumentNullException(nameof(segment));
 			
-		RemoveLocationCommand = new RelayCommand<SegmentLocation>(RemoveLocation, 
-			(location) => SelectedLocation != null && !SelectedLocation.IsReserved);
-		RemoveLocationCommand.DependsOn(() => SelectedLocation);
-			
 		CopyLocationCommand = new RelayCommand<SegmentLocation>(CopyLocation,
 			(location) => SelectedLocation != null);
 		CopyLocationCommand.DependsOn(() => SelectedLocation);
