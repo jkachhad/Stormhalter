@@ -135,6 +135,8 @@ public partial class SegmentTreeControl : UserControl
     {
         if (Segment is null)
             return;
+        
+        var collection = Segment.Regions;
 
         if (_regionsNode is null)
         {
@@ -144,8 +146,11 @@ public partial class SegmentTreeControl : UserControl
                 Header = CreateHeader("Regions", "Regions.png")
             };
         }
-
-        var collection = Segment.Regions;
+        
+        var expanded = new HashSet<string>();
+        
+        foreach (var item in _regionsNode.Items.OfType<TreeViewItem>())
+            SaveExpansionState(item, expanded);
         
         _regionsNode.Items.Clear();
 
@@ -164,7 +169,9 @@ public partial class SegmentTreeControl : UserControl
         categoryMenu.Items.Add(add);
         
         _regionsNode.ContextMenu = categoryMenu;
-
+        
+        foreach (var item in _tree.Items.OfType<TreeViewItem>())
+            RestoreExpansionState(item, expanded);
         TreeViewItem createRegionNode(SegmentRegion region, SegmentRegions source)
         {
             var item = new TreeViewItem
@@ -242,6 +249,11 @@ public partial class SegmentTreeControl : UserControl
             });
         }
         
+        var expanded = new HashSet<string>();
+        
+        foreach (var item in _locationsNode.Items.OfType<TreeViewItem>())
+            SaveExpansionState(item, expanded);
+        
         _locationsNode.Items.Clear();
 
         foreach (var child in collection)
@@ -260,6 +272,9 @@ public partial class SegmentTreeControl : UserControl
             
             _locationsNode.Items.Add(item);
         }
+        
+        foreach (var item in _tree.Items.OfType<TreeViewItem>())
+            RestoreExpansionState(item, expanded);
     }
 
     public void UpdateSpawns()
@@ -267,6 +282,8 @@ public partial class SegmentTreeControl : UserControl
         if (Segment is null)
             return;
 
+        var collection = Segment.Spawns;
+        
         if (_spawnersNode is null)
         {
             _spawnersNode = new TreeViewItem
@@ -276,7 +293,10 @@ public partial class SegmentTreeControl : UserControl
             };
         }
 
-        var collection = Segment.Spawns;
+        var expanded = new HashSet<string>();
+        
+        foreach (var item in _spawnersNode.Items.OfType<TreeViewItem>())
+            SaveExpansionState(item, expanded);
         
         _spawnersNode.Items.Clear();
         
@@ -299,6 +319,9 @@ public partial class SegmentTreeControl : UserControl
         menu.Items.Add(addRegion);
         
         _spawnersNode.ContextMenu = menu;
+        
+        foreach (var item in _tree.Items.OfType<TreeViewItem>())
+            RestoreExpansionState(item, expanded);
     }
 
     public void UpdateEntities()
@@ -306,6 +329,10 @@ public partial class SegmentTreeControl : UserControl
         if (Segment is null)
             return;
 
+        var collection = Segment.Entities
+            .GroupBy(e => string.IsNullOrEmpty(e.Group) ? "Unassigned" : e.Group)
+            .OrderBy(g => g.Key).ToList();
+        
         if (_entitiesNode is null)
         {
             _entitiesNode = new TreeViewItem
@@ -315,9 +342,10 @@ public partial class SegmentTreeControl : UserControl
             };
         }
 
-        var collection = Segment.Entities
-            .GroupBy(e => string.IsNullOrEmpty(e.Group) ? "Unassigned" : e.Group)
-            .OrderBy(g => g.Key).ToList();
+        var expanded = new HashSet<string>();
+        
+        foreach (var item in _entitiesNode.Items.OfType<TreeViewItem>())
+            SaveExpansionState(item, expanded);
         
         _entitiesNode.Items.Clear();
         
@@ -334,6 +362,9 @@ public partial class SegmentTreeControl : UserControl
         menu.Items.Add(add);
         
         _entitiesNode.ContextMenu = menu;
+        
+        foreach (var item in _tree.Items.OfType<TreeViewItem>())
+            RestoreExpansionState(item, expanded);
     }
 
     public void UpdateTreasures()
@@ -341,6 +372,8 @@ public partial class SegmentTreeControl : UserControl
         if (Segment is null)
             return;
 
+        var collection = Segment.Treasures;
+        
         if (_treasureNode is null)
         {
             _treasureNode = new TreeViewItem
@@ -350,7 +383,10 @@ public partial class SegmentTreeControl : UserControl
             };
         }
 
-        var collection = Segment.Treasures;
+        var expanded = new HashSet<string>();
+        
+        foreach (var item in _treasureNode.Items.OfType<TreeViewItem>())
+            SaveExpansionState(item, expanded);
         
         _treasureNode.Items.Clear();
         
@@ -373,11 +409,15 @@ public partial class SegmentTreeControl : UserControl
         menu.Items.Add(addHoard);
         
         _treasureNode.ContextMenu = menu;
+        
+        foreach (var item in _tree.Items.OfType<TreeViewItem>())
+            RestoreExpansionState(item, expanded);
     }
     
     private void Update()
     {
         var expanded = new HashSet<string>();
+        
         foreach (var item in _tree.Items.OfType<TreeViewItem>())
             SaveExpansionState(item, expanded);
 
@@ -421,16 +461,24 @@ public partial class SegmentTreeControl : UserControl
 
     private static void SaveExpansionState(TreeViewItem item, HashSet<string> expanded)
     {
-        if (item.Tag is string path && item.IsExpanded)
-            expanded.Add(path);
+        if (item.IsExpanded)
+        {
+            if (item.Tag is ISegmentObject segmentObject)
+                expanded.Add(segmentObject.Name);
+            else if (item.Tag is string path)
+                expanded.Add(path);
+        }
         foreach (var child in item.Items.OfType<TreeViewItem>())
             SaveExpansionState(child, expanded);
     }
 
     private static void RestoreExpansionState(TreeViewItem item, HashSet<string> expanded)
     {
-        if (item.Tag is string path && expanded.Contains(path))
+        if (item.Tag is ISegmentObject segmentObject && expanded.Contains(segmentObject.Name))
             item.IsExpanded = true;
+        else if (item.Tag is string path && expanded.Contains(path))
+            item.IsExpanded = true;
+        
         foreach (var child in item.Items.OfType<TreeViewItem>())
             RestoreExpansionState(child, expanded);
     }
