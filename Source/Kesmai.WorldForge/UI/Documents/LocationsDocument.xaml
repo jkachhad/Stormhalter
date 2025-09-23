@@ -33,37 +33,6 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             
-            <ToolBar Grid.Row="0">
-                <ToolBar.Items>
-                    <Button Width="24" Height="24"
-                            Command="{Binding AddLocationCommand}">
-                        <Image Source="../../Resources/Add.png"/>
-                    </Button>
-                    <Button Width="24" Height="24"
-                            Command="{Binding RemoveLocationCommand}"
-                            CommandParameter="{Binding SelectedLocation}">
-                        <Image Source="../../Resources/Delete.png" />
-                    </Button>
-                    <Separator />
-                    <Button Width="24" Height="24"
-                            Command="{Binding CopyLocationCommand}"
-                            CommandParameter="{Binding SelectedLocation}">
-                        <Image Source="../../Resources/Copy.png" />
-                    </Button>
-                    <Button Width="24" Height="24"
-                                    Command="{Binding ExportLocationCommand}"
-                                    ToolTip="Copy location to Clipboard"
-                                    CommandParameter="{Binding SelectedLocation}">
-                        <Image Source="../../Resources/Export.png" />
-                    </Button>
-                    <Button Width="24" Height="24"
-                                    Command="{Binding ImportLocationCommand}"
-                                    ToolTip="Paste location from Clipboard">
-                        <Image Source="../../Resources/Import.png" />
-                    </Button>
-                </ToolBar.Items>
-            </ToolBar>
-            
             <ListBox Width="300" Grid.Row="1"
                         ItemsSource="{Binding Source={StaticResource collectionViewSource}}"
                         SelectedItem="{Binding SelectedLocation, Mode=TwoWay}"

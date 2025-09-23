@@ -62,62 +62,9 @@ public class LocationsViewModel : ObservableRecipient
 	}
 
 	public SegmentLocations Locations => _segment.Locations;
-	
-	public RelayCommand<SegmentLocation> RemoveLocationCommand { get; private set; }
-	public RelayCommand<SegmentLocation> CopyLocationCommand { get; private set; }
-	public RelayCommand ImportLocationCommand { get; private set; }
-	public RelayCommand<SegmentLocation> ExportLocationCommand { get; private set; }
 
 	public LocationsViewModel(Segment segment)
 	{
 		_segment = segment ?? throw new ArgumentNullException(nameof(segment));
-			
-		CopyLocationCommand = new RelayCommand<SegmentLocation>(CopyLocation,
-			(location) => SelectedLocation != null);
-		CopyLocationCommand.DependsOn(() => SelectedLocation);
-
-		ImportLocationCommand = new RelayCommand(ImportLocation);
-
-		ExportLocationCommand = new RelayCommand<SegmentLocation>(ExportLocation,
-			(location) => SelectedLocation != null && !SelectedLocation.IsReserved);
-		ExportLocationCommand.DependsOn(() => SelectedLocation);
-	}
-
-	private void RemoveLocation(SegmentLocation location)
-	{
-		var result = MessageBox.Show($"Are you sure with to delete location '{location.Name}'?",
-			"Warning", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-		if (result != MessageBoxResult.No)
-			Locations.Remove(location);
-	}
-
-	private void CopyLocation(SegmentLocation location)
-	{
-		if (location.Clone() is SegmentLocation clonedLocation)
-		{
-			Locations.Add(clonedLocation);
-			SelectedLocation = clonedLocation;
-		}
-	}
-
-	public void ImportLocation ()
-	{
-		XDocument clipboard = null;
-		try
-		{
-			clipboard = XDocument.Parse(Clipboard.GetText());
-		}
-		catch { }
-		if (clipboard is null || clipboard.Root.Name.ToString() != "location")
-			return;
-
-		var newLocation = new SegmentLocation(clipboard.Root);
-		Locations.Add(newLocation);
-	}
-
-	public void ExportLocation (SegmentLocation location)
-	{
-		Clipboard.SetText(location.GetXElement().ToString());
 	}
 }
