@@ -79,17 +79,24 @@ public class SpawnsGraphicsScreen : WorldGraphicsScreen
 	public void SetSpawner(Spawner spawner)
 	{
 		_spawner = spawner;
-		if (_spawner is LocationSpawner ls)
+		
+		switch (_spawner)
 		{
-			CenterCameraOn(ls.X, ls.Y);
-		}
-		if (_spawner is RegionSpawner rs)
-		{
-			var inclusion = rs.Inclusions.FirstOrDefault();
-			if (inclusion != null)
-					
-				CenterCameraOn((int)(inclusion.Left+inclusion.Width/2), (int)(inclusion.Top+inclusion.Height/2));
+			case LocationSpawner ls:
+			{
+				CenterCameraOn(ls.X, ls.Y);
+				break;
+			}
+			case RegionSpawner rs:
+			{
+				var inclusion = rs.Inclusions.FirstOrDefault();
 
+				if (inclusion != null)
+					CenterCameraOn((int)(inclusion.Left + inclusion.Width / 2),
+						(int)(inclusion.Top + inclusion.Height / 2));
+				
+				break;
+			}
 		}
 	}
 
