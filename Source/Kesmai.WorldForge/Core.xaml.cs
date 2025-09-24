@@ -12,6 +12,8 @@ using System.Xml.Linq;
 using DigitalRune.ServiceLocation;
 using CommonServiceLocator;
 using DigitalRune.Collections;
+using DigitalRune.Game.Interop;
+using DigitalRune.Storages;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Scripting;
 using Syncfusion.Licensing;
@@ -64,6 +66,8 @@ public partial class Core : Application
 	private FileInfo _componentsFile;
 	private FileInfo _customArtConfig;
 	
+	private InteropGame _game;
+	
 	#endregion
 
 	#region Properties and Events
@@ -77,7 +81,6 @@ public partial class Core : Application
 	/// </summary>
 	public Core()
 	{
-		ServiceLocator.SetLocatorProvider(() => ServiceContainer);
 	}
 
 	#endregion
@@ -90,20 +93,48 @@ public partial class Core : Application
 	protected override void OnStartup(StartupEventArgs e)
 	{
 		Version = Assembly.GetExecutingAssembly().GetName().Version;
-
-		ServiceContainer.Register(typeof(SegmentProject), null, new SegmentProject());
-		ServiceContainer.Register(typeof(SegmentWorkspace), null, new SegmentWorkspace());
 		
-		if (Current.Resources["applicationPresenter"] is ApplicationPresenter presenter)
-			ServiceContainer.Register(typeof(ApplicationPresenter), null, presenter);
-
-		SyncfusionLicenseProvider.RegisterLicense("Mzk1NTI2QDMxMzgyZTM0MmUzMG85YlBIdldReGhYeUl3OFQxWUpUVDhyZ3gyRFpESm1NRUF1aUtpM01pcUk9");
-			
 		_storageDirectory = new DirectoryInfo(StoragePath);
 			
 		_componentsFile = new FileInfo($@"{_storageDirectory.FullName}\{ComponentsName}");
 		_customArtConfig = new FileInfo($@"{_storageDirectory.FullName}\{CustomArtConfigName}");
-
+		
+		// Initialize the XNA Game to get access to the GraphicsDevice and ContentManager.
+		_game = new InteropGame();
+		
+		var services = _game.Services;
+		
+		services.Register(typeof(SegmentProject), null, new SegmentProject());
+		services.Register(typeof(SegmentWorkspace), null, new SegmentWorkspace());
+		
+		if (Current.Resources["applicationPresenter"] is ApplicationPresenter presenter)
+			services.Register(typeof(ApplicationPresenter), null, presenter);
+		
+		var contentManager = services.GetInstance<StorageContentManager>();
+		var storage = contentManager.Storage;
+		
+		if (storage is VfsStorage vfsStorage)
+		{
+			try
+			{
+				vfsStorage.MountInfos.Add(new VfsMountInfo(new GZipStorage(vfsStorage, "Data.bin"), null));
+				vfsStorage.MountInfos.Add(new VfsMountInfo(new GZipStorage(vfsStorage, "Kesmai.bin"), null));
+				vfsStorage.MountInfos.Add(new VfsMountInfo(new GZipStorage(vfsStorage, "Stormhalter.bin"), null));
+				vfsStorage.MountInfos.Add(new VfsMountInfo(new GZipStorage(vfsStorage, "UI.bin"), null));
+			}
+			catch
+			{
+				MessageBox.Show("Missing either Data.bin, Kesmai.bin, Stormhalter.bin, or UI.bin.");
+				throw;
+			}
+			
+			vfsStorage.Readers.Add(typeof(XDocument), new XDocumentReader());
+		}
+		
+		services.Register(typeof(TerrainManager), null, new TerrainManager());
+		
+		SyncfusionLicenseProvider.RegisterLicense("Mzk1NTI2QDMxMzgyZTM0MmUzMG85YlBIdldReGhYeUl3OFQxWUpUVDhyZ3gyRFpESm1NRUF1aUtpM01pcUk9");
+		
 		InitializeComponent();
 			
 		if (_storageDirectory is { Exists: false })
