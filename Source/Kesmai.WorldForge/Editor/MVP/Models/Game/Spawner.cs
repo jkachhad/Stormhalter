@@ -230,7 +230,7 @@ public class LocationSpawner : Spawner
 		set => SetProperty(ref _region, value);
     }
 
-    public LocationSpawner()
+    public LocationSpawner() : base()
 	{
 	}
 
@@ -248,16 +248,15 @@ public class LocationSpawner : Spawner
 	
 	public override void Present(ApplicationPresenter presenter)
 	{
-		var spawnsViewModel = presenter.Documents.OfType<SpawnsViewModel>().FirstOrDefault();
-
-		if (spawnsViewModel is null)
-			presenter.Documents.Add(spawnsViewModel = new SpawnsViewModel(presenter.Segment));
-
-		if (presenter.ActiveDocument != spawnsViewModel)
-			presenter.SetActiveDocument(spawnsViewModel);
-					
+		var locationSpawnViewModel = presenter.Documents.OfType<LocationSpawnViewModel>().FirstOrDefault();
+		
+		if (locationSpawnViewModel is null)
+			presenter.Documents.Add(locationSpawnViewModel = new LocationSpawnViewModel());
+		
+		if (presenter.ActiveDocument != locationSpawnViewModel)
+			presenter.SetActiveDocument(locationSpawnViewModel);
+		
 		presenter.SetActiveContent(this);
-		spawnsViewModel.SelectedLocationSpawner = this;
 	}
 	
 	public override void Copy(Segment target)
