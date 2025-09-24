@@ -169,8 +169,10 @@ public class ApplicationPresenter : ObservableRecipient
 		get => _activeContent;
 		set
 		{
+			// only send the message if the content actually changes.
+			// we use a delayed send to allow the UI to update first.
 			if (value != _activeContent && SetProperty(ref _activeContent, value))
-				WeakReferenceMessenger.Default.Send(new ActiveContentChanged(value));
+				WeakReferenceMessenger.Default.SendDelayed(new ActiveContentChanged(value), TimeSpan.FromMilliseconds(50));
 		}
 	}
 
