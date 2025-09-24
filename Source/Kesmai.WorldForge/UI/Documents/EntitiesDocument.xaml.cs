@@ -23,8 +23,15 @@ public partial class EntitiesDocument : UserControl
 	{
 		InitializeComponent();
 		
-		WeakReferenceMessenger.Default.Register<EntitiesDocument, UnregisterEvents>(this,
-			(r, m) => { WeakReferenceMessenger.Default.UnregisterAll(this); });
+		var messenger = WeakReferenceMessenger.Default;
+		
+		messenger.Register<ActiveContentChanged>(this, (_, message) =>
+		{
+			if (message.Value is not Entity segmentEntity)
+				return;
+
+			_scriptsTabControl.SelectedItem = segmentEntity.Scripts.FirstOrDefault();
+		});
 	}
 }
 
