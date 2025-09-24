@@ -341,16 +341,15 @@ public class RegionSpawner : Spawner
 	
 	public override void Present(ApplicationPresenter presenter)
 	{
-		var spawnsViewModel = presenter.Documents.OfType<SpawnsViewModel>().FirstOrDefault();
+		var regionSpawnViewModel = presenter.Documents.OfType<RegionSpawnViewModel>().FirstOrDefault();
 
-		if (spawnsViewModel is null)
-			presenter.Documents.Add(spawnsViewModel = new SpawnsViewModel(presenter.Segment));
+		if (regionSpawnViewModel is null)
+			presenter.Documents.Add(regionSpawnViewModel = new RegionSpawnViewModel());
 
-		if (presenter.ActiveDocument != spawnsViewModel)
-			presenter.SetActiveDocument(spawnsViewModel);
-					
+		if (presenter.ActiveDocument != regionSpawnViewModel)
+			presenter.SetActiveDocument(regionSpawnViewModel);
+
 		presenter.SetActiveContent(this);
-		spawnsViewModel.SelectedRegionSpawner = this;
 	}
 	
 	public override void Copy(Segment target)
