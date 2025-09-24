@@ -13,8 +13,6 @@ public partial class LocationSpawnDocument : UserControl
     {
         InitializeComponent();
         
-        _presenter.Initialize();
-        
         var messenger = WeakReferenceMessenger.Default;
 		
         messenger.Register<ActiveContentChanged>(this, (_, message) =>

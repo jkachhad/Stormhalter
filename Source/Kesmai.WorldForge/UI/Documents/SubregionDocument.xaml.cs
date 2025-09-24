@@ -25,8 +25,6 @@ public partial class SubregionDocument : UserControl
 	{
 		InitializeComponent();
 
-        _presenter.Initialize();
-
         WeakReferenceMessenger.Default
             .Register<SubregionDocument, SubregionViewModel.SelectedSubregionChangedMessage>(
                 this, OnSubregionChanged);

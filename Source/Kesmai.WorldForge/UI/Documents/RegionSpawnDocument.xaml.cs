@@ -12,9 +12,7 @@ public partial class RegionSpawnDocument : UserControl
     public RegionSpawnDocument()
     {
         InitializeComponent();
-        
-        _presenter.Initialize();
-        
+
         var messenger = WeakReferenceMessenger.Default;
         
         messenger.Register<ActiveContentChanged>(this, (_, message) =>
