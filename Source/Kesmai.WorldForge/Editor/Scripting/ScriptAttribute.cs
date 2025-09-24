@@ -5,7 +5,7 @@ namespace Kesmai.WorldForge.Scripting;
 /// <summary>
 /// Attribute for marking scripts available on a class.
 /// </summary>
-[AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
 public sealed class ScriptAttribute : Attribute
 {
 	/// <summary>Gets the script name.</summary>

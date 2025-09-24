@@ -114,7 +114,7 @@ public class Entity : ObservableObject, ICloneable, ISegmentObject
 
 	private void ValidateScripts(XElement rootElement = default)
 	{
-		var attributes = GetType().GetCustomAttributes(typeof(ScriptAttribute), inherit: false)
+		var attributes = GetType().GetCustomAttributes(typeof(ScriptAttribute), inherit: true)
 			.Cast<ScriptAttribute>();
 
 		var implementations = new Dictionary<string, Script>();
