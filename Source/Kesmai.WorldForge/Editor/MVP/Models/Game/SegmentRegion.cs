@@ -320,19 +320,6 @@ public class SegmentRegion : ObservableObject, ICloneable, ISegmentObject
 	}
 }
 
-public class JumpSegmentRegionLocation
-{
-	public int Region;
-	public int X;
-	public int Y;
-	public JumpSegmentRegionLocation ( int targetRegion, int targetX, int targetY)
-	{
-		Region = targetRegion;
-		X = targetX;
-		Y = targetY;
-	}
-}
-
 public class ChunkCoordinate : Tuple<int, int>
 {
 	public int X => Item1;
