@@ -339,9 +339,8 @@ public partial class SegmentTreeControl : UserControl
         if (Segment is null)
             return;
 
-        var collection = Segment.Entities
-            .GroupBy(e => string.IsNullOrEmpty(e.Group) ? "Unassigned" : e.Group)
-            .OrderBy(g => g.Key).ToList();
+        var collection = Segment.Entities.GroupBy(e => e.Group)
+            .OrderBy(g => g.Key);
         
         if (_entitiesNode is null)
         {
@@ -358,20 +357,13 @@ public partial class SegmentTreeControl : UserControl
             SaveExpansionState(item, expanded);
         
         _entitiesNode.Items.Clear();
-        
-        foreach (var group in collection)
-            _entitiesNode.Items.Add(CreateEntityGroupNode(group.Key, group));
 
-        var menu = new ContextMenu();
-        var add = new MenuItem
-        {
-            Header = $"Add Entity" 
-        };
-        add.Click += (s, e) => AddEntity("Unassigned");
-        
-        menu.Items.Add(add);
-        
-        _entitiesNode.ContextMenu = menu;
+        foreach (var grouping in collection)
+            CreateEntityGroupNode(grouping.Key, grouping);
+
+        _entitiesNode.ContextMenu = new ContextMenu();
+        _entitiesNode.ContextMenu.AddItem("Add Entities", "Add.png", 
+            (s, e) => AddEntity(String.Empty));
         
         foreach (var item in _entitiesNode.Items.OfType<TreeViewItem>())
             RestoreExpansionState(item, expanded);
@@ -585,21 +577,45 @@ public partial class SegmentTreeControl : UserControl
         CreateInMemoryNode(file, file.Name + ".cs");
         */
 
-    private TreeViewItem CreateEntityGroupNode(string groupName, IEnumerable<Entity> entities)
+    private TreeViewItem CreateEntityGroupNode(string groupPath, IEnumerable<Entity> entities)
     {
-        var item = new TreeViewItem { Tag = $"category:Entity/{groupName}" };
-        item.Header = CreateHeader(groupName, "Folder.png");
+        // separate the groupPath into its components
+        var groupFolders = String.IsNullOrEmpty(groupPath) ? ["Ungrouped"] : groupPath.Split(@"\");
+        
+        // for each folder in the path, find or create the corresponding tree view node.
+        var parentFolder = _entitiesNode;
+        
+        foreach (var folder in groupFolders)
+        {
+            // find the folder node if it already exists.
+            var folderNode = parentFolder.Items.OfType<TreeViewItem>().FirstOrDefault(n => n.Tag is string path 
+                && path.EndsWith($"/{folder}", StringComparison.OrdinalIgnoreCase));
 
+            // if it doesn't exist, create it.
+            if (folderNode is null)
+            {
+                folderNode = new TreeViewItem
+                {
+                    Tag = $"{parentFolder.Tag}/{folder}",
+                    Header = CreateHeader(folder, "Folder.png")
+                };
+            }
+
+            // add it to the parent if it doesn't already exist.
+            parentFolder.Items.Add(folderNode);
+            
+            // move to the next child folder.
+            parentFolder = folderNode;
+        }
+        
         foreach (var entity in entities)
-            item.Items.Add(CreateEntityEntryNode(entity));
+            parentFolder.Items.Add(CreateEntityEntryNode(entity));
 
-        var menu = new ContextMenu();
-        var add = new MenuItem { Header = "Add Entity" };
-        add.Click += (s, e) => AddEntity(groupName);
-        menu.Items.Add(add);
-        item.ContextMenu = menu;
-
-        return item;
+        parentFolder.ContextMenu = new ContextMenu();
+        parentFolder.ContextMenu.AddItem("Add Entity", "Add.png", 
+            (s, e) => AddEntity(groupPath));
+        
+        return parentFolder;
     }
 
     private TreeViewItem CreateEntityEntryNode(Entity entity)

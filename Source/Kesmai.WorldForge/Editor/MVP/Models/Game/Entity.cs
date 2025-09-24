@@ -59,11 +59,14 @@ public class Entity : ObservableObject, ICloneable, ISegmentObject
 	///
 	/// The path will be used to create a folder structure in the segment tree.
 	/// </remarks>
-	[ReadOnly(true)]
 	public string Group
 	{
 		get => _group;
-		set => SetProperty(ref _group, value);
+		set
+		{
+			if (SetProperty(ref _group, value))
+				WeakReferenceMessenger.Default.Send(new SegmentEntityChanged(this));
+		}
 	}
 	
 	public ObservableCollection<Script> Scripts
