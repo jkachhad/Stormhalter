@@ -239,12 +239,6 @@ public class ApplicationPresenter : ObservableRecipient
 				this, (r, m) => {
 					if (Segment is not null)
 						Segment.UpdateTiles();
-					var graphicsService = ServiceLocator.Current.GetInstance<IGraphicsService>();
-					if (graphicsService != null)
-					{
-						foreach (var presenter in graphicsService.PresentationTargets.OfType<PresentationTarget>())
-							presenter.InvalidateRender();
-					}
 				});
 
 		SelectFilterCommand = new RelayCommand<TerrainSelector>(SelectFilter, 
@@ -348,12 +342,6 @@ public class ApplicationPresenter : ObservableRecipient
 
 			if (nextFilter.IsActive)
 				_segment.UpdateTiles();
-				
-			var services = (ServiceContainer)ServiceLocator.Current;
-			var graphicsService = services.GetInstance<IGraphicsService>();
-
-			foreach (var presenter in graphicsService.PresentationTargets.OfType<PresentationTarget>())
-				presenter.InvalidateRender();
 		}
 	}
 		
