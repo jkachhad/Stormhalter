@@ -8,10 +8,9 @@
              d:DesignHeight="300" d:DesignWidth="300"
              
              FontFamily="Tahoma" FontSize="16">
-        <Border Margin="2" Grid.Column="1"
-                BorderBrush="Black" BorderThickness="1">
-            <TabControl x:Name="_scriptsTabControl"
-                ItemsSource="{Binding SelectedEntity.Scripts}"
+        <Border Margin="2" BorderBrush="Black" BorderThickness="1">
+            <TabControl
+                ItemsSource="{Binding ActiveContent.Scripts, Source={StaticResource applicationPresenter}}"
                 Margin="5">
                 <TabControl.ItemTemplate>
                     <DataTemplate>
