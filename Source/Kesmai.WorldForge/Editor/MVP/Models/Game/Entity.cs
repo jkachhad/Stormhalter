@@ -98,13 +98,12 @@ public class Entity : ObservableObject, ICloneable, ISegmentObject
 		var entityViewModel = presenter.Documents.OfType<EntitiesViewModel>().FirstOrDefault();
 
 		if (entityViewModel is null)
-			presenter.Documents.Add(entityViewModel = new EntitiesViewModel(presenter.Segment));
+			presenter.Documents.Add(entityViewModel = new EntitiesViewModel());
 
 		if (presenter.ActiveDocument != entityViewModel)
 			presenter.SetActiveDocument(entityViewModel);
 
 		presenter.SetActiveContent(this);
-		entityViewModel.SelectedEntity = this;
 	}
 	
 	public void Copy(Segment target)
