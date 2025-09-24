@@ -12,6 +12,7 @@ using DigitalRune.ServiceLocation;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Models;
 using CommunityToolkit.Mvvm.Messaging;
+using DigitalRune.Game.Interop;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -23,7 +24,7 @@ public class SubregionsGraphicsScreen : WorldGraphicsScreen
 {
 	private SegmentSubregion _subregion;
 		
-	public SubregionsGraphicsScreen(PresentationTarget presentationTarget, IUIService uiService, IGraphicsService graphicsService) : base(presentationTarget, uiService, graphicsService)
+	public SubregionsGraphicsScreen(IGraphicsService graphicsService, WorldPresentationTarget worldPresentationTarget) : base(graphicsService, worldPresentationTarget)
 	{
 	}
 
@@ -72,7 +73,7 @@ public class SpawnsGraphicsScreen : WorldGraphicsScreen
 	private Color _exclusionFill = Color.FromNonPremultiplied(50, 50, 50, 200);
 	private Color _locationBorder = Color.FromNonPremultiplied(0, 255, 255, 200);
 
-	public SpawnsGraphicsScreen(PresentationTarget presentationTarget, IUIService uiService, IGraphicsService graphicsService) : base(presentationTarget, uiService, graphicsService)
+	public SpawnsGraphicsScreen(IGraphicsService graphicsService, WorldPresentationTarget worldPresentationTarget) : base(graphicsService, worldPresentationTarget)
 	{
 	}
 
@@ -165,7 +166,7 @@ public class LocationsGraphicsScreen : WorldGraphicsScreen
 	private int _mx;
 	private int _my;
 		
-	public LocationsGraphicsScreen(PresentationTarget presentationTarget, IUIService uiService, IGraphicsService graphicsService) : base(presentationTarget, uiService, graphicsService)
+	public LocationsGraphicsScreen(IGraphicsService graphicsService, WorldPresentationTarget worldPresentationTarget) : base(graphicsService, worldPresentationTarget)
 	{
 		DrawGrid = true;
 		Gridcolor = Color.FromNonPremultiplied(154, 205, 50, 200);
@@ -199,7 +200,7 @@ public class LocationsGraphicsScreen : WorldGraphicsScreen
 	}
 }
 
-public class WorldGraphicsScreen : GraphicsScreen
+public class WorldGraphicsScreen : InteropGraphicsScreen
 {
 	private static List<Keys> _selectorKeys = new List<Keys>()
 	{
@@ -217,7 +218,7 @@ public class WorldGraphicsScreen : GraphicsScreen
 	protected ApplicationPresenter _presenter;
 	private Selection _selection;
 
-	private PresentationTarget _presentationTarget;
+	private WorldPresentationTarget _worldPresentationTarget;
 	protected UIScreen _uiScreen;
 	private Menu _contextMenu;
 	protected MSDFontRenderer _font;
@@ -293,15 +294,14 @@ public class WorldGraphicsScreen : GraphicsScreen
 		}
 	}
 
-	public int Width => (int)_presentationTarget.ActualWidth;
-	public int Height => (int)_presentationTarget.ActualHeight;
+	public int Width => (int)_worldPresentationTarget.ActualWidth;
+	public int Height => (int)_worldPresentationTarget.ActualHeight;
 
 	public UIScreen UI => _uiScreen;
 
-	public WorldGraphicsScreen(PresentationTarget presentationTarget, 
-		IUIService uiService, IGraphicsService graphicsService) : base(graphicsService)
+	public WorldGraphicsScreen(IGraphicsService graphicsService, WorldPresentationTarget worldPresentationTarget) : base(graphicsService, worldPresentationTarget)
 	{
-		_presentationTarget = presentationTarget;
+		_worldPresentationTarget = worldPresentationTarget;
 
 		var services = (ServiceContainer)ServiceLocator.Current;
 
@@ -316,7 +316,7 @@ public class WorldGraphicsScreen : GraphicsScreen
 		var theme = contentManager.Load<Theme>(@"UI\Theme");
 		var renderer = new UIRenderer(graphicsDevice, theme);
 
-		_uiScreen = new UIScreen($"{presentationTarget.GetHashCode()} GUI Screen", renderer)
+		_uiScreen = new UIScreen($"{worldPresentationTarget.GetHashCode()} GUI Screen", renderer)
 		{
 			Background = Color.Transparent,
 			ZIndex = int.MaxValue,
@@ -369,9 +369,7 @@ public class WorldGraphicsScreen : GraphicsScreen
 		_teleporterDestinationContextItems.Add(configureTeleporterMenuItem);
 		_teleporterDestinationContextItems.Add(cancelConfigureTeleporterMenuItem);
 		_teleporterSourceContextItems.Add(configureThisTeleporterMenuItem);
-
-		uiService.Screens.Add(_uiScreen);
-			
+		
 		_font = renderer.GetFontRenderer("Tahoma", 10);
 
 		var commentStream = System.Windows.Application.GetResourceStream(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/Comment-White.png")).Stream;
@@ -384,7 +382,7 @@ public class WorldGraphicsScreen : GraphicsScreen
 
 	private void CreateLocationSpawner(object sender, EventArgs args)
 	{
-		var region = _presentationTarget.Region;
+		var region = _worldPresentationTarget.Region;
 		var tile = ToWorldTile((int)Math.Floor(_contextMenu.ActualX), (int)Math.Floor(_contextMenu.ActualY));
 		if (tile == null)
 			return;
@@ -412,7 +410,7 @@ public class WorldGraphicsScreen : GraphicsScreen
 
 	private void CreateLocation(object sender, EventArgs args)
 	{
-		var region = _presentationTarget.Region;
+		var region = _worldPresentationTarget.Region;
 		var tile = ToWorldTile((int)Math.Floor(_contextMenu.ActualX), (int)Math.Floor(_contextMenu.ActualY));
 		if (tile == null)
 			return;
@@ -441,8 +439,8 @@ public class WorldGraphicsScreen : GraphicsScreen
 			return;
 		var newSpawner = new RegionSpawner()
 		{
-			Name = $"New {_presentationTarget.Region.Name} Spawner",
-			Region = _presentationTarget.Region.ID,
+			Name = $"New {_worldPresentationTarget.Region.Name} Spawner",
+			Region = _worldPresentationTarget.Region.ID,
 			MinimumDelay = TimeSpan.FromMinutes(15.0),
 			MaximumDelay = TimeSpan.FromMinutes(15.0),
 		};
@@ -455,7 +453,7 @@ public class WorldGraphicsScreen : GraphicsScreen
 		segment.Spawns.Region.Add(newSpawner);
 
 		Rectangle insideNewSpawner = new Rectangle(_selection.First().Left, _selection.First().Top, 1, 1);
-		_selection.Select(insideNewSpawner, _presentationTarget.Region);
+		_selection.Select(insideNewSpawner, _worldPresentationTarget.Region);
 		_presenter.SwapDocument("Spawn");
 			
 	}
@@ -468,8 +466,8 @@ public class WorldGraphicsScreen : GraphicsScreen
 
 		var newSubRegion = new SegmentSubregion()
 		{
-			Name = $"New {_presentationTarget.Region.Name} Subregion",
-			Region = _presentationTarget.Region.ID
+			Name = $"New {_worldPresentationTarget.Region.Name} Subregion",
+			Region = _worldPresentationTarget.Region.ID
 		};
 			
 		foreach (Rectangle rect in _selection)
@@ -480,7 +478,7 @@ public class WorldGraphicsScreen : GraphicsScreen
 		segment.Subregions.Add(newSubRegion);
 
 		Rectangle insideNewSubregion = new Rectangle(_selection.First().Left, _selection.First().Top, 1, 1);
-		_selection.Select(insideNewSubregion, _presentationTarget.Region);
+		_selection.Select(insideNewSubregion, _worldPresentationTarget.Region);
 		_presenter.SwapDocument("Subregion");
 	}
     
@@ -523,14 +521,14 @@ public class WorldGraphicsScreen : GraphicsScreen
 		
 	private void ConfigureTeleporter(object sender, EventArgs args)
 	{
-		var region = _presentationTarget.Region;
+		var region = _worldPresentationTarget.Region;
 		var tile = ToWorldTile((int)Math.Floor(_contextMenu.ActualX), (int)Math.Floor(_contextMenu.ActualY));
 		if (tile == null)
 			return;
 
 		_presenter.ConfiguringTeleporter.DestinationX = tile.X;
 		_presenter.ConfiguringTeleporter.DestinationY = tile.Y;
-		_presenter.ConfiguringTeleporter.DestinationRegion = _presentationTarget.Region.ID;
+		_presenter.ConfiguringTeleporter.DestinationRegion = _worldPresentationTarget.Region.ID;
 		_presenter.ConfiguringTeleporter = null;
 		InvalidateRender();
 	}
@@ -552,7 +550,7 @@ public class WorldGraphicsScreen : GraphicsScreen
         _isMouseOver = false;
 
         var inputService = _uiScreen.InputService;
-		var region = _presentationTarget.Region;
+		var region = _worldPresentationTarget.Region;
 
 		if (inputService == null || inputService.IsMouseOrTouchHandled || region is null)
 			return;
@@ -560,9 +558,9 @@ public class WorldGraphicsScreen : GraphicsScreen
 		var selectedTool = _presenter.SelectedTool;
 
 		if (selectedTool != null)
-			_presentationTarget.Cursor = selectedTool.Cursor;
+			_worldPresentationTarget.Cursor = selectedTool.Cursor;
 
-		_isMouseOver = _presentationTarget.IsMouseOver;
+		_isMouseOver = _worldPresentationTarget.IsMouseOver;
 		_isMouseDirectlyOver = _isMouseOver;
 
 		if (!_isMouseOver)
@@ -584,7 +582,7 @@ public class WorldGraphicsScreen : GraphicsScreen
 		if (!inputService.IsMouseOrTouchHandled)
 		{
 			if (selectedTool != null)
-				selectedTool.OnHandleInput(_presentationTarget, inputService);
+				selectedTool.OnHandleInput(_worldPresentationTarget, inputService);
 		}
 
         if (!inputService.IsMouseOrTouchHandled)
@@ -798,7 +796,7 @@ public class WorldGraphicsScreen : GraphicsScreen
 			
 		spritebatch.Begin(SpriteSortMode.Immediate, samplerState: SamplerState.PointClamp);
 			
-		var presentation = context.GetPresentationTarget();
+		var presentation = _worldPresentationTarget;
 		var region = presentation.Region;
 			
 		if (region != default(SegmentRegion))
@@ -1150,7 +1148,7 @@ public class WorldGraphicsScreen : GraphicsScreen
 	public SegmentTile ToWorldTile(int mx, int my)
 	{
 		var (wx, wy) = ToWorldCoordinates(mx, my);
-		var region = _presentationTarget.Region;
+		var region = _worldPresentationTarget.Region;
 
 		if (region != null)
 			return region.GetTile(wx, wy);

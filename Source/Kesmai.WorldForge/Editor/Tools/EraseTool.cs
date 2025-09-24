@@ -19,7 +19,7 @@ public class EraseTool : ComponentTool
 	{
 	}
 
-	public override void OnHandleInput(PresentationTarget target, IInputService inputService)
+	public override void OnHandleInput(WorldPresentationTarget target, IInputService inputService)
 	{
 		base.OnHandleInput(target, inputService);
 			

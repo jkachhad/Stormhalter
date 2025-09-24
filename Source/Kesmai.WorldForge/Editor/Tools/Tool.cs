@@ -42,7 +42,7 @@ public class Tool : ObservableObject
 		IsActive = false;
 	}
 		
-	public virtual void OnHandleInput(PresentationTarget target, IInputService inputService)
+	public virtual void OnHandleInput(WorldPresentationTarget target, IInputService inputService)
 	{
 		if (inputService.IsMouseOrTouchHandled)
 			return;

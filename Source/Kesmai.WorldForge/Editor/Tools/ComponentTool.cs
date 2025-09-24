@@ -22,7 +22,7 @@ public abstract class ComponentTool : Tool
 	{
 	}
 		
-	public override void OnHandleInput(PresentationTarget target, IInputService inputService)
+	public override void OnHandleInput(WorldPresentationTarget target, IInputService inputService)
 	{
 		base.OnHandleInput(target, inputService);
 			
@@ -116,8 +116,10 @@ public abstract class ComponentTool : Tool
 			
 		var graphicsService = context.GraphicsService;
 		var spriteBatch = graphicsService.GetSpriteBatch();
-			
-		var presentationTarget = context.GetPresentationTarget();
+
+		if (context.PresentationTarget is not WorldPresentationTarget presentationTarget)
+			return;
+		
 		var worldScreen = presentationTarget.WorldScreen;
 		var zoomFactor = worldScreen.ZoomFactor;
 			
