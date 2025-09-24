@@ -32,6 +32,7 @@ public abstract class Spawner : ObservableObject, ICloneable, ISegmentObject
 		
 	private ObservableCollection<Script> _scripts = new ObservableCollection<Script>();
 
+	[Category("Identity")]
 	public string Name
 	{
 		get => _name;
@@ -208,18 +209,21 @@ public class LocationSpawner : Spawner
 	private int _y;
 	private int _region;
 		
+	[Category("Coordinates")]
 	public int X
 	{
 		get => _x;
 		set => SetProperty(ref _x, value);
 	}
 
+	[Category("Coordinates")]
 	public int Y
 	{
 		get => _y;
 		set => SetProperty(ref _y, value);
 	}
 		
+	[Category("Coordinates")]
 	public int Region
 	{
 		get => _region;
@@ -289,6 +293,7 @@ public class RegionSpawner : Spawner
 {
 	private int _region;
 		
+	[Category("Coordinates")]
 	public int Region
 	{
 		get => _region;
