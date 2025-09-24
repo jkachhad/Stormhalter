@@ -29,26 +29,6 @@ public partial class SpawnsDocument : UserControl
     public SpawnsDocument()
     {
         InitializeComponent();
-        _regionPresenter.Initialize();
-        _locationPresenter.Initialize();
-
-        WeakReferenceMessenger.Default
-            .Register<SpawnsDocument, SpawnsViewModel.SelectedLocationSpawnerChangedMessage>(
-                this, OnLocationSpawnerChanged);
-
-        WeakReferenceMessenger.Default
-            .Register<SpawnsDocument, SpawnsViewModel.SelectedRegionSpawnerChangedMessage>(
-                this, OnRegionSpawnerChanged);
-
-        WeakReferenceMessenger.Default
-            .Register<SpawnsDocument, Spawner>(
-                this, (r, m) => { _typeSelector.SelectedIndex = m is LocationSpawner ? 0 : 1; });
-
-        WeakReferenceMessenger.Default.Register<SpawnsDocument, GetActiveEntity>(this,
-            (r, m) => m.Reply(GetSelectedEntity()));
-
-        WeakReferenceMessenger.Default.Register<SpawnsDocument, GetCurrentTypeSelection>(this,
-            (r, m) => m.Reply(_typeSelector.SelectedIndex));
 
         WeakReferenceMessenger.Default.Register<SpawnsDocument, UnregisterEvents>(this,
             (r, m) => { WeakReferenceMessenger.Default.UnregisterAll(this); });
@@ -177,67 +157,6 @@ public partial class SpawnsDocument : UserControl
         CollectionViewSource.GetDefaultView(vm.RegionGroups.Groups)
                             .Refresh();
     }
-
-    public Entity GetSelectedEntity()
-    {
-        SpawnEntry entry = null;
-        var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
-        if (presenter.ActiveDocument is not SpawnsViewModel)
-            return null;
-        if (_typeSelector.SelectedIndex == 0)
-        {
-            entry = _locationEntities.SelectedItem as SpawnEntry;
-        }
-        else
-        {
-            entry = _regionEntities.SelectedItem as SpawnEntry;
-        }
-        if (entry is null)
-            return null as Entity;
-
-        return entry.Entity;
-    }
-    private void OnLocationSpawnerChanged(SpawnsDocument recipient, SpawnsViewModel.SelectedLocationSpawnerChangedMessage message)
-    {
-        _scriptsTabControl.SelectedIndex = 0;
-
-        var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
-        var segment = segmentRequest.Response;
-
-        var spawn = message.Value;
-        if (spawn != null)
-        {
-            _locationPresenter.Region = segment.GetRegion(spawn.Region);
-            _locationPresenter.SetLocation(spawn);
-        }
-
-        if (DataContext is not SpawnsViewModel viewModel)
-            return;
-        if (message?.Source == null)
-            viewModel.RefreshLocationGroups();
-    }
-
-    private void OnRegionSpawnerChanged(SpawnsDocument recipient, SpawnsViewModel.SelectedRegionSpawnerChangedMessage message)
-    {
-        _scriptsTabControl.SelectedIndex = 0;
-
-        var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
-        var segment = segmentRequest.Response;
-
-        var spawn = message.Value;
-        if (spawn != null)
-        {
-            _regionPresenter.Region = segment.GetRegion(spawn.Region);
-            _regionPresenter.SetLocation(spawn);
-        }
-        //_regionSpawnerList.ScrollIntoView(_regionSpawnerList.SelectedItem);
-
-        if (DataContext is not SpawnsViewModel viewModel)
-            return;
-        if (message?.Source == null)
-            viewModel.RefreshRegionGroups();
-    }
-
 }
 
 public class SpawnsViewModel : ObservableRecipient
