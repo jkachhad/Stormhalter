@@ -321,7 +321,6 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 			Background = Color.Transparent,
 			ZIndex = int.MaxValue,
 		};
-		_uiScreen.InputProcessed += HandleInput;
 
 		_contextMenu = new Menu();
 
@@ -541,207 +540,220 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 		var teleporter = tile.Components.FirstOrDefault(t => t is TeleportComponent);
 		_presenter.ConfiguringTeleporter = teleporter as TeleportComponent;
 	}
-	protected virtual void OnHandleInput(object sender, InputEventArgs args)
+	
+	protected override void OnUpdate(TimeSpan deltaTime)
 	{
-	}
-
-	private void HandleInput(object sender, InputEventArgs args)
-    {
-        _isMouseOver = false;
-
-        var inputService = _uiScreen.InputService;
+		base.OnUpdate(deltaTime);
+		
 		var region = _worldPresentationTarget.Region;
-
-		if (inputService == null || inputService.IsMouseOrTouchHandled || region is null)
-			return;
-
+		
+		// retrieve the current active tool and update the cursor.
 		var selectedTool = _presenter.SelectedTool;
 
 		if (selectedTool != null)
 			_worldPresentationTarget.Cursor = selectedTool.Cursor;
-
+		
+		// process input here, input not processed similar to a <see cref="UIControl" />.
+		// we access the input manager from the presenter, and follow the same pattern.
+		var inputManager = PresentationTarget.InputManager;
+		
+		if (inputManager is null)
+			return;
+		
+		// track if the mouse is over the control.
 		_isMouseOver = _worldPresentationTarget.IsMouseOver;
 		_isMouseDirectlyOver = _isMouseOver;
 
+		// only process input if the mouse is within the control.
 		if (!_isMouseOver)
 			return;
-
-        if (_uiScreen != null && _uiScreen.ControlDirectlyUnderMouse != null)
+		
+		// next check if the mouse is over a UI control.
+		if (_uiScreen != null && _uiScreen.ControlDirectlyUnderMouse != null)
 		{
 			var controlType = _uiScreen.ControlDirectlyUnderMouse.GetType();
 
+			// if the control is not the UIScreen, then the mouse is over a UI control.
 			if (controlType != typeof(UIScreen))
 				_isMouseDirectlyOver = false;
 		}
 
+		// we do not want to process input in this case, as it is being handled by the control.
 		if (!_isMouseDirectlyOver)
 			return;
-
-		OnHandleInput(sender, args);
-
-		if (!inputService.IsMouseOrTouchHandled)
+		
+		// process mouse/touch input.
+		if (!inputManager.IsMouseOrTouchHandled)
 		{
+			// give the selected tool the first chance to handle input.
 			if (selectedTool != null)
-				selectedTool.OnHandleInput(_worldPresentationTarget, inputService);
+				selectedTool.OnHandleInput(_worldPresentationTarget, inputManager);
 		}
 
-        if (!inputService.IsMouseOrTouchHandled)
-        {
-            if (_contextMenu != null && (_contextMenu.IsEnabled && _contextMenu.Items.Count > 0))
-            {
-                if (inputService.IsReleased(MouseButtons.Right))
-                {
-
-                    var currentPosition = inputService.MousePosition;
+		// if the input is still not handled, we can check for context menu and zoom.
+		if (!inputManager.IsMouseOrTouchHandled)
+		{
+			if (_contextMenu != null && (_contextMenu.IsEnabled && _contextMenu.Items.Count > 0))
+			{
+				// TODO: (Workspaces) Is there a better way to do this?
+				if (inputManager.IsReleased(MouseButtons.Right))
+				{
+					var currentPosition = inputManager.MousePosition;
 					var (cx, cy) = this.ToWorldCoordinates((int)currentPosition.X, (int)currentPosition.Y);
 					bool isInSelection = _selection.IsSelected(cx, cy, region);
 					bool isInRegionSpawner = false;
 					bool configuringTeleporter = _presenter.ConfiguringTeleporter is not null;
+					
 					bool tileHasOneTeleporter = false;
+					
 					if (region.GetTile(cx, cy) is SegmentTile tile && tile.Components.Where(c => c is TeleportComponent) is IEnumerable<TerrainComponent> teleporter && teleporter.Count() == 1)
 						tileHasOneTeleporter = true;
                    
 					if (_presenter.ActiveDocument is UI.Documents.SpawnsViewModel)
-                    {
-                        var response = WeakReferenceMessenger.Default.Send<Kesmai.WorldForge.UI.Documents.SpawnsDocument.GetCurrentTypeSelection>();
+					{
+						var response = WeakReferenceMessenger.Default.Send<Kesmai.WorldForge.UI.Documents.SpawnsDocument.GetCurrentTypeSelection>();
+						
 						if (response.HasReceivedResponse)
 							isInRegionSpawner = response.Response == 1;
 					}
+					
 					foreach (MenuItem item in _pointContextItems) { item.IsVisible = !configuringTeleporter &&(!isInSelection || _selection.FirstOrDefault() is { Height:1, Width:1 }); }
 					foreach (MenuItem item in _selectionContextItems) { item.IsVisible = !configuringTeleporter	&& isInSelection; }
 					foreach (MenuItem item in _spawnerContextItems) { item.IsVisible = !configuringTeleporter && isInRegionSpawner; }
 					foreach (MenuItem item in _teleporterDestinationContextItems) { item.IsVisible = configuringTeleporter; }
 					foreach (MenuItem item in _teleporterSourceContextItems) { item.IsVisible = !configuringTeleporter && tileHasOneTeleporter; }
-					inputService.IsMouseOrTouchHandled = true;
-					_contextMenu.Open(_uiScreen, args.Context.MousePosition);
+					
+					inputManager.IsMouseOrTouchHandled = true;
+					
+					_contextMenu.Open(_uiScreen, inputManager.MousePosition);
 				}
 			}
-			if (inputService.MouseWheelDelta != 0)
+			
+			if (inputManager.MouseWheelDelta != 0)
 			{
-				ZoomFactor += 0.2f * Math.Sign(inputService.MouseWheelDelta);
-				inputService.IsMouseOrTouchHandled = true;
+				ZoomFactor += 0.2f * Math.Sign(inputManager.MouseWheelDelta);
+				
+				inputManager.IsMouseOrTouchHandled = true;
 			}
 		}
 
-		/* Map Shift */
+		if (inputManager.IsKeyboardHandled)
+			return;
+		
+		// process keyboard prior to mouse/touch.
 		var multiplier = 3;
 
-		if (inputService.IsDown(Keys.LeftShift) || inputService.IsDown(Keys.RightShift))
+		if (inputManager.IsDown(Keys.LeftShift) || inputManager.IsDown(Keys.RightShift))
 			multiplier = 7;
 
 		void shiftMap(int dx, int dy)
 		{
 			CameraLocation += new Vector2F(dx * multiplier, dy * multiplier);
-			inputService.IsKeyboardHandled = true;
+			inputManager.IsKeyboardHandled = true;
 		}
-
-		if (!(inputService.IsDown(Keys.LeftControl) || inputService.IsDown(Keys.RightControl)))
+		
+		if (inputManager.IsPressed(Keys.W, true))
 		{
-			if (inputService.IsPressed(Keys.W, true))
-			{
-				shiftMap(0, -1);
-			}
-			else if (inputService.IsPressed(Keys.S, true))
-			{
-				shiftMap(0, 1);
-			}
-			else if (inputService.IsPressed(Keys.A, true))
-			{
-				shiftMap(-1, 0);
-			}
-			else if (inputService.IsPressed(Keys.D, true))
-			{
-				shiftMap(1, 0);
-			}
-			else if (inputService.IsPressed(Keys.Home, false))
-			{
-				CenterCameraOn(0, 0);
+			shiftMap(0, -1);
+		}
+		else if (inputManager.IsPressed(Keys.S, true))
+		{
+			shiftMap(0, 1);
+		}
+		else if (inputManager.IsPressed(Keys.A, true))
+		{
+			shiftMap(-1, 0);
+		}
+		else if (inputManager.IsPressed(Keys.D, true))
+		{
+			shiftMap(1, 0);
+		}
+		else if (inputManager.IsPressed(Keys.Home, false))
+		{
+			CenterCameraOn(0, 0);
 
-				if (_selection != null)
-					_selection.Select(new Rectangle(0, 0, 1, 1), region);
-			}
-			else if (inputService.IsPressed(Keys.Back, false))
+			if (_selection != null)
+				_selection.Select(new Rectangle(0, 0, 1, 1), region);
+		}
+		else if (inputManager.IsPressed(Keys.Back, false))
+		{
+			_presenter.JumpPrevious();
+		}
+		else if (inputManager.IsPressed(Keys.Add, false))
+		{
+			ZoomFactor += 0.2f;
+		}
+		else if (inputManager.IsPressed(Keys.Subtract, false))
+		{
+			ZoomFactor -= 0.2f;
+		}
+		else if (inputManager.IsReleased(Keys.Delete))
+		{
+			if (region != null)
 			{
-				_presenter.JumpPrevious();
-			}
-			else if (inputService.IsPressed(Keys.Add, false))
-			{
-				ZoomFactor += 0.2f;
-			}
-			else if (inputService.IsPressed(Keys.Subtract, false))
-			{
-				ZoomFactor -= 0.2f;
-			}
-			else if (inputService.IsReleased(Keys.Delete))
-			{
-				if (region != null)
+				foreach (var area in _selection)
 				{
-					foreach (var area in _selection)
+					for (var x = area.Left; x < area.Right; x++)
+					for (var y = area.Top; y < area.Bottom; y++)
 					{
-						for (var x = area.Left; x < area.Right; x++)
-						for (var y = area.Top; y < area.Bottom; y++)
+						var currentFilter = _presenter.SelectedFilter;
+						var tile = region.GetTile(x, y);
+						if (tile is null)
+							continue;
+						var validComponents = tile.Components.Where(c => currentFilter.IsValid(c)).ToArray();
+						foreach (var component in validComponents)
 						{
-							var currentFilter = _presenter.SelectedFilter;
-							var tile = region.GetTile(x,y);
-							if (tile is null)
-								continue;
-							var validComponents = tile.Components.Where(c => currentFilter.IsValid(c)).ToArray();
-							foreach (var component in validComponents){
-								tile.RemoveComponent(component);
-							}
+							tile.RemoveComponent(component);
 						}
-
 					}
-					_invalidateRender = true;
-					inputService.IsKeyboardHandled = true;
+
 				}
-			}
-			else if (inputService.IsPressed(Keys.Multiply, false))
-			{
-				_drawgrid = !_drawgrid;
+
 				_invalidateRender = true;
+				inputManager.IsKeyboardHandled = true;
 			}
-			else
+		}
+		else if (inputManager.IsPressed(Keys.Multiply, false))
+		{
+			_drawgrid = !_drawgrid;
+			_invalidateRender = true;
+		}
+		else
+		{
+			if (!inputManager.IsKeyboardHandled)
 			{
-				if (!inputService.IsKeyboardHandled)
+				foreach (var selectorKey in _selectorKeys)
 				{
-					foreach (var selectorKey in _selectorKeys)
-					{
-						if (!inputService.IsReleased(selectorKey))
-							continue;
+					if (!inputManager.IsReleased(selectorKey))
+						continue;
 
-						var index = _selectorKeys.IndexOf(selectorKey);
-						var filters = _presenter.Filters;
+					var index = _selectorKeys.IndexOf(selectorKey);
+					var filters = _presenter.Filters;
 
-						if (index >= 0 && index < filters.Count)
-							_presenter.SelectFilter(filters[index]);
+					if (index >= 0 && index < filters.Count)
+						_presenter.SelectFilter(filters[index]);
 
-						inputService.IsKeyboardHandled = true;
-					}
+					inputManager.IsKeyboardHandled = true;
 				}
+			}
 
-				if (!inputService.IsKeyboardHandled)
+			if (!inputManager.IsKeyboardHandled)
+			{
+				foreach (var toolKey in _toolKeys)
 				{
-					foreach (var toolKey in _toolKeys)
-					{
-						if (!inputService.IsReleased(toolKey))
-							continue;
+					if (!inputManager.IsReleased(toolKey))
+						continue;
 
-						var index = _toolKeys.IndexOf(toolKey);
-						var tools = _presenter.Tools;
+					var index = _toolKeys.IndexOf(toolKey);
+					var tools = _presenter.Tools;
 
-						if (index >= 0 && index < tools.Count)
-							_presenter.SelectTool(tools[index]);
+					if (index >= 0 && index < tools.Count)
+						_presenter.SelectTool(tools[index]);
 
-						inputService.IsKeyboardHandled = true;
-					}
+					inputManager.IsKeyboardHandled = true;
 				}
 			}
 		}
-	}
-
-	protected override void OnUpdate(TimeSpan deltaTime)
-	{
 	}
 
 	public void InvalidateRender()
@@ -762,6 +774,7 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 		var bounds = new Rectangle(x, y, width, height);
 		return bounds;
 	}
+	
 	public Rectangle GetRenderRectangle(Rectangle viewRectangle, Rectangle inlay) {
 		var ox = inlay.Left - viewRectangle.Left;
 		var oy = inlay.Top - viewRectangle.Top;
@@ -1167,11 +1180,22 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 
 	public void CenterCameraOn(int mx, int my)
 	{
-		var offset = new Vector2F(
-			(int)Math.Floor((_renderTarget.Width / 2) / (_presenter.UnitSize * _zoomFactor)),
-			(int)Math.Floor((_renderTarget.Height / 2) / (_presenter.UnitSize * _zoomFactor)));
-			
-		CameraLocation = new Vector2F(mx, my) - offset;
+		// get the display width and height
+		var displayWidth = _renderTarget.Width;
+		var displayHeight = _renderTarget.Height;
+		
+		// calculate the unit width and height
+		var unitWidth = _presenter.UnitSize * _zoomFactor;
+		var unitHeight = _presenter.UnitSize * _zoomFactor;
+		
+		var mapWidth = (displayWidth / unitWidth);
+		var mapHeight = (displayHeight / unitHeight);
+		
+		// calculate the offset
+		var ox = (int)Math.Floor(mapWidth / 2);
+		var oy = (int)Math.Floor(mapHeight / 2);
+		
+		CameraLocation = new Vector2F(mx, my) - new Vector2F(ox, oy);
 			
 		InvalidateRender();
 	}
