@@ -384,7 +384,7 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 		// we access the input manager from the presenter, and follow the same pattern.
 		var inputManager = PresentationTarget.InputManager;
 		
-		if (inputManager is null)
+		if (inputManager is null || !_worldPresentationTarget.AllowInput)
 			return;
 		
 		// track if the mouse is over the control.
