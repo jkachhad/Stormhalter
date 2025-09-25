@@ -303,25 +303,12 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 	{
 		_worldPresentationTarget = worldPresentationTarget;
 
-		var services = (ServiceContainer)ServiceLocator.Current;
+		var services = ServiceLocator.Current;
 
 		_presenter = services.GetInstance<ApplicationPresenter>();
 		_selection = _presenter.Selection;
-
-		var contentManager = services.GetInstance<ContentManager>();
-		var graphicsDevice = GraphicsService.GraphicsDevice;
-
-		_renderTarget = new RenderTarget2D(graphicsDevice, 640, 480);
-
-		var theme = contentManager.Load<Theme>(@"UI\Theme");
-		var renderer = new UIRenderer(graphicsDevice, theme);
-
-		_uiScreen = new UIScreen($"{worldPresentationTarget.GetHashCode()} GUI Screen", renderer)
-		{
-			Background = Color.Transparent,
-			ZIndex = int.MaxValue,
-		};
-
+		_renderTarget = new RenderTarget2D(GraphicsService.GraphicsDevice, 640, 480);
+		
 		_contextMenu = new Menu();
 
 		var createSpawnMenuItem = new MenuButton() { Content = new TextBlock() { Text = "Create Location Spawner.." } };
@@ -369,13 +356,33 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 		_teleporterDestinationContextItems.Add(cancelConfigureTeleporterMenuItem);
 		_teleporterSourceContextItems.Add(configureThisTeleporterMenuItem);
 		
-		_font = renderer.GetFontRenderer("Tahoma", 10);
-
 		var commentStream = System.Windows.Application.GetResourceStream(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/Comment-White.png")).Stream;
-		_commentSprite = Texture2D.FromStream(graphicsDevice, commentStream);
+		
+		_commentSprite = Texture2D.FromStream(GraphicsService.GraphicsDevice, commentStream);
 	}
 
-	public virtual void Initialize()
+	public void Initialize()
+	{
+		var services = ServiceLocator.Current;
+		var contentManager = services.GetInstance<ContentManager>();
+		
+		var theme = contentManager.Load<Theme>(@"UI\Theme");
+		var renderer = new UIRenderer(GraphicsService.GraphicsDevice, theme);
+
+		var uiManager = _worldPresentationTarget.UIManager;
+
+		uiManager.Screens.Add(_uiScreen = new UIScreen($"{_worldPresentationTarget.GetHashCode()} GUI Screen", renderer)
+		{
+			Background = Color.Transparent,
+			ZIndex = int.MaxValue,
+		});
+		
+		_font = renderer.GetFontRenderer("Tahoma", 10);
+		
+		OnInitialize();
+	}
+	
+	protected virtual void OnInitialize()
 	{
 	}
 

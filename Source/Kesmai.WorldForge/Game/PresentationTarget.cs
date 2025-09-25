@@ -105,6 +105,7 @@ public abstract class WorldPresentationTarget : InteropPresentationTarget
 		base.OnInitialize();
 		
 		_worldScreen = CreateGraphicsScreen(GraphicsService);
+		_worldScreen.Initialize();
 	}
 	
 	protected override IEnumerable<InteropGraphicsScreen> GetGraphicsScreens()
