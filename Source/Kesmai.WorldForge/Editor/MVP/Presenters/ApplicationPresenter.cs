@@ -47,7 +47,6 @@ public class ApplicationPresenter : ObservableRecipient
 	
 	private Selection _selection;
 	private TerrainSelector _filter;
-	private Tool _selectedTool;
 
 	private bool _showSubregions;
 
@@ -75,11 +74,7 @@ public class ApplicationPresenter : ObservableRecipient
 		set => _selection = value;
 	}
 		
-	public Tool SelectedTool
-	{
-		get => _selectedTool ?? Tool.Default;
-		set => _selectedTool = value;
-	}
+
 	
 	private ComponentsCategory _selectedComponentCategory;
 	private TerrainComponent _selectedComponent;
@@ -119,7 +114,7 @@ public class ApplicationPresenter : ObservableRecipient
 	}
 
 	public NotifyingCollection<TerrainSelector> Filters { get; set; }
-	public NotifyingCollection<Tool> Tools { get; set; }
+	
 	public VisibilityOptions Visibility { get; set; }
 
 	public RelayCommand CreateSegmentCommand { get; set; }
@@ -134,8 +129,7 @@ public class ApplicationPresenter : ObservableRecipient
 	public RelayCommand GenerateRegionCommand { get; set; }
 		
 	public RelayCommand<TerrainSelector> SelectFilterCommand { get; set; }
-	public RelayCommand<Tool> SelectToolCommand { get; set; }
-
+	
 	public RelayCommand ExitApplicationCommand { get; set; }
 
 	public RelayCommand ShowChangesWindow { get; set; }
@@ -245,9 +239,7 @@ public class ApplicationPresenter : ObservableRecipient
 			(filter) => (Segment != null));
 		SelectFilterCommand.DependsOn(() => Segment, () => ActiveDocument);
 			
-		SelectToolCommand = new RelayCommand<Tool>(SelectTool, 
-			(tool) => (Segment != null) && (ActiveDocument is SegmentRegion || ActiveDocument is ComponentsPanel));
-		SelectToolCommand.DependsOn(() => Segment, () => ActiveDocument);
+		
 
 		Filters = new NotifyingCollection<TerrainSelector>()
 		{
@@ -260,15 +252,7 @@ public class ApplicationPresenter : ObservableRecipient
 			new StructureSelector(),
 		};
 			
-		Tools = new NotifyingCollection<Tool>()
-		{
-			Tool.Default,
-				
-			new DrawTool(),
-			new EraseTool(),
-			new PaintTool(),
-			new HammerTool(),
-		};
+		
 
 		Visibility = new VisibilityOptions();
 			
@@ -345,30 +329,7 @@ public class ApplicationPresenter : ObservableRecipient
 		}
 	}
 		
-	public void SelectTool(Tool nextTool)
-	{
-		if (nextTool == default(Tool))
-			nextTool = Tool.Default;
-			
-		foreach (var tool in Tools)
-		{
-			tool.OnDeactivate();
-			tool.IsActive = false;
-		}
-
-		SelectedTool = nextTool;
-			
-		if (nextTool != null)
-		{
-			nextTool.IsActive = true;
-			nextTool.OnActivate();
-
-			var worldScreen = ServiceLocator.Current.GetInstance<WorldGraphicsScreen>();
-
-			if (worldScreen != null)
-				worldScreen.InvalidateRender();
-		}
-	}
+	
 	
 	public void JumpPrevious ()
 	{
@@ -481,7 +442,7 @@ public class ApplicationPresenter : ObservableRecipient
 		Segment.UpdateTiles();
 		
 		SelectFilter(Filters.FirstOrDefault());
-		SelectTool(Tools.FirstOrDefault());
+		/*SelectTool(Tools.FirstOrDefault());*/
 	}
 
 	private void SaveSegment(bool queryPath)

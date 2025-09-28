@@ -110,6 +110,9 @@ public partial class Core : Application
 		if (Current.Resources["applicationPresenter"] is ApplicationPresenter presenter)
 			services.Register(typeof(ApplicationPresenter), null, presenter);
 		
+		if (Current.Resources["regionToolbar"] is RegionToolbar regionToolbar)
+			services.Register(typeof(RegionToolbar), null, regionToolbar);
+		
 		var contentManager = services.GetInstance<StorageContentManager>();
 		var storage = contentManager.Storage;
 		

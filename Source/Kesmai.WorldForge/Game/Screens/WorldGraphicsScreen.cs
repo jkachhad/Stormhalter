@@ -36,6 +36,8 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 	protected static Color _selectionBorder = Color.FromNonPremultiplied(255, 255, 0, 100);
 
 	protected ApplicationPresenter _presenter;
+	protected RegionToolbar _toolbar;
+	
 	private Selection _selection;
 
 	private WorldPresentationTarget _worldPresentationTarget;
@@ -126,6 +128,8 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 		var services = ServiceLocator.Current;
 
 		_presenter = services.GetInstance<ApplicationPresenter>();
+		_toolbar = services.GetInstance<RegionToolbar>();
+		
 		_selection = _presenter.Selection;
 		_renderTarget = new RenderTarget2D(GraphicsService.GraphicsDevice, 640, 480);
 		
@@ -375,7 +379,7 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 		var region = _worldPresentationTarget.Region;
 		
 		// retrieve the current active tool and update the cursor.
-		var selectedTool = _presenter.SelectedTool;
+		var selectedTool = _toolbar.SelectedTool;
 
 		if (selectedTool != null)
 			_worldPresentationTarget.Cursor = selectedTool.Cursor;
@@ -572,10 +576,10 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 						continue;
 
 					var index = _toolKeys.IndexOf(toolKey);
-					var tools = _presenter.Tools;
+					var tools = _toolbar.Tools;
 
 					if (index >= 0 && index < tools.Count)
-						_presenter.SelectTool(tools[index]);
+						_toolbar.SelectTool(tools[index]);
 
 					inputManager.IsKeyboardHandled = true;
 				}
@@ -899,8 +903,8 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 
 		if (_isMouseOver)
 		{
-			if (_presenter.SelectedTool != null)
-				_presenter.SelectedTool.OnRender(context);
+			if (_toolbar.SelectedTool != null)
+				_toolbar.SelectedTool.OnRender(context);
 		}
 
 		if (_uiScreen != null)

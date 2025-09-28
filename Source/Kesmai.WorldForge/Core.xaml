@@ -2,12 +2,16 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:presenters="clr-namespace:Kesmai.WorldForge.Editor"
+             xmlns:worldForge="clr-namespace:Kesmai.WorldForge"
+             xmlns:ui="clr-namespace:Kesmai.WorldForge.UI"
 
              ShutdownMode="OnMainWindowClose"
 			 
              StartupUri="UI\ApplicationWindow.xaml">
     <Application.Resources>
         <presenters:ApplicationPresenter x:Key="applicationPresenter" />
+        
+        <worldForge:RegionToolbar x:Key="regionToolbar" />
     </Application.Resources>
 </Application>
 

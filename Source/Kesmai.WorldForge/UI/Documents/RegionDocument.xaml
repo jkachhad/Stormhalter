@@ -10,8 +10,16 @@
              d:DesignHeight="300" d:DesignWidth="300"
              
              FontFamily="Tahoma" FontSize="14">
-
-    <Border BorderBrush="Black" BorderThickness="1">
-        <worldForge:RegionPresentationTarget Region="{Binding}" x:Name="_presenter" />
-    </Border>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <ui:RegionToolbarView />
+    
+        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1">
+            <worldForge:RegionPresentationTarget Region="{Binding}" x:Name="_presenter" />
+        </Border>
+    </Grid>
 </UserControl>

@@ -50,7 +50,8 @@ public class DrawTool : Tool
             return;
 
         var services = ServiceLocator.Current;
-        var presenter = services.GetInstance<ApplicationPresenter> ( );
+        var presenter = services.GetInstance<ApplicationPresenter>();
+        var regionToolbar = services.GetInstance<RegionToolbar>();
 
         var worldScreen = target.WorldScreen;
         var region = target.Region;
@@ -63,7 +64,7 @@ public class DrawTool : Tool
 
             if ( inputService.IsReleased ( Keys.Escape ) )
             {
-                presenter.SelectTool ( default ( Tool ) );
+                regionToolbar.SelectTool(null);
                 inputService.IsKeyboardHandled = true;
             }
         }

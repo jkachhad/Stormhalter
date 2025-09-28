@@ -31,6 +31,7 @@ public abstract class ComponentTool : Tool
 			
 		var services = ServiceLocator.Current;
 		var presenter = services.GetInstance<ApplicationPresenter>();
+		var regionToolbar = services.GetInstance<RegionToolbar>();
 		var filter = presenter.SelectedFilter;
 			
 		var worldScreen = target.WorldScreen;
@@ -79,7 +80,7 @@ public abstract class ComponentTool : Tool
 		{
 			if (inputService.IsReleased(Keys.Escape))
 			{
-				presenter.SelectTool(default(Tool));
+				regionToolbar.SelectTool(null);
 				inputService.IsKeyboardHandled = true;
 			}
 		}

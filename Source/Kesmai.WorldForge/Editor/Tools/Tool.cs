@@ -63,6 +63,8 @@ public class Tool : ObservableObject
 	{
 		WeakReferenceMessenger.Default.Send(new ToolStopMessage(this));
 	}
+	
+	public override string ToString() => Name;
 }
 
 public class ToolStartMessage
