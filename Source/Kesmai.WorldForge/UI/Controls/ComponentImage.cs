@@ -60,8 +60,8 @@ public class ComponentImage : Image
         var maxWidth = 100;
         var maxHeight = 100;
 
-        var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter> ( );
-        var selector = presenter?.SelectedFilter;
+        var regionFilters = ServiceLocator.Current.GetInstance<RegionFilters> ( );
+        var selector = regionFilters?.SelectedFilter;
 
         var renderList = new List<TerrainRender> ( );
         if ( component is TilePrefabComponent tilePrefab )

@@ -16,7 +16,41 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         
-        <ui:RegionToolbarView />
+        <ToolBarTray Grid.Row="0" DockPanel.Dock="Top">
+            <!-- Tools -->
+            <ToolBar ItemsSource="{Binding Tools, Source={StaticResource regionToolbar}}" 
+                     Background="LightBlue" ToolTip="Tools" OverflowMode="Never">
+                <ToolBar.ItemTemplate>
+                    <DataTemplate>
+                        <ToggleButton  Margin="1" Height="32" Width="32" FocusVisualStyle="{x:Null}"
+                                       Command="{Binding SelectToolCommand, Source={StaticResource regionToolbar}}"
+                                       CommandParameter="{Binding}" IsChecked="{Binding IsActive}">
+                            <ToggleButton.ToolTip>
+                                <TextBlock Text="{Binding Name}" FocusVisualStyle="{x:Null}"/>
+                            </ToggleButton.ToolTip>
+                            <Image Source="{Binding Icon}" FocusVisualStyle="{x:Null}" VerticalAlignment="Center" Height="26" Width="26" />
+                        </ToggleButton>
+                    </DataTemplate>
+                </ToolBar.ItemTemplate>
+            </ToolBar>
+            
+            <!-- Filters -->
+            <ToolBar ItemsSource="{Binding Filters, Source={StaticResource regionFilters}}" 
+                     Background="LightYellow" ToolTip="Filters" OverflowMode="Never">
+                <ToolBar.ItemTemplate>
+                    <DataTemplate>
+                        <ToggleButton  Margin="1" Height="32" Width="32" FocusVisualStyle="{x:Null}"
+                                       Command="{Binding SelectFilterCommand, Source={StaticResource regionFilters}}"
+                                       CommandParameter="{Binding}" IsChecked="{Binding IsActive}">
+                            <ToggleButton.ToolTip>
+                                <TextBlock Text="{Binding Name}" FocusVisualStyle="{x:Null}"/>
+                            </ToggleButton.ToolTip>
+                            <Image Source="{Binding Icon}" FocusVisualStyle="{x:Null}" VerticalAlignment="Center" Height="26" Width="26" />
+                        </ToggleButton>
+                    </DataTemplate>
+                </ToolBar.ItemTemplate>
+            </ToolBar>
+        </ToolBarTray>
     
         <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1">
             <worldForge:RegionPresentationTarget Region="{Binding}" x:Name="_presenter" />

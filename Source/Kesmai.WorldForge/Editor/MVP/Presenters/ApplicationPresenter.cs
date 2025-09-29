@@ -62,19 +62,11 @@ public class ApplicationPresenter : ObservableRecipient
 		set { _configuringTeleporter = value; }
 	}
 
-	public TerrainSelector SelectedFilter
-	{
-		get => _filter ?? TerrainSelector.Default;
-		set => _filter = value;
-	}
-		
 	public Selection Selection
 	{
 		get => _selection;
 		set => _selection = value;
 	}
-		
-
 	
 	private ComponentsCategory _selectedComponentCategory;
 	private TerrainComponent _selectedComponent;
@@ -230,30 +222,12 @@ public class ApplicationPresenter : ObservableRecipient
 
 		WeakReferenceMessenger.Default
 			.Register<ApplicationPresenter, VisibilityOptionsChanged>(
-				this, (r, m) => {
+				this, (r, m) =>
+				{
 					if (Segment is not null)
 						Segment.UpdateTiles();
 				});
-
-		SelectFilterCommand = new RelayCommand<TerrainSelector>(SelectFilter, 
-			(filter) => (Segment != null));
-		SelectFilterCommand.DependsOn(() => Segment, () => ActiveDocument);
-			
 		
-
-		Filters = new NotifyingCollection<TerrainSelector>()
-		{
-			TerrainSelector.Default,
-				
-			new FloorSelector(),
-			new StaticSelector(),
-			new WaterSelector(),
-			new WallSelector(),
-			new StructureSelector(),
-		};
-			
-		
-
 		Visibility = new VisibilityOptions();
 			
 		ExitApplicationCommand = new RelayCommand(() => Application.Current.Shutdown());
@@ -311,22 +285,6 @@ public class ApplicationPresenter : ObservableRecipient
 
 	public void SwapDocument(String Target)
 	{
-	}
-	
-	public void SelectFilter(TerrainSelector nextFilter)
-	{
-		foreach (var filter in Filters)
-			filter.IsActive = false;
-
-		SelectedFilter = nextFilter;
-			
-		if (nextFilter != null)
-		{
-			nextFilter.IsActive = true;
-
-			if (nextFilter.IsActive)
-				_segment.UpdateTiles();
-		}
 	}
 		
 	
@@ -441,7 +399,6 @@ public class ApplicationPresenter : ObservableRecipient
 		Segment = segment;
 		Segment.UpdateTiles();
 		
-		SelectFilter(Filters.FirstOrDefault());
 		/*SelectTool(Tools.FirstOrDefault());*/
 	}
 

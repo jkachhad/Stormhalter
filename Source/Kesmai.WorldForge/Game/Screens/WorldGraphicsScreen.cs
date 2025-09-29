@@ -37,6 +37,7 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 
 	protected ApplicationPresenter _presenter;
 	protected RegionToolbar _toolbar;
+	protected RegionFilters _filters;
 	
 	private Selection _selection;
 
@@ -129,6 +130,7 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 
 		_presenter = services.GetInstance<ApplicationPresenter>();
 		_toolbar = services.GetInstance<RegionToolbar>();
+		_filters = services.GetInstance<RegionFilters>();
 		
 		_selection = _presenter.Selection;
 		_renderTarget = new RenderTarget2D(GraphicsService.GraphicsDevice, 640, 480);
@@ -527,7 +529,7 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 					for (var x = area.Left; x < area.Right; x++)
 					for (var y = area.Top; y < area.Bottom; y++)
 					{
-						var currentFilter = _presenter.SelectedFilter;
+						var currentFilter = _filters.SelectedFilter;
 						var tile = region.GetTile(x, y);
 						if (tile is null)
 							continue;
@@ -562,7 +564,7 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 					var filters = _presenter.Filters;
 
 					if (index >= 0 && index < filters.Count)
-						_presenter.SelectFilter(filters[index]);
+						_filters.SelectFilter(filters[index]);
 
 					inputManager.IsKeyboardHandled = true;
 				}

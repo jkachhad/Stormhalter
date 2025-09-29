@@ -176,10 +176,10 @@ public class SegmentTile : ObservableObject, IEnumerable<TerrainComponent>
 
     public void UpdateTerrain ( )
     {
-        var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter> ( );
+        var regionFilters = ServiceLocator.Current.GetInstance<RegionFilters>();
 
-        if ( presenter != null )
-            UpdateTerrain ( presenter.SelectedFilter );
+        if (regionFilters != null)
+            UpdateTerrain(regionFilters.SelectedFilter);
     }
 
     public void UpdateTerrain ( TerrainSelector selector )

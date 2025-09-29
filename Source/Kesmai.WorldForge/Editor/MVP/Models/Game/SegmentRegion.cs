@@ -182,10 +182,10 @@ public class SegmentRegion : ObservableObject, ICloneable, ISegmentObject
 
 	public void UpdateTiles()
 	{
-		var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+		var regionFilters = ServiceLocator.Current.GetInstance<RegionFilters>();
 			
 		foreach (var tile in GetTiles((t) => true))
-			tile.UpdateTerrain(presenter.SelectedFilter);
+			tile.UpdateTerrain(regionFilters.SelectedFilter);
 	}
 
 	public IEnumerable<SegmentTile> GetTiles()
