@@ -131,9 +131,37 @@ public class ArrowTool : Tool
 			else
 			{
 				if (_isSelecting)
+				{
+					//update the selection rectangle
 					_selectionEnd = currentPosition;
+					
+					//the mouse is outside the window, so scroll in that direction
+					var panX = 0; var panY = 0;
+					var scrollSpeed = 10;
+					
+					//if the mouse is outside the window, pan in that direction.
+					if (currentPosition.X < 0)
+						panX = -scrollSpeed;
+					else if (currentPosition.X > graphicsScreen.Width)
+						panX = scrollSpeed;
+					
+					if (currentPosition.Y < 0)
+						panY = -scrollSpeed;
+					else if (currentPosition.Y > graphicsScreen.Height)
+						panY = scrollSpeed;
+					
+					// apply the pan to the camera
+					graphicsScreen.CameraLocation += new Vector2F(
+						panX / (presenter.UnitSize * graphicsScreen.ZoomFactor),
+						panY / (presenter.UnitSize * graphicsScreen.ZoomFactor));
+					
+					// apply the pan opposite to the pan
+					_selectionStart -= new Vector2F(panX, panY);
+				}
 				else
+				{
 					_selectionStart = _selectionEnd = currentPosition;
+				}
 
 				_isSelecting = true;
 			}
