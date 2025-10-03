@@ -151,8 +151,7 @@ public class DoorComponent : TerrainComponent
 	/// <inheritdoc />
 	public override IEnumerable<ComponentRender> GetTerrain()
 	{
-		var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
-		var visibility = presenter.Visibility;
+		var visibility = ServiceLocator.Current.GetInstance<RegionVisibility>();
 		var showOpened = IsOpen || visibility.OpenDoors;
 		var showHidden = visibility.HideSecretDoors;
 		var showDestroyed = visibility.BreakWalls;

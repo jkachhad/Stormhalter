@@ -50,6 +50,47 @@
                     </DataTemplate>
                 </ToolBar.ItemTemplate>
             </ToolBar>
+            
+            <!-- Visibility -->
+            <ToolBar DataContext="{StaticResource  regionVisibility}" 
+                     Background="LightPink" ToolTip="Visibility" OverflowMode="Never">
+                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding BreakWalls, Source={StaticResource regionVisibility}}">
+                    <ToggleButton.ToolTip>
+                        <TextBlock Text="Toggle walls and doors as Destroyed" />
+                    </ToggleButton.ToolTip>
+                    <Image Source="../../Resources/FilterWall.png" VerticalAlignment="Center" Height="26" Width="26" />
+                </ToggleButton>
+                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding OpenDoors, Source={StaticResource regionVisibility}}">
+                    <ToggleButton.ToolTip>
+                        <TextBlock Text="Toggle Doors Open\Close" />
+                    </ToggleButton.ToolTip>
+                    <Image Source="../../Resources/Door.png" VerticalAlignment="Center" Height="26" Width="26" />
+                </ToggleButton>
+                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding HideSecretDoors, Source={StaticResource regionVisibility}}">
+                    <ToggleButton.ToolTip>
+                        <TextBlock Text="Show Secret Doors as Secret" />
+                    </ToggleButton.ToolTip>
+                    <Image Source="../../Resources/SecretDoor.png" VerticalAlignment="Center" Height="26" Width="26" />
+                </ToggleButton>
+                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding ShowTeleporters, Source={StaticResource regionVisibility}}">
+                    <ToggleButton.ToolTip>
+                        <TextBlock Text="Highlight Teleporter source and destinations" />
+                    </ToggleButton.ToolTip>
+                    <Image Source="../../Resources/FilterTeleport.png" VerticalAlignment="Center" Height="26" Width="26" />
+                </ToggleButton>
+                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding ShowSpawns, Source={StaticResource regionVisibility}}">
+                    <ToggleButton.ToolTip>
+                        <TextBlock Text="Highlight location and region spawners" />
+                    </ToggleButton.ToolTip>
+                    <Image Source="../../Resources/Spawns.png" VerticalAlignment="Center" Height="26" Width="26" />
+                </ToggleButton>
+                <ToggleButton  Margin="1" Height="32" Width="32" IsChecked="{Binding ShowComments, Source={StaticResource regionVisibility}}">
+                    <ToggleButton.ToolTip>
+                        <TextBlock Text="Highlight Comments" />
+                    </ToggleButton.ToolTip>
+                    <Image Source="../../Resources/Comment.png" VerticalAlignment="Center" Height="26" Width="26" />
+                </ToggleButton>
+            </ToolBar>
         </ToolBarTray>
     
         <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1">

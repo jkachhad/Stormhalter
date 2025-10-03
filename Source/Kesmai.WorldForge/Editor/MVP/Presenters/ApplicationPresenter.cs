@@ -106,8 +106,6 @@ public class ApplicationPresenter : ObservableRecipient
 	}
 
 	public NotifyingCollection<TerrainSelector> Filters { get; set; }
-	
-	public VisibilityOptions Visibility { get; set; }
 
 	public RelayCommand CreateSegmentCommand { get; set; }
 	public RelayCommand CloseSegmentCommand { get; set; }
@@ -120,8 +118,6 @@ public class ApplicationPresenter : ObservableRecipient
 
 	public RelayCommand GenerateRegionCommand { get; set; }
 		
-	public RelayCommand<TerrainSelector> SelectFilterCommand { get; set; }
-	
 	public RelayCommand ExitApplicationCommand { get; set; }
 
 	public RelayCommand ShowChangesWindow { get; set; }
@@ -228,8 +224,6 @@ public class ApplicationPresenter : ObservableRecipient
 						Segment.UpdateTiles();
 				});
 		
-		Visibility = new VisibilityOptions();
-			
 		ExitApplicationCommand = new RelayCommand(() => Application.Current.Shutdown());
 			
 		ShowSubregions = true;

@@ -38,6 +38,7 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 	protected ApplicationPresenter _presenter;
 	protected RegionToolbar _toolbar;
 	protected RegionFilters _filters;
+	protected RegionVisibility _visibility;
 	
 	private Selection _selection;
 
@@ -131,6 +132,7 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 		_presenter = services.GetInstance<ApplicationPresenter>();
 		_toolbar = services.GetInstance<RegionToolbar>();
 		_filters = services.GetInstance<RegionFilters>();
+		_visibility = services.GetInstance<RegionVisibility>();
 		
 		_selection = _presenter.Selection;
 		_renderTarget = new RenderTarget2D(GraphicsService.GraphicsDevice, 640, 480);
@@ -704,14 +706,14 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 
 				var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
 				var segment = segmentRequest.Response;
-				if (_presenter.Visibility.ShowComments ||_presenter.Visibility.ShowTeleporters||(_presenter.Visibility.ShowSpawns && _presenter.ActiveDocument is not WorldForge.UI.Documents.SpawnsViewModel))
+				if (_visibility.ShowComments || _visibility.ShowTeleporters || (_visibility.ShowSpawns && _presenter.ActiveDocument is not WorldForge.UI.Documents.SpawnsViewModel))
 				{
 					//dim the screen
 					var viewportrectangle = GetRenderRectangle(viewRectangle, viewRectangle);
 					spritebatch.FillRectangle(viewportrectangle, Color.FromNonPremultiplied(0, 0, 0, 128));
 				}
 				var _drawStrings = new List<Tuple<String, Vector2, Color>>();
-				if (_presenter.Visibility.ShowTeleporters) // Destination highlights for teleporters //todo: make this a toggle with a "tool" like button
+				if (_visibility.ShowTeleporters) // Destination highlights for teleporters //todo: make this a toggle with a "tool" like button
 				{
 					var _teleportDestinationHighlight = Color.FromNonPremultiplied(80, 255, 80, 200);
 					var _teleportSourceHighlight = Color.FromNonPremultiplied(160, 255, 20, 200);
@@ -779,7 +781,7 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 
 					}
 				}
-				if (_presenter.Visibility.ShowSpawns && _presenter.ActiveDocument is not WorldForge.UI.Documents.SpawnsViewModel)
+				if (_visibility.ShowSpawns && _presenter.ActiveDocument is not WorldForge.UI.Documents.SpawnsViewModel)
 				{
 					var _inclusionBorder = Color.FromNonPremultiplied(200, 255, 50, 200);
 					var _inclusionFill = Color.FromNonPremultiplied(200, 255, 50, 50);
@@ -865,7 +867,7 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 				{
 					_font.DrawString(spritebatch, RenderTransform.Identity, _drawString.Item1, _drawString.Item2, _drawString.Item3);
 				}
-				if (_presenter.Visibility.ShowComments)
+				if (_visibility.ShowComments)
 				{
 					var visibleComments = region.GetTiles().Where(t => t.Components.Any(c => !string.IsNullOrWhiteSpace(c.Comment)) && viewRectangle.Contains(t.X, t.Y));
 

@@ -96,9 +96,8 @@ public class WallComponent : TerrainComponent
 	public override IEnumerable<ComponentRender> GetTerrain()
 	{
 		var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
-
-		var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
-		var visibility = presenter.Visibility;
+		
+		var visibility = ServiceLocator.Current.GetInstance<RegionVisibility>();
 		var showDestroyed = visibility.BreakWalls;
 
 		Terrain terrain;

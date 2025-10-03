@@ -116,6 +116,9 @@ public partial class Core : Application
 		if (Current.Resources["regionFilters"] is RegionFilters regionFilters)
 			services.Register(typeof(RegionFilters), null, regionFilters);
 		
+		if (Current.Resources["regionVisibility"] is RegionVisibility regionVisibility)
+			services.Register(typeof(RegionVisibility), null, regionVisibility);
+		
 		var contentManager = services.GetInstance<StorageContentManager>();
 		var storage = contentManager.Storage;
 		
