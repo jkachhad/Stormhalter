@@ -41,6 +41,9 @@ public abstract class WorldPresentationTarget : InteropPresentationTarget
 
 	protected override void OnInitialize()
 	{
+		// Capture mouse within the control so we can pan the view by dragging.
+		InputManager.Mouse.CaptureMouseWithin = true;
+		
 		base.OnInitialize();
 		
 		_worldScreen = CreateGraphicsScreen(GraphicsService);
