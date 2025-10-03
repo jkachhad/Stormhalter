@@ -16,17 +16,18 @@ public partial class RegionDocument : UserControl
 			if (DataContext is SegmentRegion region)
 				region.UpdateTiles();
 			
-			// Listen for filter changes
-			WeakReferenceMessenger.Default.Register<RegionDocument, RegionFilterChanged>(this, OnFilterChanged);
+			// Listen for changes to the region that require a redraw
+			WeakReferenceMessenger.Default.Register<RegionDocument, RegionFilterChanged>(this, (_, _) => Update());
+			WeakReferenceMessenger.Default.Register<RegionDocument, RegionVisibilityChanged>(this, (_, _) => Update());
 		};
 		
 		Unloaded += (sender, args) =>
 		{
-			WeakReferenceMessenger.Default.Unregister<RegionFilterChanged>(this);
+			WeakReferenceMessenger.Default.UnregisterAll(this);
 		};
 	}
 
-	private void OnFilterChanged(RegionDocument recipient, RegionFilterChanged message)
+	private void Update()
 	{
 		if (DataContext is SegmentRegion region)
 			region.UpdateTiles();

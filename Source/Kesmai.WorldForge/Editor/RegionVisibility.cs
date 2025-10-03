@@ -1,6 +1,11 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace Kesmai.WorldForge;
+
+public class RegionVisibilityChanged(RegionVisibility Visibility) : ValueChangedMessage<RegionVisibility>(Visibility);
 
 public class RegionVisibility : ObservableRecipient
 {
@@ -45,6 +50,14 @@ public class RegionVisibility : ObservableRecipient
     {
         get => _showComments;
         set => SetProperty(ref _showComments, value);
+    }
+
+    protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+    {
+        base.OnPropertyChanged(e);
+
+        // Notify that visibility settings have changed
+        WeakReferenceMessenger.Default.Send(new RegionVisibilityChanged(this));
     }
 }
 
