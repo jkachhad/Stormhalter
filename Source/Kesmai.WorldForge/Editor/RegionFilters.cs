@@ -2,9 +2,13 @@
 using CommonServiceLocator;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using Kesmai.WorldForge.Editor;
 
 namespace Kesmai.WorldForge;
+
+public class RegionFilterChanged(TerrainSelector Filter) : ValueChangedMessage<TerrainSelector>(Filter);
 
 public class RegionFilters : ObservableRecipient
 {
@@ -48,6 +52,11 @@ public class RegionFilters : ObservableRecipient
 		SelectedFilter = filter;
 		
 		foreach (var f in Filters)
-			f.IsActive = (f == filter);
+		{
+			if (f != filter && f.IsActive)
+				f.IsActive = false;
+		}
+
+		WeakReferenceMessenger.Default.Send(new RegionFilterChanged(filter));
 	}
 }
