@@ -16,15 +16,15 @@ using Microsoft.Xna.Framework.Content;
 namespace Kesmai.WorldForge;
 
 public record DocumentClosed(LayoutDocument Document);
-public record DocumentActivate(object Content);
+public record ActiveDocumentChanged(object Content);
+
+public record ActivateDocument(object Content);
 
 /// <summary>
 /// Interaction logic for ApplicationWindow.xaml
 /// </summary>
 public partial class ApplicationWindow : Window
 {
-	
-
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ApplicationWindow"/> class.
 	/// </summary>
@@ -49,7 +49,7 @@ public partial class ApplicationWindow : Window
 				this, (r, m) => {
 				});
 
-		WeakReferenceMessenger.Default.Register<ApplicationWindow, DocumentActivate>(this, (r, m) =>
+		WeakReferenceMessenger.Default.Register<ApplicationWindow, ActivateDocument>(this, (r, m) =>
 		{
 			if (m.Content is null)
 				return;
@@ -65,6 +65,12 @@ public partial class ApplicationWindow : Window
 		});
 		
 		_dockingManager.DocumentClosed += OnDocumentClosed;
+		_dockingManager.ActiveContentChanged += (s, e) =>
+		{
+			// When a document is activated in the layout panel, notify interested parties.
+			if (_dockingManager.Layout.ActiveContent is LayoutDocument layoutDocument)
+				WeakReferenceMessenger.Default.Send(new ActiveDocumentChanged(layoutDocument.Content));
+		};
 	}
 
 	private void OnDocumentClosed(object sender, DocumentClosedEventArgs args)

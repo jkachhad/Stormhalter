@@ -130,20 +130,7 @@ public class ApplicationPresenter : ObservableRecipient
 	public object ActiveDocument
 	{
 		get => _activeDocument;
-		set
-        {
-            if (value != _activeDocument)
-            {
-                if (_activeDocument is IDisposable disposable)
-                {
-                    disposable.Dispose();
-                }
-                _previousDocument = _activeDocument;
-                
-                if (SetProperty(ref _activeDocument, value, true))
-	                WeakReferenceMessenger.Default.Send(new DocumentActivate(_activeDocument));
-            }
-		}
+		set => SetProperty(ref _activeDocument, value, true);
 	}
 
 	public ISegmentObject ActiveContent
@@ -236,6 +223,12 @@ public class ApplicationPresenter : ObservableRecipient
 			if (message.Value is not null)
 				SetActiveDocument(Documents.FirstOrDefault());
 		});
+		
+		// when content changes, ensure the appropriate document is active.
+		messenger.Register<ActiveDocumentChanged>(this, (r, message) =>
+		{
+			ActiveDocument = message.Content;
+		});
 
 		// when a document is closed, remove it from the list of documents. Set the next document as active.
 		messenger.Register<DocumentClosed>(this, (r, message) =>
@@ -244,8 +237,6 @@ public class ApplicationPresenter : ObservableRecipient
 			
 			if (Documents.Contains(content))
 				Documents.Remove(content);
-			
-			ActiveDocument = Documents.FirstOrDefault();
 		});
 
 		// when a segment object is selected, find or create the appropriate document and set it active.
@@ -264,7 +255,7 @@ public class ApplicationPresenter : ObservableRecipient
 			if (!Documents.Contains(target))
 				Documents.Add(target);
 
-			ActiveDocument = target;
+			WeakReferenceMessenger.Default.Send(new ActivateDocument(target));
 		}
 
 		if (content != default)
