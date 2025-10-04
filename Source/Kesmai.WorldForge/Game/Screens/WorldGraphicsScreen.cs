@@ -693,7 +693,12 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 								if (sprite.Offset != Vector2F.Zero)
 									spriteBounds.Offset((int)Math.Floor(sprite.Offset.X * _zoomFactor), (int)Math.Floor(sprite.Offset.Y * _zoomFactor));
 
-								spritebatch.Draw(sprite.Texture, spriteBounds.Location.ToVector2(), null, render.Color, 0, Vector2.Zero, _zoomFactor / sprite.Resolution, SpriteEffects.None, 0f);
+								var color = render.Color;
+
+								if (_toolbar.SelectedTool != null && _toolbar.SelectedTool.OnRender(segmentTile, render.Layer, out var overrideColor))
+									color = overrideColor;
+								
+								spritebatch.Draw(sprite.Texture, spriteBounds.Location.ToVector2(), null, color, 0, Vector2.Zero, _zoomFactor / sprite.Resolution, SpriteEffects.None, 0f);
 							}
 						}
 
