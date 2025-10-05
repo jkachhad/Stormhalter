@@ -105,8 +105,6 @@ public class ApplicationPresenter : ObservableRecipient
 		}
 	}
 
-	public NotifyingCollection<TerrainSelector> Filters { get; set; }
-
 	public RelayCommand CreateSegmentCommand { get; set; }
 	public RelayCommand CloseSegmentCommand { get; set; }
 	public RelayCommand OpenSegmentCommand { get; set; }

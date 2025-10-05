@@ -6,6 +6,6 @@ public class RegionPresentationTarget : WorldPresentationTarget
 {
 	public override WorldGraphicsScreen CreateGraphicsScreen(IGraphicsService graphicsService)
 	{
-		return new WorldGraphicsScreen(graphicsService, this);
+		return new RegionGraphicsScreen(graphicsService, this);
 	}
 }

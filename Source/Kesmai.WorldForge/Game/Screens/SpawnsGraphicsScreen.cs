@@ -1,6 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using CommonServiceLocator;
+using DigitalRune.Game.UI.Controls;
 using DigitalRune.Game.UI.Rendering;
 using DigitalRune.Graphics;
+using Kesmai.WorldForge.Editor;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -17,6 +22,37 @@ public class SpawnsGraphicsScreen : WorldGraphicsScreen
 
 	public SpawnsGraphicsScreen(IGraphicsService graphicsService, WorldPresentationTarget worldPresentationTarget) : base(graphicsService, worldPresentationTarget)
 	{
+	}
+
+	protected override IEnumerable<MenuItem> GetContextMenuItems(int mx, int my)
+	{
+		if (_spawner is RegionSpawner)
+		{
+			yield return _contextMenu.Create("Add selection to Inclusions..", selectionAppendInclusions);
+			yield return _contextMenu.Create("Add selection to Exclusions..", selectionAppendExclusions);
+		}
+		
+		void selectionAppendInclusions(object sender, EventArgs args)
+		{
+			if (_spawner is not RegionSpawner regionSpawner)
+				return;
+			
+			foreach (var rectangle in _selection)
+				regionSpawner.Inclusions.Add(new SegmentBounds(rectangle.Left, rectangle.Top, rectangle.Right - 1, rectangle.Bottom - 1));
+
+			InvalidateRender();
+		}
+		
+		void selectionAppendExclusions(object sender, EventArgs args)
+		{
+			if (_spawner is not RegionSpawner regionSpawner)
+				return;
+			
+			foreach (var rectangle in _selection)
+				regionSpawner.Exclusions.Add(new SegmentBounds(rectangle.Left, rectangle.Top, rectangle.Right - 1, rectangle.Bottom - 1));
+
+			InvalidateRender();
+		}
 	}
 
 	public void SetSpawner(Spawner spawner)

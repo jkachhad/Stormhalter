@@ -57,6 +57,8 @@ public class RegionFilters : ObservableRecipient
 				f.IsActive = false;
 		}
 
+		filter.IsActive = true;
+
 		WeakReferenceMessenger.Default.Send(new RegionFilterChanged(filter));
 	}
 }

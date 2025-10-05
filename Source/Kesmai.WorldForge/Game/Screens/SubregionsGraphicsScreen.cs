@@ -1,4 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using CommonServiceLocator;
+using DigitalRune.Game.UI.Controls;
 using DigitalRune.Game.UI.Rendering;
 using DigitalRune.Graphics;
 using Kesmai.WorldForge.Editor;
@@ -13,6 +17,18 @@ public class SubregionsGraphicsScreen : WorldGraphicsScreen
 		
 	public SubregionsGraphicsScreen(IGraphicsService graphicsService, WorldPresentationTarget worldPresentationTarget) : base(graphicsService, worldPresentationTarget)
 	{
+	}
+	
+	protected override IEnumerable<MenuItem> GetContextMenuItems(int mx, int my)
+	{
+		yield return _contextMenu.Create("Add selection to Subregion..", selectionAppendInclusions);
+		void selectionAppendInclusions(object sender, EventArgs args)
+		{
+			foreach (var rectangle in _selection)
+				_subregion.Rectangles.Add(new SegmentBounds(rectangle.Left, rectangle.Top, rectangle.Right - 1, rectangle.Bottom - 1));
+
+			InvalidateRender();
+		}
 	}
 
 	public void SetSubregion(SegmentSubregion subregion)

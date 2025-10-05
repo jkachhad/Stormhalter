@@ -270,6 +270,8 @@ public class ArrowTool : Tool
 			
 		var worldScreen = presentationTarget.WorldScreen;
 		var viewRectangle = worldScreen.GetViewRectangle();
+		
+		spriteBatch.Begin(SpriteSortMode.Immediate, samplerState: SamplerState.PointClamp);
 			
 		if (_isSelecting)
 		{
@@ -306,6 +308,8 @@ public class ArrowTool : Tool
 				spriteBatch.DrawRectangle(bounds, _movingBorder);
 			}
 		}
+		
+		spriteBatch.End();
 	}
 
 	private Cursor _selectNormal;
