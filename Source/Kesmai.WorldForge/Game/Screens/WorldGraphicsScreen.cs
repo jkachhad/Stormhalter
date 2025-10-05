@@ -251,43 +251,25 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 	{
 		_invalidateRender = true;
     }
-
-	public Rectangle GetRenderRectangle(Rectangle viewRectangle, Rectangle inlay, int offset) {
-		var ox = inlay.Left - viewRectangle.Left;
-		var oy = inlay.Top - viewRectangle.Top;
-
-		var x = (int)Math.Floor(ox * _presenter.UnitSize * _zoomFactor) + (offset * 2) + 1;
-		var y = (int)Math.Floor(oy * _presenter.UnitSize * _zoomFactor) + (offset * 2) + 1;
-
-		var width = (int)Math.Floor(inlay.Width * _presenter.UnitSize * _zoomFactor) - (offset * 4) - 2;
-		var height = (int)Math.Floor(inlay.Height * _presenter.UnitSize * _zoomFactor) - (offset * 4) - 2;
-
-		var bounds = new Rectangle(x, y, width, height);
-		return bounds;
-	}
-
+	
 	public Rectangle GetRenderRectangle(Rectangle viewRectangle, Rectangle inlay)
 	{
-		var ox = inlay.Left - viewRectangle.Left;
-		var oy = inlay.Top - viewRectangle.Top;
+		var x = (inlay.Left - viewRectangle.Left) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
+		var y = (inlay.Top - viewRectangle.Top) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
 
-		var x = (int)Math.Floor(ox * _presenter.UnitSize * _zoomFactor) + 1;
-		var y = (int)Math.Floor(oy * _presenter.UnitSize * _zoomFactor) + 1;
-
-		var width = (int)Math.Floor(inlay.Width * _presenter.UnitSize * _zoomFactor) - 2;
-		var height = (int)Math.Floor(inlay.Height * _presenter.UnitSize * _zoomFactor) - 2;
-
-		var bounds = new Rectangle(x, y, width, height);
-		return bounds;
+		return new Rectangle(x, y, 
+			(int)Math.Floor(_presenter.UnitSize * _zoomFactor), 
+			(int)Math.Floor(_presenter.UnitSize * _zoomFactor));
 	}
 
 	public Rectangle GetRenderRectangle(Rectangle viewRectangle, int x, int y)
 	{
-		var rx = (x - viewRectangle.Left) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor) + 1;
-		var ry = (y - viewRectangle.Top) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor) + 1;
-		var bounds = new Rectangle(rx, ry,
-			(int)Math.Floor(_presenter.UnitSize * _zoomFactor) - 2, (int)Math.Floor(_presenter.UnitSize * _zoomFactor) - 2);
-		return bounds;
+		var rx = (x - viewRectangle.Left) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
+		var ry = (y - viewRectangle.Top) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
+		
+		return new Rectangle(rx, ry,
+			(int)Math.Floor(_presenter.UnitSize * _zoomFactor), 
+			(int)Math.Floor(_presenter.UnitSize * _zoomFactor));
 	}
 
 	protected override void OnRender(RenderContext context)
