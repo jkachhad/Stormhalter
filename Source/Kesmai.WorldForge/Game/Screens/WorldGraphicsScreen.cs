@@ -460,15 +460,6 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 		return default(SegmentTile);
 	}
 
-	public Rectangle ToScreenBounds(int wx, int wy)
-	{
-		return new Rectangle(
-			(wx - (int)_cameraLocation.X) * ((int)Math.Floor(_presenter.UnitSize * _zoomFactor)), 
-			(wy - (int)_cameraLocation.Y) * ((int)Math.Floor(_presenter.UnitSize * _zoomFactor)), 
-			_presenter.UnitSize, 
-			_presenter.UnitSize);
-	}
-
 	public void CenterCameraOn(int mx, int my)
 	{
 		// get the display width and height
