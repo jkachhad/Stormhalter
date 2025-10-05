@@ -256,10 +256,11 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 	{
 		var x = (inlay.Left - viewRectangle.Left) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
 		var y = (inlay.Top - viewRectangle.Top) * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
+		
+		var width = inlay.Width * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
+		var height = inlay.Height * (int)Math.Floor(_presenter.UnitSize * _zoomFactor);
 
-		return new Rectangle(x, y, 
-			(int)Math.Floor(_presenter.UnitSize * _zoomFactor), 
-			(int)Math.Floor(_presenter.UnitSize * _zoomFactor));
+		return new Rectangle(x, y, width, height);
 	}
 
 	public Rectangle GetRenderRectangle(Rectangle viewRectangle, int x, int y)
