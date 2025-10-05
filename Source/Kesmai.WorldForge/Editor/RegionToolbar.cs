@@ -56,6 +56,8 @@ public class RegionToolbar : ObservableRecipient
 			return true;
 		});
 		SelectToolCommand.DependsOn(() => ServiceLocator.Current.GetInstance<ApplicationPresenter>().Segment);
+		
+		SelectTool(Tool.Default);
 	}
 	
 	public void SelectTool(Tool nextTool)
