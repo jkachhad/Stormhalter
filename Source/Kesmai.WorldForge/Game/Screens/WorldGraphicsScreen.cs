@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using CommonServiceLocator;
 using DigitalRune.Game.Input;
 using DigitalRune.Game.UI;
@@ -50,7 +51,7 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 	private bool _drawgrid = false;
 	private Color _gridcolor = Color.FromNonPremultiplied(255, 255, 0, 75);
 
-	private Texture2D _commentSprite = null;
+	private Texture2D _commentSprite;
 
 	protected bool _isMouseOver;
 	protected bool _isMouseDirectlyOver;
@@ -110,6 +111,8 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 
 	public UIScreen UI => _uiScreen;
 
+	public virtual bool DisplayComments => true;
+
 	public WorldGraphicsScreen(IGraphicsService graphicsService, WorldPresentationTarget worldPresentationTarget) : base(graphicsService, worldPresentationTarget)
 	{
 		_worldPresentationTarget = worldPresentationTarget;
@@ -122,10 +125,6 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 		_renderTarget = new RenderTarget2D(GraphicsService.GraphicsDevice, 640, 480);
 		
 		_contextMenu = new Menu();
-		
-		var commentStream = System.Windows.Application.GetResourceStream(new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/Comment-White.png")).Stream;
-		
-		_commentSprite = Texture2D.FromStream(GraphicsService.GraphicsDevice, commentStream);
 	}
 
 	public void Initialize()
@@ -145,6 +144,12 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 		});
 		
 		_font = renderer.GetFontRenderer("Tahoma", 10);
+		
+		var commentIcon = Application.GetResourceStream(
+			new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/Comment-White.png"));
+
+		if (commentIcon != null)
+			_commentSprite = Texture2D.FromStream(GraphicsService.GraphicsDevice, commentIcon.Stream);
 		
 		OnInitialize();
 	}
@@ -302,10 +307,14 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 
 			if (_invalidateRender)
 			{
+				
 				graphicsService.GraphicsDevice.SetRenderTarget(_renderTarget);
 
 				OnBeforeRender(spritebatch);
+				
+				var commentIcons = new List<(int X, int Y)>();
 					
+				// render terrain
 				for (var vx = viewRectangle.Left; vx <= viewRectangle.Right; vx++)
 				for (var vy = viewRectangle.Top; vy <= viewRectangle.Bottom; vy++)
 				{
@@ -321,10 +330,32 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 							(int)Math.Floor(_presenter.UnitSize * _zoomFactor));
 						
 						OnRenderTile(spritebatch, segmentTile, tileBounds);
+
+						if (DisplayComments && segmentTile.Components.Any(c => !String.IsNullOrEmpty(c.Comment)))
+							commentIcons.Add((vx, vy));
 					}
 				}
 
 				OnAfterRender(spritebatch);
+				
+				// render comment icons
+				if (DisplayComments)
+				{
+					foreach (var (vx, vy) in commentIcons)
+					{
+						var bounds = GetRenderRectangle(viewRectangle, vx, vy);
+						var iconWidth = (int)(24 * _zoomFactor);
+						var iconHeight = (int)(24 * _zoomFactor);
+						
+						var iconBounds = new Rectangle(
+							bounds.Left + (bounds.Width - iconWidth) / 2,
+							bounds.Top + (bounds.Height - iconHeight) / 2,
+							iconWidth, iconHeight);
+
+						if (_commentSprite != null)
+							spritebatch.Draw(_commentSprite, iconBounds, Color.White);
+					}
+				}
 			}
 				
 			graphicsService.GraphicsDevice.SetRenderTargets(oldTargets);

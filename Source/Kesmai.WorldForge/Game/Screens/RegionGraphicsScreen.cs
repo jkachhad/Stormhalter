@@ -30,7 +30,9 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 	protected RegionToolbar _toolbar;
 	protected RegionFilters _filters;
 	protected RegionVisibility _visibility;
-	
+
+	public override bool DisplayComments => _visibility.ShowComments;
+
 	public RegionGraphicsScreen(IGraphicsService graphicsService, WorldPresentationTarget worldPresentationTarget) : base(graphicsService, worldPresentationTarget)
 	{
 		var services = ServiceLocator.Current;
@@ -426,29 +428,6 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 					spriteBatch.FillRectangle(bounds, regionFillColor);
 					spriteBatch.DrawRectangle(bounds, regionBorderColor);
 				}
-			}
-		}
-		
-		if (_visibility.ShowComments)
-		{
-			var visibleComments = region.GetTiles().Where(
-				t => viewRectangle.Contains(t.X, t.Y) && t.Components.Any(c => !String.IsNullOrWhiteSpace(c.Comment)));
-
-			var spriteWidth = 32 * _zoomFactor;
-
-			foreach (var tile in visibleComments) 
-			{
-				var bounds = GetRenderRectangle(viewRectangle, tile.X, tile.Y);
-				
-				bounds.X = (int)Math.Floor(bounds.Right - spriteWidth);
-				bounds.Width = (int)Math.Floor(spriteWidth);
-				bounds.Height = (int)Math.Floor(spriteWidth);
-
-				_font.Style = MSDFStyle.BoldOutline;
-				_font.Stroke = Color.Black;
-				_font.DrawString(spriteBatch, RenderTransform.Identity, "*", 
-					new Vector2(bounds.X, bounds.Y), Color.White, 0, Vector2.One, new Vector2(_zoomFactor, _zoomFactor), SpriteEffects.None, 0);
-
 			}
 		}
 	}
