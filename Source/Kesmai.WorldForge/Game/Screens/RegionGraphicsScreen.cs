@@ -264,11 +264,18 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 	{
 		base.OnRender(context);
 		
+		var graphicsService = context.GraphicsService;
+		var spriteBatch = graphicsService.GetSpriteBatch();
+		
+		spriteBatch.Begin(SpriteSortMode.Immediate, samplerState: SamplerState.PointClamp);
+		
 		if (_isMouseOver)
 		{
 			if (_toolbar.SelectedTool != null)
 				_toolbar.SelectedTool.OnRender(context);
 		}
+		
+		spriteBatch.End();
 	}
 
 	protected override void OnRenderTerrain(SpriteBatch spriteBatch, SegmentTile segmentTile, TerrainRender render, Rectangle bounds)

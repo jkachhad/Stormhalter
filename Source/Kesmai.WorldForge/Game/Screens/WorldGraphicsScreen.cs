@@ -182,18 +182,8 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 		_isMouseDirectlyOver = _isMouseOver;
 
 		// only process input if the mouse is within the control.
-		if (!_isMouseOver)
+		if (!_isMouseOver || inputManager.IsMouseOrTouchHandled)
 			return;
-		
-		// next check if the mouse is over a UI control.
-		if (_uiScreen != null && _uiScreen.ControlDirectlyUnderMouse != null)
-		{
-			var controlType = _uiScreen.ControlDirectlyUnderMouse.GetType();
-
-			// if the control is not the UIScreen, then the mouse is over a UI control.
-			if (controlType != typeof(UIScreen))
-				_isMouseDirectlyOver = false;
-		}
 
 		// we do not want to process input in this case, as it is being handled by the control.
 		if (!_isMouseDirectlyOver)
@@ -280,15 +270,17 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 
 	protected override void OnRender(RenderContext context)
     {
+	    base.OnRender(context);
+	    
         var graphicsService = context.GraphicsService;
 		var graphicsDevice = graphicsService.GraphicsDevice;
-		var spritebatch = graphicsService.GetSpriteBatch();
+		var spriteBatch = graphicsService.GetSpriteBatch();
 		var viewRectangle = GetViewRectangle();
 		var selection = _selection;
 
 		graphicsDevice.Clear(Color.Black);
 
-		spritebatch.Begin(SpriteSortMode.Immediate, samplerState: SamplerState.PointClamp);
+		spriteBatch.Begin(SpriteSortMode.Immediate, samplerState: SamplerState.PointClamp);
 			
 		var presentation = _worldPresentationTarget;
 		var region = presentation.Region;
@@ -307,10 +299,9 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 
 			if (_invalidateRender)
 			{
-				
 				graphicsService.GraphicsDevice.SetRenderTarget(_renderTarget);
 
-				OnBeforeRender(spritebatch);
+				OnBeforeRender(spriteBatch);
 				
 				var commentIcons = new List<(int X, int Y)>();
 					
@@ -329,14 +320,14 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 							(int)Math.Floor(_presenter.UnitSize * _zoomFactor), 
 							(int)Math.Floor(_presenter.UnitSize * _zoomFactor));
 						
-						OnRenderTile(spritebatch, segmentTile, tileBounds);
+						OnRenderTile(spriteBatch, segmentTile, tileBounds);
 
 						if (DisplayComments && segmentTile.Components.Any(c => !String.IsNullOrEmpty(c.Comment)))
 							commentIcons.Add((vx, vy));
 					}
 				}
 
-				OnAfterRender(spritebatch);
+				OnAfterRender(spriteBatch);
 				
 				// render comment icons
 				if (DisplayComments)
@@ -353,14 +344,14 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 							iconWidth, iconHeight);
 
 						if (_commentSprite != null)
-							spritebatch.Draw(_commentSprite, iconBounds, Color.White);
+							spriteBatch.Draw(_commentSprite, iconBounds, Color.White);
 					}
 				}
 			}
 				
 			graphicsService.GraphicsDevice.SetRenderTargets(oldTargets);
 				
-			spritebatch.Draw(_renderTarget, Vector2.Zero, Color.White);
+			spriteBatch.Draw(_renderTarget, Vector2.Zero, Color.White);
 		}
 
 		if (selection.Region == region)
@@ -374,8 +365,8 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 
 				var bounds = GetRenderRectangle(viewRectangle, rectangle);
 
-				spritebatch.FillRectangle(bounds, _selectionFill);
-				spritebatch.DrawRectangle(bounds, _selectionBorder);
+				spriteBatch.FillRectangle(bounds, _selectionFill);
+				spriteBatch.DrawRectangle(bounds, _selectionBorder);
 			}
 		}
 
@@ -384,7 +375,7 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 				
 		_invalidateRender = false;
 			
-		spritebatch.End();
+		spriteBatch.End();
 	}
 
 	protected virtual void OnRenderTile(SpriteBatch spritebatch, SegmentTile segmentTile, Rectangle bounds)
