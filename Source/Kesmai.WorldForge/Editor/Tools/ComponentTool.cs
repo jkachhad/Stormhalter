@@ -18,6 +18,9 @@ public abstract class ComponentTool : Tool
 	protected TerrainComponent _componentUnderMouse;
 
 	protected virtual Color SelectionColor => Color.Yellow;
+	
+	public SegmentTile TileUnderMouse => _tileUnderMouse;
+	public TerrainComponent ComponentUnderMouse => _componentUnderMouse;
 
 	protected ComponentTool(string name, string icon) : base(name, icon)
 	{

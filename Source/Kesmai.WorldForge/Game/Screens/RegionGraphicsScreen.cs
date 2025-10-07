@@ -9,6 +9,7 @@ using DigitalRune.Graphics;
 using DigitalRune.Mathematics.Algebra;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Models;
+using Kesmai.WorldForge.Windows;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -30,6 +31,8 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 	protected RegionToolbar _toolbar;
 	protected RegionFilters _filters;
 	protected RegionVisibility _visibility;
+	
+	private TextBlock _coordinatesTextBlock;
 
 	public override bool DisplayComments => _visibility.ShowComments;
 
@@ -131,6 +134,49 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		}
 	}
 
+	protected override void OnInitialize()
+	{
+		base.OnInitialize();
+		
+		// set up user interface in the editor.
+		var grid = new Grid()
+		{
+		};
+		
+		grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Star) });
+		grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Auto) });
+		
+		grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Auto) });
+		grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Star) });
+		
+		// coordinate panel
+		var coordinatePanel = new StackPanel()
+		{
+			Style = "Client-Backdrop", 
+			Width = 500, Height = 40,
+			
+			HorizontalAlignment = HorizontalAlignment.Stretch,
+			
+			Padding = Vector4F.Zero,
+		};
+
+		_coordinatesTextBlock = new TextBlock()
+		{
+			Font = "Tahoma", FontSize = 10, 
+			FontStyle = MSDFStyle.BoldOutline,
+			Foreground = Color.White, Stroke = Color.Black,
+			
+			VerticalAlignment = VerticalAlignment.Center,
+			HorizontalAlignment = HorizontalAlignment.Center,
+		};
+		
+		coordinatePanel.Children.Add(_coordinatesTextBlock);
+
+		grid.AddChild(coordinatePanel, 2, 1);
+		
+		_uiScreen.Children.Add(grid);
+	}
+
 	protected override void OnUpdate(TimeSpan deltaTime)
 	{
 		var region = _worldPresentationTarget.Region;
@@ -153,7 +199,24 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		{
 			// give the selected tool the first chance to handle input.
 			if (selectedTool != null)
+			{
 				selectedTool.OnHandleInput(_worldPresentationTarget, inputManager);
+				
+				if (selectedTool is ComponentTool componentTool)
+				{
+					var controlUnderMouse = componentTool.TileUnderMouse;
+					
+					if (controlUnderMouse != null)
+						_coordinatesTextBlock.Text = $"[{controlUnderMouse.X}, {controlUnderMouse.Y}]";
+				}
+				else
+				{
+					var mousePosition = inputManager.MousePosition;
+					var (mx, my) = ToWorldCoordinates((int)mousePosition.X, (int)mousePosition.Y);
+					
+					_coordinatesTextBlock.Text = $"[{mx}, {my}]";
+				}
+			}
 		}
 		
 		if (inputManager.IsKeyboardHandled)
