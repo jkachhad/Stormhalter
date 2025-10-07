@@ -21,11 +21,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using HorizontalAlignment = DigitalRune.Game.UI.HorizontalAlignment;
 using VerticalAlignment = DigitalRune.Game.UI.VerticalAlignment;
-using Window = DigitalRune.Game.UI.Controls.Window;
 
 namespace Kesmai.WorldForge.Windows;
 
-public class ComponentsWindow : Window
+public class ComponentsPanel : StackPanel
 {
     private SegmentTile _tile;
     private WorldGraphicsScreen _screen;
@@ -40,7 +39,7 @@ public class ComponentsWindow : Window
     private bool _isRefreshing = false;
 
     public static readonly int SelectedItemPropertyId = CreateProperty (
-        typeof ( ComponentsWindow ), "SelectedItem", GamePropertyCategories.Default, null, default ( ComponentFrame ),
+        typeof ( ComponentsPanel ), "SelectedItem", GamePropertyCategories.Default, null, default ( ComponentFrame ),
         UIPropertyOptions.AffectsRender );
 
     public ComponentFrame SelectedItem
@@ -49,13 +48,16 @@ public class ComponentsWindow : Window
         set => SetValue ( SelectedItemPropertyId, value );
     }
 
-    public ComponentsWindow ( SegmentRegion region, SegmentTile tile, WorldGraphicsScreen screen )
+    public ComponentsPanel(SegmentRegion region, SegmentTile tile, WorldGraphicsScreen screen)
     {
         _tile = tile;
         _screen = screen;
-        Title = $"Editing components for {tile.X}, {tile.Y} [{region.ID}]";
         Focusable = true;
         IsFocusScope = true;
+
+        Orientation = Orientation.Horizontal;
+        
+        VerticalAlignment = VerticalAlignment.Stretch;
     }
 
     protected override void OnUnload ( )
@@ -132,12 +134,10 @@ public class ComponentsWindow : Window
         rightPanel.Children.Add ( _propertyGrid );
         rightPanel.Children.Add ( _actionsPanel );
         rightPanel.Children.Add ( BuildConfirmPanel ( ) );
-
-        var content = new StackPanel { Orientation = Orientation.Horizontal };
-        content.Children.Add ( _leftPanel );
-        content.Children.Add ( rightPanel );
-
-        Content = content;
+        
+        Children.Add ( _leftPanel );
+        Children.Add ( rightPanel );
+        
         _deferredSelectPending = true;
     }
 
@@ -150,11 +150,9 @@ public class ComponentsWindow : Window
             HorizontalAlignment = HorizontalAlignment.Stretch
         };
 
-        var okButton = BuildButton ( "OK", Color.LightGreen, ( ) => { _confirmed = true; Close ( ); } );
-        var cancelButton = BuildButton ( "Cancel", Color.OrangeRed, Close );
+        var okButton = BuildButton ( "OK", Color.LightGreen, ( ) => { _confirmed = true; } );
 
         panel.Children.Add ( okButton );
-        panel.Children.Add ( cancelButton );
         return panel;
     }
 
@@ -255,7 +253,6 @@ public class ComponentsWindow : Window
             {
                 var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter> ( );
                 presenter.ConfiguringTeleporter = teleport;
-                Close ( );
             } ) );
         }
     }
@@ -310,17 +307,6 @@ public class ComponentsWindow : Window
             }
             doc.Save ( path );
             System.Windows.MessageBox.Show ( "Prefab saved successfully!", "Success", MessageBoxButton.OK );
-
-            try
-            {
-                ComponentsPanel.Instance?.Reload ( );
-
-            }
-            catch ( Exception reloadEx )
-            {
-                System.Diagnostics.Debug.WriteLine ( $"Failed to auto-reload ComponentsPanel: {reloadEx.Message}" );
-            }
-
         }
         catch ( Exception ex )
         {
@@ -385,9 +371,6 @@ public class ComponentsWindow : Window
 
         if ( !inputService.IsKeyboardHandled )
         {
-            if ( inputService.IsReleased ( Keys.Escape ) )
-                Close ( );
-
             if ( ( inputService.IsDown ( Keys.LeftControl ) || inputService.IsDown ( Keys.RightControl ) ) )
             {
                 if (inputService.IsReleased(Keys.C))
@@ -397,8 +380,10 @@ public class ComponentsWindow : Window
                         // copy=false means don't call FlushClipboard
                         Clipboard.SetDataObject(SelectedItem.Component.GetXElement().ToString(), false);
                     });
+
+                    inputService.IsKeyboardHandled = true;
                 }
-                if ( inputService.IsReleased ( Keys.V ) )
+                else if ( inputService.IsReleased ( Keys.V ) )
                 {
                     try
                     {
@@ -420,11 +405,14 @@ public class ComponentsWindow : Window
                         }
                     }
                     catch { }
+                    
+                    inputService.IsKeyboardHandled = true;
                 }
             }
         }
-
-        if ( IsActive )
-            inputService.IsKeyboardHandled = true;
+        
+        // catch all mouse events to prevent bleeding into the underlying map.
+        if (IsMouseOver)
+            inputService.IsMouseOrTouchHandled = true;
     }
 }

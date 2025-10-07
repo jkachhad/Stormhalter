@@ -81,7 +81,9 @@ public class PaintTool : Tool
 
             var baseComponent = presenter.SelectedComponent;
 
-            if ( baseComponent != null )
+            // TODO: Refactor later since we no longer have a component window.
+            // This should be resolved by templates.
+            /*if ( baseComponent != null )
             {
                 // Create a temporary tile and insert the component clone
                 var tempTile = new SegmentTile ( cx, cy );
@@ -127,7 +129,7 @@ public class PaintTool : Tool
 
                     graphicsScreen.InvalidateRender ( );
                 };
-            }
+            }*/
 
 
         }

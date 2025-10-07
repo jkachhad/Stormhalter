@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CommonServiceLocator;
+using CommunityToolkit.Mvvm.Messaging;
 using DigitalRune.Game.UI;
 using DigitalRune.Game.UI.Controls;
 using DigitalRune.Game.UI.Rendering;
@@ -33,6 +34,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 	protected RegionVisibility _visibility;
 	
 	private TextBlock _coordinatesTextBlock;
+	private StackPanel _componentsPanel;
 
 	public override bool DisplayComments => _visibility.ShowComments;
 
@@ -43,6 +45,49 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		_toolbar = services.GetInstance<RegionToolbar>();
 		_filters = services.GetInstance<RegionFilters>();
 		_visibility = services.GetInstance<RegionVisibility>();
+		
+		WeakReferenceMessenger.Default.Register<RegionGraphicsScreen, SelectionChanged>(this, (_, message) =>
+		{
+			var selection = message.Value;
+
+			if (selection.Region != _worldPresentationTarget.Region || _componentsPanel is null)
+				return;
+
+			_componentsPanel.Children.Clear();
+
+			// we only care about single-surface selections in this context.
+			if (selection.SurfaceArea is not 1)
+				return;
+			
+			// get the segment tile from selection.
+			var region = _worldPresentationTarget.Region;
+			var selected = selection.FirstOrDefault();
+
+			if (selected.IsEmpty)
+				return;
+			
+			var segmentTile = region.GetTile(selected.X, selected.Y);
+			
+			if (segmentTile is not null)
+			{
+				_componentsPanel.Children.Add(new ComponentsPanel(region, segmentTile, this));
+			}
+			else
+			{
+				_componentsPanel.Children.Add(new TextBlock()
+				{
+					Font = "Tahoma", FontSize = 10, 
+					FontStyle = MSDFStyle.BoldOutline,
+					Foreground = Color.White, Stroke = Color.Black,
+			
+					VerticalAlignment = VerticalAlignment.Center,
+					HorizontalAlignment = HorizontalAlignment.Center,
+					
+					Text = "Empty"
+				});
+			}
+			
+		});
 	}
 	
 	protected override IEnumerable<MenuItem> GetContextMenuItems(int mx, int my)
@@ -172,7 +217,19 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		
 		coordinatePanel.Children.Add(_coordinatesTextBlock);
 
+		// components display
+		_componentsPanel = new StackPanel()
+		{
+			Style = "Client-Backdrop",
+			Width = 500,
+			
+			VerticalAlignment = VerticalAlignment.Stretch,
+
+			Padding = Vector4F.Zero,
+		};
+		
 		grid.AddChild(coordinatePanel, 2, 1);
+		grid.AddChild(_componentsPanel, 2, 2);
 		
 		_uiScreen.Children.Add(grid);
 	}

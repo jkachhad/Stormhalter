@@ -224,31 +224,6 @@ public class ArrowTool : Tool
 			_selectionStart = Vector2F.Zero;
 			_selectionEnd = Vector2F.Zero;
 		}
-			
-		if (inputService.IsDoubleClick(MouseButtons.Left))
-		{
-			if (graphicsScreen.UI != null)
-			{
-				var (mx, my) = graphicsScreen.ToWorldCoordinates((int)_position.X, (int)_position.Y);
-				var tile = region.GetTile(mx, my);
-
-				if (tile != null)
-				{
-					var componentWindow = new ComponentsWindow(region, tile, graphicsScreen);
-						
-					selection.Clear();
-
-					componentWindow.Show(graphicsScreen.UI);
-					componentWindow.Center();
-				}
-				else
-				{
-					new RegionWindow(region).Show(graphicsScreen.UI);
-				}
-			}
-
-			inputService.IsMouseOrTouchHandled = true;
-		}
 	}
 		
 	private static Color _selectionPreview = Color.FromNonPremultiplied(255, 255, 0, 100);
