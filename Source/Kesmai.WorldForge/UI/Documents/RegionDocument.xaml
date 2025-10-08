@@ -102,7 +102,7 @@
             <worldForge:RegionPresentationTarget Region="{Binding}" x:Name="_presenter" />
         </Border>
         
-        <ui:ComponentsPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"
+        <ui:ComponentsPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" x:Name="_componentsPanel"
                             Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" 
                             OpacityMask="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
                             VerticalAlignment="Stretch" Width="365" />

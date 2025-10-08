@@ -1,3 +1,4 @@
+using System.Windows;
 using CommunityToolkit.Mvvm.Messaging;
 using Kesmai.WorldForge.Editor;
 using System.Windows.Controls;
@@ -19,6 +20,14 @@ public partial class RegionDocument : UserControl
 			// Listen for changes to the region that require a redraw
 			WeakReferenceMessenger.Default.Register<RegionDocument, RegionFilterChanged>(this, (_, _) => Update());
 			WeakReferenceMessenger.Default.Register<RegionDocument, RegionVisibilityChanged>(this, (_, _) => Update());
+			
+			WeakReferenceMessenger.Default.Register<RegionDocument, ToolSelected>(this, (_, message) =>
+			{
+				if (message.Value is (DrawTool or PaintTool))
+					_componentsPanel.Visibility = Visibility.Visible;
+				else
+					_componentsPanel.Visibility = Visibility.Collapsed;
+			});
 		};
 		
 		Unloaded += (sender, args) =>

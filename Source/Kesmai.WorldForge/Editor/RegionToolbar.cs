@@ -2,10 +2,14 @@
 using CommonServiceLocator;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.UI;
 
 namespace Kesmai.WorldForge;
+
+public class ToolSelected(Tool Tool) : ValueChangedMessage<Tool>(Tool);
 
 public class RegionToolbar : ObservableRecipient
 {
@@ -77,6 +81,8 @@ public class RegionToolbar : ObservableRecipient
 		{
 			nextTool.IsActive = true;
 			nextTool.OnActivate();
+			
+			WeakReferenceMessenger.Default.Send(new ToolSelected(nextTool));
 
 			var worldScreen = ServiceLocator.Current.GetInstance<WorldGraphicsScreen>();
 

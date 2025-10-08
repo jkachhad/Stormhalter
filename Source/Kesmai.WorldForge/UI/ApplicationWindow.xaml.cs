@@ -32,23 +32,6 @@ public partial class ApplicationWindow : Window
 	{
 		InitializeComponent();
 
-		WeakReferenceMessenger.Default
-			.Register<ApplicationWindow, ToolStartMessage>(
-				this, (r, m) => {
-					if (m.NewTool is Kesmai.WorldForge.DrawTool || m.NewTool is Kesmai.WorldForge.PaintTool)
-					{
-						_componentsWindow.Show();
-					}
-					else
-					{
-						_componentsWindow.Hide();
-					}
-				});
-		WeakReferenceMessenger.Default
-			.Register<ApplicationWindow, ToolStopMessage>(
-				this, (r, m) => {
-				});
-
 		WeakReferenceMessenger.Default.Register<ApplicationWindow, ActivateDocument>(this, (r, m) =>
 		{
 			if (m.Content is null)
