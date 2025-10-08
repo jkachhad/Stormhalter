@@ -11,12 +11,17 @@
              
              FontFamily="Tahoma" FontSize="14">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         
-        <ToolBarTray Grid.Row="0" DockPanel.Dock="Top">
+        <ToolBarTray Grid.Column="0" Grid.Row="0" DockPanel.Dock="Top">
             <!-- Tools -->
             <ToolBar ItemsSource="{Binding Tools, Source={StaticResource regionToolbar}}" 
                      Background="LightBlue" ToolTip="Tools" OverflowMode="Never">
@@ -93,8 +98,13 @@
             </ToolBar>
         </ToolBarTray>
     
-        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1">
+        <Border Grid.Column="0" Grid.Row="1" BorderBrush="Black" BorderThickness="1">
             <worldForge:RegionPresentationTarget Region="{Binding}" x:Name="_presenter" />
         </Border>
+        
+        <ui:ComponentsPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"
+                            Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" 
+                            OpacityMask="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
+                            VerticalAlignment="Stretch" Width="365" />
     </Grid>
 </UserControl>
