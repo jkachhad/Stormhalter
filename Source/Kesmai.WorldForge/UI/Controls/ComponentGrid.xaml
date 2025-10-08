@@ -4,67 +4,27 @@
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                 xmlns:ui="clr-namespace:Kesmai.WorldForge.UI"
-                xmlns:local="clr-namespace:Kesmai.WorldForge.UI"
 
                 mc:Ignorable="d"
                 
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                ItemContainerStyle="{DynamicResource ComponentGridItemStyle}">
-    <ListBox.Resources>
-
-        <!-- Converter for showing Delete only for TilePrefabComponent -->
-        <local:PrefabOnlyVisibilityConverter x:Key="PrefabOnlyVisibilityConverter" />
-        <Style x:Key="ComponentGridItemStyle" TargetType="ListBoxItem">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListBoxItem">
-                        <Border Name="_Border" Margin="2" SnapsToDevicePixels="true">
-                            <ContentPresenter />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="true">
-                                <Setter TargetName="_Border" Property="BorderBrush" Value="#F53803"/>
-                                <Setter TargetName="_Border" Property="Background">
-                                    <Setter.Value>
-                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                            <GradientStop Color="#F9D976" Offset="0" />
-                                            <GradientStop Color="#F39F86" Offset="1" />
-                                        </LinearGradientBrush>
-                                    </Setter.Value>
-                                </Setter>
-                                <Setter Property="Foreground" Value="#F9484A"></Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </ListBox.Resources>
+                
+                SizeChanged="OnSizeChanged">
     <ListBox.ItemTemplate>
         <DataTemplate>
-            <StackPanel Tag="{x:Static local:ComponentsPanel.Instance}">
-                <StackPanel.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem   Header="Delete"
-                                    Visibility="{Binding Converter={StaticResource PrefabOnlyVisibilityConverter}}"
-                                    Loaded="menuItemDeletePrefabLoaded"
-                                    CommandParameter="{Binding}" />
-
-                    </ContextMenu>
-                </StackPanel.ContextMenu>
-
-                <Border BorderBrush="Gainsboro" BorderThickness="1" Padding="1">
-                    <ui:ComponentImage Component="{Binding}" />
-                </Border>
+            <StackPanel>
+                <ui:ComponentImage Component="{Binding}" />
+                
                 <TextBlock FontWeight="Bold" Text="{Binding Name}" Padding="3"
                            TextAlignment="Center"
                            Background="GhostWhite" MaxWidth="104" />
             </StackPanel>
         </DataTemplate>
     </ListBox.ItemTemplate>
+    
     <ListBox.ItemsPanel>
         <ItemsPanelTemplate>
-            <WrapPanel />
+            <ui:UniformGridPanel Columns="3" Rows="10" Loaded="uniformGridPanel_OnLoaded" />
         </ItemsPanelTemplate>
     </ListBox.ItemsPanel>
 </ListBox>

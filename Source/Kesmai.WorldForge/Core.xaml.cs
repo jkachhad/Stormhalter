@@ -119,6 +119,9 @@ public partial class Core : Application
 		if (Current.Resources["regionVisibility"] is RegionVisibility regionVisibility)
 			services.Register(typeof(RegionVisibility), null, regionVisibility);
 		
+		if (Current.Resources["componentImageCache"] is ComponentImageCache componentImageCache)
+			services.Register(typeof(ComponentImageCache), null, componentImageCache);
+		
 		var contentManager = services.GetInstance<StorageContentManager>();
 		var storage = contentManager.Storage;
 		
