@@ -7,36 +7,65 @@ namespace Kesmai.WorldForge.UI.Documents;
 
 public partial class RegionDocument : UserControl
 {
+	private bool _isRegistered;
+
 	public RegionDocument()
 	{
 		InitializeComponent();
-		
-		Loaded += (sender, args) =>
-		{
-			// update tiles when the document is loaded
-			if (DataContext is SegmentRegion region)
-				region.UpdateTiles();
-			
-			// Listen for changes to the region that require a redraw
-			WeakReferenceMessenger.Default.Register<RegionDocument, RegionFilterChanged>(this, (_, _) => Update());
-			WeakReferenceMessenger.Default.Register<RegionDocument, RegionVisibilityChanged>(this, (_, _) => Update());
-			
-			WeakReferenceMessenger.Default.Register<RegionDocument, ToolSelected>(this, (_, message) =>
-			{
-				if (message.Value is (DrawTool or PaintTool))
-					_componentsPanel.Visibility = Visibility.Visible;
-				else
-					_componentsPanel.Visibility = Visibility.Collapsed;
-			});
-		};
-		
-		Unloaded += (sender, args) =>
-		{
-			WeakReferenceMessenger.Default.UnregisterAll(this);
-		};
+
+		Loaded += OnLoaded;
+		Unloaded += OnUnloaded;
+		DataContextChanged += (_, _) => Refresh();
 	}
 
-	private void Update()
+	private void OnLoaded(object? sender, RoutedEventArgs args)
+	{
+		Refresh();
+		
+		RegisterMessages();
+	}
+
+	private void OnUnloaded(object? sender, RoutedEventArgs args)
+	{
+		UnregisterMessages();
+	}
+
+	private void RegisterMessages()
+	{
+		if (_isRegistered)
+			return;
+
+		WeakReferenceMessenger.Default.Register<RegionDocument, RegionFilterChanged>(this,
+			static (recipient, _) => recipient.Refresh());
+
+		WeakReferenceMessenger.Default.Register<RegionDocument, RegionVisibilityChanged>(this,
+			static (recipient, _) => recipient.Refresh());
+
+		WeakReferenceMessenger.Default.Register<RegionDocument, ToolSelected>(this,
+			(recipient, message) => recipient.OnToolSelected(message));
+		
+		_isRegistered = true;
+	}
+
+	private void UnregisterMessages()
+	{
+		if (!_isRegistered)
+			return;
+
+		WeakReferenceMessenger.Default.UnregisterAll(this);
+		_componentsPanel.Visibility = Visibility.Collapsed;
+		_isRegistered = false;
+	}
+
+	private void OnToolSelected(ToolSelected message)
+	{
+		if (message.Value is DrawTool or PaintTool)
+			_componentsPanel.Visibility = Visibility.Visible;
+		else
+			_componentsPanel.Visibility = Visibility.Collapsed;
+	}
+
+	private void Refresh()
 	{
 		if (DataContext is SegmentRegion region)
 			region.UpdateTiles();
