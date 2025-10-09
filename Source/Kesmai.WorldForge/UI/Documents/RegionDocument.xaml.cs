@@ -70,6 +70,7 @@ public partial class RegionDocument : UserControl
 		if (DataContext is SegmentRegion region)
 			region.UpdateTiles();
 
-		_presenter.WorldScreen.InvalidateRender();
+		if (_presenter is not null && _presenter.WorldScreen is not null)
+			_presenter.WorldScreen.InvalidateRender();
 	}
 }
