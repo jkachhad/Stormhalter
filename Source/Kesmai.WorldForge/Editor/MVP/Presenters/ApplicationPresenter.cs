@@ -54,13 +54,6 @@ public class ApplicationPresenter : ObservableRecipient
 	private object _previousDocument;
 
 	private ISegmentObject _activeContent;
-	
-	private TeleportComponent _configuringTeleporter = null;
-	public TeleportComponent ConfiguringTeleporter
-	{
-		get { return _configuringTeleporter; }
-		set { _configuringTeleporter = value; }
-	}
 
 	public Selection Selection
 	{

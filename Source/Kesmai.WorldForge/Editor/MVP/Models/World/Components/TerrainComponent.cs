@@ -143,40 +143,5 @@ public abstract class TerrainComponent : ObservableObject
 
     public abstract TerrainComponent Clone();
 
-    public virtual IEnumerable<Button> GetInspectorActions()
-    {
-        var templateButton = new Button()
-        {
-            Content = new TextBlock()
-            {
-                Foreground = Color.OrangeRed,
-                Stroke = Color.Black,
-                FontStyle = MSDFStyle.Outline,
-
-                Font = "Tahoma",
-                FontSize = 10,
-                Text = "Template",
-
-                Margin = new Vector4F( 3, 3, 3, 3 )
-            }
-        };
-
-        templateButton.Click += ( o, args ) =>
-        {
-            var element = GetXElement();
-            var typeAttribute = element.Attribute( "type" );
-
-            if( typeAttribute != null )
-            {
-                element.Name = typeAttribute.Value;
-                typeAttribute.Remove();
-            }
-
-            Clipboard.SetText( element.ToString() );
-        };
-
-        yield return templateButton;
-    }
-
     #endregion
 }
