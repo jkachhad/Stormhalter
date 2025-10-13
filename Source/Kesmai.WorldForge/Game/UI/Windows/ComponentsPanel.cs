@@ -1,416 +1,321 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using System.Xml;
 using System.Xml.Linq;
-using CommonServiceLocator;
-using DigitalRune;
 using DigitalRune.Game;
 using DigitalRune.Game.UI;
 using DigitalRune.Game.UI.Controls;
-using DigitalRune.Mathematics.Algebra;
-using DigitalRune.Storages;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Models;
-using Kesmai.WorldForge.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using HorizontalAlignment = DigitalRune.Game.UI.HorizontalAlignment;
-using VerticalAlignment = DigitalRune.Game.UI.VerticalAlignment;
 
 namespace Kesmai.WorldForge.Windows;
 
 public class ComponentsPanel : StackPanel
 {
-    private SegmentTile _tile;
+    private SegmentTile _targetTile;    
+    private SegmentTile _restoreTile;
+    
     private WorldGraphicsScreen _screen;
-    private PropertyGrid _propertyGrid;
-    private StackPanel _actionsPanel;
-    private StackPanel _leftPanel;
-    private SegmentTile _originalTile;
-    private bool _confirmed = false;
-    private bool _pendingRefresh;
-    private int _refreshIndex = -1;
-    private bool _deferredSelectPending = true;
-    private bool _isRefreshing = false;
+    private StackPanel _framePanel;
+    
+    private bool _invalidated;
 
-    public static readonly int SelectedItemPropertyId = CreateProperty (
-        typeof ( ComponentsPanel ), "SelectedItem", GamePropertyCategories.Default, null, default ( ComponentFrame ),
-        UIPropertyOptions.AffectsRender );
+    public static readonly int SelectedItemPropertyId = CreateProperty(
+        typeof(ComponentsPanel), "SelectedItem", GamePropertyCategories.Default, null, default(TerrainComponent),
+        UIPropertyOptions.AffectsRender);
 
-    public ComponentFrame SelectedItem
+    public TerrainComponent SelectedItem
     {
-        get => GetValue<ComponentFrame> ( SelectedItemPropertyId );
+        get => GetValue<TerrainComponent> ( SelectedItemPropertyId );
         set => SetValue ( SelectedItemPropertyId, value );
     }
 
-    public ComponentsPanel(SegmentRegion region, SegmentTile tile, WorldGraphicsScreen screen)
+    public ComponentsPanel(SegmentRegion region, SegmentTile targetTile, WorldGraphicsScreen screen)
     {
-        _tile = tile;
+        _targetTile = targetTile;
         _screen = screen;
+        
         Focusable = true;
         IsFocusScope = true;
 
         Orientation = Orientation.Horizontal;
-        
-        VerticalAlignment = VerticalAlignment.Stretch;
     }
 
-    protected override void OnUnload ( )
+    protected override void OnLoad()
     {
-        base.OnUnload ( );
+        base.OnLoad();
 
-        if ( !_confirmed )
+        // copy original tile for reset
+        _restoreTile = new SegmentTile(_targetTile.X, _targetTile.Y);
+
+        foreach (var component in _targetTile.Components)
+            _restoreTile.Components.Add(component.Clone());
+
+        // listen for changes to the components collection.
+        _targetTile.Components.CollectionChanged += (s, e) =>
         {
-            _tile.Components.Clear ( );
-            foreach ( var component in _originalTile.Components )
-                _tile.Components.Add ( component.Clone ( ) );
-
-            _tile.UpdateTerrain ( );
-            _screen.InvalidateRender ( );
-        }
-    }
-
-    protected override void OnUpdate ( TimeSpan deltaTime )
-    {
-        base.OnUpdate ( deltaTime );
-
-        if ( _deferredSelectPending && IsLoaded && _leftPanel.Children.Count > 0 )
-        {
-            _deferredSelectPending = false;
-            var frame = _leftPanel.Children.OfType<ComponentFrame> ( ).FirstOrDefault ( );
-            if ( frame != null )
-            {
-                System.Diagnostics.Debug.WriteLine ( "[Deferred Select] Applying selection after full load." );
-                Select ( frame );
-            }
-        }
-
-        if ( _pendingRefresh && IsLoaded && Screen?.Renderer != null )
-        {
-            _pendingRefresh = false;
-            RunRefreshComponentListSafe ( _refreshIndex );
-        }
-    }
-
-    protected override void OnLoad ( )
-    {
-        base.OnLoad ( );
-
-        _originalTile = new SegmentTile ( _tile.X, _tile.Y );
-        foreach ( var component in _tile.Components )
-            _originalTile.Components.Add ( component.Clone ( ) );
-
-        _leftPanel = new StackPanel { Background = Color.DarkRed };
-        foreach ( var component in _tile.Components )
-        {
-            var frame = new ComponentFrame { Component = component };
-            frame.Click += ( o, args ) => Select ( (ComponentFrame) o );
-            _leftPanel.Children.Add ( frame );
-        }
-
-        _propertyGrid = new PropertyGrid { VerticalAlignment = VerticalAlignment.Stretch };
-        _propertyGrid.PropertyChanged += ( o, args ) =>
-        {
-            _tile.UpdateTerrain ( );
-            _screen.InvalidateRender ( );
-            RefreshComponentList ( );
+            Invalidate(); 
+            
+            _targetTile.UpdateTerrain();
+            _screen.InvalidateRender();
         };
 
-        _actionsPanel = new StackPanel
+        // left panel with components
+        if (_framePanel is null)
         {
-            Style = "DarkCanvas",
-            Orientation = Orientation.Horizontal,
-            HorizontalAlignment = HorizontalAlignment.Stretch,
-            IsFocusScope = true,
-            Focusable = true
-        };
-
-        var rightPanel = new StackPanel { Background = Color.Blue };
-        rightPanel.Children.Add ( _propertyGrid );
-        rightPanel.Children.Add ( _actionsPanel );
-        rightPanel.Children.Add ( BuildConfirmPanel ( ) );
-        
-        Children.Add ( _leftPanel );
-        Children.Add ( rightPanel );
-        
-        _deferredSelectPending = true;
-    }
-
-    private StackPanel BuildConfirmPanel ( )
-    {
-        var panel = new StackPanel
-        {
-            Style = "DarkCanvas",
-            Orientation = Orientation.Horizontal,
-            HorizontalAlignment = HorizontalAlignment.Stretch
-        };
-
-        var okButton = BuildButton ( "OK", Color.LightGreen, ( ) => { _confirmed = true; } );
-
-        panel.Children.Add ( okButton );
-        return panel;
-    }
-
-    private void RefreshComponentList ( )
-    {
-        if ( _isRefreshing || !IsLoaded || Screen == null )
-            return;
-
-        _isRefreshing = true;
-
-        var targetId = SelectedItem?.Component?.Id;
-        _leftPanel.Children.Clear ( );
-
-        foreach ( var component in _tile.Components )
-        {
-            var frame = new ComponentFrame { Component = component };
-            frame.Click += ( o, args ) => Select ( (ComponentFrame) o );
-            _leftPanel.Children.Add ( frame );
-        }
-
-        var newFrame = _leftPanel.Children
-            .OfType<ComponentFrame> ( )
-            .FirstOrDefault ( f => f.Component.Id == targetId )
-            ?? _leftPanel.Children.OfType<ComponentFrame> ( ).FirstOrDefault ( );
-
-        if ( newFrame != null )
-            Select ( newFrame );
-
-        _isRefreshing = false;
-    }
-
-    public void Select ( ComponentFrame frame )
-    {
-        if ( _isRefreshing || frame?.Component == null )
-            return;
-
-        System.Diagnostics.Debug.WriteLine ( $"Select() called for: {frame.Component.GetType ( ).Name}" );
-        SelectedItem = frame;
-        _actionsPanel.Children.Clear ( );
-
-        _propertyGrid.Item = frame.Component;
-
-        foreach ( var button in frame.Component.GetInspectorActions ( ) )
-        {
-            _actionsPanel.Children.Add ( button );
-        }
-
-        AddStandardComponentButtons ( frame.Component );
-    }
-
-    private void AddStandardComponentButtons ( TerrainComponent component )
-    {
-        _actionsPanel.Children.Add ( BuildButton ( "Delete", Color.OrangeRed, ( ) =>
-        {
-            var index = _tile.Components.IndexOf ( component );
-            if ( index >= 0 )
+            _framePanel = new StackPanel
             {
-                _tile.RemoveComponent ( component );
-                _refreshIndex = index;
-                _pendingRefresh = true;
-            }
-        } ) );
-
-        _actionsPanel.Children.Add ( BuildButton ( "Move up", Color.OrangeRed, ( ) =>
-        {
-            var index = _tile.Components.IndexOf ( component );
-            if ( index > 0 )
-            {
-                _tile.Components.Move ( index, index - 1 );
-                RefreshComponentList ( );
-            }
-        } ) );
-
-        _actionsPanel.Children.Add ( BuildButton ( "Move down", Color.OrangeRed, ( ) =>
-        {
-            var index = _tile.Components.IndexOf ( component );
-            if ( index < _tile.Components.Count - 1 )
-            {
-                _tile.Components.Move ( index, index + 1 );
-                RefreshComponentList ( );
-            }
-        } ) );
-
-        _actionsPanel.Children.Add ( BuildButton ( "Save as Prefab", Color.LightGreen, ( ) =>
-        {
-            var inputWindow = new TextInputWindow ( "Enter prefab name:", "Save Prefab" );
-            inputWindow.Closed += ( s, _ ) =>
-            {
-                if ( inputWindow.IsConfirmed && !string.IsNullOrWhiteSpace ( inputWindow.InputText ) )
-                    SavePrefab ( inputWindow.InputText.Trim ( ) );
+                HorizontalAlignment = DigitalRune.Game.UI.HorizontalAlignment.Stretch
             };
-            inputWindow.Show ( Screen );
-        } ) );
+        }
 
-        if ( component is TeleportComponent teleport )
+        Children.Add(_framePanel);
+
+        Invalidate();
+    }
+
+    protected override void OnUnload()
+    {
+        base.OnUnload();
+    }
+
+    public void Invalidate()
+    {
+        _invalidated = true;
+    }
+
+    public void Update()
+    {
+        _framePanel.Children.Clear();
+
+        for (int index = 0; index < _targetTile.Components.Count; index++)
         {
-            _actionsPanel.Children.Add ( BuildButton ( "Select Destination", Color.OrangeRed, ( ) =>
+            var component = _targetTile.Components[index];
+
+            var frame = new ComponentFrame
             {
-                var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter> ( );
-                presenter.ConfiguringTeleporter = teleport;
-            } ) );
+                Component = component,
+
+                CanMoveUp = index > 0,
+                CanMoveDown = index < (_targetTile.Components.Count - 1),
+                
+                // only allow delete if there is more than one component.
+                CanDelete = index > 0,
+            };
+            frame.OnClick += OnSelect;
+            frame.OnMoveUp += OnMoveUp;
+            frame.OnMoveDown += OnMoveDown;
+            frame.OnDelete += OnDelete;
+
+            _framePanel.Children.Add(frame);
         }
     }
 
-    private Button BuildButton ( string label, Color color, Action onClick )
+    private void OnSelect(object sender, EventArgs e)
     {
-        var button = new Button
-        {
-            Focusable = true,
-            Content = new TextBlock
-            {
-                Text = label,
-                Font = "Tahoma",
-                FontSize = 10,
-                FontStyle = MSDFStyle.Outline,
-                Foreground = color,
-                Stroke = Color.Black,
-                Margin = new Vector4F ( 3 )
-            }
-        };
-        button.Click += ( s, e ) =>
-        {
-            System.Diagnostics.Debug.WriteLine ( $"Button '{label}' clicked." );
-            onClick ( );
-        };
-        return button;
+        if (sender is not ComponentFrame frame)
+            return;
+        
+        SelectedItem = frame.Component;
     }
 
-    private void SavePrefab ( string prefabName )
+    private void OnMoveUp(object sender, EventArgs e)
     {
-        var prefabElement = new XElement ( "prefab", new XAttribute ( "name", prefabName ) );
-        foreach ( var c in _tile.Components )
-            prefabElement.Add ( c.GetXElement ( ) );
-
-        var path = $"{Core.CustomArtPath}\\Data\\TilePrefabs.xml";
-
-        try
-        {
-            XDocument doc;
-            if ( File.Exists ( path ) )
-            {
-                doc = XDocument.Load ( path );
-                var existing = doc.Root.Elements ( "prefab" )
-                    .FirstOrDefault ( p => (string) p.Attribute ( "name" ) == prefabName );
-                existing?.Remove ( );
-                doc.Root.Add ( prefabElement );
-            }
-            else
-            {
-                Directory.CreateDirectory ( System.IO.Path.GetDirectoryName ( path ) );
-                doc = new XDocument ( new XElement ( "prefabs", prefabElement ) );
-            }
-            doc.Save ( path );
-            System.Windows.MessageBox.Show ( "Prefab saved successfully!", "Success", MessageBoxButton.OK );
-        }
-        catch ( Exception ex )
-        {
-            System.Windows.MessageBox.Show ( $"Failed to save prefab:\n{ex.Message}", "Error", MessageBoxButton.OK );
-        }
-    }
-
-
-
-    private void RunRefreshComponentListSafe ( int index )
-    {
-        _leftPanel.Children.Clear ( );
-        if ( _tile.Components == null ) return;
-
-        ComponentFrame frameToSelect = null;
-
-        foreach ( var component in _tile.Components )
-        {
-            var frame = new ComponentFrame { Component = component };
-            frame.Click += ( o, args ) => Select ( (ComponentFrame) o );
-            _leftPanel.Children.Add ( frame );
-
-            if ( SelectedItem?.Component == component )
-                frameToSelect = frame;
-        }
-
-        if ( frameToSelect == null && _leftPanel.Children.Count > 0 )
-        {
-            var safeIndex = Math.Min ( index, _leftPanel.Children.Count - 1 );
-            frameToSelect = _leftPanel.Children[safeIndex] as ComponentFrame;
-        }
-
-        if ( frameToSelect != null )
-            Select ( frameToSelect );
-
-        _screen.InvalidateRender ( );
-    }
-
-    protected override void OnRender ( UIRenderContext context )
-    {
-        base.OnRender ( context );
-        var selected = SelectedItem;
-        if ( selected != null )
-        {
-            var selectedBounds = selected.ActualBounds.ToRectangle ( true );
-            var renderer = ( context.Screen ?? Screen ).Renderer;
-            var spriteBatch = renderer.SpriteBatch;
-            spriteBatch.FillRectangle ( selectedBounds, Color.FromNonPremultiplied ( 0, 100, 255, 25 ) );
-        }
-    }
-
-    protected override void OnHandleInput ( InputContext context )
-    {
-        if ( !IsVisible )
+        if (sender is not ComponentFrame frame)
             return;
 
-        base.OnHandleInput ( context );
+        MoveUp(frame.Component);
+    }
+
+    private void MoveUp(TerrainComponent component)
+    {
+        var index = _targetTile.Components.IndexOf(component);
+
+        if (index > 0)
+            _targetTile.Components.Move(index, index - 1);
+    }
+    
+    private void OnMoveDown(object sender, EventArgs e)
+    {
+        if (sender is not ComponentFrame frame)
+            return;
+        
+        MoveDown(frame.Component);
+    }
+    
+    private void MoveDown(TerrainComponent component)
+    {
+        var index = _targetTile.Components.IndexOf(component);
+
+        if (index < _targetTile.Components.Count - 1)
+            _targetTile.Components.Move(index, index + 1);
+    }
+
+    private void OnDelete(object sender, EventArgs e)
+    {
+        if (sender is not ComponentFrame frame)
+            return;
+        
+        Delete(frame.Component);
+    }
+    
+    private void Delete(TerrainComponent component)
+    {
+        _targetTile.RemoveComponent(component);
+    }
+
+    public void Reset()
+    {
+        // restore original tile.
+        _targetTile.Components.Clear();
+        
+        foreach (var component in _restoreTile.Components)
+            _targetTile.Components.Add(component.Clone());
+
+        _targetTile.UpdateTerrain();
+        
+        _screen.InvalidateRender();
+    }
+
+    protected override void OnUpdate(TimeSpan deltaTime)
+    {
+        if (_invalidated)
+        {
+            Update();
+            
+            _invalidated = false;
+        }
+        
+        base.OnUpdate(deltaTime);
+    }
+
+    protected override void OnRender(UIRenderContext context)
+    {
+        var selected = SelectedItem;
+        
+        foreach (var frame in _framePanel.Children.OfType<ComponentFrame>())
+        {
+            if (selected != frame.Component)
+                continue;
+            
+            var selectedBounds = frame.ActualBounds.ToRectangle(true);
+            var renderer = (context.Screen ?? Screen).Renderer;
+            var spriteBatch = renderer.SpriteBatch;
+
+            spriteBatch.FillRectangle(selectedBounds, Color.OrangeRed);
+        }
+
+        base.OnRender(context);
+    }
+
+    protected override void OnHandleInput(InputContext context)
+    {
+        if (!IsVisible)
+            return;
+
+        base.OnHandleInput(context);
 
         var inputService = InputService;
-        if ( inputService == null )
+        if (inputService == null)
             return;
 
-        if ( !inputService.IsKeyboardHandled )
+        if (!inputService.IsKeyboardHandled)
         {
-            if ( ( inputService.IsDown ( Keys.LeftControl ) || inputService.IsDown ( Keys.RightControl ) ) )
+            var isShiftDown = inputService.IsDown(Keys.LeftShift) || inputService.IsDown(Keys.RightShift);
+            var isControlDown = inputService.IsDown(Keys.LeftControl) || inputService.IsDown(Keys.RightControl);
+            
+            if (inputService.IsReleased(Keys.Delete))
             {
-                if (inputService.IsReleased(Keys.C))
+                if (SelectedItem != null)
+                    Delete(SelectedItem);
+                
+                inputService.IsKeyboardHandled = true;
+            }
+            
+            if (isShiftDown)
+            {
+                if (inputService.IsReleased(Keys.Up))
+                {
+                    if (SelectedItem != null)
+                        MoveUp(SelectedItem);
+                    
+                    inputService.IsKeyboardHandled = true;
+                }
+                else if (inputService.IsReleased(Keys.Down))
+                {
+                    if (SelectedItem != null)
+                        MoveDown(SelectedItem);
+                    
+                    inputService.IsKeyboardHandled = true;
+                }
+            }
+            
+            if (isControlDown)
+            {
+                if (inputService.IsReleased(Keys.Z))
+                {
+                    Reset();
+                    
+                    inputService.IsKeyboardHandled = true;
+                }
+                else if (inputService.IsReleased(Keys.C))
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        // copy=false means don't call FlushClipboard
-                        Clipboard.SetDataObject(SelectedItem.Component.GetXElement().ToString(), false);
+                        Clipboard.SetDataObject(SelectedItem.GetXElement().ToString(), false);
                     });
 
                     inputService.IsKeyboardHandled = true;
                 }
-                else if ( inputService.IsReleased ( Keys.V ) )
+                else if (inputService.IsReleased(Keys.V))
                 {
                     try
                     {
-                        var clipboard = Clipboard.GetText ( );
-                        if ( !string.IsNullOrWhiteSpace ( clipboard ) )
+                        var clipboard = Clipboard.GetText();
+                    
+                        if (!String.IsNullOrWhiteSpace(clipboard))
                         {
-                            var element = XDocument.Parse ( clipboard );
-                            if ( element.Root.Name == "component" )
+                            var element = XDocument.Parse(clipboard);
+                            var rootElement = element.Root;
+
+                            if (rootElement is null)
+                                throw new XmlException("XML has no root element.");
+                        
+                            if (rootElement.Name == "component")
                             {
-                                var componentTypename = $"Kesmai.WorldForge.Models.{element.Root.Attribute ( "type" ).Value}";
-                                var componentType = Assembly.GetExecutingAssembly ( ).GetType ( componentTypename, true );
-                                if ( Activator.CreateInstance ( componentType, element.Root ) is TerrainComponent newComponent )
-                                {
-                                    _tile.AddComponent ( newComponent );
-                                    RefreshComponentList ( );
-                                    _deferredSelectPending = true;
-                                }
+                                var typeAttribute = rootElement.Attribute("type");
+                                
+                                if (typeAttribute is null)
+                                    throw new XmlException("Component XML has no type attribute.");
+                                
+                                var componentTypename = $"Kesmai.WorldForge.Models.{typeAttribute.Value}";
+                                var componentType = Assembly.GetExecutingAssembly().GetType(componentTypename, false);
+
+                                if (componentType is null)
+                                    throw new NullReferenceException($"Could not find component type: {componentTypename}");
+                                
+                                if (Activator.CreateInstance(componentType, element.Root) is not TerrainComponent newComponent)
+                                    throw new InvalidCastException($"Could not create component of type: {componentTypename}");
+                                    
+                                _targetTile.AddComponent(SelectedItem = newComponent);
                             }
                         }
                     }
-                    catch { }
+                    catch
+                    {
+                        // ignored
+                    }
                     
                     inputService.IsKeyboardHandled = true;
                 }
             }
         }
-        
+
         // catch all mouse events to prevent bleeding into the underlying map.
         if (IsMouseOver)
             inputService.IsMouseOrTouchHandled = true;

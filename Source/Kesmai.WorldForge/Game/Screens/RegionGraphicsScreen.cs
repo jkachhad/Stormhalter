@@ -33,8 +33,11 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 	protected RegionFilters _filters;
 	protected RegionVisibility _visibility;
 	
-	private TextBlock _coordinatesTextBlock;
-	private StackPanel _componentsPanel;
+	private StackPanel _componentsHost;
+	private ComponentsPanel _componentsPanel;
+	private StackPanel _finalizePanel;
+	
+	private Button _resetButton;
 
 	public override bool DisplayComments => _visibility.ShowComments;
 
@@ -50,10 +53,14 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		{
 			var selection = message.Value;
 
-			if (selection.Region != _worldPresentationTarget.Region || _componentsPanel is null)
+			if (selection.Region != _worldPresentationTarget.Region || _componentsHost is null)
 				return;
 
-			_componentsPanel.Children.Clear();
+			_componentsHost.Children.Clear();
+			_componentsPanel = null;
+
+			if (_finalizePanel != null)
+				_finalizePanel.IsVisible = false;
 
 			// we only care about single-surface selections in this context.
 			if (selection.SurfaceArea is not 1)
@@ -67,26 +74,14 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 				return;
 			
 			var segmentTile = region.GetTile(selected.X, selected.Y);
+
+			if (segmentTile is null)
+				return;
 			
-			if (segmentTile is not null)
-			{
-				_componentsPanel.Children.Add(new ComponentsPanel(region, segmentTile, this));
-			}
-			else
-			{
-				_componentsPanel.Children.Add(new TextBlock()
-				{
-					Font = "Tahoma", FontSize = 10, 
-					FontStyle = MSDFStyle.BoldOutline,
-					Foreground = Color.White, Stroke = Color.Black,
-			
-					VerticalAlignment = VerticalAlignment.Center,
-					HorizontalAlignment = HorizontalAlignment.Center,
-					
-					Text = "Empty"
-				});
-			}
-			
+			_componentsHost.Children.Add(_componentsPanel = new ComponentsPanel(region, segmentTile, this));
+
+			if (_finalizePanel != null)
+				_finalizePanel.IsVisible = true;
 		});
 	}
 	
@@ -191,45 +186,49 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Star) });
 		grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Auto) });
 		
-		grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Auto) });
 		grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Star) });
+		grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Auto) });
 		
-		// coordinate panel
-		var coordinatePanel = new StackPanel()
+		// components display
+		_componentsHost = new StackPanel()
 		{
-			Style = "Client-Backdrop", 
-			Width = 500, Height = 40,
+			Width = 500,
+		};
+		
+		grid.AddChild(_componentsHost, 2, 1);
+		
+		// save / reset panel
+		_finalizePanel = new StackPanel()
+		{
+			Style = "Client-Content",
+			
+			Orientation = Orientation.Horizontal,
 			
 			HorizontalAlignment = HorizontalAlignment.Stretch,
-			
-			Padding = Vector4F.Zero,
-		};
-
-		_coordinatesTextBlock = new TextBlock()
-		{
-			Font = "Tahoma", FontSize = 10, 
-			FontStyle = MSDFStyle.BoldOutline,
-			Foreground = Color.White, Stroke = Color.Black,
-			
-			VerticalAlignment = VerticalAlignment.Center,
-			HorizontalAlignment = HorizontalAlignment.Center,
+			VerticalAlignment = VerticalAlignment.Bottom,
 		};
 		
-		coordinatePanel.Children.Add(_coordinatesTextBlock);
-
-		// components display
-		_componentsPanel = new StackPanel()
+		if (_resetButton is null)
 		{
-			Style = "Client-Backdrop",
-			Width = 500,
-			
-			VerticalAlignment = VerticalAlignment.Stretch,
-
-			Padding = Vector4F.Zero,
-		};
+			_resetButton = new Button()
+			{
+				Content = new TextBlock()
+				{
+					Text = "Reset", FontSize = 10, HorizontalAlignment = HorizontalAlignment.Center,
+					Font = "Tahoma", Foreground = Color.White,
+				},
+				Style = "Client-Button-Red",
+				
+				HorizontalAlignment = HorizontalAlignment.Stretch,
+				
+				ToolTip = "[CONTROL + Z]"
+			};
+		}
+		_resetButton.Click += (o, args) => { _componentsPanel.Reset(); };
 		
-		grid.AddChild(coordinatePanel, 2, 1);
-		grid.AddChild(_componentsPanel, 2, 2);
+		_finalizePanel.Children.Add(_resetButton);
+		
+		grid.AddChild(_finalizePanel, 2, 2);
 		
 		_uiScreen.Children.Add(grid);
 	}
@@ -256,24 +255,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		{
 			// give the selected tool the first chance to handle input.
 			if (selectedTool != null)
-			{
 				selectedTool.OnHandleInput(_worldPresentationTarget, inputManager);
-				
-				if (selectedTool is ComponentTool componentTool)
-				{
-					var controlUnderMouse = componentTool.TileUnderMouse;
-					
-					if (controlUnderMouse != null)
-						_coordinatesTextBlock.Text = $"[{controlUnderMouse.X}, {controlUnderMouse.Y}]";
-				}
-				else
-				{
-					var mousePosition = inputManager.MousePosition;
-					var (mx, my) = ToWorldCoordinates((int)mousePosition.X, (int)mousePosition.Y);
-					
-					_coordinatesTextBlock.Text = $"[{mx}, {my}]";
-				}
-			}
 		}
 		
 		if (inputManager.IsKeyboardHandled)

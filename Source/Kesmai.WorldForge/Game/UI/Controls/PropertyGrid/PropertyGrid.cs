@@ -43,7 +43,7 @@ public class PropertyGrid : Canvas
 
 		_internalPanel = new StackPanel()
 		{
-			Background = Color.DarkRed,
+			HorizontalAlignment = HorizontalAlignment.Stretch,
 		};
 		_scrollViewer = new ScrollViewer()
 		{
