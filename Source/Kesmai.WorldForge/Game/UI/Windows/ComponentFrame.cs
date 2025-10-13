@@ -12,7 +12,7 @@ namespace Kesmai.WorldForge.Windows;
 public class ComponentFrame : StackPanel
 {
 	public static readonly int ClickEventId = CreateEvent(
-		typeof(ButtonBase), "Click", GamePropertyCategories.Default, null, EventArgs.Empty);
+		typeof(ButtonBase), nameof(OnClick), GamePropertyCategories.Default, null, EventArgs.Empty);
 	
 	public static readonly int MoveUpEventId = CreateEvent(
 		typeof(ComponentFrame), nameof(OnMoveUp), GamePropertyCategories.Default, null, EventArgs.Empty);
@@ -22,6 +22,9 @@ public class ComponentFrame : StackPanel
 	
 	public static readonly int DeleteEventId = CreateEvent(
 		typeof(ComponentFrame), nameof(OnDelete), GamePropertyCategories.Default, null, EventArgs.Empty);
+	
+	public static readonly int ChangeEventId = CreateEvent(
+		typeof(ComponentFrame), nameof(OnChange), GamePropertyCategories.Default, null, EventArgs.Empty);
 	
 	private TextBlock _componentTypeTextBlock;
 	private ComponentImage _image;
@@ -70,6 +73,12 @@ public class ComponentFrame : StackPanel
 	{
 		add => Events.Get<EventArgs>(DeleteEventId).Event += value;
 		remove => Events.Get<EventArgs>(DeleteEventId).Event -= value;
+	}
+	
+	public event EventHandler<EventArgs> OnChange
+	{
+		add => Events.Get<EventArgs>(ChangeEventId).Event += value;
+		remove => Events.Get<EventArgs>(ChangeEventId).Event -= value;
 	}
 	
 	public ComponentFrame()
@@ -193,8 +202,6 @@ public class ComponentFrame : StackPanel
 				{
 					Text = "X", FontSize = 8, HorizontalAlignment = HorizontalAlignment.Center,
 					Font = "Tahoma", Foreground = (CanDelete ? Color.Red : Color.Black),
-					
-					
 				},
 				Style = "GameIconButton",
 				
@@ -215,6 +222,13 @@ public class ComponentFrame : StackPanel
 			_propertyGrid = new PropertyGrid()
 			{
 				Margin = new  Vector4F(5),
+			};
+			_propertyGrid.OnItemChanged += (o, args) =>
+			{
+				Events.Get<EventArgs>(ChangeEventId).Raise();
+
+				if (_image != null)
+					_image.Invalidate();
 			};
 		}
 

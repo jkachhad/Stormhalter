@@ -10,6 +10,7 @@ namespace Kesmai.WorldForge;
 public class ComponentImage : UIControl
 {
 	private List<ComponentRender> _renders;
+	private bool _invalidated;
 		
 	public static readonly int ComponentPropertyId = CreateProperty(
 		typeof(ComponentImage), "Component", GamePropertyCategories.Default, null, default(TerrainComponent),
@@ -30,15 +31,28 @@ public class ComponentImage : UIControl
 
 		Properties.Get<TerrainComponent>(ComponentPropertyId).Changed += (sender, args) =>
 		{
-			_renders.Clear();
-				
-			var newValue = args.NewValue;
-
-			if (newValue != null)
-				_renders.AddRange(newValue.GetTerrain());
+			Invalidate();
 		};
 	}
+	
+	public void Invalidate()
+	{
+		_invalidated = true;
+	}
+
+	protected override void OnUpdate(TimeSpan deltaTime)
+	{
+		if (_invalidated)
+		{
+			_renders.Clear();
+
+			if (Component != null)
+				_renders.AddRange(Component.GetTerrain());
+		}
 		
+		base.OnUpdate(deltaTime);
+	}
+
 	protected override Vector2F OnMeasure(Vector2F availableSize)
 	{
 		var padding = Padding;

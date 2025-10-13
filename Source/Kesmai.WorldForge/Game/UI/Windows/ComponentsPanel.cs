@@ -111,9 +111,16 @@ public class ComponentsPanel : StackPanel
             frame.OnMoveUp += OnMoveUp;
             frame.OnMoveDown += OnMoveDown;
             frame.OnDelete += OnDelete;
+            frame.OnChange += OnChange;
 
             _framePanel.Children.Add(frame);
         }
+    }
+
+    private void OnChange(object sender, EventArgs e)
+    {
+        _targetTile.UpdateTerrain();
+        _screen.InvalidateRender();
     }
 
     private void OnSelect(object sender, EventArgs e)

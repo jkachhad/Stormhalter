@@ -14,17 +14,26 @@ namespace Kesmai.WorldForge.Windows;
 
 public class PropertyGrid : Canvas
 {
-	private ScrollViewer _scrollViewer;
-	private StackPanel _internalPanel;
-		
 	public static readonly int ItemPropertyId = CreateProperty(
 		typeof(PropertyGrid), "Item", GamePropertyCategories.Default, null, default(object),
 		UIPropertyOptions.AffectsRender);
-
+	
+	public static readonly int ItemChangedEventId = CreateEvent(
+		typeof(PropertyGrid), nameof(OnItemChanged), GamePropertyCategories.Default, null, EventArgs.Empty);
+	
+	private ScrollViewer _scrollViewer;
+	private StackPanel _internalPanel;
+	
 	public object Item
 	{
 		get => GetValue<object>(ItemPropertyId);
 		set => SetValue(ItemPropertyId, value);
+	}
+	
+	public event EventHandler<EventArgs> OnItemChanged
+	{
+		add => Events.Get<EventArgs>(ItemChangedEventId).Event += value;
+		remove => Events.Get<EventArgs>(ItemChangedEventId).Event -= value;
 	}
 		
 	public NotifyingCollection<PropertyInfo> Items { get; set; }
@@ -112,6 +121,11 @@ public class PropertyGrid : Canvas
 					_internalPanel.Children.Remove(frame);
 			});
 		}
+	}
+	
+	public void NotifyPropertyChanged(PropertyInfo propertyInfo)
+	{
+		Events.Get<EventArgs>(ItemChangedEventId).Raise();		
 	}
 }
 
