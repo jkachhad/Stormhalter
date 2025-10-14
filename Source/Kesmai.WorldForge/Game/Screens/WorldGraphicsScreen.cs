@@ -53,9 +53,6 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 
 	private Texture2D _commentSprite;
 
-	protected bool _isMouseOver;
-	protected bool _isMouseDirectlyOver;
-
 	/// <summary>
 	/// Represents the current camera location in world coordinates. (Top-left corner of the view)
 	/// </summary>
@@ -171,37 +168,18 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 	{
 		yield break;
 	}
-	
-	protected override void OnUpdate(TimeSpan deltaTime)
-	{
-		base.OnUpdate(deltaTime);
 
-		_isMouseOver = false;
-		_isMouseDirectlyOver = false;
+	protected override void OnHandleInput(TimeSpan deltaTime)
+	{
+		base.OnHandleInput(deltaTime);
 		
-		// process input here, input not processed similar to a <see cref="UIControl" />.
-		// we access the input manager from the presenter, and follow the same pattern.
 		var inputManager = PresentationTarget.InputManager;
 		
-		if (inputManager is null || !_worldPresentationTarget.AllowInput)
+		if (inputManager is null)
 			return;
 		
-		// track if the mouse is over the control.
-		_isMouseOver = _worldPresentationTarget.IsMouseOver;
-		_isMouseDirectlyOver = _isMouseOver;
-
-		// only process input if the mouse is within the control.
-		if (!_isMouseOver || inputManager.IsMouseOrTouchHandled)
-			return;
-
-		// we do not want to process input in this case, as it is being handled by the control.
-		if (!_isMouseDirectlyOver)
-			return;
-		
-		var region = _worldPresentationTarget.Region;
-
 		// if the input is still not handled, we can check for context menu and zoom.
-		if (!inputManager.IsMouseOrTouchHandled)
+		if (_isMouseDirectlyOver && !inputManager.IsMouseOrTouchHandled)
 		{
 			if (_contextMenu != null && (_contextMenu.IsEnabled && _contextMenu.Items.Count > 0))
 			{

@@ -25,6 +25,8 @@ public partial class LocationsDocument : UserControl
 			_presenter.Region = segment.GetRegion(location.Region);
 			_presenter.Location = location;
 			_presenter.SetCameraLocation(location);
+
+			_presenter.Focus();
 		});
 	}
 }

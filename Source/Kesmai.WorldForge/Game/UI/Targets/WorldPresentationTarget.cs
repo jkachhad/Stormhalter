@@ -29,8 +29,6 @@ public abstract class WorldPresentationTarget : InteropPresentationTarget
 		get => (SegmentRegion)GetValue(RegionProperty);
 		set => SetValue(RegionProperty, value);
 	}
-
-	public virtual bool AllowInput => true;
 		
 	protected WorldPresentationTarget()
 	{

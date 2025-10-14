@@ -107,21 +107,23 @@ public class SpawnsGraphicsScreen : WorldGraphicsScreen
 		_locked = true;
 	}
 
-	protected override void OnUpdate(TimeSpan deltaTime)
+	protected override void OnHandleInput(TimeSpan deltaTime)
 	{
-		base.OnUpdate(deltaTime);
+		base.OnHandleInput(deltaTime);
 		
 		var inputManager = PresentationTarget.InputManager;
 		
 		if (inputManager is null)
 			return;
 		
+		// process mouse/touch input.
+
+		// process keyboard
 		if (inputManager.IsKeyboardHandled || !PresentationTarget.IsFocused)
 			return;
 
 		if (_spawner is LocationSpawner locationSpawner)
 		{
-
 			if (inputManager.IsPressed(Keys.Left, true) || inputManager.IsPressed(Keys.A, true))
 			{
 				SetCameraLocation(_targetMx - 1, _targetMy);

@@ -233,8 +233,10 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		_uiScreen.Children.Add(grid);
 	}
 
-	protected override void OnUpdate(TimeSpan deltaTime)
+	protected override void OnHandleInput(TimeSpan deltaTime)
 	{
+		base.OnHandleInput(deltaTime);
+		
 		var region = _worldPresentationTarget.Region;
 		
 		// retrieve the current active tool and update the cursor.
@@ -243,12 +245,10 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		if (selectedTool != null)
 			_worldPresentationTarget.Cursor = selectedTool.Cursor;
 		
-		base.OnUpdate(deltaTime);
-		
-		if (!_isMouseDirectlyOver)
-			return;
-		
 		var inputManager = PresentationTarget.InputManager;
+		
+		if (inputManager is null)
+			return;
 		
 		// process mouse/touch input.
 		if (!inputManager.IsMouseOrTouchHandled)
@@ -258,10 +258,10 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 				selectedTool.OnHandleInput(_worldPresentationTarget, inputManager);
 		}
 		
-		if (inputManager.IsKeyboardHandled)
+		// process keyboard
+		if (inputManager.IsKeyboardHandled || !PresentationTarget.IsFocused)
 			return;
 		
-		// process keyboard prior to mouse/touch.
 		var multiplier = 3;
 
 		if (inputManager.IsDown(Keys.LeftShift) || inputManager.IsDown(Keys.RightShift))

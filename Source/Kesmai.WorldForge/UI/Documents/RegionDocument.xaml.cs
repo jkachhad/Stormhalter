@@ -23,6 +23,8 @@ public partial class RegionDocument : UserControl
 		Refresh();
 		
 		RegisterMessages();
+
+		_presenter.Focus();
 	}
 
 	private void OnUnloaded(object? sender, RoutedEventArgs args)

@@ -6,8 +6,6 @@ namespace Kesmai.WorldForge;
 public class LocationsPresentationTarget : WorldPresentationTarget
 {
 	private LocationsGraphicsScreen _screen;
-		
-	public override bool AllowInput => true;
 	
 	public SegmentLocation Location { get; set; }
 		
