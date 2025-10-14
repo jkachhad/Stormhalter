@@ -157,9 +157,6 @@ public class LocationsGraphicsScreen : WorldGraphicsScreen
 			
 			spriteBatch.DrawRectangle(bounds, _highlightColor);
 			spriteBatch.FillRectangle(bounds, _highlightColor * 0.2f);
-			
-			/*_font.DrawString(spriteBatch, RenderTransform.Identity, $"{_mx}, {_my}", 
-				new Vector2(bounds.Left + 4, bounds.Top + 3), Color.Black);*/
 		}
 	}
 }
