@@ -56,6 +56,9 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 	protected bool _isMouseOver;
 	protected bool _isMouseDirectlyOver;
 
+	/// <summary>
+	/// Represents the current camera location in world coordinates. (Top-left corner of the view)
+	/// </summary>
 	public Vector2F CameraLocation
 	{
 		get => _cameraLocation;
