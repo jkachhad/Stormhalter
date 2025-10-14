@@ -11,11 +11,9 @@ public class SpawnsPresentationTarget : WorldPresentationTarget
 		return (_screen = new SpawnsGraphicsScreen(graphicsService, this));
 	}
 
-	public void SetLocation(Spawner spawner)
+	public void SetSpawner(Spawner spawner)
 	{
 		if (_screen != null)
-		{
 			_screen.SetSpawner(spawner);
-		}
 	}
 }

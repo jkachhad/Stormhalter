@@ -24,7 +24,7 @@ public partial class RegionSpawnDocument : UserControl
             var segment = segmentRequest.Response;
             
             _presenter.Region = segment.GetRegion(regionSpawn.Region);
-            _presenter.SetLocation(regionSpawn);
+            _presenter.SetSpawner(regionSpawn);
             
             _scriptsTabControl.SelectedItem = regionSpawn.Scripts.FirstOrDefault(s => s.IsEnabled);
         });
