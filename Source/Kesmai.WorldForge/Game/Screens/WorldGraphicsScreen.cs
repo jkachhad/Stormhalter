@@ -96,6 +96,7 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 			_invalidateRender = true;
 		}
 	}
+	
 	public Color Gridcolor
 	{
 		get => _gridcolor;
@@ -105,6 +106,11 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 			_invalidateRender = true;
 		}
 	}
+
+	/// <summary>
+	/// Gets a value indicating whether the selection should be drawn.
+	/// </summary>
+	public virtual bool DrawSelection => true;
 
 	public int Width => (int)_worldPresentationTarget.ActualWidth;
 	public int Height => (int)_worldPresentationTarget.ActualHeight;
@@ -354,19 +360,22 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 			spriteBatch.Draw(_renderTarget, Vector2.Zero, Color.White);
 		}
 
-		if (selection.Region == region)
+		if (DrawSelection)
 		{
-			foreach (var rectangle in selection)
+			if (selection.Region == region)
 			{
-				if (!viewRectangle.Intersects(rectangle))
-					continue;
+				foreach (var rectangle in selection)
+				{
+					if (!viewRectangle.Intersects(rectangle))
+						continue;
 
-				// if (rectangle.X == 3 && rectangle.Y == 3) { var breakpoint = true; } removed because breakpoint not used
+					// if (rectangle.X == 3 && rectangle.Y == 3) { var breakpoint = true; } removed because breakpoint not used
 
-				var bounds = GetRenderRectangle(viewRectangle, rectangle);
+					var bounds = GetRenderRectangle(viewRectangle, rectangle);
 
-				spriteBatch.FillRectangle(bounds, _selectionFill);
-				spriteBatch.DrawRectangle(bounds, _selectionBorder);
+					spriteBatch.FillRectangle(bounds, _selectionFill);
+					spriteBatch.DrawRectangle(bounds, _selectionBorder);
+				}
 			}
 		}
 

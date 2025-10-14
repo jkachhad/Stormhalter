@@ -23,7 +23,8 @@ public partial class LocationsDocument : UserControl
 			var segment = segmentRequest.Response;
 
 			_presenter.Region = segment.GetRegion(location.Region);
-			_presenter.SetLocation(location);
+			_presenter.Location = location;
+			_presenter.SetCameraLocation(location);
 		});
 	}
 }
