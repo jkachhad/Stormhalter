@@ -8,8 +8,12 @@ public static class MenuExtensions
 	{
 		var menuItem = new MenuButton()
 		{
-			Content = new TextBlock() { Text = title },
-			Font = "Tahoma", FontSize = 12
+			Content = new TextBlock()
+			{
+				Text = title,
+				Font = "Tahoma", FontSize = 10
+			},
+			
 		};
 		menuItem.Click += handler;
 

@@ -181,7 +181,7 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 		// if the input is still not handled, we can check for context menu and zoom.
 		if (_isMouseDirectlyOver && !inputManager.IsMouseOrTouchHandled)
 		{
-			if (_contextMenu != null && (_contextMenu.IsEnabled && _contextMenu.Items.Count > 0))
+			if (_contextMenu != null && _contextMenu.IsEnabled)
 			{
 				// TODO: (Workspaces) Is there a better way to do this?
 				if (inputManager.IsReleased(MouseButtons.Right))
