@@ -17,12 +17,13 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="3"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             
             <Border Grid.Row="0" Visibility="{Binding SelectedTreasureIsHoard, Converter={StaticResource booleanToVisibilityConverter}}">
-                <TabControl ItemsSource="{Binding SelectedHoard.Scripts}" SelectedIndex="0">
+                <TabControl ItemsSource="{Binding SelectedHoard.Scripts}" SelectedIndex="0" Margin="10">
                     <TabControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="2">
@@ -52,7 +53,7 @@
                                                    
                                                     IsEnabled="{Binding IsEnabled}"
                                                     
-                                                    Height="100" MaxHeight="300" />
+                                                    Height="200" />
                         </DataTemplate>
                     </TabControl.ContentTemplate>
                 </TabControl>
@@ -61,14 +62,16 @@
                     <Style TargetType="Border">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=DataGridRow}}" Value="True">
-                                <Setter Property="Background" Value="LightYellow" />
+                                <Setter Property="Background" Value="LightGoldenrodYellow" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Border.Style>
             </Border>
             
-            <ToolBar Padding="2" Grid.Row="1">
+            <GridSplitter Grid.Row="1" Height="3" HorizontalAlignment="Stretch" />
+            
+            <ToolBar Padding="2" Grid.Row="2">
                 <ToolBar.Items>
                     <Button Width="24" Height="24"
                             Command="{Binding AddTreasureEntryCommand}">
@@ -88,18 +91,27 @@
                 </ToolBar.Items>
             </ToolBar>
             
-            <DataGrid Grid.Row="2" ItemsSource="{Binding SelectedTreasure.Entries}"
+            <DataGrid Grid.Row="3" ItemsSource="{Binding SelectedTreasure.Entries}"
                       SelectedItem="{Binding SelectedTreasureEntry}"
                       AutoGenerateColumns="False" SelectionMode="Single"
                       CanUserAddRows="false" CanUserDeleteRows="false"
                       RowDetailsVisibilityMode="Visible" AreRowDetailsFrozen="true">
             
                 <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Style.Triggers>
+                            <Trigger Property="DataGridRow.IsSelected" Value="True">
+                                <Setter Property="Background" Value="LightYellow" />
+                                <Setter Property="BorderBrush" Value="Yellow" />
+                                <Setter Property="Foreground" Value="Black" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
                     <Style TargetType="{x:Type DataGridCell}">
                         <Style.Triggers>
                             <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                <Setter Property="Background" Value="LightYellow" />
-                                <Setter Property="BorderBrush" Value="LightYellow" />
+                                <Setter Property="Background" Value="LightGoldenrodYellow" />
+                                <Setter Property="BorderBrush" Value="Yellow" />
                                 <Setter Property="Foreground" Value="Black" />
                             </Trigger>
                         </Style.Triggers>
@@ -111,15 +123,15 @@
                         Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, 
                         Converter={worldForge:DataGridRowToIndexConverter}}" />
                     
-                    <DataGridTextColumn Header="Weight" Binding="{Binding Weight}" Width="50" />
-                    <DataGridTextColumn Header="Chance" IsReadOnly="true" Width="60"
+                    <DataGridTextColumn Header="Weight" Binding="{Binding Weight}" Width="100" />
+                    <DataGridTextColumn Header="Chance" IsReadOnly="true" Width="100"
                                         Binding="{Binding Chance, StringFormat={}({0:0.00%})}" />
                 </DataGrid.Columns>
                 
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
                         <Border>
-                            <TabControl Grid.Column="0"
+                            <TabControl Grid.Column="0" Margin="10"
                                         ItemsSource="{Binding Scripts}">
                                 <TabControl.ItemTemplate>
                                     <DataTemplate>
@@ -163,7 +175,7 @@
                                 <Style TargetType="Border">
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=DataGridRow}}" Value="True">
-                                            <Setter Property="Background" Value="LightYellow" />
+                                            <Setter Property="Background" Value="LightGoldenrodYellow" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
