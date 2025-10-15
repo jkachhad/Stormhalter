@@ -33,10 +33,10 @@ public class SpawnsGraphicsScreen : WorldGraphicsScreen
 	
 	private Spawner _spawner;
 	
-	private Color _inclusionBorder = Color.FromNonPremultiplied(200, 255, 50, 255);
-	private Color _inclusionFill = Color.FromNonPremultiplied(200, 255, 50, 50);
-	private Color _exclusionBorder = Color.FromNonPremultiplied(0, 0, 0, 255);
-	private Color _exclusionFill = Color.FromNonPremultiplied(50, 50, 50, 200);
+	private Color _inclusionBorder = Color.FromNonPremultiplied(255, 0, 255, 255);
+	private Color _inclusionFill = Color.FromNonPremultiplied(255, 150, 255, 10);
+	private Color _exclusionBorder = Color.FromNonPremultiplied(255, 0, 0, 255);
+	private Color _exclusionFill = Color.FromNonPremultiplied(100, 50, 50, 150);
 	private Color _locationBorder = Color.FromNonPremultiplied(0, 255, 255, 200);
 	
 	private int _targetMx;
@@ -45,12 +45,12 @@ public class SpawnsGraphicsScreen : WorldGraphicsScreen
 	private bool _locked;
 	
 	private Texture2D[] _arrowTextures;
-
-	private SpawnsPresentationTarget _spawnsPresentationTarget;
-
+	
+	private ArrowTool _arrowTool;
+	
 	public SpawnsGraphicsScreen(IGraphicsService graphicsService, SpawnsPresentationTarget spawnsPresentationTarget) : base(graphicsService, spawnsPresentationTarget)
 	{
-		_spawnsPresentationTarget = spawnsPresentationTarget;
+		_arrowTool = new ArrowTool();
 	}
 	
 	protected override void OnInitialize()
@@ -110,14 +110,30 @@ public class SpawnsGraphicsScreen : WorldGraphicsScreen
 	protected override void OnHandleInput(TimeSpan deltaTime)
 	{
 		base.OnHandleInput(deltaTime);
-		
+	
+		// retrieve the current active tool and update the cursor.
+		if (_spawner is RegionSpawner)
+		{
+			if (_arrowTool != null)
+				_worldPresentationTarget.Cursor = _arrowTool.Cursor;
+		}
+
 		var inputManager = PresentationTarget.InputManager;
 		
 		if (inputManager is null)
 			return;
 		
 		// process mouse/touch input.
-
+		if (!inputManager.IsMouseOrTouchHandled)
+		{
+			if (_spawner is RegionSpawner)
+			{
+				// give the selected tool the first chance to handle input.
+				if (_arrowTool != null)
+					_arrowTool.OnHandleInput(_worldPresentationTarget, inputManager);
+			}
+		}
+		
 		// process keyboard
 		if (inputManager.IsKeyboardHandled || !PresentationTarget.IsFocused)
 			return;
@@ -174,6 +190,32 @@ public class SpawnsGraphicsScreen : WorldGraphicsScreen
 			yield return _contextMenu.Create("Add selection to Exclusions..", selectionAppendExclusions);
 		}
 		
+		// identify the inclusion/exclusion at the specified location. Only remove the includes that is contained
+		// in other selections.
+		if (_spawner is RegionSpawner regionSpawner)
+		{
+			var inclusion = regionSpawner.Inclusions.OrderBy(r => r.Area).FirstOrDefault(r => r.Contains(mx, my));
+			var exclusion = regionSpawner.Exclusions.OrderBy(r => r.Area).FirstOrDefault(r => r.Contains(mx, my));
+
+			if (inclusion != null)
+			{
+				yield return _contextMenu.Create($"Remove Inclusion", (s, a) =>
+				{
+					regionSpawner.Inclusions.Remove(inclusion);
+					InvalidateRender();
+				});
+			}
+				
+			if (exclusion != null)
+			{
+				yield return _contextMenu.Create($"Remove Exclusion", (s, a) =>
+				{
+					regionSpawner.Exclusions.Remove(exclusion);
+					InvalidateRender();
+				});
+			}
+		}
+		
 		void selectionAppendInclusions(object sender, EventArgs args)
 		{
 			if (_spawner is not RegionSpawner regionSpawner)
@@ -196,6 +238,27 @@ public class SpawnsGraphicsScreen : WorldGraphicsScreen
 			InvalidateRender();
 		}
 	}
+	
+	protected override void OnRender(RenderContext context)
+	{
+		base.OnRender(context);
+
+		if (_spawner is not RegionSpawner)
+			return;
+		
+		var graphicsService = context.GraphicsService;
+		var spriteBatch = graphicsService.GetSpriteBatch();
+		
+		spriteBatch.Begin(SpriteSortMode.Immediate, samplerState: SamplerState.PointClamp);
+		
+		if (_isMouseOver)
+		{
+			if (_arrowTool != null)
+				_arrowTool.OnRender(context);
+		}
+		
+		spriteBatch.End();
+	}
 
 	protected override void OnAfterRender(SpriteBatch spriteBatch)
 	{
@@ -205,8 +268,7 @@ public class SpawnsGraphicsScreen : WorldGraphicsScreen
 
 		if (_spawner is RegionSpawner regionSpawner)
 		{
-			var inclusions = regionSpawner.Inclusions;
-			foreach (var rectangle in inclusions)
+			foreach (var rectangle in regionSpawner.Inclusions)
 			{
 				if (!viewRectangle.Intersects(rectangle.ToRectangle()))
 					continue;
@@ -219,9 +281,8 @@ public class SpawnsGraphicsScreen : WorldGraphicsScreen
 				_font.DrawString(spriteBatch, RenderTransform.Identity, _spawner.Name,
 					new Vector2(bounds.X + 5, bounds.Y + 5), Color.White);
 			}
-
-			var exclusions = regionSpawner.Exclusions;
-			foreach (var rectangle in exclusions)
+			
+			foreach (var rectangle in regionSpawner.Exclusions)
 			{
 				if (rectangle is { Left: 0, Top: 0, Right:0, Bottom:0 } || !viewRectangle.Intersects(rectangle.ToRectangle()))
 					continue;

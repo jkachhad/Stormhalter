@@ -10,7 +10,7 @@
              FontFamily="Tahoma" FontSize="14">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         
@@ -20,6 +20,7 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="3"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="3"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         
@@ -63,7 +64,7 @@
         
         <GridSplitter Grid.Row="1" Grid.ColumnSpan="2" Height="3" HorizontalAlignment="Stretch" />
         
-        <DataGrid Grid.Row="2"  Grid.ColumnSpan="2" Margin="5" Height="300"
+        <DataGrid Grid.Row="2" Margin="5" Height="300"
                   AutoGenerateColumns="False"
                   ItemsSource="{Binding ActiveContent.Entries, Source={StaticResource applicationPresenter}}">
             <DataGrid.Resources>
@@ -80,7 +81,7 @@
             </DataGrid.Columns>
         </DataGrid>
         
-        <GridSplitter Grid.Row="3" Grid.ColumnSpan="2" Height="3" HorizontalAlignment="Stretch" />
+        <GridSplitter Grid.Row="3" Height="3" HorizontalAlignment="Stretch" />
         
         <GroupBox Header="Inclusions" Grid.Row="4" Grid.Column="0"
                   MinHeight="100" MaxHeight="200">
@@ -96,8 +97,10 @@
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>
+        
+        <GridSplitter Grid.Row="5" Height="3" HorizontalAlignment="Stretch" />
 
-        <GroupBox Header="Exclusions" Grid.Row="4" Grid.Column="1"
+        <GroupBox Header="Exclusions" Grid.Row="6" 
                   MinHeight="100" MaxHeight="200">
             <DataGrid AutoGenerateColumns="False" 
                       ItemsSource="{Binding ActiveContent.Exclusions, Source={StaticResource applicationPresenter}}"
@@ -112,6 +115,6 @@
             </DataGrid>
         </GroupBox>
         
-        <worldForge:SpawnsPresentationTarget Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" x:Name="_presenter" Margin="2" />
+        <worldForge:SpawnsPresentationTarget Grid.Column="1" Grid.Row="1" Grid.RowSpan="6" x:Name="_presenter" Margin="2" />
     </Grid>
 </UserControl>

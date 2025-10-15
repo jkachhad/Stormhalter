@@ -38,6 +38,8 @@ public class SegmentBounds : ObservableObject
 	public int Height => (_bottom - _top) + 1;
 
 	public bool IsValid => (Width != 0 && Height != 0);
+	
+	public int Area => Width * Height;
 
 	public SegmentBounds()
 	{
@@ -54,5 +56,10 @@ public class SegmentBounds : ObservableObject
 	public Rectangle ToRectangle()
 	{
 		return new Rectangle(Left, Top, Width, Height);
+	}
+	
+	public bool Contains(int x, int y)
+	{
+		return (x >= Left && x <= Right && y >= Top && y <= Bottom);
 	}
 }
