@@ -16,31 +16,9 @@ namespace Kesmai.WorldForge.UI.Documents;
 	
 public partial class TreasuresDocument : UserControl
 {
-	public class GetActiveEntity : RequestMessage<Entity>
-	{
-	}
 	public TreasuresDocument()
 	{
 		InitializeComponent();
-
-		WeakReferenceMessenger.Default
-			.Register<TreasuresDocument, TreasuresViewModel.SelectedTreasureChangedMessage>(this, (r, m) => { _treasuresList.ScrollIntoView(_treasuresList.SelectedItem); });
-			
-		WeakReferenceMessenger.Default.Register<TreasuresDocument, GetActiveEntity>(this,
-			(r, m) => m.Reply(GetSelectedEntity()));
-
-		WeakReferenceMessenger.Default.Register<TreasuresDocument, UnregisterEvents>(this,
-			(r, m) => { WeakReferenceMessenger.Default.UnregisterAll(this); });
-	}
-
-	public Entity GetSelectedEntity()
-	{
-		var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
-		if (presenter.ActiveDocument is not TreasuresViewModel)
-			return null;
-		if (_entitiesList.SelectedItem != null)
-			return _entitiesList.SelectedItem as Entity;
-		return null;
 	}
 }
 
@@ -113,7 +91,6 @@ public class TreasuresViewModel : ObservableRecipient
 	public RelayCommand AddTreasureEntryCommand { get; set; }
 	public RelayCommand<TreasureEntry> RemoveTreasureEntryCommand { get; set; }
 	public RelayCommand<TreasureEntry> CopyTreasureEntryCommand { get; set; }
-	public RelayCommand JumpEntityCommand { get; set; }
 
 	public TreasuresViewModel(Segment segment)
 	{
@@ -148,17 +125,8 @@ public class TreasuresViewModel : ObservableRecipient
 			
 		WeakReferenceMessenger.Default.Register<TreasuresViewModel, TreasureEntry.TreasureEntryWeightChanged>
 			(this, OnWeightChanged);
-
-		JumpEntityCommand = new RelayCommand(JumpEntity);
-
 	}
-
-	public void JumpEntity()
-	{
-		var entityRequest = WeakReferenceMessenger.Default.Send<TreasuresDocument.GetActiveEntity>();
-		var entity = entityRequest.Response;
-		WeakReferenceMessenger.Default.Send(entity);
-	}
+	
 	private void OnWeightChanged(TreasuresViewModel recipient, TreasureEntry.TreasureEntryWeightChanged message)
 	{
 		_selectedTreasure.InvalidateChance();
