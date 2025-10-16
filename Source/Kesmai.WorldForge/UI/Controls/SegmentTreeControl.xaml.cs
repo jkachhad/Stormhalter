@@ -21,7 +21,6 @@ using Microsoft.VisualBasic;
 using Kesmai.WorldForge;
 using Kesmai.WorldForge.Editor;
 using DigitalRune.Collections;
-
 namespace Kesmai.WorldForge.UI;
 
 public class SegmentObjectDoubleClick(ISegmentObject target) : ValueChangedMessage<ISegmentObject>(target);
@@ -47,6 +46,9 @@ public partial class SegmentTreeControl : UserControl
 
         WeakReferenceMessenger.Default.Register<SegmentRegionsChanged>(this, (r, m) => UpdateRegions());
         WeakReferenceMessenger.Default.Register<SegmentRegionChanged>(this, (r, m) => UpdateRegions());
+
+        WeakReferenceMessenger.Default.Register<SegmentSubregionsChanged>(this, (r, m) => UpdateRegions());
+        WeakReferenceMessenger.Default.Register<SegmentSubregionChanged>(this, (r, m) => UpdateRegions());
         
         WeakReferenceMessenger.Default.Register<SegmentLocationsChanged>(this, (r, m) => UpdateLocations());
         WeakReferenceMessenger.Default.Register<SegmentLocationChanged>(this, (r, m) => UpdateLocations());
@@ -185,6 +187,12 @@ public partial class SegmentTreeControl : UserControl
                 Header = CreateColoredHeader(region.Name, Brushes.MediumPurple, false)
             };
             item.MouseDoubleClick += OnDoubleClick;
+
+            if (Segment is not null)
+            {
+                foreach (var subregion in Segment.Subregions.Where(sr => sr.Region == region.ID))
+                    item.Items.Add(CreateSubregionNode(subregion));
+            }
 
             var itemMenu = new ContextMenu();
             
@@ -635,6 +643,35 @@ public partial class SegmentTreeControl : UserControl
         delete.Click += (s, e) => DeleteSegmentObject(entity, item, Segment.Entities);
         menu.Items.Add(rename);
         menu.Items.Add(delete);
+        item.ContextMenu = menu;
+
+        return item;
+    }
+
+    private TreeViewItem CreateSubregionNode(SegmentSubregion subregion)
+    {
+        var item = new TreeViewItem
+        {
+            Tag = subregion,
+            Header = CreateColoredHeader(subregion.Name, Brushes.Gray, false)
+        };
+        item.MouseDoubleClick += OnDoubleClick;
+
+        var menu = new ContextMenu();
+
+        var rename = new MenuItem { Header = "Rename" };
+        rename.Click += (s, e) => RenameSegmentObject(subregion, item);
+
+        var delete = new MenuItem { Header = "Delete" };
+        delete.Click += (s, e) =>
+        {
+            if (Segment is not null)
+                DeleteSegmentObject(subregion, item, Segment.Subregions);
+        };
+
+        menu.Items.Add(rename);
+        menu.Items.Add(delete);
+
         item.ContextMenu = menu;
 
         return item;
