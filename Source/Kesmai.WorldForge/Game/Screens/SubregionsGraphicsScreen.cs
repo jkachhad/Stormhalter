@@ -12,6 +12,9 @@ namespace Kesmai.WorldForge;
 public class SubregionsGraphicsScreen : WorldGraphicsScreen
 {
 	private SegmentSubregion _subregion;
+	private SegmentBounds _selectedBounds;
+	
+	
 	private readonly ArrowTool _arrowTool;
 		
 	public SubregionsGraphicsScreen(IGraphicsService graphicsService, WorldPresentationTarget worldPresentationTarget) : base(graphicsService, worldPresentationTarget)
@@ -34,11 +37,16 @@ public class SubregionsGraphicsScreen : WorldGraphicsScreen
 	public void SetSubregion(SegmentSubregion subregion)
 	{
 		_subregion = subregion;
+	}
 
-		var first = _subregion.Rectangles.FirstOrDefault();
-
-		if (first != null)
-			CenterCameraOn(first.Left, first.Top);
+	public void SetBounds(SegmentBounds bounds)
+	{
+		_selectedBounds = bounds;
+		
+		var centerX = (bounds.Left + bounds.Right) / 2;
+		var centerY = (bounds.Top + bounds.Bottom) / 2;
+		
+		CenterCameraOn(centerX, centerY);
 	}
 
 	protected override void OnHandleInput(TimeSpan deltaTime)
@@ -94,7 +102,12 @@ public class SubregionsGraphicsScreen : WorldGraphicsScreen
 
 				var bounds = GetRenderRectangle(viewRectangle, rectangle.ToRectangle());
 
-				spriteBatch.FillRectangle(bounds, _subregion.Color);
+				var opacity = 0.6f;
+				
+				if (Equals(rectangle, _selectedBounds))
+					opacity = 1.2f;
+
+				spriteBatch.FillRectangle(bounds, _subregion.Color * opacity);
 				spriteBatch.DrawRectangle(bounds, _subregion.Border);
 			}
 		}

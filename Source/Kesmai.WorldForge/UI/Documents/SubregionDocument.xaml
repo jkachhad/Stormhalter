@@ -17,6 +17,7 @@
         <DataGrid
                   AutoGenerateColumns="False" CanUserAddRows="true" CanUserDeleteRows="true"
                   ItemsSource="{Binding ActiveContent.Rectangles, Source={StaticResource applicationPresenter}}"
+                  SelectionChanged="RectanglesSelectionChanged" SelectionMode="Single"
                   FontFamily="Tahoma" FontSize="12" MinHeight="200">
             <DataGrid.Columns>
                 <DataGridTextColumn MinWidth="70" Header="Left" Binding="{Binding Left}"></DataGridTextColumn>

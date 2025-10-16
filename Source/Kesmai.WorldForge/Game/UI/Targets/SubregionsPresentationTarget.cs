@@ -17,4 +17,10 @@ public class SubregionsPresentationTarget : WorldPresentationTarget
 		if (_screen != null)
 			_screen.SetSubregion(subregion);
 	}
+
+	public void SetBounds(SegmentBounds bounds)
+	{
+		if (_screen != null)
+			_screen.SetBounds(bounds);
+	}
 }
