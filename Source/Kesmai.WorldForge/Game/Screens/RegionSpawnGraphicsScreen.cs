@@ -66,8 +66,11 @@ public class RegionSpawnGraphicsScreen : WorldGraphicsScreen
 		if (_spawner is null)
 			yield break;
 
-		yield return _contextMenu.Create("Add selection to Inclusions..", selectionAppendInclusions);
-		yield return _contextMenu.Create("Add selection to Exclusions..", selectionAppendExclusions);
+		if (_selection.IsSelected(mx, my, _worldPresentationTarget.Region))
+		{
+			yield return _contextMenu.Create("Add selection to Inclusions..", selectionAppendInclusions);
+			yield return _contextMenu.Create("Add selection to Exclusions..", selectionAppendExclusions);
+		}
 
 		var inclusion = _spawner.Inclusions.OrderBy(r => r.Area).FirstOrDefault(r => r.Contains(mx, my));
 		var exclusion = _spawner.Exclusions.OrderBy(r => r.Area).FirstOrDefault(r => r.Contains(mx, my));
