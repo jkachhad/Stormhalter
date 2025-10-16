@@ -14,8 +14,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Xml.Linq;
-using static Kesmai.WorldForge.UI.Documents.SpawnsDocument;
-using static Kesmai.WorldForge.UI.Documents.SpawnsViewModel;
 
 namespace Kesmai.WorldForge.UI.Documents;
 
