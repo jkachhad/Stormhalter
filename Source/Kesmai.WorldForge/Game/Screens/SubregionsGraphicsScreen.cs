@@ -21,14 +21,40 @@ public class SubregionsGraphicsScreen : WorldGraphicsScreen
 	{
 		_arrowTool = new ArrowTool();
 	}
-	
+
 	protected override IEnumerable<MenuItem> GetContextMenuItems(int mx, int my)
 	{
-		yield return _contextMenu.Create("Add selection to Subregion..", selectionAppendInclusions);
+		if (_subregion is null)
+			yield break;
+
+		if (_selection.IsSelected(mx, my, _worldPresentationTarget.Region))
+			yield return _contextMenu.Create("Add selection to Subregion..", selectionAppendInclusions);
+
+		var rectangle = _subregion.Rectangles
+			.Where(bounds => bounds.Contains(mx, my))
+			.OrderBy(bounds => bounds.Area)
+			.FirstOrDefault();
+
+		if (rectangle != null)
+		{
+			yield return _contextMenu.Create("Remove selection from Subregion..", removeRectangle);
+
+			void removeRectangle(object sender, EventArgs args)
+			{
+				_subregion.Rectangles.Remove(rectangle);
+
+				if (Equals(_selectedBounds, rectangle))
+					_selectedBounds = null;
+
+				InvalidateRender();
+			}
+		}
+
 		void selectionAppendInclusions(object sender, EventArgs args)
 		{
 			foreach (var rectangle in _selection)
-				_subregion.Rectangles.Add(new SegmentBounds(rectangle.Left, rectangle.Top, rectangle.Right - 1, rectangle.Bottom - 1));
+				_subregion.Rectangles.Add(new SegmentBounds(rectangle.Left, rectangle.Top, rectangle.Right - 1,
+					rectangle.Bottom - 1));
 
 			InvalidateRender();
 		}
