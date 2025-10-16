@@ -14,6 +14,17 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            
+            <ToolBarTray Grid.Row="0">
+                <ToolBar Band="0" BandIndex="0">
+                    <Button Command="{Binding AddEntryCommand}" ToolTip="Add entry">
+                        <Image Source="../../Resources/Add.png" Width="24" Height="24" />
+                    </Button>
+                    <Button Command="{Binding RemoveEntryCommand}" ToolTip="Delete entry">
+                        <Image Source="../../Resources/Delete.png" Width="24" Height="24" />
+                    </Button>
+                </ToolBar>
+            </ToolBarTray>
 
             <DataGrid Grid.Row="1"
                       ItemsSource="{Binding ActiveContent.Entries, Source={StaticResource applicationPresenter}}"

@@ -93,6 +93,8 @@ public class SegmentTreasure : ObservableObject, ICloneable, ISegmentObject
 
 		if (treasureViewModel is null)
 			presenter.Documents.Add(treasureViewModel = new TreasureViewModel(this));
+		else
+			treasureViewModel.ActiveTreasure = this;
 
 		if (presenter.ActiveDocument != treasureViewModel)
 			presenter.SetActiveDocument(treasureViewModel);
@@ -179,6 +181,8 @@ public class SegmentHoard : SegmentTreasure
 
 		if (hoardViewModel is null)
 			presenter.Documents.Add(hoardViewModel = new HoardViewModel(this));
+		else
+			hoardViewModel.ActiveHoard = this;
 
 		if (presenter.ActiveDocument != hoardViewModel)
 			presenter.SetActiveDocument(hoardViewModel);

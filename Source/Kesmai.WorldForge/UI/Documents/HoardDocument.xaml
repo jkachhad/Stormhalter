@@ -16,11 +16,12 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="3"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-
+            
             <Border Grid.Row="0"
                     Visibility="{Binding ActiveContent.IsHoard,
                         Source={StaticResource applicationPresenter},
@@ -71,8 +72,21 @@
             </Border>
 
             <GridSplitter Grid.Row="1" Height="3" HorizontalAlignment="Stretch" />
+            
+            <ToolBarTray Grid.Row="3">
+                <ToolBar Band="0" BandIndex="0">
+                    <Button Command="{Binding AddEntryCommand}"
+                            ToolTip="Add entry">
+                        <Image Source="..\..\Resources\Add.png" Width="24" Height="24" />
+                    </Button>
+                    <Button Command="{Binding RemoveEntryCommand}"
+                            ToolTip="Delete entry">
+                        <Image Source="..\..\Resources\Delete.png" Width="24" Height="24" />
+                    </Button>
+                </ToolBar>
+            </ToolBarTray>
 
-            <DataGrid Grid.Row="3"
+            <DataGrid Grid.Row="4"
                       ItemsSource="{Binding ActiveContent.Entries, Source={StaticResource applicationPresenter}}"
                       SelectionMode="Single" SelectionUnit="FullRow"
                       SelectedItem="{Binding SelectedTreasureEntry}"
