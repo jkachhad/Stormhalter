@@ -118,13 +118,12 @@ public class SegmentSubregion : ObservableObject, ICloneable, ISegmentObject
 			.OfType<SubregionViewModel>().FirstOrDefault();
 
 		if (subregionViewModel is null)
-			presenter.Documents.Add(subregionViewModel = new SubregionViewModel(presenter.Segment));
+			presenter.Documents.Add(subregionViewModel = new SubregionViewModel());
 
 		if (presenter.ActiveDocument != subregionViewModel)
 			presenter.SetActiveDocument(subregionViewModel);
 
 		presenter.SetActiveContent(this);
-		subregionViewModel.SelectedSubregion = this;
 	}
 	
 	public void Copy(Segment target)

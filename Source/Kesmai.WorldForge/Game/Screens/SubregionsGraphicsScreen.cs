@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CommonServiceLocator;
 using DigitalRune.Game.UI.Controls;
-using DigitalRune.Game.UI.Rendering;
 using DigitalRune.Graphics;
 using Kesmai.WorldForge.Editor;
 using Microsoft.Xna.Framework;
@@ -14,9 +12,11 @@ namespace Kesmai.WorldForge;
 public class SubregionsGraphicsScreen : WorldGraphicsScreen
 {
 	private SegmentSubregion _subregion;
+	private readonly ArrowTool _arrowTool;
 		
 	public SubregionsGraphicsScreen(IGraphicsService graphicsService, WorldPresentationTarget worldPresentationTarget) : base(graphicsService, worldPresentationTarget)
 	{
+		_arrowTool = new ArrowTool();
 	}
 	
 	protected override IEnumerable<MenuItem> GetContextMenuItems(int mx, int my)
@@ -41,6 +41,43 @@ public class SubregionsGraphicsScreen : WorldGraphicsScreen
 			CenterCameraOn(first.Left, first.Top);
 	}
 
+	protected override void OnHandleInput(TimeSpan deltaTime)
+	{
+		base.OnHandleInput(deltaTime);
+
+		if (_subregion is null)
+			return;
+
+		if (_arrowTool != null)
+			_worldPresentationTarget.Cursor = _arrowTool.Cursor;
+
+		var inputManager = PresentationTarget.InputManager;
+
+		if (inputManager is null)
+			return;
+
+		if (!inputManager.IsMouseOrTouchHandled && _arrowTool != null)
+			_arrowTool.OnHandleInput(_worldPresentationTarget, inputManager);
+	}
+
+	protected override void OnRender(RenderContext context)
+	{
+		base.OnRender(context);
+
+		if (_subregion is null)
+			return;
+
+		var graphicsService = context.GraphicsService;
+		var spriteBatch = graphicsService.GetSpriteBatch();
+
+		spriteBatch.Begin(SpriteSortMode.Immediate, samplerState: SamplerState.PointClamp);
+
+		if (_isMouseOver && _arrowTool != null)
+			_arrowTool.OnRender(context);
+
+		spriteBatch.End();
+	}
+
 	protected override void OnAfterRender(SpriteBatch spriteBatch)
 	{
 		base.OnAfterRender(spriteBatch);
@@ -59,9 +96,6 @@ public class SubregionsGraphicsScreen : WorldGraphicsScreen
 
 				spriteBatch.FillRectangle(bounds, _subregion.Color);
 				spriteBatch.DrawRectangle(bounds, _subregion.Border);
-
-				_font.DrawString(spriteBatch, RenderTransform.Identity, _subregion.Name,
-					new Vector2(bounds.X + 5, bounds.Y + 5), Color.White);
 			}
 		}
 	}

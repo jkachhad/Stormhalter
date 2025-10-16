@@ -3,148 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Kesmai.WorldForge.UI.Documents"
              xmlns:worldForge="clr-namespace:Kesmai.WorldForge"
-             xmlns:wfeditor="clr-namespace:Kesmai.WorldForge.Editor"
-             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
-             xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              
              FontFamily="Tahoma" FontSize="14">
-    <UserControl.Resources>
-        <CollectionViewSource 
-            x:Key="collectionViewSource"
-            Source="{Binding Subregions.Subregions}">
-
-            <CollectionViewSource.SortDescriptions>
-                <componentModel:SortDescription PropertyName="Name" 
-                                                Direction="Ascending" />
-            </CollectionViewSource.SortDescriptions>
-        </CollectionViewSource>
-
-        <HierarchicalDataTemplate DataType="{x:Type local:SubregionViewModel+SegmentSubregionGroup}" ItemsSource="{Binding SegmentSubregions}">
-
-            <TextBlock Text="{Binding Name}" FontWeight="Bold" Margin="3"/>
-
-            <HierarchicalDataTemplate.ItemContainerStyle>
-                <Style TargetType="TreeViewItem">
-                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
-                    <Setter Property="ToolTip" Value="{Binding Debug}"/>
-
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                            <Setter Property="FontWeight" Value="Bold"/>
-                            <Setter Property="Background"  Value="{DynamicResource {x:Static SystemColors.MenuHighlightColor}}"/>
-                            <Setter Property="Foreground"  Value="{DynamicResource {x:Static SystemColors.ControlDarkColor}}"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </HierarchicalDataTemplate.ItemContainerStyle>
-        </HierarchicalDataTemplate>
-
-        <DataTemplate DataType="{x:Type wfeditor:SegmentSubregion}">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <TextBlock Text="{Binding Name}" Margin="3"/>
-            </StackPanel>
-        </DataTemplate>
-
-        <Style x:Key="MyTreeItemStyle" TargetType="TreeViewItem">
-            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
-            <Setter Property="ToolTip" Value="{Binding Debug}"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                    <Setter Property="Background"  Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-                    <Setter Property="Foreground"  Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-    </UserControl.Resources>
-    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-            </Grid.RowDefinitions>
-
-            <ToolBar Padding="2" Grid.Row="0">
-                <ToolBar.Items>
-                    <Button Width="24" Height="24"
-                            Command="{Binding AddSubregionCommand}">
-                        <Image Source="../../Resources/Add.png"/>
-                    </Button>
-                    <Button Width="24" Height="24"
-                            Command="{Binding RemoveSubregionCommand}"
-                            CommandParameter="{Binding SelectedSubregion}">
-                        <Image Source="../../Resources/Delete.png" />
-                    </Button>
-                    <Button Width="24" Height="24"
-                                    Command="{Binding ExportSubregionCommand}"
-                                    ToolTip="Copy subregion to Clipboard"
-                                    CommandParameter="{Binding SelectedSubregion}">
-                        <Image Source="../../Resources/Export.png" />
-                    </Button>
-                    <Button Width="24" Height="24"
-                                    Command="{Binding ImportSubregionCommand}"
-                                    ToolTip="Paste subregion from Clipboard">
-                        <Image Source="../../Resources/Import.png" />
-                    </Button>
-                </ToolBar.Items>
-            </ToolBar>
-
-            <ScrollViewer Grid.Row="1"
-                                  VerticalScrollBarVisibility="Auto" 
-                                  HorizontalScrollBarVisibility="Disabled" 
-                                  PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" 
-                                  MinHeight="300" MaxHeight="800" MinWidth="300">
-
-                <TreeView x:Name="_tree"
-                                  ItemsSource="{Binding Groups.Groups}"
-                                  ItemContainerStyle="{StaticResource MyTreeItemStyle}"
-                                  SelectedItemChanged="TreeView_SelectedItemChanged"
-                                  VirtualizingStackPanel.IsVirtualizing="True"
-                                  VirtualizingStackPanel.VirtualizationMode="Recycling"
-                                  ScrollViewer.CanContentScroll="True"/>
-            </ScrollViewer>
-
-            <syncfusion:PropertyGrid    Grid.Row="2" Margin="0,3,0,0"
-                                                SelectedObject="{Binding SelectedSubregion}"
-                                                SortDirection="{x:Null}"
-                                                AutoGenerateItems="False"
-                                                DisableAnimationOnObjectSelection="True"
-                                                ValueChanged="PropertyGrid_ValueChanged"
-                                                MinHeight="150" MaxHeight="200">
-                <syncfusion:PropertyGrid.Items>
-                    <syncfusion:PropertyGridItem PropertyName="Name" />
-                    <syncfusion:PropertyGridItem PropertyName="Region" />
-                    <syncfusion:PropertyGridItem PropertyName="Type" />
-                </syncfusion:PropertyGrid.Items>
-            </syncfusion:PropertyGrid>
-
-            <DataGrid Grid.Row="3" Margin="0,3,0,0"
-                      AutoGenerateColumns="False" CanUserAddRows="true" CanUserDeleteRows="true"
-                      ItemsSource="{Binding SelectedSubregion.Rectangles}"
-                      FontFamily="Tahoma" FontSize="12"
-                      MinHeight="200" MaxHeight="350">
-                <DataGrid.Columns>
-                    <DataGridTextColumn MinWidth="70" Header="Left" Binding="{Binding Left}"></DataGridTextColumn>
-                    <DataGridTextColumn MinWidth="70" Header="Top" Binding="{Binding Top}"></DataGridTextColumn>
-                    <DataGridTextColumn MinWidth="70" Header="Right" Binding="{Binding Right}"></DataGridTextColumn>
-                    <DataGridTextColumn MinWidth="70" Header="Bottom" Binding="{Binding Bottom}"></DataGridTextColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-            
-        </Grid>
+        <DataGrid
+                  AutoGenerateColumns="False" CanUserAddRows="true" CanUserDeleteRows="true"
+                  ItemsSource="{Binding ActiveContent.Rectangles, Source={StaticResource applicationPresenter}}"
+                  FontFamily="Tahoma" FontSize="12" MinHeight="200">
+            <DataGrid.Columns>
+                <DataGridTextColumn MinWidth="70" Header="Left" Binding="{Binding Left}"></DataGridTextColumn>
+                <DataGridTextColumn MinWidth="70" Header="Top" Binding="{Binding Top}"></DataGridTextColumn>
+                <DataGridTextColumn MinWidth="70" Header="Right" Binding="{Binding Right}"></DataGridTextColumn>
+                <DataGridTextColumn MinWidth="70" Header="Bottom" Binding="{Binding Bottom}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
         
         <worldForge:SubregionsPresentationTarget Grid.Column="1" x:Name="_presenter" Margin="2" />
     </Grid>
