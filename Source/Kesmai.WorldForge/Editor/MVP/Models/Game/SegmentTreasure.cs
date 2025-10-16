@@ -87,16 +87,16 @@ public class SegmentTreasure : ObservableObject, ICloneable, ISegmentObject
 		InvalidateChance();
 	}
 	
-	public void Present(ApplicationPresenter presenter)
+	public virtual void Present(ApplicationPresenter presenter)
 	{
-		var treasureViewModel = presenter.Documents.OfType<TreasuresViewModel>().FirstOrDefault();
+		var treasureViewModel = presenter.Documents.OfType<TreasureViewModel>().FirstOrDefault();
 
 		if (treasureViewModel is null)
-			presenter.Documents.Add(treasureViewModel = new TreasuresViewModel());
+			presenter.Documents.Add(treasureViewModel = new TreasureViewModel(this));
 
 		if (presenter.ActiveDocument != treasureViewModel)
 			presenter.SetActiveDocument(treasureViewModel);
-
+					
 		presenter.SetActiveContent(this);
 	}
 	
@@ -171,6 +171,19 @@ public class SegmentHoard : SegmentTreasure
 	{
 		_scripts.Clear();
 		_scripts.AddRange(hoard.Scripts.Select(s => s.Clone()));
+	}
+
+	public override void Present(ApplicationPresenter presenter)
+	{
+		var hoardViewModel = presenter.Documents.OfType<HoardViewModel>().FirstOrDefault();
+
+		if (hoardViewModel is null)
+			presenter.Documents.Add(hoardViewModel = new HoardViewModel(this));
+
+		if (presenter.ActiveDocument != hoardViewModel)
+			presenter.SetActiveDocument(hoardViewModel);
+					
+		presenter.SetActiveContent(this);
 	}
 
 	public override void Copy(Segment target)

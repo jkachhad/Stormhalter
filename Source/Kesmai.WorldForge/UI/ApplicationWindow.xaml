@@ -128,8 +128,12 @@
                     <documents:RegionSpawnDocument />
                 </DataTemplate>
                 
-                <DataTemplate DataType="{x:Type documents:TreasuresViewModel}">
-                    <documents:TreasuresDocument />
+                <DataTemplate DataType="{x:Type documents:TreasureViewModel}">
+                    <documents:TreasureDocument />
+                </DataTemplate>
+                
+                <DataTemplate DataType="{x:Type documents:HoardViewModel}">
+                    <documents:HoardDocument />
                 </DataTemplate>
             </DockingManager.Resources>
             
