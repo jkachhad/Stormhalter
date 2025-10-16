@@ -35,14 +35,7 @@ public partial class EntitiesDocument : UserControl
 	}
 }
 
-public class EntitiesViewModel : ObservableRecipient, IDisposable
+public class EntitiesViewModel : ObservableRecipient
 {
-    private bool _isDisposed = false;
-    
-    public void Dispose()
-    {
-        _isDisposed = true;
-    }
-
 	public string Name => "(Entities)";
 }
