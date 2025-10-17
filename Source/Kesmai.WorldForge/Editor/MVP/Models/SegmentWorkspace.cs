@@ -26,9 +26,10 @@ public class SegmentWorkspace
 		});
 	}
 
-	public void Start(Segment segment)
+	public async void Start(Segment segment)
 	{
-		var refs = Task.Run(() => NuGetResolver.Resolve("Kesmai.Server.Reference", "net8.0-windows8.0"));
+		var packageReader = await NuGetResolver.Resolve("Kesmai.Server.Reference", "net8.0-windows8.0");
+		var packageReferences = await NuGetResolver.ResolveMetadataReferences(packageReader);
 		
 		var blacklistedAssemblies = new[]
 		{
@@ -69,8 +70,7 @@ public class SegmentWorkspace
 			.Select(a => (MetadataReference)MetadataReference.CreateFromFile(a.Location))
 			.ToList();
 
-		foreach (var metadataReference in refs.Result)
-			metadataReferences.Add(metadataReference);
+		metadataReferences.AddRange(packageReferences);
 		
 		var serviceAssemblies = new[]
 		{
