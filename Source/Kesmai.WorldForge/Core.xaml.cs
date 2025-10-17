@@ -166,6 +166,13 @@ public partial class Core : Application
 			CustomArtPath = CustomArtConfigPath;
 		else
 			CustomArtPath = _storageDirectory.FullName;
+
+		if (Current.Resources["componentPalette"] is ComponentPalette componentPalette)
+		{
+			services.Register(typeof(ComponentPalette), null, componentPalette);
+			
+			componentPalette.Initialize();
+		}
 	}
 	
 	#endregion
