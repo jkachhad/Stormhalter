@@ -1,0 +1,27 @@
+<UserControl x:Class="Kesmai.WorldForge.UI.Documents.ComponentDocument"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+             xmlns:worldForge="clr-namespace:Kesmai.WorldForge"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="600"
+             FontFamily="Tahoma" FontSize="14">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <avalonedit:TextEditor Grid.Column="0" x:Name="_editor"
+                             ShowLineNumbers="True" 
+                             FontFamily="Consolas" FontSize="14" 
+                             SyntaxHighlighting="XML"
+                             Margin="5"
+                             
+                             TextChanged="OnEditorChanged"/>
+        
+        <worldForge:ComponentPresentationTarget Grid.Column="1" x:Name="_presenter" Margin="2" />
+    </Grid>
+</UserControl>
