@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Windows;
+using System.Linq;
 using System.Xml.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
-using DigitalRune.Game.UI;
-using DigitalRune.Game.UI.Controls;
-using DigitalRune.Mathematics.Algebra;
+using Kesmai.WorldForge.Editor;
+using Kesmai.WorldForge.UI.Documents;
 using Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge.Models;
 
-public abstract class TerrainComponent : ObservableObject
+public abstract class TerrainComponent : ObservableObject, ISegmentObject
 {
     #region Static
 
@@ -142,6 +141,24 @@ public abstract class TerrainComponent : ObservableObject
     }
 
     public abstract TerrainComponent Clone();
+    
+    public void Present(ApplicationPresenter presenter)
+    {
+        var componentViewModel = presenter.Documents.OfType<ComponentViewModel>().FirstOrDefault();
+
+        if (componentViewModel is null)
+            presenter.Documents.Add(componentViewModel = new ComponentViewModel());
+
+        if (presenter.ActiveDocument != componentViewModel)
+            presenter.SetActiveDocument(componentViewModel);
+
+        presenter.SetActiveContent(this);
+    }
+
+    public void Copy(Segment target)
+    {
+        target.Components.Add(Clone());
+    }
 
     #endregion
 }

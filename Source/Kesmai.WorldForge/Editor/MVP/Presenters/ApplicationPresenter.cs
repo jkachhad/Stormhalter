@@ -297,11 +297,12 @@ public class ApplicationPresenter : ObservableRecipient
 		
 		process("Treasures.xml", () => segment.Treasures = new SegmentTreasures(),
 			(root, version) => segment.Treasures.Load(root, version));
+		
+		process("Components.xml", () => segment.Components = new SegmentComponents(),
+			(root, version) => segment.Components.Load(root, version));
 
 		Segment = segment;
 		Segment.UpdateTiles();
-		
-		/*SelectTool(Tools.FirstOrDefault());*/
 	}
 
 	private void SaveSegment(bool queryPath)
@@ -352,6 +353,7 @@ public class ApplicationPresenter : ObservableRecipient
 			write(_segment.Entities.Save, "entities", "Entities.xml");
 			write(_segment.Spawns.Save, "spawns", "Spawns.xml");
 			write(_segment.Treasures.Save, "treasures", "Treasures.xml");
+			write(_segment.Components.Save, "components", "Components.xml");
 			
 			// find the project file and save it
 			var segmentProject = new FileInfo(Path.Combine(targetPath, $"{_segment.Name}.csproj"));
@@ -381,7 +383,8 @@ public class ApplicationPresenter : ObservableRecipient
 					"Subregions.xml",
 					"Entities.xml",
 					"Spawns.xml",
-					"Treasures.xml"
+					"Treasures.xml",
+					"Components.xml"
 				};
 
 				if (additionalFiles.Any())

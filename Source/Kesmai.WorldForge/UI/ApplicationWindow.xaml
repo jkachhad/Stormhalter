@@ -119,6 +119,10 @@
                 <DataTemplate DataType="{x:Type documents:EntitiesViewModel}">
                     <documents:EntitiesDocument />
                 </DataTemplate>
+
+                <DataTemplate DataType="{x:Type documents:ComponentViewModel}">
+                    <documents:ComponentDocument />
+                </DataTemplate>
                 
                 <DataTemplate DataType="{x:Type documents:LocationSpawnViewModel}">
                     <documents:LocationSpawnDocument />
