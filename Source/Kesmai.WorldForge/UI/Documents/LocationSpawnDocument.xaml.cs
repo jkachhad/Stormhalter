@@ -17,7 +17,7 @@ public partial class LocationSpawnDocument : UserControl
 		
         messenger.Register<ActiveContentChanged>(this, (_, message) =>
         {
-            if (message.Value is not LocationSpawner locationSpawn)
+            if (message.Value is not LocationSegmentSpawner locationSpawn)
                 return;
 			
             var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();

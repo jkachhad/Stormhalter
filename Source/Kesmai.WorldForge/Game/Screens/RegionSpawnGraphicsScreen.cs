@@ -17,7 +17,7 @@ public class RegionSpawnGraphicsScreen : WorldGraphicsScreen
 	private readonly Color _exclusionBorder = Color.FromNonPremultiplied(255, 0, 0, 255);
 	private readonly Color _exclusionFill = Color.FromNonPremultiplied(100, 50, 50, 150);
 
-	private RegionSpawner _spawner;
+	private RegionSegmentSpawner _segmentSpawner;
 
 	private readonly ArrowTool _arrowTool;
 
@@ -26,14 +26,14 @@ public class RegionSpawnGraphicsScreen : WorldGraphicsScreen
 		_arrowTool = new ArrowTool();
 	}
 
-	public void SetSpawner(RegionSpawner spawner)
+	public void SetSpawner(RegionSegmentSpawner segmentSpawner)
 	{
-		_spawner = spawner;
+		_segmentSpawner = segmentSpawner;
 
-		if (_spawner is null)
+		if (_segmentSpawner is null)
 			return;
 
-		var inclusion = _spawner.Inclusions.FirstOrDefault();
+		var inclusion = _segmentSpawner.Inclusions.FirstOrDefault();
 
 		if (inclusion != null)
 		{
@@ -46,7 +46,7 @@ public class RegionSpawnGraphicsScreen : WorldGraphicsScreen
 	{
 		base.OnHandleInput(deltaTime);
 
-		if (_spawner is null)
+		if (_segmentSpawner is null)
 			return;
 
 		if (_arrowTool != null)
@@ -63,7 +63,7 @@ public class RegionSpawnGraphicsScreen : WorldGraphicsScreen
 
 	protected override IEnumerable<MenuItem> GetContextMenuItems(int mx, int my)
 	{
-		if (_spawner is null)
+		if (_segmentSpawner is null)
 			yield break;
 
 		if (_selection.IsSelected(mx, my, _worldPresentationTarget.Region))
@@ -72,14 +72,14 @@ public class RegionSpawnGraphicsScreen : WorldGraphicsScreen
 			yield return _contextMenu.Create("Add selection to Exclusions..", selectionAppendExclusions);
 		}
 
-		var inclusion = _spawner.Inclusions.OrderBy(r => r.Area).FirstOrDefault(r => r.Contains(mx, my));
-		var exclusion = _spawner.Exclusions.OrderBy(r => r.Area).FirstOrDefault(r => r.Contains(mx, my));
+		var inclusion = _segmentSpawner.Inclusions.OrderBy(r => r.Area).FirstOrDefault(r => r.Contains(mx, my));
+		var exclusion = _segmentSpawner.Exclusions.OrderBy(r => r.Area).FirstOrDefault(r => r.Contains(mx, my));
 
 		if (inclusion != null)
 		{
 			yield return _contextMenu.Create("Remove Inclusion", (s, a) =>
 			{
-				_spawner.Inclusions.Remove(inclusion);
+				_segmentSpawner.Inclusions.Remove(inclusion);
 				InvalidateRender();
 			});
 		}
@@ -88,7 +88,7 @@ public class RegionSpawnGraphicsScreen : WorldGraphicsScreen
 		{
 			yield return _contextMenu.Create("Remove Exclusion", (s, a) =>
 			{
-				_spawner.Exclusions.Remove(exclusion);
+				_segmentSpawner.Exclusions.Remove(exclusion);
 				InvalidateRender();
 			});
 		}
@@ -96,7 +96,7 @@ public class RegionSpawnGraphicsScreen : WorldGraphicsScreen
 		void selectionAppendInclusions(object sender, EventArgs args)
 		{
 			foreach (var rectangle in _selection)
-				_spawner.Inclusions.Add(new SegmentBounds(rectangle.Left, rectangle.Top, rectangle.Right - 1, rectangle.Bottom - 1));
+				_segmentSpawner.Inclusions.Add(new SegmentBounds(rectangle.Left, rectangle.Top, rectangle.Right - 1, rectangle.Bottom - 1));
 
 			InvalidateRender();
 		}
@@ -104,7 +104,7 @@ public class RegionSpawnGraphicsScreen : WorldGraphicsScreen
 		void selectionAppendExclusions(object sender, EventArgs args)
 		{
 			foreach (var rectangle in _selection)
-				_spawner.Exclusions.Add(new SegmentBounds(rectangle.Left, rectangle.Top, rectangle.Right - 1, rectangle.Bottom - 1));
+				_segmentSpawner.Exclusions.Add(new SegmentBounds(rectangle.Left, rectangle.Top, rectangle.Right - 1, rectangle.Bottom - 1));
 
 			InvalidateRender();
 		}
@@ -114,7 +114,7 @@ public class RegionSpawnGraphicsScreen : WorldGraphicsScreen
 	{
 		base.OnRender(context);
 
-		if (_spawner is null)
+		if (_segmentSpawner is null)
 			return;
 
 		var graphicsService = context.GraphicsService;
@@ -132,12 +132,12 @@ public class RegionSpawnGraphicsScreen : WorldGraphicsScreen
 	{
 		base.OnAfterRender(spriteBatch);
 
-		if (_spawner is null)
+		if (_segmentSpawner is null)
 			return;
 
 		var viewRectangle = GetViewRectangle();
 
-		foreach (var rectangle in _spawner.Inclusions)
+		foreach (var rectangle in _segmentSpawner.Inclusions)
 		{
 			if (!viewRectangle.Intersects(rectangle.ToRectangle()))
 				continue;
@@ -147,11 +147,11 @@ public class RegionSpawnGraphicsScreen : WorldGraphicsScreen
 			spriteBatch.FillRectangle(bounds, _inclusionFill);
 			spriteBatch.DrawRectangle(bounds, _inclusionBorder);
 
-			_font.DrawString(spriteBatch, RenderTransform.Identity, _spawner.Name,
+			_font.DrawString(spriteBatch, RenderTransform.Identity, _segmentSpawner.Name,
 				new Vector2(bounds.X + 5, bounds.Y + 5), Color.White);
 		}
 
-		foreach (var rectangle in _spawner.Exclusions)
+		foreach (var rectangle in _segmentSpawner.Exclusions)
 		{
 			if (rectangle is { Left: 0, Top: 0, Right: 0, Bottom: 0 } || !viewRectangle.Intersects(rectangle.ToRectangle()))
 				continue;

@@ -17,7 +17,7 @@ public partial class RegionSpawnDocument : UserControl
         
         messenger.Register<ActiveContentChanged>(this, (_, message) =>
         {
-            if (message.Value is not RegionSpawner regionSpawn)
+            if (message.Value is not RegionSegmentSpawner regionSpawn)
                 return;
             
             var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();

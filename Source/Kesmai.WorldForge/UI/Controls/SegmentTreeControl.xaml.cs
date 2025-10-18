@@ -710,27 +710,27 @@ public partial class SegmentTreeControl : UserControl
         return item;
     }
 
-    private TreeViewItem CreateSpawnerEntryNode(Spawner spawner, IList collection)
+    private TreeViewItem CreateSpawnerEntryNode(SegmentSpawner segmentSpawner, IList collection)
     {
-        var item = new TreeViewItem { Tag = spawner };
+        var item = new TreeViewItem { Tag = segmentSpawner };
 
         var panel = new StackPanel { Orientation = Orientation.Horizontal };
-        Shape icon = spawner switch
+        Shape icon = segmentSpawner switch
         {
-            LocationSpawner => new Ellipse { Width = 10, Height = 10, Fill = Brushes.SkyBlue },
-            RegionSpawner => new Rectangle { Width = 10, Height = 10, Fill = Brushes.Orange },
+            LocationSegmentSpawner => new Ellipse { Width = 10, Height = 10, Fill = Brushes.SkyBlue },
+            RegionSegmentSpawner => new Rectangle { Width = 10, Height = 10, Fill = Brushes.Orange },
             _ => new Rectangle { Width = 10, Height = 10, Fill = Brushes.Gray }
         };
         icon.Margin = new Thickness(2, 0, 2, 0);
         panel.Children.Add(icon);
-        panel.Children.Add(new TextBlock { Text = spawner.Name });
+        panel.Children.Add(new TextBlock { Text = segmentSpawner.Name });
         item.Header = panel;
 
         var menu = new ContextMenu();
         var rename = new MenuItem { Header = "Rename" };
-        rename.Click += (s, e) => RenameSegmentObject(spawner, item);
+        rename.Click += (s, e) => RenameSegmentObject(segmentSpawner, item);
         var delete = new MenuItem { Header = "Delete" };
-        delete.Click += (s, e) => DeleteSegmentObject(spawner, item, collection);
+        delete.Click += (s, e) => DeleteSegmentObject(segmentSpawner, item, collection);
         menu.Items.Add(rename);
         menu.Items.Add(delete);
         item.ContextMenu = menu;
@@ -773,7 +773,7 @@ public partial class SegmentTreeControl : UserControl
         Segment.Treasures.Add(new SegmentHoard { Name = name });
     }
 
-    private void AddSpawner<T>(IList<T> collection, string typeName, int regionId) where T : Spawner, new()
+    private void AddSpawner<T>(IList<T> collection, string typeName, int regionId) where T : SegmentSpawner, new()
     {
         var defaultName = $"{typeName} {collection.Count + 1}";
         var name = Interaction.InputBox("Name", $"Add {typeName}", defaultName);
@@ -785,10 +785,10 @@ public partial class SegmentTreeControl : UserControl
         collection.Add(spawner);
     }
 
-    private static int GetRegionId(Spawner spawner) => spawner switch
+    private static int GetRegionId(SegmentSpawner segmentSpawner) => segmentSpawner switch
     {
-        LocationSpawner ls => ls.Region,
-        RegionSpawner rs => rs.Region,
+        LocationSegmentSpawner ls => ls.Region,
+        RegionSegmentSpawner rs => rs.Region,
         _ => 0
     };
 

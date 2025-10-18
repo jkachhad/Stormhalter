@@ -25,7 +25,7 @@ public class LocationSpawnGraphicsScreen : WorldGraphicsScreen
 
 	private static readonly Color _highlightColor = Color.FromNonPremultiplied(0, 255, 255, 200);
 
-	private LocationSpawner _spawner;
+	private LocationSegmentSpawner _segmentSpawner;
 
 	private int _targetMx;
 	private int _targetMy;
@@ -58,14 +58,14 @@ public class LocationSpawnGraphicsScreen : WorldGraphicsScreen
 		_locked = true;
 	}
 
-	public void SetSpawner(LocationSpawner spawner)
+	public void SetSpawner(LocationSegmentSpawner segmentSpawner)
 	{
-		_spawner = spawner;
+		_segmentSpawner = segmentSpawner;
 
-		if (_spawner == null)
+		if (_segmentSpawner == null)
 			return;
 
-		SetCameraLocation(_spawner.X, _spawner.Y);
+		SetCameraLocation(_segmentSpawner.X, _segmentSpawner.Y);
 
 		_locked = true;
 	}
@@ -82,7 +82,7 @@ public class LocationSpawnGraphicsScreen : WorldGraphicsScreen
 	{
 		base.OnHandleInput(deltaTime);
 
-		if (_spawner == null)
+		if (_segmentSpawner == null)
 			return;
 
 		var inputManager = PresentationTarget.InputManager;
@@ -123,8 +123,8 @@ public class LocationSpawnGraphicsScreen : WorldGraphicsScreen
 		}
 		else if (inputManager.IsPressed(Keys.Enter, true))
 		{
-			_spawner.X = _targetMx;
-			_spawner.Y = _targetMy;
+			_segmentSpawner.X = _targetMx;
+			_segmentSpawner.Y = _targetMy;
 
 			_locked = true;
 
@@ -138,7 +138,7 @@ public class LocationSpawnGraphicsScreen : WorldGraphicsScreen
 	{
 		base.OnAfterRender(spriteBatch);
 
-		if (_spawner is null)
+		if (_segmentSpawner is null)
 			return;
 
 		var viewRectangle = GetViewRectangle();

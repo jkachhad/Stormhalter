@@ -16,11 +16,11 @@ using Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge;
 
-public class SegmentSpawnChanged(Spawner spawner) : ValueChangedMessage<Spawner>(spawner);
+public class SegmentSpawnChanged(SegmentSpawner segmentSpawner) : ValueChangedMessage<SegmentSpawner>(segmentSpawner);
 	
 [Script("OnBeforeSpawn", "void OnBeforeSpawn(Spawner spawner)", "{", "}")]
 [Script("OnAfterSpawn", "void OnAfterSpawn(Spawner spawner, MobileEntity spawn)", "{", "}")]
-public abstract class Spawner : ObservableObject, ICloneable, ISegmentObject
+public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObject
 {
 	private string _name;
 	private bool _enabled;
@@ -95,12 +95,12 @@ public abstract class Spawner : ObservableObject, ICloneable, ISegmentObject
 		set => SetProperty(ref _scripts, value);
 	}
 		
-	protected Spawner()
+	protected SegmentSpawner()
 	{
 		ValidateScripts();
 	}
 
-	protected Spawner(XElement element)
+	protected SegmentSpawner(XElement element)
 	{
 		_name = (string)element.Attribute("name");
 			
@@ -203,7 +203,7 @@ public abstract class Spawner : ObservableObject, ICloneable, ISegmentObject
 }
 
 [Obfuscation(Exclude = true, ApplyToMembers = false)]
-public class LocationSpawner : Spawner
+public class LocationSegmentSpawner : SegmentSpawner
 {
 	private int _x;
 	private int _y;
@@ -230,11 +230,11 @@ public class LocationSpawner : Spawner
 		set => SetProperty(ref _region, value);
     }
 
-    public LocationSpawner() : base()
+    public LocationSegmentSpawner() : base()
 	{
 	}
 
-	public LocationSpawner(XElement element) : base(element)
+	public LocationSegmentSpawner(XElement element) : base(element)
 	{
 		var locationElement = element.Element("location");
 
@@ -261,7 +261,7 @@ public class LocationSpawner : Spawner
 	
 	public override void Copy(Segment target)
 	{
-		if (Clone() is LocationSpawner clonedSpawner)
+		if (Clone() is LocationSegmentSpawner clonedSpawner)
 			target.Spawns.Location.Add(clonedSpawner);
 	}
 
@@ -280,7 +280,7 @@ public class LocationSpawner : Spawner
 
 	public override object Clone()
 	{
-		return new LocationSpawner(GetXElement())
+		return new LocationSegmentSpawner(GetXElement())
 		{
 			Name = $"Copy of {Name}",
 		};
@@ -288,7 +288,7 @@ public class LocationSpawner : Spawner
 }
 
 [Obfuscation(Exclude = true, ApplyToMembers = false)]
-public class RegionSpawner : Spawner
+public class RegionSegmentSpawner : SegmentSpawner
 {
 	private int _region;
 		
@@ -302,13 +302,13 @@ public class RegionSpawner : Spawner
 	public ObservableCollection<SegmentBounds> Inclusions { get; set; } = new ObservableCollection<SegmentBounds>();
 	public ObservableCollection<SegmentBounds> Exclusions { get; set; } = new ObservableCollection<SegmentBounds>();
 
-	public RegionSpawner()
+	public RegionSegmentSpawner()
 	{
 		Inclusions.Add(new SegmentBounds());
 		Exclusions.Add(new SegmentBounds());
 	}
 
-	public RegionSpawner(XElement element)  : base(element)
+	public RegionSegmentSpawner(XElement element)  : base(element)
 	{
 		var boundsElement = element.Element("bounds");
 			
@@ -354,7 +354,7 @@ public class RegionSpawner : Spawner
 	
 	public override void Copy(Segment target)
 	{
-		if (Clone() is RegionSpawner clonedSpawner)
+		if (Clone() is RegionSegmentSpawner clonedSpawner)
 			target.Spawns.Region.Add(clonedSpawner);
 	}
 
@@ -389,7 +389,7 @@ public class RegionSpawner : Spawner
 	
 	public override object Clone()
 	{
-		return new RegionSpawner(GetXElement())
+		return new RegionSegmentSpawner(GetXElement())
 		{
 			Name = $"Copy of {Name}",
 		};

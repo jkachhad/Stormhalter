@@ -11,9 +11,9 @@ public class LocationSpawnPresentationTarget : WorldPresentationTarget
 		return _screen = new LocationSpawnGraphicsScreen(graphicsService, this);
 	}
 
-	public void SetSpawner(LocationSpawner spawner)
+	public void SetSpawner(LocationSegmentSpawner segmentSpawner)
 	{
 		if (_screen != null)
-			_screen.SetSpawner(spawner);
+			_screen.SetSpawner(segmentSpawner);
 	}
 }

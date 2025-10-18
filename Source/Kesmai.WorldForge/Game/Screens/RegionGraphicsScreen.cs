@@ -120,7 +120,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		
 		void createLocationSpawner(object sender, EventArgs args)
 		{
-			var spawn = new LocationSpawner()
+			var spawn = new LocationSegmentSpawner()
 			{
 				Name = $"Location Spawn {segmentTile.X}, {segmentTile.Y} [{region.ID}]",
 				X = segmentTile.X, Y = segmentTile.Y, Region = region.ID,
@@ -136,7 +136,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		
 		void createRegionSpawner(object sender, EventArgs args)
 		{
-			var spawn = new RegionSpawner()
+			var spawn = new RegionSegmentSpawner()
 			{
 				Name = $"Region Spawn [{region.ID}]",
 				Region = region.ID,

@@ -10,19 +10,19 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace Kesmai.WorldForge.Editor;
 
-public class SegmentSpawnCreated(Spawner spawner) : ValueChangedMessage<Spawner>(spawner);
-public class SegmentSpawnDeleted(Spawner spawner) : ValueChangedMessage<Spawner>(spawner);
+public class SegmentSpawnCreated(SegmentSpawner segmentSpawner) : ValueChangedMessage<SegmentSpawner>(segmentSpawner);
+public class SegmentSpawnDeleted(SegmentSpawner segmentSpawner) : ValueChangedMessage<SegmentSpawner>(segmentSpawner);
 public class SegmentSpawnsChanged(SegmentSpawns spawners) : ValueChangedMessage<SegmentSpawns>(spawners);
 
 public class SegmentSpawns : ObservableObject
 {
 	public string Name => "(Spawns)";
 
-	public ObservableCollection<LocationSpawner> Location { get; set; }
-		= new ObservableCollection<LocationSpawner>();
+	public ObservableCollection<LocationSegmentSpawner> Location { get; set; }
+		= new ObservableCollection<LocationSegmentSpawner>();
 
-	public ObservableCollection<RegionSpawner> Region { get; set; }
-		= new ObservableCollection<RegionSpawner>();
+	public ObservableCollection<RegionSegmentSpawner> Region { get; set; }
+		= new ObservableCollection<RegionSegmentSpawner>();
 
 	public SegmentSpawns()
 	{
@@ -34,13 +34,13 @@ public class SegmentSpawns : ObservableObject
 	{
 		if (args.NewItems != null)
 		{
-			foreach (var newItem in args.NewItems.OfType<Spawner>())
+			foreach (var newItem in args.NewItems.OfType<SegmentSpawner>())
 				WeakReferenceMessenger.Default.Send(new SegmentSpawnCreated(newItem));
 		}
 			
 		if (args.OldItems != null)
 		{
-			foreach (var oldItem in args.OldItems.OfType<Spawner>())
+			foreach (var oldItem in args.OldItems.OfType<SegmentSpawner>())
 				WeakReferenceMessenger.Default.Send(new SegmentSpawnDeleted(oldItem));
 		}
 		
@@ -55,14 +55,14 @@ public class SegmentSpawns : ObservableObject
 		foreach (var spawnElement in element.Elements("spawn"))
 		{
 			var type = spawnElement.Attribute("type");
-			var spawner = default(Spawner);
+			var spawner = default(SegmentSpawner);
 						
 			if (type != null)
 			{
 				switch ((string)type)
 				{
-					case "LocationSpawner": spawner = new LocationSpawner(spawnElement); break; 
-					case "RegionSpawner": spawner = new RegionSpawner(spawnElement); break;
+					case "LocationSpawner": spawner = new LocationSegmentSpawner(spawnElement); break; 
+					case "RegionSpawner": spawner = new RegionSegmentSpawner(spawnElement); break;
 				}
 			}
 
@@ -90,9 +90,9 @@ public class SegmentSpawns : ObservableObject
 						throw new Exception($"Unable to load spawn entry '{entityName}'.");
 				}
 							
-				if (spawner is LocationSpawner locationSpawner)
+				if (spawner is LocationSegmentSpawner locationSpawner)
 					Location.Add(locationSpawner);
-				else if (spawner is RegionSpawner regionSpawner)
+				else if (spawner is RegionSegmentSpawner regionSpawner)
 					Region.Add(regionSpawner);
 			}
 		}
