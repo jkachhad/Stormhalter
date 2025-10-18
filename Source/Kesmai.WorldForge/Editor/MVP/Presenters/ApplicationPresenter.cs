@@ -83,7 +83,6 @@ public class ApplicationPresenter : ObservableRecipient
 
 	public RelayCommand CreateRegionCommand { get; set; }
 	public RelayCommand<object> DeleteRegionCommand { get; set; }
-	public RelayCommand<object> ShiftRegionCommand { get; set; }
 
 	public RelayCommand GenerateRegionCommand { get; set; }
 		
@@ -151,10 +150,6 @@ public class ApplicationPresenter : ObservableRecipient
 		DeleteRegionCommand = new RelayCommand<object>(DeleteRegion, 
 			(o) => (ActiveDocument is SegmentRegion));
 		DeleteRegionCommand.DependsOn(() => Segment, () => ActiveDocument);
-
-		ShiftRegionCommand = new RelayCommand<object>(ShiftRegion, 
-			(o) => (ActiveDocument is SegmentRegion));
-		ShiftRegionCommand.DependsOn(() => Segment, () => ActiveDocument);
 
 		GenerateRegionCommand = new RelayCommand(GenerateRegions, () => (Segment != null));
 		GenerateRegionCommand.DependsOn(() => Segment);
@@ -467,11 +462,6 @@ public class ApplicationPresenter : ObservableRecipient
 		}
 
 		ActiveDocument = Documents.FirstOrDefault();
-	}
-		
-	public void ShiftRegion(object o)
-	{
-		// TODO
 	}
 		
 	public void GenerateRegions()
