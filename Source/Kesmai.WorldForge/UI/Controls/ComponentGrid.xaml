@@ -7,9 +7,7 @@
 
                 mc:Ignorable="d"
                 
-                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                
-                SizeChanged="OnSizeChanged">
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled">
     <ListBox.ItemTemplate>
         <DataTemplate>
             <StackPanel>
@@ -17,14 +15,15 @@
                 
                 <TextBlock FontWeight="Bold" Text="{Binding Name}" Padding="3"
                            TextAlignment="Center"
-                           Background="GhostWhite" MaxWidth="104" />
+                           FontFamily="Tahoma" FontSize="12"
+                           Background="LightGray" MaxWidth="104" />
             </StackPanel>
         </DataTemplate>
     </ListBox.ItemTemplate>
     
     <ListBox.ItemsPanel>
         <ItemsPanelTemplate>
-            <ui:UniformGridPanel Columns="3" Rows="10" Loaded="uniformGridPanel_OnLoaded" />
+            <WrapPanel></WrapPanel>
         </ItemsPanelTemplate>
     </ListBox.ItemsPanel>
 </ListBox>

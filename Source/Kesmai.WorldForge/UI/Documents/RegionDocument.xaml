@@ -103,21 +103,23 @@
         </Border>
         
         <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" x:Name="_componentsPanel">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
             <Grid.RowDefinitions>
                 <RowDefinition Height="300" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <ui:ComponentCategoryTreeView Grid.Row="0"
-                                          x:Name="_categoryTreeView"
+            <ui:ComponentCategoryTreeView Grid.Row="0" x:Name="_categoryTreeView" Margin="5"
+                                          
                                           ScrollViewer.VerticalScrollBarVisibility="Auto"
                                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                          
                                           SelectedItemChanged="OnCategorySelected" />
 
-            <ui:ComponentGrid Grid.Row="1" x:Name="_componentGrid" 
-                              
-                              Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" 
-                              OpacityMask="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
+            <ui:ComponentGrid Grid.Row="1" x:Name="_componentGrid" Width="365" Margin="5"
                               
                               ScrollViewer.VerticalScrollBarVisibility="Auto"
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
