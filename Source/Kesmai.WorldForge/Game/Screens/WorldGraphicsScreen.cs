@@ -210,11 +210,7 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 			return;
 		
 		// process keyboard prior to mouse/touch.
-		if (inputManager.IsPressed(Keys.Back, false))
-		{
-			_presenter.JumpPrevious();
-		}
-		else if (inputManager.IsPressed(Keys.Add, false))
+		if (inputManager.IsPressed(Keys.Add, false))
 		{
 			ZoomFactor += 0.2f;
 		}

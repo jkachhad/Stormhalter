@@ -42,12 +42,10 @@ public class ApplicationPresenter : ObservableRecipient
 	private Segment _segment;
 	
 	private Selection _selection;
-	private TerrainSelector _filter;
 
 	private bool _showSubregions;
 
 	private object _activeDocument;
-	private object _previousDocument;
 
 	private ISegmentObject _activeContent;
 
@@ -94,8 +92,6 @@ public class ApplicationPresenter : ObservableRecipient
 
 	public RelayCommand ShowChangesWindow { get; set; }
 	public RelayCommand LaunchWiki { get; set; }
-
-	public RelayCommand<String> SwapDocumentCommand { get; set; }
 		
 	public ObservableCollection<object> Documents { get; private set; }
 		
@@ -172,9 +168,7 @@ public class ApplicationPresenter : ObservableRecipient
 				UseShellExecute = true
 			}); 
 		});
-
-		SwapDocumentCommand = new RelayCommand<string>(SwapDocument);
-
+		
 		WeakReferenceMessenger.Default
 			.Register<ApplicationPresenter, VisibilityOptionsChanged>(
 				this, (r, m) =>
@@ -239,21 +233,7 @@ public class ApplicationPresenter : ObservableRecipient
 		if (content != null && ActiveContent != content)
 			ActiveContent = content;
 	}
-
-	public void SwapDocument(String Target)
-	{
-	}
-		
 	
-	
-	public void JumpPrevious ()
-	{
-		if (_previousDocument != _activeDocument && _previousDocument != null)
-		{
-			ActiveDocument = _previousDocument;
-		}
-	}
-
 	private void CreateSegment()
 	{
 		if (_segment != null)
