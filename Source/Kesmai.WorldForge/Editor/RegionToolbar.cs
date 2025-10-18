@@ -9,7 +9,7 @@ using Kesmai.WorldForge.UI;
 
 namespace Kesmai.WorldForge;
 
-public class ToolSelected(Tool Tool) : ValueChangedMessage<Tool>(Tool);
+public class RegionToolChanged(Tool Tool) : ValueChangedMessage<Tool>(Tool);
 
 public class RegionToolbar : ObservableRecipient
 {
@@ -82,7 +82,7 @@ public class RegionToolbar : ObservableRecipient
 			nextTool.IsActive = true;
 			nextTool.OnActivate();
 			
-			WeakReferenceMessenger.Default.Send(new ToolSelected(nextTool));
+			WeakReferenceMessenger.Default.Send(new RegionToolChanged(nextTool));
 
 			var worldScreen = ServiceLocator.Current.GetInstance<WorldGraphicsScreen>();
 

@@ -13,7 +13,22 @@ namespace Kesmai.WorldForge;
 
 public class ComponentPalette : ObservableRecipient
 {
+	private ComponentsCategory _selectedCategory;
+	private TerrainComponent _selectedComponent;
+	
 	private ObservableCollection<ComponentsCategory> _categories;
+	
+	public TerrainComponent SelectedComponent
+	{
+		get => _selectedComponent;
+		set => SetProperty(ref _selectedComponent, value);
+	}
+	
+	public ComponentsCategory SelectedCategory
+	{
+		get => _selectedCategory;
+		set => SetProperty(ref _selectedCategory, value);
+	}
 
 	public ObservableCollection<ComponentsCategory> Categories
 	{

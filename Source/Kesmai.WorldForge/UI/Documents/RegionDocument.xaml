@@ -121,6 +121,9 @@
 
             <ui:ComponentGrid Grid.Row="1" x:Name="_componentGrid" Width="365" Margin="5"
                               
+                              ItemsSource="{Binding SelectedCategory.Components, Source={StaticResource componentPalette}}"
+                              SelectedItem="{Binding SelectedComponent, Source={StaticResource componentPalette}}"
+                              
                               ScrollViewer.VerticalScrollBarVisibility="Auto"
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
         </Grid>
