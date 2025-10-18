@@ -52,6 +52,7 @@ public class PaintTool : Tool
         var services = ServiceLocator.Current;
         var presenter = services.GetInstance<ApplicationPresenter>();
         var regionToolbar = services.GetInstance<RegionToolbar>();
+        var componentPalette = services.GetInstance<ComponentPalette>();
 
         var graphicsScreen = target.WorldScreen;
         var region = target.Region;
@@ -77,9 +78,9 @@ public class PaintTool : Tool
 
         if ( inputService.IsReleased ( MouseButtons.Left ) && selection.IsSelected ( cx, cy, region ) )
         {
-            var component = presenter.SelectedComponent;
+            var component = componentPalette.SelectedComponent;
 
-            var baseComponent = presenter.SelectedComponent;
+            var baseComponent = componentPalette.SelectedComponent;
 
             // TODO: Refactor later since we no longer have a component window.
             // This should be resolved by templates.

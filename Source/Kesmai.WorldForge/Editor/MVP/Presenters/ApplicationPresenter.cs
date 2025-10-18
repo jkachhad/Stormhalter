@@ -60,21 +60,6 @@ public class ApplicationPresenter : ObservableRecipient
 		get => _selection;
 		set => _selection = value;
 	}
-	
-	private ComponentsCategory _selectedComponentCategory;
-	private TerrainComponent _selectedComponent;
-		
-	public ComponentsCategory SelectedComponentCategory
-	{
-		get => _selectedComponentCategory;
-		set => SetProperty(ref _selectedComponentCategory, value);
-	}
-		
-	public TerrainComponent SelectedComponent
-	{
-		get => _selectedComponent;
-		set => SetProperty(ref _selectedComponent, value);
-	}
 		
 	public bool ShowSubregions
 	{

@@ -52,6 +52,7 @@ public class DrawTool : Tool
         var services = ServiceLocator.Current;
         var presenter = services.GetInstance<ApplicationPresenter>();
         var regionToolbar = services.GetInstance<RegionToolbar>();
+        var componentPalette = services.GetInstance<ComponentPalette>();
 
         var worldScreen = target.WorldScreen;
         var region = target.Region;
@@ -79,7 +80,7 @@ public class DrawTool : Tool
         {
             if ( selection.SurfaceArea <= 1 || selection.IsSelected ( mx, my, region ) )
             {
-                var component = presenter.SelectedComponent;
+                var component = componentPalette.SelectedComponent;
                 var selectedTile = region.GetTile ( mx, my );
 
                 if ( selectedTile == null )
@@ -142,6 +143,7 @@ public class DrawTool : Tool
 
         var services = ServiceLocator.Current;
         var presenter = services.GetInstance<ApplicationPresenter> ( );
+        var componentPalette = services.GetInstance<ComponentPalette> ( );
 
         var graphicsService = context.GraphicsService;
         var spriteBatch = graphicsService.GetSpriteBatch ( );
@@ -156,7 +158,7 @@ public class DrawTool : Tool
         var renderer = uiScreen.Renderer;
         var spriteFont = renderer.GetFontRenderer ( "Tahoma", 10 );
 
-        var component = presenter.SelectedComponent;
+        var component = componentPalette.SelectedComponent;
 
         if ( component != null )
         {
