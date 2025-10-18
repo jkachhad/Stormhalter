@@ -20,7 +20,7 @@ public class HoardViewModel : ObservableRecipient
 	private SegmentHoard _hoard;
 	private TreasureEntry _selectedTreasureEntry;
 
-	public string Name => _hoard?.Name ?? "(Hoard)";
+	public string Name => "(Hoard)";
 
 	public HoardViewModel()
 	{

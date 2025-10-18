@@ -20,7 +20,7 @@ public class TreasureViewModel : ObservableRecipient
 	private SegmentTreasure _treasure;
 	private TreasureEntry _selectedTreasureEntry;
 
-	public string Name => _treasure?.Name ?? "(Treasure)";
+	public string Name => "(Treasure)";
 
 	public TreasureViewModel()
 	{
