@@ -42,8 +42,6 @@ public class ApplicationPresenter : ObservableRecipient
 	
 	private Selection _selection;
 
-	private bool _showSubregions;
-
 	private object _activeDocument;
 
 	private ISegmentObject _activeContent;
@@ -52,16 +50,6 @@ public class ApplicationPresenter : ObservableRecipient
 	{
 		get => _selection;
 		set => _selection = value;
-	}
-		
-	public bool ShowSubregions
-	{
-		get => _showSubregions;
-		set
-		{
-			SetProperty(ref _showSubregions, value);
-			InvalidateRender();
-		}
 	}
 
 	public int UnitSize => _unitSize;
@@ -164,8 +152,6 @@ public class ApplicationPresenter : ObservableRecipient
 		});
 		
 		ExitApplicationCommand = new RelayCommand(() => Application.Current.Shutdown());
-			
-		ShowSubregions = true;
 
 		Selection = new Selection();
 
