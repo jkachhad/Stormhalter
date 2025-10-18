@@ -34,10 +34,6 @@ public class GetActiveSegmentRequestMessage : RequestMessage<Segment>
 
 public class SegmentChangedMessage(Segment Segment) : ValueChangedMessage<Segment>(Segment);
 public class ActiveContentChanged(ISegmentObject segmentObject) : ValueChangedMessage<ISegmentObject>(segmentObject);
-	
-public class UnregisterEvents
-{
-}
 
 public class ApplicationPresenter : ObservableRecipient
 {
@@ -272,7 +268,7 @@ public class ApplicationPresenter : ObservableRecipient
 			throw new InvalidOperationException("Attempt to close a segment when an active segment does not exist.");
 
 		Segment = null;
-		WeakReferenceMessenger.Default.Send(new UnregisterEvents());
+
 		Documents.Clear();
 	}
 	
