@@ -11,6 +11,21 @@ public class ComponentsCategory : ObservableObject
 	private ObservableCollection<TerrainComponent> _components;
 	private ObservableCollection<ComponentsCategory> _subcategories;
 	
+	private bool _isSelected;
+	private bool _isExpanded;
+	
+	public bool IsSelected
+	{
+		get => _isSelected;
+		set => SetProperty(ref _isSelected, value);
+	}
+	
+	public bool IsExpanded
+	{
+		get => _isExpanded;
+		set => SetProperty(ref _isExpanded, value);
+	}
+	
 	private bool _isRoot;
 	
 	public ObservableCollection<TerrainComponent> Components
