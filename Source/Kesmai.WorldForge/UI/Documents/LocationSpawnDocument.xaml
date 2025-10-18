@@ -69,7 +69,7 @@
             <DataGrid.Columns>
                 <DataGridComboBoxColumn MinWidth="200" Header="Entity" 
                                         ItemsSource="{Binding Source={StaticResource EntitiesCollection}}"
-                                        SelectedItemBinding="{Binding Entity, UpdateSourceTrigger=PropertyChanged}"></DataGridComboBoxColumn>
+                                        SelectedItemBinding="{Binding SegmentEntity, UpdateSourceTrigger=PropertyChanged}"></DataGridComboBoxColumn>
 
                 <DataGridTextColumn MinWidth="70" Header="Size" Binding="{Binding Size, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                 <DataGridTextColumn MinWidth="70" Header="Minimum" Binding="{Binding Minimum, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>

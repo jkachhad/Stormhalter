@@ -27,7 +27,7 @@ public partial class EntitiesDocument : UserControl
 		
 		messenger.Register<ActiveContentChanged>(this, (_, message) =>
 		{
-			if (message.Value is not Entity segmentEntity)
+			if (message.Value is not SegmentEntity segmentEntity)
 				return;
 
 			_scriptsTabControl.SelectedItem = segmentEntity.Scripts.FirstOrDefault();

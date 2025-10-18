@@ -72,7 +72,7 @@ public class SegmentSpawns : ObservableObject
 				{
 					var entry = new SpawnEntry(entryElement);
 
-					var entity = default(Entity);
+					var entity = default(SegmentEntity);
 					var entityName = (string)entryElement.Attribute("entity");
 
 					if (!String.IsNullOrEmpty(entityName))
@@ -82,9 +82,9 @@ public class SegmentSpawns : ObservableObject
 								entityName, StringComparison.Ordinal));
 					}
 
-					entry.Entity = entity;
+					entry.SegmentEntity = entity;
 
-					if (entry.Entity != null)
+					if (entry.SegmentEntity != null)
 						spawner.Entries.Add(entry);
 					else
 						throw new Exception($"Unable to load spawn entry '{entityName}'.");

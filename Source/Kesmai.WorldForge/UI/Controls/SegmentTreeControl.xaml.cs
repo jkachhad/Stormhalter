@@ -585,7 +585,7 @@ public partial class SegmentTreeControl : UserControl
         CreateInMemoryNode(file, file.Name + ".cs");
         */
 
-    private TreeViewItem CreateEntityGroupNode(string groupPath, IEnumerable<Entity> entities)
+    private TreeViewItem CreateEntityGroupNode(string groupPath, IEnumerable<SegmentEntity> entities)
     {
         // separate the groupPath into its components
         var groupFolders = String.IsNullOrEmpty(groupPath) ? ["Ungrouped"] : groupPath.Split(@"\");
@@ -626,21 +626,21 @@ public partial class SegmentTreeControl : UserControl
         return parentFolder;
     }
 
-    private TreeViewItem CreateEntityEntryNode(Entity entity)
+    private TreeViewItem CreateEntityEntryNode(SegmentEntity segmentEntity)
     {
-        var item = new TreeViewItem { Tag = entity };
+        var item = new TreeViewItem { Tag = segmentEntity };
 
         var panel = new StackPanel { Orientation = Orientation.Horizontal };
         var icon = new Ellipse { Width = 10, Height = 10, Fill = Brushes.Yellow, Margin = new Thickness(2, 0, 2, 0) };
         panel.Children.Add(icon);
-        panel.Children.Add(new TextBlock { Text = entity.Name });
+        panel.Children.Add(new TextBlock { Text = segmentEntity.Name });
         item.Header = panel;
 
         var menu = new ContextMenu();
         var rename = new MenuItem { Header = "Rename" };
-        rename.Click += (s, e) => RenameSegmentObject(entity, item);
+        rename.Click += (s, e) => RenameSegmentObject(segmentEntity, item);
         var delete = new MenuItem { Header = "Delete" };
-        delete.Click += (s, e) => DeleteSegmentObject(entity, item, Segment.Entities);
+        delete.Click += (s, e) => DeleteSegmentObject(segmentEntity, item, Segment.Entities);
         menu.Items.Add(rename);
         menu.Items.Add(delete);
         item.ContextMenu = menu;
@@ -683,7 +683,7 @@ public partial class SegmentTreeControl : UserControl
         var name = Interaction.InputBox("Name", "Add Entity", defaultName);
         if (string.IsNullOrWhiteSpace(name))
             return;
-        var entity = new Entity { Name = name, Group = group };
+        var entity = new SegmentEntity { Name = name, Group = group };
         Segment.Entities.Add(entity);
     }
 

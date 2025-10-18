@@ -186,7 +186,7 @@ public abstract class Spawner : ObservableObject, ICloneable, ISegmentObject
 
 		foreach (var entry in Entries)
 		{
-			if (entry.Entity != null)
+			if (entry.SegmentEntity != null)
 				element.Add(entry.GetXElement());
 		}
 
@@ -398,16 +398,16 @@ public class RegionSpawner : Spawner
 
 public class SpawnEntry : ObservableObject
 {
-	private Entity _entity;
+	private SegmentEntity _segmentEntity;
 		
 	private int _size;
 	private int _minimum;
 	private int _maximum;
 		
-	public Entity Entity
+	public SegmentEntity SegmentEntity
 	{
-		get => _entity;
-		set => SetProperty(ref _entity, value);
+		get => _segmentEntity;
+		set => SetProperty(ref _segmentEntity, value);
 	}
 		
 	public int Size
@@ -450,7 +450,7 @@ public class SpawnEntry : ObservableObject
 	public XElement GetXElement()
 	{
 		return new XElement("entry",
-			new XAttribute("entity", _entity.Name),
+			new XAttribute("entity", _segmentEntity.Name),
 			new XAttribute("size", _size),
 			new XAttribute("minimum", _minimum),
 			new XAttribute("maximum", _maximum));

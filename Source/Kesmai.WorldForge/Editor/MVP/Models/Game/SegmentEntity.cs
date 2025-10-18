@@ -19,12 +19,12 @@ using Microsoft.CodeAnalysis;
 
 namespace Kesmai.WorldForge;
 
-public class SegmentEntityChanged(Entity entity) : ValueChangedMessage<Entity>(entity);
+public class SegmentEntityChanged(SegmentEntity segmentEntity) : ValueChangedMessage<SegmentEntity>(segmentEntity);
 	
 [Script("OnSpawn", "CreatureEntity OnSpawn()", "{", "}", "\treturn new MobileEntity();")]
 [Script("OnDeath", "void OnDeath(MobileEntity source, MobileEntity killer)", "{", "}")]
 [Script("OnIncomingPlayer", "void OnIncomingPlayer(MobileEntity source, PlayerEntity player)", "{", "}")]
-public class Entity : ObservableObject, ICloneable, ISegmentObject
+public class SegmentEntity : ObservableObject, ICloneable, ISegmentObject
 {
 	private string _name;
 	private string _notes;
@@ -75,12 +75,12 @@ public class Entity : ObservableObject, ICloneable, ISegmentObject
 		set => SetProperty(ref _scripts, value);
 	}
 	
-	public Entity()
+	public SegmentEntity()
 	{
 		ValidateScripts();
 	}
 		
-	public Entity(XElement element)
+	public SegmentEntity(XElement element)
 	{
 		_name = (string)element.Attribute("name");
 
@@ -108,7 +108,7 @@ public class Entity : ObservableObject, ICloneable, ISegmentObject
 	
 	public void Copy(Segment target)
 	{
-		if (Clone() is Entity clonedEntity)
+		if (Clone() is SegmentEntity clonedEntity)
 			target.Entities.Add(clonedEntity);
 	}
 
@@ -175,7 +175,7 @@ public class Entity : ObservableObject, ICloneable, ISegmentObject
 		
 	public object Clone()
 	{
-		var clone = new Entity()
+		var clone = new SegmentEntity()
 		{
 			Name = $"Copy of {_name}",
 			Notes = _notes,
