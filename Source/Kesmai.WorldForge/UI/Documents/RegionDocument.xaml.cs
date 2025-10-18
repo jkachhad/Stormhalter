@@ -75,4 +75,15 @@ public partial class RegionDocument : UserControl
 		if (_presenter is not null && _presenter.WorldScreen is not null)
 			_presenter.WorldScreen.InvalidateRender();
 	}
+
+	private void OnCategorySelected(object sender, RoutedPropertyChangedEventArgs<object> args)
+	{
+		if (_componentGrid is null)
+			return;
+
+		if (args.NewValue is ComponentsCategory category)
+			_componentGrid.ItemsSource = category.Components;
+		else
+			_componentGrid.ClearValue(ItemsControl.ItemsSourceProperty);
+	}
 }

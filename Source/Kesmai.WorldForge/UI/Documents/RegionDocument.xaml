@@ -102,9 +102,25 @@
             <worldForge:RegionPresentationTarget Region="{Binding}" x:Name="_presenter" />
         </Border>
         
-        <ui:ComponentsPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" x:Name="_componentsPanel"
-                            Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" 
-                            OpacityMask="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
-                            VerticalAlignment="Stretch" Width="365" />
+        <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" x:Name="_componentsPanel">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="300" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <ui:ComponentCategoryTreeView Grid.Row="0"
+                                          x:Name="_categoryTreeView"
+                                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                          SelectedItemChanged="OnCategorySelected" />
+
+            <ui:ComponentGrid Grid.Row="1" x:Name="_componentGrid" 
+                              
+                              Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" 
+                              OpacityMask="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
+                              
+                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+        </Grid>
     </Grid>
 </UserControl>
