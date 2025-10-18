@@ -112,14 +112,14 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <ui:ComponentCategoryTreeView Grid.Row="0" x:Name="_categoryTreeView" Margin="5"
+            <ui:ComponentCategoryTreeView Grid.Row="0" Margin="5"
                                           
                                           ScrollViewer.VerticalScrollBarVisibility="Auto"
                                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                           
                                           SelectedItemChanged="OnCategorySelected" />
 
-            <ui:ComponentGrid Grid.Row="1" x:Name="_componentGrid" Width="365" Margin="5"
+            <ui:ComponentGrid Grid.Row="1" Width="365" Margin="5"
                               
                               ItemsSource="{Binding SelectedCategory.Components, Source={StaticResource componentPalette}}"
                               SelectedItem="{Binding SelectedComponent, Source={StaticResource componentPalette}}"
