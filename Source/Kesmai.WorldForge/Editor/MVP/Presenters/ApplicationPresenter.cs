@@ -7,7 +7,6 @@ using DigitalRune.Collections;
 using DigitalRune.Graphics;
 using DigitalRune.ServiceLocation;
 using Kesmai.WorldForge.Models;
-using Kesmai.WorldForge.MVP;
 using Kesmai.WorldForge.Roslyn;
 using Kesmai.WorldForge.UI;
 using Kesmai.WorldForge.UI.Documents;
@@ -168,14 +167,6 @@ public class ApplicationPresenter : ObservableRecipient
 				UseShellExecute = true
 			}); 
 		});
-		
-		WeakReferenceMessenger.Default
-			.Register<ApplicationPresenter, VisibilityOptionsChanged>(
-				this, (r, m) =>
-				{
-					if (Segment is not null)
-						Segment.UpdateTiles();
-				});
 		
 		ExitApplicationCommand = new RelayCommand(() => Application.Current.Shutdown());
 			
