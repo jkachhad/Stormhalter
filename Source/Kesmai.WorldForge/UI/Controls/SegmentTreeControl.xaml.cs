@@ -20,6 +20,7 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.VisualBasic;
 using Kesmai.WorldForge;
 using Kesmai.WorldForge.Editor;
+using Kesmai.WorldForge.Models;
 using DigitalRune.Collections;
 namespace Kesmai.WorldForge.UI;
 
@@ -55,6 +56,10 @@ public partial class SegmentTreeControl : UserControl
         
         WeakReferenceMessenger.Default.Register<SegmentEntitiesChanged>(this, (r, m) => UpdateEntities());
         WeakReferenceMessenger.Default.Register<SegmentEntityChanged>(this, (r, m) => UpdateEntities());
+        
+        WeakReferenceMessenger.Default.Register<SegmentComponentsChanged>(this, (r, m) => UpdateComponents());
+        WeakReferenceMessenger.Default.Register<SegmentComponentCreated>(this, (r, m) => UpdateComponents());
+        WeakReferenceMessenger.Default.Register<SegmentComponentDeleted>(this, (r, m) => UpdateComponents());
         
         WeakReferenceMessenger.Default.Register<SegmentTreasuresChanged>(this, (r, m) => UpdateTreasures());
         WeakReferenceMessenger.Default.Register<SegmentTreasureChanged>(this, (r, m) => UpdateTreasures());
@@ -119,6 +124,7 @@ public partial class SegmentTreeControl : UserControl
     private TreeViewItem _segmentNode;
     private TreeViewItem _regionsNode;
     private TreeViewItem _locationsNode;
+    private TreeViewItem _componentsNode;
     private TreeViewItem _entitiesNode;
     private TreeViewItem _spawnersNode;
     private TreeViewItem _treasureNode;
@@ -295,6 +301,36 @@ public partial class SegmentTreeControl : UserControl
             RestoreExpansionState(item, expanded);
     }
 
+    public void UpdateComponents()
+    {
+        if (Segment is null)
+            return;
+
+        var collection = Segment.Components;
+
+        if (_componentsNode is null)
+        {
+            _componentsNode = new TreeViewItem
+            {
+                Tag = $"category:Components",
+                Header = CreateHeader("Components", "Terrain.png")
+            };
+        }
+
+        var expanded = new HashSet<string>();
+
+        foreach (var item in _componentsNode.Items.OfType<TreeViewItem>())
+            SaveExpansionState(item, expanded);
+
+        _componentsNode.Items.Clear();
+
+        foreach (var component in collection)
+            _componentsNode.Items.Add(CreateComponentNode(component, collection));
+
+        foreach (var item in _componentsNode.Items.OfType<TreeViewItem>())
+            RestoreExpansionState(item, expanded);
+    }
+
     public void UpdateSpawns()
     {
         if (Segment is null)
@@ -441,6 +477,7 @@ public partial class SegmentTreeControl : UserControl
         UpdateSegment();
         UpdateRegions();
         UpdateLocations();
+        UpdateComponents();
         UpdateSpawns();
         UpdateEntities();
         UpdateTreasures();
@@ -448,6 +485,7 @@ public partial class SegmentTreeControl : UserControl
         _tree.Items.Add(_segmentNode);
         _tree.Items.Add(_regionsNode);
         _tree.Items.Add(_locationsNode);
+        _tree.Items.Add(_componentsNode);
         _tree.Items.Add(_spawnersNode);
         _tree.Items.Add(_entitiesNode);
         _tree.Items.Add(_treasureNode);
@@ -584,6 +622,27 @@ public partial class SegmentTreeControl : UserControl
     private TreeViewItem CreateVirtualFileNode(VirtualFile file) =>
         CreateInMemoryNode(file, file.Name + ".cs");
         */
+
+    private TreeViewItem CreateComponentNode(TerrainComponent component, SegmentComponents collection)
+    {
+        var item = new TreeViewItem
+        {
+            Tag = component,
+            Header = CreateColoredHeader(component.Name, Brushes.OrangeRed, false)
+        };
+        item.MouseDoubleClick += OnDoubleClick;
+        
+        var menu = new ContextMenu();
+        var rename = new MenuItem { Header = "Rename" };
+        rename.Click += (s, e) => RenameSegmentObject(component, item);
+        var delete = new MenuItem { Header = "Delete" };
+        delete.Click += (s, e) => DeleteSegmentObject(component, item, collection);
+        menu.Items.Add(rename);
+        menu.Items.Add(delete);
+        item.ContextMenu = menu;
+
+        return item;
+    }
 
     private TreeViewItem CreateEntityGroupNode(string groupPath, IEnumerable<SegmentEntity> entities)
     {
