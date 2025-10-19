@@ -13,6 +13,8 @@ namespace Kesmai.WorldForge.UI.Documents;
 
 public partial class ComponentDocument : UserControl
 {
+	private SegmentComponent _segmentComponent;
+	
 	public ComponentDocument()
 	{
 		InitializeComponent();
@@ -21,11 +23,13 @@ public partial class ComponentDocument : UserControl
 		
 		messenger.Register<ActiveContentChanged>(this, (_, message) =>
 		{
-			if (message.Value is not TerrainComponent segmentComponent)
+			if (message.Value is not SegmentComponent segmentComponent)
 				return;
+			
+			_segmentComponent = segmentComponent;
 
 			// set the text editor content
-			_editor.Text = segmentComponent.GetXElement().ToString();
+			_editor.Text = segmentComponent.Element.ToString();
 		});
 	}
 
@@ -33,11 +37,11 @@ public partial class ComponentDocument : UserControl
 	{
 		if (sender is not TextEditor editor)
 			return;
-
-		var componentElement = XElement.Parse(editor.Text);
-
+		
 		try
 		{
+			var componentElement = XElement.Parse(editor.Text);
+			
 			var componentTypename = $"Kesmai.WorldForge.Models.{componentElement.Name}";
 			var componentType = Type.GetType(componentTypename);
 
@@ -54,6 +58,8 @@ public partial class ComponentDocument : UserControl
 
 			if (component is null)
 				throw new XmlException($"Component type '{componentTypename}' failed to instantiate.");
+			
+			_segmentComponent.Element = componentElement;
 			
 			_presenter.Component = component;
 		}

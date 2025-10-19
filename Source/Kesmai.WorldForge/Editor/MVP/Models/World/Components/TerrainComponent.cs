@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge.Models;
 
-public abstract class TerrainComponent : ObservableObject, ISegmentObject
+public abstract class TerrainComponent : ObservableObject
 {
     #region Static
 
@@ -141,24 +141,6 @@ public abstract class TerrainComponent : ObservableObject, ISegmentObject
     }
 
     public abstract TerrainComponent Clone();
-    
-    public void Present(ApplicationPresenter presenter)
-    {
-        var componentViewModel = presenter.Documents.OfType<ComponentViewModel>().FirstOrDefault();
-
-        if (componentViewModel is null)
-            presenter.Documents.Add(componentViewModel = new ComponentViewModel());
-
-        if (presenter.ActiveDocument != componentViewModel)
-            presenter.SetActiveDocument(componentViewModel);
-
-        presenter.SetActiveContent(this);
-    }
-
-    public void Copy(Segment target)
-    {
-        target.Components.Add(Clone());
-    }
 
     #endregion
 }

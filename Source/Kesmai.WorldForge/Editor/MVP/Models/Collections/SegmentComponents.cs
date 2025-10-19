@@ -10,11 +10,11 @@ using Kesmai.WorldForge.Models;
 
 namespace Kesmai.WorldForge.Editor;
 
-public class SegmentComponentCreated(TerrainComponent component) : ValueChangedMessage<TerrainComponent>(component);
-public class SegmentComponentDeleted(TerrainComponent component) : ValueChangedMessage<TerrainComponent>(component);
+public class SegmentComponentCreated(SegmentComponent component) : ValueChangedMessage<SegmentComponent>(component);
+public class SegmentComponentDeleted(SegmentComponent component) : ValueChangedMessage<SegmentComponent>(component);
 public class SegmentComponentsChanged(SegmentComponents locations) : ValueChangedMessage<SegmentComponents>(locations);
 
-public class SegmentComponents : ObservableCollection<TerrainComponent>
+public class SegmentComponents : ObservableCollection<SegmentComponent>
 {
 	public string Name => "(Components)";
 	
@@ -41,14 +41,17 @@ public class SegmentComponents : ObservableCollection<TerrainComponent>
 			if (component is null)
 				throw new XmlException($"Component type '{componentTypename}' failed to instantiate.");
 
-			Add(component);
+			Add(new SegmentComponent()
+			{
+				Name = component.Name,
+			});
 		}
 	}
 	
 	public void Save(XElement element)
 	{
-		foreach (var component in this)
-			element.Add(component.GetXElement());
+		foreach (var segmentComponent in this)
+			element.Add(segmentComponent.Element);
 	}
 	
 	protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs args)
@@ -57,13 +60,13 @@ public class SegmentComponents : ObservableCollection<TerrainComponent>
 		
 		if (args.NewItems != null)
 		{
-			foreach (var newItem in args.NewItems.OfType<TerrainComponent>())
+			foreach (var newItem in args.NewItems.OfType<SegmentComponent>())
 				WeakReferenceMessenger.Default.Send(new SegmentComponentCreated(newItem));
 		}
 			
 		if (args.OldItems != null)
 		{
-			foreach (var oldItem in args.OldItems.OfType<TerrainComponent>())
+			foreach (var oldItem in args.OldItems.OfType<SegmentComponent>())
 				WeakReferenceMessenger.Default.Send(new SegmentComponentDeleted(oldItem));
 		}
 

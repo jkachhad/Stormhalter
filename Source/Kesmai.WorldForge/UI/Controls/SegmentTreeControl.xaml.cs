@@ -623,20 +623,20 @@ public partial class SegmentTreeControl : UserControl
         CreateInMemoryNode(file, file.Name + ".cs");
         */
 
-    private TreeViewItem CreateComponentNode(TerrainComponent component, SegmentComponents collection)
+    private TreeViewItem CreateComponentNode(SegmentComponent segmentComponent, SegmentComponents collection)
     {
         var item = new TreeViewItem
         {
-            Tag = component,
-            Header = CreateColoredHeader(component.Name, Brushes.OrangeRed, false)
+            Tag = segmentComponent,
+            Header = CreateColoredHeader(segmentComponent.Name, Brushes.OrangeRed, false)
         };
         item.MouseDoubleClick += OnDoubleClick;
         
         var menu = new ContextMenu();
         var rename = new MenuItem { Header = "Rename" };
-        rename.Click += (s, e) => RenameSegmentObject(component, item);
+        rename.Click += (s, e) => RenameSegmentObject(segmentComponent, item);
         var delete = new MenuItem { Header = "Delete" };
-        delete.Click += (s, e) => DeleteSegmentObject(component, item, collection);
+        delete.Click += (s, e) => DeleteSegmentObject(segmentComponent, item, collection);
         menu.Items.Add(rename);
         menu.Items.Add(delete);
         item.ContextMenu = menu;
