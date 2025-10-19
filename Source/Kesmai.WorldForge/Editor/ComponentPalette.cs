@@ -100,63 +100,78 @@ public class ComponentPalette : ObservableRecipient
 
 		if (rootElement is null)
 			throw new XmlException("Components.xml is missing root element.");
-
-		foreach (var categoryElement in rootElement.Elements("category"))
+		
+		foreach (var componentElement in rootElement.Elements())
 		{
-			var nameAttribute = categoryElement.Attribute("name");
+			try
+			{
+				var componentTypeAttribute = componentElement.Attribute("type");
+				var componentCategoryAttribute = componentElement.Attribute("category");
+					
+				if (componentTypeAttribute is null)
+					throw new XmlException("Component element is missing type attribute.");
 
-			if (nameAttribute is null)
-				throw new XmlException("Category element is missing name attribute.");
+				if (componentCategoryAttribute is null)
+					throw new XmlException("Component element is missing category attribute.");
 
-			var subcategory = category.Subcategories.FirstOrDefault(
-				sub => sub.Name.Equals(nameAttribute.Value, StringComparison.OrdinalIgnoreCase));
+				var categoryPath = componentCategoryAttribute.Value;
+				var componentsCategory = TryGetCategory(categoryPath);
+					
+				if (componentsCategory is null)
+					throw new XmlException($"Component category '{categoryPath}' not found.");
+					
+				var componentTypename = $"Kesmai.WorldForge.Models.{componentTypeAttribute.Value}";
+				var componentType = Type.GetType(componentTypename);
 
-			if (subcategory is null)
+				if (componentType is null)
+					throw new XmlException($"Component type '{componentTypename}' not found.");
+
+				var ctor = componentType.GetConstructor([typeof(XElement)]);
+
+				if (ctor is null)
+					throw new XmlException(
+						$"Component type '{componentTypename}' is missing constructor with XElement parameter.");
+
+				var component = ctor.Invoke([componentElement]) as TerrainComponent;
+
+				if (component is null)
+					throw new XmlException($"Component type '{componentTypename}' failed to instantiate.");
+
+				componentsCategory.Components.Add(component);
+			}
+			catch (Exception exception)
+			{
+				System.Windows.MessageBox.Show($"Component failed to parse:\n${componentElement}\n{exception.Message}",
+					"Custom Components.xml failed to load", System.Windows.MessageBoxButton.OK);
+			}
+		}
+	}
+
+	public ComponentsCategory TryGetCategory(string categoryPath)
+	{
+		var parts = categoryPath.Split([':'], StringSplitOptions.RemoveEmptyEntries);
+
+		if (!TryGetCategory("EDITOR", out var category))
+			return null;
+		
+		for (var i = 0; i < parts.Length; i++)
+		{
+			var categoryName = parts[i];
+
+			if (!category.TryGetCategory(categoryName, out var subcategory))
 			{
 				subcategory = new ComponentsCategory()
 				{
-					Name = nameAttribute.Value
+					Name = categoryName,
+					IsRoot = false,
 				};
-
 				category.Subcategories.Add(subcategory);
 			}
-			else
-			{
-				subcategory.Components.Clear();
-			}
 			
-			subcategory.IsRoot = false;
-			
-			foreach (var componentElement in categoryElement.Elements())
-			{
-				try
-				{
-					var componentTypename = $"Kesmai.WorldForge.Models.{componentElement.Name}";
-					var componentType = Type.GetType(componentTypename);
-
-					if (componentType is null)
-						throw new XmlException($"Component type '{componentTypename}' not found.");
-
-					var ctor = componentType.GetConstructor([typeof(XElement)]);
-
-					if (ctor is null)
-						throw new XmlException(
-							$"Component type '{componentTypename}' is missing constructor with XElement parameter.");
-
-					var component = ctor.Invoke([componentElement]) as TerrainComponent;
-
-					if (component is null)
-						throw new XmlException($"Component type '{componentTypename}' failed to instantiate.");
-
-					subcategory.Components.Add(component);
-				}
-				catch (Exception exception)
-				{
-					System.Windows.MessageBox.Show($"Component failed to parse:\n${componentElement}\n{exception.Message}",
-						"Custom Components.xml failed to load", System.Windows.MessageBoxButton.OK);
-				}
-			}
+			category = subcategory;
 		}
+		
+		return category;
 	}
 	
 	public bool TryGetCategory(string name, out ComponentsCategory category)

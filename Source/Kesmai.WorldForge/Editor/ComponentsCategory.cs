@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Kesmai.WorldForge.Models;
 
@@ -50,5 +52,11 @@ public class ComponentsCategory : ObservableObject
 	{
 		_components = new ObservableCollection<TerrainComponent>();
 		_subcategories = new ObservableCollection<ComponentsCategory>();
+	}
+	
+	public bool TryGetCategory(string name, out ComponentsCategory category)
+	{
+		return (category = _subcategories.FirstOrDefault(
+			c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase))) != null;
 	}
 }
