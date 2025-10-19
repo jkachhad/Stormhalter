@@ -6,6 +6,8 @@ using System.Xml;
 using System.Xml.Linq;
 using CommonServiceLocator;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Models;
 using Kesmai.WorldForge.UI;
 
@@ -17,6 +19,10 @@ public class ComponentPalette : ObservableRecipient
 	private TerrainComponent _selectedComponent;
 	
 	private ObservableCollection<ComponentsCategory> _categories;
+	
+	private ComponentsCategory _staticCategory;
+	private ComponentsCategory _editorCategory;
+	private ComponentsCategory _segmentCategory;
 	
 	public TerrainComponent SelectedComponent
 	{
@@ -76,6 +82,20 @@ public class ComponentPalette : ObservableRecipient
 
 			Load("EDITOR", XDocument.Load(documentStream));
 		});
+
+		_staticCategory = staticCategory;
+
+		if (TryGetCategory("EDITOR", out var editorCategory))
+			_editorCategory = editorCategory;
+
+		// create segment category
+		_segmentCategory = new ComponentsCategory()
+		{
+			Name = "SEGMENT",
+			IsRoot = true
+		};
+		
+		_categories.Add(_segmentCategory);
 	}
 
 	public void Load(string categoryName, XDocument document)
@@ -129,8 +149,7 @@ public class ComponentPalette : ObservableRecipient
 				var ctor = componentType.GetConstructor([typeof(XElement)]);
 
 				if (ctor is null)
-					throw new XmlException(
-						$"Component type '{componentTypename}' is missing constructor with XElement parameter.");
+					throw new XmlException($"Component type '{componentTypename}' is missing constructor with XElement parameter.");
 
 				var component = ctor.Invoke([componentElement]) as TerrainComponent;
 

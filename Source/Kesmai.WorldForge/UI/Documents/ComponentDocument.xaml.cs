@@ -41,8 +41,12 @@ public partial class ComponentDocument : UserControl
 		try
 		{
 			var componentElement = XElement.Parse(editor.Text);
+			var componentTypeAttribute = componentElement.Attribute("type");
 			
-			var componentTypename = $"Kesmai.WorldForge.Models.{componentElement.Name}";
+			if (componentTypeAttribute is null)
+				throw new XmlException("Component element is missing type attribute.");
+			
+			var componentTypename = $"Kesmai.WorldForge.Models.{componentTypeAttribute.Name}";
 			var componentType = Type.GetType(componentTypename);
 
 			if (componentType is null)
@@ -51,8 +55,7 @@ public partial class ComponentDocument : UserControl
 			var ctor = componentType.GetConstructor([typeof(XElement)]);
 
 			if (ctor is null)
-				throw new XmlException(
-					$"Component type '{componentTypename}' is missing constructor with XElement parameter.");
+				throw new XmlException($"Component type '{componentTypename}' is missing constructor with XElement parameter.");
 
 			var component = ctor.Invoke([componentElement]) as TerrainComponent;
 
