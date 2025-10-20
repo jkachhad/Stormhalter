@@ -6,10 +6,10 @@ using Kesmai.WorldForge.Models;
 
 namespace Kesmai.WorldForge.UI;
 
-public class ComponentImage : Image
+public class TerrainComponentImage : Image
 {
     public static readonly DependencyProperty ComponentProperty = DependencyProperty.Register(
-        nameof(Component), typeof(TerrainComponent), typeof(ComponentImage),
+        nameof(Component), typeof(TerrainComponent), typeof(TerrainComponentImage),
         new PropertyMetadata(default(TerrainComponent), OnTextureChanged));
 
     public TerrainComponent Component
@@ -20,17 +20,17 @@ public class ComponentImage : Image
 
     private static void OnTextureChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
     {
-        if (sender is ComponentImage componentImage && args.NewValue is TerrainComponent component)
+        if (sender is TerrainComponentImage componentImage && args.NewValue is TerrainComponent component)
             componentImage.UpdateComponent(component);
     }
 
-    static ComponentImage()
+    static TerrainComponentImage()
     {
-        WidthProperty.OverrideMetadata(typeof(ComponentImage), new FrameworkPropertyMetadata((double)100));
-        HeightProperty.OverrideMetadata(typeof(ComponentImage), new FrameworkPropertyMetadata((double)100));
+        WidthProperty.OverrideMetadata(typeof(TerrainComponentImage), new FrameworkPropertyMetadata((double)100));
+        HeightProperty.OverrideMetadata(typeof(TerrainComponentImage), new FrameworkPropertyMetadata((double)100));
     }
 
-    public ComponentImage()
+    public TerrainComponentImage()
     {
         HorizontalAlignment = HorizontalAlignment.Left;
         VerticalAlignment = VerticalAlignment.Top;

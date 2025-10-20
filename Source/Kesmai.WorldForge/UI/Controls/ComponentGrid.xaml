@@ -11,7 +11,7 @@
     <ListBox.ItemTemplate>
         <DataTemplate>
             <StackPanel>
-                <ui:ComponentImage Component="{Binding}" />
+                <ui:TerrainComponentImage Component="{Binding}" />
                 
                 <TextBlock FontWeight="Bold" Text="{Binding Name}" Padding="3"
                            TextAlignment="Center"
