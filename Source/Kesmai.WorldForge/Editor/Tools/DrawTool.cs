@@ -80,7 +80,13 @@ public class DrawTool : Tool
         {
             if ( selection.SurfaceArea <= 1 || selection.IsSelected ( mx, my, region ) )
             {
-                var component = componentPalette.SelectedComponent;
+                var provider = componentPalette.SelectedProvider;
+
+                if (provider is null)
+                    return;
+        
+                var component = provider.Component;
+                
                 var selectedTile = region.GetTile ( mx, my );
 
                 if ( selectedTile == null )
@@ -158,7 +164,12 @@ public class DrawTool : Tool
         var renderer = uiScreen.Renderer;
         var spriteFont = renderer.GetFontRenderer ( "Tahoma", 10 );
 
-        var component = componentPalette.SelectedComponent;
+        var provider = componentPalette.SelectedProvider;
+
+        if (provider is null)
+            return;
+        
+        var component = provider.Component;
 
         if ( component != null )
         {

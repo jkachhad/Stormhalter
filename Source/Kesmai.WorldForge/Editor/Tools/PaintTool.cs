@@ -78,9 +78,12 @@ public class PaintTool : Tool
 
         if ( inputService.IsReleased ( MouseButtons.Left ) && selection.IsSelected ( cx, cy, region ) )
         {
-            var component = componentPalette.SelectedComponent;
+            var provider = componentPalette.SelectedProvider;
 
-            var baseComponent = componentPalette.SelectedComponent;
+            if (provider is null)
+                return;
+        
+            var component = provider.Component;
 
             // TODO: Refactor later since we no longer have a component window.
             // This should be resolved by templates.

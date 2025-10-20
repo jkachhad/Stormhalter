@@ -16,7 +16,7 @@ namespace Kesmai.WorldForge;
 public class ComponentPalette : ObservableRecipient
 {
 	private ComponentsCategory _selectedCategory;
-	private TerrainComponent _selectedComponent;
+	private IComponentProvider _selectedProvider;
 	
 	private ObservableCollection<ComponentsCategory> _categories;
 	
@@ -24,10 +24,10 @@ public class ComponentPalette : ObservableRecipient
 	private ComponentsCategory _editorCategory;
 	private ComponentsCategory _segmentCategory;
 	
-	public TerrainComponent SelectedComponent
+	public IComponentProvider SelectedProvider
 	{
-		get => _selectedComponent;
-		set => SetProperty(ref _selectedComponent, value);
+		get => _selectedProvider;
+		set => SetProperty(ref _selectedProvider, value);
 	}
 	
 	public ComponentsCategory SelectedCategory
@@ -96,6 +96,46 @@ public class ComponentPalette : ObservableRecipient
 		};
 		
 		_categories.Add(_segmentCategory);
+		
+		// setup message registration for adding segment components.
+		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentComponentCreated>(this, (r, m) =>
+		{
+			addSegmentComponent(m.Value);
+		});
+		
+		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentComponentDeleted>(this, (r, m) =>
+		{
+			deleteSegmentComponent(m.Value);
+		});
+		
+		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentComponentChanged>(this, (r, m) =>
+		{
+			var segmentComponent = m.Value;	
+			
+			deleteSegmentComponent(segmentComponent);
+			addSegmentComponent(segmentComponent);
+		});
+		
+		void addSegmentComponent(SegmentComponent component)
+		{
+			if (component.Element is null)
+				return;
+			
+			var pathAttribute = component.Element.Attribute("category");
+			var category = default(ComponentsCategory);
+			
+			if (pathAttribute is not null)
+				category = TryGetCategory(pathAttribute.Value, _segmentCategory);
+
+			category ??= _segmentCategory;
+			category.Components.Add(component);
+		}
+		
+		void deleteSegmentComponent(SegmentComponent component)
+		{
+			if (TryGetCategory(component, out var category))
+				category.Components.Remove(component);
+		}
 	}
 
 	public void Load(string categoryName, XDocument document)
@@ -135,7 +175,7 @@ public class ComponentPalette : ObservableRecipient
 					throw new XmlException("Component element is missing category attribute.");
 
 				var categoryPath = componentCategoryAttribute.Value;
-				var componentsCategory = TryGetCategory(categoryPath);
+				var componentsCategory = TryGetCategory(categoryPath, category);
 					
 				if (componentsCategory is null)
 					throw new XmlException($"Component category '{categoryPath}' not found.");
@@ -166,12 +206,12 @@ public class ComponentPalette : ObservableRecipient
 		}
 	}
 
-	public ComponentsCategory TryGetCategory(string categoryPath)
+	public ComponentsCategory TryGetCategory(string categoryPath, ComponentsCategory category = null)
 	{
 		var parts = categoryPath.Split([':'], StringSplitOptions.RemoveEmptyEntries);
 
-		if (!TryGetCategory("EDITOR", out var category))
-			return null;
+		if (category is null)
+			category = _editorCategory;
 		
 		for (var i = 0; i < parts.Length; i++)
 		{
@@ -197,5 +237,39 @@ public class ComponentPalette : ObservableRecipient
 	{
 		return (category = Categories.FirstOrDefault(
 			c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase))) != null;
+	}
+
+	public bool TryGetCategory(SegmentComponent component, out ComponentsCategory category)
+	{
+		category = null;
+		
+		foreach (var parentCategory in _categories)
+		{
+			if (recursive(component, parentCategory, out category))
+				return true;
+		}
+
+		return false;
+		
+		bool recursive(SegmentComponent source, ComponentsCategory search, out ComponentsCategory targetCategory)
+		{
+			if (search.Components.Contains(source))
+			{
+				targetCategory = search;
+				return true;
+			}
+
+			if (search.Subcategories.Count is not 0)
+			{
+				foreach (var child in search.Subcategories)
+				{
+					if (recursive(source, child, out targetCategory))
+						return true;
+				}
+			}
+
+			targetCategory = null;
+			return false;
+		}
 	}
 }
