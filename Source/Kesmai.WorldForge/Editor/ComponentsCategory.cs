@@ -10,7 +10,7 @@ public class ComponentsCategory : ObservableObject
 {
 	public string Name { get; set; }
 
-	private ObservableCollection<TerrainComponent> _components;
+	private ObservableCollection<IComponentProvider> _components;
 	private ObservableCollection<ComponentsCategory> _subcategories;
 	
 	private bool _isSelected;
@@ -30,7 +30,7 @@ public class ComponentsCategory : ObservableObject
 	
 	private bool _isRoot;
 	
-	public ObservableCollection<TerrainComponent> Components
+	public ObservableCollection<IComponentProvider> Components
 	{
 		get => _components;
 		set => SetProperty(ref _components, value);
@@ -50,7 +50,7 @@ public class ComponentsCategory : ObservableObject
 
 	public ComponentsCategory()
 	{
-		_components = new ObservableCollection<TerrainComponent>();
+		_components = new ObservableCollection<IComponentProvider>();
 		_subcategories = new ObservableCollection<ComponentsCategory>();
 	}
 	

@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge.Models;
 
-public abstract class TerrainComponent : ObservableObject
+public abstract class TerrainComponent : ObservableObject, IComponentProvider
 {
     #region Static
 
@@ -31,6 +31,11 @@ public abstract class TerrainComponent : ObservableObject
     /// </summary>
     [Browsable( false )]
     public string Name { get; set; } = "(unknown)";
+
+    /// <summary>
+    /// Gets the component.
+    /// </summary>
+    public TerrainComponent Component  => this;
 
     /// <summary>
     /// Gets or sets the color.

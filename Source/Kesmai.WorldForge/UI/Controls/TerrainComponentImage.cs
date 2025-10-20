@@ -8,20 +8,20 @@ namespace Kesmai.WorldForge.UI;
 
 public class TerrainComponentImage : Image
 {
-    public static readonly DependencyProperty ComponentProperty = DependencyProperty.Register(
-        nameof(Component), typeof(TerrainComponent), typeof(TerrainComponentImage),
-        new PropertyMetadata(default(TerrainComponent), OnTextureChanged));
+    public static readonly DependencyProperty ProviderProperty = DependencyProperty.Register(
+        nameof(Provider), typeof(IComponentProvider), typeof(TerrainComponentImage),
+        new PropertyMetadata(default(TerrainComponent), OnComponentChanged));
 
-    public TerrainComponent Component
+    public IComponentProvider Provider
     {
-        get => (TerrainComponent)GetValue(ComponentProperty);
-        set => SetValue(ComponentProperty, value);
+        get => (TerrainComponent)GetValue(ProviderProperty);
+        set => SetValue(ProviderProperty, value);
     }
 
-    private static void OnTextureChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
+    private static void OnComponentChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
     {
-        if (sender is TerrainComponentImage componentImage && args.NewValue is TerrainComponent component)
-            componentImage.UpdateComponent(component);
+        if (sender is TerrainComponentImage componentImage && args.NewValue is IComponentProvider provider)
+            componentImage.UpdateComponent(provider);
     }
 
     static TerrainComponentImage()
@@ -36,11 +36,11 @@ public class TerrainComponentImage : Image
         VerticalAlignment = VerticalAlignment.Top;
     }
 
-    internal void UpdateComponent(TerrainComponent component)
+    internal void UpdateComponent(IComponentProvider provider)
     {
         var componentImageCache = ServiceLocator.Current.GetInstance<ComponentImageCache>();
 
         if (componentImageCache != null)
-            Source = componentImageCache.Get(component);
+            Source = componentImageCache.Get(provider.Component);
     }
 }

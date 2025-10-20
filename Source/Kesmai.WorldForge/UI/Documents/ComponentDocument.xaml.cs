@@ -40,31 +40,8 @@ public partial class ComponentDocument : UserControl
 		
 		try
 		{
-			var componentElement = XElement.Parse(editor.Text);
-			var componentTypeAttribute = componentElement.Attribute("type");
-			
-			if (componentTypeAttribute is null)
-				throw new XmlException("Component element is missing type attribute.");
-			
-			var componentTypename = $"Kesmai.WorldForge.Models.{componentTypeAttribute.Name}";
-			var componentType = Type.GetType(componentTypename);
-
-			if (componentType is null)
-				throw new XmlException($"Component type '{componentTypename}' not found.");
-
-			var ctor = componentType.GetConstructor([typeof(XElement)]);
-
-			if (ctor is null)
-				throw new XmlException($"Component type '{componentTypename}' is missing constructor with XElement parameter.");
-
-			var component = ctor.Invoke([componentElement]) as TerrainComponent;
-
-			if (component is null)
-				throw new XmlException($"Component type '{componentTypename}' failed to instantiate.");
-			
-			_segmentComponent.Element = componentElement;
-			
-			_presenter.Component = component;
+			_segmentComponent.Element = XElement.Parse(editor.Text);
+			_presenter.Component = _segmentComponent.Component;
 		}
 		catch (Exception exception)
 		{

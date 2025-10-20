@@ -44,6 +44,7 @@ public class SegmentComponents : ObservableCollection<SegmentComponent>
 			Add(new SegmentComponent()
 			{
 				Name = component.Name,
+				Element = new XElement(componentElement),
 			});
 		}
 	}
