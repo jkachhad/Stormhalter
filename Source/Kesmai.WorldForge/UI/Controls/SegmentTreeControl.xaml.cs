@@ -315,6 +315,10 @@ public partial class SegmentTreeControl : UserControl
                 Tag = $"category:Components",
                 Header = CreateHeader("Components", "Terrain.png")
             };
+
+            _componentsNode.ContextMenu = new ContextMenu();
+            _componentsNode.ContextMenu.AddItem("Add Component", "Add.png",
+                (s, e) => AddSegmentObject(collection, "Component"));
         }
 
         var expanded = new HashSet<string>();
