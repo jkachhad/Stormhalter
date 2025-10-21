@@ -128,7 +128,9 @@ public class ComponentPalette : ObservableRecipient
 				category = TryGetCategory(pathAttribute.Value, _segmentCategory);
 
 			category ??= _segmentCategory;
-			category.Components.Add(component);
+
+			if (!category.Components.Contains(component))
+				category.Components.Add(component);
 		}
 		
 		void deleteSegmentComponent(SegmentComponent component)
