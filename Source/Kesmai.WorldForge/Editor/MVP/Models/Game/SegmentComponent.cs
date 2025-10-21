@@ -90,35 +90,28 @@ public class SegmentComponent : ObservableObject, ISegmentObject, IComponentProv
 
 	public void UpdateComponent()
 	{
-		try
-		{
-			var componentTypeAttribute = _element.Attribute("type");
+		var componentTypeAttribute = _element.Attribute("type");
 
-			if (componentTypeAttribute is null)
-				throw new XmlException("Component element is missing type attribute.");
+		if (componentTypeAttribute is null)
+			throw new XmlException("Component element is missing type attribute.");
 
-			var componentTypename = $"Kesmai.WorldForge.Models.{componentTypeAttribute.Value}";
-			var componentType = Type.GetType(componentTypename);
+		var componentTypename = $"Kesmai.WorldForge.Models.{componentTypeAttribute.Value}";
+		var componentType = Type.GetType(componentTypename);
 
-			if (componentType is null)
-				throw new XmlException($"Component type '{componentTypename}' not found.");
+		if (componentType is null)
+			throw new XmlException($"Component type '{componentTypename}' not found.");
 
-			var ctor = componentType.GetConstructor([typeof(XElement)]);
+		var ctor = componentType.GetConstructor([typeof(XElement)]);
 
-			if (ctor is null)
-				throw new XmlException($"Component type '{componentTypename}' is missing constructor with XElement parameter.");
+		if (ctor is null)
+			throw new XmlException($"Component type '{componentTypename}' is missing constructor with XElement parameter.");
 
-			var component = ctor.Invoke([_element]) as TerrainComponent;
+		var component = ctor.Invoke([_element]) as TerrainComponent;
 
-			if (component is null)
-				throw new XmlException($"Component type '{componentTypename}' failed to instantiate.");
+		if (component is null)
+			throw new XmlException($"Component type '{componentTypename}' failed to instantiate.");
 		
-			_component = component;
-		}
-		catch (Exception exception)
-		{
-			// ignore
-		}
+		_component = component;
 	}
 
 	public void Present(ApplicationPresenter presenter)

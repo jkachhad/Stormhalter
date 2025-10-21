@@ -1,7 +1,6 @@
 using System;
-using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
-using System.Xml;
 using System.Xml.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
@@ -42,10 +41,15 @@ public partial class ComponentDocument : UserControl
 		{
 			_segmentComponent.Element = XElement.Parse(editor.Text);
 			_presenter.Component = _segmentComponent.Component;
+
+			_error.Visibility = Visibility.Hidden;
+			_error.Text = String.Empty;
 		}
 		catch (Exception exception)
 		{
 			// ignore
+			_error.Visibility = Visibility.Visible;
+			_error.Text = exception.Message;
 		}
 	}
 }

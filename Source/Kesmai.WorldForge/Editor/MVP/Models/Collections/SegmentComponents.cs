@@ -24,7 +24,12 @@ public class SegmentComponents : ObservableCollection<SegmentComponent>
 
 		foreach (var componentElement in element.Elements())
 		{
-			var componentTypename = $"Kesmai.WorldForge.Models.{componentElement.Name}";
+			var componentTypeAttribute = componentElement.Attribute("type");
+			
+			if (componentTypeAttribute is null)
+				throw new XmlException("Component element is missing type attribute.");
+			
+			var componentTypename = $"Kesmai.WorldForge.Models.{componentTypeAttribute.Value}";
 			var componentType = Type.GetType(componentTypename);
 
 			if (componentType is null)
@@ -36,16 +41,20 @@ public class SegmentComponents : ObservableCollection<SegmentComponent>
 				throw new XmlException(
 					$"Component type '{componentTypename}' is missing constructor with XElement parameter.");
 
-			var component = ctor.Invoke([componentElement]) as TerrainComponent;
+			var terrainComponent = ctor.Invoke([componentElement]) as TerrainComponent;
 
-			if (component is null)
+			if (terrainComponent is null)
 				throw new XmlException($"Component type '{componentTypename}' failed to instantiate.");
 
-			Add(new SegmentComponent()
+			var segmentComponent = new SegmentComponent()
 			{
-				Name = component.Name,
+				Name = terrainComponent.Name,
 				Element = new XElement(componentElement),
-			});
+			};
+			
+			segmentComponent.UpdateComponent();
+			
+			Add(segmentComponent);
 		}
 	}
 	

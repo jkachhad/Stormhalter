@@ -14,7 +14,18 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         
-        <avalonedit:TextEditor Grid.Column="0" x:Name="_editor"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <Border Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="1" Margin="2" Padding="2">
+            <TextBlock x:Name="_error" 
+                   FontFamily="Tahoma" FontSize="12" FontWeight="Bold"
+                   Foreground="Red" />
+        </Border>
+        
+        <avalonedit:TextEditor Grid.Column="0" Grid.Row="1" x:Name="_editor"
                              ShowLineNumbers="True" 
                              FontFamily="Consolas" FontSize="14" 
                              SyntaxHighlighting="XML"
@@ -22,6 +33,6 @@
                              
                              TextChanged="OnEditorChanged"/>
         
-        <worldForge:ComponentPresentationTarget Grid.Column="1" x:Name="_presenter" Margin="2" />
+        <worldForge:ComponentPresentationTarget Grid.Column="1" Grid.Row="1" x:Name="_presenter" Margin="2" />
     </Grid>
 </UserControl>
