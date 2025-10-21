@@ -102,7 +102,7 @@ public class DrawTool : Tool
                     {
                         selectedTile.Components.Clear ( );
                         foreach ( var sub in prefab.Components )
-                            selectedTile.AddComponent ( sub.Clone ( ) );
+                            selectedTile.AddComponent ( sub );
                     }
                     else
                     {
@@ -128,7 +128,7 @@ public class DrawTool : Tool
                             selectedTile.Components.Clear ( );
                         }
 
-                        selectedTile.AddComponent ( component.Clone ( ) );
+                        selectedTile.AddComponent(provider);
                     }
 
 

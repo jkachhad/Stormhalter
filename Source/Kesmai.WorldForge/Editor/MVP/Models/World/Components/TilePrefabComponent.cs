@@ -90,7 +90,7 @@ namespace Kesmai.WorldForge.Editor.MVP.Models.World.Components
             };
 
             foreach( var component in Components )
-                clone.Components.Add( component.Clone() );
+                clone.Components.Add( component.Component );
 
             return clone;
         }
