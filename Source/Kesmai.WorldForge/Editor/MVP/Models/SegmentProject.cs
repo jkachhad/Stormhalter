@@ -28,6 +28,9 @@ public sealed class SegmentProject : IDisposable
                 Start(segment.Directory);
             }
         });
+
+        WeakReferenceMessenger.Default.Register<SegmentSaveStartedMessage>(this, (_, message) => Pause());
+        WeakReferenceMessenger.Default.Register<SegmentSaveFinishedMessage>(this, (_, message) => Unpause());
     }
 
     public void Start(string path)
@@ -50,6 +53,12 @@ public sealed class SegmentProject : IDisposable
     {
         if (_watcher != null)
             _watcher.EnableRaisingEvents = false;
+    }
+    
+    public void Unpause()
+    {
+        if (_watcher != null)
+            _watcher.EnableRaisingEvents = true;
     }
 
     public void Reset()

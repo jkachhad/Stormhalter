@@ -331,6 +331,8 @@ public class ApplicationPresenter : ObservableRecipient
 			targetPath = _segment.Directory;
 		}
 
+		WeakReferenceMessenger.Default.Send(new SegmentSaveStartedMessage(_segment));
+		
 		try
 		{
 			var regionsDirectory = new DirectoryInfo(Path.Combine(targetPath, "Regions"));
@@ -404,6 +406,8 @@ public class ApplicationPresenter : ObservableRecipient
 		{
 			MessageBox.Show($"Error when saving project: {ex.Message}", "Unable to save", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
+		
+		WeakReferenceMessenger.Default.Send(new SegmentSaveFinishedMessage(_segment));
 	}
 	
 	private void CreateRegion()

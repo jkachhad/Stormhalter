@@ -23,6 +23,9 @@ public interface ISegmentObject
 	void Copy(Segment segment);
 }
 
+public record SegmentSaveStartedMessage(Segment Segment);
+public record SegmentSaveFinishedMessage(Segment Segment);
+
 public class Segment : ObservableObject, ISegmentObject
 {
 	private static List<string> _reservedLocations = new List<string>()
