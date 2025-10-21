@@ -312,7 +312,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 					if (tile is null)
 						continue;
 						
-					var validComponents = tile.Components.Where(c => currentFilter.IsValid(c)).ToArray();
+					var validComponents = tile.Components.Select(c => c.Component).Where(c => currentFilter.IsValid(c)).ToArray();
 						
 					foreach (var component in validComponents)
 						tile.RemoveComponent(component);

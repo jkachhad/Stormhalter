@@ -17,6 +17,9 @@ public interface IComponentProvider
 	string Name { get; }
 	
 	TerrainComponent Component { get; }
+
+	void AddComponent(SegmentTile segmentTile);
+	void RemoveComponent(SegmentTile segmentTile);
 }
 
 public class SegmentComponentChanged(SegmentComponent segmentComponent) : ValueChangedMessage<SegmentComponent>(segmentComponent);
@@ -66,7 +69,7 @@ public class SegmentComponent : ObservableObject, ISegmentObject, IComponentProv
 		UpdateComponent();
 	}
 
-	public object Clone()
+	public IComponentProvider Clone()
 	{
 		var clone = new SegmentComponent()
 		{
@@ -131,5 +134,17 @@ public class SegmentComponent : ObservableObject, ISegmentObject, IComponentProv
 	{
 		if (Clone() is SegmentComponent segmentComponent)
 			target.Components.Add(segmentComponent);
+	}
+	
+	public void AddComponent(SegmentTile segmentTile)
+	{
+		// add this specific provider.
+		segmentTile.Components.Add(this);
+	}
+
+	public void RemoveComponent(SegmentTile segmentTile)
+	{
+		// remove this specific component.
+		segmentTile.Components.Remove(this);
 	}
 }

@@ -145,7 +145,19 @@ public abstract class TerrainComponent : ObservableObject, IComponentProvider
         Color = new Color( r, g, b, a );
     }
 
-    public abstract TerrainComponent Clone();
+    public abstract IComponentProvider Clone();
 
     #endregion
+
+    public void AddComponent(SegmentTile segmentTile)
+    {
+        // create a clone of this component and add it to the tile.
+        segmentTile.Components.Add(Clone());
+    }
+
+    public void RemoveComponent(SegmentTile segmentTile)
+    {
+        // remove this specific component.
+        segmentTile.Components.Remove(this);
+    }
 }

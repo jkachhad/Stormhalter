@@ -53,7 +53,7 @@ public class ComponentsPanel : StackPanel
         // copy original tile for reset
         _restoreTile = new SegmentTile(_targetTile.X, _targetTile.Y);
 
-        foreach (var component in _targetTile.Components)
+        foreach (var component in _targetTile.Components.Select(c => c.Component))
             _restoreTile.Components.Add(component.Clone());
 
         // listen for changes to the components collection.
@@ -95,11 +95,11 @@ public class ComponentsPanel : StackPanel
 
         for (int index = 0; index < _targetTile.Components.Count; index++)
         {
-            var component = _targetTile.Components[index];
+            var provider = _targetTile.Components[index];
 
             var frame = new ComponentFrame
             {
-                Component = component,
+                Component = provider.Component,
 
                 CanMoveUp = index > 0,
                 CanMoveDown = index < (_targetTile.Components.Count - 1),
@@ -181,7 +181,7 @@ public class ComponentsPanel : StackPanel
         // restore original tile.
         _targetTile.Components.Clear();
         
-        foreach (var component in _restoreTile.Components)
+        foreach (var component in _restoreTile.Components.Select(c => c.Component))
             _targetTile.Components.Add(component.Clone());
 
         _targetTile.UpdateTerrain();

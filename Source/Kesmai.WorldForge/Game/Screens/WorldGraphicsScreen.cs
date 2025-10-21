@@ -305,7 +305,7 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 						
 						OnRenderTile(spriteBatch, segmentTile, tileBounds);
 
-						if (DisplayComments && segmentTile.Components.Any(c => !String.IsNullOrEmpty(c.Comment)))
+						if (DisplayComments && segmentTile.Components.Select(c => c.Component).Any(c => !String.IsNullOrEmpty(c.Comment)))
 							commentIcons.Add((vx, vy));
 					}
 				}

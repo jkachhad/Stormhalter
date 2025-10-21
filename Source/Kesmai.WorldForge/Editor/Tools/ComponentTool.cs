@@ -68,7 +68,7 @@ public abstract class ComponentTool : Tool
 				return false;
 
 			// Check all components of the tile (in reverse order, so top-most components are checked first).
-			foreach (var component in tile.Components.Reverse())
+			foreach (var component in tile.Components.Reverse().Select(c => c.Component))
 			{
 				// Skip components that do not match the filter or are not valid for this tool.
 				if ((filter != null && !filter.IsValid(component)) || !IsValid(component))
