@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.UI.Documents;
+using Kesmai.WorldForge.Windows;
 using Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge.Models;
@@ -43,6 +44,8 @@ public abstract class TerrainComponent : ObservableObject, IComponentProvider
     /// </summary>
     [Browsable( true )]
     public String Comment { get; set; }
+
+    public bool IsEditable => true;
 
     #endregion
 
@@ -156,5 +159,10 @@ public abstract class TerrainComponent : ObservableObject, IComponentProvider
     public virtual IEnumerable<ComponentRender> GetRenders()
     {
         yield break;
+    }
+    
+    public ComponentFrame GetComponentFrame()
+    {
+        return new TerrainComponentFrame();
     }
 }

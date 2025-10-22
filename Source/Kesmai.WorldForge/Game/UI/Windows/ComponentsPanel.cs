@@ -79,11 +79,6 @@ public class ComponentsPanel : StackPanel
         Invalidate();
     }
 
-    protected override void OnUnload()
-    {
-        base.OnUnload();
-    }
-
     public void Invalidate()
     {
         _invalidated = true;
@@ -96,17 +91,16 @@ public class ComponentsPanel : StackPanel
         for (int index = 0; index < _targetTile.Providers.Count; index++)
         {
             var provider = _targetTile.Providers[index];
+            var frame = provider.GetComponentFrame();
+            
+            frame.Provider = provider;
 
-            var frame = new ComponentFrame
-            {
-                Provider = provider,
-
-                CanMoveUp = index > 0,
-                CanMoveDown = index < (_targetTile.Providers.Count - 1),
+            frame.CanMoveUp = index > 0;
+            frame.CanMoveDown = index < (_targetTile.Providers.Count - 1);
                 
-                // only allow delete if there is more than one component.
-                CanDelete = index > 0,
-            };
+            // only allow to delete if there is more than one component.
+            frame.CanDelete = index > 0;
+            
             frame.OnClick += OnSelect;
             frame.OnMoveUp += OnMoveUp;
             frame.OnMoveDown += OnMoveDown;

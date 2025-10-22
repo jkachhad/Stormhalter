@@ -10,12 +10,15 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Models;
 using Kesmai.WorldForge.UI.Documents;
+using Kesmai.WorldForge.Windows;
 
 namespace Kesmai.WorldForge;
 
 public interface IComponentProvider
 {
 	string Name { get; }
+	
+	bool IsEditable => true;
 
 	void AddComponent(SegmentTile segmentTile);
 	void RemoveComponent(SegmentTile segmentTile);
@@ -24,6 +27,8 @@ public interface IComponentProvider
 	IEnumerable<ComponentRender> GetRenders();
 
 	XElement GetXElement();
+
+	ComponentFrame GetComponentFrame();
 }
 
 public class SegmentComponentChanged(SegmentComponent segmentComponent) : ValueChangedMessage<SegmentComponent>(segmentComponent);
@@ -56,6 +61,8 @@ public class SegmentComponent : ObservableObject, ISegmentObject, IComponentProv
 		}
 	}
 	
+	public bool IsEditable => false;
+
 	public SegmentComponent()
 	{
 	}
@@ -161,5 +168,10 @@ public class SegmentComponent : ObservableObject, ISegmentObject, IComponentProv
 	public XElement GetXElement()
 	{
 		throw new NotImplementedException();
+	}
+	
+	public ComponentFrame GetComponentFrame()
+	{
+		return new SegmentComponentFrame();
 	}
 }

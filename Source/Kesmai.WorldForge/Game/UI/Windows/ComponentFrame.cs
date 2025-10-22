@@ -1,9 +1,12 @@
 using System;
+using System.Linq;
+using CommonServiceLocator;
 using DigitalRune.Game;
 using DigitalRune.Game.Input;
 using DigitalRune.Game.UI;
 using DigitalRune.Game.UI.Controls;
 using DigitalRune.Mathematics.Algebra;
+using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Models;
 using Color = Microsoft.Xna.Framework.Color;
 
@@ -26,9 +29,8 @@ public class ComponentFrame : StackPanel
 	public static readonly int ChangeEventId = CreateEvent(
 		typeof(ComponentFrame), nameof(OnChange), GamePropertyCategories.Default, null, EventArgs.Empty);
 	
-	private TextBlock _componentTypeTextBlock;
-	private ComponentImage _image;
-	private PropertyGrid _propertyGrid;
+	protected TextBlock _componentTypeTextBlock;
+	protected ComponentImage _image;
 
 	private Button _orderUpButton;
 	private Button _orderDownButton;
@@ -44,7 +46,6 @@ public class ComponentFrame : StackPanel
 		get => GetValue<IComponentProvider>(ProviderPropertyId);
 		set => SetValue(ProviderPropertyId, value);
 	}
-	
 	
 	public bool CanMoveUp { get; set; }
 	public bool CanMoveDown { get; set; }
@@ -217,6 +218,54 @@ public class ComponentFrame : StackPanel
 		frameGrid.AddChild(orderPanel, 4, 2);
 		frameGrid.AddChild(actionsPanel, 4, 2);
 
+		var content = GetContent();
+		
+		if (content != null)
+			frameGrid.AddChild(content, 2, 2);
+		
+		Children.Add(frameGrid);
+		
+		if (Provider != null)
+			OnComponentUpdate(Provider);
+	}
+
+	protected virtual void OnComponentUpdate(IComponentProvider provider)
+	{
+		if (_componentTypeTextBlock != null)
+			_componentTypeTextBlock.Text = GetHeader();
+		
+		if (_image != null)
+			_image.Provider = provider;
+	}
+
+	protected override void OnHandleInput(InputContext context)
+	{
+		if (!IsLoaded || !IsVisible)
+			return;
+			
+		base.OnHandleInput(context);
+
+		var inputService = InputService;
+
+		if (IsMouseOver && inputService.IsReleased(MouseButtons.Left))
+			Events.Get<EventArgs>(ClickEventId).Raise();
+	}
+
+	protected virtual UIControl GetContent() => null;
+	
+	protected virtual string GetHeader() => "Component";
+}
+
+public class TerrainComponentFrame : ComponentFrame
+{
+	private PropertyGrid _propertyGrid;
+	
+	public TerrainComponentFrame()
+	{
+	}
+
+	protected override UIControl GetContent()
+	{
 		if (_propertyGrid is null)
 		{
 			_propertyGrid = new PropertyGrid()
@@ -231,37 +280,69 @@ public class ComponentFrame : StackPanel
 					_image.Invalidate();
 			};
 		}
-
-		frameGrid.AddChild(_propertyGrid, 2, 2);
 		
-		Children.Add(frameGrid);
-		
-		if (Provider != null)
-			OnComponentUpdate(Provider);
+		return _propertyGrid;
 	}
 
-	private void OnComponentUpdate(IComponentProvider provider)
+	protected override void OnComponentUpdate(IComponentProvider provider)
 	{
-		if (_componentTypeTextBlock != null)
-			_componentTypeTextBlock.Text = provider.GetType().Name;
-		
-		if (_image != null)
-			_image.Provider = provider;
+		base.OnComponentUpdate(provider);
 		
 		if (_propertyGrid != null)
 			_propertyGrid.Item = provider;
 	}
 
-	protected override void OnHandleInput(InputContext context)
+	protected override string GetHeader() => Provider.GetType().Name;
+}
+
+public class SegmentComponentFrame : ComponentFrame
+{
+	private Button _presentButton;
+	
+	public SegmentComponentFrame()
 	{
-		if (!IsLoaded || !IsVisible)
-			return;
-			
-		base.OnHandleInput(context);
+	}
 
-		var inputService = InputService;
+	protected override UIControl GetContent()
+	{
+		if (_presentButton is null)
+		{
+			_presentButton = new Button()
+			{
+				Content = new TextBlock()
+				{
+					Text = "Edit Component", FontSize = 10, HorizontalAlignment = HorizontalAlignment.Center,
+					Font = "Tahoma", Foreground = Color.Yellow,
+				},
+				Style = "Client-Button",
+				
+				Margin = new  Vector4F(5),
+				
+				HorizontalAlignment = HorizontalAlignment.Center,
+				VerticalAlignment = VerticalAlignment.Center,
+			};
+			_presentButton.Click += (o, args) =>
+			{
+				var applicationPresenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
 
-		if (IsMouseOver && inputService.IsReleased(MouseButtons.Left))
-			Events.Get<EventArgs>(ClickEventId).Raise();
+				if (applicationPresenter != null && Provider is SegmentComponent segmentComponent)
+					segmentComponent.Present(applicationPresenter);
+			};
+		}
+		
+		return _presentButton;
+	}
+	
+	protected override string GetHeader()
+	{
+		var internalType = String.Empty;
+		var components = Provider.GetComponents().ToList();
+		
+		if (components.Count() > 1)
+			internalType = " (Multiple)";
+		else if (components.Count() is 1)
+			internalType = $" ({components.First().GetType().Name})";
+		
+		return $"SegmentComponent [{internalType}]";
 	}
 }
