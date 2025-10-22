@@ -204,7 +204,28 @@ public class ApplicationPresenter : ObservableRecipient
 		if (_segment != null)
 			throw new InvalidOperationException("Attempt to create a segment when an active segment already exists.");
 
-		Segment = new Segment();
+		var dialog = new Microsoft.Win32.OpenFolderDialog()
+		{
+			Multiselect = false,
+		};
+
+		var openResult = dialog.ShowDialog();
+
+		if (!openResult.HasValue || openResult != true)
+			return;
+
+		var targetDirectory = new DirectoryInfo(dialog.FolderName);
+
+		if (!targetDirectory.Exists)
+			targetDirectory.Create();
+
+		var segment = new Segment()
+		{
+			Name = targetDirectory.Name,
+			Directory = targetDirectory.FullName
+		};
+
+		Segment = segment;
 	}
 
 	private void CloseSegment()
