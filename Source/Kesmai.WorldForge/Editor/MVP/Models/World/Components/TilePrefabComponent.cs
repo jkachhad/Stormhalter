@@ -89,18 +89,10 @@ namespace Kesmai.WorldForge.Editor.MVP.Models.World.Components
                 Comment = this.Comment,
             };
 
-            foreach( var component in Components )
-                clone.Components.Add( component.Component );
+            // foreach( var component in Components )
+            //     clone.Components.Add( component.Component );
 
             return clone;
-        }
-
-        public override IEnumerable<ComponentRender> GetTerrain()
-        {
-            System.Diagnostics.Debug.WriteLine( $"[TilePrefab] Getting terrain for prefab '{Name}'" );
-            return Components
-                .SelectMany( c => c.GetTerrain() )
-                .OrderByDescending( render => render.Terrain.Min( layer => layer.Order ) );
         }
 
         public override XElement GetXElement()

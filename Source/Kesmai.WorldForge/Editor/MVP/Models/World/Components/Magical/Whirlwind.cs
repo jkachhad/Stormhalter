@@ -44,7 +44,7 @@ public class Whirlwind : TerrainComponent
 			_allowDispel = (bool)allowDispelElement;
 	}
 		
-	public override IEnumerable<ComponentRender> GetTerrain()
+	public override IEnumerable<ComponentRender> GetRenders()
 	{
 		var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
 

@@ -49,10 +49,9 @@ public class SegmentComponents : ObservableCollection<SegmentComponent>
 			var segmentComponent = new SegmentComponent()
 			{
 				Name = terrainComponent.Name,
-				Element = new XElement(componentElement),
 			};
 			
-			segmentComponent.UpdateComponent();
+			segmentComponent.UpdateComponent(new XElement(componentElement));
 			
 			Add(segmentComponent);
 		}

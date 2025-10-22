@@ -29,7 +29,7 @@ public class EraseTool : ComponentTool
 		if (_tileUnderMouse != tile)
 			return false;
 		
-		if (_componentUnderMouse != null && _componentUnderMouse.GetTerrain().Any(t => t.Terrain.Contains(layer)))
+		if (_componentUnderMouse != null && _componentUnderMouse.GetRenders().Any(t => t.Terrain.Contains(layer)))
 		{
 			overrideColor = Color.Red;
 			return true;
@@ -58,11 +58,11 @@ public class EraseTool : ComponentTool
 			
 		if (!_isAltDown && !_isShiftDown)
 		{
-			_tileUnderMouse.Components.Remove(_componentUnderMouse);
+			_tileUnderMouse.Providers.Remove(_componentUnderMouse);
 		}
 		else if (_isAltDown)
 		{
-			_tileUnderMouse.Components.Clear();
+			_tileUnderMouse.Providers.Clear();
 		}
 	}
 		

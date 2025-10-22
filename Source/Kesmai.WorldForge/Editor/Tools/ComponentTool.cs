@@ -15,12 +15,12 @@ namespace Kesmai.WorldForge;
 public abstract class ComponentTool : Tool
 {
 	protected SegmentTile _tileUnderMouse;
-	protected TerrainComponent _componentUnderMouse;
+	protected IComponentProvider _componentUnderMouse;
 
 	protected virtual Color SelectionColor => Color.Yellow;
 	
 	public SegmentTile TileUnderMouse => _tileUnderMouse;
-	public TerrainComponent ComponentUnderMouse => _componentUnderMouse;
+	public IComponentProvider ComponentUnderMouse => _componentUnderMouse;
 
 	protected ComponentTool(string name, string icon) : base(name, icon)
 	{
@@ -45,7 +45,7 @@ public abstract class ComponentTool : Tool
 		var region = target.Region;
 
 		// get the origin tile coordinates under the mouse. Apply a hit test to find the actual component.
-		bool hitTest(int wx, int wy, out SegmentTile localTileUnderMouse, out TerrainComponent localComponentUnderMouse)
+		bool hitTest(int wx, int wy, out SegmentTile localTileUnderMouse, out IComponentProvider localComponentUnderMouse)
 		{
 			localTileUnderMouse = null;
 			localComponentUnderMouse = null;
@@ -64,18 +64,18 @@ public abstract class ComponentTool : Tool
 			var dx = _position.X - (rx - 45);
 			var dy = _position.Y - (ry - 45);
 
-			if (!tile.Components.Any())
+			if (!tile.Providers.Any())
 				return false;
 
 			// Check all components of the tile (in reverse order, so top-most components are checked first).
-			foreach (var component in tile.Components.Reverse().Select(c => c.Component))
+			foreach (var component in tile.Providers.Reverse().SelectMany(c => c.GetComponents()))
 			{
 				// Skip components that do not match the filter or are not valid for this tool.
 				if ((filter != null && !filter.IsValid(component)) || !IsValid(component))
 					continue;
 				
 				// Check all terrain layers of the component (in order of their drawing order).
-				foreach (var layer in component.GetTerrain().SelectMany(r => r.Terrain))
+				foreach (var layer in component.GetRenders().SelectMany(r => r.Terrain))
 				{
 					var sprite = layer.Sprite;
 
@@ -133,7 +133,7 @@ public abstract class ComponentTool : Tool
 		}
 	}
 
-	protected virtual bool IsValid(TerrainComponent component)
+	protected virtual bool IsValid(IComponentProvider provider)
 	{
 		return true;
 	}

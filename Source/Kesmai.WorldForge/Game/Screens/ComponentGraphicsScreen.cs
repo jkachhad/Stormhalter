@@ -40,19 +40,29 @@ public class ComponentGraphicsScreen : InteropGraphicsScreen
 		// calculate bounds
 		var bounds = new Rectangle(cx - 100, cy - 100, 200, 200);
 		
-		foreach (var render in _target.Renders)
+		var provider = _target.Provider;
+
+		if (_target.Provider is not null)
 		{
-			var sprite = render.Layer.Sprite;
+			var renders = provider.GetRenders();
 
-			if (sprite is null) 
-				continue;
-			
-			var spriteBounds = bounds;
+			foreach (var render in renders)
+			{
+				foreach (var layer in render.Terrain)
+				{
+					var sprite = layer.Sprite;
 
-			if (sprite.Offset != Vector2F.Zero)
-				spriteBounds.Offset((int)Math.Floor(sprite.Offset.X), (int)Math.Floor(sprite.Offset.Y));
+					if (sprite is null)
+						continue;
 
-			spriteBatch.Draw(sprite.Texture, bounds, render.Color);
+					var spriteBounds = bounds;
+
+					if (sprite.Offset != Vector2F.Zero)
+						spriteBounds.Offset((int)Math.Floor(sprite.Offset.X), (int)Math.Floor(sprite.Offset.Y));
+
+					spriteBatch.Draw(sprite.Texture, bounds, render.Color);
+				}
+			}
 		}
 
 		spriteBatch.End();

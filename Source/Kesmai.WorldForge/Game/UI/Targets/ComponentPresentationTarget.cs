@@ -9,36 +9,19 @@ namespace Kesmai.WorldForge;
 public class ComponentPresentationTarget : InteropPresentationTarget
 {
 	private ComponentGraphicsScreen _componentGraphicsScreen;
-	private List<TerrainRender> _renders;
 	
-	public static readonly DependencyProperty ComponentProperty =
-		DependencyProperty.Register(nameof(Component), typeof(TerrainComponent), typeof(ComponentPresentationTarget),
-			new FrameworkPropertyMetadata(default(TerrainComponent), FrameworkPropertyMetadataOptions.AffectsRender));
+	public static readonly DependencyProperty ProviderProperty =
+		DependencyProperty.Register(nameof(Provider), typeof(IComponentProvider), typeof(ComponentPresentationTarget),
+			new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 		
-	public TerrainComponent Component
+	public IComponentProvider Provider
 	{
-		get => (TerrainComponent)GetValue(ComponentProperty);
-		set
-		{
-			var oldValue = Component;
-			var newValue = value;
-			
-			SetValue(ComponentProperty, value);
-			
-			if (oldValue != newValue)
-			{
-				_renders = value.GetTerrain()
-					.SelectMany(render => render.Terrain.Select(layer => new TerrainRender(layer, render.Color)))
-					.OrderBy(render => render.Layer.Order).ToList();
-			}
-		}
+		get => (IComponentProvider)GetValue(ProviderProperty);
+		set => SetValue(ProviderProperty, value);
 	}
-
-	public List<TerrainRender> Renders => _renders;
-
+	
 	public ComponentPresentationTarget()
 	{
-		_renders = new List<TerrainRender>();
 	}
 	
 	protected override void OnInitialize()

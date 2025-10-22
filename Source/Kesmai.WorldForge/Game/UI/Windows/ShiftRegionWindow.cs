@@ -143,7 +143,7 @@ public class ShiftRegionWindow : Window
 				
 			var duplicate = new SegmentTile(dx, dy);
 
-			foreach (var component in tile.Components.Select(c => c.Component))
+			foreach (var component in tile.Providers.SelectMany(c => c.GetComponents()))
 				duplicate.AddComponent(component);
 
 			_region.SetTile(dx, dy, duplicate);

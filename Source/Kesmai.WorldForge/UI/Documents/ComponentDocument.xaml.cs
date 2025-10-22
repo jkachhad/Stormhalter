@@ -25,7 +25,7 @@ public partial class ComponentDocument : UserControl
 			if (message.Value is not SegmentComponent segmentComponent)
 				return;
 			
-			_segmentComponent = segmentComponent;
+			_presenter.Provider = _segmentComponent = segmentComponent;
 
 			// set the text editor content
 			_editor.Text = segmentComponent.Element.ToString();
@@ -39,9 +39,8 @@ public partial class ComponentDocument : UserControl
 		
 		try
 		{
-			_segmentComponent.Element = XElement.Parse(editor.Text);
-			_presenter.Component = _segmentComponent.Component;
-
+			_segmentComponent.UpdateComponent(XElement.Parse(editor.Text));
+			
 			_error.Visibility = Visibility.Hidden;
 			_error.Text = String.Empty;
 		}

@@ -149,7 +149,7 @@ public class DoorComponent : TerrainComponent
 	#region Methods
 
 	/// <inheritdoc />
-	public override IEnumerable<ComponentRender> GetTerrain()
+	public override IEnumerable<ComponentRender> GetRenders()
 	{
 		var visibility = ServiceLocator.Current.GetInstance<RegionVisibility>();
 		var showOpened = IsOpen || visibility.OpenDoors;

@@ -35,14 +35,14 @@ public class ComponentFrame : StackPanel
 	
 	private Button _deleteButton;
 
-	public static readonly int ComponentPropertyId = CreateProperty(
-		typeof(ComponentFrame), "Component", GamePropertyCategories.Default, null, default(TerrainComponent),
+	public static readonly int ProviderPropertyId = CreateProperty(
+		typeof(ComponentFrame), nameof(Provider), GamePropertyCategories.Default, null, default(IComponentProvider),
 		UIPropertyOptions.AffectsRender);
 
-	public TerrainComponent Component
+	public IComponentProvider Provider
 	{
-		get => GetValue<TerrainComponent>(ComponentPropertyId);
-		set => SetValue(ComponentPropertyId, value);
+		get => GetValue<IComponentProvider>(ProviderPropertyId);
+		set => SetValue(ProviderPropertyId, value);
 	}
 	
 	
@@ -87,7 +87,7 @@ public class ComponentFrame : StackPanel
 
 		Orientation = Orientation.Vertical;
 
-		Properties.Get<TerrainComponent>(ComponentPropertyId).Changed += (sender, args) =>
+		Properties.Get<IComponentProvider>(ProviderPropertyId).Changed += (sender, args) =>
 		{
 			if (IsLoaded)
 				OnComponentUpdate(args.NewValue);
@@ -236,20 +236,20 @@ public class ComponentFrame : StackPanel
 		
 		Children.Add(frameGrid);
 		
-		if (Component != null)
-			OnComponentUpdate(Component);
+		if (Provider != null)
+			OnComponentUpdate(Provider);
 	}
 
-	private void OnComponentUpdate(TerrainComponent component)
+	private void OnComponentUpdate(IComponentProvider provider)
 	{
 		if (_componentTypeTextBlock != null)
-			_componentTypeTextBlock.Text = component.GetType().Name;
+			_componentTypeTextBlock.Text = provider.GetType().Name;
 		
 		if (_image != null)
-			_image.Component = component;
+			_image.Provider = provider;
 		
 		if (_propertyGrid != null)
-			_propertyGrid.Item = component;
+			_propertyGrid.Item = provider;
 	}
 
 	protected override void OnHandleInput(InputContext context)

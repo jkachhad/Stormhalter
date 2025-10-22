@@ -12,14 +12,14 @@ public class ComponentImage : UIControl
 	private List<ComponentRender> _renders;
 	private bool _invalidated;
 		
-	public static readonly int ComponentPropertyId = CreateProperty(
-		typeof(ComponentImage), "Component", GamePropertyCategories.Default, null, default(TerrainComponent),
+	public static readonly int ProviderPropertyId = CreateProperty(
+		typeof(ComponentImage), nameof(Provider), GamePropertyCategories.Default, null, default(IComponentProvider),
 		UIPropertyOptions.AffectsRender);
 
-	public TerrainComponent Component
+	public IComponentProvider Provider
 	{
-		get => GetValue<TerrainComponent>(ComponentPropertyId);
-		set => SetValue(ComponentPropertyId, value);
+		get => GetValue<IComponentProvider>(ProviderPropertyId);
+		set => SetValue(ProviderPropertyId, value);
 	}
 
 	public ComponentImage()
@@ -29,7 +29,7 @@ public class ComponentImage : UIControl
 		Width = 100;
 		Height = 100;
 
-		Properties.Get<TerrainComponent>(ComponentPropertyId).Changed += (sender, args) =>
+		Properties.Get<IComponentProvider>(ProviderPropertyId).Changed += (sender, args) =>
 		{
 			Invalidate();
 		};
@@ -46,8 +46,8 @@ public class ComponentImage : UIControl
 		{
 			_renders.Clear();
 
-			if (Component != null)
-				_renders.AddRange(Component.GetTerrain());
+			if (Provider != null)
+				_renders.AddRange(Provider.GetRenders());
 		}
 		
 		base.OnUpdate(deltaTime);

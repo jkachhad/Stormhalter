@@ -70,11 +70,11 @@ public class RopeComponent : ActiveTeleporter
 	#region Methods
 
 	/// <inheritdoc />
-	public override IEnumerable<ComponentRender> GetTerrain()
+	public override IEnumerable<ComponentRender> GetRenders()
 	{
 		if (!_isSecret)
 		{
-			foreach (var render in base.GetTerrain())
+			foreach (var render in base.GetRenders())
 				yield return render;
 		}
 	}

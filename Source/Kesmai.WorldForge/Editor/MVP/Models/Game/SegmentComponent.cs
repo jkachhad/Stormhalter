@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Xml;
@@ -15,11 +16,14 @@ namespace Kesmai.WorldForge;
 public interface IComponentProvider
 {
 	string Name { get; }
-	
-	TerrainComponent Component { get; }
 
 	void AddComponent(SegmentTile segmentTile);
 	void RemoveComponent(SegmentTile segmentTile);
+
+	IEnumerable<IComponentProvider> GetComponents();
+	IEnumerable<ComponentRender> GetRenders();
+
+	XElement GetXElement();
 }
 
 public class SegmentComponentChanged(SegmentComponent segmentComponent) : ValueChangedMessage<SegmentComponent>(segmentComponent);
@@ -51,9 +55,7 @@ public class SegmentComponent : ObservableObject, ISegmentObject, IComponentProv
 			}
 		}
 	}
-
-	public TerrainComponent Component => _component;
-
+	
 	public SegmentComponent()
 	{
 	}
@@ -62,11 +64,13 @@ public class SegmentComponent : ObservableObject, ISegmentObject, IComponentProv
 	{
 		// get the name attribute
 		var nameAttribute = element.Attribute("name");
+
+		if (nameAttribute != null)
+			_name = nameAttribute.Value;
+		else
+			_name = "Unnamed Component";
 		
-		_name = nameAttribute?.Value ?? "Unnamed Component";
-		_element = element;
-		
-		UpdateComponent();
+		UpdateComponent(element);
 	}
 
 	public IComponentProvider Clone()
@@ -78,43 +82,6 @@ public class SegmentComponent : ObservableObject, ISegmentObject, IComponentProv
 		};
 		
 		return clone;
-	}
-
-	protected override void OnPropertyChanged(PropertyChangedEventArgs args)
-	{
-		base.OnPropertyChanged(args);
-		
-		// Handle changes to the Element property
-		if (args.PropertyName != nameof(Element))
-			return;
-		
-		UpdateComponent();
-	}
-
-	public void UpdateComponent()
-	{
-		var componentTypeAttribute = _element.Attribute("type");
-
-		if (componentTypeAttribute is null)
-			throw new XmlException("Component element is missing type attribute.");
-
-		var componentTypename = $"Kesmai.WorldForge.Models.{componentTypeAttribute.Value}";
-		var componentType = Type.GetType(componentTypename);
-
-		if (componentType is null)
-			throw new XmlException($"Component type '{componentTypename}' not found.");
-
-		var ctor = componentType.GetConstructor([typeof(XElement)]);
-
-		if (ctor is null)
-			throw new XmlException($"Component type '{componentTypename}' is missing constructor with XElement parameter.");
-
-		var component = ctor.Invoke([_element]) as TerrainComponent;
-
-		if (component is null)
-			throw new XmlException($"Component type '{componentTypename}' failed to instantiate.");
-		
-		_component = component;
 	}
 
 	public void Present(ApplicationPresenter presenter)
@@ -139,12 +106,60 @@ public class SegmentComponent : ObservableObject, ISegmentObject, IComponentProv
 	public void AddComponent(SegmentTile segmentTile)
 	{
 		// add this specific provider.
-		segmentTile.Components.Add(this);
+		segmentTile.Providers.Add(this);
 	}
 
 	public void RemoveComponent(SegmentTile segmentTile)
 	{
 		// remove this specific component.
-		segmentTile.Components.Remove(this);
+		segmentTile.Providers.Remove(this);
+	}
+
+	public IEnumerable<IComponentProvider> GetComponents()
+	{
+		if (_component != null)
+			yield return _component;
+	}
+
+	public void UpdateComponent(XElement element)
+	{
+		var componentTypeAttribute = element.Attribute("type");
+
+		if (componentTypeAttribute is null)
+			throw new XmlException("Component element is missing type attribute.");
+
+		var componentTypename = $"Kesmai.WorldForge.Models.{componentTypeAttribute.Value}";
+		var componentType = Type.GetType(componentTypename);
+
+		if (componentType is null)
+			throw new XmlException($"Component type '{componentTypename}' not found.");
+
+		var ctor = componentType.GetConstructor([typeof(XElement)]);
+
+		if (ctor is null)
+			throw new XmlException($"Component type '{componentTypename}' is missing constructor with XElement parameter.");
+
+		var component = ctor.Invoke([element]) as TerrainComponent;
+
+		if (component is null)
+			throw new XmlException($"Component type '{componentTypename}' failed to instantiate.");
+
+		_element = element;
+		_component = component;
+	}
+
+	public IEnumerable<ComponentRender> GetRenders()
+	{
+		// return the render of the internal component.
+		if (_component != null)
+		{
+			foreach (var render in _component.GetRenders())
+				yield return render;
+		}
+	}
+
+	public XElement GetXElement()
+	{
+		throw new NotImplementedException();
 	}
 }

@@ -21,7 +21,7 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
     public int X => _x;
     public int Y => _y;
 
-    public ObservableCollection<IComponentProvider> Components { get; set; }
+    public ObservableCollection<IComponentProvider> Providers { get; set; }
 
     public List<TerrainRender> Renders => _renders;
 
@@ -30,7 +30,7 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
         _x = x;
         _y = y;
 
-        Components = new ObservableCollection<IComponentProvider> ( );
+        Providers = new ObservableCollection<IComponentProvider> ( );
     }
 
     public SegmentTile ( XElement element )
@@ -38,14 +38,14 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
         _x = (int) element.Attribute ( "x" );
         _y = (int) element.Attribute ( "y" );
 
-        Components = new ObservableCollection<IComponentProvider> ( );
+        Providers = new ObservableCollection<IComponentProvider> ( );
 
         foreach ( var componentElement in element.Elements ( "component" ) )
         {
             var component = InstantiateComponent ( componentElement );
 
             if ( component != null )
-                Components.Add ( component );
+                Providers.Add ( component );
         }
 
         UpdateTerrain ( );
@@ -58,7 +58,7 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
     {
         var tileElement = new XElement ( "tile" );
 
-        foreach ( var component in Components.Select(c => c.Component) )
+        foreach ( var component in Providers.SelectMany(c => c.GetComponents()) )
             tileElement.Add ( component.GetXElement ( ) );
 
         return tileElement;
@@ -72,17 +72,17 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
     /// <inheritdoc />
     public IEnumerator<IComponentProvider> GetEnumerator ( )
     {
-        return Components.GetEnumerator ( );
+        return Providers.GetEnumerator ( );
     }
 
     public IEnumerable<ComponentRender> GetRenderableTerrain ( TerrainSelector selector )
     {
-        foreach ( var component in Components.Select(c => c.Component) )
+        foreach ( var provider in Providers.SelectMany(c => c.GetComponents()) )
         {
-            if ( selector.IsValid ( component ) )
+            if ( selector.IsValid ( provider ) )
             {
-                foreach ( var render in component.GetTerrain ( ) )
-                    yield return selector.TransformRender ( this, component, render );
+                foreach ( var render in provider.GetRenders() )
+                    yield return selector.TransformRender ( this, provider, render );
             }
         }
     }
@@ -96,7 +96,7 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
         {
             foreach ( var subComponent in prefabComponent.Components )
             {
-                Components.Add ( subComponent );
+                Providers.Add ( subComponent );
             }
         }
         else
@@ -109,7 +109,7 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
 
     public void RemoveComponent ( IComponentProvider component )
     {
-        if ( component != null && Components.Contains ( component ) )
+        if ( component != null && Providers.Contains ( component ) )
             component.RemoveComponent(this);
 
         UpdateTerrain ( );
@@ -118,7 +118,7 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
     public void InsertComponent ( int index, IComponentProvider component )
     {
         if ( component != null )
-            Components.Insert ( index, component );
+            Providers.Insert ( index, component );
 
         UpdateTerrain ( );
     }
@@ -128,21 +128,21 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
         if ( overwrite == null )
             return;
 
-        Components.RemoveAt ( index );
-        Components.Insert ( index, overwrite );
+        Providers.RemoveAt ( index );
+        Providers.Insert ( index, overwrite );
 
         UpdateTerrain ( );
     }
 
     public void ReplaceComponent ( TerrainComponent original, IComponentProvider overwrite )
     {
-        if ( overwrite == null || original == null || !Components.Contains ( original ) )
+        if ( overwrite == null || original == null || !Providers.Contains ( original ) )
             return;
 
-        var index = Components.IndexOf ( original );
+        var index = Providers.IndexOf ( original );
 
-        Components.Remove ( original );
-        Components.Insert ( index, overwrite );
+        Providers.Remove ( original );
+        Providers.Insert ( index, overwrite );
 
         UpdateTerrain ( );
     }
@@ -166,12 +166,12 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
 
     public IEnumerable<T> GetComponents<T> ( )
     {
-        return Components.OfType<T> ( ).ToArray<T> ( );
+        return Providers.OfType<T> ( ).ToArray<T> ( );
     }
 
     public IEnumerable<T> GetComponents<T> ( Func<T, bool> predicate )
     {
-        return Components.OfType<T> ( ).Where<T> ( predicate ).ToArray<T> ( );
+        return Providers.OfType<T> ( ).Where<T> ( predicate ).ToArray<T> ( );
     }
 
     public void UpdateTerrain ( )

@@ -26,12 +26,12 @@ public class ComponentsPanel : StackPanel
     private bool _invalidated;
 
     public static readonly int SelectedItemPropertyId = CreateProperty(
-        typeof(ComponentsPanel), "SelectedItem", GamePropertyCategories.Default, null, default(TerrainComponent),
+        typeof(ComponentsPanel), nameof(SelectedItem), GamePropertyCategories.Default, null, default(IComponentProvider),
         UIPropertyOptions.AffectsRender);
 
-    public TerrainComponent SelectedItem
+    public IComponentProvider SelectedItem
     {
-        get => GetValue<TerrainComponent> ( SelectedItemPropertyId );
+        get => GetValue<IComponentProvider> ( SelectedItemPropertyId );
         set => SetValue ( SelectedItemPropertyId, value );
     }
 
@@ -53,11 +53,11 @@ public class ComponentsPanel : StackPanel
         // copy original tile for reset
         _restoreTile = new SegmentTile(_targetTile.X, _targetTile.Y);
 
-        foreach (var component in _targetTile.Components.Select(c => c.Component))
-            _restoreTile.Components.Add(component.Clone());
+        foreach (var component in _targetTile.Providers)
+            component.AddComponent(_restoreTile);
 
         // listen for changes to the components collection.
-        _targetTile.Components.CollectionChanged += (s, e) =>
+        _targetTile.Providers.CollectionChanged += (s, e) =>
         {
             Invalidate(); 
             
@@ -93,16 +93,16 @@ public class ComponentsPanel : StackPanel
     {
         _framePanel.Children.Clear();
 
-        for (int index = 0; index < _targetTile.Components.Count; index++)
+        for (int index = 0; index < _targetTile.Providers.Count; index++)
         {
-            var provider = _targetTile.Components[index];
+            var provider = _targetTile.Providers[index];
 
             var frame = new ComponentFrame
             {
-                Component = provider.Component,
+                Provider = provider,
 
                 CanMoveUp = index > 0,
-                CanMoveDown = index < (_targetTile.Components.Count - 1),
+                CanMoveDown = index < (_targetTile.Providers.Count - 1),
                 
                 // only allow delete if there is more than one component.
                 CanDelete = index > 0,
@@ -128,7 +128,7 @@ public class ComponentsPanel : StackPanel
         if (sender is not ComponentFrame frame)
             return;
         
-        SelectedItem = frame.Component;
+        SelectedItem = frame.Provider;
     }
 
     private void OnMoveUp(object sender, EventArgs e)
@@ -136,15 +136,15 @@ public class ComponentsPanel : StackPanel
         if (sender is not ComponentFrame frame)
             return;
 
-        MoveUp(frame.Component);
+        MoveUp(frame.Provider);
     }
 
-    private void MoveUp(TerrainComponent component)
+    private void MoveUp(IComponentProvider component)
     {
-        var index = _targetTile.Components.IndexOf(component);
+        var index = _targetTile.Providers.IndexOf(component);
 
         if (index > 0)
-            _targetTile.Components.Move(index, index - 1);
+            _targetTile.Providers.Move(index, index - 1);
     }
     
     private void OnMoveDown(object sender, EventArgs e)
@@ -152,15 +152,15 @@ public class ComponentsPanel : StackPanel
         if (sender is not ComponentFrame frame)
             return;
         
-        MoveDown(frame.Component);
+        MoveDown(frame.Provider);
     }
     
-    private void MoveDown(TerrainComponent component)
+    private void MoveDown(IComponentProvider component)
     {
-        var index = _targetTile.Components.IndexOf(component);
+        var index = _targetTile.Providers.IndexOf(component);
 
-        if (index < _targetTile.Components.Count - 1)
-            _targetTile.Components.Move(index, index + 1);
+        if (index < _targetTile.Providers.Count - 1)
+            _targetTile.Providers.Move(index, index + 1);
     }
 
     private void OnDelete(object sender, EventArgs e)
@@ -168,21 +168,21 @@ public class ComponentsPanel : StackPanel
         if (sender is not ComponentFrame frame)
             return;
         
-        Delete(frame.Component);
+        Delete(frame.Provider);
     }
     
-    private void Delete(TerrainComponent component)
+    private void Delete(IComponentProvider component)
     {
-        _targetTile.RemoveComponent(component);
+        component.RemoveComponent(_targetTile);
     }
 
     public void Reset()
     {
         // restore original tile.
-        _targetTile.Components.Clear();
+        _targetTile.Providers.Clear();
         
-        foreach (var component in _restoreTile.Components.Select(c => c.Component))
-            _targetTile.Components.Add(component.Clone());
+        foreach (var provider in _restoreTile.Providers)
+            provider.AddComponent(_targetTile);
 
         _targetTile.UpdateTerrain();
         
@@ -207,7 +207,7 @@ public class ComponentsPanel : StackPanel
         
         foreach (var frame in _framePanel.Children.OfType<ComponentFrame>())
         {
-            if (selected != frame.Component)
+            if (selected != frame.Provider)
                 continue;
             
             var selectedBounds = frame.ActualBounds.ToRectangle(true);

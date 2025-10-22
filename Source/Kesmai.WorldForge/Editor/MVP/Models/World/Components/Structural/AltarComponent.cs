@@ -55,7 +55,7 @@ public class AltarComponent : TerrainComponent
 	#region Methods
 
 	/// <inheritdoc />
-	public override IEnumerable<ComponentRender> GetTerrain()
+	public override IEnumerable<ComponentRender> GetRenders()
 	{
 		var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
 

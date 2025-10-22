@@ -12,9 +12,9 @@ namespace Kesmai.WorldForge;
 
 public sealed class ComponentImageCache
 {
-    private readonly Dictionary<TerrainComponent, WriteableBitmap> _renders = new();
+    private readonly Dictionary<IComponentProvider, WriteableBitmap> _renders = new();
 
-    public WriteableBitmap Get(TerrainComponent component)
+    public WriteableBitmap Get(IComponentProvider component)
     {
         if (!_renders.TryGetValue(component, out var bmp))
         {
@@ -24,11 +24,12 @@ public sealed class ComponentImageCache
         return bmp;
     }
 
-    public WriteableBitmap Update(TerrainComponent component)
+    public WriteableBitmap Update(IComponentProvider component)
     {
         // Build render list (layer + tint + order) from your component model.
         var renderList = new List<TerrainRender>();
-        foreach (var render in component.GetTerrain())
+        
+        foreach (var render in component.GetRenders())
             renderList.AddRange(render.Terrain.Select(layer => new TerrainRender(layer, render.Color)));
 
         // Prepare (normalize to Pbgra32, freeze) and compute bounds once.

@@ -86,7 +86,7 @@ public abstract class TrapComponent : TerrainComponent
 			_interruptMovement = (bool)interruptMovementElement;
 	}
 	
-	public override IEnumerable<ComponentRender> GetTerrain()
+	public override IEnumerable<ComponentRender> GetRenders()
 	{
 		yield return _internal;
 	}

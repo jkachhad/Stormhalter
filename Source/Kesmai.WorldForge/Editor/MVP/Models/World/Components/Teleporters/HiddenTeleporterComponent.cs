@@ -366,7 +366,7 @@ public class HiddenTeleporterComponent : TeleportComponent
 		return element;
 	}
 		
-	public override IEnumerable<ComponentRender> GetTerrain()
+	public override IEnumerable<ComponentRender> GetRenders()
 	{
 		yield return _internal;
 	}

@@ -80,62 +80,37 @@ public class PaintTool : Tool
         {
             var provider = componentPalette.SelectedProvider;
 
-            if (provider is null)
-                return;
-        
-            var component = provider.Component;
-
-            // TODO: Refactor later since we no longer have a component window.
-            // This should be resolved by templates.
-            /*if ( baseComponent != null )
+            if (provider is not null)
             {
-                // Create a temporary tile and insert the component clone
-                var tempTile = new SegmentTile ( cx, cy );
-                tempTile.Components.Add ( baseComponent.Clone ( ) );
-                tempTile.UpdateTerrain ( );
-
-                var componentWindow = new ComponentsWindow ( region, tempTile, graphicsScreen );
-                componentWindow.Show ( graphicsScreen.UI );
-                componentWindow.Center ( );
-
-                componentWindow.Closed += ( s, e ) =>
+                foreach (var area in selection)
                 {
-                    var configuredComponent = tempTile.Components.FirstOrDefault ( );
-
-                    if ( configuredComponent == null )
-                        return;
-
-                    foreach ( var area in selection )
+                    for (var x = area.Left; x < area.Right; x++)
+                    for (var y = area.Top; y < area.Bottom; y++)
                     {
-                        for ( var x = area.Left; x < area.Right; x++ )
-                            for ( var y = area.Top; y < area.Bottom; y++ )
-                            {
-                                var selectedTile = region.GetTile ( x, y );
+                        var selectedTile = region.GetTile(x, y);
 
-                                if ( selectedTile == null )
-                                    region.SetTile ( x, y, selectedTile = new SegmentTile ( x, y ) );
+                        if (selectedTile == null)
+                            region.SetTile(x, y, selectedTile = new SegmentTile(x, y));
 
-                                if ( !_isShiftDown && !_isAltDown )
-                                {
-                                    var similar = GetSimilarComponents ( selectedTile, baseComponent.GetType ( ) );
-                                    foreach ( var similarComponent in similar )
-                                        selectedTile.RemoveComponent ( similarComponent );
-                                }
-                                else if ( _isAltDown )
-                                {
-                                    selectedTile.Components.Clear ( );
-                                }
+                        /*if (!_isShiftDown && !_isAltDown)
+                        {
+                            var similar = GetSimilarComponents(selectedTile, baseComponent.GetType());
+                            foreach (var similarComponent in similar)
+                                selectedTile.RemoveComponent(similarComponent);
+                        }
+                        else if (_isAltDown)
+                        {
+                            selectedTile.Components.Clear();
+                        }*/
 
-                                selectedTile.Components.Add ( configuredComponent.Clone ( ) );
-                                selectedTile.UpdateTerrain ( );
-                            }
+                        provider.AddComponent(selectedTile);
+                        selectedTile.UpdateTerrain();
+                        graphicsScreen.InvalidateRender();
                     }
-
-                    graphicsScreen.InvalidateRender ( );
-                };
-            }*/
-
-
+                }
+            }
+            
+            inputService.IsMouseOrTouchHandled = true;
         }
     }
 

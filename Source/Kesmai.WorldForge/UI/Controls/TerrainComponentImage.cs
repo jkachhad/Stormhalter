@@ -14,7 +14,7 @@ public class TerrainComponentImage : Image
 
     public IComponentProvider Provider
     {
-        get => (TerrainComponent)GetValue(ProviderProperty);
+        get => (IComponentProvider)GetValue(ProviderProperty);
         set => SetValue(ProviderProperty, value);
     }
 
@@ -41,6 +41,6 @@ public class TerrainComponentImage : Image
         var componentImageCache = ServiceLocator.Current.GetInstance<ComponentImageCache>();
 
         if (componentImageCache != null)
-            Source = componentImageCache.Get(provider.Component);
+            Source = componentImageCache.Get(provider);
     }
 }

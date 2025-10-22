@@ -44,7 +44,7 @@ public class Fire : TerrainComponent
 			_allowDispel = (bool)allowDispel;
 	}
 		
-	public override IEnumerable<ComponentRender> GetTerrain()
+	public override IEnumerable<ComponentRender> GetRenders()
 	{
 		var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
 

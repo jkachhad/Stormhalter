@@ -312,7 +312,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 					if (tile is null)
 						continue;
 						
-					var validComponents = tile.Components.Select(c => c.Component).Where(c => currentFilter.IsValid(c)).ToArray();
+					var validComponents = tile.Providers.SelectMany(c => c.GetComponents()).Where(c => currentFilter.IsValid(c)).ToArray();
 						
 					foreach (var component in validComponents)
 						tile.RemoveComponent(component);
@@ -428,8 +428,8 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			foreach (var searchRegion in segment.Regions)
 			{
 				var regionTeleporters = searchRegion.GetTiles()
-					.Where(tile => tile.Components.OfType<TeleportComponent>().Any())
-					.ToDictionary((tile => tile), tile => tile.Components.OfType<TeleportComponent>().FirstOrDefault());
+					.Where(tile => tile.Providers.OfType<TeleportComponent>().Any())
+					.ToDictionary((tile => tile), tile => tile.Providers.OfType<TeleportComponent>().FirstOrDefault());
 
 				foreach (var (segmentTile, teleporter) in regionTeleporters)
 				{

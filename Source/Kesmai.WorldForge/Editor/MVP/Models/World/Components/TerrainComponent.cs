@@ -33,11 +33,6 @@ public abstract class TerrainComponent : ObservableObject, IComponentProvider
     public string Name { get; set; } = "(unknown)";
 
     /// <summary>
-    /// Gets the component.
-    /// </summary>
-    public TerrainComponent Component  => this;
-
-    /// <summary>
     /// Gets or sets the color.
     /// </summary>
     [Browsable( true )]
@@ -127,14 +122,6 @@ public abstract class TerrainComponent : ObservableObject, IComponentProvider
         return GetType().Name;
     }
 
-    /// <summary>
-    /// Gets the rendered terrain.
-    /// </summary>
-    public virtual IEnumerable<ComponentRender> GetTerrain()
-    {
-        yield break;
-    }
-
     public void SetColor( int r, int g, int b )
     {
         Color = new Color( r, g, b );
@@ -152,12 +139,22 @@ public abstract class TerrainComponent : ObservableObject, IComponentProvider
     public void AddComponent(SegmentTile segmentTile)
     {
         // create a clone of this component and add it to the tile.
-        segmentTile.Components.Add(Clone());
+        segmentTile.Providers.Add(Clone());
     }
 
     public void RemoveComponent(SegmentTile segmentTile)
     {
         // remove this specific component.
-        segmentTile.Components.Remove(this);
+        segmentTile.Providers.Remove(this);
+    }
+    
+    public IEnumerable<IComponentProvider> GetComponents()
+    {
+        yield return this;
+    }
+
+    public virtual IEnumerable<ComponentRender> GetRenders()
+    {
+        yield break;
     }
 }
