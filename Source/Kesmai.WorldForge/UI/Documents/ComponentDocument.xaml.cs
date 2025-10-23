@@ -28,7 +28,12 @@ public partial class ComponentDocument : UserControl
 			_presenter.Provider = _segmentComponent = segmentComponent;
 
 			// set the text editor content
-			_editor.Text = segmentComponent.Element.ToString();
+			var editorValue = String.Empty;
+			
+			if (segmentComponent.Element is not null)
+				editorValue = segmentComponent.Element.ToString();
+
+			_editor.Text = editorValue;
 		});
 	}
 
