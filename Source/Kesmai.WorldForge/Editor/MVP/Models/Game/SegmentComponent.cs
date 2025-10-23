@@ -153,6 +153,8 @@ public class SegmentComponent : ObservableObject, ISegmentObject, IComponentProv
 
 		_element = element;
 		_component = component;
+		
+		WeakReferenceMessenger.Default.Send(new SegmentComponentChanged(this));
 	}
 
 	public IEnumerable<ComponentRender> GetRenders()
