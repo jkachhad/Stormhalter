@@ -28,6 +28,8 @@ public class SegmentObjectSelected(ISegmentObject target) : ValueChangedMessage<
 
 public partial class SegmentTreeControl : UserControl
 {
+    private static int _nextId;
+    
     public static readonly DependencyProperty SegmentProperty =
         DependencyProperty.Register(nameof(Segment), typeof(Segment), typeof(SegmentTreeControl),
             new PropertyMetadata(null, OnSegmentChanged));
@@ -161,7 +163,7 @@ public partial class SegmentTreeControl : UserControl
             _regionsNode.ContextMenu = new ContextMenu();
             _regionsNode.ContextMenu.AddItem("Add Region", "Add.png", (s, e) =>
             {
-                var region = AddSegmentObject(collection, "Region");
+                var region = addRegion(collection, "Region");
 
                 // present the new region to the user.
                 if (region != null)
@@ -214,6 +216,18 @@ public partial class SegmentTreeControl : UserControl
 
             return item;
         }
+        
+        T addRegion<T>(IList<T> source, string typeName) where T : ISegmentObject, new()
+        {
+            var obj = new T
+            {
+                Name = $"{typeName} {_nextId++}"
+            };
+            
+            source.Add(obj);
+            
+            return obj;
+        }
     }
     
     public void UpdateLocations()
@@ -234,15 +248,11 @@ public partial class SegmentTreeControl : UserControl
             _locationsNode.ContextMenu = new ContextMenu();
             _locationsNode.ContextMenu.AddItem("Add Location", "Add.png", (s, e) =>
             {
-                var location = new SegmentLocation
-                {
-                    Name = $"Location {collection.Count + 1}" 
-                };
-                collection.Add(location);
+                var location = addLocation(collection, "Location");
 
                 // present the new location to the user.
-                location.Present(ServiceLocator.Current
-                    .GetInstance<ApplicationPresenter>());
+                if (location != null)
+                    location.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
             });
         }
         
@@ -277,6 +287,18 @@ public partial class SegmentTreeControl : UserControl
 
             return item;
         }
+        
+        T addLocation<T>(IList<T> source, string typeName) where T : ISegmentObject, new()
+        {
+            var obj = new T
+            {
+                Name = $"{typeName} {_nextId++}"
+            };
+            
+            source.Add(obj);
+            
+            return obj;
+        }
     }
 
     public void UpdateComponents()
@@ -295,8 +317,14 @@ public partial class SegmentTreeControl : UserControl
             };
 
             _componentsNode.ContextMenu = new ContextMenu();
-            _componentsNode.ContextMenu.AddItem("Add Component", "Add.png",
-                (s, e) => AddSegmentObject(collection, "Component"));
+            _componentsNode.ContextMenu.AddItem("Add Component", "Add.png", (s, e) =>
+            {
+                var component = addComponent(collection, "Component");
+                
+                // present the new component to the user.
+                if (component != null)
+                    component.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+            });
         }
 
         var expanded = new HashSet<string>();
@@ -324,6 +352,18 @@ public partial class SegmentTreeControl : UserControl
             item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(segmentComponent, item, source));
 
             return item;
+        }
+        
+        T addComponent<T>(IList<T> source, string typeName) where T : ISegmentObject, new()
+        {
+            var obj = new T
+            {
+                Name = $"{typeName} {_nextId++}"
+            };
+            
+            source.Add(obj);
+            
+            return obj;
         }
     }
 
@@ -375,10 +415,26 @@ public partial class SegmentTreeControl : UserControl
                 item.Items.Add(createSpawnerNode(spawner, source.Region));
 
             item.ContextMenu = new ContextMenu();
-            item.ContextMenu.AddItem("Add Location Spawner", "Add.png",
-                (s, e) => AddSpawner(source.Location, "Location Spawner", region.ID));
-            item.ContextMenu.AddItem("Add Region Spawner", "Add.png",
-                (s, e) => AddSpawner(source.Region, "Region Spawner", region.ID));
+            item.ContextMenu.AddItem("Add Location Spawner", "Add.png", (s, e) =>
+            {
+                var spawner = addSpawn(source.Location, "Location Spawner");
+
+                if (spawner != null)
+                {
+                    spawner.Region = region.ID;
+                    spawner.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+                }
+            });
+            item.ContextMenu.AddItem("Add Region Spawner", "Add.png", (s, e) =>
+            {
+                var spawner = addSpawn(source.Region, "Region Spawner");
+
+                if (spawner != null)
+                {
+                    spawner.Region = region.ID;
+                    spawner.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+                }
+            });
             
             return item;
         }
@@ -404,6 +460,18 @@ public partial class SegmentTreeControl : UserControl
             
             return item;
         }
+        
+        T addSpawn<T>(IList<T> source, string typeName) where T : ISegmentObject, new()
+        {
+            var obj = new T
+            {
+                Name = $"{typeName} {_nextId++}"
+            };
+            
+            source.Add(obj);
+            
+            return obj;
+        }
     }
 
     public void UpdateEntities()
@@ -423,8 +491,14 @@ public partial class SegmentTreeControl : UserControl
             };
             
             _entitiesNode.ContextMenu = new ContextMenu();
-            _entitiesNode.ContextMenu.AddItem("Add Entities", "Add.png", 
-                (s, e) => addEntity(String.Empty));
+            _entitiesNode.ContextMenu.AddItem("Add Entities", "Add.png", (s, e) =>
+            {
+                var entity = addEntity(Segment.Entities, String.Empty, "Entity");
+                
+                // present the new entity to the user.
+                if (entity != null)
+                    entity.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+            });
         }
 
         var expanded = new HashSet<string>();
@@ -435,12 +509,12 @@ public partial class SegmentTreeControl : UserControl
         _entitiesNode.Items.Clear();
 
         foreach (var grouping in collection)
-            createEntityGroupNode(grouping.Key, grouping);
+            createEntityGroupNode(grouping.Key, grouping, Segment.Entities);
         
         foreach (var item in _entitiesNode.Items.OfType<TreeViewItem>())
             RestoreExpansionState(item, expanded);
         
-        TreeViewItem createEntityGroupNode(string groupPath, IEnumerable<SegmentEntity> entities)
+        TreeViewItem createEntityGroupNode(string groupPath, IEnumerable<SegmentEntity> grouping, IList<SegmentEntity> source)
         {
             // separate the groupPath into its components
             var groupFolders = String.IsNullOrEmpty(groupPath) ? ["Ungrouped"] : groupPath.Split(@"\");
@@ -471,12 +545,18 @@ public partial class SegmentTreeControl : UserControl
                 parentFolder = folderNode;
             }
             
-            foreach (var entity in entities)
+            foreach (var entity in grouping)
                 parentFolder.Items.Add(createEntityEntryNode(entity));
     
             parentFolder.ContextMenu = new ContextMenu();
-            parentFolder.ContextMenu.AddItem("Add Entity", "Add.png", 
-                (s, e) => addEntity(groupPath));
+            parentFolder.ContextMenu.AddItem("Add Entity", "Add.png", (s, e) =>
+            {
+                var entity = addEntity(source, groupPath, "Entity");
+                
+                // present the new entity to the user.
+                if (entity != null)
+                    entity.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+            });
             
             return parentFolder;
         }
@@ -494,22 +574,18 @@ public partial class SegmentTreeControl : UserControl
 
             return item;
         }
-    
-        void addEntity(string group)
+        
+        SegmentEntity addEntity(IList<SegmentEntity> source, string group, string typeName)
         {
-            var defaultName = $"Entity {Segment.Entities.Count + 1}";
-            var name = Interaction.InputBox("Name", "Add Entity", defaultName);
-            
-            if (string.IsNullOrWhiteSpace(name))
-                return;
-            
-            var entity = new SegmentEntity
+            var obj = new SegmentEntity
             {
-                Name = name, 
+                Name = $"{typeName} {_nextId++}",
                 Group = group 
             };
             
-            Segment.Entities.Add(entity);
+            source.Add(obj);
+            
+            return obj;
         }
     }
 
@@ -529,8 +605,22 @@ public partial class SegmentTreeControl : UserControl
             };
             
             _treasureNode.ContextMenu  = new ContextMenu();
-            _treasureNode.ContextMenu.AddItem("Add Treasures", "Add.png", (s, e) => AddSegmentObject(collection, "Treasure"));
-            _treasureNode.ContextMenu.AddItem("Add Hoard", "Add.png", (s, e) => AddHoard());
+            _treasureNode.ContextMenu.AddItem("Add Treasures", "Add.png", (s, e) =>
+            {
+                var treasure = addTreasure(collection, "Treasure");
+                
+                // present the new treasure to the user.
+                if (treasure != null)
+                    treasure.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+            });
+            _treasureNode.ContextMenu.AddItem("Add Hoard", "Add.png", (s, e) =>
+            {
+                var hoard = addTreasure(collection, "Hoard");
+                
+                // present the new hoard to the user.
+                if (hoard != null)
+                    hoard.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+            });
         }
 
         var expanded = new HashSet<string>();
@@ -560,6 +650,18 @@ public partial class SegmentTreeControl : UserControl
             item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(treasure, item, collection));
             
             return item;
+        }
+        
+        T addTreasure<T>(IList<T> source, string typeName) where T : ISegmentObject, new()
+        {
+            var obj = new T
+            {
+                Name = $"{typeName} {_nextId++}"
+            };
+            
+            source.Add(obj);
+            
+            return obj;
         }
     }
     
@@ -747,16 +849,6 @@ public partial class SegmentTreeControl : UserControl
         CreateInMemoryNode(file, file.Name + ".cs");
         */
 
-    private void AddHoard()
-    {
-        var count = Segment.Treasures.Count(t => t is SegmentHoard) + 1;
-        var defaultName = $"Hoard {count}";
-        var name = Interaction.InputBox("Name", "Add Hoard", defaultName);
-        if (string.IsNullOrWhiteSpace(name))
-            return;
-        Segment.Treasures.Add(new SegmentHoard { Name = name });
-    }
-
     private void AddSpawner<T>(IList<T> collection, string typeName, int regionId) where T : SegmentSpawner, new()
     {
         var defaultName = $"{typeName} {collection.Count + 1}";
@@ -812,16 +904,7 @@ public partial class SegmentTreeControl : UserControl
         parent.Items.Add(CreateDirectoryNode(new DirectoryInfo(path)));
     }
 
-    private T AddSegmentObject<T>(IList<T> collection, string typeName) where T : ISegmentObject, new()
-    {
-        var defaultName = $"{typeName} {collection.Count + 1}";
-        var name = Interaction.InputBox("Name", $"Add {typeName}", defaultName);
-        if (String.IsNullOrWhiteSpace(name))
-            return default(T);
-        var obj = new T { Name = name };
-        collection.Add(obj);
-        return obj;
-    }
+   
 
     private void RenameSegmentObject(ISegmentObject obj, TreeViewItem item)
     {
