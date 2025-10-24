@@ -1,8 +1,10 @@
 using System;
+using System.Linq;
 using System.Xml.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using Kesmai.WorldForge.UI.Documents;
 
 namespace Kesmai.WorldForge.Editor;
 
@@ -39,6 +41,15 @@ public class SegmentBrush : ObservableObject, ISegmentObject
 
 	public void Present(ApplicationPresenter presenter)
 	{
+		var viewModel = presenter.Documents.OfType<SegmentBrushViewModel>().FirstOrDefault();
+
+		if (viewModel is null)
+			presenter.Documents.Add(viewModel = new SegmentBrushViewModel());
+
+		if (presenter.ActiveDocument != viewModel)
+			presenter.SetActiveDocument(viewModel);
+
+		presenter.SetActiveContent(this);
 	}
 
 	public void Copy(Segment target)
