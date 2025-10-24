@@ -157,17 +157,17 @@ public partial class SegmentTreeControl : UserControl
                 Tag = $"category:Regions",
                 Header = CreateHeader("Regions", "Regions.png")
             };
-        }
-        
-        _regionsNode.ContextMenu = new ContextMenu();
-        _regionsNode.ContextMenu.AddItem("Add Region", "Add.png", (s, e) =>
-        {
-            var region = AddSegmentObject(collection, "Region");
+            
+            _regionsNode.ContextMenu = new ContextMenu();
+            _regionsNode.ContextMenu.AddItem("Add Region", "Add.png", (s, e) =>
+            {
+                var region = AddSegmentObject(collection, "Region");
 
-            // present the new region to the user.
-            if (region != null)
-                region.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-        });
+                // present the new region to the user.
+                if (region != null)
+                    region.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+            });
+        }
         
         var expanded = new HashSet<string>();
         
@@ -216,27 +216,6 @@ public partial class SegmentTreeControl : UserControl
         }
     }
     
-    private void OnItemSelected(object sender, RoutedPropertyChangedEventArgs<object> e)
-    {
-        // Only send message if the selected item is a segment object.
-        if (e.NewValue is TreeViewItem { Tag: ISegmentObject segmentObject })
-            WeakReferenceMessenger.Default.Send(new SegmentObjectSelected(segmentObject));
-    }
-
-    private void OnDoubleClick(object sender, MouseButtonEventArgs args)
-    {
-        if (sender is TreeViewItem item)
-        {
-            item.IsSelected = true;
-
-            if (item.Tag is ISegmentObject obj)
-            {
-                WeakReferenceMessenger.Default.Send(new SegmentObjectDoubleClick(obj));
-                WeakReferenceMessenger.Default.Send(new SegmentObjectSelected(obj));
-            }
-        }
-    }
-
     public void UpdateLocations()
     {
         if (Segment is null)
@@ -275,29 +254,29 @@ public partial class SegmentTreeControl : UserControl
         _locationsNode.Items.Clear();
 
         foreach (var child in collection)
+            _locationsNode.Items.Add(createLocationNode(child, collection));
+        
+        foreach (var item in _locationsNode.Items.OfType<TreeViewItem>())
+            RestoreExpansionState(item, expanded);
+
+        TreeViewItem createLocationNode(SegmentLocation location, SegmentLocations source)
         {
-            var isReserved = child.IsReserved;
+            var isReserved = location.IsReserved;
             
-            var item = new TreeViewItem
+            var item = new SegmentTreeViewItem(location, (isReserved ? Brushes.LightSlateGray : Brushes.LightPink), true)
             {
-                Header = CreateColoredHeader(child.Name, (isReserved ? Brushes.LightSlateGray : Brushes.LightPink), true),
-                Tag = child
+                Tag = location
             };
 
             if (!isReserved)
             {
                 item.ContextMenu = new ContextMenu();
-                item.ContextMenu.AddItem("Rename", "Rename.png", (s, e)
-                    => RenameSegmentObject(child, item));
-                item.ContextMenu.AddItem("Delete", "Delete.png", (s, e)
-                    => DeleteSegmentObject(child, item, collection));
+                item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(location, item));
+                item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(location, item, source));
             }
 
-            _locationsNode.Items.Add(item);
+            return item;
         }
-        
-        foreach (var item in _locationsNode.Items.OfType<TreeViewItem>())
-            RestoreExpansionState(item, expanded);
     }
 
     public void UpdateComponents()
@@ -328,10 +307,24 @@ public partial class SegmentTreeControl : UserControl
         _componentsNode.Items.Clear();
 
         foreach (var component in collection)
-            _componentsNode.Items.Add(CreateComponentNode(component, collection));
+            _componentsNode.Items.Add(createComponentNode(component, collection));
 
         foreach (var item in _componentsNode.Items.OfType<TreeViewItem>())
             RestoreExpansionState(item, expanded);
+        
+        TreeViewItem createComponentNode(SegmentComponent segmentComponent, SegmentComponents source)
+        {
+            var item = new SegmentTreeViewItem(segmentComponent, Brushes.OrangeRed, false)
+            {
+                Tag = segmentComponent,
+            };
+        
+            item.ContextMenu = new ContextMenu();
+            item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(segmentComponent, item));
+            item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(segmentComponent, item, source));
+
+            return item;
+        }
     }
 
     public void UpdateSpawns()
@@ -348,6 +341,10 @@ public partial class SegmentTreeControl : UserControl
                 Tag = $"category:Spawns",
                 Header = CreateHeader("Spawns", "Spawns.png")
             };
+            
+            _spawnersNode.ContextMenu = new ContextMenu();
+            _spawnersNode.ContextMenu.AddItem("Add Location Spawner", "Add.png", (s, e) => AddSpawner(collection.Location, "Location Spawner", 0));
+            _spawnersNode.ContextMenu.AddItem("Add Region Spawner", "Add.png", (s, e) => AddSpawner(collection.Region, "Region Spawner", 0));
         }
 
         var expanded = new HashSet<string>();
@@ -358,27 +355,55 @@ public partial class SegmentTreeControl : UserControl
         _spawnersNode.Items.Clear();
         
         foreach (var region in Segment.Regions)
-            _spawnersNode.Items.Add(CreateSpawnerRegionNode(region));
-
-        var menu = new ContextMenu();
-        var addLocation = new MenuItem
-        {
-            Header = $"Add Location Spawner" 
-        };
-        addLocation.Click += (s, e) => AddSpawner(collection.Location, "Location Spawner", 0);
-        var addRegion = new MenuItem
-        {
-            Header = $"Add Region Spawner" 
-        };
-        addRegion.Click += (s, e) => AddSpawner(collection.Region, "Region Spawner", 0);
-        
-        menu.Items.Add(addLocation);
-        menu.Items.Add(addRegion);
-        
-        _spawnersNode.ContextMenu = menu;
+            _spawnersNode.Items.Add(createSpawnerRegionNode(region, collection));
         
         foreach (var item in _spawnersNode.Items.OfType<TreeViewItem>())
             RestoreExpansionState(item, expanded);
+        
+        TreeViewItem createSpawnerRegionNode(SegmentRegion region, SegmentSpawns source)
+        {
+            var item = new TreeViewItem
+            {
+                Tag = $"category:Spawn/{region.ID}"
+            };
+            item.Header = CreateColoredHeader(region.Name, Brushes.MediumPurple, false);
+
+            foreach (var spawner in source.Location.Where(s => GetRegionId(s) == region.ID))
+                item.Items.Add(createSpawnerNode(spawner, source.Location));
+
+            foreach (var spawner in source.Region.Where(s => GetRegionId(s) == region.ID))
+                item.Items.Add(createSpawnerNode(spawner, source.Region));
+
+            item.ContextMenu = new ContextMenu();
+            item.ContextMenu.AddItem("Add Location Spawner", "Add.png",
+                (s, e) => AddSpawner(source.Location, "Location Spawner", region.ID));
+            item.ContextMenu.AddItem("Add Region Spawner", "Add.png",
+                (s, e) => AddSpawner(source.Region, "Region Spawner", region.ID));
+            
+            return item;
+        }
+        
+        TreeViewItem createSpawnerNode(SegmentSpawner segmentSpawner, IList source)
+        {
+            var brush = segmentSpawner switch
+            {
+                LocationSegmentSpawner => Brushes.SkyBlue,
+                RegionSegmentSpawner => Brushes.Orange,
+                
+                _ => Brushes.Gray
+            };
+            
+            var item = new SegmentTreeViewItem(segmentSpawner, brush, true)
+            {
+                Tag = segmentSpawner 
+            };
+            
+            item.ContextMenu = new ContextMenu();
+            item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(segmentSpawner, item));
+            item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(segmentSpawner, item, source));
+            
+            return item;
+        }
     }
 
     public void UpdateEntities()
@@ -396,6 +421,10 @@ public partial class SegmentTreeControl : UserControl
                 Tag = $"category:Entity",
                 Header = CreateHeader("Entity", "Entities.png")
             };
+            
+            _entitiesNode.ContextMenu = new ContextMenu();
+            _entitiesNode.ContextMenu.AddItem("Add Entities", "Add.png", 
+                (s, e) => addEntity(String.Empty));
         }
 
         var expanded = new HashSet<string>();
@@ -406,14 +435,82 @@ public partial class SegmentTreeControl : UserControl
         _entitiesNode.Items.Clear();
 
         foreach (var grouping in collection)
-            CreateEntityGroupNode(grouping.Key, grouping);
-
-        _entitiesNode.ContextMenu = new ContextMenu();
-        _entitiesNode.ContextMenu.AddItem("Add Entities", "Add.png", 
-            (s, e) => AddEntity(String.Empty));
+            createEntityGroupNode(grouping.Key, grouping);
         
         foreach (var item in _entitiesNode.Items.OfType<TreeViewItem>())
             RestoreExpansionState(item, expanded);
+        
+        TreeViewItem createEntityGroupNode(string groupPath, IEnumerable<SegmentEntity> entities)
+        {
+            // separate the groupPath into its components
+            var groupFolders = String.IsNullOrEmpty(groupPath) ? ["Ungrouped"] : groupPath.Split(@"\");
+            
+            // for each folder in the path, find or create the corresponding tree view node.
+            var parentFolder = _entitiesNode;
+            
+            foreach (var folder in groupFolders)
+            {
+                // find the folder node if it already exists.
+                var folderNode = parentFolder.Items.OfType<TreeViewItem>().FirstOrDefault(n => n.Tag is string path 
+                    && path.EndsWith($"/{folder}", StringComparison.OrdinalIgnoreCase));
+    
+                // if it doesn't exist, create it.
+                if (folderNode is null)
+                {
+                    folderNode = new TreeViewItem
+                    {
+                        Tag = $"{parentFolder.Tag}/{folder}",
+                        Header = CreateHeader(folder, "Folder.png")
+                    };
+                }
+    
+                // add it to the parent if it doesn't already exist.
+                parentFolder.Items.Add(folderNode);
+                
+                // move to the next child folder.
+                parentFolder = folderNode;
+            }
+            
+            foreach (var entity in entities)
+                parentFolder.Items.Add(createEntityEntryNode(entity));
+    
+            parentFolder.ContextMenu = new ContextMenu();
+            parentFolder.ContextMenu.AddItem("Add Entity", "Add.png", 
+                (s, e) => addEntity(groupPath));
+            
+            return parentFolder;
+        }
+    
+        TreeViewItem createEntityEntryNode(SegmentEntity segmentEntity)
+        {
+            var item = new SegmentTreeViewItem(segmentEntity, Brushes.Yellow, true)
+            {
+                Tag = segmentEntity 
+            };
+            
+            item.ContextMenu = new ContextMenu();
+            item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(segmentEntity, item));
+            item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(segmentEntity, item, Segment.Entities));
+
+            return item;
+        }
+    
+        void addEntity(string group)
+        {
+            var defaultName = $"Entity {Segment.Entities.Count + 1}";
+            var name = Interaction.InputBox("Name", "Add Entity", defaultName);
+            
+            if (string.IsNullOrWhiteSpace(name))
+                return;
+            
+            var entity = new SegmentEntity
+            {
+                Name = name, 
+                Group = group 
+            };
+            
+            Segment.Entities.Add(entity);
+        }
     }
 
     public void UpdateTreasures()
@@ -430,6 +527,10 @@ public partial class SegmentTreeControl : UserControl
                 Tag = $"category:Treasure",
                 Header = CreateHeader("Treasure", "Treasures.png")
             };
+            
+            _treasureNode.ContextMenu  = new ContextMenu();
+            _treasureNode.ContextMenu.AddItem("Add Treasures", "Add.png", (s, e) => AddSegmentObject(collection, "Treasure"));
+            _treasureNode.ContextMenu.AddItem("Add Hoard", "Add.png", (s, e) => AddHoard());
         }
 
         var expanded = new HashSet<string>();
@@ -440,27 +541,26 @@ public partial class SegmentTreeControl : UserControl
         _treasureNode.Items.Clear();
         
         foreach (var child in collection)
-            _treasureNode.Items.Add(CreateTreasureEntryNode(child));
-
-        var menu = new ContextMenu();
-        var addTreasure = new MenuItem
-        {
-            Header = $"Add Treasure" 
-        };
-        addTreasure.Click += (s, e) => AddSegmentObject(collection, "Treasure");
-        var addHoard = new MenuItem
-        {
-            Header = $"Add Hoard" 
-        };
-        addHoard.Click += (s, e) => AddHoard();
-        
-        menu.Items.Add(addTreasure);
-        menu.Items.Add(addHoard);
-        
-        _treasureNode.ContextMenu = menu;
+            _treasureNode.Items.Add(createTreasureEntryNode(child));
         
         foreach (var item in _treasureNode.Items.OfType<TreeViewItem>())
             RestoreExpansionState(item, expanded);
+        
+        TreeViewItem createTreasureEntryNode(SegmentTreasure treasure)
+        {
+            var brush = (treasure is SegmentHoard) ? Brushes.Red : Brushes.Green;
+            
+            var item = new SegmentTreeViewItem(treasure, brush, false)
+            {
+                Tag = treasure 
+            };
+            
+            item.ContextMenu = new ContextMenu();
+            item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(treasure, item));
+            item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(treasure, item, collection));
+            
+            return item;
+        }
     }
     
     private void Update()
@@ -533,7 +633,28 @@ public partial class SegmentTreeControl : UserControl
         foreach (var child in item.Items.OfType<TreeViewItem>())
             RestoreExpansionState(child, expanded);
     }
+    
+    private void OnItemSelected(object sender, RoutedPropertyChangedEventArgs<object> e)
+    {
+        // Only send message if the selected item is a segment object.
+        if (e.NewValue is TreeViewItem { Tag: ISegmentObject segmentObject })
+            WeakReferenceMessenger.Default.Send(new SegmentObjectSelected(segmentObject));
+    }
 
+    private void OnDoubleClick(object sender, MouseButtonEventArgs args)
+    {
+        if (sender is TreeViewItem item)
+        {
+            item.IsSelected = true;
+
+            if (item.Tag is ISegmentObject obj)
+            {
+                WeakReferenceMessenger.Default.Send(new SegmentObjectDoubleClick(obj));
+                WeakReferenceMessenger.Default.Send(new SegmentObjectSelected(obj));
+            }
+        }
+    }
+    
     private StackPanel CreateHeader(string name, string icon)
     {
         var panel = new StackPanel
@@ -625,176 +746,6 @@ public partial class SegmentTreeControl : UserControl
     private TreeViewItem CreateVirtualFileNode(VirtualFile file) =>
         CreateInMemoryNode(file, file.Name + ".cs");
         */
-
-    private TreeViewItem CreateComponentNode(SegmentComponent segmentComponent, SegmentComponents collection)
-    {
-        var item = new TreeViewItem
-        {
-            Tag = segmentComponent,
-            Header = CreateColoredHeader(segmentComponent.Name, Brushes.OrangeRed, false)
-        };
-        item.MouseDoubleClick += OnDoubleClick;
-        
-        var menu = new ContextMenu();
-        var rename = new MenuItem { Header = "Rename" };
-        rename.Click += (s, e) => RenameSegmentObject(segmentComponent, item);
-        var delete = new MenuItem { Header = "Delete" };
-        delete.Click += (s, e) => DeleteSegmentObject(segmentComponent, item, collection);
-        menu.Items.Add(rename);
-        menu.Items.Add(delete);
-        item.ContextMenu = menu;
-
-        return item;
-    }
-
-    private TreeViewItem CreateEntityGroupNode(string groupPath, IEnumerable<SegmentEntity> entities)
-    {
-        // separate the groupPath into its components
-        var groupFolders = String.IsNullOrEmpty(groupPath) ? ["Ungrouped"] : groupPath.Split(@"\");
-        
-        // for each folder in the path, find or create the corresponding tree view node.
-        var parentFolder = _entitiesNode;
-        
-        foreach (var folder in groupFolders)
-        {
-            // find the folder node if it already exists.
-            var folderNode = parentFolder.Items.OfType<TreeViewItem>().FirstOrDefault(n => n.Tag is string path 
-                && path.EndsWith($"/{folder}", StringComparison.OrdinalIgnoreCase));
-
-            // if it doesn't exist, create it.
-            if (folderNode is null)
-            {
-                folderNode = new TreeViewItem
-                {
-                    Tag = $"{parentFolder.Tag}/{folder}",
-                    Header = CreateHeader(folder, "Folder.png")
-                };
-            }
-
-            // add it to the parent if it doesn't already exist.
-            parentFolder.Items.Add(folderNode);
-            
-            // move to the next child folder.
-            parentFolder = folderNode;
-        }
-        
-        foreach (var entity in entities)
-            parentFolder.Items.Add(CreateEntityEntryNode(entity));
-
-        parentFolder.ContextMenu = new ContextMenu();
-        parentFolder.ContextMenu.AddItem("Add Entity", "Add.png", 
-            (s, e) => AddEntity(groupPath));
-        
-        return parentFolder;
-    }
-
-    private TreeViewItem CreateEntityEntryNode(SegmentEntity segmentEntity)
-    {
-        var item = new TreeViewItem { Tag = segmentEntity };
-
-        var panel = new StackPanel { Orientation = Orientation.Horizontal };
-        var icon = new Ellipse { Width = 10, Height = 10, Fill = Brushes.Yellow, Margin = new Thickness(2, 0, 2, 0) };
-        panel.Children.Add(icon);
-        panel.Children.Add(new TextBlock { Text = segmentEntity.Name });
-        item.Header = panel;
-
-        var menu = new ContextMenu();
-        var rename = new MenuItem { Header = "Rename" };
-        rename.Click += (s, e) => RenameSegmentObject(segmentEntity, item);
-        var delete = new MenuItem { Header = "Delete" };
-        delete.Click += (s, e) => DeleteSegmentObject(segmentEntity, item, Segment.Entities);
-        menu.Items.Add(rename);
-        menu.Items.Add(delete);
-        item.ContextMenu = menu;
-
-        return item;
-    }
-
-    private void AddEntity(string group)
-    {
-        var defaultName = $"Entity {Segment.Entities.Count + 1}";
-        var name = Interaction.InputBox("Name", "Add Entity", defaultName);
-        if (string.IsNullOrWhiteSpace(name))
-            return;
-        var entity = new SegmentEntity { Name = name, Group = group };
-        Segment.Entities.Add(entity);
-    }
-
-    private TreeViewItem CreateSpawnerRegionNode(SegmentRegion region)
-    {
-        var item = new TreeViewItem { Tag = $"category:Spawn/{region.ID}" };
-        item.Header = CreateColoredHeader(region.Name, Brushes.MediumPurple, false);
-
-        foreach (var spawner in Segment.Spawns.Location.Where(s => GetRegionId(s) == region.ID))
-            item.Items.Add(CreateSpawnerEntryNode(spawner, Segment.Spawns.Location));
-
-        foreach (var spawner in Segment.Spawns.Region.Where(s => GetRegionId(s) == region.ID))
-            item.Items.Add(CreateSpawnerEntryNode(spawner, Segment.Spawns.Region));
-
-        var menu = new ContextMenu();
-        var addLocation = new MenuItem { Header = "Add Location Spawner" };
-        addLocation.Click += (s, e) => AddSpawner(Segment.Spawns.Location, "Location Spawner", region.ID);
-        var addRegion = new MenuItem { Header = "Add Region Spawner" };
-        addRegion.Click += (s, e) => AddSpawner(Segment.Spawns.Region, "Region Spawner", region.ID);
-        menu.Items.Add(addLocation);
-        menu.Items.Add(addRegion);
-        item.ContextMenu = menu;
-
-        return item;
-    }
-
-    private TreeViewItem CreateSpawnerEntryNode(SegmentSpawner segmentSpawner, IList collection)
-    {
-        var item = new TreeViewItem { Tag = segmentSpawner };
-
-        var panel = new StackPanel { Orientation = Orientation.Horizontal };
-        Shape icon = segmentSpawner switch
-        {
-            LocationSegmentSpawner => new Ellipse { Width = 10, Height = 10, Fill = Brushes.SkyBlue },
-            RegionSegmentSpawner => new Rectangle { Width = 10, Height = 10, Fill = Brushes.Orange },
-            _ => new Rectangle { Width = 10, Height = 10, Fill = Brushes.Gray }
-        };
-        icon.Margin = new Thickness(2, 0, 2, 0);
-        panel.Children.Add(icon);
-        panel.Children.Add(new TextBlock { Text = segmentSpawner.Name });
-        item.Header = panel;
-
-        var menu = new ContextMenu();
-        var rename = new MenuItem { Header = "Rename" };
-        rename.Click += (s, e) => RenameSegmentObject(segmentSpawner, item);
-        var delete = new MenuItem { Header = "Delete" };
-        delete.Click += (s, e) => DeleteSegmentObject(segmentSpawner, item, collection);
-        menu.Items.Add(rename);
-        menu.Items.Add(delete);
-        item.ContextMenu = menu;
-
-        return item;
-    }
-    
-    private TreeViewItem CreateTreasureEntryNode(SegmentTreasure treasure)
-    {
-        var item = new TreeViewItem { Tag = treasure };
-
-        var panel = new StackPanel { Orientation = Orientation.Horizontal };
-        Shape icon = treasure is SegmentHoard
-            ? new Rectangle { Width = 10, Height = 10, Fill = Brushes.Red }
-            : new Ellipse { Width = 10, Height = 10, Fill = Brushes.Green };
-        icon.Margin = new Thickness(2, 0, 2, 0);
-        panel.Children.Add(icon);
-        panel.Children.Add(new TextBlock { Text = treasure.Name });
-        item.Header = panel;
-
-        var menu = new ContextMenu();
-        var rename = new MenuItem { Header = "Rename" };
-        rename.Click += (s, e) => RenameSegmentObject(treasure, item);
-        var delete = new MenuItem { Header = "Delete" };
-        delete.Click += (s, e) => DeleteSegmentObject(treasure, item, Segment.Treasures);
-        menu.Items.Add(rename);
-        menu.Items.Add(delete);
-        item.ContextMenu = menu;
-
-        return item;
-    }
 
     private void AddHoard()
     {
