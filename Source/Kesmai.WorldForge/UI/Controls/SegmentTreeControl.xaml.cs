@@ -32,7 +32,7 @@ public partial class SegmentTreeControl : UserControl
         DependencyProperty.Register(nameof(Segment), typeof(Segment), typeof(SegmentTreeControl),
             new PropertyMetadata(null, OnSegmentChanged));
 
-    public Segment? Segment
+    public Segment Segment
     {
         get => (Segment?)GetValue(SegmentProperty);
         set => SetValue(SegmentProperty, value);
@@ -159,6 +159,16 @@ public partial class SegmentTreeControl : UserControl
             };
         }
         
+        _regionsNode.ContextMenu = new ContextMenu();
+        _regionsNode.ContextMenu.AddItem("Add Region", "Add.png", (s, e) =>
+        {
+            var region = AddSegmentObject(collection, "Region");
+
+            // present the new region to the user.
+            if (region != null)
+                region.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+        });
+        
         var expanded = new HashSet<string>();
         
         foreach (var item in _regionsNode.Items.OfType<TreeViewItem>())
@@ -167,20 +177,7 @@ public partial class SegmentTreeControl : UserControl
         _regionsNode.Items.Clear();
 
         foreach (var child in collection)
-        {
             _regionsNode.Items.Add(createRegionNode(child, collection));
-        }
-
-        var categoryMenu = new ContextMenu();
-        var add = new MenuItem
-        {
-            Header = $"Add Region" 
-        };
-        add.Click += (s, e) => AddSegmentObject(collection, "Region");
-        
-        categoryMenu.Items.Add(add);
-        
-        _regionsNode.ContextMenu = categoryMenu;
         
         foreach (var item in _regionsNode.Items.OfType<TreeViewItem>())
             RestoreExpansionState(item, expanded);
@@ -194,21 +191,26 @@ public partial class SegmentTreeControl : UserControl
             if (Segment is not null)
             {
                 foreach (var subregion in Segment.Subregions.Where(sr => sr.Region == region.ID))
-                    item.Items.Add(CreateSubregionNode(subregion));
+                    item.Items.Add(createSubregionNode(subregion, Segment.Subregions));
             }
 
-            var itemMenu = new ContextMenu();
+            item.ContextMenu = new ContextMenu();
+            item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(region, item));
+            item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(region, item, source));
             
-            var rename = new MenuItem { Header = "Rename" };
-            rename.Click += (s, e) => RenameSegmentObject(region, item);
-            
-            var delete = new MenuItem { Header = "Delete" };
-            delete.Click += (s, e) => DeleteSegmentObject(region, item, source);
-            
-            itemMenu.Items.Add(rename);
-            itemMenu.Items.Add(delete);
-            
-            item.ContextMenu = itemMenu;
+            return item;
+        }
+        
+        TreeViewItem createSubregionNode(SegmentSubregion subregion, SegmentSubregions source)
+        {
+            var item = new SegmentTreeViewItem(subregion, Brushes.Gray, false)
+            {
+                Tag = subregion,
+            };
+
+            item.ContextMenu = new ContextMenu();
+            item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(subregion, item));
+            item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(subregion, item, source));
 
             return item;
         }
@@ -708,35 +710,6 @@ public partial class SegmentTreeControl : UserControl
         return item;
     }
 
-    private TreeViewItem CreateSubregionNode(SegmentSubregion subregion)
-    {
-        var item = new TreeViewItem
-        {
-            Tag = subregion,
-            Header = CreateColoredHeader(subregion.Name, Brushes.Gray, false)
-        };
-        item.MouseDoubleClick += OnDoubleClick;
-
-        var menu = new ContextMenu();
-
-        var rename = new MenuItem { Header = "Rename" };
-        rename.Click += (s, e) => RenameSegmentObject(subregion, item);
-
-        var delete = new MenuItem { Header = "Delete" };
-        delete.Click += (s, e) =>
-        {
-            if (Segment is not null)
-                DeleteSegmentObject(subregion, item, Segment.Subregions);
-        };
-
-        menu.Items.Add(rename);
-        menu.Items.Add(delete);
-
-        item.ContextMenu = menu;
-
-        return item;
-    }
-
     private void AddEntity(string group)
     {
         var defaultName = $"Entity {Segment.Entities.Count + 1}";
@@ -888,14 +861,15 @@ public partial class SegmentTreeControl : UserControl
         parent.Items.Add(CreateDirectoryNode(new DirectoryInfo(path)));
     }
 
-    private void AddSegmentObject<T>(IList<T> collection, string typeName) where T : ISegmentObject, new()
+    private T AddSegmentObject<T>(IList<T> collection, string typeName) where T : ISegmentObject, new()
     {
         var defaultName = $"{typeName} {collection.Count + 1}";
         var name = Interaction.InputBox("Name", $"Add {typeName}", defaultName);
-        if (string.IsNullOrWhiteSpace(name))
-            return;
+        if (String.IsNullOrWhiteSpace(name))
+            return default(T);
         var obj = new T { Name = name };
         collection.Add(obj);
+        return obj;
     }
 
     private void RenameSegmentObject(ISegmentObject obj, TreeViewItem item)
