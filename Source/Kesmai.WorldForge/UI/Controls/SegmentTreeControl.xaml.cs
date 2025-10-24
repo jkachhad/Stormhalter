@@ -904,21 +904,15 @@ public partial class SegmentTreeControl : UserControl
         parent.Items.Add(CreateDirectoryNode(new DirectoryInfo(path)));
     }
 
-   
-
-    private void RenameSegmentObject(ISegmentObject obj, TreeViewItem item)
+    private void RenameSegmentObject(ISegmentObject obj, SegmentTreeViewItem item)
     {
-        var name = Interaction.InputBox("New name", "Rename", obj.Name);
-        if (string.IsNullOrWhiteSpace(name))
-            return;
-        obj.Name = name;
-        if (item.Header is StackPanel panel && panel.Children.Count > 1 && panel.Children[1] is TextBlock text)
-            text.Text = name;
+        item.Rename();
     }
 
     private void DeleteSegmentObject(ISegmentObject obj, TreeViewItem item, IList collection)
     {
         collection.Remove(obj);
+        
         if (item.Parent is ItemsControl parent)
             parent.Items.Remove(item);
     }
@@ -1046,7 +1040,12 @@ public class SegmentTreeViewItem : TreeViewItem
         
         args.Handled = true;
         
-        if (sender is SegmentTreeViewItem segmentTreeViewItem && segmentTreeViewItem.EditableTextBlock != null)
-                segmentTreeViewItem.EditableTextBlock.IsInEditMode = true;
+        Rename();
+    }
+
+    public void Rename()
+    {
+        if (EditableTextBlock != null)
+            EditableTextBlock.IsInEditMode = true;
     }
 }
