@@ -18,10 +18,9 @@ using CommonServiceLocator;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.VisualBasic;
-using Kesmai.WorldForge;
 using Kesmai.WorldForge.Editor;
-using Kesmai.WorldForge.Models;
-using DigitalRune.Collections;
+using Kesmai.WorldForge.UI.Controls;
+
 namespace Kesmai.WorldForge.UI;
 
 public class SegmentObjectDoubleClick(ISegmentObject target) : ValueChangedMessage<ISegmentObject>(target);
@@ -187,12 +186,10 @@ public partial class SegmentTreeControl : UserControl
             RestoreExpansionState(item, expanded);
         TreeViewItem createRegionNode(SegmentRegion region, SegmentRegions source)
         {
-            var item = new TreeViewItem
+            var item = new SegmentTreeViewItem(region, Brushes.MediumPurple, false)
             {
                 Tag = region,
-                Header = CreateColoredHeader(region.Name, Brushes.MediumPurple, false)
             };
-            item.MouseDoubleClick += OnDoubleClick;
 
             if (Segment is not null)
             {
@@ -991,5 +988,50 @@ public partial class SegmentTreeControl : UserControl
         {
             DestroyIcon(info.hIcon);
         }
+    }
+}
+
+public class SegmentTreeViewItem : TreeViewItem
+{
+    public EditableTextBlock EditableTextBlock { get; }
+    
+    public SegmentTreeViewItem(ISegmentObject segmentObject, Brush brush, bool circleIcon)
+    {
+        var innerPanel = new StackPanel
+        {
+            Orientation = Orientation.Horizontal,
+        };
+        
+        Shape icon = circleIcon ? new Ellipse() : new Rectangle();
+        
+        icon.Width = 10;
+        icon.Height = 10;
+        icon.Fill = brush;
+        icon.Margin = new Thickness(2, 0, 2, 0);
+        
+        innerPanel.Children.Add(icon);
+
+        innerPanel.Children.Add(EditableTextBlock = new EditableTextBlock()
+        {
+            Text = segmentObject.Name,
+        });
+        
+        Header = innerPanel;
+        
+        PreviewMouseDoubleClick += OnPreviewMouseDoubleClick;
+    }
+
+    private void OnPreviewMouseDoubleClick(object sender, MouseButtonEventArgs args)
+    {
+        if (args.OriginalSource is not DependencyObject originalSource)
+            return;
+        
+        if (!ReferenceEquals(this, originalSource.FindAncestor<TreeViewItem>()))
+            return;
+        
+        args.Handled = true;
+        
+        if (sender is SegmentTreeViewItem segmentTreeViewItem && segmentTreeViewItem.EditableTextBlock != null)
+                segmentTreeViewItem.EditableTextBlock.IsInEditMode = true;
     }
 }
