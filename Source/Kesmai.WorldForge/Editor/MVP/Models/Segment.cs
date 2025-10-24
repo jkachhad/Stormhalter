@@ -56,7 +56,8 @@ public class Segment : ObservableObject, ISegmentObject
 		get => _directory;
 		set => _directory = value;
 	}
-	
+
+	public SegmentBrushes Brushes { get; set; } = new SegmentBrushes();
 	public SegmentRegions Regions { get; set; } = new SegmentRegions();
 	public SegmentLocations Locations { get; set; } = new SegmentLocations();
 	public SegmentSubregions Subregions { get; set; } = new SegmentSubregions();
