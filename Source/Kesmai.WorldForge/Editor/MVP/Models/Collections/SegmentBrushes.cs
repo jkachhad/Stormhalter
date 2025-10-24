@@ -1,6 +1,8 @@
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Xml.Linq;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 
@@ -13,6 +15,20 @@ public class SegmentBrushesChanged(SegmentBrushes brushes) : ValueChangedMessage
 public class SegmentBrushes : ObservableCollection<SegmentBrush>
 {
 	public string Name => "(Brushes)";
+
+	public void Load(XElement element, Version version)
+	{
+		Clear();
+		
+		foreach (var brushElement in element.Elements("brush"))
+			Add(new SegmentBrush(brushElement));
+	}
+
+	public void Save(XElement element)
+	{
+		foreach (var brush in this)
+			element.Add(brush.GetXElement());
+	}
 
 	protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs args)
 	{

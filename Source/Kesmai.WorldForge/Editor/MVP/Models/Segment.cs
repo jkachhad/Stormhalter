@@ -127,6 +127,7 @@ public class Segment : ObservableObject, ISegmentObject
 				case "spawns": Spawns.Load(Entities, rootElement, Core.Version); break;
 				case "treasures": Treasures.Load(rootElement, Core.Version); break;
 				case "components": Components.Load(rootElement, Core.Version); break;
+				case "brushes": Brushes.Load(rootElement, Core.Version); break;
 			}
 		}
 		catch

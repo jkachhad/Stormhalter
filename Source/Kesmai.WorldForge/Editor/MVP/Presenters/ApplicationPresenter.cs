@@ -321,6 +321,9 @@ public class ApplicationPresenter : ObservableRecipient
 		
 		process("Components.xml", () => segment.Components = new SegmentComponents(),
 			(root, version) => segment.Components.Load(root, version));
+		
+		process("Brushes.xml", () => segment.Brushes = new SegmentBrushes(),
+			(root, version) => segment.Brushes.Load(root, version));
 
 		Segment = segment;
 		Segment.UpdateTiles();
@@ -376,6 +379,7 @@ public class ApplicationPresenter : ObservableRecipient
 			write(_segment.Entities.Save, "entities", "Entities.xml");
 			write(_segment.Spawns.Save, "spawns", "Spawns.xml");
 			write(_segment.Treasures.Save, "treasures", "Treasures.xml");
+			write(_segment.Brushes.Save, "brushes", "Brushes.xml");
 			write(_segment.Components.Save, "components", "Components.xml");
 			
 			// find the project file and save it
@@ -407,7 +411,8 @@ public class ApplicationPresenter : ObservableRecipient
 					"Entities.xml",
 					"Spawns.xml",
 					"Treasures.xml",
-					"Components.xml"
+					"Components.xml",
+					"Brushes.xml"
 				};
 
 				if (additionalFiles.Any())
@@ -590,6 +595,7 @@ public class ApplicationPresenter : ObservableRecipient
 		write(segmentRoot.Element("entities"), "Entities.xml");
 		write(segmentRoot.Element("spawns"), "Spawns.xml");
 		write(segmentRoot.Element("treasures"), "Treasures.xml");
+		write(segmentRoot.Element("brushes"), "Brushes.xml");
 		
 		void cleanup(string documentName, Func<XElement, IEnumerable<XElement>> scriptSelector)
 		{
@@ -649,7 +655,8 @@ public class ApplicationPresenter : ObservableRecipient
 			"Subregions.xml",
 			"Entities.xml",
 			"Spawns.xml",
-			"Treasures.xml"
+			"Treasures.xml",
+			"Brushes.xml"
 		};
 
 		if (additionalFiles.Any())
