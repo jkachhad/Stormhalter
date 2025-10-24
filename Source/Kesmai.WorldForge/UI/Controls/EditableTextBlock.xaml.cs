@@ -74,6 +74,8 @@ public partial class EditableTextBlock : UserControl
         get => String.Format(TextFormat, Text);
     }
 
+    public event EventHandler TextChanged;
+
     public EditableTextBlock()
 	{
 		InitializeComponent();
@@ -99,11 +101,14 @@ public partial class EditableTextBlock : UserControl
         if (args.Key is not (Key.Enter or Key.Escape))
             return;
 
+        IsInEditMode = false;
+        
         if (args.Key is Key.Escape)
             Text = _oldText;
-
-        IsInEditMode = false;
-
+        
+        if (TextChanged != null)
+            TextChanged.Invoke(this, EventArgs.Empty);
+        
         args.Handled = true;
     }
 }

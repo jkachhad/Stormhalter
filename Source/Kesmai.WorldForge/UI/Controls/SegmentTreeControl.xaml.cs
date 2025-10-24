@@ -1001,10 +1001,14 @@ public partial class SegmentTreeControl : UserControl
 
 public class SegmentTreeViewItem : TreeViewItem
 {
+    private readonly ISegmentObject _segmentObject;
+    
     public EditableTextBlock EditableTextBlock { get; }
     
     public SegmentTreeViewItem(ISegmentObject segmentObject, Brush brush, bool circleIcon)
     {
+        _segmentObject = segmentObject ?? throw new ArgumentNullException(nameof(segmentObject));
+        
         var innerPanel = new StackPanel
         {
             Orientation = Orientation.Horizontal,
@@ -1019,10 +1023,13 @@ public class SegmentTreeViewItem : TreeViewItem
         
         innerPanel.Children.Add(icon);
 
-        innerPanel.Children.Add(EditableTextBlock = new EditableTextBlock()
+        EditableTextBlock = new EditableTextBlock()
         {
             Text = segmentObject.Name,
-        });
+        };
+        EditableTextBlock.TextChanged += (s, e) => _segmentObject.Name = EditableTextBlock.Text;
+            
+        innerPanel.Children.Add(EditableTextBlock);
         
         Header = innerPanel;
         
