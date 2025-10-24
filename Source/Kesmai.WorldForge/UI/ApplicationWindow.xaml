@@ -108,6 +108,10 @@
                     <documents:RegionDocument />
                 </DataTemplate>
        
+                <DataTemplate DataType="{x:Type editor:SegmentBrush}">
+                    <documents:SegmentBrushDocument />
+                </DataTemplate>
+       
                 <DataTemplate DataType="{x:Type documents:LocationsViewModel}">
                     <documents:LocationsDocument />
                 </DataTemplate>
