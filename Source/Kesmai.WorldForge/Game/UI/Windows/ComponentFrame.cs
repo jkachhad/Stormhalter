@@ -346,3 +346,51 @@ public class SegmentComponentFrame : ComponentFrame
 		return $"SegmentComponent [{internalType}]";
 	}
 }
+
+public class SegmentBrushComponentFrame : ComponentFrame
+{
+	private Button _presentButton;
+
+	protected override UIControl GetContent()
+	{
+		if (_presentButton is null)
+		{
+			_presentButton = new Button()
+			{
+				Content = new TextBlock()
+				{
+					Text = "Edit Brush",
+					FontSize = 10,
+					HorizontalAlignment = HorizontalAlignment.Center,
+					Font = "Tahoma",
+					Foreground = Color.Yellow,
+				},
+				Style = "Client-Button",
+
+				Margin = new Vector4F(5),
+
+				HorizontalAlignment = HorizontalAlignment.Center,
+				VerticalAlignment = VerticalAlignment.Center,
+			};
+			_presentButton.Click += (o, args) =>
+			{
+				var applicationPresenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+
+				if (applicationPresenter != null && Provider is SegmentBrush segmentBrush)
+					segmentBrush.Present(applicationPresenter);
+			};
+		}
+
+		return _presentButton;
+	}
+
+	protected override string GetHeader()
+	{
+		var name = Provider?.Name;
+
+		if (string.IsNullOrWhiteSpace(name))
+			name = "Unnamed";
+
+		return $"SegmentBrush [{name}]";
+	}
+}

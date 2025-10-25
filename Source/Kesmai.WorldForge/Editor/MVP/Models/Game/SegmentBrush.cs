@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
@@ -7,12 +8,13 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Kesmai.WorldForge.UI.Documents;
+using Kesmai.WorldForge.Windows;
 
 namespace Kesmai.WorldForge.Editor;
 
 public class SegmentBrushChanged(SegmentBrush brush) : ValueChangedMessage<SegmentBrush>(brush);
 
-public class SegmentBrush : ObservableObject, ISegmentObject
+public class SegmentBrush : ObservableObject, ISegmentObject, IComponentProvider
 {
 	private string _name;
 	private readonly ObservableCollection<SegmentBrushEntry> _entries = new ();
@@ -44,6 +46,30 @@ public class SegmentBrush : ObservableObject, ISegmentObject
 		_entries.CollectionChanged += OnEntriesChanged;
 	}
 	
+	public void AddComponent(SegmentTile segmentTile)
+	{
+		segmentTile.Providers.Add(this);
+	}
+
+	public void RemoveComponent(SegmentTile segmentTile)
+	{
+		segmentTile.Providers.Remove(this);
+	}
+
+	public IEnumerable<IComponentProvider> GetComponents()
+	{
+		yield return this;
+	}
+
+	public IEnumerable<ComponentRender> GetRenders()
+	{
+		if (_entries.Any())
+		{
+			foreach (var render in _entries.First().Component.GetRenders())
+				yield return render;
+		}
+	}
+
 	private void OnEntriesChanged(object sender, NotifyCollectionChangedEventArgs e)
 	{
 		UpdateChances();
@@ -61,6 +87,11 @@ public class SegmentBrush : ObservableObject, ISegmentObject
 	{
 		return new XElement("brush",
 			new XAttribute("name", _name));
+	}
+
+	public ComponentFrame GetComponentFrame()
+	{
+		return new SegmentBrushComponentFrame();
 	}
 
 	public void Present(ApplicationPresenter presenter)

@@ -23,6 +23,7 @@ public class ComponentPalette : ObservableRecipient
 	private ComponentsCategory _staticCategory;
 	private ComponentsCategory _editorCategory;
 	private ComponentsCategory _segmentCategory;
+	private ComponentsCategory _segmentBrushCategory;
 	
 	public IComponentProvider SelectedProvider
 	{
@@ -96,6 +97,14 @@ public class ComponentPalette : ObservableRecipient
 		};
 		
 		_categories.Add(_segmentCategory);
+
+		_segmentBrushCategory = new ComponentsCategory()
+		{
+			Name = "Brushes",
+			IsRoot = false
+		};
+
+		_segmentCategory.Subcategories.Add(_segmentBrushCategory);
 		
 		// setup message registration for adding segment components.
 		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentComponentCreated>(this, (r, m) =>
@@ -114,6 +123,29 @@ public class ComponentPalette : ObservableRecipient
 			
 			deleteSegmentComponent(segmentComponent);
 			addSegmentComponent(segmentComponent);
+		});
+
+		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentBrushAdded>(this, (r, m) =>
+		{
+			addSegmentBrush(m.Value);
+		});
+
+		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentBrushRemoved>(this, (r, m) =>
+		{
+			deleteSegmentBrush(m.Value);
+		});
+
+		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentBrushChanged>(this, (r, m) =>
+		{
+			var brush = m.Value;
+
+			deleteSegmentBrush(brush);
+			addSegmentBrush(brush);
+		});
+
+		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentBrushesChanged>(this, (r, m) =>
+		{
+			refreshSegmentBrushes(m.Value);
 		});
 		
 		void addSegmentComponent(SegmentComponent component)
@@ -137,6 +169,37 @@ public class ComponentPalette : ObservableRecipient
 		{
 			if (TryGetCategory(component, out var category))
 				category.Components.Remove(component);
+		}
+
+		void addSegmentBrush(SegmentBrush brush)
+		{
+			if (brush is null || _segmentBrushCategory is null)
+				return;
+
+			if (!_segmentBrushCategory.Components.Contains(brush))
+				_segmentBrushCategory.Components.Add(brush);
+		}
+
+		void deleteSegmentBrush(SegmentBrush brush)
+		{
+			if (brush is null || _segmentBrushCategory is null)
+				return;
+
+			_segmentBrushCategory.Components.Remove(brush);
+		}
+
+		void refreshSegmentBrushes(SegmentBrushes brushes)
+		{
+			if (_segmentBrushCategory is null)
+				return;
+
+			_segmentBrushCategory.Components.Clear();
+
+			if (brushes is null)
+				return;
+
+			foreach (var brush in brushes)
+				addSegmentBrush(brush);
 		}
 	}
 
