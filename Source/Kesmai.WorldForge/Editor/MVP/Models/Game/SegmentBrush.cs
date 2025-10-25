@@ -49,10 +49,7 @@ public class SegmentBrush : ObservableObject, ISegmentObject
 		var totalWeight = TotalWeight;
 
 		foreach (var entry in _entries)
-		{
-			var chance = totalWeight <= 0 ? 0f : (float)entry.Weight / totalWeight;
-			entry.Chance = chance;
-		}
+			entry.Chance = totalWeight <= 0 ? 0f : (float)entry.Weight / totalWeight;
 
 		WeakReferenceMessenger.Default.Send(new SegmentBrushChanged(this));
 	}
