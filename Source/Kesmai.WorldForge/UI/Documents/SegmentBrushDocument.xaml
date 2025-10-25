@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ui="clr-namespace:Kesmai.WorldForge.UI"
+             xmlns:worldForge="clr-namespace:Kesmai.WorldForge"
 
              mc:Ignorable="d"
              
@@ -64,9 +65,12 @@
                                    Foreground="Gray"
                                    Text="{Binding Chance, StringFormat='({0:P2})'}" />
                     </Grid>
-                  
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+
+        <Border Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="4" BorderBrush="Black" BorderThickness="1">
+            <worldForge:BrushPresentationTarget Brush="{Binding ActiveContent, Source={StaticResource applicationPresenter}}" />
+        </Border>
     </Grid>
 </UserControl>
