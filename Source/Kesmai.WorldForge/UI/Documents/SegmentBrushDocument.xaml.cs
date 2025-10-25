@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using Kesmai.WorldForge.Editor;
-using Kesmai.WorldForge.Models;
+using Kesmai.WorldForge.UI.Windows;
 
 namespace Kesmai.WorldForge.UI.Documents;
 
@@ -31,11 +31,21 @@ public partial class SegmentBrushDocument : UserControl
 		if (_segmentBrush is null)
 			return;
 
-		var entry = new SegmentBrushEntry()
+		var picker = new ComponentsWindow
 		{
-			Component = new FloorComponent(1, 1)
+			Owner = Window.GetWindow(this)
 		};
-		
+
+		var result = picker.ShowDialog();
+
+		if (!result.HasValue || result != true || picker.SelectedComponent is null)
+			return;
+
+		var entry = new SegmentBrushEntry
+		{
+			Component = picker.SelectedComponent
+		};
+
 		_segmentBrush.Entries.Add(entry);
 
 		_entriesList.SelectedItem = entry;
