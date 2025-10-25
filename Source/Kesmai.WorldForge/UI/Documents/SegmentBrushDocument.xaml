@@ -3,9 +3,67 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             
+             xmlns:ui="clr-namespace:Kesmai.WorldForge.UI"
+
              mc:Ignorable="d"
              
              d:DesignWidth="400" d:DesignHeight="300">
-    <Grid />
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <ListBox x:Name="_entriesList" Grid.RowSpan="2"
+                 SelectionMode="Single"
+                 ItemsSource="{Binding ActiveContent.Entries, Source={StaticResource applicationPresenter}}">
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add Component" Click="OnAddComponentClick" />
+                    <MenuItem Header="Delete Component" Click="OnDeleteComponentClick" />
+                </ContextMenu>
+            </ListBox.ContextMenu>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        
+                        <Border Grid.RowSpan="3" BorderBrush="Black" BorderThickness="1">
+                            <ui:TerrainComponentImage Provider="{Binding Component}" />
+                        </Border>
+                        
+                        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Component, Converter={StaticResource objectToTypeConverter}}" 
+                                   HorizontalAlignment="Stretch" TextAlignment="Center"
+                                   FontSize="14" FontWeight="Bold" />
+                        
+                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Component.Name}" 
+                                   HorizontalAlignment="Stretch" TextAlignment="Center" />
+                        
+                        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Weight}"
+                                 HorizontalAlignment="Stretch" TextAlignment="Center" />
+                        
+                        <TextBlock Grid.Column="1" Grid.Row="3" 
+                                   HorizontalAlignment="Stretch" TextAlignment="Center"
+                                   Foreground="Gray" 
+                                   Text="{Binding Weight, StringFormat='({0:0.##})'}" />
+                    </Grid>
+                  
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
 </UserControl>
