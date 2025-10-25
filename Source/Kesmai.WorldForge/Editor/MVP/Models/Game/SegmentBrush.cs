@@ -1,4 +1,5 @@
 using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Xml.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -13,6 +14,7 @@ public class SegmentBrushChanged(SegmentBrush brush) : ValueChangedMessage<Segme
 public class SegmentBrush : ObservableObject, ISegmentObject
 {
 	private string _name;
+	private ObservableCollection<SegmentBrushEntry> _entries = new();
 
 	public string Name
 	{
@@ -22,6 +24,12 @@ public class SegmentBrush : ObservableObject, ISegmentObject
 			if (SetProperty(ref _name, value))
 				WeakReferenceMessenger.Default.Send(new SegmentBrushChanged(this));
 		}
+	}
+
+	public ObservableCollection<SegmentBrushEntry> Entries
+	{
+		get => _entries;
+		set => SetProperty(ref _entries, value);
 	}
 
 	public SegmentBrush()
