@@ -7,6 +7,7 @@ public class SegmentBrushEntry : ObservableObject
 {
 	private IComponentProvider _component;
 	private int _weight = 1;
+	private float _chance = 1.0f;
 
 	public IComponentProvider Component
 	{
@@ -18,5 +19,11 @@ public class SegmentBrushEntry : ObservableObject
 	{
 		get => _weight;
 		set => SetProperty(ref _weight, value);
+	}
+	
+	public float Chance
+	{
+		get => _chance;
+		set => SetProperty(ref _chance, value);
 	}
 }

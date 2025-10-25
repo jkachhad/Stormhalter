@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Xml.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -14,7 +15,7 @@ public class SegmentBrushChanged(SegmentBrush brush) : ValueChangedMessage<Segme
 public class SegmentBrush : ObservableObject, ISegmentObject
 {
 	private string _name;
-	private ObservableCollection<SegmentBrushEntry> _entries = new();
+	private readonly ObservableCollection<SegmentBrushEntry> _entries = new ();
 
 	public string Name
 	{
@@ -26,19 +27,34 @@ public class SegmentBrush : ObservableObject, ISegmentObject
 		}
 	}
 
-	public ObservableCollection<SegmentBrushEntry> Entries
-	{
-		get => _entries;
-		set => SetProperty(ref _entries, value);
-	}
+	public ObservableCollection<SegmentBrushEntry> Entries => _entries;
+
+	public int TotalWeight => _entries.Sum(entry => entry.Weight);
 
 	public SegmentBrush()
 	{
+		_entries ??= new ObservableCollection<SegmentBrushEntry>();
+		_entries.CollectionChanged += OnEntriesChanged;
 	}
-	
+
 	public SegmentBrush(XElement element)
 	{
 		_name = (string)element.Attribute("name");
+		
+		_entries.CollectionChanged += OnEntriesChanged;
+	}
+	
+	private void OnEntriesChanged(object sender, NotifyCollectionChangedEventArgs e)
+	{
+		var totalWeight = TotalWeight;
+
+		foreach (var entry in _entries)
+		{
+			var chance = totalWeight <= 0 ? 0f : (float)entry.Weight / totalWeight;
+			entry.Chance = chance;
+		}
+
+		WeakReferenceMessenger.Default.Send(new SegmentBrushChanged(this));
 	}
 
 	public XElement GetXElement()
