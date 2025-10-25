@@ -58,8 +58,8 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
     {
         var tileElement = new XElement ( "tile" );
 
-        foreach ( var component in Providers.SelectMany(c => c.GetComponents()) )
-            tileElement.Add ( component.GetXElement ( ) );
+        foreach ( var provider in Providers )
+            tileElement.Add ( provider.GetXElement ( ) );
 
         return tileElement;
     }

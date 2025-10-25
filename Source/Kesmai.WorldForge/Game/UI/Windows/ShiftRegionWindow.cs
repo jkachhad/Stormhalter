@@ -143,8 +143,9 @@ public class ShiftRegionWindow : Window
 				
 			var duplicate = new SegmentTile(dx, dy);
 
-			foreach (var component in tile.Providers.SelectMany(c => c.GetComponents()))
-				duplicate.AddComponent(component);
+			// move the provider itself, not the underlying component.
+			foreach (var provider in tile.Providers)
+				duplicate.Providers.Add(provider);
 
 			_region.SetTile(dx, dy, duplicate);
 		}
