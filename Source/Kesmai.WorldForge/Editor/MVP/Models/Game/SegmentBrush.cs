@@ -46,12 +46,15 @@ public class SegmentBrush : ObservableObject, ISegmentObject
 	
 	private void OnEntriesChanged(object sender, NotifyCollectionChangedEventArgs e)
 	{
+		UpdateChances();
+	}
+	
+	public void UpdateChances()
+	{
 		var totalWeight = TotalWeight;
 
 		foreach (var entry in _entries)
 			entry.Chance = totalWeight <= 0 ? 0f : (float)entry.Weight / totalWeight;
-
-		WeakReferenceMessenger.Default.Send(new SegmentBrushChanged(this));
 	}
 
 	public XElement GetXElement()

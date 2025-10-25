@@ -1,5 +1,5 @@
+using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Kesmai.WorldForge;
 
 namespace Kesmai.WorldForge.Editor;
 
@@ -8,6 +8,8 @@ public class SegmentBrushEntry : ObservableObject
 	private IComponentProvider _component;
 	private int _weight = 1;
 	private float _chance = 1.0f;
+	
+	private SegmentBrush _brush;
 
 	public IComponentProvider Component
 	{
@@ -25,5 +27,21 @@ public class SegmentBrushEntry : ObservableObject
 	{
 		get => _chance;
 		set => SetProperty(ref _chance, value);
+	}
+
+	public SegmentBrushEntry(SegmentBrush brush)
+	{
+		_brush = brush;
+	}
+
+	protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+	{
+		base.OnPropertyChanged(e);
+
+		if (e.PropertyName != nameof(Weight))
+			return;
+		
+		if (_brush != null)
+			_brush.UpdateChances();
 	}
 }

@@ -53,18 +53,16 @@
                         <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Component.Name}" 
                                    HorizontalAlignment="Stretch" TextAlignment="Center" />
                         
-                        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,2,0,0">
-                            <TextBlock Text="Weight:" Margin="0,0,4,0" VerticalAlignment="Center" />
-                            <TextBox Width="80"
-                                     x:Name="_weightTextBox"
-                                     Text="{Binding Weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                     HorizontalContentAlignment="Center" />
+                        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
+                            <TextBlock Text="Weight:" />
+                            <TextBox x:Name="_weightTextBox" Width="80"
+                                     Text="{Binding Weight}" />
                         </StackPanel>
                         
                         <TextBlock Grid.Column="1" Grid.Row="3" x:Name="_chanceTextBlock"
                                    HorizontalAlignment="Stretch" TextAlignment="Center"
-                                   Foreground="Gray" Margin="0,2,0,0"
-                                   Text="{Binding Chance, StringFormat='{}{0:P2}'}" />
+                                   Foreground="Gray"
+                                   Text="{Binding Chance, StringFormat='({0:P2})'}" />
                     </Grid>
                   
                 </DataTemplate>

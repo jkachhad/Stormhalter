@@ -41,7 +41,7 @@ public partial class SegmentBrushDocument : UserControl
 		if (!result.HasValue || result != true || picker.SelectedComponent is null)
 			return;
 
-		var entry = new SegmentBrushEntry
+		var entry = new SegmentBrushEntry(_segmentBrush)
 		{
 			Component = picker.SelectedComponent
 		};
