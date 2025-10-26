@@ -318,6 +318,9 @@ public class ApplicationPresenter : ObservableRecipient
 		
 		process("Brushes.xml", () => segment.Brushes = new SegmentBrushes(),
 			(root, version) => segment.Brushes.Load(root, version));
+		
+		process("Templates.xml", () => segment.Templates = new SegmentTemplates(),
+			(root, version) => segment.Templates.Load(root, version));
 
 		var regionsFolder = new DirectoryInfo(Path.Combine(targetDirectory.FullName, "Regions"));
 
@@ -396,6 +399,7 @@ public class ApplicationPresenter : ObservableRecipient
 			write(_segment.Treasures.Save, "treasures", "Treasures.xml");
 			write(_segment.Brushes.Save, "brushes", "Brushes.xml");
 			write(_segment.Components.Save, "components", "Components.xml");
+			write(_segment.Templates.Save, "templates", "Templates.xml");
 			
 			// find the project file and save it
 			var segmentProject = new FileInfo(Path.Combine(targetPath, $"{_segment.Name}.csproj"));
@@ -428,6 +432,7 @@ public class ApplicationPresenter : ObservableRecipient
 					"Treasures.xml",
 					"Components.xml",
 					"Brushes.xml",
+					"Templates.xml",
 					@"Regions\*.xml"
 				};
 

@@ -77,6 +77,7 @@ public class Segment : ObservableObject, ISegmentObject
 	public SegmentSpawns Spawns { get; set; } = new SegmentSpawns();
 	public SegmentTreasures Treasures { get; set; } = new SegmentTreasures();
 	public SegmentComponents Components { get; set; } = new SegmentComponents();
+	public SegmentTemplates Templates { get; set; } = new SegmentTemplates();
 
 	public Segment()
 	{
@@ -140,6 +141,7 @@ public class Segment : ObservableObject, ISegmentObject
 				case "treasures": Treasures.Load(rootElement, Core.Version); break;
 				case "components": Components.Load(rootElement, Core.Version); break;
 				case "brushes": Brushes.Load(rootElement, Core.Version); break;
+				case "templates": Templates.Load(rootElement, Core.Version); break;
 			}
 		}
 		catch
