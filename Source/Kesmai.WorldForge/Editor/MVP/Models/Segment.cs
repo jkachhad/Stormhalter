@@ -23,6 +23,7 @@ public interface ISegmentObject
 	void Copy(Segment segment);
 }
 
+public record SegmentChanged(Segment segment);
 public record SegmentSerialize(Segment Segment);
 public record SegmentSerialized(Segment Segment);
 
@@ -48,13 +49,21 @@ public class Segment : ObservableObject, ISegmentObject
 	public string Name
 	{
 		get => _name;
-		set => SetProperty(ref _name, value);
+		set
+		{
+			if (SetProperty(ref _name, value))
+				WeakReferenceMessenger.Default.Send(new SegmentChanged(this));
+		}
 	}
 
 	public string Directory
 	{
 		get => _directory;
-		set => _directory = value;
+		set
+		{
+			if (SetProperty(ref _directory, value))
+				WeakReferenceMessenger.Default.Send(new SegmentChanged(this));
+		}
 	}
 
 	public SegmentBrushes Brushes { get; set; } = new SegmentBrushes();

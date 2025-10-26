@@ -8,6 +8,7 @@ namespace Kesmai.WorldForge.Editor;
 public sealed class SegmentProject : IDisposable
 {
     private FileSystemWatcher _watcher;
+    private Segment _activeSegment;
 
     public SegmentProject()
     {
@@ -18,15 +19,20 @@ public sealed class SegmentProject : IDisposable
             Pause();
             Reset();
 
-            if (segment != null)
-            {
-                var path = segment.Directory;
-                
-                if (!Directory.Exists(path))
-                    throw new DirectoryNotFoundException(path);
-                
-                Start(segment.Directory);
-            }
+            _activeSegment = segment;
+
+            WatchSegment();
+        });
+
+        WeakReferenceMessenger.Default.Register<SegmentChanged>(this, (_, message) =>
+        {
+            if (_activeSegment is null || !ReferenceEquals(_activeSegment, message.segment))
+                return;
+
+            Pause();
+            Reset();
+
+            WatchSegment();
         });
 
         WeakReferenceMessenger.Default.Register<SegmentSerialize>(this, (_, message) => Pause());
@@ -96,6 +102,22 @@ public sealed class SegmentProject : IDisposable
     {
         if (!IsIgnoredPath(e.FullPath))
             WeakReferenceMessenger.Default.SendDelayed(new SegmentFileRenamedMessage(e), TimeSpan.FromSeconds(1.0));
+    }
+
+    private void WatchSegment()
+    {
+        if (_activeSegment is null)
+            return;
+
+        var path = _activeSegment.Directory;
+
+        if (String.IsNullOrWhiteSpace(path))
+            return;
+
+        if (!Directory.Exists(path))
+            throw new DirectoryNotFoundException(path);
+
+        Start(path);
     }
     
     private bool IsIgnoredPath(string path) => 
