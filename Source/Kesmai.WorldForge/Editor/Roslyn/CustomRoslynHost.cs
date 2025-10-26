@@ -241,6 +241,9 @@ public class CustomRoslynHost : RoslynHost
         var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
         var segment = presenter.Segment;
 
+        if (segment is null)
+            return;
+
         var builder = new StringBuilder();
         
         builder.AppendLine($"namespace Kesmai.Server.Segments;");
