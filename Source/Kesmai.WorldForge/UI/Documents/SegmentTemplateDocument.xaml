@@ -1,0 +1,34 @@
+<UserControl x:Class="Kesmai.WorldForge.UI.Documents.SegmentTemplateDocument"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:documents="clr-namespace:Kesmai.WorldForge.UI.Documents"
+             mc:Ignorable="d"
+             d:DesignWidth="400"
+             d:DesignHeight="300">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ListBox x:Name="_providersList"
+                 Grid.Row="0"
+                 Margin="0,0,0,10"
+                 SelectionMode="Single"
+                 ItemsSource="{Binding ActiveContent.Providers, Source={StaticResource applicationPresenter}}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="{Binding Name}"
+                                   FontWeight="Bold" />
+                        <TextBlock Text="{Binding Converter={StaticResource objectToTypeConverter}}"
+                                   FontSize="10"
+                                   Foreground="Gray" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>
