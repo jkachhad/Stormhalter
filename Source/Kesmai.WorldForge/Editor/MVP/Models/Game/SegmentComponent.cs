@@ -26,7 +26,8 @@ public interface IComponentProvider
 	IEnumerable<IComponentProvider> GetComponents();
 	IEnumerable<ComponentRender> GetRenders();
 
-	XElement GetXElement();
+	XElement GetSerializingElement();
+	XElement GetReferencingElement();
 
 	ComponentFrame GetComponentFrame();
 }
@@ -166,10 +167,19 @@ public class SegmentComponent : ObservableObject, ISegmentObject, IComponentProv
 				yield return render;
 		}
 	}
-
-	public XElement GetXElement()
+	
+	public XElement GetSerializingElement()
 	{
-		throw new NotImplementedException();
+		var element = new XElement(_element);
+		
+		element.Add(new XAttribute("name", _name));
+		
+		return element;
+	}
+	
+	public XElement GetReferencingElement()
+	{
+		return new XElement("component", new XAttribute("name", _name));
 	}
 	
 	public ComponentFrame GetComponentFrame()

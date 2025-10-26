@@ -28,9 +28,9 @@ public class Web : StaticComponent
 			_allowDispel = (bool)allowDispel;
 	}
 		
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		if (_allowDispel)
 			element.Add(new XElement("allowDispel", _allowDispel));
@@ -40,6 +40,6 @@ public class Web : StaticComponent
 
 	public override TerrainComponent Clone()
 	{
-		return new Web(GetXElement());
+		return new Web(GetSerializingElement());
 	}
 }

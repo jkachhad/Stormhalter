@@ -82,9 +82,9 @@ public class FloorComponent : TerrainComponent
 			yield return new ComponentRender(terrain, Color);
 	}
 		
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		element.Add(new XElement("ground", _ground));
 
@@ -96,7 +96,7 @@ public class FloorComponent : TerrainComponent
 	
 	public override TerrainComponent Clone()
 	{
-		return new FloorComponent(GetXElement());
+		return new FloorComponent(GetSerializingElement());
 	}
 
 	#endregion

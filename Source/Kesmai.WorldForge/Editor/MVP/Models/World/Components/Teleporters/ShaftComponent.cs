@@ -37,9 +37,9 @@ public class ShaftComponent : ActiveTeleporter
 			_slipChance = (int)slipChanceElement;
 	}
 
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		if (_slipChance > 0)
 			element.Add(new XElement("slipChance", _slipChance));
@@ -49,6 +49,6 @@ public class ShaftComponent : ActiveTeleporter
 		
 	public override TerrainComponent Clone()
 	{
-		return new ShaftComponent(GetXElement());
+		return new ShaftComponent(GetSerializingElement());
 	}
 }

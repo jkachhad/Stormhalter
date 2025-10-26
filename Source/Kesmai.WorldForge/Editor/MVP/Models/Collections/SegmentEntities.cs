@@ -37,7 +37,7 @@ public class SegmentEntities : ObservableCollection<SegmentEntity>
 
 			}
 
-			element.Add(entity.GetXElement());
+			element.Add(entity.GetSerializingElement());
 		}
 	}
 	

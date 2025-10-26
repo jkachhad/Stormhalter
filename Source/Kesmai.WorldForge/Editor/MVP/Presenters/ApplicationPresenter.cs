@@ -375,7 +375,7 @@ public class ApplicationPresenter : ObservableRecipient
 				regionsDirectory.Create();
 			
 			foreach (var region in _segment.Regions)
-				region.GetXElement().Save(Path.Combine(regionsDirectory.FullName, $"{region.ID}.xml"));
+				region.GetSerializingElement().Save(Path.Combine(regionsDirectory.FullName, $"{region.ID}.xml"));
 			
 			void write(Action<XElement> saveAction, string elementName, string fileName)
 			{

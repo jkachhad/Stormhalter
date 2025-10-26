@@ -28,7 +28,7 @@ public class SegmentLocations : ObservableCollection<SegmentLocation>
 	public void Save(XElement element)
 	{
 		foreach (var location in this)
-			element.Add(location.GetXElement());
+			element.Add(location.GetSerializingElement());
 	}
 
 	protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs args)

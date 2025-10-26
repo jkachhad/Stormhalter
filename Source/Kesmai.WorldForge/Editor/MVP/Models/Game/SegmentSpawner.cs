@@ -169,7 +169,7 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 		}
 	}
 
-	public virtual XElement GetXElement()
+	public virtual XElement GetSerializingElement()
 	{
 		var element = new XElement("spawn",
 			new XAttribute("type", GetTypeAlias()),
@@ -182,7 +182,7 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 			element.Add(new XElement("maximum", _maximum));
 			
 		foreach (var script in _scripts)
-			element.Add(script.GetXElement());
+			element.Add(script.GetSerializingElement());
 
 		foreach (var entry in Entries)
 		{
@@ -191,6 +191,12 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 		}
 
 		return element;
+	}
+	
+	public virtual XElement GetReferencingElement()
+	{
+		return new XElement("spawn",
+			new XAttribute("name", _name));
 	}
 		
 	protected virtual string GetTypeAlias()
@@ -265,9 +271,9 @@ public class LocationSegmentSpawner : SegmentSpawner
 			target.Spawns.Location.Add(clonedSpawner);
 	}
 
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		element.Add(new XElement("location",
 			new XAttribute("x", _x),
@@ -280,7 +286,7 @@ public class LocationSegmentSpawner : SegmentSpawner
 
 	public override object Clone()
 	{
-		return new LocationSegmentSpawner(GetXElement())
+		return new LocationSegmentSpawner(GetSerializingElement())
 		{
 			Name = $"Copy of {Name}",
 		};
@@ -358,9 +364,9 @@ public class RegionSegmentSpawner : SegmentSpawner
 			target.Spawns.Region.Add(clonedSpawner);
 	}
 
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 		var bounds = new XElement("bounds",
 			new XAttribute("region", _region));
 			
@@ -389,7 +395,7 @@ public class RegionSegmentSpawner : SegmentSpawner
 	
 	public override object Clone()
 	{
-		return new RegionSegmentSpawner(GetXElement())
+		return new RegionSegmentSpawner(GetSerializingElement())
 		{
 			Name = $"Copy of {Name}",
 		};

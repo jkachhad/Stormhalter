@@ -337,4 +337,41 @@ public class ComponentPalette : ObservableRecipient
 			return false;
 		}
 	}
+	
+	public bool TryGetComponent(string name, out IComponentProvider component)
+	{
+		component = null;
+		
+		foreach (var category in _categories)
+		{
+			if (recursive(name, category, out component))
+				return true;
+		}
+
+		return false;
+		
+		bool recursive(string sourceName, ComponentsCategory search, out IComponentProvider targetComponent)
+		{
+			foreach (var childComponent in search.Components)
+			{
+				if (childComponent.Name.Equals(sourceName, StringComparison.OrdinalIgnoreCase))
+				{
+					targetComponent = childComponent;
+					return true;
+				}
+			}
+
+			if (search.Subcategories.Count is not 0)
+			{
+				foreach (var child in search.Subcategories)
+				{
+					if (recursive(sourceName, child, out targetComponent))
+						return true;
+				}
+			}
+
+			targetComponent = null;
+			return false;
+		}
+	}
 }

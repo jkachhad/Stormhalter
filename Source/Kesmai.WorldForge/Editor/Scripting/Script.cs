@@ -47,7 +47,7 @@ public class Script
 	/// <summary>
 	/// Gets the XML representation of this script.
 	/// </summary>
-	public XElement GetXElement()
+	public XElement GetSerializingElement()
 	{
 		var element = new XElement("script",
 			new XAttribute("name", Name),

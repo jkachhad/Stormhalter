@@ -27,7 +27,7 @@ public class SegmentBrushes : ObservableCollection<SegmentBrush>
 	public void Save(XElement element)
 	{
 		foreach (var brush in this)
-			element.Add(brush.GetXElement());
+			element.Add(brush.GetSerializingElement());
 	}
 
 	protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs args)

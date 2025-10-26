@@ -59,4 +59,10 @@ public class ComponentsCategory : ObservableObject
 		return (category = _subcategories.FirstOrDefault(
 			c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase))) != null;
 	}
+	
+	public bool TryGetComponent(string name, out IComponentProvider component)
+	{
+		return (component = _components.FirstOrDefault(
+			c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase))) != null;
+	}
 }

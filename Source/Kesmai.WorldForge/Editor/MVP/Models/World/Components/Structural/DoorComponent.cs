@@ -170,9 +170,9 @@ public class DoorComponent : TerrainComponent
 			yield return new ComponentRender(terrain, Color);
 	}
 		
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		element.Add(new XElement("openId", _openId));
 		element.Add(new XElement("closedId", _closedId));
@@ -196,7 +196,7 @@ public class DoorComponent : TerrainComponent
 
 	public override TerrainComponent Clone()
 	{
-		return new DoorComponent(GetXElement());
+		return new DoorComponent(GetSerializingElement());
 	}
 
 	#endregion

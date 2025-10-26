@@ -95,13 +95,13 @@ namespace Kesmai.WorldForge.Editor.MVP.Models.World.Components
             return clone;
         }
 
-        public override XElement GetXElement()
+        public override XElement GetSerializingElement()
         {
             var element = new XElement( "TilePrefab" );
             element.Add( new XAttribute( "name", Name ) );
 
             foreach( var component in Components )
-                element.Add( component.GetXElement() );
+                element.Add( component.GetSerializingElement() );
 
             return element;
         }

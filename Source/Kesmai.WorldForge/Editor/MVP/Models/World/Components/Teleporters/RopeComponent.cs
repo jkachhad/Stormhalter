@@ -79,9 +79,9 @@ public class RopeComponent : ActiveTeleporter
 		}
 	}
 		
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		if (_isSecret)
 			element.Add(new XElement("isSecret", _isSecret));
@@ -94,7 +94,7 @@ public class RopeComponent : ActiveTeleporter
 
 	public override TerrainComponent Clone()
 	{
-		return new RopeComponent(GetXElement());
+		return new RopeComponent(GetSerializingElement());
 	}
 
 	#endregion

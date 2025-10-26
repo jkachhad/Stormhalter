@@ -42,6 +42,9 @@ public class SegmentBrush : ObservableObject, ISegmentObject, IComponentProvider
 	public SegmentBrush(XElement element)
 	{
 		_name = (string)element.Attribute("name");
+
+		foreach (var entryElement in element.Elements())
+			_entries.Add(new SegmentBrushEntry(this, entryElement));
 		
 		_entries.CollectionChanged += OnEntriesChanged;
 	}
@@ -83,10 +86,20 @@ public class SegmentBrush : ObservableObject, ISegmentObject, IComponentProvider
 			entry.Chance = totalWeight <= 0 ? 0f : (float)entry.Weight / totalWeight;
 	}
 
-	public XElement GetXElement()
+	public XElement GetSerializingElement()
 	{
-		return new XElement("brush",
+		var element = new XElement("brush",
 			new XAttribute("name", _name));
+		
+		foreach (var entry in _entries)
+			element.Add(entry.GetSerializingElement());
+
+		return element;
+	}
+	
+	public XElement GetReferencingElement()
+	{
+		return new XElement("brush", new XAttribute("name", _name));
 	}
 
 	public ComponentFrame GetComponentFrame()
@@ -115,7 +128,7 @@ public class SegmentBrush : ObservableObject, ISegmentObject, IComponentProvider
 	
 	public object Clone()
 	{
-		return new SegmentBrush(GetXElement())
+		return new SegmentBrush(GetSerializingElement())
 		{
 			Name = $"Copy of {_name}"
 		};

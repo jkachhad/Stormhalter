@@ -21,6 +21,9 @@ public interface ISegmentObject
 	void Present(ApplicationPresenter presenter);
 
 	void Copy(Segment segment);
+
+	XElement GetSerializingElement();
+	XElement GetReferencingElement();
 }
 
 public record SegmentChanged(Segment segment);
@@ -154,5 +157,17 @@ public class Segment : ObservableObject, ISegmentObject
 	{
 		foreach (var region in Regions)
 			region.UpdateTiles();
+	}
+	
+	public XElement GetSerializingElement()
+	{
+		// typically does not occur.
+		return null;
+	}
+	
+	public XElement GetReferencingElement()
+	{
+		// typically does not occur.
+		return null;
 	}
 }

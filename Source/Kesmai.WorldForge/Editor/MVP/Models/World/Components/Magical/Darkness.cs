@@ -38,9 +38,9 @@ public class Darkness : TerrainComponent
 			yield return new ComponentRender(terrain, Color);
 	}
 		
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		if (_allowDispel)
 			element.Add(new XElement("allowDispel", _allowDispel));
@@ -50,6 +50,6 @@ public class Darkness : TerrainComponent
 		
 	public override TerrainComponent Clone()
 	{
-		return new Darkness(GetXElement());
+		return new Darkness(GetSerializingElement());
 	}
 }

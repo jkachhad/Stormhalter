@@ -108,7 +108,7 @@ public class SegmentTreasure : ObservableObject, ICloneable, ISegmentObject
 			target.Treasures.Add(clonedTreasure);
 	}
 
-	public virtual XElement GetXElement()
+	public virtual XElement GetSerializingElement()
 	{
 		var element = new XElement("treasure",
 			new XAttribute("name", _name));
@@ -117,9 +117,15 @@ public class SegmentTreasure : ObservableObject, ICloneable, ISegmentObject
 			element.Add(new XElement("notes", _notes));
 
 		foreach (var treasureEntry in _entries)
-			element.Add(treasureEntry.GetXElement());
+			element.Add(treasureEntry.GetSerializingElement());
 
 		return element;
+	}
+	
+	public XElement GetReferencingElement()
+	{
+		return new XElement("treasure",
+			new XAttribute("name", _name));
 	}
 		
 	public override string ToString() => _name;
@@ -132,7 +138,7 @@ public class SegmentTreasure : ObservableObject, ICloneable, ISegmentObject
 	
 	public virtual object Clone()
 	{
-		return new SegmentTreasure(GetXElement())
+		return new SegmentTreasure(GetSerializingElement())
 		{
 			Name = $"Copy of {_name}",
 		};
@@ -238,19 +244,19 @@ public class SegmentHoard : SegmentTreasure
 		}
 	}
 	
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		foreach (var script in _scripts)
-			element.Add(script.GetXElement());
+			element.Add(script.GetSerializingElement());
 
 		return element;
 	}
 	
 	public override object Clone()
 	{
-		return new SegmentHoard(GetXElement())
+		return new SegmentHoard(GetSerializingElement())
 		{
 			Name = $"Copy of {_name}",
 		};
@@ -382,7 +388,7 @@ public class TreasureEntry : ObservableObject
 		}
 	}
 
-	public XElement GetXElement()
+	public XElement GetSerializingElement()
 	{
 		var element = new XElement("entry",
 			new XAttribute("weight", _weight));
@@ -391,7 +397,7 @@ public class TreasureEntry : ObservableObject
 			element.Add(new XElement("notes", _notes));
 
 		foreach (var script in _scripts)
-			element.Add(script.GetXElement());
+			element.Add(script.GetSerializingElement());
 
 		return element;
 	}

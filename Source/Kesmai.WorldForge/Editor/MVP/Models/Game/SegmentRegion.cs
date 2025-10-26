@@ -130,7 +130,7 @@ public class SegmentRegion : ObservableObject, ICloneable, ISegmentObject
 	/// <summary>
 	/// Gets an XML element that describes this instance.
 	/// </summary>
-	public XElement GetXElement()
+	public XElement GetSerializingElement()
 	{
 		var element = new XElement("region");
 
@@ -178,6 +178,12 @@ public class SegmentRegion : ObservableObject, ICloneable, ISegmentObject
 		}
 
 		return element;
+	}
+	
+	public XElement GetReferencingElement()
+	{
+		return new XElement("region",
+			new XAttribute("id", ID));
 	}
 
 	public void UpdateTiles()
@@ -313,7 +319,7 @@ public class SegmentRegion : ObservableObject, ICloneable, ISegmentObject
 
 	public object Clone()
 	{
-		return new SegmentRegion(GetXElement())
+		return new SegmentRegion(GetSerializingElement())
 		{
 			Name = $"Copy of {_name}"
 		};

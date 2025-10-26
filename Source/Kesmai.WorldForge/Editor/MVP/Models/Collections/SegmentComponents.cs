@@ -60,7 +60,7 @@ public class SegmentComponents : ObservableCollection<SegmentComponent>
 	public void Save(XElement element)
 	{
 		foreach (var segmentComponent in this)
-			element.Add(segmentComponent.Element);
+			element.Add(segmentComponent.GetSerializingElement());
 	}
 	
 	protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs args)

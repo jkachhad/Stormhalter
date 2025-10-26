@@ -1,4 +1,8 @@
+using System;
 using System.ComponentModel;
+using System.Linq;
+using System.Xml.Linq;
+using CommonServiceLocator;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Kesmai.WorldForge.Editor;
@@ -28,6 +32,29 @@ public class SegmentBrushEntry : ObservableObject
 		get => _chance;
 		set => SetProperty(ref _chance, value);
 	}
+	
+	public SegmentBrushEntry(SegmentBrush brush, XElement element) : this(brush)
+	{
+		var weightAttribute = element.Attribute("weight");
+		
+		if (weightAttribute != null)
+			_weight = (int)weightAttribute;
+		
+		var componentElement = element.Elements().FirstOrDefault();
+
+		if (componentElement is null)
+			return;
+		
+		var componentPalette = ServiceLocator.Current.GetInstance<ComponentPalette>();
+		
+		if (componentPalette is null)
+			throw new ArgumentNullException(nameof(componentPalette));
+		
+		var nameAttribute = componentElement.Attribute("name");
+
+		if (nameAttribute != null && componentPalette.TryGetComponent((string)nameAttribute, out var namedProvider))
+			_component = namedProvider;
+	}
 
 	public SegmentBrushEntry(SegmentBrush brush)
 	{
@@ -43,5 +70,11 @@ public class SegmentBrushEntry : ObservableObject
 		
 		if (_brush != null)
 			_brush.UpdateChances();
+	}
+
+	public XElement GetSerializingElement()
+	{
+		return new XElement("entry", new XAttribute("weight", Weight), 
+			_component.GetReferencingElement());
 	}
 }

@@ -154,13 +154,13 @@ public class SegmentEntity : ObservableObject, ICloneable, ISegmentObject
 		}
 	}
 		
-	public XElement GetXElement()
+	public XElement GetSerializingElement()
 	{
 		var element = new XElement("entity", 
 			new XAttribute("name", _name));
 			
 		foreach (var script in _scripts)
-			element.Add(script.GetXElement());
+			element.Add(script.GetSerializingElement());
 
 		if (!String.IsNullOrEmpty(_notes))
 			element.Add(new XElement("notes", _notes));
@@ -169,6 +169,12 @@ public class SegmentEntity : ObservableObject, ICloneable, ISegmentObject
 			element.Add(new XElement("group", _group));
 			
 		return element;
+	}
+	
+	public XElement GetReferencingElement()
+	{
+		return new XElement("entity",
+			new XAttribute("name", _name));
 	}
 
 	public override string ToString() => _name;

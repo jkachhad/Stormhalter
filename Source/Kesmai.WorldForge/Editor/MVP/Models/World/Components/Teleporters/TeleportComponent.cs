@@ -93,9 +93,9 @@ public abstract class TeleportComponent : TerrainComponent
 
 	#region Methods
 		
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		if (_destinationX != 0)
 			element.Add(new XElement("destinationX", _destinationX));

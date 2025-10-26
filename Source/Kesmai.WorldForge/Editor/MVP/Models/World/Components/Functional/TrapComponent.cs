@@ -91,9 +91,9 @@ public abstract class TrapComponent : TerrainComponent
 		yield return _internal;
 	}
 
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		if (_cooldown > 0)
 			element.Add(new XElement("cooldown", _cooldown));

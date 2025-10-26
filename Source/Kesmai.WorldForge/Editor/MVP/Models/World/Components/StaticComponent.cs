@@ -58,16 +58,16 @@ public class StaticComponent : TerrainComponent
             yield return new ComponentRender( terrain, Color );
     }
 
-    public override XElement GetXElement()
+    public override XElement GetSerializingElement()
     {
-        var element = base.GetXElement();
+        var element = base.GetSerializingElement();
 
         element.Add( new XElement( "static", _static ) );
 
         return element;
     }
 
-    public override TerrainComponent Clone() => new StaticComponent( GetXElement() );
+    public override TerrainComponent Clone() => new StaticComponent( GetSerializingElement() );
 
 
     #endregion

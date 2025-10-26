@@ -132,7 +132,7 @@ public class SegmentSubregion : ObservableObject, ICloneable, ISegmentObject
 			target.Subregions.Add(clonedSubregion);
 	}
 		
-	public XElement GetXElement()
+	public XElement GetSerializingElement()
 	{
 		var element = new XElement("subregion", 
 			new XAttribute("name", _name), 
@@ -153,6 +153,13 @@ public class SegmentSubregion : ObservableObject, ICloneable, ISegmentObject
 		element.Add(rectanglesElement);
 			
 		return element;
+	}
+	
+	public XElement GetReferencingElement()
+	{
+		return new XElement("subregion", 
+			new XAttribute("name", _name),
+			new XAttribute("region", _region));
 	}
 
 	private void UpdateColor()
@@ -182,7 +189,7 @@ public class SegmentSubregion : ObservableObject, ICloneable, ISegmentObject
 	
 	public object Clone()
 	{
-		return new SegmentSubregion(GetXElement())
+		return new SegmentSubregion(GetSerializingElement())
 		{
 			Name = $"Copy of {_name}"
 		};

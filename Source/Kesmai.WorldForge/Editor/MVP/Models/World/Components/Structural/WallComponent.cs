@@ -117,9 +117,9 @@ public class WallComponent : TerrainComponent
 		}
 	}
 		
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		element.Add(new XElement("wall", _wall));
 		element.Add(new XElement("destroyed", _destroyed));
@@ -133,7 +133,7 @@ public class WallComponent : TerrainComponent
 
 	public override TerrainComponent Clone()
 	{
-		return new WallComponent(GetXElement());
+		return new WallComponent(GetSerializingElement());
 	}
 		
 	#endregion

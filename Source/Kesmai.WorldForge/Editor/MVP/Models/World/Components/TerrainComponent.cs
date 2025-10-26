@@ -94,30 +94,36 @@ public abstract class TerrainComponent : ObservableObject, IComponentProvider
     #endregion
 
     #region Methods
-
+    
     /// <summary>
     /// Gets an XML element that describes this component.
     /// </summary>
-    public virtual XElement GetXElement()
+    public virtual XElement GetSerializingElement()
     {
-        var element = new XElement( "component" );
+        var element = new XElement("component");
 
-        element.Add( new XAttribute( "type", GetTypeAlias() ) );
+        element.Add(new XAttribute("type", GetTypeAlias()));
 
-        if( Color != Color.White )
+        if (Color != Color.White)
         {
-            element.Add( new XElement( "color",
-                new XAttribute( "r", Color.R ), new XAttribute( "g", Color.G ), new XAttribute( "b", Color.B ),
-                new XAttribute( "a", Color.A )
-            ) );
-        }
-        if( !String.IsNullOrWhiteSpace( Comment ) )
-        {
-            element.Add( new XElement( "comment", Comment ) );
+            element.Add(new XElement("color",
+                new XAttribute("r", Color.R), new XAttribute("g", Color.G), new XAttribute("b", Color.B),
+                new XAttribute("a", Color.A)
+            ));
         }
 
+        if (!String.IsNullOrWhiteSpace(Comment))
+        {
+            element.Add(new XElement("comment", Comment));
+        }
 
         return element;
+    }
+
+    public XElement GetReferencingElement()
+    {
+        // typically does not occur.
+        return null;
     }
 
     protected virtual string GetTypeAlias()

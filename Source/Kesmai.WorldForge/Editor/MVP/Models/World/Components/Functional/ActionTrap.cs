@@ -23,9 +23,9 @@ public class ActionTrap : TrapComponent
 			_action = (string)damageElement;
 	}
 	
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		if (!String.IsNullOrEmpty(_action))
 			element.Add(new XElement("action", _action));
@@ -35,6 +35,6 @@ public class ActionTrap : TrapComponent
 	
 	public override TerrainComponent Clone()
 	{
-		return new ActionTrap(GetXElement());
+		return new ActionTrap(GetSerializingElement());
 	}
 }

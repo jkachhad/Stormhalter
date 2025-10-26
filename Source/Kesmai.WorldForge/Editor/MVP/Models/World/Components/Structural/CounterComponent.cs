@@ -81,9 +81,9 @@ public class CounterComponent : TerrainComponent
 		}
 	}
 
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		element.Add(new XElement("counter", _counter));
 
@@ -95,7 +95,7 @@ public class CounterComponent : TerrainComponent
 
 	public override TerrainComponent Clone()
 	{
-		return new CounterComponent(GetXElement());
+		return new CounterComponent(GetSerializingElement());
 	}
 		
 	#endregion

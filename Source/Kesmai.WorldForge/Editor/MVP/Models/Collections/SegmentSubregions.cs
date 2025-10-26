@@ -25,7 +25,7 @@ public class SegmentSubregions : ObservableCollection<SegmentSubregion>
 	public void Save(XElement element)
 	{
 		foreach (var subregion in this)
-			element.Add(subregion.GetXElement());
+			element.Add(subregion.GetSerializingElement());
 	}
 	
 	protected override void OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs args)

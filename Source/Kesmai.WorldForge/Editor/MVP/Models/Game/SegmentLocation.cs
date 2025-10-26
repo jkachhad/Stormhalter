@@ -90,7 +90,7 @@ public class SegmentLocation : ObservableObject, ICloneable, ISegmentObject
 			target.Locations.Add(clonedLocation);
 	}
 	
-	public XElement GetXElement()
+	public XElement GetSerializingElement()
 	{
 		return new XElement("location", 
 			new XAttribute("name", _name), 
@@ -98,10 +98,15 @@ public class SegmentLocation : ObservableObject, ICloneable, ISegmentObject
 			new XAttribute("y", _y),
 			new XAttribute("region", _region));
 	}
+	
+	public XElement GetReferencingElement()
+	{
+		return GetSerializingElement();
+	}
 
 	public object Clone()
 	{
-		return new SegmentLocation(GetXElement())
+		return new SegmentLocation(GetSerializingElement())
 		{
 			Name = $"Copy of {_name}"
 		};

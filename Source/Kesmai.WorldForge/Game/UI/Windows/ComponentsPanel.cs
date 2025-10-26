@@ -268,7 +268,7 @@ public class ComponentsPanel : StackPanel
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        Clipboard.SetDataObject(SelectedItem.GetXElement().ToString(), false);
+                        Clipboard.SetDataObject(SelectedItem.GetSerializingElement().ToString(), false);
                     });
 
                     inputService.IsKeyboardHandled = true;

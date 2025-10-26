@@ -63,9 +63,9 @@ public class AltarComponent : TerrainComponent
 			yield return new ComponentRender(terrain, Color);
 	}
 		
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		element.Add(new XElement("altar", _altar));
 
@@ -74,7 +74,7 @@ public class AltarComponent : TerrainComponent
 		
 	public override TerrainComponent Clone()
 	{
-		return new AltarComponent(GetXElement());
+		return new AltarComponent(GetSerializingElement());
 	}
 
 	#endregion

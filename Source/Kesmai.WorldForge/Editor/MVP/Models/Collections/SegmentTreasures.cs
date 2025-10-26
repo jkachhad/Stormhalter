@@ -36,7 +36,7 @@ public class SegmentTreasures : ObservableCollection<SegmentTreasure>
 	{
 		foreach (var treasure in this)
 		{
-			var treasureElement = treasure.GetXElement();
+			var treasureElement = treasure.GetSerializingElement();
 
 			if (treasure is SegmentHoard)
 				treasureElement.Add(new XAttribute("hoard", true));

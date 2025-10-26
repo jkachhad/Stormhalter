@@ -111,7 +111,7 @@ public class SegmentSpawns : ObservableObject
 					"Location Spawner Save Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
 			}
 
-			element.Add(locationSpawner.GetXElement());
+			element.Add(locationSpawner.GetSerializingElement());
 		}
 
 		foreach (var regionSpawner in Region)
@@ -121,7 +121,7 @@ public class SegmentSpawns : ObservableObject
 				MessageBox.Show($"Region Spawner:{regionSpawner.Name} {messageForBlankEntities}",
 					"Region Spawner Save Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
 			}
-			element.Add(regionSpawner.GetXElement());
+			element.Add(regionSpawner.GetSerializingElement());
 		}
 	}
 }

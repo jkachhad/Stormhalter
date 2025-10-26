@@ -257,9 +257,9 @@ public class HiddenTeleporterComponent : TeleportComponent
 			_allowNPC = (bool)allowNPCsElement;
 	}
 		
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		/**/
 		var lightphasesElement = new XElement("lightphases");
@@ -373,6 +373,6 @@ public class HiddenTeleporterComponent : TeleportComponent
 		
 	public override TerrainComponent Clone()
 	{
-		return new HiddenTeleporterComponent(GetXElement());
+		return new HiddenTeleporterComponent(GetSerializingElement());
 	}
 }

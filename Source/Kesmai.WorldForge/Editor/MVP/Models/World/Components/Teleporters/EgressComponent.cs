@@ -75,9 +75,9 @@ public class EgressComponent : TerrainComponent
 		}
 	}
 		
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		element.Add(new XElement("egress", _egress));
 
@@ -89,7 +89,7 @@ public class EgressComponent : TerrainComponent
 		
 	public override TerrainComponent Clone()
 	{
-		return new EgressComponent(GetXElement());
+		return new EgressComponent(GetSerializingElement());
 	}
 
 	#endregion
