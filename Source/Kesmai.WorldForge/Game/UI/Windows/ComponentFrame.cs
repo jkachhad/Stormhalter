@@ -394,3 +394,51 @@ public class SegmentBrushComponentFrame : ComponentFrame
 		return $"SegmentBrush [{name}]";
 	}
 }
+
+public class SegmentTemplateComponentFrame : ComponentFrame
+{
+	private Button _presentButton;
+
+	protected override UIControl GetContent()
+	{
+		if (_presentButton is null)
+		{
+			_presentButton = new Button()
+			{
+				Content = new TextBlock()
+				{
+					Text = "Edit Template",
+					FontSize = 10,
+					HorizontalAlignment = HorizontalAlignment.Center,
+					Font = "Tahoma",
+					Foreground = Color.Yellow,
+				},
+				Style = "Client-Button",
+
+				Margin = new Vector4F(5),
+
+				HorizontalAlignment = HorizontalAlignment.Center,
+				VerticalAlignment = VerticalAlignment.Center,
+			};
+			_presentButton.Click += (o, args) =>
+			{
+				var applicationPresenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+
+				if (applicationPresenter != null && Provider is SegmentTemplate segmentTemplate)
+					segmentTemplate.Present(applicationPresenter);
+			};
+		}
+
+		return _presentButton;
+	}
+
+	protected override string GetHeader()
+	{
+		var name = Provider?.Name;
+
+		if (string.IsNullOrWhiteSpace(name))
+			name = "Unnamed";
+
+		return $"SegmentTemplate [{name}]";
+	}
+}
