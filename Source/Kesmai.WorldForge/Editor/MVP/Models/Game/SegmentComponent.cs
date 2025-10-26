@@ -172,6 +172,11 @@ public class SegmentComponent : ObservableObject, ISegmentObject, IComponentProv
 	{
 		var element = new XElement(_element);
 		
+		var nameAttribute = element.Attribute("name");
+		
+		if (nameAttribute != null)
+			nameAttribute.Remove();
+		
 		element.Add(new XAttribute("name", _name));
 		
 		return element;
