@@ -683,6 +683,10 @@ public class ApplicationPresenter : ObservableRecipient
 			"Entities.xml",
 			"Spawns.xml",
 			"Treasures.xml",
+			"Components.xml",
+			"Brushes.xml",
+			"Templates.xml",
+			@"Regions\*.xml"
 		};
 
 		if (additionalFiles.Any())
