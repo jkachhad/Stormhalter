@@ -31,7 +31,7 @@ public class GetActiveSegmentRequestMessage : RequestMessage<Segment>
 {
 }
 
-public class SegmentChangedMessage(Segment Segment) : ValueChangedMessage<Segment>(Segment);
+public class ActiveSegmentChanged(Segment Segment) : ValueChangedMessage<Segment>(Segment);
 public class ActiveContentChanged(ISegmentObject segmentObject) : ValueChangedMessage<ISegmentObject>(segmentObject);
 
 public class ApplicationPresenter : ObservableRecipient
@@ -60,7 +60,7 @@ public class ApplicationPresenter : ObservableRecipient
 		set
 		{
 			if (SetProperty(ref _segment, value, true))
-				WeakReferenceMessenger.Default.Send(new SegmentChangedMessage(Segment));
+				WeakReferenceMessenger.Default.Send(new ActiveSegmentChanged(Segment));
 		}
 	}
 
@@ -149,7 +149,7 @@ public class ApplicationPresenter : ObservableRecipient
 		Selection = new Selection();
 
 		// update active document when the segment changes occurs.
-		messenger.Register<SegmentChangedMessage>(this, (_, message) =>
+		messenger.Register<ActiveSegmentChanged>(this, (_, message) =>
 		{
 			if (message.Value is not null)
 				SetActiveDocument(Documents.FirstOrDefault());

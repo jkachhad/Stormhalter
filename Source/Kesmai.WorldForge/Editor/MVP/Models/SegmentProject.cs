@@ -11,7 +11,7 @@ public sealed class SegmentProject : IDisposable
 
     public SegmentProject()
     {
-        WeakReferenceMessenger.Default.Register<SegmentChangedMessage>(this, (_, message) =>
+        WeakReferenceMessenger.Default.Register<ActiveSegmentChanged>(this, (_, message) =>
         {
             var segment = message.Value;
 
