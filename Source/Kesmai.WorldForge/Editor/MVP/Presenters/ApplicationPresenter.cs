@@ -271,22 +271,6 @@ public class ApplicationPresenter : ObservableRecipient
 			Directory = targetDirectory.FullName
 		};
 		
-		var regionsFolder = new DirectoryInfo(Path.Combine(targetDirectory.FullName, "Regions"));
-
-		if (regionsFolder.Exists)
-		{
-			foreach (var file in regionsFolder.GetFiles("*.xml"))
-			{
-				var regionDocument = XDocument.Load(file.FullName);
-				var regionRoot = regionDocument.Root;
-
-				if (regionRoot is null)
-					throw new Exception($"Region file {file.Name} is not valid XML.");
-				
-				segment.Regions.Add(new SegmentRegion(regionRoot));
-			}
-		}
-
 		void process(string documentName, Action assignment, Action<XElement, Version> load)
 		{
 			var documentFile = new FileInfo(Path.Combine(targetDirectory.FullName, documentName));
@@ -334,6 +318,22 @@ public class ApplicationPresenter : ObservableRecipient
 		
 		process("Brushes.xml", () => segment.Brushes = new SegmentBrushes(),
 			(root, version) => segment.Brushes.Load(root, version));
+
+		var regionsFolder = new DirectoryInfo(Path.Combine(targetDirectory.FullName, "Regions"));
+
+		if (regionsFolder.Exists)
+		{
+			foreach (var file in regionsFolder.GetFiles("*.xml"))
+			{
+				var regionDocument = XDocument.Load(file.FullName);
+				var regionRoot = regionDocument.Root;
+
+				if (regionRoot is null)
+					throw new Exception($"Region file {file.Name} is not valid XML.");
+				
+				segment.Regions.Add(new SegmentRegion(regionRoot));
+			}
+		}
 
 		Segment = segment;
 		Segment.UpdateTiles();
