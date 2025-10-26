@@ -23,8 +23,8 @@ public interface ISegmentObject
 	void Copy(Segment segment);
 }
 
-public record SegmentSaveStartedMessage(Segment Segment);
-public record SegmentSaveFinishedMessage(Segment Segment);
+public record SegmentSerialize(Segment Segment);
+public record SegmentSerialized(Segment Segment);
 
 public class Segment : ObservableObject, ISegmentObject
 {

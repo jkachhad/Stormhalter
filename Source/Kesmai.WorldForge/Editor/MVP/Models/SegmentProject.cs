@@ -29,8 +29,8 @@ public sealed class SegmentProject : IDisposable
             }
         });
 
-        WeakReferenceMessenger.Default.Register<SegmentSaveStartedMessage>(this, (_, message) => Pause());
-        WeakReferenceMessenger.Default.Register<SegmentSaveFinishedMessage>(this, (_, message) => Unpause());
+        WeakReferenceMessenger.Default.Register<SegmentSerialize>(this, (_, message) => Pause());
+        WeakReferenceMessenger.Default.Register<SegmentSerialized>(this, (_, message) => Unpause());
     }
 
     public void Start(string path)
