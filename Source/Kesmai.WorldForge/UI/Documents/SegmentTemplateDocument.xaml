@@ -3,21 +3,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:documents="clr-namespace:Kesmai.WorldForge.UI.Documents"
+             xmlns:worldForge="clr-namespace:Kesmai.WorldForge"
+             
              mc:Ignorable="d"
-             d:DesignWidth="400"
-             d:DesignHeight="300">
-    <Grid Margin="10">
+             
+             d:DesignWidth="600" d:DesignHeight="360">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="320" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ListBox x:Name="_providersList"
-                 Grid.Row="0"
-                 Margin="0,0,0,10"
+        <ListBox x:Name="_providersList" Grid.Row="0"
                  SelectionMode="Single"
                  ItemsSource="{Binding ActiveContent.Providers, Source={StaticResource applicationPresenter}}">
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add Component" Click="OnAddComponentClick" />
+                    <MenuItem Header="Remove Component" Click="OnRemoveComponentClick" />
+                </ContextMenu>
+            </ListBox.ContextMenu>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
@@ -30,5 +39,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        
+        <worldForge:TemplatePresentationTarget Grid.Column="1" 
+            Template="{Binding ActiveContent, Source={StaticResource applicationPresenter}}" />
     </Grid>
 </UserControl>

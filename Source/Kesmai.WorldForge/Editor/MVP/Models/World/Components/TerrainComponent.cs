@@ -120,11 +120,7 @@ public abstract class TerrainComponent : ObservableObject, IComponentProvider
         return element;
     }
 
-    public XElement GetReferencingElement()
-    {
-        // typically does not occur.
-        return null;
-    }
+    public XElement GetReferencingElement() => GetSerializingElement();
 
     protected virtual string GetTypeAlias()
     {
