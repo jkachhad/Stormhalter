@@ -7,7 +7,6 @@ using DigitalRune.Game.UI.Rendering;
 using DigitalRune.Graphics;
 using DigitalRune.Mathematics.Algebra;
 using Kesmai.WorldForge.Editor;
-using Kesmai.WorldForge.Editor.MVP.Models.World.Components;
 using Kesmai.WorldForge.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;

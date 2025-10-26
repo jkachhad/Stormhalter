@@ -6,7 +6,6 @@ using System.Linq;
 using System.Xml.Linq;
 using CommonServiceLocator;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Kesmai.WorldForge.Editor.MVP.Models.World.Components;
 using Kesmai.WorldForge.Models;
 
 namespace Kesmai.WorldForge.Editor;
@@ -91,19 +90,9 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
     {
         if ( provider == null )
             return;
-
-        if ( provider is TilePrefabComponent prefabComponent )
-        {
-            foreach ( var subComponent in prefabComponent.Components )
-            {
-                Providers.Add ( subComponent );
-            }
-        }
-        else
-        {
-            provider.AddComponent(this);
-        }
-
+        
+        provider.AddComponent(this);
+        
         UpdateTerrain ( );
     }
 

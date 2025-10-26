@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 using CommonServiceLocator;
 
@@ -9,7 +8,6 @@ namespace Kesmai.WorldForge.Models;
 
 public class StaticComponent : TerrainComponent
 {
-
     private int _static;
 
     #region Properties and Events
@@ -27,9 +25,6 @@ public class StaticComponent : TerrainComponent
     #endregion
 
     #region Constructors and Cleanup
-
-    // To help with performance, we cache the preview image of the static component. This is mostly used to help with prefab but it can be utilized for any component.
-    public WriteableBitmap? CachedPreview { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="StaticComponent"/> class.
