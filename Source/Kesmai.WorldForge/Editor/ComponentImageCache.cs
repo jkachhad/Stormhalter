@@ -24,7 +24,7 @@ public sealed class ComponentImageCache
         return bmp;
     }
 
-    public WriteableBitmap Update(IComponentProvider component)
+    public WriteableBitmap Update(IComponentProvider component, bool forceUpdate = false)
     {
         // Build render list (layer + tint + order) from your component model.
         var renderList = new List<TerrainRender>();
@@ -47,8 +47,7 @@ public sealed class ComponentImageCache
         int maxHeight = layers.Max(l => l.OffsetY + l.Height);
 
         // Reuse existing WB if size matches; otherwise create new.
-        if (!_renders.TryGetValue(component, out var wb) ||
-            wb.PixelWidth != maxWidth || wb.PixelHeight != maxHeight || wb.Format != PixelFormats.Pbgra32)
+        if (!_renders.TryGetValue(component, out var wb) || wb.PixelWidth != maxWidth || wb.PixelHeight != maxHeight || wb.Format != PixelFormats.Pbgra32 || forceUpdate)
         {
             wb = new WriteableBitmap(maxWidth, maxHeight, 96, 96, PixelFormats.Pbgra32, null);
             _renders[component] = wb;

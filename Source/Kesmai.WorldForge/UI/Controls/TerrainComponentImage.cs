@@ -1,7 +1,8 @@
-using System;
 using System.Windows;
 using System.Windows.Controls;
+using CommunityToolkit.Mvvm.Messaging;
 using CommonServiceLocator;
+using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Models;
 
 namespace Kesmai.WorldForge.UI;
@@ -34,13 +35,37 @@ public class TerrainComponentImage : Image
     {
         HorizontalAlignment = HorizontalAlignment.Left;
         VerticalAlignment = VerticalAlignment.Top;
+
+        WeakReferenceMessenger.Default.Register<TerrainComponentImage, SegmentTemplateChanged>(this, static (recipient, message) =>
+        {
+            recipient.OnSegmentTemplateChanged(message.Value);
+        });
+    }
+
+    private void OnSegmentTemplateChanged(SegmentTemplate template)
+    {
+        if (ReferenceEquals(Provider, template))
+            UpdateComponent(template, forceRefresh: true);
     }
 
     internal void UpdateComponent(IComponentProvider provider)
     {
+        UpdateComponent(provider, forceRefresh: false);
+    }
+
+    private void UpdateComponent(IComponentProvider provider, bool forceRefresh)
+    {
+        if (provider is null)
+            return;
+
         var componentImageCache = ServiceLocator.Current.GetInstance<ComponentImageCache>();
 
-        if (componentImageCache != null)
+        if (componentImageCache is null)
+            return;
+
+        if (forceRefresh)
+            Source = componentImageCache.Update(provider, true);
+        else
             Source = componentImageCache.Get(provider);
     }
 }
