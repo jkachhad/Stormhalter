@@ -60,8 +60,7 @@ public partial class SegmentTreeControl : UserControl
         
         WeakReferenceMessenger.Default.Register<SegmentComponentsChanged>(this, (r, m) => UpdateComponents());
         WeakReferenceMessenger.Default.Register<SegmentComponentCreated>(this, (r, m) => UpdateComponents());
-        WeakReferenceMessenger.Default.Register<SegmentComponentDeleted>(this, (r, m) => UpdateComponents());
-        
+
         WeakReferenceMessenger.Default.Register<SegmentTreasuresChanged>(this, (r, m) => UpdateTreasures());
         WeakReferenceMessenger.Default.Register<SegmentTreasureChanged>(this, (r, m) => UpdateTreasures());
         
@@ -752,13 +751,13 @@ public partial class SegmentTreeControl : UserControl
         var rootPath = Segment.Directory;
         
         UpdateSegment();
-        UpdateBrushes();
         UpdateRegions();
         UpdateLocations();
-        UpdateComponents();
-        UpdateSpawns();
         UpdateEntities();
         UpdateTreasures();
+        UpdateSpawns();
+        UpdateComponents();
+        UpdateBrushes();
         
         _tree.Items.Add(_segmentNode);
         _tree.Items.Add(_brushesNode);
