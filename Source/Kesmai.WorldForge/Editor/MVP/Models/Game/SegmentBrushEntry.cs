@@ -50,9 +50,7 @@ public class SegmentBrushEntry : ObservableObject
 		if (componentPalette is null)
 			throw new ArgumentNullException(nameof(componentPalette));
 		
-		var nameAttribute = componentElement.Attribute("name");
-
-		if (nameAttribute != null && componentPalette.TryGetComponent((string)nameAttribute, out var namedProvider))
+		if (componentPalette.TryGetComponent(componentElement, out var namedProvider))
 			_component = namedProvider;
 	}
 

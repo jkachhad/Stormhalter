@@ -401,17 +401,45 @@ public class ComponentPalette : ObservableRecipient
 		}
 	}
 	
-	public bool TryGetComponent(string name, out IComponentProvider component)
+	public bool TryGetComponent(XElement element, out IComponentProvider component)
 	{
 		component = null;
 		
-		foreach (var category in _categories)
+		var nameAttribute = element.Attribute("name");
+
+		if (nameAttribute is not null)
 		{
-			if (recursive(name, category, out component))
-				return true;
+			foreach (var category in _categories)
+			{
+				if (recursive(nameAttribute.Value, category, out component))
+					return true;
+			}
 		}
 
-		return false;
+		// the component was not found. determine if it's a terrain component.
+		if (Equals(element.Name.LocalName, "component"))
+			component = construct(element);
+
+		return (component is not null);
+
+		TerrainComponent construct(XElement terrainElement)
+		{
+			var type = typeof(StaticComponent);
+			var typeAttribute = terrainElement.Attribute("type");
+
+			if (typeAttribute != null)
+				type = Type.GetType($"Kesmai.WorldForge.Models.{typeAttribute.Value}");
+
+			if (type is null)
+				return null;
+
+			var ctor = type.GetConstructor([typeof(XElement)]);
+			
+			if (ctor is null)
+				return null;
+			
+			return (ctor.Invoke([element]) as TerrainComponent);
+		}
 		
 		bool recursive(string sourceName, ComponentsCategory search, out IComponentProvider targetComponent)
 		{

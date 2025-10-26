@@ -51,12 +51,7 @@ public class SegmentTemplate : ObservableObject, ISegmentObject, IComponentProvi
         
         foreach (var providerElement in element.Elements())
         {
-            var providerNameAttribute = providerElement.Attribute("name");
-            
-            if (providerNameAttribute is null)
-                continue;
-
-            if (componentPalette.TryGetComponent(providerNameAttribute.Value, out var provider))
+            if (componentPalette.TryGetComponent(providerElement, out var provider))
                 Providers.Add(provider);
         }
     }
@@ -99,7 +94,15 @@ public class SegmentTemplate : ObservableObject, ISegmentObject, IComponentProvi
         var element = new XElement("template", new XAttribute("name", _name));
 
         foreach (var provider in Providers)
+        {
+            var providerElement = provider.GetReferencingElement();
+            var nameAttribute = providerElement.Attribute("name");
+            
+            if (nameAttribute is null)
+                providerElement.Add(new XAttribute("name", provider.Name));
+            
             element.Add(provider.GetReferencingElement());
+        }
 
         return element;
     }
