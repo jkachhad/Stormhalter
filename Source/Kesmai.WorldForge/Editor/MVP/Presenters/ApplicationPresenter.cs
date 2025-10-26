@@ -299,10 +299,20 @@ public class ApplicationPresenter : ObservableRecipient
 				if (documentRoot is null)
 					throw new Exception($"Location file {documentFile.Name} is not valid XML.");
 
-				assignment();
+				if (assignment != null)
+					assignment();
+				
 				load(documentRoot, Core.Version);
 			}
 		}
+		
+		process("Segments.xml", null, (root, version) =>
+		{
+			var nameAttribute = root.Attribute("name");
+
+			if (nameAttribute is not null)
+				segment.Name = nameAttribute.Value;
+		});
 		
 		process("Locations.xml", () => segment.Locations = new SegmentLocations(), 
 			(root, version) => segment.Locations.Load(root, version));
@@ -373,6 +383,11 @@ public class ApplicationPresenter : ObservableRecipient
 				saveAction(element);
 				element.Save(Path.Combine(targetPath, fileName));
 			}
+
+			write((element) => element.Add(
+					new XAttribute("name", _segment.Name),
+					new XAttribute("version", Core.Version.ToString())),
+				"segment", "Segment.xml");
 
 			write(_segment.Locations.Save, "locations", "Locations.xml");
 			write(_segment.Subregions.Save, "subregions", "Subregions.xml");
@@ -590,6 +605,10 @@ public class ApplicationPresenter : ObservableRecipient
 			rootElement.Save(Path.Combine(segmentDirectory.FullName, fileName));
 		}
 
+		write(new XElement("segment", 
+			new XAttribute("name", segmentName), 
+			new XAttribute("version", segmentVersion.ToString())), "Segment.xml");
+		
 		write(segmentRoot.Element("locations"), "Locations.xml");
 		write(segmentRoot.Element("subregions"), "Subregions.xml");
 		write(segmentRoot.Element("entities"), "Entities.xml");
@@ -669,6 +688,5 @@ public class ApplicationPresenter : ObservableRecipient
 			);
 		}
 
-		new XDocument(projectRoot).Save(Path.Combine(segmentDirectory.FullName, $"{segmentName}.csproj"));
     }
 }
