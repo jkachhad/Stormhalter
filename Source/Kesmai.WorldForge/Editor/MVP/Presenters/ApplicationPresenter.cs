@@ -602,6 +602,9 @@ public class ApplicationPresenter : ObservableRecipient
 		// other data
 		void write(XElement rootElement, string fileName)
 		{
+			if (rootElement is null)
+				return;
+			
 			rootElement.Save(Path.Combine(segmentDirectory.FullName, fileName));
 		}
 
@@ -614,7 +617,6 @@ public class ApplicationPresenter : ObservableRecipient
 		write(segmentRoot.Element("entities"), "Entities.xml");
 		write(segmentRoot.Element("spawns"), "Spawns.xml");
 		write(segmentRoot.Element("treasures"), "Treasures.xml");
-		write(segmentRoot.Element("brushes"), "Brushes.xml");
 		
 		void cleanup(string documentName, Func<XElement, IEnumerable<XElement>> scriptSelector)
 		{
@@ -675,7 +677,6 @@ public class ApplicationPresenter : ObservableRecipient
 			"Entities.xml",
 			"Spawns.xml",
 			"Treasures.xml",
-			"Brushes.xml"
 		};
 
 		if (additionalFiles.Any())
