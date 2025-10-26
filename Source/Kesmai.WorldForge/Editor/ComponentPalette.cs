@@ -24,6 +24,7 @@ public class ComponentPalette : ObservableRecipient
 	private ComponentsCategory _editorCategory;
 	private ComponentsCategory _segmentCategory;
 	private ComponentsCategory _segmentBrushCategory;
+	private ComponentsCategory _segmentTemplateCategory;
 	
 	public IComponentProvider SelectedProvider
 	{
@@ -106,6 +107,14 @@ public class ComponentPalette : ObservableRecipient
 
 		_segmentCategory.Subcategories.Add(_segmentBrushCategory);
 		
+		_segmentTemplateCategory = new ComponentsCategory()
+		{
+			Name = "Templates",
+			IsRoot = false
+		};
+
+		_segmentCategory.Subcategories.Add(_segmentTemplateCategory);
+		
 		// setup message registration for adding segment components.
 		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentComponentCreated>(this, (r, m) =>
 		{
@@ -146,6 +155,29 @@ public class ComponentPalette : ObservableRecipient
 		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentBrushesChanged>(this, (r, m) =>
 		{
 			refreshSegmentBrushes(m.Value);
+		});
+		
+		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentTemplateAdded>(this, (r, m) =>
+		{
+			addSegmentTemplate(m.Value);
+		});
+		
+		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentTemplateRemoved>(this, (r, m) =>
+		{
+			deleteSegmentTemplate(m.Value);
+		});
+		
+		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentTemplateChanged>(this, (r, m) =>
+		{
+			var template = m.Value;
+			
+			deleteSegmentTemplate(template);
+			addSegmentTemplate(template);
+		});
+
+		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentTemplatesChanged>(this, (r, m) =>
+		{
+			refreshSegmentTemplates(m.Value);
 		});
 		
 		void addSegmentComponent(SegmentComponent component)
@@ -200,6 +232,37 @@ public class ComponentPalette : ObservableRecipient
 
 			foreach (var brush in brushes)
 				addSegmentBrush(brush);
+		}
+
+		void addSegmentTemplate(SegmentTemplate template)
+		{
+			if (template is null || _segmentTemplateCategory is null)
+				return;
+
+			if (!_segmentTemplateCategory.Components.Contains(template))
+				_segmentTemplateCategory.Components.Add(template);
+		}
+
+		void deleteSegmentTemplate(SegmentTemplate template)
+		{
+			if (template is null || _segmentTemplateCategory is null)
+				return;
+
+			_segmentTemplateCategory.Components.Remove(template);
+		}
+
+		void refreshSegmentTemplates(SegmentTemplates templates)
+		{
+			if (_segmentTemplateCategory is null)
+				return;
+
+			_segmentTemplateCategory.Components.Clear();
+
+			if (templates is null)
+				return;
+
+			foreach (var template in templates)
+				addSegmentTemplate(template);
 		}
 	}
 
