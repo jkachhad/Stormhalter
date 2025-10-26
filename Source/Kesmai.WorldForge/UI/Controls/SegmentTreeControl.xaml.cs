@@ -39,6 +39,71 @@ public partial class SegmentTreeControl : UserControl
         get => (Segment?)GetValue(SegmentProperty);
         set => SetValue(SegmentProperty, value);
     }
+    
+    public void UpdateTemplates()
+    {
+        if (Segment is null)
+            return;
+
+        var collection = Segment.Templates;
+        
+        if (_templatesNode is null)
+        {
+            _templatesNode = new TreeViewItem
+            {
+                Tag = $"category:Templates",
+                Header = CreateHeader("Templates", "Gear.png")
+            };
+
+            _templatesNode.ContextMenu = new ContextMenu();
+            _templatesNode.ContextMenu.AddItem("Add Template", "Add.png", (s, e) =>
+            {
+                var template = addTemplate(collection, "Template");
+
+                if (template != null)
+                    template.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+            });
+        }
+
+        var expanded = new HashSet<string>();
+
+        foreach (var item in _templatesNode.Items.OfType<TreeViewItem>())
+            SaveExpansionState(item, expanded);
+
+        _templatesNode.Items.Clear();
+
+        foreach (var template in collection)
+            _templatesNode.Items.Add(createTemplateNode(template, collection));
+
+        foreach (var item in _templatesNode.Items.OfType<TreeViewItem>())
+            RestoreExpansionState(item, expanded);
+
+        TreeViewItem createTemplateNode(SegmentTemplate template, SegmentTemplates source)
+        {
+            var item = new SegmentTreeViewItem(template, Brushes.SteelBlue, true)
+            {
+                Tag = template
+            };
+
+            item.ContextMenu = new ContextMenu();
+            item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(template, item));
+            item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(template, item, source));
+
+            return item;
+        }
+
+        T addTemplate<T>(IList<T> source, string typeName) where T : ISegmentObject, new()
+        {
+            var obj = new T
+            {
+                Name = $"{typeName} {_nextId++}"
+            };
+
+            source.Add(obj);
+
+            return obj;
+        }
+    }
 
     private ISegmentObject _copyObject;
     
@@ -69,6 +134,9 @@ public partial class SegmentTreeControl : UserControl
 
         WeakReferenceMessenger.Default.Register<SegmentBrushesChanged>(this, (r, m) => UpdateBrushes());
         WeakReferenceMessenger.Default.Register<SegmentBrushChanged>(this, (r, m) => UpdateBrushes());
+        
+        WeakReferenceMessenger.Default.Register<SegmentTemplatesChanged>(this, (r, m) => UpdateTemplates());
+        WeakReferenceMessenger.Default.Register<SegmentTemplateChanged>(this, (r, m) => UpdateTemplates());
         
         _tree.SelectedItemChanged += OnItemSelected;
         _tree.KeyDown += OnKeyDown;
@@ -126,6 +194,7 @@ public partial class SegmentTreeControl : UserControl
 
     private TreeViewItem _segmentNode;
     private TreeViewItem _brushesNode;
+    private TreeViewItem _templatesNode;
     private TreeViewItem _regionsNode;
     private TreeViewItem _locationsNode;
     private TreeViewItem _componentsNode;
@@ -758,15 +827,19 @@ public partial class SegmentTreeControl : UserControl
         UpdateSpawns();
         UpdateComponents();
         UpdateBrushes();
+        UpdateTemplates();
         
         _tree.Items.Add(_segmentNode);
-        _tree.Items.Add(_brushesNode);
+
         _tree.Items.Add(_regionsNode);
         _tree.Items.Add(_locationsNode);
-        _tree.Items.Add(_componentsNode);
-        _tree.Items.Add(_spawnersNode);
         _tree.Items.Add(_entitiesNode);
         _tree.Items.Add(_treasureNode);
+        _tree.Items.Add(_spawnersNode);
+        
+        _tree.Items.Add(_componentsNode);
+        _tree.Items.Add(_brushesNode);
+        _tree.Items.Add(_templatesNode);
 
         // Add Source directory last
         if (!string.IsNullOrEmpty(rootPath) && Directory.Exists(rootPath))
