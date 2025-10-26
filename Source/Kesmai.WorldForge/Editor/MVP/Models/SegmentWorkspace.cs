@@ -11,18 +11,27 @@ namespace Kesmai.WorldForge.Editor;
 
 public class SegmentWorkspace
 {
+	private Segment _activeSegment;
+	
 	public CustomRoslynHost Host { get; set; }
 	
 	public SegmentWorkspace()
 	{
 		WeakReferenceMessenger.Default.Register<ActiveSegmentChanged>(this, (_, message) =>
 		{
-			var segment = message.Value;
+			_activeSegment = message.Value;
 			
 			Reset();
+			Start();
+		});
 
-			if (segment != null)
-				Start(segment);
+		WeakReferenceMessenger.Default.Register<SegmentChanged>(this, (_, message) =>
+		{
+			if (_activeSegment is null || !ReferenceEquals(_activeSegment, message.segment))
+				return;
+
+			Reset();
+			Start();
 		});
 	}
 
@@ -104,5 +113,13 @@ public class SegmentWorkspace
 			return;
 
 		Host = null;
+	}
+
+	private void Start()
+	{
+		if (_activeSegment is null)
+			return;
+
+		Start(_activeSegment);
 	}
 }
