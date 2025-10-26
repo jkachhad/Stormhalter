@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:worldForge="clr-namespace:Kesmai.WorldForge"
+             xmlns:ui="clr-namespace:Kesmai.WorldForge.UI"
              
              mc:Ignorable="d"
              
@@ -29,13 +30,30 @@
             </ListBox.ContextMenu>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="{Binding Name}"
-                                   FontWeight="Bold" />
-                        <TextBlock Text="{Binding Converter={StaticResource objectToTypeConverter}}"
-                                   FontSize="10"
-                                   Foreground="Gray" />
-                    </StackPanel>
+                    <Grid Margin="0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Border Width="104"
+                                Height="104"
+                                BorderBrush="DarkGray"
+                                BorderThickness="1"
+                                Margin="0,0,8,0">
+                            <ui:TerrainComponentImage Provider="{Binding}"
+                                                      Stretch="Uniform" />
+                        </Border>
+
+                        <StackPanel Grid.Column="1"
+                                    VerticalAlignment="Center">
+                            <TextBlock Text="{Binding Name}"
+                                       FontWeight="Bold" />
+                            <TextBlock Text="{Binding Converter={StaticResource objectToTypeConverter}}"
+                                       FontSize="10"
+                                       Foreground="Gray" />
+                        </StackPanel>
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
