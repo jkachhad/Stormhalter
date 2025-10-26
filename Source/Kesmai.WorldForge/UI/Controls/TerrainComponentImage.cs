@@ -38,11 +38,16 @@ public class TerrainComponentImage : Image
 
         WeakReferenceMessenger.Default.Register<TerrainComponentImage, SegmentTemplateChanged>(this, static (recipient, message) =>
         {
-            recipient.OnSegmentTemplateChanged(message.Value);
+            recipient.OnProviderChanged(message.Value);
+        });
+        
+        WeakReferenceMessenger.Default.Register<TerrainComponentImage, SegmentBrushChanged>(this, static (recipient, message) =>
+        {
+            recipient.OnProviderChanged(message.Value);
         });
     }
 
-    private void OnSegmentTemplateChanged(SegmentTemplate template)
+    private void OnProviderChanged(IComponentProvider template)
     {
         if (ReferenceEquals(Provider, template))
             UpdateComponent(template, forceRefresh: true);

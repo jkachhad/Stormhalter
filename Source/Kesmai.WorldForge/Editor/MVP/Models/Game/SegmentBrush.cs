@@ -17,7 +17,7 @@ public class SegmentBrushChanged(SegmentBrush brush) : ValueChangedMessage<Segme
 public class SegmentBrush : ObservableObject, ISegmentObject, IComponentProvider
 {
 	private string _name;
-	private readonly ObservableCollection<SegmentBrushEntry> _entries = new ();
+	private readonly ObservableCollection<SegmentBrushEntry> _entries;
 
 	public string Name
 	{
@@ -35,18 +35,16 @@ public class SegmentBrush : ObservableObject, ISegmentObject, IComponentProvider
 
 	public SegmentBrush()
 	{
-		_entries ??= new ObservableCollection<SegmentBrushEntry>();
+		_entries = new ObservableCollection<SegmentBrushEntry>();
 		_entries.CollectionChanged += OnEntriesChanged;
 	}
 
-	public SegmentBrush(XElement element)
+	public SegmentBrush(XElement element) : this()
 	{
 		_name = (string)element.Attribute("name");
 
 		foreach (var entryElement in element.Elements())
 			_entries.Add(new SegmentBrushEntry(this, entryElement));
-		
-		_entries.CollectionChanged += OnEntriesChanged;
 	}
 	
 	public void AddComponent(SegmentTile segmentTile)
@@ -76,6 +74,8 @@ public class SegmentBrush : ObservableObject, ISegmentObject, IComponentProvider
 	private void OnEntriesChanged(object sender, NotifyCollectionChangedEventArgs e)
 	{
 		UpdateChances();
+		
+		WeakReferenceMessenger.Default.Send(new SegmentBrushChanged(this));
 	}
 	
 	public void UpdateChances()
