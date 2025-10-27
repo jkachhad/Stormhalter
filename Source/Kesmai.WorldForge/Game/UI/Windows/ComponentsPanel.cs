@@ -35,7 +35,7 @@ public class ComponentsPanel : StackPanel
         set => SetValue ( SelectedItemPropertyId, value );
     }
 
-    public ComponentsPanel(SegmentRegion region, SegmentTile targetTile, WorldGraphicsScreen screen)
+    public ComponentsPanel(SegmentTile targetTile, WorldGraphicsScreen screen)
     {
         _targetTile = targetTile;
         _screen = screen;

@@ -78,7 +78,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			if (segmentTile is null)
 				return;
 			
-			_componentsHost.Children.Add(_componentsPanel = new ComponentsPanel(region, segmentTile, this));
+			_componentsHost.Children.Add(_componentsPanel = new ComponentsPanel(segmentTile, this));
 
 			if (_finalizePanel != null)
 				_finalizePanel.IsVisible = true;
