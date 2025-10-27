@@ -34,20 +34,24 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
 
     public SegmentTile ( XElement element )
     {
-        _x = (int) element.Attribute ( "x" );
-        _y = (int) element.Attribute ( "y" );
+        _x = (int)element.Attribute("x");
+        _y = (int)element.Attribute("y");
 
-        Providers = new ObservableCollection<IComponentProvider> ( );
+        Providers = new ObservableCollection<IComponentProvider>();
+        
+        var componentPalette = ServiceLocator.Current.GetInstance<ComponentPalette>();
+        
+        if (componentPalette is null)
+            throw new InvalidOperationException("ComponentPalette service is not available.");
 
-        foreach ( var componentElement in element.Elements ( "component" ) )
+        foreach (var componentElement in element.Elements("component"))
         {
-            var component = InstantiateComponent ( componentElement );
-
-            if ( component != null )
-                Providers.Add ( component );
+            // TODO: Should we handle missing components differently?
+            if (componentPalette.TryGetComponent(componentElement, out var component))
+                Providers.Add(component);
         }
 
-        UpdateTerrain ( );
+        UpdateTerrain();
     }
 
     /// <summary>
@@ -134,23 +138,6 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
         Providers.Insert ( index, overwrite );
 
         UpdateTerrain ( );
-    }
-
-    private TerrainComponent InstantiateComponent ( XElement element )
-    {
-        var type = typeof ( StaticComponent );
-        var typeAttribute = element.Attribute ( "type" );
-
-        if ( typeAttribute != null )
-            type = Type.GetType ( String.Format ( "Kesmai.WorldForge.Models.{0}", (string) typeAttribute ) );
-
-        if ( type == null )
-            throw new ArgumentNullException ( "Unable to find the specified component type" );
-
-        var ctor = type.GetConstructor ( new Type[] { typeof ( XElement ) } );
-        var component = ctor.Invoke ( new object[] { element } ) as TerrainComponent;
-
-        return component;
     }
 
     public IEnumerable<T> GetComponents<T> ( )
