@@ -165,6 +165,7 @@
                 <LayoutPanel Orientation="Horizontal">
                     
                     <LayoutAnchorablePaneGroup DockWidth="300" Orientation="Vertical">
+                        
                         <LayoutAnchorablePane DockHeight="*">
                             <LayoutAnchorable Title="Project" CanDockAsTabbedDocument="False">
                                 <ui:SegmentTreeControl Segment="{Binding Segment}" />
@@ -174,7 +175,6 @@
                         <LayoutAnchorablePane DockHeight="*">
                             <LayoutAnchorable Title="Properties" CanDockAsTabbedDocument="False">
                                 <syncfusion:PropertyGrid SelectedObject="{Binding ActiveContent, Mode=OneWay}"
-                                                         Width="300"
                                                          DisableAnimationOnObjectSelection="True">
                                 </syncfusion:PropertyGrid>
                             </LayoutAnchorable>
