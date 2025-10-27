@@ -9,19 +9,17 @@ using DigitalRune.Game.UI.Controls;
 using DigitalRune.Game.UI.Rendering;
 using DigitalRune.Graphics;
 using DigitalRune.Mathematics.Algebra;
-using DigitalRune.ServiceLocation;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Models;
 using CommunityToolkit.Mvvm.Messaging;
 using DigitalRune.Game.Interop;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace Kesmai.WorldForge;
 
-public class WorldGraphicsScreen : InteropGraphicsScreen
+public class WorldGraphicsScreen : UIGraphicsScreen
 {
 	protected static Color _selectionFill = Color.FromNonPremultiplied(255, 255, 0, 75);
 	protected static Color _selectionBorder = Color.FromNonPremultiplied(255, 255, 0, 100);
@@ -31,8 +29,6 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 	protected Selection _selection;
 
 	protected WorldPresentationTarget _worldPresentationTarget;
-	protected UIScreen _uiScreen;
-	protected Menu _contextMenu;
 	protected MSDFontRenderer _font;
 	private List<MenuItem> _pointContextItems = new List<MenuItem>();
 	private List<MenuItem> _selectionContextItems = new List<MenuItem>();
@@ -115,8 +111,6 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 	public int Width => (int)_worldPresentationTarget.ActualWidth;
 	public int Height => (int)_worldPresentationTarget.ActualHeight;
 
-	public UIScreen UI => _uiScreen;
-
 	public virtual bool DisplayComments => true;
 
 	public WorldGraphicsScreen(IGraphicsService graphicsService, WorldPresentationTarget worldPresentationTarget) : base(graphicsService, worldPresentationTarget)
@@ -129,41 +123,21 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 		
 		_selection = _presenter.Selection;
 		_renderTarget = new RenderTarget2D(GraphicsService.GraphicsDevice, 640, 480);
-		
-		_contextMenu = new Menu();
 	}
 
-	public void Initialize()
+	protected override void OnInitialize()
 	{
-		var services = ServiceLocator.Current;
-		var contentManager = services.GetInstance<ContentManager>();
+		base.OnInitialize();
 		
-		var theme = contentManager.Load<Theme>(@"UI\Theme");
-		var renderer = new UIRenderer(GraphicsService.GraphicsDevice, theme);
+		_font = UIRenderer.GetFontRenderer("Tahoma", 10);
 
-		var uiManager = _worldPresentationTarget.UIManager;
-
-		uiManager.Screens.Add(_uiScreen = new UIScreen($"{_worldPresentationTarget.GetHashCode()} GUI Screen", renderer)
-		{
-			Background = Color.Transparent,
-			ZIndex = int.MaxValue,
-		});
-		
-		_font = renderer.GetFontRenderer("Tahoma", 10);
-		
 		var commentIcon = Application.GetResourceStream(
 			new Uri(@"pack://application:,,,/Kesmai.WorldForge;component/Resources/Comment-White.png"));
 
 		if (commentIcon != null)
 			_commentSprite = Texture2D.FromStream(GraphicsService.GraphicsDevice, commentIcon.Stream);
-		
-		OnInitialize();
 	}
 	
-	protected virtual void OnInitialize()
-	{
-	}
-
 	protected virtual IEnumerable<MenuItem> GetContextMenuItems(int mx, int my)
 	{
 		yield break;
@@ -356,8 +330,7 @@ public class WorldGraphicsScreen : InteropGraphicsScreen
 			}
 		}
 
-		if (_uiScreen != null)
-			_uiScreen.Draw(context.DeltaTime);
+		RenderUI(context);
 				
 		_invalidateRender = false;
 			
