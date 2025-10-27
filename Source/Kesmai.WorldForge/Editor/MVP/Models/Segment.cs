@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -59,6 +60,7 @@ public class Segment : ObservableObject, ISegmentObject
 		}
 	}
 
+	[ReadOnly(true)]
 	public string Directory
 	{
 		get => _directory;
@@ -69,15 +71,15 @@ public class Segment : ObservableObject, ISegmentObject
 		}
 	}
 
-	public SegmentBrushes Brushes { get; set; } = new SegmentBrushes();
-	public SegmentRegions Regions { get; set; } = new SegmentRegions();
-	public SegmentLocations Locations { get; set; } = new SegmentLocations();
-	public SegmentSubregions Subregions { get; set; } = new SegmentSubregions();
-	public SegmentEntities Entities { get; set; } = new SegmentEntities();
-	public SegmentSpawns Spawns { get; set; } = new SegmentSpawns();
-	public SegmentTreasures Treasures { get; set; } = new SegmentTreasures();
-	public SegmentComponents Components { get; set; } = new SegmentComponents();
-	public SegmentTemplates Templates { get; set; } = new SegmentTemplates();
+	[Browsable(false)] public SegmentBrushes Brushes { get; set; } = new SegmentBrushes();
+	[Browsable(false)] public SegmentRegions Regions { get; set; } = new SegmentRegions();
+	[Browsable(false)] public SegmentLocations Locations { get; set; } = new SegmentLocations();
+	[Browsable(false)] public SegmentSubregions Subregions { get; set; } = new SegmentSubregions();
+	[Browsable(false)] public SegmentEntities Entities { get; set; } = new SegmentEntities();
+	[Browsable(false)] public SegmentSpawns Spawns { get; set; } = new SegmentSpawns();
+	[Browsable(false)] public SegmentTreasures Treasures { get; set; } = new SegmentTreasures();
+	[Browsable(false)] public SegmentComponents Components { get; set; } = new SegmentComponents();
+	[Browsable(false)] public SegmentTemplates Templates { get; set; } = new SegmentTemplates();
 
 	public Segment()
 	{
