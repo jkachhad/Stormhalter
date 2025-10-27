@@ -1,5 +1,4 @@
 using System;
-using DigitalRune.Game.Interop;
 using DigitalRune.Graphics;
 using DigitalRune.Mathematics.Algebra;
 using Microsoft.Xna.Framework;
@@ -7,17 +6,35 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Kesmai.WorldForge;
 
-public class TemplateGraphicsScreen : InteropGraphicsScreen
+public class TemplateGraphicsScreen : UIGraphicsScreen
 {
-	private readonly TemplatePresentationTarget _presentationTarget;
+	private TemplatePresentationTarget _presentationTarget;
+	
+	private bool _invalidated;
 
 	public TemplateGraphicsScreen(IGraphicsService graphicsService, TemplatePresentationTarget presentationTarget) : base(graphicsService, presentationTarget)
 	{
 		_presentationTarget = presentationTarget ?? throw new ArgumentNullException(nameof(presentationTarget));
 	}
 
-	public void Initialize()
+	public void Invalidate()
 	{
+		_invalidated = true;
+	}
+
+	protected override void OnInitialize()
+	{
+		base.OnInitialize();
+	}
+
+	protected override void OnUpdate(TimeSpan deltaTime)
+	{
+		if (_invalidated)
+		{
+			_invalidated = false;
+		}
+		
+		base.OnUpdate(deltaTime);
 	}
 
 	protected override void OnRender(RenderContext context)

@@ -14,10 +14,16 @@ public partial class SegmentTemplateDocument : UserControl
     public SegmentTemplateDocument()
     {
         InitializeComponent();
-
-        WeakReferenceMessenger.Default.Register<ActiveContentChanged>(this, (_, message) =>
+        
+        var messenger = WeakReferenceMessenger.Default;
+		
+        messenger.Register<ActiveContentChanged>(this, (_, message) =>
         {
-            _segmentTemplate = message.Value as SegmentTemplate;
+            if (message.Value is not SegmentTemplate segmentTemplate)
+                return;
+            
+            _presenter.Template = _segmentTemplate = segmentTemplate;
+            _presenter.Focus();
         });
     }
 

@@ -58,7 +58,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
         
-        <worldForge:TemplatePresentationTarget Grid.Column="1" 
+        <worldForge:TemplatePresentationTarget Grid.Column="1" x:Name="_presenter"
             Template="{Binding ActiveContent, Source={StaticResource applicationPresenter}}" />
     </Grid>
 </UserControl>

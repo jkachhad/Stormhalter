@@ -27,6 +27,16 @@ public class TemplatePresentationTarget : InteropPresentationTarget
 		_graphicsScreen.Initialize();
 	}
 
+	protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+	{
+		base.OnPropertyChanged(e);
+
+		if (e.Property != TemplateProperty)
+			return;
+		
+		_graphicsScreen.Invalidate();
+	}
+
 	protected override IEnumerable<InteropGraphicsScreen> GetGraphicsScreens()
 	{
 		yield return _graphicsScreen;
