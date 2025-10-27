@@ -59,10 +59,10 @@ public class SegmentSpawns : ObservableObject
 						
 			if (type != null)
 			{
-				switch ((string)type)
+				switch (type.Value)
 				{
-					case "LocationSpawner": spawner = new LocationSegmentSpawner(spawnElement); break; 
-					case "RegionSpawner": spawner = new RegionSegmentSpawner(spawnElement); break;
+					case nameof(LocationSegmentSpawner) or "LocationSpawner": spawner = new LocationSegmentSpawner(spawnElement); break; 
+					case nameof(RegionSegmentSpawner) or "RegionSpawner": spawner = new RegionSegmentSpawner(spawnElement); break;
 				}
 			}
 
