@@ -36,8 +36,12 @@ public class StaticComponent : TerrainComponent
 
     public StaticComponent( XElement element ) : base( element )
     {
-        _static = (int?)element.Element( "static" )
-            ?? throw new ArgumentException( "Missing <static> element", nameof( element ) );
+        var staticElement = element.Element( "static" );
+        
+        if ( staticElement == null )
+            throw new ArgumentException( "Missing <static> element", nameof( element ) );
+        
+        _static = int.Parse( staticElement.Value );
     }
 
     #endregion
