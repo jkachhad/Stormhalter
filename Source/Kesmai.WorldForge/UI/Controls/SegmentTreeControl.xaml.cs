@@ -417,6 +417,9 @@ public partial class SegmentTreeControl : UserControl
             {
                 Tag = location
             };
+            
+
+            item.EditableTextBlock.IsEditable = !isReserved;
 
             if (!isReserved)
             {
