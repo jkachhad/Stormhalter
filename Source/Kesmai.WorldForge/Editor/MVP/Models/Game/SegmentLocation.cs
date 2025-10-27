@@ -54,7 +54,7 @@ public class SegmentLocation : ObservableObject, ICloneable, ISegmentObject
 		set => SetProperty(ref _region, value);
 	}
 	
-	[ReadOnly(true)]
+	[Browsable(false)]
 	public bool IsReserved { get; set; }
 
 	public SegmentLocation()

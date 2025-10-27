@@ -69,6 +69,7 @@ public class SegmentEntity : ObservableObject, ICloneable, ISegmentObject
 		}
 	}
 	
+	[Browsable(false)]
 	public ObservableCollection<Script> Scripts
 	{
 		get => _scripts;

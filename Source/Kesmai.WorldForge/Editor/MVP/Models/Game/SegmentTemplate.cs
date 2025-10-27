@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Xml.Linq;
 using CommonServiceLocator;
@@ -30,6 +31,7 @@ public class SegmentTemplate : ObservableObject, ISegmentObject, IComponentProvi
         }
     }
     
+    [Browsable(false)]
     public ObservableCollection<IComponentProvider> Providers { get; }
 
     public SegmentTemplate(XElement element) : this()

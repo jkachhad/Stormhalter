@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Xml.Linq;
@@ -45,8 +46,8 @@ public class SegmentSubregion : ObservableObject, ICloneable, ISegmentObject
 		}
 	}
 
-	public Color Color { get; set; }
-	public Color Border { get; set; }
+	[Browsable(false)] public Color Color { get; set; }
+	[Browsable(false)] public Color Border { get; set; }
 		
 	public SubregionType Type
 	{
@@ -63,18 +64,10 @@ public class SegmentSubregion : ObservableObject, ICloneable, ISegmentObject
 		get => _region;
 		set => SetProperty(ref _region, value);
     }
-
-    private bool _isSelected;
-    public bool IsSelected
-    {
-        get => _isSelected;
-        set => SetProperty(ref _isSelected, value);
-    }
-
-    public IEnumerable<SubregionType> Types => Enum.GetValues(typeof(SubregionType)).Cast<SubregionType>();
-
+	
 	private ObservableCollection<SegmentBounds> _rectangles = new ObservableCollection<SegmentBounds>();
 
+	[Browsable(false)]
 	public ObservableCollection<SegmentBounds> Rectangles
 	{
 		get => _rectangles;

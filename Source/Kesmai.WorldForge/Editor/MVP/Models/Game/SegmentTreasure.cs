@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Xml.Linq;
 using CommonServiceLocator;
@@ -23,6 +24,7 @@ public class SegmentTreasure : ObservableObject, ICloneable, ISegmentObject
 		
 	private ObservableCollection<TreasureEntry> _entries = new ObservableCollection<TreasureEntry>();
 		
+	[Browsable(false)]
 	public ObservableCollection<TreasureEntry> Entries
 	{
 		get => _entries;
@@ -45,8 +47,10 @@ public class SegmentTreasure : ObservableObject, ICloneable, ISegmentObject
 		set => SetProperty(ref _notes, value);
 	}
 
+	[Browsable(false)]
 	public int TotalWeight => _entries.Sum(e => e.Weight);
 
+	[Browsable(false)]
 	public virtual bool IsHoard => false;
 		
 	public SegmentTreasure()

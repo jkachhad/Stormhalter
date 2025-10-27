@@ -50,6 +50,7 @@ public class SegmentComponent : ObservableObject, ISegmentObject, IComponentProv
 		}
 	}
 	
+	[Browsable(false)]
 	public XElement Element
 	{
 		get => _element;
@@ -61,8 +62,6 @@ public class SegmentComponent : ObservableObject, ISegmentObject, IComponentProv
 			}
 		}
 	}
-	
-	public bool IsEditable => false;
 
 	public SegmentComponent()
 	{

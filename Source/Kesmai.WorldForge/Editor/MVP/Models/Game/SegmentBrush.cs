@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Xml.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -29,8 +30,10 @@ public class SegmentBrush : ObservableObject, ISegmentObject, IComponentProvider
 		}
 	}
 
+	[Browsable(false)]
 	public ObservableCollection<SegmentBrushEntry> Entries => _entries;
 
+	[Browsable(false)]
 	public int TotalWeight => _entries.Sum(entry => entry.Weight);
 
 	public SegmentBrush()
