@@ -167,7 +167,7 @@ public class SegmentRegion : ObservableObject, ICloneable, ISegmentObject
 
 				if (tile != null)
 				{
-					var tileElement = tile.GetXElement();
+					var tileElement = tile.GetSerializingElement();
 
 					tileElement.Add(new XAttribute("x", x));
 					tileElement.Add(new XAttribute("y", y));

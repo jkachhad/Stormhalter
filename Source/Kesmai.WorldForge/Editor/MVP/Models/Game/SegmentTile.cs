@@ -53,7 +53,7 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
     /// <summary>
     /// Gets an XML element that describes this instance.
     /// </summary>
-    public XElement GetXElement()
+    public XElement GetSerializingElement()
     {
         var tileElement = new XElement("tile");
 
