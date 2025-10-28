@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Xml.Linq;
@@ -141,16 +142,16 @@ public abstract class TerrainComponent : ObservableObject, IComponentProvider
 
     #endregion
 
-    public void AddComponent(SegmentTile segmentTile)
+    public void AddComponent(ObservableCollection<IComponentProvider> collection)
     {
         // create a clone of this component and add it to the tile.
-        segmentTile.Providers.Add(Clone());
+        collection.Add(Clone());
     }
 
-    public void RemoveComponent(SegmentTile segmentTile)
+    public void RemoveComponent(ObservableCollection<IComponentProvider> collection)
     {
         // remove this specific component.
-        segmentTile.Providers.Remove(this);
+        collection.Remove(this);
     }
     
     public IEnumerable<IComponentProvider> GetComponents()
@@ -165,6 +166,6 @@ public abstract class TerrainComponent : ObservableObject, IComponentProvider
     
     public ComponentFrame GetComponentFrame()
     {
-        return new TerrainComponentFrame();
+        return new TerrainComponentFrame(this);
     }
 }

@@ -95,7 +95,7 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
         if ( provider == null )
             return;
         
-        provider.AddComponent(this);
+        provider.AddComponent(this.Providers);
         
         UpdateTerrain ( );
     }
@@ -103,7 +103,7 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
     public void RemoveComponent ( IComponentProvider component )
     {
         if ( component != null && Providers.Contains ( component ) )
-            component.RemoveComponent(this);
+            component.RemoveComponent(this.Providers);
 
         UpdateTerrain ( );
     }

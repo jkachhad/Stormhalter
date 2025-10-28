@@ -111,7 +111,7 @@ public class DrawTool : Tool
                         selectedTile.Providers.Clear ( );
                     }*/
 
-                    provider.AddComponent(selectedTile);
+                    provider.AddComponent(selectedTile.Providers);
                     selectedTile.UpdateTerrain();
                     worldScreen.InvalidateRender();
 

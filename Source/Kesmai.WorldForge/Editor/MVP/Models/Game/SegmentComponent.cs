@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Xml;
@@ -20,8 +21,8 @@ public interface IComponentProvider
 	
 	bool IsEditable => true;
 
-	void AddComponent(SegmentTile segmentTile);
-	void RemoveComponent(SegmentTile segmentTile);
+	void AddComponent(ObservableCollection<IComponentProvider> collection);
+	void RemoveComponent(ObservableCollection<IComponentProvider> collection);
 
 	IEnumerable<IComponentProvider> GetComponents();
 	IEnumerable<ComponentRender> GetRenders();
@@ -110,16 +111,16 @@ public class SegmentComponent : ObservableObject, ISegmentObject, IComponentProv
 			target.Components.Add(segmentComponent);
 	}
 	
-	public void AddComponent(SegmentTile segmentTile)
+	public void AddComponent(ObservableCollection<IComponentProvider> collection)
 	{
 		// add this specific provider.
-		segmentTile.Providers.Add(this);
+		collection.Add(this);
 	}
 
-	public void RemoveComponent(SegmentTile segmentTile)
+	public void RemoveComponent(ObservableCollection<IComponentProvider> collection)
 	{
 		// remove this specific component.
-		segmentTile.Providers.Remove(this);
+		collection.Remove(this);
 	}
 
 	public IEnumerable<IComponentProvider> GetComponents()
@@ -188,6 +189,6 @@ public class SegmentComponent : ObservableObject, ISegmentObject, IComponentProv
 	
 	public ComponentFrame GetComponentFrame()
 	{
-		return new SegmentComponentFrame();
+		return new SegmentComponentFrame(this);
 	}
 }

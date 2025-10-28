@@ -103,7 +103,7 @@ public class PaintTool : Tool
                             selectedTile.Components.Clear();
                         }*/
 
-                        provider.AddComponent(selectedTile);
+                        provider.AddComponent(selectedTile.Providers);
                         selectedTile.UpdateTerrain();
                         graphicsScreen.InvalidateRender();
                     }

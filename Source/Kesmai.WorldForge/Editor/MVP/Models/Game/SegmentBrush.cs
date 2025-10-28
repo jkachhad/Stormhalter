@@ -50,14 +50,14 @@ public class SegmentBrush : ObservableObject, ISegmentObject, IComponentProvider
 			_entries.Add(new SegmentBrushEntry(this, entryElement));
 	}
 	
-	public void AddComponent(SegmentTile segmentTile)
+	public void AddComponent(ObservableCollection<IComponentProvider> collection)
 	{
-		segmentTile.Providers.Add(this);
+		collection.Add(this);
 	}
 
-	public void RemoveComponent(SegmentTile segmentTile)
+	public void RemoveComponent(ObservableCollection<IComponentProvider> collection)
 	{
-		segmentTile.Providers.Remove(this);
+		collection.Remove(this);
 	}
 
 	public IEnumerable<IComponentProvider> GetComponents()
@@ -107,7 +107,7 @@ public class SegmentBrush : ObservableObject, ISegmentObject, IComponentProvider
 
 	public ComponentFrame GetComponentFrame()
 	{
-		return new SegmentBrushComponentFrame();
+		return new SegmentBrushComponentFrame(this);
 	}
 
 	public void Present(ApplicationPresenter presenter)

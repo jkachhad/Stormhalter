@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using CommonServiceLocator;
 using CommunityToolkit.Mvvm.Messaging;
@@ -32,12 +33,15 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 	protected RegionToolbar _toolbar;
 	protected RegionFilters _filters;
 	protected RegionVisibility _visibility;
-	
-	private StackPanel _componentsHost;
-	private ComponentsPanel _componentsPanel;
-	private StackPanel _finalizePanel;
-	
+
 	private Button _resetButton;
+	private StackPanel _componentFrames;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+	
+	private SegmentTile _editingTile;
+	private ObservableCollection<IComponentProvider> _editingProviders;
+	private ComponentFrame _selectedComponentFrame;
+
+	private bool _invalidated;
 
 	public override bool DisplayComments => _visibility.ShowComments;
 
@@ -53,23 +57,24 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		{
 			var selection = message.Value;
 
-			if (selection.Region != _worldPresentationTarget.Region || _componentsHost is null)
+			if (selection.Region != _worldPresentationTarget.Region || _componentFrames is null)
 				return;
+			
+			_componentFrames.Children.Clear();
 
-			_componentsHost.Children.Clear();
-			_componentsPanel = null;
-
-			if (_finalizePanel != null)
-				_finalizePanel.IsVisible = false;
-
-			// we only care about single-surface selections in this context.
 			if (selection.SurfaceArea is not 1)
+			{
+				_editingTile = null;
+				_editingProviders = null;
+				
+				_componentFrames.IsVisible = false;
 				return;
+			}
 			
 			// get the segment tile from selection.
 			var region = _worldPresentationTarget.Region;
 			var selected = selection.FirstOrDefault();
-
+			
 			if (selected.IsEmpty)
 				return;
 			
@@ -77,11 +82,17 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 
 			if (segmentTile is null)
 				return;
-			
-			_componentsHost.Children.Add(_componentsPanel = new ComponentsPanel(segmentTile, this));
 
-			if (_finalizePanel != null)
-				_finalizePanel.IsVisible = true;
+			// create restore point.
+			_editingTile = segmentTile;
+			_editingProviders = new ObservableCollection<IComponentProvider>();
+			
+			foreach(var provider in segmentTile.Providers)
+				provider.AddComponent(_editingProviders);
+			
+			InvalidateFrames();
+
+			_componentFrames.IsVisible = true;
 		});
 	}
 	
@@ -178,36 +189,18 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 	{
 		base.OnInitialize();
 		
-		// set up user interface in the editor.
 		var grid = new Grid()
 		{
 		};
 		
 		grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Star) });
 		grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Auto) });
-		
+
 		grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Star) });
 		grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Auto) });
 		
-		// components display
-		_componentsHost = new StackPanel()
-		{
-			Width = 500,
-		};
-		
-		grid.AddChild(_componentsHost, 2, 1);
-		
-		// save / reset panel
-		_finalizePanel = new StackPanel()
-		{
-			Style = "Client-Content",
+		_uiScreen.Children.Add(grid);
 			
-			Orientation = Orientation.Horizontal,
-			
-			HorizontalAlignment = HorizontalAlignment.Stretch,
-			VerticalAlignment = VerticalAlignment.Bottom,
-		};
-		
 		if (_resetButton is null)
 		{
 			_resetButton = new Button()
@@ -224,13 +217,148 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 				ToolTip = "[CONTROL + Z]"
 			};
 		}
-		_resetButton.Click += (o, args) => { _componentsPanel.Reset(); };
+		// TODO: implement reset functionality
+		_resetButton.Click += (o, args) => { Reset(); };
 		
-		_finalizePanel.Children.Add(_resetButton);
+		grid.AddChild(_resetButton, 2, 2);
 		
-		grid.AddChild(_finalizePanel, 2, 2);
+		_componentFrames = new StackPanel()
+		{
+			VerticalAlignment = VerticalAlignment.Stretch,
+		};
 		
-		_uiScreen.Children.Add(grid);
+		grid.AddChild(_componentFrames, 2, 1);
+	}
+
+	public void InvalidateFrames()
+	{
+		_invalidated = true;
+	}
+
+	protected override void OnUpdate(TimeSpan deltaTime)
+	{
+		if (_invalidated && _componentFrames != null && _editingTile != null)
+		{
+			_componentFrames.Children.Clear();
+
+			var providers = _editingTile.Providers;
+
+			for (int index = 0; index < providers.Count; index++)
+			{
+				var provider = providers[index];
+				var providerFrame = provider.GetComponentFrame();
+				
+				providerFrame.AllowOrderUp = index > 0;
+				providerFrame.AllowOrderDown = index < (providers.Count - 1);
+				
+				providerFrame.AllowDelete = providers.Count > 1;
+
+				providerFrame.Click += (sender, args) =>
+				{
+					if (sender is not ComponentFrame componentFrame)
+						return;
+					
+					foreach (var frame in _componentFrames.Children.OfType<ComponentFrame>())
+						frame.IsSelected = false;
+					
+					_selectedComponentFrame = componentFrame;
+					_selectedComponentFrame.IsSelected = true;
+				};
+				
+				providerFrame.OrderUp += OnFrameOrderUp;
+				providerFrame.OrderDown += OnFrameOrderDown;
+				providerFrame.Delete += OnFrameDelete;
+
+				providerFrame.Invalidate += (sender, args) =>
+				{
+					_editingTile.UpdateTerrain();
+					
+					InvalidateRender();
+				};
+				
+				_componentFrames.Children.Add(providerFrame);
+			}
+
+			_invalidated = false;
+		}
+		
+		base.OnUpdate(deltaTime);
+	}
+
+	private void OnFrameDelete(object sender, EventArgs args)
+	{
+		if (sender is not ComponentFrame frame)
+			return;
+		
+		Delete(frame);
+	}
+
+	private void Delete(ComponentFrame frame)
+	{
+		frame.Provider.RemoveComponent(_editingTile.Providers);
+		
+		_editingTile.UpdateTerrain();
+		
+		InvalidateFrames();
+		InvalidateRender();
+	}
+
+	private void OnFrameOrderUp(object sender, EventArgs args)
+	{
+		if (sender is not ComponentFrame frame)
+			return;
+
+		MoveUp(frame);
+	}
+
+	private void MoveUp(ComponentFrame frame)
+	{
+		var providers = _editingTile.Providers;
+		var index = providers.IndexOf(frame.Provider);
+		
+		if (index > 0)
+			providers.Move(index, index - 1);
+		
+		_editingTile.UpdateTerrain();
+		
+		InvalidateFrames();
+		InvalidateRender();
+	}
+
+	private void OnFrameOrderDown(object sender, EventArgs args)
+	{
+		if (sender is not ComponentFrame frame)
+			return;
+		
+		MoveDown(frame);
+	}
+
+	private void MoveDown(ComponentFrame frame)
+	{
+		var providers = _editingTile.Providers;
+		var index = providers.IndexOf(frame.Provider);
+		
+		if (index < providers.Count - 1)
+			providers.Move(index, index + 1);
+		
+		_editingTile.UpdateTerrain();
+		
+		InvalidateFrames();
+		InvalidateRender();
+	}
+
+	public void Reset()
+	{
+		// restore original tile.
+		_editingTile.Providers.Clear();
+        
+		foreach (var provider in _editingProviders)
+			provider.AddComponent(_editingTile.Providers);
+
+		_editingTile.UpdateTerrain();
+		
+		InvalidateFrames();
+		InvalidateRender();
 	}
 
 	protected override void OnHandleInput(TimeSpan deltaTime)
@@ -262,6 +390,9 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		if (inputManager.IsKeyboardHandled || !PresentationTarget.IsFocused)
 			return;
 		
+		var isShiftDown = inputManager.IsDown(Keys.LeftShift) || inputManager.IsDown(Keys.RightShift);
+		var isControlDown = inputManager.IsDown(Keys.LeftControl) || inputManager.IsDown(Keys.RightControl);
+		
 		var multiplier = 3;
 
 		if (inputManager.IsDown(Keys.LeftShift) || inputManager.IsDown(Keys.RightShift))
@@ -273,6 +404,34 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			inputManager.IsKeyboardHandled = true;
 		}
 		
+		if (isShiftDown)
+		{
+			if (inputManager.IsReleased(Keys.Up))
+			{
+				if (_selectedComponentFrame != null)
+					MoveUp(_selectedComponentFrame);
+                    
+				inputManager.IsKeyboardHandled = true;
+			}
+			else if (inputManager.IsReleased(Keys.Down))
+			{
+				if (_selectedComponentFrame != null)
+					MoveDown(_selectedComponentFrame);
+                    
+				inputManager.IsKeyboardHandled = true;
+			}
+		}
+
+		if (isControlDown)
+		{
+			if (inputManager.IsReleased(Keys.Z))
+			{
+				Reset();
+
+				inputManager.IsKeyboardHandled = true;
+			}
+		}
+
 		if (inputManager.IsPressed(Keys.W, true))
 		{
 			shiftMap(0, -1);
@@ -300,28 +459,35 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		}
 		else if (inputManager.IsReleased(Keys.Delete))
 		{
-			foreach (var area in _selection)
+			if (_selectedComponentFrame != null)
 			{
-				for (var x = area.Left; x < area.Right; x++)
-				for (var y = area.Top; y < area.Bottom; y++)
+				Delete(_selectedComponentFrame);
+			}
+			else
+			{
+				foreach (var area in _selection)
 				{
-					var currentFilter = _filters.SelectedFilter;
+					for (var x = area.Left; x < area.Right; x++)
+					for (var y = area.Top; y < area.Bottom; y++)
+					{
+						var currentFilter = _filters.SelectedFilter;
 						
-					var tile = region.GetTile(x, y);
+						var tile = region.GetTile(x, y);
 						
-					if (tile is null)
-						continue;
+						if (tile is null)
+							continue;
 						
-					var validComponents = tile.Providers.SelectMany(c => c.GetComponents()).Where(c => currentFilter.IsValid(c)).ToArray();
+						var validComponents = tile.Providers.SelectMany(c => c.GetComponents()).Where(c => currentFilter.IsValid(c)).ToArray();
 						
-					foreach (var component in validComponents)
-						tile.RemoveComponent(component);
+						foreach (var component in validComponents)
+							tile.RemoveComponent(component);
+					}
+
 				}
 
+				InvalidateRender();
 			}
-
-			InvalidateRender();
-				
+			
 			inputManager.IsKeyboardHandled = true;
 		}
 		else
@@ -361,7 +527,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			}
 		}
 	}
-
+	
 	protected override void OnRender(RenderContext context)
 	{
 		base.OnRender(context);

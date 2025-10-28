@@ -116,17 +116,17 @@ public class SegmentTemplate : ObservableObject, ISegmentObject, IComponentProvi
 
     public ComponentFrame GetComponentFrame()
     {
-        return new SegmentTemplateComponentFrame();
+        return new SegmentTemplateComponentFrame(this);
     }
 
-    public void AddComponent(SegmentTile segmentTile)
+    public void AddComponent(ObservableCollection<IComponentProvider> collection)
     {
-        segmentTile.Providers.Add(this);
+        collection.Add(this);
     }
 
-    public void RemoveComponent(SegmentTile segmentTile)
+    public void RemoveComponent(ObservableCollection<IComponentProvider> collection)
     {
-        segmentTile.Providers.Remove(this);
+        collection.Remove(this);
     }
 
     public IEnumerable<IComponentProvider> GetComponents()

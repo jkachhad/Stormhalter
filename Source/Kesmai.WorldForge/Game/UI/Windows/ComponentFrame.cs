@@ -8,236 +8,168 @@ using DigitalRune.Game.UI.Controls;
 using DigitalRune.Mathematics.Algebra;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Models;
+using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
 
 namespace Kesmai.WorldForge.Windows;
 
-public class ComponentFrame : StackPanel
+public abstract class ComponentFrame : Grid
 {
-	public static readonly int ClickEventId = CreateEvent(
-		typeof(ButtonBase), nameof(OnClick), GamePropertyCategories.Default, null, EventArgs.Empty);
+	public static readonly int OrderUpEventId = CreateEvent(
+		typeof(ComponentFrame), nameof(OrderUp), GamePropertyCategories.Default, null, EventArgs.Empty);
 	
-	public static readonly int MoveUpEventId = CreateEvent(
-		typeof(ComponentFrame), nameof(OnMoveUp), GamePropertyCategories.Default, null, EventArgs.Empty);
-	
-	public static readonly int MoveDownEventId = CreateEvent(
-		typeof(ComponentFrame), nameof(OnMoveDown), GamePropertyCategories.Default, null, EventArgs.Empty);
-	
+	public static readonly int OrderDownEventId = CreateEvent(
+		typeof(ComponentFrame), nameof(OrderDown), GamePropertyCategories.Default, null, EventArgs.Empty);
+
 	public static readonly int DeleteEventId = CreateEvent(
-		typeof(ComponentFrame), nameof(OnDelete), GamePropertyCategories.Default, null, EventArgs.Empty);
+		typeof(ComponentFrame), nameof(Delete), GamePropertyCategories.Default, null, EventArgs.Empty);
 	
-	public static readonly int ChangeEventId = CreateEvent(
-		typeof(ComponentFrame), nameof(OnChange), GamePropertyCategories.Default, null, EventArgs.Empty);
+	public static readonly int ClickEventId = CreateEvent(
+		typeof(ComponentFrame), nameof(Click), GamePropertyCategories.Default, null, EventArgs.Empty);
 	
-	protected TextBlock _componentTypeTextBlock;
-	protected ComponentImage _image;
-
-	private Button _orderUpButton;
-	private Button _orderDownButton;
+	public static readonly int InvalidateEventId = CreateEvent(
+		typeof(ComponentFrame), nameof(Invalidate), GamePropertyCategories.Default, null, EventArgs.Empty);
 	
-	private Button _deleteButton;
-
-	public static readonly int ProviderPropertyId = CreateProperty(
-		typeof(ComponentFrame), nameof(Provider), GamePropertyCategories.Default, null, default(IComponentProvider),
-		UIPropertyOptions.AffectsRender);
-
-	public IComponentProvider Provider
+	protected readonly IComponentProvider _componentProvider;
+	protected ComponentImage _componentImage;
+	
+	public IComponentProvider Provider => _componentProvider;
+	
+	public bool AllowOrderUp { get; set; } = true;
+	public bool AllowOrderDown { get; set; } = true;
+	
+	public bool AllowDelete { get; set; } = true;
+	
+	public bool IsSelected { get; set; } = false;
+	
+	public event EventHandler<EventArgs> OrderUp
 	{
-		get => GetValue<IComponentProvider>(ProviderPropertyId);
-		set => SetValue(ProviderPropertyId, value);
+		add => Events.Get<EventArgs>(OrderUpEventId).Event += value;
+		remove => Events.Get<EventArgs>(OrderUpEventId).Event -= value;
 	}
 	
-	public bool CanMoveUp { get; set; }
-	public bool CanMoveDown { get; set; }
-	
-	public bool CanDelete { get; set; }
-	
-	public event EventHandler<EventArgs> OnClick
+	public event EventHandler<EventArgs> OrderDown
 	{
-		add => Events.Get<EventArgs>(ClickEventId).Event += value;
-		remove => Events.Get<EventArgs>(ClickEventId).Event -= value;
+		add => Events.Get<EventArgs>(OrderDownEventId).Event += value;
+		remove => Events.Get<EventArgs>(OrderDownEventId).Event -= value;
 	}
 	
-	public event EventHandler<EventArgs> OnMoveUp
-	{
-		add => Events.Get<EventArgs>(MoveUpEventId).Event += value;
-		remove => Events.Get<EventArgs>(MoveUpEventId).Event -= value;
-	}
-	
-	public event EventHandler<EventArgs> OnMoveDown
-	{
-		add => Events.Get<EventArgs>(MoveDownEventId).Event += value;
-		remove => Events.Get<EventArgs>(MoveDownEventId).Event -= value;
-	}
-	
-	public event EventHandler<EventArgs> OnDelete
+	public event EventHandler<EventArgs> Delete
 	{
 		add => Events.Get<EventArgs>(DeleteEventId).Event += value;
 		remove => Events.Get<EventArgs>(DeleteEventId).Event -= value;
 	}
 	
-	public event EventHandler<EventArgs> OnChange
+	public event EventHandler<EventArgs> Click
 	{
-		add => Events.Get<EventArgs>(ChangeEventId).Event += value;
-		remove => Events.Get<EventArgs>(ChangeEventId).Event -= value;
+		add => Events.Get<EventArgs>(ClickEventId).Event += value;
+		remove => Events.Get<EventArgs>(ClickEventId).Event -= value;
 	}
 	
-	public ComponentFrame()
+	public event EventHandler<EventArgs> Invalidate
+	{
+		add => Events.Get<EventArgs>(InvalidateEventId).Event += value;
+		remove => Events.Get<EventArgs>(InvalidateEventId).Event -= value;
+	}
+	
+	public ComponentFrame(IComponentProvider provider)
 	{
 		Style = "Client-Content";
-
-		Orientation = Orientation.Vertical;
-
-		Properties.Get<IComponentProvider>(ProviderPropertyId).Changed += (sender, args) =>
-		{
-			if (IsLoaded)
-				OnComponentUpdate(args.NewValue);
-		};
-
-		Opacity = 1.5f;
+		
+		_componentProvider = provider;
 	}
 
 	protected override void OnLoad()
 	{
 		base.OnLoad();
-
-		// display the component image and property grid.
-		var frameGrid = new Grid()
+		
+		_componentImage = new ComponentImage()
 		{
-			HorizontalAlignment = HorizontalAlignment.Stretch,
-			VerticalAlignment = VerticalAlignment.Stretch,
+			Background = Color.FromNonPremultiplied(255, 255, 255, 60),
+			Margin = new Vector4F(0, 5, 0, 0),
+			
+			Provider = _componentProvider,
 		};
-
-		frameGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(100, GridUnitType.Auto) });
-		frameGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Star) });
-		frameGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Auto) });
-		frameGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Auto) });
 		
-		frameGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Auto) });
-		frameGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Auto) });
-
-		// display the component type.
-		if (_componentTypeTextBlock is null)
-		{
-			_componentTypeTextBlock = new TextBlock()
-			{
-				Font = "Tahoma", FontSize = 10,
-				FontStyle = MSDFStyle.BoldOutline,
-
-				Foreground = Color.Yellow, Stroke = Color.Black,
-				
-				HorizontalAlignment = HorizontalAlignment.Stretch,
-
-				Background = Color.FromNonPremultiplied(255, 255, 255, 60),
-				Padding = new  Vector4F(5, 5, 5, 5),
-			};
-		}
-		frameGrid.AddChild(_componentTypeTextBlock, 1, 1, 4);
+		// Define grid structure.
+		ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Auto) });
+		ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Auto) });
+		ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Auto) });
 		
-		if (_image is null)
-		{
-			_image = new ComponentImage()
-			{
-				Background = Color.FromNonPremultiplied(255, 255, 255, 60),
-				Margin = new  Vector4F(0, 5, 0, 5),
-			};
-		}
-		frameGrid.AddChild(_image, 1, 2);
+		RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Auto) });
+		RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Auto) });
 
-		var orderPanel = new StackPanel()
+		// Add header.		
+		AddChild(GetHeaderControl(), 1, 1, 3);
+		AddChild(GetRenderControl(), 1, 2);
+		AddChild(GetContent(), 2, 2);
+		AddChild(GetActions(), 3, 2);
+	}
+	
+	protected abstract UIControl GetHeaderControl();
+	protected abstract UIControl GetRenderControl();
+	protected abstract UIControl GetContent();
+
+	protected virtual UIControl GetActions()
+	{
+		var actionsPanel = new StackPanel()
 		{
 			Margin = new  Vector4F(0, 5, 0, 5),
 			VerticalAlignment = VerticalAlignment.Top,
 		};
 		
-		if (_orderUpButton is null)
+		var orderUpButton = new Button()
 		{
-			_orderUpButton = new Button()
+			Content = new TextBlock()
 			{
-				Content = new TextBlock()
-				{
-					Text = "▲", FontSize = 8, HorizontalAlignment = HorizontalAlignment.Center,
-					Font = "Tahoma", Foreground = (CanMoveUp ? Color.Green : Color.Black),
-				},
-				Style = "GameIconButton",
-				
-				IsEnabled = CanMoveUp,
-				
-				ToolTip = "[SHIFT + UP]"
-			};
-		}
-		_orderUpButton.Click += (o, args) => Events.Get<EventArgs>(MoveUpEventId).Raise();
-		
-		if (_orderDownButton is null)
-		{
-			_orderDownButton = new Button()
-			{
-				Content = new TextBlock()
-				{
-					Text = "▼", FontSize = 8, HorizontalAlignment = HorizontalAlignment.Center,
-					Font = "Tahoma", Foreground = (CanMoveDown ? Color.Green : Color.Black),
-				},
-				Style = "GameIconButton",
-				
-				IsEnabled = CanMoveDown,
-				
-				ToolTip = "[SHIFT + DOWN]"
-			};
-		}
-		_orderDownButton.Click += (o, args) => Events.Get<EventArgs>(MoveDownEventId).Raise();
-		
-		orderPanel.Children.Add(_orderUpButton);
-		orderPanel.Children.Add(_orderDownButton);
-
-		var actionsPanel = new StackPanel()
-		{
-			Margin = new Vector4F(0, 5, 0, 5),
-			VerticalAlignment = VerticalAlignment.Bottom,
+				Text = "▲", FontSize = 8, HorizontalAlignment = HorizontalAlignment.Center,
+				Font = "Tahoma", Foreground = (AllowOrderUp ? Color.Green : Color.Black),
+			},
+			Style = "GameIconButton",
+			
+			IsEnabled = AllowOrderUp,
+			
+			ToolTip = "[SHIFT + UP]"
 		};
+		orderUpButton.Click += (o, args) => Events.Get<EventArgs>(OrderUpEventId).Raise();
 		
-		if (_deleteButton is null)
+		var orderDownButton = new Button()
 		{
-			_deleteButton = new Button()
+			Content = new TextBlock()
 			{
-				Content = new TextBlock()
-				{
-					Text = "X", FontSize = 8, HorizontalAlignment = HorizontalAlignment.Center,
-					Font = "Tahoma", Foreground = (CanDelete ? Color.Red : Color.Black),
-				},
-				Style = "GameIconButton",
-				
-				IsEnabled = CanDelete,
-				
-				ToolTip = "[DELETE]"
-			};
-		}
-		_deleteButton.Click += (o, args) => Events.Get<EventArgs>(DeleteEventId).Raise();
+				Text = "▼", FontSize = 8, HorizontalAlignment = HorizontalAlignment.Center,
+				Font = "Tahoma", Foreground = (AllowOrderDown ? Color.Green : Color.Black),
+			},
+			Style = "GameIconButton",
+			
+			IsEnabled = AllowOrderDown,
+			
+			ToolTip = "[SHIFT + DOWN]"
+		};
+		orderDownButton.Click += (o, args) => Events.Get<EventArgs>(OrderDownEventId).Raise();
 		
-		actionsPanel.Children.Add(_deleteButton);
+		var deleteButton = new Button()
+		{
+			Content = new TextBlock()
+			{
+				Text = "X", FontSize = 8, HorizontalAlignment = HorizontalAlignment.Center,
+				Font = "Tahoma", Foreground = (AllowDelete ? Color.Red : Color.Black),
+			},
+			Style = "GameIconButton",
+			
+			IsEnabled = AllowDelete,
+			
+			ToolTip = "[DELETE]"
+		};
+		deleteButton.Click += (o, args) => Events.Get<EventArgs>(DeleteEventId).Raise();
 		
-		frameGrid.AddChild(orderPanel, 4, 2);
-		frameGrid.AddChild(actionsPanel, 4, 2);
-
-		var content = GetContent();
+		actionsPanel.Children.Add(orderUpButton);
+		actionsPanel.Children.Add(orderDownButton);
+		actionsPanel.Children.Add(deleteButton);
 		
-		if (content != null)
-			frameGrid.AddChild(content, 2, 2);
-		
-		Children.Add(frameGrid);
-		
-		if (Provider != null)
-			OnComponentUpdate(Provider);
+		return actionsPanel;
 	}
-
-	protected virtual void OnComponentUpdate(IComponentProvider provider)
-	{
-		if (_componentTypeTextBlock != null)
-			_componentTypeTextBlock.Text = GetHeader();
-		
-		if (_image != null)
-			_image.Provider = provider;
-	}
-
+	
 	protected override void OnHandleInput(InputContext context)
 	{
 		if (!IsLoaded || !IsVisible)
@@ -247,198 +179,288 @@ public class ComponentFrame : StackPanel
 
 		var inputService = InputService;
 
-		if (IsMouseOver && inputService.IsReleased(MouseButtons.Left))
-			Events.Get<EventArgs>(ClickEventId).Raise();
+		if (IsMouseOver)
+		{
+			if (inputService.IsReleased(MouseButtons.Left))
+				Events.Get<EventArgs>(ClickEventId).Raise();
+			
+			inputService.IsMouseOrTouchHandled = true;
+		}
 	}
 
-	protected virtual UIControl GetContent() => null;
-	
-	protected virtual string GetHeader() => "Component";
+	protected override void OnRender(UIRenderContext context)
+	{
+		var screen = Screen ?? context.Screen;
+		var renderer = screen.Renderer;
+		var spriteBatch = renderer.SpriteBatch;
+
+		if (IsSelected)
+			spriteBatch.FillRectangle(ActualBounds.ToRectangle(true), Color.OrangeRed);
+		
+		base.OnRender(context);
+	}
 }
 
 public class TerrainComponentFrame : ComponentFrame
 {
-	private PropertyGrid _propertyGrid;
-	
-	public TerrainComponentFrame()
+	public TerrainComponentFrame(IComponentProvider provider) : base(provider)
 	{
+	}
+
+	protected override UIControl GetHeaderControl()
+	{
+		var headerPanel = new StackPanel()
+		{
+			HorizontalAlignment = HorizontalAlignment.Stretch,
+		};
+		headerPanel.Children.Add(new TextBlock()
+		{
+			Text = _componentProvider.GetType().Name,
+			
+			Font = "Tahoma", FontSize = 10,
+			FontStyle = MSDFStyle.BoldOutline,
+
+			Foreground = Color.Yellow, Stroke = Color.Black,
+			
+			Background = Color.FromNonPremultiplied(255, 255, 255, 60),
+			Padding = new  Vector4F(5, 5, 5, 5),
+			
+			HorizontalAlignment = HorizontalAlignment.Stretch,
+		});
+
+		return headerPanel;
+	}
+
+	protected override UIControl GetRenderControl()
+	{
+		return _componentImage;
 	}
 
 	protected override UIControl GetContent()
 	{
-		if (_propertyGrid is null)
+		var propertyGrid = new PropertyGrid()
 		{
-			_propertyGrid = new PropertyGrid()
-			{
-				Margin = new  Vector4F(5),
-			};
-			_propertyGrid.OnItemChanged += (o, args) =>
-			{
-				Events.Get<EventArgs>(ChangeEventId).Raise();
+			Margin = new  Vector4F(5),
+			Item = _componentProvider,
+		};
+		propertyGrid.OnItemChanged += (s, e) => Events.Get<EventArgs>(InvalidateEventId).Raise();
 
-				if (_image != null)
-					_image.Invalidate();
-			};
-		}
-		
-		return _propertyGrid;
+		return propertyGrid;
 	}
-
-	protected override void OnComponentUpdate(IComponentProvider provider)
-	{
-		base.OnComponentUpdate(provider);
-		
-		if (_propertyGrid != null)
-			_propertyGrid.Item = provider;
-	}
-
-	protected override string GetHeader() => Provider.GetType().Name;
 }
 
 public class SegmentComponentFrame : ComponentFrame
 {
-	private Button _presentButton;
-	
-	public SegmentComponentFrame()
+	public SegmentComponentFrame(IComponentProvider provider) : base(provider)
 	{
 	}
 
-	protected override UIControl GetContent()
+	protected override UIControl GetHeaderControl()
 	{
-		if (_presentButton is null)
+		var headerPanel = new StackPanel()
 		{
-			_presentButton = new Button()
-			{
-				Content = new TextBlock()
-				{
-					Text = "Edit Component", FontSize = 10, HorizontalAlignment = HorizontalAlignment.Center,
-					Font = "Tahoma", Foreground = Color.Yellow,
-				},
-				Style = "Client-Button",
-				
-				Margin = new  Vector4F(5),
-				
-				HorizontalAlignment = HorizontalAlignment.Center,
-				VerticalAlignment = VerticalAlignment.Center,
-			};
-			_presentButton.Click += (o, args) =>
-			{
-				var applicationPresenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
-
-				if (applicationPresenter != null && Provider is SegmentComponent segmentComponent)
-					segmentComponent.Present(applicationPresenter);
-			};
-		}
+			HorizontalAlignment = HorizontalAlignment.Stretch,
+		};
 		
-		return _presentButton;
-	}
-	
-	protected override string GetHeader()
-	{
 		var internalType = String.Empty;
-		var components = Provider.GetComponents().ToList();
+		var components = _componentProvider.GetComponents().ToList();
 		
 		if (components.Count() > 1)
 			internalType = " (Multiple)";
 		else if (components.Count() is 1)
 			internalType = $" ({components.First().GetType().Name})";
 		
-		return $"SegmentComponent [{internalType}]";
+		headerPanel.Children.Add(new TextBlock()
+		{
+			Text = $"SegmentComponent [{internalType}]",
+			
+			Font = "Tahoma", FontSize = 10,
+			FontStyle = MSDFStyle.BoldOutline,
+
+			Foreground = Color.Yellow, Stroke = Color.Black,
+			
+			Background = Color.FromNonPremultiplied(255, 255, 255, 60),
+			Padding = new  Vector4F(5, 5, 5, 5),
+			
+			HorizontalAlignment = HorizontalAlignment.Stretch,
+		});
+
+		return headerPanel;
+	}
+
+	protected override UIControl GetRenderControl()
+	{
+		return _componentImage;
+	}
+
+	protected override UIControl GetContent()
+	{
+		var presentButton = new Button()
+		{
+			Content = new TextBlock()
+			{
+				Text = "Edit Component", FontSize = 10, HorizontalAlignment = HorizontalAlignment.Center,
+				Font = "Tahoma", Foreground = Color.Yellow,
+			},
+			Style = "Client-Button",
+				
+			Margin = new  Vector4F(5),
+				
+			HorizontalAlignment = HorizontalAlignment.Center,
+			VerticalAlignment = VerticalAlignment.Center,
+		};
+		presentButton.Click += (o, args) =>
+		{
+			var applicationPresenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+
+			if (applicationPresenter != null && _componentProvider is SegmentComponent segmentComponent)
+				segmentComponent.Present(applicationPresenter);
+		};
+
+		return presentButton;
 	}
 }
 
 public class SegmentBrushComponentFrame : ComponentFrame
 {
-	private Button _presentButton;
+	public SegmentBrushComponentFrame(IComponentProvider provider) : base(provider)
+	{
+	}
+
+	protected override UIControl GetHeaderControl()
+	{
+		var headerPanel = new StackPanel()
+		{
+			HorizontalAlignment = HorizontalAlignment.Stretch,
+		};
+		
+		var name = "Unnamed";
+
+		if (_componentProvider != null)
+			name = _componentProvider.Name;
+		
+		headerPanel.Children.Add(new TextBlock()
+		{
+			Text = $"SegmentBrush [{name}]",
+			
+			Font = "Tahoma", FontSize = 10,
+			FontStyle = MSDFStyle.BoldOutline,
+
+			Foreground = Color.Yellow, Stroke = Color.Black,
+			
+			Background = Color.FromNonPremultiplied(255, 255, 255, 60),
+			Padding = new  Vector4F(5, 5, 5, 5),
+			
+			HorizontalAlignment = HorizontalAlignment.Stretch,
+		});
+
+		return headerPanel;
+	}
+
+	protected override UIControl GetRenderControl()
+	{
+		return _componentImage;
+	}
 
 	protected override UIControl GetContent()
 	{
-		if (_presentButton is null)
+		var presentButton = new Button()
 		{
-			_presentButton = new Button()
+			Content = new TextBlock()
 			{
-				Content = new TextBlock()
-				{
-					Text = "Edit Brush",
-					FontSize = 10,
-					HorizontalAlignment = HorizontalAlignment.Center,
-					Font = "Tahoma",
-					Foreground = Color.Yellow,
-				},
-				Style = "Client-Button",
-
-				Margin = new Vector4F(5),
-
+				Text = "Edit Brush",
+				FontSize = 10,
 				HorizontalAlignment = HorizontalAlignment.Center,
-				VerticalAlignment = VerticalAlignment.Center,
-			};
-			_presentButton.Click += (o, args) =>
-			{
-				var applicationPresenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+				Font = "Tahoma",
+				Foreground = Color.Yellow,
+			},
+			Style = "Client-Button",
 
-				if (applicationPresenter != null && Provider is SegmentBrush segmentBrush)
-					segmentBrush.Present(applicationPresenter);
-			};
-		}
+			Margin = new Vector4F(5),
 
-		return _presentButton;
-	}
+			HorizontalAlignment = HorizontalAlignment.Center,
+			VerticalAlignment = VerticalAlignment.Center,
+		};
+		presentButton.Click += (o, args) =>
+		{
+			var applicationPresenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
 
-	protected override string GetHeader()
-	{
-		var name = Provider?.Name;
+			if (applicationPresenter != null && _componentProvider is SegmentBrush segmentBrush)
+				segmentBrush.Present(applicationPresenter);
+		};
 
-		if (string.IsNullOrWhiteSpace(name))
-			name = "Unnamed";
-
-		return $"SegmentBrush [{name}]";
+		return presentButton;
 	}
 }
 
 public class SegmentTemplateComponentFrame : ComponentFrame
 {
-	private Button _presentButton;
+	public SegmentTemplateComponentFrame(IComponentProvider provider) : base(provider)
+	{
+	}
+
+	protected override UIControl GetHeaderControl()
+	{
+		var headerPanel = new StackPanel()
+		{
+			HorizontalAlignment = HorizontalAlignment.Stretch,
+		};
+		
+		var name = "Unnamed";
+
+		if (_componentProvider != null)
+			name = _componentProvider.Name;
+		
+		headerPanel.Children.Add(new TextBlock()
+		{
+			Text = $"SegmentTemplate [{name}]",
+			
+			Font = "Tahoma", FontSize = 10,
+			FontStyle = MSDFStyle.BoldOutline,
+
+			Foreground = Color.Yellow, Stroke = Color.Black,
+			
+			Background = Color.FromNonPremultiplied(255, 255, 255, 60),
+			Padding = new  Vector4F(5, 5, 5, 5),
+			
+			HorizontalAlignment = HorizontalAlignment.Stretch,
+		});
+
+		return headerPanel;
+	}
+
+	protected override UIControl GetRenderControl()
+	{
+		return _componentImage;
+	}
 
 	protected override UIControl GetContent()
 	{
-		if (_presentButton is null)
+		var presentButton = new Button()
 		{
-			_presentButton = new Button()
+			Content = new TextBlock()
 			{
-				Content = new TextBlock()
-				{
-					Text = "Edit Template",
-					FontSize = 10,
-					HorizontalAlignment = HorizontalAlignment.Center,
-					Font = "Tahoma",
-					Foreground = Color.Yellow,
-				},
-				Style = "Client-Button",
-
-				Margin = new Vector4F(5),
-
+				Text = "Edit Template",
+				FontSize = 10,
 				HorizontalAlignment = HorizontalAlignment.Center,
-				VerticalAlignment = VerticalAlignment.Center,
-			};
-			_presentButton.Click += (o, args) =>
-			{
-				var applicationPresenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+				Font = "Tahoma",
+				Foreground = Color.Yellow,
+			},
+			Style = "Client-Button",
 
-				if (applicationPresenter != null && Provider is SegmentTemplate segmentTemplate)
-					segmentTemplate.Present(applicationPresenter);
-			};
-		}
+			Margin = new Vector4F(5),
 
-		return _presentButton;
-	}
+			HorizontalAlignment = HorizontalAlignment.Center,
+			VerticalAlignment = VerticalAlignment.Center,
+		};
+		presentButton.Click += (o, args) =>
+		{
+			var applicationPresenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
 
-	protected override string GetHeader()
-	{
-		var name = Provider?.Name;
+			if (applicationPresenter != null && _componentProvider is SegmentTemplate segmentTemplate)
+				segmentTemplate.Present(applicationPresenter);
+		};
 
-		if (string.IsNullOrWhiteSpace(name))
-			name = "Unnamed";
-
-		return $"SegmentTemplate [{name}]";
+		return presentButton;
 	}
 }

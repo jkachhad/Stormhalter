@@ -68,6 +68,9 @@ public class PropertyGrid : Canvas
 			Margin = Vector4F.Zero,
 		};
 		Children.Add(_scrollViewer);
+		
+		if (Item != null)
+			Update(Item);
 
 		Properties.Get<object>(ItemPropertyId).Changed += (o, args) =>
 		{
