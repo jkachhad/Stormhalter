@@ -41,4 +41,17 @@ public class TemplatePresentationTarget : InteropPresentationTarget
 	{
 		yield return _graphicsScreen;
 	}
+
+	protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+	{
+		base.OnRenderSizeChanged(sizeInfo);
+
+		var screen = _graphicsScreen.UI;
+		
+		if (screen != null)
+		{
+			screen.Width = (float)sizeInfo.NewSize.Width;
+			screen.Height = (float)sizeInfo.NewSize.Height;
+		}
+	}
 }

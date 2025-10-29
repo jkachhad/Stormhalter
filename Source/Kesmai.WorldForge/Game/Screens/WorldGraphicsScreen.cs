@@ -398,13 +398,7 @@ public class WorldGraphicsScreen : UIGraphicsScreen
 
 		width = Math.Max(1, Math.Min(width, 4096));
 		height = Math.Max(1, Math.Min(height, 16384));
-			
-		if (_uiScreen != null)
-		{
-			_uiScreen.Width = width;
-			_uiScreen.Height = height;
-		}
-			
+		
 		_renderTarget = new RenderTarget2D(graphicsService.GraphicsDevice, width, height);
 		_invalidateRender = true;
 	}

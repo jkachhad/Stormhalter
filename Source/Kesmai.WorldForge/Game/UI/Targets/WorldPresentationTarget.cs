@@ -13,8 +13,6 @@ namespace Kesmai.WorldForge;
 
 public abstract class WorldPresentationTarget : InteropPresentationTarget
 {
-	private bool _isRendering;
-		
 	protected WorldGraphicsScreen _worldScreen;
 	
 	public WorldGraphicsScreen WorldScreen => _worldScreen;
@@ -51,5 +49,18 @@ public abstract class WorldPresentationTarget : InteropPresentationTarget
 	protected override IEnumerable<InteropGraphicsScreen> GetGraphicsScreens()
 	{
 		yield return _worldScreen;
+	}
+	
+	protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+	{
+		base.OnRenderSizeChanged(sizeInfo);
+
+		var screen = _worldScreen.UI;
+		
+		if (screen != null)
+		{
+			screen.Width = (float)sizeInfo.NewSize.Width;
+			screen.Height = (float)sizeInfo.NewSize.Height;
+		}
 	}
 }
