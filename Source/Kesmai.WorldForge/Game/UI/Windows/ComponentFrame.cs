@@ -39,6 +39,10 @@ public abstract class ComponentFrame : Grid
 	public bool AllowOrderDown { get; set; } = true;
 	
 	public bool AllowDelete { get; set; } = true;
+
+	public bool ShowOrderUp { get; set; } = true;
+	public bool ShowOrderDown { get; set; } = true;
+	public bool ShowDelete { get; set; } = true;
 	
 	public bool IsSelected { get; set; } = false;
 	
@@ -162,10 +166,10 @@ public abstract class ComponentFrame : Grid
 			ToolTip = "[DELETE]"
 		};
 		deleteButton.Click += (o, args) => Events.Get<EventArgs>(DeleteEventId).Raise();
-		
-		actionsPanel.Children.Add(orderUpButton);
-		actionsPanel.Children.Add(orderDownButton);
-		actionsPanel.Children.Add(deleteButton);
+
+		if (ShowOrderUp) actionsPanel.Children.Add(orderUpButton);
+		if (ShowOrderDown) actionsPanel.Children.Add(orderDownButton);
+		if (ShowDelete) actionsPanel.Children.Add(deleteButton);
 		
 		return actionsPanel;
 	}

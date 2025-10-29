@@ -34,6 +34,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 	protected RegionFilters _filters;
 	protected RegionVisibility _visibility;
 
+	private Grid _grid;
 	private Button _resetButton;
 	private StackPanel _componentFrames;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 	
@@ -57,7 +58,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		{
 			var selection = message.Value;
 
-			if (selection.Region != _worldPresentationTarget.Region || _componentFrames is null)
+			if (selection.Region != _worldPresentationTarget.Region || _componentFrames is null || _grid is null)
 				return;
 			
 			_componentFrames.Children.Clear();
@@ -67,7 +68,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 				_editingTile = null;
 				_editingProviders = null;
 				
-				_componentFrames.IsVisible = false;
+				_grid.IsVisible = false;
 				return;
 			}
 			
@@ -92,7 +93,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			
 			InvalidateFrames();
 
-			_componentFrames.IsVisible = true;
+			_grid.IsVisible = true;
 		});
 	}
 	
@@ -189,17 +190,18 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 	{
 		base.OnInitialize();
 		
-		var grid = new Grid()
+		_grid = new Grid()
 		{
+			IsVisible = false
 		};
 		
-		grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Star) });
-		grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Auto) });
+		_grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Star) });
+		_grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Auto) });
 
-		grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Star) });
-		grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Auto) });
+		_grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Star) });
+		_grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Auto) });
 		
-		_uiScreen.Children.Add(grid);
+		_uiScreen.Children.Add(_grid);
 			
 		if (_resetButton is null)
 		{
@@ -219,14 +221,14 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		}
 		_resetButton.Click += (o, args) => { Reset(); };
 		
-		grid.AddChild(_resetButton, 2, 2);
+		_grid.AddChild(_resetButton, 2, 2);
 		
 		_componentFrames = new StackPanel()
 		{
 			VerticalAlignment = VerticalAlignment.Stretch,
 		};
 		
-		grid.AddChild(_componentFrames, 2, 1);
+		_grid.AddChild(_componentFrames, 2, 1);
 	}
 
 	public void InvalidateFrames()
@@ -277,7 +279,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 				
 				_componentFrames.Children.Add(providerFrame);
 			}
-
+			
 			_invalidated = false;
 		}
 		
