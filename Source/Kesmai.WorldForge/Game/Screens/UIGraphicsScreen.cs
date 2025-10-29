@@ -37,8 +37,7 @@ public abstract class UIGraphicsScreen : InteropGraphicsScreen
 		_uiScreen.Background = Color.Transparent;
 		_uiScreen.ZIndex = int.MaxValue;
 
-		var uiManager = PresentationTarget.UIManager;
-		uiManager.Screens.Add(_uiScreen);
+		PresentationTarget.UIManager.Screens.Add(_uiScreen);
 
 		_contextMenu = new Menu();
 
