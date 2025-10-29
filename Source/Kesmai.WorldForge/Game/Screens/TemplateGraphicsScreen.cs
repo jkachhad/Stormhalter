@@ -83,5 +83,7 @@ public class TemplateGraphicsScreen : UIGraphicsScreen
 		}
 
 		spriteBatch.End();
+		
+		RenderUI(context);
 	}
 }
