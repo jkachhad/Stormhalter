@@ -33,8 +33,14 @@ public class TemplatePresentationTarget : InteropPresentationTarget
 
 		if (e.Property != TemplateProperty)
 			return;
-		
-		_graphicsScreen.Invalidate();
+
+		Invalidate();
+	}
+
+	public void Invalidate()
+	{
+		if (_graphicsScreen != null)
+			_graphicsScreen.Invalidate();
 	}
 
 	protected override IEnumerable<InteropGraphicsScreen> GetGraphicsScreens()

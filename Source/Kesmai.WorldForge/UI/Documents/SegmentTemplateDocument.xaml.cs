@@ -24,6 +24,8 @@ public partial class SegmentTemplateDocument : UserControl
             
             _presenter.Template = _segmentTemplate = segmentTemplate;
             _presenter.Focus();
+            
+            _presenter.Invalidate();
         });
     }
 
@@ -46,6 +48,8 @@ public partial class SegmentTemplateDocument : UserControl
 
         _providersList.SelectedItem = picker.SelectedComponent;
         _providersList.ScrollIntoView(picker.SelectedComponent);
+        
+        _presenter.Invalidate();
     }
 
     private void OnRemoveComponentClick(object sender, RoutedEventArgs e)
@@ -57,6 +61,8 @@ public partial class SegmentTemplateDocument : UserControl
             return;
 
         _segmentTemplate.Providers.Remove(provider);
+        
+        _presenter.Invalidate();
     }
 }
 
