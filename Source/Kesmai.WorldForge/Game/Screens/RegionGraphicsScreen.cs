@@ -217,7 +217,6 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 				ToolTip = "[CONTROL + Z]"
 			};
 		}
-		// TODO: implement reset functionality
 		_resetButton.Click += (o, args) => { Reset(); };
 		
 		grid.AddChild(_resetButton, 2, 2);
