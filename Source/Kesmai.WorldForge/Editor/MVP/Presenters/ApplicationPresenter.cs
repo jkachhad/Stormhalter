@@ -613,16 +613,29 @@ public class ApplicationPresenter : ObservableRecipient
 			
 			rootElement.Save(Path.Combine(segmentDirectory.FullName, fileName));
 		}
-
+		
+		// clean up spawner names
+		foreach (var element in segmentRoot.Elements("spawns"))
+		{
+			switch (element.Name.LocalName)
+			{
+				case "LocationSpawner": element.Name = "LocationRegionSpawner"; break;
+				case "SubregionSpawner": element.Name = "SubregionRegionSpawner"; break;
+			}
+		}
+		
 		write(new XElement("segment", 
 			new XAttribute("name", segmentName), 
-			new XAttribute("version", segmentVersion.ToString())), "Segment.xml");
+			new XAttribute("version", Core.Version.ToString())), "Segment.xml");
 		
 		write(segmentRoot.Element("locations"), "Locations.xml");
 		write(segmentRoot.Element("subregions"), "Subregions.xml");
 		write(segmentRoot.Element("entities"), "Entities.xml");
 		write(segmentRoot.Element("spawns"), "Spawns.xml");
 		write(segmentRoot.Element("treasures"), "Treasures.xml");
+		write(new XElement("components"), "Components.xml");
+		write(new XElement("brushes"), "Brushes.xml");
+		
 		
 		void cleanup(string documentName, Func<XElement, IEnumerable<XElement>> scriptSelector)
 		{
