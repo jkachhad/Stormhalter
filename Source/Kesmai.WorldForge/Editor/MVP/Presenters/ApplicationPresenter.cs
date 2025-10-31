@@ -671,6 +671,7 @@ public class ApplicationPresenter : ObservableRecipient
 		cleanup("Spawns.xml", (root) => root.Elements("spawn").Elements("script"));
 		cleanup("Entities.xml", (root) => root.Elements("entity").Elements("script"));
 		cleanup("Treasures.xml", (root) => root.Elements("treasure").Elements("entry").Elements("script"));
+		cleanup("Treasures.xml", (root) => root.Elements("treasure").Elements("script"));
 		
 		// create the project file
 		var projectRoot = new XElement("Project",
