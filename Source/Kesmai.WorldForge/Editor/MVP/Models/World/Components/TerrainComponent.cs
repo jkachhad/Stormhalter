@@ -158,6 +158,8 @@ public abstract class TerrainComponent : ObservableObject, IComponentProvider
     {
         yield return this;
     }
+    
+    public IEnumerable<ComponentRender> GetRenders(int mx, int my) => GetRenders();
 
     public virtual IEnumerable<ComponentRender> GetRenders()
     {
