@@ -44,7 +44,7 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
         if (componentPalette is null)
             throw new InvalidOperationException("ComponentPalette service is not available.");
 
-        foreach (var componentElement in element.Elements("component"))
+        foreach (var componentElement in element.Elements())
         {
             // TODO: Should we handle missing components differently?
             if (componentPalette.TryGetComponent(componentElement, out var component))
