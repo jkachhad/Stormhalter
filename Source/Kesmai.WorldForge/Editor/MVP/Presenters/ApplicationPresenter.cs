@@ -699,5 +699,6 @@ public class ApplicationPresenter : ObservableRecipient
 			);
 		}
 
+		new XDocument(projectRoot).Save(segmentDirectory.FullName);
     }
 }
