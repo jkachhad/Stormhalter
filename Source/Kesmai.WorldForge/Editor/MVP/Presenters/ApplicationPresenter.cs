@@ -635,6 +635,7 @@ public class ApplicationPresenter : ObservableRecipient
 		write(segmentRoot.Element("treasures"), "Treasures.xml");
 		write(new XElement("components"), "Components.xml");
 		write(new XElement("brushes"), "Brushes.xml");
+		write(new XElement("templates"), "Templates.xml");
 		
 		
 		void cleanup(string documentName, Func<XElement, IEnumerable<XElement>> scriptSelector)
