@@ -65,6 +65,27 @@ public class SegmentBrush : ObservableObject, ISegmentObject, IComponentProvider
 		yield return this;
 	}
 
+	public IEnumerable<ComponentRender> GetRenders(int mx, int my)
+	{
+		var entries = _entries.Where(entry => entry.Component is not null && entry.Weight > 0).ToArray();
+
+		if (entries.Length is 0)
+			yield break;
+
+		var totalWeight = entries.Sum(entry => entry.Weight);
+
+		if (totalWeight <= 0)
+			yield break;
+
+		var entry = SelectEntry(entries, totalWeight, mx, my);
+
+		if (entry?.Component is null)
+			yield break;
+
+		foreach (var render in entry.Component.GetRenders(mx, my))
+			yield return render;
+	}
+	
 	public IEnumerable<ComponentRender> GetRenders()
 	{
 		if (_entries.Any())
@@ -135,5 +156,26 @@ public class SegmentBrush : ObservableObject, ISegmentObject, IComponentProvider
 		{
 			Name = $"Copy of {_name}"
 		};
+	}
+
+	private SegmentBrushEntry SelectEntry(IReadOnlyList<SegmentBrushEntry> entries, int totalWeight, int mx, int my)
+	{
+		if (entries.Count is 0 || totalWeight <= 0)
+			return null;
+
+		var seed = HashCode.Combine(mx, my, totalWeight, entries.Count, Name);
+		var random = new Random(seed);
+		var roll = random.Next(totalWeight);
+		var cumulative = 0;
+
+		foreach (var entry in entries)
+		{
+			cumulative += entry.Weight;
+
+			if (roll < cumulative)
+				return entry;
+		}
+
+		return entries[^1];
 	}
 }

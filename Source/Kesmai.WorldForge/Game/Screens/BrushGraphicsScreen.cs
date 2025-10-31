@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using DigitalRune.Game.Interop;
 using DigitalRune.Game.UI;
 using DigitalRune.Graphics;
@@ -38,37 +37,18 @@ public class BrushGraphicsScreen : InteropGraphicsScreen
 		if (brush is null)
 			return;
 
-		var entries = brush.Entries
-			.Where(entry => entry.Component is not null && entry.Weight > 0)
-			.ToArray();
-
-		if (entries.Length == 0)
-			return;
-
-		var totalWeight = entries.Sum(entry => entry.Weight);
-
-		if (totalWeight <= 0)
-			return;
-
 		var width = Math.Max(1, (int)_presentationTarget.ActualWidth);
 		var height = Math.Max(1, (int)_presentationTarget.ActualHeight);
 
 		var columns = Math.Max(1, width / 55.0f);
 		var rows = Math.Max(1, height / 55.0f);
-		
-		var random = new Random(CreateSeed(brush));
 
 		spriteBatch.Begin(SpriteSortMode.Immediate, samplerState: SamplerState.PointClamp);
 
 		for (var my = 0; my < rows; my++)
 		for (var mx = 0; mx < columns; mx++)
 		{
-			var entry = SelectEntry(entries, totalWeight, random);
-			
-			if (entry is null || entry.Component is null)
-				return;
-
-			var renders = entry.Component.GetRenders();
+			var renders = brush.GetRenders(mx, my);
 			
 			var bounds = new RectangleF(
 				(mx * 55.0f), (my * 55.0f), 55.0f, 55.0f);
@@ -97,39 +77,4 @@ public class BrushGraphicsScreen : InteropGraphicsScreen
 
 		spriteBatch.End();
 	}
-
-	private static SegmentBrushEntry SelectEntry(SegmentBrushEntry[] entries, int totalWeight, Random random)
-	{
-		if (entries.Length == 0 || totalWeight <= 0)
-			return null;
-
-		var roll = random.Next(totalWeight);
-		var cumulative = 0;
-
-		foreach (var entry in entries)
-		{
-			cumulative += entry.Weight;
-
-			if (roll < cumulative)
-				return entry;
-		}
-
-		return entries[^1];
-	}
-
-	private static int CreateSeed(SegmentBrush brush)
-	{
-		if (brush is null)
-			return 0;
-
-		var hash = HashCode.Combine(brush.Name ?? string.Empty, brush.TotalWeight, brush.Entries.Count);
-
-		foreach (var entry in brush.Entries)
-		{
-			hash = HashCode.Combine(hash, entry.Weight, entry.Component?.Name?.GetHashCode() ?? 0);
-		}
-
-		return hash;
-	}
-	
 }

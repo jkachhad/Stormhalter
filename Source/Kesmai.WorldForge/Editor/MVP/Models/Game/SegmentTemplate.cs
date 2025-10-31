@@ -135,6 +135,8 @@ public class SegmentTemplate : ObservableObject, ISegmentObject, IComponentProvi
             yield return provider;
     }
 
+    public IEnumerable<ComponentRender> GetRenders(int mx, int my) => GetRenders();
+    
     public IEnumerable<ComponentRender> GetRenders()
     {
         foreach (var provider in Providers)

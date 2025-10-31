@@ -25,6 +25,7 @@ public interface IComponentProvider
 	void RemoveComponent(ObservableCollection<IComponentProvider> collection);
 
 	IEnumerable<IComponentProvider> GetComponents();
+	IEnumerable<ComponentRender> GetRenders(int mx, int my);
 	IEnumerable<ComponentRender> GetRenders();
 
 	XElement GetSerializingElement();
@@ -158,6 +159,8 @@ public class SegmentComponent : ObservableObject, ISegmentObject, IComponentProv
 		WeakReferenceMessenger.Default.Send(new SegmentComponentChanged(this));
 	}
 
+	public IEnumerable<ComponentRender> GetRenders(int mx, int my) => GetRenders();
+	
 	public IEnumerable<ComponentRender> GetRenders()
 	{
 		// return the render of the internal component.
