@@ -79,6 +79,7 @@ public abstract class ComponentFrame : Grid
 	public ComponentFrame(IComponentProvider provider)
 	{
 		Style = "Client-Content";
+		Width = 500;
 		
 		_componentProvider = provider;
 	}
@@ -97,7 +98,7 @@ public abstract class ComponentFrame : Grid
 		
 		// Define grid structure.
 		ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Auto) });
-		ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Auto) });
+		ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Star) });
 		ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Auto) });
 		
 		RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Auto) });
