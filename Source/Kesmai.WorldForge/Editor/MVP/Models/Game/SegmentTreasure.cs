@@ -252,7 +252,7 @@ public class SegmentHoard : SegmentTreasure
 	{
 		var element = base.GetSerializingElement();
 
-		foreach (var script in _scripts)
+		foreach (var script in _scripts.Where(s => !s.IsEmpty))
 			element.Add(script.GetSerializingElement());
 
 		return element;
@@ -400,7 +400,7 @@ public class TreasureEntry : ObservableObject
 		if (!String.IsNullOrEmpty(_notes))
 			element.Add(new XElement("notes", _notes));
 
-		foreach (var script in _scripts)
+		foreach (var script in _scripts.Where(s => !s.IsEmpty))
 			element.Add(script.GetSerializingElement());
 
 		return element;

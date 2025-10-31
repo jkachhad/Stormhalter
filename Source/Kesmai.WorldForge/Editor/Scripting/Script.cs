@@ -25,6 +25,8 @@ public class Script
 	
 	/// <summary>Gets or sets a value indicating whether this script is enabled.</summary>
 	public bool IsEnabled { get; set; }
+	
+	public bool IsEmpty => String.IsNullOrWhiteSpace(Body);
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Script"/> class.

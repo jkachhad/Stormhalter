@@ -181,7 +181,7 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 		if (_maximum > 0)
 			element.Add(new XElement("maximum", _maximum));
 			
-		foreach (var script in _scripts)
+		foreach (var script in _scripts.Where(s => !s.IsEmpty))
 			element.Add(script.GetSerializingElement());
 
 		foreach (var entry in Entries)

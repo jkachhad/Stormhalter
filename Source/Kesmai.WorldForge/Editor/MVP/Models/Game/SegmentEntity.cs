@@ -160,7 +160,7 @@ public class SegmentEntity : ObservableObject, ICloneable, ISegmentObject
 		var element = new XElement("entity", 
 			new XAttribute("name", _name));
 			
-		foreach (var script in _scripts)
+		foreach (var script in _scripts.Where(s => !s.IsEmpty))
 			element.Add(script.GetSerializingElement());
 
 		if (!String.IsNullOrEmpty(_notes))
