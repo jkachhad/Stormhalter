@@ -34,24 +34,10 @@
       <PackageReference Include="CommonServiceLocator" Version="2.0.6" />
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
       <PackageReference Include="Dirkster.AvalonDock" Version="4.50.2" />
-       <PackageReference Include="DotNetZip" Version="1.16.0">
-         <NoWarn>NU1903</NoWarn>
-      </PackageReference>
-      <PackageReference Include="DotNext" Version="5.12.1" />
-      <PackageReference Include="iTextSharp" Version="5.5.13.4">
-        <NoWarn>NU1701</NoWarn>
-      </PackageReference>
       <PackageReference Include="MonoGame.Framework.WindowsDX" Version="$(MonoGameVersion)" />
       <PackageReference Include="NuGet.Frameworks" Version="6.14.0" />
       <PackageReference Include="NuGet.Resolver" Version="6.14.0" />
-      <PackageReference Include="RedGate.SmartAssembly.MSBuild" Version="8.0.1.4676-preview">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
       <PackageReference Include="RoslynPad.Editor.Windows" Version="4.12.1" />
-      <PackageReference Include="Syncfusion.PropertyGrid.WPF" Version="18.4.0.44" />
-      <PackageReference Include="System.Linq" Version="4.3.0" />
-      <PackageReference Include="WriteableBitmapEx" Version="1.6.7" />
     </ItemGroup>
 
     <ItemGroup>
@@ -112,90 +98,6 @@
     </ItemGroup>
 
     <PropertyGroup>
-        <SmartAssemblyIsEnabled>false</SmartAssemblyIsEnabled>
         <EnableWindowsTargeting>true</EnableWindowsTargeting>
     </PropertyGroup>
-
-    <Target Name="SmartAssemblyTarget" AfterTargets="Publish">
-        <ItemGroup>
-            <!-- Remove unwanted files, eg. resources of unused files, unused native files -->
-            <GarbageFile Include="AvalonDock.dll" />
-            <GarbageFile Include="CommonServiceLocator.dll" />
-            <GarbageFile Include="DigitalRune.Animation.dll" />
-            <GarbageFile Include="DigitalRune.dll" />
-            <GarbageFile Include="DigitalRune.Game.dll" />
-            <GarbageFile Include="DigitalRune.Game.Input.dll" />
-            <GarbageFile Include="DigitalRune.Game.UI.Content.Pipeline.dll" />
-            <GarbageFile Include="DigitalRune.Game.UI.dll" />
-            <GarbageFile Include="DigitalRune.Geometry.dll" />
-            <GarbageFile Include="DigitalRune.Graphics.dll" />
-            <GarbageFile Include="DigitalRune.Mathematics.Content.Pipeline.dll" />
-            <GarbageFile Include="DigitalRune.Mathematics.dll" />
-            <GarbageFile Include="DigitalRune.Particles.dll" />
-            <GarbageFile Include="DigitalRune.ServiceLocation.dll" />
-            <GarbageFile Include="DotNetZip.dll" />
-            <GarbageFile Include="Humanizer.dll" />
-            <GarbageFile Include="ICSharpCode.AvalonEdit.dll" />
-            <GarbageFile Include="Microsoft.Bcl.AsyncInterfaces.dll" />
-            <GarbageFile Include="Microsoft.CodeAnalysis.AnalyzerUtilities.dll" />
-            <GarbageFile Include="Microsoft.CodeAnalysis.CSharp.dll" />
-            <GarbageFile Include="Microsoft.CodeAnalysis.CSharp.Features.dll" />
-            <GarbageFile Include="Microsoft.CodeAnalysis.CSharp.Scripting.dll" />
-            <GarbageFile Include="Microsoft.CodeAnalysis.CSharp.Workspaces.dll" />
-            <GarbageFile Include="Microsoft.CodeAnalysis.dll" />
-            <GarbageFile Include="Microsoft.CodeAnalysis.Features.dll" />
-            <GarbageFile Include="Microsoft.CodeAnalysis.LanguageServer.Protocol.dll" />
-            <GarbageFile Include="Microsoft.CodeAnalysis.Scripting.dll" />
-            <GarbageFile Include="Microsoft.CodeAnalysis.VisualBasic.dll" />
-            <GarbageFile Include="Microsoft.CodeAnalysis.Workspaces.dll" />
-            <GarbageFile Include="Microsoft.DiaSymReader.dll" />
-            <GarbageFile Include="CommunityToolkit.Mvvm.dll" />
-            <GarbageFile Include="MonoGame.Framework.dll" />
-            <GarbageFile Include="RoslynPad.Editor.Windows.dll" />
-            <GarbageFile Include="RoslynPad.Roslyn.dll" />
-            <GarbageFile Include="RoslynPad.Roslyn.Windows.dll" />
-            <GarbageFile Include="SharpDX.Direct2D1.dll" />
-            <GarbageFile Include="SharpDX.Direct3D11.dll" />
-            <GarbageFile Include="SharpDX.Direct3D9.dll" />
-            <GarbageFile Include="SharpDX.dll" />
-            <GarbageFile Include="SharpDX.DXGI.dll" />
-            <GarbageFile Include="SharpDX.Mathematics.dll" />
-            <GarbageFile Include="SharpDX.MediaFoundation.dll" />
-            <GarbageFile Include="SharpDX.XAudio2.dll" />
-            <GarbageFile Include="SharpDX.XInput.dll" />
-            <GarbageFile Include="Syncfusion.Licensing.dll" />
-            <GarbageFile Include="Syncfusion.PropertyGrid.WPF.dll" />
-            <GarbageFile Include="Syncfusion.SfInput.WPF.dll" />
-            <GarbageFile Include="Syncfusion.SfShared.WPF.dll" />
-            <GarbageFile Include="Syncfusion.Shared.WPF.dll" />
-            <GarbageFile Include="Syncfusion.Tools.WPF.dll" />
-            <GarbageFile Include="System.Composition.AttributedModel.dll" />
-            <GarbageFile Include="System.Composition.Convention.dll" />
-            <GarbageFile Include="System.Composition.Hosting.dll" />
-            <GarbageFile Include="System.Composition.Runtime.dll" />
-            <GarbageFile Include="System.Composition.TypedParts.dll" />
-            <GarbageFile Include="System.Reactive.dll" />
-            <GarbageFile Include="System.Reactive.Linq.dll" />
-            <GarbageFile Include="System.Reactive.xml" />
-            <GarbageFile Include="System.Windows.Interactivity.dll" />
-            <GarbageFile Include="WriteableBitmapEx.Wpf.dll" />
-
-            <GarbageFile Include="Kesmai.WorldForge.deps.json" />
-            <GarbageFile Include="Kesmai.WorldForge.dll.config" />
-            <GarbageFile Include="Kesmai.WorldForge.pdb" />
-        </ItemGroup>
-
-        <!-- SmartAssembly -->
-        <SmartAssembly ProjectFile="$(ProjectDir)\$(AssemblyName).saproj" Input="$(PublishDir)\$(AssemblyName).dll" OverwriteAssembly="true" />
-        
-        <!-- Copy -->
-        <Copy SourceFiles="$(PublishDir)$(AssemblyName).dll" DestinationFiles="$(SolutionDir)..\..\Kesmai\Build\Publish\$(AssemblyName).dll" />
-        <Copy SourceFiles="$(PublishDir)$(AssemblyName).exe" DestinationFiles="$(SolutionDir)..\..\Kesmai\Build\Publish\$(AssemblyName).exe" />
-        <Copy SourceFiles="$(PublishDir)$(AssemblyName).runtimeconfig.json" DestinationFiles="$(SolutionDir)..\..\Kesmai\Build\Publish\$(AssemblyName).runtimeconfig.json" />
-
-        <!-- Clean-up -->
-        <Delete Files="$(PublishDir)%(GarbageFile.Identity)" ContinueOnError="WarnAndContinue" />
-        <RemoveDir Directories="$(PublishDir)%(GarbageDir.Identity)" ContinueOnError="WarnAndContinue" />
-
-    </Target>
 </Project>

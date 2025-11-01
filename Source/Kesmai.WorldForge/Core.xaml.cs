@@ -16,7 +16,6 @@ using DigitalRune.Game.Interop;
 using DigitalRune.Storages;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Scripting;
-using Syncfusion.Licensing;
 
 namespace Kesmai.WorldForge;
 
@@ -144,9 +143,7 @@ public partial class Core : Application
 		}
 		
 		services.Register(typeof(TerrainManager), null, new TerrainManager());
-		
-		SyncfusionLicenseProvider.RegisterLicense("Mzk1NTI2QDMxMzgyZTM0MmUzMG85YlBIdldReGhYeUl3OFQxWUpUVDhyZ3gyRFpESm1NRUF1aUtpM01pcUk9");
-		
+
 		InitializeComponent();
 			
 		if (_storageDirectory is { Exists: false })

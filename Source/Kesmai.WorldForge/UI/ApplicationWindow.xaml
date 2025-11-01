@@ -10,7 +10,6 @@
         xmlns:ui="clr-namespace:Kesmai.WorldForge.UI"
         xmlns:editor="clr-namespace:Kesmai.WorldForge.Editor"
         xmlns:documents="clr-namespace:Kesmai.WorldForge.UI.Documents"
-        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
 
         mc:Ignorable="d"
 		
@@ -174,9 +173,7 @@
 
                         <LayoutAnchorablePane DockHeight="*">
                             <LayoutAnchorable Title="Properties" CanDockAsTabbedDocument="False">
-                                <syncfusion:PropertyGrid SelectedObject="{Binding ActiveContent, Mode=OneWay}"
-                                                         DisableAnimationOnObjectSelection="True">
-                                </syncfusion:PropertyGrid>
+
                             </LayoutAnchorable>
                         </LayoutAnchorablePane>
                     </LayoutAnchorablePaneGroup>

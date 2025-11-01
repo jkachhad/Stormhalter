@@ -511,25 +511,6 @@ public class ApplicationPresenter : ObservableRecipient
 			graphicsScreen.InvalidateRender();
 	}
 
-    private async Task ExportToPdfAsync()
-    {
-        if (ActiveDocument is SegmentRegion region)
-        {
-            var dialog = new Microsoft.Win32.SaveFileDialog()
-            {
-                DefaultExt = ".pdf",
-                Filter = "PDF Files (*.pdf)|*.pdf"
-            };
-
-            if (dialog.ShowDialog() == true)
-            {
-                var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
-                var pdfExportService = new PdfExportService(terrainManager);
-                await pdfExportService.ExportCurrentViewAsync(region, dialog.FileName);
-            }
-        }
-    }
-
     private void ConvertSegment()
     {
         var dialog = new Microsoft.Win32.OpenFileDialog()
