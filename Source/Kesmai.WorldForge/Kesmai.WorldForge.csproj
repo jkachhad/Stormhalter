@@ -106,4 +106,8 @@
     <PropertyGroup>
         <EnableWindowsTargeting>true</EnableWindowsTargeting>
     </PropertyGroup>
+    
+    <Target Name="CopySingleFile" AfterTargets="Publish">
+        <Copy SourceFiles="$(PublishedSingleFilePath)" DestinationFolder="..\..\..\Kesmai\Build\Publish" />
+    </Target>
 </Project>
