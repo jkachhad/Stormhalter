@@ -86,10 +86,14 @@ public class SegmentWorkspace
 			Assembly.Load("RoslynPad.Roslyn.Windows"),
 			Assembly.Load("RoslynPad.Editor.Windows")
 		};
+		
+		var segmentClassName = segment.Name.Replace(" ", String.Empty);
 
 		var namespaceImports = new string[]
 		{
-			$"static Kesmai.Server.Segments.{segment.Name}",
+			"System.Drawing",
+			
+			$"static Kesmai.Server.Segments.{segmentClassName}",
 			$"static Kesmai.Server.Segments.Editor",
 			"Kesmai.Server.Game",
 			"Kesmai.Server.Items",
@@ -98,6 +102,8 @@ public class SegmentWorkspace
 			"Kesmai.Server.Spells",
 			"SpanReader = DotNext.Buffers.SpanReader<byte>",
 			"SpanWriter = DotNext.Buffers.PoolingArrayBufferWriter<byte>",
+
+			$"static Kesmai.Server.Internal.{segmentClassName}.Cache"
 		};
 		
 		var roslynReferences = RoslynHostReferences.NamespaceDefault
