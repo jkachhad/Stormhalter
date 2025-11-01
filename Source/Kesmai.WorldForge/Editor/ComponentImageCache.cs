@@ -17,7 +17,7 @@ public sealed class ComponentImageCache
     public WriteableBitmap Get(IComponentProvider component)
     {
         if (!_renders.TryGetValue(component, out var bmp))
-            _renders[component] =  Update(component);
+            _renders[component] = Update(component);
 
         return bmp;
     }
@@ -38,7 +38,9 @@ public sealed class ComponentImageCache
             var empty = new WriteableBitmap(1, 1, 96, 96, PixelFormats.Pbgra32, null);
             
             empty.Lock(); 
-            empty.AddDirtyRect(new Int32Rect(0, 0, 1, 1)); empty.Unlock(); empty.Freeze();
+            empty.AddDirtyRect(new Int32Rect(0, 0, 1, 1)); 
+            empty.Unlock(); 
+            empty.Freeze();
             
             _renders[component] = empty;
             return empty;
