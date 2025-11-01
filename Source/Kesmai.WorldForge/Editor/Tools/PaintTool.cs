@@ -42,7 +42,7 @@ public class PaintTool : Tool
     }
 
 
-    public override void OnHandleInput ( PresentationTarget target, IInputService inputService )
+    public override void OnHandleInput ( WorldPresentationTarget target, IInputService inputService )
     {
         base.OnHandleInput ( target, inputService );
 
@@ -50,7 +50,9 @@ public class PaintTool : Tool
             return;
 
         var services = ServiceLocator.Current;
-        var presenter = services.GetInstance<ApplicationPresenter> ( );
+        var presenter = services.GetInstance<ApplicationPresenter>();
+        var regionToolbar = services.GetInstance<RegionToolbar>();
+        var componentPalette = services.GetInstance<ComponentPalette>();
 
         var graphicsScreen = target.WorldScreen;
         var region = target.Region;
@@ -64,7 +66,7 @@ public class PaintTool : Tool
 
             if ( inputService.IsReleased ( Keys.Escape ) )
             {
-                presenter.SelectTool ( default ( Tool ) );
+                regionToolbar.SelectTool(null);
                 inputService.IsKeyboardHandled = true;
             }
         }
@@ -76,59 +78,39 @@ public class PaintTool : Tool
 
         if ( inputService.IsReleased ( MouseButtons.Left ) && selection.IsSelected ( cx, cy, region ) )
         {
-            var component = presenter.SelectedComponent;
+            var provider = componentPalette.SelectedProvider;
 
-            var baseComponent = presenter.SelectedComponent;
-
-            if ( baseComponent != null )
+            if (provider is not null)
             {
-                // Create a temporary tile and insert the component clone
-                var tempTile = new SegmentTile ( cx, cy );
-                tempTile.Components.Add ( baseComponent.Clone ( ) );
-                tempTile.UpdateTerrain ( );
-
-                var componentWindow = new ComponentsWindow ( region, tempTile, graphicsScreen );
-                componentWindow.Show ( graphicsScreen.UI );
-                componentWindow.Center ( );
-
-                componentWindow.Closed += ( s, e ) =>
+                foreach (var area in selection)
                 {
-                    var configuredComponent = tempTile.Components.FirstOrDefault ( );
-
-                    if ( configuredComponent == null )
-                        return;
-
-                    foreach ( var area in selection )
+                    for (var x = area.Left; x < area.Right; x++)
+                    for (var y = area.Top; y < area.Bottom; y++)
                     {
-                        for ( var x = area.Left; x < area.Right; x++ )
-                            for ( var y = area.Top; y < area.Bottom; y++ )
-                            {
-                                var selectedTile = region.GetTile ( x, y );
+                        var selectedTile = region.GetTile(x, y);
 
-                                if ( selectedTile == null )
-                                    region.SetTile ( x, y, selectedTile = new SegmentTile ( x, y ) );
+                        if (selectedTile == null)
+                            region.SetTile(x, y, selectedTile = new SegmentTile(x, y));
 
-                                if ( !_isShiftDown && !_isAltDown )
-                                {
-                                    var similar = GetSimilarComponents ( selectedTile, baseComponent.GetType ( ) );
-                                    foreach ( var similarComponent in similar )
-                                        selectedTile.RemoveComponent ( similarComponent );
-                                }
-                                else if ( _isAltDown )
-                                {
-                                    selectedTile.Components.Clear ( );
-                                }
+                        /*if (!_isShiftDown && !_isAltDown)
+                        {
+                            var similar = GetSimilarComponents(selectedTile, baseComponent.GetType());
+                            foreach (var similarComponent in similar)
+                                selectedTile.RemoveComponent(similarComponent);
+                        }
+                        else if (_isAltDown)
+                        {
+                            selectedTile.Components.Clear();
+                        }*/
 
-                                selectedTile.Components.Add ( configuredComponent.Clone ( ) );
-                                selectedTile.UpdateTerrain ( );
-                            }
+                        provider.AddComponent(selectedTile.Providers);
+                        selectedTile.UpdateTerrain();
+                        graphicsScreen.InvalidateRender();
                     }
-
-                    graphicsScreen.InvalidateRender ( );
-                };
+                }
             }
-
-
+            
+            inputService.IsMouseOrTouchHandled = true;
         }
     }
 
@@ -150,7 +132,8 @@ public class PaintTool : Tool
         var graphicsService = context.GraphicsService;
         var spriteBatch = graphicsService.GetSpriteBatch ( );
 
-        var presentationTarget = context.GetPresentationTarget ( );
+        if (context.PresentationTarget is not WorldPresentationTarget presentationTarget)
+            return;
 
         var worldScreen = presentationTarget.WorldScreen;
         var uiScreen = worldScreen.UI;

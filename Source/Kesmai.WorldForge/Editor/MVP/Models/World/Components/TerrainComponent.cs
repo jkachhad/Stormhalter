@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows;
+using System.Linq;
 using System.Xml.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
-using DigitalRune.Game.UI;
-using DigitalRune.Game.UI.Controls;
-using DigitalRune.Mathematics.Algebra;
+using Kesmai.WorldForge.Editor;
+using Kesmai.WorldForge.UI.Documents;
+using Kesmai.WorldForge.Windows;
 using Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge.Models;
 
-public abstract class TerrainComponent : ObservableObject
+public abstract class TerrainComponent : ObservableObject, IComponentProvider
 {
     #region Static
 
@@ -44,6 +45,8 @@ public abstract class TerrainComponent : ObservableObject
     /// </summary>
     [Browsable( true )]
     public String Comment { get; set; }
+
+    public bool IsEditable => true;
 
     #endregion
 
@@ -92,43 +95,37 @@ public abstract class TerrainComponent : ObservableObject
     #endregion
 
     #region Methods
-
+    
     /// <summary>
     /// Gets an XML element that describes this component.
     /// </summary>
-    public virtual XElement GetXElement()
+    public virtual XElement GetSerializingElement()
     {
-        var element = new XElement( "component" );
+        var element = new XElement("component");
 
-        element.Add( new XAttribute( "type", GetTypeAlias() ) );
+        element.Add(new XAttribute("type", GetTypeAlias()));
 
-        if( Color != Color.White )
+        if (Color != Color.White)
         {
-            element.Add( new XElement( "color",
-                new XAttribute( "r", Color.R ), new XAttribute( "g", Color.G ), new XAttribute( "b", Color.B ),
-                new XAttribute( "a", Color.A )
-            ) );
-        }
-        if( !String.IsNullOrWhiteSpace( Comment ) )
-        {
-            element.Add( new XElement( "comment", Comment ) );
+            element.Add(new XElement("color",
+                new XAttribute("r", Color.R), new XAttribute("g", Color.G), new XAttribute("b", Color.B),
+                new XAttribute("a", Color.A)
+            ));
         }
 
+        if (!String.IsNullOrWhiteSpace(Comment))
+        {
+            element.Add(new XElement("comment", Comment));
+        }
 
         return element;
     }
 
+    public XElement GetReferencingElement() => GetSerializingElement();
+
     protected virtual string GetTypeAlias()
     {
         return GetType().Name;
-    }
-
-    /// <summary>
-    /// Gets the rendered terrain.
-    /// </summary>
-    public virtual IEnumerable<ComponentRender> GetTerrain()
-    {
-        yield break;
     }
 
     public void SetColor( int r, int g, int b )
@@ -141,42 +138,36 @@ public abstract class TerrainComponent : ObservableObject
         Color = new Color( r, g, b, a );
     }
 
-    public abstract TerrainComponent Clone();
-
-    public virtual IEnumerable<Button> GetInspectorActions()
-    {
-        var templateButton = new Button()
-        {
-            Content = new TextBlock()
-            {
-                Foreground = Color.OrangeRed,
-                Stroke = Color.Black,
-                FontStyle = MSDFStyle.Outline,
-
-                Font = "Tahoma",
-                FontSize = 10,
-                Text = "Template",
-
-                Margin = new Vector4F( 3, 3, 3, 3 )
-            }
-        };
-
-        templateButton.Click += ( o, args ) =>
-        {
-            var element = GetXElement();
-            var typeAttribute = element.Attribute( "type" );
-
-            if( typeAttribute != null )
-            {
-                element.Name = typeAttribute.Value;
-                typeAttribute.Remove();
-            }
-
-            Clipboard.SetText( element.ToString() );
-        };
-
-        yield return templateButton;
-    }
+    public abstract IComponentProvider Clone();
 
     #endregion
+
+    public void AddComponent(ObservableCollection<IComponentProvider> collection)
+    {
+        // create a clone of this component and add it to the tile.
+        collection.Add(Clone());
+    }
+
+    public void RemoveComponent(ObservableCollection<IComponentProvider> collection)
+    {
+        // remove this specific component.
+        collection.Remove(this);
+    }
+    
+    public IEnumerable<IComponentProvider> GetComponents()
+    {
+        yield return this;
+    }
+    
+    public IEnumerable<ComponentRender> GetRenders(int mx, int my) => GetRenders();
+
+    public virtual IEnumerable<ComponentRender> GetRenders()
+    {
+        yield break;
+    }
+    
+    public ComponentFrame GetComponentFrame()
+    {
+        return new TerrainComponentFrame(this);
+    }
 }

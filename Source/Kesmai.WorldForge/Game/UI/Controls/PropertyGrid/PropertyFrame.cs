@@ -38,10 +38,11 @@ public class PropertyFrame : StackPanel
 	public PropertyFrame()
 	{
 		Orientation = Orientation.Horizontal;
-
 		HorizontalAlignment = HorizontalAlignment.Stretch;
 			
-		Style = "DarkCanvas";
+		Style = "Client-TextBlock-Canvas";
+
+		Padding = new Vector4F(2);
 	}
 
 	protected override void OnLoad()
@@ -55,10 +56,10 @@ public class PropertyFrame : StackPanel
 		};
 		_nameBlock = new TextBlock()
 		{
-			Foreground = Color.Yellow, Stroke = Color.Black,
+			Foreground = Color.White, Stroke = Color.Black,
 			FontStyle = MSDFStyle.Outline,
 				
-			Font = "Tahoma", FontSize = 10,
+			Font = "Tahoma", FontSize = 9,
 				
 			HorizontalAlignment = HorizontalAlignment.Right,
 				

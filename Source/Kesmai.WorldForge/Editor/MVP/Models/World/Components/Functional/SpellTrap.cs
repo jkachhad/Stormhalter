@@ -23,9 +23,9 @@ public abstract class SpellTrap : TrapComponent
 			_skill = (int)skillElement;
 	}
 	
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		if (_skill > 0)
 			element.Add(new XElement("skill", _skill));
@@ -46,9 +46,9 @@ public class WhirlwindTrap : SpellTrap
 			Direction = Direction.GetDirection((int)directionElement);
 	}
 	
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		if (Direction != null)
 			element.Add(new XElement("direction", Direction.Index));
@@ -58,7 +58,7 @@ public class WhirlwindTrap : SpellTrap
 	
 	public override TerrainComponent Clone()
 	{
-		return new WhirlwindTrap(GetXElement());
+		return new WhirlwindTrap(GetSerializingElement());
 	}
 }
 
@@ -74,9 +74,9 @@ public class PoisonCloudTrap : SpellTrap
 			Direction = Direction.GetDirection((int)directionElement);
 	}
 	
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		if (Direction != null)
 			element.Add(new XElement("direction", Direction.Index));
@@ -86,7 +86,7 @@ public class PoisonCloudTrap : SpellTrap
 	
 	public override TerrainComponent Clone()
 	{
-		return new PoisonCloudTrap(GetXElement());
+		return new PoisonCloudTrap(GetSerializingElement());
 	}
 }
 
@@ -98,7 +98,7 @@ public class BonfireTrap : SpellTrap
 	
 	public override TerrainComponent Clone()
 	{
-		return new BonfireTrap(GetXElement());
+		return new BonfireTrap(GetSerializingElement());
 	}
 }
 
@@ -110,7 +110,7 @@ public class FirestormTrap : SpellTrap
 	
 	public override TerrainComponent Clone()
 	{
-		return new FirestormTrap(GetXElement());
+		return new FirestormTrap(GetSerializingElement());
 	}
 }
 
@@ -122,7 +122,7 @@ public class ConcussionTrap : SpellTrap
 	
 	public override TerrainComponent Clone()
 	{
-		return new ConcussionTrap(GetXElement());
+		return new ConcussionTrap(GetSerializingElement());
 	}
 }
 
@@ -134,7 +134,7 @@ public class LightningBoltTrap : SpellTrap
 	
 	public override TerrainComponent Clone()
 	{
-		return new LightningBoltTrap(GetXElement());
+		return new LightningBoltTrap(GetSerializingElement());
 	}
 }
 
@@ -146,7 +146,7 @@ public class BlindTrap : SpellTrap
 	
 	public override TerrainComponent Clone()
 	{
-		return new BlindTrap(GetXElement());
+		return new BlindTrap(GetSerializingElement());
 	}
 }
 
@@ -158,7 +158,7 @@ public class FearTrap : SpellTrap
 	
 	public override TerrainComponent Clone()
 	{
-		return new FearTrap(GetXElement());
+		return new FearTrap(GetSerializingElement());
 	}
 }
 
@@ -170,6 +170,6 @@ public class StunTrap : SpellTrap
 	
 	public override TerrainComponent Clone()
 	{
-		return new StunTrap(GetXElement());
+		return new StunTrap(GetSerializingElement());
 	}
 }

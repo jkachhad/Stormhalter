@@ -2,10 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CommonServiceLocator;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using Kesmai.WorldForge.Editor;
 using Microsoft.Xna.Framework;
 
 namespace Kesmai.WorldForge;
+
+public class SelectionChanged(Selection selection) : ValueChangedMessage<Selection>(selection);
 
 public class Selection : List<Rectangle>
 {
@@ -40,6 +44,8 @@ public class Selection : List<Rectangle>
 			Clean();
 			
 		Region = region;
+		
+		WeakReferenceMessenger.Default.Send(new SelectionChanged(this));
 	}
 
 	public void Shift(int dx, int dy)
@@ -52,6 +58,8 @@ public class Selection : List<Rectangle>
 		Clear();
 			
 		AddRange(updated);
+		
+		WeakReferenceMessenger.Default.Send(new SelectionChanged(this));
 	}
 
 	private void Clean()

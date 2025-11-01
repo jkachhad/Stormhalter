@@ -34,7 +34,7 @@ public class ArrowTool : Tool
 	{
 	}
 		
-	public override void OnHandleInput(PresentationTarget target, IInputService inputService)
+	public override void OnHandleInput(WorldPresentationTarget target, IInputService inputService)
 	{
 		base.OnHandleInput(target, inputService);
 			
@@ -131,9 +131,37 @@ public class ArrowTool : Tool
 			else
 			{
 				if (_isSelecting)
+				{
+					//update the selection rectangle
 					_selectionEnd = currentPosition;
+					
+					//the mouse is outside the window, so scroll in that direction
+					var panX = 0; var panY = 0;
+					var scrollSpeed = 10;
+					
+					//if the mouse is outside the window, pan in that direction.
+					if (currentPosition.X < 0)
+						panX = -scrollSpeed;
+					else if (currentPosition.X > graphicsScreen.Width)
+						panX = scrollSpeed;
+					
+					if (currentPosition.Y < 0)
+						panY = -scrollSpeed;
+					else if (currentPosition.Y > graphicsScreen.Height)
+						panY = scrollSpeed;
+					
+					// apply the pan to the camera
+					graphicsScreen.CameraLocation += new Vector2F(
+						panX / (presenter.UnitSize * graphicsScreen.ZoomFactor),
+						panY / (presenter.UnitSize * graphicsScreen.ZoomFactor));
+					
+					// apply the pan opposite to the pan
+					_selectionStart -= new Vector2F(panX, panY);
+				}
 				else
+				{
 					_selectionStart = _selectionEnd = currentPosition;
+				}
 
 				_isSelecting = true;
 			}
@@ -196,31 +224,6 @@ public class ArrowTool : Tool
 			_selectionStart = Vector2F.Zero;
 			_selectionEnd = Vector2F.Zero;
 		}
-			
-		if (inputService.IsDoubleClick(MouseButtons.Left))
-		{
-			if (graphicsScreen.UI != null)
-			{
-				var (mx, my) = graphicsScreen.ToWorldCoordinates((int)_position.X, (int)_position.Y);
-				var tile = region.GetTile(mx, my);
-
-				if (tile != null)
-				{
-					var componentWindow = new ComponentsWindow(region, tile, graphicsScreen);
-						
-					selection.Clear();
-
-					componentWindow.Show(graphicsScreen.UI);
-					componentWindow.Center();
-				}
-				else
-				{
-					new RegionWindow(region).Show(graphicsScreen.UI);
-				}
-			}
-
-			inputService.IsMouseOrTouchHandled = true;
-		}
 	}
 		
 	private static Color _selectionPreview = Color.FromNonPremultiplied(255, 255, 0, 100);
@@ -237,11 +240,12 @@ public class ArrowTool : Tool
 		var graphicsService = context.GraphicsService;
 		var spriteBatch = graphicsService.GetSpriteBatch();
 			
-		var presentationTarget = context.GetPresentationTarget();
+		if (context.PresentationTarget is not WorldPresentationTarget presentationTarget)
+			return;
 			
 		var worldScreen = presentationTarget.WorldScreen;
 		var viewRectangle = worldScreen.GetViewRectangle();
-			
+		
 		if (_isSelecting)
 		{
 			var preview = new Rectangle((int)_selectionStart.X, (int)_selectionStart.Y, 

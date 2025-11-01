@@ -78,6 +78,8 @@ public class DropDownPropertyEditor : PropertyEditor
 		_internal.Properties.Get<int>(DropDownButton.SelectedIndexPropertyId).Changed += (o, args) =>
 		{
 			_parent.PropertyInfo.SetValue(_parent.Source, sources[args.NewValue].Value, null);
+			
+			NotifyPropertyChanged(_parent.PropertyInfo);
 		};
 	}
 }

@@ -108,6 +108,8 @@ public class ColorPropertyEditor : PropertyEditor
 			var source = _parent.Source;
 				
 			propertyInfo.SetValue(source, color, null);
+			
+			NotifyPropertyChanged(propertyInfo);
 		}
 	}
 }

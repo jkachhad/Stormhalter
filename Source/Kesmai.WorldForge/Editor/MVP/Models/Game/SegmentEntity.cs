@@ -1,0 +1,197 @@
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Xml.Linq;
+using CommonServiceLocator;
+using DigitalRune.Collections;
+using Kesmai.WorldForge.Scripting;
+using Kesmai.WorldForge.UI.Documents;
+using CommunityToolkit.Mvvm.ComponentModel;
+using System.ComponentModel;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Collections.Generic;
+using System.Configuration;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
+using Kesmai.WorldForge.Editor;
+using Microsoft.CodeAnalysis;
+
+namespace Kesmai.WorldForge;
+
+public class SegmentEntityChanged(SegmentEntity segmentEntity) : ValueChangedMessage<SegmentEntity>(segmentEntity);
+	
+[Script("OnSpawn", "CreatureEntity OnSpawn()", "{", "}", "\treturn new MobileEntity();")]
+[Script("OnDeath", "void OnDeath(MobileEntity source, MobileEntity killer)", "{", "}")]
+[Script("OnIncomingPlayer", "void OnIncomingPlayer(MobileEntity source, PlayerEntity player)", "{", "}")]
+public class SegmentEntity : ObservableObject, ICloneable, ISegmentObject
+{
+	private string _name;
+	private string _notes;
+	private string _group;
+		
+	private ObservableCollection<Script> _scripts = new ObservableCollection<Script>();
+	
+	[Category("Identity")]
+	public string Name
+	{
+		get => _name;
+		set
+		{
+			if (SetProperty(ref _name, value))
+				WeakReferenceMessenger.Default.Send(new SegmentEntityChanged(this));
+		}
+	}
+
+	public string Notes
+	{
+		get => _notes;
+		set => SetProperty(ref _notes, value);
+	}
+	
+	/// <summary>
+	/// Gets or sets the group for this entity.
+	/// </summary>
+	/// <remarks>
+	/// The group is used to categorize entities in the edit. It is only used for organizational purposes.
+	/// The format is slash-separated values, e.g. "animals\mammals", similar to a path.
+	/// This allows for grouping related entities together in a hierarchical manner.
+	///
+	/// The path will be used to create a folder structure in the segment tree.
+	/// </remarks>
+	public string Group
+	{
+		get => _group;
+		set
+		{
+			if (SetProperty(ref _group, value))
+				WeakReferenceMessenger.Default.Send(new SegmentEntityChanged(this));
+		}
+	}
+	
+	[Browsable(false)]
+	public ObservableCollection<Script> Scripts
+	{
+		get => _scripts;
+		set => SetProperty(ref _scripts, value);
+	}
+	
+	public SegmentEntity()
+	{
+		ValidateScripts();
+	}
+		
+	public SegmentEntity(XElement element)
+	{
+		_name = (string)element.Attribute("name");
+
+		if (element.TryGetElement("notes", out var notesElement))
+			_notes = (string)notesElement;
+		
+		if (element.TryGetElement("group", out var groupElement))
+			_group = (string)groupElement;
+		
+		ValidateScripts(element);
+	}
+	
+	public void Present(ApplicationPresenter presenter)
+	{
+		var entityViewModel = presenter.Documents.OfType<EntitiesViewModel>().FirstOrDefault();
+
+		if (entityViewModel is null)
+			presenter.Documents.Add(entityViewModel = new EntitiesViewModel());
+
+		if (presenter.ActiveDocument != entityViewModel)
+			presenter.SetActiveDocument(entityViewModel);
+
+		presenter.SetActiveContent(this);
+	}
+	
+	public void Copy(Segment target)
+	{
+		if (Clone() is SegmentEntity clonedEntity)
+			target.Entities.Add(clonedEntity);
+	}
+
+	private void ValidateScripts(XElement rootElement = default)
+	{
+		var attributes = GetType().GetCustomAttributes(typeof(ScriptAttribute), inherit: true)
+			.Cast<ScriptAttribute>();
+
+		var implementations = new Dictionary<string, Script>();
+
+		if (rootElement != null)
+		{
+			foreach (var scriptElement in rootElement.Elements("script"))
+			{
+				var script = new Script(scriptElement);
+
+				if (!implementations.TryAdd(script.Name, script))
+					throw new InvalidOperationException($"Duplicate script name '{script.Name}'.");
+			}
+		}
+
+		foreach (var attribute in attributes)
+		{
+			if (implementations.TryGetValue(attribute.Name, out var script))
+			{
+				script.Signature = attribute.Signature;
+				script.Header = attribute.Header;
+				script.Footer = attribute.Footer;
+				
+				_scripts.Add(script);
+			}
+			else
+			{
+				_scripts.Add(new Script
+				{
+					Name = attribute.Name,
+					Signature = attribute.Signature,
+					Header = attribute.Header,
+					Body = attribute.Body,
+					Footer = attribute.Footer
+				});
+			}
+		}
+	}
+		
+	public XElement GetSerializingElement()
+	{
+		var element = new XElement("entity", 
+			new XAttribute("name", _name));
+			
+		foreach (var script in _scripts.Where(s => !s.IsEmpty))
+			element.Add(script.GetSerializingElement());
+
+		if (!String.IsNullOrEmpty(_notes))
+			element.Add(new XElement("notes", _notes));
+		
+		if (!String.IsNullOrEmpty(_group))
+			element.Add(new XElement("group", _group));
+			
+		return element;
+	}
+	
+	public XElement GetReferencingElement()
+	{
+		return new XElement("entity",
+			new XAttribute("name", _name));
+	}
+
+	public override string ToString() => _name;
+		
+	public object Clone()
+	{
+		var clone = new SegmentEntity()
+		{
+			Name = $"Copy of {_name}",
+			Notes = _notes,
+			Group = _group
+		};
+			
+		clone.Scripts.Clear();
+		clone.Scripts.AddRange(_scripts.Select(s => s.Clone()));
+
+		return clone;
+	}
+}

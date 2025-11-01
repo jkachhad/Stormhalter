@@ -44,7 +44,7 @@ public class Whirlwind : TerrainComponent
 			_allowDispel = (bool)allowDispelElement;
 	}
 		
-	public override IEnumerable<ComponentRender> GetTerrain()
+	public override IEnumerable<ComponentRender> GetRenders()
 	{
 		var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
 
@@ -52,9 +52,9 @@ public class Whirlwind : TerrainComponent
 			yield return new ComponentRender(terrain, Color);
 	}
 		
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		if (_damage > 0)
 			element.Add(new XElement("damage", _damage));
@@ -67,6 +67,6 @@ public class Whirlwind : TerrainComponent
 
 	public override TerrainComponent Clone()
 	{
-		return new Whirlwind(GetXElement());
+		return new Whirlwind(GetSerializingElement());
 	}
 }

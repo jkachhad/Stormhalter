@@ -68,7 +68,7 @@ public class ClipboardManager
 					if (tile != null)
 					{
 						binaryWriter.Write((bool)true);
-						binaryWriter.Write((string)tile.GetXElement().ToString());
+						binaryWriter.Write((string)tile.GetSerializingElement().ToString());
 					}
 					else
 					{

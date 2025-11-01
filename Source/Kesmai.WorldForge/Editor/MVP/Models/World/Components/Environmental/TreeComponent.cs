@@ -166,7 +166,7 @@ public class TreeComponent : TerrainComponent
 	#region Methods
 
 	/// <inheritdoc />
-	public override IEnumerable<ComponentRender> GetTerrain()
+	public override IEnumerable<ComponentRender> GetRenders()
 	{
 		var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
 		Terrain terrain;
@@ -188,9 +188,9 @@ public class TreeComponent : TerrainComponent
 
 	}
 
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		element.Add(new XElement("tree", _tree));
 		element.Add(new XElement("canGrow", CanGrow));
@@ -203,7 +203,7 @@ public class TreeComponent : TerrainComponent
 		
 	public override TerrainComponent Clone()
 	{
-		return new TreeComponent(GetXElement());
+		return new TreeComponent(GetSerializingElement());
 	}
 
 	#endregion

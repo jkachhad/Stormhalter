@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using CommonServiceLocator;
+using CommunityToolkit.Mvvm.Messaging;
 using Kesmai.WorldForge.Editor;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -18,34 +19,81 @@ namespace Kesmai.WorldForge.Roslyn;
 public class CustomRoslynHost : RoslynHost
 {
     private CustomRoslynWorkspace _workspace;
-    
-    private DocumentId _internalDocumentId;
-    private DocumentId _definitionDocumentId;
+
     private DocumentId _editorDocumentId;
+
+    private Dictionary<string, DocumentId> _segmentDocuments 
+        = new Dictionary<string, DocumentId>();
     
-    public CustomRoslynHost(IEnumerable<Assembly> additionalAssemblies, RoslynHostReferences references) : base(additionalAssemblies, references)
+    public CustomRoslynHost(Segment segment, IEnumerable<Assembly> additionalAssemblies, RoslynHostReferences references) : base(additionalAssemblies, references)
     {
         _workspace = new CustomRoslynWorkspace(HostServices, WorkspaceKind.Host, this);
         _workspace.Services.GetRequiredService<IDiagnosticsUpdater>()
             .DisabledDiagnostics = DisabledDiagnostics;
+        
+        // create segment project
+        var segmentSolution = _workspace.CurrentSolution;
+		
+        var segmentProject = segmentSolution.AddProject($"Segment", $"Kesmai.Server.Segments.{segment.Name}", LanguageNames.CSharp)
+            .WithCompilationOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
+            /* C# minimum to support global usings. */
+            .WithParseOptions(new CSharpParseOptions(LanguageVersion.CSharp10))
+            /* Minimum references to prevent overloading */
+            .WithMetadataReferences(DefaultReferences);
+
+        segmentSolution = segmentProject.Solution;
+        
+        // add documents to segment project.
+        var segmentDocuments = Directory.GetFiles(segment.Directory, "*.cs", SearchOption.AllDirectories)
+            .Where(p => !p.Contains(@"\obj\") && !p.Contains(@"\bin\"));
+
+        foreach (var segmentDocument in segmentDocuments)
+        {
+            var documentId = DocumentId.CreateNewId(segmentProject.Id);
+            var documentName = Path.GetFileName(segmentDocument);
+            var documentText = File.ReadAllText(segmentDocument);
+            
+            segmentSolution = segmentSolution.AddDocument(documentId, documentName, 
+                SourceText.From(documentText), filePath: segmentDocument);
+            
+            _segmentDocuments[segmentDocument] = documentId;
+        }
+        
+        _workspace.TryApplyChanges(segmentSolution);
+        
+        // create editor project
+        var editorSolution = _workspace.CurrentSolution;
+		
+        var editorProject = editorSolution.AddProject($"Editor", $"Kesmai.Server.Segments.Editor", LanguageNames.CSharp)
+            .WithCompilationOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
+            /* C# minimum to support global usings. */
+            .WithParseOptions(new CSharpParseOptions(LanguageVersion.CSharp10))
+            /* Minimum references to prevent overloading */
+            .WithMetadataReferences(DefaultReferences);
+        
+        _editorDocumentId = DocumentId.CreateNewId(editorProject.Id);
+        
+        editorSolution = editorProject.Solution.AddDocument(_editorDocumentId, "Editor.g.cs", 
+            SourceText.From("namespace Kesmai.Server.Segments; public static class Editor { }"));
+        
+        _workspace.TryApplyChanges(editorSolution);
+        
+        // bind events
+        WeakReferenceMessenger.Default.Register<SegmentLocationChanged>(this, (_, _) => OnSegmentChanged());
+        WeakReferenceMessenger.Default.Register<SegmentEntityChanged>(this, (_, _) => OnSegmentChanged());
+        WeakReferenceMessenger.Default.Register<SegmentTreasuresChanged>(this, (_, _) => OnSegmentChanged());
+        WeakReferenceMessenger.Default.Register<SegmentSpawnChanged>(this, (_, _) => OnSegmentChanged());
+        
+        // watch for file changes
+        WeakReferenceMessenger.Default.Register<SegmentFileCreatedMessage>(this, (_, message) => OnSegmentFileCreated(message.Value));
+        WeakReferenceMessenger.Default.Register<SegmentFileDeletedMessage>(this, (_, message) => OnSegmentFileDeleted(message.Value));
+        WeakReferenceMessenger.Default.Register<SegmentFileRenamedMessage>(this, (_, message) => OnSegmentFileRenamed(message.Value));
+        WeakReferenceMessenger.Default.Register<SegmentFileChangedMessage>(this, (_, message) => OnSegmentFileChanged(message.Value));
     }
 
     public override RoslynWorkspace CreateWorkspace()
     {
         return _workspace;
-    }
-    
-    // Workaround for multiple additions of GetSolutionAnalyzerReferences.
-    private bool _initializedAnalyzers;
-    
-    protected override IEnumerable<AnalyzerReference> GetSolutionAnalyzerReferences()
-    {
-        if (_initializedAnalyzers)
-            return [];
-        
-        _initializedAnalyzers = true;
-        
-        return base.GetSolutionAnalyzerReferences();
     }
     
     protected override Project CreateProject(Solution solution, DocumentCreationArgs args, CompilationOptions compilationOptions, Project? previousProject = null)
@@ -86,77 +134,115 @@ public class CustomRoslynHost : RoslynHost
             return String.Empty;
         }
     }
-    
-    public void CreateSegmentProject(Segment segment)
+
+    public void OnSegmentFileCreated(FileSystemEventArgs args)
     {
+        var path = args.FullPath;
+        var extension = Path.GetExtension(path).ToLower();
+        
+        // we only process C# files.
+        if (!extension.Equals(".cs", StringComparison.OrdinalIgnoreCase))
+            return;
+        
         var workspace = _workspace;
         var solution = workspace.CurrentSolution;
-		
-        var project = solution.AddProject($"Segment", $"Kesmai.Server.Segments.{segment.Name}", LanguageNames.CSharp)
-            .WithCompilationOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
-            /* C# minimum to support global usings. */
-            .WithParseOptions(new CSharpParseOptions(LanguageVersion.CSharp10))
-            /* Minimum references to prevent overloading */
-            .WithMetadataReferences(DefaultReferences);
 
-        solution = project.Solution;
+        if (_segmentDocuments.ContainsKey(args.FullPath))
+            return;
         
-        _internalDocumentId = DocumentId.CreateNewId(project.Id);
+        var segmentProject = solution.Projects.FirstOrDefault(p => p.Name.Equals("Segment"));
+
+        if (segmentProject is null)
+            return;
         
-        solution = solution.AddDocument(_internalDocumentId, "Internal.g.cs",
-            SourceText.From($"namespace Kesmai.Server.Segments; public partial class {segment.Name} {{ { segment.Internal.Blocks[1] } }}"));
-        
-        _definitionDocumentId = DocumentId.CreateNewId(project.Id);
-        
-        solution = solution.AddDocument(_definitionDocumentId, "Definition.g.cs",
-            SourceText.From(segment.Definition.Blocks[1]));
-        
-        segment.Internal.Changed += () => UpdateSegmentDocuments(segment);
-        segment.Definition.Changed += () => UpdateSegmentDocuments(segment);
-        
+        var documentId = DocumentId.CreateNewId(segmentProject.Id);
+        var documentName = Path.GetFileName(args.FullPath);
+        var documentText = File.ReadAllText(args.FullPath);
+            
+        solution = solution.AddDocument(documentId, documentName, 
+            SourceText.From(documentText), filePath: args.FullPath);
+            
+        _segmentDocuments[args.FullPath] = documentId;
+                
         workspace.TryApplyChanges(solution);
     }
 
-    public void UpdateSegmentDocuments(Segment segment)
+    public void OnSegmentFileDeleted(FileSystemEventArgs args)
     {
+        var path = args.FullPath;
+        var extension = Path.GetExtension(path).ToLower();
+        
+        // we only process C# files.
+        if (!extension.Equals(".cs", StringComparison.OrdinalIgnoreCase))
+            return;
+        
+        if (!_segmentDocuments.TryGetValue(args.FullPath, out var documentId))
+            return;
+        
         var workspace = _workspace;
         var solution = workspace.CurrentSolution;
 
-        solution = solution.WithDocumentText(_internalDocumentId, TextAndVersion.Create(
-            SourceText.From($"namespace Kesmai.Server.Segments; public partial class {segment.Name} {{ { segment.Internal.Blocks[1] } }}"),
-            VersionStamp.Create()), PreservationMode.PreserveIdentity);
+        solution = solution.RemoveDocument(documentId);
+        
+        _segmentDocuments.Remove(args.FullPath);
 
-        solution = solution.WithDocumentText(_definitionDocumentId, TextAndVersion.Create(
-            SourceText.From(segment.Definition.Blocks[1]),
-            VersionStamp.Create()), PreservationMode.PreserveIdentity);
-        
-        workspace.TryApplyChanges(solution);
-    }
-
-    public void CreateEditorProject()
-    {
-        var workspace = _workspace;
-        var solution = workspace.CurrentSolution;
-		
-        var project = solution.AddProject($"Editor", $"Kesmai.Server.Segments.Editor", LanguageNames.CSharp)
-            .WithCompilationOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
-            /* C# minimum to support global usings. */
-            .WithParseOptions(new CSharpParseOptions(LanguageVersion.CSharp10))
-            /* Minimum references to prevent overloading */
-            .WithMetadataReferences(DefaultReferences);
-        
-        _editorDocumentId = DocumentId.CreateNewId(project.Id);
-        
-        solution = project.Solution.AddDocument(_editorDocumentId, "Editor.g.cs", 
-            SourceText.From("namespace Kesmai.Server.Segments; public static class Editor { }"));
-        
         workspace.TryApplyChanges(solution);
     }
     
-    public void UpdateEditorDocument()
+    public void OnSegmentFileRenamed(RenamedEventArgs args)
+    {
+        var path = args.FullPath;
+        var extension = Path.GetExtension(path).ToLower();
+        
+        // we only process C# files.
+        if (!extension.Equals(".cs", StringComparison.OrdinalIgnoreCase))
+            return;
+        
+        if (!_segmentDocuments.TryGetValue(args.OldFullPath, out var documentId)) 
+            return;
+        
+        var workspace = _workspace;
+        var solution = workspace.CurrentSolution;
+
+        solution = solution.WithDocumentName(documentId, Path.GetFileName(args.FullPath));
+            
+        _segmentDocuments.Remove(args.OldFullPath);
+        _segmentDocuments[args.FullPath] = documentId;
+            
+        workspace.TryApplyChanges(solution);
+    }
+    
+    public void OnSegmentFileChanged(FileSystemEventArgs args)
+    {
+        var path = args.FullPath;
+        var extension = Path.GetExtension(path).ToLower();
+        
+        // we only process C# files.
+        if (!extension.Equals(".cs", StringComparison.OrdinalIgnoreCase))
+            return;
+        
+        if (!_segmentDocuments.TryGetValue(args.FullPath, out var documentId))
+            return;
+        
+        var workspace = _workspace;
+        var solution = workspace.CurrentSolution;
+
+        var documentText = File.ReadAllText(args.FullPath);
+            
+        solution = solution.WithDocumentText(documentId, TextAndVersion.Create(
+            SourceText.From(documentText),
+            VersionStamp.Create()), PreservationMode.PreserveIdentity);
+            
+        workspace.TryApplyChanges(solution);
+    }
+
+    public void OnSegmentChanged()
     {
         var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
         var segment = presenter.Segment;
+
+        if (segment is null)
+            return;
 
         var builder = new StringBuilder();
         
@@ -179,5 +265,18 @@ public class CustomRoslynHost : RoslynHost
                 VersionStamp.Create()), PreservationMode.PreserveIdentity);
 
         workspace.TryApplyChanges(solution);
+    }
+    
+    // Workaround for multiple additions of GetSolutionAnalyzerReferences.
+    private bool _initializedAnalyzers;
+    
+    protected override IEnumerable<AnalyzerReference> GetSolutionAnalyzerReferences()
+    {
+        if (_initializedAnalyzers)
+            return [];
+        
+        _initializedAnalyzers = true;
+        
+        return base.GetSolutionAnalyzerReferences();
     }
 }

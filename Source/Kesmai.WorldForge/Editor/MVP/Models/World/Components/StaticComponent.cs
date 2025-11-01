@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 using CommonServiceLocator;
 
@@ -9,7 +8,6 @@ namespace Kesmai.WorldForge.Models;
 
 public class StaticComponent : TerrainComponent
 {
-
     private int _static;
 
     #region Properties and Events
@@ -28,9 +26,6 @@ public class StaticComponent : TerrainComponent
 
     #region Constructors and Cleanup
 
-    // To help with performance, we cache the preview image of the static component. This is mostly used to help with prefab but it can be utilized for any component.
-    public WriteableBitmap? CachedPreview { get; set; }
-
     /// <summary>
     /// Initializes a new instance of the <see cref="StaticComponent"/> class.
     /// </summary>
@@ -41,8 +36,12 @@ public class StaticComponent : TerrainComponent
 
     public StaticComponent( XElement element ) : base( element )
     {
-        _static = (int?)element.Element( "static" )
-            ?? throw new ArgumentException( "Missing <static> element", nameof( element ) );
+        var staticElement = element.Element( "static" );
+        
+        if ( staticElement == null )
+            throw new ArgumentException( "Missing <static> element", nameof( element ) );
+        
+        _static = int.Parse( staticElement.Value );
     }
 
     #endregion
@@ -50,7 +49,7 @@ public class StaticComponent : TerrainComponent
     #region Methods
 
     /// <inheritdoc />
-    public override IEnumerable<ComponentRender> GetTerrain()
+    public override IEnumerable<ComponentRender> GetRenders()
     {
         var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
 
@@ -58,16 +57,16 @@ public class StaticComponent : TerrainComponent
             yield return new ComponentRender( terrain, Color );
     }
 
-    public override XElement GetXElement()
+    public override XElement GetSerializingElement()
     {
-        var element = base.GetXElement();
+        var element = base.GetSerializingElement();
 
         element.Add( new XElement( "static", _static ) );
 
         return element;
     }
 
-    public override TerrainComponent Clone() => new StaticComponent( GetXElement() );
+    public override TerrainComponent Clone() => new StaticComponent( GetSerializingElement() );
 
 
     #endregion

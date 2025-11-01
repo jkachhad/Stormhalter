@@ -7,7 +7,6 @@ using DigitalRune.Collections;
 using DigitalRune.Graphics;
 using DigitalRune.ServiceLocation;
 using Kesmai.WorldForge.Models;
-using Kesmai.WorldForge.MVP;
 using Kesmai.WorldForge.Roslyn;
 using Kesmai.WorldForge.UI;
 using Kesmai.WorldForge.UI.Documents;
@@ -17,6 +16,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using RoslynPad.Roslyn;
 using SharpDX.Direct3D9;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -30,79 +30,26 @@ namespace Kesmai.WorldForge.Editor;
 public class GetActiveSegmentRequestMessage : RequestMessage<Segment>
 {
 }
-	
-public class UnregisterEvents
-{
-}
+
+public class ActiveSegmentChanged(Segment Segment) : ValueChangedMessage<Segment>(Segment);
+public class ActiveContentChanged(ISegmentObject segmentObject) : ValueChangedMessage<ISegmentObject>(segmentObject);
+
 public class ApplicationPresenter : ObservableRecipient
 {
 	private int _unitSize = 55;
-		
-	private string _segmentFilePath;
-	private DirectoryInfo _segmentFileFolder;
 	
-	private CustomRoslynHost _roslynHost;
-		
 	private Segment _segment;
+	
 	private Selection _selection;
-	private TerrainSelector _filter;
-	private Tool _selectedTool;
-
-	private bool _showSubregions;
 
 	private object _activeDocument;
-	private object _previousDocument;
-	
-	public CustomRoslynHost Roslyn => _roslynHost;
 
-	private TeleportComponent _configuringTeleporter = null;
-	public TeleportComponent ConfiguringTeleporter
-	{
-		get { return _configuringTeleporter; }
-		set { _configuringTeleporter = value; }
-	}
+	private ISegmentObject _activeContent;
 
-	public TerrainSelector SelectedFilter
-	{
-		get => _filter ?? TerrainSelector.Default;
-		set => _filter = value;
-	}
-		
 	public Selection Selection
 	{
 		get => _selection;
 		set => _selection = value;
-	}
-		
-	public Tool SelectedTool
-	{
-		get => _selectedTool ?? Tool.Default;
-		set => _selectedTool = value;
-	}
-	
-	private ComponentsCategory _selectedComponentCategory;
-	private TerrainComponent _selectedComponent;
-		
-	public ComponentsCategory SelectedComponentCategory
-	{
-		get => _selectedComponentCategory;
-		set => SetProperty(ref _selectedComponentCategory, value);
-	}
-		
-	public TerrainComponent SelectedComponent
-	{
-		get => _selectedComponent;
-		set => SetProperty(ref _selectedComponent, value);
-	}
-		
-	public bool ShowSubregions
-	{
-		get => _showSubregions;
-		set
-		{
-			SetProperty(ref _showSubregions, value);
-			InvalidateRender();
-		}
 	}
 
 	public int UnitSize => _unitSize;
@@ -113,18 +60,9 @@ public class ApplicationPresenter : ObservableRecipient
 		set
 		{
 			if (SetProperty(ref _segment, value, true))
-			{
-				if (_segment != null)
-					CreateWorkspace();
-				
-				ActiveDocument = Documents.FirstOrDefault();
-			}
+				WeakReferenceMessenger.Default.Send(new ActiveSegmentChanged(Segment));
 		}
 	}
-
-	public NotifyingCollection<TerrainSelector> Filters { get; set; }
-	public NotifyingCollection<Tool> Tools { get; set; }
-	public VisibilityOptions Visibility { get; set; }
 
 	public RelayCommand CreateSegmentCommand { get; set; }
 	public RelayCommand CloseSegmentCommand { get; set; }
@@ -133,49 +71,40 @@ public class ApplicationPresenter : ObservableRecipient
 
 	public RelayCommand CreateRegionCommand { get; set; }
 	public RelayCommand<object> DeleteRegionCommand { get; set; }
-	public RelayCommand<object> ShiftRegionCommand { get; set; }
 
 	public RelayCommand GenerateRegionCommand { get; set; }
 		
-	public RelayCommand<TerrainSelector> SelectFilterCommand { get; set; }
-	public RelayCommand<Tool> SelectToolCommand { get; set; }
-
 	public RelayCommand ExitApplicationCommand { get; set; }
 
 	public RelayCommand ShowChangesWindow { get; set; }
 	public RelayCommand LaunchWiki { get; set; }
-
-	public RelayCommand<String> SwapDocumentCommand { get; set; }
 		
 	public ObservableCollection<object> Documents { get; private set; }
 		
 	public object ActiveDocument
 	{
 		get => _activeDocument;
+		set => SetProperty(ref _activeDocument, value, true);
+	}
+
+	public ISegmentObject ActiveContent
+	{
+		get => _activeContent;
 		set
-        {
-            if (value != _activeDocument)
-            {
-                if (_activeDocument is IDisposable disposable)
-                {
-                    disposable.Dispose();
-                }
-                _previousDocument = _activeDocument;
-                SetProperty(ref _activeDocument, value, true);
-            }
+		{
+			// only send the message if the content actually changes.
+			// we use a delayed send to allow the UI to update first.
+			if (value != _activeContent && SetProperty(ref _activeContent, value))
+				WeakReferenceMessenger.Default.SendDelayed(new ActiveContentChanged(value), TimeSpan.FromMilliseconds(50));
 		}
 	}
-    public RelayCommand ExportToPdfCommand { get; set; }
+	
+    public RelayCommand ConvertSegmentCommand { get; }
+
     public ApplicationPresenter()
 	{
 		var messenger = WeakReferenceMessenger.Default;
 
-        ExportToPdfCommand = new RelayCommand(() =>
-        {
-            ((Func<Task>)(() => ExportToPdfAsync())).FireAndForget();
-        }, () => (ActiveDocument is SegmentRegion));
-
-        ExportToPdfCommand.DependsOn(() => ActiveDocument);
         messenger.Register<ApplicationPresenter, GetActiveSegmentRequestMessage>(this,
 			(r, m) => m.Reply(r.Segment));
 
@@ -192,7 +121,9 @@ public class ApplicationPresenter : ObservableRecipient
 			
 		SaveSegmentCommand = new RelayCommand<bool>(SaveSegment, (queryPath) => (Segment != null));
 		SaveSegmentCommand.DependsOn(() => Segment);
-			
+		
+		ConvertSegmentCommand = new RelayCommand(ConvertSegment, () => (Segment is null));
+		ConvertSegmentCommand.DependsOn(() => Segment);
 
 		CreateRegionCommand = new RelayCommand(CreateRegion, () => (Segment != null));
 		CreateRegionCommand.DependsOn(() => Segment);
@@ -200,10 +131,6 @@ public class ApplicationPresenter : ObservableRecipient
 		DeleteRegionCommand = new RelayCommand<object>(DeleteRegion, 
 			(o) => (ActiveDocument is SegmentRegion));
 		DeleteRegionCommand.DependsOn(() => Segment, () => ActiveDocument);
-
-		ShiftRegionCommand = new RelayCommand<object>(ShiftRegion, 
-			(o) => (ActiveDocument is SegmentRegion));
-		ShiftRegionCommand.DependsOn(() => Segment, () => ActiveDocument);
 
 		GenerateRegionCommand = new RelayCommand(GenerateRegions, () => (Segment != null));
 		GenerateRegionCommand.DependsOn(() => Segment);
@@ -216,312 +143,89 @@ public class ApplicationPresenter : ObservableRecipient
 				UseShellExecute = true
 			}); 
 		});
-
-		SwapDocumentCommand = new RelayCommand<string>(SwapDocument);
-
-		WeakReferenceMessenger.Default
-			.Register<ApplicationPresenter, VisibilityOptionsChanged>(
-				this, (r, m) => {
-					if (Segment is not null)
-						Segment.UpdateTiles();
-					var graphicsService = ServiceLocator.Current.GetInstance<IGraphicsService>();
-					if (graphicsService != null)
-					{
-						foreach (var presenter in graphicsService.PresentationTargets.OfType<PresentationTarget>())
-							presenter.InvalidateRender();
-					}
-				});
-
-		SelectFilterCommand = new RelayCommand<TerrainSelector>(SelectFilter, 
-			(filter) => (Segment != null));
-		SelectFilterCommand.DependsOn(() => Segment, () => ActiveDocument);
-			
-		SelectToolCommand = new RelayCommand<Tool>(SelectTool, 
-			(tool) => (Segment != null) && (ActiveDocument is SegmentRegion || ActiveDocument is ComponentsPanel));
-		SelectToolCommand.DependsOn(() => Segment, () => ActiveDocument);
-
-		Filters = new NotifyingCollection<TerrainSelector>()
-		{
-			TerrainSelector.Default,
-				
-			new FloorSelector(),
-			new StaticSelector(),
-			new WaterSelector(),
-			new WallSelector(),
-			new StructureSelector(),
-		};
-			
-		Tools = new NotifyingCollection<Tool>()
-		{
-			Tool.Default,
-				
-			new DrawTool(),
-			new EraseTool(),
-			new PaintTool(),
-			new HammerTool(),
-		};
-
-		Visibility = new VisibilityOptions();
-			
+		
 		ExitApplicationCommand = new RelayCommand(() => Application.Current.Shutdown());
-			
-		ShowSubregions = true;
 
 		Selection = new Selection();
-	}
 
-	public void SwapDocument(String Target)
-	{
-		switch (Target)
+		// update active document when the segment changes occurs.
+		messenger.Register<ActiveSegmentChanged>(this, (_, message) =>
 		{
-			case "Spawn": //Ctrl-P
-			{
-				var sel = _selection.FirstOrDefault();
-				LocationSpawner targetLS = null;
-				RegionSpawner targetRS = null;
-				if (ActiveDocument is EntitiesViewModel)
-				{
-					var spawnRequest = WeakReferenceMessenger.Default.Send<EntitiesDocument.GetSelectedSpawner>();
-					if (spawnRequest.HasReceivedResponse)
-					{
-						Spawner target = spawnRequest.Response;
-						ActiveDocument = Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
-						if (target is LocationSpawner)
-							(ActiveDocument as SpawnsViewModel).SelectedLocationSpawner = target as LocationSpawner;
-						if (target is RegionSpawner)
-							(ActiveDocument as SpawnsViewModel).SelectedRegionSpawner = target as RegionSpawner;
-						WeakReferenceMessenger.Default.Send(target as Spawner);
-						break;
-					}
-				}
-				if (sel is { Width: 1, Height: 1 })
-				{
-					targetLS = Segment.Spawns.Location.Where(s => s.Region == _selection.Region.ID && s.X == sel.Left && s.Y == sel.Top).LastOrDefault();
-					targetRS = Segment.Spawns.Region.Where(s => s.Region == _selection.Region.ID && s.Inclusions.Any(i => i.ToRectangle().Contains(sel.Left, sel.Top))).LastOrDefault();
-				}
-				ActiveDocument = Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
-				if (targetRS is not null && targetLS is null)
-				{
-					(ActiveDocument as SpawnsViewModel).SelectedRegionSpawner = targetRS;
-					WeakReferenceMessenger.Default.Send(targetRS as Spawner);
-				}
-				if (targetLS is not null) { 
-					(ActiveDocument as SpawnsViewModel).SelectedLocationSpawner = targetLS;
-					WeakReferenceMessenger.Default.Send(targetLS as Spawner);
-				}
-				break;
-			}
-			case "Segment": //Ctrl-G
-				ActiveDocument = Documents.Where(d => d is SegmentViewModel).FirstOrDefault() as SegmentViewModel;
-				break;
-			case "Entity": //Ctrl-E
-			{
-				Entity target = null;
-				//There's probably a better way to do this. but I can't search one up. Can I send a more generic message and have both documents register for it but decline to respond if they are not active?
-				var spawnEntityRequest = WeakReferenceMessenger.Default.Send<SpawnsDocument.GetActiveEntity>();
-				var treasureEntityRequest = WeakReferenceMessenger.Default.Send<TreasuresDocument.GetActiveEntity>();
-				if (spawnEntityRequest.HasReceivedResponse && spawnEntityRequest.Response != null) 
-					target = spawnEntityRequest.Response;
-				if (treasureEntityRequest.HasReceivedResponse && treasureEntityRequest.Response != null)
-					target = treasureEntityRequest.Response;
-				ActiveDocument = Documents.Where(d => d is EntitiesViewModel).FirstOrDefault() as EntitiesViewModel;
-				if (target is not null)
-					(ActiveDocument as EntitiesViewModel).SelectedEntity = target;
-				break;
-			}
-			case "Treasure": //Ctrl-T
-				String targetTreasure = null;
-				if (ActiveDocument is EntitiesViewModel e)
-				{
-					var treasureRequest = WeakReferenceMessenger.Default.Send<EntitiesDocument.GetCurrentScriptSelection>();
-					if (treasureRequest.HasReceivedResponse)
-						targetTreasure = treasureRequest.Response;
-				}
-				ActiveDocument = Documents.Where(d => d is TreasuresViewModel).FirstOrDefault() as TreasuresViewModel;
-				if (targetTreasure is not null)
-				{
-					var targetTreasureObject = (ActiveDocument as TreasuresViewModel).Treasures.Where(t => t.Name == targetTreasure).FirstOrDefault();
-					if (targetTreasureObject is not null)
-						(ActiveDocument as TreasuresViewModel).SelectedTreasure = targetTreasureObject;
-				}
-				break;
-			case "Location": //Ctrl-L
-			{
-				var sel = _selection.FirstOrDefault();
-				SegmentLocation target = null;
-				if (sel is { Width: 1, Height: 1 })
-				{
-					target = Segment.Locations.Where(l => l.Region == _selection.Region.ID && l.X == sel.Left && l.Y == sel.Top).LastOrDefault();
-				}
-				ActiveDocument = Documents.Where(d => d is LocationsViewModel).FirstOrDefault() as LocationsViewModel;
-				if (target is not null)
-					(ActiveDocument as LocationsViewModel).SelectedLocation = target;
-				break;
-			}
-			case "Subregion": //Ctrl-U
-			{
-				var sel = _selection.FirstOrDefault();
-				SegmentSubregion target = null;
-				if (sel is { Width: 1, Height: 1 })
-				{
-					target = Segment.Subregions.Where(s => s.Region == _selection.Region.ID && s.Rectangles.Any(rect => rect.ToRectangle().Contains(sel.Left, sel.Top))).LastOrDefault();
-				}
-				ActiveDocument = Documents.Where(d => d is SubregionViewModel).FirstOrDefault() as SubregionViewModel;
-				if (target is not null)
-					(ActiveDocument as SubregionViewModel).SelectedSubregion = target;
-				break;
-			}
-			case "Teleporter": //Ctrl-D
-			{
-				var sel = _selection.FirstOrDefault();
-				TeleportComponent target = null;
-				if (sel is { Width:1, Height: 1 })
-				{
-					var tile = _selection.Region.GetTile(sel.Left, sel.Top);
-					target = tile.GetComponents<TeleportComponent>().FirstOrDefault();
-				}
-				if (target is not null)
-				{
-					ActiveDocument = Documents.Where(d => d is SegmentRegion dr && dr.ID == target.DestinationRegion).FirstOrDefault();
-					WeakReferenceMessenger.Default.Send(new JumpSegmentRegionLocation(target.DestinationRegion, target.DestinationX, target.DestinationY));
-					_selection.Select(new Microsoft.Xna.Framework.Rectangle(target.DestinationX,target.DestinationY,1,1), Segment.GetRegion(target.DestinationRegion));
-				}
-				break;
-			}
-			case "RegionLeft": //Ctrl-Left
-			{
-				if (ActiveDocument is SegmentRegion)
-				{
-					var sortedRegions = Segment.Regions.OrderBy(r => r.ID);
-					int regionID = (ActiveDocument as SegmentRegion).ID;
-					SegmentRegion nextRegion = sortedRegions.LastOrDefault(r => r.ID < regionID);
-					if (nextRegion != null) { ActiveDocument = nextRegion; } else { ActiveDocument = sortedRegions.Last(); }
-				}
-				break;
-			}
-			case "RegionRight": //Ctrl-Right
-			{
-				if (ActiveDocument is SegmentRegion)
-				{
-					var sortedRegions = Segment.Regions.OrderBy(r => r.ID);
-					int regionID = (ActiveDocument as SegmentRegion).ID;
-					SegmentRegion nextRegion = sortedRegions.FirstOrDefault(r => r.ID > regionID);
-					if (nextRegion != null) { ActiveDocument = nextRegion; } else { ActiveDocument = sortedRegions.First(); }
-				}
-				break;
-			}
-		}
-	}
-	public void SelectFilter(TerrainSelector nextFilter)
-	{
-		foreach (var filter in Filters)
-			filter.IsActive = false;
-
-		SelectedFilter = nextFilter;
-			
-		if (nextFilter != null)
-		{
-			nextFilter.IsActive = true;
-
-			if (nextFilter.IsActive)
-				_segment.UpdateTiles();
-				
-			var services = (ServiceContainer)ServiceLocator.Current;
-			var graphicsService = services.GetInstance<IGraphicsService>();
-
-			foreach (var presenter in graphicsService.PresentationTargets.OfType<PresentationTarget>())
-				presenter.InvalidateRender();
-		}
-	}
+			if (message.Value is not null)
+				SetActiveDocument(Documents.FirstOrDefault());
+		});
 		
-	public void SelectTool(Tool nextTool)
-	{
-		if (nextTool == default(Tool))
-			nextTool = Tool.Default;
+		// when content changes, ensure the appropriate document is active.
+		messenger.Register<ActiveDocumentChanged>(this, (r, message) =>
+		{
+			ActiveDocument = message.Content;
+		});
+
+		// when a document is closed, remove it from the list of documents. Set the next document as active.
+		messenger.Register<DocumentClosed>(this, (r, message) =>
+		{
+			var content = message.Document.Content;
 			
-		foreach (var tool in Tools)
+			if (Documents.Contains(content))
+				Documents.Remove(content);
+		});
+
+		// when a segment object is selected, find or create the appropriate document and set it active.
+		// also set the active content to the selected object, if applicable.
+		messenger.Register<SegmentObjectSelected>(this, (r, message) =>
 		{
-			tool.OnDeactivate();
-			tool.IsActive = false;
+			if (message.Value != null)
+				message.Value.Present(this);
+		});
+	}
+
+	public void SetActiveDocument(object target, ISegmentObject content = default)
+	{
+		if (ActiveDocument != target)
+		{
+			if (!Documents.Contains(target))
+				Documents.Add(target);
+
+			WeakReferenceMessenger.Default.Send(new ActivateDocument(target));
 		}
 
-		SelectedTool = nextTool;
-			
-		if (nextTool != null)
-		{
-			nextTool.IsActive = true;
-			nextTool.OnActivate();
-
-			var worldScreen = ServiceLocator.Current.GetInstance<WorldGraphicsScreen>();
-
-			if (worldScreen != null)
-				worldScreen.InvalidateRender();
-		}
+		if (content != default)
+			SetActiveContent(content);
 	}
-		
-	private void JumpSpawner (Spawner spawner)
+	
+	public void SetActiveContent(ISegmentObject content)
 	{
-		var viewmodel = ActiveDocument as SpawnsViewModel;
-
-		if (spawner is LocationSpawner)
-		{
-			viewmodel.SelectedLocationSpawner = spawner as LocationSpawner;
-		}
-
-		if (spawner is RegionSpawner)
-		{
-			viewmodel.SelectedRegionSpawner = spawner as RegionSpawner;
-		}
+		if (content != null && ActiveContent != content)
+			ActiveContent = content;
 	}
-
-	private void JumpSubregion(SegmentSubregion subregion)
-	{
-		var viewmodel = ActiveDocument as SubregionViewModel;
-		viewmodel.SelectedSubregion = subregion;
-	}
-
-	private void JumpEntity(Entity entity)
-	{
-		var viewmodel = ActiveDocument as EntitiesViewModel;
-		viewmodel.SelectedEntity = entity;
-
-	}
-
-	private void JumpLocation (SegmentLocation location)
-	{
-		var viewmodel = ActiveDocument as LocationsViewModel;
-		viewmodel.SelectedLocation = location;
-	}
-
-	private void JumpTreasure (SegmentTreasure treasure)
-	{
-		var viewmodel = ActiveDocument as TreasuresViewModel;
-		viewmodel.SelectedTreasure = treasure;
-	}
-
-	public void JumpPrevious ()
-	{
-		if (_previousDocument != _activeDocument && _previousDocument != null)
-		{
-			ActiveDocument = _previousDocument;
-		}
-	}
-
+	
 	private void CreateSegment()
 	{
 		if (_segment != null)
 			throw new InvalidOperationException("Attempt to create a segment when an active segment already exists.");
 
-		Segment = new Segment();
-			
-		Documents.Add(new SegmentViewModel(Segment));
-		Documents.Add(new LocationsViewModel(Segment));
-		Documents.Add(new SubregionViewModel(Segment));
-		Documents.Add(new EntitiesViewModel(Segment));
-		Documents.Add(new SpawnsViewModel(Segment));
-		Documents.Add(new TreasuresViewModel(Segment));
+		var dialog = new Microsoft.Win32.OpenFolderDialog()
+		{
+			Multiselect = false,
+		};
 
-		_segmentFilePath = String.Empty;
+		var openResult = dialog.ShowDialog();
+
+		if (!openResult.HasValue || openResult != true)
+			return;
+
+		var targetDirectory = new DirectoryInfo(dialog.FolderName);
+
+		if (!targetDirectory.Exists)
+			targetDirectory.Create();
+
+		var segment = new Segment()
+		{
+			Name = targetDirectory.Name,
+			Directory = targetDirectory.FullName
+		};
+
+		Segment = segment;
 	}
 
 	private void CloseSegment()
@@ -530,10 +234,8 @@ public class ApplicationPresenter : ObservableRecipient
 			throw new InvalidOperationException("Attempt to close a segment when an active segment does not exist.");
 
 		Segment = null;
-		WeakReferenceMessenger.Default.Send(new UnregisterEvents());
+
 		Documents.Clear();
-			
-		_segmentFilePath = String.Empty;
 	}
 	
 	private void OpenSegment()
@@ -550,139 +252,108 @@ public class ApplicationPresenter : ObservableRecipient
 
 		if (!overwrite)
 			return;
-
-		// TODO: Set open file path for Save
-		var dialog = new Microsoft.Win32.OpenFileDialog()
+		
+		// show dialog for folder selection
+		var dialog = new Microsoft.Win32.OpenFolderDialog()
 		{
-			DefaultExt = ".mapproj",
-			Filter = "WorldForge - Map Project (*.mapproj)|*.mapproj",
+			Multiselect = false,
 		};
-
+		
 		var openResult = dialog.ShowDialog();
-
+		
 		if (!openResult.HasValue || openResult != true)
 			return;
-
-		var targetFile = dialog.FileName;
-		var targetFileInfo = new FileInfo(targetFile);
 		
-		_segmentFilePath = targetFile;
-		_segmentFileFolder = targetFileInfo.Directory;
-			
-		var segment = new Segment();
+		var targetDirectory = new DirectoryInfo(dialog.FolderName);
+		var segment = new Segment()
+		{
+			Name = targetDirectory.Name,
+			Directory = targetDirectory.FullName
+		};
 		
-		XElement rootElement = null;
-		try
+		void process(string documentName, Action assignment, Action<XElement, Version> load)
 		{
-			var document = XDocument.Load(targetFile);
-			rootElement = document.Root;
-		} catch (System.Xml.XmlException e)
-		{
-			MessageBox.Show($"Segment File is incorrectly formatted:\n{e.Message}", "Open Segment Error", MessageBoxButton.OK);
-			return;
-		}
-		if (rootElement != null)
-		{
-			if (rootElement.Name != "segment")
+			var documentFile = new FileInfo(Path.Combine(targetDirectory.FullName, documentName));
+		
+			if (documentFile.Exists)
 			{
-				MessageBox.Show($"Provided file is not a WorldForge Segment file.", "Open Segment Error", MessageBoxButton.OK);
-				return;
+				var document = XDocument.Load(documentFile.FullName);
+				var documentRoot = document.Root;
+
+				if (documentRoot is null)
+					throw new Exception($"Location file {documentFile.Name} is not valid XML.");
+
+				if (assignment != null)
+					assignment();
+				
+				load(documentRoot, Core.Version);
 			}
-			segment.Load(rootElement);
 		}
-			
-		var definitionFilePath = $@"{_segmentFileFolder.FullName}\{segment.Name}.cs";
-
-		if (File.Exists(definitionFilePath))
-		{
-			using (var stream = new FileStream(definitionFilePath, FileMode.Open, FileAccess.Read, FileShare.None))
-			using (var reader = new StreamReader(stream))
-				segment.Definition.Blocks[1] = reader.ReadToEnd();
-		}
-
-		Documents.Add(new SegmentViewModel(segment));
-		Documents.Add(new LocationsViewModel(segment));
-		Documents.Add(new SubregionViewModel(segment));
-		Documents.Add(new EntitiesViewModel(segment));
-		Documents.Add(new SpawnsViewModel(segment));
-		Documents.Add(new TreasuresViewModel(segment));
 		
+		process("Segments.xml", null, (root, version) =>
+		{
+			var nameAttribute = root.Attribute("name");
+
+			if (nameAttribute is not null)
+				segment.Name = nameAttribute.Value;
+		});
+		
+		process("Locations.xml", () => segment.Locations = new SegmentLocations(), 
+			(root, version) => segment.Locations.Load(root, version));
+		
+		process("Subregions.xml", () => segment.Subregions = new SegmentSubregions(), 
+			(root, version) => segment.Subregions.Load(root, version));
+		
+		process("Entities.xml", () => segment.Entities = new SegmentEntities(),
+			(root, version) => segment.Entities.Load(root, version));
+		
+		process("Spawns.xml", () => segment.Spawns = new SegmentSpawns(),
+			(root, version) => segment.Spawns.Load(segment.Entities, root, version));
+		
+		process("Treasures.xml", () => segment.Treasures = new SegmentTreasures(),
+			(root, version) => segment.Treasures.Load(root, version));
+		
+		process("Components.xml", () => segment.Components = new SegmentComponents(),
+			(root, version) => segment.Components.Load(root, version));
+		
+		process("Brushes.xml", () => segment.Brushes = new SegmentBrushes(),
+			(root, version) => segment.Brushes.Load(root, version));
+		
+		process("Templates.xml", () => segment.Templates = new SegmentTemplates(),
+			(root, version) => segment.Templates.Load(root, version));
+
+		var regionsFolder = new DirectoryInfo(Path.Combine(targetDirectory.FullName, "Regions"));
+
+		if (regionsFolder.Exists)
+		{
+			foreach (var file in regionsFolder.GetFiles("*.xml"))
+			{
+				var regionDocument = XDocument.Load(file.FullName);
+				var regionRoot = regionDocument.Root;
+
+				if (regionRoot is null)
+					throw new Exception($"Region file {file.Name} is not valid XML.");
+				
+				segment.Regions.Add(new SegmentRegion(regionRoot));
+			}
+		}
+
 		Segment = segment;
 		Segment.UpdateTiles();
-		
-		SelectFilter(Filters.FirstOrDefault());
-		SelectTool(Tools.FirstOrDefault());
-		
-		_roslynHost.CreateEditorProject();
-		_roslynHost.UpdateEditorDocument();
-	}
-
-	public void CreateWorkspace()
-	{
-		var refs = Task.Run(() => NuGetResolver.Resolve("Kesmai.Server.Reference", "net8.0-windows8.0"));
-		
-		var blacklistedAssemblies = new[]
-		{
-			"RoslynPad.Roslyn.Windows",
-			"RoslynPad.Editor.Windows",
-			"DigitalRune",
-			"MonoGame",
-			"SharpDX",
-			"WindowsDesktop",
-			"WorldForge"
-		};
-		
-		var metadataReferences = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(a => !a.IsDynamic && !String.IsNullOrEmpty(a.Location))
-			.Where(a => blacklistedAssemblies.All(b => !a.Location.Contains(b)))
-			.Select(a => (MetadataReference)MetadataReference.CreateFromFile(a.Location))
-			.ToList();
-
-		foreach (var metadataReference in refs.Result)
-			metadataReferences.Add(metadataReference);
-		
-		var serviceAssemblies = new[]
-		{
-			Assembly.Load("RoslynPad.Roslyn.Windows"),
-			Assembly.Load("RoslynPad.Editor.Windows")
-		};
-
-		var namespaceImports = new string[]
-		{
-			$"static Kesmai.Server.Segments.{_segment.Name}",
-			$"static Kesmai.Server.Segments.Editor",
-			"Kesmai.Server.Game",
-			"Kesmai.Server.Items",
-			"Kesmai.Server.Miscellaneous",
-			"Kesmai.Server.Network",
-			"Kesmai.Server.Spells",
-			"SpanReader = DotNext.Buffers.SpanReader<byte>",
-			"SpanWriter = DotNext.Buffers.PoolingArrayBufferWriter<byte>",
-		};
-		
-		var roslynReferences = RoslynHostReferences.NamespaceDefault
-			.With(references: metadataReferences, imports: namespaceImports);
-		
-		_roslynHost = new CustomRoslynHost(serviceAssemblies, roslynReferences);
-		_roslynHost.CreateSegmentProject(_segment);
 	}
 
 	private void SaveSegment(bool queryPath)
 	{
-		var targetFile = String.Empty;
-
-		if (!CheckScriptSyntax())
-			return;
-
-		if (!queryPath && String.IsNullOrEmpty(_segmentFilePath))
+		var targetPath = String.Empty;
+		
+		if (!queryPath && String.IsNullOrEmpty(_segment.Directory))
 			queryPath = true;
 
 		if (queryPath)
 		{
-			var dialog = new Microsoft.Win32.SaveFileDialog()
+			var dialog = new Microsoft.Win32.OpenFolderDialog()
 			{
-				DefaultExt = ".mapproj",
-				Filter = "WorldForge - Map Project (*.mapproj)|*.mapproj",
+				Multiselect = false,
 			};
 
 			var saveResult = dialog.ShowDialog();
@@ -690,224 +361,102 @@ public class ApplicationPresenter : ObservableRecipient
 			if (!saveResult.HasValue || saveResult != true)
 				return;
 
-			targetFile = dialog.FileName;
+			targetPath = dialog.FolderName;
 		}
 		else
 		{
-			targetFile = _segmentFilePath;
+			targetPath = _segment.Directory;
 		}
 
+		WeakReferenceMessenger.Default.Send(new SegmentSerialize(_segment));
+		
 		try
 		{
-			if (File.Exists(targetFile))
-				File.Delete(targetFile);
-
-			_segmentFilePath = targetFile;
-
-			var projectFile = new XDocument();
-			var segmentElement = new XElement("segment",
-				new XAttribute("name", _segment.Name ?? "(Unknown)"),
-				new XAttribute("version", Core.Version));
-
-			_segment.Save(segmentElement);
-
-			projectFile.Add(segmentElement);
-
-			projectFile.Save(targetFile);
-
-			var definitionFilePath = $@"{_segmentFileFolder.FullName}\{_segment.Name}.cs";
-
-			if (File.Exists(definitionFilePath))
-				File.Delete(definitionFilePath);
+			var regionsDirectory = new DirectoryInfo(Path.Combine(targetPath, "Regions"));
 			
-			using (var stream = new FileStream(definitionFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
-			using (var writer = new StreamWriter(stream))
-				writer.Write(_segment.Definition.Blocks[1]);
+			if (!regionsDirectory.Exists)
+				regionsDirectory.Create();
+			
+			foreach (var region in _segment.Regions)
+				region.GetSerializingElement().Save(Path.Combine(regionsDirectory.FullName, $"{region.ID}.xml"));
+			
+			void write(Action<XElement> saveAction, string elementName, string fileName)
+			{
+				var element = new XElement(elementName);
+				saveAction(element);
+				element.Save(Path.Combine(targetPath, fileName));
+			}
+
+			write((element) => element.Add(
+					new XAttribute("name", _segment.Name),
+					new XAttribute("version", Core.Version.ToString())),
+				"segment", "Segment.xml");
+
+			write(_segment.Locations.Save, "locations", "Locations.xml");
+			write(_segment.Subregions.Save, "subregions", "Subregions.xml");
+			write(_segment.Entities.Save, "entities", "Entities.xml");
+			write(_segment.Spawns.Save, "spawns", "Spawns.xml");
+			write(_segment.Treasures.Save, "treasures", "Treasures.xml");
+			write(_segment.Brushes.Save, "brushes", "Brushes.xml");
+			write(_segment.Components.Save, "components", "Components.xml");
+			write(_segment.Templates.Save, "templates", "Templates.xml");
+			
+			// find the project file and save it
+			var segmentProject = new FileInfo(Path.Combine(targetPath, $"{_segment.Name}.csproj"));
+
+			if (!segmentProject.Exists)
+			{
+				var projectRoot = new XElement("Project",
+					new XAttribute("Sdk", "Microsoft.NET.Sdk"),
+					new XElement("PropertyGroup",
+						new XElement("OutputType", "Library"),
+						new XElement("TargetFramework", "net8.0-windows8.0"),
+						new XElement("RootNamespace", _segment.Name),
+						new XElement("AssemblyName", _segment.Name),
+						new XElement("EnableDefaultItems", false)
+					),
+					new XElement("ItemGroup",
+						new XElement("Compile", new XAttribute("Include", "Source/**/*.cs"))
+					),
+					new XElement("ItemGroup",
+						new XElement("PackageReference", new XAttribute("Include", "Kesmai.Server.Reference"), new XAttribute("Version", "*"))
+					)
+				);
+		
+				var additionalFiles = new []
+				{
+					"Locations.xml",
+					"Subregions.xml",
+					"Entities.xml",
+					"Spawns.xml",
+					"Treasures.xml",
+					"Components.xml",
+					"Brushes.xml",
+					"Templates.xml",
+					@"Regions\*.xml"
+				};
+
+				if (additionalFiles.Any())
+				{
+					projectRoot.Add(
+						new XElement("ItemGroup",
+							additionalFiles.Select(f =>
+								new XElement("AdditionalFiles", new XAttribute("Include", f.Replace('\\', '/'))))
+						)
+					);
+				}
+				
+				new XDocument(projectRoot).Save(segmentProject.FullName);
+			}
 		}
 		catch (Exception ex)
 		{
 			MessageBox.Show($"Error when saving project: {ex.Message}", "Unable to save", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
+		
+		WeakReferenceMessenger.Default.Send(new SegmentSerialized(_segment));
 	}
-
-	private bool CheckScriptSyntax() //Enumerate all script segments and verify that they pass syntax checks
-	{
-		//Segment code:
-		var syntaxErrors = CSharpSyntaxTree.ParseText(Segment.Internal.Blocks[1], new CSharpParseOptions(kind: SourceCodeKind.Script)).GetDiagnostics();
-		var syntaxErrorRefined = syntaxErrors.Where(e => e.Severity == DiagnosticSeverity.Error).ToList();
-		if (syntaxErrorRefined.Count()>0)
-		{
-			var errorList = String.Join('\n', syntaxErrorRefined.Take(6).Select(err => (err.Location.GetLineSpan().StartLinePosition.Line+2) + ":" + err.GetMessage()));
-			if (syntaxErrorRefined.Count() > 3)
-				errorList += "\n...";
-			var messageResult = MessageBox.Show($"Segment code has syntax errors.\nDo you wish to continue?\n\n{errorList}", "Syntax Errors in scripts", MessageBoxButton.YesNo);
-			if (messageResult == MessageBoxResult.No)
-			{
-				ActiveDocument = Documents.Where(d => d is SegmentViewModel).FirstOrDefault() as SegmentViewModel;
-				return false;
-			}
-		}
-
-		//Entity scripts:
-		foreach (Entity entity in Segment.Entities)
-		{
-			foreach (Scripting.Script script in entity.Scripts.Where(s=>s.IsEnabled))
-			{
-				syntaxErrors = CSharpSyntaxTree.ParseText("void OnSpawn(){" + script.Blocks[1] + "}").GetDiagnostics();
-				if (syntaxErrors.Count() > 0)
-				{
-					var errorList = String.Join('\n', syntaxErrors.Take(3).Select(err => (err.Location.GetLineSpan().StartLinePosition.Line + 3) + ":" + err.GetMessage()));
-					if (syntaxErrors.Count() > 3)
-						errorList += "\n...";
-					var messageResult = MessageBox.Show($"Entity '{entity.Name}' has syntax errors in script '{script.Name}'.\nDo you wish to continue?\n\n{errorList}", "Syntax Errors in scripts", MessageBoxButton.YesNo);
-					if (messageResult == MessageBoxResult.No)
-					{
-						ActiveDocument = Documents.Where(d => d is EntitiesViewModel).FirstOrDefault() as EntitiesViewModel;
-						(ActiveDocument as EntitiesViewModel).SelectedEntity = entity;
-						return false;
-					}
-				}
-			}
-		}
-		//Entity duplicate name check
-		var entityDuplicates = Segment.Entities.GroupBy(e => e.Name, StringComparer.InvariantCultureIgnoreCase).Where(g => g.Count() > 1);
-		foreach (var duplicate in entityDuplicates)
-		{
-			var messageResult = MessageBox.Show($"Entity '{duplicate.Key}' has {duplicate.Count()} definitions.\nDo you wish to continue?", "Duplicate Entities found", MessageBoxButton.YesNo);
-			if (messageResult == MessageBoxResult.No)
-			{
-				ActiveDocument = Documents.Where(d => d is EntitiesViewModel).FirstOrDefault() as EntitiesViewModel;
-				(ActiveDocument as EntitiesViewModel).SelectedEntity = duplicate.First();
-				return false;
-			}
-		}
-
-		//Spawner scripts:
-		foreach (LocationSpawner spawner in Segment.Spawns.Location)
-		{
-			foreach (Scripting.Script script in spawner.Scripts.Where(script=>script.IsEnabled))
-			{
-				syntaxErrors = CSharpSyntaxTree.ParseText("void OnSpawn(){" + script.Blocks[1] + "}").GetDiagnostics();
-				if (syntaxErrors.Count() > 0)
-				{
-					var errorList = String.Join('\n', syntaxErrors.Take(3).Select(err => (err.Location.GetLineSpan().StartLinePosition.Line + 3) + ":" + err.GetMessage()));
-					if (syntaxErrors.Count() > 3)
-						errorList += "\n...";
-					var messageResult = MessageBox.Show($"Location Spawner '{spawner.Name}' has syntax errors in script '{script.Name}'.\nDo you wish to continue?\n\n{errorList}", "Syntax Errors in scripts", MessageBoxButton.YesNo);
-					if (messageResult == MessageBoxResult.No)
-					{
-							
-						ActiveDocument = Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
-						(ActiveDocument as SpawnsViewModel).SelectedLocationSpawner = spawner;
-						WeakReferenceMessenger.Default.Send(spawner as Spawner);
-						return false;
-					}
-				}
-			}
-		}
-		//Spawner duplicate name checks
-		var locationSpawnerDuplicates = Segment.Spawns.Location.GroupBy(e => e.Name, StringComparer.InvariantCultureIgnoreCase).Where(g => g.Count() > 1);
-		foreach (var duplicate in locationSpawnerDuplicates)
-		{
-			var messageResult = MessageBox.Show($"Spawner '{duplicate.Key}' has {duplicate.Count()} definitions.\nDo you wish to continue?", "Duplicate Spawners found", MessageBoxButton.YesNo);
-			if (messageResult == MessageBoxResult.No)
-			{
-				ActiveDocument = Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
-				(ActiveDocument as SpawnsViewModel).SelectedLocationSpawner = duplicate.First();
-				WeakReferenceMessenger.Default.Send(duplicate.First() as Spawner);
-				return false;
-			}
-		}
-		var regionSpawnerDuplicates = Segment.Spawns.Region.GroupBy(e => e.Name, StringComparer.InvariantCultureIgnoreCase).Where(g => g.Count() > 1);
-		foreach (var duplicate in regionSpawnerDuplicates)
-		{
-			var messageResult = MessageBox.Show($"Spawner '{duplicate.Key}' has {duplicate.Count()} definitions.\nDo you wish to continue?", "Duplicate Spawners found", MessageBoxButton.YesNo);
-			if (messageResult == MessageBoxResult.No)
-			{
-				ActiveDocument = Documents.Where(d => d is SpawnsViewModel).FirstOrDefault() as SpawnsViewModel;
-				(ActiveDocument as SpawnsViewModel).SelectedRegionSpawner = duplicate.First();
-				WeakReferenceMessenger.Default.Send(duplicate.First() as Spawner);
-				return false;
-			}
-		}
-
-		//Treasure scripts:
-		foreach (SegmentTreasure treasurePool in Segment.Treasures)
-		{
-			foreach (TreasureEntry entry in treasurePool.Entries)
-			{
-				foreach (Scripting.Script script in entry.Scripts.Where(s=>s.IsEnabled))
-				{
-					syntaxErrors = CSharpSyntaxTree.ParseText("void OnCreate(){" + script.Blocks[1] + "}").GetDiagnostics();
-					if (syntaxErrors.Count() > 0)
-					{
-						var errorList = String.Join('\n', syntaxErrors.Take(3).Select(err => (err.Location.GetLineSpan().StartLinePosition.Line + 3) + ":" + err.GetMessage()));
-						if (syntaxErrors.Count() > 3)
-							errorList += "\n...";
-						var messageResult = MessageBox.Show($"Treasure '{treasurePool.Name}' has syntax errors in script '{treasurePool.Entries.IndexOf(entry)+1}'.\nDo you wish to continue?\n\n{errorList}", "Syntax Errors in scripts", MessageBoxButton.YesNo);
-						if (messageResult == MessageBoxResult.No) {
-							ActiveDocument = Documents.Where(d => d is TreasuresViewModel).FirstOrDefault() as TreasuresViewModel;
-							(ActiveDocument as TreasuresViewModel).SelectedTreasure = treasurePool;
-							return false;
-						}
-					}
-				}
-			}
-		}
-		//Treasure duplicate name check
-		var treasureDuplicates = Segment.Treasures.GroupBy(e => e.Name, StringComparer.InvariantCultureIgnoreCase).Where(g => g.Count() > 1);
-		foreach (var duplicate in treasureDuplicates)
-		{
-			var messageResult = MessageBox.Show($"Treasure '{duplicate.Key}' has {duplicate.Count()} definitions.\nDo you wish to continue?", "Duplicate Treasures found", MessageBoxButton.YesNo);
-			if (messageResult == MessageBoxResult.No)
-			{
-				ActiveDocument = Documents.Where(d => d is TreasuresViewModel).FirstOrDefault() as TreasuresViewModel;
-				(ActiveDocument as TreasuresViewModel).SelectedTreasure = duplicate.First();
-				return false;
-			}
-		}
-
-		//Location duplicate name check
-		var locationDuplicates = Segment.Locations.GroupBy(e => e.Name, StringComparer.InvariantCultureIgnoreCase).Where(g => g.Count() > 1);
-		foreach (var duplicate in locationDuplicates)
-		{
-			var messageResult = MessageBox.Show($"Location '{duplicate.Key}' has {duplicate.Count()} definitions.\nDo you wish to continue?", "Duplicate Locations found", MessageBoxButton.YesNo);
-			if (messageResult == MessageBoxResult.No)
-			{
-				ActiveDocument = Documents.Where(d => d is LocationsViewModel).FirstOrDefault() as LocationsViewModel;
-				(ActiveDocument as LocationsViewModel).SelectedLocation = duplicate.First();
-				return false;
-			}
-		}
-
-		//Subregion duplicate name check
-		var subregionDuplicates = Segment.Subregions.GroupBy(e => e.Name, StringComparer.InvariantCultureIgnoreCase).Where(g => g.Count() > 1);
-		foreach (var duplicate in subregionDuplicates)
-		{
-			var messageResult = MessageBox.Show($"Subregion '{duplicate.Key}' has {duplicate.Count()} definitions.\nDo you wish to continue?", "Duplicate Subregions found", MessageBoxButton.YesNo);
-			if (messageResult == MessageBoxResult.No)
-			{
-				ActiveDocument = Documents.Where(d => d is SubregionViewModel).FirstOrDefault() as SubregionViewModel;
-				(ActiveDocument as SubregionViewModel).SelectedSubregion = duplicate.First();
-				return false;
-			}
-		}
-
-		/* Prevent any region with id = 0 */
-		foreach (var region in Segment.Regions)
-		{
-			if (region.ID is not 0)
-				continue;
-			
-			MessageBox.Show($"Unable to save: Region '{region.Name}' has ID = 0.", "Invalid Region ID", MessageBoxButton.OK);
-
-			ActiveDocument = region;
-			return false;
-		}
-
-		return true;
-	}
-
+	
 	private void CreateRegion()
 	{
 		if (_segment == null)
@@ -948,11 +497,6 @@ public class ApplicationPresenter : ObservableRecipient
 		ActiveDocument = Documents.FirstOrDefault();
 	}
 		
-	public void ShiftRegion(object o)
-	{
-		// TODO
-	}
-		
 	public void GenerateRegions()
 	{
 		var generator = new GenerateRegionWindow();
@@ -985,35 +529,192 @@ public class ApplicationPresenter : ObservableRecipient
             }
         }
     }
-}
-// Extension method to handle async void safely
-public static class TaskExtensions
-{
-    // Original extension for Task
-    public static void FireAndForget(this Task task, Action<Exception> onException = null)
-    {
-        _ = FireAndHandleExceptionsAsync(() => task, onException);
-    }
 
-    // Alternative extension for Func<Task>, which avoids VSTHRD003
-    public static void FireAndForget(this Func<Task> taskFactory, Action<Exception> onException = null)
+    private void ConvertSegment()
     {
-        _ = FireAndHandleExceptionsAsync(taskFactory, onException);
-    }
-
-    private static async Task FireAndHandleExceptionsAsync(Func<Task> taskFactory, Action<Exception> onException)
-    {
-        if (taskFactory == null)
-            throw new ArgumentNullException(nameof(taskFactory));
-
-        try
+        var dialog = new Microsoft.Win32.OpenFileDialog()
         {
-            await taskFactory().ConfigureAwait(false);
-        }
-        catch (Exception ex)
-        {
-            onException?.Invoke(ex);
-        }
+            DefaultExt = ".mapproj",
+            Filter = "WorldForge - Map Project (*.mapproj)|*.mapproj",
+            Title = "Convert Segment"
+        };
+
+        var result = dialog.ShowDialog();
+
+        if (!result.HasValue || !result.Value)
+	        return;
+
+        var targetFile = new FileInfo(dialog.FileName);
+        var targetPath = targetFile.Directory;
+
+        if (targetPath is null)
+	        throw new InvalidOperationException("Target path is invalid.");
+       
+		// convert the segment from xml to a directory based format
+		var segmentDocument = XDocument.Load(dialog.FileName);
+		var segmentDirectory = targetPath.CreateSubdirectory(Path.GetFileNameWithoutExtension(targetFile.Name));
+
+		// load the segment object, we may use it to populate the definition file
+		var segmentRoot = segmentDocument.Root;
+		
+		if (segmentRoot is null)
+			throw new InvalidOperationException("Segment file is invalid.");
+
+		var segmentNameAttribute = segmentRoot.Attribute("name");
+		var versionAttribute = segmentRoot.Attribute("version");
+
+		if (segmentNameAttribute is null || versionAttribute is null)
+			throw new InvalidOperationException("Segment file is invalid.");
+		
+		var segmentName = segmentNameAttribute.Value;
+		var segmentVersion = Version.Parse(versionAttribute.Value);
+
+		var segmentScriptElement = segmentRoot.Element("script");
+		
+		// create the internal source directory
+		var sourceDirectory = segmentDirectory.CreateSubdirectory("Source");
+		var definitionScript = new FileInfo(Path.Combine(targetPath.FullName, $"{segmentName}.cs"));
+
+		if (segmentScriptElement != null)
+		{
+			var internalScript = segmentScriptElement.Elements("block").ToArray()[1];
+			
+			File.WriteAllText(Path.Combine(sourceDirectory.FullName, "Internal.cs"),
+				$"namespace Kesmai.Server.Segments;\r\n\r\npublic partial class {segmentName}\n{{\n{internalScript.Value.Trim('\r', '\n')}\n}}");
+		}
+
+		if (definitionScript.Exists)
+			definitionScript.CopyTo(Path.Combine(sourceDirectory.FullName, $"{segmentName}.cs"));
+		
+		// convert regions to individual files.
+		var regionsDirectory = segmentDirectory.CreateSubdirectory("Regions");
+		var regionsElement = segmentRoot.Element("regions");
+		
+		if (regionsElement is null)
+			throw new InvalidOperationException("Segment file is invalid.");
+		
+		var regionElements = regionsElement.Elements("region");
+
+		foreach (var region in regionElements)
+		{
+			var idElement = region.Element("id");
+			
+			if (idElement is null)
+				throw new InvalidOperationException("Region is missing an ID.");
+			
+			region.Save(Path.Combine(regionsDirectory.FullName, $"{idElement.Value}.xml"));
+		}
+
+		// other data
+		void write(XElement rootElement, string fileName)
+		{
+			if (rootElement is null)
+				return;
+			
+			rootElement.Save(Path.Combine(segmentDirectory.FullName, fileName));
+		}
+		
+		// clean up spawner names
+		foreach (var element in segmentRoot.Elements("spawns"))
+		{
+			switch (element.Name.LocalName)
+			{
+				case "LocationSpawner": element.Name = "LocationRegionSpawner"; break;
+				case "SubregionSpawner": element.Name = "SubregionRegionSpawner"; break;
+			}
+		}
+		
+		write(new XElement("segment", 
+			new XAttribute("name", segmentName), 
+			new XAttribute("version", Core.Version.ToString())), "Segment.xml");
+		
+		write(segmentRoot.Element("locations"), "Locations.xml");
+		write(segmentRoot.Element("subregions"), "Subregions.xml");
+		write(segmentRoot.Element("entities"), "Entities.xml");
+		write(segmentRoot.Element("spawns"), "Spawns.xml");
+		write(segmentRoot.Element("treasures"), "Treasures.xml");
+		write(new XElement("components"), "Components.xml");
+		write(new XElement("brushes"), "Brushes.xml");
+		write(new XElement("templates"), "Templates.xml");
+		
+		void cleanup(string documentName, Func<XElement, IEnumerable<XElement>> scriptSelector)
+		{
+			var documentPath = Path.Combine(segmentDirectory.FullName, documentName);
+			var document = XDocument.Load(documentPath);
+			var documentRoot = document.Root;
+		
+			if (documentRoot is null)
+				throw new InvalidOperationException($"{documentName} document is invalid.");
+
+			var scripts = scriptSelector(documentRoot).ToList();
+		
+			foreach (var scriptElement in scripts)
+			{
+				var blocks = scriptElement.Elements("block").ToArray();
+				var body = blocks[1].Value;
+				
+				// trim leading/trailing new line
+				body = body.Trim('\r', '\n');
+			
+				scriptElement.ReplaceWith(new XElement("script",
+					new XAttribute("name", scriptElement.Attribute("name")?.Value ?? "(Unnamed)"),
+					new XAttribute("enabled", scriptElement.Attribute("enabled")?.Value ?? "true"),
+					new XCData(body))
+				);
+			}
+		
+			document.Save(documentPath);
+		}
+
+		// go through and clean up scripts.
+		cleanup("Spawns.xml", (root) => root.Elements("spawn").Elements("script"));
+		cleanup("Entities.xml", (root) => root.Elements("entity").Elements("script"));
+		cleanup("Treasures.xml", (root) => root.Elements("treasure").Elements("entry").Elements("script"));
+		cleanup("Treasures.xml", (root) => root.Elements("treasure").Elements("script"));
+		
+		// create the project file
+		var segmentProject = new FileInfo(Path.Combine(segmentDirectory.FullName, $"{segmentName}.csproj"));
+		
+		var projectRoot = new XElement("Project",
+			new XAttribute("Sdk", "Microsoft.NET.Sdk"),
+			new XElement("PropertyGroup",
+				new XElement("OutputType", "Library"),
+				new XElement("TargetFramework", "net8.0-windows8.0"),
+				new XElement("RootNamespace", segmentName),
+				new XElement("AssemblyName", segmentName),
+				new XElement("EnableDefaultItems", false)
+			),
+			new XElement("ItemGroup",
+				new XElement("Compile", new XAttribute("Include", "Source/**/*.cs"))
+			),
+			new XElement("ItemGroup",
+				new XElement("PackageReference", new XAttribute("Include", "Kesmai.Server.Reference"), new XAttribute("Version", "*"))
+			)
+		);
+		
+		var additionalFiles = new []
+		{
+			"Locations.xml",
+			"Subregions.xml",
+			"Entities.xml",
+			"Spawns.xml",
+			"Treasures.xml",
+			"Components.xml",
+			"Brushes.xml",
+			"Templates.xml",
+			@"Regions\*.xml"
+		};
+
+		if (additionalFiles.Any())
+		{
+			projectRoot.Add(
+				new XElement("ItemGroup",
+					additionalFiles.Select(f =>
+						new XElement("AdditionalFiles", new XAttribute("Include", f.Replace('\\', '/'))))
+				)
+			);
+		}
+
+		new XDocument(projectRoot).Save(segmentProject.FullName);
     }
 }
-
