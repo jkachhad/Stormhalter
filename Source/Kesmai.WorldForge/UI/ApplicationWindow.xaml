@@ -10,6 +10,7 @@
         xmlns:ui="clr-namespace:Kesmai.WorldForge.UI"
         xmlns:editor="clr-namespace:Kesmai.WorldForge.Editor"
         xmlns:documents="clr-namespace:Kesmai.WorldForge.UI.Documents"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 
         mc:Ignorable="d"
 		
@@ -173,7 +174,7 @@
 
                         <LayoutAnchorablePane DockHeight="*">
                             <LayoutAnchorable Title="Properties" CanDockAsTabbedDocument="False">
-
+                                <xctk:PropertyGrid SelectedObject="{Binding ActiveContent, Mode=OneWay}" />
                             </LayoutAnchorable>
                         </LayoutAnchorablePane>
                     </LayoutAnchorablePaneGroup>

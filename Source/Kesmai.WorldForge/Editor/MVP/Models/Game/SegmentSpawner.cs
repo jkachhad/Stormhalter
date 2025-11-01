@@ -43,26 +43,6 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 		}
 	}
 
-	public abstract void Present(ApplicationPresenter presenter);
-
-	public override string ToString()
-	{
-		return Name;
-	}
-
-    private bool _isSelected;
-    public bool IsSelected
-    {
-        get => _isSelected;
-        set => SetProperty(ref _isSelected, value);
-    }
-    private string _debug;
-    public string Debug
-    {
-        get => _debug;
-        set => SetProperty(ref _debug, value);
-    }
-
     public bool Enabled
 	{
 		get => _enabled;
@@ -87,8 +67,10 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 		set => SetProperty(ref _maximum, value);
 	}
 
+	[Browsable(false)]
 	public ObservableCollection<SpawnEntry> Entries { get; set; } = new ObservableCollection<SpawnEntry>();
 
+	[Browsable(false)]
 	public ObservableCollection<Script> Scripts
 	{
 		get => _scripts;
@@ -168,6 +150,8 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 			}
 		}
 	}
+	
+	public abstract void Present(ApplicationPresenter presenter);
 
 	public virtual XElement GetSerializingElement()
 	{
@@ -202,6 +186,11 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 	protected virtual string GetTypeAlias()
 	{
 		return GetType().Name;
+	}
+
+	public override string ToString()
+	{
+		return Name;
 	}
 
 	public abstract void Copy(Segment segment);
@@ -305,7 +294,9 @@ public class RegionSegmentSpawner : SegmentSpawner
 		set => SetProperty(ref _region, value);
 	}
 		
+	[Browsable(false)]
 	public ObservableCollection<SegmentBounds> Inclusions { get; set; } = new ObservableCollection<SegmentBounds>();
+	[Browsable(false)]
 	public ObservableCollection<SegmentBounds> Exclusions { get; set; } = new ObservableCollection<SegmentBounds>();
 
 	public RegionSegmentSpawner()

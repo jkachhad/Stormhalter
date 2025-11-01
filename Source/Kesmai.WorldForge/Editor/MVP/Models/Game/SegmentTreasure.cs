@@ -153,14 +153,8 @@ public class SegmentTreasure : ObservableObject, ICloneable, ISegmentObject
 public class SegmentHoard : SegmentTreasure
 {
 	private ObservableCollection<Script> _scripts = new ObservableCollection<Script>();
-	private double _chance;
 	
-	public double Chance
-	{
-		get => _chance;
-		set => SetProperty(ref _chance, value);
-	}
-	
+	[Browsable(false)]
 	public ObservableCollection<Script> Scripts
 	{
 		get => _scripts;
