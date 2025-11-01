@@ -637,7 +637,6 @@ public class ApplicationPresenter : ObservableRecipient
 		write(new XElement("brushes"), "Brushes.xml");
 		write(new XElement("templates"), "Templates.xml");
 		
-		
 		void cleanup(string documentName, Func<XElement, IEnumerable<XElement>> scriptSelector)
 		{
 			var documentPath = Path.Combine(segmentDirectory.FullName, documentName);
@@ -674,6 +673,8 @@ public class ApplicationPresenter : ObservableRecipient
 		cleanup("Treasures.xml", (root) => root.Elements("treasure").Elements("script"));
 		
 		// create the project file
+		var segmentProject = new FileInfo(Path.Combine(segmentDirectory.FullName, $"{segmentName}.csproj"));
+		
 		var projectRoot = new XElement("Project",
 			new XAttribute("Sdk", "Microsoft.NET.Sdk"),
 			new XElement("PropertyGroup",
@@ -714,6 +715,6 @@ public class ApplicationPresenter : ObservableRecipient
 			);
 		}
 
-		new XDocument(projectRoot).Save(segmentDirectory.FullName);
+		new XDocument(projectRoot).Save(segmentProject.FullName);
     }
 }
