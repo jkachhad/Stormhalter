@@ -17,10 +17,8 @@ public sealed class ComponentImageCache
     public WriteableBitmap Get(IComponentProvider component)
     {
         if (!_renders.TryGetValue(component, out var bmp))
-        {
-            bmp = Update(component);
-            _renders[component] = bmp;
-        }
+            _renders[component] =  Update(component);
+
         return bmp;
     }
 
@@ -38,7 +36,10 @@ public sealed class ComponentImageCache
         if (layers.Count == 0)
         {
             var empty = new WriteableBitmap(1, 1, 96, 96, PixelFormats.Pbgra32, null);
-            empty.Lock(); empty.AddDirtyRect(new Int32Rect(0, 0, 1, 1)); empty.Unlock(); empty.Freeze();
+            
+            empty.Lock(); 
+            empty.AddDirtyRect(new Int32Rect(0, 0, 1, 1)); empty.Unlock(); empty.Freeze();
+            
             _renders[component] = empty;
             return empty;
         }
@@ -48,10 +49,7 @@ public sealed class ComponentImageCache
 
         // Reuse existing WB if size matches; otherwise create new.
         if (!_renders.TryGetValue(component, out var wb) || wb.PixelWidth != maxWidth || wb.PixelHeight != maxHeight || wb.Format != PixelFormats.Pbgra32 || forceUpdate)
-        {
-            wb = new WriteableBitmap(maxWidth, maxHeight, 96, 96, PixelFormats.Pbgra32, null);
-            _renders[component] = wb;
-        }
+            _renders[component] = (wb = new WriteableBitmap(maxWidth, maxHeight, 96, 96, PixelFormats.Pbgra32, null));
 
         CompositeInto(wb, layers);
 
