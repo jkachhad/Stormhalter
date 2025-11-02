@@ -634,7 +634,7 @@ public partial class SegmentTreeControl : UserControl
             };
             
             _entitiesNode.ContextMenu = new ContextMenu();
-            _entitiesNode.ContextMenu.AddItem("Add Entities", "Add.png", (s, e) =>
+            _entitiesNode.ContextMenu.AddItem("Add Entity", "Add.png", (s, e) =>
             {
                 var entity = addEntity(Segment.Entities, String.Empty, "Entity");
                 
