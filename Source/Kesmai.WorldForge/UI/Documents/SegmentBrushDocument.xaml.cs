@@ -33,7 +33,8 @@ public partial class SegmentBrushDocument : UserControl
 
 		var picker = new ComponentsWindow
 		{
-			Owner = Window.GetWindow(this)
+			Owner = Window.GetWindow(this),
+			ComponentFilter = provider => !ReferenceEquals(provider, _segmentBrush)
 		};
 
 		var result = picker.ShowDialog();
