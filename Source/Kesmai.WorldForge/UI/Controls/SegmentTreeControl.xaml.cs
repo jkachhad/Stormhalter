@@ -87,6 +87,7 @@ public partial class SegmentTreeControl : UserControl
 
             item.ContextMenu = new ContextMenu();
             item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(template, item));
+            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(template));
             item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(template, item, source));
 
             return item;
@@ -267,6 +268,7 @@ public partial class SegmentTreeControl : UserControl
 
             item.ContextMenu = new ContextMenu();
             item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(brush, item));
+            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(brush));
             item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(brush, item, source));
 
             return item;
@@ -338,6 +340,7 @@ public partial class SegmentTreeControl : UserControl
 
             item.ContextMenu = new ContextMenu();
             item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(region, item));
+            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(region));
             item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(region, item, source));
             
             return item;
@@ -352,6 +355,7 @@ public partial class SegmentTreeControl : UserControl
 
             item.ContextMenu = new ContextMenu();
             item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(subregion, item));
+            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(subregion));
             item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(subregion, item, source));
 
             return item;
@@ -421,12 +425,15 @@ public partial class SegmentTreeControl : UserControl
 
             item.EditableTextBlock.IsEditable = !isReserved;
 
+            item.ContextMenu = new ContextMenu();
+
             if (!isReserved)
-            {
-                item.ContextMenu = new ContextMenu();
                 item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(location, item));
+
+            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(location));
+
+            if (!isReserved)
                 item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(location, item, source));
-            }
 
             return item;
         }
@@ -492,6 +499,7 @@ public partial class SegmentTreeControl : UserControl
         
             item.ContextMenu = new ContextMenu();
             item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(segmentComponent, item));
+            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(segmentComponent));
             item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(segmentComponent, item, source));
 
             return item;
@@ -599,6 +607,7 @@ public partial class SegmentTreeControl : UserControl
             
             item.ContextMenu = new ContextMenu();
             item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(segmentSpawner, item));
+            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(segmentSpawner));
             item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(segmentSpawner, item, source));
             
             return item;
@@ -713,6 +722,7 @@ public partial class SegmentTreeControl : UserControl
             
             item.ContextMenu = new ContextMenu();
             item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(segmentEntity, item));
+            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(segmentEntity));
             item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(segmentEntity, item, Segment.Entities));
 
             return item;
@@ -790,6 +800,7 @@ public partial class SegmentTreeControl : UserControl
             
             item.ContextMenu = new ContextMenu();
             item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(treasure, item));
+            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(treasure));
             item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(treasure, item, collection));
             
             return item;
@@ -1056,6 +1067,14 @@ public partial class SegmentTreeControl : UserControl
     private void RenameSegmentObject(ISegmentObject obj, SegmentTreeViewItem item)
     {
         item.Rename();
+    }
+
+    private void DuplicateSegmentObject(ISegmentObject obj)
+    {
+        if (Segment is null)
+            return;
+
+        obj.Copy(Segment);
     }
 
     private void DeleteSegmentObject(ISegmentObject obj, TreeViewItem item, IList collection)
