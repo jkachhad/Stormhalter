@@ -53,12 +53,7 @@ public class TurnUndeadSpell : DelayedSpell
 					.Where(e => e is not PlayerEntity && e is IUndead).ToList();
 
 				foreach (var defender in mobiles)
-				{
-					var defenderDamage = damage;
-					
-					defender.ScaleSpellDamage(_caster, ref defenderDamage, true);
-					defender.ApplySpellDamage(_caster, this, defenderDamage, true);
-				}
+					defender.ApplySpellDamage(_caster, this, damage, true);
 
 				/* Apply return mana. */
 				var returnMana = Math.Min(missingHealth / 3, mobiles.Count);

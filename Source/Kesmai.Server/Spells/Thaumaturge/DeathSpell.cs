@@ -48,8 +48,6 @@ public class DeathSpell : DelayedSpell
 			var baseDamage = 10 * skillLevel;
 			var damage = SpellHelper.AdjustDamage((int)baseDamage, 0.9, 1.1);
 
-			defender.ScaleSpellDamage(attacker, ref damage, true);
-			
 			if (target.Stats[EntityStat.DeathProtection].Value is 0)
 			{
 				var resistance = target.Stats[EntityStat.DeathResistance].Value;
@@ -62,7 +60,7 @@ public class DeathSpell : DelayedSpell
 			{
 				damage /= 2;
 			}
-			
+
 			defender.ApplySpellDamage(attacker, this, damage, true);
 
 			if (_caster is PlayerEntity player && _item == null)
