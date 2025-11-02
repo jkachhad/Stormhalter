@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
@@ -12,7 +13,7 @@ namespace Kesmai.WorldForge.Editor;
 
 public class SegmentEntityCreated(SegmentEntity segmentEntity) : ValueChangedMessage<SegmentEntity>(segmentEntity);
 public class SegmentEntityDeleted(SegmentEntity segmentEntity) : ValueChangedMessage<SegmentEntity>(segmentEntity);
-public class SegmentEntitiesChanged(SegmentEntity segmentEntity) : ValueChangedMessage<SegmentEntity>(segmentEntity);
+public class SegmentEntitiesChanged(SegmentEntities entities) : ValueChangedMessage<SegmentEntities>(entities);
 
 public class SegmentEntities : ObservableCollection<SegmentEntity>
 {
@@ -57,7 +58,6 @@ public class SegmentEntities : ObservableCollection<SegmentEntity>
 				WeakReferenceMessenger.Default.Send(new SegmentEntityDeleted(oldItem));
 		}
 			
-		foreach (var item in this)
-			WeakReferenceMessenger.Default.Send(new SegmentEntitiesChanged(item));
+		WeakReferenceMessenger.Default.Send(new SegmentEntitiesChanged(this));
 	}
 }
