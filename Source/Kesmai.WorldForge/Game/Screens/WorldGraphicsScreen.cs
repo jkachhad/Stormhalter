@@ -152,6 +152,19 @@ public class WorldGraphicsScreen : UIGraphicsScreen
 		if (inputManager is null)
 			return;
 		
+		var coordinateText = "(-, -)";
+
+		if (_isMouseDirectlyOver)
+		{
+			var mousePosition = inputManager.MousePosition;
+			var (wx, wy) = ToWorldCoordinates((int)mousePosition.X, (int)mousePosition.Y);
+			
+			coordinateText = $"({wx}, {wy})";
+		}
+
+		if (_presenter.TileCoordinateDisplay != coordinateText)
+			_presenter.TileCoordinateDisplay = coordinateText;
+		
 		// if the input is still not handled, we can check for context menu and zoom.
 		if (_isMouseDirectlyOver && !inputManager.IsMouseOrTouchHandled)
 		{

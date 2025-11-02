@@ -224,12 +224,16 @@
                     </Grid>
                 </ItemsPanelTemplate>
             </StatusBar.ItemsPanel>
+            
             <Separator Grid.Column="1" />
-
-            <Separator Grid.Column="3" />
-            <StatusBarItem Grid.Column="4" HorizontalAlignment="Center">
-                <TextBlock  Text="(x, y)" TextAlignment="Right" />
+            
+            <StatusBarItem Grid.Column="2" HorizontalAlignment="Center">
+                <TextBlock Text="{Binding TileCoordinateDisplay}" TextAlignment="Center"
+                           FontWeight="Bold" />
             </StatusBarItem>
+            
+            <Separator Grid.Column="3" />
+          
         </StatusBar>
     </Grid>
 

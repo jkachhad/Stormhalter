@@ -45,6 +45,7 @@ public class ApplicationPresenter : ObservableRecipient
 	private object _activeDocument;
 
 	private ISegmentObject _activeContent;
+	private string _tileCoordinateDisplay = "(-, -)";
 
 	public Selection Selection
 	{
@@ -97,6 +98,12 @@ public class ApplicationPresenter : ObservableRecipient
 			if (value != _activeContent && SetProperty(ref _activeContent, value))
 				WeakReferenceMessenger.Default.SendDelayed(new ActiveContentChanged(value), TimeSpan.FromMilliseconds(50));
 		}
+	}
+
+	public string TileCoordinateDisplay
+	{
+		get => _tileCoordinateDisplay;
+		set => SetProperty(ref _tileCoordinateDisplay, value);
 	}
 	
     public RelayCommand ConvertSegmentCommand { get; }
