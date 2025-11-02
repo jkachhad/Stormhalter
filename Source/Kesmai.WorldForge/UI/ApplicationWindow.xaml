@@ -22,6 +22,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
         <!-- Menu -->
@@ -208,6 +209,28 @@
             </DockingManager.LayoutItemContainerStyle>
            
         </DockingManager>
+        
+        <StatusBar Grid.Row="2">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <Separator Grid.Column="1" />
+
+            <Separator Grid.Column="3" />
+            <StatusBarItem Grid.Column="4" HorizontalAlignment="Center">
+                <TextBlock  Text="(x, y)" TextAlignment="Right" />
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 
     <!-- Input bindings -->
