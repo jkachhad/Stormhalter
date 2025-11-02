@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -34,12 +35,12 @@ public partial class SegmentBrushDocument : UserControl
 		var picker = new ComponentsWindow
 		{
 			Owner = Window.GetWindow(this),
-			ComponentFilter = provider => !ReferenceEquals(provider, _segmentBrush)
+			ComponentFilter = provider => _segmentBrush is null || provider is not SegmentBrush brush || !ContainsBrush(brush, _segmentBrush)
 		};
 
 		var result = picker.ShowDialog();
 
-		if (!result.HasValue || result != true || picker.SelectedComponent is null)
+		if (result is not true || picker.SelectedComponent is null)
 			return;
 
 		var entry = new SegmentBrushEntry(_segmentBrush)
@@ -62,6 +63,36 @@ public partial class SegmentBrushDocument : UserControl
 			return;
 
 		_segmentBrush.Entries.Remove(entry);
+	}
+
+	private static bool ContainsBrush(SegmentBrush source, SegmentBrush target)
+	{
+		// short-circuit for self-reference
+		if (ReferenceEquals(source, target))
+			return true;
+		
+		// perform a depth-first search to find the target brush
+		return ContainsBrushRecursive(source, target, new HashSet<SegmentBrush>());
+
+		static bool ContainsBrushRecursive(SegmentBrush current, SegmentBrush search, HashSet<SegmentBrush> visited)
+		{
+			if (!visited.Add(current))
+				return false;
+
+			foreach (var entry in current.Entries)
+			{
+				if (entry.Component is not SegmentBrush brush)
+					continue;
+
+				if (ReferenceEquals(brush, search))
+					return true;
+
+				if (ContainsBrushRecursive(brush, search, visited))
+					return true;
+			}
+
+			return false;
+		}
 	}
 }
 
