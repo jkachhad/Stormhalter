@@ -181,19 +181,21 @@ public class ScriptEditor : RoslynCodeEditor
 
         _updatingDocument = true;
 
-        var bodySegmentLength = e.InsertionLength - e.RemovalLength;
+		try
+		{
+			var bodySegmentDelta = e.InsertionLength - e.RemovalLength;
+			BodySegment.Length = Math.Max(0, BodySegment.Length + bodySegmentDelta);
 
-        if (bodySegmentLength <= 0)
-            return;
-        
-        BodySegment.Length += bodySegmentLength;
-        
-        SetCurrentValue(BodyProperty, _body = Document.GetText(BodySegment));
-        
-        FooterSegment.StartOffset = BodySegment.EndOffset + NewLine.Length;
+			_body = Document.GetText(BodySegment);
+			SetCurrentValue(BodyProperty, _body);
 
-        _updatingDocument = false;
-    }
+			FooterSegment.StartOffset = BodySegment.EndOffset + NewLine.Length;
+		}
+		finally
+		{
+			_updatingDocument = false;
+		}
+	}
     
     private class ReadOnlySectionsProvider : IReadOnlySectionProvider
     {
