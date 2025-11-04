@@ -278,6 +278,8 @@ public class ApplicationPresenter : ObservableRecipient
 			Directory = targetDirectory.FullName
 		};
 		
+		Segment = segment;
+		
 		void process(string documentName, Action assignment, Action<XElement, Version> load)
 		{
 			var documentFile = new FileInfo(Path.Combine(targetDirectory.FullName, documentName));
@@ -345,7 +347,6 @@ public class ApplicationPresenter : ObservableRecipient
 			}
 		}
 
-		Segment = segment;
 		Segment.UpdateTiles();
 	}
 
