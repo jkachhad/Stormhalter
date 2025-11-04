@@ -314,14 +314,11 @@ public partial class SegmentTreeControl : UserControl
     private void OnRegionRemoved(SegmentRegion region)
     {
         // a region has been removed, delete its tree node.
-        if (_regionItems.TryGetValue(region, out var item))
+        if (_regionItems.Remove(region, out var item))
         {
             if (_regionsNode != null)
                 _regionsNode.Items.Remove(item);
         }
-
-        if (_regionsNode != null)
-            _regionsNode.Items.Remove(item);
     }
 
     private void OnSubregionAdded(SegmentSubregion subregion)
@@ -357,7 +354,7 @@ public partial class SegmentTreeControl : UserControl
     private void OnSubregionRemoved(SegmentSubregion subregion)
     {
         // a subregion has been removed, delete its tree node.
-        if (_subregionItems.TryGetValue(subregion, out var item))
+        if (_subregionItems.Remove(subregion, out var item))
         {
             // find the parent region node.
             var parentRegion = _regionItems.Keys.FirstOrDefault(r => r.ID == subregion.Region);
