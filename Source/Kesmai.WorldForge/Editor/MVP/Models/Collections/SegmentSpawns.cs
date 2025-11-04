@@ -12,6 +12,8 @@ namespace Kesmai.WorldForge.Editor;
 
 public class SegmentSpawnCreated(SegmentSpawner segmentSpawner) : ValueChangedMessage<SegmentSpawner>(segmentSpawner);
 public class SegmentSpawnDeleted(SegmentSpawner segmentSpawner) : ValueChangedMessage<SegmentSpawner>(segmentSpawner);
+
+public class SegmentSpawnsReset();
 public class SegmentSpawnsChanged(SegmentSpawns spawners) : ValueChangedMessage<SegmentSpawns>(spawners);
 
 public class SegmentSpawns : ObservableObject
@@ -43,6 +45,9 @@ public class SegmentSpawns : ObservableObject
 			foreach (var oldItem in args.OldItems.OfType<SegmentSpawner>())
 				WeakReferenceMessenger.Default.Send(new SegmentSpawnDeleted(oldItem));
 		}
+		
+		if (args.Action is NotifyCollectionChangedAction.Reset)
+			WeakReferenceMessenger.Default.Send(new SegmentSpawnsReset());
 		
 		WeakReferenceMessenger.Default.Send(new SegmentSpawnsChanged(this));
 	}

@@ -12,6 +12,8 @@ namespace Kesmai.WorldForge.Editor;
 
 public class SegmentComponentCreated(SegmentComponent component) : ValueChangedMessage<SegmentComponent>(component);
 public class SegmentComponentDeleted(SegmentComponent component) : ValueChangedMessage<SegmentComponent>(component);
+
+public class SegmentComponentsReset();
 public class SegmentComponentsChanged(SegmentComponents locations) : ValueChangedMessage<SegmentComponents>(locations);
 
 public class SegmentComponents : ObservableCollection<SegmentComponent>
@@ -78,6 +80,9 @@ public class SegmentComponents : ObservableCollection<SegmentComponent>
 			foreach (var oldItem in args.OldItems.OfType<SegmentComponent>())
 				WeakReferenceMessenger.Default.Send(new SegmentComponentDeleted(oldItem));
 		}
+		
+		if (args.Action is NotifyCollectionChangedAction.Reset)
+			WeakReferenceMessenger.Default.Send(new SegmentComponentsReset());
 
 		WeakReferenceMessenger.Default.Send(new SegmentComponentsChanged(this));
 	}

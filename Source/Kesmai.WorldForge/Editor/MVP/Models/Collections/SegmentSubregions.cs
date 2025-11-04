@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -10,6 +11,8 @@ namespace Kesmai.WorldForge.Editor;
 
 public class SegmentSubregionAdded(SegmentSubregion subregion) : ValueChangedMessage<SegmentSubregion>(subregion);
 public class SegmentSubregionRemoved(SegmentSubregion subregion) : ValueChangedMessage<SegmentSubregion>(subregion);
+
+public class SegmentSubregionsReset();
 public class SegmentSubregionsChanged(SegmentSubregions subregions) : ValueChangedMessage<SegmentSubregions>(subregions);
 
 public class SegmentSubregions : ObservableCollection<SegmentSubregion>
@@ -39,7 +42,7 @@ public class SegmentSubregions : ObservableCollection<SegmentSubregion>
 			element.Add(subregion.GetSerializingElement());
 	}
 	
-	protected override void OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs args)
+	protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs args)
 	{
 		base.OnCollectionChanged(args);
 		
@@ -54,6 +57,9 @@ public class SegmentSubregions : ObservableCollection<SegmentSubregion>
 			foreach (var oldItem in args.OldItems.OfType<SegmentSubregion>())
 				WeakReferenceMessenger.Default.Send(new SegmentSubregionRemoved(oldItem));
 		}
+		
+		if (args.Action is NotifyCollectionChangedAction.Reset)
+			WeakReferenceMessenger.Default.Send(new SegmentSubregionsReset());
 		
 		WeakReferenceMessenger.Default.Send(new SegmentSubregionsChanged(this));
 	}

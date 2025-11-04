@@ -11,6 +11,8 @@ namespace Kesmai.WorldForge.Editor;
 
 public class SegmentLocationCreated(SegmentLocation location) : ValueChangedMessage<SegmentLocation>(location);
 public class SegmentLocationDeleted(SegmentLocation location) : ValueChangedMessage<SegmentLocation>(location);
+
+public class SegmentLocationsReset();
 public class SegmentLocationsChanged(SegmentLocations locations) : ValueChangedMessage<SegmentLocations>(locations);
 
 public class SegmentLocations : ObservableCollection<SegmentLocation>
@@ -51,6 +53,9 @@ public class SegmentLocations : ObservableCollection<SegmentLocation>
 			foreach (var oldItem in args.OldItems.OfType<SegmentLocation>())
 				WeakReferenceMessenger.Default.Send(new SegmentLocationDeleted(oldItem));
 		}
+
+		if (args.Action is NotifyCollectionChangedAction.Reset)
+			WeakReferenceMessenger.Default.Send(new SegmentLocationsReset());
 
 		WeakReferenceMessenger.Default.Send(new SegmentLocationsChanged(this));
 	}

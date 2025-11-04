@@ -9,6 +9,7 @@ namespace Kesmai.WorldForge.Editor;
 public class SegmentRegionAdded(SegmentRegion region) : ValueChangedMessage<SegmentRegion>(region);
 public class SegmentRegionRemoved(SegmentRegion region) : ValueChangedMessage<SegmentRegion>(region);
 
+public class SegmentRegionsReset();
 public class SegmentRegionsChanged(SegmentRegions regions) : ValueChangedMessage<SegmentRegions>(regions);
 
 public class SegmentRegions : ObservableCollection<SegmentRegion>
@@ -30,6 +31,9 @@ public class SegmentRegions : ObservableCollection<SegmentRegion>
 			foreach (var oldItem in args.OldItems.OfType<SegmentRegion>())
 				WeakReferenceMessenger.Default.Send(new SegmentRegionRemoved(oldItem));
 		}
+		
+		if (args.Action is NotifyCollectionChangedAction.Reset)
+			WeakReferenceMessenger.Default.Send(new SegmentRegionsReset());
 
 		WeakReferenceMessenger.Default.Send(new SegmentRegionsChanged(this));
 	}

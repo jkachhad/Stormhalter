@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -11,7 +12,8 @@ namespace Kesmai.WorldForge.Editor;
 public class SegmentTreasureCreated(SegmentTreasure treasure) : ValueChangedMessage<SegmentTreasure>(treasure);
 public class SegmentTreasureDeleted(SegmentTreasure treasure) : ValueChangedMessage<SegmentTreasure>(treasure);
 
-public class SegmentTreasuresChanged(SegmentTreasure treasure) : ValueChangedMessage<SegmentTreasure>(treasure);
+public class SegmentTreasuresReset();
+public class SegmentTreasuresChanged(SegmentTreasures treasures) : ValueChangedMessage<SegmentTreasures>(treasures);
 	
 public class SegmentTreasures : ObservableCollection<SegmentTreasure>
 {
@@ -45,7 +47,7 @@ public class SegmentTreasures : ObservableCollection<SegmentTreasure>
 		}
 	}
 	
-	protected override void OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs args)
+	protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs args)
 	{
 		base.OnCollectionChanged(args);
 			
@@ -60,8 +62,10 @@ public class SegmentTreasures : ObservableCollection<SegmentTreasure>
 			foreach (var oldItem in args.OldItems.OfType<SegmentTreasure>())
 				WeakReferenceMessenger.Default.Send(new SegmentTreasureDeleted(oldItem));
 		}
-			
-		if (args.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Reset)
-			WeakReferenceMessenger.Default.Send(new SegmentTreasuresChanged(null));
+		
+		if (args.Action is NotifyCollectionChangedAction.Reset)
+			WeakReferenceMessenger.Default.Send(new SegmentTreasuresReset());
+
+		WeakReferenceMessenger.Default.Send(new SegmentTreasuresChanged(null));
 	}
 }
