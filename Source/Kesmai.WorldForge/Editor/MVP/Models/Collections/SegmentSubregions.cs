@@ -14,6 +14,17 @@ public class SegmentSubregionsChanged(SegmentSubregions subregions) : ValueChang
 
 public class SegmentSubregions : ObservableCollection<SegmentSubregion>
 {
+	public SegmentSubregions()
+	{
+		WeakReferenceMessenger.Default.Register<SegmentRegionRemoved>(this, (_, message) =>
+		{
+			var subregions = this.Where(r => r.Region == message.Value.ID).ToList();
+			
+			foreach (var subregion in subregions)
+				Remove(subregion);
+		});
+	}
+	
 	public void Load(XElement element, Version version)
 	{
 		Clear();
