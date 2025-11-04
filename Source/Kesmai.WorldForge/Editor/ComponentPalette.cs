@@ -116,12 +116,12 @@ public class ComponentPalette : ObservableRecipient
 		_segmentCategory.Subcategories.Add(_segmentTemplateCategory);
 		
 		// setup message registration for adding segment components.
-		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentComponentCreated>(this, (r, m) =>
+		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentComponentAdded>(this, (r, m) =>
 		{
 			addSegmentComponent(m.Value);
 		});
 		
-		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentComponentDeleted>(this, (r, m) =>
+		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentComponentRemoved>(this, (r, m) =>
 		{
 			deleteSegmentComponent(m.Value);
 		});
