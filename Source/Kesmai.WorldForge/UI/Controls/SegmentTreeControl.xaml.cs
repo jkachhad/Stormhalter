@@ -121,13 +121,13 @@ public partial class SegmentTreeControl : UserControl
         WeakReferenceMessenger.Default.Register<SegmentLocationAdded>(this, (r, m) => OnLocationAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentLocationRemoved>(this, (r, m) => OnLocationRemoved(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentLocationsReset>(this, (r, m) => OnLocationsReset());
+
+        WeakReferenceMessenger.Default.Register<SegmentComponentAdded>(this, (r, m) => OnComponentAdded(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentComponentRemoved>(this, (r, m) => OnComponentRemoved(m.Value));
         
         /*
         WeakReferenceMessenger.Default.Register<SegmentEntitiesChanged>(this, (r, m) => UpdateEntities());
         WeakReferenceMessenger.Default.Register<SegmentEntityChanged>(this, (r, m) => UpdateEntities());
-        
-        WeakReferenceMessenger.Default.Register<SegmentComponentsChanged>(this, (r, m) => UpdateComponents());
-        WeakReferenceMessenger.Default.Register<SegmentComponentCreated>(this, (r, m) => UpdateComponents());
 
         WeakReferenceMessenger.Default.Register<SegmentTreasuresChanged>(this, (r, m) => UpdateTreasures());
         WeakReferenceMessenger.Default.Register<SegmentTreasureChanged>(this, (r, m) => UpdateTreasures());
@@ -289,6 +289,7 @@ public partial class SegmentTreeControl : UserControl
     private Dictionary<SegmentRegion, SegmentTreeViewItem> _regionItems = new Dictionary<SegmentRegion, SegmentTreeViewItem>();
     private Dictionary<SegmentSubregion, SegmentTreeViewItem> _subregionItems = new Dictionary<SegmentSubregion, SegmentTreeViewItem>();
     private Dictionary<SegmentLocation, SegmentTreeViewItem> _locationItems = new Dictionary<SegmentLocation, SegmentTreeViewItem>();
+    private Dictionary<SegmentComponent, SegmentTreeViewItem> _componentItems = new Dictionary<SegmentComponent, SegmentTreeViewItem>();
     
     private void OnRegionAdded(SegmentRegion region)
     {
@@ -473,73 +474,65 @@ public partial class SegmentTreeControl : UserControl
         });
     }
 
-    public void UpdateComponents()
+    public void OnComponentAdded(SegmentComponent component)
     {
-        if (Segment is null)
-            return;
-
-        var collection = Segment.Components;
-
-        if (_componentsNode is null)
+        EnsureComponentsNode();
+        
+        // a component has been added, create its tree node.
+        if (!_componentItems.TryGetValue(component, out var componentItem))
         {
-            _componentsNode = new TreeViewItem
+            componentItem = new SegmentTreeViewItem(component, Brushes.OrangeRed, false)
             {
-                Tag = $"category:Components",
-                Header = CreateHeader("Components", "Terrain.png")
+                Tag = component,
             };
 
-            _componentsNode.ContextMenu = new ContextMenu();
-            _componentsNode.ContextMenu.AddItem("Add Component", "Add.png", (s, e) =>
-            {
-                var component = addComponent(collection, "Component");
-                
-                // present the new component to the user.
-                if (component != null)
-                    component.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-            });
-        }
-
-        var expanded = new HashSet<string>();
-
-        foreach (var item in _componentsNode.Items.OfType<TreeViewItem>())
-            SaveExpansionState(item, expanded);
-
-        _componentsNode.Items.Clear();
-
-        foreach (var component in collection)
-            _componentsNode.Items.Add(createComponentNode(component, collection));
-
-        foreach (var item in _componentsNode.Items.OfType<TreeViewItem>())
-            RestoreExpansionState(item, expanded);
-        
-        TreeViewItem createComponentNode(SegmentComponent segmentComponent, SegmentComponents source)
-        {
-            var item = new SegmentTreeViewItem(segmentComponent, Brushes.OrangeRed, false)
-            {
-                Tag = segmentComponent,
-            };
-        
-            item.ContextMenu = new ContextMenu();
-            item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(segmentComponent, item));
-            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(segmentComponent));
-            item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(segmentComponent, item, source));
-
-            return item;
+            componentItem.ContextMenu = new ContextMenu();
+            componentItem.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(component, componentItem));
+            componentItem.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(component));
+            componentItem.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(component, componentItem, Segment.Components));
+            
+            _componentItems.Add(component, componentItem);
         }
         
-        T addComponent<T>(IList<T> source, string typeName) where T : ISegmentObject, new()
+        if (!_componentsNode.Items.Contains(componentItem))
+            _componentsNode.Items.Add(componentItem);
+    }
+    
+    public void OnComponentRemoved(SegmentComponent component)
+    {
+        // a component has been removed, delete its tree node.
+        if (_componentItems.Remove(component, out var item))
         {
-            var obj = new T
-            {
-                Name = $"{typeName} {_nextId++}"
-            };
-            
-            source.Add(obj);
-            
-            return obj;
+            if (_componentsNode != null)
+                _componentsNode.Items.Remove(item);
         }
     }
-
+    
+    private void EnsureComponentsNode()
+    {
+        if (_componentsNode is not null)
+            return;
+        
+        _componentsNode = new TreeViewItem
+        {
+            Tag = $"category:Components",
+            Header = CreateHeader("Components", "Terrain.png")
+        };
+            
+        _componentsNode.ContextMenu = new ContextMenu();
+        _componentsNode.ContextMenu.AddItem("Add Component", "Add.png", (s, e) =>
+        {
+            var component = new SegmentComponent()
+            {
+                Name = $"Component {_nextId++}"
+            };
+            
+            Segment.Components.Add(component);
+            
+            component.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+        });
+    }
+    
     public void UpdateSpawns()
     {
         if (Segment is null)
@@ -861,7 +854,7 @@ public partial class SegmentTreeControl : UserControl
         UpdateEntities();
         UpdateTreasures();
         UpdateSpawns();
-        UpdateComponents();
+        EnsureComponentsNode();
         UpdateBrushes();
         UpdateTemplates();
         
