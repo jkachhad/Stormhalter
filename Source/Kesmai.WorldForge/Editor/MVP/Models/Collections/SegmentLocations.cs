@@ -9,8 +9,8 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace Kesmai.WorldForge.Editor;
 
-public class SegmentLocationCreated(SegmentLocation location) : ValueChangedMessage<SegmentLocation>(location);
-public class SegmentLocationDeleted(SegmentLocation location) : ValueChangedMessage<SegmentLocation>(location);
+public class SegmentLocationAdded(SegmentLocation location) : ValueChangedMessage<SegmentLocation>(location);
+public class SegmentLocationRemoved(SegmentLocation location) : ValueChangedMessage<SegmentLocation>(location);
 
 public class SegmentLocationsReset();
 public class SegmentLocationsChanged(SegmentLocations locations) : ValueChangedMessage<SegmentLocations>(locations);
@@ -44,14 +44,14 @@ public class SegmentLocations : ObservableCollection<SegmentLocation>
 				if (Segment.IsReservedLocation(newItem.Name))
 					newItem.IsReserved = true;
 				
-				WeakReferenceMessenger.Default.Send(new SegmentLocationCreated(newItem));
+				WeakReferenceMessenger.Default.Send(new SegmentLocationAdded(newItem));
 			}
 		}
 			
 		if (args.OldItems != null)
 		{
 			foreach (var oldItem in args.OldItems.OfType<SegmentLocation>())
-				WeakReferenceMessenger.Default.Send(new SegmentLocationDeleted(oldItem));
+				WeakReferenceMessenger.Default.Send(new SegmentLocationRemoved(oldItem));
 		}
 
 		if (args.Action is NotifyCollectionChangedAction.Reset)
