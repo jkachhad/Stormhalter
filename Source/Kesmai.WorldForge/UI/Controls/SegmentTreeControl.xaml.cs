@@ -40,72 +40,6 @@ public partial class SegmentTreeControl : UserControl
         set => SetValue(SegmentProperty, value);
     }
     
-    public void UpdateTemplates()
-    {
-        if (Segment is null)
-            return;
-
-        var collection = Segment.Templates;
-        
-        if (_templatesNode is null)
-        {
-            _templatesNode = new TreeViewItem
-            {
-                Tag = $"category:Templates",
-                Header = CreateHeader("Templates", "Gear.png")
-            };
-
-            _templatesNode.ContextMenu = new ContextMenu();
-            _templatesNode.ContextMenu.AddItem("Add Template", "Add.png", (s, e) =>
-            {
-                var template = addTemplate(collection, "Template");
-
-                if (template != null)
-                    template.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-            });
-        }
-
-        var expanded = new HashSet<string>();
-
-        foreach (var item in _templatesNode.Items.OfType<TreeViewItem>())
-            SaveExpansionState(item, expanded);
-
-        _templatesNode.Items.Clear();
-
-        foreach (var template in collection)
-            _templatesNode.Items.Add(createTemplateNode(template, collection));
-
-        foreach (var item in _templatesNode.Items.OfType<TreeViewItem>())
-            RestoreExpansionState(item, expanded);
-
-        TreeViewItem createTemplateNode(SegmentTemplate template, SegmentTemplates source)
-        {
-            var item = new SegmentTreeViewItem(template, Brushes.SteelBlue, true)
-            {
-                Tag = template
-            };
-
-            item.ContextMenu = new ContextMenu();
-            item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(template, item));
-            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(template));
-            item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(template, item, source));
-
-            return item;
-        }
-
-        T addTemplate<T>(IList<T> source, string typeName) where T : ISegmentObject, new()
-        {
-            var obj = new T
-            {
-                Name = $"{typeName} {_nextId++}"
-            };
-
-            source.Add(obj);
-
-            return obj;
-        }
-    }
-
     private ISegmentObject _copyObject;
     
     public SegmentTreeControl()
@@ -128,21 +62,19 @@ public partial class SegmentTreeControl : UserControl
         WeakReferenceMessenger.Default.Register<SegmentBrushAdded>(this, (r, m) => OnBrushAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentBrushRemoved>(this, (r, m) => OnBrushRemoved(m.Value));
         
+        WeakReferenceMessenger.Default.Register<SegmentTemplateAdded>(this, (r, m) => OnTemplateAdded(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentTemplateRemoved>(this, (r, m) => OnTemplateRemoved(m.Value));
+        
         /*
         WeakReferenceMessenger.Default.Register<SegmentEntitiesChanged>(this, (r, m) => UpdateEntities());
         WeakReferenceMessenger.Default.Register<SegmentEntityChanged>(this, (r, m) => UpdateEntities());
 
         WeakReferenceMessenger.Default.Register<SegmentTreasuresChanged>(this, (r, m) => UpdateTreasures());
         WeakReferenceMessenger.Default.Register<SegmentTreasureChanged>(this, (r, m) => UpdateTreasures());
-        
+
         WeakReferenceMessenger.Default.Register<SegmentSpawnsChanged>(this, (r, m) => UpdateSpawns());
         WeakReferenceMessenger.Default.Register<SegmentSpawnChanged>(this, (r, m) => UpdateSpawns());
-
-        WeakReferenceMessenger.Default.Register<SegmentBrushesChanged>(this, (r, m) => UpdateBrushes());
-        WeakReferenceMessenger.Default.Register<SegmentBrushChanged>(this, (r, m) => UpdateBrushes());
-        
-        WeakReferenceMessenger.Default.Register<SegmentTemplatesChanged>(this, (r, m) => UpdateTemplates());
-        WeakReferenceMessenger.Default.Register<SegmentTemplateChanged>(this, (r, m) => UpdateTemplates());*/
+        */
         
         _tree.SelectedItemChanged += OnItemSelected;
         _tree.KeyDown += OnKeyDown;
@@ -225,6 +157,7 @@ public partial class SegmentTreeControl : UserControl
     private Dictionary<SegmentLocation, SegmentTreeViewItem> _locationItems = new Dictionary<SegmentLocation, SegmentTreeViewItem>();
     private Dictionary<SegmentComponent, SegmentTreeViewItem> _componentItems = new Dictionary<SegmentComponent, SegmentTreeViewItem>();
     private Dictionary<SegmentBrush, SegmentTreeViewItem> _brushItems = new Dictionary<SegmentBrush, SegmentTreeViewItem>();
+    private Dictionary<SegmentTemplate, SegmentTreeViewItem> _templateItems = new Dictionary<SegmentTemplate, SegmentTreeViewItem>();
     
     private void OnRegionAdded(SegmentRegion region)
     {
@@ -524,6 +457,66 @@ public partial class SegmentTreeControl : UserControl
             Segment.Brushes.Add(brush);
 
             brush.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+        });
+    }
+    
+    private void OnTemplateAdded(SegmentTemplate template)
+    {
+        EnsureTemplatesNode();
+
+        // a template has been added, create its tree node.
+        if (!_templateItems.TryGetValue(template, out var templateItem))
+        {
+            templateItem = new SegmentTreeViewItem(template, Brushes.SteelBlue, true)
+            {
+                Tag = template,
+            };
+
+            templateItem.ContextMenu = new ContextMenu();
+            templateItem.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(template, templateItem));
+            templateItem.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(template));
+            templateItem.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(template, templateItem, Segment.Templates));
+            
+            _templateItems.Add(template, templateItem);
+        }
+        
+        if (!_templatesNode.Items.Contains(templateItem))
+            _templatesNode.Items.Add(templateItem);
+    }
+    
+    private void OnTemplateRemoved(SegmentTemplate template)
+    {
+        // a template has been removed, delete its tree node.
+        if (_templateItems.Remove(template, out var item))
+        {
+            if (_templatesNode != null)
+                _templatesNode.Items.Remove(item);
+        }
+    }
+
+    private void EnsureTemplatesNode()
+    {
+        if (_templatesNode is not null)
+            return;
+        
+        _templatesNode = new TreeViewItem
+        {
+            Tag = $"category:Templates",
+            Header = CreateHeader("Templates", "Gear.png")
+        };
+            
+        _templatesNode.ContextMenu = new ContextMenu();
+        _templatesNode.ContextMenu.AddItem("Add Template", "Add.png", (s, e) =>
+        {
+            var template = new SegmentTemplate
+            {
+                Name = $"Template {_nextId++}"
+            };
+            
+            Segment.Templates.Add(template);
+                
+            // present the new template to the user.
+            template.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
         });
     }
     
@@ -850,7 +843,7 @@ public partial class SegmentTreeControl : UserControl
         UpdateSpawns();
         EnsureComponentsNode();
         EnsureBrushesNode();
-        UpdateTemplates();
+        EnsureTemplatesNode();
         
         _tree.Items.Add(_segmentNode);
 
