@@ -310,9 +310,6 @@ public class ApplicationPresenter : ObservableRecipient
 		process("Locations.xml", () => segment.Locations = new SegmentLocations(), 
 			(root, version) => segment.Locations.Load(root, version));
 		
-		process("Subregions.xml", () => segment.Subregions = new SegmentSubregions(), 
-			(root, version) => segment.Subregions.Load(root, version));
-		
 		process("Entities.xml", () => segment.Entities = new SegmentEntities(),
 			(root, version) => segment.Entities.Load(root, version));
 		
@@ -346,6 +343,9 @@ public class ApplicationPresenter : ObservableRecipient
 				segment.Regions.Add(new SegmentRegion(regionRoot));
 			}
 		}
+
+		process("Subregions.xml", () => segment.Subregions = new SegmentSubregions(), 
+			(root, version) => segment.Subregions.Load(root, version));
 
 		Segment.UpdateTiles();
 	}
