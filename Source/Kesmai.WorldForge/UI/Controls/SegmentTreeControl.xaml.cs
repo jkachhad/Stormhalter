@@ -124,6 +124,9 @@ public partial class SegmentTreeControl : UserControl
 
         WeakReferenceMessenger.Default.Register<SegmentComponentAdded>(this, (r, m) => OnComponentAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentComponentRemoved>(this, (r, m) => OnComponentRemoved(m.Value));
+
+        WeakReferenceMessenger.Default.Register<SegmentBrushAdded>(this, (r, m) => OnBrushAdded(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentBrushRemoved>(this, (r, m) => OnBrushRemoved(m.Value));
         
         /*
         WeakReferenceMessenger.Default.Register<SegmentEntitiesChanged>(this, (r, m) => UpdateEntities());
@@ -217,79 +220,11 @@ public partial class SegmentTreeControl : UserControl
         };
     }
     
-    public void UpdateBrushes()
-    {
-        if (Segment is null)
-            return;
-
-        var collection = Segment.Brushes;
-
-        if (collection is null)
-            return;
-
-        if (_brushesNode is null)
-        {
-            _brushesNode = new TreeViewItem
-            {
-                Tag = $"category:Brushes",
-                Header = CreateHeader("Brushes", "Editor-Icon-Paint.png")
-            };
-
-            _brushesNode.ContextMenu = new ContextMenu();
-            _brushesNode.ContextMenu.AddItem("Add Brush", "Add.png", (s, e) =>
-            {
-                var brush = addBrush(collection, "Brush");
-                    
-                if (brush != null)
-                    brush.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-            });
-        }
-
-        var expanded = new HashSet<string>();
-
-        foreach (var item in _brushesNode.Items.OfType<TreeViewItem>())
-            SaveExpansionState(item, expanded);
-
-        _brushesNode.Items.Clear();
-
-        foreach (var brush in collection)
-            _brushesNode.Items.Add(createBrushNode(brush, collection));
-
-        foreach (var item in _brushesNode.Items.OfType<TreeViewItem>())
-            RestoreExpansionState(item, expanded);
-
-        TreeViewItem createBrushNode(SegmentBrush brush, SegmentBrushes source)
-        {
-            var item = new SegmentTreeViewItem(brush, Brushes.MediumSeaGreen, true)
-            {
-                Tag = brush
-            };
-
-            item.ContextMenu = new ContextMenu();
-            item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(brush, item));
-            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(brush));
-            item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(brush, item, source));
-
-            return item;
-        }
-
-        T addBrush<T>(IList<T> source, string typeName) where T : ISegmentObject, new()
-        {
-            var obj = new T
-            {
-                Name = $"{typeName} {_nextId++}"
-            };
-            
-            source.Add(obj);
-            
-            return obj;
-        }
-    }
-    
     private Dictionary<SegmentRegion, SegmentTreeViewItem> _regionItems = new Dictionary<SegmentRegion, SegmentTreeViewItem>();
     private Dictionary<SegmentSubregion, SegmentTreeViewItem> _subregionItems = new Dictionary<SegmentSubregion, SegmentTreeViewItem>();
     private Dictionary<SegmentLocation, SegmentTreeViewItem> _locationItems = new Dictionary<SegmentLocation, SegmentTreeViewItem>();
     private Dictionary<SegmentComponent, SegmentTreeViewItem> _componentItems = new Dictionary<SegmentComponent, SegmentTreeViewItem>();
+    private Dictionary<SegmentBrush, SegmentTreeViewItem> _brushItems = new Dictionary<SegmentBrush, SegmentTreeViewItem>();
     
     private void OnRegionAdded(SegmentRegion region)
     {
@@ -508,6 +443,40 @@ public partial class SegmentTreeControl : UserControl
         }
     }
     
+    private void OnBrushAdded(SegmentBrush brush)
+    {
+        EnsureBrushesNode();
+
+        // a brush has been added, create its tree node.
+        if (!_brushItems.TryGetValue(brush, out var brushItem))
+        {
+            brushItem = new SegmentTreeViewItem(brush, Brushes.MediumSeaGreen, true)
+            {
+                Tag = brush,
+            };
+
+            brushItem.ContextMenu = new ContextMenu();
+            brushItem.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(brush, brushItem));
+            brushItem.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(brush));
+            brushItem.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(brush, brushItem, Segment.Brushes));
+            
+            _brushItems.Add(brush, brushItem);
+        }
+        
+        if (!_brushesNode.Items.Contains(brushItem))
+            _brushesNode.Items.Add(brushItem);
+    }
+    
+    private void OnBrushRemoved(SegmentBrush brush)
+    {
+        // a brush has been removed, delete its tree node.
+        if (_brushItems.Remove(brush, out var item))
+        {
+            if (_brushesNode != null)
+                _brushesNode.Items.Remove(item);
+        }
+    }
+    
     private void EnsureComponentsNode()
     {
         if (_componentsNode is not null)
@@ -530,6 +499,31 @@ public partial class SegmentTreeControl : UserControl
             Segment.Components.Add(component);
             
             component.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+        });
+    }
+    
+    private void EnsureBrushesNode()
+    {
+        if (_brushesNode is not null)
+            return;
+
+        _brushesNode = new TreeViewItem
+        {
+            Tag = $"category:Brushes",
+            Header = CreateHeader("Brushes", "Editor-Icon-Paint.png")
+        };
+        
+        _brushesNode.ContextMenu = new ContextMenu();
+        _brushesNode.ContextMenu.AddItem("Add Brush", "Add.png", (s, e) =>
+        {
+            var brush = new SegmentBrush
+            {
+                Name = $"Brush {_nextId++}"
+            };
+
+            Segment.Brushes.Add(brush);
+
+            brush.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
         });
     }
     
@@ -855,7 +849,7 @@ public partial class SegmentTreeControl : UserControl
         UpdateTreasures();
         UpdateSpawns();
         EnsureComponentsNode();
-        UpdateBrushes();
+        EnsureBrushesNode();
         UpdateTemplates();
         
         _tree.Items.Add(_segmentNode);
