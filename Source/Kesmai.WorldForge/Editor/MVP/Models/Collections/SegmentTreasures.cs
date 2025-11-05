@@ -9,8 +9,8 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace Kesmai.WorldForge.Editor;
 
-public class SegmentTreasureCreated(SegmentTreasure treasure) : ValueChangedMessage<SegmentTreasure>(treasure);
-public class SegmentTreasureDeleted(SegmentTreasure treasure) : ValueChangedMessage<SegmentTreasure>(treasure);
+public class SegmentTreasureAdded(SegmentTreasure treasure) : ValueChangedMessage<SegmentTreasure>(treasure);
+public class SegmentTreasureRemoved(SegmentTreasure treasure) : ValueChangedMessage<SegmentTreasure>(treasure);
 
 public class SegmentTreasuresReset();
 public class SegmentTreasuresChanged(SegmentTreasures treasures) : ValueChangedMessage<SegmentTreasures>(treasures);
@@ -54,13 +54,13 @@ public class SegmentTreasures : ObservableCollection<SegmentTreasure>
 		if (args.NewItems != null)
 		{
 			foreach (var newItem in args.NewItems.OfType<SegmentTreasure>())
-				WeakReferenceMessenger.Default.Send(new SegmentTreasureCreated(newItem));
+				WeakReferenceMessenger.Default.Send(new SegmentTreasureAdded(newItem));
 		}
 			
 		if (args.OldItems != null)
 		{
 			foreach (var oldItem in args.OldItems.OfType<SegmentTreasure>())
-				WeakReferenceMessenger.Default.Send(new SegmentTreasureDeleted(oldItem));
+				WeakReferenceMessenger.Default.Send(new SegmentTreasureRemoved(oldItem));
 		}
 		
 		if (args.Action is NotifyCollectionChangedAction.Reset)
