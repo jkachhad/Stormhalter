@@ -173,13 +173,16 @@ public class ScriptEditor : RoslynCodeEditor
 
         _updatingDocument = false;
     }
-    
-    private void DocumentOnChanged(object? sender, DocumentChangeEventArgs e)
-    {
-        if (_updatingDocument)
-            return;
 
-        _updatingDocument = true;
+    private void DocumentOnChanged(object? sender, DocumentChangeEventArgs e)
+	{
+		if (_updatingDocument)
+			return;
+
+		_updatingDocument = true; try
+		{
+			var bodySegmentDelta = e.InsertionLength - e.RemovalLength;
+			BodySegment.Length = Math.Max(0, BodySegment.Length + bodySegmentDelta);
 
 		try
 		{

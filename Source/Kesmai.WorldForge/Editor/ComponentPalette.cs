@@ -115,6 +115,15 @@ public class ComponentPalette : ObservableRecipient
 
 		_segmentCategory.Subcategories.Add(_segmentTemplateCategory);
 		
+		_allCategories.Add(_staticCategory);
+
+		if (_editorCategory is not null)
+			_allCategories.Add(_editorCategory);
+
+		_allCategories.Add(_segmentCategory);
+		_allCategories.Add(_segmentBrushCategory);
+		_allCategories.Add(_segmentTemplateCategory);
+
 		// setup message registration for adding segment components.
 		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentComponentCreated>(this, (r, m) =>
 		{
@@ -283,6 +292,9 @@ public class ComponentPalette : ObservableRecipient
 		{
 			category.IsRoot = true;
 		}
+
+		if (string.Equals(categoryName, "EDITOR", StringComparison.OrdinalIgnoreCase))
+			_editorCategory = category;
 
 		var rootElement = document.Root;
 
