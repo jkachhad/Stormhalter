@@ -18,7 +18,7 @@ public class ComponentPalette : ObservableRecipient
 	private ComponentsCategory _selectedCategory;
 	private IComponentProvider _selectedProvider;
 	
-	private ObservableCollection<ComponentsCategory> _categories;
+	private ObservableCollection<ComponentsCategory> _rootCategories;
 	
 	private ComponentsCategory _staticCategory;
 	private ComponentsCategory _editorCategory;
@@ -40,13 +40,13 @@ public class ComponentPalette : ObservableRecipient
 
 	public ObservableCollection<ComponentsCategory> Categories
 	{
-		get => _categories;
-		set => SetProperty(ref _categories, value);
+		get => _rootCategories;
+		set => SetProperty(ref _rootCategories, value);
 	}
 	
 	public ComponentPalette()
 	{
-		_categories = new ObservableCollection<ComponentsCategory>();
+		_rootCategories = new ObservableCollection<ComponentsCategory>();
 	}
 
 	public void Initialize()
@@ -74,7 +74,7 @@ public class ComponentPalette : ObservableRecipient
 			staticCategory.Components.Add(component);
 		}
 		
-		_categories.Add(staticCategory);
+		_rootCategories.Add(staticCategory);
 		
 		// load editor components
 		Task.Run(async () =>
@@ -97,7 +97,7 @@ public class ComponentPalette : ObservableRecipient
 			IsRoot = true
 		};
 		
-		_categories.Add(_segmentCategory);
+		_rootCategories.Add(_segmentCategory);
 
 		_segmentBrushCategory = new ComponentsCategory()
 		{
@@ -277,7 +277,7 @@ public class ComponentPalette : ObservableRecipient
 				IsRoot = true
 			};
 			
-			_categories.Add(category);
+			_rootCategories.Add(category);
 		}
 		else
 		{
@@ -371,7 +371,7 @@ public class ComponentPalette : ObservableRecipient
 	{
 		category = null;
 		
-		foreach (var parentCategory in _categories)
+		foreach (var parentCategory in _rootCategories)
 		{
 			if (recursive(component, parentCategory, out category))
 				return true;
@@ -409,7 +409,7 @@ public class ComponentPalette : ObservableRecipient
 
 		if (nameAttribute is not null)
 		{
-			foreach (var category in _categories)
+			foreach (var category in _rootCategories)
 			{
 				if (recursive(nameAttribute.Value, category, out component))
 					return true;
