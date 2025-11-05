@@ -60,6 +60,12 @@ public partial class SegmentTreeControl : UserControl
         
         WeakReferenceMessenger.Default.Register<SegmentEntityAdded>(this, (r, m) => OnEntityAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentEntityRemoved>(this, (r, m) => OnEntityRemoved(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentEntityChanged>(this, (r, m) =>
+        {
+            // for entity changes, we need to update the grouping in the tree.
+            OnEntityRemoved(m.Value);
+            OnEntityAdded(m.Value);
+        });
         
         WeakReferenceMessenger.Default.Register<SegmentTreasureAdded>(this, (r, m) => OnTreasureAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentTreasureRemoved>(this, (r, m) => OnTreasureRemoved(m.Value));
@@ -152,6 +158,8 @@ public partial class SegmentTreeControl : UserControl
     private Dictionary<SegmentEntity, SegmentTreeViewItem> _entityItems = new Dictionary<SegmentEntity, SegmentTreeViewItem>();
     private Dictionary<SegmentTreasure, SegmentTreeViewItem> _treasureItems = new Dictionary<SegmentTreasure, SegmentTreeViewItem>();
     private Dictionary<SegmentSpawner, SegmentTreeViewItem> _spawnItems = new Dictionary<SegmentSpawner, SegmentTreeViewItem>();
+    
+    private Dictionary<string, TreeViewItem> _entityGroupNodes = new Dictionary<string, TreeViewItem>();
     
     
     private void OnRegionAdded(SegmentRegion region)
@@ -535,17 +543,46 @@ public partial class SegmentTreeControl : UserControl
             _entityItems.Add(entity, entityItem);
         }
         
-        if (!_entitiesNode.Items.Contains(entityItem))
-            _entitiesNode.Items.Add(entityItem);
+        // parse the group path and insert into the tree.
+        var groupPath = String.IsNullOrEmpty(entity.Group) ? "Ungrouped" : entity.Group;
+        
+        if (!_entityGroupNodes.TryGetValue(groupPath, out var parentNode))
+        {
+            parentNode = _entitiesNode;
+            
+            // split the path into folders.
+            var groupFolders = groupPath.Split(@"\");
+
+            for (int i = 0; i < groupFolders.Length; i++)
+            {
+                var folderPath = String.Join(@"\", groupFolders.Take(i + 1));
+
+                if (!_entityGroupNodes.TryGetValue(folderPath, out var folderNode))
+                {
+                    parentNode.Items.Add(folderNode = new TreeViewItem
+                    {
+                        Header = CreateHeader(groupFolders[i], "Folder.png")
+                    });
+                    
+                    _entityGroupNodes.Add(folderPath, folderNode);
+                }
+
+                parentNode = folderNode;
+            }
+        }
+        
+        if (parentNode != null)
+            parentNode.Items.Add(entityItem);
     }
     
     private void OnEntityRemoved(SegmentEntity entity)
     {
         // an entity has been removed, delete its tree node.
-        if (_entityItems.Remove(entity, out var item))
+        if (_entityItems.Remove(entity, out var entityNode))
         {
-            if (_entitiesNode != null)
-                _entitiesNode.Items.Remove(item);
+            // find the parent node.
+            if (entityNode.Parent is TreeViewItem parentNode)
+                parentNode.Items.Remove(entityNode);
         }
     }
 
