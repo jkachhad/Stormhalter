@@ -18,7 +18,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         
-        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" BorderBrush="Black" BorderThickness="1">
+        <Border Grid.Row="0" Grid.Column="0" Margin="2" BorderBrush="Black" BorderThickness="1">
             <TabControl x:Name="_scriptsTabControl"
                 ItemsSource="{Binding ActiveContent.Scripts, Source={StaticResource applicationPresenter}}"
                 Margin="5">
