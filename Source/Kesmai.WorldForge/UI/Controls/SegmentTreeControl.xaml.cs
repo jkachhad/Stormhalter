@@ -70,11 +70,9 @@ public partial class SegmentTreeControl : UserControl
         
         WeakReferenceMessenger.Default.Register<SegmentTreasureAdded>(this, (r, m) => OnTreasureAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentTreasureRemoved>(this, (r, m) => OnTreasureRemoved(m.Value));
-        
-        /*
-        WeakReferenceMessenger.Default.Register<SegmentSpawnsChanged>(this, (r, m) => UpdateSpawns());
-        WeakReferenceMessenger.Default.Register<SegmentSpawnChanged>(this, (r, m) => UpdateSpawns());
-        */
+      
+        WeakReferenceMessenger.Default.Register<SegmentSpawnAdded>(this, (r, m) => OnSpawnAdded(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentSpawnRemoved>(this, (r, m) => OnSpawnRemoved(m.Value));
         
         _tree.SelectedItemChanged += OnItemSelected;
         _tree.KeyDown += OnKeyDown;
@@ -160,6 +158,8 @@ public partial class SegmentTreeControl : UserControl
     private Dictionary<SegmentTemplate, SegmentTreeViewItem> _templateItems = new Dictionary<SegmentTemplate, SegmentTreeViewItem>();
     private Dictionary<SegmentEntity, SegmentTreeViewItem> _entityItems = new Dictionary<SegmentEntity, SegmentTreeViewItem>();
     private Dictionary<SegmentTreasure, SegmentTreeViewItem> _treasureItems = new Dictionary<SegmentTreasure, SegmentTreeViewItem>();
+    private Dictionary<SegmentSpawner, SegmentTreeViewItem> _spawnItems = new Dictionary<SegmentSpawner, SegmentTreeViewItem>();
+    
     
     private void OnRegionAdded(SegmentRegion region)
     {
@@ -655,80 +655,13 @@ public partial class SegmentTreeControl : UserControl
             hoard.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
         });
     }
-    
-    public void UpdateSpawns()
+
+    private void OnSpawnAdded(SegmentSpawner segmentSpawner)
     {
-        if (Segment is null)
-            return;
-
-        var collection = Segment.Spawns;
+        EnsureSpawnersNode();
         
-        if (_spawnersNode is null)
-        {
-            _spawnersNode = new TreeViewItem
-            {
-                Tag = $"category:Spawns",
-                Header = CreateHeader("Spawns", "Spawns.png")
-            };
-            
-            _spawnersNode.ContextMenu = new ContextMenu();
-            _spawnersNode.ContextMenu.AddItem("Add Location Spawner", "Add.png", (s, e) => AddSpawner(collection.Location, "Location Spawner", 0));
-            _spawnersNode.ContextMenu.AddItem("Add Region Spawner", "Add.png", (s, e) => AddSpawner(collection.Region, "Region Spawner", 0));
-        }
-
-        var expanded = new HashSet<string>();
-        
-        foreach (var item in _spawnersNode.Items.OfType<TreeViewItem>())
-            SaveExpansionState(item, expanded);
-        
-        _spawnersNode.Items.Clear();
-        
-        foreach (var region in Segment.Regions)
-            _spawnersNode.Items.Add(createSpawnerRegionNode(region, collection));
-        
-        foreach (var item in _spawnersNode.Items.OfType<TreeViewItem>())
-            RestoreExpansionState(item, expanded);
-        
-        TreeViewItem createSpawnerRegionNode(SegmentRegion region, SegmentSpawns source)
-        {
-            var item = new TreeViewItem
-            {
-                Tag = $"category:Spawn/{region.ID}"
-            };
-            item.Header = CreateColoredHeader(region.Name, Brushes.MediumPurple, false);
-
-            foreach (var spawner in source.Location.Where(s => GetRegionId(s) == region.ID))
-                item.Items.Add(createSpawnerNode(spawner, source.Location));
-
-            foreach (var spawner in source.Region.Where(s => GetRegionId(s) == region.ID))
-                item.Items.Add(createSpawnerNode(spawner, source.Region));
-
-            item.ContextMenu = new ContextMenu();
-            item.ContextMenu.AddItem("Add Location Spawner", "Add.png", (s, e) =>
-            {
-                var spawner = addSpawn(source.Location, "Location Spawner");
-
-                if (spawner != null)
-                {
-                    spawner.Region = region.ID;
-                    spawner.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-                }
-            });
-            item.ContextMenu.AddItem("Add Region Spawner", "Add.png", (s, e) =>
-            {
-                var spawner = addSpawn(source.Region, "Region Spawner");
-
-                if (spawner != null)
-                {
-                    spawner.Region = region.ID;
-                    spawner.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-                }
-            });
-            
-            return item;
-        }
-        
-        TreeViewItem createSpawnerNode(SegmentSpawner segmentSpawner, IList source)
+        // a spawner has been added, create its tree node.
+        if (!_spawnItems.TryGetValue(segmentSpawner, out var spawnerItem))
         {
             var brush = segmentSpawner switch
             {
@@ -738,30 +671,81 @@ public partial class SegmentTreeControl : UserControl
                 _ => Brushes.Gray
             };
             
-            var item = new SegmentTreeViewItem(segmentSpawner, brush, true)
+            spawnerItem = new SegmentTreeViewItem(segmentSpawner, brush, true)
             {
-                Tag = segmentSpawner 
+                Tag = segmentSpawner,
             };
+
+            spawnerItem.ContextMenu = new ContextMenu();
+            spawnerItem.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(segmentSpawner, spawnerItem));
+            spawnerItem.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(segmentSpawner));
+            spawnerItem.ContextMenu.AddItem("Delete", "Delete.png", (s, e) =>
+            {
+                IList source = segmentSpawner switch
+                {
+                    LocationSegmentSpawner => Segment.Spawns.Location,
+                    RegionSegmentSpawner => Segment.Spawns.Region,
+                    
+                    _ => null
+                };
+
+                if (source != null)
+                    DeleteSegmentObject(segmentSpawner, spawnerItem, source);
+            });
             
-            item.ContextMenu = new ContextMenu();
-            item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(segmentSpawner, item));
-            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(segmentSpawner));
-            item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(segmentSpawner, item, source));
-            
-            return item;
+            _spawnItems.Add(segmentSpawner, spawnerItem);
         }
         
-        T addSpawn<T>(IList<T> source, string typeName) where T : ISegmentObject, new()
+        if (!_spawnersNode.Items.Contains(spawnerItem))
+            _spawnersNode.Items.Add(spawnerItem);
+    }
+    
+    private void OnSpawnRemoved(SegmentSpawner segmentSpawner)
+    {
+        // a spawner has been removed, delete its tree node.
+        if (_spawnItems.Remove(segmentSpawner, out var item))
         {
-            var obj = new T
+            if (_spawnersNode != null)
+                _spawnersNode.Items.Remove(item);
+        }
+    }
+    
+    private void EnsureSpawnersNode()
+    {
+        if (_spawnersNode is not null)
+            return;
+        
+        _spawnersNode = new TreeViewItem
+        {
+            Tag = $"category:Spawns",
+            Header = CreateHeader("Spawns", "Spawns.png")
+        };
+            
+        _spawnersNode.ContextMenu = new ContextMenu();
+        _spawnersNode.ContextMenu.AddItem("Add Location Spawner", "Add.png", (s, e) =>
+        {
+            var spawn = new LocationSegmentSpawner()
             {
-                Name = $"{typeName} {_nextId++}"
+                Name = $"Location Spawner {_nextId++}"
             };
             
-            source.Add(obj);
+            Segment.Spawns.Location.Add(spawn);
+                
+            // present the new treasure to the user.
+            spawn.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+        });
+        _spawnersNode.ContextMenu.AddItem("Add Region Spawner", "Add.png", (s, e) =>
+        {
+            var spawn = new RegionSegmentSpawner()
+            {
+                Name = $"Region Spawner {_nextId++}"
+            };
             
-            return obj;
-        }
+            Segment.Spawns.Region.Add(spawn);
+                
+            // present the new treasure to the user.
+            spawn.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());   
+        });
     }
     
     private void Update()
@@ -783,7 +767,7 @@ public partial class SegmentTreeControl : UserControl
         EnsureLocationsNode();
         EnsureEntitiesNode();
         EnsureTreasuresNode();
-        UpdateSpawns();
+        EnsureSpawnersNode();
         EnsureComponentsNode();
         EnsureBrushesNode();
         EnsureTemplatesNode();
@@ -795,7 +779,6 @@ public partial class SegmentTreeControl : UserControl
         _tree.Items.Add(_entitiesNode);
         _tree.Items.Add(_treasureNode);
         _tree.Items.Add(_spawnersNode);
-        
         _tree.Items.Add(_componentsNode);
         _tree.Items.Add(_brushesNode);
         _tree.Items.Add(_templatesNode);
@@ -953,18 +936,6 @@ public partial class SegmentTreeControl : UserControl
     private TreeViewItem CreateVirtualFileNode(VirtualFile file) =>
         CreateInMemoryNode(file, file.Name + ".cs");
         */
-
-    private void AddSpawner<T>(IList<T> collection, string typeName, int regionId) where T : SegmentSpawner, new()
-    {
-        var defaultName = $"{typeName} {collection.Count + 1}";
-        var name = Interaction.InputBox("Name", $"Add {typeName}", defaultName);
-        if (string.IsNullOrWhiteSpace(name))
-            return;
-        var spawner = new T { Name = name };
-        dynamic dyn = spawner;
-        dyn.Region = regionId;
-        collection.Add(spawner);
-    }
 
     private static int GetRegionId(SegmentSpawner segmentSpawner) => segmentSpawner switch
     {
