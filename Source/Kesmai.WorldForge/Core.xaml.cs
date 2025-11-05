@@ -56,9 +56,8 @@ public partial class Core : Application
 
 	private static string StoragePath = ".storage";
 
-	private static string ComponentsName = "Components.cache";
-	private static string ScriptingName = "Scripting.cache";
-	private static string CustomArtConfigName = "CustomArt.cfg";
+        private static string ComponentsName = "Components.cache";
+        private static string CustomArtConfigName = "CustomArt.cfg";
 
 	private DirectoryInfo _storageDirectory;
 		

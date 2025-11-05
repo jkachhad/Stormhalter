@@ -14,6 +14,8 @@ using Microsoft.CodeAnalysis.Text;
 using RoslynPad.Roslyn;
 using RoslynPad.Roslyn.Diagnostics;
 
+#nullable enable
+
 namespace Kesmai.WorldForge.Roslyn;
 
 public class CustomRoslynHost : RoslynHost

@@ -9,18 +9,20 @@ using CommonServiceLocator;
 using Kesmai.WorldForge;
 using Kesmai.WorldForge.Editor;
 
+#nullable enable
+
 namespace Kesmai.WorldForge.UI.Windows;
 
 public partial class ComponentsWindow : Window
 {
-	private readonly ComponentPalette _componentPalette;
-	private readonly HashSet<ComponentsCategory> _filteredCategories = new();
+        private readonly ComponentPalette _componentPalette;
+        private readonly HashSet<ComponentsCategory> _filteredCategories = new();
 
-	private Predicate<IComponentProvider> _componentFilter;
+        private Predicate<IComponentProvider>? _componentFilter;
 
-	public IComponentProvider SelectedComponent { get; private set; }
+        public IComponentProvider? SelectedComponent { get; private set; }
 
-	public Predicate<IComponentProvider> ComponentFilter
+        public Predicate<IComponentProvider>? ComponentFilter
 	{
 		get => _componentFilter;
 		set

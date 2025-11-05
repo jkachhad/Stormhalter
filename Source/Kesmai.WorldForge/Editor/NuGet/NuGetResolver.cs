@@ -17,6 +17,8 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
+#nullable enable
+
 public static class NuGetResolver
 {
     private sealed class PackageContext
