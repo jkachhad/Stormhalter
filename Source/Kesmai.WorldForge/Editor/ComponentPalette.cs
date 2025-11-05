@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
@@ -19,10 +21,12 @@ public class ComponentPalette : ObservableRecipient
 	private IComponentProvider _selectedProvider;
 	
 	private ObservableCollection<ComponentsCategory> _rootCategories;
+	private ObservableCollection<ComponentsCategory> _allCategories;
 	
 	private ComponentsCategory _staticCategory;
 	private ComponentsCategory _editorCategory;
 	private ComponentsCategory _segmentCategory;
+	
 	private ComponentsCategory _segmentBrushCategory;
 	private ComponentsCategory _segmentTemplateCategory;
 	
@@ -47,6 +51,7 @@ public class ComponentPalette : ObservableRecipient
 	public ComponentPalette()
 	{
 		_rootCategories = new ObservableCollection<ComponentsCategory>();
+		_allCategories = new ObservableCollection<ComponentsCategory>();
 	}
 
 	public void Initialize()
@@ -114,6 +119,12 @@ public class ComponentPalette : ObservableRecipient
 		};
 
 		_segmentCategory.Subcategories.Add(_segmentTemplateCategory);
+		
+		_allCategories.Add(_staticCategory);
+		_allCategories.Add(_editorCategory);
+		_allCategories.Add(_segmentCategory);
+		_allCategories.Add(_segmentBrushCategory);
+		_allCategories.Add(_segmentTemplateCategory);
 		
 		// setup message registration for adding segment components.
 		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentComponentAdded>(this, (r, m) =>
@@ -278,6 +289,7 @@ public class ComponentPalette : ObservableRecipient
 			};
 			
 			_rootCategories.Add(category);
+			_allCategories.Add(category);
 		}
 		else
 		{
@@ -353,6 +365,8 @@ public class ComponentPalette : ObservableRecipient
 					IsRoot = false,
 				};
 				category.Subcategories.Add(subcategory);
+
+				_allCategories.Add(subcategory);
 			}
 			
 			category = subcategory;
@@ -371,35 +385,20 @@ public class ComponentPalette : ObservableRecipient
 	{
 		category = null;
 		
-		foreach (var parentCategory in _rootCategories)
+		foreach (var searchCategory in _allCategories)
 		{
-			if (recursive(component, parentCategory, out category))
+			if (searchCategory.Components.Contains(component))
+			{
+				category = searchCategory;
 				return true;
+			}
 		}
 
 		return false;
-		
-		bool recursive(SegmentComponent source, ComponentsCategory search, out ComponentsCategory targetCategory)
-		{
-			if (search.Components.Contains(source))
-			{
-				targetCategory = search;
-				return true;
-			}
-
-			if (search.Subcategories.Count is not 0)
-			{
-				foreach (var child in search.Subcategories)
-				{
-					if (recursive(source, child, out targetCategory))
-						return true;
-				}
-			}
-
-			targetCategory = null;
-			return false;
-		}
 	}
+	
+	private Dictionary<string, Type> _componentTypeCache = new Dictionary<string, Type>();
+	private Dictionary<Type, ConstructorInfo> _componentCtorCache = new Dictionary<Type, ConstructorInfo>();
 	
 	public bool TryGetComponent(XElement element, out IComponentProvider component)
 	{
@@ -409,60 +408,53 @@ public class ComponentPalette : ObservableRecipient
 
 		if (nameAttribute is not null)
 		{
-			foreach (var category in _rootCategories)
+			foreach (var searchCategory in _allCategories)
 			{
-				if (recursive(nameAttribute.Value, category, out component))
-					return true;
+				foreach (var childComponent in searchCategory.Components)
+				{
+					if (childComponent.Name.Equals(nameAttribute.Value, StringComparison.OrdinalIgnoreCase))
+					{
+						component = childComponent;
+						return true;
+					}
+				}
 			}
 		}
 
 		// the component was not found. determine if it's a terrain component.
 		if (Equals(element.Name.LocalName, "component"))
-			component = construct(element);
-
-		return (component is not null);
-
-		TerrainComponent construct(XElement terrainElement)
 		{
 			var type = typeof(StaticComponent);
-			var typeAttribute = terrainElement.Attribute("type");
+			var typeAttribute = element.Attribute("type");
 
 			if (typeAttribute != null)
-				type = Type.GetType($"Kesmai.WorldForge.Models.{typeAttribute.Value}");
-
-			if (type is null)
-				return null;
-
-			var ctor = type.GetConstructor([typeof(XElement)]);
-			
-			if (ctor is null)
-				return null;
-			
-			return (ctor.Invoke([element]) as TerrainComponent);
-		}
-		
-		bool recursive(string sourceName, ComponentsCategory search, out IComponentProvider targetComponent)
-		{
-			foreach (var childComponent in search.Components)
 			{
-				if (childComponent.Name.Equals(sourceName, StringComparison.OrdinalIgnoreCase))
+				var typeName = $"Kesmai.WorldForge.Models.{typeAttribute.Value}";
+
+				if (!_componentTypeCache.TryGetValue(typeName, out type))
 				{
-					targetComponent = childComponent;
-					return true;
+					type = Type.GetType(typeName);
+					
+					if (type != null)
+						_componentTypeCache[typeName] = type;
 				}
 			}
 
-			if (search.Subcategories.Count is not 0)
+			if (type is not null)
 			{
-				foreach (var child in search.Subcategories)
+				if (!_componentCtorCache.TryGetValue(type, out var ctor))
 				{
-					if (recursive(sourceName, child, out targetComponent))
-						return true;
+					ctor = type.GetConstructor([typeof(XElement)]);
+				
+					if (ctor != null)
+						_componentCtorCache[type] = ctor;
 				}
+			
+				if (ctor is not null)
+					component = ctor.Invoke([element]) as TerrainComponent;
 			}
-
-			targetComponent = null;
-			return false;
 		}
+
+		return (component is not null);
 	}
 }
