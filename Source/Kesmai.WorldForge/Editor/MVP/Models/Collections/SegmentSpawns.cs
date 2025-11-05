@@ -10,8 +10,8 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace Kesmai.WorldForge.Editor;
 
-public class SegmentSpawnCreated(SegmentSpawner segmentSpawner) : ValueChangedMessage<SegmentSpawner>(segmentSpawner);
-public class SegmentSpawnDeleted(SegmentSpawner segmentSpawner) : ValueChangedMessage<SegmentSpawner>(segmentSpawner);
+public class SegmentSpawnAdded(SegmentSpawner segmentSpawner) : ValueChangedMessage<SegmentSpawner>(segmentSpawner);
+public class SegmentSpawnRemoved(SegmentSpawner segmentSpawner) : ValueChangedMessage<SegmentSpawner>(segmentSpawner);
 
 public class SegmentSpawnsReset();
 public class SegmentSpawnsChanged(SegmentSpawns spawners) : ValueChangedMessage<SegmentSpawns>(spawners);
@@ -37,13 +37,13 @@ public class SegmentSpawns : ObservableObject
 		if (args.NewItems != null)
 		{
 			foreach (var newItem in args.NewItems.OfType<SegmentSpawner>())
-				WeakReferenceMessenger.Default.Send(new SegmentSpawnCreated(newItem));
+				WeakReferenceMessenger.Default.Send(new SegmentSpawnAdded(newItem));
 		}
 			
 		if (args.OldItems != null)
 		{
 			foreach (var oldItem in args.OldItems.OfType<SegmentSpawner>())
-				WeakReferenceMessenger.Default.Send(new SegmentSpawnDeleted(oldItem));
+				WeakReferenceMessenger.Default.Send(new SegmentSpawnRemoved(oldItem));
 		}
 		
 		if (args.Action is NotifyCollectionChangedAction.Reset)
