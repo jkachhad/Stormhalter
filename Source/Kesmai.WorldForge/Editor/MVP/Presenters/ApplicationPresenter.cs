@@ -310,15 +310,6 @@ public class ApplicationPresenter : ObservableRecipient
 		process("Locations.xml", () => segment.Locations = new SegmentLocations(), 
 			(root, version) => segment.Locations.Load(root, version));
 		
-		process("Entities.xml", () => segment.Entities = new SegmentEntities(),
-			(root, version) => segment.Entities.Load(root, version));
-		
-		process("Spawns.xml", () => segment.Spawns = new SegmentSpawns(),
-			(root, version) => segment.Spawns.Load(segment.Entities, root, version));
-		
-		process("Treasures.xml", () => segment.Treasures = new SegmentTreasures(),
-			(root, version) => segment.Treasures.Load(root, version));
-		
 		process("Components.xml", () => segment.Components = new SegmentComponents(),
 			(root, version) => segment.Components.Load(root, version));
 		
@@ -346,6 +337,15 @@ public class ApplicationPresenter : ObservableRecipient
 
 		process("Subregions.xml", () => segment.Subregions = new SegmentSubregions(), 
 			(root, version) => segment.Subregions.Load(root, version));
+		
+		process("Entities.xml", () => segment.Entities = new SegmentEntities(),
+			(root, version) => segment.Entities.Load(root, version));
+		
+		process("Spawns.xml", () => segment.Spawns = new SegmentSpawns(),
+			(root, version) => segment.Spawns.Load(segment.Entities, root, version));
+		
+		process("Treasures.xml", () => segment.Treasures = new SegmentTreasures(),
+			(root, version) => segment.Treasures.Load(root, version));
 
 		Segment.UpdateTiles();
 	}
