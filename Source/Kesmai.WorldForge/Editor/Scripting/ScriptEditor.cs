@@ -180,16 +180,12 @@ public class ScriptEditor : RoslynCodeEditor
             return;
 
         _updatingDocument = true;
+        
+        BodySegment.Length += e.InsertionLength - e.RemovalLength;
 
-        var bodySegmentLength = e.InsertionLength - e.RemovalLength;
+        if (BodySegment.Length > 0)
+            SetCurrentValue(BodyProperty, _body = Document.GetText(BodySegment));
 
-        if (bodySegmentLength <= 0)
-            return;
-        
-        BodySegment.Length += bodySegmentLength;
-        
-        SetCurrentValue(BodyProperty, _body = Document.GetText(BodySegment));
-        
         FooterSegment.StartOffset = BodySegment.EndOffset + NewLine.Length;
 
         _updatingDocument = false;
