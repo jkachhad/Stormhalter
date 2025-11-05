@@ -179,10 +179,7 @@ public class ScriptEditor : RoslynCodeEditor
 		if (_updatingDocument)
 			return;
 
-		_updatingDocument = true; try
-		{
-			var bodySegmentDelta = e.InsertionLength - e.RemovalLength;
-			BodySegment.Length = Math.Max(0, BodySegment.Length + bodySegmentDelta);
+		_updatingDocument = true;
 
 		try
 		{
