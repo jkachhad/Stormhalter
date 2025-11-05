@@ -1,29 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.IO;
-using Path = System.IO.Path;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using CommonServiceLocator;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using Microsoft.VisualBasic;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.UI.Controls;
 
 namespace Kesmai.WorldForge.UI;
 
-public class SegmentObjectDoubleClick(ISegmentObject target) : ValueChangedMessage<ISegmentObject>(target);
 public class SegmentObjectSelected(ISegmentObject target) : ValueChangedMessage<ISegmentObject>(target);
 
 public partial class SegmentTreeControl : UserControl
@@ -750,18 +743,11 @@ public partial class SegmentTreeControl : UserControl
     
     private void Update()
     {
-        var expanded = new HashSet<string>();
-        
-        foreach (var item in _tree.Items.OfType<TreeViewItem>())
-            SaveExpansionState(item, expanded);
-
         _tree.Items.Clear();
         
         if (Segment is null)
             return;
 
-        var rootPath = Segment.Directory;
-        
         EnsureSegmentNode();
         EnsureRegionsNode();
         EnsureLocationsNode();
@@ -782,46 +768,6 @@ public partial class SegmentTreeControl : UserControl
         _tree.Items.Add(_componentsNode);
         _tree.Items.Add(_brushesNode);
         _tree.Items.Add(_templatesNode);
-
-        // Add Source directory last
-        if (!string.IsNullOrEmpty(rootPath) && Directory.Exists(rootPath))
-        {
-            var sourcePath = Path.Combine(rootPath, "Source");
-            Directory.CreateDirectory(sourcePath);
-            var sourceItem = CreateDirectoryNode(new DirectoryInfo(sourcePath));
-
-            /*foreach (var file in Segment.VirtualFiles)
-                sourceItem.Items.Add(CreateVirtualFileNode(file));*/
-
-            _tree.Items.Add(sourceItem);
-        }
-
-        foreach (var item in _tree.Items.OfType<TreeViewItem>())
-            RestoreExpansionState(item, expanded);
-    }
-
-    private static void SaveExpansionState(TreeViewItem item, HashSet<string> expanded)
-    {
-        if (item.IsExpanded)
-        {
-            if (item.Tag is ISegmentObject segmentObject)
-                expanded.Add(segmentObject.Name);
-            else if (item.Tag is string path)
-                expanded.Add(path);
-        }
-        foreach (var child in item.Items.OfType<TreeViewItem>())
-            SaveExpansionState(child, expanded);
-    }
-
-    private static void RestoreExpansionState(TreeViewItem item, HashSet<string> expanded)
-    {
-        if (item.Tag is ISegmentObject segmentObject && expanded.Contains(segmentObject.Name))
-            item.IsExpanded = true;
-        else if (item.Tag is string path && expanded.Contains(path))
-            item.IsExpanded = true;
-        
-        foreach (var child in item.Items.OfType<TreeViewItem>())
-            RestoreExpansionState(child, expanded);
     }
     
     private void OnItemSelected(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -829,20 +775,6 @@ public partial class SegmentTreeControl : UserControl
         // Only send message if the selected item is a segment object.
         if (e.NewValue is TreeViewItem { Tag: ISegmentObject segmentObject })
             WeakReferenceMessenger.Default.Send(new SegmentObjectSelected(segmentObject));
-    }
-
-    private void OnDoubleClick(object sender, MouseButtonEventArgs args)
-    {
-        if (sender is TreeViewItem item)
-        {
-            item.IsSelected = true;
-
-            if (item.Tag is ISegmentObject obj)
-            {
-                WeakReferenceMessenger.Default.Send(new SegmentObjectDoubleClick(obj));
-                WeakReferenceMessenger.Default.Send(new SegmentObjectSelected(obj));
-            }
-        }
     }
     
     private StackPanel CreateHeader(string name, string icon)
@@ -870,116 +802,7 @@ public partial class SegmentTreeControl : UserControl
         
         return panel;
     }
-
-    private static StackPanel CreateColoredHeader(string text, Brush brush, bool isCircle)
-    {
-        var panel = new StackPanel { Orientation = Orientation.Horizontal };
-        Shape icon = isCircle ? new Ellipse() : new Rectangle();
-        icon.Width = 10;
-        icon.Height = 10;
-        icon.Fill = brush;
-        icon.Margin = new Thickness(2, 0, 2, 0);
-        panel.Children.Add(icon);
-        panel.Children.Add(new TextBlock { Text = text });
-        return panel;
-    }
-
-    private TreeViewItem CreateDirectoryNode(DirectoryInfo dir)
-    {
-        var item = new TreeViewItem { Tag = dir.FullName };
-        item.Header = CreateHeader(dir.Name, "Folder.png");
-
-        foreach (var subDir in dir.GetDirectories())
-            item.Items.Add(CreateDirectoryNode(subDir));
-
-        foreach (var file in dir.GetFiles("*.cs"))
-            item.Items.Add(CreateFileNode(file));
-
-        var menu = new ContextMenu();
-        var addFile = new MenuItem { Header = "Add File" };
-        addFile.Click += (s, e) => AddFile(dir.FullName, item);
-        var addFolder = new MenuItem { Header = "Add Folder" };
-        addFolder.Click += (s, e) => AddFolder(dir.FullName, item);
-        var rename = new MenuItem { Header = "Rename" };
-        rename.Click += (s, e) => Rename(dir.FullName, item, true);
-        var delete = new MenuItem { Header = "Delete" };
-        delete.Click += (s, e) => Delete(dir.FullName, item, true);
-
-        menu.Items.Add(addFile);
-        menu.Items.Add(addFolder);
-        menu.Items.Add(rename);
-        menu.Items.Add(delete);
-        item.ContextMenu = menu;
-
-        return item;
-    }
-
-    private TreeViewItem CreateFileNode(FileInfo file)
-    {
-        var item = new TreeViewItem { Tag = file.FullName };
-        item.Header = CreateHeader(file.Name, "Folder.png");
-
-        var menu = new ContextMenu();
-        var rename = new MenuItem { Header = "Rename" };
-        rename.Click += (s, e) => Rename(file.FullName, item, false);
-        var delete = new MenuItem { Header = "Delete" };
-        delete.Click += (s, e) => Delete(file.FullName, item, false);
-
-        menu.Items.Add(rename);
-        menu.Items.Add(delete);
-        item.ContextMenu = menu;
-
-        return item;
-    }
-
-    /*
-    private TreeViewItem CreateVirtualFileNode(VirtualFile file) =>
-        CreateInMemoryNode(file, file.Name + ".cs");
-        */
-
-    private static int GetRegionId(SegmentSpawner segmentSpawner) => segmentSpawner switch
-    {
-        LocationSegmentSpawner ls => ls.Region,
-        RegionSegmentSpawner rs => rs.Region,
-        _ => 0
-    };
-
-    private TreeViewItem CreateInMemoryNode(ISegmentObject obj, string displayName)
-    {
-        var item = new TreeViewItem { Tag = obj };
-        var header = CreateHeader(displayName, "Folder.png");
-        item.ContextMenu = null;
-        if (header.Children.Count > 1 && header.Children[1] is TextBlock text)
-        {
-            text.Foreground = Brushes.LightGray;
-            text.FontWeight = FontWeights.Bold;
-        }
-        item.Header = header;
-        return item;
-    }
-
-    private void AddFile(string directory, TreeViewItem parent)
-    {
-        var name = Interaction.InputBox("File name", "Add File", "NewFile.cs");
-        if (string.IsNullOrWhiteSpace(name))
-            return;
-        if (Path.GetExtension(name) != ".cs")
-            name += ".cs";
-        var path = Path.Combine(directory, name);
-        File.Create(path).Close();
-        parent.Items.Add(CreateFileNode(new FileInfo(path)));
-    }
-
-    private void AddFolder(string directory, TreeViewItem parent)
-    {
-        var name = Interaction.InputBox("Folder name", "Add Folder", "NewFolder");
-        if (string.IsNullOrWhiteSpace(name))
-            return;
-        var path = Path.Combine(directory, name);
-        Directory.CreateDirectory(path);
-        parent.Items.Add(CreateDirectoryNode(new DirectoryInfo(path)));
-    }
-
+    
     private void RenameSegmentObject(ISegmentObject obj, SegmentTreeViewItem item)
     {
         item.Rename();
@@ -999,81 +822,6 @@ public partial class SegmentTreeControl : UserControl
         
         if (item.Parent is ItemsControl parent)
             parent.Items.Remove(item);
-    }
-
-    private void Rename(string path, TreeViewItem item, bool isDirectory)
-    {
-        var name = Interaction.InputBox("New name", "Rename", Path.GetFileName(path));
-        if (string.IsNullOrWhiteSpace(name))
-            return;
-        if (!isDirectory && Path.GetExtension(name) != ".cs")
-            name += ".cs";
-        var newPath = Path.Combine(Path.GetDirectoryName(path)!, name);
-        if (isDirectory)
-            Directory.Move(path, newPath);
-        else
-            File.Move(path, newPath);
-        item.Tag = newPath;
-        if (item.Header is StackPanel panel)
-        {
-            if (panel.Children[0] is Image img)
-                img.Source = GetIcon(newPath, isDirectory);
-            if (panel.Children[1] is TextBlock text)
-                text.Text = name;
-        }
-    }
-
-    private void Delete(string path, TreeViewItem item, bool isDirectory)
-    {
-        if (isDirectory)
-            Directory.Delete(path, true);
-        else
-            File.Delete(path);
-        if (item.Parent is ItemsControl parent)
-            parent.Items.Remove(item);
-    }
-
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    private struct SHFILEINFO
-    {
-        public IntPtr hIcon;
-        public int iIcon;
-        public uint dwAttributes;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-        public string szDisplayName;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
-        public string szTypeName;
-    }
-
-    [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
-    private static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes,
-        out SHFILEINFO psfi, uint cbFileInfo, uint uFlags);
-
-    [DllImport("user32.dll", SetLastError = true)]
-    private static extern bool DestroyIcon(IntPtr hIcon);
-
-    private const uint SHGFI_ICON = 0x000000100;
-    private const uint SHGFI_SMALLICON = 0x000000001;
-    private const uint SHGFI_USEFILEATTRIBUTES = 0x000000010;
-    private const uint FILE_ATTRIBUTE_DIRECTORY = 0x00000010;
-
-    private static ImageSource? GetIcon(string path, bool isDirectory)
-    {
-        var flags = SHGFI_ICON | SHGFI_SMALLICON;
-        var attributes = isDirectory ? FILE_ATTRIBUTE_DIRECTORY : 0u;
-        if (!File.Exists(path) && !Directory.Exists(path))
-            flags |= SHGFI_USEFILEATTRIBUTES;
-        SHGetFileInfo(path, attributes, out var info, (uint)Marshal.SizeOf<SHFILEINFO>(), flags);
-        if (info.hIcon == IntPtr.Zero)
-            return null;
-        try
-        {
-            return Imaging.CreateBitmapSourceFromHIcon(info.hIcon, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-        }
-        finally
-        {
-            DestroyIcon(info.hIcon);
-        }
     }
 }
 
