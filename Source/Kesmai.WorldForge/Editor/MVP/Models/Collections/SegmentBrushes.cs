@@ -10,6 +10,7 @@ namespace Kesmai.WorldForge.Editor;
 
 public class SegmentBrushAdded(SegmentBrush brush) : ValueChangedMessage<SegmentBrush>(brush);
 public class SegmentBrushRemoved(SegmentBrush brush) : ValueChangedMessage<SegmentBrush>(brush);
+public class SegmentBrushesReset();
 public class SegmentBrushesChanged(SegmentBrushes brushes) : ValueChangedMessage<SegmentBrushes>(brushes);
 
 public class SegmentBrushes : ObservableCollection<SegmentBrush>
@@ -45,6 +46,9 @@ public class SegmentBrushes : ObservableCollection<SegmentBrush>
 			foreach (var oldItem in args.OldItems.OfType<SegmentBrush>())
 				WeakReferenceMessenger.Default.Send(new SegmentBrushRemoved(oldItem));
 		}
+		
+		if (args.Action is NotifyCollectionChangedAction.Reset)
+			WeakReferenceMessenger.Default.Send(new SegmentBrushesReset());
 
 		WeakReferenceMessenger.Default.Send(new SegmentBrushesChanged(this));
 	}

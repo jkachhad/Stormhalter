@@ -10,8 +10,10 @@ using Kesmai.WorldForge.Models;
 
 namespace Kesmai.WorldForge.Editor;
 
-public class SegmentComponentCreated(SegmentComponent component) : ValueChangedMessage<SegmentComponent>(component);
-public class SegmentComponentDeleted(SegmentComponent component) : ValueChangedMessage<SegmentComponent>(component);
+public class SegmentComponentAdded(SegmentComponent component) : ValueChangedMessage<SegmentComponent>(component);
+public class SegmentComponentRemoved(SegmentComponent component) : ValueChangedMessage<SegmentComponent>(component);
+
+public class SegmentComponentsReset();
 public class SegmentComponentsChanged(SegmentComponents locations) : ValueChangedMessage<SegmentComponents>(locations);
 
 public class SegmentComponents : ObservableCollection<SegmentComponent>
@@ -70,14 +72,17 @@ public class SegmentComponents : ObservableCollection<SegmentComponent>
 		if (args.NewItems != null)
 		{
 			foreach (var newItem in args.NewItems.OfType<SegmentComponent>())
-				WeakReferenceMessenger.Default.Send(new SegmentComponentCreated(newItem));
+				WeakReferenceMessenger.Default.Send(new SegmentComponentAdded(newItem));
 		}
 			
 		if (args.OldItems != null)
 		{
 			foreach (var oldItem in args.OldItems.OfType<SegmentComponent>())
-				WeakReferenceMessenger.Default.Send(new SegmentComponentDeleted(oldItem));
+				WeakReferenceMessenger.Default.Send(new SegmentComponentRemoved(oldItem));
 		}
+		
+		if (args.Action is NotifyCollectionChangedAction.Reset)
+			WeakReferenceMessenger.Default.Send(new SegmentComponentsReset());
 
 		WeakReferenceMessenger.Default.Send(new SegmentComponentsChanged(this));
 	}

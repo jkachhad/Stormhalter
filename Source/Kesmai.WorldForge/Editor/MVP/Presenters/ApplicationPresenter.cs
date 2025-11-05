@@ -278,6 +278,8 @@ public class ApplicationPresenter : ObservableRecipient
 			Directory = targetDirectory.FullName
 		};
 		
+		Segment = segment;
+		
 		void process(string documentName, Action assignment, Action<XElement, Version> load)
 		{
 			var documentFile = new FileInfo(Path.Combine(targetDirectory.FullName, documentName));
@@ -308,18 +310,6 @@ public class ApplicationPresenter : ObservableRecipient
 		process("Locations.xml", () => segment.Locations = new SegmentLocations(), 
 			(root, version) => segment.Locations.Load(root, version));
 		
-		process("Subregions.xml", () => segment.Subregions = new SegmentSubregions(), 
-			(root, version) => segment.Subregions.Load(root, version));
-		
-		process("Entities.xml", () => segment.Entities = new SegmentEntities(),
-			(root, version) => segment.Entities.Load(root, version));
-		
-		process("Spawns.xml", () => segment.Spawns = new SegmentSpawns(),
-			(root, version) => segment.Spawns.Load(segment.Entities, root, version));
-		
-		process("Treasures.xml", () => segment.Treasures = new SegmentTreasures(),
-			(root, version) => segment.Treasures.Load(root, version));
-		
 		process("Components.xml", () => segment.Components = new SegmentComponents(),
 			(root, version) => segment.Components.Load(root, version));
 		
@@ -345,7 +335,18 @@ public class ApplicationPresenter : ObservableRecipient
 			}
 		}
 
-		Segment = segment;
+		process("Subregions.xml", () => segment.Subregions = new SegmentSubregions(), 
+			(root, version) => segment.Subregions.Load(root, version));
+		
+		process("Entities.xml", () => segment.Entities = new SegmentEntities(),
+			(root, version) => segment.Entities.Load(root, version));
+		
+		process("Spawns.xml", () => segment.Spawns = new SegmentSpawns(),
+			(root, version) => segment.Spawns.Load(segment.Entities, root, version));
+		
+		process("Treasures.xml", () => segment.Treasures = new SegmentTreasures(),
+			(root, version) => segment.Treasures.Load(root, version));
+
 		Segment.UpdateTiles();
 	}
 

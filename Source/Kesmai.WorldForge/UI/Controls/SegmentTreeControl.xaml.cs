@@ -1,29 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.IO;
-using Path = System.IO.Path;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using CommonServiceLocator;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using Microsoft.VisualBasic;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.UI.Controls;
 
 namespace Kesmai.WorldForge.UI;
 
-public class SegmentObjectDoubleClick(ISegmentObject target) : ValueChangedMessage<ISegmentObject>(target);
 public class SegmentObjectSelected(ISegmentObject target) : ValueChangedMessage<ISegmentObject>(target);
 
 public partial class SegmentTreeControl : UserControl
@@ -36,108 +29,55 @@ public partial class SegmentTreeControl : UserControl
 
     public Segment Segment
     {
-        get => (Segment?)GetValue(SegmentProperty);
+        get => (Segment)GetValue(SegmentProperty);
         set => SetValue(SegmentProperty, value);
     }
     
-    public void UpdateTemplates()
-    {
-        if (Segment is null)
-            return;
-
-        var collection = Segment.Templates;
-        
-        if (_templatesNode is null)
-        {
-            _templatesNode = new TreeViewItem
-            {
-                Tag = $"category:Templates",
-                Header = CreateHeader("Templates", "Gear.png")
-            };
-
-            _templatesNode.ContextMenu = new ContextMenu();
-            _templatesNode.ContextMenu.AddItem("Add Template", "Add.png", (s, e) =>
-            {
-                var template = addTemplate(collection, "Template");
-
-                if (template != null)
-                    template.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-            });
-        }
-
-        var expanded = new HashSet<string>();
-
-        foreach (var item in _templatesNode.Items.OfType<TreeViewItem>())
-            SaveExpansionState(item, expanded);
-
-        _templatesNode.Items.Clear();
-
-        foreach (var template in collection)
-            _templatesNode.Items.Add(createTemplateNode(template, collection));
-
-        foreach (var item in _templatesNode.Items.OfType<TreeViewItem>())
-            RestoreExpansionState(item, expanded);
-
-        TreeViewItem createTemplateNode(SegmentTemplate template, SegmentTemplates source)
-        {
-            var item = new SegmentTreeViewItem(template, Brushes.SteelBlue, true)
-            {
-                Tag = template
-            };
-
-            item.ContextMenu = new ContextMenu();
-            item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(template, item));
-            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(template));
-            item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(template, item, source));
-
-            return item;
-        }
-
-        T addTemplate<T>(IList<T> source, string typeName) where T : ISegmentObject, new()
-        {
-            var obj = new T
-            {
-                Name = $"{typeName} {_nextId++}"
-            };
-
-            source.Add(obj);
-
-            return obj;
-        }
-    }
-
     private ISegmentObject _copyObject;
     
     public SegmentTreeControl()
     {
         InitializeComponent();
 
-        WeakReferenceMessenger.Default.Register<SegmentRegionsChanged>(this, (r, m) => UpdateRegions());
-        WeakReferenceMessenger.Default.Register<SegmentRegionChanged>(this, (r, m) => UpdateRegions());
+        WeakReferenceMessenger.Default.Register<SegmentRegionAdded>(this, (r, m) => OnRegionAdded(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentRegionRemoved>(this, (r, m) => OnRegionRemoved(m.Value));
 
-        WeakReferenceMessenger.Default.Register<SegmentSubregionsChanged>(this, (r, m) => UpdateRegions());
-        WeakReferenceMessenger.Default.Register<SegmentSubregionChanged>(this, (r, m) => UpdateRegions());
-        
-        WeakReferenceMessenger.Default.Register<SegmentLocationsChanged>(this, (r, m) => UpdateLocations());
-        WeakReferenceMessenger.Default.Register<SegmentLocationChanged>(this, (r, m) => UpdateLocations());
-        
-        WeakReferenceMessenger.Default.Register<SegmentEntitiesChanged>(this, (r, m) => UpdateEntities());
-        WeakReferenceMessenger.Default.Register<SegmentEntityChanged>(this, (r, m) => UpdateEntities());
-        
-        WeakReferenceMessenger.Default.Register<SegmentComponentsChanged>(this, (r, m) => UpdateComponents());
-        WeakReferenceMessenger.Default.Register<SegmentComponentCreated>(this, (r, m) => UpdateComponents());
+        WeakReferenceMessenger.Default.Register<SegmentSubregionAdded>(this, (r, m) => OnSubregionAdded(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentSubregionRemoved>(this, (r, m) => OnSubregionRemoved(m.Value));
 
-        WeakReferenceMessenger.Default.Register<SegmentTreasuresChanged>(this, (r, m) => UpdateTreasures());
-        WeakReferenceMessenger.Default.Register<SegmentTreasureChanged>(this, (r, m) => UpdateTreasures());
-        
-        WeakReferenceMessenger.Default.Register<SegmentSpawnsChanged>(this, (r, m) => UpdateSpawns());
-        WeakReferenceMessenger.Default.Register<SegmentSpawnChanged>(this, (r, m) => UpdateSpawns());
+        WeakReferenceMessenger.Default.Register<SegmentLocationAdded>(this, (r, m) => OnLocationAdded(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentLocationRemoved>(this, (r, m) => OnLocationRemoved(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentLocationsReset>(this, (r, m) => OnLocationsReset());
 
-        WeakReferenceMessenger.Default.Register<SegmentBrushesChanged>(this, (r, m) => UpdateBrushes());
-        WeakReferenceMessenger.Default.Register<SegmentBrushChanged>(this, (r, m) => UpdateBrushes());
+        WeakReferenceMessenger.Default.Register<SegmentComponentAdded>(this, (r, m) => OnComponentAdded(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentComponentRemoved>(this, (r, m) => OnComponentRemoved(m.Value));
+
+        WeakReferenceMessenger.Default.Register<SegmentBrushAdded>(this, (r, m) => OnBrushAdded(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentBrushRemoved>(this, (r, m) => OnBrushRemoved(m.Value));
         
-        WeakReferenceMessenger.Default.Register<SegmentTemplatesChanged>(this, (r, m) => UpdateTemplates());
-        WeakReferenceMessenger.Default.Register<SegmentTemplateChanged>(this, (r, m) => UpdateTemplates());
+        WeakReferenceMessenger.Default.Register<SegmentTemplateAdded>(this, (r, m) => OnTemplateAdded(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentTemplateRemoved>(this, (r, m) => OnTemplateRemoved(m.Value));
+        
+        WeakReferenceMessenger.Default.Register<SegmentEntityAdded>(this, (r, m) => OnEntityAdded(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentEntityRemoved>(this, (r, m) => OnEntityRemoved(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentEntityChanged>(this, (r, m) =>
+        {
+            // for entity changes, we need to update the grouping in the tree.
+            OnEntityRemoved(m.Value);
+            OnEntityAdded(m.Value);
+        });
+        
+        WeakReferenceMessenger.Default.Register<SegmentTreasureAdded>(this, (r, m) => OnTreasureAdded(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentTreasureRemoved>(this, (r, m) => OnTreasureRemoved(m.Value));
+      
+        WeakReferenceMessenger.Default.Register<SegmentSpawnAdded>(this, (r, m) => OnSpawnAdded(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentSpawnRemoved>(this, (r, m) => OnSpawnRemoved(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentSpawnChanged>(this, (r, m) =>
+        {
+            // for spawn changes, we need to update the grouping in the tree.
+            OnSpawnRemoved(m.Value);
+            OnSpawnAdded(m.Value);
+        });
         
         _tree.SelectedItemChanged += OnItemSelected;
         _tree.KeyDown += OnKeyDown;
@@ -203,394 +143,562 @@ public partial class SegmentTreeControl : UserControl
     private TreeViewItem _spawnersNode;
     private TreeViewItem _treasureNode;
 
-    public void UpdateSegment()
+    private void EnsureSegmentNode()
     {
-        if (Segment is null)
+        if (_segmentNode is not null)
             return;
         
-        if (_segmentNode is null)
+        _segmentNode = new TreeViewItem
         {
-            _segmentNode = new TreeViewItem
-            {
-                Tag = Segment,
-                Header = CreateHeader("Segment", "Segment.png"),
-            };
-        }
+            Tag = Segment,
+            Header = CreateHeader("Segment", "Segment.png"),
+        };
     }
     
-    public void UpdateBrushes()
-    {
-        if (Segment is null)
-            return;
-
-        var collection = Segment.Brushes;
-
-        if (collection is null)
-            return;
-
-        if (_brushesNode is null)
-        {
-            _brushesNode = new TreeViewItem
-            {
-                Tag = $"category:Brushes",
-                Header = CreateHeader("Brushes", "Editor-Icon-Paint.png")
-            };
-
-            _brushesNode.ContextMenu = new ContextMenu();
-            _brushesNode.ContextMenu.AddItem("Add Brush", "Add.png", (s, e) =>
-            {
-                var brush = addBrush(collection, "Brush");
-                    
-                if (brush != null)
-                    brush.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-            });
-        }
-
-        var expanded = new HashSet<string>();
-
-        foreach (var item in _brushesNode.Items.OfType<TreeViewItem>())
-            SaveExpansionState(item, expanded);
-
-        _brushesNode.Items.Clear();
-
-        foreach (var brush in collection)
-            _brushesNode.Items.Add(createBrushNode(brush, collection));
-
-        foreach (var item in _brushesNode.Items.OfType<TreeViewItem>())
-            RestoreExpansionState(item, expanded);
-
-        TreeViewItem createBrushNode(SegmentBrush brush, SegmentBrushes source)
-        {
-            var item = new SegmentTreeViewItem(brush, Brushes.MediumSeaGreen, true)
-            {
-                Tag = brush
-            };
-
-            item.ContextMenu = new ContextMenu();
-            item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(brush, item));
-            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(brush));
-            item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(brush, item, source));
-
-            return item;
-        }
-
-        T addBrush<T>(IList<T> source, string typeName) where T : ISegmentObject, new()
-        {
-            var obj = new T
-            {
-                Name = $"{typeName} {_nextId++}"
-            };
-            
-            source.Add(obj);
-            
-            return obj;
-        }
-    }
+    private Dictionary<SegmentRegion, SegmentTreeViewItem> _regionItems = new Dictionary<SegmentRegion, SegmentTreeViewItem>();
+    private Dictionary<SegmentSubregion, SegmentTreeViewItem> _subregionItems = new Dictionary<SegmentSubregion, SegmentTreeViewItem>();
+    private Dictionary<SegmentLocation, SegmentTreeViewItem> _locationItems = new Dictionary<SegmentLocation, SegmentTreeViewItem>();
+    private Dictionary<SegmentComponent, SegmentTreeViewItem> _componentItems = new Dictionary<SegmentComponent, SegmentTreeViewItem>();
+    private Dictionary<SegmentBrush, SegmentTreeViewItem> _brushItems = new Dictionary<SegmentBrush, SegmentTreeViewItem>();
+    private Dictionary<SegmentTemplate, SegmentTreeViewItem> _templateItems = new Dictionary<SegmentTemplate, SegmentTreeViewItem>();
+    private Dictionary<SegmentEntity, SegmentTreeViewItem> _entityItems = new Dictionary<SegmentEntity, SegmentTreeViewItem>();
+    private Dictionary<SegmentTreasure, SegmentTreeViewItem> _treasureItems = new Dictionary<SegmentTreasure, SegmentTreeViewItem>();
+    private Dictionary<SegmentSpawner, SegmentTreeViewItem> _spawnItems = new Dictionary<SegmentSpawner, SegmentTreeViewItem>();
     
-    public void UpdateRegions()
+    private Dictionary<string, TreeViewItem> _entityGroupNodes = new Dictionary<string, TreeViewItem>();
+    private Dictionary<int, TreeViewItem> _spawnGroupNodes = new Dictionary<int, TreeViewItem>();
+    
+    
+    private void OnRegionAdded(SegmentRegion region)
     {
-        if (Segment is null)
-            return;
+        EnsureRegionsNode();
         
-        var collection = Segment.Regions;
-
-        if (_regionsNode is null)
+        // a region has been added, create its tree node.
+        if (!_regionItems.TryGetValue(region, out var regionItem))
         {
-            _regionsNode = new TreeViewItem
-            {
-                Tag = $"category:Regions",
-                Header = CreateHeader("Regions", "Regions.png")
-            };
-            
-            _regionsNode.ContextMenu = new ContextMenu();
-            _regionsNode.ContextMenu.AddItem("Add Region", "Add.png", (s, e) =>
-            {
-                var region = addRegion(collection, "Region");
-
-                // present the new region to the user.
-                if (region != null)
-                    region.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-            });
-        }
-        
-        var expanded = new HashSet<string>();
-        
-        foreach (var item in _regionsNode.Items.OfType<TreeViewItem>())
-            SaveExpansionState(item, expanded);
-        
-        _regionsNode.Items.Clear();
-
-        foreach (var child in collection)
-            _regionsNode.Items.Add(createRegionNode(child, collection));
-        
-        foreach (var item in _regionsNode.Items.OfType<TreeViewItem>())
-            RestoreExpansionState(item, expanded);
-        TreeViewItem createRegionNode(SegmentRegion region, SegmentRegions source)
-        {
-            var item = new SegmentTreeViewItem(region, Brushes.MediumPurple, false)
+            regionItem = new SegmentTreeViewItem(region, Brushes.MediumPurple, false)
             {
                 Tag = region,
             };
 
-            if (Segment is not null)
-            {
-                foreach (var subregion in Segment.Subregions.Where(sr => sr.Region == region.ID))
-                    item.Items.Add(createSubregionNode(subregion, Segment.Subregions));
-            }
-
-            item.ContextMenu = new ContextMenu();
-            item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(region, item));
-            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(region));
-            item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(region, item, source));
+            regionItem.ContextMenu = new ContextMenu();
+            regionItem.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(region, regionItem));
+            regionItem.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(region));
+            regionItem.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(region, regionItem, Segment.Regions));
             
-            return item;
+            _regionItems.Add(region, regionItem);
         }
         
-        TreeViewItem createSubregionNode(SegmentSubregion subregion, SegmentSubregions source)
+        if (!_regionsNode.Items.Contains(regionItem))
+            _regionsNode.Items.Add(regionItem);
+    }
+    
+    private void OnRegionRemoved(SegmentRegion region)
+    {
+        // a region has been removed, delete its tree node.
+        if (_regionItems.Remove(region, out var item))
         {
-            var item = new SegmentTreeViewItem(subregion, Brushes.Gray, false)
+            if (_regionsNode != null)
+                _regionsNode.Items.Remove(item);
+        }
+    }
+
+    private void OnSubregionAdded(SegmentSubregion subregion)
+    {
+        // subregion has been added, create its tree node.
+        // the nodes rest on the parent region.
+        
+        // find the parent node.
+        var parentRegion = _regionItems.Keys.FirstOrDefault(r => r.ID == subregion.Region);
+
+        if (parentRegion is null)
+            return;
+        
+        if (!_subregionItems.TryGetValue(subregion, out var subregionItem))
+        {
+            subregionItem = new SegmentTreeViewItem(subregion, Brushes.Gray, false)
             {
                 Tag = subregion,
             };
 
-            item.ContextMenu = new ContextMenu();
-            item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(subregion, item));
-            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(subregion));
-            item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(subregion, item, source));
+            subregionItem.ContextMenu = new ContextMenu();
+            subregionItem.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(subregion, subregionItem));
+            subregionItem.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(subregion));
+            subregionItem.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(subregion, subregionItem, Segment.Subregions));
 
-            return item;
+            _subregionItems.Add(subregion, subregionItem);
         }
-        
-        T addRegion<T>(IList<T> source, string typeName) where T : ISegmentObject, new()
-        {
-            var obj = new T
-            {
-                Name = $"{typeName} {_nextId++}"
-            };
-            
-            source.Add(obj);
-            
-            return obj;
-        }
+
+        if (_regionItems.TryGetValue(parentRegion, out var parentRegionNode))
+            parentRegionNode.Items.Add(subregionItem);
     }
     
-    public void UpdateLocations()
+    private void OnSubregionRemoved(SegmentSubregion subregion)
     {
-        if (Segment is null)
-            return;
-
-        var collection = Segment.Locations;
-        
-        if (_locationsNode is null)
+        // a subregion has been removed, delete its tree node.
+        if (_subregionItems.Remove(subregion, out var item))
         {
-            _locationsNode = new TreeViewItem
-            {
-                Tag = $"category:Locations",
-                Header = CreateHeader("Locations", "Locations.png")
-            };
-            
-            _locationsNode.ContextMenu = new ContextMenu();
-            _locationsNode.ContextMenu.AddItem("Add Location", "Add.png", (s, e) =>
-            {
-                var location = addLocation(collection, "Location");
+            // find the parent region node.
+            var parentRegion = _regionItems.Keys.FirstOrDefault(r => r.ID == subregion.Region);
 
-                // present the new location to the user.
-                if (location != null)
-                    location.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-            });
+            if (parentRegion is null)
+                return;
+
+            if (_regionItems.TryGetValue(parentRegion, out var parentRegionNode))
+                parentRegionNode.Items.Remove(item);
         }
-        
-        var expanded = new HashSet<string>();
-        
-        foreach (var item in _locationsNode.Items.OfType<TreeViewItem>())
-            SaveExpansionState(item, expanded);
-        
-        _locationsNode.Items.Clear();
+    }
 
-        foreach (var child in collection)
-            _locationsNode.Items.Add(createLocationNode(child, collection));
-        
-        foreach (var item in _locationsNode.Items.OfType<TreeViewItem>())
-            RestoreExpansionState(item, expanded);
+    private void OnLocationAdded(SegmentLocation location)
+    {
+        EnsureLocationsNode();
 
-        TreeViewItem createLocationNode(SegmentLocation location, SegmentLocations source)
+        // a location has been added, create its tree node.
+        if (!_locationItems.TryGetValue(location, out var locationItem))
         {
             var isReserved = location.IsReserved;
             
-            var item = new SegmentTreeViewItem(location, (isReserved ? Brushes.LightSlateGray : Brushes.LightPink), true)
+            locationItem = new SegmentTreeViewItem(location, (isReserved ? Brushes.LightSlateGray : Brushes.LightPink), true)
             {
-                Tag = location
+                Tag = location,
             };
+
+            locationItem.EditableTextBlock.IsEditable = !isReserved;
+
+            locationItem.ContextMenu = new ContextMenu();
             
-
-            item.EditableTextBlock.IsEditable = !isReserved;
-
-            item.ContextMenu = new ContextMenu();
-
             if (!isReserved)
-                item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(location, item));
-
-            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(location));
-
+                locationItem.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(location, locationItem));
+            
+            locationItem.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(location));
+            
             if (!isReserved)
-                item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(location, item, source));
+                locationItem.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(location, locationItem, Segment.Locations));
 
-            return item;
+            _locationItems.Add(location, locationItem);
         }
-        
-        T addLocation<T>(IList<T> source, string typeName) where T : ISegmentObject, new()
+
+        if (!_locationsNode.Items.Contains(locationItem))
+            _locationsNode.Items.Add(locationItem);
+    }
+    
+    private void OnLocationRemoved(SegmentLocation location)
+    {
+        // a location has been removed, delete its tree node.
+        if (_locationItems.Remove(location, out var item))
         {
-            var obj = new T
-            {
-                Name = $"{typeName} {_nextId++}"
-            };
-            
-            source.Add(obj);
-            
-            return obj;
+            if (_locationsNode != null)
+                _locationsNode.Items.Remove(item);
         }
     }
 
-    public void UpdateComponents()
+    private void OnLocationsReset()
     {
-        if (Segment is null)
+        if (_locationsNode != null)
+            _locationsNode.Items.Clear();
+        
+        _locationItems.Clear();
+    }
+
+    private void EnsureLocationsNode()
+    {
+        if (_locationsNode is not null)
             return;
-
-        var collection = Segment.Components;
-
-        if (_componentsNode is null)
+        
+        _locationsNode = new TreeViewItem
         {
-            _componentsNode = new TreeViewItem
+            Tag = $"category:Locations",
+            Header = CreateHeader("Locations", "Locations.png")
+        };
+            
+        _locationsNode.ContextMenu = new ContextMenu();
+        _locationsNode.ContextMenu.AddItem("Add Location", "Add.png", (s, e) =>
+        {
+            var location = new SegmentLocation
             {
-                Tag = $"category:Components",
-                Header = CreateHeader("Components", "Terrain.png")
+                Name = $"Location {_nextId++}"
             };
-
-            _componentsNode.ContextMenu = new ContextMenu();
-            _componentsNode.ContextMenu.AddItem("Add Component", "Add.png", (s, e) =>
-            {
-                var component = addComponent(collection, "Component");
+            
+            Segment.Locations.Add(location);
                 
-                // present the new component to the user.
-                if (component != null)
-                    component.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-            });
-        }
-
-        var expanded = new HashSet<string>();
-
-        foreach (var item in _componentsNode.Items.OfType<TreeViewItem>())
-            SaveExpansionState(item, expanded);
-
-        _componentsNode.Items.Clear();
-
-        foreach (var component in collection)
-            _componentsNode.Items.Add(createComponentNode(component, collection));
-
-        foreach (var item in _componentsNode.Items.OfType<TreeViewItem>())
-            RestoreExpansionState(item, expanded);
+            // present the new location to the user.
+            location.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+        });
+    }
+    
+    private void EnsureRegionsNode()
+    {
+        if (_regionsNode is not null) 
+            return;
         
-        TreeViewItem createComponentNode(SegmentComponent segmentComponent, SegmentComponents source)
+        _regionsNode = new TreeViewItem
         {
-            var item = new SegmentTreeViewItem(segmentComponent, Brushes.OrangeRed, false)
-            {
-                Tag = segmentComponent,
-            };
-        
-            item.ContextMenu = new ContextMenu();
-            item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(segmentComponent, item));
-            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(segmentComponent));
-            item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(segmentComponent, item, source));
-
-            return item;
-        }
-        
-        T addComponent<T>(IList<T> source, string typeName) where T : ISegmentObject, new()
+            Tag = $"category:Regions",
+            Header = CreateHeader("Regions", "Regions.png")
+        };
+            
+        _regionsNode.ContextMenu = new ContextMenu();
+        _regionsNode.ContextMenu.AddItem("Add Region", "Add.png", (s, e) =>
         {
-            var obj = new T
+            var region = new SegmentRegion
             {
-                Name = $"{typeName} {_nextId++}"
+                Name = $"Region {_nextId++}"
             };
             
-            source.Add(obj);
+            Segment.Regions.Add(region);
+                
+            // present the new region to the user.
+            region.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+        });
+    }
+
+    public void OnComponentAdded(SegmentComponent component)
+    {
+        EnsureComponentsNode();
+        
+        // a component has been added, create its tree node.
+        if (!_componentItems.TryGetValue(component, out var componentItem))
+        {
+            componentItem = new SegmentTreeViewItem(component, Brushes.OrangeRed, false)
+            {
+                Tag = component,
+            };
+
+            componentItem.ContextMenu = new ContextMenu();
+            componentItem.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(component, componentItem));
+            componentItem.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(component));
+            componentItem.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(component, componentItem, Segment.Components));
             
-            return obj;
+            _componentItems.Add(component, componentItem);
+        }
+        
+        if (!_componentsNode.Items.Contains(componentItem))
+            _componentsNode.Items.Add(componentItem);
+    }
+    
+    public void OnComponentRemoved(SegmentComponent component)
+    {
+        // a component has been removed, delete its tree node.
+        if (_componentItems.Remove(component, out var item))
+        {
+            if (_componentsNode != null)
+                _componentsNode.Items.Remove(item);
+        }
+    }
+    
+    private void OnBrushAdded(SegmentBrush brush)
+    {
+        EnsureBrushesNode();
+
+        // a brush has been added, create its tree node.
+        if (!_brushItems.TryGetValue(brush, out var brushItem))
+        {
+            brushItem = new SegmentTreeViewItem(brush, Brushes.MediumSeaGreen, true)
+            {
+                Tag = brush,
+            };
+
+            brushItem.ContextMenu = new ContextMenu();
+            brushItem.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(brush, brushItem));
+            brushItem.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(brush));
+            brushItem.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(brush, brushItem, Segment.Brushes));
+            
+            _brushItems.Add(brush, brushItem);
+        }
+        
+        if (!_brushesNode.Items.Contains(brushItem))
+            _brushesNode.Items.Add(brushItem);
+    }
+    
+    private void OnBrushRemoved(SegmentBrush brush)
+    {
+        // a brush has been removed, delete its tree node.
+        if (_brushItems.Remove(brush, out var item))
+        {
+            if (_brushesNode != null)
+                _brushesNode.Items.Remove(item);
+        }
+    }
+    
+    private void EnsureComponentsNode()
+    {
+        if (_componentsNode is not null)
+            return;
+        
+        _componentsNode = new TreeViewItem
+        {
+            Tag = $"category:Components",
+            Header = CreateHeader("Components", "Terrain.png")
+        };
+            
+        _componentsNode.ContextMenu = new ContextMenu();
+        _componentsNode.ContextMenu.AddItem("Add Component", "Add.png", (s, e) =>
+        {
+            var component = new SegmentComponent()
+            {
+                Name = $"Component {_nextId++}"
+            };
+            
+            Segment.Components.Add(component);
+            
+            component.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+        });
+    }
+    
+    private void EnsureBrushesNode()
+    {
+        if (_brushesNode is not null)
+            return;
+
+        _brushesNode = new TreeViewItem
+        {
+            Tag = $"category:Brushes",
+            Header = CreateHeader("Brushes", "Editor-Icon-Paint.png")
+        };
+        
+        _brushesNode.ContextMenu = new ContextMenu();
+        _brushesNode.ContextMenu.AddItem("Add Brush", "Add.png", (s, e) =>
+        {
+            var brush = new SegmentBrush
+            {
+                Name = $"Brush {_nextId++}"
+            };
+
+            Segment.Brushes.Add(brush);
+
+            brush.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+        });
+    }
+    
+    private void OnTemplateAdded(SegmentTemplate template)
+    {
+        EnsureTemplatesNode();
+
+        // a template has been added, create its tree node.
+        if (!_templateItems.TryGetValue(template, out var templateItem))
+        {
+            templateItem = new SegmentTreeViewItem(template, Brushes.SteelBlue, true)
+            {
+                Tag = template,
+            };
+
+            templateItem.ContextMenu = new ContextMenu();
+            templateItem.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(template, templateItem));
+            templateItem.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(template));
+            templateItem.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(template, templateItem, Segment.Templates));
+            
+            _templateItems.Add(template, templateItem);
+        }
+        
+        if (!_templatesNode.Items.Contains(templateItem))
+            _templatesNode.Items.Add(templateItem);
+    }
+    
+    private void OnTemplateRemoved(SegmentTemplate template)
+    {
+        // a template has been removed, delete its tree node.
+        if (_templateItems.Remove(template, out var item))
+        {
+            if (_templatesNode != null)
+                _templatesNode.Items.Remove(item);
         }
     }
 
-    public void UpdateSpawns()
+    private void EnsureTemplatesNode()
     {
-        if (Segment is null)
+        if (_templatesNode is not null)
             return;
-
-        var collection = Segment.Spawns;
         
-        if (_spawnersNode is null)
+        _templatesNode = new TreeViewItem
         {
-            _spawnersNode = new TreeViewItem
+            Tag = $"category:Templates",
+            Header = CreateHeader("Templates", "Gear.png")
+        };
+            
+        _templatesNode.ContextMenu = new ContextMenu();
+        _templatesNode.ContextMenu.AddItem("Add Template", "Add.png", (s, e) =>
+        {
+            var template = new SegmentTemplate
             {
-                Tag = $"category:Spawns",
-                Header = CreateHeader("Spawns", "Spawns.png")
+                Name = $"Template {_nextId++}"
             };
             
-            _spawnersNode.ContextMenu = new ContextMenu();
-            _spawnersNode.ContextMenu.AddItem("Add Location Spawner", "Add.png", (s, e) => AddSpawner(collection.Location, "Location Spawner", 0));
-            _spawnersNode.ContextMenu.AddItem("Add Region Spawner", "Add.png", (s, e) => AddSpawner(collection.Region, "Region Spawner", 0));
-        }
+            Segment.Templates.Add(template);
+                
+            // present the new template to the user.
+            template.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+        });
+    }
 
-        var expanded = new HashSet<string>();
+    private void OnEntityAdded(SegmentEntity entity)
+    {
+        EnsureEntitiesNode();
         
-        foreach (var item in _spawnersNode.Items.OfType<TreeViewItem>())
-            SaveExpansionState(item, expanded);
-        
-        _spawnersNode.Items.Clear();
-        
-        foreach (var region in Segment.Regions)
-            _spawnersNode.Items.Add(createSpawnerRegionNode(region, collection));
-        
-        foreach (var item in _spawnersNode.Items.OfType<TreeViewItem>())
-            RestoreExpansionState(item, expanded);
-        
-        TreeViewItem createSpawnerRegionNode(SegmentRegion region, SegmentSpawns source)
+        // an entity has been added, create its tree node.
+        if (!_entityItems.TryGetValue(entity, out var entityItem))
         {
-            var item = new TreeViewItem
+            entityItem = new SegmentTreeViewItem(entity, Brushes.Yellow, true)
             {
-                Tag = $"category:Spawn/{region.ID}"
+                Tag = entity,
             };
-            item.Header = CreateColoredHeader(region.Name, Brushes.MediumPurple, false);
 
-            foreach (var spawner in source.Location.Where(s => GetRegionId(s) == region.ID))
-                item.Items.Add(createSpawnerNode(spawner, source.Location));
-
-            foreach (var spawner in source.Region.Where(s => GetRegionId(s) == region.ID))
-                item.Items.Add(createSpawnerNode(spawner, source.Region));
-
-            item.ContextMenu = new ContextMenu();
-            item.ContextMenu.AddItem("Add Location Spawner", "Add.png", (s, e) =>
-            {
-                var spawner = addSpawn(source.Location, "Location Spawner");
-
-                if (spawner != null)
-                {
-                    spawner.Region = region.ID;
-                    spawner.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-                }
-            });
-            item.ContextMenu.AddItem("Add Region Spawner", "Add.png", (s, e) =>
-            {
-                var spawner = addSpawn(source.Region, "Region Spawner");
-
-                if (spawner != null)
-                {
-                    spawner.Region = region.ID;
-                    spawner.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-                }
-            });
+            entityItem.ContextMenu = new ContextMenu();
+            entityItem.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(entity, entityItem));
+            entityItem.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(entity));
+            entityItem.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(entity, entityItem, Segment.Entities));
             
-            return item;
+            _entityItems.Add(entity, entityItem);
         }
         
-        TreeViewItem createSpawnerNode(SegmentSpawner segmentSpawner, IList source)
+        // parse the group path and insert into the tree.
+        var groupPath = String.IsNullOrEmpty(entity.Group) ? "Ungrouped" : entity.Group;
+        
+        if (!_entityGroupNodes.TryGetValue(groupPath, out var parentNode))
+        {
+            parentNode = _entitiesNode;
+            
+            // split the path into folders.
+            var groupFolders = groupPath.Split(@"\");
+
+            for (int i = 0; i < groupFolders.Length; i++)
+            {
+                var folderPath = String.Join(@"\", groupFolders.Take(i + 1));
+
+                if (!_entityGroupNodes.TryGetValue(folderPath, out var folderNode))
+                {
+                    parentNode.Items.Add(folderNode = new TreeViewItem
+                    {
+                        Header = CreateHeader(groupFolders[i], "Folder.png")
+                    });
+                    
+                    _entityGroupNodes.Add(folderPath, folderNode);
+                }
+
+                parentNode = folderNode;
+            }
+        }
+        
+        if (parentNode != null)
+            parentNode.Items.Add(entityItem);
+    }
+    
+    private void OnEntityRemoved(SegmentEntity entity)
+    {
+        // an entity has been removed, delete its tree node.
+        if (_entityItems.Remove(entity, out var entityNode))
+        {
+            // find the parent node.
+            if (entityNode.Parent is TreeViewItem parentNode)
+                parentNode.Items.Remove(entityNode);
+        }
+    }
+
+    private void EnsureEntitiesNode()
+    {
+        if (_entitiesNode is not null)
+            return;
+        
+        _entitiesNode = new TreeViewItem
+        {
+            Tag = $"category:Entities",
+            Header = CreateHeader("Entities", "Entities.png")
+        };
+            
+        _entitiesNode.ContextMenu = new ContextMenu();
+        _entitiesNode.ContextMenu.AddItem("Add Entity", "Add.png", (s, e) =>
+        {
+            var entity = new SegmentEntity
+            {
+                Name = $"Entity {_nextId++}"
+            };
+            
+            Segment.Entities.Add(entity);
+                
+            // present the new entity to the user.
+            entity.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+        });
+    }
+    
+    private void OnTreasureAdded(SegmentTreasure treasure)
+    {
+        EnsureTreasuresNode();
+        
+        // a treasure has been added, create its tree node.
+        if (!_treasureItems.TryGetValue(treasure, out var treasureItem))
+        {
+            var brush = (treasure is SegmentHoard) ? Brushes.Red : Brushes.Green;
+            
+            treasureItem = new SegmentTreeViewItem(treasure, brush, true)
+            {
+                Tag = treasure,
+            };
+
+            treasureItem.ContextMenu = new ContextMenu();
+            treasureItem.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(treasure, treasureItem));
+            treasureItem.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(treasure));
+            treasureItem.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(treasure, treasureItem, Segment.Treasures));
+            
+            _treasureItems.Add(treasure, treasureItem);
+        }
+        
+        if (!_treasureNode.Items.Contains(treasureItem))
+            _treasureNode.Items.Add(treasureItem);
+    }
+    
+    private void OnTreasureRemoved(SegmentTreasure treasure)
+    {
+        // a treasure has been removed, delete its tree node.
+        if (_treasureItems.Remove(treasure, out var item))
+        {
+            if (_treasureNode != null)
+                _treasureNode.Items.Remove(item);
+        }
+    }
+
+    private void EnsureTreasuresNode()
+    {
+        if (_treasureNode is not null)
+            return;
+        
+        _treasureNode = new TreeViewItem
+        {
+            Tag = $"category:Treasure",
+            Header = CreateHeader("Treasure", "Treasures.png")
+        };
+            
+        _treasureNode.ContextMenu  = new ContextMenu();
+        _treasureNode.ContextMenu.AddItem("Add Treasures", "Add.png", (s, e) =>
+        {
+            var treasure = new SegmentTreasure
+            {
+                Name = $"Treasure {_nextId++}"
+            };
+            
+            Segment.Treasures.Add(treasure);
+                
+            // present the new treasure to the user.
+            treasure.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+        });
+        _treasureNode.ContextMenu.AddItem("Add Hoard", "Add.png", (s, e) =>
+        {
+            var hoard = new SegmentHoard
+            {
+                Name = $"Hoard {_nextId++}"
+            };
+            
+            Segment.Treasures.Add(hoard);
+                
+            // present the new hoard to the user.
+            hoard.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+        });
+    }
+
+    private void OnSpawnAdded(SegmentSpawner segmentSpawner)
+    {
+        EnsureSpawnersNode();
+        
+        // a spawner has been added, create its tree node.
+        if (!_spawnItems.TryGetValue(segmentSpawner, out var spawnerItem))
         {
             var brush = segmentSpawner switch
             {
@@ -600,248 +708,123 @@ public partial class SegmentTreeControl : UserControl
                 _ => Brushes.Gray
             };
             
-            var item = new SegmentTreeViewItem(segmentSpawner, brush, true)
+            spawnerItem = new SegmentTreeViewItem(segmentSpawner, brush, true)
             {
-                Tag = segmentSpawner 
+                Tag = segmentSpawner,
             };
-            
-            item.ContextMenu = new ContextMenu();
-            item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(segmentSpawner, item));
-            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(segmentSpawner));
-            item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(segmentSpawner, item, source));
-            
-            return item;
-        }
-        
-        T addSpawn<T>(IList<T> source, string typeName) where T : ISegmentObject, new()
-        {
-            var obj = new T
-            {
-                Name = $"{typeName} {_nextId++}"
-            };
-            
-            source.Add(obj);
-            
-            return obj;
-        }
-    }
 
-    public void UpdateEntities()
-    {
-        if (Segment is null)
-            return;
-
-        var collection = Segment.Entities.GroupBy(e => e.Group)
-            .OrderBy(g => g.Key);
-        
-        if (_entitiesNode is null)
-        {
-            _entitiesNode = new TreeViewItem
+            spawnerItem.ContextMenu = new ContextMenu();
+            spawnerItem.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(segmentSpawner, spawnerItem));
+            spawnerItem.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(segmentSpawner));
+            spawnerItem.ContextMenu.AddItem("Delete", "Delete.png", (s, e) =>
             {
-                Tag = $"category:Entity",
-                Header = CreateHeader("Entity", "Entities.png")
-            };
-            
-            _entitiesNode.ContextMenu = new ContextMenu();
-            _entitiesNode.ContextMenu.AddItem("Add Entity", "Add.png", (s, e) =>
-            {
-                var entity = addEntity(Segment.Entities, String.Empty, "Entity");
-                
-                // present the new entity to the user.
-                if (entity != null)
-                    entity.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-            });
-        }
-
-        var expanded = new HashSet<string>();
-        
-        foreach (var item in _entitiesNode.Items.OfType<TreeViewItem>())
-            SaveExpansionState(item, expanded);
-        
-        _entitiesNode.Items.Clear();
-
-        foreach (var grouping in collection)
-            createEntityGroupNode(grouping.Key, grouping, Segment.Entities);
-        
-        foreach (var item in _entitiesNode.Items.OfType<TreeViewItem>())
-            RestoreExpansionState(item, expanded);
-        
-        TreeViewItem createEntityGroupNode(string groupPath, IEnumerable<SegmentEntity> grouping, IList<SegmentEntity> source)
-        {
-            // separate the groupPath into its components
-            var groupFolders = String.IsNullOrEmpty(groupPath) ? ["Ungrouped"] : groupPath.Split(@"\");
-            
-            // for each folder in the path, find or create the corresponding tree view node.
-            var parentFolder = _entitiesNode;
-            
-            foreach (var folder in groupFolders)
-            {
-                // find the folder node if it already exists.
-                var folderNode = parentFolder.Items.OfType<TreeViewItem>().FirstOrDefault(n => n.Tag is string path 
-                    && path.EndsWith($"/{folder}", StringComparison.OrdinalIgnoreCase));
-    
-                // if it doesn't exist, create it.
-                if (folderNode is null)
+                IList source = segmentSpawner switch
                 {
-                    folderNode = new TreeViewItem
-                    {
-                        Tag = $"{parentFolder.Tag}/{folder}",
-                        Header = CreateHeader(folder, "Folder.png")
-                    };
-                }
-    
-                // add it to the parent if it doesn't already exist.
-                parentFolder.Items.Add(folderNode);
-                
-                // move to the next child folder.
-                parentFolder = folderNode;
-            }
-            
-            foreach (var entity in grouping)
-                parentFolder.Items.Add(createEntityEntryNode(entity));
-    
-            parentFolder.ContextMenu = new ContextMenu();
-            parentFolder.ContextMenu.AddItem("Add Entity", "Add.png", (s, e) =>
-            {
-                var entity = addEntity(source, groupPath, "Entity");
-                
-                // present the new entity to the user.
-                if (entity != null)
-                    entity.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+                    LocationSegmentSpawner => Segment.Spawns.Location,
+                    RegionSegmentSpawner => Segment.Spawns.Region,
+                    
+                    _ => null
+                };
+
+                if (source != null)
+                    DeleteSegmentObject(segmentSpawner, spawnerItem, source);
             });
             
-            return parentFolder;
-        }
-    
-        TreeViewItem createEntityEntryNode(SegmentEntity segmentEntity)
-        {
-            var item = new SegmentTreeViewItem(segmentEntity, Brushes.Yellow, true)
-            {
-                Tag = segmentEntity 
-            };
-            
-            item.ContextMenu = new ContextMenu();
-            item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(segmentEntity, item));
-            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(segmentEntity));
-            item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(segmentEntity, item, Segment.Entities));
-
-            return item;
+            _spawnItems.Add(segmentSpawner, spawnerItem);
         }
         
-        SegmentEntity addEntity(IList<SegmentEntity> source, string group, string typeName)
+        var regionId = segmentSpawner switch
         {
-            var obj = new SegmentEntity
+            LocationSegmentSpawner locationSegmentSpawner => locationSegmentSpawner.Region,
+            RegionSegmentSpawner regionSegmentSpawner => regionSegmentSpawner.Region,
+            
+            _ => -1
+        };
+
+        var region = Segment.GetRegion(regionId);
+        var parentNode = default(TreeViewItem);
+        
+        if (region is not null && !_spawnGroupNodes.TryGetValue(regionId, out parentNode))
+        {
+            parentNode = new TreeViewItem
             {
-                Name = $"{typeName} {_nextId++}",
-                Group = group 
+                Header = CreateHeader(region.Name, "Folder.png")
             };
-            
-            source.Add(obj);
-            
-            return obj;
+
+            _spawnersNode.Items.Add(parentNode);
+            _spawnGroupNodes.Add(regionId, parentNode);
+        }
+        
+        parentNode ??= _spawnersNode;
+        
+        if (parentNode != null && !parentNode.Items.Contains(spawnerItem))
+            parentNode.Items.Add(spawnerItem);
+    }
+    
+    private void OnSpawnRemoved(SegmentSpawner segmentSpawner)
+    {
+        // a spawner has been removed, delete its tree node.
+        if (_spawnItems.Remove(segmentSpawner, out var spawnNode))
+        {
+            if (spawnNode.Parent is TreeViewItem parent)
+                parent.Items.Remove(spawnNode);
         }
     }
-
-    public void UpdateTreasures()
+    
+    private void EnsureSpawnersNode()
     {
-        if (Segment is null)
+        if (_spawnersNode is not null)
             return;
-
-        var collection = Segment.Treasures;
         
-        if (_treasureNode is null)
+        _spawnersNode = new TreeViewItem
         {
-            _treasureNode = new TreeViewItem
+            Tag = $"category:Spawns",
+            Header = CreateHeader("Spawns", "Spawns.png")
+        };
+            
+        _spawnersNode.ContextMenu = new ContextMenu();
+        _spawnersNode.ContextMenu.AddItem("Add Location Spawner", "Add.png", (s, e) =>
+        {
+            var spawn = new LocationSegmentSpawner()
             {
-                Tag = $"category:Treasure",
-                Header = CreateHeader("Treasure", "Treasures.png")
+                Name = $"Location Spawner {_nextId++}"
             };
             
-            _treasureNode.ContextMenu  = new ContextMenu();
-            _treasureNode.ContextMenu.AddItem("Add Treasures", "Add.png", (s, e) =>
-            {
-                var treasure = addTreasure(collection, "Treasure");
+            Segment.Spawns.Location.Add(spawn);
                 
-                // present the new treasure to the user.
-                if (treasure != null)
-                    treasure.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-            });
-            _treasureNode.ContextMenu.AddItem("Add Hoard", "Add.png", (s, e) =>
+            // present the new treasure to the user.
+            spawn.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+        });
+        _spawnersNode.ContextMenu.AddItem("Add Region Spawner", "Add.png", (s, e) =>
+        {
+            var spawn = new RegionSegmentSpawner()
             {
-                var hoard = addTreasure(collection, "Hoard");
+                Name = $"Region Spawner {_nextId++}"
+            };
+            
+            Segment.Spawns.Region.Add(spawn);
                 
-                // present the new hoard to the user.
-                if (hoard != null)
-                    hoard.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-            });
-        }
-
-        var expanded = new HashSet<string>();
-        
-        foreach (var item in _treasureNode.Items.OfType<TreeViewItem>())
-            SaveExpansionState(item, expanded);
-        
-        _treasureNode.Items.Clear();
-        
-        foreach (var child in collection)
-            _treasureNode.Items.Add(createTreasureEntryNode(child));
-        
-        foreach (var item in _treasureNode.Items.OfType<TreeViewItem>())
-            RestoreExpansionState(item, expanded);
-        
-        TreeViewItem createTreasureEntryNode(SegmentTreasure treasure)
-        {
-            var brush = (treasure is SegmentHoard) ? Brushes.Red : Brushes.Green;
-            
-            var item = new SegmentTreeViewItem(treasure, brush, false)
-            {
-                Tag = treasure 
-            };
-            
-            item.ContextMenu = new ContextMenu();
-            item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(treasure, item));
-            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(treasure));
-            item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(treasure, item, collection));
-            
-            return item;
-        }
-        
-        T addTreasure<T>(IList<T> source, string typeName) where T : ISegmentObject, new()
-        {
-            var obj = new T
-            {
-                Name = $"{typeName} {_nextId++}"
-            };
-            
-            source.Add(obj);
-            
-            return obj;
-        }
+            // present the new treasure to the user.
+            spawn.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());   
+        });
     }
     
     private void Update()
     {
-        var expanded = new HashSet<string>();
-        
-        foreach (var item in _tree.Items.OfType<TreeViewItem>())
-            SaveExpansionState(item, expanded);
-
         _tree.Items.Clear();
         
         if (Segment is null)
             return;
 
-        var rootPath = Segment.Directory;
-        
-        UpdateSegment();
-        UpdateRegions();
-        UpdateLocations();
-        UpdateEntities();
-        UpdateTreasures();
-        UpdateSpawns();
-        UpdateComponents();
-        UpdateBrushes();
-        UpdateTemplates();
+        EnsureSegmentNode();
+        EnsureRegionsNode();
+        EnsureLocationsNode();
+        EnsureEntitiesNode();
+        EnsureTreasuresNode();
+        EnsureSpawnersNode();
+        EnsureComponentsNode();
+        EnsureBrushesNode();
+        EnsureTemplatesNode();
         
         _tree.Items.Add(_segmentNode);
 
@@ -850,50 +833,9 @@ public partial class SegmentTreeControl : UserControl
         _tree.Items.Add(_entitiesNode);
         _tree.Items.Add(_treasureNode);
         _tree.Items.Add(_spawnersNode);
-        
         _tree.Items.Add(_componentsNode);
         _tree.Items.Add(_brushesNode);
         _tree.Items.Add(_templatesNode);
-
-        // Add Source directory last
-        if (!string.IsNullOrEmpty(rootPath) && Directory.Exists(rootPath))
-        {
-            var sourcePath = Path.Combine(rootPath, "Source");
-            Directory.CreateDirectory(sourcePath);
-            var sourceItem = CreateDirectoryNode(new DirectoryInfo(sourcePath));
-
-            /*foreach (var file in Segment.VirtualFiles)
-                sourceItem.Items.Add(CreateVirtualFileNode(file));*/
-
-            _tree.Items.Add(sourceItem);
-        }
-
-        foreach (var item in _tree.Items.OfType<TreeViewItem>())
-            RestoreExpansionState(item, expanded);
-    }
-
-    private static void SaveExpansionState(TreeViewItem item, HashSet<string> expanded)
-    {
-        if (item.IsExpanded)
-        {
-            if (item.Tag is ISegmentObject segmentObject)
-                expanded.Add(segmentObject.Name);
-            else if (item.Tag is string path)
-                expanded.Add(path);
-        }
-        foreach (var child in item.Items.OfType<TreeViewItem>())
-            SaveExpansionState(child, expanded);
-    }
-
-    private static void RestoreExpansionState(TreeViewItem item, HashSet<string> expanded)
-    {
-        if (item.Tag is ISegmentObject segmentObject && expanded.Contains(segmentObject.Name))
-            item.IsExpanded = true;
-        else if (item.Tag is string path && expanded.Contains(path))
-            item.IsExpanded = true;
-        
-        foreach (var child in item.Items.OfType<TreeViewItem>())
-            RestoreExpansionState(child, expanded);
     }
     
     private void OnItemSelected(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -901,20 +843,6 @@ public partial class SegmentTreeControl : UserControl
         // Only send message if the selected item is a segment object.
         if (e.NewValue is TreeViewItem { Tag: ISegmentObject segmentObject })
             WeakReferenceMessenger.Default.Send(new SegmentObjectSelected(segmentObject));
-    }
-
-    private void OnDoubleClick(object sender, MouseButtonEventArgs args)
-    {
-        if (sender is TreeViewItem item)
-        {
-            item.IsSelected = true;
-
-            if (item.Tag is ISegmentObject obj)
-            {
-                WeakReferenceMessenger.Default.Send(new SegmentObjectDoubleClick(obj));
-                WeakReferenceMessenger.Default.Send(new SegmentObjectSelected(obj));
-            }
-        }
     }
     
     private StackPanel CreateHeader(string name, string icon)
@@ -942,128 +870,7 @@ public partial class SegmentTreeControl : UserControl
         
         return panel;
     }
-
-    private static StackPanel CreateColoredHeader(string text, Brush brush, bool isCircle)
-    {
-        var panel = new StackPanel { Orientation = Orientation.Horizontal };
-        Shape icon = isCircle ? new Ellipse() : new Rectangle();
-        icon.Width = 10;
-        icon.Height = 10;
-        icon.Fill = brush;
-        icon.Margin = new Thickness(2, 0, 2, 0);
-        panel.Children.Add(icon);
-        panel.Children.Add(new TextBlock { Text = text });
-        return panel;
-    }
-
-    private TreeViewItem CreateDirectoryNode(DirectoryInfo dir)
-    {
-        var item = new TreeViewItem { Tag = dir.FullName };
-        item.Header = CreateHeader(dir.Name, "Folder.png");
-
-        foreach (var subDir in dir.GetDirectories())
-            item.Items.Add(CreateDirectoryNode(subDir));
-
-        foreach (var file in dir.GetFiles("*.cs"))
-            item.Items.Add(CreateFileNode(file));
-
-        var menu = new ContextMenu();
-        var addFile = new MenuItem { Header = "Add File" };
-        addFile.Click += (s, e) => AddFile(dir.FullName, item);
-        var addFolder = new MenuItem { Header = "Add Folder" };
-        addFolder.Click += (s, e) => AddFolder(dir.FullName, item);
-        var rename = new MenuItem { Header = "Rename" };
-        rename.Click += (s, e) => Rename(dir.FullName, item, true);
-        var delete = new MenuItem { Header = "Delete" };
-        delete.Click += (s, e) => Delete(dir.FullName, item, true);
-
-        menu.Items.Add(addFile);
-        menu.Items.Add(addFolder);
-        menu.Items.Add(rename);
-        menu.Items.Add(delete);
-        item.ContextMenu = menu;
-
-        return item;
-    }
-
-    private TreeViewItem CreateFileNode(FileInfo file)
-    {
-        var item = new TreeViewItem { Tag = file.FullName };
-        item.Header = CreateHeader(file.Name, "Folder.png");
-
-        var menu = new ContextMenu();
-        var rename = new MenuItem { Header = "Rename" };
-        rename.Click += (s, e) => Rename(file.FullName, item, false);
-        var delete = new MenuItem { Header = "Delete" };
-        delete.Click += (s, e) => Delete(file.FullName, item, false);
-
-        menu.Items.Add(rename);
-        menu.Items.Add(delete);
-        item.ContextMenu = menu;
-
-        return item;
-    }
-
-    /*
-    private TreeViewItem CreateVirtualFileNode(VirtualFile file) =>
-        CreateInMemoryNode(file, file.Name + ".cs");
-        */
-
-    private void AddSpawner<T>(IList<T> collection, string typeName, int regionId) where T : SegmentSpawner, new()
-    {
-        var defaultName = $"{typeName} {collection.Count + 1}";
-        var name = Interaction.InputBox("Name", $"Add {typeName}", defaultName);
-        if (string.IsNullOrWhiteSpace(name))
-            return;
-        var spawner = new T { Name = name };
-        dynamic dyn = spawner;
-        dyn.Region = regionId;
-        collection.Add(spawner);
-    }
-
-    private static int GetRegionId(SegmentSpawner segmentSpawner) => segmentSpawner switch
-    {
-        LocationSegmentSpawner ls => ls.Region,
-        RegionSegmentSpawner rs => rs.Region,
-        _ => 0
-    };
-
-    private TreeViewItem CreateInMemoryNode(ISegmentObject obj, string displayName)
-    {
-        var item = new TreeViewItem { Tag = obj };
-        var header = CreateHeader(displayName, "Folder.png");
-        item.ContextMenu = null;
-        if (header.Children.Count > 1 && header.Children[1] is TextBlock text)
-        {
-            text.Foreground = Brushes.LightGray;
-            text.FontWeight = FontWeights.Bold;
-        }
-        item.Header = header;
-        return item;
-    }
-
-    private void AddFile(string directory, TreeViewItem parent)
-    {
-        var name = Interaction.InputBox("File name", "Add File", "NewFile.cs");
-        if (string.IsNullOrWhiteSpace(name))
-            return;
-        if (Path.GetExtension(name) != ".cs")
-            name += ".cs";
-        var path = Path.Combine(directory, name);
-        File.Create(path).Close();
-        parent.Items.Add(CreateFileNode(new FileInfo(path)));
-    }
-
-    private void AddFolder(string directory, TreeViewItem parent)
-    {
-        var name = Interaction.InputBox("Folder name", "Add Folder", "NewFolder");
-        if (string.IsNullOrWhiteSpace(name))
-            return;
-        var path = Path.Combine(directory, name);
-        Directory.CreateDirectory(path);
-        parent.Items.Add(CreateDirectoryNode(new DirectoryInfo(path)));
-    }
-
+    
     private void RenameSegmentObject(ISegmentObject obj, SegmentTreeViewItem item)
     {
         item.Rename();
@@ -1083,81 +890,6 @@ public partial class SegmentTreeControl : UserControl
         
         if (item.Parent is ItemsControl parent)
             parent.Items.Remove(item);
-    }
-
-    private void Rename(string path, TreeViewItem item, bool isDirectory)
-    {
-        var name = Interaction.InputBox("New name", "Rename", Path.GetFileName(path));
-        if (string.IsNullOrWhiteSpace(name))
-            return;
-        if (!isDirectory && Path.GetExtension(name) != ".cs")
-            name += ".cs";
-        var newPath = Path.Combine(Path.GetDirectoryName(path)!, name);
-        if (isDirectory)
-            Directory.Move(path, newPath);
-        else
-            File.Move(path, newPath);
-        item.Tag = newPath;
-        if (item.Header is StackPanel panel)
-        {
-            if (panel.Children[0] is Image img)
-                img.Source = GetIcon(newPath, isDirectory);
-            if (panel.Children[1] is TextBlock text)
-                text.Text = name;
-        }
-    }
-
-    private void Delete(string path, TreeViewItem item, bool isDirectory)
-    {
-        if (isDirectory)
-            Directory.Delete(path, true);
-        else
-            File.Delete(path);
-        if (item.Parent is ItemsControl parent)
-            parent.Items.Remove(item);
-    }
-
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    private struct SHFILEINFO
-    {
-        public IntPtr hIcon;
-        public int iIcon;
-        public uint dwAttributes;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-        public string szDisplayName;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
-        public string szTypeName;
-    }
-
-    [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
-    private static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes,
-        out SHFILEINFO psfi, uint cbFileInfo, uint uFlags);
-
-    [DllImport("user32.dll", SetLastError = true)]
-    private static extern bool DestroyIcon(IntPtr hIcon);
-
-    private const uint SHGFI_ICON = 0x000000100;
-    private const uint SHGFI_SMALLICON = 0x000000001;
-    private const uint SHGFI_USEFILEATTRIBUTES = 0x000000010;
-    private const uint FILE_ATTRIBUTE_DIRECTORY = 0x00000010;
-
-    private static ImageSource? GetIcon(string path, bool isDirectory)
-    {
-        var flags = SHGFI_ICON | SHGFI_SMALLICON;
-        var attributes = isDirectory ? FILE_ATTRIBUTE_DIRECTORY : 0u;
-        if (!File.Exists(path) && !Directory.Exists(path))
-            flags |= SHGFI_USEFILEATTRIBUTES;
-        SHGetFileInfo(path, attributes, out var info, (uint)Marshal.SizeOf<SHFILEINFO>(), flags);
-        if (info.hIcon == IntPtr.Zero)
-            return null;
-        try
-        {
-            return Imaging.CreateBitmapSourceFromHIcon(info.hIcon, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-        }
-        finally
-        {
-            DestroyIcon(info.hIcon);
-        }
     }
 }
 

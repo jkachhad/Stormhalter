@@ -11,8 +11,10 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace Kesmai.WorldForge.Editor;
 
-public class SegmentEntityCreated(SegmentEntity segmentEntity) : ValueChangedMessage<SegmentEntity>(segmentEntity);
-public class SegmentEntityDeleted(SegmentEntity segmentEntity) : ValueChangedMessage<SegmentEntity>(segmentEntity);
+public class SegmentEntityAdded(SegmentEntity segmentEntity) : ValueChangedMessage<SegmentEntity>(segmentEntity);
+public class SegmentEntityRemoved(SegmentEntity segmentEntity) : ValueChangedMessage<SegmentEntity>(segmentEntity);
+
+public class SegmentEntitiesReset();
 public class SegmentEntitiesChanged(SegmentEntities entities) : ValueChangedMessage<SegmentEntities>(entities);
 
 public class SegmentEntities : ObservableCollection<SegmentEntity>
@@ -49,14 +51,17 @@ public class SegmentEntities : ObservableCollection<SegmentEntity>
 		if (args.NewItems != null)
 		{
 			foreach (var newItem in args.NewItems.OfType<SegmentEntity>())
-				WeakReferenceMessenger.Default.Send(new SegmentEntityCreated(newItem));
+				WeakReferenceMessenger.Default.Send(new SegmentEntityAdded(newItem));
 		}
 			
 		if (args.OldItems != null)
 		{
 			foreach (var oldItem in args.OldItems.OfType<SegmentEntity>())
-				WeakReferenceMessenger.Default.Send(new SegmentEntityDeleted(oldItem));
+				WeakReferenceMessenger.Default.Send(new SegmentEntityRemoved(oldItem));
 		}
+		
+		if (args.Action is NotifyCollectionChangedAction.Reset)
+			WeakReferenceMessenger.Default.Send(new SegmentEntitiesReset());
 			
 		WeakReferenceMessenger.Default.Send(new SegmentEntitiesChanged(this));
 	}

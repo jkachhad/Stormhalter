@@ -222,10 +222,14 @@ public class LocationSegmentSpawner : SegmentSpawner
 	public int Region
 	{
 		get => _region;
-		set => SetProperty(ref _region, value);
-    }
+		set
+		{
+			if (SetProperty(ref _region, value))
+				WeakReferenceMessenger.Default.Send(new SegmentSpawnChanged(this));
+		}
+	}
 
-    public LocationSegmentSpawner() : base()
+	public LocationSegmentSpawner() : base()
 	{
 	}
 
@@ -291,9 +295,13 @@ public class RegionSegmentSpawner : SegmentSpawner
 	public int Region
 	{
 		get => _region;
-		set => SetProperty(ref _region, value);
+		set
+		{
+			if (SetProperty(ref _region, value))
+				WeakReferenceMessenger.Default.Send(new SegmentSpawnChanged(this));
+		}
 	}
-		
+
 	[Browsable(false)]
 	public ObservableCollection<SegmentBounds> Inclusions { get; set; } = new ObservableCollection<SegmentBounds>();
 	[Browsable(false)]

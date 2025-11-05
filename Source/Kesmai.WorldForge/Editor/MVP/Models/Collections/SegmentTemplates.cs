@@ -10,6 +10,8 @@ namespace Kesmai.WorldForge.Editor;
 
 public class SegmentTemplateAdded(SegmentTemplate template) : ValueChangedMessage<SegmentTemplate>(template);
 public class SegmentTemplateRemoved(SegmentTemplate template) : ValueChangedMessage<SegmentTemplate>(template);
+
+public class SegmentTemplatesReset();
 public class SegmentTemplatesChanged(SegmentTemplates templates) : ValueChangedMessage<SegmentTemplates>(templates);
 
 public class SegmentTemplates : ObservableCollection<SegmentTemplate>
@@ -51,6 +53,9 @@ public class SegmentTemplates : ObservableCollection<SegmentTemplate>
             foreach (var oldItem in args.OldItems.OfType<SegmentTemplate>())
                 WeakReferenceMessenger.Default.Send(new SegmentTemplateRemoved(oldItem));
         }
+        
+        if (args.Action is NotifyCollectionChangedAction.Reset)
+            WeakReferenceMessenger.Default.Send(new SegmentTemplatesReset());
 
         WeakReferenceMessenger.Default.Send(new SegmentTemplatesChanged(this));
     }
