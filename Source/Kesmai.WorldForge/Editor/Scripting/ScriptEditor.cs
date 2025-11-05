@@ -17,6 +17,8 @@ using Kesmai.WorldForge.Editor;
 using Microsoft.CodeAnalysis;
 using RoslynPad.Editor;
 
+#nullable enable
+
 namespace Kesmai.WorldForge.Scripting;
 
 public class ScriptEditor : RoslynCodeEditor
