@@ -72,6 +72,12 @@ public partial class SegmentTreeControl : UserControl
       
         WeakReferenceMessenger.Default.Register<SegmentSpawnAdded>(this, (r, m) => OnSpawnAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentSpawnRemoved>(this, (r, m) => OnSpawnRemoved(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentSpawnChanged>(this, (r, m) =>
+        {
+            // for spawn changes, we need to update the grouping in the tree.
+            OnSpawnRemoved(m.Value);
+            OnSpawnAdded(m.Value);
+        });
         
         _tree.SelectedItemChanged += OnItemSelected;
         _tree.KeyDown += OnKeyDown;
@@ -160,6 +166,7 @@ public partial class SegmentTreeControl : UserControl
     private Dictionary<SegmentSpawner, SegmentTreeViewItem> _spawnItems = new Dictionary<SegmentSpawner, SegmentTreeViewItem>();
     
     private Dictionary<string, TreeViewItem> _entityGroupNodes = new Dictionary<string, TreeViewItem>();
+    private Dictionary<int, TreeViewItem> _spawnGroupNodes = new Dictionary<int, TreeViewItem>();
     
     
     private void OnRegionAdded(SegmentRegion region)
@@ -726,17 +733,41 @@ public partial class SegmentTreeControl : UserControl
             _spawnItems.Add(segmentSpawner, spawnerItem);
         }
         
-        if (!_spawnersNode.Items.Contains(spawnerItem))
-            _spawnersNode.Items.Add(spawnerItem);
+        var regionId = segmentSpawner switch
+        {
+            LocationSegmentSpawner locationSegmentSpawner => locationSegmentSpawner.Region,
+            RegionSegmentSpawner regionSegmentSpawner => regionSegmentSpawner.Region,
+            
+            _ => -1
+        };
+
+        var region = Segment.GetRegion(regionId);
+        var parentNode = default(TreeViewItem);
+        
+        if (region is not null && !_spawnGroupNodes.TryGetValue(regionId, out parentNode))
+        {
+            parentNode = new TreeViewItem
+            {
+                Header = CreateHeader(region.Name, "Folder.png")
+            };
+
+            _spawnersNode.Items.Add(parentNode);
+            _spawnGroupNodes.Add(regionId, parentNode);
+        }
+        
+        parentNode ??= _spawnersNode;
+        
+        if (parentNode != null && !parentNode.Items.Contains(spawnerItem))
+            parentNode.Items.Add(spawnerItem);
     }
     
     private void OnSpawnRemoved(SegmentSpawner segmentSpawner)
     {
         // a spawner has been removed, delete its tree node.
-        if (_spawnItems.Remove(segmentSpawner, out var item))
+        if (_spawnItems.Remove(segmentSpawner, out var spawnNode))
         {
-            if (_spawnersNode != null)
-                _spawnersNode.Items.Remove(item);
+            if (spawnNode.Parent is TreeViewItem parent)
+                parent.Items.Remove(spawnNode);
         }
     }
     
