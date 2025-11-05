@@ -68,10 +68,10 @@ public partial class SegmentTreeControl : UserControl
         WeakReferenceMessenger.Default.Register<SegmentEntityAdded>(this, (r, m) => OnEntityAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentEntityRemoved>(this, (r, m) => OnEntityRemoved(m.Value));
         
+        WeakReferenceMessenger.Default.Register<SegmentTreasureAdded>(this, (r, m) => OnTreasureAdded(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentTreasureRemoved>(this, (r, m) => OnTreasureRemoved(m.Value));
+        
         /*
-        WeakReferenceMessenger.Default.Register<SegmentTreasuresChanged>(this, (r, m) => UpdateTreasures());
-        WeakReferenceMessenger.Default.Register<SegmentTreasureChanged>(this, (r, m) => UpdateTreasures());
-
         WeakReferenceMessenger.Default.Register<SegmentSpawnsChanged>(this, (r, m) => UpdateSpawns());
         WeakReferenceMessenger.Default.Register<SegmentSpawnChanged>(this, (r, m) => UpdateSpawns());
         */
@@ -159,6 +159,7 @@ public partial class SegmentTreeControl : UserControl
     private Dictionary<SegmentBrush, SegmentTreeViewItem> _brushItems = new Dictionary<SegmentBrush, SegmentTreeViewItem>();
     private Dictionary<SegmentTemplate, SegmentTreeViewItem> _templateItems = new Dictionary<SegmentTemplate, SegmentTreeViewItem>();
     private Dictionary<SegmentEntity, SegmentTreeViewItem> _entityItems = new Dictionary<SegmentEntity, SegmentTreeViewItem>();
+    private Dictionary<SegmentTreasure, SegmentTreeViewItem> _treasureItems = new Dictionary<SegmentTreasure, SegmentTreeViewItem>();
     
     private void OnRegionAdded(SegmentRegion region)
     {
@@ -581,6 +582,80 @@ public partial class SegmentTreeControl : UserControl
         });
     }
     
+    private void OnTreasureAdded(SegmentTreasure treasure)
+    {
+        EnsureTreasuresNode();
+        
+        // a treasure has been added, create its tree node.
+        if (!_treasureItems.TryGetValue(treasure, out var treasureItem))
+        {
+            var brush = (treasure is SegmentHoard) ? Brushes.Red : Brushes.Green;
+            
+            treasureItem = new SegmentTreeViewItem(treasure, brush, true)
+            {
+                Tag = treasure,
+            };
+
+            treasureItem.ContextMenu = new ContextMenu();
+            treasureItem.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(treasure, treasureItem));
+            treasureItem.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(treasure));
+            treasureItem.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(treasure, treasureItem, Segment.Treasures));
+            
+            _treasureItems.Add(treasure, treasureItem);
+        }
+        
+        if (!_treasureNode.Items.Contains(treasureItem))
+            _treasureNode.Items.Add(treasureItem);
+    }
+    
+    private void OnTreasureRemoved(SegmentTreasure treasure)
+    {
+        // a treasure has been removed, delete its tree node.
+        if (_treasureItems.Remove(treasure, out var item))
+        {
+            if (_treasureNode != null)
+                _treasureNode.Items.Remove(item);
+        }
+    }
+
+    private void EnsureTreasuresNode()
+    {
+        if (_treasureNode is not null)
+            return;
+        
+        _treasureNode = new TreeViewItem
+        {
+            Tag = $"category:Treasure",
+            Header = CreateHeader("Treasure", "Treasures.png")
+        };
+            
+        _treasureNode.ContextMenu  = new ContextMenu();
+        _treasureNode.ContextMenu.AddItem("Add Treasures", "Add.png", (s, e) =>
+        {
+            var treasure = new SegmentTreasure
+            {
+                Name = $"Treasure {_nextId++}"
+            };
+            
+            Segment.Treasures.Add(treasure);
+                
+            // present the new treasure to the user.
+            treasure.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+        });
+        _treasureNode.ContextMenu.AddItem("Add Hoard", "Add.png", (s, e) =>
+        {
+            var hoard = new SegmentHoard
+            {
+                Name = $"Hoard {_nextId++}"
+            };
+            
+            Segment.Treasures.Add(hoard);
+                
+            // present the new hoard to the user.
+            hoard.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+        });
+    }
+    
     public void UpdateSpawns()
     {
         if (Segment is null)
@@ -688,83 +763,6 @@ public partial class SegmentTreeControl : UserControl
             return obj;
         }
     }
-
-    public void UpdateTreasures()
-    {
-        if (Segment is null)
-            return;
-
-        var collection = Segment.Treasures;
-        
-        if (_treasureNode is null)
-        {
-            _treasureNode = new TreeViewItem
-            {
-                Tag = $"category:Treasure",
-                Header = CreateHeader("Treasure", "Treasures.png")
-            };
-            
-            _treasureNode.ContextMenu  = new ContextMenu();
-            _treasureNode.ContextMenu.AddItem("Add Treasures", "Add.png", (s, e) =>
-            {
-                var treasure = addTreasure(collection, "Treasure");
-                
-                // present the new treasure to the user.
-                if (treasure != null)
-                    treasure.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-            });
-            _treasureNode.ContextMenu.AddItem("Add Hoard", "Add.png", (s, e) =>
-            {
-                var hoard = addTreasure(collection, "Hoard");
-                
-                // present the new hoard to the user.
-                if (hoard != null)
-                    hoard.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-            });
-        }
-
-        var expanded = new HashSet<string>();
-        
-        foreach (var item in _treasureNode.Items.OfType<TreeViewItem>())
-            SaveExpansionState(item, expanded);
-        
-        _treasureNode.Items.Clear();
-        
-        foreach (var child in collection)
-            _treasureNode.Items.Add(createTreasureEntryNode(child));
-        
-        foreach (var item in _treasureNode.Items.OfType<TreeViewItem>())
-            RestoreExpansionState(item, expanded);
-        
-        TreeViewItem createTreasureEntryNode(SegmentTreasure treasure)
-        {
-            var brush = (treasure is SegmentHoard) ? Brushes.Red : Brushes.Green;
-            
-            var item = new SegmentTreeViewItem(treasure, brush, false)
-            {
-                Tag = treasure 
-            };
-            
-            item.ContextMenu = new ContextMenu();
-            item.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(treasure, item));
-            item.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(treasure));
-            item.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(treasure, item, collection));
-            
-            return item;
-        }
-        
-        T addTreasure<T>(IList<T> source, string typeName) where T : ISegmentObject, new()
-        {
-            var obj = new T
-            {
-                Name = $"{typeName} {_nextId++}"
-            };
-            
-            source.Add(obj);
-            
-            return obj;
-        }
-    }
     
     private void Update()
     {
@@ -784,7 +782,7 @@ public partial class SegmentTreeControl : UserControl
         EnsureRegionsNode();
         EnsureLocationsNode();
         EnsureEntitiesNode();
-        UpdateTreasures();
+        EnsureTreasuresNode();
         UpdateSpawns();
         EnsureComponentsNode();
         EnsureBrushesNode();
