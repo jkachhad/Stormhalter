@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
@@ -68,7 +69,7 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 	}
 
 	[Browsable(false)]
-	public ObservableCollection<SpawnEntry> Entries { get; set; } = new ObservableCollection<SpawnEntry>();
+	public ObservableCollection<SpawnEntry> Entries { get; private set; }
 
 	[Browsable(false)]
 	public ObservableCollection<Script> Scripts
@@ -76,13 +77,8 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 		get => _scripts;
 		set => SetProperty(ref _scripts, value);
 	}
-		
-	protected SegmentSpawner()
-	{
-		ValidateScripts();
-	}
 
-	protected SegmentSpawner(XElement element)
+	protected SegmentSpawner(XElement element) : this()
 	{
 		_name = (string)element.Attribute("name");
 			
@@ -107,6 +103,41 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 			_maximum = (int)maximumElement;
 
 		ValidateScripts(element);
+	}
+	
+	protected SegmentSpawner()
+	{
+		Entries = new ObservableCollection<SpawnEntry>();
+		Entries.CollectionChanged += OnEntriesChanged;
+	}
+
+	private void OnEntriesChanged(object sender, NotifyCollectionChangedEventArgs args)
+	{
+		if (args.NewItems != null)
+		{
+			foreach (var newItem in args.NewItems.OfType<SpawnEntry>())
+			{
+				var entity = newItem.SegmentEntity;
+				
+				if (entity != null && !entity.Spawns.Contains(this))
+					entity.Spawns.Add(this);
+
+				newItem.Spawner = this;
+			}
+		}
+			
+		if (args.OldItems != null)
+		{
+			foreach (var oldItem in args.OldItems.OfType<SpawnEntry>())
+			{
+				var entity = oldItem.SegmentEntity;
+				
+				if (entity != null && entity.Spawns.Contains(this))
+					entity.Spawns.Remove(this);
+				
+				oldItem.Spawner = null;
+			}
+		}
 	}
 
 	private void ValidateScripts(XElement rootElement = default)
@@ -412,9 +443,22 @@ public class SpawnEntry : ObservableObject
 	public SegmentEntity SegmentEntity
 	{
 		get => _segmentEntity;
-		set => SetProperty(ref _segmentEntity, value);
+		set
+		{
+			var oldValue = _segmentEntity;
+			var newValue = value;
+
+			if (oldValue != null && Spawner != null)
+				oldValue.Spawns.Remove(Spawner);
+			
+			if (oldValue != newValue)
+				SetProperty(ref _segmentEntity, value);
+
+			if (newValue != null && Spawner != null)
+				newValue.Spawns.Add(Spawner);
+		}
 	}
-		
+
 	public int Size
 	{
 		get => _size;
@@ -432,6 +476,8 @@ public class SpawnEntry : ObservableObject
 		get => _maximum;
 		set => SetProperty( ref _maximum, value);
 	}
+	
+	public SegmentSpawner Spawner { get; set; }
 
 	public SpawnEntry()
 	{

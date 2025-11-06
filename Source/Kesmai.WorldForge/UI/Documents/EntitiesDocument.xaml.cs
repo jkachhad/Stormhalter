@@ -1,19 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Xml.Linq;
 using CommonServiceLocator;
 using Kesmai.WorldForge.Editor;
-using Kesmai.WorldForge.Scripting;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace Kesmai.WorldForge.UI.Documents;
 
@@ -32,6 +24,17 @@ public partial class EntitiesDocument : UserControl
 
 			_scriptsTabControl.SelectedItem = segmentEntity.Scripts.FirstOrDefault();
 		});
+	}
+
+	private void SpawnerButtonClick(object sender, RoutedEventArgs e)
+	{
+		if (sender is not Button { DataContext: SegmentSpawner spawner })
+			return;
+		
+		var applicationPresenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+
+		if (applicationPresenter != null)
+			spawner.Present(applicationPresenter);
 	}
 }
 

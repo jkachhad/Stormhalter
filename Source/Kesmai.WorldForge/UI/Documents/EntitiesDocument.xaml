@@ -8,7 +8,17 @@
              d:DesignHeight="300" d:DesignWidth="300"
              
              FontFamily="Tahoma" FontSize="16">
-        <Border Margin="2" BorderBrush="Black" BorderThickness="1">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <Border Grid.Row="0" Grid.Column="0" Margin="2" BorderBrush="Black" BorderThickness="1">
             <TabControl x:Name="_scriptsTabControl"
                 ItemsSource="{Binding ActiveContent.Scripts, Source={StaticResource applicationPresenter}}"
                 Margin="5">
@@ -47,4 +57,41 @@
                 </TabControl.ContentTemplate>
             </TabControl>
         </Border>
+        
+        <Border Grid.Row="1" Grid.Column="0" Margin="2" BorderBrush="Black" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Spawns:" FontWeight="Bold" FontSize="13" 
+                           VerticalAlignment="Center" Margin="2" />
+                
+                <ItemsControl Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ActiveContent.Spawns, Source={StaticResource applicationPresenter}}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Padding="4" Margin="2" Click="SpawnerButtonClick">
+                                <Button.Content>
+                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="13" />
+                                </Button.Content>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+            
+        </Border>
+    </Grid>
 </UserControl>
