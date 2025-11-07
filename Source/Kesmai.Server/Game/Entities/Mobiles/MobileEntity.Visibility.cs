@@ -21,10 +21,11 @@ public abstract partial class MobileEntity
 		["npc"] = (source, entities) => entities.RemoveAll(entity => (entity is not CreatureEntity)),
 		["conjured"] = (source, entities) => entities.RemoveAll(entity => entity is CreatureEntity { IsSubordinate: false }),
 		
-		["injured"] = (source, entities) => entities.RemoveAll(entity => (entity.Health != entity.MaxHealth)),
+		["injured"] = (source, entities) => entities.RemoveAll(entity => (entity.Health >= entity.MaxHealth)),
 		["healthy"] = (source, entities) => entities.RemoveAll(entity => (entity.Health < entity.MaxHealth)),
 		["deathly"] = (source, entities) => entities.RemoveAll(entity => (Combat.GetHealthState(entity) != 1)),
-		
+		["lowest"] = (source, entities) => entities.RemoveAll(x => !ReferenceEquals(x, e.Where(y => y.IsAlive && y.MaxHealth > 0).MinBy(y => (double)y.Health / y.MaxHealth)));
+
 		["casting"] = (source, entities) => entities.RemoveAll(entity => (entity.Spell is null)), 
 
 		["melee"] = (source, entities) => entities.RemoveAll(entity => (entity.GetWeapon() is not MeleeWeapon)),
