@@ -1,104 +1,107 @@
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using Kesmai.WorldForge.Editor;
 
 namespace Kesmai.WorldForge.UI.Documents;
 
 public partial class TreasureDocument : UserControl
 {
+	private TreasureViewModel? _viewModel;
+
 	public TreasureDocument()
 	{
 		InitializeComponent();
+
+		DataContextChanged += OnDataContextChanged;
 	}
-}
-
-public class TreasureViewModel : ObservableRecipient
-{
-	private SegmentTreasure _treasure;
-	private TreasureEntry _selectedTreasureEntry;
-
-	public string Name => "(Treasure)";
-
-	public TreasureViewModel()
+	
+	private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
 	{
-		AddEntryCommand = new RelayCommand(AddEntry, () => ActiveTreasure != null);
-		AddEntryCommand.DependsOn(() => ActiveTreasure);
-		
-		RemoveEntryCommand = new RelayCommand(RemoveEntry, () => ActiveTreasure != null && SelectedTreasureEntry != null);
-		RemoveEntryCommand.DependsOn(() => SelectedTreasureEntry);
+		if (e.OldValue is TreasureViewModel oldViewModel)
+			oldViewModel.PropertyChanged -= OnViewModelPropertyChanged;
+
+		_viewModel = e.NewValue as TreasureViewModel;
+
+		if (_viewModel != null)
+			_viewModel.PropertyChanged += OnViewModelPropertyChanged;
 	}
 
-	public TreasureViewModel(SegmentTreasure treasure) : this()
+	private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
 	{
-		ActiveTreasure = treasure;
 	}
 
-	public RelayCommand AddEntryCommand { get; }
-	public RelayCommand RemoveEntryCommand { get; }
-
-	public SegmentTreasure ActiveTreasure
+	private void OnAddEntryClick(object sender, RoutedEventArgs e)
 	{
-		get => _treasure;
-		set
-		{
-			if (SetProperty(ref _treasure, value))
-			{
-				OnPropertyChanged(nameof(Name));
-
-				if (_treasure != null)
-					SelectedTreasureEntry = _treasure.Entries.FirstOrDefault();
-			}
-		}
-	}
-
-	public TreasureEntry SelectedTreasureEntry
-	{
-		get => _selectedTreasureEntry;
-		set => SetProperty(ref _selectedTreasureEntry, value);
-	}
-
-	private void AddEntry()
-	{
-		if (ActiveTreasure is null)
+		if (_viewModel is null || _viewModel.Treasure is null)
 			return;
-
-		var entry = new TreasureEntry(ActiveTreasure);
 		
-		ActiveTreasure.Entries.Add(entry);
-		SelectedTreasureEntry = entry;
+		var entry = new TreasureEntry(_viewModel.Treasure);
+		
+		_viewModel.Treasure.Entries.Add(entry);
+		_viewModel.SelectedTreasureEntry = entry;
 	}
 
-	private void RemoveEntry()
+	private void OnRemoveEntryClick(object sender, RoutedEventArgs e)
 	{
-		if (ActiveTreasure is null || SelectedTreasureEntry is null)
+		if (_viewModel is null || _viewModel.Treasure is null || _viewModel.SelectedTreasureEntry is null)
 			return;
-
+		
 		var result = MessageBox.Show("Are you sure you want to delete the selected entry?", "Delete Entry",
 			MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
 
 		if (result != MessageBoxResult.Yes)
 			return;
 
-		var currentIndex = ActiveTreasure.Entries.IndexOf(SelectedTreasureEntry);
+		var treasure = _viewModel.Treasure;
+		var selectedEntry = _viewModel.SelectedTreasureEntry;
+
+		var currentIndex = treasure.Entries.IndexOf(selectedEntry);
 
 		if (currentIndex < 0)
 			return;
 
-		ActiveTreasure.Entries.RemoveAt(currentIndex);
+		treasure.Entries.RemoveAt(currentIndex);
 
-		if (ActiveTreasure.Entries.Count > 0)
+		if (treasure.Entries.Count > 0)
 		{
-			if (currentIndex >= ActiveTreasure.Entries.Count)
-				currentIndex = ActiveTreasure.Entries.Count - 1;
+			if (currentIndex >= treasure.Entries.Count)
+				currentIndex = treasure.Entries.Count - 1;
 
-			SelectedTreasureEntry = ActiveTreasure.Entries.ElementAt(currentIndex);
+			_viewModel.SelectedTreasureEntry = treasure.Entries.ElementAt(currentIndex);
 		}
 		else
 		{
-			SelectedTreasureEntry = null;
+			_viewModel.SelectedTreasureEntry = null;
 		}
+	}
+}
+
+public class TreasureViewModel : ObservableRecipient
+{
+	private SegmentTreasure? _treasure;
+	private TreasureEntry? _selectedTreasureEntry;
+
+	public string Name => "(Treasure)";
+	
+	public SegmentTreasure? Treasure
+	{
+		get => _treasure;
+		set
+		{
+			if (SetProperty(ref _treasure, value))
+			{
+				if (_treasure != null)
+					SelectedTreasureEntry = _treasure.Entries.FirstOrDefault();
+			}
+		}
+	}
+
+	public TreasureEntry? SelectedTreasureEntry
+	{
+		get => _selectedTreasureEntry;
+		set => SetProperty(ref _selectedTreasureEntry, value);
 	}
 }

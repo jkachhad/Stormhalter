@@ -96,14 +96,11 @@ public class SegmentTreasure : ObservableObject, ICloneable, ISegmentObject
 		var treasureViewModel = presenter.Documents.OfType<TreasureViewModel>().FirstOrDefault();
 
 		if (treasureViewModel is null)
-			presenter.Documents.Add(treasureViewModel = new TreasureViewModel(this));
-		else
-			treasureViewModel.ActiveTreasure = this;
+			presenter.Documents.Add(treasureViewModel = new TreasureViewModel());
 
-		if (presenter.ActiveDocument != treasureViewModel)
-			presenter.SetActiveDocument(treasureViewModel);
-					
-		presenter.SetActiveContent(this);
+		treasureViewModel.Treasure = this;
+
+		presenter.SetActiveDocument(treasureViewModel, this);
 	}
 	
 	public virtual void Copy(Segment target)
