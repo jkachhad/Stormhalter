@@ -32,7 +32,6 @@ public class GetActiveSegmentRequestMessage : RequestMessage<Segment>
 }
 
 public class ActiveSegmentChanged(Segment Segment) : ValueChangedMessage<Segment>(Segment);
-public class ActiveContentChanged(ISegmentObject segmentObject) : ValueChangedMessage<ISegmentObject>(segmentObject);
 
 public class ApplicationPresenter : ObservableRecipient
 {
@@ -91,13 +90,7 @@ public class ApplicationPresenter : ObservableRecipient
 	public ISegmentObject ActiveContent
 	{
 		get => _activeContent;
-		set
-		{
-			// only send the message if the content actually changes.
-			// we use a delayed send to allow the UI to update first.
-			if (value != _activeContent && SetProperty(ref _activeContent, value))
-				WeakReferenceMessenger.Default.SendDelayed(new ActiveContentChanged(value), TimeSpan.FromMilliseconds(50));
-		}
+		set => SetProperty(ref _activeContent, value);
 	}
 
 	public string TileCoordinateDisplay
