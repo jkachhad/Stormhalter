@@ -1,7 +1,7 @@
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Messaging;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.UI.Windows;
 
@@ -9,29 +9,51 @@ namespace Kesmai.WorldForge.UI.Documents;
 
 public partial class SegmentTemplateDocument : UserControl
 {
-    private SegmentTemplate _segmentTemplate;
+    private SegmentTemplateViewModel? _viewModel;
 
     public SegmentTemplateDocument()
     {
         InitializeComponent();
+
+        DataContextChanged += OnDataContextChanged;
+    }
+
+    private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+    {
+        if (_viewModel != null)
+            _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
+
+        _viewModel = e.NewValue as SegmentTemplateViewModel;
+
+        if (_viewModel != null)
+            _viewModel.PropertyChanged += OnViewModelPropertyChanged;
+
+        UpdateTemplate();
+    }
+
+    private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(SegmentTemplateViewModel.Template))
+            UpdateTemplate();
+    }
+
+    private void UpdateTemplate()
+    {
+        if (_viewModel is null)
+            return;
         
-        var messenger = WeakReferenceMessenger.Default;
-		
-        messenger.Register<ActiveContentChanged>(this, (_, message) =>
-        {
-            if (message.Value is not SegmentTemplate segmentTemplate)
-                return;
-            
-            _presenter.Template = _segmentTemplate = segmentTemplate;
-            _presenter.Focus();
-            
-            _presenter.Invalidate();
-        });
+        _presenter.Template = _viewModel.Template;
+
+        if (_viewModel.Template is null)
+            return;
+
+        _presenter.Focus();
+        _presenter.Invalidate();
     }
 
     private void OnAddComponentClick(object sender, RoutedEventArgs e)
     {
-        if (_segmentTemplate is null)
+        if (_viewModel is null || _viewModel.Template is null)
             return;
 
         var picker = new ComponentsWindow
@@ -44,7 +66,7 @@ public partial class SegmentTemplateDocument : UserControl
         if (!result.HasValue || result != true || picker.SelectedComponent is null)
             return;
 
-        _segmentTemplate.Providers.Add(picker.SelectedComponent);
+        _viewModel.Template.Providers.Add(picker.SelectedComponent);
 
         _providersList.SelectedItem = picker.SelectedComponent;
         _providersList.ScrollIntoView(picker.SelectedComponent);
@@ -54,13 +76,13 @@ public partial class SegmentTemplateDocument : UserControl
 
     private void OnRemoveComponentClick(object sender, RoutedEventArgs e)
     {
-        if (_segmentTemplate is null)
+        if (_viewModel is null || _viewModel.Template is null)
             return;
 
         if (_providersList.SelectedItem is not IComponentProvider provider)
             return;
 
-        _segmentTemplate.Providers.Remove(provider);
+        _viewModel.Template.Providers.Remove(provider);
         
         _presenter.Invalidate();
     }
@@ -68,5 +90,13 @@ public partial class SegmentTemplateDocument : UserControl
 
 public class SegmentTemplateViewModel : ObservableRecipient
 {
+    private SegmentTemplate? _template;
+
     public string Name => "(Template)";
+
+    public SegmentTemplate? Template
+    {
+        get => _template;
+        set => SetProperty(ref _template, value);
+    }
 }
