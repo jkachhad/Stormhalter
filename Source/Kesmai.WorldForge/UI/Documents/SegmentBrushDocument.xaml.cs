@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Messaging;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.UI.Windows;
 
@@ -10,32 +9,29 @@ namespace Kesmai.WorldForge.UI.Documents;
 
 public partial class SegmentBrushDocument : UserControl
 {
-	private SegmentBrush _segmentBrush;
+	private SegmentBrushViewModel? _viewModel;
 	
 	public SegmentBrushDocument()
 	{
 		InitializeComponent();
 		
-		var messenger = WeakReferenceMessenger.Default;
+		DataContextChanged += OnDataContextChanged;
+	}
 
-		messenger.Register<ActiveContentChanged>(this, (_, message) =>
-		{
-			if (message.Value is not SegmentBrush segmentBrush)
-				return;
-
-			_segmentBrush = segmentBrush;
-		});
+	private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs args)
+	{
+		_viewModel = args.NewValue as SegmentBrushViewModel;
 	}
 
 	private void OnAddComponentClick(object sender, RoutedEventArgs e)
 	{
-		if (_segmentBrush is null)
+		if (_viewModel is null || _viewModel.Brush is null)
 			return;
 
 		var picker = new ComponentsWindow
 		{
 			Owner = Window.GetWindow(this),
-			ComponentFilter = provider => _segmentBrush is null || provider is not SegmentBrush brush || !ContainsBrush(brush, _segmentBrush)
+			ComponentFilter = provider => provider is not SegmentBrush brush || !ContainsBrush(brush, _viewModel.Brush)
 		};
 
 		var result = picker.ShowDialog();
@@ -43,12 +39,12 @@ public partial class SegmentBrushDocument : UserControl
 		if (result is not true || picker.SelectedComponent is null)
 			return;
 
-		var entry = new SegmentBrushEntry(_segmentBrush)
+		var entry = new SegmentBrushEntry(_viewModel.Brush)
 		{
 			Component = picker.SelectedComponent
 		};
 
-		_segmentBrush.Entries.Add(entry);
+		_viewModel.Brush.Entries.Add(entry);
 
 		_entriesList.SelectedItem = entry;
 		_entriesList.ScrollIntoView(entry);
@@ -56,13 +52,13 @@ public partial class SegmentBrushDocument : UserControl
 
 	private void OnDeleteComponentClick(object sender, RoutedEventArgs e)
 	{
-		if (_segmentBrush is null)
+		if (_viewModel is null || _viewModel.Brush is null)
 			return;
 
 		if (_entriesList.SelectedItem is not SegmentBrushEntry entry)
 			return;
 
-		_segmentBrush.Entries.Remove(entry);
+		_viewModel.Brush.Entries.Remove(entry);
 	}
 
 	private static bool ContainsBrush(SegmentBrush source, SegmentBrush target)
@@ -72,9 +68,9 @@ public partial class SegmentBrushDocument : UserControl
 			return true;
 		
 		// perform a depth-first search to find the target brush
-		return ContainsBrushRecursive(source, target, new HashSet<SegmentBrush>());
+		return containsBrushRecursive(source, target, new HashSet<SegmentBrush>());
 
-		static bool ContainsBrushRecursive(SegmentBrush current, SegmentBrush search, HashSet<SegmentBrush> visited)
+		static bool containsBrushRecursive(SegmentBrush current, SegmentBrush search, HashSet<SegmentBrush> visited)
 		{
 			if (!visited.Add(current))
 				return false;
@@ -87,7 +83,7 @@ public partial class SegmentBrushDocument : UserControl
 				if (ReferenceEquals(brush, search))
 					return true;
 
-				if (ContainsBrushRecursive(brush, search, visited))
+				if (containsBrushRecursive(brush, search, visited))
 					return true;
 			}
 
@@ -98,5 +94,13 @@ public partial class SegmentBrushDocument : UserControl
 
 public class SegmentBrushViewModel : ObservableRecipient
 {
+	private SegmentBrush? _brush;
+
 	public string Name => "(Brushes)";
+
+	public SegmentBrush? Brush
+	{
+		get => _brush;
+		set => SetProperty(ref _brush, value);
+	}
 }
