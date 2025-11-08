@@ -78,10 +78,13 @@ public class SegmentLocation : ObservableObject, ICloneable, ISegmentObject
 		if (locationViewModel is null)
 			presenter.Documents.Add(locationViewModel = new LocationsViewModel());
 
-		if (presenter.ActiveDocument != locationViewModel)
-			presenter.SetActiveDocument(locationViewModel);
+		if (presenter.Segment is null)
+			throw new InvalidOperationException("No segment is currently loaded.");
+			
+		locationViewModel.Region = presenter.Segment.GetRegion(Region);
+		locationViewModel.Location = this;
 					
-		presenter.SetActiveContent(this);
+		presenter.SetActiveDocument(locationViewModel, this);
 	}
 	
 	public void Copy(Segment target)

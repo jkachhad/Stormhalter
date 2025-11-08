@@ -1,37 +1,70 @@
-using System;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 using Kesmai.WorldForge.Editor;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Messaging;
 
 namespace Kesmai.WorldForge.UI.Documents;
 
 public partial class LocationsDocument : UserControl
 {
+	private LocationsViewModel? _viewModel;
+	
 	public LocationsDocument()
 	{
 		InitializeComponent();
 		
-		var messenger = WeakReferenceMessenger.Default;
-		
-		messenger.Register<ActiveContentChanged>(this, (_, message) =>
-		{
-			if (message.Value is not SegmentLocation location)
-				return;
-			
-			var segmentRequest = WeakReferenceMessenger.Default.Send<GetActiveSegmentRequestMessage>();
-			var segment = segmentRequest.Response;
+		DataContextChanged += OnDataContextChanged;
+	}
 
-			_presenter.Region = segment.GetRegion(location.Region);
-			_presenter.Location = location;
-			_presenter.SetCameraLocation(location);
+	private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs args)
+	{
+		if (_viewModel != null)
+			_viewModel.PropertyChanged -= OnViewModelPropertyChanged;
 
-			_presenter.Focus();
-		});
+		_viewModel = args.NewValue as LocationsViewModel;
+
+		if (_viewModel != null)
+			_viewModel.PropertyChanged += OnViewModelPropertyChanged;
+
+		UpdatePresenter();
+	}
+
+	private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs args)
+	{
+		if (args.PropertyName == nameof(LocationsViewModel.Location) || args.PropertyName == nameof(LocationsViewModel.Region))
+			UpdatePresenter();
+	}
+
+	private void UpdatePresenter()
+	{
+		if (_presenter == null || _viewModel == null || _viewModel.Location == null || _viewModel.Region == null)
+			return;
+
+		_presenter.Region = _viewModel.Region;
+		_presenter.Location = _viewModel.Location;
+		_presenter.SetCameraLocation(_viewModel.Location);
+
+		_presenter.Focus();
 	}
 }
 
 public class LocationsViewModel : ObservableRecipient
 {
 	public string Name => "(Locations)";
+	
+	private SegmentLocation? _location;
+	private SegmentRegion? _region;
+
+	public SegmentLocation? Location
+	{
+		get => _location;
+		set => SetProperty(ref _location, value);
+	}
+
+	public SegmentRegion? Region
+	{
+		get => _region;
+		set => SetProperty(ref _region, value);
+	}
 }
