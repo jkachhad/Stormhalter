@@ -283,10 +283,13 @@ public class LocationSegmentSpawner : SegmentSpawner
 		if (locationSpawnViewModel is null)
 			presenter.Documents.Add(locationSpawnViewModel = new LocationSpawnViewModel());
 		
-		if (presenter.ActiveDocument != locationSpawnViewModel)
-			presenter.SetActiveDocument(locationSpawnViewModel);
+		if (presenter.Segment is null)
+			throw new InvalidOperationException("No segment is currently loaded.");
+
+		locationSpawnViewModel.Region = presenter.Segment.GetRegion(Region);
+		locationSpawnViewModel.Spawner = this;
 		
-		presenter.SetActiveContent(this);
+		presenter.SetActiveDocument(locationSpawnViewModel, this);
 	}
 	
 	public override void Copy(Segment target)
@@ -382,10 +385,13 @@ public class RegionSegmentSpawner : SegmentSpawner
 		if (regionSpawnViewModel is null)
 			presenter.Documents.Add(regionSpawnViewModel = new RegionSpawnViewModel());
 
-		if (presenter.ActiveDocument != regionSpawnViewModel)
-			presenter.SetActiveDocument(regionSpawnViewModel);
+		if (presenter.Segment is null)
+			throw new InvalidOperationException("No segment is currently loaded.");
 
-		presenter.SetActiveContent(this);
+		regionSpawnViewModel.Region = presenter.Segment.GetRegion(Region);
+		regionSpawnViewModel.Spawner = this;
+
+		presenter.SetActiveDocument(regionSpawnViewModel, this);
 	}
 	
 	public override void Copy(Segment target)
