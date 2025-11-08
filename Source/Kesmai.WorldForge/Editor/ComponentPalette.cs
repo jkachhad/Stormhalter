@@ -63,7 +63,7 @@ public class ComponentPalette : ObservableRecipient
 			throw new ArgumentNullException(nameof(terrainManager));
 		
 		// load static component from terrain.
-		var staticCategory = new ComponentsCategory
+		_staticCategory = new ComponentsCategory
 		{
 			Name = "STATIC",
 			IsRoot = true
@@ -76,10 +76,19 @@ public class ComponentPalette : ObservableRecipient
 				Name = terrain.ID.ToString(),
 			};
 
-			staticCategory.Components.Add(component);
+			_staticCategory.Components.Add(component);
 		}
 		
-		_rootCategories.Add(staticCategory);
+		_rootCategories.Add(_staticCategory);
+		
+		// create editor category
+		_editorCategory = new ComponentsCategory
+		{
+			Name = "EDITOR",
+			IsRoot = true
+		};
+		
+		_rootCategories.Add(_editorCategory);
 		
 		// load editor components
 		Task.Run(async () =>
@@ -89,11 +98,6 @@ public class ComponentPalette : ObservableRecipient
 
 			Load("EDITOR", XDocument.Load(documentStream));
 		});
-
-		_staticCategory = staticCategory;
-
-		if (TryGetCategory("EDITOR", out var editorCategory))
-			_editorCategory = editorCategory;
 
 		// create segment category
 		_segmentCategory = new ComponentsCategory()
