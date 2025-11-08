@@ -1,11 +1,10 @@
-using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using CommonServiceLocator;
 using Kesmai.WorldForge.Editor;
+using Kesmai.WorldForge.Scripting;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Messaging;
 
 namespace Kesmai.WorldForge.UI.Documents;
 
@@ -14,16 +13,6 @@ public partial class EntitiesDocument : UserControl
 	public EntitiesDocument()
 	{
 		InitializeComponent();
-		
-		var messenger = WeakReferenceMessenger.Default;
-		
-		messenger.Register<ActiveContentChanged>(this, (_, message) =>
-		{
-			if (message.Value is not SegmentEntity segmentEntity)
-				return;
-
-			_scriptsTabControl.SelectedItem = segmentEntity.Scripts.FirstOrDefault();
-		});
 	}
 
 	private void SpawnerButtonClick(object sender, RoutedEventArgs e)
@@ -41,4 +30,33 @@ public partial class EntitiesDocument : UserControl
 public class EntitiesViewModel : ObservableRecipient
 {
 	public string Name => "(Entities)";
+
+	private SegmentEntity? _entity;
+	private Script? _selectedScript;
+
+	public SegmentEntity? Entity
+	{
+		get => _entity;
+		set
+		{
+			if (!SetProperty(ref _entity, value))
+				return;
+
+			if (_entity != null)
+			{
+				if (_selectedScript is null || !_entity.Scripts.Contains(_selectedScript))
+					SelectedScript = _entity.Scripts.FirstOrDefault(s => s.IsEnabled);
+			}
+			else
+			{
+				SelectedScript = null;
+			}
+		}
+	}
+
+	public Script? SelectedScript
+	{
+		get => _selectedScript;
+		set => SetProperty(ref _selectedScript, value);
+	}
 }

@@ -103,10 +103,9 @@ public class SegmentEntity : ObservableObject, ICloneable, ISegmentObject
 		if (entityViewModel is null)
 			presenter.Documents.Add(entityViewModel = new EntitiesViewModel());
 
-		if (presenter.ActiveDocument != entityViewModel)
-			presenter.SetActiveDocument(entityViewModel);
-
-		presenter.SetActiveContent(this);
+		entityViewModel.Entity = this;
+		
+		presenter.SetActiveDocument(entityViewModel, this);
 	}
 	
 	public void Copy(Segment target)
