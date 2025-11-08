@@ -27,6 +27,7 @@
         <NoWarn>$(NoWarn);MSB3539</NoWarn>
         <Configurations>Release;Debug</Configurations>
         <Platforms>AnyCPU</Platforms>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
     
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
