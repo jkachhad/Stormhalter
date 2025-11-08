@@ -45,7 +45,7 @@ public class EntitiesViewModel : ObservableRecipient
 			if (_entity != null)
 			{
 				if (_selectedScript is null || !_entity.Scripts.Contains(_selectedScript))
-					SelectedScript = _entity.Scripts.FirstOrDefault(s => s.IsEnabled);
+					SelectedScript = _entity.Scripts.FirstOrDefault(s => s.IsEnabled) ?? _entity.Scripts.FirstOrDefault();
 			}
 			else
 			{
