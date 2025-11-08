@@ -8,10 +8,6 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              FontFamily="Tahoma" FontSize="14">
-    <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
-    </UserControl.Resources>
-
     <Border Margin="2" BorderBrush="Black" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
@@ -22,12 +18,8 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             
-            <Border Grid.Row="0"
-                    Visibility="{Binding ActiveContent.IsHoard,
-                        Source={StaticResource applicationPresenter},
-                        Converter={StaticResource booleanToVisibilityConverter}}">
-                <TabControl ItemsSource="{Binding ActiveContent.Scripts, Source={StaticResource applicationPresenter}}"
-                            Margin="10">
+            <Border Grid.Row="0">
+                <TabControl ItemsSource="{Binding Hoard.Scripts}" Margin="10">
                     <TabControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="2">
@@ -75,11 +67,11 @@
             
             <ToolBarTray Grid.Row="3">
                 <ToolBar Band="0" BandIndex="0">
-                    <Button Command="{Binding AddEntryCommand}"
+                    <Button Click="OnAddEntryClick"
                             ToolTip="Add entry">
                         <Image Source="..\..\Resources\Add.png" Width="24" Height="24" />
                     </Button>
-                    <Button Command="{Binding RemoveEntryCommand}"
+                    <Button Click="OnRemoveEntryClick"
                             ToolTip="Delete entry">
                         <Image Source="..\..\Resources\Delete.png" Width="24" Height="24" />
                     </Button>
@@ -87,7 +79,7 @@
             </ToolBarTray>
 
             <DataGrid Grid.Row="4"
-                      ItemsSource="{Binding ActiveContent.Entries, Source={StaticResource applicationPresenter}}"
+                      ItemsSource="{Binding Hoard.Entries}"
                       SelectionMode="Single" SelectionUnit="FullRow"
                       SelectedItem="{Binding SelectedTreasureEntry}"
                       AutoGenerateColumns="False"

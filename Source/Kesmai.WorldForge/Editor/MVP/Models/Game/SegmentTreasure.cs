@@ -181,14 +181,11 @@ public class SegmentHoard : SegmentTreasure
 		var hoardViewModel = presenter.Documents.OfType<HoardViewModel>().FirstOrDefault();
 
 		if (hoardViewModel is null)
-			presenter.Documents.Add(hoardViewModel = new HoardViewModel(this));
-		else
-			hoardViewModel.ActiveHoard = this;
+			presenter.Documents.Add(hoardViewModel = new HoardViewModel());
 
-		if (presenter.ActiveDocument != hoardViewModel)
-			presenter.SetActiveDocument(hoardViewModel);
-					
-		presenter.SetActiveContent(this);
+		hoardViewModel.Hoard = this;
+
+		presenter.SetActiveDocument(hoardViewModel, this);
 	}
 
 	public override void Copy(Segment target)

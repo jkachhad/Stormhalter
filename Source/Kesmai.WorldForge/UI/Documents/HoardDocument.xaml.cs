@@ -1,80 +1,52 @@
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using Kesmai.WorldForge.Editor;
 
 namespace Kesmai.WorldForge.UI.Documents;
 
 public partial class HoardDocument : UserControl
 {
+	private HoardViewModel? _viewModel;
+	
 	public HoardDocument()
 	{
 		InitializeComponent();
+
+		DataContextChanged += OnDataContextChanged;
 	}
-}
-
-public class HoardViewModel : ObservableRecipient
-{
-	private SegmentHoard _hoard;
-	private TreasureEntry _selectedTreasureEntry;
-
-	public string Name => "(Hoard)";
-
-	public HoardViewModel()
+	
+	private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
 	{
-		AddEntryCommand = new RelayCommand(AddEntry, () => ActiveHoard != null);
-		RemoveEntryCommand = new RelayCommand(RemoveEntry, () => ActiveHoard != null && SelectedTreasureEntry != null);
-	}
+		if (e.OldValue is HoardViewModel oldViewModel)
+			oldViewModel.PropertyChanged -= OnViewModelPropertyChanged;
 
-	public HoardViewModel(SegmentHoard hoard) : this()
-	{
-		ActiveHoard = hoard;
+		_viewModel = e.NewValue as HoardViewModel;
+
+		if (_viewModel != null)
+			_viewModel.PropertyChanged += OnViewModelPropertyChanged;
 	}
 
-	public IRelayCommand AddEntryCommand { get; }
-	public IRelayCommand RemoveEntryCommand { get; }
-
-	public SegmentHoard ActiveHoard
+	private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
 	{
-		get => _hoard;
-		set
-		{
-			if (SetProperty(ref _hoard, value))
-			{
-				OnPropertyChanged(nameof(Name));
-
-				SelectedTreasureEntry = _hoard?.Entries.FirstOrDefault();
-				AddEntryCommand.NotifyCanExecuteChanged();
-				RemoveEntryCommand.NotifyCanExecuteChanged();
-			}
-		}
 	}
-
-	public TreasureEntry SelectedTreasureEntry
+	
+	private void OnAddEntryClick(object sender, RoutedEventArgs e)
 	{
-		get => _selectedTreasureEntry;
-		set
-		{
-			if (SetProperty(ref _selectedTreasureEntry, value))
-				RemoveEntryCommand.NotifyCanExecuteChanged();
-		}
-	}
-
-	private void AddEntry()
-	{
-		if (ActiveHoard is null)
+		if (_viewModel is null || _viewModel.Hoard is null)
 			return;
 
-		var entry = new TreasureEntry(ActiveHoard);
-		ActiveHoard.Entries.Add(entry);
-		SelectedTreasureEntry = entry;
+		var entry = new TreasureEntry(_viewModel.Hoard);
+		
+		_viewModel.Hoard.Entries.Add(entry);
+		_viewModel.SelectedTreasureEntry = entry;
 	}
 
-	private void RemoveEntry()
+	private void OnRemoveEntryClick(object sender, RoutedEventArgs e)
 	{
-		if (ActiveHoard is null || SelectedTreasureEntry is null)
+		if (_viewModel is null || _viewModel.Hoard is null || _viewModel.SelectedTreasureEntry is null)
 			return;
 
 		var result = MessageBox.Show("Are you sure you want to delete the selected entry?", "Delete Entry",
@@ -83,22 +55,53 @@ public class HoardViewModel : ObservableRecipient
 		if (result != MessageBoxResult.Yes)
 			return;
 
-		var currentIndex = ActiveHoard.Entries.IndexOf(SelectedTreasureEntry);
+		var hoard = _viewModel.Hoard;
+		var selectedEntry = _viewModel.SelectedTreasureEntry;
+
+		var currentIndex = hoard.Entries.IndexOf(selectedEntry);
 
 		if (currentIndex < 0)
 			return;
 
-		ActiveHoard.Entries.RemoveAt(currentIndex);
+		hoard.Entries.RemoveAt(currentIndex);
 
-		if (ActiveHoard.Entries.Count == 0)
+		if (hoard.Entries.Count > 0)
 		{
-			SelectedTreasureEntry = null;
-			return;
+			if (currentIndex >= hoard.Entries.Count)
+				currentIndex = hoard.Entries.Count - 1;
+
+			_viewModel.SelectedTreasureEntry = hoard.Entries.ElementAt(currentIndex);
 		}
+		else
+		{
+			_viewModel.SelectedTreasureEntry = null;
+		}
+	}
+}
 
-		if (currentIndex >= ActiveHoard.Entries.Count)
-			currentIndex = ActiveHoard.Entries.Count - 1;
+public class HoardViewModel : ObservableRecipient
+{
+	private SegmentHoard? _hoard;
+	private TreasureEntry? _selectedTreasureEntry;
 
-		SelectedTreasureEntry = ActiveHoard.Entries.ElementAt(currentIndex);
+	public string Name => "(Hoard)";
+
+	public SegmentHoard? Hoard
+	{
+		get => _hoard;
+		set
+		{
+			if (SetProperty(ref _hoard, value))
+			{
+				if (_hoard != null)
+					SelectedTreasureEntry = _hoard.Entries.FirstOrDefault();
+			}
+		}
+	}
+
+	public TreasureEntry? SelectedTreasureEntry
+	{
+		get => _selectedTreasureEntry;
+		set => SetProperty(ref _selectedTreasureEntry, value);
 	}
 }
