@@ -54,18 +54,6 @@ public class Tree : TerrainComponent
 	}
 	
 	private static readonly Dictionary<SegmentTile, Timer> _growthTimer = new Dictionary<SegmentTile, Timer>();
-
-	[ServerConfigure]
-	public static void Configure()
-	{
-		EventSink.ServerStopped += () =>
-		{
-			foreach (var (_, timer) in _growthTimer) 
-				timer.Stop();
-			
-			_growthTimer.Clear();
-		};
-	}
 	
 	private static void StartGrowthTimer(SegmentTile parent, Tree component)
 	{
