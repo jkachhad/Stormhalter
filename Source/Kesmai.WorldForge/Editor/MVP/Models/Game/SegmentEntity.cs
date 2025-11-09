@@ -76,8 +76,6 @@ public class SegmentEntity : ObservableObject, ICloneable, ISegmentObject
 		set => SetProperty(ref _scripts, value);
 	}
 	
-	public ObservableCollection<SegmentSpawner> Spawns { get; } = new ObservableCollection<SegmentSpawner>();
-	
 	public SegmentEntity()
 	{
 		ValidateScripts();

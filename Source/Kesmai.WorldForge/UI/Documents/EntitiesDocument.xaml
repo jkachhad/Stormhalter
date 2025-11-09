@@ -74,7 +74,7 @@
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Spawns:" FontWeight="Bold" FontSize="13" 
                            VerticalAlignment="Center" Margin="2" />
                 
-                <ItemsControl Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Entity.Spawns}">
+                <ItemsControl Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Spawns, RelativeSource={RelativeSource AncestorType=UserControl}}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal"/>
