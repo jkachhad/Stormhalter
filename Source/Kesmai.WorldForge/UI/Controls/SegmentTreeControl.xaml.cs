@@ -898,8 +898,8 @@ public class SegmentTreeViewItem : TreeViewItem
     private readonly ISegmentObject _segmentObject;
     
     public EditableTextBlock EditableTextBlock { get; }
-    
-    public SegmentTreeViewItem(ISegmentObject segmentObject, Brush brush, bool circleIcon)
+
+    public SegmentTreeViewItem(ISegmentObject segmentObject, Brush brush, bool circleIcon, string displayFormat = "{0}")
     {
         _segmentObject = segmentObject ?? throw new ArgumentNullException(nameof(segmentObject));
         
@@ -920,6 +920,7 @@ public class SegmentTreeViewItem : TreeViewItem
         EditableTextBlock = new EditableTextBlock()
         {
             Text = segmentObject.Name,
+            TextFormat = displayFormat,
         };
         EditableTextBlock.TextChanged += (s, e) => _segmentObject.Name = EditableTextBlock.Text;
             
