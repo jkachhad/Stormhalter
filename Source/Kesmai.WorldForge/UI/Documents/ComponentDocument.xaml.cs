@@ -1,57 +1,81 @@
 using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Messaging;
 using ICSharpCode.AvalonEdit;
-using Kesmai.WorldForge.Editor;
-using Kesmai.WorldForge.Models;
 
 namespace Kesmai.WorldForge.UI.Documents;
 
 public partial class ComponentDocument : UserControl
 {
-	private SegmentComponent _segmentComponent;
+	private ComponentViewModel? _viewModel;
 	
 	public ComponentDocument()
 	{
 		InitializeComponent();
+
+		DataContextChanged += OnDataContextChanged;
+	}
+
+	private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+	{
+		if (_viewModel != null)
+			_viewModel.PropertyChanged -= OnViewModelPropertyChanged;
+
+		_viewModel = e.NewValue as ComponentViewModel;
+
+		if (_viewModel != null)
+			_viewModel.PropertyChanged += OnViewModelPropertyChanged;
+
+		UpdateComponent();
+	}
+
+	private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+	{
+		if (e.PropertyName == nameof(ComponentViewModel.Component))
+			UpdateComponent();
+	}
+
+	private void UpdateComponent()
+	{
+		_error.Visibility = Visibility.Hidden;
+		_error.Text = String.Empty;
 		
-		var messenger = WeakReferenceMessenger.Default;
+		_editor.Text = String.Empty;
 		
-		messenger.Register<ActiveContentChanged>(this, (_, message) =>
+		if (_viewModel is null || _viewModel.Component is null)
+			return;
+
+		if (_viewModel.Component.Element is not null)
 		{
-			if (message.Value is not SegmentComponent segmentComponent)
-				return;
-			
-			_presenter.Provider = _segmentComponent = segmentComponent;
+			var editorValue = _viewModel.Component.Element.ToString();
 
-			// set the text editor content
-			var editorValue = String.Empty;
-			
-			if (segmentComponent.Element is not null)
-				editorValue = segmentComponent.Element.ToString();
+			if (!String.IsNullOrEmpty(editorValue))
+				_editor.Text = editorValue;
+		}
 
-			_editor.Text = editorValue;
-		});
+		_presenter.Provider = _viewModel.Component;
 	}
 
 	private void OnEditorChanged(object sender, EventArgs args)
 	{
 		if (sender is not TextEditor editor)
 			return;
+
+		if (_viewModel is null || _viewModel.Component is null)
+			return;
 		
 		try
 		{
-			_segmentComponent.UpdateComponent(XElement.Parse(editor.Text));
+			_viewModel.Component.UpdateComponent(XElement.Parse(editor.Text));
 			
 			_error.Visibility = Visibility.Hidden;
 			_error.Text = String.Empty;
 		}
 		catch (Exception exception)
 		{
-			// ignore
 			_error.Visibility = Visibility.Visible;
 			_error.Text = exception.Message;
 		}
@@ -60,5 +84,13 @@ public partial class ComponentDocument : UserControl
 
 public class ComponentViewModel : ObservableRecipient
 {
+	private SegmentComponent? _component;
+
 	public string Name => "(Component)";
+
+	public SegmentComponent? Component
+	{
+		get => _component;
+		set => SetProperty(ref _component, value);
+	}
 }

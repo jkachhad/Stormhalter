@@ -17,17 +17,17 @@
             
             <ToolBarTray Grid.Row="0">
                 <ToolBar Band="0" BandIndex="0">
-                    <Button Command="{Binding AddEntryCommand}" ToolTip="Add entry">
+                    <Button Click="OnAddEntryClick" ToolTip="Add entry">
                         <Image Source="../../Resources/Add.png" Width="24" Height="24" />
                     </Button>
-                    <Button Command="{Binding RemoveEntryCommand}" ToolTip="Delete entry">
+                    <Button Click="OnRemoveEntryClick" ToolTip="Delete entry">
                         <Image Source="../../Resources/Delete.png" Width="24" Height="24" />
                     </Button>
                 </ToolBar>
             </ToolBarTray>
 
             <DataGrid Grid.Row="1"
-                      ItemsSource="{Binding ActiveContent.Entries, Source={StaticResource applicationPresenter}}"
+                      ItemsSource="{Binding Treasure.Entries}"
                       SelectionMode="Single" SelectionUnit="FullRow"
                       SelectedItem="{Binding SelectedTreasureEntry}"
                       AutoGenerateColumns="False"

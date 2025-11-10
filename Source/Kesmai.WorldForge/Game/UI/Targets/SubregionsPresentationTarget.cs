@@ -5,11 +5,22 @@ namespace Kesmai.WorldForge;
 
 public class SubregionsPresentationTarget : WorldPresentationTarget
 {
-	private SubregionsGraphicsScreen _screen;
+	private SubregionsGraphicsScreen? _screen;
+	
+	public SegmentSubregion? Subregion { get; set; }
+	public SegmentBounds? Bounds { get; set; }
 		
 	public override WorldGraphicsScreen CreateGraphicsScreen(IGraphicsService graphicsService)
 	{
-		return (_screen = new SubregionsGraphicsScreen(graphicsService, this));
+		_screen = new SubregionsGraphicsScreen(graphicsService, this);
+		
+		if (Subregion != null)
+			_screen.SetSubregion(Subregion);
+		
+		if (Bounds != null)
+			_screen.SetBounds(Bounds);
+			
+		return (_screen);
 	}
 
 	public void SetSubregion(SegmentSubregion subregion)

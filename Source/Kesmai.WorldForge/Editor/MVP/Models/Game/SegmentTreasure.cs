@@ -96,14 +96,11 @@ public class SegmentTreasure : ObservableObject, ICloneable, ISegmentObject
 		var treasureViewModel = presenter.Documents.OfType<TreasureViewModel>().FirstOrDefault();
 
 		if (treasureViewModel is null)
-			presenter.Documents.Add(treasureViewModel = new TreasureViewModel(this));
-		else
-			treasureViewModel.ActiveTreasure = this;
+			presenter.Documents.Add(treasureViewModel = new TreasureViewModel());
 
-		if (presenter.ActiveDocument != treasureViewModel)
-			presenter.SetActiveDocument(treasureViewModel);
-					
-		presenter.SetActiveContent(this);
+		treasureViewModel.Treasure = this;
+
+		presenter.SetActiveDocument(treasureViewModel, this);
 	}
 	
 	public virtual void Copy(Segment target)
@@ -184,14 +181,11 @@ public class SegmentHoard : SegmentTreasure
 		var hoardViewModel = presenter.Documents.OfType<HoardViewModel>().FirstOrDefault();
 
 		if (hoardViewModel is null)
-			presenter.Documents.Add(hoardViewModel = new HoardViewModel(this));
-		else
-			hoardViewModel.ActiveHoard = this;
+			presenter.Documents.Add(hoardViewModel = new HoardViewModel());
 
-		if (presenter.ActiveDocument != hoardViewModel)
-			presenter.SetActiveDocument(hoardViewModel);
-					
-		presenter.SetActiveContent(this);
+		hoardViewModel.Hoard = this;
+
+		presenter.SetActiveDocument(hoardViewModel, this);
 	}
 
 	public override void Copy(Segment target)

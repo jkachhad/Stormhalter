@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
@@ -128,5 +129,35 @@ public class SegmentSpawns : ObservableObject
 			}
 			element.Add(regionSpawner.GetSerializingElement());
 		}
+	}
+
+	public IEnumerable<SegmentSpawner> GetSpawns()
+	{
+		foreach (var spawn in Region)
+			yield return spawn;
+
+		foreach (var spawn in Location)
+			yield return spawn;
+	}
+	
+	public IEnumerable<SegmentSpawner> GetSpawns(SegmentEntity entity)
+	{
+		foreach (var spawn in GetSpawns().Where(s => s.Entries.Any(e => e.SegmentEntity == entity)))
+			yield return spawn;
+	}
+
+	public IEnumerable<SpawnEntry> GetSpawnEntries()
+	{
+		foreach (var entry in Region.SelectMany(s => s.Entries))
+			yield return entry;
+
+		foreach (var entry in Location.SelectMany(s => s.Entries))
+			yield return entry;
+	}
+
+	public IEnumerable<SpawnEntry> GetSpawnEntries(SegmentEntity entity)
+	{
+		foreach (var entry in GetSpawnEntries().Where(e => e.SegmentEntity == entity))
+			yield return entry;
 	}
 }

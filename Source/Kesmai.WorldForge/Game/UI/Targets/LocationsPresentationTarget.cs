@@ -5,13 +5,18 @@ namespace Kesmai.WorldForge;
 
 public class LocationsPresentationTarget : WorldPresentationTarget
 {
-	private LocationsGraphicsScreen _screen;
+	private LocationsGraphicsScreen? _screen;
 	
-	public SegmentLocation Location { get; set; }
+	public SegmentLocation? Location { get; set; }
 		
 	public override WorldGraphicsScreen CreateGraphicsScreen(IGraphicsService graphicsService)
 	{
-		return (_screen = new LocationsGraphicsScreen(graphicsService, this));
+		_screen = new LocationsGraphicsScreen(graphicsService, this);
+
+		if (Location != null)
+			_screen.SetCameraLocation(Location.X, Location.Y);
+		
+		return (_screen);
 	}
 
 	public void SetCameraLocation(SegmentLocation location)
@@ -19,5 +24,4 @@ public class LocationsPresentationTarget : WorldPresentationTarget
 		if (_screen != null)
 			_screen.SetCameraLocation(location.X, location.Y);
 	}
-
 }

@@ -21,7 +21,7 @@
 
         <ListBox x:Name="_providersList" Grid.Row="0"
                  SelectionMode="Single"
-                 ItemsSource="{Binding ActiveContent.Providers, Source={StaticResource applicationPresenter}}">
+                 ItemsSource="{Binding Template.Providers}">
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Add Component" Click="OnAddComponentClick" />
@@ -59,6 +59,6 @@
         </ListBox>
         
         <worldForge:TemplatePresentationTarget Grid.Column="1" x:Name="_presenter"
-            Template="{Binding ActiveContent, Source={StaticResource applicationPresenter}}" />
+            Template="{Binding Template}" />
     </Grid>
 </UserControl>

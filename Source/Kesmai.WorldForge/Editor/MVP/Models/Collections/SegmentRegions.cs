@@ -37,4 +37,9 @@ public class SegmentRegions : ObservableCollection<SegmentRegion>
 
 		WeakReferenceMessenger.Default.Send(new SegmentRegionsChanged(this));
 	}
+	
+	public SegmentRegion? GetRegion(int regionId)
+	{
+		return this.FirstOrDefault(r => r.ID == regionId);
+	}
 }

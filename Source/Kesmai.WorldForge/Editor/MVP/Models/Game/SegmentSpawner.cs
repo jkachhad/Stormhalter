@@ -69,7 +69,7 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 	}
 
 	[Browsable(false)]
-	public ObservableCollection<SpawnEntry> Entries { get; private set; }
+	public ObservableCollection<SpawnEntry> Entries { get; set; } = new ObservableCollection<SpawnEntry>();
 
 	[Browsable(false)]
 	public ObservableCollection<Script> Scripts
@@ -78,7 +78,7 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 		set => SetProperty(ref _scripts, value);
 	}
 
-	protected SegmentSpawner(XElement element) : this()
+	protected SegmentSpawner(XElement element)
 	{
 		_name = (string)element.Attribute("name");
 			
@@ -107,37 +107,7 @@ public abstract class SegmentSpawner : ObservableObject, ICloneable, ISegmentObj
 	
 	protected SegmentSpawner()
 	{
-		Entries = new ObservableCollection<SpawnEntry>();
-		Entries.CollectionChanged += OnEntriesChanged;
-	}
-
-	private void OnEntriesChanged(object sender, NotifyCollectionChangedEventArgs args)
-	{
-		if (args.NewItems != null)
-		{
-			foreach (var newItem in args.NewItems.OfType<SpawnEntry>())
-			{
-				var entity = newItem.SegmentEntity;
-				
-				if (entity != null && !entity.Spawns.Contains(this))
-					entity.Spawns.Add(this);
-
-				newItem.Spawner = this;
-			}
-		}
-			
-		if (args.OldItems != null)
-		{
-			foreach (var oldItem in args.OldItems.OfType<SpawnEntry>())
-			{
-				var entity = oldItem.SegmentEntity;
-				
-				if (entity != null && entity.Spawns.Contains(this))
-					entity.Spawns.Remove(this);
-				
-				oldItem.Spawner = null;
-			}
-		}
+		ValidateScripts();
 	}
 
 	private void ValidateScripts(XElement rootElement = default)
@@ -283,10 +253,13 @@ public class LocationSegmentSpawner : SegmentSpawner
 		if (locationSpawnViewModel is null)
 			presenter.Documents.Add(locationSpawnViewModel = new LocationSpawnViewModel());
 		
-		if (presenter.ActiveDocument != locationSpawnViewModel)
-			presenter.SetActiveDocument(locationSpawnViewModel);
+		if (presenter.Segment is null)
+			throw new InvalidOperationException("No segment is currently loaded.");
+
+		locationSpawnViewModel.Region = presenter.Segment.GetRegion(Region);
+		locationSpawnViewModel.Spawner = this;
 		
-		presenter.SetActiveContent(this);
+		presenter.SetActiveDocument(locationSpawnViewModel, this);
 	}
 	
 	public override void Copy(Segment target)
@@ -382,10 +355,13 @@ public class RegionSegmentSpawner : SegmentSpawner
 		if (regionSpawnViewModel is null)
 			presenter.Documents.Add(regionSpawnViewModel = new RegionSpawnViewModel());
 
-		if (presenter.ActiveDocument != regionSpawnViewModel)
-			presenter.SetActiveDocument(regionSpawnViewModel);
+		if (presenter.Segment is null)
+			throw new InvalidOperationException("No segment is currently loaded.");
 
-		presenter.SetActiveContent(this);
+		regionSpawnViewModel.Region = presenter.Segment.GetRegion(Region);
+		regionSpawnViewModel.Spawner = this;
+
+		presenter.SetActiveDocument(regionSpawnViewModel, this);
 	}
 	
 	public override void Copy(Segment target)
@@ -443,20 +419,7 @@ public class SpawnEntry : ObservableObject
 	public SegmentEntity SegmentEntity
 	{
 		get => _segmentEntity;
-		set
-		{
-			var oldValue = _segmentEntity;
-			var newValue = value;
-
-			if (oldValue != null && Spawner != null)
-				oldValue.Spawns.Remove(Spawner);
-			
-			if (oldValue != newValue)
-				SetProperty(ref _segmentEntity, value);
-
-			if (newValue != null && Spawner != null)
-				newValue.Spawns.Add(Spawner);
-		}
+		set => SetProperty(ref _segmentEntity, value);
 	}
 
 	public int Size
@@ -477,8 +440,6 @@ public class SpawnEntry : ObservableObject
 		set => SetProperty( ref _maximum, value);
 	}
 	
-	public SegmentSpawner Spawner { get; set; }
-
 	public SpawnEntry()
 	{
 		Size = 1;

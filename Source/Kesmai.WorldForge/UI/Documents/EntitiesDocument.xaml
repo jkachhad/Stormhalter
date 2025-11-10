@@ -20,8 +20,9 @@
         
         <Border Grid.Row="0" Grid.Column="0" Margin="2" BorderBrush="Black" BorderThickness="1">
             <TabControl x:Name="_scriptsTabControl"
-                ItemsSource="{Binding ActiveContent.Scripts, Source={StaticResource applicationPresenter}}"
-                Margin="5">
+                        ItemsSource="{Binding Entity.Scripts}"
+                        SelectedItem="{Binding SelectedScript, Mode=TwoWay}"
+                        Margin="5">
                 <TabControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" Margin="2">
@@ -73,7 +74,7 @@
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Spawns:" FontWeight="Bold" FontSize="13" 
                            VerticalAlignment="Center" Margin="2" />
                 
-                <ItemsControl Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ActiveContent.Spawns, Source={StaticResource applicationPresenter}}">
+                <ItemsControl Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Spawns, RelativeSource={RelativeSource AncestorType=UserControl}}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal"/>

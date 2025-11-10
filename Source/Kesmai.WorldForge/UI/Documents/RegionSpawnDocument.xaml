@@ -24,8 +24,9 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         
-        <TabControl Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" x:Name="_scriptsTabControl"
-                    ItemsSource="{Binding ActiveContent.Scripts, Source={StaticResource applicationPresenter}}" 
+        <TabControl Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+                    ItemsSource="{Binding Spawner.Scripts}"
+                    SelectedItem="{Binding SelectedScript, Mode=TwoWay}"
                     Margin="5" MinHeight="100">
             <TabControl.ItemTemplate>
                 <DataTemplate>
@@ -66,7 +67,7 @@
         
         <DataGrid Grid.Row="2" Margin="5" Height="300"
                   AutoGenerateColumns="False"
-                  ItemsSource="{Binding ActiveContent.Entries, Source={StaticResource applicationPresenter}}">
+                  ItemsSource="{Binding Spawner.Entries}">
             <DataGrid.Resources>
                 <CollectionViewSource x:Key="EntitiesCollection" Source="{Binding Segment.Entities, Source={StaticResource applicationPresenter}}" />
             </DataGrid.Resources>
@@ -86,7 +87,7 @@
         <GroupBox Header="Inclusions" Grid.Row="4" Grid.Column="0"
                   MinHeight="100" MaxHeight="200">
             <DataGrid AutoGenerateColumns="False" 
-                      ItemsSource="{Binding ActiveContent.Inclusions, Source={StaticResource applicationPresenter}}"
+                      ItemsSource="{Binding Spawner.Inclusions}"
                       CanUserAddRows="true" CanUserDeleteRows="true"
                       FontFamily="Tahoma" FontSize="12">
                 <DataGrid.Columns>
@@ -103,7 +104,7 @@
         <GroupBox Header="Exclusions" Grid.Row="6" 
                   MinHeight="100" MaxHeight="200">
             <DataGrid AutoGenerateColumns="False" 
-                      ItemsSource="{Binding ActiveContent.Exclusions, Source={StaticResource applicationPresenter}}"
+                      ItemsSource="{Binding Spawner.Exclusions}"
                       CanUserAddRows="true" CanUserDeleteRows="true"
                       FontFamily="Tahoma" FontSize="12">
                 <DataGrid.Columns>

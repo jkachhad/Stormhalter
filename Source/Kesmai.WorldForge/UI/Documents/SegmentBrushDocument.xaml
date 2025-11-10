@@ -22,7 +22,7 @@
         
         <ListBox x:Name="_entriesList" Grid.RowSpan="2"
                  SelectionMode="Single"
-                 ItemsSource="{Binding ActiveContent.Entries, Source={StaticResource applicationPresenter}}">
+                 ItemsSource="{Binding Brush.Entries}">
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Add Component" Click="OnAddComponentClick" />
@@ -70,7 +70,7 @@
         </ListBox>
 
         <Border Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="4" BorderBrush="Black" BorderThickness="1">
-            <worldForge:BrushPresentationTarget Brush="{Binding ActiveContent, Source={StaticResource applicationPresenter}}" />
+            <worldForge:BrushPresentationTarget Brush="{Binding Brush}" />
         </Border>
     </Grid>
 </UserControl>

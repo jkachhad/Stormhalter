@@ -13,7 +13,7 @@ public class TemplatePresentationTarget : InteropPresentationTarget
 		DependencyProperty.Register(nameof(Template), typeof(SegmentTemplate), typeof(TemplatePresentationTarget),
 			new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
-	public SegmentTemplate Template
+	public SegmentTemplate? Template
 	{
 		get => (SegmentTemplate)GetValue(TemplateProperty);
 		set => SetValue(TemplateProperty, value);

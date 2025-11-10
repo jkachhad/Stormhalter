@@ -100,10 +100,9 @@ public class SegmentComponent : ObservableObject, ISegmentObject, IComponentProv
 		if (componentViewModel is null)
 			presenter.Documents.Add(componentViewModel = new ComponentViewModel());
 
-		if (presenter.ActiveDocument != componentViewModel)
-			presenter.SetActiveDocument(componentViewModel);
+		componentViewModel.Component = this;
 
-		presenter.SetActiveContent(this);
+		presenter.SetActiveDocument(componentViewModel, this);
 	}
 
 	public void Copy(Segment target)

@@ -11,8 +11,8 @@ namespace Kesmai.Server.Game;
 [WorldForgeComponent("DoorComponent")]
 public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMovement, IHandleInteraction
 {
-	private static Dictionary<SegmentTile, Timer> _closeTimers = new Dictionary<SegmentTile, Timer>();
-	private static Dictionary<SegmentTile, Timer> _hideTimers = new Dictionary<SegmentTile, Timer>();
+	private static readonly Dictionary<SegmentTile, Timer> _closeTimers = new Dictionary<SegmentTile, Timer>();
+	private static readonly Dictionary<SegmentTile, Timer> _hideTimers = new Dictionary<SegmentTile, Timer>();
 
 	private static void StartCloseTimer(SegmentTile parent, Door component, TimeSpan duration)
 	{
@@ -329,5 +329,13 @@ public class Door : TerrainComponent, IHandleVision, IHandlePathing, IHandleMove
 		Open(parent, true);
 			
 		_isDestroyed = true;
+	}
+	
+	protected override void OnDispose(SegmentTile parent, bool disposing)
+	{
+		base.OnDispose(parent, disposing);
+
+		StopCloseTimer(parent);
+		StopHideTimer(parent);
 	}
 }

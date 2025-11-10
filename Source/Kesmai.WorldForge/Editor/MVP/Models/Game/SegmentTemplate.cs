@@ -71,10 +71,9 @@ public class SegmentTemplate : ObservableObject, ISegmentObject, IComponentProvi
         if (viewModel is null)
             presenter.Documents.Add(viewModel = new SegmentTemplateViewModel());
 
-        if (presenter.ActiveDocument != viewModel)
-            presenter.SetActiveDocument(viewModel);
+        viewModel.Template = this;
 
-        presenter.SetActiveContent(this);
+        presenter.SetActiveDocument(viewModel, this);
     }
 
     public void Copy(Segment segment)

@@ -113,10 +113,13 @@ public class SegmentSubregion : ObservableObject, ICloneable, ISegmentObject
 		if (subregionViewModel is null)
 			presenter.Documents.Add(subregionViewModel = new SubregionViewModel());
 
-		if (presenter.ActiveDocument != subregionViewModel)
-			presenter.SetActiveDocument(subregionViewModel);
+		if (presenter.Segment is null)
+			throw new InvalidOperationException("No segment is currently loaded.");
 
-		presenter.SetActiveContent(this);
+		subregionViewModel.Region = presenter.Segment.GetRegion(Region);
+		subregionViewModel.Subregion = this;
+
+		presenter.SetActiveDocument(subregionViewModel, this);
 	}
 	
 	public void Copy(Segment target)

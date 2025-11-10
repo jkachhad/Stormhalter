@@ -138,10 +138,9 @@ public class SegmentBrush : ObservableObject, ISegmentObject, IComponentProvider
 		if (viewModel is null)
 			presenter.Documents.Add(viewModel = new SegmentBrushViewModel());
 
-		if (presenter.ActiveDocument != viewModel)
-			presenter.SetActiveDocument(viewModel);
+		viewModel.Brush = this;
 
-		presenter.SetActiveContent(this);
+		presenter.SetActiveDocument(viewModel, this);
 	}
 
 	public void Copy(Segment target)
