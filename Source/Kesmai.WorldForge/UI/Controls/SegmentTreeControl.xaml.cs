@@ -176,7 +176,7 @@ public partial class SegmentTreeControl : UserControl
         // a region has been added, create its tree node.
         if (!_regionItems.TryGetValue(region, out var regionItem))
         {
-            regionItem = new SegmentTreeViewItem(region, Brushes.MediumPurple, false)
+            regionItem = new SegmentTreeViewItem(region, Brushes.MediumPurple, false, $"[{region.ID}] {{0}}")
             {
                 Tag = region,
             };
@@ -748,7 +748,7 @@ public partial class SegmentTreeControl : UserControl
         {
             parentNode = new TreeViewItem
             {
-                Header = CreateHeader(region.Name, "Folder.png")
+                Header = CreateHeader($"[{region.ID}] {region.Name}", "Folder.png")
             };
 
             _spawnersNode.Items.Add(parentNode);
