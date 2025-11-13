@@ -208,6 +208,15 @@ public abstract class ComponentFrame : Grid
 
 public class TerrainComponentFrame : ComponentFrame
 {
+	public static readonly int ConvertEventId = CreateEvent(
+		typeof(TerrainComponentFrame), nameof(Convert), GamePropertyCategories.Default, null, EventArgs.Empty);
+	
+	public event EventHandler<EventArgs> Convert
+	{
+		add => Events.Get<EventArgs>(ConvertEventId).Event += value;
+		remove => Events.Get<EventArgs>(ConvertEventId).Event -= value;
+	}
+	
 	public TerrainComponentFrame(IComponentProvider provider) : base(provider)
 	{
 	}
@@ -251,6 +260,29 @@ public class TerrainComponentFrame : ComponentFrame
 		propertyGrid.OnItemChanged += (s, e) => Events.Get<EventArgs>(InvalidateEventId).Raise();
 
 		return propertyGrid;
+	}
+	
+	protected override UIControl GetActions()
+	{
+		var actionsPanel = base.GetActions();
+
+		if (actionsPanel is not StackPanel stackPanel)
+			return actionsPanel;
+		
+		var convertComponent = new Button()
+		{
+			Content = new TextBlock()
+			{
+				Text = "C", FontSize = 8, HorizontalAlignment = HorizontalAlignment.Center,
+				Font = "Tahoma", Foreground = (AllowOrderUp ? Color.Green : Color.Black),
+			},
+			Style = "GameIconButton",
+		};
+		convertComponent.Click += (o, args) => Events.Get<EventArgs>(ConvertEventId).Raise();
+		
+		stackPanel.Children.Add(convertComponent);
+		
+		return actionsPanel;
 	}
 }
 
