@@ -20,10 +20,6 @@ public class ComponentPresentationTarget : InteropPresentationTarget
 		set => SetValue(ProviderProperty, value);
 	}
 	
-	public ComponentPresentationTarget()
-	{
-	}
-	
 	protected override void OnInitialize()
 	{
 		base.OnInitialize();
