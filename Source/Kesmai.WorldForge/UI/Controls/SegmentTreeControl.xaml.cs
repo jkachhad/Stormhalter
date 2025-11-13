@@ -41,22 +41,28 @@ public partial class SegmentTreeControl : UserControl
 
         WeakReferenceMessenger.Default.Register<SegmentRegionAdded>(this, (r, m) => OnRegionAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentRegionRemoved>(this, (r, m) => OnRegionRemoved(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentRegionChanged>(this, (r, m) => OnRegionChanged(m.Value));
 
         WeakReferenceMessenger.Default.Register<SegmentSubregionAdded>(this, (r, m) => OnSubregionAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentSubregionRemoved>(this, (r, m) => OnSubregionRemoved(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentSubregionChanged>(this, (r, m) => OnSubregionChanged(m.Value));
 
         WeakReferenceMessenger.Default.Register<SegmentLocationAdded>(this, (r, m) => OnLocationAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentLocationRemoved>(this, (r, m) => OnLocationRemoved(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentLocationChanged>(this, (r, m) => OnLocationChanged(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentLocationsReset>(this, (r, m) => OnLocationsReset());
 
         WeakReferenceMessenger.Default.Register<SegmentComponentAdded>(this, (r, m) => OnComponentAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentComponentRemoved>(this, (r, m) => OnComponentRemoved(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentComponentChanged>(this, (r, m) => OnComponentChanged(m.Value));
 
         WeakReferenceMessenger.Default.Register<SegmentBrushAdded>(this, (r, m) => OnBrushAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentBrushRemoved>(this, (r, m) => OnBrushRemoved(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentBrushChanged>(this, (r, m) => OnBrushChanged(m.Value));
         
         WeakReferenceMessenger.Default.Register<SegmentTemplateAdded>(this, (r, m) => OnTemplateAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentTemplateRemoved>(this, (r, m) => OnTemplateRemoved(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentTemplateChanged>(this, (r, m) => OnTemplateChanged(m.Value));
         
         WeakReferenceMessenger.Default.Register<SegmentEntityAdded>(this, (r, m) => OnEntityAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentEntityRemoved>(this, (r, m) => OnEntityRemoved(m.Value));
@@ -69,6 +75,7 @@ public partial class SegmentTreeControl : UserControl
         
         WeakReferenceMessenger.Default.Register<SegmentTreasureAdded>(this, (r, m) => OnTreasureAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentTreasureRemoved>(this, (r, m) => OnTreasureRemoved(m.Value));
+        WeakReferenceMessenger.Default.Register<SegmentTreasureChanged>(this, (r, m) => OnTreasureChanged(m.Value));
       
         WeakReferenceMessenger.Default.Register<SegmentSpawnAdded>(this, (r, m) => OnSpawnAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentSpawnRemoved>(this, (r, m) => OnSpawnRemoved(m.Value));
@@ -168,6 +175,15 @@ public partial class SegmentTreeControl : UserControl
     private Dictionary<string, TreeViewItem> _entityGroupNodes = new Dictionary<string, TreeViewItem>();
     private Dictionary<int, TreeViewItem> _spawnGroupNodes = new Dictionary<int, TreeViewItem>();
     
+    private void UpdateTreeItemText<T>(Dictionary<T, SegmentTreeViewItem> lookup, T segmentObject) where T : class, ISegmentObject
+    {
+        if (segmentObject is null)
+            return;
+
+        if (lookup.TryGetValue(segmentObject, out var item))
+            item.EditableTextBlock.Text = segmentObject.Name;
+    }
+    
     
     private void OnRegionAdded(SegmentRegion region)
     {
@@ -201,6 +217,11 @@ public partial class SegmentTreeControl : UserControl
             if (_regionsNode != null)
                 _regionsNode.Items.Remove(item);
         }
+    }
+    
+    private void OnRegionChanged(SegmentRegion region)
+    {
+        UpdateTreeItemText(_regionItems, region);
     }
 
     private void OnSubregionAdded(SegmentSubregion subregion)
@@ -249,6 +270,11 @@ public partial class SegmentTreeControl : UserControl
         }
     }
 
+    private void OnSubregionChanged(SegmentSubregion subregion)
+    {
+        UpdateTreeItemText(_subregionItems, subregion);
+    }
+
     private void OnLocationAdded(SegmentLocation location)
     {
         EnsureLocationsNode();
@@ -290,6 +316,11 @@ public partial class SegmentTreeControl : UserControl
             if (_locationsNode != null)
                 _locationsNode.Items.Remove(item);
         }
+    }
+
+    private void OnLocationChanged(SegmentLocation location)
+    {
+        UpdateTreeItemText(_locationItems, location);
     }
 
     private void OnLocationsReset()
@@ -385,6 +416,11 @@ public partial class SegmentTreeControl : UserControl
                 _componentsNode.Items.Remove(item);
         }
     }
+
+    private void OnComponentChanged(SegmentComponent component)
+    {
+        UpdateTreeItemText(_componentItems, component);
+    }
     
     private void OnBrushAdded(SegmentBrush brush)
     {
@@ -418,6 +454,11 @@ public partial class SegmentTreeControl : UserControl
             if (_brushesNode != null)
                 _brushesNode.Items.Remove(item);
         }
+    }
+
+    private void OnBrushChanged(SegmentBrush brush)
+    {
+        UpdateTreeItemText(_brushItems, brush);
     }
     
     private void EnsureComponentsNode()
@@ -502,6 +543,11 @@ public partial class SegmentTreeControl : UserControl
             if (_templatesNode != null)
                 _templatesNode.Items.Remove(item);
         }
+    }
+
+    private void OnTemplateChanged(SegmentTemplate template)
+    {
+        UpdateTreeItemText(_templateItems, template);
     }
 
     private void EnsureTemplatesNode()
@@ -653,6 +699,11 @@ public partial class SegmentTreeControl : UserControl
             if (_treasureNode != null)
                 _treasureNode.Items.Remove(item);
         }
+    }
+
+    private void OnTreasureChanged(SegmentTreasure treasure)
+    {
+        UpdateTreeItemText(_treasureItems, treasure);
     }
 
     private void EnsureTreasuresNode()
