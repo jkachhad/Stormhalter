@@ -46,7 +46,6 @@ public class SegmentTile : ObservableObject, IEnumerable<IComponentProvider>
 
         foreach (var componentElement in element.Elements())
         {
-            // TODO: Should we handle missing components differently?
             if (componentPalette.TryGetComponent(componentElement, out var component))
                 Providers.Add(component);
         }

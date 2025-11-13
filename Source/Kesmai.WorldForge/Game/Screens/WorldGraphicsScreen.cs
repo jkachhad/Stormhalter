@@ -170,7 +170,6 @@ public class WorldGraphicsScreen : UIGraphicsScreen
 		{
 			if (_contextMenu != null && _contextMenu.IsEnabled)
 			{
-				// TODO: (Workspaces) Is there a better way to do this?
 				if (inputManager.IsReleased(MouseButtons.Right) && _cameraDrag.Magnitude < 2.0f)
 				{
 					_contextMenu.Items.Clear();
