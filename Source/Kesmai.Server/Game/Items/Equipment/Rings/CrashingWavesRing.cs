@@ -8,7 +8,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class CrashingWavesRing : Ring, ITreasure
+public class CrashingWavesRing : Ring, ITreasure
 {
 	/// <summary>
 	/// Gets the price.
@@ -28,6 +28,13 @@ public partial class CrashingWavesRing : Ring, ITreasure
 	}
 
 	/// <summary>
+	/// Initializes a new instance of the <see cref="CrashingWavesRing"/> class.
+	/// </summary>
+	public CrashingWavesRing(Serial serial) : base(serial)
+	{
+	}
+
+	/// <summary>
 	/// Gets the description for this instance.
 	/// </summary>
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -38,10 +45,12 @@ public partial class CrashingWavesRing : Ring, ITreasure
 			entries.Add(new LocalizationEntry(6250129)); /* The ring contains a spell of Water Walking. */
 	}
 
-	protected override bool OnEquip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
 	{
-		if (!base.OnEquip(entity))
-			return false;
+		base.OnActivateBonus(entity);
 
 		if (!entity.GetStatus(typeof(WaterWalkingStatus), out var status))
 		{
@@ -54,19 +63,45 @@ public partial class CrashingWavesRing : Ring, ITreasure
 		{
 			status.AddSource(new ItemSource(this));
 		}
-
-		return true;
 	}
 
-	protected override bool OnUnequip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
 	{
-		if (!base.OnUnequip(entity))
-			return false;
-			
+		base.OnInactivateBonus(entity);
+
 		if (entity.GetStatus(typeof(WaterWalkingStatus), out var status))
 			status.RemoveSource(this);
+	}
 
-		return true;
+	/// <summary>
+	/// Serializes this instance into binary data for persistence.
+	/// </summary>
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <summary>
+	/// Deserializes this instance from persisted binary data.
+	/// </summary>
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }
 	

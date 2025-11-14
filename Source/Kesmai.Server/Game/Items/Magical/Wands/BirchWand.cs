@@ -8,7 +8,7 @@ using Kesmai.Server.Targeting;
 
 namespace Kesmai.Server.Items;
 
-public partial class BirchWand : Wand, ITreasure
+public class BirchWand : Wand, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 500;
@@ -28,6 +28,13 @@ public partial class BirchWand : Wand, ITreasure
 	public BirchWand() : base(206)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="BirchWand"/> class.
+	/// </summary>
+	public BirchWand(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -40,7 +47,7 @@ public partial class BirchWand : Wand, ITreasure
 		
 	public override Spell GetSpell()
 	{
-		return new BlindSpell()
+		return new BlindSpell
 		{
 			Item = this,
 				
@@ -59,6 +66,30 @@ public partial class BirchWand : Wand, ITreasure
 		{
 			blind.Warm(source);
 			blind.CastAt(target);
+		}
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
 		}
 	}
 }

@@ -49,7 +49,7 @@ public abstract class TrapComponent : TerrainComponent, IHandleMovement, IHandle
 		if (!entity.IsAlive)
 			return;
 
-		if ((entity is CreatureEntity && !TrapCreatures) || (entity is PlayerEntity && TrapPlayers))
+		if ((entity is CreatureEntity && !TrapCreatures) || (entity is PlayerEntity && !TrapPlayers))
 			return;
 
 		if (Server.Now < _next)

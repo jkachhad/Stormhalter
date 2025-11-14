@@ -3,7 +3,7 @@ using Kesmai.Server.Items;
 
 namespace Kesmai.Server.Game;
 
-public partial class YellowBerries : Food
+public class YellowBerries : Food
 {
 	private static ConsumableDamage content = new ConsumableDamage(5);
 		
@@ -21,6 +21,13 @@ public partial class YellowBerries : Food
 	public YellowBerries() : base(25)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="YellowBerries"/> class.
+	/// </summary>
+	public YellowBerries(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	protected override void OnCreate()
@@ -29,5 +36,29 @@ public partial class YellowBerries : Food
 
 		if (_content is null)
 			_content = content;
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

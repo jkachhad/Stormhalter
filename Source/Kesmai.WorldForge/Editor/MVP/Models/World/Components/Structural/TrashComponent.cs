@@ -39,7 +39,7 @@ public class TrashComponent : StaticComponent
 
 	public override TerrainComponent Clone()
 	{
-		return new TrashComponent(GetXElement());
+		return new TrashComponent(GetSerializingElement());
 	}
 
 	#endregion

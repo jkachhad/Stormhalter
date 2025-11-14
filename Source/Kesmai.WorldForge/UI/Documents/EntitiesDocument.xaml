@@ -3,139 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
              xmlns:scripting="clr-namespace:Kesmai.WorldForge.Scripting"
-             xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              
              FontFamily="Tahoma" FontSize="16">
-    
-    <UserControl.Resources>
-        <CollectionViewSource x:Key="sortedGroups" Source="{Binding Groups}">
-            <CollectionViewSource.SortDescriptions>
-                <componentModel:SortDescription PropertyName="Name" Direction="Ascending"/>
-            </CollectionViewSource.SortDescriptions>
-        </CollectionViewSource>
-        <DataTemplate x:Key="GroupTemplate">
-            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
-        </DataTemplate>
-    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="140"></RowDefinition>
-                <RowDefinition Height="200"></RowDefinition>
-            </Grid.RowDefinitions>
-            
-            <ToolBar Padding="2" Grid.Row="0">
-                <ToolBar.Items>
-                    <Button Width="24" Height="24"
-                            Command="{Binding AddEntityCommand}"
-                            ToolTip="Add Entity">
-                        <Image Source="../../Resources/Add.png"/>
-                    </Button>
-                    <Button Width="24" Height="24"
-                            Command="{Binding AddGroupCommand}"
-                            ToolTip="Add Group">
-                        <Image Source="../../Resources/plus.png"/>
-                    </Button>
-                    <Button Width="24" Height="24"
-                            Command="{Binding RemoveEntityCommand}"
-                            CommandParameter="{Binding SelectedEntity}">
-                        <Image Source="../../Resources/Delete.png" />
-                    </Button>
-                    <Button Width="24" Height="24"
-                            Command="{Binding RemoveGroupCommand}"
-                            CommandParameter="{Binding SelectedGroup}">
-                        <Image Source="../../Resources/GreenX.png" />
-                    </Button>
-                    <Separator />
-                    <Button Width="24" Height="24"
-                            Command="{Binding CopyEntityCommand}"
-                            CommandParameter="{Binding SelectedEntity}">
-                        <Image Source="../../Resources/Copy.png" />
-                    </Button>
-                    <Button Width="24" Height="24"
-                                    Command="{Binding ExportEntityCommand}"
-                                    ToolTip="Copy Entity to Clipboard"
-                                    CommandParameter="{Binding SelectedEntity}">
-                        <Image Source="../../Resources/Export.png" />
-                    </Button>
-                    <Button Width="24" Height="24"
-                                    Command="{Binding ImportEntityComamnd}"
-                                    ToolTip="Paste Entity from Clipboard">
-                        <Image Source="../../Resources/Import.png" />
-                    </Button>
-                </ToolBar.Items>
-            </ToolBar>
-            
-           
-            <TreeView VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" x:Name="entitiesTreeView" Grid.Row="1" ItemsSource="{Binding Source={StaticResource sortedGroups}}"
-                      SelectedItemChanged ="TreeView_SelectedItemChanged"
-                      PreviewMouseLeftButtonDown="TreeView_PreviewMouseLeftButtonDown"
-                      DragOver="TreeView_DragOver"
-                      Drop="TreeView_Drop">
-                <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate ItemsSource="{Binding Entities}">
-                        <TextBlock AllowDrop="True" 
-                                   Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" 
-                                   MouseRightButtonDown="TextBlock_MouseRightButtonDown"/>
-                        <HierarchicalDataTemplate.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" />
-                            </DataTemplate>
-                        </HierarchicalDataTemplate.ItemTemplate>
-                    </HierarchicalDataTemplate>
-                </TreeView.ItemTemplate>
-            </TreeView>
-            
-
-                <syncfusion:PropertyGrid Grid.Row="2" Margin="0,3,0,0"
-                                         SelectedObject="{Binding SelectedEntity}"
-                                         AutoGenerateItems="False"
-                                         SortDirection="{x:Null}"
-                                         DisableAnimationOnObjectSelection="True">
-                <syncfusion:PropertyGrid.Items>
-                    <syncfusion:PropertyGridItem PropertyName="Name" />
-                    <syncfusion:PropertyGridItem IsReadOnly="True" PropertyName="Group" />
-                    <syncfusion:PropertyGridItem PropertyName="XP" />
-                    <syncfusion:PropertyGridItem PropertyName="HP" />
-                    <syncfusion:PropertyGridItem PropertyName="Threat"/>
-                    <syncfusion:PropertyGridItem PropertyName="Flags"/>
-                    <syncfusion:PropertyGridItem PropertyName="MeleeXPPerThreat" DisplayName="XP/Melee Threat"/>
-                    <syncfusion:PropertyGridItem PropertyName="RangedXPPerThreat" DisplayName="XP/Range Threat"/>
-                    <syncfusion:PropertyGridItem PropertyName="MagicXPPerThreat" DisplayName="XP/Magic Threat"/>
-                </syncfusion:PropertyGrid.Items>
-            </syncfusion:PropertyGrid>
-            <StackPanel Grid.Row="3" Margin="0,3,0,0">
-                <TextBlock Margin="7,0,0,0" FontWeight="Bold">Spawns In</TextBlock>
-                <ListBox
-                    Height="184"
-                    BorderBrush="White"
-                    x:Name="_spawnersList"
-                    ItemsSource="{Binding RelatedSpawners}">
-                    <ListBox.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="Jump to Spawn Definition" Command="{Binding JumpSpawnerCommand}"/>
-                        </ContextMenu>
-                    </ListBox.ContextMenu>
-                </ListBox>
-            </StackPanel>
-        </Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
         
-        <Border Margin="2" Grid.Column="1"
-                BorderBrush="Black" BorderThickness="1">
+        <Border Grid.Row="0" Grid.Column="0" Margin="2" BorderBrush="Black" BorderThickness="1">
             <TabControl x:Name="_scriptsTabControl"
-                ItemsSource="{Binding SelectedEntity.Scripts}"
-                Margin="5">
+                        ItemsSource="{Binding Entity.Scripts}"
+                        SelectedItem="{Binding SelectedScript, Mode=TwoWay}"
+                        Margin="5">
                 <TabControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" Margin="2">
@@ -161,10 +48,50 @@
                 </TabControl.ItemTemplate>
                 <TabControl.ContentTemplate>
                     <DataTemplate>
-                        <scripting:ScriptEditor Script="{Binding}" IsEnabled="{Binding IsEnabled}" x:Name="_editor"/>
+                        <scripting:ScriptEditor Signature="{Binding Signature}"
+                                                Header="{Binding Header}"
+                                                Body="{Binding Body, Mode=TwoWay}"
+                                                Footer="{Binding Footer}" 
+                                                       
+                                                IsEnabled="{Binding IsEnabled}" />
                     </DataTemplate>
                 </TabControl.ContentTemplate>
             </TabControl>
+        </Border>
+        
+        <Border Grid.Row="1" Grid.Column="0" Margin="2" BorderBrush="Black" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Spawns:" FontWeight="Bold" FontSize="13" 
+                           VerticalAlignment="Center" Margin="2" />
+                
+                <ItemsControl Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Spawns, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Padding="4" Margin="2" Click="SpawnerButtonClick">
+                                <Button.Content>
+                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="13" />
+                                </Button.Content>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
             
         </Border>
     </Grid>

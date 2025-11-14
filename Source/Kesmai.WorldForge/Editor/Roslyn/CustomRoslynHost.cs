@@ -1,130 +1,282 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime;
 using System.Text;
 using CommonServiceLocator;
-using ICSharpCode.AvalonEdit.Document;
+using CommunityToolkit.Mvvm.Messaging;
 using Kesmai.WorldForge.Editor;
-using Kesmai.WorldForge.Scripting;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Text;
 using RoslynPad.Roslyn;
+using RoslynPad.Roslyn.Diagnostics;
 
 namespace Kesmai.WorldForge.Roslyn;
 
 public class CustomRoslynHost : RoslynHost
 {
-	private CustomResolver _resolver;
-		
-	public CustomRoslynHost(Segment segment) : base(
-		additionalAssemblies: new[]
-		{
-			Assembly.Load("RoslynPad.Roslyn.Windows"),
-			Assembly.Load("RoslynPad.Editor.Windows"),
-		}, 
-		RoslynHostReferences.NamespaceDefault.With(imports: new []
-		{
-			"WorldForge",
-		}))
-	{
-		_resolver = new CustomResolver(segment);
-	}
+    private CustomRoslynWorkspace _workspace;
+
+    private DocumentId _editorDocumentId;
+
+    private Dictionary<string, DocumentId> _segmentDocuments 
+        = new Dictionary<string, DocumentId>();
+    
+    public CustomRoslynHost(Segment segment, IEnumerable<Assembly> additionalAssemblies, RoslynHostReferences references) : base(additionalAssemblies, references)
+    {
+        _workspace = new CustomRoslynWorkspace(HostServices, WorkspaceKind.Host, this);
+        _workspace.Services.GetRequiredService<IDiagnosticsUpdater>()
+            .DisabledDiagnostics = DisabledDiagnostics;
         
-	protected override Project CreateProject(Solution solution, DocumentCreationArgs args, CompilationOptions compilationOptions, Project? previousProject = null)
-	{
-		var name = "WorldForge";
-		var id = ProjectId.CreateNewId(name);
-		var parseOptions = new CSharpParseOptions(
-			kind: SourceCodeKind.Script,
-			languageVersion: LanguageVersion.CSharp8
-		);
-			
-		compilationOptions = compilationOptions
-			.WithScriptClassName(name)
-			.WithSourceReferenceResolver(_resolver);
-			
-		if (compilationOptions is CSharpCompilationOptions csharpCompilationOptions)
-		{
-			compilationOptions = csharpCompilationOptions
-				.WithNullableContextOptions(NullableContextOptions.Disable);
-		}
+        // create segment project
+        var segmentSolution = _workspace.CurrentSolution;
 		
-		var references = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(a => !a.IsDynamic && !string.IsNullOrEmpty(a.Location))
-			.Select(a => a.Location)
-			.Select(path => MetadataReference.CreateFromFile(path))
-			.ToList();
+        var segmentProject = segmentSolution.AddProject($"Segment", $"Kesmai.Server.Segments.{segment.Name}", LanguageNames.CSharp)
+            .WithCompilationOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
+            /* C# minimum to support global usings. */
+            .WithParseOptions(new CSharpParseOptions(LanguageVersion.CSharp10))
+            /* Minimum references to prevent overloading */
+            .WithMetadataReferences(DefaultReferences);
 
-		var scriptingData = Core.ScriptingData;
-			
-		if (scriptingData != null)
-			references.Add(MetadataReference.CreateFromImage(scriptingData));
-			
-		solution = solution.AddProject(ProjectInfo.Create(
-			id, VersionStamp.Create(),
-			name, name,
-			LanguageNames.CSharp,
-			isSubmission: true,
-			parseOptions: parseOptions,
-			compilationOptions: compilationOptions,
-			metadataReferences: previousProject != null ? ImmutableArray<MetadataReference>.Empty : references,
-			projectReferences: previousProject != null ? new[] { new ProjectReference(previousProject.Id) } : null
-		));
-			
-		return solution.GetProject(id);
-	}
-}
+        segmentSolution = segmentProject.Solution;
+        
+        // add documents to segment project.
+        var segmentDocuments = Directory.GetFiles(segment.Directory, "*.cs", SearchOption.AllDirectories)
+            .Where(p => !p.Contains(@"\obj\") && !p.Contains(@"\bin\"));
 
-public class CustomResolver : SourceReferenceResolver
-{
-	private readonly SourceText _cache;
+        foreach (var segmentDocument in segmentDocuments)
+        {
+            var documentId = DocumentId.CreateNewId(segmentProject.Id);
+            var documentName = Path.GetFileName(segmentDocument);
+            var documentText = File.ReadAllText(segmentDocument);
+            
+            segmentSolution = segmentSolution.AddDocument(documentId, documentName, 
+                SourceText.From(documentText), filePath: segmentDocument);
+            
+            _segmentDocuments[segmentDocument] = documentId;
+        }
+        
+        _workspace.TryApplyChanges(segmentSolution);
+        
+        // create editor project
+        var editorSolution = _workspace.CurrentSolution;
+		
+        var editorProject = editorSolution.AddProject($"Editor", $"Kesmai.Server.Segments.Editor", LanguageNames.CSharp)
+            .WithCompilationOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
+            /* C# minimum to support global usings. */
+            .WithParseOptions(new CSharpParseOptions(LanguageVersion.CSharp10))
+            /* Minimum references to prevent overloading */
+            .WithMetadataReferences(DefaultReferences);
+        
+        _editorDocumentId = DocumentId.CreateNewId(editorProject.Id);
+        
+        editorSolution = editorProject.Solution.AddDocument(_editorDocumentId, "Editor.g.cs", 
+            SourceText.From("namespace Kesmai.Server.Segments; public static class Editor { }"));
+        
+        _workspace.TryApplyChanges(editorSolution);
+        
+        // bind events
+        WeakReferenceMessenger.Default.Register<SegmentLocationChanged>(this, (_, _) => OnSegmentChanged());
+        WeakReferenceMessenger.Default.Register<SegmentEntityChanged>(this, (_, _) => OnSegmentChanged());
+        WeakReferenceMessenger.Default.Register<SegmentTreasuresChanged>(this, (_, _) => OnSegmentChanged());
+        WeakReferenceMessenger.Default.Register<SegmentSpawnChanged>(this, (_, _) => OnSegmentChanged());
+        
+        // watch for file changes
+        WeakReferenceMessenger.Default.Register<SegmentFileCreatedMessage>(this, (_, message) => OnSegmentFileCreated(message.Value));
+        WeakReferenceMessenger.Default.Register<SegmentFileDeletedMessage>(this, (_, message) => OnSegmentFileDeleted(message.Value));
+        WeakReferenceMessenger.Default.Register<SegmentFileRenamedMessage>(this, (_, message) => OnSegmentFileRenamed(message.Value));
+        WeakReferenceMessenger.Default.Register<SegmentFileChangedMessage>(this, (_, message) => OnSegmentFileChanged(message.Value));
+    }
 
-	public CustomResolver(Segment segment)
-	{
-		var builder = new StringBuilder();
+    public override RoslynWorkspace CreateWorkspace()
+    {
+        return _workspace;
+    }
+    
+    protected override Project CreateProject(Solution solution, DocumentCreationArgs args, CompilationOptions compilationOptions, Project? previousProject = null)
+    {
+        var projectName = "Script";
+        var projectId = ProjectId.CreateNewId(projectName);
 
-		if (segment.Internal != null)
-			builder.AppendLine(segment.Internal.ToString());
+        var parseOptions = ParseOptions.WithKind(args.SourceCodeKind);
+        
+        var projectReferences = solution.ProjectIds
+            .Select(p => new ProjectReference(p));
+        
+        solution = solution.AddProject(ProjectInfo.Create(
+                projectId, VersionStamp.Create(), projectName, projectName,
+                LanguageNames.CSharp,
+                filePath: args.WorkingDirectory,
+                isSubmission: false,
+                parseOptions: parseOptions,
+                compilationOptions: compilationOptions,
+                metadataReferences: previousProject != null ? [] : DefaultReferences,
+                projectReferences: previousProject != null ? [new ProjectReference(previousProject.Id)] : projectReferences));
+        
+        var project = solution.GetProject(projectId);
+        
+        if (project is null)
+            throw new InvalidOperationException("Could not create project.");
+        
+        if (GetUsings(project) is { Length: > 0 } usings)
+            project = project.AddDocument("Usings.g.cs", usings).Project;
 
-		foreach (var lootTemplate in segment.Treasures.Select(t => t.Name))
-			builder.AppendLine($"Func<MobileEntity, Container, ItemEntity> {lootTemplate};");
+        return project;
 
-		foreach (var entities in segment.Entities.Select(t => t.Name))
-			builder.AppendLine($"Func<CreatureEntity> {entities};");
-			
-		_cache = SourceText.From(builder.ToString());
-	}
+        static string GetUsings(Project project)
+        {
+            if (project.CompilationOptions is CSharpCompilationOptions options)
+                return String.Join(" ", options.Usings.Select(i => $"global using {i};"));
 
-	public override SourceText ReadText(string resolvedPath) => _cache;
+            return String.Empty;
+        }
+    }
 
-	public override string NormalizePath(string path, string baseFilePath) => path;
-	public override string ResolveReference(string path, string baseFilePath) => path;
-	public override Stream OpenRead(string resolvedPath) => null;
+    public void OnSegmentFileCreated(FileSystemEventArgs args)
+    {
+        var path = args.FullPath;
+        var extension = Path.GetExtension(path).ToLower();
+        
+        // we only process C# files.
+        if (!extension.Equals(".cs", StringComparison.OrdinalIgnoreCase))
+            return;
+        
+        var workspace = _workspace;
+        var solution = workspace.CurrentSolution;
 
-	public override bool Equals(object obj)
-	{
-		if (ReferenceEquals(null, obj))
-			return false;
-			
-		if (ReferenceEquals(this, obj)) 
-			return true;
-			
-		if (obj.GetType() != this.GetType()) 
-			return false;
+        if (_segmentDocuments.ContainsKey(args.FullPath))
+            return;
+        
+        var segmentProject = solution.Projects.FirstOrDefault(p => p.Name.Equals("Segment"));
 
-		if (obj is CustomResolver other && other._cache != _cache)
-			return false;
+        if (segmentProject is null)
+            return;
+        
+        var documentId = DocumentId.CreateNewId(segmentProject.Id);
+        var documentName = Path.GetFileName(args.FullPath);
+        var documentText = File.ReadAllText(args.FullPath);
+            
+        solution = solution.AddDocument(documentId, documentName, 
+            SourceText.From(documentText), filePath: args.FullPath);
+            
+        _segmentDocuments[args.FullPath] = documentId;
+                
+        workspace.TryApplyChanges(solution);
+    }
 
-		return true;
-	}
+    public void OnSegmentFileDeleted(FileSystemEventArgs args)
+    {
+        var path = args.FullPath;
+        var extension = Path.GetExtension(path).ToLower();
+        
+        // we only process C# files.
+        if (!extension.Equals(".cs", StringComparison.OrdinalIgnoreCase))
+            return;
+        
+        if (!_segmentDocuments.TryGetValue(args.FullPath, out var documentId))
+            return;
+        
+        var workspace = _workspace;
+        var solution = workspace.CurrentSolution;
 
-	public override int GetHashCode()
-	{
-		return _cache.GetHashCode();
-	}
+        solution = solution.RemoveDocument(documentId);
+        
+        _segmentDocuments.Remove(args.FullPath);
+
+        workspace.TryApplyChanges(solution);
+    }
+    
+    public void OnSegmentFileRenamed(RenamedEventArgs args)
+    {
+        var path = args.FullPath;
+        var extension = Path.GetExtension(path).ToLower();
+        
+        // we only process C# files.
+        if (!extension.Equals(".cs", StringComparison.OrdinalIgnoreCase))
+            return;
+        
+        if (!_segmentDocuments.TryGetValue(args.OldFullPath, out var documentId)) 
+            return;
+        
+        var workspace = _workspace;
+        var solution = workspace.CurrentSolution;
+
+        solution = solution.WithDocumentName(documentId, Path.GetFileName(args.FullPath));
+            
+        _segmentDocuments.Remove(args.OldFullPath);
+        _segmentDocuments[args.FullPath] = documentId;
+            
+        workspace.TryApplyChanges(solution);
+    }
+    
+    public void OnSegmentFileChanged(FileSystemEventArgs args)
+    {
+        var path = args.FullPath;
+        var extension = Path.GetExtension(path).ToLower();
+        
+        // we only process C# files.
+        if (!extension.Equals(".cs", StringComparison.OrdinalIgnoreCase))
+            return;
+        
+        if (!_segmentDocuments.TryGetValue(args.FullPath, out var documentId))
+            return;
+        
+        var workspace = _workspace;
+        var solution = workspace.CurrentSolution;
+
+        var documentText = File.ReadAllText(args.FullPath);
+            
+        solution = solution.WithDocumentText(documentId, TextAndVersion.Create(
+            SourceText.From(documentText),
+            VersionStamp.Create()), PreservationMode.PreserveIdentity);
+            
+        workspace.TryApplyChanges(solution);
+    }
+
+    public void OnSegmentChanged()
+    {
+        var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+        var segment = presenter.Segment;
+
+        if (segment is null)
+            return;
+
+        var builder = new StringBuilder();
+        
+        builder.AppendLine($"namespace Kesmai.Server.Segments;");
+        builder.AppendLine(String.Empty);
+        builder.AppendLine($@"public static class Editor {{");
+
+        foreach (var lootTemplate in segment.Treasures.Select(t => t.Name))
+            builder.AppendLine($"\tpublic static Func<MobileEntity, Container, ItemEntity> {lootTemplate};");
+
+        foreach (var entities in segment.Entities.Select(t => t.Name))
+            builder.AppendLine($"\tpublic static Func<CreatureEntity> {entities};");
+        
+        builder.AppendLine($"}}");
+
+        var workspace = _workspace;
+        var solution = workspace.CurrentSolution;
+
+        solution = solution.WithDocumentText(_editorDocumentId, TextAndVersion.Create(SourceText.From(builder.ToString()),
+                VersionStamp.Create()), PreservationMode.PreserveIdentity);
+
+        workspace.TryApplyChanges(solution);
+    }
+    
+    // Workaround for multiple additions of GetSolutionAnalyzerReferences.
+    private bool _initializedAnalyzers;
+    
+    protected override IEnumerable<AnalyzerReference> GetSolutionAnalyzerReferences()
+    {
+        if (_initializedAnalyzers)
+            return [];
+        
+        _initializedAnalyzers = true;
+        
+        return base.GetSolutionAnalyzerReferences();
+    }
 }

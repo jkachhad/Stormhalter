@@ -7,7 +7,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class LightningShield : Shield, ITreasure
+public class LightningShield : Shield, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 2000;
@@ -30,6 +30,13 @@ public partial class LightningShield : Shield, ITreasure
 	public LightningShield() : base(280)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="LightningShield"/> class.
+	/// </summary>
+	public LightningShield(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -48,7 +55,7 @@ public partial class LightningShield : Shield, ITreasure
 		{
 			resistStatus = new LightningResistanceStatus(entity)
 			{
-				Inscription = new SpellInscription() { SpellId = 50 }
+				Inscription = new SpellInscription { SpellId = 50 }
 			};
 			resistStatus.AddSource(new ItemSource(this));
 				
@@ -66,5 +73,29 @@ public partial class LightningShield : Shield, ITreasure
 
 		if (entity.GetStatus(typeof(LightningResistanceStatus), out var lightningStatus))
 			lightningStatus.RemoveSource(this);
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

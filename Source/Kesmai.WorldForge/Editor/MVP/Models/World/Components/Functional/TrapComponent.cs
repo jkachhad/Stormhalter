@@ -86,14 +86,14 @@ public abstract class TrapComponent : TerrainComponent
 			_interruptMovement = (bool)interruptMovementElement;
 	}
 	
-	public override IEnumerable<ComponentRender> GetTerrain()
+	public override IEnumerable<ComponentRender> GetRenders()
 	{
 		yield return _internal;
 	}
 
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		if (_cooldown > 0)
 			element.Add(new XElement("cooldown", _cooldown));

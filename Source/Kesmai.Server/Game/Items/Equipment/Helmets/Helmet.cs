@@ -6,7 +6,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class Helmet : Equipment
+public abstract class Helmet : Equipment
 {
 	/// <summary>
 	/// Gets the label number.
@@ -31,11 +31,20 @@ public abstract partial class Helmet : Equipment
 	protected Helmet(int helmetID) : base(helmetID)
 	{
 	}
-
-	protected override bool OnEquip(MobileEntity entity)
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Helmet"/> class.
+	/// </summary>
+	protected Helmet(Serial serial) : base(serial)
 	{
-		if (!base.OnEquip(entity))
-			return false;
+	}
+
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
+	{
+		base.OnActivateBonus(entity);
 
 		if (ProvidesNightVision)
 		{
@@ -43,7 +52,7 @@ public abstract partial class Helmet : Equipment
 			{
 				status = new NightVisionStatus(entity)
 				{
-					Inscription = new SpellInscription() { SpellId = 36 }
+					Inscription = new SpellInscription { SpellId = 36 }
 				};
 				status.AddSource(new ItemSource(this));
 
@@ -54,21 +63,47 @@ public abstract partial class Helmet : Equipment
 				status.AddSource(new ItemSource(this));
 			}
 		}
-
-		return true;
 	}
 
-	protected override bool OnUnequip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
 	{
-		if (!base.OnUnequip(entity))
-			return false;
+		base.OnInactivateBonus(entity);
 
 		if (ProvidesNightVision)
 		{
 			if (entity.GetStatus(typeof(NightVisionStatus), out var status))
 				status.RemoveSource(this);
 		}
+	}
+	
+	/// <summary>
+	/// Serializes this instance into binary data for persistence.
+	/// </summary>
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
 
-		return true;
+		writer.Write((short)1); /* version */
+	}
+
+	/// <summary>
+	/// Deserializes this instance from persisted binary data.
+	/// </summary>
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

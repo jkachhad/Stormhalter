@@ -10,15 +10,16 @@ namespace Kesmai.WorldForge;
 public class ComponentImage : UIControl
 {
 	private List<ComponentRender> _renders;
+	private bool _invalidated;
 		
-	public static readonly int ComponentPropertyId = CreateProperty(
-		typeof(ComponentImage), "Component", GamePropertyCategories.Default, null, default(TerrainComponent),
+	public static readonly int ProviderPropertyId = CreateProperty(
+		typeof(ComponentImage), nameof(Provider), GamePropertyCategories.Default, null, default(IComponentProvider),
 		UIPropertyOptions.AffectsRender);
 
-	public TerrainComponent Component
+	public IComponentProvider Provider
 	{
-		get => GetValue<TerrainComponent>(ComponentPropertyId);
-		set => SetValue(ComponentPropertyId, value);
+		get => GetValue<IComponentProvider>(ProviderPropertyId);
+		set => SetValue(ProviderPropertyId, value);
 	}
 
 	public ComponentImage()
@@ -28,17 +29,30 @@ public class ComponentImage : UIControl
 		Width = 100;
 		Height = 100;
 
-		Properties.Get<TerrainComponent>(ComponentPropertyId).Changed += (sender, args) =>
+		Properties.Get<IComponentProvider>(ProviderPropertyId).Changed += (sender, args) =>
 		{
-			_renders.Clear();
-				
-			var newValue = args.NewValue;
-
-			if (newValue != null)
-				_renders.AddRange(newValue.GetTerrain());
+			Invalidate();
 		};
 	}
+	
+	public void Invalidate()
+	{
+		_invalidated = true;
+	}
+
+	protected override void OnUpdate(TimeSpan deltaTime)
+	{
+		if (_invalidated)
+		{
+			_renders.Clear();
+
+			if (Provider != null)
+				_renders.AddRange(Provider.GetRenders());
+		}
 		
+		base.OnUpdate(deltaTime);
+	}
+
 	protected override Vector2F OnMeasure(Vector2F availableSize)
 	{
 		var padding = Padding;
@@ -83,7 +97,7 @@ public class ComponentImage : UIControl
 						if (sprite.Offset != Vector2F.Zero)
 							spriteBounds.Offset(sprite.Offset.X, sprite.Offset.Y);
 							
-						spriteBatch.Draw(sprite.Texture, spriteBounds.Location.ToVector2(), render.Color);
+						spriteBatch.Draw(sprite.Texture, originalBounds,  render.Color);
 					}
 				}
 			}

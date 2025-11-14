@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class HeavyCrossbow : Crossbow, ITreasure
+public class HeavyCrossbow : Crossbow, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 60;
@@ -40,6 +40,13 @@ public partial class HeavyCrossbow : Crossbow, ITreasure
 	public HeavyCrossbow() : base(232)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="HeavyCrossbow"/> class.
+	/// </summary>
+	public HeavyCrossbow(Serial serial) : base(serial)
+	{
+	}
 		
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -48,5 +55,29 @@ public partial class HeavyCrossbow : Crossbow, ITreasure
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250003)); /* The combat adds for this weapon are +4. */
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

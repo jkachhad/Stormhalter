@@ -5,7 +5,7 @@ using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class Equipment : ItemEntity
+public abstract class Equipment : ItemEntity
 {
 	/// <summary>
 	/// Gets the hindrance penalty for this <see cref="Equipment"/>.
@@ -64,12 +64,49 @@ public abstract partial class Equipment : ItemEntity
 	protected Equipment(int equipmentId) : base(equipmentId)
 	{
 	}
-
-	protected override bool OnEquip(MobileEntity entity)
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Equipment"/> class.
+	/// </summary>
+	protected Equipment(Serial serial) : base(serial)
 	{
-		if (!base.OnEquip(entity))
-			return false;
-			
+	}
+
+	/// <summary>
+	/// Serializes this instance into binary data for persistence.
+	/// </summary>
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <summary>
+	/// Deserialize this instance from persisted binary data.
+	/// </summary>
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
+	}
+
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
+	{
+		base.OnActivateBonus(entity);
+
 		if (CanUse(entity))
 		{
 			if (ProtectionFromFire > 0)
@@ -90,15 +127,15 @@ public abstract partial class Equipment : ItemEntity
 			if (ManaRegeneration > 0)
 				entity.Stats[EntityStat.ManaRegenerationRate].Add(+ManaRegeneration, ModifierType.Constant);
 		}
-
-		return true;
 	}
 		
-	protected override bool OnUnequip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
 	{
-		if (!base.OnUnequip(entity))
-			return false;
-			
+		base.OnInactivateBonus(entity);
+		
 		if (CanUse(entity))
 		{
 			if (ProtectionFromFire > 0)
@@ -119,8 +156,6 @@ public abstract partial class Equipment : ItemEntity
 			if (ManaRegeneration > 0)
 				entity.Stats[EntityStat.ManaRegenerationRate].Remove(+ManaRegeneration, ModifierType.Constant);
 		}
-
-		return true;
 	}
 	
 	/// <inheritdoc />

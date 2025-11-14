@@ -6,7 +6,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class GriffinJacket : Jacket, ITreasure
+public class GriffinJacket : Jacket, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 30;
@@ -24,6 +24,13 @@ public partial class GriffinJacket : Jacket, ITreasure
 	public GriffinJacket() : base(260)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="GriffinJacket"/> class.
+	/// </summary>
+	public GriffinJacket(Serial serial) : base(serial)
+	{
+	}
         
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -31,17 +38,18 @@ public partial class GriffinJacket : Jacket, ITreasure
 		entries.Add(new LocalizationEntry(6200000, 6200195)); /* [You are looking at] [a vest made from the feathers of a griffin.] */
 	}
 
-	/// <inheritdoc />
-	protected override bool OnEquip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
 	{
-		if (!base.OnEquip(entity))
-			return false;
+		base.OnActivateBonus(entity);
 
 		if (!entity.GetStatus(typeof(BlindResistanceStatus), out var resistance))
 		{
 			resistance = new BlindResistanceStatus(entity)
 			{
-				Inscription = new SpellInscription() { SpellId = 47 }
+				Inscription = new SpellInscription { SpellId = 47 }
 			};
 			resistance.AddSource(new ItemSource(this));
 				
@@ -51,19 +59,40 @@ public partial class GriffinJacket : Jacket, ITreasure
 		{
 			resistance.AddSource(new ItemSource(this));
 		}
+	}
 
-		return true;
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
+	{
+		base.OnInactivateBonus(entity);
+
+		if (entity.GetStatus(typeof(BlindResistanceStatus), out var resistance))
+			resistance.RemoveSource(this);
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
 	}
 
 	/// <inheritdoc />
-	protected override bool OnUnequip(MobileEntity entity)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		if (!base.OnUnequip(entity))
-			return false;
-			
-		if (entity.GetStatus(typeof(BlindResistanceStatus), out var resistance))
-			resistance.RemoveSource(this);
+		base.Deserialize(ref reader);
 
-		return true;
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

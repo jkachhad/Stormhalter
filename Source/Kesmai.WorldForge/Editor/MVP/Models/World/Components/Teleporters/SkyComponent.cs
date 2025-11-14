@@ -18,6 +18,6 @@ public class SkyComponent : PassiveTeleporterComponent
 
 	public override TerrainComponent Clone()
 	{
-		return new SkyComponent(GetXElement());
+		return new SkyComponent(GetSerializingElement());
 	}
 }

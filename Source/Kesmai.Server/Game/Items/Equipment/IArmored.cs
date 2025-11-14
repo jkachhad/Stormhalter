@@ -2,7 +2,7 @@ using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
-public partial interface IArmored
+public interface IArmored
 {
 	/// <summary>
 	/// Gets the base armor bonus provided by this <see cref="IArmored"/> against all attack types.

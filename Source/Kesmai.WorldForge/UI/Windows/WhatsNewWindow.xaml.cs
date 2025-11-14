@@ -96,6 +96,6 @@ public partial class WhatsNew : Window
 </ul>
 </body>
 ";
-        Content.NavigateToString(Changelog);
+        WebContent.NavigateToString(Changelog);
     }
 }

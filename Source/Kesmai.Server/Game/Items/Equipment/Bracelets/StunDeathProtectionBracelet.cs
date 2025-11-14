@@ -8,7 +8,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class StunDeathProtectionBracelet : Bracelet, ITreasure
+public class StunDeathProtectionBracelet : Bracelet, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 3000;
@@ -23,6 +23,13 @@ public partial class StunDeathProtectionBracelet : Bracelet, ITreasure
 	{
 	}
 
+	/// <summary>
+	/// Initializes a new instance of the <see cref="StunDeathProtectionBracelet"/> class.
+	/// </summary>
+	public StunDeathProtectionBracelet(Serial serial) : base(serial)
+	{
+	}
+	
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
@@ -32,16 +39,18 @@ public partial class StunDeathProtectionBracelet : Bracelet, ITreasure
 			entries.Add(new LocalizationEntry(6250057)); /* The bracelet contains the spell of Protection from Stun and Death. */
 	}
 
-	protected override bool OnEquip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be applied to <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnActivateBonus(MobileEntity entity)
 	{
-		if (!base.OnEquip(entity))
-			return false;
+		base.OnActivateBonus(entity);
 
 		if (!entity.GetStatus(typeof(StunDeathProtectionStatus), out var resistance))
 		{
 			resistance = new StunDeathProtectionStatus(entity)
 			{
-				Inscription = new SpellInscription() { SpellId = 45 }
+				Inscription = new SpellInscription { SpellId = 45 }
 			};
 			resistance.AddSource(new ItemSource(this));
 				
@@ -51,18 +60,40 @@ public partial class StunDeathProtectionBracelet : Bracelet, ITreasure
 		{
 			resistance.AddSource(new ItemSource(this));
 		}
-
-		return true;
 	}
 
-	protected override bool OnUnequip(MobileEntity entity)
+	/// <summary>
+	/// Overridable. Called when effects from this item should be removed from <see cref="MobileEntity"/>.
+	/// </summary>
+	protected override void OnInactivateBonus(MobileEntity entity)
 	{
-		if (!base.OnUnequip(entity))
-			return false;
-			
+		base.OnInactivateBonus(entity);
+
 		if (entity.GetStatus(typeof(StunDeathProtectionStatus), out var resistance))
 			resistance.RemoveSource(this);
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
 
-		return true;
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

@@ -4,7 +4,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class DogJacket : Jacket
+public class DogJacket : Jacket
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 20;
@@ -18,6 +18,13 @@ public partial class DogJacket : Jacket
 	public DogJacket() : base(254)
 	{
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="DogJacket"/> class.
+	/// </summary>
+	public DogJacket(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
@@ -26,5 +33,29 @@ public partial class DogJacket : Jacket
 
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250099)); /* The jacket appears quite ordinary. */
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

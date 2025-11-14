@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Game;
 
-public partial class PermanentWillpowerPotion : Bottle, ITreasure
+public class PermanentWillpowerPotion : Bottle, ITreasure
 {
 	private static ConsumableWillpowerStat content = new ConsumableWillpowerStat();
 		
@@ -14,11 +14,21 @@ public partial class PermanentWillpowerPotion : Bottle, ITreasure
 
 	/// <inheritdoc />
 	public override int Weight => 240;
+	
+	/// <inheritdoc />
+	public override ItemQuality Quality => ItemQuality.Uncommon;
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PermanentWillpowerPotion"/> class.
 	/// </summary>
 	public PermanentWillpowerPotion() : base(289)
+	{
+	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="PermanentWillpowerPotion"/> class.
+	/// </summary>
+	public PermanentWillpowerPotion(Serial serial) : base(serial)
 	{
 	}
 		
@@ -37,5 +47,29 @@ public partial class PermanentWillpowerPotion : Bottle, ITreasure
 		entries.Add(new LocalizationEntry(6200000, 6200110)); /* [You are looking at] [a porcelain bottle with small irises in raised relief around its base.] */
 
 		base.GetDescription(entries);
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

@@ -149,10 +149,9 @@ public class DoorComponent : TerrainComponent
 	#region Methods
 
 	/// <inheritdoc />
-	public override IEnumerable<ComponentRender> GetTerrain()
+	public override IEnumerable<ComponentRender> GetRenders()
 	{
-		var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
-		var visibility = presenter.Visibility;
+		var visibility = ServiceLocator.Current.GetInstance<RegionVisibility>();
 		var showOpened = IsOpen || visibility.OpenDoors;
 		var showHidden = visibility.HideSecretDoors;
 		var showDestroyed = visibility.BreakWalls;
@@ -171,9 +170,9 @@ public class DoorComponent : TerrainComponent
 			yield return new ComponentRender(terrain, Color);
 	}
 		
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		element.Add(new XElement("openId", _openId));
 		element.Add(new XElement("closedId", _closedId));
@@ -197,7 +196,7 @@ public class DoorComponent : TerrainComponent
 
 	public override TerrainComponent Clone()
 	{
-		return new DoorComponent(GetXElement());
+		return new DoorComponent(GetSerializingElement());
 	}
 
 	#endregion

@@ -7,7 +7,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class SteelWand : Wand, ITreasure
+public class SteelWand : Wand, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 500;
@@ -24,7 +24,14 @@ public partial class SteelWand : Wand, ITreasure
 	public SteelWand() : base(204)
 	{
 	}
-		
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="SteelWand"/> class.
+	/// </summary>
+	public SteelWand(Serial serial) : base(serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
@@ -33,10 +40,10 @@ public partial class SteelWand : Wand, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250112)); /* The wand contains the spell of Lightning Bolt. */
 	}
-		
+
 	public override Spell GetSpell()
 	{
-		return new LightningBoltSpell()
+		return new LightningBoltSpell
 		{
 			Item = this,
 				
@@ -46,7 +53,7 @@ public partial class SteelWand : Wand, ITreasure
 			Cost = 0,
 		};
 	}
-		
+
 	protected override void OnTarget(MobileEntity source, Point2D location)
 	{
 		var spell = GetSpell();
@@ -55,6 +62,30 @@ public partial class SteelWand : Wand, ITreasure
 		{
 			lightningBolt.Warm(source);
 			lightningBolt.CastAt(location);
+		}
+	}
+
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
 		}
 	}
 }

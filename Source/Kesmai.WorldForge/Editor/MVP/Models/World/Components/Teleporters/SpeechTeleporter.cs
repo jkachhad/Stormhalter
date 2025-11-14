@@ -54,7 +54,7 @@ public class SpeechTeleporter : HiddenTeleporterComponent
 	}	
 		
 	/// <inheritdoc />
-	public override IEnumerable<ComponentRender> GetTerrain()
+	public override IEnumerable<ComponentRender> GetRenders()
 	{
 		var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
 
@@ -69,9 +69,9 @@ public class SpeechTeleporter : HiddenTeleporterComponent
 		}
 	}
 		
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		element.Add(new XElement("teleporterId", _teleporterId));
 
@@ -83,6 +83,6 @@ public class SpeechTeleporter : HiddenTeleporterComponent
 		
 	public override TerrainComponent Clone()
 	{
-		return new SpeechTeleporter(GetXElement());
+		return new SpeechTeleporter(GetSerializingElement());
 	}
 }

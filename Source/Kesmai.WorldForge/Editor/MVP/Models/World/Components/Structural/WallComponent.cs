@@ -93,12 +93,11 @@ public class WallComponent : TerrainComponent
 	#region Methods
 
 	/// <inheritdoc />
-	public override IEnumerable<ComponentRender> GetTerrain()
+	public override IEnumerable<ComponentRender> GetRenders()
 	{
 		var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
-
-		var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
-		var visibility = presenter.Visibility;
+		
+		var visibility = ServiceLocator.Current.GetInstance<RegionVisibility>();
 		var showDestroyed = visibility.BreakWalls;
 
 		Terrain terrain;
@@ -118,9 +117,9 @@ public class WallComponent : TerrainComponent
 		}
 	}
 		
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		element.Add(new XElement("wall", _wall));
 		element.Add(new XElement("destroyed", _destroyed));
@@ -134,7 +133,7 @@ public class WallComponent : TerrainComponent
 
 	public override TerrainComponent Clone()
 	{
-		return new WallComponent(GetXElement());
+		return new WallComponent(GetSerializingElement());
 	}
 		
 	#endregion

@@ -6,7 +6,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class DarknessOrb : SpellOrb, ITreasure
+public class DarknessOrb : SpellOrb, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 800;
@@ -15,6 +15,13 @@ public partial class DarknessOrb : SpellOrb, ITreasure
 	/// Initializes a new instance of the <see cref="DarknessOrb"/> class.
 	/// </summary>
 	public DarknessOrb() : base(202)
+	{
+	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="DarknessOrb"/> class.
+	/// </summary>
+	public DarknessOrb(Serial serial) : base(serial)
 	{
 	}
 
@@ -30,7 +37,7 @@ public partial class DarknessOrb : SpellOrb, ITreasure
 	/// <inheritdoc />
 	protected override void PlaceEffect(MobileEntity source, Point2D location)
 	{
-		var spell = new DarknessSpell()
+		var spell = new DarknessSpell
 		{
 			Item = this,
 				
@@ -42,5 +49,29 @@ public partial class DarknessOrb : SpellOrb, ITreasure
 
 		spell.Warm(source);
 		spell.CastAt(location);
+	}
+	
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

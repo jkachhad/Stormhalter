@@ -53,8 +53,8 @@ public class Tree : TerrainComponent
 		return new Tree(color, treeId, canGrow, decayed);
 	}
 	
-	private static Dictionary<SegmentTile, Timer> _growthTimer = new Dictionary<SegmentTile, Timer>();
-
+	private static readonly Dictionary<SegmentTile, Timer> _growthTimer = new Dictionary<SegmentTile, Timer>();
+	
 	private static void StartGrowthTimer(SegmentTile parent, Tree component)
 	{
 		if (_growthTimer.TryGetValue(parent, out var timer))
@@ -110,6 +110,7 @@ public class Tree : TerrainComponent
 		new TreeStages() { new TreeStagePair(247, 101), },
 		new TreeStages() { new TreeStagePair(370, 372), },
 		new TreeStages() { new TreeStagePair(403, 402), },
+
 		new TreeStages() { new TreeStagePair(625, 103), },
 		new TreeStages() { new TreeStagePair(901, 103), },
 		new TreeStages() { new TreeStagePair(893, 897), },
@@ -121,6 +122,7 @@ public class Tree : TerrainComponent
 		new TreeStages() { new TreeStagePair(900, 103), },
 		new TreeStages() { new TreeStagePair(901, 103), },
 		new TreeStages() { new TreeStagePair(902, 103), },
+		new TreeStages() { new TreeStagePair(903, 103), },
 		new TreeStages() { new TreeStagePair(905, 103), },
 		new TreeStages() { new TreeStagePair(906, 103), },
         new TreeStages() { new TreeStagePair(1004, 103), },
@@ -129,7 +131,35 @@ public class Tree : TerrainComponent
 		new TreeStages() { new TreeStagePair(625, 625), },
 		new TreeStages() { new TreeStagePair(626, 626), },
 		new TreeStages() { new TreeStagePair(627, 627), },
-	};
+		new TreeStages() { new TreeStagePair(1112, 1113), },
+		new TreeStages() { new TreeStagePair(1373, 1378), },
+		new TreeStages() { new TreeStagePair(1374, 1378), },
+		new TreeStages() { new TreeStagePair(1375, 1378), },
+		new TreeStages() { new TreeStagePair(1376, 1378), },
+		new TreeStages() { new TreeStagePair(1377, 1378), },
+
+        new TreeStages() { new TreeStagePair(1580, 102), },
+        new TreeStages() { new TreeStagePair(1581, 102), },
+        new TreeStages() { new TreeStagePair(1582, 102), },
+        new TreeStages() { new TreeStagePair(1583, 102), },
+        new TreeStages() { new TreeStagePair(1584, 102), },
+        new TreeStages() { new TreeStagePair(1585, 102), },
+        new TreeStages() { new TreeStagePair(1586, 102), },
+        new TreeStages() { new TreeStagePair(1587, 102), },
+        new TreeStages() { new TreeStagePair(1588, 102), },
+        new TreeStages() { new TreeStagePair(1589, 102), },
+        new TreeStages() { new TreeStagePair(1590, 102), },
+        new TreeStages() { new TreeStagePair(1591, 102), },
+        new TreeStages() { new TreeStagePair(1592, 101), },
+        new TreeStages() { new TreeStagePair(1593, 102), },
+        new TreeStages() { new TreeStagePair(1594, 102), },
+        new TreeStages() { new TreeStagePair(1595, 102), },
+        new TreeStages() { new TreeStagePair(1596, 102), },
+        new TreeStages() { new TreeStagePair(1597, 102), },
+        new TreeStages() { new TreeStagePair(1598, 102), },
+        new TreeStages() { new TreeStagePair(1599, 102), },
+
+    };
 		
 	private static TreeStages FindStages(int treeId)
 	{
@@ -214,10 +244,10 @@ public class Tree : TerrainComponent
 	/// <param name="parent"></param>
 	public void Grow(SegmentTile parent)
 	{
+		StopGrowthTimer(parent);
+		
 		if ((_currentStage >= _stages.Count))
 			return;
-		
-		StopGrowthTimer(parent);
 		
 		var stage = _currentStage + 1;
 		var max = _stages.Count - 1;
@@ -269,9 +299,9 @@ public class Tree : TerrainComponent
 
 	protected override void OnDispose(SegmentTile parent, bool disposing)
 	{
-		StopGrowthTimer(parent);
-			
 		base.OnDispose(parent, disposing);
+		
+		StopGrowthTimer(parent);
 	}
 
 	private class GrowthTimer : Timer

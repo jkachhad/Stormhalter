@@ -51,7 +51,7 @@ public class Web : Static, IHandlePathing
 	}
 	
 	private static readonly Dictionary<SegmentTile, Timer> _dispelTimers = new Dictionary<SegmentTile, Timer>();
-
+	
 	private static void StartDispelTimer(SegmentTile parent, Web component, TimeSpan duration)
 	{
 		if (_dispelTimers.TryGetValue(parent, out var timer))
@@ -154,5 +154,12 @@ public class Web : Static, IHandlePathing
 
 		if (parent != null)
 			parent.Remove(this);
+	}
+	
+	protected override void OnDispose(SegmentTile parent, bool disposing)
+	{
+		base.OnDispose(parent, disposing);
+
+		StopDispelTimer(parent);
 	}
 }

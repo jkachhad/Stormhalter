@@ -121,6 +121,8 @@ public class CheckComboBoxPropertyEditor : PropertyEditor
 						propertyInfo.SetValue(source, (Direction)item.Value, null);
 				}
 			}
+			
+			NotifyPropertyChanged(propertyInfo);
 		}
 	}
 }

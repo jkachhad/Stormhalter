@@ -57,9 +57,9 @@ public class WaterComponent : FloorComponent
 
 	#region Methods
 
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		if (_depth != 3)
 			element.Add(new XElement("depth", _depth));
@@ -69,7 +69,7 @@ public class WaterComponent : FloorComponent
 	
 	public override TerrainComponent Clone()
 	{
-		return new WaterComponent(GetXElement());
+		return new WaterComponent(GetSerializingElement());
 	}
 
 	#endregion

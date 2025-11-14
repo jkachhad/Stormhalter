@@ -2,7 +2,7 @@ using Kesmai.Server.Game;
 
 namespace Kesmai.Server.Items;
 
-public partial interface IWieldable
+public interface IWieldable
 {
 	void OnWield(MobileEntity entity);
 

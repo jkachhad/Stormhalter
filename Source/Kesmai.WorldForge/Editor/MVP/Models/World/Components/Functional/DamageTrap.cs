@@ -22,9 +22,9 @@ public class DamageTrap : TrapComponent
 			_damage = (int)damageElement;
 	}
 	
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		if (_damage > 0)
 			element.Add(new XElement("damage", _damage));
@@ -34,6 +34,6 @@ public class DamageTrap : TrapComponent
 
 	public override TerrainComponent Clone()
 	{
-		return new DamageTrap(GetXElement());
+		return new DamageTrap(GetSerializingElement());
 	}
 }

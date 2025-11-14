@@ -5,7 +5,7 @@ using System.Xml.Linq;
 
 namespace Kesmai.Server.Game;
 
-public abstract class TerrainComponent
+public abstract class TerrainComponent : IComponentProvider
 {
 	private static readonly Dictionary<Type, IComponentCache> _componentCaches = new()
 	{
@@ -13,6 +13,7 @@ public abstract class TerrainComponent
 		[typeof(Wall)] = new Wall.Cache(),
 		[typeof(Static)] = new Static.Cache(),
 		[typeof(Ice)] = new Ice.Cache(),
+		[typeof(Fire)] = new Fire.Cache(),
 		[typeof(Water)] = new Water.Cache(),
 		[typeof(PoisonedWater)] = new PoisonedWater.Cache(),
 		[typeof(Ruins)] = new Ruins.Cache(),
@@ -95,4 +96,9 @@ public abstract class TerrainComponent
 	}
 		
 	#endregion
+
+	public IEnumerable<TerrainComponent> GetComponents()
+	{
+		yield return this;
+	}
 }

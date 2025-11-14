@@ -7,7 +7,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class GlassWand : Wand, ITreasure
+public class GlassWand : Wand, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 700;
@@ -22,6 +22,13 @@ public partial class GlassWand : Wand, ITreasure
 	{
 	}
 
+	/// <summary>
+	/// Initializes a new instance of the <see cref="GlassWand"/> class.
+	/// </summary>
+	public GlassWand(Serial serial) : base(serial)
+	{
+	}
+
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
 	{
@@ -30,10 +37,10 @@ public partial class GlassWand : Wand, ITreasure
 		if (Identified)
 			entries.Add(new LocalizationEntry(6250111)); /* The wand contains the spell of Ice Storm. */
 	}
-		
+
 	public override Spell GetSpell()
 	{
-		return new IceStormSpell()
+		return new IceStormSpell
 		{
 			Item = this,
 				
@@ -43,7 +50,7 @@ public partial class GlassWand : Wand, ITreasure
 			Cost = 0,
 		};
 	}
-		
+
 	protected override void OnTarget(MobileEntity source, Point2D location)
 	{
 		var spell = GetSpell();
@@ -52,6 +59,30 @@ public partial class GlassWand : Wand, ITreasure
 		{
 			icestorm.Warm(source);
 			icestorm.CastAt(location);
+		}
+	}
+
+	/// <inheritdoc />
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <inheritdoc />
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
 		}
 	}
 }

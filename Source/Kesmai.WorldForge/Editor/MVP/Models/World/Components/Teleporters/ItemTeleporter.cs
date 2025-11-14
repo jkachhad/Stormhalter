@@ -31,9 +31,9 @@ public class ItemTeleporter : HiddenTeleporterComponent
 			OnFail = PathingResult.Interrupted;
 	}
 
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		if (!String.IsNullOrWhiteSpace(Type))
 			element.Add(new XElement("type", Type));
@@ -46,6 +46,6 @@ public class ItemTeleporter : HiddenTeleporterComponent
 
 	public override TerrainComponent Clone()
 	{
-		return new ItemTeleporter(GetXElement());
+		return new ItemTeleporter(GetSerializingElement());
 	}
 }

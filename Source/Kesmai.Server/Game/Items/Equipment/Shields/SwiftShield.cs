@@ -9,7 +9,7 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Items;
 
-public partial class SwiftShield : Shield, ITreasure
+public class SwiftShield : Shield, ITreasure
 {
 	/// <inheritdoc />
 	public override uint BasePrice => 2000;
@@ -64,7 +64,7 @@ public partial class SwiftShield : Shield, ITreasure
 		{
 			status = new ShieldStatus(entity)
 			{
-				Inscription = new SpellInscription() { SpellId = 52 }
+				Inscription = new SpellInscription { SpellId = 52 }
 			};
 			status.AddSource(new ItemSource(this));
 				
@@ -74,6 +74,8 @@ public partial class SwiftShield : Shield, ITreasure
 		{
 			status.AddSource(new ItemSource(this));
 		}
+		
+		entity.Stats[EntityStat.Barrier].Add(+Shield, ModifierType.Constant);
 	}
 
 	public override void OnUnwield(MobileEntity entity)
@@ -82,5 +84,7 @@ public partial class SwiftShield : Shield, ITreasure
 
 		if (entity.GetStatus(typeof(ShieldStatus), out var status))
 			status.RemoveSource(this);
+		
+		entity.Stats[EntityStat.Barrier].Remove(+Shield, ModifierType.Constant);
 	}
 }

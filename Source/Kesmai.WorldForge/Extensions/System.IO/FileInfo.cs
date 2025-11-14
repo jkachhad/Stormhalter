@@ -19,12 +19,4 @@ public static class FileInfoExtensions
 
 		return false;
 	}
-
-	public static bool IsZipFile(this FileInfo file)
-	{
-		return file.HasLeadingBytes(new byte[]
-		{
-			0x50, 0x4b, 0x03, 0x04,
-		});
-	}
 }

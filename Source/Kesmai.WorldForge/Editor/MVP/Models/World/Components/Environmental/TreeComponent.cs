@@ -52,7 +52,54 @@ public class TreeComponent : TerrainComponent
 		new TreeStages() { new TreeStagePair(247, 101), },
 		new TreeStages() { new TreeStagePair(370, 372), },
 		new TreeStages() { new TreeStagePair(403, 402), },
-	};
+
+        new TreeStages() { new TreeStagePair(625, 103), },
+        new TreeStages() { new TreeStagePair(901, 103), },
+        new TreeStages() { new TreeStagePair(893, 897), },
+        new TreeStages() { new TreeStagePair(894, 897), },
+        new TreeStages() { new TreeStagePair(895, 897), },
+        new TreeStages() { new TreeStagePair(896, 897), },
+        new TreeStages() { new TreeStagePair(898, 103), },
+        new TreeStages() { new TreeStagePair(899, 103), },
+        new TreeStages() { new TreeStagePair(900, 103), },
+        new TreeStages() { new TreeStagePair(901, 103), },
+        new TreeStages() { new TreeStagePair(902, 103), },
+        new TreeStages() { new TreeStagePair(905, 103), },
+        new TreeStages() { new TreeStagePair(906, 103), },
+        new TreeStages() { new TreeStagePair(1004, 103), },
+
+        new TreeStages() { new TreeStagePair(624, 624), },
+        new TreeStages() { new TreeStagePair(625, 625), },
+        new TreeStages() { new TreeStagePair(626, 626), },
+        new TreeStages() { new TreeStagePair(627, 627), },
+        new TreeStages() { new TreeStagePair(1112, 1113), },
+        new TreeStages() { new TreeStagePair(1373, 1378), },
+        new TreeStages() { new TreeStagePair(1374, 1378), },
+        new TreeStages() { new TreeStagePair(1375, 1378), },
+        new TreeStages() { new TreeStagePair(1376, 1378), },
+        new TreeStages() { new TreeStagePair(1377, 1378), },
+
+        new TreeStages() { new TreeStagePair(1580, 103), },
+        new TreeStages() { new TreeStagePair(1581, 103), },
+        new TreeStages() { new TreeStagePair(1582, 103), },
+        new TreeStages() { new TreeStagePair(1583, 103), },
+        new TreeStages() { new TreeStagePair(1584, 103), },
+        new TreeStages() { new TreeStagePair(1585, 103), },
+        new TreeStages() { new TreeStagePair(1586, 103), },
+        new TreeStages() { new TreeStagePair(1587, 103), },
+        new TreeStages() { new TreeStagePair(1588, 103), },
+        new TreeStages() { new TreeStagePair(1589, 103), },
+        new TreeStages() { new TreeStagePair(1590, 103), },
+        new TreeStages() { new TreeStagePair(1591, 103), },
+        new TreeStages() { new TreeStagePair(1592, 103), },
+        new TreeStages() { new TreeStagePair(1593, 103), },
+        new TreeStages() { new TreeStagePair(1594, 103), },
+        new TreeStages() { new TreeStagePair(1595, 103), },
+        new TreeStages() { new TreeStagePair(1596, 103), },
+        new TreeStages() { new TreeStagePair(1597, 103), },
+        new TreeStages() { new TreeStagePair(1598, 103), },
+        new TreeStages() { new TreeStagePair(1599, 103), },
+    };
 		
 	private static TreeStages FindStages(int treeId)
 	{
@@ -119,7 +166,7 @@ public class TreeComponent : TerrainComponent
 	#region Methods
 
 	/// <inheritdoc />
-	public override IEnumerable<ComponentRender> GetTerrain()
+	public override IEnumerable<ComponentRender> GetRenders()
 	{
 		var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
 		Terrain terrain;
@@ -141,9 +188,9 @@ public class TreeComponent : TerrainComponent
 
 	}
 
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		element.Add(new XElement("tree", _tree));
 		element.Add(new XElement("canGrow", CanGrow));
@@ -156,7 +203,7 @@ public class TreeComponent : TerrainComponent
 		
 	public override TerrainComponent Clone()
 	{
-		return new TreeComponent(GetXElement());
+		return new TreeComponent(GetSerializingElement());
 	}
 
 	#endregion

@@ -41,9 +41,9 @@ public class GameSprite
 
 	public bool HitTest(int x, int y)
 	{
-		var dx = (int)(x + Offset.X);
-		var dy = (int)(y + Offset.Y);
-			
+		var dx = (int)((x + Offset.X) * Resolution);
+		var dy = (int)((y + Offset.Y) * Resolution);
+
 		if (Texture != null && !Texture.IsTransparent(dx, dy))
 			return true;
 

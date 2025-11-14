@@ -39,16 +39,16 @@ public class StaircaseComponent : ActiveTeleporter
 
 	#region Methods
 		
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 			
 		return element;
 	}
 
 	public override TerrainComponent Clone()
 	{
-		return new StaircaseComponent(GetXElement());
+		return new StaircaseComponent(GetSerializingElement());
 	}
 
 	#endregion

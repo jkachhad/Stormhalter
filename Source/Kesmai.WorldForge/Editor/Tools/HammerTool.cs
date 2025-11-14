@@ -14,9 +14,9 @@ public class HammerTool : ComponentTool
 	{
 	}
 
-	protected override bool IsValid(TerrainComponent component)
+	protected override bool IsValid(IComponentProvider provider)
 	{
-		return component is WallComponent;
+		return provider is WallComponent;
 	}
 
 	protected override void OnClick()

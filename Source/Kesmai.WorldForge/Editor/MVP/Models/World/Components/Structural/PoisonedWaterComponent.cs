@@ -29,9 +29,9 @@ public class PoisonedWaterComponent : WaterComponent
 			_potency = 3;
 	}
 		
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		if (_potency != 3)
 			element.Add(new XElement("potency", _potency));
@@ -41,6 +41,6 @@ public class PoisonedWaterComponent : WaterComponent
 		
 	public override TerrainComponent Clone()
 	{
-		return new PoisonedWaterComponent(GetXElement());
+		return new PoisonedWaterComponent(GetSerializingElement());
 	}
 }

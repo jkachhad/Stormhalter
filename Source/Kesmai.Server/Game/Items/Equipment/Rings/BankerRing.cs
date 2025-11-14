@@ -11,7 +11,7 @@ using Kesmai.Server.Targeting;
 
 namespace Kesmai.Server.Items;
 
-public partial class BankerRing : Ring, ITreasure
+public class BankerRing : Ring, ITreasure
 {
 	private static uint _carryLimit = 4000000000;
 			
@@ -96,7 +96,7 @@ public partial class BankerRing : Ring, ITreasure
 			return;
 
 		/* Move the created gold to the specified location. */
-		var gold = new Gold()
+		var gold = new Gold
 		{
 			Amount = Consumed
 		};
@@ -194,19 +194,19 @@ public partial class BankerRing : Ring, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 
 		writer.Write((short)1); /* version */
 			
-		writer.Write((uint)_consumed);
+		writer.Write(_consumed);
 	}
 
 	/// <inheritdoc />
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 
 		var version = reader.ReadInt16();
 

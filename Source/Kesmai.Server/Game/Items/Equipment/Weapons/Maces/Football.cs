@@ -5,7 +5,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class Football : Mace
+public class Football : Mace
 {
 	/// <inheritdoc />
 	public override int LabelNumber => 6000039;

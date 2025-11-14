@@ -9,6 +9,39 @@ using Kesmai.Server.Spells;
 namespace Kesmai.Server.Game;
 
 [WorldForge]
+public interface IConsumableContent
+{
+	/// <summary>
+	/// Gets the description for the content.
+	/// </summary>
+	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries);
+
+	/// <summary>
+	/// Called when consumed by an entity.
+	/// </summary>
+	public void OnConsume(MobileEntity entity, Consumable item);
+
+	/// <summary>
+	/// Called when this instance is thrown at the specified entity.
+	/// </summary>
+	/// <remarks>The default behavior is to execute <see cref="ThrowAt(Kesmai.Server.Game.MobileEntity,Kesmai.Server.Game.Point2D)"/></remarks>
+	public void ThrowAt(MobileEntity source, Consumable item, MobileEntity target)
+	{
+		ThrowAt(source, item, target.Location);
+	}
+
+	/// <summary>
+	/// Called when this instance is thrown to the specified location.
+	/// </summary>
+	public void ThrowAt(MobileEntity source, Consumable item, Point2D location)
+	{
+	}
+
+	public void Serialize(SpanWriter writer);
+	public void Deserialize(ref SpanReader reader);
+}
+
+[WorldForge]
 public class ConsumableHeal : IConsumableContent
 {
 	private int _amount; 
@@ -32,14 +65,14 @@ public class ConsumableHeal : IConsumableContent
 		entity.Health += _amount;
 	}
 
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 			
-		writer.Write((int)_amount);
+		writer.Write(_amount);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -85,14 +118,14 @@ public class ConsumableDamage : IConsumableContent
 		entity.Health = health;
 	}
 		
-	public virtual void Serialize(BinaryWriter writer)
+	public virtual void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 			
-		writer.Write((int)_amount);
+		writer.Write(_amount);
 	}
 
-	public virtual void Deserialize(BinaryReader reader)
+	public virtual void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -129,14 +162,14 @@ public class ConsumablePoison : IConsumableContent
 		entity.Poison(item.Owner, new Poison(TimeSpan.Zero, _potency));
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 			
-		writer.Write((int)_potency);
+		writer.Write(_potency);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -197,15 +230,15 @@ public class ConsumablePoisonAntidote : IConsumableContent
 		}
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)2);
 			
-		writer.Write((bool)_relative);
-		writer.Write((int)_potency);
+		writer.Write(_relative);
+		writer.Write(_potency);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -240,12 +273,12 @@ public class ConsumableBlindnessAntidote : IConsumableContent
 			entity.RemoveStatus(status);
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -302,17 +335,17 @@ public class ConsumableRestoreMana : IConsumableContent
 			entity.Mana = entity.MaxMana;
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 			
-		writer.Write((bool)_amount.HasValue);
+		writer.Write(_amount.HasValue);
 
 		if (_amount.HasValue)
-			writer.Write((int)_amount.Value);
+			writer.Write(_amount.Value);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -352,35 +385,27 @@ public class ConsumableIncreaseMana : IConsumableContent
 
 	public void OnConsume(MobileEntity entity, Consumable item)
 	{
-		if (entity is PlayerEntity player)
-		{
-			var profession = player.Profession;
-			var professionMaxMana = profession.GetMaximumMana(player);
+		if (entity is not PlayerEntity player) 
+			return;
 
-			if (professionMaxMana > 0)
-			{
-				var currentMana = player.Mana;
-				var currentMaxMana = player.MaxMana;
+		var currentMaxManaPenalty = player.Stats[EntityStat.MaxMana].Penalty;
 
-				if (currentMaxMana < professionMaxMana)
-					currentMaxMana += _amount;
-
-				currentMaxMana = player.MaxMana = Math.Min(currentMaxMana, professionMaxMana);
-
-				if (currentMana < currentMaxMana)
-					player.Mana = currentMaxMana;
-			}
-		}
+		if (currentMaxManaPenalty is 0) 
+			return;
+		
+		player.Stats[EntityStat.MaxMana].Penalty = Math.Max(currentMaxManaPenalty - _amount, 0);
+		
+		player.Mana = player.MaxMana;
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 
-		writer.Write((int)_amount);
+		writer.Write(_amount);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -438,17 +463,17 @@ public class ConsumableRestoreStamina : IConsumableContent
 			entity.Stamina = entity.MaxStamina;
 	}
 		
-	public virtual void Serialize(BinaryWriter writer)
+	public virtual void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 			
-		writer.Write((bool)_amount.HasValue);
+		writer.Write(_amount.HasValue);
 
 		if (_amount.HasValue)
-			writer.Write((int)_amount.Value);
+			writer.Write(_amount.Value);
 	}
 
-	public virtual void Deserialize(BinaryReader reader)
+	public virtual void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -481,16 +506,16 @@ public class ConsumableWater : ConsumableRestoreStamina
 			entries.Add(new LocalizationEntry(6250062)); /* The bottle contains water. */
 	}
 		
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 			
 		writer.Write((byte)1);
 	}
 
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 			
 		var version = reader.ReadByte();
 
@@ -523,17 +548,17 @@ public class ConsumableUrine : ConsumableDamage
 			entries.Add(new LocalizationEntry(6250064, _owner)); /* The bottle contains {_owner} urine. */
 	}
 		
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 			
 		writer.Write((byte)1);
-		writer.Write((string)_owner);
+		writer.Write(_owner);
 	}
 
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 			
 		var version = reader.ReadByte();
 
@@ -574,12 +599,12 @@ public class ConsumableAmbrosia : IConsumableContent
 		}
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -617,7 +642,7 @@ public class ConsumableNaphtha : IConsumableContent
 			return;
 			
 		// TODO: Check for hole/sky?
-		var spell = new BonfireSpell()
+		var spell = new BonfireSpell
 		{
 			Item = item,
 					
@@ -629,12 +654,12 @@ public class ConsumableNaphtha : IConsumableContent
 		spell.CastAt(location);
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -674,7 +699,7 @@ public class ConsumableNitro : IConsumableContent
 			return;
 			
 		// TODO: Check for hole/sky?
-		var spell = new ConcussionSpell()
+		var spell = new ConcussionSpell
 		{
 			Item = item,
 			Localized = true,
@@ -687,12 +712,12 @@ public class ConsumableNitro : IConsumableContent
 		spell.CastAt(location);
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -721,7 +746,7 @@ public class ConsumableStrengthSpell : IConsumableContent
 	{
 		if (entity is PlayerEntity player)
 		{
-			var spell = new InstantStrengthSpell()
+			var spell = new InstantStrengthSpell
 			{
 				Item = item, 
 				Cost = 0,
@@ -732,12 +757,12 @@ public class ConsumableStrengthSpell : IConsumableContent
 		}
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -766,7 +791,7 @@ public class ConsumableStrengthStat : IConsumableContent
 		{
 			var strength = player.Stats[EntityStat.BaseStrength];
 
-			if (strength.Base < strength.Maximum)
+			if (strength.Base < strength.MaximumValue)
 				strength.Base++;
 
 			player.SendLocalizedMessage(6100100); /* You feel a little bit more like Hercules. */
@@ -778,12 +803,12 @@ public class ConsumableStrengthStat : IConsumableContent
 		}
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -812,7 +837,7 @@ public class ConsumableDexterityStat : IConsumableContent
 		{
 			var dexterity = player.Stats[EntityStat.BaseDexterity];
 
-			if (dexterity.Base < dexterity.Maximum)
+			if (dexterity.Base < dexterity.MaximumValue)
 				dexterity.Base++;
 
 			player.SendLocalizedMessage(6100102); /* You feel more agile. */
@@ -824,12 +849,12 @@ public class ConsumableDexterityStat : IConsumableContent
 		}
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -858,19 +883,19 @@ public class ConsumableIntelligenceStat : IConsumableContent
 		{
 			var intelligence = player.Stats[EntityStat.BaseIntelligence];
 
-			if (intelligence.Base < intelligence.Maximum)
+			if (intelligence.Base < intelligence.MaximumValue)
 				intelligence.Base++;
 
 			player.SendLocalizedMessage(6100103); /* You feel more ingenious. */
 		}
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -899,19 +924,19 @@ public class ConsumableWillpowerStat : IConsumableContent
 		{
 			var willpower = player.Stats[EntityStat.BaseWillpower];
 
-			if (willpower.Base < willpower.Maximum)
+			if (willpower.Base < willpower.MaximumValue)
 				willpower.Base++;
 
 			player.SendLocalizedMessage(6100105); /* You feel more resolute. */
 		}
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -940,19 +965,19 @@ public class ConsumableWisdomStat : IConsumableContent
 		{
 			var wisdom = player.Stats[EntityStat.BaseWisdom];
 
-			if (wisdom.Base < wisdom.Maximum)
+			if (wisdom.Base < wisdom.MaximumValue)
 				wisdom.Base++;
 
 			player.SendLocalizedMessage(6100104); /* You feel more enlightened. */
 		}
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -977,58 +1002,41 @@ public class ConsumableConstitutionStat : IConsumableContent
 
 	public void OnConsume(MobileEntity entity, Consumable item)
 	{
-		if (entity is PlayerEntity player)
-		{
-			var baseConstitution = player.Stats[EntityStat.BaseConstitution];
+		if (entity is not PlayerEntity player) 
+			return;
+		
+		var baseConstitution = player.Stats[EntityStat.BaseConstitution];
 
-			/* Compare base value with the maximum value.*/
-			if (baseConstitution.Base < baseConstitution.Maximum)
-				baseConstitution.Base += 2;
+		/* Compare base value with the maximum value.*/
+		if (baseConstitution.Base < baseConstitution.MaximumValue)
+			baseConstitution.Base += 2;
 
-			player.SendLocalizedMessage(6100106); /* You feel more hale. */
+		player.SendLocalizedMessage(6100106); /* You feel more hale. */
+		
+		/* Reduce the penalty applied to maximum health. */
+		var currentMaxHealthPenalty = player.Stats[EntityStat.MaxHealth].Penalty;
 
-			var profession = player.Profession;
+		if (currentMaxHealthPenalty > 0)
+			player.Stats[EntityStat.MaxHealth].Penalty = Math.Max(currentMaxHealthPenalty - 4, 0);
+		
+		/* Reduce the penalty applied to maximum stamina. */
+		var currentMaxStaminaPenalty = player.Stats[EntityStat.MaxStamina].Penalty;
 
-			/* Increase health. */
-			var currentHealth = player.Health;
-			var currentMaxHealth = player.MaxHealth;
-			var professionMaxHealth = profession.GetMaximumHealth(player);
-
-			if (currentMaxHealth < professionMaxHealth)
-				currentMaxHealth += 4;
-
-			currentMaxHealth = player.MaxHealth = Math.Min(currentMaxHealth, professionMaxHealth);
-
-			if (currentHealth < currentMaxHealth)
-				player.Health = currentMaxHealth;
-
-			/* Increase stamina. */
-			var currentStamina = player.Stamina;
-			var currentMaxStamina = player.MaxStamina;
-
-			if (currentMaxStamina < 120)
-				currentMaxStamina += 4;
-
-			currentMaxStamina = player.MaxStamina = Math.Min(currentMaxStamina, 120);
-
-			if (currentStamina < currentMaxStamina)
-				player.Stamina = currentMaxStamina;
-
-			/* Restore mana */
-			var currentMana = player.Mana;
-			var currentMaxMana = player.MaxMana;
-
-			if (currentMana < currentMaxMana)
-				player.Mana = currentMaxMana;
-		}
+		if (currentMaxStaminaPenalty > 0)
+			player.Stats[EntityStat.MaxStamina].Penalty = Math.Max(currentMaxStaminaPenalty - 4, 0);
+		
+		/* Increase the player to full health, stamina, and mana. */
+		player.Health = player.MaxHealth;
+		player.Stamina = player.MaxStamina;
+		player.Mana = player.MaxMana;
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 
@@ -1058,12 +1066,12 @@ public class ConsumableBalm : IConsumableContent
 		entity.BalmTimer = new BalmTimer(entity);
 	}
 		
-	public void Serialize(BinaryWriter writer)
+	public void Serialize(SpanWriter writer)
 	{
 		writer.Write((byte)1);
 	}
 
-	public void Deserialize(BinaryReader reader)
+	public void Deserialize(ref SpanReader reader)
 	{
 		var version = reader.ReadByte();
 

@@ -257,9 +257,9 @@ public class HiddenTeleporterComponent : TeleportComponent
 			_allowNPC = (bool)allowNPCsElement;
 	}
 		
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		/**/
 		var lightphasesElement = new XElement("lightphases");
@@ -366,13 +366,13 @@ public class HiddenTeleporterComponent : TeleportComponent
 		return element;
 	}
 		
-	public override IEnumerable<ComponentRender> GetTerrain()
+	public override IEnumerable<ComponentRender> GetRenders()
 	{
 		yield return _internal;
 	}
 		
 	public override TerrainComponent Clone()
 	{
-		return new HiddenTeleporterComponent(GetXElement());
+		return new HiddenTeleporterComponent(GetSerializingElement());
 	}
 }

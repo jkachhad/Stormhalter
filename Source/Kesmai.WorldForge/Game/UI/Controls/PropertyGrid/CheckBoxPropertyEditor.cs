@@ -30,6 +30,8 @@ public class CheckBoxPropertyEditor : PropertyEditor
 			_internal.Properties.Get<bool>(ToggleButton.IsCheckedPropertyId).Changed += (o, args) =>
 			{
 				propertyInfo.SetValue(source, args.NewValue, null);
+				
+				NotifyPropertyChanged(propertyInfo);
 			};
 		}
 		else

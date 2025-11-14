@@ -6,7 +6,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public partial class DungeonBook : ItemEntity, ITreasure
+public class DungeonBook : ItemEntity, ITreasure
 {
 	/// <inheritdoc />
 	public override int Weight => 5;
@@ -33,7 +33,7 @@ public partial class DungeonBook : ItemEntity, ITreasure
 	}
 	
 	/// <inheritdoc />
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 
@@ -41,9 +41,9 @@ public partial class DungeonBook : ItemEntity, ITreasure
 	}
 
 	/// <inheritdoc />
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 
 		var version = reader.ReadInt16();
 

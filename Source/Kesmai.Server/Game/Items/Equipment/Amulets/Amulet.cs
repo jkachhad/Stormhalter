@@ -2,7 +2,7 @@
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class Amulet : Equipment
+public abstract class Amulet : Equipment
 {
 	/// <summary>
 	/// Gets the label number.
@@ -19,5 +19,40 @@ public abstract partial class Amulet : Equipment
 	/// </summary>
 	protected Amulet(int amuletId) : base(amuletId)
 	{
+	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Amulet"/> class.
+	/// </summary>
+	protected Amulet(Serial serial) : base(serial)
+	{
+	}
+	
+	/// <summary>
+	/// Serializes this instance into binary data for persistence.
+	/// </summary>
+	public override void Serialize(SpanWriter writer)
+	{
+		base.Serialize(writer);
+
+		writer.Write((short)1); /* version */
+	}
+
+	/// <summary>
+	/// Deserializes this instance from persisted binary data.
+	/// </summary>
+	public override void Deserialize(ref SpanReader reader)
+	{
+		base.Deserialize(ref reader);
+
+		var version = reader.ReadInt16();
+
+		switch (version)
+		{
+			case 1:
+			{
+				break;
+			}
+		}
 	}
 }

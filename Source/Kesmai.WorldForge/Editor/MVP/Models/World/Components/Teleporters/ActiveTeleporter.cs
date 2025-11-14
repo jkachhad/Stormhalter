@@ -28,7 +28,7 @@ public abstract class ActiveTeleporter : TeleportComponent
 	}
 		
 	/// <inheritdoc />
-	public override IEnumerable<ComponentRender> GetTerrain()
+	public override IEnumerable<ComponentRender> GetRenders()
 	{
 		var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
 
@@ -36,9 +36,9 @@ public abstract class ActiveTeleporter : TeleportComponent
 			yield return new ComponentRender(terrain, (IsValid() ? Color : Microsoft.Xna.Framework.Color.Red));
 	}
 		
-	public override XElement GetXElement()
+	public override XElement GetSerializingElement()
 	{
-		var element = base.GetXElement();
+		var element = base.GetSerializingElement();
 
 		element.Add(new XElement("teleporterId", _teleporterId));
 	

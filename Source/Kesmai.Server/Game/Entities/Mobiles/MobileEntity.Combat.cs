@@ -1,11 +1,63 @@
 using System;
 using System.Linq;
+using Kesmai.Server.Items;
 using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Game;
 
 public abstract partial class MobileEntity
 {
+	/// <summary>
+	/// Calculates this <see cref="MobileEntity"/> melee damage mitigation against the specified <see cref="ItemEntity"/>.
+	/// </summary>
+	public int CalculateMeleeMitigation(ItemEntity weapon)
+		=> Stats[EntityStat.MeleeDamageMitigation].Value;
+	
+	/// <summary>
+	/// Calculates this <see cref="MobileEntity"/> projectile damage mitigation against the specified <see cref="ItemEntity"/>.
+	/// </summary>
+	public int CalculateProjectileMitigation(ItemEntity weapon)
+		=> Stats[EntityStat.ProjectileDamageMitigation].Value;
+	
+	/// <summary>
+	/// Calculates this <see cref="MobileEntity"/> ranged damage mitigation against the specified <see cref="ItemEntity"/>.
+	/// </summary>
+	public int CalculateRangedMitigation(ItemEntity weapon)
+		=> Stats[EntityStat.RangedDamageMitigation].Value;
+		
+	/// <summary>
+	/// Checks if the <see cref="ShieldPenetration"/> value can penetrate the shield for this instance.
+	/// </summary>
+	/// <returns>Returns true if the attack is not blocked by a shield buff.</returns>
+	[WorldForge]
+	public virtual bool CheckShieldPenetration(ShieldPenetration penetration)
+	{
+		if (GetStatus<ShieldStatus>() is ShieldStatus status)
+		{
+			var currentProtection = Stats[EntityStat.Barrier].Value;
+
+			if (penetration > ShieldPenetration.None)
+			{
+				var penetrationDice = 0;
+	
+				switch (penetration)
+				{
+					case ShieldPenetration.VeryHeavy: penetrationDice = 90; break; // Very Heavy
+					case ShieldPenetration.Heavy: penetrationDice = 45; break; // Heavy
+					case ShieldPenetration.Medium: penetrationDice = 36; break; // Medium
+					case ShieldPenetration.Light: penetrationDice = 18; break; // Light
+					case ShieldPenetration.VeryLight: penetrationDice = 13; break; // Very Light
+				}
+	
+				return Utility.RandomBetween(1, penetrationDice) > currentProtection;
+			}
+
+			return false;
+		}
+
+		return true;
+	}
+	
 	/// <summary>
 	/// Dazes the entity for a specified number of rounds.
 	/// </summary>

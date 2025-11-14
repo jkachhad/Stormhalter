@@ -45,6 +45,8 @@ public class EnumPropertyEditor : PropertyEditor
 				var value = values.GetValue(args.NewValue);
 					
 				propertyInfo.SetValue(source, value, null);
+				
+				NotifyPropertyChanged(propertyInfo);
 			}
 		};
 			

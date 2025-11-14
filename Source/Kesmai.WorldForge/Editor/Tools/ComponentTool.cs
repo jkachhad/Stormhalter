@@ -7,6 +7,7 @@ using DigitalRune.Mathematics.Algebra;
 using Kesmai.WorldForge.Editor;
 using Kesmai.WorldForge.Models;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace Kesmai.WorldForge;
@@ -14,15 +15,18 @@ namespace Kesmai.WorldForge;
 public abstract class ComponentTool : Tool
 {
 	protected SegmentTile _tileUnderMouse;
-	protected TerrainComponent _componentUnderMouse;
+	protected IComponentProvider _componentUnderMouse;
 
 	protected virtual Color SelectionColor => Color.Yellow;
+	
+	public SegmentTile TileUnderMouse => _tileUnderMouse;
+	public IComponentProvider ComponentUnderMouse => _componentUnderMouse;
 
 	protected ComponentTool(string name, string icon) : base(name, icon)
 	{
 	}
 		
-	public override void OnHandleInput(PresentationTarget target, IInputService inputService)
+	public override void OnHandleInput(WorldPresentationTarget target, IInputService inputService)
 	{
 		base.OnHandleInput(target, inputService);
 			
@@ -31,55 +35,86 @@ public abstract class ComponentTool : Tool
 			
 		var services = ServiceLocator.Current;
 		var presenter = services.GetInstance<ApplicationPresenter>();
-		var filter = presenter.SelectedFilter;
+		var regionToolbar = services.GetInstance<RegionToolbar>();
+		var regionFilters = services.GetInstance<RegionFilters>();
+		
+		var filter = regionFilters.SelectedFilter;
 			
 		var worldScreen = target.WorldScreen;
 		var zoomFactor = worldScreen.ZoomFactor;
 		var region = target.Region;
-			
-		var (mx, my) = worldScreen.ToWorldCoordinates((int)_position.X, (int)_position.Y);
-		var tile = region.GetTile(mx, my);
 
-		if (tile != null)
+		// get the origin tile coordinates under the mouse. Apply a hit test to find the actual component.
+		bool hitTest(int wx, int wy, out SegmentTile localTileUnderMouse, out IComponentProvider localComponentUnderMouse)
 		{
+			localTileUnderMouse = null;
+			localComponentUnderMouse = null;
+
+			var tile = region.GetTile(wx, wy);
+
+			if (tile is null) 
+				return false;
+			
+			// Get the view rectangle to calculate the screen position of the tile and the offset within the tile.
 			var viewRectangle = worldScreen.GetViewRectangle();
 
-			var rx = (int)Math.Floor((mx - viewRectangle.Left) * (presenter.UnitSize*zoomFactor));
-			var ry = (int)Math.Floor((my - viewRectangle.Top) * (presenter.UnitSize*zoomFactor));
+			var rx = (int)Math.Floor((wx - viewRectangle.Left) * (presenter.UnitSize * zoomFactor));
+			var ry = (int)Math.Floor((wy - viewRectangle.Top) * (presenter.UnitSize * zoomFactor));
 
 			var dx = _position.X - (rx - 45);
 			var dy = _position.Y - (ry - 45);
-				
-			foreach (var component in tile.Components)
+
+			if (!tile.Providers.Any())
+				return false;
+
+			// Check all components of the tile (in reverse order, so top-most components are checked first).
+			foreach (var component in tile.Providers.Reverse().SelectMany(c => c.GetComponents()))
 			{
+				// Skip components that do not match the filter or are not valid for this tool.
 				if ((filter != null && !filter.IsValid(component)) || !IsValid(component))
 					continue;
-					
-				var renderList = component.GetTerrain().ToList();
-
-				for (var i = renderList.Count - 1; i >= 0; i--)
+				
+				// Check all terrain layers of the component (in order of their drawing order).
+				foreach (var layer in component.GetRenders().SelectMany(r => r.Terrain))
 				{
-					var render = renderList[i];
+					var sprite = layer.Sprite;
 
-					foreach (var layer in render.Terrain)
-					{
-						var sprite = layer.Sprite;
-
-						if (sprite != null && sprite.HitTest((int)dx, (int)dy))
-						{
-							_tileUnderMouse = tile;
-							_componentUnderMouse = component;
-						}
-					}
+					if (sprite is null || !sprite.HitTest((int)dx, (int)dy)) 
+						continue;
+					
+					localTileUnderMouse = tile;
+					localComponentUnderMouse = component;
+					return true;
 				}
 			}
+
+			return false;
 		}
+		
+		var (mx, my) = worldScreen.ToWorldCoordinates((int)_position.X, (int)_position.Y);
+
+		if (hitTest(mx + 1, my + 1, out var tileUnderMouse, out var componentUnderMouse) ||
+		    hitTest(mx, my + 1, out tileUnderMouse, out componentUnderMouse) ||
+		    hitTest(mx + 1, my, out tileUnderMouse, out componentUnderMouse) ||
+		    hitTest(mx, my, out tileUnderMouse, out componentUnderMouse))
+		{
+			if (_tileUnderMouse != tileUnderMouse || _componentUnderMouse != componentUnderMouse)
+				worldScreen.InvalidateRender();
 			
+			_tileUnderMouse = tileUnderMouse;
+			_componentUnderMouse = componentUnderMouse;
+		}
+		else
+		{
+			_tileUnderMouse = null;
+			_componentUnderMouse = null;
+		}
+		
 		if (!inputService.IsKeyboardHandled)
 		{
 			if (inputService.IsReleased(Keys.Escape))
 			{
-				presenter.SelectTool(default(Tool));
+				regionToolbar.SelectTool(null);
 				inputService.IsKeyboardHandled = true;
 			}
 		}
@@ -98,7 +133,7 @@ public abstract class ComponentTool : Tool
 		}
 	}
 
-	protected virtual bool IsValid(TerrainComponent component)
+	protected virtual bool IsValid(IComponentProvider provider)
 	{
 		return true;
 	}
@@ -110,48 +145,5 @@ public abstract class ComponentTool : Tool
 	public override void OnRender(RenderContext context)
 	{
 		base.OnRender(context);
-			
-		var services = ServiceLocator.Current;
-		var presenter = services.GetInstance<ApplicationPresenter>();
-			
-		var graphicsService = context.GraphicsService;
-		var spriteBatch = graphicsService.GetSpriteBatch();
-			
-		var presentationTarget = context.GetPresentationTarget();
-		var worldScreen = presentationTarget.WorldScreen;
-		var zoomFactor = worldScreen.ZoomFactor;
-			
-		if (_componentUnderMouse != null)
-		{
-			var viewRectangle = worldScreen.GetViewRectangle();
-			var (mx, my) = worldScreen.ToWorldCoordinates((int)_position.X, (int)_position.Y);
-			
-			var rx = (int)Math.Floor((mx - viewRectangle.Left) * (presenter.UnitSize*zoomFactor));
-			var ry = (int)Math.Floor((my - viewRectangle.Top) * (presenter.UnitSize*zoomFactor));
-			
-			var tileBounds = new Rectangle(rx, ry, (int)Math.Floor(presenter.UnitSize * zoomFactor), (int)Math.Floor(presenter.UnitSize * zoomFactor));
-			var originalBounds = new Rectangle((int)Math.Floor(tileBounds.X - 45*zoomFactor), (int)Math.Floor(tileBounds.Y - 45*zoomFactor), (int)Math.Floor(100*zoomFactor), (int)Math.Floor(100*zoomFactor));
-
-			var component = _componentUnderMouse;
-			var terrains = component.GetTerrain();
-				
-			foreach (var render in terrains)
-			{
-				foreach (var layer in render.Terrain)
-				{
-					var sprite = layer.Sprite;
-
-					if (sprite != null)
-					{
-						var spriteBounds = originalBounds;
-
-						if (sprite.Offset != Vector2F.Zero)
-							spriteBounds.Offset(sprite.Offset.X, sprite.Offset.Y);
-
-						spriteBatch.Draw(sprite.Texture, spriteBounds.Location.ToVector2(), null, SelectionColor, 0, Vector2.Zero, zoomFactor / sprite.Resolution, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0f);
-					}
-				}
-			}
-		}
 	}
 }

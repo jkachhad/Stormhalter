@@ -1,81 +1,73 @@
-﻿using CommonServiceLocator;
-using Kesmai.WorldForge.Editor;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Windows;
 using System.Xml.Linq;
+using CommonServiceLocator;
 
 namespace Kesmai.WorldForge.Models;
 
 public class StaticComponent : TerrainComponent
 {
-	#region Static
+    private int _static;
 
-	#endregion
+    #region Properties and Events
 
-	#region Fields
+    /// <summary>
+    /// Gets the static terrain.
+    /// </summary>
+    [Browsable( true )]
+    public int Static
+    {
+        get => _static;
+        set => SetProperty( ref _static, value );
+    }
 
-	private int _static;
+    #endregion
 
-	#endregion
+    #region Constructors and Cleanup
 
-	#region Properties and Events
+    /// <summary>
+    /// Initializes a new instance of the <see cref="StaticComponent"/> class.
+    /// </summary>
+    public StaticComponent( int staticId )
+    {
+        _static = staticId;
+    }
 
-	/// <summary>
-	/// Gets the static terrain.
-	/// </summary>
-	[Browsable(true)]
-	public int Static
-	{
-		get => _static;
-		set => SetProperty(ref _static, value);
-	}
+    public StaticComponent( XElement element ) : base( element )
+    {
+        var staticElement = element.Element( "static" );
+        
+        if ( staticElement == null )
+            throw new ArgumentException( "Missing <static> element", nameof( element ) );
+        
+        _static = int.Parse( staticElement.Value );
+    }
 
-	#endregion
+    #endregion
 
-	#region Constructors and Cleanup
+    #region Methods
 
-	/// <summary>
-	/// Initializes a new instance of the <see cref="StaticComponent"/> class.
-	/// </summary>
-	public StaticComponent(int staticId)
-	{
-		_static = staticId;
-	}
-		
-	public StaticComponent(XElement element) : base(element)
-	{
-		_static = (int)element.Element("static");
-	}
+    /// <inheritdoc />
+    public override IEnumerable<ComponentRender> GetRenders()
+    {
+        var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
 
-	#endregion
+        if( terrainManager.TryGetValue( _static, out Terrain terrain ) )
+            yield return new ComponentRender( terrain, Color );
+    }
 
-	#region Methods
+    public override XElement GetSerializingElement()
+    {
+        var element = base.GetSerializingElement();
 
-	/// <inheritdoc />
-	public override IEnumerable<ComponentRender> GetTerrain()
-	{
-		var terrainManager = ServiceLocator.Current.GetInstance<TerrainManager>();
+        element.Add( new XElement( "static", _static ) );
 
-		if (terrainManager.TryGetValue(_static, out Terrain terrain))
-			yield return new ComponentRender(terrain, Color);
-	}
-	    
-	public override XElement GetXElement()
-	{
-		var element = base.GetXElement();
+        return element;
+    }
 
-		element.Add(new XElement("static", _static));
+    public override TerrainComponent Clone() => new StaticComponent( GetSerializingElement() );
 
-		return element;
-	}
-	    
-	public override TerrainComponent Clone()
-	{
-		return new StaticComponent(GetXElement());
-	}
 
-	#endregion
+    #endregion
 }

@@ -10,7 +10,7 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-public abstract partial class Armor : Equipment, IArmored
+public abstract class Armor : Equipment, IArmored
 {
 	/// <summary>
 	/// Gets the label number.
@@ -58,6 +58,13 @@ public abstract partial class Armor : Equipment, IArmored
 	/// Initializes a new instance of the <see cref="Armor"/> class.
 	/// </summary>
 	protected Armor(int armorID) : base(armorID)
+	{
+	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Armor"/> class.
+	/// </summary>
+	protected Armor(Serial serial) : base(serial)
 	{
 	}
 		
@@ -108,7 +115,7 @@ public abstract partial class Armor : Equipment, IArmored
 	/// <summary>
 	/// Serializes this instance into binary data for persistence.
 	/// </summary>
-	public override void Serialize(BinaryWriter writer)
+	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);
 
@@ -122,9 +129,9 @@ public abstract partial class Armor : Equipment, IArmored
 	/// <summary>
 	/// Deserializes this instance from persisted binary data.
 	/// </summary>
-	public override void Deserialize(BinaryReader reader)
+	public override void Deserialize(ref SpanReader reader)
 	{
-		base.Deserialize(reader);
+		base.Deserialize(ref reader);
 
 		var version = reader.ReadInt16();
 
@@ -147,7 +154,7 @@ public abstract partial class Armor : Equipment, IArmored
 	}
 		
 	[Flags]
-	private enum ArmorSaveFlag : int
+	private enum ArmorSaveFlag
 	{
 		None 		= 0x00000000,
 			
