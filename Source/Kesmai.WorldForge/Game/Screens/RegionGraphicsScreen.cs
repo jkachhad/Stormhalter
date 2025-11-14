@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Xml.Linq;
 using CommonServiceLocator;
 using CommunityToolkit.Mvvm.Messaging;
 using DigitalRune.Game.UI;
@@ -277,6 +278,17 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 					InvalidateRender();
 				};
 				
+				if (providerFrame is TerrainComponentFrame terrainFrame)
+				{
+					terrainFrame.Convert += (sender, args) =>
+					{
+						if (terrainFrame.Provider is not TerrainComponent terrainComponent)
+							return;
+						
+						OnConvertComponent(terrainComponent);
+					};
+				}
+				
 				_componentFrames.Children.Add(providerFrame);
 			}
 			
@@ -285,7 +297,73 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		
 		base.OnUpdate(deltaTime);
 	}
-
+	
+	private void OnConvertComponent(TerrainComponent sourceComponent)
+	{
+		var applicationPresenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+		
+		if (sourceComponent is null || applicationPresenter is null)
+			return;
+		
+		var segment = applicationPresenter.Segment;
+		
+		if (segment is null)
+			return;
+		
+		var serializedComponent = sourceComponent.GetSerializingElement();
+		
+		if (serializedComponent is null)
+			return;
+		
+		// create converted component.
+		var segmentComponent = new SegmentComponent()
+		{
+			Name = Guid.NewGuid().ToString("N"),
+		};
+		
+		segmentComponent.UpdateComponent(new XElement(serializedComponent));
+		
+		segment.Components.Add(segmentComponent);
+		
+		// create replacement component.
+		foreach (var region in segment.Regions)
+		{
+			foreach (var tile in region.GetTiles())
+			{
+				var tileUpdated = false;
+				
+				var terrainComponents = tile.GetComponents<TerrainComponent>().ToArray();
+				
+				foreach (var terrainComponent in terrainComponents)
+				{
+					if (!XNode.DeepEquals(terrainComponent.GetSerializingElement(), serializedComponent))
+						continue;
+					
+					tile.ReplaceComponent(terrainComponent, segmentComponent);
+					
+					tileUpdated = true;
+				}
+				
+				if (tileUpdated)
+					tile.UpdateTerrain();
+			}
+		}
+		
+		// update the editing tile.
+		_editingTile.UpdateTerrain();
+			
+		_editingProviders.Clear();
+		
+		foreach (var provider in _editingTile.Providers)
+			provider.AddComponent(_editingProviders);
+		
+		InvalidateFrames();
+		InvalidateRender();
+		
+		// present the new component to the user.
+		segmentComponent.Present(applicationPresenter);
+	}
+	
 	private void OnFrameDelete(object sender, EventArgs args)
 	{
 		if (sender is not ComponentFrame frame)
