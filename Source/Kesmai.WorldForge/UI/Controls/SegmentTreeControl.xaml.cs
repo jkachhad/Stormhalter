@@ -650,10 +650,28 @@ public partial class SegmentTreeControl : UserControl
 
                 parentNode = folderNode;
             }
-        }
-        
-        if (parentNode != null)
-            parentNode.Items.Add(entityItem);
+		}
+
+		if (parentNode != null)
+		{
+			if (entityItem.Parent is ItemsControl currentParent)
+			{
+				// If the entity already belongs to a different folder we must detach it before
+				// re-attaching, otherwise WPF throws "element already has a logical parent".
+				if (!ReferenceEquals(currentParent, parentNode))
+				{
+					currentParent.Items.Remove(entityItem);
+				}
+				else if (parentNode.Items.Contains(entityItem))
+				{
+					// The item is already part of this group, nothing else to do.
+					return;
+				}
+			}
+
+			parentNode.Items.Add(entityItem);
+		}
+
     }
     
     private void OnEntityRemoved(SegmentEntity entity)
