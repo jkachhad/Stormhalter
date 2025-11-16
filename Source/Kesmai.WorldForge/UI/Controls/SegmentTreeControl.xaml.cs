@@ -66,12 +66,7 @@ public partial class SegmentTreeControl : UserControl
         
         WeakReferenceMessenger.Default.Register<SegmentEntityAdded>(this, (r, m) => OnEntityAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentEntityRemoved>(this, (r, m) => OnEntityRemoved(m.Value));
-        WeakReferenceMessenger.Default.Register<SegmentEntityChanged>(this, (r, m) =>
-        {
-            // for entity changes, we need to update the grouping in the tree.
-            OnEntityRemoved(m.Value);
-            OnEntityAdded(m.Value);
-        });
+        WeakReferenceMessenger.Default.Register<SegmentEntityChanged>(this, (r, m) => OnEntityChanged(m.Value));
         
         WeakReferenceMessenger.Default.Register<SegmentTreasureAdded>(this, (r, m) => OnTreasureAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentTreasureRemoved>(this, (r, m) => OnTreasureRemoved(m.Value));
@@ -608,7 +603,6 @@ public partial class SegmentTreeControl : UserControl
     {
         EnsureEntitiesNode();
         
-        // an entity has been added, create its tree node.
         if (!_entityItems.TryGetValue(entity, out var entityItem))
         {
             entityItem = new SegmentTreeViewItem(entity, Brushes.Yellow, true)
@@ -624,14 +618,40 @@ public partial class SegmentTreeControl : UserControl
             _entityItems.Add(entity, entityItem);
         }
         
-        // parse the group path and insert into the tree.
+        BindEntityToGroup(entity, entityItem);
+    }
+    
+    private void OnEntityChanged(SegmentEntity entity)
+    {
+        if (!_entityItems.TryGetValue(entity, out var entityItem))
+            return;
+
+        entityItem.EditableTextBlock.Text = entity.Name;
+        
+        BindEntityToGroup(entity, entityItem);
+    }
+    
+    private void OnEntityRemoved(SegmentEntity entity)
+    {
+        // an entity has been removed, delete its tree node.
+        if (_entityItems.Remove(entity, out var entityNode))
+        {
+            // find the parent node.
+            if (entityNode.Parent is TreeViewItem parentNode)
+                parentNode.Items.Remove(entityNode);
+        }
+    }
+
+    private void BindEntityToGroup(SegmentEntity entity, SegmentTreeViewItem entityItem)
+    {
+        EnsureEntitiesNode();
+
         var groupPath = String.IsNullOrEmpty(entity.Group) ? "Ungrouped" : entity.Group;
         
         if (!_entityGroupNodes.TryGetValue(groupPath, out var parentNode))
         {
             parentNode = _entitiesNode;
             
-            // split the path into folders.
             var groupFolders = groupPath.Split(@"\");
 
             for (int i = 0; i < groupFolders.Length; i++)
@@ -648,16 +668,15 @@ public partial class SegmentTreeControl : UserControl
                     folderNode.ContextMenu = new ContextMenu();
                     folderNode.ContextMenu.AddItem("Add Entity", "Add.png", (s, e) =>
                     {
-                        var entity = new SegmentEntity
+                        var newEntity = new SegmentEntity
                         {
                             Name = $"Entity {_nextId++}",
                             Group = folderPath
                         };
             
-                        Segment.Entities.Add(entity);
+                        Segment.Entities.Add(newEntity);
                 
-                        // present the new entity to the user.
-                        entity.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+                        newEntity.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
                     });
                     
                     _entityGroupNodes.Add(folderPath, folderNode);
@@ -667,36 +686,17 @@ public partial class SegmentTreeControl : UserControl
             }
 		}
 
-		if (parentNode != null)
-		{
-			if (entityItem.Parent is ItemsControl currentParent)
-			{
-				// If the entity already belongs to a different folder we must detach it before
-				// re-attaching, otherwise WPF throws "element already has a logical parent".
-				if (!ReferenceEquals(currentParent, parentNode))
-				{
-					currentParent.Items.Remove(entityItem);
-				}
-				else if (parentNode.Items.Contains(entityItem))
-				{
-					// The item is already part of this group, nothing else to do.
-					return;
-				}
-			}
-
-			parentNode.Items.Add(entityItem);
-		}
-
-    }
-    
-    private void OnEntityRemoved(SegmentEntity entity)
-    {
-        // an entity has been removed, delete its tree node.
-        if (_entityItems.Remove(entity, out var entityNode))
+        if (parentNode != null)
         {
-            // find the parent node.
-            if (entityNode.Parent is TreeViewItem parentNode)
-                parentNode.Items.Remove(entityNode);
+            if (entityItem.Parent is ItemsControl currentParent && !ReferenceEquals(currentParent, parentNode))
+            {
+                // If the entity already belongs to a different folder we must detach it before
+                // re-attaching, otherwise WPF throws "element already has a logical parent".
+                currentParent.Items.Remove(entityItem);
+            }
+
+            if (!parentNode.Items.Contains(entityItem))
+                parentNode.Items.Add(entityItem);
         }
     }
 
