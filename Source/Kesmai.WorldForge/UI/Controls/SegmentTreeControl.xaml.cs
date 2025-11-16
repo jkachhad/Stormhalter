@@ -645,6 +645,21 @@ public partial class SegmentTreeControl : UserControl
                         Header = CreateHeader(groupFolders[i], "Folder.png")
                     });
                     
+                    folderNode.ContextMenu = new ContextMenu();
+                    folderNode.ContextMenu.AddItem("Add Entity", "Add.png", (s, e) =>
+                    {
+                        var entity = new SegmentEntity
+                        {
+                            Name = $"Entity {_nextId++}",
+                            Group = folderPath
+                        };
+            
+                        Segment.Entities.Add(entity);
+                
+                        // present the new entity to the user.
+                        entity.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+                    });
+                    
                     _entityGroupNodes.Add(folderPath, folderNode);
                 }
 
@@ -847,6 +862,34 @@ public partial class SegmentTreeControl : UserControl
             {
                 Header = CreateHeader($"[{region.ID}] {region.Name}", "Folder.png")
             };
+
+            parentNode.ContextMenu = new ContextMenu();
+            parentNode.ContextMenu.AddItem("Add Location Spawner", "Add.png", (s, e) =>
+            {
+                var spawn = new LocationSegmentSpawner()
+                {
+                    Name = $"Location Spawner {_nextId++}",
+                    Region = regionId
+                };
+            
+                Segment.Spawns.Location.Add(spawn);
+                
+                // present the new treasure to the user.
+                spawn.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+            });
+            parentNode.ContextMenu.AddItem("Add Region Spawner", "Add.png", (s, e) =>
+            {
+                var spawn = new RegionSegmentSpawner()
+                {
+                    Name = $"Region Spawner {_nextId++}",
+                    Region = regionId
+                };
+            
+                Segment.Spawns.Region.Add(spawn);
+                
+                // present the new treasure to the user.
+                spawn.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());   
+            });
 
             _spawnersNode.Items.Add(parentNode);
             _spawnGroupNodes.Add(regionId, parentNode);
