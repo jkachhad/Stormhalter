@@ -216,8 +216,36 @@ public partial class SegmentTreeControl : UserControl
 		foreach (var item in ordered)
 			_regionsNode.Items.Add(item);
 	}
-    
-    /// <summary>
+	private void ResetTreeState()
+	{
+		// Root nodes
+		_segmentNode = null;
+		_brushesNode = null;
+		_templatesNode = null;
+		_regionsNode = null;
+		_locationsNode = null;
+		_componentsNode = null;
+		_entitiesNode = null;
+		_spawnersNode = null;
+		_treasureNode = null;
+
+		// Item lookup dictionaries
+		_regionItems.Clear();
+		_subregionItems.Clear();
+		_locationItems.Clear();
+		_componentItems.Clear();
+		_brushItems.Clear();
+		_templateItems.Clear();
+		_entityItems.Clear();
+		_treasureItems.Clear();
+		_spawnItems.Clear();
+
+		// Grouping caches
+		_entityGroupNodes.Clear();
+		_spawnGroupNodes.Clear();
+	}
+
+	/// <summary>
 	/// Ensure the spawn region folders under the "Spawns" node are ordered
 	/// by their region id (the key in _spawnGroupNodes).
 	/// </summary>
@@ -955,8 +983,9 @@ public partial class SegmentTreeControl : UserControl
     private void Update()
     {
         _tree.Items.Clear();
-        
-        if (Segment is null)
+		ResetTreeState();
+
+		if (Segment is null)
             return;
 
         EnsureSegmentNode();
@@ -984,8 +1013,8 @@ public partial class SegmentTreeControl : UserControl
 		SortRegionsById();
 		SortSpawnGroupsByRegionId();
 	}
-    
-    private void OnItemSelected(object sender, RoutedPropertyChangedEventArgs<object> e)
+
+	private void OnItemSelected(object sender, RoutedPropertyChangedEventArgs<object> e)
     {
         // Only send message if the selected item is a segment object.
         if (e.NewValue is TreeViewItem { Tag: ISegmentObject segmentObject })
