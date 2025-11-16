@@ -575,7 +575,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			{
 				foreach (var selectorKey in _selectorKeys)
 				{
-					if (!inputManager.IsReleased(selectorKey))
+					if (!inputManager.IsPressed(selectorKey, false))
 						continue;
 
 					var index = _selectorKeys.IndexOf(selectorKey);
@@ -592,7 +592,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			{
 				foreach (var toolKey in _toolKeys)
 				{
-					if (!inputManager.IsReleased(toolKey))
+					if (!inputManager.IsPressed(toolKey, false))
 						continue;
 
 					var index = _toolKeys.IndexOf(toolKey);
