@@ -74,12 +74,7 @@ public partial class SegmentTreeControl : UserControl
       
         WeakReferenceMessenger.Default.Register<SegmentSpawnAdded>(this, (r, m) => OnSpawnAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentSpawnRemoved>(this, (r, m) => OnSpawnRemoved(m.Value));
-        WeakReferenceMessenger.Default.Register<SegmentSpawnChanged>(this, (r, m) =>
-        {
-            // for spawn changes, we need to update the grouping in the tree.
-            OnSpawnRemoved(m.Value);
-            OnSpawnAdded(m.Value);
-        });
+        WeakReferenceMessenger.Default.Register<SegmentSpawnChanged>(this, (r, m) => OnSpawnChanged(m.Value));
         
         _tree.SelectedItemChanged += OnItemSelected;
         _tree.KeyDown += OnKeyDown;
@@ -685,19 +680,16 @@ public partial class SegmentTreeControl : UserControl
                 parentNode = folderNode;
             }
 		}
-
-        if (parentNode != null)
+        
+        if (entityItem.Parent is ItemsControl currentParent && !ReferenceEquals(currentParent, parentNode))
         {
-            if (entityItem.Parent is ItemsControl currentParent && !ReferenceEquals(currentParent, parentNode))
-            {
-                // If the entity already belongs to a different folder we must detach it before
-                // re-attaching, otherwise WPF throws "element already has a logical parent".
-                currentParent.Items.Remove(entityItem);
-            }
-
-            if (!parentNode.Items.Contains(entityItem))
-                parentNode.Items.Add(entityItem);
+            // If the entity already belongs to a different folder we must detach it before
+            // re-attaching, otherwise WPF throws "element already has a logical parent".
+            currentParent.Items.Remove(entityItem);
         }
+
+        if (!parentNode.Items.Contains(entityItem))
+            parentNode.Items.Add(entityItem);
     }
 
     private void EnsureEntitiesNode()
@@ -809,7 +801,6 @@ public partial class SegmentTreeControl : UserControl
     {
         EnsureSpawnersNode();
         
-        // a spawner has been added, create its tree node.
         if (!_spawnItems.TryGetValue(segmentSpawner, out var spawnerItem))
         {
             var brush = segmentSpawner switch
@@ -845,60 +836,17 @@ public partial class SegmentTreeControl : UserControl
             _spawnItems.Add(segmentSpawner, spawnerItem);
         }
         
-        var regionId = segmentSpawner switch
-        {
-            LocationSegmentSpawner locationSegmentSpawner => locationSegmentSpawner.Region,
-            RegionSegmentSpawner regionSegmentSpawner => regionSegmentSpawner.Region,
-            
-            _ => -1
-        };
+        BindSpawnToGroup(segmentSpawner, spawnerItem);
+    }
 
-        var region = Segment.GetRegion(regionId);
-        var parentNode = default(TreeViewItem);
-        
-        if (region is not null && !_spawnGroupNodes.TryGetValue(regionId, out parentNode))
-        {
-            parentNode = new TreeViewItem
-            {
-                Header = CreateHeader($"[{region.ID}] {region.Name}", "Folder.png")
-            };
+    private void OnSpawnChanged(SegmentSpawner segmentSpawner)
+    {
+        if (!_spawnItems.TryGetValue(segmentSpawner, out var spawnerItem))
+            return;
 
-            parentNode.ContextMenu = new ContextMenu();
-            parentNode.ContextMenu.AddItem("Add Location Spawner", "Add.png", (s, e) =>
-            {
-                var spawn = new LocationSegmentSpawner()
-                {
-                    Name = $"Location Spawner {_nextId++}",
-                    Region = regionId
-                };
-            
-                Segment.Spawns.Location.Add(spawn);
-                
-                // present the new treasure to the user.
-                spawn.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-            });
-            parentNode.ContextMenu.AddItem("Add Region Spawner", "Add.png", (s, e) =>
-            {
-                var spawn = new RegionSegmentSpawner()
-                {
-                    Name = $"Region Spawner {_nextId++}",
-                    Region = regionId
-                };
-            
-                Segment.Spawns.Region.Add(spawn);
-                
-                // present the new treasure to the user.
-                spawn.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());   
-            });
-
-            _spawnersNode.Items.Add(parentNode);
-            _spawnGroupNodes.Add(regionId, parentNode);
-        }
+        spawnerItem.EditableTextBlock.Text = segmentSpawner.Name;
         
-        parentNode ??= _spawnersNode;
-        
-        if (parentNode != null && !parentNode.Items.Contains(spawnerItem))
-            parentNode.Items.Add(spawnerItem);
+        BindSpawnToGroup(segmentSpawner, spawnerItem);
     }
     
     private void OnSpawnRemoved(SegmentSpawner segmentSpawner)
@@ -909,6 +857,80 @@ public partial class SegmentTreeControl : UserControl
             if (spawnNode.Parent is TreeViewItem parent)
                 parent.Items.Remove(spawnNode);
         }
+    }
+
+    private void BindSpawnToGroup(SegmentSpawner segmentSpawner, SegmentTreeViewItem spawnerItem)
+    {
+        EnsureSpawnersNode();
+
+        var regionId = segmentSpawner switch
+        {
+            LocationSegmentSpawner locationSegmentSpawner => locationSegmentSpawner.Region,
+            RegionSegmentSpawner regionSegmentSpawner => regionSegmentSpawner.Region,
+            
+            _ => -1
+        };
+
+        var region = Segment.GetRegion(regionId);
+        var parentNode = default(TreeViewItem);
+
+        if (region is not null)
+        {
+            if (!_spawnGroupNodes.TryGetValue(regionId, out parentNode))
+            {
+                parentNode = new TreeViewItem
+                {
+                    Header = CreateHeader($"[{region.ID}] {region.Name}", "Folder.png")
+                };
+
+                parentNode.ContextMenu = new ContextMenu();
+                parentNode.ContextMenu.AddItem("Add Location Spawner", "Add.png", (s, e) =>
+                {
+                    var spawn = new LocationSegmentSpawner()
+                    {
+                        Name = $"Location Spawner {_nextId++}",
+                        Region = regionId
+                    };
+
+                    Segment.Spawns.Location.Add(spawn);
+
+                    // present the new treasure to the user.
+                    spawn.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+                });
+                parentNode.ContextMenu.AddItem("Add Region Spawner", "Add.png", (s, e) =>
+                {
+                    var spawn = new RegionSegmentSpawner()
+                    {
+                        Name = $"Region Spawner {_nextId++}",
+                        Region = regionId
+                    };
+
+                    Segment.Spawns.Region.Add(spawn);
+
+                    // present the new treasure to the user.
+                    spawn.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
+                });
+
+                _spawnersNode.Items.Add(parentNode);
+                _spawnGroupNodes.Add(regionId, parentNode);
+            }
+            else
+            {
+                parentNode = _spawnGroupNodes[regionId];
+            }
+        }
+        
+        parentNode ??= _spawnersNode;
+
+        if (spawnerItem.Parent is ItemsControl currentParent && !ReferenceEquals(currentParent, parentNode))
+        {
+            // If the entity already belongs to a different folder we must detach it before
+            // re-attaching, otherwise WPF throws "element already has a logical parent".
+            currentParent.Items.Remove(spawnerItem);
+        }
+
+        if (!parentNode.Items.Contains(spawnerItem))
+            parentNode.Items.Add(spawnerItem);
     }
     
     private void EnsureSpawnersNode()
