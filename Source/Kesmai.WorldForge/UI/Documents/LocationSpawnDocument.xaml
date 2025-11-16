@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:worldForge="clr-namespace:Kesmai.WorldForge"
              xmlns:scripting="clr-namespace:Kesmai.WorldForge.Scripting"
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="600"
              FontFamily="Tahoma" FontSize="14">
@@ -65,7 +66,12 @@
                   AutoGenerateColumns="False"
                   ItemsSource="{Binding Spawner.Entries}">
             <DataGrid.Resources>
-                <CollectionViewSource x:Key="EntitiesCollection" Source="{Binding Segment.Entities, Source={StaticResource applicationPresenter}}" />
+                <CollectionViewSource x:Key="EntitiesCollection"
+                                      Source="{Binding Segment.Entities, Source={StaticResource applicationPresenter}}">
+                    <CollectionViewSource.SortDescriptions>
+                        <scm:SortDescription PropertyName="Name" />
+                    </CollectionViewSource.SortDescriptions>
+                </CollectionViewSource>
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridComboBoxColumn MinWidth="200" Header="Entity" 
