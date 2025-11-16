@@ -98,6 +98,9 @@ public partial class SegmentTreeControl : UserControl
             oldSegment.PropertyChanged -= control.OnSegmentPropertyChanged;
 
         }
+
+        control.ResetNodes();
+        
         if (e.NewValue is Segment newSegment)
         {
             newSegment.PropertyChanged += control.OnSegmentPropertyChanged;
@@ -174,6 +177,31 @@ public partial class SegmentTreeControl : UserControl
     
     private Dictionary<string, TreeViewItem> _entityGroupNodes = new Dictionary<string, TreeViewItem>();
     private Dictionary<int, TreeViewItem> _spawnGroupNodes = new Dictionary<int, TreeViewItem>();
+
+    private void ResetNodes()
+    {
+        _segmentNode = null;
+        _regionsNode = null;
+        _locationsNode = null;
+        _entitiesNode = null;
+        _treasureNode = null;
+        _spawnersNode = null;
+        _componentsNode = null;
+        _brushesNode = null;
+        _templatesNode = null;
+        
+        _regionItems.Clear();
+        _subregionItems.Clear();
+        _locationItems.Clear();
+        _componentItems.Clear();
+        _brushItems.Clear();
+        _templateItems.Clear();
+        _entityItems.Clear();
+        _treasureItems.Clear();
+        _spawnItems.Clear();
+        _entityGroupNodes.Clear();
+        _spawnGroupNodes.Clear();
+    }
     
     private void UpdateTreeItemText<T>(Dictionary<T, SegmentTreeViewItem> lookup, T segmentObject) where T : class, ISegmentObject
     {
