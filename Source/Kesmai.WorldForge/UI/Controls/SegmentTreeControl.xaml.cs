@@ -183,9 +183,71 @@ public partial class SegmentTreeControl : UserControl
         if (lookup.TryGetValue(segmentObject, out var item))
             item.EditableTextBlock.Text = segmentObject.Name;
     }
+
+	/// <summary>
+	/// Ensure the regions under the "Regions" node are ordered by SegmentRegion.ID ascending.
+	/// </summary>
+	private void SortRegionsById()
+	{
+		if (_regionsNode is null || _regionsNode.Items.Count == 0)
+			return;
+
+		var ordered = _regionsNode.Items
+			.OfType<TreeViewItem>()
+			.OrderBy(ti =>
+			{
+				if (ti.Tag is SegmentRegion region)
+					return region.ID;
+
+				// Anything weird / non-region goes to the end
+				return int.MaxValue;
+			})
+			.ThenBy(ti =>
+			{
+				if (ti.Tag is SegmentRegion region)
+					return region.Name ?? string.Empty;
+
+				return string.Empty;
+			})
+			.ToList();
+
+		_regionsNode.Items.Clear();
+
+		foreach (var item in ordered)
+			_regionsNode.Items.Add(item);
+	}
     
-    
-    private void OnRegionAdded(SegmentRegion region)
+    /// <summary>
+	/// Ensure the spawn region folders under the "Spawns" node are ordered
+	/// by their region id (the key in _spawnGroupNodes).
+	/// </summary>
+	private void SortSpawnGroupsByRegionId()
+	{
+		if (_spawnersNode is null || _spawnGroupNodes.Count == 0)
+			return;
+
+		// All folder nodes we created for region groups
+		var groupNodes = new HashSet<TreeViewItem>(_spawnGroupNodes.Values);
+
+		// Anything that isn't one of those (e.g. ungrouped spawners) stays in original order
+		var nonGroupItems = _spawnersNode.Items
+			.OfType<TreeViewItem>()
+			.Where(ti => !groupNodes.Contains(ti))
+			.Cast<object>()
+			.ToList();
+
+		_spawnersNode.Items.Clear();
+
+		// Keep non-group items in the same relative order
+		foreach (var item in nonGroupItems)
+			_spawnersNode.Items.Add(item);
+
+		// Then append groups ordered by numeric region id
+		foreach (var kvp in _spawnGroupNodes.OrderBy(kvp => kvp.Key))
+			_spawnersNode.Items.Add(kvp.Value);
+	}
+
+	private void OnRegionAdded(SegmentRegion region)
     {
         EnsureRegionsNode();
         
@@ -207,7 +269,10 @@ public partial class SegmentTreeControl : UserControl
         
         if (!_regionsNode.Items.Contains(regionItem))
             _regionsNode.Items.Add(regionItem);
-    }
+
+		// keep regions ordered by their numeric ID
+		SortRegionsById();
+	}
     
     private void OnRegionRemoved(SegmentRegion region)
     {
@@ -216,13 +281,17 @@ public partial class SegmentTreeControl : UserControl
         {
             if (_regionsNode != null)
                 _regionsNode.Items.Remove(item);
-        }
-    }
+		}
+
+		SortRegionsById();
+	}
     
     private void OnRegionChanged(SegmentRegion region)
     {
         UpdateTreeItemText(_regionItems, region);
-    }
+
+		SortRegionsById();
+	}
 
     private void OnSubregionAdded(SegmentSubregion subregion)
     {
@@ -828,7 +897,10 @@ public partial class SegmentTreeControl : UserControl
         
         if (parentNode != null && !parentNode.Items.Contains(spawnerItem))
             parentNode.Items.Add(spawnerItem);
-    }
+
+		// keep spawn groups ordered by region id
+		SortSpawnGroupsByRegionId();
+	}
     
     private void OnSpawnRemoved(SegmentSpawner segmentSpawner)
     {
@@ -837,8 +909,10 @@ public partial class SegmentTreeControl : UserControl
         {
             if (spawnNode.Parent is TreeViewItem parent)
                 parent.Items.Remove(spawnNode);
-        }
-    }
+		}
+
+		SortSpawnGroupsByRegionId();
+	}
     
     private void EnsureSpawnersNode()
     {
@@ -905,7 +979,11 @@ public partial class SegmentTreeControl : UserControl
         _tree.Items.Add(_componentsNode);
         _tree.Items.Add(_brushesNode);
         _tree.Items.Add(_templatesNode);
-    }
+
+		// Make sure regions are ordered even after a full refresh
+		SortRegionsById();
+		SortSpawnGroupsByRegionId();
+	}
     
     private void OnItemSelected(object sender, RoutedPropertyChangedEventArgs<object> e)
     {
