@@ -17,9 +17,8 @@ public partial class EditableTextBlock : UserControl
         get => (string)GetValue(TextProperty);
         set => SetValue(TextProperty, value);
     }
-    
     public static readonly DependencyProperty TextProperty = DependencyProperty.Register(nameof(Text), 
-        typeof(string), typeof(EditableTextBlock), new PropertyMetadata(String.Empty));
+        typeof(string), typeof(EditableTextBlock), new PropertyMetadata(String.Empty, OnTextChanged));
 
     public bool IsEditable
     {
@@ -57,21 +56,22 @@ public partial class EditableTextBlock : UserControl
     public string TextFormat
     {
         get => (string)GetValue(TextFormatProperty);
-        set
-        {
-            if (String.IsNullOrEmpty(value)) 
-                value = "{0}";
-            
-            SetValue(TextFormatProperty, value);
-        }
+        set => SetValue(TextFormatProperty, value);
     }
     
     public static readonly DependencyProperty TextFormatProperty =
-        DependencyProperty.Register(nameof(TextFormat), typeof(string), typeof(EditableTextBlock), new PropertyMetadata("{0}"));
+        DependencyProperty.Register(nameof(TextFormat), typeof(string), typeof(EditableTextBlock),
+            new PropertyMetadata("{0}", OnTextFormatChanged, CoerceTextFormat));
+
+    private static readonly DependencyPropertyKey FormattedTextPropertyKey =
+        DependencyProperty.RegisterReadOnly(nameof(FormattedText), typeof(string), typeof(EditableTextBlock),
+            new PropertyMetadata(String.Empty));
+
+    public static readonly DependencyProperty FormattedTextProperty = FormattedTextPropertyKey.DependencyProperty;
 
     public string FormattedText
     {
-        get => String.Format(TextFormat, Text);
+        get => (string)GetValue(FormattedTextProperty);
     }
 
     public event EventHandler TextChanged;
@@ -82,6 +82,8 @@ public partial class EditableTextBlock : UserControl
         
         base.Focusable = true;
         base.FocusVisualStyle = null;
+
+        UpdateFormattedText();
 	}
     
     void TextBox_Loaded(object sender, RoutedEventArgs e)
@@ -110,5 +112,31 @@ public partial class EditableTextBlock : UserControl
             TextChanged.Invoke(this, EventArgs.Empty);
         
         args.Handled = true;
+    }
+
+    private static void OnTextChanged(DependencyObject textBox, DependencyPropertyChangedEventArgs e)
+    {
+        if (textBox is not EditableTextBlock editableTextBlock)
+            return;
+        
+        editableTextBlock.UpdateFormattedText();
+    }
+
+    private static void OnTextFormatChanged(DependencyObject textBox, DependencyPropertyChangedEventArgs e)
+    {
+        if (textBox is not EditableTextBlock editableTextBlock)
+            return;
+        
+        editableTextBlock.UpdateFormattedText();
+    }
+
+    private static object CoerceTextFormat(DependencyObject d, object baseValue)
+    {
+        return String.IsNullOrEmpty(baseValue as string) ? "{0}" : baseValue;
+    }
+
+    private void UpdateFormattedText()
+    {
+        SetValue(FormattedTextPropertyKey, String.Format(TextFormat, Text));
     }
 }
