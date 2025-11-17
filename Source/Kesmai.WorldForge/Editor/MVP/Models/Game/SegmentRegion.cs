@@ -38,7 +38,11 @@ public class SegmentRegion : ObservableObject, ICloneable, ISegmentObject
 	public int ID
 	{
 		get => _id;
-		set => SetProperty(ref _id, value);
+		set
+		{
+			if (SetProperty(ref _id, value))
+				WeakReferenceMessenger.Default.Send(new SegmentRegionChanged(this));
+		}
 	}
 
 	[Browsable(true)]
