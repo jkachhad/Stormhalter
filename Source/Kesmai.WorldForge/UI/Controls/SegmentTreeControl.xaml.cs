@@ -193,13 +193,16 @@ public partial class SegmentTreeControl : UserControl
         _spawnGroupNodes.Clear();
     }
     
-    private void UpdateTreeItemText<T>(Dictionary<T, SegmentTreeViewItem> lookup, T segmentObject) where T : class, ISegmentObject
+    private void UpdateTreeItemText<T>(Dictionary<T, SegmentTreeViewItem> lookup, T segmentObject, string format = "") where T : class, ISegmentObject
     {
         if (segmentObject is null)
             return;
 
         if (lookup.TryGetValue(segmentObject, out var item))
+        {
+            item.EditableTextBlock.TextFormat = format;
             item.EditableTextBlock.Text = segmentObject.Name;
+        }
     }
     
     
@@ -241,7 +244,8 @@ public partial class SegmentTreeControl : UserControl
     
     private void OnRegionChanged(SegmentRegion region)
     {
-        UpdateTreeItemText(_regionItems, region);
+        UpdateTreeItemText(_regionItems, region, $"[{region.ID}] {{0}}");
+        
         ApplyRegionSort();
     }
 
