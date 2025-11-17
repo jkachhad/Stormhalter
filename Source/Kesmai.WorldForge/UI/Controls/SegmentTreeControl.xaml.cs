@@ -225,6 +225,8 @@ public partial class SegmentTreeControl : UserControl
         
         if (!_regionsNode.Items.Contains(regionItem))
             _regionsNode.Items.Add(regionItem);
+
+        ApplyRegionSort();
     }
     
     private void OnRegionRemoved(SegmentRegion region)
@@ -240,6 +242,23 @@ public partial class SegmentTreeControl : UserControl
     private void OnRegionChanged(SegmentRegion region)
     {
         UpdateTreeItemText(_regionItems, region);
+        ApplyRegionSort();
+    }
+
+    private void ApplyRegionSort()
+    {
+        if (_regionsNode is null)
+            return;
+
+        var sortedItems = _regionsNode.Items.OfType<SegmentTreeViewItem>()
+            .OrderBy(item => (item.Tag is SegmentRegion segmentRegion) ? segmentRegion.ID : int.MaxValue)
+            .ThenBy(item => item.EditableTextBlock.Text, StringComparer.OrdinalIgnoreCase)
+            .ToList();
+        
+        _regionsNode.Items.Clear();
+
+        foreach (var item in sortedItems)
+            _regionsNode.Items.Add(item);
     }
 
     private void OnSubregionAdded(SegmentSubregion subregion)
@@ -399,6 +418,8 @@ public partial class SegmentTreeControl : UserControl
             // present the new region to the user.
             region.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
         });
+
+        ApplyRegionSort();
     }
 
     public void OnComponentAdded(SegmentComponent component)
