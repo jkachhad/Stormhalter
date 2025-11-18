@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -24,8 +25,11 @@ internal sealed class EntitiesTreeViewItem : TreeViewItem, IDisposable
     private readonly Dictionary<TreeViewItem, string> _groupLookup = new();
     
     private int _nextEntityId;
+    
     private Point? _dragStartPoint;
-    private SegmentTreeViewItem? _dragSourceItem;
+    private SegmentTreeViewItem _dragSourceItem;
+    private TreeViewItem _currentDropTarget;
+    private DropHighlightAdorner _currentDropAdorner;
 
     public EntitiesTreeViewItem(Segment segment, object header)
     {
@@ -73,6 +77,7 @@ internal sealed class EntitiesTreeViewItem : TreeViewItem, IDisposable
         WeakReferenceMessenger.Default.UnregisterAll(this);
         
         Items.Clear();
+        SetDropTarget(null);
         
         _entityItems.Clear();
         _groupNodes.Clear();
@@ -197,31 +202,63 @@ internal sealed class EntitiesTreeViewItem : TreeViewItem, IDisposable
         treeViewItem.AllowDrop = true;
         
         treeViewItem.PreviewDragOver += OnPreviewDrag;
+        treeViewItem.DragLeave += OnDragLeave;
         treeViewItem.Drop += OnDrop;
     }
 
     private void OnPreviewDrag(object sender, DragEventArgs args)
     {
+        if (args.Source is not UIElement dragControl)
+            return;
+        
+        args.Handled = true;
+
+        if (!TryGetDraggedEntity(args.Data, out var entity))
+        {
+            args.Effects = DragDropEffects.None;
+            
+            SetDropTarget(null);
+            return;
+        }
+        
+        var dragAncestor = dragControl.FindAncestor<TreeViewItem>();
+        
+        // find ancestor TreeViewItem
+        if (dragAncestor is null || ReferenceEquals(dragAncestor, _dragSourceItem))
+        {
+            args.Effects = DragDropEffects.None;
+            SetDropTarget(null);
+            return;
+        }
+
+        var targetGroup = GetGroupPathFor(dragAncestor);
+
+        if (targetGroup is null)
+        {
+            args.Effects = DragDropEffects.None;
+            SetDropTarget(null);
+            return;
+        }
+
+        args.Effects = DragDropEffects.Move;
+        SetDropTarget(dragAncestor);
+    }
+
+    private void OnDragLeave(object sender, DragEventArgs args)
+    {
         args.Handled = true;
 
         if (!TryGetDraggedEntity(args.Data, out _))
-        {
-            args.Effects = DragDropEffects.None;
             return;
-        }
 
-        if (sender is not TreeViewItem treeViewItem)
-        {
-            args.Effects = DragDropEffects.None;
-            return;
-        }
-
-        args.Effects = GetGroupPathFor(treeViewItem) is null ? DragDropEffects.None : DragDropEffects.Move;
+        if (sender is TreeViewItem treeViewItem && ReferenceEquals(treeViewItem, _currentDropTarget))
+            SetDropTarget(null);
     }
 
     private void OnDrop(object sender, DragEventArgs args)
     {
         args.Handled = true;
+        SetDropTarget(null);
 
         if (!TryGetDraggedEntity(args.Data, out var entity))
             return;
@@ -252,6 +289,42 @@ internal sealed class EntitiesTreeViewItem : TreeViewItem, IDisposable
 
         entity = null!;
         return false;
+    }
+
+    private void SetDropTarget(TreeViewItem? treeViewItem)
+    {
+        if (ReferenceEquals(_currentDropTarget, treeViewItem))
+            return;
+
+        RemoveCurrentDropAdorner();
+
+        _currentDropTarget = treeViewItem;
+
+        if (_currentDropTarget is null)
+            return;
+
+        _currentDropTarget.ApplyTemplate();
+
+        var layer = AdornerLayer.GetAdornerLayer(_currentDropTarget);
+
+        if (layer is null)
+        {
+            _currentDropTarget = null;
+            return;
+        }
+
+        _currentDropAdorner = new DropHighlightAdorner(_currentDropTarget);
+        layer.Add(_currentDropAdorner);
+    }
+
+    private void RemoveCurrentDropAdorner()
+    {
+        if (_currentDropAdorner is null)
+            return;
+
+        var layer = AdornerLayer.GetAdornerLayer(_currentDropAdorner.AdornedElement);
+        layer?.Remove(_currentDropAdorner);
+        _currentDropAdorner = null;
     }
 
     private string GetGroupPathFor(TreeViewItem treeViewItem)
