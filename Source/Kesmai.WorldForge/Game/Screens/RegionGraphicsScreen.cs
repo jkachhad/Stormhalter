@@ -117,7 +117,14 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			yield return _contextMenu.Create("Create Region Spawner", createRegionSpawner);
 			yield return _contextMenu.Create("Create Subregion", createSubregion);
 		}
+
+		yield return _contextMenu.Create("Convert to Segment Template", convertTemplate);
 		
+		void convertTemplate(object sender, EventArgs e)
+		{
+			OnConvertTemplate(segmentTile);
+		}
+
 		void createLocation(object sender, EventArgs args)
 		{
 			var location = new SegmentLocation
@@ -362,6 +369,86 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		
 		// present the new component to the user.
 		segmentComponent.Present(applicationPresenter);
+	}
+
+	// Convert the provided tile into a new template and replace identical tiles across the segment.
+	private void OnConvertTemplate(SegmentTile sourceTile)
+	{
+		var applicationPresenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
+
+		if (applicationPresenter is null || sourceTile is null)
+			return;
+
+		var segment = applicationPresenter.Segment;
+
+		if (segment is null)
+			return;
+
+		if (sourceTile.Providers == null || sourceTile.Providers.Count == 0)
+			return;
+
+		if (sourceTile.Providers.Count == 1 && sourceTile.Providers[0] is SegmentTemplate)
+			return;
+
+		var serializedTile = sourceTile.GetSerializingElement();
+
+		if (!serializedTile.HasElements)
+			return;
+
+		var matchingTiles = new List<SegmentTile>();
+
+		foreach (var region in segment.Regions)
+		{
+			foreach (var tile in region.GetTiles())
+			{
+				if (tile is null)
+					continue;
+
+				if (XNode.DeepEquals(tile.GetSerializingElement(), serializedTile))
+					matchingTiles.Add(tile);
+			}
+		}
+
+		if (matchingTiles.Count == 0)
+			return;
+
+		var templateProviders = sourceTile.Providers.ToList();
+
+		if (templateProviders.Count == 0)
+			return;
+
+		var template = new SegmentTemplate
+		{
+			Name = Guid.NewGuid().ToString("N"),
+		};
+
+		foreach (var provider in templateProviders)
+			template.Providers.Add(provider);
+
+		segment.Templates.Add(template);
+
+		var editingTileAffected = _editingTile != null && matchingTiles.Contains(_editingTile);
+
+		foreach (var tile in matchingTiles)
+		{
+			tile.Providers.Clear();
+			template.AddComponent(tile.Providers);
+			tile.UpdateTerrain();
+		}
+
+		if (editingTileAffected && _editingProviders != null)
+		{
+			_editingProviders.Clear();
+
+			foreach (var provider in _editingTile.Providers)
+				provider.AddComponent(_editingProviders);
+
+			InvalidateFrames();
+		}
+
+		InvalidateRender();
+
+		template.Present(applicationPresenter);
 	}
 	
 	private void OnFrameDelete(object sender, EventArgs args)
