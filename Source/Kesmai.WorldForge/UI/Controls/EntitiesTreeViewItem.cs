@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using CommonServiceLocator;
@@ -14,11 +15,17 @@ namespace Kesmai.WorldForge.UI;
 
 internal sealed class EntitiesTreeViewItem : TreeViewItem, IDisposable
 {
+    private const string UndefinedGroup = "Ungrouped";
+    private const string DragFormat = "Kesmai.WorldForge.EntitiesTreeViewItem.Entity";
+
     private readonly Segment _segment;
     private readonly Dictionary<SegmentEntity, SegmentTreeViewItem> _entityItems = new();
     private readonly Dictionary<string, TreeViewItem> _groupNodes = new(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<TreeViewItem, string> _groupLookup = new();
     
     private int _nextEntityId;
+    private Point? _dragStartPoint;
+    private SegmentTreeViewItem? _dragSourceItem;
 
     public EntitiesTreeViewItem(Segment segment, object header)
     {
@@ -29,6 +36,8 @@ internal sealed class EntitiesTreeViewItem : TreeViewItem, IDisposable
 
         ContextMenu = new ContextMenu();
         ContextMenu.AddItem("Add Entity", "Add.png", (s, e) => AddEntity());
+        
+        AttachDropTarget(this);
 
         _nextEntityId = 0;
 
@@ -67,6 +76,7 @@ internal sealed class EntitiesTreeViewItem : TreeViewItem, IDisposable
         
         _entityItems.Clear();
         _groupNodes.Clear();
+        _groupLookup.Clear();
     }
 
     private SegmentTreeViewItem CreateEntityItem(SegmentEntity entity)
@@ -89,6 +99,11 @@ internal sealed class EntitiesTreeViewItem : TreeViewItem, IDisposable
             if (entityItem.Parent is ItemsControl parent)
                 parent.Items.Remove(entityItem);
         });
+        
+        AttachDropTarget(entityItem);
+        entityItem.PreviewMouseLeftButtonDown += OnEntityPreviewMouseLeftButtonDown;
+        entityItem.PreviewMouseMove += OnEntityPreviewMouseMove;
+        entityItem.PreviewMouseLeftButtonUp += OnEntityPreviewMouseLeftButtonUp;
 
         _entityItems.Add(entity, entityItem);
         
@@ -97,7 +112,7 @@ internal sealed class EntitiesTreeViewItem : TreeViewItem, IDisposable
 
     private void Bind(SegmentEntity entity, SegmentTreeViewItem entityItem)
     {
-        var groupPath = string.IsNullOrEmpty(entity.Group) ? "Ungrouped" : entity.Group;
+        var groupPath = string.IsNullOrEmpty(entity.Group) ? UndefinedGroup : entity.Group;
 
         var parentNode = EnsurePath(groupPath);
 
@@ -129,6 +144,8 @@ internal sealed class EntitiesTreeViewItem : TreeViewItem, IDisposable
 
                 parentNode.Items.Add(folderNode);
                 _groupNodes.Add(path, folderNode);
+                _groupLookup[folderNode] = path;
+                AttachDropTarget(folderNode);
             }
 
             parentNode = folderNode;
@@ -137,7 +154,7 @@ internal sealed class EntitiesTreeViewItem : TreeViewItem, IDisposable
         return parentNode;
     }
 
-    private void AddEntity(string? groupPath = null)
+    private void AddEntity(string groupPath = null)
     {
         var entity = new SegmentEntity
         {
@@ -173,5 +190,124 @@ internal sealed class EntitiesTreeViewItem : TreeViewItem, IDisposable
         panel.Children.Add(new TextBlock { Text = name, FontSize = 12, VerticalAlignment = VerticalAlignment.Center });
 
         return panel;
+    }
+
+    private void AttachDropTarget(TreeViewItem treeViewItem)
+    {
+        treeViewItem.AllowDrop = true;
+        
+        treeViewItem.PreviewDragOver += OnPreviewDrag;
+        treeViewItem.Drop += OnDrop;
+    }
+
+    private void OnPreviewDrag(object sender, DragEventArgs args)
+    {
+        args.Handled = true;
+
+        if (!TryGetDraggedEntity(args.Data, out _))
+        {
+            args.Effects = DragDropEffects.None;
+            return;
+        }
+
+        if (sender is not TreeViewItem treeViewItem)
+        {
+            args.Effects = DragDropEffects.None;
+            return;
+        }
+
+        args.Effects = GetGroupPathFor(treeViewItem) is null ? DragDropEffects.None : DragDropEffects.Move;
+    }
+
+    private void OnDrop(object sender, DragEventArgs args)
+    {
+        args.Handled = true;
+
+        if (!TryGetDraggedEntity(args.Data, out var entity))
+            return;
+
+        if (sender is not TreeViewItem treeViewItem)
+            return;
+
+        var targetGroup = GetGroupPathFor(treeViewItem);
+
+        if (targetGroup is null)
+            return;
+
+        var normalizedCurrent = string.IsNullOrEmpty(entity.Group) ? string.Empty : entity.Group;
+
+        if (string.Equals(normalizedCurrent, targetGroup, StringComparison.OrdinalIgnoreCase))
+            return;
+
+        entity.Group = targetGroup;
+    }
+
+    private static bool TryGetDraggedEntity(IDataObject data, out SegmentEntity entity)
+    {
+        if (data.GetDataPresent(DragFormat) && data.GetData(DragFormat) is SegmentEntity segmentEntity)
+        {
+            entity = segmentEntity;
+            return true;
+        }
+
+        entity = null!;
+        return false;
+    }
+
+    private string GetGroupPathFor(TreeViewItem treeViewItem)
+    {
+        if (ReferenceEquals(treeViewItem, this))
+            return String.Empty;
+
+        if (_groupLookup.TryGetValue(treeViewItem, out var groupPath))
+            return String.Equals(groupPath, UndefinedGroup, StringComparison.OrdinalIgnoreCase) ? String.Empty : groupPath;
+
+        if (treeViewItem is SegmentTreeViewItem segmentItem && segmentItem.Tag is SegmentEntity entity)
+            return string.IsNullOrEmpty(entity.Group) ? String.Empty : entity.Group;
+
+        return null;
+    }
+
+    private void OnEntityPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs args)
+    {
+        _dragStartPoint = args.GetPosition(this);
+        _dragSourceItem = sender as SegmentTreeViewItem;
+    }
+
+    private void OnEntityPreviewMouseMove(object sender, MouseEventArgs args)
+    {
+        if (_dragStartPoint is null)
+            return;
+
+        if (args.LeftButton != MouseButtonState.Pressed)
+        {
+            ResetDrag();
+            return;
+        }
+
+        if (!ReferenceEquals(sender, _dragSourceItem))
+            return;
+
+        var currentPosition = args.GetPosition(this);
+
+        if (Math.Abs(currentPosition.X - _dragStartPoint.Value.X) < SystemParameters.MinimumHorizontalDragDistance &&
+            Math.Abs(currentPosition.Y - _dragStartPoint.Value.Y) < SystemParameters.MinimumVerticalDragDistance)
+            return;
+
+        if (_dragSourceItem?.Tag is SegmentEntity entity)
+            DragDrop.DoDragDrop(_dragSourceItem, new DataObject(DragFormat, entity), DragDropEffects.Move);
+
+        ResetDrag();
+    }
+
+    private void OnEntityPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    {
+        ResetDrag();
+    }
+
+    private void ResetDrag()
+    {
+        _dragStartPoint = null;
+        _dragSourceItem = null;
     }
 }
