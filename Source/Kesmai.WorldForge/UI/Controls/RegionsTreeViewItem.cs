@@ -13,7 +13,6 @@ namespace Kesmai.WorldForge.UI;
 internal sealed class RegionsTreeViewItem : TreeViewItem, IDisposable
 {
     private readonly Segment _segment;
-    
     private readonly Dictionary<SegmentRegion, SegmentTreeViewItem> _regionItems = new();
     private readonly Dictionary<SegmentSubregion, SegmentTreeViewItem> _subregionItems = new();
     
@@ -89,10 +88,7 @@ internal sealed class RegionsTreeViewItem : TreeViewItem, IDisposable
         });
 
         foreach (var region in _segment.Regions)
-        {
-            var regionItem = CreateRegionItem(region);
-            Items.Add(regionItem);
-        }
+            Items.Add(CreateRegionItem(region));
 
         foreach (var subregion in _segment.Subregions)
             CreateSubregionItem(subregion);
