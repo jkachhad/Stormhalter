@@ -39,11 +39,6 @@ public partial class SegmentTreeControl : UserControl
     {
         InitializeComponent();
 
-        WeakReferenceMessenger.Default.Register<SegmentLocationAdded>(this, (r, m) => OnLocationAdded(m.Value));
-        WeakReferenceMessenger.Default.Register<SegmentLocationRemoved>(this, (r, m) => OnLocationRemoved(m.Value));
-        WeakReferenceMessenger.Default.Register<SegmentLocationChanged>(this, (r, m) => OnLocationChanged(m.Value));
-        WeakReferenceMessenger.Default.Register<SegmentLocationsReset>(this, (r, m) => OnLocationsReset());
-
         WeakReferenceMessenger.Default.Register<SegmentComponentAdded>(this, (r, m) => OnComponentAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentComponentRemoved>(this, (r, m) => OnComponentRemoved(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentComponentChanged>(this, (r, m) => OnComponentChanged(m.Value));
@@ -126,7 +121,7 @@ public partial class SegmentTreeControl : UserControl
     private TreeViewItem _brushesNode;
     private TreeViewItem _templatesNode;
     private RegionsTreeViewItem _regionsNode;
-    private TreeViewItem _locationsNode;
+    private LocationsTreeViewItem _locationsNode;
     private TreeViewItem _componentsNode;
     private TreeViewItem _entitiesNode;
     private TreeViewItem _spawnersNode;
@@ -144,7 +139,6 @@ public partial class SegmentTreeControl : UserControl
         };
     }
     
-    private Dictionary<SegmentLocation, SegmentTreeViewItem> _locationItems = new Dictionary<SegmentLocation, SegmentTreeViewItem>();
     private Dictionary<SegmentComponent, SegmentTreeViewItem> _componentItems = new Dictionary<SegmentComponent, SegmentTreeViewItem>();
     private Dictionary<SegmentBrush, SegmentTreeViewItem> _brushItems = new Dictionary<SegmentBrush, SegmentTreeViewItem>();
     private Dictionary<SegmentTemplate, SegmentTreeViewItem> _templateItems = new Dictionary<SegmentTemplate, SegmentTreeViewItem>();
@@ -160,6 +154,7 @@ public partial class SegmentTreeControl : UserControl
         _segmentNode = null;
         _regionsNode?.Dispose();
         _regionsNode = null;
+        _locationsNode?.Dispose();
         _locationsNode = null;
         _entitiesNode = null;
         _treasureNode = null;
@@ -168,7 +163,6 @@ public partial class SegmentTreeControl : UserControl
         _brushesNode = null;
         _templatesNode = null;
         
-        _locationItems.Clear();
         _componentItems.Clear();
         _brushItems.Clear();
         _templateItems.Clear();
@@ -190,86 +184,12 @@ public partial class SegmentTreeControl : UserControl
             item.EditableTextBlock.Text = segmentObject.Name;
         }
     }
-    private void OnLocationAdded(SegmentLocation location)
-    {
-        EnsureLocationsNode();
-
-        // a location has been added, create its tree node.
-        if (!_locationItems.TryGetValue(location, out var locationItem))
-        {
-            var isReserved = location.IsReserved;
-            
-            locationItem = new SegmentTreeViewItem(location, (isReserved ? Brushes.LightSlateGray : Brushes.LightPink), true)
-            {
-                Tag = location,
-            };
-
-            locationItem.EditableTextBlock.IsEditable = !isReserved;
-
-            locationItem.ContextMenu = new ContextMenu();
-            
-            if (!isReserved)
-                locationItem.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(location, locationItem));
-            
-            locationItem.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(location));
-            
-            if (!isReserved)
-                locationItem.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(location, locationItem, Segment.Locations));
-
-            _locationItems.Add(location, locationItem);
-        }
-
-        if (!_locationsNode.Items.Contains(locationItem))
-            _locationsNode.Items.Add(locationItem);
-    }
-    
-    private void OnLocationRemoved(SegmentLocation location)
-    {
-        // a location has been removed, delete its tree node.
-        if (_locationItems.Remove(location, out var item))
-        {
-            if (_locationsNode != null)
-                _locationsNode.Items.Remove(item);
-        }
-    }
-
-    private void OnLocationChanged(SegmentLocation location)
-    {
-        UpdateTreeItemText(_locationItems, location);
-    }
-
-    private void OnLocationsReset()
-    {
-        if (_locationsNode != null)
-            _locationsNode.Items.Clear();
-        
-        _locationItems.Clear();
-    }
-
     private void EnsureLocationsNode()
     {
-        if (_locationsNode is not null)
+        if (_locationsNode is not null || Segment is null)
             return;
         
-        _locationsNode = new TreeViewItem
-        {
-            Tag = $"category:Locations",
-            Header = CreateHeader("Locations", "Locations.png")
-        };
-            
-        _locationsNode.ContextMenu = new ContextMenu();
-        _locationsNode.ContextMenu.AddItem("Add Location", "Add.png", (s, e) =>
-        {
-            var location = new SegmentLocation
-            {
-                Name = $"Location {_nextId++}"
-            };
-            
-            Segment.Locations.Add(location);
-                
-            // present the new location to the user.
-            location.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-        });
+        _locationsNode = new LocationsTreeViewItem(Segment, CreateHeader("Locations", "Locations.png"));
     }
     
     private void EnsureRegionsNode()
