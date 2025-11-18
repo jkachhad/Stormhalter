@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -21,7 +18,6 @@ public class SegmentObjectSelected(ISegmentObject target) : ValueChangedMessage<
 
 public partial class SegmentTreeControl : UserControl
 {
-    private static int _nextId;
     
     public static readonly DependencyProperty SegmentProperty =
         DependencyProperty.Register(nameof(Segment), typeof(Segment), typeof(SegmentTreeControl),
@@ -38,10 +34,6 @@ public partial class SegmentTreeControl : UserControl
     public SegmentTreeControl()
     {
         InitializeComponent();
-
-        WeakReferenceMessenger.Default.Register<SegmentSpawnAdded>(this, (r, m) => OnSpawnAdded(m.Value));
-        WeakReferenceMessenger.Default.Register<SegmentSpawnRemoved>(this, (r, m) => OnSpawnRemoved(m.Value));
-        WeakReferenceMessenger.Default.Register<SegmentSpawnChanged>(this, (r, m) => OnSpawnChanged(m.Value));
         
         _tree.SelectedItemChanged += OnItemSelected;
         _tree.KeyDown += OnKeyDown;
@@ -104,7 +96,7 @@ public partial class SegmentTreeControl : UserControl
     private LocationsTreeViewItem _locationsNode;
     private ComponentsTreeViewItem _componentsNode;
     private EntitiesTreeViewItem _entitiesNode;
-    private TreeViewItem _spawnersNode;
+    private SpawnsTreeViewItem _spawnersNode;
     private TreasuresTreeViewItem _treasureNode;
 
     private void EnsureSegmentNode()
@@ -119,13 +111,10 @@ public partial class SegmentTreeControl : UserControl
         };
     }
     
-    private Dictionary<SegmentSpawner, SegmentTreeViewItem> _spawnItems = new Dictionary<SegmentSpawner, SegmentTreeViewItem>();
-    
-    private Dictionary<int, TreeViewItem> _spawnGroupNodes = new Dictionary<int, TreeViewItem>();
-
     private void ResetNodes()
     {
         _segmentNode = null;
+        
         _regionsNode?.Dispose();
         _regionsNode = null;
         _locationsNode?.Dispose();
@@ -136,27 +125,14 @@ public partial class SegmentTreeControl : UserControl
         _entitiesNode = null;
         _treasureNode?.Dispose();
         _treasureNode = null;
+        _spawnersNode?.Dispose();
         _spawnersNode = null;
         _brushesNode?.Dispose();
         _brushesNode = null;
         _templatesNode?.Dispose();
         _templatesNode = null;
-        
-        _spawnItems.Clear();
-        _spawnGroupNodes.Clear();
     }
     
-    private void UpdateTreeItemText<T>(Dictionary<T, SegmentTreeViewItem> lookup, T segmentObject, string format = "") where T : class, ISegmentObject
-    {
-        if (segmentObject is null)
-            return;
-
-        if (lookup.TryGetValue(segmentObject, out var item))
-        {
-            item.EditableTextBlock.TextFormat = format;
-            item.EditableTextBlock.Text = segmentObject.Name;
-        }
-    }
     private void EnsureLocationsNode()
     {
         if (_locationsNode is not null || Segment is null)
@@ -213,178 +189,12 @@ public partial class SegmentTreeControl : UserControl
         _treasureNode = new TreasuresTreeViewItem(Segment, CreateHeader("Treasure", "Treasures.png"));
     }
 
-    private void OnSpawnAdded(SegmentSpawner segmentSpawner)
-    {
-        EnsureSpawnersNode();
-        
-        if (!_spawnItems.TryGetValue(segmentSpawner, out var spawnerItem))
-        {
-            var brush = segmentSpawner switch
-            {
-                LocationSegmentSpawner => Brushes.SkyBlue,
-                RegionSegmentSpawner => Brushes.Orange,
-                
-                _ => Brushes.Gray
-            };
-            
-            spawnerItem = new SegmentTreeViewItem(segmentSpawner, brush, true)
-            {
-                Tag = segmentSpawner,
-            };
-
-            spawnerItem.ContextMenu = new ContextMenu();
-            spawnerItem.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(segmentSpawner, spawnerItem));
-            spawnerItem.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(segmentSpawner));
-            spawnerItem.ContextMenu.AddItem("Delete", "Delete.png", (s, e) =>
-            {
-                IList source = segmentSpawner switch
-                {
-                    LocationSegmentSpawner => Segment.Spawns.Location,
-                    RegionSegmentSpawner => Segment.Spawns.Region,
-                    
-                    _ => null
-                };
-
-                if (source != null)
-                    DeleteSegmentObject(segmentSpawner, spawnerItem, source);
-            });
-            
-            _spawnItems.Add(segmentSpawner, spawnerItem);
-        }
-        
-        BindSpawnToGroup(segmentSpawner, spawnerItem);
-    }
-
-    private void OnSpawnChanged(SegmentSpawner segmentSpawner)
-    {
-        if (!_spawnItems.TryGetValue(segmentSpawner, out var spawnerItem))
-            return;
-
-        spawnerItem.EditableTextBlock.Text = segmentSpawner.Name;
-        
-        BindSpawnToGroup(segmentSpawner, spawnerItem);
-    }
-    
-    private void OnSpawnRemoved(SegmentSpawner segmentSpawner)
-    {
-        // a spawner has been removed, delete its tree node.
-        if (_spawnItems.Remove(segmentSpawner, out var spawnNode))
-        {
-            if (spawnNode.Parent is TreeViewItem parent)
-                parent.Items.Remove(spawnNode);
-        }
-    }
-
-    private void BindSpawnToGroup(SegmentSpawner segmentSpawner, SegmentTreeViewItem spawnerItem)
-    {
-        EnsureSpawnersNode();
-
-        var regionId = segmentSpawner switch
-        {
-            LocationSegmentSpawner locationSegmentSpawner => locationSegmentSpawner.Region,
-            RegionSegmentSpawner regionSegmentSpawner => regionSegmentSpawner.Region,
-            
-            _ => -1
-        };
-
-        var region = Segment.GetRegion(regionId);
-        var parentNode = default(TreeViewItem);
-
-        if (region is not null)
-        {
-            if (!_spawnGroupNodes.TryGetValue(regionId, out parentNode))
-            {
-                parentNode = new TreeViewItem
-                {
-                    Header = CreateHeader($"[{region.ID}] {region.Name}", "Folder.png")
-                };
-
-                parentNode.ContextMenu = new ContextMenu();
-                parentNode.ContextMenu.AddItem("Add Location Spawner", "Add.png", (s, e) =>
-                {
-                    var spawn = new LocationSegmentSpawner()
-                    {
-                        Name = $"Location Spawner {_nextId++}",
-                        Region = regionId
-                    };
-
-                    Segment.Spawns.Location.Add(spawn);
-
-                    // present the new treasure to the user.
-                    spawn.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-                });
-                parentNode.ContextMenu.AddItem("Add Region Spawner", "Add.png", (s, e) =>
-                {
-                    var spawn = new RegionSegmentSpawner()
-                    {
-                        Name = $"Region Spawner {_nextId++}",
-                        Region = regionId
-                    };
-
-                    Segment.Spawns.Region.Add(spawn);
-
-                    // present the new treasure to the user.
-                    spawn.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-                });
-
-                _spawnersNode.Items.Add(parentNode);
-                _spawnGroupNodes.Add(regionId, parentNode);
-            }
-            else
-            {
-                parentNode = _spawnGroupNodes[regionId];
-            }
-        }
-        
-        parentNode ??= _spawnersNode;
-
-        if (spawnerItem.Parent is ItemsControl currentParent && !ReferenceEquals(currentParent, parentNode))
-        {
-            // If the entity already belongs to a different folder we must detach it before
-            // re-attaching, otherwise WPF throws "element already has a logical parent".
-            currentParent.Items.Remove(spawnerItem);
-        }
-
-        if (!parentNode.Items.Contains(spawnerItem))
-            parentNode.Items.Add(spawnerItem);
-    }
-    
     private void EnsureSpawnersNode()
     {
         if (_spawnersNode is not null)
             return;
         
-        _spawnersNode = new TreeViewItem
-        {
-            Tag = $"category:Spawns",
-            Header = CreateHeader("Spawns", "Spawns.png")
-        };
-            
-        _spawnersNode.ContextMenu = new ContextMenu();
-        _spawnersNode.ContextMenu.AddItem("Add Location Spawner", "Add.png", (s, e) =>
-        {
-            var spawn = new LocationSegmentSpawner()
-            {
-                Name = $"Location Spawner {_nextId++}"
-            };
-            
-            Segment.Spawns.Location.Add(spawn);
-                
-            // present the new treasure to the user.
-            spawn.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-        });
-        _spawnersNode.ContextMenu.AddItem("Add Region Spawner", "Add.png", (s, e) =>
-        {
-            var spawn = new RegionSegmentSpawner()
-            {
-                Name = $"Region Spawner {_nextId++}"
-            };
-            
-            Segment.Spawns.Region.Add(spawn);
-                
-            // present the new treasure to the user.
-            spawn.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());   
-        });
+        _spawnersNode = new SpawnsTreeViewItem(Segment, CreateHeader("Spawns", "Spawns.png"));
     }
     
     private void Update()
@@ -447,27 +257,6 @@ public partial class SegmentTreeControl : UserControl
         panel.Children.Add(new TextBlock { Text = name, FontSize = 12, VerticalAlignment = VerticalAlignment.Center });
         
         return panel;
-    }
-    
-    private void RenameSegmentObject(ISegmentObject obj, SegmentTreeViewItem item)
-    {
-        item.Rename();
-    }
-
-    private void DuplicateSegmentObject(ISegmentObject obj)
-    {
-        if (Segment is null)
-            return;
-
-        obj.Copy(Segment);
-    }
-
-    private void DeleteSegmentObject(ISegmentObject obj, TreeViewItem item, IList collection)
-    {
-        collection.Remove(obj);
-        
-        if (item.Parent is ItemsControl parent)
-            parent.Items.Remove(item);
     }
 }
 
