@@ -377,6 +377,15 @@ public class ApplicationPresenter : ObservableRecipient
 			
 			if (!regionsDirectory.Exists)
 				regionsDirectory.Create();
+
+			var expectedRegionFiles = new HashSet<string>(_segment.Regions.Select(region => $"{region.ID}.xml"),
+				StringComparer.OrdinalIgnoreCase);
+
+			foreach (var existingFile in regionsDirectory.GetFiles("*.xml"))
+			{
+				if (!expectedRegionFiles.Contains(existingFile.Name))
+					existingFile.Delete();
+			}
 			
 			foreach (var region in _segment.Regions)
 				region.GetSerializingElement().Save(Path.Combine(regionsDirectory.FullName, $"{region.ID}.xml"));
