@@ -39,10 +39,6 @@ public partial class SegmentTreeControl : UserControl
     {
         InitializeComponent();
 
-        WeakReferenceMessenger.Default.Register<SegmentBrushAdded>(this, (r, m) => OnBrushAdded(m.Value));
-        WeakReferenceMessenger.Default.Register<SegmentBrushRemoved>(this, (r, m) => OnBrushRemoved(m.Value));
-        WeakReferenceMessenger.Default.Register<SegmentBrushChanged>(this, (r, m) => OnBrushChanged(m.Value));
-        
         WeakReferenceMessenger.Default.Register<SegmentTemplateAdded>(this, (r, m) => OnTemplateAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentTemplateRemoved>(this, (r, m) => OnTemplateRemoved(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentTemplateChanged>(this, (r, m) => OnTemplateChanged(m.Value));
@@ -114,7 +110,7 @@ public partial class SegmentTreeControl : UserControl
     }
 
     private TreeViewItem _segmentNode;
-    private TreeViewItem _brushesNode;
+    private BrushesTreeViewItem _brushesNode;
     private TreeViewItem _templatesNode;
     private RegionsTreeViewItem _regionsNode;
     private LocationsTreeViewItem _locationsNode;
@@ -135,7 +131,6 @@ public partial class SegmentTreeControl : UserControl
         };
     }
     
-    private Dictionary<SegmentBrush, SegmentTreeViewItem> _brushItems = new Dictionary<SegmentBrush, SegmentTreeViewItem>();
     private Dictionary<SegmentTemplate, SegmentTreeViewItem> _templateItems = new Dictionary<SegmentTemplate, SegmentTreeViewItem>();
     private Dictionary<SegmentEntity, SegmentTreeViewItem> _entityItems = new Dictionary<SegmentEntity, SegmentTreeViewItem>();
     private Dictionary<SegmentTreasure, SegmentTreeViewItem> _treasureItems = new Dictionary<SegmentTreasure, SegmentTreeViewItem>();
@@ -156,10 +151,10 @@ public partial class SegmentTreeControl : UserControl
         _entitiesNode = null;
         _treasureNode = null;
         _spawnersNode = null;
+        _brushesNode?.Dispose();
         _brushesNode = null;
         _templatesNode = null;
         
-        _brushItems.Clear();
         _templateItems.Clear();
         _entityItems.Clear();
         _treasureItems.Clear();
@@ -195,45 +190,6 @@ public partial class SegmentTreeControl : UserControl
         _regionsNode = new RegionsTreeViewItem(Segment, CreateHeader("Regions", "Regions.png"));
     }
 
-    private void OnBrushAdded(SegmentBrush brush)
-    {
-        EnsureBrushesNode();
-
-        // a brush has been added, create its tree node.
-        if (!_brushItems.TryGetValue(brush, out var brushItem))
-        {
-            brushItem = new SegmentTreeViewItem(brush, Brushes.MediumSeaGreen, true)
-            {
-                Tag = brush,
-            };
-
-            brushItem.ContextMenu = new ContextMenu();
-            brushItem.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(brush, brushItem));
-            brushItem.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(brush));
-            brushItem.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(brush, brushItem, Segment.Brushes));
-            
-            _brushItems.Add(brush, brushItem);
-        }
-        
-        if (!_brushesNode.Items.Contains(brushItem))
-            _brushesNode.Items.Add(brushItem);
-    }
-    
-    private void OnBrushRemoved(SegmentBrush brush)
-    {
-        // a brush has been removed, delete its tree node.
-        if (_brushItems.Remove(brush, out var item))
-        {
-            if (_brushesNode != null)
-                _brushesNode.Items.Remove(item);
-        }
-    }
-
-    private void OnBrushChanged(SegmentBrush brush)
-    {
-        UpdateTreeItemText(_brushItems, brush);
-    }
-    
     private void EnsureComponentsNode()
     {
         if (_componentsNode is not null)
@@ -247,24 +203,7 @@ public partial class SegmentTreeControl : UserControl
         if (_brushesNode is not null)
             return;
 
-        _brushesNode = new TreeViewItem
-        {
-            Tag = $"category:Brushes",
-            Header = CreateHeader("Brushes", "Editor-Icon-Paint.png")
-        };
-        
-        _brushesNode.ContextMenu = new ContextMenu();
-        _brushesNode.ContextMenu.AddItem("Add Brush", "Add.png", (s, e) =>
-        {
-            var brush = new SegmentBrush
-            {
-                Name = $"Brush {_nextId++}"
-            };
-
-            Segment.Brushes.Add(brush);
-
-            brush.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-        });
+        _brushesNode = new BrushesTreeViewItem(Segment, CreateHeader("Brushes", "Editor-Icon-Paint.png"));
     }
     
     private void OnTemplateAdded(SegmentTemplate template)
