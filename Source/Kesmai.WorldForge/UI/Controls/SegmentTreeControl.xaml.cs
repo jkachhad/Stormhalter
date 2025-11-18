@@ -72,22 +72,19 @@ public partial class SegmentTreeControl : UserControl
         _tree.KeyDown += OnKeyDown;
     }
 
-    private static void OnSegmentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    private static void OnSegmentChanged(DependencyObject control, DependencyPropertyChangedEventArgs args)
     {
-        var control = (SegmentTreeControl)d;
-        if (e.OldValue is Segment oldSegment)
-        {
-            oldSegment.PropertyChanged -= control.OnSegmentPropertyChanged;
-
-        }
-
-        control.ResetNodes();
+        if (control is not SegmentTreeControl segmentTreeControl)
+            return;
         
-        if (e.NewValue is Segment newSegment)
-        {
-            newSegment.PropertyChanged += control.OnSegmentPropertyChanged;
-        }
-        control.Update();
+        if (args.OldValue is Segment oldSegment)
+            oldSegment.PropertyChanged -= segmentTreeControl.OnSegmentPropertyChanged;
+
+        segmentTreeControl.ResetNodes();
+        
+        if (args.NewValue is Segment newSegment)
+            newSegment.PropertyChanged += segmentTreeControl.OnSegmentPropertyChanged;
+        segmentTreeControl.Update();
     }
 
     private void OnSegmentPropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -161,7 +158,7 @@ public partial class SegmentTreeControl : UserControl
     private void ResetNodes()
     {
         _segmentNode = null;
-        _regionsNode.Dispose();
+        _regionsNode?.Dispose();
         _regionsNode = null;
         _locationsNode = null;
         _entitiesNode = null;
