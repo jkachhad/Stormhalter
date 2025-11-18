@@ -183,8 +183,8 @@ public class ScriptEditor : RoslynCodeEditor
         
         BodySegment.Length += e.InsertionLength - e.RemovalLength;
 
-        if (BodySegment.Length > 0)
-            SetCurrentValue(BodyProperty, _body = Document.GetText(BodySegment));
+        SetCurrentValue(BodyProperty, 
+            _body = (BodySegment.Length > 0 ? Document.GetText(BodySegment) : String.Empty));
 
         FooterSegment.StartOffset = BodySegment.EndOffset + NewLine.Length;
 
