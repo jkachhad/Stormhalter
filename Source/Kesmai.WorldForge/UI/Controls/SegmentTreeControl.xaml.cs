@@ -39,10 +39,6 @@ public partial class SegmentTreeControl : UserControl
     {
         InitializeComponent();
 
-        WeakReferenceMessenger.Default.Register<SegmentEntityAdded>(this, (r, m) => OnEntityAdded(m.Value));
-        WeakReferenceMessenger.Default.Register<SegmentEntityRemoved>(this, (r, m) => OnEntityRemoved(m.Value));
-        WeakReferenceMessenger.Default.Register<SegmentEntityChanged>(this, (r, m) => OnEntityChanged(m.Value));
-        
         WeakReferenceMessenger.Default.Register<SegmentSpawnAdded>(this, (r, m) => OnSpawnAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentSpawnRemoved>(this, (r, m) => OnSpawnRemoved(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentSpawnChanged>(this, (r, m) => OnSpawnChanged(m.Value));
@@ -107,7 +103,7 @@ public partial class SegmentTreeControl : UserControl
     private RegionsTreeViewItem _regionsNode;
     private LocationsTreeViewItem _locationsNode;
     private ComponentsTreeViewItem _componentsNode;
-    private TreeViewItem _entitiesNode;
+    private EntitiesTreeViewItem _entitiesNode;
     private TreeViewItem _spawnersNode;
     private TreasuresTreeViewItem _treasureNode;
 
@@ -123,10 +119,8 @@ public partial class SegmentTreeControl : UserControl
         };
     }
     
-    private Dictionary<SegmentEntity, SegmentTreeViewItem> _entityItems = new Dictionary<SegmentEntity, SegmentTreeViewItem>();
     private Dictionary<SegmentSpawner, SegmentTreeViewItem> _spawnItems = new Dictionary<SegmentSpawner, SegmentTreeViewItem>();
     
-    private Dictionary<string, TreeViewItem> _entityGroupNodes = new Dictionary<string, TreeViewItem>();
     private Dictionary<int, TreeViewItem> _spawnGroupNodes = new Dictionary<int, TreeViewItem>();
 
     private void ResetNodes()
@@ -138,6 +132,7 @@ public partial class SegmentTreeControl : UserControl
         _locationsNode = null;
         _componentsNode?.Dispose();
         _componentsNode = null;
+        _entitiesNode?.Dispose();
         _entitiesNode = null;
         _treasureNode?.Dispose();
         _treasureNode = null;
@@ -147,9 +142,7 @@ public partial class SegmentTreeControl : UserControl
         _templatesNode?.Dispose();
         _templatesNode = null;
         
-        _entityItems.Clear();
         _spawnItems.Clear();
-        _entityGroupNodes.Clear();
         _spawnGroupNodes.Clear();
     }
     
@@ -204,128 +197,12 @@ public partial class SegmentTreeControl : UserControl
         _templatesNode = new TemplatesTreeViewItem(Segment, CreateHeader("Templates", "Gear.png"));
     }
 
-    private void OnEntityAdded(SegmentEntity entity)
-    {
-        EnsureEntitiesNode();
-        
-        if (!_entityItems.TryGetValue(entity, out var entityItem))
-        {
-            entityItem = new SegmentTreeViewItem(entity, Brushes.Yellow, true)
-            {
-                Tag = entity,
-            };
-
-            entityItem.ContextMenu = new ContextMenu();
-            entityItem.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(entity, entityItem));
-            entityItem.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(entity));
-            entityItem.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(entity, entityItem, Segment.Entities));
-            
-            _entityItems.Add(entity, entityItem);
-        }
-        
-        BindEntityToGroup(entity, entityItem);
-    }
-    
-    private void OnEntityChanged(SegmentEntity entity)
-    {
-        if (!_entityItems.TryGetValue(entity, out var entityItem))
-            return;
-
-        entityItem.EditableTextBlock.Text = entity.Name;
-        
-        BindEntityToGroup(entity, entityItem);
-    }
-    
-    private void OnEntityRemoved(SegmentEntity entity)
-    {
-        // an entity has been removed, delete its tree node.
-        if (_entityItems.Remove(entity, out var entityNode))
-        {
-            // find the parent node.
-            if (entityNode.Parent is TreeViewItem parentNode)
-                parentNode.Items.Remove(entityNode);
-        }
-    }
-
-    private void BindEntityToGroup(SegmentEntity entity, SegmentTreeViewItem entityItem)
-    {
-        EnsureEntitiesNode();
-
-        var groupPath = String.IsNullOrEmpty(entity.Group) ? "Ungrouped" : entity.Group;
-        
-        if (!_entityGroupNodes.TryGetValue(groupPath, out var parentNode))
-        {
-            parentNode = _entitiesNode;
-            
-            var groupFolders = groupPath.Split(@"\");
-
-            for (int i = 0; i < groupFolders.Length; i++)
-            {
-                var folderPath = String.Join(@"\", groupFolders.Take(i + 1));
-
-                if (!_entityGroupNodes.TryGetValue(folderPath, out var folderNode))
-                {
-                    parentNode.Items.Add(folderNode = new TreeViewItem
-                    {
-                        Header = CreateHeader(groupFolders[i], "Folder.png")
-                    });
-                    
-                    folderNode.ContextMenu = new ContextMenu();
-                    folderNode.ContextMenu.AddItem("Add Entity", "Add.png", (s, e) =>
-                    {
-                        var newEntity = new SegmentEntity
-                        {
-                            Name = $"Entity {_nextId++}",
-                            Group = folderPath
-                        };
-            
-                        Segment.Entities.Add(newEntity);
-                
-                        newEntity.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-                    });
-                    
-                    _entityGroupNodes.Add(folderPath, folderNode);
-                }
-
-                parentNode = folderNode;
-            }
-		}
-        
-        if (entityItem.Parent is ItemsControl currentParent && !ReferenceEquals(currentParent, parentNode))
-        {
-            // If the entity already belongs to a different folder we must detach it before
-            // re-attaching, otherwise WPF throws "element already has a logical parent".
-            currentParent.Items.Remove(entityItem);
-        }
-
-        if (!parentNode.Items.Contains(entityItem))
-            parentNode.Items.Add(entityItem);
-    }
-
     private void EnsureEntitiesNode()
     {
         if (_entitiesNode is not null)
             return;
         
-        _entitiesNode = new TreeViewItem
-        {
-            Tag = $"category:Entities",
-            Header = CreateHeader("Entities", "Entities.png")
-        };
-            
-        _entitiesNode.ContextMenu = new ContextMenu();
-        _entitiesNode.ContextMenu.AddItem("Add Entity", "Add.png", (s, e) =>
-        {
-            var entity = new SegmentEntity
-            {
-                Name = $"Entity {_nextId++}"
-            };
-            
-            Segment.Entities.Add(entity);
-                
-            // present the new entity to the user.
-            entity.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-        });
+        _entitiesNode = new EntitiesTreeViewItem(Segment, CreateHeader("Entities", "Entities.png"));
     }
     
     private void EnsureTreasuresNode()
