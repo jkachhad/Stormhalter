@@ -39,14 +39,6 @@ public partial class SegmentTreeControl : UserControl
     {
         InitializeComponent();
 
-        WeakReferenceMessenger.Default.Register<SegmentRegionAdded>(this, (r, m) => OnRegionAdded(m.Value));
-        WeakReferenceMessenger.Default.Register<SegmentRegionRemoved>(this, (r, m) => OnRegionRemoved(m.Value));
-        WeakReferenceMessenger.Default.Register<SegmentRegionChanged>(this, (r, m) => OnRegionChanged(m.Value));
-
-        WeakReferenceMessenger.Default.Register<SegmentSubregionAdded>(this, (r, m) => OnSubregionAdded(m.Value));
-        WeakReferenceMessenger.Default.Register<SegmentSubregionRemoved>(this, (r, m) => OnSubregionRemoved(m.Value));
-        WeakReferenceMessenger.Default.Register<SegmentSubregionChanged>(this, (r, m) => OnSubregionChanged(m.Value));
-
         WeakReferenceMessenger.Default.Register<SegmentLocationAdded>(this, (r, m) => OnLocationAdded(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentLocationRemoved>(this, (r, m) => OnLocationRemoved(m.Value));
         WeakReferenceMessenger.Default.Register<SegmentLocationChanged>(this, (r, m) => OnLocationChanged(m.Value));
@@ -136,7 +128,7 @@ public partial class SegmentTreeControl : UserControl
     private TreeViewItem _segmentNode;
     private TreeViewItem _brushesNode;
     private TreeViewItem _templatesNode;
-    private TreeViewItem _regionsNode;
+    private RegionsTreeViewItem _regionsNode;
     private TreeViewItem _locationsNode;
     private TreeViewItem _componentsNode;
     private TreeViewItem _entitiesNode;
@@ -155,8 +147,6 @@ public partial class SegmentTreeControl : UserControl
         };
     }
     
-    private Dictionary<SegmentRegion, SegmentTreeViewItem> _regionItems = new Dictionary<SegmentRegion, SegmentTreeViewItem>();
-    private Dictionary<SegmentSubregion, SegmentTreeViewItem> _subregionItems = new Dictionary<SegmentSubregion, SegmentTreeViewItem>();
     private Dictionary<SegmentLocation, SegmentTreeViewItem> _locationItems = new Dictionary<SegmentLocation, SegmentTreeViewItem>();
     private Dictionary<SegmentComponent, SegmentTreeViewItem> _componentItems = new Dictionary<SegmentComponent, SegmentTreeViewItem>();
     private Dictionary<SegmentBrush, SegmentTreeViewItem> _brushItems = new Dictionary<SegmentBrush, SegmentTreeViewItem>();
@@ -171,6 +161,7 @@ public partial class SegmentTreeControl : UserControl
     private void ResetNodes()
     {
         _segmentNode = null;
+        _regionsNode.Dispose();
         _regionsNode = null;
         _locationsNode = null;
         _entitiesNode = null;
@@ -180,8 +171,6 @@ public partial class SegmentTreeControl : UserControl
         _brushesNode = null;
         _templatesNode = null;
         
-        _regionItems.Clear();
-        _subregionItems.Clear();
         _locationItems.Clear();
         _componentItems.Clear();
         _brushItems.Clear();
@@ -204,118 +193,6 @@ public partial class SegmentTreeControl : UserControl
             item.EditableTextBlock.Text = segmentObject.Name;
         }
     }
-    
-    
-    private void OnRegionAdded(SegmentRegion region)
-    {
-        EnsureRegionsNode();
-        
-        // a region has been added, create its tree node.
-        if (!_regionItems.TryGetValue(region, out var regionItem))
-        {
-            regionItem = new SegmentTreeViewItem(region, Brushes.MediumPurple, false, $"[{region.ID}] {{0}}")
-            {
-                Tag = region,
-            };
-
-            regionItem.ContextMenu = new ContextMenu();
-            regionItem.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(region, regionItem));
-            regionItem.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(region));
-            regionItem.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(region, regionItem, Segment.Regions));
-            
-            _regionItems.Add(region, regionItem);
-        }
-        
-        if (!_regionsNode.Items.Contains(regionItem))
-            _regionsNode.Items.Add(regionItem);
-
-        ApplyRegionSort();
-    }
-    
-    private void OnRegionRemoved(SegmentRegion region)
-    {
-        // a region has been removed, delete its tree node.
-        if (_regionItems.Remove(region, out var item))
-        {
-            if (_regionsNode != null)
-                _regionsNode.Items.Remove(item);
-        }
-    }
-    
-    private void OnRegionChanged(SegmentRegion region)
-    {
-        UpdateTreeItemText(_regionItems, region, $"[{region.ID}] {{0}}");
-        
-        ApplyRegionSort();
-    }
-
-    private void ApplyRegionSort()
-    {
-        if (_regionsNode is null)
-            return;
-
-        var sortedItems = _regionsNode.Items.OfType<SegmentTreeViewItem>()
-            .OrderBy(item => (item.Tag is SegmentRegion segmentRegion) ? segmentRegion.ID : int.MaxValue)
-            .ThenBy(item => item.EditableTextBlock.Text, StringComparer.OrdinalIgnoreCase)
-            .ToList();
-        
-        _regionsNode.Items.Clear();
-
-        foreach (var item in sortedItems)
-            _regionsNode.Items.Add(item);
-    }
-
-    private void OnSubregionAdded(SegmentSubregion subregion)
-    {
-        // subregion has been added, create its tree node.
-        // the nodes rest on the parent region.
-        
-        // find the parent node.
-        var parentRegion = _regionItems.Keys.FirstOrDefault(r => r.ID == subregion.Region);
-
-        if (parentRegion is null)
-            return;
-        
-        if (!_subregionItems.TryGetValue(subregion, out var subregionItem))
-        {
-            subregionItem = new SegmentTreeViewItem(subregion, Brushes.Gray, false)
-            {
-                Tag = subregion,
-            };
-
-            subregionItem.ContextMenu = new ContextMenu();
-            subregionItem.ContextMenu.AddItem("Rename", "Rename.png", (s, e) => RenameSegmentObject(subregion, subregionItem));
-            subregionItem.ContextMenu.AddItem("Duplicate", "Copy.png", (s, e) => DuplicateSegmentObject(subregion));
-            subregionItem.ContextMenu.AddItem("Delete", "Delete.png", (s, e) => DeleteSegmentObject(subregion, subregionItem, Segment.Subregions));
-
-            _subregionItems.Add(subregion, subregionItem);
-        }
-
-        if (_regionItems.TryGetValue(parentRegion, out var parentRegionNode))
-            parentRegionNode.Items.Add(subregionItem);
-    }
-    
-    private void OnSubregionRemoved(SegmentSubregion subregion)
-    {
-        // a subregion has been removed, delete its tree node.
-        if (_subregionItems.Remove(subregion, out var item))
-        {
-            // find the parent region node.
-            var parentRegion = _regionItems.Keys.FirstOrDefault(r => r.ID == subregion.Region);
-
-            if (parentRegion is null)
-                return;
-
-            if (_regionItems.TryGetValue(parentRegion, out var parentRegionNode))
-                parentRegionNode.Items.Remove(item);
-        }
-    }
-
-    private void OnSubregionChanged(SegmentSubregion subregion)
-    {
-        UpdateTreeItemText(_subregionItems, subregion);
-    }
-
     private void OnLocationAdded(SegmentLocation location)
     {
         EnsureLocationsNode();
@@ -400,30 +277,10 @@ public partial class SegmentTreeControl : UserControl
     
     private void EnsureRegionsNode()
     {
-        if (_regionsNode is not null) 
+        if (_regionsNode is not null || Segment is null)
             return;
         
-        _regionsNode = new TreeViewItem
-        {
-            Tag = $"category:Regions",
-            Header = CreateHeader("Regions", "Regions.png")
-        };
-            
-        _regionsNode.ContextMenu = new ContextMenu();
-        _regionsNode.ContextMenu.AddItem("Add Region", "Add.png", (s, e) =>
-        {
-            var region = new SegmentRegion
-            {
-                Name = $"Region {_nextId++}"
-            };
-            
-            Segment.Regions.Add(region);
-                
-            // present the new region to the user.
-            region.Present(ServiceLocator.Current.GetInstance<ApplicationPresenter>());
-        });
-
-        ApplyRegionSort();
+        _regionsNode = new RegionsTreeViewItem(Segment, CreateHeader("Regions", "Regions.png"));
     }
 
     public void OnComponentAdded(SegmentComponent component)
