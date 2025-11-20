@@ -24,7 +24,7 @@ public abstract partial class MobileEntity
 		["injured"] = (source, entities) => entities.RemoveAll(entity => (entity.Health >= entity.MaxHealth)),
 		["healthy"] = (source, entities) => entities.RemoveAll(entity => (entity.Health < entity.MaxHealth)),
 		["deathly"] = (source, entities) => entities.RemoveAll(entity => (Combat.GetHealthState(entity) != 1)),
-		["lowest"] = (source, entities) => entities.RemoveAll(x => !ReferenceEquals(x, e.Where(y => y.IsAlive && y.MaxHealth > 0).MinBy(y => (double)y.Health / y.MaxHealth)));
+		["lowest"] = (source, entities) => entities.RemoveAll(x => !ReferenceEquals(x, entities.Where(y => y.IsAlive && y.MaxHealth > 0).MinBy(y => (double)y.Health / y.MaxHealth))),
 
 		["casting"] = (source, entities) => entities.RemoveAll(entity => (entity.Spell is null)), 
 
