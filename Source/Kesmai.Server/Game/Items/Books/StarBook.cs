@@ -19,7 +19,6 @@ public class StarBook : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StarBook"/> class.
 	/// </summary>
-	[WorldForge]
 	public StarBook() : base(192)
 	{
 	}

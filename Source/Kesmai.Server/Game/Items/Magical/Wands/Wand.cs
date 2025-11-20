@@ -38,7 +38,6 @@ public abstract class Wand : MeleeWeapon, IEmpowered, ICharged
 	/// <summary>
 	/// Gets the target flags utilized by this <see cref="Wand"/>.
 	/// </summary>
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual TargetFlags TargetFlags => TargetFlags.Path;
 		
@@ -72,7 +71,6 @@ public abstract class Wand : MeleeWeapon, IEmpowered, ICharged
 	/// <summary>
 	/// Gets the current charges available.
 	/// </summary>
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public int ChargesCurrent
 	{
@@ -83,7 +81,6 @@ public abstract class Wand : MeleeWeapon, IEmpowered, ICharged
 	/// <summary>
 	/// Gets the maximum charges available.
 	/// </summary>
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public int ChargesMax
 	{

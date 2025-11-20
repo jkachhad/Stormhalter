@@ -19,7 +19,6 @@ public class ClamShell : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ClamShell"/> class.
 	/// </summary>
-	[WorldForge]
 	public ClamShell() : base(65)
 	{
 	}

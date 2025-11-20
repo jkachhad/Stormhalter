@@ -28,27 +28,22 @@ public abstract class Armor : Equipment, IArmored
 	#region IArmored
 		
 	/// <inheritdoc />
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int BaseArmorBonus => 0;
 
 	/// <inheritdoc />
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int SlashingProtection => 0;
 
 	/// <inheritdoc />
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int PiercingProtection => 0;
 
 	/// <inheritdoc />
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int BashingProtection => 0;
 
 	/// <inheritdoc />
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int ProjectileProtection => 0;
 

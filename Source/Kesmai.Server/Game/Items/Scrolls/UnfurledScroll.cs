@@ -19,7 +19,6 @@ public class UnfurledScroll : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="UnfurledScroll"/> class.
 	/// </summary>
-	[WorldForge]
 	public UnfurledScroll() : base(141)
 	{
 	}

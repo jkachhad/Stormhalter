@@ -13,7 +13,6 @@ public class PerfectRuby : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PerfectRuby"/> class.
 	/// </summary>
-	[WorldForge]
 	public PerfectRuby(uint basePrice) : base(359, basePrice)
 	{
 	}

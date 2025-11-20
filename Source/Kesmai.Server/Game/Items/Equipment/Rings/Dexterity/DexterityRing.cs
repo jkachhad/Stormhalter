@@ -18,7 +18,6 @@ public class DexterityRing : Ring, ITreasure
 	/// <summary>
 	/// The dexterity bonus provided by this ring.
 	/// </summary>
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int BonusDexterity => 2;
 

@@ -19,7 +19,6 @@ public class DemonBook : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DemonBook"/> class.
 	/// </summary>
-	[WorldForge]
 	public DemonBook() : base(192)
 	{
 	}

@@ -12,7 +12,6 @@ public class UncutEmerald : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="UncutEmerald"/> class.
 	/// </summary>
-	[WorldForge]
 	public UncutEmerald(uint basePrice) : base(178, basePrice)
 	{
 	}

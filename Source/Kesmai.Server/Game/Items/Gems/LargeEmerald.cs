@@ -14,7 +14,6 @@ public class LargeEmerald : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LargeEmerald"/> class.
 	/// </summary>
-	[WorldForge]
 	public LargeEmerald(uint basePrice) : base(61, basePrice)
 	{
 	}

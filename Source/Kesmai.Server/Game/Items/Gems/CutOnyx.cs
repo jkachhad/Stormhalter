@@ -13,7 +13,6 @@ public class CutOnyx : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="CutOnyx"/> class.
 	/// </summary>
-	[WorldForge]
 	public CutOnyx(uint basePrice) : base(358, basePrice)
 	{
 	}

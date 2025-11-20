@@ -8,7 +8,6 @@ public class NightVisionStatus : SpellStatus
 {
 	public override int SpellRemovedSound => 221;
 		
-	[WorldForge]
 	public NightVisionStatus(MobileEntity entity) : base(entity)
 	{
 	}

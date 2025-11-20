@@ -15,7 +15,6 @@ public class OysterPearl : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="OysterPearl"/> class.
 	/// </summary>
-	[WorldForge]
 	public OysterPearl(uint basePrice) : base(143, basePrice)
 	{
 	}

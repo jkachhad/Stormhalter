@@ -21,7 +21,6 @@ public class StrengthRing : Ring, ITreasure
 	/// </summary>
 	public override int Weight => 20;
 
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int StrengthBonus => 3;
 

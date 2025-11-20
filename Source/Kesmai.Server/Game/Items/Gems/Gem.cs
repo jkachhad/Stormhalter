@@ -23,7 +23,6 @@ public abstract class Gem : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Gem"/> class.
 	/// </summary>
-	[WorldForge]
 	protected Gem(int gemID, uint basePrice) : base(gemID)
 	{
 		_basePrice = basePrice;

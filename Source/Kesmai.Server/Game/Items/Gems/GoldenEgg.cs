@@ -16,7 +16,6 @@ public class GoldenEgg : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GoldenEgg"/> class.
 	/// </summary>
-	[WorldForge]
 	public GoldenEgg(uint basePrice) : base(191, basePrice)
 	{
 	}
@@ -24,7 +23,6 @@ public class GoldenEgg : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GoldenEgg"/> class.
 	/// </summary>
-	[WorldForge]
 	public GoldenEgg(Serial serial) : base(serial)
 	{
 	}

@@ -13,7 +13,6 @@ public class OvalOnyx : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="OvalOnyx"/> class.
 	/// </summary>
-	[WorldForge]
 	public OvalOnyx(uint basePrice) : base(345, basePrice)
 	{
 	}

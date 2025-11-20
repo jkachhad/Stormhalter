@@ -79,7 +79,6 @@ public class Book : ItemEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Book"/> class.
 	/// </summary>
-	[WorldForge]
 	public Book(uint publicationId) : base(152)
 	{
 		PublicationId = publicationId;

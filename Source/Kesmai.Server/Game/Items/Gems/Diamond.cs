@@ -14,7 +14,6 @@ public class Diamond : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Diamond"/> class.
 	/// </summary>
-	[WorldForge]
 	public Diamond(uint basePrice) : base(136, basePrice)
 	{
 	}

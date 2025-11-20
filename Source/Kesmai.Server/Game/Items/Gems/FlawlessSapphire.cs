@@ -13,7 +13,6 @@ public class FlawlessSapphire : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FlawlessSapphire"/> class.
 	/// </summary>
-	[WorldForge]
 	public FlawlessSapphire(uint basePrice) : base(177, basePrice)
 	{
 	}

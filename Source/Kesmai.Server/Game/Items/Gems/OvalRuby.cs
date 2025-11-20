@@ -13,7 +13,6 @@ public class OvalRuby : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="OvalRuby"/> class.
 	/// </summary>
-	[WorldForge]
 	public OvalRuby(uint basePrice) : base(63, basePrice)
 	{
 	}

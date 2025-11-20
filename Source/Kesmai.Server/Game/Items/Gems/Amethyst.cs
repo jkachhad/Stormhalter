@@ -13,7 +13,6 @@ public class Amethyst : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Amethyst"/> class.
 	/// </summary>
-	[WorldForge]
 	public Amethyst(uint basePrice) : base(179, basePrice)
 	{
 	}

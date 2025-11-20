@@ -18,7 +18,6 @@ public class Tourmaline : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Tourmaline"/> class.
 	/// </summary>
-	[WorldForge]
 	public Tourmaline(uint basePrice) : base(62, basePrice)
 	{
 	}

@@ -13,7 +13,6 @@ public class RawSapphire : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RawSapphire"/> class.
 	/// </summary>
-	[WorldForge]
 	public RawSapphire(uint basePrice) : base(361, basePrice)
 	{
 	}

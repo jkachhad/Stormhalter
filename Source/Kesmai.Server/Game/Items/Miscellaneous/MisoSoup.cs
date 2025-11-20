@@ -19,7 +19,6 @@ public class MisoSoup : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="MisoSoup"/> class.
 	/// </summary>
-	[WorldForge]
 	public MisoSoup() : base(24)
 	{
 	}

@@ -286,7 +286,6 @@ public abstract partial class TrainerEntity : VendorEntity
 		return true;
 	}
 
-	[WorldForge]
 	public void SetTraining(Skill skill, double minimum, double maximum)
 	{
 		if (!_training.ContainsKey(skill))

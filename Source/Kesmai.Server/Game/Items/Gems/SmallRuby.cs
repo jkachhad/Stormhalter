@@ -14,7 +14,6 @@ public class SmallRuby : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SmallRuby"/> class.
 	/// </summary>
-	[WorldForge]
 	public SmallRuby(uint basePrice) : base(140, basePrice)
 	{
 	}

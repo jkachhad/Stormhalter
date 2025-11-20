@@ -19,7 +19,6 @@ public class AshtugBook : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="AshtugBook"/> class.
 	/// </summary>
-	[WorldForge]
 	public AshtugBook() : base(155)
 	{
 	}

@@ -14,7 +14,6 @@ public class SmallTopaz : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SmallTopaz"/> class.
 	/// </summary>
-	[WorldForge]
 	public SmallTopaz(uint basePrice) : base(150, basePrice)
 	{
 	}

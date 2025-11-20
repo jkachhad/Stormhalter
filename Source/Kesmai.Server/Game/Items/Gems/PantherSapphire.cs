@@ -13,7 +13,6 @@ public class PantherSapphire : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PantherSapphire"/> class.
 	/// </summary>
-	[WorldForge]
 	public PantherSapphire(uint basePrice) : base(167, basePrice)
 	{
 	}

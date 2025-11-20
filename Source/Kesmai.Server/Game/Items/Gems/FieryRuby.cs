@@ -15,7 +15,6 @@ public class FieryRuby : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="FieryRuby"/> class.
 	/// </summary>
-	[WorldForge]
 	public FieryRuby(uint basePrice) : base(165, basePrice)
 	{
 	}

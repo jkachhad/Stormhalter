@@ -6,7 +6,6 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Game;
 
-[WorldForge]
 public abstract class Consumable : ItemEntity
 {
 	protected IConsumableContent _content;
@@ -17,7 +16,6 @@ public abstract class Consumable : ItemEntity
 	/// <summary>
 	/// Gets or sets the <see cref="IConsumableContent"/> for this <see cref="Consumable"/>.
 	/// </summary>
-	[WorldForge]
 	public IConsumableContent Content
 	{
 		get => _content;
@@ -137,7 +135,6 @@ public abstract class Consumable : ItemEntity
 	/// <summary>
 	/// Called when the specified entity consumes this item.
 	/// </summary>
-	[WorldForge]
 	public bool Consume(MobileEntity entity, bool destroy = true)
 	{
 		if (Deleted || entity.Deleted)

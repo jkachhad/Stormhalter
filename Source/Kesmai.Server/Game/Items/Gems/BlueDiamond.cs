@@ -13,7 +13,6 @@ public class BlueDiamond : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BlueDiamond"/> class.
 	/// </summary>
-	[WorldForge]
 	public BlueDiamond(uint basePrice) : base(335, basePrice)
 	{
 	}

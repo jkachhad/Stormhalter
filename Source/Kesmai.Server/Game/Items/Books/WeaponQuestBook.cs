@@ -19,7 +19,6 @@ public class WeaponBook : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WeaponBook"/> class.
 	/// </summary>
-	[WorldForge]
 	public WeaponBook() : base(299)
 	{
 	}

@@ -19,7 +19,6 @@ public class TigerStatuette : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TigerStatuette"/> class.
 	/// </summary>
-	[WorldForge]
 	public TigerStatuette() : base(50)
 	{
 	}

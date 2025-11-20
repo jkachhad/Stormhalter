@@ -8,7 +8,6 @@ using Kesmai.Server.Spells;
 
 namespace Kesmai.Server.Game;
 
-[WorldForge]
 public interface IConsumableContent
 {
 	/// <summary>
@@ -41,7 +40,6 @@ public interface IConsumableContent
 	public void Deserialize(ref SpanReader reader);
 }
 
-[WorldForge]
 public class ConsumableHeal : IConsumableContent
 {
 	private int _amount; 
@@ -50,7 +48,6 @@ public class ConsumableHeal : IConsumableContent
 	/// Initializes a new instance of the <see cref="ConsumableHeal"/> class.
 	/// </summary>
 	/// <param name="amount">The amount an entity will be healed.</param>
-	[WorldForge]
 	public ConsumableHeal(int amount)
 	{
 		_amount = amount;
@@ -86,8 +83,7 @@ public class ConsumableHeal : IConsumableContent
 		}
 	}
 }
-	
-[WorldForge]
+
 public class ConsumableDamage : IConsumableContent
 {
 	private int _amount; 
@@ -96,7 +92,6 @@ public class ConsumableDamage : IConsumableContent
 	/// Initializes a new instance of the <see cref="ConsumableDamage"/> class.
 	/// </summary>
 	/// <param name="amount">The amount an entity will be hurt.</param>
-	[WorldForge]
 	public ConsumableDamage(int amount)
 	{
 		_amount = amount;
@@ -140,12 +135,10 @@ public class ConsumableDamage : IConsumableContent
 	}
 }
 
-[WorldForge]
 public class ConsumablePoison : IConsumableContent
 {
 	private int _potency;
-		
-	[WorldForge]
+
 	public ConsumablePoison(int potency)
 	{
 		_potency = potency;
@@ -183,8 +176,7 @@ public class ConsumablePoison : IConsumableContent
 		}
 	}
 }
-	
-[WorldForge]
+
 public class ConsumablePoisonAntidote : IConsumableContent
 {
 	private bool _relative;
@@ -195,7 +187,6 @@ public class ConsumablePoisonAntidote : IConsumableContent
 	/// </summary>
 	/// <param name="potency">The amount of potency reduced on poison status.</param>
 	/// <param name="relative">if the antidote cures by a relative, or absolute amount.</param>
-	[WorldForge]
 	public ConsumablePoisonAntidote(int potency, bool relative = true)
 	{
 		_relative = relative;
@@ -257,8 +248,7 @@ public class ConsumablePoisonAntidote : IConsumableContent
 		}
 	}
 }
-	
-[WorldForge]
+
 public class ConsumableBlindnessAntidote : IConsumableContent
 {
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
@@ -291,14 +281,12 @@ public class ConsumableBlindnessAntidote : IConsumableContent
 		}
 	}
 }
-	
-[WorldForge]
+
 public class ConsumableRestoreMana : IConsumableContent
 {
 	private static Dictionary<int, ConsumableRestoreMana> _collection 
 		= new Dictionary<int, ConsumableRestoreMana>();
 
-	[WorldForge]
 	public static ConsumableRestoreMana Full = new ConsumableRestoreMana(default(int?));
 
 	public static ConsumableRestoreMana Instantiate(int amount)
@@ -315,7 +303,6 @@ public class ConsumableRestoreMana : IConsumableContent
 	/// Initializes a new instance of the <see cref="ConsumableRestoreMana"/> class.
 	/// </summary>
 	/// <param name="amount">The amount of mana restored if specified. Otherwise, the maximum amount is restored.</param>
-	[WorldForge]
 	public ConsumableRestoreMana(int? amount)
 	{
 		_amount = amount;
@@ -361,8 +348,7 @@ public class ConsumableRestoreMana : IConsumableContent
 		}
 	}
 }
-	
-[WorldForge]
+
 public class ConsumableIncreaseMana : IConsumableContent
 {
 	private int _amount;
@@ -371,7 +357,6 @@ public class ConsumableIncreaseMana : IConsumableContent
 	/// Initializes a new instance of the <see cref="ConsumableIncreaseMana"/> class.
 	/// </summary>
 	/// <param name="amount">The amount of max mana increased.</param>
-	[WorldForge]
 	public ConsumableIncreaseMana(int amount)
 	{
 		_amount = amount;
@@ -419,17 +404,14 @@ public class ConsumableIncreaseMana : IConsumableContent
 		}
 	}
 }
-	
-[WorldForge]
+
 public class ConsumableRestoreStamina : IConsumableContent
 {
 	private static Dictionary<int, ConsumableRestoreStamina> _collection 
 		= new Dictionary<int, ConsumableRestoreStamina>();
 
-	[WorldForge]
 	public static ConsumableRestoreStamina Full = new ConsumableRestoreStamina(default(int?));
 
-	[WorldForge]
 	public static ConsumableRestoreStamina Instantiate(int amount)
 	{
 		if (!_collection.TryGetValue(amount, out var content))
@@ -490,10 +472,8 @@ public class ConsumableRestoreStamina : IConsumableContent
 	}
 }
 
-[WorldForge]
 public class ConsumableWater : ConsumableRestoreStamina
 {
-	[WorldForge]
 	public ConsumableWater() : base(10)
 	{
 	}
@@ -529,12 +509,10 @@ public class ConsumableWater : ConsumableRestoreStamina
 	}
 }
 
-[WorldForge]
 public class ConsumableUrine : ConsumableDamage
 {
 	private string _owner;
-		
-	[WorldForge]
+
 	public ConsumableUrine(string owner) : base(10)
 	{
 		_owner = owner;
@@ -572,8 +550,7 @@ public class ConsumableUrine : ConsumableDamage
 		}
 	}
 }
-	
-[WorldForge]
+
 public class ConsumableAmbrosia : IConsumableContent
 {
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
@@ -618,7 +595,6 @@ public class ConsumableAmbrosia : IConsumableContent
 	}
 }
 
-[WorldForge]
 public class ConsumableNaphtha : IConsumableContent
 {
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
@@ -672,8 +648,7 @@ public class ConsumableNaphtha : IConsumableContent
 		}
 	}
 }
-	
-[WorldForge]
+
 public class ConsumableNitro : IConsumableContent
 {
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
@@ -730,8 +705,7 @@ public class ConsumableNitro : IConsumableContent
 		}
 	}
 }
-	
-[WorldForge]
+
 public class ConsumableStrengthSpell : IConsumableContent
 {
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
@@ -776,7 +750,6 @@ public class ConsumableStrengthSpell : IConsumableContent
 	}
 }
 
-[WorldForge]
 public class ConsumableStrengthStat : IConsumableContent
 {
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
@@ -821,8 +794,7 @@ public class ConsumableStrengthStat : IConsumableContent
 		}
 	}
 }
-	
-[WorldForge]
+
 public class ConsumableDexterityStat : IConsumableContent
 {
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
@@ -867,8 +839,7 @@ public class ConsumableDexterityStat : IConsumableContent
 		}
 	}
 }
-	
-[WorldForge]
+
 public class ConsumableIntelligenceStat : IConsumableContent
 {
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
@@ -908,8 +879,7 @@ public class ConsumableIntelligenceStat : IConsumableContent
 		}
 	}
 }
-	
-[WorldForge]
+
 public class ConsumableWillpowerStat : IConsumableContent
 {
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
@@ -949,8 +919,7 @@ public class ConsumableWillpowerStat : IConsumableContent
 		}
 	}
 }
-	
-[WorldForge]
+
 public class ConsumableWisdomStat : IConsumableContent
 {
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
@@ -990,8 +959,7 @@ public class ConsumableWisdomStat : IConsumableContent
 		}
 	}
 }
-	
-[WorldForge]
+
 public class ConsumableConstitutionStat : IConsumableContent
 {
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)
@@ -1050,7 +1018,6 @@ public class ConsumableConstitutionStat : IConsumableContent
 	}
 }
 
-[WorldForge]
 public class ConsumableBalm : IConsumableContent
 {
 	public void GetDescription(ItemEntity consumable, List<LocalizationEntry> entries)

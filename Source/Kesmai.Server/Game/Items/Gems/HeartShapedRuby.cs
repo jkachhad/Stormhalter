@@ -13,7 +13,6 @@ public class HeartShapedRuby : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="HeartShapedRuby"/> class.
 	/// </summary>
-	[WorldForge]
 	public HeartShapedRuby(uint basePrice) : base(321, basePrice)
 	{
 	}

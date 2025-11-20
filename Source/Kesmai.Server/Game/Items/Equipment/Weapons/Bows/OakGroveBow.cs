@@ -7,7 +7,6 @@ using Kesmai.Server.Network;
 
 namespace Kesmai.Server.Items;
 
-[WorldForge]
 public class OakGroveBow : Bow, ITreasure
 {
 	/// <inheritdoc />

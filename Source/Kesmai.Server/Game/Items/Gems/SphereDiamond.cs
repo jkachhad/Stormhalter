@@ -13,7 +13,6 @@ public class SphereDiamond : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SphereDiamond"/> class.
 	/// </summary>
-	[WorldForge]
 	public SphereDiamond(uint basePrice) : base(163, basePrice)
 	{
 	}

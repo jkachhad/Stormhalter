@@ -19,7 +19,6 @@ public class DungeonBook : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DungeonBook"/> class.
 	/// </summary>
-	[WorldForge]
 	public DungeonBook() : base(296)
 	{
 	}
@@ -27,7 +26,6 @@ public class DungeonBook : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="AnnwnBook"/> class.
 	/// </summary>
-	[WorldForge]
 	public DungeonBook(Serial serial) : base(serial)
 	{
 	}

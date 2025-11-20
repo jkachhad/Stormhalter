@@ -12,7 +12,6 @@ public abstract class LocateAmulet : Amulet, ITreasure, ICharged
 	private int _chargesCurrent;
 	private int _chargesMax;
 
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public int ChargesCurrent
 	{
@@ -20,7 +19,6 @@ public abstract class LocateAmulet : Amulet, ITreasure, ICharged
 		set => _chargesCurrent = value.Clamp(0, _chargesMax);
 	}
 		
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public int ChargesMax
 	{

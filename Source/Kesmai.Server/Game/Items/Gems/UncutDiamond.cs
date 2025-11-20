@@ -12,7 +12,6 @@ public class UncutDiamond : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="UncutDiamond"/> class.
 	/// </summary>
-	[WorldForge]
 	public UncutDiamond(uint basePrice) : base(154, basePrice)
 	{
 	}

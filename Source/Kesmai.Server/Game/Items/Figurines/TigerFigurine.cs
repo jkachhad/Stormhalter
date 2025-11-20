@@ -19,7 +19,6 @@ public class TigerFigurine : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="TigerFigurine"/> class.
 	/// </summary>
-	[WorldForge]
 	public TigerFigurine() : base(49)
 	{
 	}

@@ -19,7 +19,6 @@ public class OysterShell : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="OysterShell"/> class.
 	/// </summary>
-	[WorldForge]
 	public OysterShell() : base(52)
 	{
 	}

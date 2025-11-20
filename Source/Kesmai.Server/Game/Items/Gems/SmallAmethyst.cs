@@ -14,7 +14,6 @@ public class SmallAmethyst : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SmallAmethyst"/> class.
 	/// </summary>
-	[WorldForge]
 	public SmallAmethyst(uint basePrice) : base(151, basePrice)
 	{
 	}

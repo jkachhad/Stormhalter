@@ -19,7 +19,6 @@ public class RolledScroll : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RolledScroll"/> class.
 	/// </summary>
-	[WorldForge]
 	public RolledScroll() : base(128)
 	{
 	}

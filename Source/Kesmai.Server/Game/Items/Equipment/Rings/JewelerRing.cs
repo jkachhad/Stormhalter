@@ -24,7 +24,6 @@ public class JewelerRing : Ring, ITreasure
 	/// <summary>
 	/// Gets the total gold value converted by this ring.
 	/// </summary>
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public ulong Transmuted
 	{

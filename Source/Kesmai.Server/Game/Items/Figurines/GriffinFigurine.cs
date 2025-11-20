@@ -19,7 +19,6 @@ public class GriffinFigurine : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GriffinFigurine"/> class.
 	/// </summary>
-	[WorldForge]
 	public GriffinFigurine() : base(180)
 	{
 	}

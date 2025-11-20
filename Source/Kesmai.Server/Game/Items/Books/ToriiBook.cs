@@ -19,7 +19,6 @@ public class ToriiBook : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ToriiBook"/> class.
 	/// </summary>
-	[WorldForge]
 	public ToriiBook() : base(297)
 	{
 	}

@@ -18,7 +18,6 @@ public class LargeWhitePearl : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="LargeWhitePearl"/> class.
 	/// </summary>
-	[WorldForge]
 	public LargeWhitePearl(uint basePrice) : base(349, basePrice)
 	{
 	}

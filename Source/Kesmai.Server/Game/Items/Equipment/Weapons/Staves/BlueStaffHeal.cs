@@ -49,7 +49,6 @@ public class BlueStaffHeal : BlueStaff, IEmpowered, ICharged
 	private int _chargesMax;
 	private int _chargesCurrent;
 
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public int ChargesCurrent
 	{
@@ -57,7 +56,6 @@ public class BlueStaffHeal : BlueStaff, IEmpowered, ICharged
 		set => _chargesCurrent = value;
 	}
 
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public int ChargesMax
 	{

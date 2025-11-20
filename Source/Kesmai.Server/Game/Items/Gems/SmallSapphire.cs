@@ -14,7 +14,6 @@ public class SmallSapphire : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SmallSapphire"/> class.
 	/// </summary>
-	[WorldForge]
 	public SmallSapphire(uint basePrice) : base(60, basePrice)
 	{
 	}

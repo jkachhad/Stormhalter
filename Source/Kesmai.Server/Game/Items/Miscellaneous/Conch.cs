@@ -19,7 +19,6 @@ public class Conch : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Conch"/> class.
 	/// </summary>
-	[WorldForge]
 	public Conch() : base(156)
 	{
 	}

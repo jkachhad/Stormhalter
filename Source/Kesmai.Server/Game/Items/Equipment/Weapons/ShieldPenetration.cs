@@ -1,6 +1,5 @@
 ﻿namespace Kesmai.Server.Items;
 
-[WorldForge]
 public enum ShieldPenetration
 {
 	None = 0,

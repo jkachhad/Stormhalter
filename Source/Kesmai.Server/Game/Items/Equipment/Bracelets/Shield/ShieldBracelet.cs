@@ -18,7 +18,6 @@ public class ShieldBracelet : Bracelet, ITreasure
 	public override int Weight => 4;
 		
 	/// <inheritdoc />
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int Shield => 3;
 

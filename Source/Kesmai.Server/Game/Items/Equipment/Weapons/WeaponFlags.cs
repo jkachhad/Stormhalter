@@ -2,7 +2,6 @@
 
 namespace Kesmai.Server.Items;
 
-[WorldForge]
 [Flags]
 public enum WeaponFlags
 {

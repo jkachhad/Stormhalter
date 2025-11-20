@@ -13,7 +13,6 @@ public class BloodRuby : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BloodRuby"/> class.
 	/// </summary>
-	[WorldForge]
 	public BloodRuby(uint basePrice) : base(164, basePrice)
 	{
 	}

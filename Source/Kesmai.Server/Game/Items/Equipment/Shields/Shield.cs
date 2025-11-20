@@ -15,35 +15,30 @@ public abstract class Shield : ItemEntity, IArmored, IWieldable
 	/// <summary>
 	/// Gets the base armor bonus provided by this <see cref="Armor"/>.
 	/// </summary>
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int BaseArmorBonus => 0;
 
 	/// <summary>
 	/// Gets the protection provided against slashing attacks.
 	/// </summary>
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int SlashingProtection => 0;
 
 	/// <summary>
 	/// Gets the protection provided against peircing attacks.
 	/// </summary>
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int PiercingProtection => 0;
 
 	/// <summary>
 	/// Gets the protection provided against bashing attacks.
 	/// </summary>
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int BashingProtection => 0;
 
 	/// <summary>
 	/// Gets the protection provided against projectile attacks.
 	/// </summary>
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int ProjectileProtection => 0;
 

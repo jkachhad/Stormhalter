@@ -19,7 +19,6 @@ public class DemonFigurine : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DemonFigurine"/> class.
 	/// </summary>
-	[WorldForge]
 	public DemonFigurine() : base(376)
 	{
 	}

@@ -101,14 +101,12 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	/// <summary>
 	/// Gets the health regeneration provided by this <see cref="Weapon"/>
 	/// </summary>
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int HealthRegeneration => 0;
 
 	/// <summary>
 	/// Gets the stamina regeneration provided by this <see cref="Weapon"/>
 	/// </summary>
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int StaminaRegeneration => 0;
 

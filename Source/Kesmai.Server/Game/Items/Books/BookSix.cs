@@ -19,7 +19,6 @@ public class BookSix : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BookSix"/> class.
 	/// </summary>
-	[WorldForge]
 	public BookSix() : base(78)
 	{
 	}

@@ -13,7 +13,6 @@ public class StarSapphire : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StarSapphire"/> class.
 	/// </summary>
-	[WorldForge]
 	public StarSapphire(uint basePrice) : base(166, basePrice)
 	{
 	}

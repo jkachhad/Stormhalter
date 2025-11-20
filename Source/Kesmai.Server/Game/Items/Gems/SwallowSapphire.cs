@@ -13,7 +13,6 @@ public class SwallowSapphire : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="SwallowSapphire"/> class.
 	/// </summary>
-	[WorldForge]
 	public SwallowSapphire(uint basePrice) : base(282, basePrice)
 	{
 	}

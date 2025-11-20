@@ -19,7 +19,6 @@ public class HorseStatue : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="HorseStatue"/> class.
 	/// </summary>
-	[WorldForge]
 	public HorseStatue() : base(12)
 	{
 	}

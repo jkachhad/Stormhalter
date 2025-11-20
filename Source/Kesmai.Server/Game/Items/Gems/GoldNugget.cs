@@ -16,7 +16,6 @@ public class GoldNugget : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GoldNugget"/> class.
 	/// </summary>
-	[WorldForge]
 	public GoldNugget(uint basePrice) : base(84, basePrice)
 	{
 	}

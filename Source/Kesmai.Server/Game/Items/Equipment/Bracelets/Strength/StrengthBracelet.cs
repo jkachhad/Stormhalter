@@ -18,7 +18,6 @@ public class StrengthBracelet : Bracelet, ITreasure
 	public override int Weight => 4;
 		
 	/// <inheritdoc />
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int StrengthBonus => 3;
 

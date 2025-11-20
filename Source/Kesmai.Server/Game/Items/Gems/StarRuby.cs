@@ -19,7 +19,6 @@ public class StarRuby : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="StarRuby"/> class.
 	/// </summary>
-	[WorldForge]
 	public StarRuby(uint basePrice) : base(90, basePrice)
 	{
 	}

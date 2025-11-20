@@ -21,7 +21,6 @@ public abstract class Helmet : Equipment
 	/// <summary>
 	/// Gets or sets a value indication if this instance provides <see cref="NightVisionStatus"/>
 	/// </summary>
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual bool ProvidesNightVision => false;
 		

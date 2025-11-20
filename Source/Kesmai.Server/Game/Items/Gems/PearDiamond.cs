@@ -14,7 +14,6 @@ public class PearDiamond : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PearDiamond"/> class.
 	/// </summary>
-	[WorldForge]
 	public PearDiamond(uint basePrice) : base(153, basePrice)
 	{
 	}

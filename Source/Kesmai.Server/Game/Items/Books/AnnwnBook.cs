@@ -19,7 +19,6 @@ public class AnnwnBook : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="AnnwnBook"/> class.
 	/// </summary>
-	[WorldForge]
 	public AnnwnBook() : base(298)
 	{
 	}
@@ -27,7 +26,6 @@ public class AnnwnBook : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="AnnwnBook"/> class.
 	/// </summary>
-	[WorldForge]
 	public AnnwnBook(Serial serial) : base(serial)
 	{
 	}

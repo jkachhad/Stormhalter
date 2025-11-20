@@ -23,7 +23,6 @@ public class BankerRing : Ring, ITreasure
 	/// <summary>
 	/// Gets the gold held by this ring.
 	/// </summary>
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public uint Consumed
 	{

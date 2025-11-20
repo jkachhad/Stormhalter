@@ -10,51 +10,42 @@ public abstract class Equipment : ItemEntity
 	/// <summary>
 	/// Gets the hindrance penalty for this <see cref="Equipment"/>.
 	/// </summary>
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int Hindrance => 0;
 
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int ProtectionFromDaze => 0;
 		
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int ProtectionFromFire => 0;
 		
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int ProtectionFromIce => 0;
 		
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int ProtectionFromConcussion => 0;
 		
 	/// <summary>
 	/// Gets the health regeneration provided by this <see cref="Equipment"/>
 	/// </summary>
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int HealthRegeneration => 0;
 		
 	/// <summary>
 	/// Gets the stamina regeneration provided by this <see cref="Equipment"/>
 	/// </summary>
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int StaminaRegeneration => 0;
 		
 	/// <summary>
 	/// Gets the mana regeneration provided by this <see cref="Equipment"/>
 	/// </summary>
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int ManaRegeneration => 0;
 
 	/// <summary>
 	/// Gets a value indicating if this instance restricts spell casting for certain professions.
 	/// </summary>
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual bool RestrictSpellcast => false;
 

@@ -29,7 +29,6 @@ public abstract partial class MobileEntity
 	/// Checks if the <see cref="ShieldPenetration"/> value can penetrate the shield for this instance.
 	/// </summary>
 	/// <returns>Returns true if the attack is not blocked by a shield buff.</returns>
-	[WorldForge]
 	public virtual bool CheckShieldPenetration(ShieldPenetration penetration)
 	{
 		if (GetStatus<ShieldStatus>() is ShieldStatus status)
@@ -61,7 +60,6 @@ public abstract partial class MobileEntity
 	/// <summary>
 	/// Dazes the entity for a specified number of rounds.
 	/// </summary>
-	[WorldForge]
 	public void Daze(int ticks)
 	{
 		if (IsInvulnerable)
@@ -106,7 +104,6 @@ public abstract partial class MobileEntity
 	/// <summary>
 	/// Stuns the entity for a specified number of rounds.
 	/// </summary>
-	[WorldForge]
 	public void Stun(int ticks)
 	{
 		/* Remove any fear effect. */
@@ -148,7 +145,6 @@ public abstract partial class MobileEntity
 	/// <summary>
 	/// Gets a value indicating if this entity can be poisoned by a specific <see cref="Poison"/>.
 	/// </summary>
-	[WorldForge]
 	public virtual bool AllowPoison(Poison poison)
 	{
 		return true;
@@ -157,7 +153,6 @@ public abstract partial class MobileEntity
 	/// <summary>
 	/// Poisons the entity using the specified <see cref="Poison"/>.
 	/// </summary>
-	[WorldForge]
 	public void Poison(MobileEntity source, Poison poison)
 	{
 		if (!AllowPoison(poison))
@@ -187,7 +182,6 @@ public abstract partial class MobileEntity
 	/// <summary>
 	/// Neutralizes all <see cref="Poison">Poisons</see>.
 	/// </summary>
-	[WorldForge]
 	public void NeutralizePoison(MobileEntity source = default(MobileEntity))
 	{
 		if (GetStatus(typeof(PoisonStatus), out var status))
@@ -204,7 +198,6 @@ public abstract partial class MobileEntity
 	/// <summary>
 	/// Clears <see cref="PoisonStatus"/>.
 	/// </summary>
-	[WorldForge]
 	public void ClearPoison()
 	{
 		if (GetStatus(typeof(PoisonStatus), out var status))

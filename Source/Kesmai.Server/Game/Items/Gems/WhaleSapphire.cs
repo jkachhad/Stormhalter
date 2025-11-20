@@ -13,7 +13,6 @@ public class WhaleSapphire : Gem
 	/// <summary>
 	/// Initializes a new instance of the <see cref="WhaleSapphire"/> class.
 	/// </summary>
-	[WorldForge]
 	public WhaleSapphire(uint basePrice) : base(176, basePrice)
 	{
 	}

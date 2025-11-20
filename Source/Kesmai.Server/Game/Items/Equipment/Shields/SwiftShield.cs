@@ -23,7 +23,6 @@ public class SwiftShield : Shield, ITreasure
 	/// <summary>
 	/// Gets or sets the shield-value provided by this ring.
 	/// </summary>
-	[WorldForge]
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int Shield => 3;
 		

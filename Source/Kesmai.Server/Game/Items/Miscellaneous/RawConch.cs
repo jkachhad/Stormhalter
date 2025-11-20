@@ -19,7 +19,6 @@ public class RawConch : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="RawConch"/> class.
 	/// </summary>
-	[WorldForge]
 	public RawConch() : base(104)
 	{
 	}

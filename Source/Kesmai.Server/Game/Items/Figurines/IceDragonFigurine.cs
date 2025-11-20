@@ -19,7 +19,6 @@ public class IceDragonFigurine : ItemEntity, ITreasure
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IceDragonFigurine"/> class.
 	/// </summary>
-	[WorldForge]
 	public IceDragonFigurine() : base(375)
 	{
 	}
