@@ -17,7 +17,7 @@ public sealed class ComponentImageCache
     public WriteableBitmap Get(IComponentProvider component)
     {
         if (!_renders.TryGetValue(component, out var bmp))
-            _renders[component] = Update(component);
+            _renders[component] = bmp = Update(component);
 
         return bmp;
     }
