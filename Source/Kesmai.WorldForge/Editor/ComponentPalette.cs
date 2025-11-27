@@ -26,6 +26,7 @@ public class ComponentPalette : ObservableRecipient
 	private ComponentsCategory _staticCategory;
 	private ComponentsCategory _editorCategory;
 	private ComponentsCategory _segmentCategory;
+	private ComponentsCategory _segmentComponentsCategory;
 	
 	private ComponentsCategory _segmentBrushCategory;
 	private ComponentsCategory _segmentTemplateCategory;
@@ -108,6 +109,14 @@ public class ComponentPalette : ObservableRecipient
 		
 		_rootCategories.Add(_segmentCategory);
 
+		_segmentComponentsCategory = new ComponentsCategory()
+		{
+			Name = "Components",
+			IsRoot = false
+		};
+
+		_segmentCategory.Subcategories.Add(_segmentComponentsCategory);
+
 		_segmentBrushCategory = new ComponentsCategory()
 		{
 			Name = "Brushes",
@@ -127,6 +136,7 @@ public class ComponentPalette : ObservableRecipient
 		_allCategories.Add(_staticCategory);
 		_allCategories.Add(_editorCategory);
 		_allCategories.Add(_segmentCategory);
+		_allCategories.Add(_segmentComponentsCategory);
 		_allCategories.Add(_segmentBrushCategory);
 		_allCategories.Add(_segmentTemplateCategory);
 		
@@ -197,16 +207,23 @@ public class ComponentPalette : ObservableRecipient
 		
 		void addSegmentComponent(SegmentComponent component)
 		{
-			if (component.Element is null)
+			if (_segmentComponentsCategory is null)
 				return;
-			
-			var pathAttribute = component.Element.Attribute("category");
-			var category = default(ComponentsCategory);
-			
-			if (pathAttribute is not null)
-				category = TryGetCategory(pathAttribute.Value, _segmentCategory);
 
-			category ??= _segmentCategory;
+			var category = _segmentComponentsCategory;
+
+			if (component.Element is not null)
+			{
+				var pathAttribute = component.Element.Attribute("category");
+
+				if (pathAttribute is not null)
+				{
+					var targetCategory = TryGetCategory(pathAttribute.Value, _segmentComponentsCategory);
+
+					if (targetCategory is not null)
+						category = targetCategory;
+				}
+			}
 
 			if (!category.Components.Contains(component))
 				category.Components.Add(component);
