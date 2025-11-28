@@ -96,8 +96,20 @@ public abstract class Bottle : Consumable
 	{
 		if (!IsOpen || !IsFull)
 			return;
+		
+		OnSpill();
 
 		_content = null;
+	}
+
+	/// <summary>
+	/// Called when the bottle spills its contents.
+	/// </summary>
+	/// <remarks>
+	/// Spilled contents are accessible via the <see cref="Bottle._content" /> field.
+	/// </remarks>
+	protected virtual void OnSpill()
+	{
 	}
 
 	/// <summary>
@@ -113,6 +125,15 @@ public abstract class Bottle : Consumable
 
 		_isOpen = true;
 		Delta(ItemDelta.UpdateIcon);
+		
+		OnOpen(source);
+	}
+
+	/// <summary>
+	/// Called when the bottle is opened.
+	/// </summary>
+	protected virtual void OnOpen(MobileEntity source)
+	{
 	}
 
 	/// <summary>
@@ -128,8 +149,17 @@ public abstract class Bottle : Consumable
 
 		_isOpen = false;
 		Delta(ItemDelta.UpdateIcon);
+		
+		OnClose(source);
 	}
 
+	/// <summary>
+	/// Called when the bottle is closed.
+	/// </summary>
+	protected virtual void OnClose(MobileEntity source)
+	{
+	}
+	
 	/// <inheritdoc />
 	protected override void OnConsume(MobileEntity entity, bool destroy = true)
 	{

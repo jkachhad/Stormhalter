@@ -82,8 +82,11 @@ public abstract class Weapon : ItemEntity, IWeapon, IArmored, IWieldable
 	[CommandProperty(AccessLevel.GameMaster)]
 	public virtual int MaxRange => 0;
 
+	/// <summary>
+	/// Gets the poison applied to this <see cref="Weapon"/>.
+	/// </summary>
 	[CommandProperty(AccessLevel.GameMaster)]
-	public Poison Poison
+	public virtual Poison Poison
 	{
 		get => _poison;
 		set

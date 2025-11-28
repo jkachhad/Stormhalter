@@ -52,6 +52,18 @@ public abstract class Armor : Equipment, IArmored
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Armor"/> class.
 	/// </summary>
+	/// <remarks>
+	/// Using the default constructor should be avoided as it may
+	/// result in an uninitialized instance. This constructor is primarily
+	/// provided to facilitate deserialization processes.
+	/// </remarks>
+	protected Armor()
+	{
+	}
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Armor"/> class.
+	/// </summary>
 	protected Armor(int armorID) : base(armorID)
 	{
 	}
@@ -64,9 +76,16 @@ public abstract class Armor : Equipment, IArmored
 	}
 		
 	/// <summary>
-	/// Gets the armor bonus against the specified <see cref="ItemEntity"/>.
+	/// Gets the armor bonus against a specified <see cref="ItemEntity"/>.
 	/// </summary>
-	public int GetArmorBonus(ItemEntity item)
+	/// <remarks>
+	/// The armor bonus is calculated based on the weapon's damage type flags.
+	/// If the weapon is a projectile, the <see cref="ProjectileProtection"/> is used.
+	/// Otherwise, the minimum protection value among the applicable damage types
+	/// (slashing, piercing, bashing) is used. The <see cref="BaseArmorBonus"/> is then added
+	/// to this value to determine the total armor bonus.
+	/// </remarks>
+	public virtual int GetArmorBonus(ItemEntity item)
 	{
 		var flags = WeaponFlags.Bashing;
 

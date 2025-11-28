@@ -52,6 +52,18 @@ public abstract class Equipment : ItemEntity
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Equipment"/> class.
 	/// </summary>
+	/// <remarks>
+	/// Using the default constructor should be avoided as it may
+	/// result in an uninitialized instance. This constructor is primarily
+	/// provided to facilitate deserialization processes.
+	/// </remarks>
+	public Equipment()
+	{
+	}
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Equipment"/> class.
+	/// </summary>
 	protected Equipment(int equipmentId) : base(equipmentId)
 	{
 	}
