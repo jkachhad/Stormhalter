@@ -33,7 +33,7 @@ public class CreateSnakeSpell : DelayedSpell
 			Target.Cancel(_caster);
 	}
 		
-	public void CastAt(MobileEntity target)
+	public virtual void CastAt(MobileEntity target)
 	{
 		if (!_caster.IsAlive || !_caster.CanPerformAction)
 			return;

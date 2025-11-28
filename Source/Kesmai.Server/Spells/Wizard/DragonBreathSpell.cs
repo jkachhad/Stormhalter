@@ -30,7 +30,7 @@ public abstract class DragonBreathSpell : DelayedSpell, IWorldSpell
 			Target.Cancel(_caster);
 	}
 
-	public void CastAt(Direction direction)
+	public virtual void CastAt(Direction direction)
 	{
 		CastAt(direction, Direction.None);
 	}

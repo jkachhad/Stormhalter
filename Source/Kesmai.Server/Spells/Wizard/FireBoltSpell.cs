@@ -167,7 +167,7 @@ public class FireBoltSpell : DelayedSpell, IWorldSpell
 		CastAt(spellPath);
 	}
 
-	public void CastAt(MobileEntity mobile)
+	public virtual void CastAt(MobileEntity mobile)
 	{
 		var spellPower = _skillLevel;
 		var maxLength = (int)Math.Ceiling(spellPower / 2);
