@@ -60,7 +60,7 @@ public abstract partial class MobileEntity
 	/// <summary>
 	/// Dazes the entity for a specified number of rounds.
 	/// </summary>
-	public void Daze(int ticks)
+	public virtual void Daze(int ticks)
 	{
 		if (IsInvulnerable)
 			return;
@@ -104,7 +104,7 @@ public abstract partial class MobileEntity
 	/// <summary>
 	/// Stuns the entity for a specified number of rounds.
 	/// </summary>
-	public void Stun(int ticks)
+	public virtual void Stun(int ticks)
 	{
 		/* Remove any fear effect. */
 		if (GetStatus<FearStatus>() is FearStatus fearStatus)
