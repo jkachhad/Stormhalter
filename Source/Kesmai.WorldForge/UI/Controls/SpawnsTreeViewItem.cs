@@ -55,7 +55,12 @@ internal sealed class SpawnsTreeViewItem : TreeViewItem, IDisposable
         messenger.Register<SegmentSpawnRemoved>(this, (_, message) =>
         {
             if (_spawnItems.Remove(message.Value, out var item) && item.Parent is ItemsControl parent)
+            {
                 parent.Items.Remove(item);
+
+                if (parent is TreeViewItem treeViewItem)
+                    PruneEmptyRegionNode(treeViewItem);
+            }
         });
 
         messenger.Register<SegmentSpawnChanged>(this, (_, message) =>
@@ -131,7 +136,12 @@ internal sealed class SpawnsTreeViewItem : TreeViewItem, IDisposable
         var parentNode = regionId >= 0 ? EnsureRegionNode(regionId) : this;
 
         if (spawnerItem.Parent is ItemsControl currentParent && !ReferenceEquals(currentParent, parentNode))
+        {
             currentParent.Items.Remove(spawnerItem);
+
+            if (currentParent is TreeViewItem treeViewItem)
+                PruneEmptyRegionNode(treeViewItem);
+        }
 
         if (!parentNode.Items.Contains(spawnerItem))
             parentNode.Items.Add(spawnerItem);
@@ -160,6 +170,24 @@ internal sealed class SpawnsTreeViewItem : TreeViewItem, IDisposable
         Items.Add(node);
         _regionNodes.Add(regionId, node);
         return node;
+    }
+
+    private void PruneEmptyRegionNode(TreeViewItem? regionNode)
+    {
+        if (regionNode is null)
+            return;
+
+        if (regionNode.Items.Count > 0)
+            return;
+
+        if (!_regionLookup.TryGetValue(regionNode, out var regionId))
+            return;
+
+        if (regionNode.Parent is ItemsControl parent)
+            parent.Items.Remove(regionNode);
+
+        _regionLookup.Remove(regionNode);
+        _regionNodes.Remove(regionId);
     }
 
     private void AddLocationSpawner(int? regionId = null)

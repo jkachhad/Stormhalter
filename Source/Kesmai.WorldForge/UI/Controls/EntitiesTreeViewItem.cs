@@ -55,7 +55,12 @@ internal sealed class EntitiesTreeViewItem : TreeViewItem, IDisposable
         messenger.Register<SegmentEntityRemoved>(this, (_, message) =>
         {
             if (_entityItems.Remove(message.Value, out var entityNode) && entityNode.Parent is ItemsControl parent)
+            {
                 parent.Items.Remove(entityNode);
+
+                if (parent is TreeViewItem treeViewItem)
+                    PruneEmptyGroups(treeViewItem);
+            }
         });
 
         messenger.Register<SegmentEntityChanged>(this, (_, message) =>
@@ -122,7 +127,12 @@ internal sealed class EntitiesTreeViewItem : TreeViewItem, IDisposable
         var parentNode = EnsurePath(groupPath);
 
         if (entityItem.Parent is ItemsControl currentParent && !ReferenceEquals(currentParent, parentNode))
+        {
             currentParent.Items.Remove(entityItem);
+
+            if (currentParent is TreeViewItem treeViewItem)
+                PruneEmptyGroups(treeViewItem);
+        }
 
         if (!parentNode.Items.Contains(entityItem))
             parentNode.Items.Add(entityItem);
@@ -157,6 +167,28 @@ internal sealed class EntitiesTreeViewItem : TreeViewItem, IDisposable
         }
 
         return parentNode;
+    }
+
+    private void PruneEmptyGroups(TreeViewItem? groupNode)
+    {
+        while (groupNode is not null && !ReferenceEquals(groupNode, this))
+        {
+            if (groupNode.Items.Count > 0)
+                break;
+
+            if (!_groupLookup.TryGetValue(groupNode, out var groupPath))
+                break;
+
+            if (groupNode.Parent is not ItemsControl parent)
+                break;
+
+            parent.Items.Remove(groupNode);
+            
+            _groupLookup.Remove(groupNode);
+            _groupNodes.Remove(groupPath);
+
+            groupNode = parent as TreeViewItem;
+        }
     }
 
     private void AddEntity(string groupPath = null)
