@@ -246,62 +246,65 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 
 	protected override void OnUpdate(TimeSpan deltaTime)
 	{
-		if (_invalidated && _componentFrames != null && _editingTile != null)
+		if (_invalidated && _componentFrames != null)
 		{
 			_componentFrames.Children.Clear();
 
-			var providers = _editingTile.Providers;
-
-			for (int index = 0; index < providers.Count; index++)
+			if (_editingTile != null)
 			{
-				var provider = providers[index];
-				var providerFrame = provider.GetComponentFrame();
-				
-				providerFrame.AllowOrderUp = index > 0;
-				providerFrame.AllowOrderDown = index < (providers.Count - 1);
-				
-				providerFrame.AllowDelete = providers.Count > 1;
+				var providers = _editingTile.Providers;
 
-				providerFrame.Click += (sender, args) =>
+				for (int index = 0; index < providers.Count; index++)
 				{
-					if (sender is not ComponentFrame componentFrame)
-						return;
-					
-					foreach (var frame in _componentFrames.Children.OfType<ComponentFrame>())
-						frame.IsSelected = false;
-					
-					_selectedComponentFrame = componentFrame;
-					_selectedComponentFrame.IsSelected = true;
-				};
-				
-				providerFrame.OrderUp += OnFrameOrderUp;
-				providerFrame.OrderDown += OnFrameOrderDown;
-				providerFrame.Delete += OnFrameDelete;
+					var provider = providers[index];
+					var providerFrame = provider.GetComponentFrame();
 
-				providerFrame.Invalidate += (sender, args) =>
-				{
-					_editingTile.UpdateTerrain();
-					
-					InvalidateRender();
-				};
-				
-				if (providerFrame is TerrainComponentFrame terrainFrame)
-				{
-					terrainFrame.Convert += (sender, args) =>
+					providerFrame.AllowOrderUp = index > 0;
+					providerFrame.AllowOrderDown = index < (providers.Count - 1);
+
+					providerFrame.AllowDelete = providers.Count > 1;
+
+					providerFrame.Click += (sender, args) =>
 					{
-						if (terrainFrame.Provider is not TerrainComponent terrainComponent)
+						if (sender is not ComponentFrame componentFrame)
 							return;
-						
-						OnConvertComponent(terrainComponent);
+
+						foreach (var frame in _componentFrames.Children.OfType<ComponentFrame>())
+							frame.IsSelected = false;
+
+						_selectedComponentFrame = componentFrame;
+						_selectedComponentFrame.IsSelected = true;
 					};
+
+					providerFrame.OrderUp += OnFrameOrderUp;
+					providerFrame.OrderDown += OnFrameOrderDown;
+					providerFrame.Delete += OnFrameDelete;
+
+					providerFrame.Invalidate += (sender, args) =>
+					{
+						_editingTile.UpdateTerrain();
+
+						InvalidateRender();
+					};
+
+					if (providerFrame is TerrainComponentFrame terrainFrame)
+					{
+						terrainFrame.Convert += (sender, args) =>
+						{
+							if (terrainFrame.Provider is not TerrainComponent terrainComponent)
+								return;
+
+							OnConvertComponent(terrainComponent);
+						};
+					}
+
+					_componentFrames.Children.Add(providerFrame);
 				}
-				
-				_componentFrames.Children.Add(providerFrame);
 			}
-			
+
 			_invalidated = false;
 		}
-		
+
 		base.OnUpdate(deltaTime);
 	}
 	
@@ -463,6 +466,9 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 	{
 		frame.Provider.RemoveComponent(_editingTile.Providers);
 		
+		if (_selectedComponentFrame == frame)
+			_selectedComponentFrame = null;
+		
 		_editingTile.UpdateTerrain();
 		
 		InvalidateFrames();
@@ -515,6 +521,9 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 
 	public void Reset()
 	{
+		if (_editingTile is null || _editingProviders is null)
+			return;
+		
 		// restore original tile.
 		_editingTile.Providers.Clear();
         
@@ -651,6 +660,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 
 				}
 
+				InvalidateFrames();
 				InvalidateRender();
 			}
 			
