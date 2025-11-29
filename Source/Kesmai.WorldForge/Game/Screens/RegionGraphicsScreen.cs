@@ -461,10 +461,13 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 
 	private void Delete(ComponentFrame frame)
 	{
+		if (_editingTile is null)
+			return;
+
 		frame.Provider.RemoveComponent(_editingTile.Providers);
-		
+
 		_editingTile.UpdateTerrain();
-		
+
 		InvalidateFrames();
 		InvalidateRender();
 	}
@@ -515,9 +518,12 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 
 	public void Reset()
 	{
+		if (_editingTile is null || _editingProviders is null)
+			return;
+
 		// restore original tile.
 		_editingTile.Providers.Clear();
-        
+
 		foreach (var provider in _editingProviders)
 			provider.AddComponent(_editingTile.Providers);
 
