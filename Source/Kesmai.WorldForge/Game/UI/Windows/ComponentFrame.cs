@@ -184,12 +184,14 @@ public abstract class ComponentFrame : Grid
 
 		var inputService = InputService;
 
-		if (IsMouseOver)
+		if (!inputService.IsMouseOrTouchHandled && IsMouseOver)
 		{
-			if (inputService.IsReleased(MouseButtons.Left))
+			if (inputService.IsDown(MouseButtons.Left))
+			{
 				Events.Get<EventArgs>(ClickEventId).Raise();
 			
-			inputService.IsMouseOrTouchHandled = true;
+				inputService.IsMouseOrTouchHandled = true;
+			}
 		}
 	}
 

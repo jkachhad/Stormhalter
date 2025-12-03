@@ -37,6 +37,7 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 
 	private Grid _grid;
 	private Button _resetButton;
+	private ScrollViewer _componentScrollViewer;
 	private StackPanel _componentFrames;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 	
 	private SegmentTile _editingTile;
@@ -235,8 +236,20 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 		{
 			VerticalAlignment = VerticalAlignment.Stretch,
 		};
-		
-		_grid.AddChild(_componentFrames, 2, 1);
+
+		_componentScrollViewer = new ScrollViewer()
+		{
+			Style = "Client-ScrollViewer",
+			Content = _componentFrames,
+
+			HorizontalAlignment = HorizontalAlignment.Stretch,
+			VerticalAlignment = VerticalAlignment.Stretch,
+
+			HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
+			VerticalScrollBarVisibility = ScrollBarVisibility.Visible,
+		};
+
+		_grid.AddChild(_componentScrollViewer, 2, 1);
 	}
 
 	public void InvalidateFrames()
