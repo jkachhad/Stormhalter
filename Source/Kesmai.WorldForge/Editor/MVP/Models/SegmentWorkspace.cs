@@ -106,6 +106,7 @@ public class SegmentWorkspace
 			
 			$"static Kesmai.Server.Segments.{segmentClassName}",
 			$"static Kesmai.Server.Segments.Editor",
+			"Kesmai.Server",
 			"Kesmai.Server.Game",
 			"Kesmai.Server.Items",
 			"Kesmai.Server.Miscellaneous",
