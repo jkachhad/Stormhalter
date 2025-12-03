@@ -56,6 +56,8 @@ internal sealed class LocationsTreeViewItem : TreeViewItem, IDisposable
             if (_locationItems.TryGetValue(message.Value, out var item) && item.EditableTextBlock is not null)
                 item.EditableTextBlock.Text = message.Value.Name;
         });
+        messenger.Register<SegmentLocationsReset>(this, (_, _) => 
+            ResetLocations());
 
         foreach (var location in _segment.Locations)
             Items.Add(CreateLocationItem(location));
@@ -65,6 +67,11 @@ internal sealed class LocationsTreeViewItem : TreeViewItem, IDisposable
     {
         WeakReferenceMessenger.Default.UnregisterAll(this);
 
+        ResetLocations();
+    }
+    
+    private void ResetLocations()
+    {
         Items.Clear();
         
         _locationItems.Clear();
