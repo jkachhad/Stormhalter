@@ -89,29 +89,32 @@ public class DrawTool : Tool
                     if (selectedTile == null)
                         region.SetTile(mx, my, selectedTile = new SegmentTile(mx, my));
 
-                    /*var componentType = component.GetType ( );
+                    var componentType = provider.GetType();
 
-                    if ( !_isAltDown && !_isShiftDown )
+                    if (!_isAltDown && !_isShiftDown)
                     {
-                        if ( floorTypes.Contains ( componentType.Name ) )
+                        if (floorTypes.Contains(componentType.Name))
                         {
-                            var similar = selectedTile.GetComponents<TerrainComponent> ( c => floorTypes.Contains ( c.GetType ( ).Name ) );
-                            foreach ( var existing in similar )
-                                selectedTile.RemoveComponent ( existing );
+                            var similar = selectedTile.GetComponents<TerrainComponent>(c => floorTypes.Contains(c.GetType().Name));
+                            
+                            foreach (var existing in similar)
+                                selectedTile.RemoveComponent(existing);
                         }
                         else
                         {
-                            var similar = selectedTile.GetComponents<TerrainComponent> ( c => c.GetType ( ).IsAssignableFrom ( componentType ) );
-                            foreach ( var existing in similar )
-                                selectedTile.RemoveComponent ( existing );
+                            var similar = selectedTile.GetComponents<IComponentProvider>(c => c.GetType().IsAssignableFrom(componentType));
+                            
+                            foreach (var existing in similar)
+                                selectedTile.RemoveComponent(existing);
                         }
                     }
-                    else if ( _isAltDown )
+                    else if (_isAltDown)
                     {
-                        selectedTile.Providers.Clear ( );
-                    }*/
+                        selectedTile.Providers.Clear();
+                    }
 
                     provider.AddComponent(selectedTile.Providers);
+
                     selectedTile.UpdateTerrain();
                     worldScreen.InvalidateRender();
 
