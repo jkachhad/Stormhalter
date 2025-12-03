@@ -39,4 +39,4 @@ using System.Windows.Media;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.112.0")]
+[assembly: AssemblyVersion("0.112.1")]
