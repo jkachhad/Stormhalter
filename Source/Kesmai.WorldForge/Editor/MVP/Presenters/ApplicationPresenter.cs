@@ -429,7 +429,8 @@ public class ApplicationPresenter : ObservableRecipient
 						new XElement("Compile", new XAttribute("Include", "Source/**/*.cs"))
 					),
 					new XElement("ItemGroup",
-						new XElement("PackageReference", new XAttribute("Include", "Kesmai.Server.Reference"), new XAttribute("Version", "*"))
+						new XElement("PackageReference", new XAttribute("Include", "Kesmai.Server.Reference"), new XAttribute("Version", "*")),
+						new XElement("PackageReference", new XAttribute("Include", "Kesmai.Server.Reference.Generator"), new XAttribute("Version", "*"))
 					)
 				);
 		
