@@ -98,13 +98,25 @@ public class ShadowstepSpell : InstantSpell, IWorldSpell
 		foreach (var direction in directions)
 		{
 			var next = target + direction;
+
+			if (_caster.GetDistanceToMax(next) > 3)
+			{
+				Fizzle();
+				FinishSequence();
+				return;
+			}
+
 			var segmentTile = segment.FindTile(next);
+
+			if (segmentTile == null)
+			{
+				target = next;
+				continue;
+			}
 				
-			if (_caster.GetDistanceToMax(next) > 3 
-			    || (segmentTile.GetComponent<Wall>() is Wall wall && wall.IsIndestructible)
-			    || (segmentTile.ContainsComponent<Obstruction>())
-			    || (segmentTile.ContainsComponent<Counter>())
-			    || (segmentTile.ContainsComponent<Altar>()))
+			if (segmentTile.GetComponent<Wall>() is { IsIndestructible: true } || (segmentTile.ContainsComponent<Obstruction>()) 
+			                                                                   || (segmentTile.ContainsComponent<Counter>()) 
+			                                                                   || (segmentTile.ContainsComponent<Altar>()))
 			{
 				Fizzle();
 				FinishSequence();
