@@ -9,6 +9,7 @@ namespace Kesmai.Server.Game;
 
 public partial class Demon : CreatureEntity, IDemon
 {
+	/// <summary>
 	/// Initializes a new instance of the <see cref="Demon"/> class.
 	/// </summary>
 	public Demon()
