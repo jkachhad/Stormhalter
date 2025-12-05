@@ -40,6 +40,10 @@ public class Football : Mace
 	public Football() : base(162)
 	{
 	}
+	
+	public Football(Serial serial) : base(serial)
+	{
+	}
 
 	/// <inheritdoc />
 	public override void GetDescription(List<LocalizationEntry> entries)
