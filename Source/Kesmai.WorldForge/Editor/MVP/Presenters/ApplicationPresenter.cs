@@ -674,7 +674,8 @@ public class ApplicationPresenter : ObservableRecipient
 				new XElement("TargetFramework", "net8.0-windows8.0"),
 				new XElement("RootNamespace", segmentName),
 				new XElement("AssemblyName", segmentName),
-				new XElement("EnableDefaultItems", false)
+				new XElement("EnableDefaultItems", false),
+				new XElement("GenerateAssemblyInfo", false)
 			),
 			new XElement("ItemGroup",
 				new XElement("Compile", new XAttribute("Include", "Source/**/*.cs"))
