@@ -653,24 +653,28 @@ public class RegionGraphicsScreen : WorldGraphicsScreen
 			}
 			else
 			{
+				var currentFilter = _filters.SelectedFilter;
+
 				foreach (var area in _selection)
 				{
 					for (var x = area.Left; x < area.Right; x++)
 					for (var y = area.Top; y < area.Bottom; y++)
 					{
-						var currentFilter = _filters.SelectedFilter;
-						
 						var tile = region.GetTile(x, y);
 						
 						if (tile is null)
 							continue;
-						
-						var validComponents = tile.Providers.SelectMany(c => c.GetComponents()).Where(c => currentFilter.IsValid(c)).ToArray();
-						
-						foreach (var component in validComponents)
-							tile.RemoveComponent(component);
-					}
 
+						var providers = tile.Providers.ToArray();
+
+						foreach (var provider in providers)
+						{
+							if (!currentFilter.IsValid(provider))
+								continue;
+
+							tile.RemoveComponent(provider);
+						}
+					}
 				}
 
 				InvalidateFrames();
