@@ -97,12 +97,14 @@ public class SegmentTemplate : ObservableObject, ISegmentObject, IComponentProvi
         foreach (var provider in Providers)
         {
             var providerElement = provider.GetReferencingElement();
-            var nameAttribute = providerElement.Attribute("name");
-            
-            if (nameAttribute is null)
+
+            if (providerElement is null)
+                continue;
+
+            if (providerElement.Attribute("name") is null && !String.IsNullOrWhiteSpace(provider.Name))
                 providerElement.Add(new XAttribute("name", provider.Name));
-            
-            element.Add(provider.GetReferencingElement());
+
+            element.Add(providerElement);
         }
 
         return element;
