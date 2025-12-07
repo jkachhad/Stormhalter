@@ -146,6 +146,11 @@ public class ComponentPalette : ObservableRecipient
 			addSegmentComponent(m.Value);
 		});
 		
+		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentComponentsReset>(this, (r, m) =>
+		{
+			clearSegmentComponents(_segmentComponentsCategory);
+		});
+		
 		WeakReferenceMessenger.Default.Register<ComponentPalette, SegmentComponentRemoved>(this, (r, m) =>
 		{
 			deleteSegmentComponent(m.Value);
@@ -204,6 +209,17 @@ public class ComponentPalette : ObservableRecipient
 		{
 			refreshSegmentTemplates(m.Value);
 		});
+		
+		void clearSegmentComponents(ComponentsCategory category)
+		{
+			if (category is null)
+				return;
+
+			category.Components.Clear();
+
+			foreach (var subcategory in category.Subcategories)
+				clearSegmentComponents(subcategory);
+		}
 		
 		void addSegmentComponent(SegmentComponent component)
 		{
