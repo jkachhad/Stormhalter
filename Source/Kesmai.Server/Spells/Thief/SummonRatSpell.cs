@@ -54,7 +54,7 @@ public class SummonRatSpell : DelayedSpell
 			}
 
 			_caster.Steering = rat;
-			_caster.EmitSound(226, 3, 6);
+			_caster.EmitSound(237, 3, 6);
 		}
 		else
 		{

@@ -75,7 +75,7 @@ public class InstantEnchantWeaponSpell : InstantSpell
 				base.OnCast();
 
 				_caster.SendLocalizedMessage(6300308);
-				_caster.EmitSound(232, 3, 6);
+				_caster.EmitSound(233, 3, 6);
 					
 				weapon.IsEnchanted = true;
 			}

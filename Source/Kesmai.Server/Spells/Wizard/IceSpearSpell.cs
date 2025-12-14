@@ -45,7 +45,7 @@ public class IceSpearSpell : DelayedSpell
 			var attacker = _caster;
 			var defender = target;
 
-			attacker.EmitSound(222, 3, 6);
+			attacker.EmitSound(224, 3, 6);
 
 			var skill = _skillLevel;
 			var baseDamage = 12.5 * skill;

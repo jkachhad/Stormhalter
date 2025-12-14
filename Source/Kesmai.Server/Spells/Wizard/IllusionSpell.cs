@@ -38,7 +38,7 @@ public abstract class IllusionSpell : DelayedSpell
 			{
 				base.OnCast();
 					
-				_caster.EmitSound(230, 3, 6);
+				_caster.EmitSound(231, 3, 6);
 
 				if (_caster is PlayerEntity player && _item == null)
 					player.AwardMagicSkill(this);

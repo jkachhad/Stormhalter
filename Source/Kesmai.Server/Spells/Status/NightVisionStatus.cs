@@ -6,7 +6,7 @@ namespace Kesmai.Server.Spells;
 
 public class NightVisionStatus : SpellStatus
 {
-	public override int SpellRemovedSound => 221;
+	public override int SpellRemovedSound => 223;
 		
 	public NightVisionStatus(MobileEntity entity) : base(entity)
 	{

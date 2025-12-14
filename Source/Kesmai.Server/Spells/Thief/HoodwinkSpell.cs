@@ -74,7 +74,7 @@ public class HoodwinkSpell : DelayedSpell, IWorldSpell
 					for (var i = 0; i < amount; i++)
 						new HoodwinkOpal().Move(target, true, _caster.Segment);
 
-					_caster.EmitSound(232, 3, 6);
+					_caster.EmitSound(233, 3, 6);
 
 					if (_caster is PlayerEntity player && _item == null)
 						player.AwardMagicSkill(this);

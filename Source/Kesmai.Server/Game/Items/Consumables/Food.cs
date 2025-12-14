@@ -21,6 +21,16 @@ public abstract class Food : Consumable
 	}
 	
 	/// <inheritdoc />
+	protected override void OnConsume(MobileEntity entity, bool destroy = true)
+	{
+		/* Play a sound of chewing. */
+		entity.EmitSound(62, 3, 6);
+
+		/* Call the base method to execute the content effect. */
+		base.OnConsume(entity, destroy);
+	}
+	
+	/// <inheritdoc />
 	public override void Serialize(SpanWriter writer)
 	{
 		base.Serialize(writer);

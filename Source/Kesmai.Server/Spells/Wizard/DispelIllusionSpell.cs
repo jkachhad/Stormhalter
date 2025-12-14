@@ -46,7 +46,7 @@ public class DispelIllusionSpell : DelayedSpell
 					// TODO: Maybe prevent an illusion from dispel if the source vs caster skill is too low.
 					currentIllusion.Dispel(segmentTile);
 
-					_caster.EmitSound(232, 3, 6);
+					_caster.EmitSound(233, 3, 6);
 
 					if (_caster is PlayerEntity player && _item == null)
 						player.AwardMagicSkill(this);

@@ -67,7 +67,7 @@ public class CreateWebSpell : DelayedSpell, IWorldSpell
 			{
 				base.OnCast();
 					
-				segment.PlaySound(target, 230, 3, 6);
+				segment.PlaySound(target, 231, 3, 6);
 
 				var facet = _caster.Facet;
 				var rounds = (_skillLevel + 6);

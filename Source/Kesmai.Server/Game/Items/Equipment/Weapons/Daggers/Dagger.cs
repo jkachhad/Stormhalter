@@ -32,7 +32,10 @@ public abstract class Dagger : MeleeWeapon
 
 	/// <inheritdoc />
 	public override WeaponFlags Flags => WeaponFlags.Piercing | WeaponFlags.Throwable | WeaponFlags.QuickThrow;
-		
+
+	/// <inheritdoc />
+	public override int AttackSound => 45;
+
 	public override int ItemId
 	{
 		get

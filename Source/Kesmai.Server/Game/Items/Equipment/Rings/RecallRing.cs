@@ -32,7 +32,7 @@ public class RecallRing : Ring
 
 		if (recallRings.Count > 0)
 		{
-			entity.SendPacket(new PlaySoundPacket(221));
+			entity.SendPacket(new PlaySoundPacket(223));
 
 			if (recallRings.Count > 1)
 				entity.SendLocalizedMessage(Color.Fuchsia, 6300423); // Your recall rings have been reset!

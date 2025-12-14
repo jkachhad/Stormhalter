@@ -62,7 +62,7 @@ public class HideInShadowSpell : DelayedSpell
 					status.AddSource(new SpellSource(_caster, TimeSpan.Zero));
 				}
 					
-				_caster.EmitSound(232, 3, 6);
+				_caster.EmitSound(233, 3, 6);
 			}
 			else
 			{

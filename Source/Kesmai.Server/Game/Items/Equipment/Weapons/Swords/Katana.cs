@@ -30,6 +30,9 @@ public class Katana : Sword
 
 	/// <inheritdoc />
 	public override WeaponFlags Flags => WeaponFlags.Slashing;
+	
+	/// <inheritdoc />
+	public override int AttackSound => 45;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Katana"/> class.

@@ -51,7 +51,7 @@ public class VigorStatus : SpellStatus
 			
 		base.OnRemoved();
 			
-		_entity.PlaySound(221);
+		_entity.PlaySound(223);
 
 		if (_entity.Client != null)
 			_entity.SendLocalizedMessage(Color.Magenta, 6300270, 597); /* The spell of [Vigor] has worn off. */

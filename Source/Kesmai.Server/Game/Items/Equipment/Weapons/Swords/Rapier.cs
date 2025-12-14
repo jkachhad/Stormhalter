@@ -30,6 +30,9 @@ public class Rapier : Sword
 
 	/// <inheritdoc />
 	public override WeaponFlags Flags => WeaponFlags.Piercing;
+	
+	/// <inheritdoc />
+	public override int AttackSound => 45;
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Rapier"/> class.

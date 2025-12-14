@@ -52,7 +52,7 @@ public class PeekSpell : DelayedSpell
 						player.AwardMagicSkill(this);
 				}
 
-				_caster.EmitSound(226, 3, 6);
+				_caster.EmitSound(237, 3, 6);
 			}
 			else
 			{

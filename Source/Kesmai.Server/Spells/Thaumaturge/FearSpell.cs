@@ -68,7 +68,7 @@ public class FearSpell : DelayedSpell
 				
 			var attacker = _caster;
 
-			attacker.EmitSound(229, 3, 6);
+			attacker.EmitSound(230, 3, 6);
 
 			if (!target.HasStatus(typeof(FearStatus)))
 			{

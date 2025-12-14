@@ -75,7 +75,7 @@ public class CreateLavaSpell : DelayedSpell
 			var segment = _caster.Segment;
 			var sourceTile = _caster.SegmentTile;
 				
-			segment.PlaySound(sourceTile.Location, 351, 6, 12);
+			segment.PlaySound(sourceTile.Location, 354, 6, 12);
 
 			/* Spell can not be cast on the caster's location. */
 			var validLocation = (_caster is not PlayerEntity || startTile != sourceTile);

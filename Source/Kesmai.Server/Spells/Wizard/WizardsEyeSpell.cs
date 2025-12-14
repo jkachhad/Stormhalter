@@ -57,7 +57,7 @@ public class WizardsEyeSpell : DelayedSpell
 			}
 
 			_caster.Steering = frog;
-			_caster.EmitSound(226, 3, 6);
+			_caster.EmitSound(237, 3, 6);
 		}
 		else
 		{

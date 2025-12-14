@@ -41,7 +41,7 @@ public class CurseSpell : DelayedSpell
 			var attacker = _caster;
 			var defender = target;
 
-			attacker.EmitSound(225, 3, 6);
+			attacker.EmitSound(227, 3, 6);
 
 			var skill = _skillLevel;
 			var baseDamage = 4 * skill;

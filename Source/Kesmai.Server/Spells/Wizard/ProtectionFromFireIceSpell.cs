@@ -77,7 +77,7 @@ public class ProtectionFromFireIceSpell : DelayedSpell
 					player.AwardMagicSkill(this);
 			}
 
-			target.EmitSound(232, 3, 6);
+			target.EmitSound(233, 3, 6);
 
 			if (_caster != target || _item != null)
 				target.SendLocalizedMessage(6300311, 544);

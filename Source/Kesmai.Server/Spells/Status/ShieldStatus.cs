@@ -11,7 +11,7 @@ public class ShieldStatus : SpellStatus
 	/// </summary>
 	public static readonly int MaximumProtection = 9;
 	
-	public override int SpellRemovedSound => 221;
+	public override int SpellRemovedSound => 223;
 
 	public ShieldStatus(MobileEntity entity) : base(entity)
 	{

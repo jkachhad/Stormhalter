@@ -107,7 +107,7 @@ public class CrashingWavesRing : Ring, ITreasure
 	
 public class WaterWalkingStatus : SpellStatus
 {
-	public override int SpellRemovedSound => 221;
+	public override int SpellRemovedSound => 223;
 
 	public override bool Hidden => true;
 

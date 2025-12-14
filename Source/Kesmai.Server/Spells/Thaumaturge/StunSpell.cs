@@ -95,7 +95,7 @@ public class StunSpell : DelayedSpell
 					player.AwardMagicSkill(this);
 			}
 
-			_caster.EmitSound(229, 3, 6);
+			_caster.EmitSound(230, 3, 6);
 		}
 		else
 		{

@@ -114,7 +114,7 @@ public class FireBoltSpell : DelayedSpell, IWorldSpell
 				if (_caster is PlayerEntity player && _item == null)
 					player.AwardMagicSkill(this);
 
-				_caster.EmitSound(224, 3, 6);
+				_caster.EmitSound(226, 3, 6);
 			}
 			else
 			{

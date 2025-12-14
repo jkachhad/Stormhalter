@@ -5,7 +5,7 @@ namespace Kesmai.Server.Spells;
 
 public class ClearcastStatus : SpellStatus
 {
-	public override int SpellRemovedSound => 221;
+	public override int SpellRemovedSound => 223;
 
 	private Timer _internalTimer;
 

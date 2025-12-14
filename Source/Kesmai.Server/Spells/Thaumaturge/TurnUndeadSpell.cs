@@ -37,7 +37,7 @@ public class TurnUndeadSpell : DelayedSpell
 		{
 			base.OnCast();
 				
-			_caster.EmitSound(229, 3, 6);
+			_caster.EmitSound(230, 3, 6);
 				
 			/* Calculate health difference */
 			var missingHealth = (_caster.MaxHealth - _caster.Health);

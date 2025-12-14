@@ -65,7 +65,7 @@ public class VermeilRing : Ring, ITreasure
 			
 		if (entity is PlayerEntity player)
 		{
-			player.EmitSound(226, 3, 6);
+			player.EmitSound(237, 3, 6);
 
 			if (player.RightHand != null)
 			{

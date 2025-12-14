@@ -8,7 +8,7 @@ namespace Kesmai.Server.Spells;
 
 public class StrengthSpellStatus : SpellStatus
 {
-	public override int SpellRemovedSound => 221;
+	public override int SpellRemovedSound => 223;
 
 	public StrengthSpellStatus(MobileEntity entity) : base(entity)
 	{

@@ -57,7 +57,7 @@ public class FearStatus : SpellStatus
 					possibleDirections.Add(direction);
 			}
 				
-			_entity.EmitSound((_entity.IsFemale ? 206 : 203), 3, 6);
+			_entity.EmitSound((_entity.IsFemale ? 205 : 202), 3, 6);
 				
 			if (_entity.RequestPath(new[] { possibleDirections.Random() }))
 				_entity.QueueMovementTimer();

@@ -6,7 +6,7 @@ namespace Kesmai.Server.Spells;
 
 public class BreatheWaterStatus : SpellStatus
 {
-	public override int SpellRemovedSound => 221;
+	public override int SpellRemovedSound => 223;
 
 	public BreatheWaterStatus(MobileEntity entity) : base(entity)
 	{

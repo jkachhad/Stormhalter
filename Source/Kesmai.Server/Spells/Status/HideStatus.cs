@@ -12,7 +12,7 @@ public class HideStatus : SpellStatus
 		
 	private List<IWorldGroup> _detectors;
 		
-	public override int SpellRemovedSound => 221;
+	public override int SpellRemovedSound => 223;
 		
 	public HideStatus(MobileEntity entity) : base(entity)
 	{

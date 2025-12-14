@@ -42,7 +42,7 @@ public class DeathSpell : DelayedSpell
 			var attacker = _caster;
 			var defender = target;
 
-			attacker.EmitSound(223, 3, 6);
+			attacker.EmitSound(225, 3, 6);
 
 			var skillLevel = _skillLevel;
 			var baseDamage = 10 * skillLevel;

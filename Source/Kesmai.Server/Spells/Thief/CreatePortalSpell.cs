@@ -79,7 +79,7 @@ public class CreatePortalSpell : DelayedSpell
 
 						mapTile.Add(Portal.Construct(Color.White, duration, replaced));
 
-						segment.PlaySound(location, 232, 3, 6);
+						segment.PlaySound(location, 233, 3, 6);
 
 						if (_caster is PlayerEntity player && _item == null)
 							player.AwardMagicSkill(this);

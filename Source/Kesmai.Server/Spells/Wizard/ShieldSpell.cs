@@ -70,7 +70,7 @@ public class ShieldSpell : DelayedSpell
 				status.AddSource(new SpellSource(_caster, duration));
 			}
 
-			target.EmitSound(232, 3, 6);
+			target.EmitSound(233, 3, 6);
 
 			if (_caster != target || _item != null)
 				target.SendLocalizedMessage(6300311, 552);

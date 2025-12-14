@@ -6,7 +6,7 @@ namespace Kesmai.Server.Spells;
 
 public class DeathResistanceStatus : SpellStatus
 {
-	public override int SpellRemovedSound => 221;
+	public override int SpellRemovedSound => 223;
 		
 	public DeathResistanceStatus(MobileEntity entity) : base(entity)
 	{

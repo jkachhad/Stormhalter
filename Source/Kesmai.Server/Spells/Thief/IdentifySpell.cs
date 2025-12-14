@@ -29,7 +29,7 @@ public class IdentifySpell : DelayedSpell
 					
 				target.Identified = true;
 
-				_caster.EmitSound(226, 3, 6);
+				_caster.EmitSound(237, 3, 6);
 				_caster.SendDescription(target);
 
 				if (_caster is PlayerEntity player && _item == null)

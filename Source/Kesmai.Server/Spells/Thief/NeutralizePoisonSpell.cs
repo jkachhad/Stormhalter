@@ -52,7 +52,7 @@ public class NeutralizePoisonSpell : DelayedSpell
 					player.AwardMagicSkill(this);
 			}
 
-			target.EmitSound(231, 3, 6);
+			target.EmitSound(232, 3, 6);
 		}
 		else
 		{

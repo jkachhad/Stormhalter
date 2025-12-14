@@ -30,9 +30,9 @@ public partial class Lurker : AnimalEntity
 		_brain = new CombatAI(this);
 	}
 
-	public override int GetNearbySound() => 238;
-	public override int GetAttackSound() => 239;
-	public override int GetDeathSound() => 240;
+	public override int GetNearbySound() => 241;
+	public override int GetAttackSound() => 242;
+	public override int GetDeathSound() => 243;
 		
 	public override ItemEntity OnCorpseTanned()
 	{

@@ -49,7 +49,7 @@ public class CloseOpenDoorSpell : DelayedSpell
 					
 				door.Toggle(segmentTile);
 
-				segment.PlaySound(target, 232, 3, 6);
+				segment.PlaySound(target, 233, 3, 6);
 
 				if (_caster is PlayerEntity player && _item == null)
 					player.AwardMagicSkill(this);

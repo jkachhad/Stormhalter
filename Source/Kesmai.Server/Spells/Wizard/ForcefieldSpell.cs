@@ -32,7 +32,7 @@ public class ForcefieldSpell : DelayedSpell
 				status.AddSource(new SpellSource(_caster, duration));
 
 				_caster.AddStatus(status);
-				_caster.EmitSound(232, 3, 6);
+				_caster.EmitSound(233, 3, 6);
 					
 				if (_caster is PlayerEntity player && _item is null)
 					player.AwardMagicSkill(this);

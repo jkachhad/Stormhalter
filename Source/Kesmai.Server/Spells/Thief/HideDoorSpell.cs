@@ -48,7 +48,7 @@ public class HideDoorSpell : DelayedSpell
 					
 				door.Hide(segmentTile);
 
-				segment.PlaySound(target, 232, 3, 6);
+				segment.PlaySound(target, 233, 3, 6);
 
 				if (_caster is PlayerEntity player && _item == null)
 					player.AwardMagicSkill(this);

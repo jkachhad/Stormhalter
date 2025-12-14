@@ -45,7 +45,7 @@ public class ShadowstepSpell : InstantSpell, IWorldSpell
 			{
 				base.OnCast();
 					
-				_caster.EmitSound(232, 3, 6);
+				_caster.EmitSound(233, 3, 6);
 				_caster.Teleport(target);
 					
 				var spellPower = Math.Min(16, (16 + (_skillLevel - 14) * 2));
@@ -171,3 +171,4 @@ public class ShadowstepSpell : InstantSpell, IWorldSpell
 		}
 	}
 }
+

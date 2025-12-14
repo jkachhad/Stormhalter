@@ -6,7 +6,7 @@ namespace Kesmai.Server.Spells;
 
 public class BlindFearProtectionStatus : SpellStatus
 {
-	public override int SpellRemovedSound => 221;
+	public override int SpellRemovedSound => 223;
 		
 	public BlindFearProtectionStatus(MobileEntity entity) : base(entity)
 	{

@@ -66,7 +66,7 @@ public class InstantCureSpell : InstantSpell
 				if (missingHealth > heal)
 					missingHealth = (int)(heal + (missingHealth - heal) * Utility.RandomBetween(0.6, 0.8));
 
-				_caster.EmitSound(233, 3, 6);
+				_caster.EmitSound(234, 3, 6);
 
 				if (missingHealth > 0)
 				{

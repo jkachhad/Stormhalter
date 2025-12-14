@@ -7,7 +7,7 @@ namespace Kesmai.Server.Spells;
 
 public class RapidfireStatus : SpellStatus
 {
-	public override int SpellRemovedSound => 221;
+	public override int SpellRemovedSound => 223;
 
 	public bool IsActive => true;
 		

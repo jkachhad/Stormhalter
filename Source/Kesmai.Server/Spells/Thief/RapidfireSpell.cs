@@ -39,7 +39,7 @@ public class RapidfireSpell : DelayedSpell
 				status.AddSource(new SpellSource(_caster, duration));
 			}
 
-			_caster.EmitSound(232, 3, 6);
+			_caster.EmitSound(233, 3, 6);
 		}
 		else
 		{

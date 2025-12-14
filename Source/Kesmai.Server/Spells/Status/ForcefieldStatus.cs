@@ -7,7 +7,7 @@ namespace Kesmai.Server.Spells;
 
 public class ForcefieldStatus : SpellStatus
 {
-	public override int SpellRemovedSound => 221;
+	public override int SpellRemovedSound => 223;
 
 	private int _minimumAbsorb;
 	private int _maximumAbsorb;

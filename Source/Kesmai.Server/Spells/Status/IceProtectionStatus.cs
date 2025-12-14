@@ -6,7 +6,7 @@ namespace Kesmai.Server.Spells;
 
 public class IceProtectionStatus : SpellStatus
 {
-	public override int SpellRemovedSound => 221;
+	public override int SpellRemovedSound => 223;
 
 	public IceProtectionStatus(MobileEntity entity) : base(entity)
 	{

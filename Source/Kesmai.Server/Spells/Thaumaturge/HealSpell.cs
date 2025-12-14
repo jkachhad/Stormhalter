@@ -80,7 +80,7 @@ public class HealSpell : DelayedSpell
 				}
 			}
 
-			_caster.EmitSound(233, 3, 6);
+			_caster.EmitSound(234, 3, 6);
 		}
 		else
 		{

@@ -49,7 +49,7 @@ public class FindSecretDoorsSpell : DelayedSpell
 				_caster.SendLocalizedMessage(6300358); /* You could not detect any secret doors. */
 			}
 				
-			_caster.EmitSound(232, 3, 6);
+			_caster.EmitSound(233, 3, 6);
 		}
 		else
 		{
