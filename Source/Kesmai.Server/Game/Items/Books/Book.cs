@@ -224,6 +224,8 @@ public class BookGump : Gump
 		
 		Overlay = true;
 		CanDrag = true;
+		
+		CanClose = true;
 
 		var stackPanel = new StackPanel
 		{
@@ -282,6 +284,8 @@ public class ScrollGump : Gump
 		
 		Overlay = true;
 		CanDrag = true;
+
+		CanClose = true;
 		
 		var stackPanel = new StackPanel()
 		{
